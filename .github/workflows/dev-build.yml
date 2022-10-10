@@ -1,0 +1,38 @@
+name: Build on develop
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited]
+    branches:
+      - develop
+
+jobs:
+  pr:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Build
+        run: yarn build
+
+      - name: Check lint-staged
+        run: yarn lint-staged
+
+      - name: Check Format
+        run: yarn check-format
+
+      - name: Eslint
+        run: yarn check-lint:dev
+
+      - name: Check Types
+        run: yarn check-types
+
+      - name: Test
+        run: yarn test

@@ -20,7 +20,8 @@
       "@pages/*": ["pages/*"],
       "@hooks/*": ["hooks/*"]
     },
-    "types": ["jest"]
+    "types": ["jest"],
+    "incremental": true
   },
   "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules"]

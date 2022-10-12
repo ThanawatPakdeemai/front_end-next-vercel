@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+# git-format-staged -f 'prettier --ignore-unknown --stdin --stdin-filepath "{}"' .
+
 # BY KAEN
 
 echo "🧐 lint staged active..."
@@ -21,9 +23,9 @@ yarn check-format ||
 
 
 # Check ESLint Standards
-# yarn check-lint ||
-# (
-#         echo '😤🏀👋😤 Get that weak shit out of here! 😤🏀👋😤 
-#                 ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
-#         false; 
-# )
+yarn check-eslint ||
+(
+        echo '😤🏀👋😤 Get that weak shit out of here! 😤🏀👋😤 
+                ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
+        false; 
+)

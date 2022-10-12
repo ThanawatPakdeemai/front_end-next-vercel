@@ -17,12 +17,12 @@ yarn check-types ||
     false;
 )
 
-# yarn check-lint:dev ||
-# (
-#         echo '😤🏀👋😤 Get that weak shit out of here! 😤🏀👋😤 
-#                 ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
-#         false; 
-# )
+yarn check-eslint:dev ||
+(
+        echo '😤🏀👋😤 Get that weak shit out of here! 😤🏀👋😤 
+                ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
+        false; 
+)
 
 # yarn test:ci ||
 # (
@@ -33,15 +33,15 @@ yarn check-types ||
 # # If everything passes... Now we can commit
 # # echo '🤔🤔🤔🤔... Alright.... Code looks good to me... Trying to build now. 🤔🤔🤔🤔'
 
-# yarn build ||
-# (
-#     echo '❌👷🔨❌ Better call Bob... Because your build failed ❌👷🔨❌
-#             Next build failed: View the errors above to see why. 
-#     '
-#     false;
-# )
+yarn build ||
+(
+    echo '❌👷🔨❌ Better call Bob... Because your build failed ❌👷🔨❌
+            Next build failed: View the errors above to see why. 
+    '
+    false;
+)
 
 # # If everything passes... Now we can commit
-# echo '🚀🚀🚀🚀 You win this time... I am pushed this now. 🚀'
-# echo "🐙🐙🐙 FINISH AT : $(date +%d/%m/%Y-%H:%M:%S) 🐙🐙🐙"
-# echo "⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼"
+echo '🚀🚀🚀🚀 You win this time... I am pushed this now. 🚀'
+echo "🐙🐙🐙 FINISH AT : $(date +%d/%m/%Y-%H:%M:%S) 🐙🐙🐙"
+echo "⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼"

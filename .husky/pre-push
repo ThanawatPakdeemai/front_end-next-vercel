@@ -31,11 +31,11 @@ yarn check-eslint ||
 #         false; 
 # )
 
-# yarn test:ci ||
-# (
-#     echo '🔥🔥 Report from coverage 🔥🔥'
-#     false;
-# )
+yarn test ||
+(
+    echo '🔥🔥 Report from coverage 🔥🔥'
+    false;
+)
 
 # # If everything passes... Now we can commit
 # # echo '🤔🤔🤔🤔... Alright.... Code looks good to me... Trying to build now. 🤔🤔🤔🤔'

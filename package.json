@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "PORT=4002 next dev",
     "build": "next build",
     "build:dev": "env-cmd -f .env.development yarn build && yarn start",
-    "start": "next start",
+    "start": "PORT=4002 next start",
     "lint": "next lint --dir src",
     "css:dev": "TAILWIND_MODE=watch postcss src/styles/tailwind.css -o src/styles/globals.css --watch",
     "css:build": "postcss src/styles/tailwind.css -o src/styles/globals.css",

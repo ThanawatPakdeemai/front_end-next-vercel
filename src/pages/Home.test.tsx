@@ -5,7 +5,9 @@ import '@testing-library/jest-dom';
 
 import Home from './index';
 
-it('Should render title text', () => {
-  render(<Home />);
-  expect(screen.getByText('Next.js!')).toBeInTheDocument();
+describe('Calculator', () => {
+  it('Should render title text', () => {
+    render(<Home />);
+    expect(screen.getByText('Next.js!')).toBeInTheDocument();
+  });
 });

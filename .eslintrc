@@ -17,7 +17,7 @@
 		// "plugin:@typescript-eslint/strict",
 		"prettier"
 	],
-	"plugins": ["@typescript-eslint", "simple-import-sort"],
+	"plugins": ["jest", "@typescript-eslint", "simple-import-sort"],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"tsconfigRootDir": "./",

@@ -9,11 +9,16 @@ module.exports = {
       'satoshi-medium': ['satoshimedium', 'Helvetica', 'Arial', ' sans-serif'],
       'satoshi-bold': ['satoshibold', 'Helvetica', 'Arial', ' sans-serif'],
       'satoshi-black': ['satoshiblack', 'Helvetica', 'Arial', ' sans-serif'],
-      'dogicapixel-bold': ['dogica_pixelbold', 'Helvetica', 'Arial', ' sans-serif'],
+      'dogicapixel-bold': [
+        'dogica_pixelbold',
+        'Helvetica',
+        'Arial',
+        ' sans-serif'
+      ],
       dogicapixel: ['dogica_pixelregular', 'Helvetica', 'Arial', ' sans-serif'],
-      roboto: ['Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+      roboto: ['Roboto', 'Helvetica', 'Arial', 'sans-serif']
     },
-    extend: {},
+    extend: {}
   },
-  plugins: [],
+  plugins: []
 };

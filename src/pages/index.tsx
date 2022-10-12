@@ -35,12 +35,11 @@ const Home: NextPage = () => {
             <p>Discover and deploy boilerplate example Next.js projects.</p>
           </a>
 
-          <a
-            href='https://vercel.com'
-            className={styles.card}
-          >
+          <a href='https://vercel.com' className={styles.card}>
             <h2>Deploy &rarr;</h2>
-            <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
+            <p>
+              Instantly deploy your Next.js site to a public URL with Vercel.
+            </p>
           </a>
         </div>
       </main>
@@ -53,7 +52,12 @@ const Home: NextPage = () => {
         >
           Powered by{' '}
           <span className={styles.logo}>
-            <Image src='/favicon.svg'alt='Vercel Logo' width={72} height={16} />
+            <Image
+              src='/favicon.svg'
+              alt='Vercel Logo'
+              width={72}
+              height={16}
+            />
           </span>
         </a>
       </footer>

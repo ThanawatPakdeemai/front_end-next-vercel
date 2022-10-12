@@ -1,17 +1,20 @@
 // .vscode/settings.json
 {
-	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"editor.formatOnSave": true,
-	"editor.codeActionsOnSave": {
-		"source.fixAll": true,
-		// For ESLint
-		"source.fixAll.eslint": true,
-		// For TSLint
-		"source.fixAll.tslint": true,
-		// For Stylelint
-		"source.fixAll.stylelint": true
-	},
-	"[typescriptreact]": {
-		"editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
-	}
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    // For ESLint
+    "source.fixAll.eslint": true,
+    // For TSLint
+    "source.fixAll.tslint": true,
+    // For Stylelint
+    "source.fixAll.stylelint": true
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.jsxSingleQuote": true,
+  "prettier.requireConfig": true,
+  "eslint.format.enable": false
 }

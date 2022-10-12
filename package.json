@@ -25,14 +25,9 @@
     "semi": true,
     "tabWidth": 2,
     "printWidth": 80,
-    "trailingComma": "none",
     "jsxSingleQuote": true,
     "singleQuote": true,
-    "useTabs": true,
-    "bracketSpacing": true,
-    "arrowParens": "always",
-    "requirePragma": true,
-    "proseWrap": "always"
+    "trailingComma": "none"
   },
   "lint-staged": {
     "*.(tsx|ts)": "eslint --cache --fix",

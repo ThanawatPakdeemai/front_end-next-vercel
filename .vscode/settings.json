@@ -1,11 +1,19 @@
 // .vscode/settings.json
 {
-  // デフォルトのフォーマッタを prettier に設定
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  // ファイル保存時、prettier による自動フォーマット
   "editor.formatOnSave": true,
-  // ファイル保存時、ESLint による自動フォーマット
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
-  }
+    "source.fixAll": true,
+    // For ESLint
+    "source.fixAll.eslint": true,
+    // For TSLint
+    "source.fixAll.tslint": true,
+    // For Stylelint
+    "source.fixAll.stylelint": true
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.jsxSingleQuote": true,
+  "prettier.requireConfig": true
 }

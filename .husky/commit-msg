@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npx --no-install commitlint --edit "" ||
+(
+  echo '🙅‍♀️🙅‍♀️🙅‍♀️ Not allowed commit pattern! 🙅‍♀️🙅‍♀️🙅‍♀️
+      Type must be one of [
+        "feat",
+        "fix",
+        "docs",
+        "chore",
+        "style",
+        "refactor",
+        "ci",
+        "test",
+        "revert",
+        "perf",
+        "vercel"
+      ] [type-enum
+      ----------------------------------------
+      ❌ Ex. Check buying game items bug
+      ✅ Ex. fix: check buying game items bug
+      ----------------------------------------'
+  false; 
+)

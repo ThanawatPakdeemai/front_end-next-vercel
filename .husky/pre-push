@@ -4,44 +4,61 @@
 # pawaox4th@gmail.con
 
 echo "⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼"
-echo "🐙🐙🐙 RUN AS : $(date +%d/%m/%Y-%H:%M:%S) 🐙🐙🐙"
+echo "🧐🧐🧐 RUN AS : $(date +%d/%m/%Y-%H:%M:%S) 🧐🧐🧐"
 echo "⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼"
-echo "👮☁️  Styling, linting, testing and building your project before committing [Pre-Push]
+echo "Styling, linting, testing and building your project before committing [Pre-Push]
 ";
 
 # Check tsconfig standards
-yarn check-types ||
+yarn check:types ||
 (
-    echo '🤡😂❌🤡 Failed Type check. 🤡😂❌🤡
+    echo '❌❌❌ Failed Type check. ❌❌❌
             Are you seriously trying to write that? Make the changes required above.'
     false;
 )
 
-# yarn check-lint:dev ||
+yarn check:eslint ||
+(
+        echo '🙅‍♀️🙅‍♀️🙅‍♀️ Get that weak shit out of here! 🙅‍♀️🙅‍♀️🙅‍♀️
+                ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
+        false; 
+)
+
+# Check Format Stylelint standards  
+yarn check:stylelint ||
+
+(
+    echo '😵😵😵 Your styling looks BAD. 😵😵😵
+            Run [yarn format:stylelint], add changes and try commit again.';
+    false;
+)
+
+# yarn check:eslint:dev ||
 # (
 #         echo '😤🏀👋😤 Get that weak shit out of here! 😤🏀👋😤 
 #                 ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
 #         false; 
 # )
 
-# yarn test:ci ||
-# (
-#     echo '🔥🔥 Report from coverage 🔥🔥'
-#     false;
-# )
+yarn test ||
+(
+    echo '🧪🧪🧪 Report from coverage 🧪🧪🧪'
+    false;
+)
+
+# If everything passes... Now we can commit
+echo '👍👍👍 Your code is passed! I am building. 👍👍👍'
+echo 'Please waiting, take a sip of coffee and relax...'
+
+yarn build:dev ||
+(
+    echo '😲😲😲 Oops!! Failed building 😲😲😲
+            Next build failed: View the errors above to see why. 
+    '
+    false;
+)
 
 # # If everything passes... Now we can commit
-# # echo '🤔🤔🤔🤔... Alright.... Code looks good to me... Trying to build now. 🤔🤔🤔🤔'
-
-# yarn build ||
-# (
-#     echo '❌👷🔨❌ Better call Bob... Because your build failed ❌👷🔨❌
-#             Next build failed: View the errors above to see why. 
-#     '
-#     false;
-# )
-
-# # If everything passes... Now we can commit
-# echo '🚀🚀🚀🚀 You win this time... I am pushed this now. 🚀'
-# echo "🐙🐙🐙 FINISH AT : $(date +%d/%m/%Y-%H:%M:%S) 🐙🐙🐙"
-# echo "⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼"
+echo '🚀🚀 You win this time... I am pushed this now. 🚀🚀'
+echo "🎉🎉🎉 FINISH AT : $(date +%d/%m/%Y-%H:%M:%S) 🎉🎉🎉"
+echo "⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼"

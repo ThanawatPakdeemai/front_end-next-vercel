@@ -26,13 +26,13 @@ jobs:
         run: yarn lint-staged
 
       - name: Check Format
-        run: yarn check-format
+        run: yarn format:prettier
 
       - name: Eslint
-        run: yarn check-lint:dev
+        run: yarn check:eslint
 
       - name: Check Types
-        run: yarn check-types
+        run: yarn check:types
 
       - name: Test
         run: yarn test

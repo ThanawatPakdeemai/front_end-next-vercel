@@ -5,21 +5,27 @@
   "scripts": {
     "dev": "PORT=4002 next dev",
     "build": "next build",
-    "build:dev": "env-cmd -f .env.development yarn build && yarn start",
-    "start": "PORT=4002 next start",
+    "build:dev": "env-cmd -f .env.development yarn build",
+    "build:prod": "env-cmd -f .env.production yarn build",
+    "build:css": "yarn build:sass && npx tailwindcss -i ./src/styles/globals.css -o ./src/styles/output.css && yarn format:prettier-css",
+    "build:tailwind": "tailwindcss -i ./src/styles/globals.css -o ./src/styles/output.css --watch",
+    "build:sass-watch": "sass --no-source-map ./src/styles/scss:./src/styles/css --watch",
+    "build:sass": "sass --no-source-map ./src/styles/scss:./src/styles/css",
+    "start": "next start",
     "lint": "next lint --dir src",
-    "css:dev": "TAILWIND_MODE=watch postcss src/styles/tailwind.css -o src/styles/globals.css --watch",
-    "css:build": "postcss src/styles/tailwind.css -o src/styles/globals.css",
-    "format": "prettier --write --ignore-path .prettierignore './**/*.{js,jsx,ts,tsx,json,css}'",
-    "autofix": "eslint --fix-dry-run --ignore-path .eslintignore './**/*.{js,jsx,ts,tsx}'",
-    "check-types": "tsc --pretty --noEmit",
-    "check-format": "prettier --check .",
-    "check-eslint": "eslint . --ext ts --ext tsx --ext js",
-    "check-eslint:dev": "eslint . --ext ts --ext tsx --ext js",
+    "format:stylelint": "yarn build:sass && yarn format:prettier-css && stylelint --fix './**/*.{css,scss}'",
+    "format:eslint": "eslint --fix --ignore-path .eslintignore './**/*.{js,jsx,ts,tsx}' && yarn format:prettier-tsx",
+    "format:prettier": "prettier --write --ignore-path .prettierignore './**/*.{js,jsx,ts,tsx,json,css,scss, README.md}'",
+    "format:prettier-css": "prettier --write --ignore-path .prettierignore './**/*.{css,scss}'",
+    "format:prettier-tsx": "prettier --write --ignore-path .prettierignore './**/*.{js,jsx,ts,tsx}'",
+    "check:types": "tsc --pretty --noEmit",
+    "check:prettier": "prettier --check .",
+    "check:eslint": "eslint . --ext ts --ext tsx --ext js",
+    "check:stylelint": "stylelint --ignore-path .stylelintignore './**/*.{css,scss}'",
     "prepare": "husky install",
     "test": "jest",
     "release": "semantic-release --no-ci",
-    "precommit": "git-format-staged --formatter 'prettier --stdin' './**/*.{js,jsx,ts,tsx,json,css}'"
+    "precommit": "git-format-staged --formatter 'prettier --stdin' './**/*.{js,jsx,ts,tsx,json,css,scss}'"
   },
   "prettier": {
     "semi": true,
@@ -29,19 +35,47 @@
     "singleQuote": true,
     "trailingComma": "none"
   },
+  "stylelint": {
+    "extends": [
+      "stylelint-config-standard",
+      "stylelint-config-prettier"
+    ],
+    "rules": {
+      "at-rule-no-unknown": [
+        true,
+        {
+          "ignoreAtRules": [
+            "tailwind"
+          ]
+        }
+      ],
+      "declaration-block-trailing-semicolon": null,
+      "no-descending-specificity": null,
+      "function-no-unknown": null
+    }
+  },
   "lint-staged": {
     "*.(tsx|ts)": "eslint --cache --fix",
     "*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@fontsource/roboto": "^4.5.8",
+    "@mui/material": "^5.10.9",
+    "@mui/styled-engine-sc": "^5.10.6",
+    "axios": "^1.1.2",
     "env-cmd": "^10.1.0",
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "next": "12.3.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.18.6",
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
     "@testing-library/dom": "^8.19.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -58,6 +92,8 @@
     "eslint-config-next": "12.3.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^27.1.1",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-tailwindcss": "^3.6.2",
     "git-format-staged": "^3.0.0",
     "husky": "^8.0.0",
     "identity-obj-proxy": "^3.0.0",
@@ -68,8 +104,14 @@
     "node-mocks-http": "^1.11.0",
     "postcss": "^8.4.17",
     "postcss-cli": "^10.0.0",
-    "prettier": "2.7.1",
+    "postcss-scss": "^4.0.5",
+    "prettier": "^2.7.1",
+    "prettier-plugin-tailwindcss": "^0.1.13",
     "semantic-release": "^19.0.5",
+    "stylelint": "^14.13.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^28.0.0",
+    "stylelint-config-standard-scss": "^5.0.0",
     "tailwindcss": "^3.1.8",
     "ts-jest": "^29.0.3",
     "ts-loader": "^9.4.1",

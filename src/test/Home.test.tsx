@@ -3,9 +3,9 @@ import { render, screen } from '@testing-library/react';
 
 import '@testing-library/jest-dom';
 
-import Home from './index';
+import Home from '../pages/index';
 
-describe('Calculator', () => {
+describe('Check Home Component', () => {
   it('Should render title text', () => {
     render(<Home />);
     expect(screen.getByText('Next.js!')).toBeInTheDocument();

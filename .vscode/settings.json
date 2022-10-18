@@ -15,6 +15,5 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "prettier.jsxSingleQuote": true,
-  "prettier.requireConfig": true,
-  "eslint.format.enable": false
+  "prettier.requireConfig": true
 }

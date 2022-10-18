@@ -7,9 +7,12 @@ package-lock.json
 .babelrc
 .gitignore
 .eslintrc
+.eslintrc.js
 
+# Prettier
 .prettierignore
 .prettierrc
+prettier.config.js
 
 .gitignore
 
@@ -24,3 +27,6 @@ yarn.lock
 # Jest
 jest.setup.ts
 jest.config.json
+
+# commitlint
+commitlint.config.js

@@ -1,0 +1,32 @@
+.next/
+node_modules/
+coverage/
+__snapshots__/
+package-lock.json
+
+.babelrc
+.gitignore
+.eslintrc
+.eslintrc.js
+
+# Prettier
+.prettierignore
+.prettierrc
+prettier.config.js
+
+.gitignore
+
+next-env.d.ts
+next.config.js
+
+postcss.config.js
+
+tailwind.config.js
+yarn.lock
+
+# Jest
+jest.setup.ts
+jest.config.json
+
+# commitlint
+commitlint.config.js

@@ -1,17 +1,26 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+# git-format-staged -f 'prettier --ignore-unknown --stdin --stdin-filepath "{}"' .
+
 # BY KAEN
 
 echo "🧐 lint staged active..."
 yarn lint-staged
 
+# Building Tailwind CSS
+yarn build:css ||
+(
+        echo '🎨🎨🎨 I am building the CSS 🎨🎨🎨'
+        false; 
+)
+
 # Format code.
 echo "🤓 Formating code ... "
-yarn format
+yarn format:prettier
 
 # Check Prettier standards  
-yarn check-format ||
+yarn check:prettier ||
 
 (
     echo '🤢🤮🤢🤮 Its FOKING RAW - Your styling looks disgusting. 🤢🤮🤢🤮
@@ -19,11 +28,23 @@ yarn check-format ||
     false;
 )
 
+# Format Stylelint.
+echo "🤓 Formating code ... "
+yarn format:stylelint
+
+# Check Format Stylelint standards  
+yarn check:stylelint ||
+
+(
+    echo '😵😵😵 Its FOKING RAW - Your styling looks disgusting. 😵😵😵
+            Stylelint Check Failed. Run [yarn format:stylelint], add changes and try commit again.';
+    false;
+)
 
 # Check ESLint Standards
-# yarn check-lint ||
-# (
-#         echo '😤🏀👋😤 Get that weak shit out of here! 😤🏀👋😤 
-#                 ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
-#         false; 
-# )
+yarn check:eslint ||
+(
+        echo '😤🏀👋😤 Get that weak shit out of here! 😤🏀👋😤 
+                ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
+        false; 
+)

@@ -1,0 +1,32 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: satoshiregular, Helvetica, Arial, -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+strong {
+  font-weight: bold;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    color: theme('colors.gray.default');
+    background: url('/images/common/bg.png') theme('colors.gray.900');
+  }
+}
+
+.text {
+  color: theme('colors.gray.default');
+  font-size: 20px;
+}

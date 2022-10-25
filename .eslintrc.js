@@ -87,7 +87,7 @@ module.exports = {
     'no-dupe-else-if': 'error',
     'no-dupe-keys': 'error',
     'no-duplicate-case': 'error',
-    // "no-duplicate-imports": ["error"],
+    // 'no-duplicate-imports': ['error'],
     'no-empty-character-class': 'error',
     'no-ex-assign': 'error',
     'no-fallthrough': 'error',
@@ -230,7 +230,7 @@ module.exports = {
       'error',
       { blankLine: 'always', prev: ['case', 'default'], next: '*' }
     ],
-    quotes: ['error', 'single'],
+    quotes: ['error', 'single', { allowTemplateLiterals: true }],
     'space-in-parens': 'error',
     'wrap-regex': 'error',
     'no-multiple-empty-lines': 'error',
@@ -275,7 +275,7 @@ module.exports = {
     '@typescript-eslint/restrict-template-expressions': 'error',
     '@typescript-eslint/triple-slash-reference': 'error',
     '@typescript-eslint/unbound-method': 'error',
-    '@typescript-eslint/no-duplicate-imports': 'error',
+    '@typescript-eslint/no-duplicate-imports': ['error'],
 
     // Tailwindcss
     'tailwindcss/classnames-order': 'warn',

@@ -1,6 +1,7 @@
 import type { ThemeOptions } from '@mui/material';
 
 import { MuiAppBar } from './partial/components/muiAppBar';
+import { MuiAutocomplete } from './partial/components/muiAutocomplete';
 import { MuiBackdrop } from './partial/components/muiBackdrop';
 import { MuiButton } from './partial/components/muiButton';
 import { MuiButtonBase } from './partial/components/muiButtonBase';
@@ -40,6 +41,7 @@ export const theme: ThemeOptions = {
     MuiButtonGroup: MuiButtonGroup,
     MuiCheckbox: MuiCheckbox,
     MuiFab: MuiFab,
+    MuiAutocomplete: MuiAutocomplete,
     MuiFormControl: {
       defaultProps: {
         margin: 'dense',

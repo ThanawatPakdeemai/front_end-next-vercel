@@ -21,29 +21,8 @@ yarn format:prettier
 
 # Check Prettier standards  
 yarn check:prettier ||
-
 (
     echo '🤢🤮🤢🤮 Its FOKING RAW - Your styling looks disgusting. 🤢🤮🤢🤮
             Prettier Check Failed. Run [yarn format], add changes and try commit again.';
     false;
-)
-
-# Format Stylelint.
-# echo "🤓 Formating code ... "
-# yarn format:stylelint
-
-# Check Format Stylelint standards  
-# yarn check:stylelint ||
-# (
-#     echo '😵😵😵 Its FOKING RAW - Your styling looks disgusting. 😵😵😵
-#             Stylelint Check Failed. Run [yarn format:stylelint], add changes and try commit again.';
-#     false;
-# )
-
-# Check ESLint Standards
-yarn check:eslint ||
-(
-        echo '😤🏀👋😤 Get that weak shit out of here! 😤🏀👋😤 
-                ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
-        false; 
 )

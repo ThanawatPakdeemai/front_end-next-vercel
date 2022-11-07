@@ -5,9 +5,9 @@ import type { AppProps } from "next/app"
 
 import { theme } from "@src/styles/themes/darkTheme"
 
-import "../styles/globals.css"
-import "../styles/css/common.css"
-import "../styles/fonts.css"
+import "@src/styles/globals.css"
+import "@src/styles/css/common.css"
+import "@src/styles/fonts.css"
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const customTheme = createTheme(theme as ThemeOptions)

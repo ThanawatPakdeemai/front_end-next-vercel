@@ -23,7 +23,9 @@
     "prepare": "husky install",
     "test": "jest",
     "release": "semantic-release --no-ci",
-    "precommit": "git-format-staged --formatter 'prettier --stdin' './**/*.{js,jsx,ts,tsx,json,css,scss}'"
+    "precommit": "git-format-staged --formatter 'prettier --stdin' './**/*.{js,jsx,ts,tsx,json,css,scss}'",
+    "check-types": "tsc --pretty --noEmit",
+    "check-lint": "eslint . --ext ts --ext tsx --ext js"
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",

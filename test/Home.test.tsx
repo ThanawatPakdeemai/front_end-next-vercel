@@ -1,7 +1,6 @@
-import React from "react"
 import { render, screen } from "@testing-library/react"
-import "@testing-library/jest-dom"
 import Home from "../pages/index"
+import "@testing-library/jest-dom"
 
 describe("Check Home Component", () => {
   it("Should render title text", () => {

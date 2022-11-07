@@ -1,6 +1,6 @@
 import React from "react"
 import type { NextPage } from "next"
-import type { IGame } from "../../types/games/gameData"
+import type { IGame } from "@src/types/games/gameData"
 
 interface IProps {
   data: IGame

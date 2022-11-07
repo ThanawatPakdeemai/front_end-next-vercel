@@ -10,8 +10,8 @@ import {
 import type { SelectChangeEvent } from "@mui/material/Select"
 import type { NextPage } from "next"
 import Image from "next/image"
-import SidebarTemplate from "@components/templates/sidebarTemplate"
-import styles from "../styles/css/Home.module.css"
+import SidebarTemplate from "@src/components/templates/sidebarTemplate"
+import styles from "@src/styles/css/Home.module.css"
 
 const Home: NextPage = () => {
   const [age, setAge] = useState<string>("")

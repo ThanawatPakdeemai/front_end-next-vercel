@@ -1,8 +1,6 @@
-import React from 'react';
-import type { NextPage } from 'next';
+import React from "react"
+import type { NextPage } from "next"
 
-const Summary: NextPage = () => {
-  return <>Summary</>;
-};
+const Summary: NextPage = () => <>Summary</>
 
-export default Summary;
+export default Summary

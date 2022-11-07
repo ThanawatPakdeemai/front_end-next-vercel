@@ -1,5 +1,5 @@
-import { memo } from 'react';
-import Image from 'next/image';
+import { memo } from "react"
+import Image from "next/image"
 
 const Footer = () => {
   /*
@@ -12,9 +12,15 @@ const Footer = () => {
    * const { t } = useTranslation();
    */
 
+  const imgSrc = "/images/mocks/footer.png"
+
   return (
     <>
-      <Image src='/images/mocks/footer.png' alt='mock' layout='fill' />
+      <Image
+        src={imgSrc}
+        alt="mock"
+        fill
+      />
       {/* <ContentBottom className="conten-footer">
         <h2>{t("be_a_part_of_the_play_to_earn_revolution")}</h2>
         <p>
@@ -66,7 +72,7 @@ const Footer = () => {
         <CopyRight>Copyright 2022 © Nakamoto Games</CopyRight>
       </ContentBottom> */}
     </>
-  );
-};
+  )
+}
 
-export default memo(Footer);
+export default memo(Footer)

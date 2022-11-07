@@ -1,8 +1,8 @@
-import type { Components, Theme } from '@mui/material';
+import type { Components, Theme } from "@mui/material"
 
-export const MuiCheckbox: Components<Omit<Theme, 'components'>>['MuiCheckbox'] =
+export const MuiCheckbox: Components<Omit<Theme, "components">>["MuiCheckbox"] =
   {
     defaultProps: {
-      size: 'medium'
+      size: "medium"
     }
-  };
+  }

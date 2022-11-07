@@ -6,4 +6,4 @@ export const baseUrl = {
   support: process.env.NEXT_SUPPORT,
   marketplace: process.env.NEXT_MARKETPLACE,
   nakaverse: process.env.NEXT_NAKAVERSE
-};
+}

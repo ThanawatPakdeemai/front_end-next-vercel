@@ -25,13 +25,13 @@ yarn check:eslint ||
 )
 
 # Check Format Stylelint standards  
-yarn check:stylelint ||
+# yarn check:stylelint ||
 
-(
-    echo '😵😵😵 Your styling looks BAD. 😵😵😵
-            Run [yarn format:stylelint], add changes and try commit again.';
-    false;
-)
+# (
+#     echo '😵😵😵 Your styling looks BAD. 😵😵😵
+#             Run [yarn format:stylelint], add changes and try commit again.';
+#     false;
+# )
 
 # yarn check:eslint:dev ||
 # (

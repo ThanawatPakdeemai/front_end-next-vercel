@@ -1,17 +1,17 @@
-import type { TypographyOptions } from '@mui/material/styles/createTypography';
+import type { TypographyOptions } from "@mui/material/styles/createTypography"
 
 export const TypographyCustom: TypographyOptions = {
   fontFamily: [
-    'dogica_pixelbold',
-    '-apple-system',
-    'BlinkMacSystemFont',
+    "dogica_pixelbold",
+    "-apple-system",
+    "BlinkMacSystemFont",
     '"Segoe UI"',
-    'Roboto',
+    "Roboto",
     '"Helvetica Neue"',
-    'Arial',
-    'sans-serif',
+    "Arial",
+    "sans-serif",
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
     '"Segoe UI Symbol"'
-  ].join(',')
-};
+  ].join(",")
+}

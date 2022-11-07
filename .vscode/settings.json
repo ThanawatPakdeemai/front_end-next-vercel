@@ -1,19 +1,81 @@
 // .vscode/settings.json
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
     "source.fixAll": true,
     // For ESLint
     "source.fixAll.eslint": true,
     // For TSLint
-    "source.fixAll.tslint": true,
+    "source.fixAll.tslint": true
     // For Stylelint
-    "source.fixAll.stylelint": true
+    // "source.fixAll.stylelint": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "prettier.jsxSingleQuote": true,
-  "prettier.requireConfig": true
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 80,
+  "editor.wrappingIndent": "indent",
+  "html.format.wrapAttributes": "auto",
+  "editor.tabSize": 2,
+  "prettier.requireConfig": true,
+  "todohighlight.keywords": [
+    "DEBUG:",
+    "REVIEW:",
+    {
+      "text": "NOTE:",
+      "color": "#fff",
+      "backgroundColor": "#22d1ee",
+      "overviewRulerColor": "grey",
+      "isWholeLine": false
+    },
+    {
+      "text": "Fn:",
+      "color": "#0e153a",
+      "backgroundColor": "#FF5DA2",
+      "overviewRulerColor": "grey",
+      "isWholeLine": false
+    },
+    {
+      "text": "HACK:",
+      "color": "#000",
+      "isWholeLine": false
+    },
+    {
+      "text": "CSS:",
+      "color": "#000",
+      "backgroundColor": "#7DEDFF",
+      "overviewRulerColor": "grey"
+    },
+    {
+      "text": "FIX:",
+      "color": "#fff",
+      "backgroundColor": "#FF3D68",
+      "overviewRulerColor": "grey"
+    },
+    {
+      "text": "BUG:",
+      "color": "#fff",
+      "backgroundColor": "#FF5200",
+      "overviewRulerColor": "grey"
+    },
+    {
+      "text": "THIS:",
+      "color": "#FB7AFC",
+      "backgroundColor": "#F7F6F2",
+      "borderRadius": "2px",
+      "isWholeLine": false
+    }
+  ],
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "[csharp]": {
+    "editor.defaultFormatter": "SimonSiefke.prettier-vscode"
+  }
 }

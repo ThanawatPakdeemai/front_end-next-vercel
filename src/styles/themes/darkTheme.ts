@@ -1,87 +1,87 @@
-import type { ThemeOptions } from '@mui/material';
+import type { ThemeOptions } from "@mui/material"
 
-import { MuiAppBar } from './partial/components/muiAppBar';
-import { MuiAutocomplete } from './partial/components/muiAutocomplete';
-import { MuiBackdrop } from './partial/components/muiBackdrop';
-import { MuiButton } from './partial/components/muiButton';
-import { MuiButtonBase } from './partial/components/muiButtonBase';
-import { MuiButtonGroup } from './partial/components/muiButtonGroup';
-import { MuiCheckbox } from './partial/components/muiCheckbox';
-import { MuiFab } from './partial/components/muiFab';
-import { MuiList } from './partial/components/muiList';
-import { MuiMenuItem } from './partial/components/muiMenuItem';
-import { MuiTable } from './partial/components/muiTable';
-import { PaletteCustom } from './partial/pattern';
-import { TypographyCustom } from './partial/typography';
+import { MuiAppBar as _muiAppBar } from "./partial/components/muiAppBar"
+import { MuiAutocomplete as _muiAutocomplete } from "./partial/components/muiAutocomplete"
+import { MuiBackdrop as _muiBackdrop } from "./partial/components/muiBackdrop"
+import { MuiButton as _muiButton } from "./partial/components/muiButton"
+import { MuiButtonBase as _muiButtonBase } from "./partial/components/muiButtonBase"
+import { MuiButtonGroup as _muiButtonGroup } from "./partial/components/muiButtonGroup"
+import { MuiCheckbox as _muiCheckbox } from "./partial/components/muiCheckbox"
+import { MuiFab as _muiFab } from "./partial/components/muiFab"
+import { MuiList as _muiList } from "./partial/components/muiList"
+import { MuiMenuItem as _muiMenuItem } from "./partial/components/muiMenuItem"
+import { MuiTable as _muiTable } from "./partial/components/muiTable"
+import { PaletteCustom } from "./partial/pattern"
+import { TypographyCustom } from "./partial/typography"
 
 export const theme: ThemeOptions = {
   typography: TypographyCustom,
   palette: PaletteCustom,
   transitions: {
     easing: {
-      easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
-      easeOut: 'cubic-bezier(0.0, 0, 0.2, 1)',
-      easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
-      sharp: 'cubic-bezier(0.4, 0, 0.6, 1)'
+      easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
+      easeOut: "cubic-bezier(0.0, 0, 0.2, 1)",
+      easeIn: "cubic-bezier(0.4, 0, 1, 1)",
+      sharp: "cubic-bezier(0.4, 0, 0.6, 1)"
     }
   },
   spacing: 8,
-  direction: 'rtl',
+  direction: "rtl",
   shape: {
     borderRadius: 25
   },
   components: {
-    MuiButtonBase: MuiButtonBase,
-    MuiButton: MuiButton,
-    MuiAppBar: MuiAppBar,
-    MuiList: MuiList,
-    MuiMenuItem: MuiMenuItem,
-    MuiTable: MuiTable,
-    MuiBackdrop: MuiBackdrop,
-    MuiButtonGroup: MuiButtonGroup,
-    MuiCheckbox: MuiCheckbox,
-    MuiFab: MuiFab,
-    MuiAutocomplete: MuiAutocomplete,
+    MuiButtonBase: _muiButtonBase,
+    MuiButton: _muiButton,
+    MuiAppBar: _muiAppBar,
+    MuiList: _muiList,
+    MuiMenuItem: _muiMenuItem,
+    MuiTable: _muiTable,
+    MuiBackdrop: _muiBackdrop,
+    MuiButtonGroup: _muiButtonGroup,
+    MuiCheckbox: _muiCheckbox,
+    MuiFab: _muiFab,
+    MuiAutocomplete: _muiAutocomplete,
     MuiFormControl: {
       defaultProps: {
-        margin: 'dense',
-        size: 'medium'
+        margin: "dense",
+        size: "medium"
       }
     },
     MuiFormHelperText: {
       defaultProps: {
-        margin: 'dense'
+        margin: "dense"
       }
     },
     MuiIconButton: {
       defaultProps: {
-        size: 'large'
+        size: "large"
       }
     },
     MuiInputBase: {
       defaultProps: {
-        margin: 'dense'
+        margin: "dense"
       }
     },
     MuiInputLabel: {
       defaultProps: {
-        margin: 'dense'
+        margin: "dense"
       }
     },
     MuiRadio: {
       defaultProps: {
-        size: 'medium'
+        size: "medium"
       }
     },
     MuiSwitch: {
       defaultProps: {
-        size: 'medium'
+        size: "medium"
       }
     },
     MuiTextField: {
       defaultProps: {
-        margin: 'dense',
-        size: 'medium'
+        margin: "dense",
+        size: "medium"
       }
     },
     MuiTooltip: {
@@ -90,4 +90,4 @@ export const theme: ThemeOptions = {
       }
     }
   }
-};
+}

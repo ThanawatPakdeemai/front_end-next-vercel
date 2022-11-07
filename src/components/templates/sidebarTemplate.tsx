@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react"
 /*
  * Import Footer from '@components/organisms/footer';
  * import Header from '@components/organisms/header';
@@ -7,16 +7,18 @@ import type { ReactNode } from 'react';
  */
 
 interface IProp {
-  children: ReactNode;
-  className?: string;
+  children: ReactNode
+  className?: string
 }
 
-const SidebarTemplate = ({ children, className }: IProp) => {
-  return (
-    <article id='sidebar-template' className={className}>
-      {children}
-      {/* <Cookies /> */}
-      {/* <Header />
+const SidebarTemplate = ({ children, className }: IProp) => (
+  <article
+    id="sidebar-template"
+    className={className}
+  >
+    {children}
+    {/* <Cookies /> */}
+    {/* <Header />
       <Box className={'my-6 gap-8 lg:container lg:flex'}>
         <Sidebar />
         <main id='main'>
@@ -26,8 +28,7 @@ const SidebarTemplate = ({ children, className }: IProp) => {
           <Footer />
         </main>
       </Box> */}
-    </article>
-  );
-};
+  </article>
+)
 
-export default SidebarTemplate;
+export default SidebarTemplate

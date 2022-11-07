@@ -1,7 +1,8 @@
-import type { Components, Theme } from '@mui/material';
+import type { Components, Theme } from "@mui/material"
+
 export const MuiButtonBase: Components<
-  Omit<Theme, 'components'>
->['MuiButtonBase'] = {
+  Omit<Theme, "components">
+>["MuiButtonBase"] = {
   defaultProps: {
     disableRipple: true,
     disableTouchRipple: true,
@@ -9,10 +10,10 @@ export const MuiButtonBase: Components<
   },
   styleOverrides: {
     root: {
-      '&:disabled, &.Mui-disabled': {
-        backgroundColor: '#98A0B5 !important',
-        color: '#fff !important'
+      "&:disabled, &.Mui-disabled": {
+        backgroundColor: "#98A0B5 !important",
+        color: "#fff !important"
       }
     }
   }
-};
+}

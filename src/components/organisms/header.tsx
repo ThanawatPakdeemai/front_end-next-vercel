@@ -1,5 +1,5 @@
-import React, { memo } from 'react';
-import Image from 'next/image';
+import React, { memo } from "react"
+import Image from "next/image"
 
 const Header = () => {
   /*
@@ -25,10 +25,15 @@ const Header = () => {
    *   localStorage.setItem("language", lng);
    * };
    */
+  const imgSrc = "/images/mocks/header.png"
 
   return (
-    <header className='header'>
-      <Image src='/images/mocks/header.png' alt='mock' layout='fill' />
+    <header className="header">
+      <Image
+        src={imgSrc}
+        alt="mock"
+        fill
+      />
       {/* <LanguageSelected defaultName="LANGUAGE" data={LANGUAGE} onChange={onClickSelected} />
       <NakaCurrency />
       <Button
@@ -83,7 +88,7 @@ const Header = () => {
         </Box>
       </Modal> */}
     </header>
-  );
-};
+  )
+}
 
-export default memo(Header);
+export default memo(Header)

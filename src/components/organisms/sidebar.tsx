@@ -1,5 +1,5 @@
-import React, { memo } from 'react';
-import Image from 'next/image';
+import React, { memo } from "react"
+import Image from "next/image"
 
 // Type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -69,9 +69,15 @@ const Sidebar: React.FC = () => {
   //     </>
   //   );
   // };
+  const imgSrc = "/images/mocks/sidebar.png"
+
   return (
-    <aside className='sidebar'>
-      <Image src='/images/mocks/sidebar.png' alt='mock' layout='fill' />
+    <aside className="sidebar">
+      <Image
+        src={imgSrc}
+        alt="mock"
+        fill
+      />
       {/* <Logo />
       <div className="lg:block hidden">{listMenu()}</div>
 
@@ -85,7 +91,7 @@ const Sidebar: React.FC = () => {
         {listMenu()}
       </Drawer> */}
     </aside>
-  );
-};
+  )
+}
 
-export default memo(Sidebar);
+export default memo(Sidebar)

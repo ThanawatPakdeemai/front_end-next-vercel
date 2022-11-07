@@ -29,17 +29,16 @@ yarn check:prettier ||
 )
 
 # Format Stylelint.
-echo "🤓 Formating code ... "
-yarn format:stylelint
+# echo "🤓 Formating code ... "
+# yarn format:stylelint
 
 # Check Format Stylelint standards  
-yarn check:stylelint ||
-
-(
-    echo '😵😵😵 Its FOKING RAW - Your styling looks disgusting. 😵😵😵
-            Stylelint Check Failed. Run [yarn format:stylelint], add changes and try commit again.';
-    false;
-)
+# yarn check:stylelint ||
+# (
+#     echo '😵😵😵 Its FOKING RAW - Your styling looks disgusting. 😵😵😵
+#             Stylelint Check Failed. Run [yarn format:stylelint], add changes and try commit again.';
+#     false;
+# )
 
 # Check ESLint Standards
 yarn check:eslint ||

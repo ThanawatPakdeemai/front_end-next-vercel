@@ -1,8 +1,6 @@
-import React from 'react';
-import type { NextPage } from 'next';
+import React from "react"
+import type { NextPage } from "next"
 
-const WaitingRoom: NextPage = () => {
-  return <>WaitingRoom Free</>;
-};
+const WaitingRoom: NextPage = () => <>WaitingRoom Free</>
 
-export default WaitingRoom;
+export default WaitingRoom

@@ -13,7 +13,6 @@
     "build:sass": "sass --no-source-map ./src/styles/scss:./src/styles/css",
     "start": "next start",
     "lint": "next lint --dir src",
-    "format:stylelint": "yarn build:sass && yarn format:prettier-css && stylelint --fix './**/*.{css,scss}'",
     "format:eslint": "eslint --fix --ignore-path .eslintignore './**/*.{js,jsx,ts,tsx}' && yarn format:prettier-tsx",
     "format:prettier": "prettier --write --ignore-path .prettierignore './**/*.{js,jsx,ts,tsx,json,css,scss, README.md}'",
     "format:prettier-css": "prettier --write --ignore-path .prettierignore './**/*.{css,scss}'",
@@ -21,42 +20,10 @@
     "check:types": "tsc --pretty --noEmit",
     "check:prettier": "prettier --check .",
     "check:eslint": "eslint . --ext ts --ext tsx --ext js",
-    "check:stylelint": "stylelint --ignore-path .stylelintignore './**/*.{css,scss}'",
     "prepare": "husky install",
     "test": "jest",
     "release": "semantic-release --no-ci",
     "precommit": "git-format-staged --formatter 'prettier --stdin' './**/*.{js,jsx,ts,tsx,json,css,scss}'"
-  },
-  "prettier": {
-    "semi": true,
-    "tabWidth": 2,
-    "printWidth": 80,
-    "jsxSingleQuote": true,
-    "singleQuote": true,
-    "trailingComma": "none"
-  },
-  "stylelint": {
-    "extends": [
-      "stylelint-config-standard",
-      "stylelint-config-prettier"
-    ],
-    "rules": {
-      "at-rule-no-unknown": [
-        true,
-        {
-          "ignoreAtRules": [
-            "tailwind"
-          ]
-        }
-      ],
-      "declaration-block-trailing-semicolon": null,
-      "no-descending-specificity": null,
-      "function-no-unknown": null
-    }
-  },
-  "lint-staged": {
-    "*.(tsx|ts)": "eslint --cache --fix",
-    "*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
@@ -64,10 +31,12 @@
     "@fontsource/roboto": "^4.5.8",
     "@mui/material": "^5.10.9",
     "@mui/styled-engine-sc": "^5.10.6",
+    "@next/bundle-analyzer": "^13.0.2",
     "axios": "^1.1.2",
     "env-cmd": "^10.1.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-simple-import-sort": "^8.0.0",
-    "next": "12.3.1",
+    "next": "13.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "styled-components": "^5.3.6"
@@ -77,6 +46,7 @@
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "@testing-library/dom": "^8.19.0",
+    "@testing-library/react-hooks": "8.0.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
@@ -92,8 +62,10 @@
     "eslint-config-next": "12.3.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^27.1.1",
+    "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-tailwindcss": "^3.6.2",
+    "eslint-plugin-testing-library": "5.5.0",
     "git-format-staged": "^3.0.0",
     "husky": "^8.0.0",
     "identity-obj-proxy": "^3.0.0",
@@ -108,13 +80,18 @@
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.13",
     "semantic-release": "^19.0.5",
-    "stylelint": "^14.13.0",
-    "stylelint-config-prettier": "^9.0.3",
-    "stylelint-config-standard": "^28.0.0",
-    "stylelint-config-standard-scss": "^5.0.0",
     "tailwindcss": "^3.1.8",
     "ts-jest": "^29.0.3",
     "ts-loader": "^9.4.1",
-    "typescript": "^4.8.4"
+    "typescript": "4.8.4"
+  },
+  "resolutions": {
+    "**/async": "^2.6.4",
+    "**/node-fetch": "^2.6.7",
+    "webpack": "^5"
+  },
+  "lint-staged": {
+    "*.(tsx|ts)": "eslint --cache --fix",
+    "*": "prettier --write --ignore-unknown"
   }
 }

@@ -1,8 +1,6 @@
-import React from 'react';
-import type { NextPage } from 'next';
+import React from "react"
+import type { NextPage } from "next"
 
-const Reward: NextPage = () => {
-  return <>Reward</>;
-};
+const Reward: NextPage = () => <>Reward</>
 
-export default Reward;
+export default Reward

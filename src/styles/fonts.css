@@ -1,16 +1,16 @@
 @font-face {
-  font-family: 'dogica_pixelregular';
-  src: url('/fonts/dogicapixel-webfont.woff') format('woff2'),
-    url('/fonts/dogicapixel-webfont.woff') format('woff');
+  font-family: "dogica_pixelregular";
+  src: url("/fonts/dogicapixel-webfont.woff") format("woff2"),
+    url("/fonts/dogicapixel-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'dogica_pixelbold';
-  src: url('/fonts/dogicapixelbold-webfont.woff2') format('woff2'),
-    url('/fonts/dogicapixelbold-webfont.woff') format('woff');
+  font-family: "dogica_pixelbold";
+  src: url("/fonts/dogicapixelbold-webfont.woff2") format("woff2"),
+    url("/fonts/dogicapixelbold-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -18,8 +18,8 @@
 
 @font-face {
   font-family: satoshiblack;
-  src: url('/fonts/satoshi-black-webfont.woff2') format('woff2'),
-    url('/fonts/satoshi-black-webfont.woff') format('woff');
+  src: url("/fonts/satoshi-black-webfont.woff2") format("woff2"),
+    url("/fonts/satoshi-black-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -27,8 +27,8 @@
 
 @font-face {
   font-family: satoshibold;
-  src: url('/fonts/satoshi-bold-webfont.woff2') format('woff2'),
-    url('/fonts/satoshi-bold-webfont.woff') format('woff');
+  src: url("/fonts/satoshi-bold-webfont.woff2") format("woff2"),
+    url("/fonts/satoshi-bold-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -36,8 +36,8 @@
 
 @font-face {
   font-family: satoshilight;
-  src: url('/fonts/satoshi-light-webfont.woff2') format('woff2'),
-    url('/fonts/satoshi-light-webfont.woff') format('woff');
+  src: url("/fonts/satoshi-light-webfont.woff2") format("woff2"),
+    url("/fonts/satoshi-light-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -45,8 +45,8 @@
 
 @font-face {
   font-family: satoshimedium;
-  src: url('/fonts/satoshi-medium-webfont.woff2') format('woff2'),
-    url('/fonts/satoshi-medium-webfont.woff') format('woff');
+  src: url("/fonts/satoshi-medium-webfont.woff2") format("woff2"),
+    url("/fonts/satoshi-medium-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -54,17 +54,17 @@
 
 @font-face {
   font-family: satoshiregular;
-  src: url('/fonts/satoshi-regular-webfont.woff2') format('woff2'),
-    url('/fonts/satoshi-regular-webfont.woff') format('woff');
+  src: url("/fonts/satoshi-regular-webfont.woff2") format("woff2"),
+    url("/fonts/satoshi-regular-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: fallback;
 }
 
 @font-face {
-  font-family: 'Broken Console';
-  src: url('/fonts/BrokenConsole-Regular.woff2') format('woff2'),
-    url('/fonts/BrokenConsole-Regular.woff') format('woff');
+  font-family: "Broken Console";
+  src: url("/fonts/BrokenConsole-Regular.woff2") format("woff2"),
+    url("/fonts/BrokenConsole-Regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: fallback;

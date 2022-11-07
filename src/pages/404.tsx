@@ -1,20 +1,10 @@
-import React from 'react';
+import React from "react"
 
-import Meta from '@/meta/index';
-
-const CustomPage404 = () => {
-  return (
-    <div
-      className={
-        'relative flex h-screen w-screen flex-col items-center justify-center'
-      }
-    >
-      {/* Meta */}
-      <Meta title={'404 Not Found'} />
-
-      <main className='mx-auto grid-cols-2 items-center px-4 md:container md:grid md:px-0'>
-        <>404</>
-        {/* <div className='xs:p-0 flex flex-col items-center sm:pl-36 md:items-start'>
+const CustomPage404 = () => (
+  <div className="relative flex h-screen w-screen flex-col items-center justify-center">
+    <main className="mx-auto grid-cols-2 items-center px-4 md:container md:grid md:px-0">
+      <>404</>
+      {/* <div className='xs:p-0 flex flex-col items-center sm:pl-36 md:items-start'>
           <div className='inline-block'>
             <Logo
               src='/assets/images/logo_404.svg'
@@ -51,9 +41,8 @@ const CustomPage404 = () => {
             loading='lazy'
           />
         </div> */}
-      </main>
-    </div>
-  );
-};
+    </main>
+  </div>
+)
 
-export default CustomPage404;
+export default CustomPage404

@@ -1,8 +1,6 @@
-import React from 'react';
-import type { NextPage } from 'next';
+import React from "react"
+import type { NextPage } from "next"
 
-const Register: NextPage = () => {
-  return <>Register</>;
-};
+const Register: NextPage = () => <>Register</>
 
-export default Register;
+export default Register

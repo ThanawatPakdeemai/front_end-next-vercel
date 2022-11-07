@@ -1,5 +1,3 @@
-const ButtonText = () => {
-  return <>Button</>;
-};
+const ButtonText = () => <>Button</>
 
-export default ButtonText;
+export default ButtonText

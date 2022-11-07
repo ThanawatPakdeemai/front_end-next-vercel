@@ -1,5 +1,5 @@
-import React, { memo } from 'react';
-import { Box } from '@mui/material';
+import React, { memo } from "react"
+import { Box } from "@mui/material"
 
 const Cookies: React.FC = () => {
   /*
@@ -11,9 +11,10 @@ const Cookies: React.FC = () => {
    *   setAccept("accept");
    * }
    */
+  const _txt = "cookies"
 
   return (
-    <Box>Cookies</Box>
+    <Box>{_txt}</Box>
     /*
      * <ContentMiddle
      *   style={
@@ -33,7 +34,7 @@ const Cookies: React.FC = () => {
      *   </div>
      * </ContentMiddle>
      */
-  );
-};
+  )
+}
 
-export default memo(Cookies);
+export default memo(Cookies)

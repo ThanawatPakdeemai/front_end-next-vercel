@@ -70,10 +70,7 @@ const Home: NextPage = () => {
           </FormControl>
         </Box>
         <main className={styles.main}>
-          <h1 className={styles.title}>
-            Welcome to <a href="https://nextjs.org">Next.js!</a>
-          </h1>
-
+          <h1 className={styles.title}>Nakamoto.games</h1>
           <div className={styles.grid}>
             <a
               href="https://nextjs.org/docs "

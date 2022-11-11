@@ -1,3 +1,8 @@
+/* eslint-disable global-require */
+/* eslint-disable import/no-dynamic-require */
+// @ts-nocheck
+// jest.config.js
+
 const nextJest = require("next/jest")
 
 function makeModuleNameMapper(srcPath, tsconfigPath) {

@@ -1,41 +1,51 @@
 const nextJest = require("next/jest")
 
+function makeModuleNameMapper(srcPath, tsconfigPath) {
+  // Get paths from tsconfig
+  const { paths } = require(tsconfigPath).compilerOptions
+
+  const aliases = {}
+
+  // Iterate over paths and convert them into moduleNameMapper format
+  Object.keys(paths).forEach((item) => {
+    const key = item.replace("/*", "/(.*)")
+    const path = paths[item][0].replace("/*", "/$1")
+    aliases[key] = `${srcPath}/${path}`
+  })
+  return aliases
+}
+
 const createJestConfig = nextJest({
   dir: "./"
 })
 
+const TS_CONFIG_PATH = "./tsconfig.json"
+const MAIN_PATH = "<rootDir>/"
+
 // Add any custom config to be passed to Jest
 const customJestConfig = {
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
-  moduleDirectories: ["node_modules", "<rootDir>/src"],
-  moduleNameMapper: {
-    // Handle module aliases (this will be automatically configured for you soon)
-    "@pages/(.*)": "<rootDir>/pages/$1",
-    "@src/(.*)": "<rootDir>/src/$1",
-    "@styles/(.*)": "<rootDir>/src/styles/$1",
-    "@components/(.*)": "<rootDir>/src/components/$1",
-    "@configs/(.*)": "<rootDir>/src/configs/$1",
-    "@constants/(.*)": "<rootDir>/src/constants/$1",
-    "@feature/(.*)": "<rootDir>/src/features/$1",
-    "@hooks/(.*)": "<rootDir>/src/hooks/$1",
-    "@interfaces/(.*)": "<rootDir>/src/interfaces/$1",
-    "@providers/(.*)": "<rootDir>/src/providers/$1",
-    "@stores/(.*)": "<rootDir>/src/stores/$1",
-    "@utils/(.*)": "<rootDir>/src/utils/$1",
-    "@public/(.*)": "<rootDir>/public/$1"
-    // "^@/components/(.*)$": "<rootDir>/src/components/$1"
-    // '^@/constants/(.*)$': '<rootDir>/src/constants/$1',
-    // '^@/contexts/(.*)$': '<rootDir>/src/contexts/$1',
-    // '^@/helpers/(.*)$': '<rootDir>/src/helpers/$1',
-    // '^@/hooks/(.*)$': '<rootDir>/src/hooks/$1',
-    // '^@/components/(.*)$': '<rootDir>/src/components/$1',
-    // '^@/components/(.*)$': '<rootDir>/src/components/$1',
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts", "./tsconfig.jest.json"],
+  globals: {
+    "ts-jest": {
+      tsconfig: "./tsconfig.jest.json"
+    }
   },
-  testEnvironment: "jest-environment-jsdom"
-  // testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/']
-  // moduleNameMapper: {
-  //   '\\.(scss|sass|css)$': 'identity-obj-proxy'
-  // }
+  moduleDirectories: ["node_modules", "<rootDir>/"],
+  testEnvironment: "jsdom",
+  clearMocks: true,
+  moduleNameMapper: makeModuleNameMapper(MAIN_PATH, TS_CONFIG_PATH),
+  transform: {
+    "<rootDir>/node_modules/@uiball/loaders": "babel-jest"
+  },
+  // coveragePathIgnorePatterns: ["<rootDir>/src/components/icons"],
+  coverageThreshold: {
+    global: {
+      statements: 60,
+      branches: 40,
+      lines: 64,
+      functions: 40
+    }
+  }
 }
 
 module.exports = createJestConfig(customJestConfig)

@@ -10,7 +10,7 @@ import Config from "."
 const baseUrl = Config.NEXT_PUBLIC_API_URL
 const isServer = () => typeof window === "undefined"
 
-const resetStore = () => {
+const resetProfile = () => {
   unstable_batchedUpdates(() => {
     useProfileStore.getState().onReset()
   })
@@ -27,52 +27,31 @@ export const removeAxiosToken = () => {
   delete services.defaults.headers.common.Authorization
 }
 
-services.interceptors.request.use(async (config) => {
+services.interceptors.request.use(async (config: any) => {
   if (isServer()) return config
 
-  const rawData = config.data
-  if (rawData && rawData.data) {
-    if (typeof rawData.data === "object") {
-      config.data = {
-        data: helper.encryptWithAES(JSON.stringify(rawData.data))
-      }
-    } else if (typeof rawData.data === "string") {
-      config.data = { data: rawData.data }
-    }
-  }
   const token = localStorage.getItem("token")
+  const time = localStorage.getItem("time")
+  if (time) {
+    const expire = dayjs(time).add(30, "minutes").unix()
+
+    const now = dayjs().unix()
+    if (now >= expire) {
+      // disconnectWallet();
+    }
+  }
   if (token) {
-    const userToken = jwtDecode<{
-      address: string
-      iat: number
-      exp: number
-    }>(token)
-    const isExpired = dayjs.unix(userToken.exp).diff(dayjs()) < 1
-
-    if (!isExpired) {
-      helper.setTokenToLocal(token)
-      config.headers!.Authorization = `Bearer ${token}`
-      return config
+    if (token !== "undefined") {
+      config.headers.Authorization = `Bearer ${token}`
+    } else {
+      resetProfile()
     }
-
-    try {
-      const response = await refreshProfileToken(() => {
-        // Callback : for clear profile.
-        useProfileStore.getState().onReset()
-      })
-      if (response) {
-        helper.setTokenToLocal(response.jwtToken)
-        config.headers!.Authorization = `Bearer ${response.jwtToken}`
-        return config
-      }
-    } catch (error) {
-      useProfileStore.getState().onReset()
-      helper.removeTokenInLocal()
-    }
-
-    return config
+  } else {
+    resetProfile()
   }
 
+  config.baseURL = `${process.env.REACT_APP_API_URL}`
+  config.withCredentials = true
   return config
 })
 
@@ -98,7 +77,7 @@ services.interceptors.response.use(
       // return refreshToken(err)
       // return services(originalConfig)
       // useProfileStore().onReset()
-      resetStore()
+      resetProfile()
       return Promise.reject(
         new Error("authentication has failed, Please connect wallet again.")
       )

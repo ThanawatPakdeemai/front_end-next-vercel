@@ -1,9 +1,10 @@
 {
-  "printWidth": 80,
+  "printWidth": 100,
   "tabWidth": 2,
   "endOfLine": "lf",
   "quoteProps": "preserve",
   "semi": false,
   "trailingComma": "none",
-  "singleAttributePerLine": true
+  "singleAttributePerLine": true,
+  "doubleQuote": true
 }

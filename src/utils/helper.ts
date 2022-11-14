@@ -2,21 +2,28 @@ import Config from "@src/configs"
 import { ethers } from "ethers"
 import CryptoJS from "crypto-js"
 import { IPropsFormatNumberOption } from "@src/interfaces/IHelper"
+import { ILocal } from "@src/interfaces/ILocal"
 // import { AxiosResponse } from "axios"
 
 const helper = {
-  setTokenToLocal(_accessToken: string) {
-    localStorage.setItem("token", _accessToken)
+  setLocalStorage({ key, val }: ILocal) {
+    localStorage.setItem(key.toString(), val || "")
   },
-  removeTokenInLocal() {
+  removeLocalStorage({ key }: ILocal) {
+    localStorage.removeItem(key.toString())
+  },
+  resetLocalStorage() {
     localStorage.removeItem("token")
+    localStorage.removeItem("time")
+    localStorage.removeItem("email")
+    localStorage.removeItem("address")
+    localStorage.removeItem("loginWith")
   },
   getTokenFromLocal() {
     return typeof window === "undefined" ? null : localStorage.getItem("token")
   },
   async getWelletAccount() {
-    if (!window.ethereum)
-      throw new Error("MetaMask is required. Please install the extension.")
+    if (!window.ethereum) throw new Error("MetaMask is required. Please install the extension.")
 
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const accounts = await provider.listAccounts()

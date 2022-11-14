@@ -1,20 +1,15 @@
 import dayjs from "dayjs"
 import { refreshProfileToken } from "@src/features/authentication/container/service/profile.services"
 import helper from "@src/utils/helper"
-import Axios, { AxiosError } from "axios"
-import jwtDecode from "jwt-decode"
+import Axios from "axios"
 import { unstable_batchedUpdates } from "react-dom"
 import useProfileStore from "@src/stores/profileStore"
+import handleDisconnectWallet from "@src/hooks/useWeb3Provider/useCreateWeb3Provider"
 import Config from "."
 
 const baseUrl = Config.NEXT_PUBLIC_API_URL
 const isServer = () => typeof window === "undefined"
 
-const resetProfile = () => {
-  unstable_batchedUpdates(() => {
-    useProfileStore.getState().onReset()
-  })
-}
 const services = Axios.create({
   baseURL: baseUrl,
   headers: {
@@ -27,19 +22,27 @@ export const removeAxiosToken = () => {
   delete services.defaults.headers.common.Authorization
 }
 
+const resetProfile = () => {
+  unstable_batchedUpdates(() => {
+    useProfileStore.getState().onReset()
+    helper.resetLocalStorage()
+    removeAxiosToken()
+  })
+}
+
 services.interceptors.request.use(async (config: any) => {
   if (isServer()) return config
 
   const token = localStorage.getItem("token")
-  const time = localStorage.getItem("time")
-  if (time) {
-    const expire = dayjs(time).add(30, "minutes").unix()
+  // const time = localStorage.getItem("time")
+  // if (time) {
+  // const expire = dayjs(time).add(30, "minutes").unix()
 
-    const now = dayjs().unix()
-    if (now >= expire) {
-      // disconnectWallet();
-    }
-  }
+  // const now = dayjs().unix()
+  // if (now >= expire) {
+  //   // disconnectWallet();
+  // }
+  // }
   if (token) {
     if (token !== "undefined") {
       config.headers.Authorization = `Bearer ${token}`
@@ -55,42 +58,48 @@ services.interceptors.request.use(async (config: any) => {
   return config
 })
 
+// 1. Get expire time
+// 2. Interact - refresh token
+// 3. Not interact - revoke token
 services.interceptors.response.use(
-  (response) => {
-    const stringData = response.data.data
+  async (res) => res,
+  async (err: any) => {
+    const originalConfig = err.config
 
-    if (typeof stringData === "string") {
-      const data = JSON.parse(helper.decryptWithAES(stringData))
-      response.data = data
-    }
+    if (err.response) {
+      // Access Token was expired
+      if (err.response.status === 401 && !originalConfig._retry) {
+        originalConfig._retry = true
+        try {
+          if (originalConfig.url === "/auth/revoke-token") {
+            resetProfile()
 
-    return response
-  },
-  async (err: AxiosError) => {
-    // const originalConfig = err.config
+            // eslint-disable-next-line prefer-promise-reject-errors
+            return Promise.reject([])
+          }
+          await refreshProfileToken()
+          localStorage.setItem("time", dayjs().format("YYYY-MM-DD HH:mm"))
+          return services(originalConfig) // if there is error in this line change service to Axios
 
-    if (err.response && err.response.status === 401) {
-      if (err?.config?.url === "/auth/revoke-token") {
-        // removeAccessToken()
-        return Promise.reject(new Error("Revoke token:"))
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (_error: any) {
+          if (_error.response && _error.response.data) {
+            return Promise.reject(_error.response.data)
+          }
+
+          return Promise.reject(_error)
+        }
+      } else if (err.response.status === 403 && !originalConfig._retry) {
+        originalConfig._retry = true
+        handleDisconnectWallet()
       }
-      // return refreshToken(err)
-      // return services(originalConfig)
-      // useProfileStore().onReset()
-      resetProfile()
-      return Promise.reject(
-        new Error("authentication has failed, Please connect wallet again.")
-      )
+
+      if (err.response.status === 400 && err.response.data) {
+        return Promise.reject(err.response.data)
+      }
     }
 
-    // @ts-ignore
-    if (typeof err?.response?.data?.data === "string") {
-      // @ts-ignore
-      const data = JSON.parse(helper.decryptWithAES(err.response.data.data))
-      err.response.data = data
-    }
-
-    return Promise.reject(err.response?.data)
+    return Promise.reject(err)
   }
 )
 

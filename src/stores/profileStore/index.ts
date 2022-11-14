@@ -1,11 +1,8 @@
-import {
-  IProfile,
-  IProfileResponse
-} from "@src/features/profile/interfaces/IProfileServices"
-import configZustandDevTools from "@src/utils/configDevtools"
-import helper from "@src/utils/helper"
 import create from "zustand"
 import { devtools } from "zustand/middleware"
+import { IProfile, IProfileResponse } from "@src/features/profile/interfaces/IProfileServices"
+import configZustandDevTools from "@src/utils/configDevtools"
+import helper from "@src/utils/helper"
 
 export interface IUseProfileStore {
   address: string | undefined
@@ -50,11 +47,7 @@ const useProfileStore = create<IUseProfileStore>()(
         )
       },
       onSetProfileAddress: (_address) => {
-        set(
-          () => ({ address: _address }),
-          false,
-          "ProfileStore/onSetProfileAddress"
-        )
+        set(() => ({ address: _address }), false, "ProfileStore/onSetProfileAddress")
       },
       onSetProfileData: (_profile) => {
         const dummyProfile = get().profile
@@ -77,7 +70,7 @@ const useProfileStore = create<IUseProfileStore>()(
           false,
           "ProfileStore/onSetProfileToken"
         )
-        helper.setTokenToLocal(_token)
+        helper.setLocalStorage({ key: "token", val: _token })
       }
     }),
     configZustandDevTools("Profile-Store")

@@ -23,7 +23,8 @@ const helper = {
     return typeof window === "undefined" ? null : localStorage.getItem("token")
   },
   async getWelletAccount() {
-    if (!window.ethereum) throw new Error("MetaMask is required. Please install the extension.")
+    if (!window.ethereum)
+      throw new Error("MetaMask is required. Please install the extension.")
 
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const accounts = await provider.listAccounts()

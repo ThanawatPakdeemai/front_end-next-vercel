@@ -1,6 +1,9 @@
 import create from "zustand"
 import { devtools } from "zustand/middleware"
-import { IProfile, IProfileResponse } from "@src/features/profile/interfaces/IProfileServices"
+import {
+  IProfile,
+  IProfileResponse
+} from "@src/features/profile/interfaces/IProfileServices"
 import configZustandDevTools from "@src/utils/configDevtools"
 import helper from "@src/utils/helper"
 
@@ -47,7 +50,11 @@ const useProfileStore = create<IUseProfileStore>()(
         )
       },
       onSetProfileAddress: (_address) => {
-        set(() => ({ address: _address }), false, "ProfileStore/onSetProfileAddress")
+        set(
+          () => ({ address: _address }),
+          false,
+          "ProfileStore/onSetProfileAddress"
+        )
       },
       onSetProfileData: (_profile) => {
         const dummyProfile = get().profile

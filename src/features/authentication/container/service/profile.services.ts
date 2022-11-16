@@ -5,12 +5,12 @@ import useProfileStore from "@src/stores/profileStore"
 import helper from "@src/utils/helper"
 
 export const signIn = (_address: string, _signature: string) =>
-  new Promise<any>((resolve, reject) => {
+  new Promise<any>((resolve) => {
     resolve(null)
   })
 
 export const signUp = (_address: string, _signature: string) =>
-  new Promise<{ data: any }>((resolve, reject) => {
+  new Promise<{ data: any }>((resolve) => {
     resolve({ data: [] })
   })
 
@@ -20,7 +20,7 @@ export const signUp = (_address: string, _signature: string) =>
  * @returns
  */
 export const signOut = async () =>
-  new Promise((resolve, reject) => {
+  new Promise((resolve) => {
     resolve(null)
   })
 

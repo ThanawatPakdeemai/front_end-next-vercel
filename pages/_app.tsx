@@ -1,19 +1,29 @@
-import React from "react"
+import { ReactElement, ReactNode } from "react"
+import type { NextPage } from "next"
 import type { AppProps } from "next/app"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { useRouter } from "next/router"
 import Head from "next/head"
-import { createTheme, ThemeProvider } from "@mui/material"
-import { theme } from "@src/styles/themes/darkTheme"
-import type { ThemeOptions } from "@mui/material"
+// import { createTheme, ThemeProvider } from "@mui/material"
+// import { theme } from "@src/styles/themes/darkTheme"
+// import type { ThemeOptions } from "@mui/material"
 import { DATA_META_TAG } from "@src/constants/metaTagData"
+import { ProviderApp, Web3Provider } from "@src/providers"
 
 import "@src/styles/globals.css"
 import "@src/styles/css/common.css"
 import "@src/styles/fonts.css"
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
-  const customTheme = createTheme(theme as ThemeOptions)
+type NextPageWithLayout = NextPage & {
+  getLayout?: (_page: ReactElement) => ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
+  const getLayout = Component.getLayout ?? ((page) => page)
   const queryClient = new QueryClient()
   const router = useRouter()
   const pathActive = router.pathname
@@ -85,9 +95,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           : null
       )}
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={customTheme}>
-          <Component {...pageProps} />
-        </ThemeProvider>
+        <Web3Provider>
+          <ProviderApp>{getLayout(<Component {...pageProps} />)}</ProviderApp>
+        </Web3Provider>
       </QueryClientProvider>
     </>
   )

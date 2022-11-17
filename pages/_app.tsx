@@ -1,5 +1,6 @@
 import { ReactElement, ReactNode } from "react"
 import type { NextPage } from "next"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import type { AppProps } from "next/app"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { useRouter } from "next/router"
@@ -98,6 +99,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         <Web3Provider>
           <ProviderApp>{getLayout(<Component {...pageProps} />)}</ProviderApp>
         </Web3Provider>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>
   )

@@ -5,8 +5,6 @@
   "scripts": {
     "dev": "PORT=4002 next dev",
     "build": "next build",
-    "build:dev": "env-cmd -f .env.development next build",
-    "build:prod": "env-cmd -f .env.production yarn build",
     "build:css": "yarn build:sass && npx tailwindcss -i ./src/styles/globals.css -o ./src/styles/output.css && yarn format:prettier-css",
     "build:tailwind": "tailwindcss -i ./src/styles/globals.css -o ./src/styles/output.css --watch",
     "build:sass-watch": "sass --no-source-map ./src/styles/scss:./src/styles/css --watch",
@@ -39,7 +37,6 @@
     "axios": "^1.1.2",
     "crypto-js": "^4.1.1",
     "dayjs": "^1.11.6",
-    "env-cmd": "^10.1.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "ethers": "^5.7.2",

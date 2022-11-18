@@ -1,4 +1,4 @@
-// import { ToasterBox } from "@src/features/toast/components"
+import { ToasterBox } from "@src/features/toast/components"
 import React, { memo, useEffect } from "react"
 // import ModalProvider from "./ModalProvider"
 import SocketProvider from "./SocketProvider"
@@ -9,7 +9,7 @@ function ProviderApp({ children }: { children: React.ReactNode }) {
   return (
     <>
       <SocketProvider>
-        {/* <ToasterBox /> */}
+        <ToasterBox />
         {/* <ModalProvider>{children}</ModalProvider> */}
         {children}
       </SocketProvider>

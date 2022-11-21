@@ -146,7 +146,7 @@ const useCreateWeb3Provider = () => {
       }
       const walletConnector = localStorage.getItem(WALLET_CONNECTOR)
       if (walletConnector === WALLET_CONNECTOR_TYPES.injected) {
-        const account = await helper.getWelletAccount()
+        const account = await helper.getWalletAccount()
         const _provider = new providers.Web3Provider(window.ethereum)
         if (_provider) {
           const _signer = _provider.getSigner()

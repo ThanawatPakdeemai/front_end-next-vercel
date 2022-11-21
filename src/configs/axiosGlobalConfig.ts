@@ -1,5 +1,5 @@
 import dayjs from "dayjs"
-import { refreshProfileToken } from "@src/features/authentication/container/service/profile.services"
+import { refreshProfileToken } from "@src/features/authentication/containers/services/auth.service"
 import helper from "@src/utils/helper"
 import Axios from "axios"
 import { unstable_batchedUpdates } from "react-dom"

@@ -1,5 +1,6 @@
 import { ReactElement, ReactNode } from "react"
 import type { NextPage } from "next"
+import { appWithTranslation } from "next-i18next"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import type { AppProps } from "next/app"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
@@ -105,4 +106,4 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   )
 }
 
-export default MyApp
+export default appWithTranslation(MyApp)

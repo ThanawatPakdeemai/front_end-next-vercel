@@ -39,7 +39,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         />
         <link
           rel="shortcut icon"
-          href="punGame-logo.svg"
+          href="favicon.ico"
           type="image/x-icon"
         />
       </Head>

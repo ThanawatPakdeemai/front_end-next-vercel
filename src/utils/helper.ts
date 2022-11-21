@@ -1,5 +1,4 @@
 import Config from "@src/configs"
-import { ethers } from "ethers"
 import CryptoJS from "crypto-js"
 import { IPropsFormatNumberOption } from "@src/interfaces/IHelper"
 import { ILocal } from "@src/interfaces/ILocal"
@@ -22,20 +21,12 @@ const helper = {
   getTokenFromLocal() {
     return typeof window === "undefined" ? null : localStorage.getItem("token")
   },
-  async getWelletAccount() {
-    if (!window.ethereum)
-      throw new Error("MetaMask is required. Please install the extension.")
-
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const accounts = await provider.listAccounts()
-    return accounts
-  },
   encryptWithAES(data: string) {
     const passphrase = `${Config.NEXT_PUBLIC_KEYTEXT}`
     return CryptoJS.AES.encrypt(data, passphrase).toString()
   },
   decryptWithAES(ciphertext: string) {
-    const passphrase = `${process.env.NEXT_PUBLIC_PASSPHRASE}`
+    const passphrase = `${process.env.NEXT_PUBLIC_KEYTEXT}`
     const bytes = CryptoJS.AES.decrypt(ciphertext, passphrase)
     const originalText = bytes.toString(CryptoJS.enc.Utf8)
     return originalText
@@ -43,7 +34,7 @@ const helper = {
   decryptSocketWithAES<T>(ciphertext: string): T | undefined {
     if (ciphertext) {
       const removeDoubleQuotes = ciphertext.replace(/["']/g, "")
-      const passphrase = `${process.env.NEXT_PUBLIC_PASSPHRASE}`
+      const passphrase = `${process.env.NEXT_PUBLIC_KEYTEXT}`
       const bytes = CryptoJS.AES.decrypt(removeDoubleQuotes, passphrase)
 
       const originalText = bytes.toString(CryptoJS.enc.Utf8)

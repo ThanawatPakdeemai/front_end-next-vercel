@@ -4,11 +4,11 @@ import { IRefreshToken } from "@src/interfaces/IAuth"
 import useProfileStore from "@src/stores/profileStore"
 import helper from "@src/utils/helper"
 import services from "@src/configs/axiosGlobalConfig"
-import { IProfileResponse } from "@src/features/profile/interfaces/IProfileServices"
+import { IProfileResponse } from "@src/features/profile/interfaces/IProfileService"
 import {
   ICreateNewPassword,
   IForgetPassword
-} from "../../interfaces/IAuthServices"
+} from "../../interfaces/IAuthService"
 
 export const signIn = (_email: string, _password: string) =>
   new Promise<IProfileResponse>((resolve, reject) => {

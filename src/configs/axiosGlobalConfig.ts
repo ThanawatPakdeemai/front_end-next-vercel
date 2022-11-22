@@ -1,10 +1,10 @@
 import dayjs from "dayjs"
-import { refreshProfileToken } from "@src/features/authentication/containers/services/auth.service"
 import helper from "@src/utils/helper"
 import Axios from "axios"
 import { unstable_batchedUpdates } from "react-dom"
 import useProfileStore from "@src/stores/profileStore"
 import handleDisconnectWallet from "@src/hooks/useWeb3Provider/useCreateWeb3Provider"
+import { refreshProfileToken } from "@src/features/authentication/containers/services/auth.service"
 import Config from "."
 
 const baseUrl = Config.NEXT_PUBLIC_API_URL

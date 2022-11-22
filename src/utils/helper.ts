@@ -9,6 +9,9 @@ const helper = {
   setLocalStorage({ key, val }: ILocal) {
     localStorage.setItem(key.toString(), val || "")
   },
+  getLocalStorage({ key }: ILocal) {
+    return localStorage.getItem(key.toString())
+  },
   removeLocalStorage({ key }: ILocal) {
     localStorage.removeItem(key.toString())
   },

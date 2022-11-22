@@ -7,6 +7,7 @@ export default function Home() {
   return (
     <article className="h-full w-full">
       <>
+        Nakamoto.games
         <Image
           src={IMAGES.footerMock.src}
           width={IMAGES.footerMock.width}

@@ -3,3 +3,10 @@ export interface IPropsFormatNumberOption {
   compactDisplay?: "short" | "long"
   maximumFractionDigits?: number
 }
+
+export interface IInfo {
+  pages: number
+  limit: number
+  currentCount: number
+  totalCount: number
+}

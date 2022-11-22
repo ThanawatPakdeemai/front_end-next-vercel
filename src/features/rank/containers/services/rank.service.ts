@@ -1,6 +1,6 @@
 import services from "@src/configs/axiosGlobalConfig"
 import { BASE_URL } from "@src/constants/site"
-import { IProfile } from "@src/features/profile/interfaces/IProfileServices"
+import { IProfile } from "@src/features/profile/interfaces/IProfileService"
 
 const email = localStorage.getItem("email")
 

@@ -1,4 +1,6 @@
+export type TKey = "token" | "time" | "email" | "address" | "loginWith"
+
 export interface ILocal {
-  key: "token" | "time" | "email" | "address" | "loginWith"
+  key: TKey
   val?: string
 }

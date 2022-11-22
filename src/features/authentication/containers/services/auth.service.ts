@@ -2,7 +2,7 @@ import axios from "axios"
 import Config from "@src/configs"
 import { IRefreshToken } from "@src/interfaces/IAuth"
 import useProfileStore from "@src/stores/profileStore"
-import helper from "@src/utils/helper"
+import Helper from "@src/utils/helper"
 import services from "@src/configs/axiosGlobalConfig"
 import { IProfileResponse } from "@src/features/profile/interfaces/IProfileService"
 import {
@@ -78,7 +78,7 @@ export const refreshProfileToken = async (
     return response.data.jwtToken
   } catch (error) {
     useProfileStore.getState().onReset()
-    helper.resetLocalStorage()
+    Helper.resetLocalStorage()
     callBeckWhenError && callBeckWhenError()
     if (error instanceof Error) {
       console.error("Error", error.message)

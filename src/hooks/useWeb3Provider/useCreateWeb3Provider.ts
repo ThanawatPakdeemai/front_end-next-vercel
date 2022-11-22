@@ -6,7 +6,7 @@ import {
   WALLET_CONNECTOR_TYPES
 } from "@src/constants/walletConnect"
 import useProfileStore from "@src/stores/profileStore"
-import helper from "@src/utils/helper"
+import Helper from "@src/utils/helper"
 import { providers } from "ethers"
 
 const useCreateWeb3Provider = () => {
@@ -146,7 +146,7 @@ const useCreateWeb3Provider = () => {
       }
       const walletConnector = localStorage.getItem(WALLET_CONNECTOR)
       if (walletConnector === WALLET_CONNECTOR_TYPES.injected) {
-        const account = await helper.getWalletAccount()
+        const account = await Helper.getWalletAccount()
         const _provider = new providers.Web3Provider(window.ethereum)
         if (_provider) {
           const _signer = _provider.getSigner()

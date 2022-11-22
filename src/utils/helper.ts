@@ -3,8 +3,9 @@ import { ethers } from "ethers"
 import CryptoJS from "crypto-js"
 import { IPropsFormatNumberOption } from "@src/interfaces/IHelper"
 import { ILocal, TKey } from "@src/interfaces/ILocal"
+import { ITEMS } from "@constants/localStorage"
 
-const helper = {
+const Helper = {
   setLocalStorage({ key, val }: ILocal) {
     localStorage.setItem(key, val || "")
   },
@@ -15,11 +16,7 @@ const helper = {
     localStorage.removeItem(key)
   },
   resetLocalStorage() {
-    localStorage.removeItem("token")
-    localStorage.removeItem("time")
-    localStorage.removeItem("email")
-    localStorage.removeItem("address")
-    localStorage.removeItem("loginWith")
+    ITEMS.map((item) => localStorage.removeItem(item))
   },
   getTokenFromLocal() {
     return typeof window === "undefined" ? null : localStorage.getItem("token")
@@ -83,4 +80,4 @@ const helper = {
   // }
 }
 
-export default helper
+export default Helper

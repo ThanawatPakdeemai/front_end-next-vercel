@@ -1,5 +1,5 @@
 import dayjs from "dayjs"
-import helper from "@src/utils/helper"
+import Helper from "@src/utils/helper"
 import Axios from "axios"
 import { unstable_batchedUpdates } from "react-dom"
 import useProfileStore from "@src/stores/profileStore"
@@ -25,7 +25,7 @@ export const removeAxiosToken = () => {
 const resetProfile = () => {
   unstable_batchedUpdates(() => {
     useProfileStore.getState().onReset()
-    helper.resetLocalStorage()
+    Helper.resetLocalStorage()
     removeAxiosToken()
   })
 }

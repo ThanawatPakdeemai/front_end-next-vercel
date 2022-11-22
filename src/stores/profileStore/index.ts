@@ -3,7 +3,7 @@ import { devtools } from "zustand/middleware"
 import {
   IProfile,
   IProfileResponse
-} from "@src/features/profile/interfaces/IProfileServices"
+} from "@src/features/profile/interfaces/IProfileService"
 import configZustandDevTools from "@src/utils/configDevtools"
 import helper from "@src/utils/helper"
 

@@ -1,3 +1,5 @@
+import { IInfo } from "@src/interfaces/IHelper"
+
 export interface IProfileRank {
   name: string
   score: number
@@ -299,4 +301,24 @@ export interface IPlayerInfoResponse {
   status: boolean
   message: string
   data: IPlayerInfoData
+}
+
+export interface IGetProfileResponse {
+  _id: string
+  status: number
+  createdAt: Date
+  email: string
+  role: string
+  is_active: boolean
+  avatar: string
+  username: string
+  address: string
+  subscription: boolean
+  id: string
+}
+
+export interface IDataPlayerInfoResponse {
+  status: boolean
+  data: IDataPlayerStatisticData
+  info: IInfo
 }

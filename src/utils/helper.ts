@@ -3,17 +3,16 @@ import { ethers } from "ethers"
 import CryptoJS from "crypto-js"
 import { IPropsFormatNumberOption } from "@src/interfaces/IHelper"
 import { ILocal, TKey } from "@src/interfaces/ILocal"
-// import { AxiosResponse } from "axios"
 
 const helper = {
   setLocalStorage({ key, val }: ILocal) {
-    localStorage.setItem(key.toString(), val || "")
+    localStorage.setItem(key, val || "")
   },
   getLocalStorage(key: TKey) {
-    return localStorage.getItem(key.toString())
+    return localStorage.getItem(key)
   },
-  removeLocalStorage({ key }: ILocal) {
-    localStorage.removeItem(key.toString())
+  removeLocalStorage(key: TKey) {
+    localStorage.removeItem(key)
   },
   resetLocalStorage() {
     localStorage.removeItem("token")

@@ -5,7 +5,7 @@ import {
   IProfileResponse
 } from "@src/features/profile/interfaces/IProfileService"
 import configZustandDevTools from "@src/utils/configDevtools"
-import helper from "@src/utils/helper"
+import Helper from "@src/utils/helper"
 
 export interface IUseProfileStore {
   address: string | undefined
@@ -77,7 +77,7 @@ const useProfileStore = create<IUseProfileStore>()(
           false,
           "ProfileStore/onSetProfileToken"
         )
-        helper.setLocalStorage({ key: "token", val: _token })
+        Helper.setLocalStorage({ key: "token", val: _token })
       }
     }),
     configZustandDevTools("Profile-Store")

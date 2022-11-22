@@ -2,14 +2,14 @@ import Config from "@src/configs"
 import { ethers } from "ethers"
 import CryptoJS from "crypto-js"
 import { IPropsFormatNumberOption } from "@src/interfaces/IHelper"
-import { ILocal } from "@src/interfaces/ILocal"
+import { ILocal, TKey } from "@src/interfaces/ILocal"
 // import { AxiosResponse } from "axios"
 
 const helper = {
   setLocalStorage({ key, val }: ILocal) {
     localStorage.setItem(key.toString(), val || "")
   },
-  getLocalStorage({ key }: ILocal) {
+  getLocalStorage(key: TKey) {
     return localStorage.getItem(key.toString())
   },
   removeLocalStorage({ key }: ILocal) {

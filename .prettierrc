@@ -5,6 +5,5 @@
   "quoteProps": "preserve",
   "semi": false,
   "trailingComma": "none",
-  "singleAttributePerLine": true,
-  "doubleQuote": true
+  "singleAttributePerLine": true
 }

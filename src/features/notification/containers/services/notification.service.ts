@@ -1,5 +1,5 @@
 import services from "@src/configs/axiosGlobalConfig"
-import { INotification } from "../../interfaces/INotificationsService"
+import { INotification } from "../../interfaces/INotificationService"
 
 export const getNotificationById = (_playerId: string) =>
   new Promise<INotification[]>((resolve, reject) => {

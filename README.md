@@ -55,7 +55,7 @@ To run tests, run the following command
 To run build using .env.production, run the following command
 
 ```bash
-  yarn build:prod
+  yarn build
 ```
 
 ## ✅ Commit Pattern

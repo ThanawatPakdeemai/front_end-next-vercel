@@ -15,3 +15,8 @@ export interface IFormatService {
   status: boolean
   info: IInfo
 }
+
+export interface IFormatMessageService {
+  status: boolean
+  message: string
+}

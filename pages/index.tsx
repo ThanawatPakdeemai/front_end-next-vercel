@@ -2,8 +2,10 @@ import { Layout } from "@src/components/template"
 import { ReactElement } from "react"
 import Image from "@components/atoms/image"
 import { IMAGES } from "@constants/images"
+import Helper from "@utils/helper"
 
 export default function Home() {
+  Helper.resetLocalStorage()
   return (
     <article className="h-full w-full">
       <>

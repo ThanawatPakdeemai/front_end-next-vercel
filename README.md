@@ -13,7 +13,6 @@ This is the main website of [Nakamoto.Games](https://nakamoto.games) project
 - [Eslint](https://eslint.org/)
 - [Husky](https://typicode.github.io/husky/#/)
 - [Jest](https://jestjs.io/)
-- [Vercel](https://vercel.com/)
 - [Tailwind](https://tailwindcss.com/)
 - [Mui](https://mui.com/)
 

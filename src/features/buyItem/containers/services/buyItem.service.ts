@@ -2,7 +2,7 @@ import services from "@src/configs/axiosGlobalConfig"
 import {
   IBuyItems,
   IBuyItemTransectionResponse
-} from "../../interfaces/IBuyItem"
+} from "../../interfaces/IBuyItemService"
 
 const buyItems = ({ player_id, item_id, qty }: IBuyItems) =>
   new Promise<IBuyItemTransectionResponse>((resolve, reject) => {

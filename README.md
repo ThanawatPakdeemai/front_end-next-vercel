@@ -51,14 +51,7 @@ To run tests, run the following command
   yarn test
 ```
 
-## 🏠 Build Development
-
-To run build using .env.development, run the following command
-
-```bash
-  yarn build:dev
-```
-
+## 🏠 Build
 To run build using .env.production, run the following command
 
 ```bash

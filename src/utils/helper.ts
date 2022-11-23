@@ -2,25 +2,20 @@ import Config from "@src/configs"
 import { ethers } from "ethers"
 import CryptoJS from "crypto-js"
 import { IPropsFormatNumberOption } from "@src/interfaces/IHelper"
-import { ILocal, TKey } from "@src/interfaces/ILocal"
-// import { AxiosResponse } from "axios"
+import { ILocal, TLocalKey, ELocalKey } from "@src/interfaces/ILocal"
 
-const helper = {
-  setLocalStorage({ key, val }: ILocal) {
-    localStorage.setItem(key.toString(), val || "")
+const Helper = {
+  setLocalStorage({ key, value }: ILocal) {
+    localStorage.setItem(key, value || "")
   },
-  getLocalStorage(key: TKey) {
-    return localStorage.getItem(key.toString())
+  getLocalStorage(key: TLocalKey) {
+    return typeof window !== "undefined" ? localStorage.getItem(key) : null
   },
-  removeLocalStorage({ key }: ILocal) {
-    localStorage.removeItem(key.toString())
+  removeLocalStorage(key: TLocalKey) {
+    localStorage.removeItem(key)
   },
   resetLocalStorage() {
-    localStorage.removeItem("token")
-    localStorage.removeItem("time")
-    localStorage.removeItem("email")
-    localStorage.removeItem("address")
-    localStorage.removeItem("loginWith")
+    Object.keys(ELocalKey).map((key) => localStorage.removeItem(ELocalKey[key]))
   },
   getTokenFromLocal() {
     return typeof window === "undefined" ? null : localStorage.getItem("token")
@@ -84,4 +79,4 @@ const helper = {
   // }
 }
 
-export default helper
+export default Helper

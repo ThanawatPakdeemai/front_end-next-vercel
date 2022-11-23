@@ -5,6 +5,7 @@ import { unstable_batchedUpdates } from "react-dom"
 import useProfileStore from "@src/stores/profileStore"
 import handleDisconnectWallet from "@src/hooks/useWeb3Provider/useCreateWeb3Provider"
 import { refreshProfileToken } from "@src/features/authentication/containers/services/auth.service"
+import { ELocalKey } from "@src/interfaces/ILocal"
 import Config from "."
 
 const baseUrl = Config.NEXT_PUBLIC_API_URL
@@ -33,7 +34,7 @@ const resetProfile = () => {
 services.interceptors.request.use(async (config: any) => {
   if (isServer()) return config
 
-  const token = localStorage.getItem("token")
+  const token = Helper.getTokenFromLocal()
   // const time = localStorage.getItem("time")
   // if (time) {
   // const expire = dayjs(time).add(30, "minutes").unix()
@@ -78,7 +79,8 @@ services.interceptors.response.use(
             return Promise.reject([])
           }
           await refreshProfileToken()
-          localStorage.setItem("time", dayjs().format("YYYY-MM-DD HH:mm"))
+          const now = dayjs().format("YYYY-MM-DD HH:mm")
+          Helper.setLocalStorage({ key: ELocalKey.time, value: now })
           return services(originalConfig) // if there is error in this line change service to Axios
 
           // eslint-disable-next-line @typescript-eslint/no-explicit-any

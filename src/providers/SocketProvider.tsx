@@ -1,5 +1,5 @@
-import SocketContext from "@src/features/socket/container/context/socketContext"
-import { socketSetupManager } from "@src/features/socket/container/socketSetup"
+import SocketContext from "@src/features/socket/containers/contexts/socketContext"
+import { socketSetupManager } from "@src/features/socket/containers/socketSetup"
 import { PropsWithChildren, useMemo } from "react"
 
 function SocketProvider({ children }: PropsWithChildren<unknown>) {

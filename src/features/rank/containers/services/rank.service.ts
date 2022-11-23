@@ -2,8 +2,9 @@ import services from "@src/configs/axiosGlobalConfig"
 import { BASE_URL } from "@src/constants/site"
 import { IProfile } from "@src/features/profile/interfaces/IProfileService"
 import Helper from "@src/utils/helper"
+import { ELocalKey } from "@src/interfaces/ILocal"
 
-const email = Helper.getLocalStorage("email")
+const email = Helper.getLocalStorage(ELocalKey.email)
 
 const updateRank = (game_id: string) =>
   new Promise<IProfile>((resolve, reject) => {

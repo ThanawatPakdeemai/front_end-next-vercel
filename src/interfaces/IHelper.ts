@@ -10,3 +10,8 @@ export interface IInfo {
   currentCount: number
   totalCount: number
 }
+
+export interface IFormatService {
+  status: boolean
+  info: IInfo
+}

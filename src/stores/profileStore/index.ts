@@ -78,7 +78,7 @@ const useProfileStore = create<IUseProfileStore>()(
           false,
           "ProfileStore/onSetProfileToken"
         )
-        Helper.setLocalStorage({ key: ELocalKey.token, val: _token })
+        Helper.setLocalStorage({ key: ELocalKey.token, value: _token })
       }
     }),
     configZustandDevTools("Profile-Store")

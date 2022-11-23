@@ -1,6 +1,6 @@
 import services from "@src/configs/axiosGlobalConfig"
 import { BASE_URL } from "@src/constants/site"
-import { IBadgeResponse } from "../../interface/IBadge"
+import { IBadgeResponse } from "../../interfaces/IBadgeService"
 
 const getBadgeplayerId = (player_id: string) =>
   new Promise<IBadgeResponse>((resolve, reject) => {

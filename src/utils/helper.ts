@@ -2,16 +2,16 @@ import Config from "@src/configs"
 import { ethers } from "ethers"
 import CryptoJS from "crypto-js"
 import { IPropsFormatNumberOption } from "@src/interfaces/IHelper"
-import { ILocal, ELocalKey } from "@src/interfaces/ILocal"
+import { ILocal, TLocalKey, ELocalKey } from "@src/interfaces/ILocal"
 
 const Helper = {
-  setLocalStorage({ key, val }: ILocal) {
-    localStorage.setItem(key, val || "")
+  setLocalStorage({ key, value }: ILocal) {
+    localStorage.setItem(key, value || "")
   },
-  getLocalStorage(key: ELocalKey) {
-    return localStorage.getItem(key)
+  getLocalStorage(key: TLocalKey) {
+    return typeof window !== "undefined" ? localStorage.getItem(key) : null
   },
-  removeLocalStorage(key: ELocalKey) {
+  removeLocalStorage(key: TLocalKey) {
     localStorage.removeItem(key)
   },
   resetLocalStorage() {

@@ -5,6 +5,7 @@ import useProfileStore from "@src/stores/profileStore"
 import Helper from "@src/utils/helper"
 import services from "@src/configs/axiosGlobalConfig"
 import { IProfileResponse } from "@src/features/profile/interfaces/IProfileService"
+import { ELocalKey } from "@src/interfaces/ILocal"
 import {
   ICreateNewPassword,
   IForgetPassword
@@ -70,7 +71,10 @@ export const refreshProfileToken = async (
         withCredentials: true
       }
     )
-    localStorage.setItem("token", response.data.jwtToken)
+    Helper.setLocalStorage({
+      key: ELocalKey.token,
+      value: response.data.jwtToken
+    })
     axios.defaults.headers.common = {
       Authorization: `Bearer ${response.data.jwtToken}`
     }

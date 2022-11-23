@@ -1,6 +1,12 @@
-export type TKey = "token" | "time" | "email" | "address" | "loginWith"
+export enum ELocalKey {
+  token = "token",
+  email = "email",
+  address = "address",
+  loginWith = "loginWith",
+  time = "time"
+}
 
 export interface ILocal {
-  key: TKey
+  key: ELocalKey
   val?: string
 }

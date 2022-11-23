@@ -1,7 +1,7 @@
 import {
   IGameItem,
   IGameItemList
-} from "@src/features/gameItems/interfaces/IGameItemsService"
+} from "@src/features/gameItem/interfaces/IGameItemService"
 import { IFormatService } from "@src/interfaces/IHelper"
 
 export interface IGameHowTo {

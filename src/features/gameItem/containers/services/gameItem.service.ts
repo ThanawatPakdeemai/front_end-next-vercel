@@ -3,13 +3,13 @@ import {
   IGameItemBalanceService,
   IGameItemList,
   IGameItemService,
-  IGameItemsListService
-} from "../../interfaces/IGameItemsService"
+  IGameItemListService
+} from "../../interfaces/IGameItemService"
 
 export const getAllGameItems = () =>
-  new Promise<IGameItemsListService>((resolve, reject) => {
+  new Promise<IGameItemListService>((resolve, reject) => {
     services
-      .get<IGameItemsListService>(`/game-items`)
+      .get<IGameItemListService>(`/game-items`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

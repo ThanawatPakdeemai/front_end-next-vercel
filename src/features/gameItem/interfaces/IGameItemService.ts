@@ -28,7 +28,7 @@ export interface IGameItemListData extends IGameItem {
   qty: number
 }
 
-export interface IGameItemsListService extends IFormatService {
+export interface IGameItemListService extends IFormatService {
   data: IGameItemListData[]
 }
 

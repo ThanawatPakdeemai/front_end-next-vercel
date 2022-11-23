@@ -8,7 +8,7 @@ import {
 } from "../../interfaces/IBlogService"
 
 const getBlogAll = ({
-  limit = 20,
+  limit = 10,
   skip = 1,
   search = "",
   cate = "all",

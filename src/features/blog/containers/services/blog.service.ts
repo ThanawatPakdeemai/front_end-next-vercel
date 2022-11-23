@@ -5,7 +5,7 @@ import {
   IBlogDetailResponse,
   IBlogResponse,
   ICategoryResponse
-} from "../../interface/blog"
+} from "../../interfaces/IBlog"
 
 const getBlogAll = ({
   limit = 10,

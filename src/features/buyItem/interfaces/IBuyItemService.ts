@@ -4,33 +4,32 @@ export interface IBuyItems {
   qty: number
 }
 
-export interface IBuyItemTransectionLog {
-  address: string
-  topics: string[]
-  data: string
+interface IBuyItem {
   blockNumber: number
   transactionHash: string
   transactionIndex: number
   blockHash: string
+}
+
+export interface IBuyItemTransactionLog extends IBuyItem {
+  address: string
+  topics: string[]
+  data: string
   logIndex: number
   removed: boolean
   id: string
 }
 
-export interface IBuyItemTransectionResponse {
-  blockHash: string
-  blockNumber: number
+export interface IBuyItemTransactionResponse extends IBuyItem {
   contractAddress: null
   cumulativeGasUsed: number
   effectiveGasPrice: string
   from: string
   gasUsed: number
-  logs: IBuyItemTransectionLog[]
+  logs: IBuyItemTransactionLog[]
   logsBloom: string
   status: boolean
   to: string
-  transactionHash: string
-  transactionIndex: number
   type: string
   responseBalanceOf: number
 }

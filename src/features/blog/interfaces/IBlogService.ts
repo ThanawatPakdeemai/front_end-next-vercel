@@ -5,40 +5,35 @@ export interface Blog {
   cate: string
   sort: string
 }
+
 interface IInfo {
   currentCount: number
   limit: number
   pages: number
   totalCount: number
 }
+
 interface ICateData {
   id: string
   is_active: true
   name: string
   slug: string
 }
-export interface ICategoryDetail {
-  id: string
-  is_active: boolean
-  name: string
-  slug: string
-}
 
-export interface ICategoryData {
+export interface ICategoryDetail extends ICateData {}
+
+export interface ICategoryData extends ICateData {
   createdAt: string
-  id: string
-  is_active: boolean
-  name: string
-  slug: string
   updatedAt: string
 }
+
 interface ICateInfoData {
   like: number
   shared: number
   view: number
 }
-export interface IBlogData {
-  category_data: ICateData
+
+interface IBlog {
   category_id: string
   date_released: string
   description: string
@@ -49,35 +44,34 @@ export interface IBlogData {
   _id: string
 }
 
-export interface IBlogDetail {
+export interface IBlogData extends IBlog {
+  category_data: ICateData
+}
+
+export interface IBlogDetail extends IBlog {
   category_data: ICategoryDetail[]
-  category_id: string
   content: string
   createdAt: string
-  date_released: string
-  description: string
-  image_list: string
-  info: ICateInfoData
   is_active: boolean
   related: IBlogData[]
-  slug: string
-  title: string
   updatedAt: string
-  _id: string
 }
-export interface IBlogDetailResponse {
+
+interface IBlogRes {
   status: boolean
   message: string
+}
+
+export interface IBlogDetailResponse extends IBlogRes {
   data: IBlogDetail | undefined
 }
+
+export interface ICategoryResponse extends IBlogRes {
+  data: ICategoryData[]
+}
+
 export interface IBlogResponse {
   status: boolean
   info: IInfo
   data: IBlogData[]
-}
-
-export interface ICategoryResponse {
-  status: boolean
-  message: string
-  data: ICategoryData[]
 }

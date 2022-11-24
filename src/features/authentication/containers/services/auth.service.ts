@@ -2,9 +2,10 @@ import axios from "axios"
 import Config from "@src/configs"
 import { IRefreshToken } from "@src/interfaces/IAuth"
 import useProfileStore from "@src/stores/profileStore"
-import helper from "@src/utils/helper"
+import Helper from "@src/utils/helper"
 import services from "@src/configs/axiosGlobalConfig"
 import { IProfileResponse } from "@src/features/profile/interfaces/IProfileService"
+import { ELocalKey } from "@src/interfaces/ILocal"
 import {
   ICreateNewPassword,
   IForgetPassword
@@ -70,7 +71,10 @@ export const refreshProfileToken = async (
         withCredentials: true
       }
     )
-    localStorage.setItem("token", response.data.jwtToken)
+    Helper.setLocalStorage({
+      key: ELocalKey.token,
+      value: response.data.jwtToken
+    })
     axios.defaults.headers.common = {
       Authorization: `Bearer ${response.data.jwtToken}`
     }
@@ -78,7 +82,7 @@ export const refreshProfileToken = async (
     return response.data.jwtToken
   } catch (error) {
     useProfileStore.getState().onReset()
-    helper.resetLocalStorage()
+    Helper.resetLocalStorage()
     callBeckWhenError && callBeckWhenError()
     if (error instanceof Error) {
       console.error("Error", error.message)

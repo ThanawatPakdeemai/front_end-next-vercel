@@ -1,13 +1,11 @@
 import { useCallback, useEffect, useState } from "react"
 import { Web3Provider } from "@ethersproject/providers"
 import Config from "@src/configs"
-import {
-  WALLET_CONNECTOR,
-  WALLET_CONNECTOR_TYPES
-} from "@src/constants/walletConnect"
+import { WALLET_CONNECTOR_TYPES } from "@src/constants/walletConnect"
 import useProfileStore from "@src/stores/profileStore"
-import helper from "@src/utils/helper"
+import Helper from "@src/utils/helper"
 import { providers } from "ethers"
+import { ELocalKey } from "@src/interfaces/ILocal"
 
 const useCreateWeb3Provider = () => {
   const [signer, setSigner] = useState<any>(undefined)
@@ -70,7 +68,7 @@ const useCreateWeb3Provider = () => {
   const { onReset } = useProfileStore()
   const handleDisconnectWallet = useCallback(async () => {
     onReset()
-    localStorage.clear()
+    Helper.resetLocalStorage()
     setProvider(undefined)
     setAddress(undefined)
   }, [onReset])
@@ -85,7 +83,10 @@ const useCreateWeb3Provider = () => {
     if (!chainIdIsSupported()) {
       resetChainId()
     }
-    localStorage.setItem(WALLET_CONNECTOR, WALLET_CONNECTOR_TYPES.injected)
+    Helper.setLocalStorage({
+      key: ELocalKey.walletConnector,
+      value: WALLET_CONNECTOR_TYPES.injected
+    })
     const _provider = new providers.Web3Provider(window.ethereum)
     _provider.send("eth_requestAccounts", []).then(() => {
       setProvider(_provider)
@@ -144,9 +145,9 @@ const useCreateWeb3Provider = () => {
       if (window.ethereum === undefined) {
         return
       }
-      const walletConnector = localStorage.getItem(WALLET_CONNECTOR)
+      const walletConnector = Helper.getLocalStorage(ELocalKey.walletConnector)
       if (walletConnector === WALLET_CONNECTOR_TYPES.injected) {
-        const account = await helper.getWalletAccount()
+        const account = await Helper.getWalletAccount()
         const _provider = new providers.Web3Provider(window.ethereum)
         if (_provider) {
           const _signer = _provider.getSigner()

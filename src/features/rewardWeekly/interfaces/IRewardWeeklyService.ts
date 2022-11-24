@@ -1,26 +1,23 @@
-export interface IRewardWeeklyData {
-  _id: string
+import { IFormatService } from "@src/interfaces/IHelper"
+
+export interface IWeeklyReward {
   player_id: string
   username: string
-  walletAddress: string
-  email: string
   avatar: string
   reward: number
+  percent?: number
+}
+
+export interface IRewardWeeklyData extends IWeeklyReward {
+  _id: string
+  walletAddress: string
+  email: string
   percentRate: number
   transaction_hash: string
 }
 
-export interface IRewardWeekly {
-  status: boolean
+export interface IRewardWeekly extends IFormatService {
   data: IRewardWeeklyData[]
-}
-
-export interface IWeeklyReward {
-  player_id: string
-  avatar: string
-  username: string
-  percent: number
-  reward: number
 }
 
 export interface IRecord {
@@ -31,6 +28,6 @@ export interface IRecord {
   record: IWeeklyReward[]
 }
 
-export interface IWeeklyRewardObject {
+export interface IWeeklyRewardObject extends IFormatService {
   data: IRecord
 }

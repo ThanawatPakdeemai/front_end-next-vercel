@@ -1,15 +1,8 @@
-import { IGame } from "@src/features/game/interfaces/IGameService"
-
-export interface IHomeSlideResponse {
-  status: boolean
-  data: IGame[]
-}
-
-export interface IPointCurrent {
+export interface IPrice {
   averagePrice: string
   buy: string
   changePrice: string
-  changeRate: number
+  changeRate: string
   high: string
   last: string
   low: string
@@ -24,7 +17,9 @@ export interface IPointCurrent {
   volValue: string
 }
 
-export interface IPointCurrentResponse {
-  status: boolean
-  data: IPointCurrent[]
+export interface IPriceData {
+  data: IPrice
+}
+export interface IResponsePrice {
+  data: IPriceData
 }

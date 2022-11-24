@@ -1,5 +1,4 @@
 import services from "@src/configs/axiosGlobalConfig"
-import { BASE_URL } from "@src/constants/site"
 import {
   Blog,
   IBlogDetailResponse,
@@ -22,7 +21,7 @@ const getBlogAll = ({
       sort
     }
     services
-      .post(`${BASE_URL.api}/blog/list/${cate}`, { ...data })
+      .post(`/blog/list/${cate}`, { ...data })
       .then((res) => {
         resolve(res.data)
       })
@@ -33,7 +32,7 @@ const getBlogDetail = (blog_id: string) =>
   new Promise<IBlogDetailResponse>((resolve, reject) => {
     if (blog_id) {
       services
-        .get(`${BASE_URL.api}/blog/${blog_id}`)
+        .get(`/blog/${blog_id}`)
         .then((res) => {
           resolve(res.data)
         })
@@ -57,7 +56,7 @@ const getCategoryBlogAll = ({
       sort
     }
     services
-      .post<ICategoryResponse>(`${BASE_URL.api}/blog/all/category`, { ...data })
+      .post<ICategoryResponse>(`/blog/all/category`, { ...data })
       .then((res) => {
         resolve(res.data)
       })

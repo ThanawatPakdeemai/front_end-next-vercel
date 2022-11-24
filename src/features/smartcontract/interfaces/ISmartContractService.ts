@@ -1,4 +1,4 @@
-import { IFormatMessageService } from "@src/interfaces/IHelper"
+import { IFormatService } from "@src/interfaces/IHelper"
 
 export interface ICurrentNakaData {
   time: number
@@ -23,6 +23,6 @@ export interface ICurrentNakaResponse {
   data: ICurrentNakaData
 }
 
-export interface IGetNakaServices extends IFormatMessageService {
+export interface IGetNakaServices extends IFormatService {
   data: number
 }

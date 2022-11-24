@@ -27,13 +27,13 @@ const useCreateWeb3Provider = () => {
           method: "wallet_addEthereumChain",
           params: [
             {
-              chainId: `0x${Number(Config.NEXT_PUBLIC_CHAIN_ID).toString(16)}`,
-              chainName: `${Config.NEXT_PUBLIC_CHAIN_NAME}`,
-              rpcUrls: [`${Config.NEXT_PUBLIC_MATIC_RPC_URL}/`],
-              blockExplorerUrls: [`${Config.NEXT_PUBLIC_POLYGON_SCAN}/`],
+              chainId: `0x${Number(Config.CHAIN_ID).toString(16)}`,
+              chainName: `${Config.CHAIN_NAME}`,
+              rpcUrls: [`${Config.MATIC_RPC_URL}/`],
+              blockExplorerUrls: [`${Config.POLYGON_SCAN}/`],
               nativeCurrency: {
-                name: Config.NEXT_PUBLIC_TOKEN_NAME,
-                symbol: Config.NEXT_PUBLIC_TOKEN_SYMBOL,
+                name: Config.TOKEN_NAME,
+                symbol: Config.TOKEN_SYMBOL,
                 decimals: 18
               }
             }
@@ -63,7 +63,7 @@ const useCreateWeb3Provider = () => {
   }
 
   const chainIdIsSupported = () =>
-    window.ethereum?.chainId === Config.NEXT_PUBLIC_CHAIN_ID_HEX
+    window.ethereum?.chainId === Config.CHAIN_ID_HEX
 
   const { onReset } = useProfileStore()
   const handleDisconnectWallet = useCallback(async () => {

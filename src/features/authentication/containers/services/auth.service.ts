@@ -1,5 +1,4 @@
 import axios from "axios"
-import Config from "@src/configs"
 import { IRefreshToken } from "@src/interfaces/IAuth"
 import useProfileStore from "@src/stores/profileStore"
 import Helper from "@src/utils/helper"
@@ -65,7 +64,7 @@ export const refreshProfileToken = async (
 ): Promise<any | undefined> => {
   try {
     const response = await axios.post<IRefreshToken>(
-      `${Config.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
+      `/auth/refresh-token`,
       {},
       {
         withCredentials: true

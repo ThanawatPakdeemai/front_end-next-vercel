@@ -29,11 +29,11 @@ const Helper = {
     return accounts
   },
   encryptWithAES(data: string) {
-    const passphrase = `${Config.NEXT_PUBLIC_KEYTEXT}`
+    const passphrase = `${Config.KEYTEXT}`
     return CryptoJS.AES.encrypt(data, passphrase).toString()
   },
   decryptWithAES(ciphertext: string) {
-    const passphrase = `${process.env.NEXT_PUBLIC_KEYTEXT}`
+    const passphrase = `${process.env.KEYTEXT}`
     const bytes = CryptoJS.AES.decrypt(ciphertext, passphrase)
     const originalText = bytes.toString(CryptoJS.enc.Utf8)
     return originalText
@@ -41,7 +41,7 @@ const Helper = {
   decryptSocketWithAES<T>(ciphertext: string): T | undefined {
     if (ciphertext) {
       const removeDoubleQuotes = ciphertext.replace(/["']/g, "")
-      const passphrase = `${process.env.NEXT_PUBLIC_KEYTEXT}`
+      const passphrase = `${process.env.KEYTEXT}`
       const bytes = CryptoJS.AES.decrypt(removeDoubleQuotes, passphrase)
 
       const originalText = bytes.toString(CryptoJS.enc.Utf8)

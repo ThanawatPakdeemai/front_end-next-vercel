@@ -8,7 +8,7 @@ import { refreshProfileToken } from "@src/features/authentication/containers/ser
 import { ELocalKey } from "@src/interfaces/ILocal"
 import Config from "."
 
-const baseUrl = Config.NEXT_PUBLIC_API_URL
+const baseUrl = Config.API_URL
 const isServer = () => typeof window === "undefined"
 
 const services = Axios.create({
@@ -54,7 +54,7 @@ services.interceptors.request.use(async (config: any) => {
     resetProfile()
   }
 
-  config.baseURL = `${process.env.REACT_APP_API_URL}`
+  config.baseURL = baseUrl
   config.withCredentials = true
   return config
 })

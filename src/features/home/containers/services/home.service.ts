@@ -40,3 +40,5 @@ const getNakaCurrent = () =>
         reject(err)
       })
   })
+
+export { getHomeSlide, getPriceCurrent, getNakaCurrent }

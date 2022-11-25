@@ -21,7 +21,7 @@ const getBlogAll = ({
       sort
     }
     services
-      .post(`/blog/list/${cate}`, { ...data })
+      .post<IBlogResponse>(`/blog/list/${cate}`, { ...data })
       .then((res) => {
         resolve(res.data)
       })

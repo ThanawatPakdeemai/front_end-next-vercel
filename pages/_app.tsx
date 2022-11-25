@@ -9,7 +9,7 @@ import Head from "next/head"
 // import { createTheme, ThemeProvider } from "@mui/material"
 // import { theme } from "@src/styles/themes/darkTheme"
 // import type { ThemeOptions } from "@mui/material"
-import { DATA_META_TAG } from "@src/constants/metaTagData"
+import { DATA_META_TAG } from "@src/configs/metaTagData"
 import { ProviderApp, Web3Provider } from "@src/providers"
 
 import "@src/styles/globals.css"

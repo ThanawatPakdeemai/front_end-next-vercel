@@ -18,6 +18,7 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_KEYTEXT: string
     readonly NEXT_PUBLIC_MARKETPLACE: string
     readonly NEXT_PUBLIC_NAKAVERSE: string
+    readonly NEXT_PUBLIC_NAKA_CONTRACT: string
     readonly NEXT_PUBLIC_KEY_RECAPTCHA: string
     readonly NEXT_PUBLIC_POLYGON_SCAN: string
     readonly NEXT_PUBLIC_POLYGON_RPC_URL: string
@@ -26,6 +27,10 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_CHAIN_ID: string
     readonly NEXT_PUBLIC_CHAIN_ID_HEX: string
     readonly NEXT_PUBLIC_CHAIN_NAME: string
+    readonly NEXT_PUBLIC_BNB_CHAIN_ID: string
+    readonly NEXT_PUBLIC_BNB_CHAIN_NAME: string
+    readonly NEXT_PUBLIC_BNB_RPC_URL: string
+    readonly NEXT_PUBLIC_BNB_SCAN: string
     readonly NEXT_PUBLIC_CONTRACT_ERC20: string
     readonly NEXT_PUBLIC_OWNER: string
     readonly NEXT_PUBLIC_CONTRACT_BALANCE_VAULT: string

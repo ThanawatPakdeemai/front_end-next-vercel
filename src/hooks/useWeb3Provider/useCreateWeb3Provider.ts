@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react"
 import { Web3Provider } from "@ethersproject/providers"
 import Config from "@src/configs"
-import { WALLET_CONNECTOR_TYPES } from "@src/constants/walletConnect"
+import { WALLET_CONNECTOR_TYPES } from "@src/configs/walletConnect"
 import useProfileStore from "@src/stores/profileStore"
 import Helper from "@src/utils/helper"
 import { providers } from "ethers"

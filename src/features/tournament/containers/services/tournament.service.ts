@@ -10,7 +10,7 @@ import {
   ITournamentService
 } from "../../interfaces/ITournament"
 
-export const registerTournament = (_tournamentId: string) =>
+export const registTournament = (_tournamentId: string) =>
   new Promise<ITournamentPlayerService>((resolve, reject) => {
     const data = {
       tournament_id: _tournamentId
@@ -24,11 +24,7 @@ export const registerTournament = (_tournamentId: string) =>
       .catch((error) => reject(error))
   })
 
-export const getTournamentPlayerRegister = (
-  _limit: number,
-  _page: number,
-  _sort: string
-) =>
+export const getTourRegister = (_limit: number, _page: number, _sort: string) =>
   new Promise<ITournamentPlayerListService>((resolve, reject) => {
     const data = {
       limit: _limit,
@@ -41,7 +37,7 @@ export const getTournamentPlayerRegister = (
       .catch((error) => reject(error))
   })
 
-export const getTournamentPlayerInfo = () =>
+export const getTourPlayerInfo = () =>
   new Promise<ITournamentHistoryService>((resolve, reject) => {
     services
       .get<ITournamentHistoryService>(`/tournament/getuser`)
@@ -57,7 +53,7 @@ export const getTournament = () =>
       .catch((error) => reject(error))
   })
 
-export const getTournamentMatch = () =>
+export const getTourMatch = () =>
   new Promise<ITournamentMatchService>((resolve, reject) => {
     services
       .get<ITournamentMatchService>(`/tournament/get-match-tournament`)
@@ -65,7 +61,7 @@ export const getTournamentMatch = () =>
       .catch((error) => reject(error))
   })
 
-export const getTournamentCurrentMatch = (_tournamentId: string) =>
+export const getTourCurMatch = (_tournamentId: string) =>
   new Promise<ITournamentLiveService>((resolve, reject) => {
     services
       .get<ITournamentLiveService>(
@@ -75,7 +71,7 @@ export const getTournamentCurrentMatch = (_tournamentId: string) =>
       .catch((error) => reject(error))
   })
 
-export const getTournamentSummary = (_tournamentId: string) =>
+export const getTourSummary = (_tournamentId: string) =>
   new Promise<ITournamentMatchRoomService>((resolve, reject) => {
     services
       .get<ITournamentMatchRoomService>(
@@ -87,7 +83,7 @@ export const getTournamentSummary = (_tournamentId: string) =>
 
 // check
 
-export const checkTournamentTicketPlayerUsed = (_tournamentId: string) =>
+export const checkTourTicketIsUsed = (_tournamentId: string) =>
   new Promise<ITournamentCheckStatusService>((resolve, reject) => {
     services
       .get<ITournamentCheckStatusService>(
@@ -97,7 +93,7 @@ export const checkTournamentTicketPlayerUsed = (_tournamentId: string) =>
       .catch((error) => reject(error))
   })
 
-export const checkTournamentTimeUserPlayed = (_tournamentId: string) =>
+export const checkTourIsPlayed = (_tournamentId: string) =>
   new Promise<ITournamentCheckStatusService>((resolve, reject) => {
     services
       .get<ITournamentCheckStatusService>(
@@ -107,7 +103,7 @@ export const checkTournamentTimeUserPlayed = (_tournamentId: string) =>
       .catch((error) => reject(error))
   })
 
-export const checkTournamentPlayerPlayed = (_tournamentId: string) =>
+export const checkTourPlayerIsPlayed = (_tournamentId: string) =>
   new Promise<ITournamentPlayerService>((resolve, reject) => {
     services
       .get<ITournamentPlayerService>(

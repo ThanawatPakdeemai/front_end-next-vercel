@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from "react"
 import { Web3Provider } from "@ethersproject/providers"
-import Config from "@src/configs"
-import { WALLET_CONNECTOR_TYPES } from "@src/configs/walletConnect"
-import useProfileStore from "@src/stores/profileStore"
-import Helper from "@src/utils/helper"
+import CONFIGS from "@configs/index"
+import { WALLET_CONNECTOR_TYPES } from "@configs/walletConnect"
+import useProfileStore from "@stores/profileStore"
+import Helper from "@utils/helper"
 import { providers } from "ethers"
-import { ELocalKey } from "@src/interfaces/ILocal"
+import { ELocalKey } from "@interfaces/ILocal"
 
 const useCreateWeb3Provider = () => {
   const [signer, setSigner] = useState<any>(undefined)
@@ -27,13 +27,13 @@ const useCreateWeb3Provider = () => {
           method: "wallet_addEthereumChain",
           params: [
             {
-              chainId: `0x${Number(Config.CHAIN_ID).toString(16)}`,
-              chainName: `${Config.CHAIN_NAME}`,
-              rpcUrls: [`${Config.MATIC_RPC_URL}/`],
-              blockExplorerUrls: [`${Config.POLYGON_SCAN}/`],
+              chainId: `0x${Number(CONFIGS.CHAIN.CHAIN_ID).toString(16)}`,
+              chainName: `${CONFIGS.CHAIN.CHAIN_NAME}`,
+              rpcUrls: [`${CONFIGS.CHAIN.POLYGON_RPC_URL}/`],
+              blockExplorerUrls: [`${CONFIGS.CHAIN.POLYGON_SCAN}/`],
               nativeCurrency: {
-                name: Config.TOKEN_NAME,
-                symbol: Config.TOKEN_SYMBOL,
+                name: CONFIGS.CHAIN.TOKEN_NAME,
+                symbol: CONFIGS.CHAIN.TOKEN_SYMBOL,
                 decimals: 18
               }
             }
@@ -63,7 +63,7 @@ const useCreateWeb3Provider = () => {
   }
 
   const chainIdIsSupported = () =>
-    window.ethereum?.chainId === Config.CHAIN_ID_HEX
+    window.ethereum?.chainId === CONFIGS.CHAIN.CHAIN_ID_HEX
 
   const { onReset } = useProfileStore()
   const handleDisconnectWallet = useCallback(async () => {

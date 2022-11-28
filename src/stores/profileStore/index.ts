@@ -3,10 +3,10 @@ import { devtools } from "zustand/middleware"
 import {
   IProfile,
   IProfileResponse
-} from "@src/features/profile/interfaces/IProfileService"
-import configZustandDevTools from "@src/utils/configDevtools"
-import Helper from "@src/utils/helper"
-import { ELocalKey } from "@src/interfaces/ILocal"
+} from "@features/profile/interfaces/IProfileService"
+import configZustandDevTools from "@utils/configDevtools"
+import Helper from "@utils/helper"
+import { ELocalKey } from "@interfaces/ILocal"
 
 export interface IUseProfileStore {
   address: string | undefined

@@ -1,4 +1,4 @@
-import { useCreateWeb3Provider } from "@src/hooks/useWeb3Provider"
+import { useCreateWeb3Provider } from "@hooks/useWeb3Provider"
 import { createContext, ReactNode, useContext } from "react"
 
 const Web3Context = createContext<

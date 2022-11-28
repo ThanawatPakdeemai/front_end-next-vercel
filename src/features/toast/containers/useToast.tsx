@@ -1,5 +1,5 @@
-import IconInfo from "@src/components/icons/InfoIcon"
-import CloseCircledIcon from "@src/components/icons/CloseCircledIcon"
+import IconInfo from "@components/icons/InfoIcon"
+import CloseCircledIcon from "@components/icons/CloseCircledIcon"
 import React, { useCallback } from "react"
 import toast from "react-hot-toast"
 import { BaseToastComponent } from "../components"

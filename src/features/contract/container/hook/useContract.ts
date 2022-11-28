@@ -13,9 +13,9 @@ import {
   getShopContract,
   getStakingContract,
   getUserGameItemsContract
-} from "@src/features/contract/container/contractHelpers"
+} from "@features/contract/container/contractHelpers"
 import { Web3Provider } from "@ethersproject/providers"
-import web3NoAccount from "@src/utils/web3"
+import web3NoAccount from "@utils/web3"
 
 export const useBalanceVault = (
   _provider: Web3Provider | undefined,

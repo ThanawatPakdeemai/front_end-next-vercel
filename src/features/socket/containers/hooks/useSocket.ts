@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from "react"
 import { Socket } from "socket.io-client"
-import { socketSetupManager } from "@src/features/socket/containers/socketSetup"
+import { socketSetupManager } from "@features/socket/containers/socketSetup"
 
 interface IUseSocket {
   path: string

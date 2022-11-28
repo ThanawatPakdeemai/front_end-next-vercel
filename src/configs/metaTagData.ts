@@ -1,4 +1,4 @@
-import { IMetaTagConstants } from "@src/interfaces/IMetaTag"
+import { IMetaTagConstants } from "@interfaces/IMetaTag"
 
 export const DATA_META_TAG: IMetaTagConstants[] = [
   {

@@ -1,4 +1,4 @@
-import services from "@src/configs/axiosGlobalConfig"
+import services from "@configs/axiosGlobalConfig"
 import { IStaking, IStakingdata } from "../../interfaces/IStaking"
 
 export const getStakingAll = ({ _limit, _skip }: IStaking) =>

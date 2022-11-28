@@ -1,4 +1,4 @@
-import services from "@src/configs/axiosGlobalConfig"
+import services from "@configs/axiosGlobalConfig"
 import { IGetAvatar } from "../../interfaces/IAvatarService"
 
 export const getAllAvatar = () =>

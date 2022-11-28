@@ -1,14 +1,14 @@
 import dayjs from "dayjs"
-import Helper from "@src/utils/helper"
+import Helper from "@utils/helper"
 import Axios from "axios"
 import { unstable_batchedUpdates } from "react-dom"
-import useProfileStore from "@src/stores/profileStore"
-import handleDisconnectWallet from "@src/hooks/useWeb3Provider/useCreateWeb3Provider"
-import { refreshProfileToken } from "@src/features/authentication/containers/services/auth.service"
-import { ELocalKey } from "@src/interfaces/ILocal"
-import Config from "."
+import useProfileStore from "@stores/profileStore"
+import handleDisconnectWallet from "@hooks/useWeb3Provider/useCreateWeb3Provider"
+import { refreshProfileToken } from "@features/authentication/containers/services/auth.service"
+import { ELocalKey } from "@interfaces/ILocal"
+import CONFIGS from "."
 
-const baseUrl = Config.API_URL
+const baseUrl = CONFIGS.BASE_URL.API
 const isServer = () => typeof window === "undefined"
 
 const services = Axios.create({

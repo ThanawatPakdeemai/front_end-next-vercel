@@ -1,10 +1,12 @@
 import { ethers, providers } from "ethers"
-import Config from "@src/configs"
+import CONFIGS from "@configs/index"
 
 export const ethHttpRpcProvider = new ethers.providers.JsonRpcProvider(
-  Config.POLYGON_RPC_URL
+  CONFIGS.CHAIN.POLYGON_RPC_URL
 )
 
-const simpleRpcProvider = new providers.JsonRpcProvider(Config.POLYGON_RPC_URL)
+const simpleRpcProvider = new providers.JsonRpcProvider(
+  CONFIGS.CHAIN.POLYGON_RPC_URL
+)
 
 export default simpleRpcProvider

@@ -1,4 +1,4 @@
-import { IFormatService } from "@src/interfaces/IHelper"
+import { IFormatService } from "@interfaces/IHelper"
 
 export interface ICurrentNakaData {
   time: number
@@ -23,6 +23,17 @@ export interface ICurrentNakaResponse {
   data: ICurrentNakaData
 }
 
+export interface IBurnItem {
+  player_id: string
+  item_id: string
+  room_id: string
+  qty: number
+}
+
 export interface IGetNakaServices extends IFormatService {
   data: number
+}
+
+export interface IBurnItemResponse {
+  status: boolean
 }

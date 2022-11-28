@@ -1,8 +1,8 @@
 import {
   IGameItem,
   IGameItemList
-} from "@src/features/gameItem/interfaces/IGameItemService"
-import { IFormatService } from "@src/interfaces/IHelper"
+} from "@features/gameItem/interfaces/IGameItemService"
+import { IFormatService } from "@interfaces/IHelper"
 
 export interface IGameHowTo {
   title: string

@@ -1,4 +1,4 @@
-import services from "@src/configs/axiosGlobalConfig"
+import services from "@configs/axiosGlobalConfig"
 import { IGetHistory, IPlayloadHistory } from "../../interfaces/IHistoryService"
 
 const getHistory = ({ player_id, limit, skip }: IGetHistory) =>

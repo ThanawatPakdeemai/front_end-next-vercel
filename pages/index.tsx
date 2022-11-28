@@ -1,4 +1,4 @@
-import { Layout } from "@src/components/template"
+import { Layout } from "@components/template"
 import { ReactElement } from "react"
 import Image from "@components/atoms/image"
 import { IMAGES } from "@constants/images"

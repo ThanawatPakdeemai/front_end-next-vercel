@@ -1,10 +1,10 @@
 import axios from "axios"
-import { IRefreshToken } from "@src/interfaces/IAuth"
-import useProfileStore from "@src/stores/profileStore"
-import Helper from "@src/utils/helper"
-import services from "@src/configs/axiosGlobalConfig"
-import { IProfileResponse } from "@src/features/profile/interfaces/IProfileService"
-import { ELocalKey } from "@src/interfaces/ILocal"
+import { IRefreshToken } from "@interfaces/IAuth"
+import useProfileStore from "@stores/profileStore"
+import Helper from "@utils/helper"
+import services from "@configs/axiosGlobalConfig"
+import { IProfileResponse } from "@features/profile/interfaces/IProfileService"
+import { ELocalKey } from "@interfaces/ILocal"
 import {
   ICreateNewPassword,
   IForgetPassword

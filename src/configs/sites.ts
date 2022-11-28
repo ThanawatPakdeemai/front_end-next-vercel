@@ -1,44 +1,14 @@
-import Config from "."
+import CONFIGS from "@configs/index"
 
 // Base setting value and default value
 export const DEFAULT_VALUE = {
-  limit: 10,
-  chain_id: Config.CHAIN_ID,
-  chain_name: Config.CHAIN_NAME
+  limit: 10
 }
 
 // Base site information
 export const siteInfo = {
   title: "NAKAMOTO",
   description: "Secure, simple, enjoy and earn $NAKA!"
-}
-
-// Base URL website
-export const BASE_URL = {
-  api: Config.API_URL,
-  game: Config.GAME_URL,
-  baseSite: Config.FRONTEND_URL,
-  support: Config.SUPPORT,
-  marketplace: Config.MARKETPLACE,
-  nakaverse: Config.NAKAVERSE
-}
-
-// Base address on Smart Contract ex.0x0000000...
-export const CONTRACT_ADDRESS = {
-  owner: Config.OWNER,
-  vault: Config.CONTRACT_BALANCE_VAULT,
-  shop: Config.CONTRACT_SHOP,
-  staking: `${Config.CONTRACT_STAKING_30DAY},${Config.CONTRACT_STAKING_60DAY},${Config.CONTRACT_STAKING_90DAY}`,
-  stakingA: `${Config.CONTRACT_STAKING_A_30DAY},${Config.CONTRACT_STAKING_A_60DAY},${Config.CONTRACT_STAKING_A_90DAY}`,
-  stakingFlexible: `${Config.CONTRACT_STAKING_FLEXIBLE_180DAY}`,
-  stakingFlexibleA: `${Config.CONTRACT_STAKING_FLEXIBLE_360DAY}`,
-  itemVault: Config.CONTRACT_ITEM_VAULT
-    ? Config.CONTRACT_ITEM_VAULT
-    : Config.CONTRACT_ITEM_VAULT,
-  erc20: Config.CONTRACT_ERC20 ? Config.CONTRACT_ERC20 : "",
-  bep20: Config.CONTRACT_BEP20 ? Config.CONTRACT_BEP20 : "",
-  p2pBinance: Config.CONTRACT_P2P_BINANCE ? Config.CONTRACT_P2P_BINANCE : "",
-  p2pPolygon: Config.CONTRACT_P2P_POLYGON ? Config.CONTRACT_P2P_POLYGON : ""
 }
 
 // Setting slick player ranking
@@ -116,17 +86,17 @@ export const SETTING_RANKING = {
 }
 
 export const CHAIN_ID_CONFIG = {
-  binance: parseInt(Config.BNB_CHAIN_ID, 10),
-  polygon: parseInt(Config.CHAIN_ID, 10)
+  binance: parseInt(CONFIGS.CHAIN.BNB_CHAIN_ID, 10),
+  polygon: parseInt(CONFIGS.CHAIN.CHAIN_ID, 10)
 }
 
 export const PROVIDER_CONFIG = {
   binance: [
     {
       chainId: `0x${CHAIN_ID_CONFIG.binance.toString(16)}`,
-      chainName: Config.BNB_CHAIN_NAME,
-      rpcUrls: [`${Config.BNB_RPC_URL}`],
-      blockExplorerUrls: [`${Config.BNB_SCAN}/`],
+      chainName: CONFIGS.CHAIN.BNB_CHAIN_NAME,
+      rpcUrls: [`${CONFIGS.CHAIN.BNB_RPC_URL}`],
+      blockExplorerUrls: [`${CONFIGS.CHAIN.BNB_SCAN}/`],
       nativeCurrency: {
         name: "BNB",
         symbol: "BNB",
@@ -137,9 +107,9 @@ export const PROVIDER_CONFIG = {
   polygon: [
     {
       chainId: `0x${CHAIN_ID_CONFIG.polygon.toString(16)}`,
-      chainName: Config.CHAIN_NAME,
-      rpcUrls: [Config.POLYGON_RPC_URL],
-      blockExplorerUrls: [`${Config.POLYGON_SCAN}/`],
+      chainName: CONFIGS.CHAIN.CHAIN_NAME,
+      rpcUrls: [CONFIGS.CHAIN.POLYGON_RPC_URL],
+      blockExplorerUrls: [`${CONFIGS.CHAIN.POLYGON_SCAN}/`],
       nativeCurrency: {
         name: "NAKA",
         symbol: "MATIC",

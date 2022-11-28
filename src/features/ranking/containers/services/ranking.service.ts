@@ -1,4 +1,4 @@
-import services from "@src/configs/axiosGlobalConfig"
+import services from "@configs/axiosGlobalConfig"
 import { IPlayerRanking, IRanking } from "../../interfaces/IRanking"
 
 // Call api to get players in the game order by NAKA

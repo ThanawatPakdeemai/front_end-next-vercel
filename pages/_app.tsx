@@ -7,14 +7,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { useRouter } from "next/router"
 import Head from "next/head"
 // import { createTheme, ThemeProvider } from "@mui/material"
-// import { theme } from "@src/styles/themes/darkTheme"
+// import { theme } from "@styles/themes/darkTheme"
 // import type { ThemeOptions } from "@mui/material"
-import { DATA_META_TAG } from "@src/configs/metaTagData"
-import { ProviderApp, Web3Provider } from "@src/providers"
+import { DATA_META_TAG } from "@configs/metaTagData"
+import { ProviderApp, Web3Provider } from "@providers/index"
 
-import "@src/styles/globals.css"
-import "@src/styles/css/common.css"
-import "@src/styles/fonts.css"
+import "@styles/globals.css"
+import "@styles/css/common.css"
+import "@styles/fonts.css"
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (_page: ReactElement) => ReactNode

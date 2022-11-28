@@ -1,4 +1,4 @@
-import { IFormatService } from "@src/interfaces/IHelper"
+import { IFormatService } from "@interfaces/IHelper"
 
 export interface IGameItem {
   name: string

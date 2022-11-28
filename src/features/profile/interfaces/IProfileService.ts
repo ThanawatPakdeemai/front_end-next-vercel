@@ -1,4 +1,4 @@
-import { IInfo } from "@src/interfaces/IHelper"
+import { IInfo } from "@interfaces/IHelper"
 
 export interface IProfileRank {
   name: string

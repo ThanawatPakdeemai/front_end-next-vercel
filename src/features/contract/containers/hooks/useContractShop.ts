@@ -1,12 +1,11 @@
-import { ethers, BigNumber } from "ethers"
-import { useShop } from "@features/contract/container/hook/useContract"
+import { useShop } from "@features/contract/containers/hooks/useContract"
 import { useState } from "react"
 import { useWeb3Provider } from "@providers/index"
 import { ITransactionResponse } from "@interfaces/ITransaction"
 import CONFIGS from "@configs/index"
 
-const useVaultApproval = () => {
-  const { signer, address: account } = useWeb3Provider()
+const useContractShop = () => {
+  const { signer } = useWeb3Provider()
   const [isLoading, setIsLoading] = useState(false)
   const shopContract = useShop(signer, CONFIGS.CONTRACT_ADDRESS.SHOP)
 
@@ -49,6 +48,7 @@ const useVaultApproval = () => {
           reject(error)
         })
     })
+
   return {
     AddBullets,
     IsApproved,
@@ -56,4 +56,4 @@ const useVaultApproval = () => {
   }
 }
 
-export default useVaultApproval
+export default useContractShop

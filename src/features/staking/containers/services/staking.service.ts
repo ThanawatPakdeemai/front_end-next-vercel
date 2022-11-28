@@ -1,14 +1,17 @@
 import services from "@configs/axiosGlobalConfig"
-import { IStaking, IStakingdata } from "../../interfaces/IStaking"
+import {
+  IStakingPaging,
+  IStakingResponse
+} from "../../interfaces/IStakingService"
 
-export const getStakingAll = ({ _limit, _skip }: IStaking) =>
-  new Promise<IStakingdata>((resolve, reject) => {
+export const getStakingAll = ({ _limit, _skip }: IStakingPaging) =>
+  new Promise<IStakingResponse>((resolve, reject) => {
     const data = {
       limit: _limit,
       skip: _skip
     }
     services
-      .post<IStakingdata>(`/staking/all `, { ...data })
+      .post<IStakingResponse>(`/staking/all `, { ...data })
       .then((res) => {
         resolve(res.data)
       })

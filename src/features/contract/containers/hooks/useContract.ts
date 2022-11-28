@@ -13,7 +13,7 @@ import {
   getShopContract,
   getStakingContract,
   getUserGameItemsContract
-} from "@features/contract/container/contractHelpers"
+} from "@features/contract/containers/contractHelpers"
 import { Web3Provider } from "@ethersproject/providers"
 import web3NoAccount from "@utils/web3"
 

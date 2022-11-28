@@ -1,4 +1,4 @@
-export interface IStaking {
+export interface IStakingPaging {
   _limit: number
   _skip: number
 }
@@ -20,7 +20,7 @@ export interface IStakingAll {
   date: string
 }
 
-export interface IStakingdata {
+export interface IStakingResponse {
   data: IStakingAll[]
   info: {
     pages: number

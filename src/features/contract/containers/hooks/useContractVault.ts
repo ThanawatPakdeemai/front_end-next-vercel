@@ -3,7 +3,7 @@ import { ethers, BigNumber } from "ethers"
 import {
   useERC20,
   useBalanceVault
-} from "@features/contract/container/hook/useContract"
+} from "@features/contract/containers/hooks/useContract"
 import { useState } from "react"
 import { useWeb3Provider } from "@providers/index"
 import { ITransactionResponse } from "@interfaces/ITransaction"

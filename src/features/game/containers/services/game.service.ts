@@ -9,7 +9,7 @@ import {
   IGameService,
   IGameRoomService,
   IGameCategoryService
-} from "@features/game/interfaces/IGameService"
+} from "@feature/game/interfaces/IGameService"
 
 export const getAllGames = () =>
   new Promise<IGameService>((resolve, reject) => {

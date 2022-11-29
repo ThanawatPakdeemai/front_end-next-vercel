@@ -4,7 +4,7 @@ import Axios from "axios"
 import { unstable_batchedUpdates } from "react-dom"
 import useProfileStore from "@stores/profileStore"
 import handleDisconnectWallet from "@hooks/useWeb3Provider/useCreateWeb3Provider"
-import { refreshProfileToken } from "@features/authentication/containers/services/auth.service"
+import { refreshProfileToken } from "@feature/authentication/containers/services/auth.service"
 import { ELocalKey } from "@interfaces/ILocal"
 import CONFIGS from "."
 

@@ -1,4 +1,4 @@
-import { useShop } from "@features/contract/containers/hooks/useContract"
+import { useShop } from "@feature/contract/containers/hooks/useContract"
 import { useState } from "react"
 import { useWeb3Provider } from "@providers/index"
 import { ITransactionResponse } from "@interfaces/ITransaction"

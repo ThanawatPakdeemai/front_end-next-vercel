@@ -2,7 +2,7 @@ import {
   IMultiOrderListDataServ,
   IMultiOrderListServ,
   IMultiOrderServ
-} from "@features/multichain/interfaces/IMultichain"
+} from "@feature/multichain/interfaces/IMultichain"
 import services from "@src/configs/axiosGlobalConfig"
 
 export const getP2PDexOrderByAddr = (

@@ -4,7 +4,7 @@ import {
   IGetProfileResponse,
   IPlayerInfoResponse,
   IProfile
-} from "@features/profile/interfaces/IProfileService"
+} from "@feature/profile/interfaces/IProfileService"
 
 export const getProfileByEmail = (_email: string) =>
   new Promise<IProfile>((resolve, reject) => {

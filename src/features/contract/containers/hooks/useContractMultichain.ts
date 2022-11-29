@@ -1,7 +1,7 @@
 import {
   useP2PBinance,
   useP2PPolygon
-} from "@features/contract/containers/hooks/useContract"
+} from "@feature/contract/containers/hooks/useContract"
 import { ethers } from "ethers"
 import { BigNumberish } from "@ethersproject/bignumber"
 import { useState } from "react"

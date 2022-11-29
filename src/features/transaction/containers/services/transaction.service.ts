@@ -1,7 +1,7 @@
 import {
   ITransData,
   ITransWalletService
-} from "@features/transaction/interfaces/ITransaction"
+} from "@feature/transaction/interfaces/ITransaction"
 import services from "@src/configs/axiosGlobalConfig"
 
 export const createTransWallet = (

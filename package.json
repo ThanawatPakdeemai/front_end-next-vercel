@@ -28,6 +28,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@ethersproject/bignumber": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
     "@fontsource/roboto": "^4.5.8",
     "@mui/material": "^5.10.9",

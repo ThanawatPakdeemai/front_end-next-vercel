@@ -4,7 +4,7 @@ import {
   IGameItemList,
   IGameItemService,
   IGameItemListService
-} from "../../interfaces/IGameItemService"
+} from "@features/gameItem/interfaces/IGameItemService"
 
 export const getAllGameItems = () =>
   new Promise<IGameItemListService>((resolve, reject) => {

@@ -1,9 +1,9 @@
-import services from "@src/configs/axiosGlobalConfig"
 import {
+  IMultiOrderListDataServ,
   IMultiOrderListServ,
-  IMultiOrderServ,
-  IMultiOrderListDataServ
-} from "../interfaces/IMultichain"
+  IMultiOrderServ
+} from "@features/multichain/interfaces/IMultichain"
+import services from "@src/configs/axiosGlobalConfig"
 
 export const getP2PDexOrderByAddr = (
   _address: string,

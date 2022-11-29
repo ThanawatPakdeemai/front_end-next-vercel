@@ -5,7 +5,7 @@ import {
   ICreateRoom,
   IRoomMap,
   RoomData
-} from "../../interfaces/IRooms"
+} from "@features/rooms/interfaces/IRooms"
 
 const createRoom = ({
   _gameId,

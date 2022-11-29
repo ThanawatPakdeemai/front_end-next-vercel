@@ -8,7 +8,7 @@ import { ELocalKey } from "@interfaces/ILocal"
 import {
   ICreateNewPassword,
   IForgetPassword
-} from "../../interfaces/IAuthService"
+} from "@features/authentication/interfaces/IAuthService"
 
 export const signIn = (_email: string, _password: string) =>
   new Promise<IProfileResponse>((resolve, reject) => {

@@ -8,7 +8,7 @@ import {
   ITournamentMatchService,
   ITournamentPlayerListService,
   ITournamentService
-} from "../../interfaces/ITournament"
+} from "@features/tournament/interfaces/ITournament"
 
 export const registTournament = (_tournamentId: string) =>
   new Promise<ITournamentPlayerService>((resolve, reject) => {

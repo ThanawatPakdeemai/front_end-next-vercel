@@ -1,5 +1,5 @@
 import services from "@configs/axiosGlobalConfig"
-import { IPlayerRanking, IRanking } from "../../interfaces/IRanking"
+import { IPlayerRanking, IRanking } from "@features/ranking/interfaces/IRanking"
 
 // Call api to get players in the game order by NAKA
 const getPlayersRanking = (url: string) =>

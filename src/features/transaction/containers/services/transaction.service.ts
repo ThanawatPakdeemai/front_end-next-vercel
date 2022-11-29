@@ -1,5 +1,8 @@
+import {
+  ITransData,
+  ITransWalletService
+} from "@features/transaction/interfaces/ITransaction"
 import services from "@src/configs/axiosGlobalConfig"
-import { ITransData, ITransWalletService } from "../interfaces/ITransaction"
 
 export const createTransWallet = (
   _playerId: string,

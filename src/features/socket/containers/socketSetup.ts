@@ -1,11 +1,11 @@
-import Config from "@src/configs"
+import CONFIGS from "@configs/index"
 import { Manager } from "socket.io-client"
 
 export interface ISocketContext {
   socketIO: Manager
 }
 
-export const socketSetupManager = new Manager(`${Config.API_URL}`, {
+export const socketSetupManager = new Manager(`${CONFIGS.BASE_URL.API}`, {
   autoConnect: false,
   reconnection: true,
   secure: true,

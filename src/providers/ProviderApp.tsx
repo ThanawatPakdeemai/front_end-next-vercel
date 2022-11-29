@@ -1,4 +1,4 @@
-import { ToasterBox } from "@src/features/toast/components"
+import { ToasterBox } from "@features/toast/components"
 import React, { memo, useEffect } from "react"
 // import ModalProvider from "./ModalProvider"
 import SocketProvider from "./SocketProvider"

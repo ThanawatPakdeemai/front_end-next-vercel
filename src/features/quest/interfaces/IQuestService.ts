@@ -1,4 +1,4 @@
-import { IFormatMessageService } from "@src/interfaces/IHelper"
+import { IFormatMessageService } from "@interfaces/IHelper"
 
 export interface IQuestReward {
   type: string

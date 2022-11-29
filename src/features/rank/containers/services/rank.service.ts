@@ -1,7 +1,7 @@
-import services from "@src/configs/axiosGlobalConfig"
-import { IProfile } from "@src/features/profile/interfaces/IProfileService"
-import Helper from "@src/utils/helper"
-import { ELocalKey } from "@src/interfaces/ILocal"
+import services from "@configs/axiosGlobalConfig"
+import { IProfile } from "@features/profile/interfaces/IProfileService"
+import Helper from "@utils/helper"
+import { ELocalKey } from "@interfaces/ILocal"
 
 const email = Helper.getLocalStorage(ELocalKey.email)
 

@@ -1,8 +1,8 @@
 import {
   IGameItem,
   IGameItemList
-} from "@src/features/gameItem/interfaces/IGameItemService"
-import { IFormatService } from "@src/interfaces/IHelper"
+} from "@features/gameItem/interfaces/IGameItemService"
+import { IFormatService } from "@interfaces/IHelper"
 
 export interface IGameHowTo {
   title: string
@@ -20,16 +20,17 @@ export interface IGameSupport {
   supported: boolean
 }
 
-export interface IGameCurrentPlayerItemStatus {
+interface IGameBase {
   _id: string
   player_id: string
+}
+
+export interface IGameCurrentPlayerItemStatus extends IGameBase {
   timestamp_burn: Date
   socket_id: string
 }
 
-export interface IGameRewards {
-  _id: string
-  player_id: string
+export interface IGameRewards extends IGameBase {
   wallet_address: string
   naka_for_player: number
 }
@@ -115,26 +116,36 @@ export interface IGame {
   image_free_to_earn_icon?: string
 }
 
+export interface IGameRewardByPlayer extends IGameBase {
+  claim_status: boolean
+  item_amount: number
+  event_number: number
+  score: number
+  is_active: boolean
+  item_id: string
+  game_id: string
+  createdAt: Date
+  updatedAt: Date
+  current_time: Date
+  __v?: number
+}
+
 export interface IGameService extends IFormatService {
   data: IGame
 }
 
-export interface IGameCurrentPlayer {
+export interface IGameCurrentPlayer extends IGameBase {
   status: string
   item_burn: boolean
   transaction_status: boolean
-  _id: string
-  player_id: string
   avatar: string
   username: string
   timestamp: Date
   rank: string
 }
 
-export interface IGameHistoryUserPlay {
+export interface IGameHistoryUserPlay extends IGameBase {
   status: string
-  _id: string
-  player_id: string
   timestamp: Date
   qty: number
 }
@@ -186,12 +197,10 @@ export interface IGameUsedItem {
   qty: number
 }
 
-export interface IGameSummary {
-  _id: string
+export interface IGameSummary extends IGameBase {
   tx_address: string
   naka_for_player: number
   room_id: string
-  player_id: string
   current_score: number
   used_items: IGameUsedItem[]
   avatar: string
@@ -213,22 +222,6 @@ export interface IGameReport {
   cost_per_game_naka: string
   profit_potential_min: number
   profit_potential_max: number
-}
-
-export interface IGameRewardByPlayer {
-  claim_status: boolean
-  item_amount: number
-  event_number: number
-  score: number
-  is_active: boolean
-  _id: string
-  player_id: string
-  item_id: string
-  game_id: string
-  createdAt: Date
-  updatedAt: Date
-  current_time: Date
-  __v?: number
 }
 
 export interface IGameCategoryDetail extends IGameCategory {

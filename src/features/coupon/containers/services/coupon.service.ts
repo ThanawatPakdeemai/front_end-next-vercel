@@ -1,5 +1,5 @@
-import services from "@src/configs/axiosGlobalConfig"
-import { IResponseCoupon } from "../../interfaces/ICoupon"
+import services from "@configs/axiosGlobalConfig"
+import { IResponseCoupon } from "../../interfaces/ICouponService"
 
 const redeemCode = (coupon_code: string) =>
   new Promise<IResponseCoupon>((resolve, reject) => {

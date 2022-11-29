@@ -1,4 +1,4 @@
-import { IInfo } from "@src/interfaces/IHelper"
+import { IInfo } from "@interfaces/IHelper"
 
 interface ICreateNewPasswordData {
   message: string

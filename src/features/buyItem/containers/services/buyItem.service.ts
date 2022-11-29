@@ -1,11 +1,11 @@
-import services from "@src/configs/axiosGlobalConfig"
+import services from "@configs/axiosGlobalConfig"
 import {
   IBuyItems,
-  IBuyItemTransectionResponse
+  IBuyItemTransactionResponse
 } from "../../interfaces/IBuyItemService"
 
 const buyItems = ({ player_id, item_id, qty }: IBuyItems) =>
-  new Promise<IBuyItemTransectionResponse>((resolve, reject) => {
+  new Promise<IBuyItemTransactionResponse>((resolve, reject) => {
     if (player_id) {
       services
         .put("/inventory/buy-item-smartcontract", {

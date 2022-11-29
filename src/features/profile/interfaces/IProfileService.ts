@@ -1,4 +1,4 @@
-import { IInfo } from "@src/interfaces/IHelper"
+import { IInfo } from "@interfaces/IHelper"
 
 export interface IProfileRank {
   name: string
@@ -8,24 +8,32 @@ export interface IProfileRank {
   game_id: string
 }
 
-export interface IProfile {
+export interface IPlayerInfoRankElement extends IProfileRank {}
+
+interface IProfileBase {
+  subscription: boolean
+  email: string
+}
+
+interface IProfileMain extends IProfileBase {
   status: number
   createdAt: Date
-  updatedAt: Date
-  banned: []
-  ban_time: Date
-  friend: []
-  email: string
-  nonce: number
   role: string
   is_active: boolean
   avatar: string
   username: string
   address: string
-  ranks: IProfileRank[]
   id: string
+}
+
+export interface IProfile extends IProfileMain {
+  updatedAt: Date
+  banned: []
+  ban_time: Date
+  friend: []
+  nonce: number
+  ranks: IProfileRank[]
   jwtToken: string
-  subscription: boolean
   stamina_point: number
   total_stamina: number
   recovery_stamina_time: Date
@@ -36,10 +44,8 @@ export interface IProfile {
   level: number
 }
 
-export interface IProfileResponse {
-  status: boolean
-  data: IProfile | null
-  message: string | null
+export interface IGetProfileResponse extends IProfileMain {
+  _id: string
 }
 
 export interface IGetUserByIdData {
@@ -52,6 +58,19 @@ export interface IGetUserByIdData {
   avatar: string
   username: string
   id: string
+}
+
+// Type for Register user
+export interface IRegister extends IProfileBase {
+  verifycode: string
+  password: string
+  referral?: string | null | undefined
+}
+
+export interface IProfileResponse {
+  status: boolean
+  data: IProfile | null
+  message: string | null
 }
 
 export interface IGetUserById {
@@ -72,15 +91,6 @@ export interface IProfileVerify {
   avatar: string
   address: string
   password: string
-}
-
-// Type for Register user
-export interface IRegister {
-  email: string
-  verifycode: string
-  password: string
-  referral?: string | null | undefined
-  subscription: boolean
 }
 
 // Type for Login user
@@ -204,30 +214,11 @@ export interface IPlayerInfoGameData {
   id: string
 }
 
-// export interface IPlayerInfoGameData {
-//   name: string
-//   story: string
-//   image: string
-//   game_type: string
-//   winrate: string
-//   played: number
-//   rank: string
-//   rankScore: number
-// }
-
 export interface IPlayerPageInfo {
   pages?: number
   limit?: number
   currentCount?: number
   totalCount?: number
-}
-
-export interface IPlayerInfoRankElement {
-  name: string
-  score: number
-  _id: string
-  rank_id: string
-  game_id: string
 }
 
 export interface IPlayerInfoUserDetail {
@@ -301,20 +292,6 @@ export interface IPlayerInfoResponse {
   status: boolean
   message: string
   data: IPlayerInfoData
-}
-
-export interface IGetProfileResponse {
-  _id: string
-  status: number
-  createdAt: Date
-  email: string
-  role: string
-  is_active: boolean
-  avatar: string
-  username: string
-  address: string
-  subscription: boolean
-  id: string
 }
 
 export interface IDataPlayerInfoResponse {

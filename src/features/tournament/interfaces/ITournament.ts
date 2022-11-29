@@ -1,4 +1,4 @@
-import { IFormatService } from "@src/interfaces/IHelper"
+import { IFormatService } from "@interfaces/IHelper"
 
 interface IID {
   _id: string

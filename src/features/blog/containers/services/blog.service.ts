@@ -1,4 +1,4 @@
-import services from "@src/configs/axiosGlobalConfig"
+import services from "@configs/axiosGlobalConfig"
 import {
   Blog,
   IBlogDetailResponse,
@@ -21,7 +21,7 @@ const getBlogAll = ({
       sort
     }
     services
-      .post(`/blog/list/${cate}`, { ...data })
+      .post<IBlogResponse>(`/blog/list/${cate}`, { ...data })
       .then((res) => {
         resolve(res.data)
       })

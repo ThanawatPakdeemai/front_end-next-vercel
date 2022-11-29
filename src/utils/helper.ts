@@ -1,8 +1,8 @@
-import Config from "@src/configs"
+import CONFIGS from "@configs/index"
 import { ethers } from "ethers"
 import CryptoJS from "crypto-js"
-import { IPropsFormatNumberOption } from "@src/interfaces/IHelper"
-import { ILocal, TLocalKey, ELocalKey } from "@src/interfaces/ILocal"
+import { IPropsFormatNumberOption } from "@interfaces/IHelper"
+import { ILocal, TLocalKey, ELocalKey } from "@interfaces/ILocal"
 
 const Helper = {
   setLocalStorage({ key, value }: ILocal) {
@@ -29,11 +29,11 @@ const Helper = {
     return accounts
   },
   encryptWithAES(data: string) {
-    const passphrase = `${Config.KEYTEXT}`
+    const passphrase = `${CONFIGS.KEYTEXT}`
     return CryptoJS.AES.encrypt(data, passphrase).toString()
   },
   decryptWithAES(ciphertext: string) {
-    const passphrase = `${process.env.KEYTEXT}`
+    const passphrase = `${CONFIGS.KEYTEXT}`
     const bytes = CryptoJS.AES.decrypt(ciphertext, passphrase)
     const originalText = bytes.toString(CryptoJS.enc.Utf8)
     return originalText
@@ -41,7 +41,7 @@ const Helper = {
   decryptSocketWithAES<T>(ciphertext: string): T | undefined {
     if (ciphertext) {
       const removeDoubleQuotes = ciphertext.replace(/["']/g, "")
-      const passphrase = `${process.env.KEYTEXT}`
+      const passphrase = `${CONFIGS.KEYTEXT}`
       const bytes = CryptoJS.AES.decrypt(removeDoubleQuotes, passphrase)
 
       const originalText = bytes.toString(CryptoJS.enc.Utf8)

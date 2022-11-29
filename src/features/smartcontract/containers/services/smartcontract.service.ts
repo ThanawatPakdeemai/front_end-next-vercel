@@ -4,7 +4,7 @@ import {
   IGetNakaServices,
   IBurnItem,
   IBurnItemResponse
-} from "../../interfaces/ISmartContractService"
+} from "@features/smartcontract/interfaces/ISmartContractService"
 
 export const getBalanceOf = (_address: string, _item_id: number) =>
   new Promise<IGetNakaServices>((resolve, reject) => {

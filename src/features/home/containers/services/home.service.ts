@@ -2,7 +2,7 @@ import services from "@configs/axiosGlobalConfig"
 import {
   IHomeSlideResponse,
   IPointCurrentResponse
-} from "../../interfaces/IHomeService"
+} from "@features/home/interfaces/IHomeService"
 
 const getHomeSlide = () =>
   new Promise<IHomeSlideResponse>((resolve, reject) => {

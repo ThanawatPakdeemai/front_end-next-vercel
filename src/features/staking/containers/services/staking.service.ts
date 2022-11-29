@@ -2,7 +2,7 @@ import services from "@configs/axiosGlobalConfig"
 import {
   IStakingPaging,
   IStakingResponse
-} from "../../interfaces/IStakingService"
+} from "@features/staking/interfaces/IStakingService"
 
 export const getStakingAll = ({ _limit, _skip }: IStakingPaging) =>
   new Promise<IStakingResponse>((resolve, reject) => {

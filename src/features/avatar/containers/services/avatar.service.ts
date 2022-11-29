@@ -1,5 +1,5 @@
 import services from "@configs/axiosGlobalConfig"
-import { IGetAvatar } from "../../interfaces/IAvatarService"
+import { IGetAvatar } from "@features/avatar/interfaces/IAvatarService"
 
 export const getAllAvatar = () =>
   new Promise<IGetAvatar>((resolve, reject) => {

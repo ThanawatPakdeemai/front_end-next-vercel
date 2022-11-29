@@ -1,8 +1,11 @@
-import CONFIGS from "@configs/index"
 import { ethers } from "ethers"
+import { BigNumber, BigNumberish, parseFixed } from "@ethersproject/bignumber"
+import CONFIGS from "@configs/index"
 import CryptoJS from "crypto-js"
 import { IPropsFormatNumberOption } from "@interfaces/IHelper"
 import { ILocal, TLocalKey, ELocalKey } from "@interfaces/ILocal"
+
+const names = ["wei", "kwei", "mwei", "gwei", "szabo", "finney", "ether"]
 
 const Helper = {
   setLocalStorage({ key, value }: ILocal) {
@@ -66,6 +69,24 @@ const Helper = {
       return true
     }
     return false
+  },
+  BNToNumber(_bn: string) {
+    return Number(BigNumber.from(_bn).toString())
+  },
+  WeiToNumber(_wei: string) {
+    return Number(ethers.utils.formatEther(_wei))
+  },
+  parseUnits(value: string, unitName?: BigNumberish): BigNumber {
+    if (typeof unitName === "string") {
+      const index = names.indexOf(unitName)
+      if (index !== -1) {
+        unitName = 3 * index
+      }
+    }
+    return parseFixed(value, unitName != null ? unitName : 18)
+  },
+  toWei(ether: string): BigNumber {
+    return this.parseUnits(ether, 18)
   }
   // async helperAxiosAPI<T>(promiseAPI: Promise<AxiosResponse<T, any>>) {
   //   return promiseAPI

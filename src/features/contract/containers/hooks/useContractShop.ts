@@ -10,7 +10,7 @@ const useContractShop = () => {
   const shopContract = useShop(signer, CONFIGS.CONTRACT_ADDRESS.SHOP)
 
   // Buy items -- SHOP
-  const AddBullets = async (
+  const AddBullets = (
     _item: number,
     _number: number,
     _nakaAmount: string,

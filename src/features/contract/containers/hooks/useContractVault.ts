@@ -17,7 +17,7 @@ const useContractVault = () => {
     CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
   )
 
-  const checkAllowNaka = async (_address: string) =>
+  const checkAllowNaka = (_address: string) =>
     new Promise((resolve, reject) => {
       setIsLoading(true)
       erc20Contract.methods
@@ -48,7 +48,7 @@ const useContractVault = () => {
               "Please try again, Confirm the transaction and make sure you are paying enough gas!"
             reject(errMsg)
           })
-      }
+      } else reject()
     })
 
   const depositNaka = async (_address: string, _nakaAmount: string) =>
@@ -87,25 +87,26 @@ const useContractVault = () => {
         })
     })
 
-  const checkSufficient = async (bet: BigNumber, address: string) =>
+  const checkSufficient = async (_bet: BigNumber) =>
     new Promise<Boolean>((resolve, reject) => {
       try {
         setIsLoading(true)
-        erc20Contract.allowance(account, address).then((response: string) => {
-          const currentAllowance = BigNumber.from(response)
+        erc20Contract
+          .allowance(account, CONFIGS.CONTRACT_ADDRESS.ERC20)
+          .then((response: string) => {
+            const currentAllowance = BigNumber.from(response)
+            const valueBetString = BigNumber.from(_bet).toString()
+            const toCheck = BigNumber.from(valueBetString)
+            const _gt = currentAllowance.gte(toCheck)
 
-          const valueBetString = BigNumber.from(bet).toString()
-          const toCheck = BigNumber.from(valueBetString)
-          const _gt = currentAllowance.gte(toCheck)
-
-          setIsLoading(false)
-          resolve(_gt)
-        })
+            setIsLoading(false)
+            resolve(_gt)
+          })
       } catch (error) {
         if (error instanceof Error) {
           setIsLoading(false)
           reject(error)
-        }
+        } else reject()
       }
     })
 

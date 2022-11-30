@@ -1,10 +1,10 @@
 import services from "@configs/axiosGlobalConfig"
 import {
-  ICurrentNakaResponse,
   IGetNakaServices,
   IBurnItem,
-  IBurnItemResponse
-} from "@feature/smartcontract/interfaces/ISmartContractService"
+  IBurnItemResponse,
+  ICurrentNakaData
+} from "@feature/inventory/interfaces/IInventoryService"
 
 export const getBalanceOf = (_address: string, _item_id: number) =>
   new Promise<IGetNakaServices>((resolve, reject) => {
@@ -40,9 +40,9 @@ export const getNaka = (_address: string) =>
   })
 
 export const getCurrentNaka = () =>
-  new Promise<ICurrentNakaResponse>((resolve, reject) => {
+  new Promise<ICurrentNakaData>((resolve, reject) => {
     services
-      .get<ICurrentNakaResponse>(`/price/current`)
+      .get<ICurrentNakaData>(`/price/current`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

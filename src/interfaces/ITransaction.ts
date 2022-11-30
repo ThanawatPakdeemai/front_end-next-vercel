@@ -102,3 +102,8 @@ export interface IBuyItemResponse {
   status: boolean
   data: IBuyItemTransactionResponse
 }
+
+export interface IGetEventLog {
+  allowed: string[]
+  events: object
+}

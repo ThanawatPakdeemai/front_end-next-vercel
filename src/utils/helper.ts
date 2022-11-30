@@ -3,6 +3,7 @@ import { BigNumber, BigNumberish, parseFixed } from "@ethersproject/bignumber"
 import CONFIGS from "@configs/index"
 import CryptoJS from "crypto-js"
 import { IPropsFormatNumberOption } from "@interfaces/IHelper"
+import { IGetEventLog } from "@interfaces/ITransaction"
 import { ILocal, TLocalKey, ELocalKey } from "@interfaces/ILocal"
 import { ICurrentNakaData } from "@feature/inventory/interfaces/IInventoryService"
 import { getCurrentNaka } from "@feature/inventory/containers/services/inventory.service"
@@ -160,12 +161,6 @@ const Helper = {
     }
     return false
   },
-  BNToNumber(_bn: string) {
-    return Number(BigNumber.from(_bn).toString())
-  },
-  WeiToNumber(_wei: string) {
-    return Number(ethers.utils.formatEther(_wei))
-  },
   parseUnits(_value: string, _unitName?: BigNumberish): BigNumber {
     if (typeof _unitName === "string") {
       const index = names.indexOf(_unitName)
@@ -174,6 +169,12 @@ const Helper = {
       }
     }
     return parseFixed(_value, _unitName != null ? _unitName : 18)
+  },
+  BNToNumber(_bn: string) {
+    return Number(BigNumber.from(_bn).toString())
+  },
+  WeiToNumber(_wei: string) {
+    return Number(ethers.utils.formatEther(_wei))
   },
   toWei(_ether: string): BigNumber {
     return this.parseUnits(_ether, 18)
@@ -196,6 +197,33 @@ const Helper = {
       itemToFixed.substring(0, itemToFixed.length - 1)
     )
     return itemPerNaka
+  },
+  getFeeGas(effectiveGasPrice: string, gasUsed: number) {
+    return this.WeiToNumber(effectiveGasPrice) * gasUsed
+  },
+  calFloat(_val: number, _regit = 4) {
+    if (_val === 0 && _regit) {
+      return _val.toFixed(_regit)
+    }
+    if (_val && _regit) {
+      // eslint-disable-next-line prefer-exponentiation-operator, no-restricted-properties
+      const decimal = Math.pow(10, _regit)
+      const multiplyValue = Number(_val * decimal)
+      const divideValue = multiplyValue / decimal
+
+      return divideValue.toFixed(_regit)
+    }
+  },
+  getEventLog({ allowed, events }: IGetEventLog) {
+    let data = null
+    data = Object.keys(events)
+      .filter((key) => allowed.includes(key))
+      .reduce((obj: any, key: any) => {
+        obj[key] = events[key]
+        return obj
+      }, {})
+
+    return data
   }
   // async helperAxiosAPI<T>(promiseAPI: Promise<AxiosResponse<T, any>>) {
   //   return promiseAPI

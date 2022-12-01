@@ -197,6 +197,10 @@ export interface IGameUsedItem {
   qty: number
 }
 
+export interface IGameAllState {
+  data: IGame[]
+}
+
 export interface IGameSummary extends IGameBase {
   tx_address: string
   naka_for_player: number

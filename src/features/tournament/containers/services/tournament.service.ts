@@ -7,7 +7,8 @@ import {
   ITournamentMatchRoomService,
   ITournamentMatchService,
   ITournamentPlayerListService,
-  ITournamentService
+  ITournamentService,
+  IGetTourRegister
 } from "@feature/tournament/interfaces/ITournament"
 
 export const registTournament = (_tournamentId: string) =>
@@ -24,7 +25,7 @@ export const registTournament = (_tournamentId: string) =>
       .catch((error) => reject(error))
   })
 
-export const getTourRegister = (_limit: number, _page: number, _sort: string) =>
+export const getTourRegister = ({ _limit, _page, _sort }: IGetTourRegister) =>
   new Promise<ITournamentPlayerListService>((resolve, reject) => {
     const data = {
       limit: _limit,

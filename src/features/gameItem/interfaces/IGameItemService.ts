@@ -39,3 +39,13 @@ export interface IGameItemService extends IFormatService {
 export interface IGameItemBalanceService extends IFormatService {
   data: number
 }
+
+export interface IGetGameItemsByGameId {
+  _playerId: string
+  _gameId: string
+}
+
+export interface IGetGameItemsBalanceByItemId {
+  _address: string
+  _itemIdSmartContract: string
+}

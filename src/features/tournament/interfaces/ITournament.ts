@@ -228,3 +228,9 @@ export interface ITournamentPlayerService extends IFormatService {
 export interface ITournamentMatchRoomService extends IFormatService {
   data: ITournamentMatchRoomData
 }
+
+export interface IGetTourRegister {
+  _limit: number
+  _page: number
+  _sort: string
+}

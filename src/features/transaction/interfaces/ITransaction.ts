@@ -45,3 +45,20 @@ export interface ITransactionWalletData extends ITransData, IItemId {
 export interface ITransWalletService extends IFormatService {
   data: ITransactionWalletData[]
 }
+
+interface IParamTrans {
+  _playerId: string
+  _type: string
+}
+
+export interface ICreateTransWallet extends IParamTrans {
+  _dateTime: string
+  _amount: number
+  _fee: number
+  _txHash: string
+}
+
+export interface IGetTransWallet extends IParamTrans {
+  _limit: string
+  _page: string
+}

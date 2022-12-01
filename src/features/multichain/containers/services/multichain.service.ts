@@ -1,15 +1,20 @@
 import {
   IMultiOrderListDataServ,
   IMultiOrderListServ,
-  IMultiOrderServ
+  IMultiOrderServ,
+  IGetP2PDexOrderByAddr,
+  IGetP2PDexOrderList,
+  ICreateP2PDexOrder,
+  IExecP2PDexOrder,
+  IUpdateP2PDexOrder
 } from "@feature/multichain/interfaces/IMultichain"
 import services from "@src/configs/axiosGlobalConfig"
 
-export const getP2PDexOrderByAddr = (
-  _address: string,
-  _limit: number,
-  _page: number
-) =>
+export const getP2PDexOrderByAddr = ({
+  _address,
+  _limit,
+  _page
+}: IGetP2PDexOrderByAddr) =>
   new Promise<IMultiOrderListDataServ>((resolve, reject) => {
     const data = {
       limit: _limit,
@@ -26,15 +31,15 @@ export const getP2PDexOrderByAddr = (
       .catch((error) => reject(error))
   })
 
-export const createP2PDexOrder = (
-  _orderId: string,
-  _type: string,
-  _busdPrice: string,
-  _nakaPrice: string,
-  _nakaAmount: string,
-  _totalPrice: string,
-  _address: string
-) =>
+export const createP2PDexOrder = ({
+  _orderId,
+  _type,
+  _busdPrice,
+  _nakaPrice,
+  _nakaAmount,
+  _totalPrice,
+  _address
+}: ICreateP2PDexOrder) =>
   new Promise<IMultiOrderServ>((resolve, reject) => {
     const data = {
       order_id: _orderId,
@@ -51,18 +56,18 @@ export const createP2PDexOrder = (
       .catch((error) => reject(error))
   })
 
-export const execP2PDexOrder = (
-  _requestId: string,
-  _orderId: string,
-  _type: string,
-  _busdPrice: string,
-  _nakaPrice: string,
-  _nakaAmount: string,
-  _buyerAddress: string,
-  _sellerAddress: string,
-  _totalPrice: string,
-  _address: string
-) =>
+export const execP2PDexOrder = ({
+  _requestId,
+  _orderId,
+  _type,
+  _busdPrice,
+  _nakaPrice,
+  _nakaAmount,
+  _buyerAddress,
+  _sellerAddress,
+  _totalPrice,
+  _address
+}: IExecP2PDexOrder) =>
   new Promise((resolve, reject) => {
     const data = {
       request_id: _requestId,
@@ -82,16 +87,16 @@ export const execP2PDexOrder = (
       .catch((error) => reject(error))
   })
 
-export const updateP2PDexOrder = (
-  _orderId: string,
-  _type: string,
-  _busdPrice: string,
-  _nakaPrice: string,
-  _nakaAmount: string,
-  _totalPrice: string,
-  _address: string,
-  _txHash: string
-) =>
+export const updateP2PDexOrder = ({
+  _orderId,
+  _type,
+  _busdPrice,
+  _nakaPrice,
+  _nakaAmount,
+  _totalPrice,
+  _address,
+  _txHash
+}: IUpdateP2PDexOrder) =>
   new Promise<IMultiOrderServ>((resolve, reject) => {
     const data = {
       order_id: _orderId,
@@ -108,11 +113,11 @@ export const updateP2PDexOrder = (
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })
-export const getP2PDexOrderList = (
-  _type: string,
-  _limit: number,
-  _page: number
-) =>
+export const getP2PDexOrderList = ({
+  _type,
+  _limit,
+  _page
+}: IGetP2PDexOrderList) =>
   new Promise<IMultiOrderListServ>((resolve, reject) => {
     const data = {
       type: _type, // sell, buy

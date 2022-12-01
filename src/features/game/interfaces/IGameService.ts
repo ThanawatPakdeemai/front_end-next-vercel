@@ -255,3 +255,20 @@ export interface IGameClaimEarnedRewardService extends IFormatService {
 export interface IGameCategoryService extends IFormatService {
   data: IGameCategoryDetail[]
 }
+
+export interface IGetAllGameRooms {
+  _gameId: string
+  _email: string
+  _itemId: string
+}
+
+export interface IGetPlayerInRoom {
+  _roomId: string
+  _playerId: string
+  _type: string
+}
+
+export interface IClaimEarnedRewardByPlayerId {
+  _playerId: string
+  _rewardId: string
+}

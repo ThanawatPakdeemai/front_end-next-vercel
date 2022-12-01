@@ -1,17 +1,19 @@
 import {
+  ICreateTransWallet,
+  IGetTransWallet,
   ITransData,
   ITransWalletService
 } from "@feature/transaction/interfaces/ITransaction"
 import services from "@src/configs/axiosGlobalConfig"
 
-export const createTransWallet = (
-  _playerId: string,
-  _dateTime: string,
-  _amount: number,
-  _fee: number,
-  _type: string,
-  _txHash: string
-) =>
+export const createTransWallet = ({
+  _playerId,
+  _dateTime,
+  _amount,
+  _fee,
+  _type,
+  _txHash
+}: ICreateTransWallet) =>
   new Promise<ITransData>((resolve, reject) => {
     const data = {
       player_id: _playerId,
@@ -27,12 +29,12 @@ export const createTransWallet = (
       .catch((error) => reject(error))
   })
 
-export const getTransWallet = (
-  _playerId: string,
-  _type: string, // null<˜all>, DepositNaka, WithdrawNaka //! case-sensitive
-  _limit: number,
-  _page: number
-) =>
+export const getTransWallet = ({
+  _playerId,
+  _type, // null<˜all>, DepositNaka, WithdrawNaka //! case-sensitive
+  _limit,
+  _page
+}: IGetTransWallet) =>
   new Promise<ITransWalletService>((resolve, reject) => {
     const data = {
       player_id: _playerId,

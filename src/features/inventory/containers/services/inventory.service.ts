@@ -3,10 +3,11 @@ import {
   IGetNakaServices,
   IBurnItem,
   IBurnItemResponse,
-  ICurrentNakaData
+  ICurrentNakaData,
+  IGetBalanceOf
 } from "@feature/inventory/interfaces/IInventoryService"
 
-export const getBalanceOf = (_address: string, _item_id: number) =>
+export const getBalanceOf = ({ _address, _item_id }: IGetBalanceOf) =>
   new Promise<IGetNakaServices>((resolve, reject) => {
     services
       .get<IGetNakaServices>(`/inventory/item/balance/${_address}/${_item_id}`)

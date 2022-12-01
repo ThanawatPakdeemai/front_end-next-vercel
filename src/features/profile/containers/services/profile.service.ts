@@ -1,9 +1,13 @@
 import services from "@configs/axiosGlobalConfig"
 import {
   IDataPlayerInfoResponse,
+  IGetDataPlayerInfo,
+  IGetPlayerInfoByPlayerId,
   IGetProfileResponse,
   IPlayerInfoResponse,
-  IProfile
+  IProfile,
+  IUpdateProfile,
+  IUpdateWalletAddress
 } from "@feature/profile/interfaces/IProfileService"
 
 export const getProfileByEmail = (_email: string) =>
@@ -26,14 +30,14 @@ export const getProfileByPlayerId = (_playerId: string) =>
       .catch((error) => reject(error))
   })
 
-export const updateProfile = (
-  _email: string,
-  _username: string,
-  _avatar: string,
-  _subscription: boolean,
-  _country: string,
-  _user_ip_address: string
-) =>
+export const updateProfile = ({
+  _email,
+  _username,
+  _avatar,
+  _subscription,
+  _country,
+  _user_ip_address
+}: IUpdateProfile) =>
   new Promise((resolve, reject) => {
     const data = {
       data: {
@@ -53,7 +57,10 @@ export const updateProfile = (
       .catch((error) => reject(error))
   })
 
-export const updateWalletAddress = (_email: string, _address: string) =>
+export const updateWalletAddress = ({
+  _email,
+  _address
+}: IUpdateWalletAddress) =>
   new Promise<IProfile>((resolve, reject) => {
     const data = {
       data: {
@@ -69,13 +76,13 @@ export const updateWalletAddress = (_email: string, _address: string) =>
       .catch((error) => reject(error))
   })
 
-export const getDataPlayerInfo = (
-  _playerId: string,
-  _gameId: string,
-  _limit: number,
-  _page: number,
-  _sort: string
-) =>
+export const getDataPlayerInfo = ({
+  _playerId,
+  _gameId,
+  _limit,
+  _page,
+  _sort
+}: IGetDataPlayerInfo) =>
   new Promise<IDataPlayerInfoResponse>((resolve, reject) => {
     const data = {
       player_id: _playerId,
@@ -92,12 +99,12 @@ export const getDataPlayerInfo = (
       .catch((error) => reject(error))
   })
 
-export const getPlayerInfoByPlayerId = (
-  _playerId: string,
-  _limit: number,
-  _page: number,
-  _sort: string
-) =>
+export const getPlayerInfoByPlayerId = ({
+  _playerId,
+  _limit,
+  _page,
+  _sort
+}: IGetPlayerInfoByPlayerId) =>
   new Promise<IPlayerInfoResponse>((resolve, reject) => {
     const data = {
       player_id: _playerId,

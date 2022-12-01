@@ -299,3 +299,28 @@ export interface IDataPlayerInfoResponse {
   data: IDataPlayerStatisticData
   info: IInfo
 }
+
+export interface IUpdateProfile {
+  _email: string
+  _username: string
+  _avatar: string
+  _subscription: boolean
+  _country: string
+  _user_ip_address: string
+}
+
+export interface IUpdateWalletAddress {
+  _email: string
+  _address: string
+}
+
+export interface IGetPlayerInfoByPlayerId {
+  _playerId: string
+  _limit: number
+  _page: number
+  _sort: string
+}
+
+export interface IGetDataPlayerInfo extends IGetPlayerInfoByPlayerId {
+  _gameId: string
+}

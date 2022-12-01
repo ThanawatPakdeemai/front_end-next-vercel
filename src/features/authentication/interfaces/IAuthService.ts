@@ -8,14 +8,34 @@ interface IForgetPasswordData extends ICreateNewPasswordData {
   token: string
 }
 
-export interface IForgetPassword {
+export interface IForgetPasswordResponse {
   status: boolean
   data: IForgetPasswordData
   info: IInfo
 }
 
-export interface ICreateNewPassword {
+export interface ICreateNewPasswordResponse {
   status: boolean
   data: ICreateNewPasswordData
   info: IInfo
+}
+
+export interface ISignIn {
+  _email: string
+  _password: string
+}
+
+export interface ISignUp extends ISignIn {
+  _verifycode: string
+  _referral: string
+  _subscription: string
+}
+
+export interface IGetVerifyCode extends ISignIn {
+  _recaptcha: string
+}
+
+export interface ICreateNewPassword extends ISignIn {
+  _token: string
+  _confirmPassword: string
 }

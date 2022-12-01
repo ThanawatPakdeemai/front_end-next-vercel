@@ -11,6 +11,11 @@ interface IMultiOrderPrice {
   total_price: number
 }
 
+interface ILimitPage {
+  _limit: number
+  _page: number
+}
+
 export interface IMultiHistory extends IMultiOrderPrice {
   _id: string
   transaction_hash: string
@@ -46,4 +51,32 @@ export interface IMultiOrderListDataServ extends IFormatService, IMessage {
 
 export interface IMultiOrderListServ extends IFormatService, IMessage {
   data: IMultiTrustOrder[]
+}
+
+export interface IGetP2PDexOrderByAddr extends ILimitPage {
+  _address: string
+}
+
+export interface IGetP2PDexOrderList extends ILimitPage {
+  _type: string
+}
+
+export interface ICreateP2PDexOrder {
+  _orderId: string
+  _type: string
+  _busdPrice: string
+  _nakaPrice: string
+  _nakaAmount: string
+  _totalPrice: string
+  _address: string
+}
+
+export interface IExecP2PDexOrder extends ICreateP2PDexOrder {
+  _requestId: string
+  _buyerAddress: string
+  _sellerAddress: string
+}
+
+export interface IUpdateP2PDexOrder extends ICreateP2PDexOrder {
+  _txHash: string
 }

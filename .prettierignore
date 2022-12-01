@@ -1,16 +1,8 @@
-# Ignore artifacts:
-build
+.next
+next-env.d.ts
+node_modules
+yarn.lock
+package-lock.json
+public
+README.md
 coverage
-
-# Ignore all HTML files:
-*.html
-
-**/.git
-**/.svn
-**/.hg
-**/node_modules
-
-# .eslintrc
-.next/*
-
-# styles/tailwind.css

@@ -1,6 +1,6 @@
 import services from "@configs/axiosGlobalConfig"
+import { IQuestService } from "@feature/quest/interfaces/IQuestService"
 import { IFormatMessageService } from "@interfaces/IHelper"
-import { IQuestService } from "../../interfaces/IQuestService"
 
 export const getAllQuest = (_playerId: string) =>
   new Promise<IQuestService>((resolve, reject) => {

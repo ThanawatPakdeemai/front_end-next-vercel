@@ -21,7 +21,7 @@
       "@components/*": ["src/components/*"],
       "@configs/*": ["src/configs/*"],
       "@constants/*": ["src/constants/*"],
-      "@features/*": ["src/features/*"],
+      "@feature/*": ["src/features/*"],
       "@hooks/*": ["src/hooks/*"],
       "@interfaces/*": ["src/interfaces/*"],
       "@locales/*": ["src/locales/*"],

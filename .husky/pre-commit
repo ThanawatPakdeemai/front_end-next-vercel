@@ -11,8 +11,8 @@ yarn lint-staged
 # Building Tailwind CSS
 yarn build:css ||
 (
-        echo '🎨🎨🎨 I am building the CSS 🎨🎨🎨'
-        false; 
+  echo '🎨🎨🎨 I am building the CSS 🎨🎨🎨'
+  false; 
 )
 
 # Format code.
@@ -22,7 +22,7 @@ yarn format:prettier
 # Check Prettier standards  
 yarn check:prettier ||
 (
-    echo '🤢🤮🤢🤮 Its FOKING RAW - Your styling looks disgusting. 🤢🤮🤢🤮
-            Prettier Check Failed. Run [yarn format], add changes and try commit again.';
-    false;
+  echo '🤢🤮🤢🤮 Its FOKING RAW - Your styling looks disgusting. 🤢🤮🤢🤮
+    Prettier Check Failed. Run [yarn format], add changes and try commit again.';
+  false;
 )

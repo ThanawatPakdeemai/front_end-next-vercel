@@ -3,8 +3,10 @@ import {
   IGameItemBalanceService,
   IGameItemList,
   IGameItemService,
-  IGameItemListService
-} from "../../interfaces/IGameItemService"
+  IGameItemListService,
+  IGetGameItemsByGameId,
+  IGetGameItemsBalanceByItemId
+} from "@feature/gameItem/interfaces/IGameItemService"
 
 export const getAllGameItems = () =>
   new Promise<IGameItemListService>((resolve, reject) => {
@@ -22,7 +24,10 @@ export const getGameItemById = (_itemId: string) =>
       .catch((error) => reject(error))
   })
 
-export const getGameItemsByGameId = (_playerId: string, _gameId: string) =>
+export const getGameItemsByGameId = ({
+  _playerId,
+  _gameId
+}: IGetGameItemsByGameId) =>
   new Promise<IGameItemList[]>((resolve, reject) => {
     services
       .get<IGameItemList[]>(`/game/item-list/${_gameId}/${_playerId}`)
@@ -30,10 +35,10 @@ export const getGameItemsByGameId = (_playerId: string, _gameId: string) =>
       .catch((error) => reject(error))
   })
 
-export const getGameItemsBalanceByItemId = (
-  _address: string,
-  _itemIdSmartContract: string
-) =>
+export const getGameItemsBalanceByItemId = ({
+  _address,
+  _itemIdSmartContract
+}: IGetGameItemsBalanceByItemId) =>
   new Promise<IGameItemBalanceService>((resolve, reject) => {
     services
       .get<IGameItemBalanceService>(

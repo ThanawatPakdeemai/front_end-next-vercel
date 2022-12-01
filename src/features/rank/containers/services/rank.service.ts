@@ -1,5 +1,5 @@
 import services from "@configs/axiosGlobalConfig"
-import { IProfile } from "@features/profile/interfaces/IProfileService"
+import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import Helper from "@utils/helper"
 import { ELocalKey } from "@interfaces/ILocal"
 

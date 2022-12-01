@@ -1,8 +1,9 @@
 import services from "@configs/axiosGlobalConfig"
 import {
+  IGetWeeklyReward,
   IRewardWeekly,
   IWeeklyRewardObject
-} from "../../interfaces/IRewardWeeklyService"
+} from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
 
 export const getWeeklyPoolPlayer = (weekly_pool_id: string) =>
   new Promise<IRewardWeekly>((resolve, reject) => {
@@ -16,7 +17,7 @@ export const getWeeklyPoolPlayer = (weekly_pool_id: string) =>
       .catch((error) => reject(error))
   })
 
-export const getWeeklyReward = (game_id: string, weeklyId: any) =>
+export const getWeeklyReward = ({ game_id, weeklyId }: IGetWeeklyReward) =>
   new Promise<IWeeklyRewardObject>((resolve, reject) => {
     services
       .post(`/weekly-pool/get_player_reward_weekly/${game_id}`, {

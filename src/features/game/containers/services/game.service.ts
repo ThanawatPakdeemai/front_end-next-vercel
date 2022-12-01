@@ -8,8 +8,11 @@ import {
   IGameSummary,
   IGameService,
   IGameRoomService,
-  IGameCategoryService
-} from "../../interfaces/IGameService"
+  IGameCategoryService,
+  IGetAllGameRooms,
+  IGetPlayerInRoom,
+  IClaimEarnedRewardByPlayerId
+} from "@feature/game/interfaces/IGameService"
 
 export const getAllGames = () =>
   new Promise<IGameService>((resolve, reject) => {
@@ -27,11 +30,11 @@ export const getGameById = (_gameId: string) =>
       .catch((error) => reject(error))
   })
 
-export const getAllGameRooms = (
-  _gameId: string,
-  _email: string,
-  _itemId: string
-) =>
+export const getAllGameRooms = ({
+  _gameId,
+  _email,
+  _itemId
+}: IGetAllGameRooms) =>
   new Promise<IGameRoomDetailService>((resolve, reject) => {
     services
       .post<IGameRoomDetailService>(`/gameroom/${_gameId}/${_email}/${_itemId}`)
@@ -48,11 +51,11 @@ export const getGameRoomById = (_roomId: string) =>
   })
 
 // why use put method?
-export const getPlayerInRoom = (
-  _roomId: string,
-  _playerId: string,
-  _type: string
-) =>
+export const getPlayerInRoom = ({
+  _roomId,
+  _playerId,
+  _type
+}: IGetPlayerInRoom) =>
   new Promise<IGameRoomDetail>((resolve, reject) => {
     const data = {
       room_id: _roomId,
@@ -120,10 +123,10 @@ export const getPlayToEarnRewardByPlayerId = (_playerId: string) =>
       .catch((error) => reject(error))
   })
 
-export const claimEarnedRewardByPlayerId = (
-  _playerId: string,
-  _rewardId: string
-) =>
+export const claimEarnedRewardByPlayerId = ({
+  _playerId,
+  _rewardId
+}: IClaimEarnedRewardByPlayerId) =>
   new Promise<IGameClaimEarnedRewardService>((resolve, reject) => {
     const data = {
       player_id: _playerId,

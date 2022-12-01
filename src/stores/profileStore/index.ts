@@ -3,7 +3,7 @@ import { devtools } from "zustand/middleware"
 import {
   IProfile,
   IProfileResponse
-} from "@features/profile/interfaces/IProfileService"
+} from "@feature/profile/interfaces/IProfileService"
 import configZustandDevTools from "@utils/configDevtools"
 import Helper from "@utils/helper"
 import { ELocalKey } from "@interfaces/ILocal"

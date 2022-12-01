@@ -3,14 +3,18 @@ import { IRefreshToken } from "@interfaces/IAuth"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
 import services from "@configs/axiosGlobalConfig"
-import { IProfileResponse } from "@features/profile/interfaces/IProfileService"
+import { IProfileResponse } from "@feature/profile/interfaces/IProfileService"
 import { ELocalKey } from "@interfaces/ILocal"
 import {
   ICreateNewPassword,
-  IForgetPassword
-} from "../../interfaces/IAuthService"
+  ICreateNewPasswordResponse,
+  IForgetPasswordResponse,
+  IGetVerifyCode,
+  ISignIn,
+  ISignUp
+} from "@feature/authentication/interfaces/IAuthService"
 
-export const signIn = (_email: string, _password: string) =>
+export const signIn = ({ _email, _password }: ISignIn) =>
   new Promise<IProfileResponse>((resolve, reject) => {
     const data = {
       data: {
@@ -26,13 +30,13 @@ export const signIn = (_email: string, _password: string) =>
       .catch((error) => reject(error))
   })
 
-export const signUp = (
-  _email: string,
-  _password: string,
-  _verifycode: string,
-  _referral: string,
-  _subscription: boolean
-) =>
+export const signUp = ({
+  _email,
+  _password,
+  _verifycode,
+  _referral,
+  _subscription
+}: ISignUp) =>
   new Promise<IProfileResponse>((resolve, reject) => {
     const data = {
       email: _email,
@@ -90,7 +94,7 @@ export const refreshProfileToken = async (
   }
 }
 
-export const getVerifyCode = (_email: string, _recaptcha: string) =>
+export const getVerifyCode = ({ _email, _recaptcha }: IGetVerifyCode) =>
   new Promise<{ message: string }>((resolve, reject) => {
     services
       .get<{ message: string }>(`/profile/getcode/${_email}`, {
@@ -105,22 +109,22 @@ export const getVerifyCode = (_email: string, _recaptcha: string) =>
   })
 
 export const forgotPassword = (_email: string) =>
-  new Promise<IForgetPassword>((resolve, reject) => {
+  new Promise<IForgetPasswordResponse>((resolve, reject) => {
     services
-      .get<IForgetPassword>(`/profile/reset-password/${_email}`)
+      .get<IForgetPasswordResponse>(`/profile/reset-password/${_email}`)
       .then((response) => {
         resolve(response.data)
       })
       .catch((error) => reject(error))
   })
 
-export const createNewPassword = (
-  _email: string,
-  _token: string,
-  _password: string,
-  _confirmPassword: string
-) =>
-  new Promise<ICreateNewPassword>((resolve, reject) => {
+export const createNewPassword = ({
+  _email,
+  _token,
+  _password,
+  _confirmPassword
+}: ICreateNewPassword) =>
+  new Promise<ICreateNewPasswordResponse>((resolve, reject) => {
     const data = {
       email: _email,
       password: _password,
@@ -128,7 +132,7 @@ export const createNewPassword = (
       token: _token
     }
     services
-      .post<ICreateNewPassword>(`/profile/reset-password`, { ...data })
+      .post<ICreateNewPasswordResponse>(`/profile/reset-password`, { ...data })
       .then((response) => {
         resolve(response.data)
       })

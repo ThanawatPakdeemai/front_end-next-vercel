@@ -44,57 +44,75 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         />
       </Head>
       {DATA_META_TAG?.map((item) =>
-        item.path === pathActive
-          ? item.metaTag?.map((meta) => (
-              <Head key={item.path}>
-                <title>{meta.pageTitle}</title>
-                <meta
-                  name="description"
-                  content={meta.pageDescription}
-                />
-                <meta
-                  property="og:url"
-                  content={meta.ogURL}
-                />
-                <meta
-                  property="og:type"
-                  content={meta.ogType}
-                />
-                <meta
-                  property="og:site_name"
-                  content={meta.ogSiteName}
-                />
-                <meta
-                  property="og:title"
-                  content={meta.ogTitle}
-                />
-                <meta
-                  property="og:description"
-                  content={meta.ogDescription}
-                />
-                <meta
-                  property="og:image"
-                  content={meta.ogImage}
-                />
-                <meta
-                  name="twitter:card"
-                  content={meta.twitterCard}
-                />
-                <meta
-                  name="twitter:title"
-                  content={meta.twitterTitle}
-                />
-                <meta
-                  name="twitter:description"
-                  content={meta.twitterDescription}
-                />
-                <meta
-                  name="twitter:image"
-                  content={meta.twitterImage}
-                />
-              </Head>
-            ))
-          : null
+        item.path === pathActive ? (
+          <Head key={item.path}>
+            <title>{item.metaTag?.pageTitle}</title>
+            <meta
+              name="description"
+              content={item.metaTag?.pageDescription}
+            />
+            {item.metaTag?.ogURL ? (
+              <meta
+                property="og:url"
+                content={item.metaTag?.ogURL}
+              />
+            ) : null}
+            {item.metaTag?.ogType ? (
+              <meta
+                property="og:type"
+                content={item.metaTag?.ogType}
+              />
+            ) : null}
+            {item.metaTag?.ogSiteName ? (
+              <meta
+                property="og:site_name"
+                content={item.metaTag?.ogSiteName}
+              />
+            ) : null}
+            {item.metaTag?.ogTitle ? (
+              <meta
+                property="og:title"
+                content={item.metaTag?.ogTitle}
+              />
+            ) : null}
+            {item.metaTag?.ogDescription ? (
+              <meta
+                property="og:description"
+                content={item.metaTag?.ogDescription}
+              />
+            ) : null}
+            {item.metaTag?.ogImage ? (
+              <meta
+                property="og:image"
+                content={item.metaTag?.ogImage}
+              />
+            ) : null}
+            {item.metaTag?.twitterCard ? (
+              <meta
+                name="twitter:card"
+                content={item.metaTag?.twitterCard}
+              />
+            ) : null}
+            {item.metaTag?.twitterTitle ? (
+              <meta
+                name="twitter:title"
+                content={item.metaTag?.twitterTitle}
+              />
+            ) : null}
+            {item.metaTag?.twitterDescription ? (
+              <meta
+                name="twitter:description"
+                content={item.metaTag?.twitterDescription}
+              />
+            ) : null}
+            {item.metaTag?.twitterImage ? (
+              <meta
+                name="twitter:image"
+                content={item.metaTag?.twitterImage}
+              />
+            ) : null}
+          </Head>
+        ) : null
       )}
       <QueryClientProvider client={queryClient}>
         <Web3Provider>

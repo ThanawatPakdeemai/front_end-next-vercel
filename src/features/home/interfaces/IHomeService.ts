@@ -1,4 +1,4 @@
-import { IGame } from "@features/game/interfaces/IGameService"
+import { IGame } from "@feature/game/interfaces/IGameService"
 
 export interface IHomeSlideResponse {
   status: boolean

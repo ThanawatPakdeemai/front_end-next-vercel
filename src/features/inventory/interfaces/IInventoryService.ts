@@ -37,3 +37,8 @@ export interface IGetNakaServices extends IFormatService {
 export interface IBurnItemResponse {
   status: boolean
 }
+
+export interface IGetBalanceOf {
+  _address: string
+  _item_id: number
+}

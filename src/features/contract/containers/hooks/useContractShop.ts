@@ -1,4 +1,4 @@
-import { useShop } from "@features/contract/containers/hooks/useContract"
+import { useShop } from "@feature/contract/containers/hooks/useContract"
 import { useState } from "react"
 import { useWeb3Provider } from "@providers/index"
 import { ITransactionResponse } from "@interfaces/ITransaction"
@@ -10,7 +10,7 @@ const useContractShop = () => {
   const shopContract = useShop(signer, CONFIGS.CONTRACT_ADDRESS.SHOP)
 
   // Buy items -- SHOP
-  const AddBullets = async (
+  const AddBullets = (
     _item: number,
     _number: number,
     _nakaAmount: string,

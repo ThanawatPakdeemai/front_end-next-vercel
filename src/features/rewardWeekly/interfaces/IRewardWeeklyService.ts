@@ -31,3 +31,8 @@ export interface IRecord {
 export interface IWeeklyRewardObject extends IFormatService {
   data: IRecord
 }
+
+export interface IGetWeeklyReward {
+  game_id: string
+  weeklyId: string
+}

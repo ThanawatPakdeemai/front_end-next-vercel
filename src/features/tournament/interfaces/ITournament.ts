@@ -1,5 +1,96 @@
 import { IFormatService } from "@interfaces/IHelper"
 
+interface IID {
+  _id: string
+}
+
+interface IStatus {
+  status: string
+}
+
+interface IIDName extends IID {
+  name: string
+}
+
+interface ITourId {
+  tournament_id: number
+}
+interface IIsActive {
+  is_active: boolean
+}
+
+interface IDateStartEnd {
+  date_start: Date
+  date_end: Date
+}
+
+interface IRoomId {
+  room_id: null | string
+}
+
+interface IMatchType extends IRoomId {
+  match_type: string
+}
+
+interface IRoundNumber {
+  round: number
+}
+
+interface ITimeStemp {
+  time_stemp: Date
+}
+interface IPlayerID {
+  player_id: string
+}
+
+interface IUsername {
+  username: string
+}
+interface IPlayerInfo extends IPlayerID, IUsername {
+  avatar: string
+}
+interface ITournamentGamePlay extends IPlayerInfo {
+  email: string
+}
+
+interface IScore {
+  score: number
+}
+interface ITournamentDateSlot {
+  date_time: Date
+}
+
+interface ITourData extends IID, ITourId, IStatus, IIsActive {
+  createdAt: Date
+  updatedAt: Date
+  __v: number
+}
+interface ITournamentRoundPlayedQty {
+  round: string
+  number_played: number
+}
+
+interface IRoundPlayedQTY {
+  round_played_qty: Array<IID & ITournamentRoundPlayedQty>
+}
+
+interface ITournamentPlayData extends IScore, IID, IRoomId, ITimeStemp {
+  match_id: string
+}
+
+interface IPlayerData {
+  play_data: ITournamentPlayData[]
+}
+
+interface ILimitScore {
+  max_score: number
+  sum_score: number
+  count_match: number
+}
+
+interface ITournamentPlayerData extends ITournamentGamePlay, ILimitScore {
+  min_score: number
+}
 export interface ITournamentCondition {
   number_of_played: number
   ticket_for_join: number
@@ -7,182 +98,105 @@ export interface ITournamentCondition {
   max_player_register: number
 }
 
-export interface ITournamentGames {
-  _id: string
-  name: string
-  is_active: boolean
+export interface ITournamentGames extends IIDName, IIsActive {
   game_type: string
 }
 
-export interface ITournamentRound {
-  _id: string
-  status: string
-  name: string
+export interface ITournamentRound extends IIDName, IStatus, IDateStartEnd {
   detail: string
-  date_start: Date
-  date_end: Date
   number_play?: number
   summary?: boolean
   number_player?: number
 }
 
-export interface ITournamentData {
-  _id: string
+export interface ITournamentData extends IIDName, IStatus, IDateStartEnd {
   condition: ITournamentCondition
   register_button: boolean
-  name: string
   desc: string
   reward: string
-  date_start: Date
-  date_end: Date
   current_player_register: number
   tournament_type: string
   banner_image: string
   round: ITournamentRound[]
   privacy_policy: string
-  status: string
   games: ITournamentGames
 }
 
-export interface ITournamentGamePlay {
-  player_id: string
-  username: string
-  email: string
-  avatar: string
-}
+type ITournamentGamePlayedData = ITournamentGamePlay &
+  IStatus &
+  Partial<IScore> &
+  IRoundNumber
 
-export interface ITournamentGamePlayedData extends ITournamentGamePlay {
-  status: string
-  score?: number
-  round: number
-}
-
-export interface ITournamentPlayerData extends ITournamentGamePlay {
-  max_score: number
-  min_score: number
-  sum_score: number
-  count_match: number
-}
-
-export interface ITournamentMatchData {
+export interface ITournamentMatchData
+  extends IDateStartEnd,
+    ITourId,
+    IMatchType,
+    IRoundNumber {
   id: string
-  date_start: Date
-  date_end: Date
-  match_type: string
-  tournament_id: string
   round: number
   player_data: ITournamentPlayerData[]
   played_data: Array<ITournamentGamePlayedData[]>
   winner: string
-  room_id: null
 }
 
-export interface ITournamentPlayData {
-  _id: string
-  room_id: string
-  match_id: string
-  score: number
-  time_stemp: Date
-}
-
-export interface ITournamentPlayerList {
-  _id: string
-  play_data: ITournamentPlayData[]
-  status: string
-  player_id: string
-  username: string
-  avatar: string
+export interface ITournamentPlayerList
+  extends ILimitScore,
+    IPlayerInfo,
+    IID,
+    IStatus,
+    IPlayerData {
   address: string
-  sum_score: number
-  max_score: number
-  count_match: number
   rank: number
 }
 
-export interface ITournamentMatch {
-  _id: string
+export interface ITournamentMatch extends IID {
   match_data: ITournamentMatchData[]
 }
 
-export interface ITournamentRoundPlayedQty {
-  _id: string
-  round: string
-  number_played: number
-}
-
-export interface ITournamentHistory {
-  play_data: ITournamentPlayData[]
-  round_played_qty: ITournamentRoundPlayedQty[]
-  tournament_id: string
-  status: string
-  is_active: boolean
+export interface ITournamentHistory
+  extends ITourId,
+    IStatus,
+    IPlayerData,
+    IIsActive,
+    IRoundPlayedQTY {
   id: string
 }
 
-export interface ITournamentMatchPlayerData {
-  _id: string
-  player_id: string
-  username: string
-  status: string
-  time_stemp: Date
-}
-
-interface ITournamentDateSlot {
-  date_time: Date
-}
-
-export interface ITournamentLiveData {
-  _id: string
-  player_data: ITournamentMatchPlayerData[]
+export interface ITournamentLiveData
+  extends ITourData,
+    IDateStartEnd,
+    IMatchType,
+    IRoundNumber {
+  player_data: Array<IID & IPlayerID & IStatus & IUsername & ITimeStemp>
   date_slot: ITournamentDateSlot[]
-  createdAt: Date
-  updatedAt: Date
-  status: string
-  room_id: string
-  date_start: Date
-  date_end: Date
-  tournament_id: string
-  match_type: string
-  is_active: boolean
-  __v: number
-  round: number
 }
 
-export interface ITournamentCheckPlayerData {
-  _id: string
-  play_data: ITournamentPlayData[]
+export interface ITournamentCheckPlayerData
+  extends ITourData,
+    IPlayerID,
+    IPlayerData {
   round_player_qty: ITournamentRoundPlayedQty[]
-  createdAt: Date
-  updatedAt: Date
-  player_id: string
-  tournament_id: string
   item_burn: boolean
-  status: string
-  is_active: boolean
   qualifying: number
-  __v: number
 }
 
-export interface ITournamentPlayerDataDetail {
-  player_id: string
-  username: string
-  status: string
-  score: number
+export interface ITournamentPlayerDataDetail
+  extends ITournamentGamePlay,
+    IScore,
+    IStatus,
+    IRoundPlayedQTY {
   rank_in_game: number
-  email: string
-  avatar: string
-  round_played_qty: ITournamentRoundPlayedQty[]
 }
 
-export interface ITournamentMatchRoomData {
-  _id: string
-  date_start: Date
-  date_end: Date
-  match_type: string
-  tournament_id: string
-  room_id: string
+export interface ITournamentMatchRoomData
+  extends IID,
+    IDateStartEnd,
+    ITourId,
+    IMatchType {
   player_data: ITournamentPlayerDataDetail[]
 }
+
+// services
 export interface ITournamentService extends IFormatService {
   data: ITournamentData
 }
@@ -213,4 +227,10 @@ export interface ITournamentPlayerService extends IFormatService {
 
 export interface ITournamentMatchRoomService extends IFormatService {
   data: ITournamentMatchRoomData
+}
+
+export interface IGetTourRegister {
+  _limit: number
+  _page: number
+  _sort: string
 }

@@ -2,7 +2,7 @@ import type { TypographyOptions } from "@mui/material/styles/createTypography"
 
 export const TypographyCustom: TypographyOptions = {
   fontFamily: [
-    "dogica_pixelbold",
+    "neue-machina",
     "-apple-system",
     "BlinkMacSystemFont",
     '"Segoe UI"',

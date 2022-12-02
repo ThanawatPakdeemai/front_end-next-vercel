@@ -1,8 +1,6 @@
 import { memo } from "react"
-// import Image from "next/image"
-import Image from "@components/atoms/image"
 
-const Footer = () => {
+const Footer = () => (
   /*
    * Const scrollToTop = () => {
    *   window.scrollTo({
@@ -13,16 +11,8 @@ const Footer = () => {
    * const { t } = useTranslation();
    */
 
-  const imgSrc = "/images/mocks/footer.png"
-
-  return (
-    <>
-      <Image
-        src={imgSrc}
-        alt="mock"
-        fill
-      />
-      {/* <ContentBottom className="conten-footer">
+  <>
+    {/* <ContentBottom className="conten-footer">
         <h2>{t("be_a_part_of_the_play_to_earn_revolution")}</h2>
         <p>
           <Trans>{t("title_footer_header")}</Trans>
@@ -72,8 +62,7 @@ const Footer = () => {
         </Content>
         <CopyRight>Copyright 2022 © Nakamoto Games</CopyRight>
       </ContentBottom> */}
-    </>
-  )
-}
+  </>
+)
 
 export default memo(Footer)

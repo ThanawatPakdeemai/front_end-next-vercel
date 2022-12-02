@@ -12,7 +12,7 @@ export const MuiButton: Components<Omit<Theme, "components">>["MuiButton"] = {
     root: {
       fontSize: "12px",
       borderRadius: "18px",
-      fontFamily: "dogica_pixelbold, Helvetica, Arial,  sans-serif",
+      fontFamily: "neue-machina, Helvetica, Arial,  sans-serif",
       minWidth: "240px",
       height: "48px",
       color: "#fff"

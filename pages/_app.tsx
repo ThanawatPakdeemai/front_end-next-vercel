@@ -1,3 +1,5 @@
+import "@styles/globals.css"
+
 import { ReactElement, ReactNode } from "react"
 import type { NextPage } from "next"
 import { appWithTranslation } from "next-i18next"
@@ -11,10 +13,6 @@ import Head from "next/head"
 // import type { ThemeOptions } from "@mui/material"
 import { DATA_META_TAG } from "@configs/metaTagData"
 import { ProviderApp, Web3Provider } from "@providers/index"
-
-import "@styles/globals.css"
-import "@styles/css/common.css"
-import "@styles/fonts.css"
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (_page: ReactElement) => ReactNode

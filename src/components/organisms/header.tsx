@@ -1,7 +1,7 @@
 import React, { memo } from "react"
-import Image from "next/image"
+import Image from "@components/atoms/image"
 
-const Header = () => {
+const Header = () => (
   /*
    * Const { t } = useTranslation();
    * const [open, setOpen] = React.useState(false);
@@ -25,16 +25,9 @@ const Header = () => {
    *   localStorage.setItem("language", lng);
    * };
    */
-  const imgSrc = "/images/mocks/header.png"
 
-  return (
-    <header className="header">
-      <Image
-        src={imgSrc}
-        alt="mock"
-        fill
-      />
-      {/* <LanguageSelected defaultName="LANGUAGE" data={LANGUAGE} onChange={onClickSelected} />
+  <header className="header">
+    {/* <LanguageSelected defaultName="LANGUAGE" data={LANGUAGE} onChange={onClickSelected} />
       <NakaCurrency />
       <Button
         className="butbuynaka button mb-0 flex items-center"
@@ -87,8 +80,7 @@ const Header = () => {
           </Button>
         </Box>
       </Modal> */}
-    </header>
-  )
-}
+  </header>
+)
 
 export default memo(Header)

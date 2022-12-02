@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+.MuiPaper-root {
+  @apply bg-purple-primary;
+}
+
+/*# sourceMappingURL=cardTitle.css.map */

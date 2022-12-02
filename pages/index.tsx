@@ -2,6 +2,7 @@ import { Layout } from "@components/template"
 import { ReactElement } from "react"
 import Image from "@components/atoms/image"
 import { IMAGES } from "@constants/images"
+import CardTitle from "@components/organisms/cardTitle"
 
 export default function Home() {
   return (
@@ -15,6 +16,9 @@ export default function Home() {
           alt={IMAGES.footerMock.alt}
         />
       </>
+      <div>
+        <CardTitle />
+      </div>
     </article>
   )
 }

@@ -20,6 +20,9 @@ module.exports = {
     },
     extend: {
       colors: {
+        purple: {
+          primary: "#7B5BE6"
+        },
         blue: {
           from: "#0C9DE6",
           to: "#0070FF",

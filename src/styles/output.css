@@ -1,8 +1,8 @@
 @font-face {
   font-family: "neueMachina";
 
-  src: url("/fonts/PPNeueMachina-InktrapRegular.woff2") format("woff2"),
-    url("/fonts/PPNeueMachina-InktrapRegular.woff") format("woff");
+  src: url("/assets/fonts/PPNeueMachina-InktrapRegular.woff2") format("woff2"),
+    url("/assets/fonts/PPNeueMachina-InktrapRegular.woff") format("woff");
 
   font-weight: normal;
 
@@ -14,8 +14,8 @@
 @font-face {
   font-family: "neueMachinaSemiBold";
 
-  src: url("/fonts/PPNeueMachina-InktrapSemibold.woff2") format("woff2"),
-    url("/fonts/PPNeueMachina-InktrapSemibold.woff") format("woff");
+  src: url("/assets/fonts/PPNeueMachina-InktrapSemibold.woff2") format("woff2"),
+    url("/assets/fonts/PPNeueMachina-InktrapSemibold.woff") format("woff");
 
   font-weight: normal;
 
@@ -27,8 +27,8 @@
 @font-face {
   font-family: "neueMachinaBold";
 
-  src: url("/fonts/PPNeueMachina-InktrapBold.woff2") format("woff2"),
-    url("/fonts/PPNeueMachina-InktrapBold.woff") format("woff");
+  src: url("/assets/fonts/PPNeueMachina-InktrapBold.woff2") format("woff2"),
+    url("/assets/fonts/PPNeueMachina-InktrapBold.woff") format("woff");
 
   font-weight: normal;
 
@@ -708,6 +708,10 @@ video {
   padding-right: 1.5rem;
 }
 
+.font-neue-machina {
+  font-family: neueMachina, Helvetica, Arial, sans-serif;
+}
+
 .text-base {
   font-size: 1rem;
   line-height: 1.5rem;
@@ -718,13 +722,9 @@ video {
   line-height: 1.75rem;
 }
 
-.text-red-from {
+.text-red-to {
   --tw-text-opacity: 1;
-  color: rgb(230 93 93 / var(--tw-text-opacity));
-}
-
-.underline {
-  text-decoration-line: underline;
+  color: rgb(237 48 48 / var(--tw-text-opacity));
 }
 
 .ring {
@@ -764,6 +764,12 @@ video {
 
 .main-container {
   max-width: 1370px;
+}
+
+html,
+body {
+  font-family: neueMachina, Helvetica, Arial, sans-serif;
+  background-color: #010101;
 }
 
 .hover\:scale-110:hover {

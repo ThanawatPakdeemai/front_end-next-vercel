@@ -19,6 +19,7 @@ strong {
   html {
     color-scheme: dark;
   }
+
   body {
     color: theme("colors.gray.default");
     background: url("/images/common/bg.png") theme("colors.gray.900");

@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <article className="h-full w-full">
       <>
-        Nakamoto.games
+        <h3 className="font-neue-machina text-red-to">Nakamoto.games</h3>
         <Image
           src={IMAGES.footerMock.src}
           width={IMAGES.footerMock.width}

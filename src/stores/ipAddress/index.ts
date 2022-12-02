@@ -2,14 +2,14 @@ import create from "zustand"
 import { devtools } from "zustand/middleware"
 import configZustandDevTools from "@utils/configDevtools"
 
-interface IIpAddrs {
+interface IIpAddr {
   ipAddress: string | null
   getIpAddress: () => string | null
   setIp: (_ip: string) => void
   clearIp: () => void
 }
 
-const useIpAddressStore = create<IIpAddrs>()(
+const useIpAddressStore = create<IIpAddr>()(
   devtools(
     (set, get) => ({
       ipAddress: null,

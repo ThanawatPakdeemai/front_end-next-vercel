@@ -3,6 +3,12 @@ module.exports = {
   content: ["./pages/**/*.{js,ts,jsx,tsx}", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     colors: {
+      white: {
+        default: "#ffffff"
+      },
+      purple: {
+        "01": "#7a5be6"
+      },
       blue: {
         from: "#0C9DE6",
         to: "#0070FF",
@@ -29,17 +35,11 @@ module.exports = {
       polygon: {
         default: "#8247e5"
       },
-      gray: {
-        default: "#98A0B5",
-        100: "#ffffff80",
-        200: "#5B606F",
-        300: "#5E6679",
-        400: "#5B6070",
-        500: "#353945",
-        600: "#282D3B",
-        700: "#222531",
-        800: "#1D2029",
-        900: "#14161E"
+      black: {
+        default: "#70727B",
+        "01": "#010101",
+        "02": "#18181C",
+        "03": "#232329"
       }
     },
     fontFamily: {
@@ -57,7 +57,18 @@ module.exports = {
         "sans-serif"
       ]
     },
-    extend: {}
+    extend: {
+      keyframes: {
+        "time-progress": {
+          "0%": { width: "0%" },
+          "100%": { width: "100%" }
+        }
+      },
+      animation: {
+        "time-progress": "time-progress 5s linear forwards"
+      }
+    }
   },
-  plugins: []
+  // eslint-disable-next-line global-require
+  plugins: [require("@tailwindcss/line-clamp")]
 }

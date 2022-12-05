@@ -13,6 +13,7 @@ import { MuiMenuItem as _muiMenuItem } from "./partial/components/muiMenuItem"
 import { MuiTable as _muiTable } from "./partial/components/muiTable"
 import { PaletteCustom } from "./partial/pattern"
 import { TypographyCustom } from "./partial/typography"
+import { MuiTypography as _muiTypography } from "./partial/components/muiTypography"
 
 export const theme: ThemeOptions = {
   typography: TypographyCustom,
@@ -42,6 +43,7 @@ export const theme: ThemeOptions = {
     MuiCheckbox: _muiCheckbox,
     MuiFab: _muiFab,
     MuiAutocomplete: _muiAutocomplete,
+    MuiTypography: _muiTypography,
     MuiFormControl: {
       defaultProps: {
         margin: "dense",

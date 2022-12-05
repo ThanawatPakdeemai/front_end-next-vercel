@@ -10,12 +10,12 @@ export const MuiButton: Components<Omit<Theme, "components">>["MuiButton"] = {
   },
   styleOverrides: {
     root: {
-      fontSize: "12px",
-      borderRadius: "18px",
-      fontFamily: "neue-machina, Helvetica, Arial,  sans-serif",
+      borderRadius: "60px",
+      fontFamily: "neueMachina, Helvetica, Arial,  sans-serif",
       minWidth: "240px",
-      height: "48px",
-      color: "#fff"
+      height: "60px",
+      color: "#fff",
+      textTransform: "unset"
     },
     containedInfo: {
       backgroundImage: "linear-gradient(180deg, #0C9DE6 0%, #0070FF 100%);",
@@ -26,16 +26,12 @@ export const MuiButton: Components<Omit<Theme, "components">>["MuiButton"] = {
       }
     },
     containedPrimary: {
-      backgroundColor: "#EC2F2F",
-      boxShadow:
-        "0px 0px 20px #EC2F2F, inset 0px 1px 3px rgba(255, 255, 255, 0.5)",
+      backgroundColor: "#7a5be6",
       "&:disabled": {
         backgroundColor: "#98A0B5"
       },
       ":hover": {
-        backgroundColor: "#EC2F2F",
-        boxShadow:
-          "0px 0px 0 transparent, inset 0px 1px 3px rgba(255, 255, 255, 0.5)"
+        backgroundColor: "#7a5be6"
       }
     },
     containedSuccess: {

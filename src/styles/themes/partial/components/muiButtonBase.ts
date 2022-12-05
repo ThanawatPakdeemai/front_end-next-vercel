@@ -10,6 +10,7 @@ export const MuiButtonBase: Components<
   },
   styleOverrides: {
     root: {
+      textTransform: "unset",
       "&:disabled, &.Mui-disabled": {
         backgroundColor: "#98A0B5 !important",
         color: "#fff !important"

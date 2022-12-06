@@ -15,40 +15,44 @@ const CardBodyList = ({ width, players }: Iprop) => (
         key={item._id}
         sx={{ maxWidth: width ?? "auto" }}
         className={` ${
-          index > 2 ? "bg-black-neutral07" : "bg-black-neutral08"
-        } rounded-default border-1 border-black-neutral08 mb-3`}
+          index > 2 ? "bg-black-03" : "bg-black-01"
+        } border-1 mb-3 rounded-default border-black-01`}
       >
         <div className="flex items-center justify-between p-3 ">
           <div
             className={`${index === 0 && "bg-red-card"} ${
               index === 1 && "bg-purple-primary"
             } ${index === 2 && "bg-green-card"} ${
-              index > 2 && "bg-black-neutral7.5"
-            } font-neue-machina text-md ${
-              index > 2 ? "text-white-primary" : "text-black-neutral08"
-            } w-[58px] h-[58px] rounded-sm flex items-center justify-center`}
+              index > 2 && "bg-black-02"
+            } text-md font-neue-machina ${
+              index > 2 ? "text-white-primary" : "text-black-01"
+            } flex h-[58px] w-[58px] items-center justify-center rounded-sm`}
           >
             {index + 1}
           </div>
-          <div className="flex items-center mr-[10px]">
+          <div className="mr-[10px] flex items-center">
             <div>
-              <Typography className="text-white-primary font-neue-machina text-sm text-right uppercase">
+              <Typography className="text-right font-neue-machina text-sm uppercase text-white-primary">
                 {item.username}
               </Typography>
-              <Typography className="text-gray-neutral04 font-neue-machina text-xs border-gray-110 border border-solid p-2 text-right uppercase rounded-less">
+              <Typography
+                className={`rounded-less border border-solid border-black-03 p-2 text-right font-neue-machina text-xs uppercase text-gray-neutral04 ${
+                  index > 2 && "bg-black-01"
+                }`}
+              >
                 {item.naka_earn.toLocaleString("en-US", {
                   maximumFractionDigits: 4
                 })}{" "}
                 NAKA
               </Typography>
             </div>
-            <div className="w-[58px] h-[58px]">
+            <div className="h-[58px] w-[58px]">
               <Image
                 src={item.avatar}
                 width="200"
                 height="200"
                 alt={item.username}
-                className="rounded-sm ml-3 object-fill object-center w-full h-[58px]"
+                className="ml-3 h-[58px] w-full rounded-sm object-fill object-center"
               />
             </div>
           </div>

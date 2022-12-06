@@ -1,10 +1,10 @@
 @tailwind base;
 @tailwind components;
 .card-title-page {
-  @apply bg-purple-primary rounded-default;
+  @apply rounded-default bg-purple-primary;
 }
 .card-title-page .MuiCardHeader-content span {
-  @apply text-white-primary font-neue-machina uppercase font-[700] text-default;
+  @apply font-neue-machina text-default font-[700] uppercase text-white-primary;
 }
 
 .custom-scroll {
@@ -20,9 +20,9 @@
   border-radius: 10px;
 }
 .custom-scroll::-webkit-scrollbar-thumb {
-  @apply bg-purple-primary border-black-neutral07 border border-solid;
+  @apply border border-solid border-black-03 bg-purple-primary;
   border-radius: 10px;
 }
 .custom-scroll::-webkit-scrollbar-thumb:hover {
-  @apply bg-black-neutral07;
+  @apply bg-black-03;
 }

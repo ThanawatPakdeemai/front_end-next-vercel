@@ -47,12 +47,12 @@ module.exports = {
     ],
     semi: "off",
     "import/extensions": "off",
-    // "no-console": [
-    //   process.env.NODE_ENV === "development" ? "warn" : "error",
-    //   {
-    //     allow: ["error"]
-    //   }
-    // ],
+    "no-console": [
+      process.env.NODE_ENV === "development" ? "warn" : "error",
+      {
+        allow: ["error"]
+      }
+    ],
     quotes: "off",
     "react/react-in-jsx-scope": "off",
     "import/no-duplicates": "error",

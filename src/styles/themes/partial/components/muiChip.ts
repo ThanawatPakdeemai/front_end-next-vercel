@@ -10,13 +10,13 @@ export const MuiChip: Components<Omit<Theme, "components">>["MuiChip"] = {
       "&.MuiChip": {
         "&-size": {
           "&Small": {
-            padding: "6px 10px 4px",
-            height: "20px",
+            padding: "6px 0 4px",
+            height: "25px",
             borderRadius: "4px",
             fontSize: "10px"
           },
           "&Medium": {
-            padding: "10px 20px 9px",
+            padding: "10px 0 9px",
             height: "40px",
             borderRadius: "8px"
           }

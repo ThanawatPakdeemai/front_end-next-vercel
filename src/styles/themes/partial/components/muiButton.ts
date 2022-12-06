@@ -17,6 +17,7 @@ export const MuiButton: Components<Omit<Theme, "components">>["MuiButton"] = {
       alignItems: "center",
       justifyContent: "center",
       textTransform: "unset",
+      transition: "all 0.75s cubic-bezier(0.215, 0.61, 0.355, 1)",
       ".MuiSvgIcon-root": {
         marginTop: "-2px"
       },
@@ -71,8 +72,9 @@ export const MuiButton: Components<Omit<Theme, "components">>["MuiButton"] = {
         backgroundColor: "#010101",
         "&Secondary": {
           backgroundColor: PaletteCustom.secondary.main,
+          boxShadow: "none",
           ":hover": {
-            background: `linear-gradient(95.05deg, #D91212 0%, ${PaletteCustom.primary.main} 57.62%, ${PaletteCustom.info.main} 100.57%)`,
+            background: `linear-gradient(95.05deg, #D91212 0%, #7B5BE6 57.62%, #27F1EC 100.57%)`,
             boxShadow:
               "0px -27px 71px rgba(1, 62, 137, 0.25), 0px -11.28px 29.6621px rgba(1, 62, 137, 0.179714), 0px -6.0308px 15.8588px rgba(1, 62, 137, 0.149027), 0px -3.38082px 8.8903px rgba(1, 62, 137, 0.125), 0px -1.79553px 4.72157px rgba(1, 62, 137, 0.100973), 0px -0.747159px 1.96475px rgba(1, 62, 137, 0.0702864), 0px 4px 4px rgba(0, 0, 0, 0.1), inset 0px 1px 1px rgba(255, 255, 255, 0.4), inset 0px -1px 1px rgba(0, 0, 0, 0.25)"
           }

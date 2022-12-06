@@ -18,7 +18,23 @@ const nextConfig = {
 
     return config
   },
-  i18n
+  i18n,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "nakamoto-prod-new.s3.eu-central-1.amazonaws.com",
+        port: "",
+        pathname: "/**"
+      },
+      {
+        protocol: "https",
+        hostname: "nakamoto-s3.s3.ap-southeast-1.amazonaws.com",
+        port: "",
+        pathname: "/**"
+      }
+    ]
+  }
 }
 
 module.exports = withBundleAnalyzer({ ...nextConfig })

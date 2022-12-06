@@ -1,8 +1,9 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { Layout } from "@components/template"
 import { ReactElement } from "react"
 import Image from "@components/atoms/image"
 import { IMAGES } from "@constants/images"
-import CardTitle from "@components/organisms/cardTitle"
+import TopPlayer from "@feature/ranking/components/topPlayer"
 
 export default function Home() {
   return (
@@ -15,10 +16,8 @@ export default function Home() {
           height={IMAGES.footerMock.height}
           alt={IMAGES.footerMock.alt}
         />
+        <TopPlayer />
       </>
-      <div>
-        <CardTitle />
-      </div>
     </article>
   )
 }

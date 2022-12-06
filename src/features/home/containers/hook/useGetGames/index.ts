@@ -2,9 +2,6 @@ import { useQuery } from "@tanstack/react-query"
 import { getHomeSlide } from "../../services/home.service"
 
 const useGetGames = () => {
-  /**
-   * @description Get game list slide. Set cache time 1 day
-   */
   const {
     data: slideGames,
     error,

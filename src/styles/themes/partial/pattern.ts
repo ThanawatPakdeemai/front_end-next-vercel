@@ -2,7 +2,7 @@ import type { PaletteOptions } from "@mui/material/styles"
 
 export const PaletteCustom: PaletteOptions = {
   primary: {
-    main: "#1d2029",
+    main: "#7a5be6",
     light: "#98a0b5",
     dark: "rgba(152,160,181,0.5)",
     contrastText: "rgba(152,160,181,0.5)"

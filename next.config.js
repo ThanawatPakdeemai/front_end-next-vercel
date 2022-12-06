@@ -9,7 +9,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const { i18n } = require("./next-i18next.config")
 
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
@@ -34,6 +34,7 @@ const nextConfig = {
         pathname: "/**"
       }
     ]
+    // domains: ["nakamoto-prod-new.s3.eu-central-1.amazonaws.com"]
   }
 }
 

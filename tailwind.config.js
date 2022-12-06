@@ -15,10 +15,12 @@ module.exports = {
     },
     colors: {
       purple: {
-        primary: "#7B5BE6"
+        primary: "#7B5BE6",
+        "01": "#7a5be6"
       },
       white: {
-        primary: "#E1E2E2"
+        primary: "#E1E2E2",
+        default: "#ffffff"
       },
       blue: {
         from: "#0C9DE6",
@@ -27,6 +29,13 @@ module.exports = {
         shadow: "#7796ff",
         border: "#3D65EF"
       },
+      // blue: {
+      //   from: "#0C9DE6",
+      //   to: "#0070FF",
+      //   default: "#0C9DE6",
+      //   shadow: "#7796ff",
+      //   border: "#3D65EF"
+      // },
       red: {
         from: "#E65D5D",
         to: "#ED3030",
@@ -36,12 +45,14 @@ module.exports = {
         card: "#F42728"
       },
       green: {
-        from: "#0CBE79",
-        to: "#17C582",
-        default: "#27DE7F",
-        shadow: "#00C076",
-        card: "#5DBE74"
+        // from: "#0CBE79",
+        // default: "#27DE7F",
+        // shadow: "#00C076",
+        card: "#5DBE74",
+        "01": "#5DBE74",
+        to: "#ED3030"
       },
+
       binance: {
         default: "#fcd535"
       },
@@ -65,7 +76,11 @@ module.exports = {
       black: {
         "neutral07": "#232329",
         "neutral08": "#010101",
-        "neutral7.5": "#18181C"
+        "neutral7.5": "#18181C",
+        default: "#70727B",
+        "01": "#010101",
+        "02": "#18181C",
+        "03": "#232329"
       }
     },
     fontFamily: {
@@ -83,7 +98,18 @@ module.exports = {
         "sans-serif"
       ]
     },
-    extend: {}
+    extend: {
+      keyframes: {
+        "time-progress": {
+          "0%": { width: "0%" },
+          "100%": { width: "100%" }
+        }
+      },
+      animation: {
+        "time-progress": "time-progress 5s linear forwards"
+      }
+    }
   },
-  plugins: []
+  // eslint-disable-next-line global-require
+  plugins: [require("@tailwindcss/line-clamp")]
 }

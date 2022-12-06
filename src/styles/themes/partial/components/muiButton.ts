@@ -31,7 +31,11 @@ export const MuiButton: Components<Omit<Theme, "components">>["MuiButton"] = {
         backgroundColor: "#98A0B5"
       },
       ":hover": {
-        backgroundColor: "#7a5be6"
+        backgroundImage:
+          "linear-gradient(95.05deg, #D91212 0%, #7B5BE6 57.62%, #27F1EC 100.57%)",
+        boxShadow:
+          "0px -27px 71px rgb(1 62 137 / 25%), 0px -11.28px 29.6621px rgb(1 62 137 / 18%), 0px -6.0308px 15.8588px rgb(1 62 137 / 15%), 0px -3.38082px 8.8903px rgb(1 62 137 / 13%), 0px -1.79553px 4.72157px rgb(1 62 137 / 10%), 0px -0.747159px 1.96475px rgb(1 62 137 / 7%), 0px 4px 4px rgb(0 0 0 / 10%), inset 0px 1px 1px rgb(255 255 255 / 40%), inset 0px -1px 1px rgb(0 0 0 / 25%)",
+        borderRadius: "30px"
       }
     },
     containedSuccess: {

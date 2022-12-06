@@ -9,25 +9,27 @@ module.exports = {
       purple: {
         "01": "#7a5be6"
       },
-      blue: {
-        from: "#0C9DE6",
-        to: "#0070FF",
-        default: "#0C9DE6",
-        shadow: "#7796ff",
-        border: "#3D65EF"
-      },
+      // blue: {
+      //   from: "#0C9DE6",
+      //   to: "#0070FF",
+      //   default: "#0C9DE6",
+      //   shadow: "#7796ff",
+      //   border: "#3D65EF"
+      // },
       red: {
-        from: "#E65D5D",
-        to: "#ED3030",
-        default: "#EC2F2F",
-        shadow: "#EC2F2F",
-        border: "#EC2F2F"
+        "01": "#F42728"
+        // from: "#E65D5D",
+        // to: "#ED3030",
+        // default: "#EC2F2F",
+        // shadow: "#EC2F2F",
+        // border: "#EC2F2F"
       },
       green: {
-        from: "#0CBE79",
-        to: "#17C582",
-        default: "#27DE7F",
-        shadow: "#00C076"
+        "01": "#5DBE74"
+        // from: "#0CBE79",
+        // to: "#17C582",
+        // default: "#27DE7F",
+        // shadow: "#00C076"
       },
       binance: {
         default: "#fcd535"

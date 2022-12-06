@@ -1,18 +1,6 @@
 import useGetGames from "@feature/home/containers/hook/useGetGames"
 import React from "react"
-import {
-  SwiperOptions,
-  Navigation,
-  Pagination,
-  EffectFade,
-  Autoplay
-} from "swiper"
-import { Swiper, SwiperSlide } from "swiper/react"
-// eslint-disable-next-line import/no-unresolved
-import "swiper/css"
-// eslint-disable-next-line import/no-unresolved
-import "swiper/css/autoplay"
-
+import Slider, { Settings } from "react-slick"
 import BannerCardSlide from "../../molecules/bannerCardSlide/BannerCardSlide"
 
 const BannerSlide = () => {
@@ -24,15 +12,10 @@ const BannerSlide = () => {
   /**
    * @description swiper options
    */
-  const settings: SwiperOptions = {
-    slidesPerView: 1,
-    // effect: "fade",
-    navigation: true,
-    autoplay: {
-      delay: 4500
-    },
-    speed: 1000,
-    loop: true
+  const settings = {
+    slidesToShow: 1,
+    fade: true,
+    swipeToSlide: true
   }
 
   return (
@@ -40,23 +23,17 @@ const BannerSlide = () => {
       className="w-full"
       // {...props}
     >
-      <Swiper
-        {...settings}
-        modules={[Navigation, Pagination, Autoplay, EffectFade]}
-      >
+      <Slider {...settings}>
         {slideGames &&
           slideGames.slice(0, 11).map((slide, index) => (
-            <SwiperSlide
-              id={`slide--${index}`}
-              key={slide.id}
-            >
+            <div key={slide.id}>
               <BannerCardSlide
                 slide={slide}
                 slideNext={index === 4 ? slideGames[0] : slideGames[index + 1]}
               />
-            </SwiperSlide>
+            </div>
           ))}
-      </Swiper>
+      </Slider>
     </section>
   )
 }

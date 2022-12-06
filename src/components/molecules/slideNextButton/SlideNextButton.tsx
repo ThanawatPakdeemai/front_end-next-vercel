@@ -1,7 +1,6 @@
 // some-inner-component.jsx
 import { Typography } from "@mui/material"
 import React from "react"
-import { useSwiper, useSwiperSlide } from "swiper/react"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 import ImageCustom from "@src/components/atoms/image"
 import { IGame } from "@feature/game/interfaces/IGameService"
@@ -11,16 +10,14 @@ export interface IBannerCardSlide extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export default function SlideNextButton({ slideNext }: IBannerCardSlide) {
-  const swiper = useSwiper()
-  const swiperSlide = useSwiperSlide()
-
   return (
     <button
       type="button"
-      onClick={() => swiper.slideNext()}
-      className={`slide-next flex items-center gap-4 rounded-3xl border-[1px] border-white-default/20 p-4 text-left ${
-        swiperSlide.isActive ? "opacity-100" : "opacity-0"
-      }"}`}
+      // onClick={() => swiper.slideNext()}
+      // ${
+      //   swiperSlide.isActive ? "opacity-100" : "opacity-0"
+      // }"}
+      className="slide-next flex items-center gap-4 rounded-3xl border-[1px] border-white-default/20 p-4 text-left"
     >
       <div className="slide-next--image w-1/3">
         <ImageCustom
@@ -42,11 +39,10 @@ export default function SlideNextButton({ slideNext }: IBannerCardSlide) {
         </span>
         <Typography variant="h3">{slideNext.name}</Typography>
         <div className="slide-next--bar relative mt-4 h-[1px] w-full bg-white-default/20">
-          <span
-            className={`absolute top-0 left-0 h-full w-0 bg-white-default ${
+          {/* ${
               swiperSlide.isActive ? "animate-time-progress" : ""
-            }`}
-          />
+            } */}
+          <span className="absolute top-0 left-0 h-full w-0 bg-white-default" />
         </div>
       </div>
     </button>

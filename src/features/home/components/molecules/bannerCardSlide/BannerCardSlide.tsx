@@ -7,6 +7,7 @@ import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined
 import { SlideNextButton } from "@components/molecules/slideNextButton"
 import { Tag } from "@components/atoms/tag"
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"
+import { ButtonLink } from "@components/atoms/buttonLink"
 
 export interface IBannerCardSlide extends React.HTMLAttributes<HTMLDivElement> {
   slide: IGame
@@ -15,7 +16,7 @@ export interface IBannerCardSlide extends React.HTMLAttributes<HTMLDivElement> {
 
 const BannerCardSlide = ({ slide, slideNext }: IBannerCardSlide) => (
   <div className="slide-item flex gap-4 bg-black-01 align-middle text-white-default">
-    <div className="slide-item--image w-3/4 overflow-hidden rounded-2xl">
+    <div className="slide-item--image w-2/5 overflow-hidden rounded-2xl lg:w-3/4">
       <ImageCustom
         src={slide.image_home_banner}
         alt={slide.name}
@@ -23,14 +24,14 @@ const BannerCardSlide = ({ slide, slideNext }: IBannerCardSlide) => (
         height={1080}
       />
     </div>
-    <div className="w-1/4 justify-between md:flex md:flex-col md:gap-4">
+    <div className="w-3/5 justify-between md:flex md:flex-col md:gap-4 lg:w-1/4">
       <div className="slide-item--content flex flex-col justify-between rounded-3xl bg-black-02 p-8 md:h-full">
         <section className="slide-item--content-body">
           <div className="slide-item--tags mb-4 flex items-center gap-2">
-            <Tag>{slide.category.name}</Tag>
-            {slide.game_free_status && <Tag>Free</Tag>}
-            {slide.hot_game_status && <Tag>Hot</Tag>}
-            <Tag>{slide.game_type}</Tag>
+            <Tag text={slide.category.name} />
+            {slide.game_free_status && <Tag text="Free" />}
+            {slide.hot_game_status && <Tag text="Hot">Hot</Tag>}
+            <Tag text={slide.game_type} />
           </div>
           <Typography
             variant="h1"
@@ -48,22 +49,11 @@ const BannerCardSlide = ({ slide, slideNext }: IBannerCardSlide) => (
           />
         </section>
         <footer className="slide-item--footer flex items-center justify-between">
-          <Link
-            className="slide-item--link w-[calc(100%-80px)]"
+          <ButtonLink
+            text="Play Now"
             href={`/game/${slide.id}`}
-          >
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{
-                minWidth: "auto",
-                width: "100%"
-              }}
-              startIcon={<SportsEsportsOutlinedIcon />}
-            >
-              Play Now
-            </Button>
-          </Link>
+            icon={<SportsEsportsOutlinedIcon />}
+          />
           <div className="slide-item--favorite">
             <button
               type="button"

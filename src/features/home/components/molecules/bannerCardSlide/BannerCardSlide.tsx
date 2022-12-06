@@ -1,6 +1,5 @@
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { Button, Typography } from "@mui/material"
-import Link from "next/link"
+import { Typography } from "@mui/material"
 import React from "react"
 import ImageCustom from "@src/components/atoms/image"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"

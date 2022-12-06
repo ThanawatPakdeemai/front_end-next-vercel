@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { Layout } from "@components/template"
 import { ReactElement } from "react"
-import Image from "@components/atoms/image"
+import { Image } from "@components/atoms/image/index"
 import { IMAGES } from "@constants/images"
 import TopPlayer from "@feature/ranking/components/topPlayer"
 import { BannerSlide } from "@feature/home/components/organisms/bannerSlide"

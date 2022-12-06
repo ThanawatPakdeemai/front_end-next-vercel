@@ -1,7 +1,4 @@
-import useGetGames from "@feature/home/containers/hook/useGetGames"
 import React from "react"
-import Slider from "react-slick"
-import BannerCardSlide from "../../molecules/bannerCardSlide/BannerCardSlide"
 
 const BannerSlide = () => (
   /**

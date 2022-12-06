@@ -1,7 +1,7 @@
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { Typography } from "@mui/material"
 import React from "react"
-import ImageCustom from "@src/components/atoms/image"
+import ImageCustom from "@components/atoms/image/Image"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import { SlideNextButton } from "@components/molecules/slideNextButton"
 import { Tag } from "@components/atoms/tag"

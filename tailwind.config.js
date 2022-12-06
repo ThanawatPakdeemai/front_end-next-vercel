@@ -17,9 +17,9 @@ module.exports = {
       //   border: "#3D65EF"
       // },
       red: {
-        "01": "#F42728"
+        "01": "#F42728",
+        to: "#ED3030"
         // from: "#E65D5D",
-        // to: "#ED3030",
         // default: "#EC2F2F",
         // shadow: "#EC2F2F",
         // border: "#EC2F2F"

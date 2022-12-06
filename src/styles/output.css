@@ -37,9 +37,56 @@
   font-display: swap;
 }
 
-/*
-! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com
-*/
+@tailwind base;
+
+@tailwind components;
+
+.card-title-page {
+  border-radius: 16px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(123 91 230 / var(--tw-bg-opacity));
+}
+
+.card-title-page .MuiCardHeader-content span {
+  font-family: neueMachina, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  --tw-text-opacity: 1;
+  color: rgb(225 226 226 / var(--tw-text-opacity));
+}
+
+.custom-scroll {
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  border-width: 1px;
+  border-style: solid;
+  --tw-border-opacity: 1;
+  border-color: rgb(35 35 41 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(123 91 230 / var(--tw-bg-opacity));
+  border-radius: 10px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(35 35 41 / var(--tw-bg-opacity));
+}
+
+/* ! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com */
 
 /*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
@@ -567,6 +614,18 @@ video {
   margin-right: auto;
 }
 
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
+
+.mr-\[10px\] {
+  margin-right: 10px;
+}
+
+.ml-3 {
+  margin-left: 0.75rem;
+}
+
 .mb-0 {
   margin-bottom: 0px;
 }
@@ -579,6 +638,10 @@ video {
   margin-left: 1rem;
 }
 
+.mr-3 {
+  margin-right: 0.75rem;
+}
+
 .flex {
   display: flex;
 }
@@ -589,6 +652,14 @@ video {
 
 .h-full {
   height: 100%;
+}
+
+.h-\[412px\] {
+  height: 412px;
+}
+
+.h-\[58px\] {
+  height: 58px;
 }
 
 .h-auto {
@@ -611,6 +682,10 @@ video {
   width: 100%;
 }
 
+.w-\[58px\] {
+  width: 58px;
+}
+
 .w-5 {
   width: 1.25rem;
 }
@@ -629,6 +704,10 @@ video {
 
 .flex-grow {
   flex-grow: 1;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .grid-cols-2 {
@@ -655,12 +734,46 @@ video {
   gap: 1rem;
 }
 
-.border-2 {
-  border-width: 2px;
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
+.rounded-default {
+  border-radius: 16px;
+}
+
+.rounded-sm {
+  border-radius: 11px;
+}
+
+.rounded-less {
+  border-radius: 4px;
+}
+
+.rounded-md {
+  border-radius: 24px;
 }
 
 .border {
   border-width: 1px;
+}
+
+.border-2 {
+  border-width: 2px;
+}
+
+.border-solid {
+  border-style: solid;
+}
+
+.border-black-neutral08 {
+  --tw-border-opacity: 1;
+  border-color: rgb(1 1 1 / var(--tw-border-opacity));
+}
+
+.border-gray-110 {
+  --tw-border-opacity: 1;
+  border-color: rgb(35 35 41 / var(--tw-border-opacity));
 }
 
 .border-\[\#189661\] {
@@ -678,6 +791,36 @@ video {
   border-color: rgb(195 154 9 / var(--tw-border-opacity));
 }
 
+.bg-black-neutral07 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(35 35 41 / var(--tw-bg-opacity));
+}
+
+.bg-black-neutral08 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(1 1 1 / var(--tw-bg-opacity));
+}
+
+.bg-red-card {
+  --tw-bg-opacity: 1;
+  background-color: rgb(244 39 40 / var(--tw-bg-opacity));
+}
+
+.bg-purple-primary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(123 91 230 / var(--tw-bg-opacity));
+}
+
+.bg-green-card {
+  --tw-bg-opacity: 1;
+  background-color: rgb(93 190 116 / var(--tw-bg-opacity));
+}
+
+.bg-black-neutral7\.5 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(24 24 28 / var(--tw-bg-opacity));
+}
+
 .bg-\[\#FA4339\] {
   --tw-bg-opacity: 1;
   background-color: rgb(250 67 57 / var(--tw-bg-opacity));
@@ -688,9 +831,27 @@ video {
   object-fit: contain;
 }
 
+.object-fill {
+  -o-object-fit: fill;
+  object-fit: fill;
+}
+
+.object-center {
+  -o-object-position: center;
+  object-position: center;
+}
+
 .object-left {
   -o-object-position: left;
   object-position: left;
+}
+
+.p-3 {
+  padding: 0.75rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
 }
 
 .px-4 {
@@ -708,30 +869,60 @@ video {
   padding-right: 1.5rem;
 }
 
+.pr-4 {
+  padding-right: 1rem;
+}
+
+.pr-3 {
+  padding-right: 0.75rem;
+}
+
 .text-right {
   text-align: right;
 }
 
-.font-dogicapixel-bold {
-  font-family: dogica_pixelbold, Helvetica, Arial, sans-serif;
-}
 .font-neue-machina {
   font-family: neueMachina, Helvetica, Arial, sans-serif;
 }
 
-.text-base {
-  font-size: 1rem;
-  line-height: 1.5rem;
+.text-sm {
+  font-size: 12px;
 }
 
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
+.text-xs {
+  font-size: 10px;
+}
+
+.font-\[700\] {
+  font-weight: 700;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.leading-\[26px\] {
+  line-height: 26px;
 }
 
 .text-red-to {
   --tw-text-opacity: 1;
   color: rgb(237 48 48 / var(--tw-text-opacity));
+}
+
+.text-white-primary {
+  --tw-text-opacity: 1;
+  color: rgb(225 226 226 / var(--tw-text-opacity));
+}
+
+.text-black-neutral08 {
+  --tw-text-opacity: 1;
+  color: rgb(1 1 1 / var(--tw-text-opacity));
+}
+
+.text-gray-neutral04 {
+  --tw-text-opacity: 1;
+  color: rgb(166 169 174 / var(--tw-text-opacity));
 }
 
 .ring {

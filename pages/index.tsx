@@ -1,6 +1,6 @@
 import { Layout } from "@components/template"
 import { ReactElement } from "react"
-import Image from "@components/atoms/image"
+import { Image } from "@components/atoms/image/index"
 import { IMAGES } from "@constants/images"
 import { BannerSlide } from "@feature/home/components/organisms/bannerSlide"
 

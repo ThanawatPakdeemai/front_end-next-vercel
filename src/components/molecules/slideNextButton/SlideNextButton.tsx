@@ -2,7 +2,7 @@
 import { Typography } from "@mui/material"
 import React from "react"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
-import ImageCustom from "@src/components/atoms/image"
+import ImageCustom from "@components/atoms/image/Image"
 import { IGame } from "@feature/game/interfaces/IGameService"
 
 export interface IBannerCardSlide extends React.HTMLAttributes<HTMLDivElement> {

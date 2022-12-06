@@ -2,7 +2,7 @@
 import React, { memo } from "react"
 import { Card, Typography } from "@mui/material"
 import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
-import Image from "@components/atoms/image"
+import { Image } from "@components/atoms/image/index"
 
 interface Iprop {
   width: string

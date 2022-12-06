@@ -953,6 +953,11 @@ video {
   letter-spacing: 0.05em;
 }
 
+.text-red-to {
+  --tw-text-opacity: 1;
+  color: rgb(237 48 48 / var(--tw-text-opacity));
+}
+
 .text-black-default {
   --tw-text-opacity: 1;
   color: rgb(112 114 123 / var(--tw-text-opacity));

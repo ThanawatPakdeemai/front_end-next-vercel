@@ -126,7 +126,7 @@ strong {
 
   body {
     color: #98a0b5;
-    background: url("/images/common/bg.png") #14161e;
+    background: url("/images/common/bg.png") #232329;
   }
 }
 
@@ -159,7 +159,7 @@ strong {
   /* 2 */
   border-style: solid;
   /* 2 */
-  border-color: #5b606f;
+  border-color: currentColor;
   /* 2 */
 }
 
@@ -501,7 +501,7 @@ input::-moz-placeholder,
 textarea::-moz-placeholder {
   opacity: 1;
   /* 1 */
-  color: #5b6070;
+  color: #9ca3af;
   /* 2 */
 }
 
@@ -509,7 +509,7 @@ input::placeholder,
 textarea::placeholder {
   opacity: 1;
   /* 1 */
-  color: #5b6070;
+  color: #9ca3af;
   /* 2 */
 }
 
@@ -749,6 +749,10 @@ video {
   margin-left: 1rem;
 }
 
+.mr-6 {
+  margin-right: 1.5rem;
+}
+
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -795,6 +799,10 @@ video {
 
 .h-\[1px\] {
   height: 1px;
+}
+
+.h-8 {
+  height: 2rem;
 }
 
 .h-auto {
@@ -902,8 +910,28 @@ video {
   animation: time-progress 5s linear forwards;
 }
 
+@keyframes right-to-left {
+  0% {
+    left: 100%;
+    transform: translate-x-0;
+  }
+
+  100% {
+    left: -50%;
+    transform: translate-x-full;
+  }
+}
+
+.animate-right-to-left {
+  animation: right-to-left 100s linear infinite;
+}
+
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.flex-row {
+  flex-direction: row;
 }
 
 .flex-col {
@@ -938,8 +966,24 @@ video {
   overflow-y: scroll;
 }
 
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
+.rounded {
+  border-radius: 0.25rem;
+}
+
 .rounded-\[8px\] {
   border-radius: 8px;
+}
+
+.rounded-3xl {
+  border-radius: 1.5rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
 }
 
 .rounded-sm {
@@ -956,6 +1000,14 @@ video {
 
 .rounded-md {
   border-radius: 24px;
+}
+
+.rounded-2xl {
+  border-radius: 1rem;
+}
+
+.rounded-full {
+  border-radius: 9999px;
 }
 
 .border-\[1px\] {
@@ -1143,6 +1195,10 @@ video {
   padding-top: 0.5rem;
 }
 
+.pr-6 {
+  padding-right: 1.5rem;
+}
+
 .pr-4 {
   padding-right: 1rem;
 }
@@ -1163,6 +1219,11 @@ video {
   font-family: neueMachina, Helvetica, Arial, sans-serif;
 }
 
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
 .text-\[65\%\] {
   font-size: 65%;
 }
@@ -1177,6 +1238,11 @@ video {
 
 .text-\[70\%\] {
   font-size: 70%;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 .text-default {
@@ -1228,7 +1294,7 @@ video {
   color: rgb(1 1 1 / var(--tw-text-opacity));
 }
 
-.text-gray-neutral04 {
+.text-grey-neutral04 {
   --tw-text-opacity: 1;
   color: rgb(166 169 174 / var(--tw-text-opacity));
 }

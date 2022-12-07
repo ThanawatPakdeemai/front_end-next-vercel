@@ -2,81 +2,59 @@
 module.exports = {
   content: ["./pages/**/*.{js,ts,jsx,tsx}", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    fontSize: {
-      xs: "10px",
-      sm: "12px",
-      default: "14px"
-    },
-    borderRadius: {
-      less: "4px",
-      sm: "11px",
-      default: "16px",
-      md: "24px"
-    },
+    /* base config */
     colors: {
-      purple: {
-        primary: "#7B5BE6",
-        "01": "#7a5be6"
+      primary: {
+        main: "#010101",
+        light: "#010101",
+        dark: "#010101",
+        contrastText: "#A6A9AE"
       },
-      white: {
-        primary: "#E1E2E2",
-        default: "#ffffff"
+      secondary: {
+        main: "#7B5BE6",
+        light: "#7B5BE6",
+        dark: "#7B5BE6",
+        contrastText: "#010101"
       },
-      blue: {
-        from: "#0C9DE6",
-        to: "#0070FF",
-        default: "#0C9DE6",
-        shadow: "#7796ff",
-        border: "#3D65EF"
+      error: {
+        main: "#F42728",
+        light: "#F42728",
+        dark: "#F42728",
+        contrastText: "#010101"
       },
-      // blue: {
-      //   from: "#0C9DE6",
-      //   to: "#0070FF",
-      //   default: "#0C9DE6",
-      //   shadow: "#7796ff",
-      //   border: "#3D65EF"
-      // },
-      red: {
-        from: "#E65D5D",
-        to: "#ED3030",
-        default: "#EC2F2F",
-        shadow: "#EC2F2F",
-        border: "#EC2F2F",
-        card: "#F42728"
+      info: {
+        main: "#27F1EC",
+        light: "#27F1EC",
+        dark: "#27F1EC",
+        contrastText: "#010101"
       },
-      green: {
-        // from: "#0CBE79",
-        // default: "#27DE7F",
-        // shadow: "#00C076",
-        card: "#5DBE74",
-        "01": "#5DBE74",
-        to: "#ED3030"
+      success: {
+        main: "#5DBE74",
+        light: "#5DBE74",
+        dark: "#5DBE74",
+        contrastText: "#010101"
       },
-
-      binance: {
-        default: "#fcd535"
+      warning: {
+        main: "#E1D35A",
+        light: "#E1D35A",
+        dark: "#E1D35A",
+        contrastText: "#010101"
       },
-      polygon: {
-        default: "#8247e5"
-      },
-      gray: {
-        default: "#98A0B5",
-        100: "#ffffff80",
-        200: "#5B606F",
-        300: "#5E6679",
-        400: "#5B6070",
-        500: "#353945",
-        600: "#282D3B",
-        700: "#222531",
-        800: "#1D2029",
-        900: "#14161E",
-        "neutral04": "#A6A9AE"
-      },
-      black: {
-        default: "#70727B",
-        "01": "#010101",
-        "02": "#18181C",
-        "03": "#232329"
+      grey: {
+        50: "#fafafa",
+        100: "#f5f5f5",
+        200: "#eeeeee",
+        300: "#e0e0e0",
+        400: "#bdbdbd",
+        500: "#9e9e9e",
+        600: "#757575",
+        700: "#616161",
+        800: "#424242",
+        900: "#232329",
+        A100: "#18181C",
+        A200: "#010101",
+        A400: "#303030",
+        A700: "#616161"
       }
     },
     fontFamily: {
@@ -94,18 +72,84 @@ module.exports = {
         "sans-serif"
       ]
     },
+    /* extend config here */
     extend: {
+      fontSize: {
+        xs: "10px",
+        sm: "12px",
+        default: "14px"
+      },
+      colors: {
+        purple: {
+          primary: "#7B5BE6",
+          "01": "#7a5be6"
+        },
+        white: {
+          primary: "#E1E2E2",
+          default: "#ffffff"
+        },
+        blue: {
+          from: "#0C9DE6",
+          to: "#0070FF",
+          default: "#0C9DE6",
+          shadow: "#7796ff",
+          border: "#3D65EF"
+        },
+        red: {
+          from: "#E65D5D",
+          to: "#ED3030",
+          default: "#EC2F2F",
+          shadow: "#EC2F2F",
+          border: "#EC2F2F",
+          card: "#F42728"
+        },
+        green: {
+          card: "#5DBE74",
+          "01": "#5DBE74",
+          to: "#ED3030"
+        },
+        binance: {
+          default: "#fcd535"
+        },
+        polygon: {
+          default: "#8247e5"
+        },
+        grey: {
+          default: "#98A0B5",
+          "neutral04": "#A6A9AE"
+        },
+        black: {
+          default: "#70727B",
+          "01": "#010101",
+          "02": "#18181C",
+          "03": "#232329"
+        }
+      },
+      borderRadius: {
+        less: "4px",
+        sm: "11px",
+        default: "16px",
+        md: "24px"
+      },
       keyframes: {
         "time-progress": {
           "0%": { width: "0%" },
           "100%": { width: "100%" }
+        },
+        "right-to-left": {
+          "0%": { left: "100%", transform: `translate-x-0` },
+          "100%": { left: "-50%", transform: `translate-x-full` }
         }
       },
       animation: {
-        "time-progress": "time-progress 5s linear forwards"
+        "time-progress": "time-progress 5s linear forwards",
+        "right-to-left": "right-to-left 100s linear infinite"
       }
     }
   },
   // eslint-disable-next-line global-require
-  plugins: [require("@tailwindcss/line-clamp")]
+  plugins: [require("@tailwindcss/line-clamp")],
+  babel: {
+    plugins: ["preval"]
+  }
 }

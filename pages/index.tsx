@@ -3,7 +3,7 @@ import { Layout } from "@components/template"
 import { ReactElement } from "react"
 import { Image } from "@components/atoms/image/index"
 import { IMAGES } from "@constants/images"
-import TopPlayer from "@feature/ranking/components/topPlayer"
+import TopPlayer from "@feature/ranking/components/template/topPlayer"
 import { BannerSlide } from "@feature/home/components/organisms/bannerSlide"
 
 export default function Home() {

@@ -1,17 +1,14 @@
-import CardBodyList from "@components/organisms/cardBodyList"
+import CardBodyList from "@feature/ranking/components/organisms/cardBodyList"
 import CardTitle from "@components/organisms/cardTitle"
 import { Card } from "@mui/material"
-import { useQuery } from "@tanstack/react-query"
 import { memo } from "react"
 import AddIcon from "@mui/icons-material/Add"
 import { ButtonLink } from "@components/atoms/buttonLink"
-import { getPlayersRanking } from "../containers/services/ranking.service"
+import CircleIcon from "@components/icons/CircleIcon"
+import { useTopPlayer } from "../../containers/hook/useTopPlayer"
 
 const TopPlayer = () => {
-  const { data, status, isLoading } = useQuery({
-    queryKey: ["topPlayer"],
-    queryFn: () => getPlayersRanking("game/ranks-all").then((res) => res)
-  })
+  const { topPlayerAllGame } = useTopPlayer()
 
   return (
     <>
@@ -21,7 +18,7 @@ const TopPlayer = () => {
       >
         <CardTitle
           width="433px"
-          icon={<AddIcon className="mr-2" />}
+          icon={<CircleIcon.Ori className="mr-2" />}
           title="Top NAKA Players"
           rightTitle={
             <ButtonLink
@@ -31,10 +28,10 @@ const TopPlayer = () => {
             />
           }
         />
-        {data && status && !isLoading && data !== undefined && (
+        {topPlayerAllGame && (
           <CardBodyList
             width="433px"
-            players={data}
+            players={topPlayerAllGame}
           />
         )}
       </Card>

@@ -26,3 +26,18 @@
 .custom-scroll::-webkit-scrollbar-thumb:hover {
   @apply bg-black-03;
 }
+
+.top-player {
+  transition: width 0.9s ease-in-out;
+}
+.top-player:hover {
+  transition: 5s;
+}
+.top-player:hover .show-arrow {
+  display: block !important;
+  transition-duration: 700ms;
+  transition-timing-function: linear;
+}
+.top-player:hover .squre-no-player {
+  width: 70px;
+}

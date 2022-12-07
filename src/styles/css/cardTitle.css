@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 .card-title-page {
-  @apply rounded-default bg-purple-primary;
+  @apply rounded-default;
 }
 .card-title-page .MuiCardHeader-content span {
   @apply font-neue-machina text-default font-[700] uppercase text-white-primary;

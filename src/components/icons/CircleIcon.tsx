@@ -34,27 +34,27 @@ function IconCircleOri({
           cy="12"
           r="9.4"
           stroke="#E1E2E2"
-          stroke-width="1.2"
+          strokeWidth="1.2"
         />
         <circle
           cx="12"
           cy="12"
           r="5.4"
           stroke="#E1E2E2"
-          stroke-width="1.2"
+          strokeWidth="1.2"
         />
         <circle
           cx="12"
           cy="12"
           r="1.4"
           stroke="#E1E2E2"
-          stroke-width="1.2"
+          strokeWidth="1.2"
         />
       </g>
       <path
         d="M12 11L12 2"
         stroke="#E1E2E2"
-        stroke-width="1.2"
+        strokeWidth="1.2"
         stroke-linejoin="round"
       />
     </svg>

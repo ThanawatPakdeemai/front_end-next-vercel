@@ -1,11 +1,10 @@
-import { Layout } from "@components/template"
 import TopPlayer from "@feature/ranking/components/template/topPlayer"
 import { Grid } from "@mui/material"
 import { memo } from "react"
-import Developer from "../molecules/developer"
+import Developer from "../organisms/developer"
 
-const Homepage = () => (
-  <Layout>
+const developerPart = () => (
+  <>
     <Grid
       container
       spacing={2}
@@ -25,6 +24,6 @@ const Homepage = () => (
         <TopPlayer />
       </Grid>
     </Grid>
-  </Layout>
+  </>
 )
-export default memo(Homepage)
+export default memo(developerPart)

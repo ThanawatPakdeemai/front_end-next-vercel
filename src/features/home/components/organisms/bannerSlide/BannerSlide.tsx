@@ -1,30 +1,55 @@
-import React from "react"
+import { IGame } from "@feature/game/interfaces/IGameService"
+import React, { useRef } from "react"
+import Slider, { Settings } from "react-slick"
+import BannerCardSlide from "../../molecules/bannerCardSlide/bannerCardSlide"
 
-const BannerSlide = () => (
+interface IBannerSlide extends React.HTMLAttributes<HTMLDivElement> {
+  slides: IGame[]
+}
+
+const BannerSlide = ({ slides }: IBannerSlide) => {
   /**
-   * @description get slide games
+   * @description Slider ref
    */
-  // const { slideGames } = useGetGames()
+  const sliderRef = useRef<Slider>(null)
+  const gotoNext = () => {
+    sliderRef?.current?.slickNext()
+  }
+  /**
+   * @description Slider settings
+   */
+  const settings: Settings = {
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: true,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    draggable: true,
+    fade: true,
+    pauseOnHover: false,
+    dots: true
+  }
 
-  // const settings = {
-  //   slidesToShow: 1,
-  //   fade: true,
-  //   swipeToSlide: true
-  // }
-
-  <section className="w-full">
-    {/* <Slider slidesToShow={1}>
-        {slideGames &&
-          slideGames.slice(0, 11).map((slide, index) => (
-            <div key={slide.id}>
-              <BannerCardSlide
-                slide={slide}
-                slideNext={index === 4 ? slideGames[0] : slideGames[index + 1]}
-              />
-            </div>
-          ))}
-      </Slider> */}
-  </section>
-)
+  return (
+    <section className="relative w-full overflow-hidden">
+      <Slider
+        ref={sliderRef}
+        {...settings}
+      >
+        {slides.slice(0, 5).map((slide, index) => (
+          <div key={slide.id}>
+            <BannerCardSlide
+              slide={slide}
+              slideNext={index === 4 ? slides[0] : slides[index + 1]}
+              gotoNext={gotoNext}
+            />
+          </div>
+        ))}
+      </Slider>
+    </section>
+  )
+}
 
 export default BannerSlide

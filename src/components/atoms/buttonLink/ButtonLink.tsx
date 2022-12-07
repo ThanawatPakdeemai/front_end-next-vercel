@@ -6,21 +6,31 @@ export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   text?: string
   href: string
   icon?: React.ReactNode
+  variant?: "text" | "outlined" | "contained"
+  color?: "primary" | "secondary" | "success" | "error" | "info" | "warning"
+  size?: "small" | "medium" | "large"
+  className?: string
 }
 
-const ButtonLink = ({ text = "Text", href, icon }: IButtonLink) => (
+const ButtonLink = ({
+  text,
+  href,
+  icon,
+  variant,
+  color,
+  size,
+  className
+}: IButtonLink) => (
   <Link
-    className="slide-item--link w-[calc(100%-80px)]"
     href={href}
+    data-testid="button-link"
   >
     <Button
-      variant="contained"
-      color="primary"
-      sx={{
-        minWidth: "auto",
-        width: "100%"
-      }}
+      variant={variant}
+      color={color}
+      size={size}
       startIcon={icon}
+      className={`${className}`}
     >
       {text}
     </Button>

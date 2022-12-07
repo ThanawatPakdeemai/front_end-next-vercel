@@ -1,1 +1,1 @@
-export { default as SlideNextButton } from "./SlideNextButton"
+export { default as SlideNextButton } from "./slideNextButton"

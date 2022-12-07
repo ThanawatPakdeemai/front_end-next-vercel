@@ -1,5 +1,4 @@
-// some-inner-component.jsx
-import { Typography } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 import React from "react"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 import ImageCustom from "@src/components/atoms/image"
@@ -7,17 +6,18 @@ import { IGame } from "@feature/game/interfaces/IGameService"
 
 export interface IBannerCardSlide extends React.HTMLAttributes<HTMLDivElement> {
   slideNext: IGame
+  gotoNext?: () => void
 }
 
-export default function SlideNextButton({ slideNext }: IBannerCardSlide) {
+export default function SlideNextButton({
+  slideNext,
+  gotoNext
+}: IBannerCardSlide) {
   return (
     <button
+      onClick={gotoNext}
       type="button"
-      // onClick={() => swiper.slideNext()}
-      // ${
-      //   swiperSlide.isActive ? "opacity-100" : "opacity-0"
-      // }"}
-      className="slide-next flex items-center gap-4 rounded-3xl border-[1px] border-white-default/20 p-4 text-left"
+      className="slide-next relative flex w-full items-center gap-4 rounded-3xl border-[1px] border-white-default/20 p-4 text-left"
     >
       <div className="slide-next--image w-1/3">
         <ImageCustom
@@ -39,10 +39,19 @@ export default function SlideNextButton({ slideNext }: IBannerCardSlide) {
         </span>
         <Typography variant="h3">{slideNext.name}</Typography>
         <div className="slide-next--bar relative mt-4 h-[1px] w-full bg-white-default/20">
-          {/* ${
-              swiperSlide.isActive ? "animate-time-progress" : ""
-            } */}
-          <span className="absolute top-0 left-0 h-full w-0 bg-white-default" />
+          <Box
+            component="span"
+            sx={{
+              ".slick-active &": {
+                animation: "time-progress 5s linear forwards",
+                "@keyframes time-progress": {
+                  "0%": { width: "0%" },
+                  "100%": { width: "100%" }
+                }
+              }
+            }}
+            className="absolute top-0 left-0 h-full w-0 bg-white-default"
+          />
         </div>
       </div>
     </button>

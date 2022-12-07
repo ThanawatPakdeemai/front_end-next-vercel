@@ -1,1 +1,1 @@
-export { default as BannerCard } from "./BannerCardSlide"
+export { default as BannerCard } from "./bannerCardSlide"

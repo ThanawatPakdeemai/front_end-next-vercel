@@ -15,17 +15,26 @@ strong {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-
-  body {
-    color: theme("colors.gray.default");
-    background: url("/images/common/bg.png") theme("colors.gray.900");
-  }
+.slick-slider .slick-dots {
+  position: relative;
+  bottom: 0;
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-end;
 }
-.text {
-  color: theme("colors.gray.default");
-  font-size: 20px;
+.slick-slider .slick-dots li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 3px;
+}
+.slick-slider .slick-dots li button {
+  background-color: #f1f4f4;
+  width: 14px;
+  height: 1px;
+  text-indent: -9999px;
+  padding: 0;
+}
+.slick-slider .slick-dots li.slick-active button {
+  background-color: #f42728;
 }

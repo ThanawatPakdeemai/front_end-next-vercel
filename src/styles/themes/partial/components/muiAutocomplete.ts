@@ -1,5 +1,6 @@
 import type { Components } from "@mui/material/styles/components"
 import type { Theme } from "@mui/material/styles/createTheme"
+import { PaletteCustom } from "../pattern"
 
 export const MuiAutocomplete: Components<
   Omit<Theme, "components">
@@ -11,7 +12,7 @@ export const MuiAutocomplete: Components<
       fontFamily: "satoshimedium, Helvetica, Arial,  sans-serif",
       minWidth: "240px",
       height: "48px",
-      color: "#fff",
+      color: PaletteCustom.common.white,
       border: 0
     }
   }

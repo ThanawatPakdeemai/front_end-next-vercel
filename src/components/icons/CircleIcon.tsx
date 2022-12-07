@@ -55,7 +55,7 @@ function IconCircleOri({
         d="M12 11L12 2"
         stroke="#E1E2E2"
         strokeWidth="1.2"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
       />
     </svg>
   )

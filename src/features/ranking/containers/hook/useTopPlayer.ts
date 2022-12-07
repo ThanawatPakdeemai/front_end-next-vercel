@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import { getPlayersRanking } from "../services/ranking.service"
 
 export const useTopPlayer = () => {
-  const { data, status, isLoading, isSuccess } = useQuery({
+  const { data, status, isLoading, isSuccess } = useQuery<IPlayerRanking[]>({
     queryKey: ["topPlayer"],
     queryFn: () => getPlayersRanking("game/ranks-all").then((res) => res)
   })

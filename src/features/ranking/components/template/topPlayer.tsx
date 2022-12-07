@@ -25,6 +25,7 @@ const TopPlayer = () => {
               href="/"
               text="View All"
               icon={<AddIcon />}
+              color="secondary"
             />
           }
         />

@@ -119,15 +119,36 @@ strong {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.slick-slider .slick-dots {
+  position: relative;
+  bottom: 0;
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-end;
+}
 
-  body {
-    color: #98a0b5;
-    background: url("/images/common/bg.png") #232329;
-  }
+.slick-slider .slick-dots li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 3px;
+}
+
+.slick-slider .slick-dots li button {
+  background-color: #f1f4f4;
+  width: 14px;
+  height: 1px;
+  text-indent: -9999px;
+  padding: 0;
+}
+
+.slick-slider .slick-dots li.slick-active button {
+  background-color: #f42728;
+}
+
+body {
+  color: #98a0b5;
+  background: url("/images/common/bg.png") #232329;
 }
 
 .text {
@@ -716,6 +737,14 @@ video {
   left: 0px;
 }
 
+.top-5 {
+  top: 1.25rem;
+}
+
+.right-5 {
+  right: 1.25rem;
+}
+
 .left-4 {
   left: 1rem;
 }
@@ -728,9 +757,18 @@ video {
   z-index: 10;
 }
 
+.m-auto {
+  margin: auto;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .mb-3 {
@@ -825,8 +863,8 @@ video {
   height: 365px;
 }
 
-.h-16 {
-  height: 4rem;
+.h-14 {
+  height: 3.5rem;
 }
 
 .min-h-\[56px\] {
@@ -869,12 +907,8 @@ video {
   width: 58px;
 }
 
-.w-2\/5 {
-  width: 40%;
-}
-
-.w-3\/5 {
-  width: 60%;
+.w-\[calc\(100\%-80px\)\] {
+  width: calc(100% - 80px);
 }
 
 .w-14 {
@@ -904,9 +938,9 @@ video {
     scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-@keyframes time-progress {
-  0% {
-    width: 0%;
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
   }
 
   to {
@@ -1136,6 +1170,11 @@ video {
   background-color: rgb(35 35 41 / var(--tw-bg-opacity));
 }
 
+.\!bg-black-01 {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(1 1 1 / var(--tw-bg-opacity)) !important;
+}
+
 .object-contain {
   -o-object-fit: contain;
   object-fit: contain;
@@ -1164,8 +1203,8 @@ video {
   padding: 0.5rem;
 }
 
-.p-8 {
-  padding: 2rem;
+.p-6 {
+  padding: 1.5rem;
 }
 
 .px-4 {

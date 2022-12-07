@@ -1,16 +1,27 @@
 import { IGame } from "@src/features/game/interfaces/IGameService"
 import create from "zustand"
+import { devtools } from "zustand/middleware"
 
 export interface IUseGameItemStore {
-  data: IGame[]
-  setGameFree: (_data: IGame[]) => void
+  gameFree: IGame[]
+  setGameFree: (_gameFreeData: IGame[]) => void
   clearGameFree: () => void
 }
 
-const uesGameFreeStore = create<IUseGameItemStore>((set) => ({
-  data: [],
-  setGameFree: (data) => set((state) => ({ ...state, data })),
-  clearGameFree: () => set(() => ({ data: [] }))
-}))
+const uesGameFreeStore = create<IUseGameItemStore>()(
+  devtools((set) => ({
+    gameFree: [],
+    setGameFree: (_gameFreeData) => {
+      set(
+        () => ({ gameFree: _gameFreeData }),
+        false,
+        "GameFreeStore/setGameFree"
+      )
+    },
+    clearGameFree: () => {
+      set(() => ({ gameFree: [] }), false, "GameFreeStore/clearGameFree")
+    }
+  }))
+)
 
 export default uesGameFreeStore

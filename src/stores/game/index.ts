@@ -1,24 +1,35 @@
 import { GameAllId, IGame } from "@src/features/game/interfaces/IGameService"
 import create from "zustand"
+import { devtools } from "zustand/middleware"
 
 export interface IUseGameItemStore {
-  data: null
-  dataId: []
-  onSetGameData: (_data: IGame[]) => void
-  onClearGameData: () => void
-  onSetGameID: (_dataAiiID: GameAllId[]) => void
-  onClearGameID: () => void
+  data: IGame | null
+  gameId: GameAllId[]
+  onSetGameData: (_game: IGame) => void
+  clearGameData: () => void
+  setGameID: (_gameID: GameAllId[]) => void
+  clearGameID: () => void
   getGame: () => void
 }
 
-const useGameStore = create<IUseGameItemStore>((set, get) => ({
-  data: null,
-  dataId: [],
-  onSetGameData: () => set((state) => ({ data: state.data })),
-  onClearGameData: () => set(() => ({ data: null })),
-  onSetGameID: () => set((state) => ({ dataId: state.dataId })),
-  onClearGameID: () => set(() => ({ dataId: [] })),
-  getGame: () => get().data
-}))
+const useGameStore = create<IUseGameItemStore>()(
+  devtools((set, get) => ({
+    data: null,
+    gameId: [],
+    onSetGameData: (_game) => {
+      set(() => ({ data: _game }), false, "GameStore/setGame")
+    },
+    clearGameData: () => {
+      set(() => ({ data: null }), false, "GameStore/clearGameData")
+    },
+    setGameID: (_gameID) => {
+      set(() => ({ gameId: _gameID }), false, "GameStore/setGameID")
+    },
+    clearGameID: () => {
+      set(() => ({ gameId: [] }), false, "GameStore/clearGameID")
+    },
+    getGame: () => get().data
+  }))
+)
 
 export default useGameStore

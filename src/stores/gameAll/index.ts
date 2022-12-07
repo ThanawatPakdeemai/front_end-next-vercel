@@ -1,24 +1,39 @@
 import { IGameAllState } from "@src/features/game/interfaces/IGameService"
 import create from "zustand"
+import { devtools } from "zustand/middleware"
 
 export interface IUesGameAllStore {
   data: IGameAllState[]
-  dataActive: IGameAllState[]
-  onSetGameAll: (_data: IGameAllState[]) => void
+  gameActive: IGameAllState[]
+  setGameAll: (_gameAll: IGameAllState[]) => void
   getGameInFo: () => IGameAllState[]
-  onClearGameAll: () => void
-  onSetGameAllActive: () => void
-  onClearGameAllActiv: (_dataActive: IGameAllState[]) => void
+  clearGameAll: () => void
+  setGameAllActive: (_gameActive: IGameAllState[]) => void
+  clearGameAllActiv: () => void
 }
 
-const uesGameAllStore = create<IUesGameAllStore>((set, get) => ({
-  data: [],
-  dataActive: [],
-  getGameInFo: () => get().data,
-  onSetGameAll: () => set((state) => ({ data: state.data })),
-  onClearGameAll: () => set(() => ({ data: [] })),
-  onSetGameAllActive: () => set((state) => ({ dataActive: state.data })),
-  onClearGameAllActiv: () => set(() => ({ dataActive: [] }))
-}))
+const uesGameAllStore = create<IUesGameAllStore>()(
+  devtools((set, get) => ({
+    data: [],
+    gameActive: [],
+    getGameInFo: () => get().data,
+    setGameAll: (_gameAll) => {
+      set(() => ({ data: _gameAll }), false, "GameAllStore/setGameAll")
+    },
+    clearGameAll: () => {
+      set(() => ({ data: [] }), false, "GameAllStore/clearGameAll")
+    },
+    setGameAllActive: (_gameActive) => {
+      set(
+        () => ({ gameActive: _gameActive }),
+        false,
+        "GameAllStore/setGameAllActive"
+      )
+    },
+    clearGameAllActiv: () => {
+      set(() => ({ gameActive: [] }), false, "GameAllStore/clearGameAllActiv")
+    }
+  }))
+)
 
 export default uesGameAllStore

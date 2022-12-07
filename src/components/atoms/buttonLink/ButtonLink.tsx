@@ -1,36 +1,39 @@
 import { Button } from "@mui/material"
 import Link from "next/link"
 import React from "react"
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 
 export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   text?: string
   href: string
   icon?: React.ReactNode
-  variant?: "text" | "outlined" | "contained"
-  color?: "primary" | "secondary" | "success" | "error" | "info" | "warning"
-  size?: "small" | "medium" | "large"
-  className?: string
+  color?: "primary" | "secondary" | "inherit" | "success" | "error"
 }
 
 const ButtonLink = ({
-  text,
+  text = "Text",
   href,
   icon,
-  variant,
-  color,
-  size,
-  className
+  color = "primary"
 }: IButtonLink) => (
   <Link
     href={href}
     data-testid="button-link"
   >
     <Button
-      variant={variant}
+      className="button-global"
+      variant="contained"
       color={color}
-      size={size}
-      startIcon={icon}
-      className={`${className}`}
+      sx={{
+        minWidth: "auto",
+        width: "100%"
+      }}
+      startIcon={<div className="button-icon">{icon}</div>}
+      endIcon={
+        <div className="button-arrow hidden">
+          <ArrowForwardIcon />
+        </div>
+      }
     >
       {text}
     </Button>

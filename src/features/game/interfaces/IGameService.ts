@@ -150,6 +150,12 @@ export interface IGameHistoryUserPlay extends IGameBase {
   qty: number
 }
 
+export interface GameAllId {
+  id: string | null | undefined
+  name: string | null | undefined
+  img: string | null | undefined
+}
+
 export interface IGameRoom {
   start_time: Date
   end_time: Date
@@ -195,6 +201,10 @@ export interface IGameUsedItem {
   _id: string
   item_id: string
   qty: number
+}
+
+export interface IGameAllState {
+  data: IGame[]
 }
 
 export interface IGameSummary extends IGameBase {

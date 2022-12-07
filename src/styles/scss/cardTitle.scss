@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+
+.card-title-page {
+  @apply rounded-default;
+  .MuiCardHeader-content {
+    span {
+      @apply font-neue-machina text-default font-[700] uppercase text-white-primary;
+    }
+  }
+}
+.custom-scroll {
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+
+  &::-webkit-scrollbar-thumb {
+    @apply border border-solid border-black-03 bg-purple-primary;
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    @apply bg-black-03;
+  }
+}
+
+.top-player {
+  transition: width 0.9s ease-in-out; //, box-shadow 0.3s ease-in-out;
+  &:hover {
+    transition: 5s;
+    .show-arrow {
+      display: block !important;
+      transition-duration: 700ms;
+      transition-timing-function: linear;
+    }
+    .squre-no-player {
+      width: 70px;
+    }
+  }
+}

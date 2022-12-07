@@ -1,4 +1,5 @@
 @import "./fonts.css";
+@import "./css/cardTitle.css";
 @import "./css/common.css";
 
 @tailwind base;

@@ -1,25 +1,15 @@
 import React from "react"
-
-type IProps = {
-  hideNavbar?: boolean
-  hideSidebar?: boolean
-  hideFooter?: boolean
-} & React.ComponentPropsWithoutRef<"div">
+import Header from "@components/organisms/header"
+import Footer from "@components/organisms/footer"
 
 export default function Layout({
-  hideNavbar,
-  hideSidebar,
-  hideFooter,
-  children,
-  className,
-  ...props
-}: React.PropsWithChildren<IProps>) {
+  children
+}: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) {
   return (
-    <div
-      className={`${className}`}
-      {...props}
-    >
+    <div className="main-container mx-auto">
+      <Header />
       {children}
+      <Footer />
     </div>
   )
 }

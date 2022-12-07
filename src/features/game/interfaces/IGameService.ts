@@ -77,7 +77,7 @@ export interface IGame {
   device_support: IGameSupport[]
   item: IGameItemList[]
   play_to_earn: boolean
-  play_to_earn_status?: string // "end" | "free" | "in_progress"
+  play_to_earn_status?: "end" | "free" | "in_progress"
   date_start_event?: Date | null
   date_end_event?: Date | null
   reward_item_amount?: number
@@ -97,8 +97,8 @@ export interface IGame {
   version: string
   developer: string
   category: IGameCategory
-  game_type: string
-  type_code: string
+  game_type: "singleplayer" | "multiplayer" | "storymode"
+  type_code: "single_01" | "single_02" | "multi_01" | "multi_02" | "story_01"
   game_url: string
   path: string
   image_main: string
@@ -111,7 +111,7 @@ export interface IGame {
   image_background: string
   image_sum: string
   id: string
-  image_home_banner?: string
+  image_home_banner: string
   game_free_url?: string
   image_free_to_earn_icon?: string
 }

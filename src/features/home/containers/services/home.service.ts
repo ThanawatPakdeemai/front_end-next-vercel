@@ -1,15 +1,13 @@
 import services from "@configs/axiosGlobalConfig"
-import {
-  IHomeSlideResponse,
-  IPointCurrentResponse
-} from "@feature/home/interfaces/IHomeService"
+import { IGame } from "@feature/game/interfaces/IGameService"
+import { IPointCurrentResponse } from "@feature/home/interfaces/IHomeService"
 
 const getHomeSlide = () =>
-  new Promise<IHomeSlideResponse>((resolve, reject) => {
+  new Promise<IGame[]>((resolve, reject) => {
     services
       .get(`/game/banner/all`)
       .then((res) => {
-        resolve(res.data)
+        resolve(res.data.data)
       })
       .catch((err) => {
         reject(err)

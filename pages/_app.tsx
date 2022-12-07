@@ -1,3 +1,5 @@
+import "@styles/globals.css"
+
 import { ReactElement, ReactNode } from "react"
 import type { NextPage } from "next"
 import { appWithTranslation } from "next-i18next"
@@ -6,15 +8,10 @@ import type { AppProps } from "next/app"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { useRouter } from "next/router"
 import Head from "next/head"
-// import { createTheme, ThemeProvider } from "@mui/material"
-// import { theme } from "@styles/themes/darkTheme"
-// import type { ThemeOptions } from "@mui/material"
 import { DATA_META_TAG } from "@configs/metaTagData"
 import { ProviderApp, Web3Provider } from "@providers/index"
-
-import "@styles/globals.css"
-import "@styles/css/common.css"
-import "@styles/fonts.css"
+import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material"
+import { theme } from "@styles/themes/darkTheme"
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (_page: ReactElement) => ReactNode
@@ -29,6 +26,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const queryClient = new QueryClient()
   const router = useRouter()
   const pathActive = router.pathname
+  const customTheme = createTheme(theme as ThemeOptions)
 
   return (
     <>
@@ -116,7 +114,9 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       )}
       <QueryClientProvider client={queryClient}>
         <Web3Provider>
-          <ProviderApp>{getLayout(<Component {...pageProps} />)}</ProviderApp>
+          <ThemeProvider theme={customTheme}>
+            <ProviderApp>{getLayout(<Component {...pageProps} />)}</ProviderApp>
+          </ThemeProvider>
         </Web3Provider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

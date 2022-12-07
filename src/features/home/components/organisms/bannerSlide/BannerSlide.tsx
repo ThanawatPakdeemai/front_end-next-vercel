@@ -1,15 +1,15 @@
 import { TagCircle } from "@components/atoms/tagCircle"
 import NewGameIcon from "@components/icons/NewGameIcon"
-import { IGame } from "@feature/game/interfaces/IGameService"
+import useGetGames from "@feature/home/containers/hook/useGetGames"
 import React, { useRef } from "react"
 import Slider, { Settings } from "react-slick"
 import BannerCardSlide from "../../molecules/bannerCardSlide/bannerCardSlide"
 
-interface IBannerSlide extends React.HTMLAttributes<HTMLDivElement> {
-  slides: IGame[]
-}
-
-const BannerSlide = ({ slides }: IBannerSlide) => {
+const BannerSlide = () => {
+  /**
+   * @description get slide games
+   */
+  const { slideGames } = useGetGames()
   /**
    * @description Slider ref
    */
@@ -46,15 +46,16 @@ const BannerSlide = ({ slides }: IBannerSlide) => {
         ref={sliderRef}
         {...settings}
       >
-        {slides.slice(0, 5).map((slide, index) => (
-          <div key={slide.id}>
-            <BannerCardSlide
-              slide={slide}
-              slideNext={index === 4 ? slides[0] : slides[index + 1]}
-              gotoNext={gotoNext}
-            />
-          </div>
-        ))}
+        {slideGames &&
+          slideGames.slice(0, 5).map((slide, index) => (
+            <div key={slide.id}>
+              <BannerCardSlide
+                slide={slide}
+                slideNext={index === 4 ? slideGames[0] : slideGames[index + 1]}
+                gotoNext={gotoNext}
+              />
+            </div>
+          ))}
       </Slider>
     </section>
   )

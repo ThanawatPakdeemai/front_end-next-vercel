@@ -2,7 +2,7 @@ import { Layout } from "@components/template"
 import TopPlayer from "@feature/ranking/components/template/topPlayer"
 import { Grid } from "@mui/material"
 import { memo } from "react"
-import { Developer } from "../molecules/developer"
+import Developer from "../molecules/developer"
 
 const Homepage = () => (
   <Layout>

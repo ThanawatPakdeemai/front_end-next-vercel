@@ -20,7 +20,21 @@ const nextConfig = {
   },
   i18n,
   images: {
-    domains: ["nakamoto-prod-new.s3.eu-central-1.amazonaws.com"]
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "nakamoto-prod-new.s3.eu-central-1.amazonaws.com",
+        port: "",
+        pathname: "/**"
+      },
+      {
+        protocol: "https",
+        hostname: "nakamoto-s3.s3.ap-southeast-1.amazonaws.com",
+        port: "",
+        pathname: "/**"
+      }
+    ]
+    // domains: ["nakamoto-prod-new.s3.eu-central-1.amazonaws.com"]
   }
 }
 

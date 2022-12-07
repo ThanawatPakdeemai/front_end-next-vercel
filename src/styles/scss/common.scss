@@ -30,3 +30,14 @@ strong {
   color: theme("colors.gray.default");
   font-size: 20px;
 }
+
+.button-global {
+  &:hover {
+    .button-icon {
+      display: none;
+    }
+    .button-arrow {
+      display: block;
+    }
+  }
+}

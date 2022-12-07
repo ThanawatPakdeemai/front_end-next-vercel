@@ -14,6 +14,7 @@ import { MuiTable as _muiTable } from "./partial/components/muiTable"
 import { PaletteCustom } from "./partial/pattern"
 import { TypographyCustom } from "./partial/typography"
 import { MuiTypography as _muiTypography } from "./partial/components/muiTypography"
+import { MuiChip as _muiChip } from "./partial/components/muiChip"
 
 export const theme: ThemeOptions = {
   typography: TypographyCustom,
@@ -44,52 +45,6 @@ export const theme: ThemeOptions = {
     MuiFab: _muiFab,
     MuiAutocomplete: _muiAutocomplete,
     MuiTypography: _muiTypography,
-    MuiFormControl: {
-      defaultProps: {
-        margin: "dense",
-        size: "medium"
-      }
-    },
-    MuiFormHelperText: {
-      defaultProps: {
-        margin: "dense"
-      }
-    },
-    MuiIconButton: {
-      defaultProps: {
-        size: "large"
-      }
-    },
-    MuiInputBase: {
-      defaultProps: {
-        margin: "dense"
-      }
-    },
-    MuiInputLabel: {
-      defaultProps: {
-        margin: "dense"
-      }
-    },
-    MuiRadio: {
-      defaultProps: {
-        size: "medium"
-      }
-    },
-    MuiSwitch: {
-      defaultProps: {
-        size: "medium"
-      }
-    },
-    MuiTextField: {
-      defaultProps: {
-        margin: "dense",
-        size: "medium"
-      }
-    },
-    MuiTooltip: {
-      defaultProps: {
-        arrow: true
-      }
-    }
+    MuiChip: _muiChip
   }
 }

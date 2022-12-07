@@ -13,8 +13,8 @@ const TopPlayer = () => {
   return (
     <>
       <Card
-        sx={{ background: "#18181C", maxWidth: "449px" }}
-        className="rounded-md p-3"
+        sx={{ maxWidth: "449px" }}
+        className="rounded-md bg-black-02 p-2"
       >
         <CardTitle
           width="433px"

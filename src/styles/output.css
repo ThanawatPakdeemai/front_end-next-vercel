@@ -104,6 +104,47 @@
   width: 70px;
 }
 
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: satoshiregular, Helvetica, Arial, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+strong {
+  font-weight: bold;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    color: #98a0b5;
+    background: url("/images/common/bg.png") #14161e;
+  }
+}
+
+.text {
+  color: #98a0b5;
+  font-size: 20px;
+}
+
+.button-global:hover .button-icon {
+  display: none;
+}
+
+.button-global:hover .button-arrow {
+  display: block;
+}
+
 /* ! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com */
 
 /*

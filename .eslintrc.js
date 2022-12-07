@@ -80,6 +80,7 @@ module.exports = {
     "react/jsx-filename-extension": "off",
     "react/function-component-definition": "off",
     "react/jsx-no-useless-fragment": "off",
+    "dot-notation": "off",
 
     // overriding recommended rules
     "import/no-extraneous-dependencies": [

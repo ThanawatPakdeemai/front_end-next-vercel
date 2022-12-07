@@ -1,13 +1,11 @@
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { Button, Chip, IconButton, Stack, Typography } from "@mui/material"
+import { Button, Chip, IconButton, Typography } from "@mui/material"
 import React from "react"
 import ImageCustom from "@src/components/atoms/image"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import { SlideNextButton } from "@components/molecules/slideNextButton"
 import { ButtonLink } from "@components/atoms/buttonLink"
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"
-import { TagCircle } from "@components/atoms/tagCircle"
-import LogoIcon from "@components/icons/LogoIcon"
 
 export interface IBannerCardSlide extends React.HTMLAttributes<HTMLDivElement> {
   slide: IGame

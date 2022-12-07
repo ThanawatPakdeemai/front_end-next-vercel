@@ -1,5 +1,4 @@
 import { TagCircle } from "@components/atoms/tagCircle"
-import LogoIcon from "@components/icons/LogoIcon"
 import NewGameIcon from "@components/icons/NewGameIcon"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import React, { useRef } from "react"

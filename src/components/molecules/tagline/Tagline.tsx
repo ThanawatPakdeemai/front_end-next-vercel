@@ -1,6 +1,6 @@
 import React from "react"
 import { ImageProps } from "next/image"
-import { InsideTagLine } from "@components/atoms/insideTagLine"
+import { InsideTagLine } from "@components/molecules/insideTagLine"
 
 interface IProp extends ImageProps {
   bgColor: string
@@ -17,25 +17,25 @@ const Tagline = ({ bgColor, textColor, text, alt, ...props }: IProp) => (
       <InsideTagLine
         textColor={textColor}
         text={text}
-        alt="logo_master"
+        alt={alt}
         {...props}
       />
       <InsideTagLine
         textColor={textColor}
         text={text}
-        alt="logo_master"
+        alt={alt}
         {...props}
       />
       <InsideTagLine
         textColor={textColor}
         text={text}
-        alt="logo_master"
+        alt={alt}
         {...props}
       />
       <InsideTagLine
         textColor={textColor}
         text={text}
-        alt="logo_master"
+        alt={alt}
         {...props}
       />
     </div>

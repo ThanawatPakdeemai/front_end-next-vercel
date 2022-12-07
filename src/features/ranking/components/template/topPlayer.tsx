@@ -4,7 +4,7 @@ import { Card } from "@mui/material"
 import { memo } from "react"
 import AddIcon from "@mui/icons-material/Add"
 import { ButtonLink } from "@components/atoms/buttonLink"
-import CircleIcon from "@components/icons/CircleIcon"
+import TrackChangesIcon from "@mui/icons-material/TrackChanges"
 import { useTopPlayer } from "../../containers/hook/useTopPlayer"
 
 const TopPlayer = () => {
@@ -18,7 +18,7 @@ const TopPlayer = () => {
       >
         <CardTitle
           width="433px"
-          icon={<CircleIcon.Ori className="mr-2" />}
+          icon={<TrackChangesIcon className="mr-2" />}
           title="Top NAKA Players"
           rightTitle={
             <ButtonLink

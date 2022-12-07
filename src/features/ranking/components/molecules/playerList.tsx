@@ -20,7 +20,7 @@ const PlayerList = ({ item, index, className }: IProp) => {
           {item.username}
         </Typography>
         <Typography
-          className={`rounded-less border border-solid border-black-03 p-2 text-right font-neue-machina text-xs uppercase text-gray-neutral04 ${
+          className={`rounded-less border border-solid border-black-03 p-2 text-right font-neue-machina text-xs uppercase text-grey-neutral04 ${
             index > 2 && "bg-black-01"
           }`}
         >

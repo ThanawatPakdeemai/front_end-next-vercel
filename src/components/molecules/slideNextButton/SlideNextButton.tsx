@@ -17,7 +17,7 @@ export default function SlideNextButton({ slideNext }: IBannerCardSlide) {
       // ${
       //   swiperSlide.isActive ? "opacity-100" : "opacity-0"
       // }"}
-      className="slide-next rounded-3xl flex items-center gap-4 border-[1px] border-white-default/20 p-4 text-left"
+      className="slide-next flex items-center gap-4 rounded-3xl border-[1px] border-white-default/20 p-4 text-left"
     >
       <div className="slide-next--image w-1/3">
         <ImageCustom

@@ -49,10 +49,20 @@ module.exports = {
         "time-progress": {
           "0%": { width: "0%" },
           "100%": { width: "100%" }
+        },
+        "rotating": {
+          "from": {
+            transform: "rotate(0deg)"
+          },
+
+          "to": {
+            transform: "rotate(-360deg)"
+          }
         }
       },
       animation: {
-        "time-progress": "time-progress 5s linear forwards"
+        "time-progress": "time-progress 5s linear forwards",
+        "rotating": "rotating 7s linear infinite"
       }
     }
   },

@@ -1,3 +1,6 @@
+import { TagCircle } from "@components/atoms/tagCircle"
+import LogoIcon from "@components/icons/LogoIcon"
+import NewGameIcon from "@components/icons/NewGameIcon"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import React, { useRef } from "react"
 import Slider, { Settings } from "react-slick"
@@ -34,6 +37,12 @@ const BannerSlide = ({ slides }: IBannerSlide) => {
 
   return (
     <section className="relative w-full overflow-hidden">
+      <div className="absolute left-4 top-4 z-10">
+        <TagCircle
+          color="secondary"
+          icon={<NewGameIcon />}
+        />
+      </div>
       <Slider
         ref={sliderRef}
         {...settings}

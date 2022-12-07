@@ -1,11 +1,20 @@
-import type { Palette } from "@mui/material/styles"
+import type { Palette, PaletteColor } from "@mui/material/styles"
 
-export const PaletteCustom: Palette = {
+interface IPalette extends Palette {
+  purple: PaletteColor
+}
+export const PaletteCustom: IPalette = {
   primary: {
     main: "#232329",
-    light: "#232329",
+    light: "#7B5BE6",
     dark: "#232329",
     contrastText: "#70727B"
+  },
+  purple: {
+    main: "#7B5BE6",
+    light: "#7B5BE6",
+    dark: "#7B5BE6",
+    contrastText: "#7B5BE6"
   },
   secondary: {
     main: "#7a5be6",

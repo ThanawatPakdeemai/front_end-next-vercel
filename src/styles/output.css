@@ -37,9 +37,115 @@
   font-display: swap;
 }
 
-/*
-! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com
-*/
+@tailwind base;
+
+@tailwind components;
+
+.card-title-page {
+  border-radius: 16px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(123 91 230 / var(--tw-bg-opacity));
+}
+
+.card-title-page .MuiCardHeader-content span {
+  font-family: neueMachina, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  --tw-text-opacity: 1;
+  color: rgb(225 226 226 / var(--tw-text-opacity));
+}
+
+.custom-scroll {
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  border-width: 1px;
+  border-style: solid;
+  --tw-border-opacity: 1;
+  border-color: rgb(35 35 41 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(123 91 230 / var(--tw-bg-opacity));
+  border-radius: 10px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(35 35 41 / var(--tw-bg-opacity));
+}
+
+.top-player {
+  transition: width 0.9s ease-in-out;
+}
+
+.top-player:hover {
+  transition: 5s;
+}
+
+.top-player:hover .show-arrow {
+  display: block !important;
+  transition-duration: 700ms;
+  transition-timing-function: linear;
+}
+
+.top-player:hover .squre-no-player {
+  width: 70px;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: satoshiregular, Helvetica, Arial, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+strong {
+  font-weight: bold;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    color: #98a0b5;
+    background: url("/images/common/bg.png") #14161e;
+  }
+}
+
+.text {
+  color: #98a0b5;
+  font-size: 20px;
+}
+
+.button-global:hover .button-icon {
+  display: none;
+}
+
+.button-global:hover .button-arrow {
+  display: block;
+}
+
+/* ! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com */
 
 /*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
@@ -55,7 +161,7 @@
   /* 2 */
   border-style: solid;
   /* 2 */
-  border-color: currentColor;
+  border-color: #5b606f;
   /* 2 */
 }
 
@@ -397,7 +503,7 @@ input::-moz-placeholder,
 textarea::-moz-placeholder {
   opacity: 1;
   /* 1 */
-  color: #9ca3af;
+  color: #5b6070;
   /* 2 */
 }
 
@@ -405,7 +511,7 @@ input::placeholder,
 textarea::placeholder {
   opacity: 1;
   /* 1 */
-  color: #9ca3af;
+  color: #5b6070;
   /* 2 */
 }
 
@@ -583,6 +689,10 @@ video {
   margin-right: auto;
 }
 
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
+
 .mb-0 {
   margin-bottom: 0px;
 }
@@ -607,8 +717,24 @@ video {
   margin-top: 1rem;
 }
 
+.ml-3 {
+  margin-left: 0.75rem;
+}
+
+.mr-\[10px\] {
+  margin-right: 10px;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
 .flex {
   display: flex;
+}
+
+.hidden {
+  display: none;
 }
 
 .h-screen {
@@ -629,6 +755,14 @@ video {
 
 .h-7 {
   height: 1.75rem;
+}
+
+.h-\[58px\] {
+  height: 58px;
+}
+
+.h-\[412px\] {
+  height: 412px;
 }
 
 .h-16 {
@@ -669,6 +803,10 @@ video {
 
 .w-7 {
   width: 1.75rem;
+}
+
+.w-\[58px\] {
+  width: 58px;
 }
 
 .w-2\/5 {
@@ -741,24 +879,28 @@ video {
   overflow: hidden;
 }
 
-.rounded {
-  border-radius: 0.25rem;
+.overflow-y-scroll {
+  overflow-y: scroll;
 }
 
 .rounded-\[8px\] {
   border-radius: 8px;
 }
 
-.rounded-3xl {
-  border-radius: 1.5rem;
+.rounded-sm {
+  border-radius: 11px;
 }
 
-.rounded-2xl {
-  border-radius: 1rem;
+.rounded-less {
+  border-radius: 4px;
 }
 
-.rounded-full {
-  border-radius: 9999px;
+.rounded-default {
+  border-radius: 16px;
+}
+
+.rounded-md {
+  border-radius: 24px;
 }
 
 .border-\[1px\] {
@@ -771,6 +913,10 @@ video {
 
 .border {
   border-width: 1px;
+}
+
+.border-solid {
+  border-style: solid;
 }
 
 .border-white-default\/20 {
@@ -792,6 +938,16 @@ video {
   border-color: rgb(195 154 9 / var(--tw-border-opacity));
 }
 
+.border-black-03 {
+  --tw-border-opacity: 1;
+  border-color: rgb(35 35 41 / var(--tw-border-opacity));
+}
+
+.border-black-01 {
+  --tw-border-opacity: 1;
+  border-color: rgb(1 1 1 / var(--tw-border-opacity));
+}
+
 .bg-black-01 {
   --tw-bg-opacity: 1;
   background-color: rgb(1 1 1 / var(--tw-bg-opacity));
@@ -800,11 +956,6 @@ video {
 .bg-purple-01 {
   --tw-bg-opacity: 1;
   background-color: rgb(122 91 230 / var(--tw-bg-opacity));
-}
-
-.bg-red-01 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(244 39 40 / var(--tw-bg-opacity));
 }
 
 .bg-green-01 {
@@ -826,9 +977,29 @@ video {
   background-color: rgb(250 67 57 / var(--tw-bg-opacity));
 }
 
+.bg-red-card {
+  --tw-bg-opacity: 1;
+  background-color: rgb(244 39 40 / var(--tw-bg-opacity));
+}
+
+.bg-purple-primary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(123 91 230 / var(--tw-bg-opacity));
+}
+
+.bg-green-card {
+  --tw-bg-opacity: 1;
+  background-color: rgb(93 190 116 / var(--tw-bg-opacity));
+}
+
 .bg-black-02 {
   --tw-bg-opacity: 1;
   background-color: rgb(24 24 28 / var(--tw-bg-opacity));
+}
+
+.bg-black-03 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(35 35 41 / var(--tw-bg-opacity));
 }
 
 .object-contain {
@@ -836,13 +1007,31 @@ video {
   object-fit: contain;
 }
 
+.object-fill {
+  -o-object-fit: fill;
+  object-fit: fill;
+}
+
 .object-left {
   -o-object-position: left;
   object-position: left;
 }
 
+.object-center {
+  -o-object-position: center;
+  object-position: center;
+}
+
 .p-4 {
   padding: 1rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.p-3 {
+  padding: 0.75rem;
 }
 
 .p-8 {
@@ -903,8 +1092,16 @@ video {
   padding-top: 0.5rem;
 }
 
+.pr-4 {
+  padding-right: 1rem;
+}
+
 .text-left {
   text-align: left;
+}
+
+.text-right {
+  text-align: right;
 }
 
 .align-middle {
@@ -913,11 +1110,6 @@ video {
 
 .font-neue-machina {
   font-family: neueMachina, Helvetica, Arial, sans-serif;
-}
-
-.text-base {
-  font-size: 1rem;
-  line-height: 1.5rem;
 }
 
 .text-\[65\%\] {
@@ -936,9 +1128,12 @@ video {
   font-size: 70%;
 }
 
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
+.text-sm {
+  font-size: 12px;
+}
+
+.text-xs {
+  font-size: 10px;
 }
 
 .uppercase {
@@ -961,6 +1156,21 @@ video {
 
 .text-white-default\/50 {
   color: rgb(255 255 255 / 0.5);
+}
+
+.text-white-primary {
+  --tw-text-opacity: 1;
+  color: rgb(225 226 226 / var(--tw-text-opacity));
+}
+
+.text-black-01 {
+  --tw-text-opacity: 1;
+  color: rgb(1 1 1 / var(--tw-text-opacity));
+}
+
+.text-gray-neutral04 {
+  --tw-text-opacity: 1;
+  color: rgb(166 169 174 / var(--tw-text-opacity));
 }
 
 .text-white-default {

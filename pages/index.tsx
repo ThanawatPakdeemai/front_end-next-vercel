@@ -1,7 +1,9 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { Layout } from "@components/template"
 import { ReactElement } from "react"
 import { Image } from "@components/atoms/image/index"
 import { IMAGES } from "@constants/images"
+import TopPlayer from "@feature/ranking/components/template/topPlayer"
 import { BannerSlide } from "@feature/home/components/organisms/bannerSlide"
 
 export default function Home() {
@@ -16,6 +18,7 @@ export default function Home() {
           height={IMAGES.footerMock.height}
           alt={IMAGES.footerMock.alt}
         />
+        <TopPlayer />
       </>
     </article>
   )

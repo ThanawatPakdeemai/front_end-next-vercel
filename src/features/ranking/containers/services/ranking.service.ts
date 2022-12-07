@@ -3,10 +3,10 @@ import { IPlayerRanking, IRanking } from "@feature/ranking/interfaces/IRanking"
 
 // Call api to get players in the game order by NAKA
 const getPlayersRanking = (url: string) =>
-  new Promise<IPlayerRanking>((resolve, reject) => {
+  new Promise<IPlayerRanking[]>((resolve, reject) => {
     if (url) {
       services
-        .get<IPlayerRanking>(`/${url}`)
+        .get<IPlayerRanking[]>(`/${url}`)
         .then((reponse) => {
           resolve(reponse.data)
         })

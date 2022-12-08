@@ -10,6 +10,7 @@ import {
   Popover,
   Typography
 } from "@mui/material"
+import { Box } from "@mui/system"
 
 interface IProp {
   button: React.ReactNode
@@ -58,19 +59,21 @@ const SelectNaka = ({ button, title, options, imageSelectd }: IProp) => (
                       </Typography>
                     </ListItemText>
                   </div>
-                  <div className="relative">
-                    <Typography
-                      className="ml-2 cursor-pointer  font-neue-machina text-default"
-                      onClick={() => popupState.close()}
-                    >
+                  <Box
+                    component="div"
+                    className="relative cursor-pointer"
+                    onClick={() => popupState.close()}
+                  >
+                    <div className="ml-2 font-neue-machina text-default">
                       <div className="h-5 w-5 rotate-45 rounded-less bg-error-main hover:rotate-0 " />
-                    </Typography>
+                    </div>
+
                     <Divider
                       className=" absolute bottom-[9px] left-[10px] w-[15px] border border-[#f1f4f4]"
                       orientation="vertical"
                       flexItem
                     />
-                  </div>
+                  </Box>
                 </div>
               </div>
               <div className="flex items-center justify-between bg-primary-main pt-2 ">

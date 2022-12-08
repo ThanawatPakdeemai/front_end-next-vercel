@@ -1,43 +1,51 @@
+import { ButtonLink } from "@components/atoms/buttonLink"
+import DownloadIcon from "@components/icons/DownloadIcon"
+import { IGameDownloadSlide } from "@feature/slider/interfaces/ISlides"
+import { CardContent, CardMedia, Typography } from "@mui/material"
+import Link from "next/link"
 import React from "react"
 
-export interface CarouselCardSlideProps {
-  slide: any
+export interface CarouselCardSlideProps extends IGameDownloadSlide {
   index: number
   activeIndex: number
 }
 const CarouselCardSlide = ({
-  slide,
   index,
-  activeIndex
+  activeIndex,
+  ...props
 }: CarouselCardSlideProps) => {
-  // Example of a component
   const isActive = index === activeIndex
   return (
     <div
-      className={`carousel-slide__item ${
+      className={`carousel-slide__item relative overflow-hidden rounded-2xl ${
         isActive ? "carousel-slide__item--active" : ""
       }`}
     >
       <div className="carousel-slide__item__image">
-        {/* <img
-          src={slide.image}
-          alt={slide.name}
-        /> */}
+        <CardMedia
+          component="img"
+          alt={props.name}
+          height={468}
+          image={props.image}
+        />
       </div>
-      <div className="carousel-slide__item__content">
-        <div className="carousel-slide__item__content__title">
-          <h3>{slide.name}</h3>
-        </div>
-        <div className="carousel-slide__item__content__description">
-          <p>{slide.description}</p>
-        </div>
-        <div className="carousel-slide__item__content__bar">
-          <div
-            className="carousel-slide__item__content__bar__progress"
-            style={{ width: `${(index + 1) * 10}%` }}
+      <CardContent className="carousel-slide__item__content absolute bottom-0 left-0 z-[1] w-full">
+        <div className="flex w-full items-center justify-between gap-4 rounded-xl bg-grey-A100 p-4">
+          <Typography
+            className="mb-0 text-white-primary line-clamp-1"
+            variant="body1"
+            dangerouslySetInnerHTML={{
+              __html: props.description
+            }}
+          />
+          <ButtonLink
+            href={props.link}
+            text="Download"
+            className="carousel-slide__item__content__link !min-w-0 p-0 font-neue-machina"
+            icon={<DownloadIcon />}
           />
         </div>
-      </div>
+      </CardContent>
     </div>
   )
 }

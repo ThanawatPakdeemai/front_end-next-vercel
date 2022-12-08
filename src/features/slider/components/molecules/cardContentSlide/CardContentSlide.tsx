@@ -1,7 +1,7 @@
 import { CardBody } from "@components/molecules/cardBody"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IGameTag } from "@feature/slider/interfaces/IGameTags"
-import React, { useState } from "react"
+import React from "react"
 import { GameTags } from "../../atoms/gameTags"
 import { CardFooterSlide } from "../cardFooterSlide"
 

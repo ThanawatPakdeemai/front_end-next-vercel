@@ -90,6 +90,7 @@
     "jest-dom": "^4.0.0",
     "jest-environment-jsdom": "^29.1.2",
     "lint-staged": "^13.0.3",
+    "material-ui-popup-state": "^4.1.0",
     "node-mocks-http": "^1.11.0",
     "postcss": "^8.4.19",
     "postcss-cli": "^10.0.0",

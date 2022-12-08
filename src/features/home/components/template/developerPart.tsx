@@ -18,14 +18,14 @@ const developerPart = () => (
         xs={12}
         md={8}
       >
-        <Card className="bg-black-02 p-2 sm:h-auto md:h-[465px]">
+        <Card className="bg-grey-A100 p-2 sm:h-auto md:h-[465px]">
           <CardTitle
             width="100%"
-            icon={<DvrIcon className="mr-2 text-black-01" />}
+            icon={<DvrIcon className="mr-2 text-grey-A200" />}
             title={
               <Typography
                 variant="inherit"
-                className="text-black-01"
+                className="text-grey-A200"
               >{`Looking for NAKA<DEVELOPERs>`}</Typography>
             }
             background="red"

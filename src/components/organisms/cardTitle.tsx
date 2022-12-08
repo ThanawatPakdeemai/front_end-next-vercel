@@ -26,8 +26,8 @@ const CardTitle = ({
       <CardHeader
         title={
           <div className="flex items-center">
-            <p>{icon}</p>
-            <p>{title}</p>
+            <div>{icon}</div>
+            <div>{title}</div>
           </div>
         }
         action={rightTitle ?? ""}

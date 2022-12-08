@@ -14,7 +14,7 @@ const Tag = ({
   ...props
 }: IPropsTag) => {
   const hasVariant = {
-    primary: "bg-black-01 text-black-default",
+    primary: "bg-grey-A200 text-black-default",
     purple: "bg-purple-01",
     red: "bg-red-01",
     green: "bg-green-01"

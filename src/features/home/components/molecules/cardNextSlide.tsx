@@ -4,15 +4,12 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 import ImageCustom from "@components/atoms/image/Image"
 import { IGame } from "@feature/game/interfaces/IGameService"
 
-export interface IBannerCardSlide extends React.HTMLAttributes<HTMLDivElement> {
+export interface ICardNextSlide {
   slideNext: IGame
   gotoNext?: () => void
 }
 
-export default function SlideNextButton({
-  slideNext,
-  gotoNext
-}: IBannerCardSlide) {
+export default function CardNextSlide({ slideNext, gotoNext }: ICardNextSlide) {
   return (
     <button
       onClick={gotoNext}

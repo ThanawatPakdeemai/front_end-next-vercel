@@ -1,5 +1,5 @@
 import { Layout } from "@components/template"
-import { BannerSlide } from "@feature/home/components/organisms/bannerSlide"
+import { BannerSlide } from "@feature/home/components/template/bannerSlide"
 import DeveloperPart from "@feature/home/components/template/developerPart"
 import { memo } from "react"
 

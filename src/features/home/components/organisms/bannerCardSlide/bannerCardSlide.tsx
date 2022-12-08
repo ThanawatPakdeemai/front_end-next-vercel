@@ -21,12 +21,7 @@ const BannerCardSlide = ({ slide, ...props }: IBannerCardSlide) => (
       />
     </div>
     <div className="w-full justify-between md:flex md:w-3/5 md:flex-col md:gap-4 xl:w-1/4">
-      <CardContentSlide
-        title={slide.name}
-        description={slide.banner_description}
-        link={`/game/${slide.path}`}
-        slide={slide}
-      />
+      <CardContentSlide slide={slide} />
       <CardNextSlide
         slideNext={props.slideNext}
         gotoNext={props.gotoNext}

@@ -24,6 +24,7 @@ export const PaletteCustom: Palette | any = theme &&
     contrastThreshold: 1,
     tonalOffset: 1,
     grey: theme.colors["grey"],
+    white: theme.colors["white"],
     text: {
       primary: theme.colors["black"]["default"],
       secondary: theme.colors["grey"]["neutral04"],

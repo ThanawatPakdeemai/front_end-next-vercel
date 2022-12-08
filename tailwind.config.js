@@ -119,10 +119,7 @@ module.exports = {
           "neutral04": "#A6A9AE"
         },
         black: {
-          default: "#70727B",
-          "01": "#010101",
-          "02": "#18181C",
-          "03": "#232329"
+          default: "#70727B"
         }
       },
       borderRadius: {

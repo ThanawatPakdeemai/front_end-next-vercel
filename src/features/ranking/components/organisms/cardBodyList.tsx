@@ -16,8 +16,8 @@ const CardBodyList = ({ width, players }: Iprop) => (
         key={item._id}
         sx={{ maxWidth: width ?? "auto" }}
         className={` ${
-          index > 2 ? "bg-black-03" : "bg-black-01"
-        } border-1 top-player mb-3 rounded-default border-black-01 `}
+          index > 2 ? "bg-grey-900" : "bg-grey-A200"
+        } border-1 top-player mb-3 rounded-default border-grey-A200 `}
       >
         <div className=" flex items-center justify-between p-2">
           <NumberRank index={index} />

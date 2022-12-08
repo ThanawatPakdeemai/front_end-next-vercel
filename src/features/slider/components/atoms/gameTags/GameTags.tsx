@@ -6,7 +6,7 @@ export interface ICardGameTag {
   gameTags: IGameTag[]
 }
 
-const CardGameTag = ({ gameTags }: ICardGameTag) => (
+const GameTag = ({ gameTags }: ICardGameTag) => (
   <div className="flex flex-wrap gap-2">
     {gameTags.map((gameTag, index) =>
       gameTag.name !== "" ? (
@@ -28,4 +28,4 @@ const CardGameTag = ({ gameTags }: ICardGameTag) => (
   </div>
 )
 
-export default CardGameTag
+export default GameTag

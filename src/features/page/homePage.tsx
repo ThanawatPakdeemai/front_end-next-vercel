@@ -1,4 +1,4 @@
-import { BannerSlide } from "@feature/home/components/template/bannerSlide"
+import { BannerSlide } from "@feature/slider/components/templates/bannerSlide"
 import DeveloperPart from "@feature/home/components/template/developerPart"
 import { memo } from "react"
 

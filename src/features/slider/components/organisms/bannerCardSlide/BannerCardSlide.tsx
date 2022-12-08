@@ -1,15 +1,17 @@
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { CardMedia } from "@mui/material"
 import React from "react"
-import CardNextSlide, { ICardNextSlide } from "../../molecules/CardNextSlide"
-import CardContentSlide from "../CardContentSlide"
+import { CardContentSlide } from "../../molecules/cardContentSlide"
+import CardNextSlide, {
+  ICardNextSlide
+} from "../../molecules/cardNextSlide/CardNextSlide"
 
 export interface IBannerCardSlide extends ICardNextSlide {
   slide: IGame
 }
 
 const BannerCardSlide = ({ slide, ...props }: IBannerCardSlide) => (
-  <div className="slide-item bg-black-01 relative gap-4 align-middle text-white-default md:flex">
+  <div className="slide-item relative gap-4 align-middle text-white-default md:flex">
     <div className="slide-item--image w-full overflow-hidden rounded-2xl md:w-3/5 xl:w-3/4">
       <CardMedia
         component="img"

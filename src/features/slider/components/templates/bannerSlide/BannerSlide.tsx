@@ -3,7 +3,7 @@ import NewGameIcon from "@components/icons/NewGameIcon"
 import useGetGames from "@feature/home/containers/hook/useGetGames"
 import React, { useRef } from "react"
 import Slider, { Settings } from "react-slick"
-import BannerCardSlide from "../../organisms/bannerCardSlide/BannerCardSlide"
+import { BannerCardSlide } from "../../organisms/bannerCardSlide"
 
 const BannerSlide = () => {
   /**

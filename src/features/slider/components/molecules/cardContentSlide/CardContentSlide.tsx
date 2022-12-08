@@ -2,8 +2,8 @@ import { CardBody } from "@components/molecules/cardBody"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IGameTag } from "@feature/home/interfaces/IHomeService"
 import React from "react"
-import CardFooterSlide from "../molecules/CardFooterSlide"
-import CardGameTags from "../molecules/GameTags"
+import { GameTags } from "../../atoms/gameTags"
+import { CardFooterSlide } from "../cardFooterSlide"
 
 export interface ICardContentSlide {
   slide: IGame
@@ -29,8 +29,8 @@ const CardContentSlide = ({ slide }: ICardContentSlide) => {
   })
 
   return (
-    <div className="slide-item--content bg-black-02 my-4 flex flex-col justify-between rounded-2xl p-6 md:my-0 md:h-full md:rounded-3xl md:p-8">
-      <CardGameTags gameTags={gameTags} />
+    <div className="slide-item--content my-4 flex flex-col justify-between rounded-2xl bg-grey-A100 p-6 md:my-0 md:h-full md:rounded-3xl md:p-8">
+      <GameTags gameTags={gameTags} />
       <CardBody
         title={slide.name}
         description={slide.banner_description}

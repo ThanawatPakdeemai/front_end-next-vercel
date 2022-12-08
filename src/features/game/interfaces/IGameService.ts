@@ -4,6 +4,14 @@ import {
 } from "@feature/gameItem/interfaces/IGameItemService"
 import { IFormatService } from "@interfaces/IHelper"
 
+export type TGameType = "singleplayer" | "multiplayer" | "storymode"
+export type TTypeCode =
+  | "single_01"
+  | "single_02"
+  | "multi_01"
+  | "multi_02"
+  | "story_01"
+
 export interface IGameHowTo {
   title: string
   details: string
@@ -97,8 +105,8 @@ export interface IGame {
   version: string
   developer: string
   category: IGameCategory
-  game_type: "singleplayer" | "multiplayer" | "storymode"
-  type_code: "single_01" | "single_02" | "multi_01" | "multi_02" | "story_01"
+  game_type: TGameType
+  type_code: TTypeCode
   game_url: string
   path: string
   image_main: string

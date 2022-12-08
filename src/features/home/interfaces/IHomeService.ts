@@ -28,3 +28,8 @@ export interface IPointCurrentResponse {
   status: boolean
   data: IPointCurrent[]
 }
+
+export interface IGameTag {
+  name: string
+  link?: string
+}

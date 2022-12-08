@@ -6,7 +6,7 @@ export interface ICardBodySlide {
   description: string
 }
 
-const CardBodySlide = ({ title, description }: ICardBodySlide) => (
+const CardBody = ({ title, description }: ICardBodySlide) => (
   <div className="content-body">
     <Typography
       variant="h1"
@@ -24,4 +24,4 @@ const CardBodySlide = ({ title, description }: ICardBodySlide) => (
   </div>
 )
 
-export default CardBodySlide
+export default CardBody

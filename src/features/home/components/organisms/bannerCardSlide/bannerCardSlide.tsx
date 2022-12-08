@@ -1,10 +1,10 @@
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { CardMedia } from "@mui/material"
 import React from "react"
-import CardContentSlide from "@feature/home/components/organisms/cardContentSlide"
+import CardContentSlide from "@feature/home/components/organisms/CardContentSlide"
 import CardNextSlide, {
   ICardNextSlide
-} from "@feature/home/components/molecules/cardNextSlide"
+} from "@feature/home/components/molecules/CardNextSlide"
 
 export interface IBannerCardSlide extends ICardNextSlide {
   slide: IGame
@@ -25,10 +25,7 @@ const BannerCardSlide = ({ slide, ...props }: IBannerCardSlide) => (
         title={slide.name}
         description={slide.banner_description}
         link={`/game/${slide.path}`}
-        category={slide.category.name}
-        gameType={slide.game_type}
-        isFreeGame={slide.game_free_status}
-        isHotGame={slide.hot_game_status}
+        slide={slide}
       />
       <CardNextSlide
         slideNext={props.slideNext}

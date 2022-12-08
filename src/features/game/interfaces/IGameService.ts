@@ -68,6 +68,7 @@ export interface IGameMap {
 export interface IGameCategory {
   name: string
   id: string
+  slug: string
 }
 
 export interface IGame {

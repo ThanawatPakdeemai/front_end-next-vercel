@@ -15,7 +15,7 @@ export interface IBannerCardSlide extends React.HTMLAttributes<HTMLDivElement> {
 
 const BannerCardSlide = ({ slide, slideNext }: IBannerCardSlide) => (
   <div className="slide-item flex gap-4 bg-black-01 align-middle text-white-default">
-    <div className="slide-item--image rounded-2xl w-2/5 overflow-hidden lg:w-3/4">
+    <div className="slide-item--image w-2/5 overflow-hidden rounded-2xl lg:w-3/4">
       <ImageCustom
         src={slide.image_home_banner}
         alt={slide.name}
@@ -24,7 +24,7 @@ const BannerCardSlide = ({ slide, slideNext }: IBannerCardSlide) => (
       />
     </div>
     <div className="w-3/5 justify-between md:flex md:flex-col md:gap-4 lg:w-1/4">
-      <div className="slide-item--content rounded-3xl flex flex-col justify-between bg-black-02 p-8 md:h-full">
+      <div className="slide-item--content flex flex-col justify-between rounded-3xl bg-black-02 p-8 md:h-full">
         <section className="slide-item--content-body">
           <div className="slide-item--tags mb-4 flex items-center gap-2">
             <Tag text={slide.category.name} />
@@ -56,7 +56,7 @@ const BannerCardSlide = ({ slide, slideNext }: IBannerCardSlide) => (
           <div className="slide-item--favorite">
             <button
               type="button"
-              className="rounded-full flex h-16 w-16 items-center justify-center bg-black-01"
+              className="flex h-16 w-16 items-center justify-center rounded-full bg-black-01"
             >
               <FavoriteBorderIcon className="opacity-80" />
             </button>

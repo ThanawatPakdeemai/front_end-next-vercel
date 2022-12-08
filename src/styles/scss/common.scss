@@ -21,13 +21,13 @@ strong {
   }
 
   body {
-    color: theme("colors.gray.default");
-    background: url("/images/common/bg.png") theme("colors.gray.900");
+    color: theme("colors.grey.default");
+    background: url("/images/common/bg.png") theme("colors.grey.900");
   }
 }
 
 .text {
-  color: theme("colors.gray.default");
+  color: theme("colors.grey.default");
   font-size: 20px;
 }
 

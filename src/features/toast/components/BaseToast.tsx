@@ -26,7 +26,7 @@ function BaseToastComponent({
       className={`xxl:min-w-[225px] rounded-5xl flex h-auto min-h-[56px] min-w-[125px] max-w-[564px] justify-between gap-4 border-2 py-4 px-6 xl:min-w-[175px] ${toastTyoe[type]}`}
     >
       <div className="h-7 w-7 ">{iconType}</div>
-      <div className="text-base1-demi text-lg flex-grow">{content}</div>
+      <div className="text-base1-demi flex-grow text-lg">{content}</div>
       {onClose && (
         <div className="flex h-7 w-7 items-center justify-center ">
           <button

@@ -47,7 +47,7 @@ const BannerSlide = () => {
         {...settings}
       >
         {slideGames &&
-          slideGames.slice(15, 20).map((slide, index) => (
+          slideGames.slice(0, 5).map((slide, index) => (
             <div key={slide.id}>
               <BannerCardSlide
                 slide={slide}

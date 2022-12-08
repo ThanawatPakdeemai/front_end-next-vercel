@@ -8,9 +8,9 @@ import {
   ListItemText,
   MenuList,
   Popover,
-  Typography
+  Typography,
+  Box
 } from "@mui/material"
-import { Box } from "@mui/system"
 
 interface IProp {
   button: React.ReactNode

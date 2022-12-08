@@ -119,6 +119,29 @@ strong {
   box-sizing: border-box;
 }
 
+body {
+  color: #98a0b5;
+  background: url("/images/common/bg.png") #232329;
+}
+
+.text {
+  color: #98a0b5;
+  font-size: 20px;
+}
+
+.button-global:hover .button-icon {
+  display: none;
+}
+
+.button-global:hover .button-arrow {
+  display: block;
+}
+
+.slick-slider .slick-slide.slick-active {
+  position: relative;
+  z-index: 1;
+}
+
 .slick-slider .slick-dots {
   position: relative;
   bottom: 0;
@@ -144,24 +167,6 @@ strong {
 
 .slick-slider .slick-dots li.slick-active button {
   background-color: #f42728;
-}
-
-body {
-  color: #98a0b5;
-  background: url("/images/common/bg.png") #232329;
-}
-
-.text {
-  color: #98a0b5;
-  font-size: 20px;
-}
-
-.button-global:hover .button-icon {
-  display: none;
-}
-
-.button-global:hover .button-arrow {
-  display: block;
 }
 
 /* ! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com */
@@ -759,6 +764,10 @@ video {
 
 .top-4 {
   top: 1rem;
+}
+
+.z-\[1\] {
+  z-index: 1;
 }
 
 .z-10 {
@@ -1561,6 +1570,10 @@ h6 {
   .md\:my-0 {
     margin-top: 0px;
     margin-bottom: 0px;
+  }
+
+  .md\:mt-auto {
+    margin-top: auto;
   }
 
   .md\:flex {

@@ -26,7 +26,7 @@ const BannerSlide = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 5000,
     draggable: true,
     fade: true,
@@ -47,7 +47,7 @@ const BannerSlide = () => {
         {...settings}
       >
         {slideGames &&
-          slideGames.slice(0, 5).map((slide, index) => (
+          slideGames.slice(15, 20).map((slide, index) => (
             <div key={slide.id}>
               <BannerCardSlide
                 slide={slide}

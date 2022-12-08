@@ -15,8 +15,35 @@ strong {
   box-sizing: border-box;
 }
 
+body {
+  color: theme("colors.grey.default");
+  background: url("/images/common/bg.png") theme("colors.grey.900");
+}
+
+.text {
+  color: theme("colors.grey.default");
+  font-size: 20px;
+}
+
+.button-global {
+  &:hover {
+    .button-icon {
+      display: none;
+    }
+    .button-arrow {
+      display: block;
+    }
+  }
+}
+
 .slick-slider {
   .slick {
+    &-slide {
+      &.slick-active {
+        position: relative;
+        z-index: 1;
+      }
+    }
     &-dots {
       position: relative;
       bottom: 0;
@@ -41,27 +68,6 @@ strong {
           }
         }
       }
-    }
-  }
-}
-
-body {
-  color: theme("colors.grey.default");
-  background: url("/images/common/bg.png") theme("colors.grey.900");
-}
-
-.text {
-  color: theme("colors.grey.default");
-  font-size: 20px;
-}
-
-.button-global {
-  &:hover {
-    .button-icon {
-      display: none;
-    }
-    .button-arrow {
-      display: block;
     }
   }
 }

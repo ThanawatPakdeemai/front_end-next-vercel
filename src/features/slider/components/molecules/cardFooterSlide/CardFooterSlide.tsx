@@ -5,13 +5,17 @@ import { ButtonFavourite } from "@components/atoms/buttonFavourite"
 
 interface IContentFooterBannerSlide {
   link: string
+  text?: string
 }
 
-const CardFooterSlide = ({ link }: IContentFooterBannerSlide) => (
-  <footer className="slide-item--footer relative mt-4 flex items-center justify-between">
+const CardFooterSlide = ({
+  link,
+  text = "Play Now"
+}: IContentFooterBannerSlide) => (
+  <footer className="slide-item--footer relative mt-4 flex items-center justify-between md:mt-auto">
     <div className="w-[calc(100%-80px)]">
       <ButtonLink
-        text="Play Now"
+        text={text}
         href={link}
         icon={<SportsEsportsOutlinedIcon />}
         size="large"

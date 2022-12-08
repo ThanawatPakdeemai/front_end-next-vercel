@@ -21,10 +21,7 @@ const ButtonLink = ({
   size,
   className
 }: IButtonLink) => (
-  <Link
-    href={href}
-    data-testid="button-link"
-  >
+  <Link href={href}>
     <Button
       variant={variant}
       color={color}

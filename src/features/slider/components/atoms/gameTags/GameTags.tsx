@@ -1,4 +1,4 @@
-import { IGameTag } from "@feature/home/interfaces/IHomeService"
+import { IGameTag } from "@feature/slider/interfaces/IGameTags"
 import { Chip, Link } from "@mui/material"
 import React from "react"
 
@@ -6,13 +6,14 @@ export interface ICardGameTag {
   gameTags: IGameTag[]
 }
 
-const GameTag = ({ gameTags }: ICardGameTag) => (
+const GameTags = ({ gameTags }: ICardGameTag) => (
   <div className="flex flex-wrap gap-2">
     {gameTags.map((gameTag, index) =>
       gameTag.name !== "" ? (
         <Link
           href={gameTag.link ? gameTag.link : ""}
           key={`${`tag--${index}`}`}
+          className="relative z-[1] flex items-center justify-center"
         >
           <Chip
             key={`${`tag--${index}`}`}
@@ -20,7 +21,7 @@ const GameTag = ({ gameTags }: ICardGameTag) => (
             label={gameTag.name}
             variant="outlined"
             size="small"
-            className="uppercase"
+            className="cursor-pointer uppercase"
           />
         </Link>
       ) : null
@@ -28,4 +29,4 @@ const GameTag = ({ gameTags }: ICardGameTag) => (
   </div>
 )
 
-export default GameTag
+export default GameTags

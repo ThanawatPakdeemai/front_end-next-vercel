@@ -15,6 +15,27 @@ strong {
   box-sizing: border-box;
 }
 
+body {
+  color: theme("colors.grey.default");
+  background: url("/images/common/bg.png") theme("colors.grey.900");
+}
+
+.text {
+  color: theme("colors.grey.default");
+  font-size: 20px;
+}
+
+.button-global:hover .button-icon {
+  display: none;
+}
+.button-global:hover .button-arrow {
+  display: block;
+}
+
+.slick-slider .slick-slide.slick-active {
+  position: relative;
+  z-index: 1;
+}
 .slick-slider .slick-dots {
   position: relative;
   bottom: 0;
@@ -37,21 +58,4 @@ strong {
 }
 .slick-slider .slick-dots li.slick-active button {
   background-color: #f42728;
-}
-
-body {
-  color: theme("colors.grey.default");
-  background: url("/images/common/bg.png") theme("colors.grey.900");
-}
-
-.text {
-  color: theme("colors.grey.default");
-  font-size: 20px;
-}
-
-.button-global:hover .button-icon {
-  display: none;
-}
-.button-global:hover .button-arrow {
-  display: block;
 }

@@ -20,7 +20,7 @@ const HeadMenu = () => {
   return (
     <Box
       component="div"
-      className="items-center justify-center gap-1 rounded-default bg-grey-900 p-1 sm:flex-row md:flex"
+      className="items-center justify-center gap-1 rounded-default bg-grey-900 p-1 sm:flex-row md:flex "
     >
       {MENU.map((item) => {
         if (!item.isChide) {
@@ -30,7 +30,7 @@ const HeadMenu = () => {
                 <Button
                   key={`${item.name}`}
                   sx={styleButton}
-                  className=" text-black-default hover:bg-error-main hover:text-white-primary"
+                  className=" xs:mb-1 mb-1 text-black-default hover:bg-error-main hover:text-white-primary md:mb-0"
                   variant="contained"
                   size="large"
                 >
@@ -69,7 +69,7 @@ const HeadMenu = () => {
               button={
                 <Button
                   sx={styleButton}
-                  className="px-2 text-black-default hover:bg-error-main hover:text-white-primary"
+                  className="xs:mb-1 mb-1 px-2 text-black-default hover:bg-error-main hover:text-white-primary md:mb-0"
                   variant="contained"
                   size="large"
                 >

@@ -55,18 +55,23 @@ export const MENU = [
     },
     chide: [
       {
-        name: "Play To Earn Mode",
+        name: "Play To Earn Mode Services",
         link: "/",
         icon: AttachMoneyIcon
       },
-      { name: "Free Mode", link: "/", icon: MoneyOffIcon, textRight: "Free" },
       {
-        name: "Story Mode",
+        name: "Free Mode Services",
+        link: "/",
+        icon: MoneyOffIcon,
+        textRight: "Free"
+      },
+      {
+        name: "Story Mode Services",
         link: "/",
         icon: MapOutlinedIcon,
         textRight: "Free"
       },
-      { name: "Tournament", link: "/", icon: DiamondIcon }
+      { name: "Tournament Services", link: "/", icon: DiamondIcon }
     ]
   },
   {
@@ -82,18 +87,23 @@ export const MENU = [
     },
     chide: [
       {
-        name: "Play To Earn Mode",
+        name: "Play To Earn Mode Ecosystems",
         link: "/",
         icon: AttachMoneyIcon
       },
-      { name: "Free Mode", link: "/", icon: MoneyOffIcon, textRight: "Free" },
       {
-        name: "Story Mode",
+        name: "Free Mode Ecosystems",
+        link: "/",
+        icon: MoneyOffIcon,
+        textRight: "Free"
+      },
+      {
+        name: "Story Mode Ecosystems",
         link: "/",
         icon: MapOutlinedIcon,
         textRight: "Free"
       },
-      { name: "Tournament", link: "/", icon: DiamondIcon }
+      { name: "Tournament Ecosystems", link: "/", icon: DiamondIcon }
     ]
   }
 ]

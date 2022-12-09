@@ -822,6 +822,14 @@ video {
   margin-right: 10px;
 }
 
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
 .flex {
   display: flex;
 }
@@ -1564,6 +1572,10 @@ h6 {
     }
   }
 
+  .md\:mb-0 {
+    margin-bottom: 0px;
+  }
+
   .md\:flex {
     display: flex;
   }
@@ -1595,6 +1607,10 @@ h6 {
 }
 
 @media (min-width: 1024px) {
+  .lg\:flex {
+    display: flex;
+  }
+
   .lg\:w-3\/4 {
     width: 75%;
   }

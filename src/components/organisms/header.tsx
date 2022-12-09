@@ -32,11 +32,11 @@ const Header = () => (
   <header className="header">
     <Box
       component="div"
-      className="my-10 items-center justify-between md:flex "
+      className="my-10 items-center justify-between lg:flex"
     >
       <HeadLogo />
       <HeadMenu />
-      <HeadLogo />
+      <div className="text-error-main">MENU</div>
     </Box>
 
     {/* <LanguageSelected

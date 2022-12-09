@@ -1,11 +1,11 @@
-import CardBodyList from "@feature/ranking/components/organisms/CardBodyList"
-import CardTitle from "@components/organisms/CardTitle"
 import { Card } from "@mui/material"
 import { memo } from "react"
 import AddIcon from "@mui/icons-material/Add"
 import TrackChangesIcon from "@mui/icons-material/TrackChanges"
 import ButtonLink from "@components/atoms/button/ButtonLink"
+import CardTitle from "@components/organisms/cardTitle"
 import { useTopPlayer } from "../../containers/hook/useTopPlayer"
+import CardBodyList from "../organisms/cardBodyList"
 
 const TopPlayer = () => {
   const { topPlayerAllGame } = useTopPlayer()

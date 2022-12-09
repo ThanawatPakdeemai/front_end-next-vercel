@@ -51,10 +51,10 @@ const HeadMenu = () => {
             <SelectNaka
               imageSelectd={
                 <Image
-                  src={item.image.src ?? IMAGES.footerMock.src}
-                  width={item.image.widthImg ?? IMAGES.footerMock.height}
-                  height={item.image.height ?? IMAGES.footerMock.height}
-                  alt={item.image.alt ?? IMAGES.footerMock.height}
+                  src={item.image.src ?? IMAGES.tableCom.src}
+                  width={item.image.widthImg ?? IMAGES.tableCom.height}
+                  height={item.image.height ?? IMAGES.tableCom.height}
+                  alt={item.image.alt ?? IMAGES.tableCom.height}
                   className="m-auto"
                 />
               }

@@ -2,7 +2,6 @@ import { ButtonLink } from "@components/atoms/buttonLink"
 import DownloadIcon from "@components/icons/DownloadIcon"
 import { IGameDownloadSlide } from "@feature/slider/interfaces/ISlides"
 import { CardContent, CardMedia, Typography } from "@mui/material"
-import Link from "next/link"
 import React from "react"
 
 export interface CarouselCardSlideProps extends IGameDownloadSlide {

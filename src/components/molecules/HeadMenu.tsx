@@ -20,75 +20,73 @@ const HeadMenu = () => {
   return (
     <Box
       component="div"
-      className="xs:table xs:my-5 my-5 items-center justify-center gap-1 rounded-default bg-grey-900 p-1 md:flex lg:my-0"
+      className="xs:table xs:my-5 m-auto my-5 w-max items-center justify-center gap-1 rounded-default bg-grey-900 p-1 md:flex lg:my-0"
     >
       {MENU.map((item) => {
         if (!item.isChide) {
           return (
-            <>
-              <Link
-                href={item.link}
-                className="m-auto table"
+            <Link
+              href={item.link}
+              className="m-auto table"
+              key={`${item.name}`}
+            >
+              <Button
+                sx={styleButton}
+                className=" xs:mb-1 mb-1 text-black-default hover:bg-error-main hover:text-white-primary md:mb-0"
+                variant="contained"
+                size="large"
               >
-                <Button
-                  key={`${item.name}`}
-                  sx={styleButton}
-                  className=" xs:mb-1 mb-1 text-black-default hover:bg-error-main hover:text-white-primary md:mb-0"
-                  variant="contained"
-                  size="large"
-                >
-                  <Typography className="font-neue-machina-semi text-default">
-                    {t(`${item.name}`)}
-                  </Typography>
-                </Button>
-              </Link>
-            </>
+                <Typography className="font-neue-machina-semi text-default">
+                  {t(`${item.name}`)}
+                </Typography>
+              </Button>
+            </Link>
           )
         }
         return (
-          <>
-            <div className="m-auto table">
-              <SelectNaka
-                key={`${item.name}`}
-                imageSelectd={
-                  <Image
-                    src={item.image.src ?? IMAGES.footerMock.src}
-                    width={item.image.widthImg ?? IMAGES.footerMock.height}
-                    height={item.image.height ?? IMAGES.footerMock.height}
-                    alt={item.image.alt ?? IMAGES.footerMock.height}
-                    className="m-auto"
+          <div
+            className="m-auto table"
+            key={`${item.name}`}
+          >
+            <SelectNaka
+              imageSelectd={
+                <Image
+                  src={item.image.src ?? IMAGES.footerMock.src}
+                  width={item.image.widthImg ?? IMAGES.footerMock.height}
+                  height={item.image.height ?? IMAGES.footerMock.height}
+                  alt={item.image.alt ?? IMAGES.footerMock.height}
+                  className="m-auto"
+                />
+              }
+              options={
+                item.chide?.map((ele) => ({
+                  label: ele.name,
+                  value: ele.name,
+                  textEnd: ele.textRight,
+                  icon: typeof ele.icon === "string" ? ele.icon : <ele.icon />
+                })) ?? [{ label: "", value: "" }]
+              }
+              widthOption="600px"
+              title={item.name}
+              left={item.left}
+              button={
+                <Button
+                  sx={styleButton}
+                  className="xs:mb-1 mb-1 px-2 text-black-default hover:bg-error-main hover:text-white-primary md:mb-0"
+                  variant="contained"
+                  size="large"
+                >
+                  <Typography className="whitespace-nowrap font-neue-machina-semi text-sm">
+                    {t(`${item.name}`)}
+                  </Typography>
+                  <DragHandleIcon
+                    className="ml-2"
+                    sx={styleIcon}
                   />
-                }
-                options={
-                  item.chide?.map((ele) => ({
-                    label: ele.name,
-                    value: ele.name,
-                    textEnd: ele.textRight,
-                    icon: typeof ele.icon === "string" ? ele.icon : <ele.icon />
-                  })) ?? [{ label: "", value: "" }]
-                }
-                widthOption="600px"
-                title={item.name}
-                left={item.left}
-                button={
-                  <Button
-                    sx={styleButton}
-                    className="xs:mb-1 mb-1 px-2 text-black-default hover:bg-error-main hover:text-white-primary md:mb-0"
-                    variant="contained"
-                    size="large"
-                  >
-                    <Typography className="whitespace-nowrap font-neue-machina-semi text-sm">
-                      {t(`${item.name}`)}
-                    </Typography>
-                    <DragHandleIcon
-                      className="ml-2"
-                      sx={styleIcon}
-                    />
-                  </Button>
-                }
-              />
-            </div>
-          </>
+                </Button>
+              }
+            />
+          </div>
         )
       })}
     </Box>

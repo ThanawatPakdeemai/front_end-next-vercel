@@ -8,8 +8,9 @@ export const MuiMenuItem: Components<Omit<Theme, "components">>["MuiMenuItem"] =
     },
     styleOverrides: {
       root: {
-        borderRadius: "5px",
+        borderRadius: "12px",
         marginBottom: "5px",
+        padding: "8px 5px 8px 5px",
         "&:last-child": { marginBottom: 0 },
         backgroundColor: PaletteCustom.grey["A100"],
         "&:hover": {

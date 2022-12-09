@@ -36,6 +36,11 @@ body {
   }
 }
 
+.menu-select-naka:hover {
+  .text-end-select-naka {
+    @apply border-white-primary bg-white-primary text-primary-main;
+  }
+}
 .slick-slider {
   .slick {
     &-slide {

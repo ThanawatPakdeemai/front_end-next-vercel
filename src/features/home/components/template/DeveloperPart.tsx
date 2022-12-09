@@ -1,4 +1,4 @@
-import CardTitle from "@components/organisms/cardTitle"
+import CardTitle from "@components/organisms/CardTitle"
 import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import { Card, Grid, Typography } from "@mui/material"
 import { memo } from "react"

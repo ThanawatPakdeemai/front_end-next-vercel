@@ -1,14 +1,19 @@
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import DownloadIcon from "@components/icons/DownloadIcon"
-import { IGameDownloadSlide } from "@feature/slider/interfaces/ISlides"
-import { CardContent, CardMedia, Typography } from "@mui/material"
+import ShortDetailsCTA, {
+  IShortDetailsCTA
+} from "@components/molecules/ShortDetailsCTA"
 import React from "react"
+import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined"
+import { CardMedia } from "@mui/material"
 
-export interface CarouselCardSlideProps extends IGameDownloadSlide {
+export interface CarouselCardSlideProps extends IShortDetailsCTA {
+  image: string
+  name: string
   index: number
   activeIndex: number
 }
 const CarouselCardSlide = ({
+  image,
+  name,
   index,
   activeIndex,
   ...props
@@ -23,28 +28,21 @@ const CarouselCardSlide = ({
       <div className="carousel-slide__item__image">
         <CardMedia
           component="img"
-          alt={props.name}
+          alt={name}
           height={468}
-          image={props.image}
+          image={image}
         />
       </div>
-      <CardContent className="carousel-slide__item__content absolute bottom-0 left-0 z-[1] w-full">
-        <div className="flex w-full items-center justify-between gap-4 rounded-xl bg-grey-A100 p-4">
-          <Typography
-            className="mb-0 text-white-primary line-clamp-1"
-            variant="body1"
-            dangerouslySetInnerHTML={{
-              __html: props.description
-            }}
+      <ShortDetailsCTA
+        description={props.description}
+        link={props.link}
+        startIcon={
+          <LanguageOutlinedIcon
+            color="error"
+            className="mr-3"
           />
-          <ButtonLink
-            href={props.link}
-            text="Download"
-            className="carousel-slide__item__content__link !min-w-0 p-0 font-neue-machina"
-            icon={<DownloadIcon />}
-          />
-        </div>
-      </CardContent>
+        }
+      />
     </div>
   )
 }

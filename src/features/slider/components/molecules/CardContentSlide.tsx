@@ -1,4 +1,4 @@
-import GameTags from "@components/atoms/GameTags"
+import GameTags from "@feature/slider/components/atoms/GameTags"
 import CardBody from "@components/molecules/CardBody"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IGameTag } from "@feature/slider/interfaces/IGameTags"

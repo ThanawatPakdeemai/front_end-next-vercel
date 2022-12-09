@@ -942,6 +942,11 @@ video {
   width: 100%;
 }
 
+.w-max {
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .w-5 {
   width: 1.25rem;
 }
@@ -956,11 +961,6 @@ video {
 
 .w-\[15px\] {
   width: 15px;
-}
-
-.w-max {
-  width: -moz-max-content;
-  width: max-content;
 }
 
 .w-20 {

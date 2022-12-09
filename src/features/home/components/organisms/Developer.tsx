@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material"
 import { memo } from "react"
-import DeveloperTitle from "../molecules/DeveloperTitle"
-import DeveloperContent from "../molecules/DeveloperContent"
+import DeveloperTitle from "../molecules/developerTitle"
+import DeveloperContent from "../molecules/developerContent"
 
 const Developer = () => (
   <Grid

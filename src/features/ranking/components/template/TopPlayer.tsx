@@ -1,5 +1,5 @@
 import CardBodyList from "@feature/ranking/components/organisms/CardBodyList"
-import CardTitle from "@components/organisms/CardTitle"
+import CardTitle from "@components/organisms/cardTitle"
 import { Card } from "@mui/material"
 import { memo } from "react"
 import AddIcon from "@mui/icons-material/Add"

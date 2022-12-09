@@ -19,5 +19,12 @@ export const IMAGES = {
     width: 335,
     height: 319,
     alt: "table-com"
+  },
+  nakaBand: {
+    src: "/images/home/nakamoto-band.svg",
+    blurDataURL: "/images/home/nakamoto-band.svg",
+    width: 166,
+    height: 30,
+    alt: "nakamoto-band"
   }
 }

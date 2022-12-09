@@ -15,15 +15,11 @@ strong {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: theme("colors.grey.default");
-    background: url("/images/common/bg.png") theme("colors.grey.900");
-  }
+body {
+  color: theme("colors.grey.default");
+  background: url("/images/common/bg.png") theme("colors.grey.900");
 }
+
 .text {
   color: theme("colors.grey.default");
   font-size: 20px;
@@ -34,6 +30,34 @@ strong {
 }
 .button-global:hover .button-arrow {
   display: block;
+}
+
+.slick-slider .slick-slide.slick-active {
+  position: relative;
+  z-index: 1;
+}
+.slick-slider .slick-dots {
+  position: relative;
+  bottom: 0;
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-end;
+}
+.slick-slider .slick-dots li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 3px;
+}
+.slick-slider .slick-dots li button {
+  background-color: #f1f4f4;
+  width: 14px;
+  height: 1px;
+  text-indent: -9999px;
+  padding: 0;
+}
+.slick-slider .slick-dots li.slick-active button {
+  background-color: #f42728;
 }
 
 .progress-bar-energy {

@@ -1,5 +1,6 @@
 import Helper from "@utils/helper"
 import CONFIGS from "@configs/index"
+import { IGameDownloadSlide } from "@feature/slider/interfaces/ISlides"
 
 export const GAME_BANNER_SLIDES = [
   {
@@ -163,5 +164,26 @@ export const GAME_COMING_SOON = [
     title: "Escape",
     image: "/assets/images/games/coming_soon/escape.png",
     youtube_id: "l6tD708Q8Zc"
+  }
+]
+
+export const GAME_DOWNLOAD: IGameDownloadSlide[] = [
+  {
+    name: "Escape",
+    image: "/assets/images/games/coming_soon/escape.png",
+    description: "Escape from the prison",
+    link: "https://play.google.com/store/apps/details?id=com.nakama.escape"
+  },
+  {
+    name: "Duck Hunter",
+    image: "/assets/images/games/coming_soon/duckhunter.png",
+    description: "An exciting twist on a favorite retro game",
+    link: "https://play.google.com/store/apps/details?id=com.nakama.duckhunter"
+  },
+  {
+    name: "NAKA Runner",
+    image: "/assets/images/games/coming_soon/nakarunner.png",
+    description: "Move without stopping. You can do it!",
+    link: "https://play.google.com/store/apps/details?id=com.nakama.nakarunner"
   }
 ]

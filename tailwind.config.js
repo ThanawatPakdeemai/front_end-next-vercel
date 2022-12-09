@@ -119,10 +119,7 @@ module.exports = {
           "neutral04": "#A6A9AE"
         },
         black: {
-          default: "#70727B",
-          "01": "#010101",
-          "02": "#18181C",
-          "03": "#232329"
+          default: "#70727B"
         },
         transparent: "transparent"
       },
@@ -143,6 +140,15 @@ module.exports = {
           "0%": { width: "0%" },
           "100%": { width: "100%" }
         },
+        "rotating": {
+          "from": {
+            transform: "rotate(0deg)"
+          },
+
+          "to": {
+            transform: "rotate(-360deg)"
+          }
+        },
         "right-to-left": {
           "0%": { left: "100%", transform: `translate-x-0` },
           "100%": { left: "-50%", transform: `translate-x-full` }
@@ -150,10 +156,12 @@ module.exports = {
       },
       animation: {
         "time-progress": "time-progress 5s linear forwards",
+        "rotating": "rotating 7s linear infinite",
         "right-to-left": "right-to-left 100s linear infinite"
       }
     }
   },
+  // important: true,
   // eslint-disable-next-line global-require
   plugins: [require("@tailwindcss/line-clamp")],
   babel: {

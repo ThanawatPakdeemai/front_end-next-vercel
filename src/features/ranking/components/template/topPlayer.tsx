@@ -26,6 +26,8 @@ const TopPlayer = () => {
               text="View All"
               icon={<AddIcon />}
               color="secondary"
+              size="small"
+              className="button-global button-transparent"
             />
           }
         />

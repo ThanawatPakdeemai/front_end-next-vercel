@@ -1,3 +1,4 @@
+import DeveloperPart from "@feature/home/components/template/DeveloperPart"
 import BannerSlide from "@feature/slider/components/templates/BannerSlide"
 import CarouselSlide from "@feature/slider/components/templates/CarouselSlide"
 import { memo } from "react"
@@ -10,6 +11,7 @@ const Home = () => (
       <></>
       <CarouselSlide />
     </div>
+    <DeveloperPart />
   </>
 )
 export default memo(Home)

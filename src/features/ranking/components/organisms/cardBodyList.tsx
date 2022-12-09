@@ -10,7 +10,7 @@ interface Iprop {
   players: IPlayerRanking[]
 }
 const CardBodyList = ({ width, players }: Iprop) => (
-  <div className="custom-scroll h-[365px] overflow-y-scroll pr-4">
+  <div className="custom-scroll h-[375px] overflow-y-scroll pr-4">
     {players.map((item, index: number) => (
       <Card
         key={item._id}

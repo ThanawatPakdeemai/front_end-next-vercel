@@ -1,6 +1,7 @@
 import { Button } from "@mui/material"
 import Link from "next/link"
 import React from "react"
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 
 export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   text?: string
@@ -10,7 +11,6 @@ export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   color?: "primary" | "secondary" | "success" | "error" | "info" | "warning"
   size?: "small" | "medium" | "large"
   className?: string
-  classBg?: string
 }
 
 const ButtonLink = ({
@@ -20,16 +20,20 @@ const ButtonLink = ({
   variant,
   color,
   size,
-  className,
-  classBg
+  className
 }: IButtonLink) => (
   <Link href={href}>
     <Button
       variant={variant}
       color={color}
       size={size}
-      startIcon={icon}
-      className={`${className} ${classBg}`}
+      startIcon={<div className="button-icon">{icon}</div>}
+      className={`${className}`}
+      endIcon={
+        <div className="button-arrow hidden">
+          <ArrowForwardIcon />
+        </div>
+      }
     >
       {text}
     </Button>

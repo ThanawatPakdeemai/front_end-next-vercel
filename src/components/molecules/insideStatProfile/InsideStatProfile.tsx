@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { LinearProgress, Typography } from "@mui/material"
 import Helper from "@utils/helper"
 

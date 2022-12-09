@@ -3,8 +3,8 @@ import CardTitle from "@components/organisms/CardTitle"
 import { Card } from "@mui/material"
 import { memo } from "react"
 import AddIcon from "@mui/icons-material/Add"
-import { ButtonLink } from "@components/atoms/buttonLink"
 import TrackChangesIcon from "@mui/icons-material/TrackChanges"
+import ButtonLink from "@components/atoms/button/ButtonLink"
 import { useTopPlayer } from "../../containers/hook/useTopPlayer"
 
 const TopPlayer = () => {
@@ -25,8 +25,7 @@ const TopPlayer = () => {
               href="/"
               text="View All"
               icon={<AddIcon />}
-              size="small"
-              classBg="button-transparent"
+              color="secondary"
             />
           }
         />

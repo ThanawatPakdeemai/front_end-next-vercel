@@ -7,6 +7,7 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import { Typography, Collapse, CardActions, Card } from "@mui/material"
 import Helper from "@utils/helper"
 import StatProfile from "@components/molecules/statProfile/StatProfile"
+import MenuProfile from "@components/molecules/menuProfile/MenuProfile"
 
 const RightMenu = () => {
   const [expanded, setExpanded] = React.useState(false)
@@ -25,8 +26,14 @@ const RightMenu = () => {
       <Card
         className={`${
           expanded ? "rounded-t-[13px] rounded-b-none" : "rounded-[13px]"
-        } flex items-center justify-center bg-[#01010133]`}
-        sx={{ maxWidth: 277, width: 277, height: 62 }}
+        } flex items-center justify-center`}
+        sx={{
+          maxWidth: 277,
+          width: 277,
+          height: 62,
+          backgroundColor: "#010101D9",
+          backgroundImage: "none"
+        }}
       >
         <CardActions
           className="flex justify-between rounded-[13px] border-2  border-grey-900 bg-[#18181cff] px-0"
@@ -125,6 +132,7 @@ const RightMenu = () => {
             totalStamina: 20
           }}
         />
+        <MenuProfile />
       </Collapse>
     </div>
   )

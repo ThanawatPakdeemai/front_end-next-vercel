@@ -1,5 +1,5 @@
 import HeadMenu from "@components/molecules/HeadMenu"
-import RightMenu from "@components/molecules/rightMenu/RightMenu"
+import RightMenu from "@components/molecules/RightMenu"
 import { Box } from "@mui/material"
 import React, { memo } from "react"
 // import Image from "@components/atoms/image"

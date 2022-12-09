@@ -1,4 +1,6 @@
+import HeadMenu from "@components/molecules/HeadMenu"
 import RightMenu from "@components/molecules/rightMenu/RightMenu"
+import { Box } from "@mui/material"
 import React, { memo } from "react"
 // import Image from "@components/atoms/image"
 
@@ -28,9 +30,14 @@ const Header = () => (
    */
 
   <header className="header flex h-36 items-center justify-between overflow-clip">
-    <RightMenu />
-    <RightMenu />
-    <RightMenu />
+    <Box
+      component="div"
+      className="my-10 items-center justify-between lg:flex"
+    >
+      <HeadMenu />
+      <div className="text-error-main">MENU</div>
+      <RightMenu />
+    </Box>
 
     {/* <LanguageSelected defaultName="LANGUAGE" data={LANGUAGE} onChange={onClickSelected} />
       <NakaCurrency />

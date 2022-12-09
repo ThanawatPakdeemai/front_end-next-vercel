@@ -1,5 +1,5 @@
-import CardBodyList from "@feature/ranking/components/organisms/cardBodyList"
-import CardTitle from "@components/organisms/cardTitle"
+import CardBodyList from "@feature/ranking/components/organisms/CardBodyList"
+import CardTitle from "@components/organisms/CardTitle"
 import { Card } from "@mui/material"
 import { memo } from "react"
 import AddIcon from "@mui/icons-material/Add"
@@ -26,6 +26,8 @@ const TopPlayer = () => {
               text="View All"
               icon={<AddIcon />}
               color="secondary"
+              size="small"
+              className="button-global button-transparent"
             />
           }
         />

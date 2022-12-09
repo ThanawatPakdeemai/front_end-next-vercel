@@ -2,15 +2,15 @@
 import React, { memo } from "react"
 import { Card } from "@mui/material"
 import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
-import PlayerList from "../molecules/playerList"
-import NumberRank from "../atoms/numberRank"
+import PlayerList from "../molecules/PlayerList"
+import NumberRank from "../atoms/NumberRank"
 
 interface Iprop {
   width: string
   players: IPlayerRanking[]
 }
 const CardBodyList = ({ width, players }: Iprop) => (
-  <div className="custom-scroll h-[365px] overflow-y-scroll pr-4">
+  <div className="custom-scroll h-[375px] overflow-y-scroll pr-4">
     {players.map((item, index: number) => (
       <Card
         key={item._id}

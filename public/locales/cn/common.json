@@ -243,5 +243,6 @@
   "score_rank": "段位分数",
   "played": "游戏次数",
   "win_rate": "胜率",
-  "no_badge": "无徽章"
+  "no_badge": "无徽章",
+  "lang_name": "語"
 }

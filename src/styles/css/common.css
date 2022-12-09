@@ -32,6 +32,10 @@ body {
   display: block;
 }
 
+.menu-select-naka:hover .text-end-select-naka {
+  @apply border-white-primary bg-white-primary text-primary-main;
+}
+
 .slick-slider .slick-slide.slick-active {
   position: relative;
   z-index: 1;

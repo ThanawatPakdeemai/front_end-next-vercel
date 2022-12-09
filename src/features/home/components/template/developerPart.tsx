@@ -1,10 +1,10 @@
-import { ButtonLink } from "@components/atoms/buttonLink"
 import CardTitle from "@components/organisms/cardTitle"
 import TopPlayer from "@feature/ranking/components/template/topPlayer"
 import { Card, Grid, Typography } from "@mui/material"
 import { memo } from "react"
 import AddIcon from "@mui/icons-material/Add"
 import DvrIcon from "@mui/icons-material/Dvr"
+import ButtonLink from "@components/atoms/button/ButtonLink"
 import Developer from "../organisms/developer"
 
 const developerPart = () => (
@@ -18,14 +18,14 @@ const developerPart = () => (
         xs={12}
         md={8}
       >
-        <Card className="bg-black-02 p-2 sm:h-auto md:h-[465px]">
+        <Card className="bg-grey-A100 p-2 sm:h-auto md:h-[465px]">
           <CardTitle
             width="100%"
-            icon={<DvrIcon className="mr-2 text-black-01" />}
+            icon={<DvrIcon className="mr-2 text-grey-A200" />}
             title={
               <Typography
                 variant="inherit"
-                className="text-black-01"
+                className="text-grey-A200"
               >{`Looking for NAKA<DEVELOPERs>`}</Typography>
             }
             background="red"

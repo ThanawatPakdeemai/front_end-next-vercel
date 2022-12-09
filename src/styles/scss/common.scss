@@ -15,15 +15,9 @@ strong {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-
-  body {
-    color: theme("colors.grey.default");
-    background: url("/images/common/bg.png") theme("colors.grey.900");
-  }
+body {
+  color: theme("colors.grey.default");
+  background: url("/images/common/bg.png") theme("colors.grey.900");
 }
 
 .text {
@@ -38,6 +32,42 @@ strong {
     }
     .button-arrow {
       display: block;
+    }
+  }
+}
+
+.slick-slider {
+  .slick {
+    &-slide {
+      &.slick-active {
+        position: relative;
+        z-index: 1;
+      }
+    }
+    &-dots {
+      position: relative;
+      bottom: 0;
+      display: flex !important;
+      align-items: center;
+      justify-content: flex-end;
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 3px;
+        button {
+          background-color: #f1f4f4;
+          width: 14px;
+          height: 1px;
+          text-indent: -9999px;
+          padding: 0;
+        }
+        &.slick-active {
+          button {
+            background-color: #f42728;
+          }
+        }
+      }
     }
   }
 }

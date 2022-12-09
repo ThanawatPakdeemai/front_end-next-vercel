@@ -3,8 +3,8 @@ import CardTitle from "@components/organisms/cardTitle"
 import { Card } from "@mui/material"
 import { memo } from "react"
 import AddIcon from "@mui/icons-material/Add"
-import { ButtonLink } from "@components/atoms/buttonLink"
 import TrackChangesIcon from "@mui/icons-material/TrackChanges"
+import ButtonLink from "@components/atoms/button/ButtonLink"
 import { useTopPlayer } from "../../containers/hook/useTopPlayer"
 
 const TopPlayer = () => {
@@ -14,7 +14,7 @@ const TopPlayer = () => {
     <>
       <Card
         sx={{ maxWidth: "449px" }}
-        className="rounded-md bg-black-02 p-2"
+        className="rounded-md bg-grey-A100 p-2"
       >
         <CardTitle
           width="433px"

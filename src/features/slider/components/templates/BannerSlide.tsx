@@ -1,4 +1,4 @@
-import TagCircle from "@components/atoms/TagCircle"
+import { TagCircle } from "@components/atoms/tagCircle"
 import NewGameIcon from "@components/icons/NewGameIcon"
 import useGetGames from "@feature/home/containers/hook/useGetGames"
 import React, { useRef } from "react"

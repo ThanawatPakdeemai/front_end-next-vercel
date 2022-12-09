@@ -1,5 +1,5 @@
 import { BannerSlide } from "@feature/home/components/organisms/bannerSlide"
-import DeveloperPart from "@feature/home/components/template/developerPart"
+import DeveloperPart from "@feature/home/components/template/DeveloperPart"
 import { memo } from "react"
 
 const Home = () => (

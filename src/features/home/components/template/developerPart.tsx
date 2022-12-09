@@ -1,11 +1,11 @@
 import { ButtonLink } from "@components/atoms/buttonLink"
-import CardTitle from "@components/organisms/cardTitle"
-import TopPlayer from "@feature/ranking/components/template/topPlayer"
+import CardTitle from "@components/organisms/CardTitle"
+import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import { Card, Grid, Typography } from "@mui/material"
 import { memo } from "react"
 import AddIcon from "@mui/icons-material/Add"
 import DvrIcon from "@mui/icons-material/Dvr"
-import Developer from "../organisms/developer"
+import Developer from "../organisms/Developer"
 
 const developerPart = () => (
   <>
@@ -18,7 +18,7 @@ const developerPart = () => (
         xs={12}
         md={8}
       >
-        <Card className="bg-grey-A100 p-2 sm:h-auto md:h-[465px]">
+        <Card className="bg-grey-A100 p-2 sm:h-auto md:h-[454px]">
           <CardTitle
             width="100%"
             icon={<DvrIcon className="mr-2 text-grey-A200" />}
@@ -35,6 +35,8 @@ const developerPart = () => (
                 text="Register"
                 icon={<AddIcon />}
                 color="error"
+                size="small"
+                classBg="button-transparent"
               />
             }
           />

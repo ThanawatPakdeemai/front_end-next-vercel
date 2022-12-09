@@ -2,8 +2,8 @@
 import React, { memo } from "react"
 import { Card } from "@mui/material"
 import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
-import PlayerList from "../molecules/playerList"
-import NumberRank from "../atoms/numberRank"
+import PlayerList from "../molecules/PlayerList"
+import NumberRank from "../atoms/NumberRank"
 
 interface Iprop {
   width: string

@@ -8,26 +8,31 @@ export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   href: string
   icon?: React.ReactNode
   color?: "primary" | "secondary" | "inherit" | "success" | "error"
+  size?: "small" | "medium" | "large"
+  classBg?: string
 }
 
 const ButtonLink = ({
   text = "Text",
   href,
   icon,
-  color = "primary"
+  color = "primary",
+  size = "medium",
+  classBg
 }: IButtonLink) => (
   <Link
     className="slide-item--link w-[calc(100%-80px)]"
     href={href}
   >
     <Button
-      className="button-global"
+      className={`button-global ${classBg}`}
       variant="contained"
       color={color}
       sx={{
         minWidth: "auto",
         width: "100%"
       }}
+      size={size}
       startIcon={<div className="button-icon">{icon}</div>}
       endIcon={
         <div className="button-arrow hidden">

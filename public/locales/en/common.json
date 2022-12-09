@@ -246,5 +246,6 @@
   "score_rank": "Score Rank",
   "played": "Played",
   "win_rate": "Win Rate",
-  "no_badge": "NO Badge"
+  "no_badge": "NO Badge",
+  "lang_name": "Language"
 }

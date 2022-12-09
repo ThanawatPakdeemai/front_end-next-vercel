@@ -18,6 +18,7 @@ export const MuiButton: Components<Omit<Theme, "components">>["MuiButton"] = {
       justifyContent: "center",
       textTransform: "unset",
       transition: "all 0.75s cubic-bezier(0.215, 0.61, 0.355, 1)",
+
       ".MuiSvgIcon-root": {
         marginTop: "-2px"
       },
@@ -67,6 +68,11 @@ export const MuiButton: Components<Omit<Theme, "components">>["MuiButton"] = {
           borderColor: PaletteCustom.info.main,
           color: PaletteCustom.info.main
         }
+      },
+      "&.button-transparent": {
+        background: "transparent !important",
+        fontSize: "12px",
+        "&:hover": { boxShadow: "none !important" }
       },
       "&.MuiButton-contained": {
         backgroundColor: "#010101",

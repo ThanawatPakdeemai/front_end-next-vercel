@@ -1,26 +1,33 @@
-import LogoNaka from "@components/atoms/logoNaka"
-import SelectNaka from "@components/atoms/selectNaka"
-import { Button, Divider, Typography } from "@mui/material"
+import LogoNaka from "@components/atoms/logo/LogoNaka"
+import SelectNaka from "@components/atoms/select/SelectNaka"
+import { Button, Divider, Typography, Box } from "@mui/material"
 import { memo } from "react"
 import LanguageIcon from "@mui/icons-material/Language"
 import DragHandleIcon from "@mui/icons-material/DragHandle"
 import { useRouter } from "next/router"
 import { Image } from "@components/atoms/image/index"
 import { FLAGS } from "@constants/flags"
+import { styleIcon } from "./HeadMenu"
 
 const HeadLogo = () => {
   const router = useRouter()
 
   return (
     <>
-      <div className="flex items-center">
+      <Box
+        component="div"
+        className="flex items-center justify-center"
+      >
         <LogoNaka />
         <Divider
           className="mx-5 my-2 border-grey-900"
           orientation="vertical"
           flexItem
         />
-        <div className="flex items-center">
+        <Box
+          component="div"
+          className="flex items-center"
+        >
           <LanguageIcon className="text-error-main" />
           <SelectNaka
             imageSelectd={
@@ -38,7 +45,7 @@ const HeadLogo = () => {
               router.locales?.map((item) => ({
                 label: item,
                 value: item,
-                image: (
+                icon: (
                   <Image
                     src={
                       FLAGS.find((flag) => flag.code === item)?.flag_4x3 ??
@@ -55,22 +62,25 @@ const HeadLogo = () => {
                   })
               })) ?? [{ label: "", value: "" }]
             }
-            title="language"
+            title="lang_name"
             button={
               <Button
                 sx={{ minWidth: "10px !important" }}
                 className="text-error-main"
                 variant="contained"
               >
-                <Typography className="font-neue-machina">
+                <Typography className="font-neue-machina-semi text-sm">
                   {router.locale}
                 </Typography>
-                <DragHandleIcon />
+                <DragHandleIcon
+                  className="ml-2"
+                  sx={styleIcon}
+                />
               </Button>
             }
           />
-        </div>
-      </div>
+        </Box>
+      </Box>
     </>
   )
 }

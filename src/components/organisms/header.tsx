@@ -1,4 +1,6 @@
 import HeadLogo from "@components/molecules/HeadLogo"
+import HeadMenu from "@components/molecules/HeadMenu"
+import { Box } from "@mui/material"
 import React, { memo } from "react"
 // import Image from "@components/atoms/image"
 
@@ -28,7 +30,15 @@ const Header = () => (
    */
 
   <header className="header">
-    <HeadLogo />
+    <Box
+      component="div"
+      className="my-10 items-center justify-between md:flex "
+    >
+      <HeadLogo />
+      <HeadMenu />
+      <HeadLogo />
+    </Box>
+
     {/* <LanguageSelected
       defaultName="LANGUAGE"
       data={LANGUAGE}

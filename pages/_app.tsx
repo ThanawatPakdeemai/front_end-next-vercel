@@ -12,6 +12,8 @@ import { DATA_META_TAG } from "@configs/metaTagData"
 import { ProviderApp, Web3Provider } from "@providers/index"
 import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material"
 import { theme } from "@styles/themes/darkTheme"
+import "slick-carousel/slick/slick-theme.css"
+import "slick-carousel/slick/slick.css"
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (_page: ReactElement) => ReactNode

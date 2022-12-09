@@ -1,7 +1,7 @@
 import useGetGames from "@feature/home/containers/hook/useGetGames"
 import React from "react"
 import Slider, { Settings } from "react-slick"
-import { CarouselCardSlide } from "../../organisms/carouselCardSlide"
+import CarouselCardSlide from "../organisms/CarouselCardSlide"
 
 const CarouselSlide = () => {
   /**

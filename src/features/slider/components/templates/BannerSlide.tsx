@@ -1,9 +1,9 @@
-import { TagCircle } from "@components/atoms/tagCircle"
+import TagCircle from "@components/atoms/TagCircle"
 import NewGameIcon from "@components/icons/NewGameIcon"
 import useGetGames from "@feature/home/containers/hook/useGetGames"
 import React, { useRef } from "react"
 import Slider, { Settings } from "react-slick"
-import { BannerCardSlide } from "../../organisms/bannerCardSlide"
+import BannerCardSlide from "../organisms/BannerCardSlide"
 
 const BannerSlide = () => {
   /**

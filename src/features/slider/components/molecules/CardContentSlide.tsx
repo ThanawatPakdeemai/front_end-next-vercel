@@ -1,9 +1,9 @@
-import { CardBody } from "@components/molecules/cardBody"
+import GameTags from "@components/atoms/GameTags"
+import CardBody from "@components/molecules/CardBody"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IGameTag } from "@feature/slider/interfaces/IGameTags"
 import React from "react"
-import { GameTags } from "../../atoms/gameTags"
-import { CardFooterSlide } from "../cardFooterSlide"
+import CardFooterSlide from "./CardFooterSlide"
 
 export interface ICardContentSlide {
   slide: IGame

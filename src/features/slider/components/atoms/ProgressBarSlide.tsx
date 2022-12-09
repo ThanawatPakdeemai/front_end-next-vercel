@@ -1,6 +1,7 @@
 import { Box } from "@mui/material"
 
-// { progress }: ProgressBarSlideProps
+// TODO: Created props interface later
+
 const ProgressBarSlide = () => (
   <div className="progress-bar-slide relative mt-4 h-[1px] w-full bg-white-default/20">
     <Box

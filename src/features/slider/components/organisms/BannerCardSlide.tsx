@@ -1,10 +1,8 @@
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { CardMedia } from "@mui/material"
 import React from "react"
-import { CardContentSlide } from "../../molecules/cardContentSlide"
-import CardNextSlide, {
-  ICardNextSlide
-} from "../../molecules/cardNextSlide/CardNextSlide"
+import CardContentSlide from "../molecules/CardContentSlide"
+import CardNextSlide, { ICardNextSlide } from "../molecules/CardNextSlide"
 
 export interface IBannerCardSlide extends ICardNextSlide {
   slide: IGame

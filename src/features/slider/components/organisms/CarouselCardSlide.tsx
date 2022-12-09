@@ -1,4 +1,4 @@
-import { ButtonLink } from "@components/atoms/buttonLink"
+import ButtonLink from "@components/atoms/button/ButtonLink"
 import DownloadIcon from "@components/icons/DownloadIcon"
 import { IGameDownloadSlide } from "@feature/slider/interfaces/ISlides"
 import { CardContent, CardMedia, Typography } from "@mui/material"

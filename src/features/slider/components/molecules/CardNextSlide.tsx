@@ -2,8 +2,8 @@ import { CardMedia, Typography } from "@mui/material"
 import React from "react"
 
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { ProgressBarSlide } from "../../atoms/progressBarSlide"
-import { NextButtonSlide } from "../../atoms/nextButtonSlide"
+import NextButtonSlide from "../atoms/NextButtonSlide"
+import ProgressBarSlide from "../atoms/ProgressBarSlide"
 
 export interface ICardNextSlide {
   slideNext: IGame

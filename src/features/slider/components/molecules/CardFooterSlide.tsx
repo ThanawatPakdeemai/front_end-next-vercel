@@ -1,7 +1,7 @@
-import { ButtonLink } from "@components/atoms/buttonLink"
 import React from "react"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
-import { ButtonFavourite } from "@components/atoms/buttonFavourite"
+import ButtonLink from "@components/atoms/button/ButtonLink"
+import ButtonFavourite from "@components/atoms/button/ButtonFavourite"
 
 interface IContentFooterBannerSlide {
   link: string

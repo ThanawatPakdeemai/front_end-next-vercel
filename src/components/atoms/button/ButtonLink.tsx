@@ -27,15 +27,15 @@ const ButtonLink = ({
       variant={variant}
       color={color}
       size={size}
-      startIcon={<div className="button-icon">{icon}</div>}
+      startIcon={<div className="button-icon animation-arrow">{icon}</div>}
       className={`${className}`}
       endIcon={
-        <div className="button-arrow hidden">
+        <div className="button-arrow animation-arrow hidden">
           <ArrowForwardIcon />
         </div>
       }
     >
-      {text}
+      <span className="animation-button-text">{text}</span>
     </Button>
   </Link>
 )

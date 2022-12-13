@@ -98,6 +98,46 @@
   width: 70px;
 }
 
+.top-player:hover .animation-box {
+  animation: mymove 1s;
+  animation-timing-function: linear;
+  animation-duration: 0.5s;
+}
+
+.top-player:hover .animation-image {
+  animation: mymove-image 1s;
+  animation-timing-function: linear;
+  animation-duration: 0.5s;
+}
+
+@keyframes mymove-image {
+  0% {
+    margin-right: -43px;
+  }
+
+  50% {
+    margin-right: 0;
+  }
+
+  100% {
+    margin-right: -15px;
+  }
+}
+
+@keyframes mymove {
+  0% {
+    width: 70px;
+  }
+
+  50% {
+    width: 65px;
+  }
+
+  100% {
+    width: 70px;
+  }
+}
+
 html,
 body {
   padding: 0;
@@ -125,12 +165,72 @@ body {
   font-size: 20px;
 }
 
+.button-global .button-icon {
+  animation: mymove-image-icon-button 1s;
+  animation-timing-function: linear;
+  animation-duration: 0.5s;
+}
+
 .button-global:hover .button-icon {
   display: none;
 }
 
 .button-global:hover .button-arrow {
   display: block;
+}
+
+.button-global:hover .animation-arrow {
+  animation: mymove-image-icon-arrow 1s;
+  animation-timing-function: linear;
+  animation-duration: 0.5s;
+}
+
+.button-global:hover .animation-button-text {
+  animation: mymove-image-button-text 1s;
+  animation-timing-function: linear;
+  animation-duration: 0.5s;
+}
+
+@keyframes mymove-image-icon-button {
+  0% {
+    margin-right: -10px;
+  }
+
+  50% {
+    margin-right: 5px;
+  }
+
+  100% {
+    margin-right: 0px;
+  }
+}
+
+@keyframes mymove-image-button-text {
+  0% {
+    margin-right: -8px;
+  }
+
+  50% {
+    margin-right: 15px;
+  }
+
+  100% {
+    margin-right: 8px;
+  }
+}
+
+@keyframes mymove-image-icon-arrow {
+  0% {
+    margin-right: 15px;
+  }
+
+  50% {
+    margin-right: 0px;
+  }
+
+  100% {
+    margin-right: 5px;
+  }
 }
 
 .menu-select-naka:hover .text-end-select-naka {

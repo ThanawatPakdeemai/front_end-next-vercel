@@ -28,7 +28,7 @@ const useGetGames = () => {
     }
   }
   return {
-    slideGames: []
+    slideGames: undefined
   }
 }
 

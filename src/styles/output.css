@@ -1375,12 +1375,12 @@ video {
   vertical-align: middle;
 }
 
-.font-neue-machina {
-  font-family: neueMachina, Helvetica, Arial, sans-serif;
-}
-
 .font-neue-machina-semi {
   font-family: neueMachinaSemiBold, Helvetica, Arial, sans-serif;
+}
+
+.font-neue-machina {
+  font-family: neueMachina, Helvetica, Arial, sans-serif;
 }
 
 .text-sm {
@@ -1411,11 +1411,6 @@ video {
 
 .uppercase {
   text-transform: uppercase;
-}
-
-.text-red-to {
-  --tw-text-opacity: 1;
-  color: rgb(237 48 48 / var(--tw-text-opacity));
 }
 
 .text-black-default {
@@ -1449,6 +1444,11 @@ video {
 }
 
 .text-grey-A200 {
+  --tw-text-opacity: 1;
+  color: rgb(1 1 1 / var(--tw-text-opacity));
+}
+
+.text-primary-main {
   --tw-text-opacity: 1;
   color: rgb(1 1 1 / var(--tw-text-opacity));
 }

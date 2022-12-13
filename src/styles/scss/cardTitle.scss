@@ -1,6 +1,3 @@
-@tailwind base;
-@tailwind components;
-
 .card-title-page {
   @apply rounded-default;
   .MuiCardHeader-content {
@@ -45,5 +42,38 @@
     .squre-no-player {
       width: 70px;
     }
+    .animation-box {
+      animation: mymove 1s;
+      animation-timing-function: linear;
+      animation-duration: 0.5s;
+    }
+    .animation-image {
+      animation: mymove-image 1s;
+      animation-timing-function: linear;
+      animation-duration: 0.5s;
+    }
+  }
+}
+
+@keyframes mymove-image {
+  0% {
+    margin-right: -43px;
+  }
+  50% {
+    margin-right: 0;
+  }
+  100% {
+    margin-right: -15px;
+  }
+}
+@keyframes mymove {
+  0% {
+    width: 70px;
+  }
+  50% {
+    width: 65px;
+  }
+  100% {
+    width: 70px;
   }
 }

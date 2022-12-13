@@ -27,7 +27,7 @@ const PlayerList = ({ item, index, className }: IProp) => {
           {formatNumber(item.naka_earn, { maximumFractionDigits: 4 })} NAKA
         </Typography>
       </div>
-      <div className="ml-2 h-[58px] w-[58px]">
+      <div className="animation-image ml-2 h-[58px] w-[58px]">
         <Image
           src={item.avatar}
           width="200"

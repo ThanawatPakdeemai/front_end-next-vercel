@@ -11,6 +11,8 @@ export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   color?: "primary" | "secondary" | "success" | "error" | "info" | "warning"
   size?: "small" | "medium" | "large"
   className?: string
+  textColor?: string
+  arrowColor?: string
 }
 
 const ButtonLink = ({
@@ -20,7 +22,9 @@ const ButtonLink = ({
   variant,
   color,
   size,
-  className
+  className,
+  textColor,
+  arrowColor
 }: IButtonLink) => (
   <Link href={href}>
     <Button
@@ -31,11 +35,11 @@ const ButtonLink = ({
       className={`${className} button-global`}
       endIcon={
         <div className="button-arrow animation-arrow hidden">
-          <ArrowForwardIcon />
+          <ArrowForwardIcon className={arrowColor} />
         </div>
       }
     >
-      <span className="animation-button-text">{text}</span>
+      <span className={`animation-button-text ${textColor}`}>{text}</span>
     </Button>
   </Link>
 )

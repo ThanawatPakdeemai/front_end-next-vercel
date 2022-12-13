@@ -148,3 +148,14 @@ body {
     }
   }
 }
+
+.progress-bar-energy {
+  background: rgb(35, 35, 41) !important;
+  background: linear-gradient(
+    90deg,
+    rgba(1, 1, 1, 1) 50%,
+    rgba(35, 35, 41, 1) 50%
+  ) !important;
+  background-repeat: repeat-x !important;
+  background-size: 5% !important;
+}

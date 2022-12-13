@@ -131,3 +131,14 @@ body {
 .slick-slider .slick-dots li.slick-active button {
   background-color: #f42728;
 }
+
+.progress-bar-energy {
+  background: rgb(35, 35, 41) !important;
+  background: linear-gradient(
+    90deg,
+    rgb(1, 1, 1) 50%,
+    rgb(35, 35, 41) 50%
+  ) !important;
+  background-repeat: repeat-x !important;
+  background-size: 5% !important;
+}

@@ -5,7 +5,6 @@ import ListItemText from "@mui/material/ListItemText"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import { MENU_PROFILE } from "@constants/menu"
 import { Image } from "@components/atoms/image"
-import { Button } from "@mui/material"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 
 const MenuProfile = () => (

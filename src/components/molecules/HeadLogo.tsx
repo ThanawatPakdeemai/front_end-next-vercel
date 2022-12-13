@@ -16,7 +16,7 @@ const HeadLogo = () => {
     <>
       <Box
         component="div"
-        className="flex items-center justify-center"
+        className="z-[51] flex items-center justify-center"
       >
         <LogoNaka />
         <Divider

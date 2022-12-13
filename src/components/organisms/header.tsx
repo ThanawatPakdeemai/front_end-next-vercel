@@ -1,3 +1,4 @@
+import HeadLogo from "@components/molecules/HeadLogo"
 import HeadMenu from "@components/molecules/HeadMenu"
 import RightMenu from "@components/molecules/RightMenu"
 import { Box } from "@mui/material"
@@ -34,9 +35,11 @@ const Header = () => (
       component="div"
       className="my-10 items-center justify-between lg:flex"
     >
-      <HeadMenu />
-      <div className="text-error-main">MENU</div>
-      <RightMenu />
+      <HeadLogo />
+      <div className="fixed z-50 flex w-full items-center p-52">
+        <HeadMenu />
+        <RightMenu />
+      </div>
     </Box>
 
     {/* <LanguageSelected defaultName="LANGUAGE" data={LANGUAGE} onChange={onClickSelected} />

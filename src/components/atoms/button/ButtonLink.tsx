@@ -32,7 +32,7 @@ const ButtonLink = ({
       color={color}
       size={size}
       startIcon={<div className="button-icon animation-arrow">{icon}</div>}
-      className={`${className}`}
+      className={`${className} button-global`}
       endIcon={
         <div className="button-arrow animation-arrow hidden">
           <ArrowForwardIcon className={arrowColor} />

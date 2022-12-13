@@ -90,6 +90,29 @@ body {
     @apply border-white-primary bg-white-primary text-primary-main;
   }
 }
+.image-square {
+  .select-global-square:hover {
+    animation: mymove-global-square 1s;
+    animation-duration: 0.5s;
+  }
+  &:hover + .select-square {
+    left: 18px !important;
+    bottom: 19px !important;
+  }
+}
+
+@keyframes mymove-global-square {
+  0% {
+    rotate: 90deg;
+  }
+  50% {
+    rotate: 45deg;
+  }
+  100% {
+    rotate: 90deg;
+  }
+}
+
 .slick-slider {
   .slick {
     &-slide {

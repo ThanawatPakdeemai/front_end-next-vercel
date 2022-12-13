@@ -25,17 +25,85 @@ body {
   font-size: 20px;
 }
 
+.button-global .button-icon {
+  animation: mymove-image-icon-button 1s;
+  animation-timing-function: linear;
+  animation-duration: 0.5s;
+}
 .button-global:hover .button-icon {
   display: none;
 }
 .button-global:hover .button-arrow {
   display: block;
 }
+.button-global:hover .animation-arrow {
+  animation: mymove-image-icon-arrow 1s;
+  animation-timing-function: linear;
+  animation-duration: 0.5s;
+}
+.button-global:hover .animation-button-text {
+  animation: mymove-image-button-text 1s;
+  animation-timing-function: linear;
+  animation-duration: 0.5s;
+}
 
+@keyframes mymove-image-icon-button {
+  0% {
+    margin-right: -10px;
+  }
+  50% {
+    margin-right: 5px;
+  }
+  100% {
+    margin-right: 0px;
+  }
+}
+@keyframes mymove-image-button-text {
+  0% {
+    margin-right: -8px;
+  }
+  50% {
+    margin-right: 15px;
+  }
+  100% {
+    margin-right: 8px;
+  }
+}
+@keyframes mymove-image-icon-arrow {
+  0% {
+    margin-right: 15px;
+  }
+  50% {
+    margin-right: 0px;
+  }
+  100% {
+    margin-right: 5px;
+  }
+}
 .menu-select-naka:hover .text-end-select-naka {
   @apply border-white-primary bg-white-primary text-primary-main;
 }
 
+.image-square .select-global-square:hover {
+  animation: mymove-global-square 1s;
+  animation-duration: 0.5s;
+}
+.image-square:hover + .select-square {
+  left: 18px !important;
+  bottom: 19px !important;
+}
+
+@keyframes mymove-global-square {
+  0% {
+    rotate: 90deg;
+  }
+  50% {
+    rotate: 45deg;
+  }
+  100% {
+    rotate: 90deg;
+  }
+}
 .slick-slider .slick-slide.slick-active {
   position: relative;
   z-index: 1;
@@ -62,4 +130,15 @@ body {
 }
 .slick-slider .slick-dots li.slick-active button {
   background-color: #f42728;
+}
+
+.progress-bar-energy {
+  background: rgb(35, 35, 41) !important;
+  background: linear-gradient(
+    90deg,
+    rgb(1, 1, 1) 50%,
+    rgb(35, 35, 41) 50%
+  ) !important;
+  background-repeat: repeat-x !important;
+  background-size: 5% !important;
 }

@@ -107,3 +107,21 @@ export const MENU = [
     ]
   }
 ]
+
+export const MENU_PROFILE = [
+  {
+    name: "Edit Profile",
+    link: "/",
+    icon: "/images/menu/editProfile.png"
+  },
+  { name: "Wishlist", link: "/", icon: "/images/menu/wishlist.png" },
+  {
+    name: "Play History",
+    link: "/",
+    icon: "/images/menu/playHistory.png"
+  },
+  { name: "Your Mission", link: "/", icon: "/images/menu/yourMission.png" },
+  { name: "Inventory", link: "/", icon: "/images/menu/inventory.png" },
+  { name: "Item Reward", link: "/", icon: "/images/menu/itemReward.png" },
+  { name: "Support", link: "/", icon: "/images/menu/support.png" }
+]

@@ -6,6 +6,7 @@ import ListItemIcon from "@mui/material/ListItemIcon"
 import { MENU_PROFILE } from "@constants/menu"
 import { Image } from "@components/atoms/image"
 import { Button } from "@mui/material"
+import ButtonLink from "@components/atoms/button/ButtonLink"
 
 const MenuProfile = () => (
   <MenuList className="mx-[6px] mt-[14px] mb-[6px] rounded-[13px] bg-grey-900 p-[6px]">
@@ -22,23 +23,24 @@ const MenuProfile = () => (
         <ListItemText>{ele.name}</ListItemText>
       </MenuItem>
     ))}
-    <Button
-      className="my-4 flex h-10 w-full items-center justify-center self-center"
-      variant="contained"
-      color="error"
-    >
-      <div className="flex">
+    <ButtonLink
+      text="Log out"
+      href="/"
+      icon={
         <Image
           src="/images/menu/logout.png"
           alt="logout"
           width={24}
           height={24}
         />
-        <ListItemText className="ml-[10px] text-sm text-white-default">
-          Log out
-        </ListItemText>
-      </div>
-    </Button>
+      }
+      size="medium"
+      color="error"
+      variant="contained"
+      className="button-global my-4 w-full"
+      textColor="text-white-default"
+      arrowColor="text-white-default"
+    />
   </MenuList>
 )
 

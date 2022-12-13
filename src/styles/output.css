@@ -242,6 +242,30 @@ body {
   color: rgb(1 1 1 / var(--tw-text-opacity));
 }
 
+.image-square .select-global-square:hover {
+  animation: mymove-global-square 1s;
+  animation-duration: 0.5s;
+}
+
+.image-square:hover + .select-square {
+  left: 18px !important;
+  bottom: 19px !important;
+}
+
+@keyframes mymove-global-square {
+  0% {
+    rotate: 90deg;
+  }
+
+  50% {
+    rotate: 45deg;
+  }
+
+  100% {
+    rotate: 90deg;
+  }
+}
+
 .slick-slider .slick-slide.slick-active {
   position: relative;
   z-index: 1;
@@ -1637,6 +1661,14 @@ h4,
 h5,
 h6 {
   font-family: neueMachina, Helvetica, Arial, sans-serif;
+}
+
+.hover\:h-\[38px\]:hover {
+  height: 38px;
+}
+
+.hover\:w-\[38px\]:hover {
+  width: 38px;
 }
 
 .hover\:rotate-0:hover {

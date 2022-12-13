@@ -994,10 +994,6 @@ video {
   margin-bottom: 6px;
 }
 
-.ml-\[10px\] {
-  margin-left: 10px;
-}
-
 .mt-3 {
   margin-top: 0.75rem;
 }
@@ -1317,10 +1313,6 @@ video {
 
 .gap-2 {
   gap: 0.5rem;
-}
-
-.self-center {
-  align-self: center;
 }
 
 .overflow-hidden {

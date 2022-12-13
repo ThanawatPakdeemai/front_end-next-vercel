@@ -12,7 +12,7 @@ import Link from "next/link"
 const Footer = () => (
   <>
     <Divider sx={{ marginTop: 10, marginBottom: 10 }} />
-    <div className="justify-between text-[12px] md:flex">
+    <div className="justify-between text-[12px] lg:flex">
       <div className="flex justify-center">
         <div className="w-48">
           <div className="mb-4 uppercase text-white-primary">game</div>
@@ -60,8 +60,8 @@ const Footer = () => (
           </div>
         </div>
       </div>
-      <div className="flex justify-center pt-[20px] md:justify-start md:p-0">
-        <div className="flex flex-col items-center justify-self-end md:w-2/4 md:items-start">
+      <div className="flex justify-center pt-[20px] lg:justify-center lg:p-0">
+        <div className="flex flex-col items-center justify-self-end lg:w-3/4 lg:items-start">
           <div className="mb-4 uppercase text-white-primary">
             BE A PART OF THE PLAY TO EARN REVOLUTION!
           </div>
@@ -72,20 +72,14 @@ const Footer = () => (
               href="/"
               text="join The Revolutions"
               icon={<WineBarOutlinedIcon />}
-              size="large"
+              size="medium"
               color="secondary"
               variant="contained"
               // className="w-full"
             />
-            {/* <ButtonLink
-            href="/"
-            text="Join The Revolutions"
-            icon={<WineBarOutlinedIcon />}
-            color="secondary"
-          /> */}
           </div>
           {/* grid grid-cols-7 */}
-          <div className="flex">
+          <div className="flex flex-wrap">
             {SOCIAL?.map((item) => (
               <Link
                 key={item.label}
@@ -113,39 +107,44 @@ const Footer = () => (
           padding: 4
         }}
       >
-        <div
-          className="md:flex"
-          text-white-primary
-        >
-          <div className="w-[400px]">
-            <ButtonLink
-              href="/"
-              text="Become a Naka Devs"
-              icon={<DvrOutlinedIcon />}
-              size="large"
-              color="secondary"
-              variant="outlined"
-              // className="w-full"
-            />
+        <div className="md:flex">
+          <div
+            className="flex md:w-2/4"
+            text-white-primary
+          >
+            <div className="">
+              <ButtonLink
+                href="/"
+                text="Become a Naka Devs"
+                icon={<DvrOutlinedIcon />}
+                size="medium"
+                color="secondary"
+                variant="outlined"
+                className="w-[230px]"
+              />
+            </div>
+            <h3 className="w-2/4 pl-[30px] text-grey-neutral04">
+              Join the industry&apos;s first comprehensive Play to Earn
+              ecosystem.
+            </h3>
           </div>
-          <h3 className="pl-[30px] text-grey-neutral04">
-            Join the industry&apos;s first comprehensive Play to Earn ecosystem.
-          </h3>
-
-          <div className="w-[400px]">
-            <ButtonLink
-              href="/"
-              text="Become a Partner"
-              icon={<LocalAtmOutlinedIcon />}
-              size="large"
-              color="secondary"
-              variant="outlined"
-              // className="w-full"
-            />
+          <div className="mt-[20px] flex md:mt-0 md:w-2/4">
+            <div className=" ">
+              <ButtonLink
+                href="/"
+                text="Become a Partner"
+                icon={<LocalAtmOutlinedIcon />}
+                size="medium"
+                color="secondary"
+                variant="outlined"
+                className="w-[230px]"
+                // className="w-full"
+              />
+            </div>
+            <h3 className="w-2/4 pl-[30px] text-grey-neutral04">
+              Earn some serious cash promoting Nakamoto.Games
+            </h3>
           </div>
-          <h3 className="pl-[30px] text-grey-neutral04">
-            Earn some serious cash promoting Nakamoto.Games
-          </h3>
         </div>
       </Card>
       <Card

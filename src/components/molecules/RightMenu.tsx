@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Image } from "@components/atoms/image"
 import StateIcon from "@components/atoms/stateIcon/StateIcon"
 import IconButtonCustom from "@components/atoms/IconButtonCustom/IconButtonCustom"
@@ -8,23 +8,11 @@ import { Typography, Collapse, CardActions, Card } from "@mui/material"
 import Helper from "@utils/helper"
 import StatProfile from "@components/molecules/statProfile/StatProfile"
 import MenuProfile from "@components/molecules/menuProfile/MenuProfile"
-import useGetProfileByEmail from "@feature/profile/containers/hook/getProfileByEmail"
+import { PROFILE_MOCKUP } from "@constants/profileMockup"
 
 const RightMenu = () => {
   const [expanded, setExpanded] = useState<boolean>(false)
   const [hoverExpand, setHoverExpand] = useState<boolean>(false)
-
-  /* mock up function for profile */
-  const { profile } = useGetProfileByEmail("heart@kos.design")
-
-  useEffect(() => {
-    if (!profile) {
-      localStorage.setItem(
-        "token",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhlYXJ0QGtvcy5kZXNpZ24iLCJpYXQiOjE2NzA5MTE4MjUsImV4cCI6MTY3MDkxMzYyNX0.tcM2dGOA4OZVpZ7fZETpuGG48E4E1fBDDsYRHvSdOOY"
-      )
-    }
-  }, [profile])
 
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
@@ -34,7 +22,7 @@ const RightMenu = () => {
     /* do someing wth notification */
   }
 
-  return profile ? (
+  return (
     <div>
       <Card
         className={`${
@@ -64,20 +52,20 @@ const RightMenu = () => {
           </IconButtonCustom>
           <div className="flex-1 flex-col items-center">
             <Typography className="text-sm font-bold">
-              {profile.username}
+              {PROFILE_MOCKUP.username}
             </Typography>
             <Typography
               paragraph
               component="span"
               variant="body1"
-              onClick={() => Helper.copyClipboard(profile.address)}
+              onClick={() => Helper.copyClipboard(PROFILE_MOCKUP.address)}
               className="cursor-pointer text-xs font-bold text-secondary-main"
             >
-              {Helper.shortenString(profile.address)}
+              {Helper.shortenString(PROFILE_MOCKUP.address)}
             </Typography>
           </div>
           <Image
-            src={profile.avatar}
+            src={PROFILE_MOCKUP.avatar}
             alt="avatar"
             width={40}
             height={40}
@@ -132,19 +120,19 @@ const RightMenu = () => {
         />
         <StatProfile
           exp={{
-            level: profile.level,
-            expAmount: profile.exp,
-            maxExp: profile.max_exp
+            level: PROFILE_MOCKUP.level,
+            expAmount: PROFILE_MOCKUP.exp,
+            maxExp: PROFILE_MOCKUP.max_exp
           }}
           energy={{
-            staminaPoint: profile.stamina_point,
-            totalStamina: profile.total_stamina
+            staminaPoint: PROFILE_MOCKUP.stamina_point,
+            totalStamina: PROFILE_MOCKUP.total_stamina
           }}
         />
         <MenuProfile />
       </Collapse>
     </div>
-  ) : null
+  )
 }
 
 export default RightMenu

@@ -120,13 +120,20 @@ module.exports = {
         },
         black: {
           default: "#70727B"
-        }
+        },
+        transparent: "transparent"
       },
       borderRadius: {
         less: "4px",
         sm: "11px",
         default: "16px",
         md: "24px"
+      },
+      transitionDuration: {
+        400: "400ms"
+      },
+      transitionTimingFunction: {
+        "bounce": "cubic-bezier(.17,.67,.83,.67)"
       },
       keyframes: {
         "time-progress": {

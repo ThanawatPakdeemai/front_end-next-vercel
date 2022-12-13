@@ -36,7 +36,7 @@ const developerPart = () => (
                 icon={<AddIcon />}
                 color="error"
                 size="small"
-                className="button-global button-transparent"
+                className="button-global button-transparent text-primary-main"
               />
             }
           />

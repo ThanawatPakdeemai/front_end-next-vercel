@@ -862,6 +862,10 @@ video {
   }
 }
 
+.fixed {
+  position: fixed;
+}
+
 .absolute {
   position: absolute;
 }
@@ -910,8 +914,16 @@ video {
   top: 1rem;
 }
 
+.z-\[51\] {
+  z-index: 51;
+}
+
 .z-\[1\] {
   z-index: 1;
+}
+
+.z-50 {
+  z-index: 50;
 }
 
 .z-10 {
@@ -1582,6 +1594,10 @@ video {
 
 .p-0 {
   padding: 0px;
+}
+
+.p-52 {
+  padding: 13rem;
 }
 
 .\!p-4 {

@@ -1,5 +1,4 @@
 import React, { memo, useEffect, useState } from "react"
-import moment from "moment"
 import { Image } from "@components/atoms/image"
 import { IPointCurrent } from "@feature/home/interfaces/IHomeService"
 import { Box, Typography } from "@mui/material"

@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { memo } from "react"
 import { Box } from "@mui/material"
 import HeadLogo from "@components/molecules/HeadLogo"
 import HeadMenu from "@components/molecules/HeadMenu"

@@ -875,6 +875,14 @@ video {
   left: 14px;
 }
 
+.top-10 {
+  top: 2.5rem;
+}
+
+.right-10 {
+  right: 2.5rem;
+}
+
 .top-5 {
   top: 1.25rem;
 }
@@ -1253,12 +1261,12 @@ video {
   border-radius: 4px;
 }
 
-.rounded-lg {
-  border-radius: 0.5rem;
-}
-
 .rounded-sm {
   border-radius: 11px;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
 }
 
 .rounded-md {
@@ -1560,6 +1568,11 @@ video {
 .text-\[\#ffffff\] {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-secondary-main {
+  --tw-text-opacity: 1;
+  color: rgb(123 91 230 / var(--tw-text-opacity));
 }
 
 .text-red-default {

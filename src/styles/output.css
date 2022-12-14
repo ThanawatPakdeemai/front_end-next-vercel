@@ -171,6 +171,10 @@ body {
   animation-duration: 0.5s;
 }
 
+.button-global .button-arrow {
+  display: none;
+}
+
 .button-global:hover .button-icon {
   display: none;
 }

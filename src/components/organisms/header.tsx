@@ -29,20 +29,21 @@ const Header = () => (
    *   localStorage.setItem("language", lng);
    * };
    */
-
-  <header className="header flex h-36 items-center justify-between overflow-clip">
+  <>
     <HeadPrice />
-    <Box
-      component="div"
-      className="my-10 items-center justify-between lg:flex"
-    >
-      <HeadLogo />
-      <div className="fixed z-50 flex w-full items-center p-52">
-        <HeadMenu />
-        <RightMenu />
-      </div>
-    </Box>
-  </header>
+    <header className="header flex h-36 items-center justify-between overflow-clip">
+      <Box
+        component="div"
+        className="my-10 items-center justify-between lg:flex"
+      >
+        <HeadLogo />
+        <div className="fixed z-50 flex w-full items-center p-52">
+          <HeadMenu />
+          <RightMenu />
+        </div>
+      </Box>
+    </header>
+  </>
 )
 
 export default memo(Header)

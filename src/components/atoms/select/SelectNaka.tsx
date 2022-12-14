@@ -23,7 +23,8 @@ interface IProp {
     icon?: string | React.ReactNode
     image?: React.ReactNode
     textEnd?: string
-    link: string
+    link?: string
+    handelClick?: () => void
   }[]
   imageSelectd?: React.ReactNode
   widthOption?: string
@@ -108,7 +109,11 @@ const SelectNaka = ({
                           key={option.value}
                           onClick={() => {
                             popupState.close()
-                            router.push(option.link)
+                            if (option.handelClick) {
+                              option.handelClick()
+                            } else if (option.link) {
+                              router.push(option.link)
+                            }
                           }}
                         >
                           <ListItemIcon className="text-primary-contrastText">

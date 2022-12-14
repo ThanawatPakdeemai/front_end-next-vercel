@@ -36,7 +36,7 @@ const ButtonLink = ({
   <Link href={href}>
     <Button
       variant={variant}
-      color={color}
+      color={color === "tertiary" ? "primary" : color}
       size={size}
       startIcon={<div className="button-icon animation-arrow">{icon}</div>}
       className={`${className} button-global`}

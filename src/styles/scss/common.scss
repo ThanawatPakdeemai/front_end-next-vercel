@@ -27,12 +27,17 @@ body {
 
 .button-global {
   .button-icon {
-    animation: mymove-image-icon-button 1s;
+    animation: mymove-image-icon-button 0.5;
     animation-timing-function: linear;
     animation-duration: 0.5s;
   }
   .button-arrow {
     display: none;
+  }
+  .animation-button-text {
+    animation: mymove-button-text 0.5s;
+    animation-timing-function: linear;
+    animation-duration: 0.5s;
   }
   &:hover {
     .button-icon {
@@ -42,12 +47,12 @@ body {
       display: block;
     }
     .animation-arrow {
-      animation: mymove-image-icon-arrow 1s;
+      animation: mymove-image-icon-arrow 0.5;
       animation-timing-function: linear;
       animation-duration: 0.5s;
     }
     .animation-button-text {
-      animation: mymove-image-button-text 1s;
+      animation: mymove-image-button-text 0.5s;
       animation-timing-function: linear;
       animation-duration: 0.5s;
     }
@@ -58,22 +63,52 @@ body {
   0% {
     margin-right: -10px;
   }
+  25% {
+    margin-right: 0px;
+  }
   50% {
     margin-right: 5px;
   }
+  75% {
+    margin-right: 8px;
+  }
   100% {
-    margin-right: 0px;
+    margin-right: 5px;
   }
 }
 @keyframes mymove-image-button-text {
   0% {
     margin-right: -8px;
   }
-  50% {
+  25% {
     margin-right: 15px;
+  }
+  50% {
+    margin-right: 8px;
+  }
+  75% {
+    margin-right: 3px;
   }
   100% {
     margin-right: 8px;
+  }
+}
+
+@keyframes animation-button-text {
+  0% {
+    margin-right: -9px;
+  }
+  25% {
+    margin-right: 9px;
+  }
+  50% {
+    margin-right: -9px;
+  }
+  75% {
+    margin-right: 15px;
+  }
+  100% {
+    margin-right: 0px;
   }
 }
 @keyframes mymove-image-icon-arrow {

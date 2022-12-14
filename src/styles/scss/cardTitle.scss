@@ -31,30 +31,24 @@
 }
 
 .top-player {
-  .squre-no-player {
+  .animation-box {
     width: 58px;
     height: 58px;
   }
   &:hover {
-    transition: 5s;
     .show-arrow {
       display: block !important;
       transition-duration: 700ms;
       transition-timing-function: linear;
     }
-    .squre-no-player {
-      width: 58px;
-      height: 58px;
-    }
     .animation-box {
-      animation: mymove 1s !important;
+      width: 70px;
+      animation: mymove 0.5s !important;
       animation-timing-function: linear;
-      animation-duration: 0.5s;
     }
     .animation-image {
-      animation: mymove-image 1s;
+      animation: mymove-image 0.5s;
       animation-timing-function: linear;
-      animation-duration: 0.5s;
     }
   }
 }
@@ -72,12 +66,12 @@
 }
 @keyframes mymove {
   0% {
-    width: 70px;
-  }
-  50% {
     width: 65px;
   }
-  100% {
+  50% {
     width: 70px;
+  }
+  100% {
+    width: 65px;
   }
 }

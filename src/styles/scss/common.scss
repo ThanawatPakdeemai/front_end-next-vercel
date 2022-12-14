@@ -91,25 +91,36 @@ body {
   }
 }
 .image-square {
+  .select-global-square {
+    animation: mymove-global-square-not 1s;
+    animation-duration: 0.5s;
+  }
+
   .select-global-square:hover {
     animation: mymove-global-square 1s;
     animation-duration: 0.5s;
   }
   &:hover + .select-square {
     left: 18px !important;
-    bottom: 19px !important;
+    bottom: 17px !important;
   }
 }
 
 @keyframes mymove-global-square {
   0% {
-    rotate: 90deg;
-  }
-  50% {
-    rotate: 45deg;
+    rotate: -45deg;
   }
   100% {
     rotate: 90deg;
+  }
+}
+
+@keyframes mymove-global-square-not {
+  0% {
+    rotate: 90deg;
+  }
+  100% {
+    rotate: 180deg;
   }
 }
 

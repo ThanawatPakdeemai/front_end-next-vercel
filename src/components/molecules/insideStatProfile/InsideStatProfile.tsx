@@ -1,5 +1,5 @@
 import React from "react"
-import { LinearProgress, Typography } from "@mui/material"
+import { Box, LinearProgress, Typography } from "@mui/material"
 import Helper from "@utils/helper"
 
 interface IProps {
@@ -35,13 +35,16 @@ const InsideStatProfile = ({ type, barColor, exp, energy }: IProps) => {
       <Typography className={`text-xs font-bold uppercase ${barColor}`}>
         {type === "exp" ? `level ${exp && exp.level}` : "free energy"}
       </Typography>
-      <Typography className="flex text-xs font-bold uppercase text-white-default">
+      <Box
+        component="div"
+        className="flex text-xs font-bold uppercase text-white-default"
+      >
         {type === "exp" ? `exp ` : `stamina `}
         <Typography className={`ml-1 text-xs font-bold uppercase ${barColor}`}>
           {(energy && energy.staminaPoint) || (exp && exp.expAmount)}
         </Typography>
         / {(energy && energy.totalStamina) || (exp && exp.maxExp)}
-      </Typography>
+      </Box>
       {type === "exp" ? (
         <LinearProgress
           variant="determinate"

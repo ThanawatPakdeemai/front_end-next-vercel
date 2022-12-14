@@ -80,13 +80,9 @@
   background-color: rgb(35 35 41 / var(--tw-bg-opacity));
 }
 
-.top-player .squre-no-player {
+.top-player .animation-box {
   width: 58px;
   height: 58px;
-}
-
-.top-player:hover {
-  transition: 5s;
 }
 
 .top-player:hover .show-arrow {
@@ -95,21 +91,15 @@
   transition-timing-function: linear;
 }
 
-.top-player:hover .squre-no-player {
-  width: 58px;
-  height: 58px;
-}
-
 .top-player:hover .animation-box {
-  animation: mymove 1s !important;
+  width: 70px;
+  animation: mymove 0.5s !important;
   animation-timing-function: linear;
-  animation-duration: 0.5s;
 }
 
 .top-player:hover .animation-image {
-  animation: mymove-image 1s;
+  animation: mymove-image 0.5s;
   animation-timing-function: linear;
-  animation-duration: 0.5s;
 }
 
 @keyframes mymove-image {
@@ -128,15 +118,15 @@
 
 @keyframes mymove {
   0% {
-    width: 70px;
-  }
-
-  50% {
     width: 65px;
   }
 
-  100% {
+  50% {
     width: 70px;
+  }
+
+  100% {
+    width: 65px;
   }
 }
 
@@ -168,13 +158,19 @@ body {
 }
 
 .button-global .button-icon {
-  animation: mymove-image-icon-button 1s;
+  animation: mymove-image-icon-button 0.5;
   animation-timing-function: linear;
   animation-duration: 0.5s;
 }
 
 .button-global .button-arrow {
   display: none;
+}
+
+.button-global .animation-button-text {
+  animation: mymove-button-text 0.5s;
+  animation-timing-function: linear;
+  animation-duration: 0.5s;
 }
 
 .button-global:hover .button-icon {
@@ -186,13 +182,13 @@ body {
 }
 
 .button-global:hover .animation-arrow {
-  animation: mymove-image-icon-arrow 1s;
+  animation: mymove-image-icon-arrow 0.5;
   animation-timing-function: linear;
   animation-duration: 0.5s;
 }
 
 .button-global:hover .animation-button-text {
-  animation: mymove-image-button-text 1s;
+  animation: mymove-image-button-text 0.5s;
   animation-timing-function: linear;
   animation-duration: 0.5s;
 }
@@ -202,12 +198,20 @@ body {
     margin-right: -10px;
   }
 
+  25% {
+    margin-right: 0px;
+  }
+
   50% {
     margin-right: 5px;
   }
 
+  75% {
+    margin-right: 8px;
+  }
+
   100% {
-    margin-right: 0px;
+    margin-right: 5px;
   }
 }
 
@@ -216,12 +220,42 @@ body {
     margin-right: -8px;
   }
 
-  50% {
+  25% {
     margin-right: 15px;
+  }
+
+  50% {
+    margin-right: 8px;
+  }
+
+  75% {
+    margin-right: 3px;
   }
 
   100% {
     margin-right: 8px;
+  }
+}
+
+@keyframes animation-button-text {
+  0% {
+    margin-right: -9px;
+  }
+
+  25% {
+    margin-right: 9px;
+  }
+
+  50% {
+    margin-right: -9px;
+  }
+
+  75% {
+    margin-right: 15px;
+  }
+
+  100% {
+    margin-right: 0px;
   }
 }
 

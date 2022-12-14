@@ -7,6 +7,7 @@ import { useTranslation } from "next-i18next"
 import { MENU } from "@constants/menu"
 import Link from "next/link"
 import { IMAGES } from "@constants/images"
+import { useRouter } from "next/router"
 
 const styleButton = {
   minWidth: "10px !important",
@@ -17,6 +18,8 @@ export const styleIcon = {
 }
 const HeadMenu = () => {
   const { t } = useTranslation()
+  const router = useRouter()
+
   return (
     <Box
       component="div"
@@ -32,7 +35,11 @@ const HeadMenu = () => {
             >
               <Button
                 sx={styleButton}
-                className=" xs:mb-1 mb-1  text-black-default hover:bg-error-main hover:text-white-primary md:mb-0"
+                className={` xs:mb-1 mb-1  text-black-default hover:bg-error-main hover:text-white-primary ${
+                  router.pathname === item.link
+                    ? "bg-primary-main"
+                    : "bg-grey-A100"
+                } md:mb-0`}
                 variant="contained"
                 size="large"
               >
@@ -63,8 +70,9 @@ const HeadMenu = () => {
                   label: ele.name,
                   value: ele.name,
                   textEnd: ele.textRight,
+                  link: ele.link,
                   icon: typeof ele.icon === "string" ? ele.icon : <ele.icon />
-                })) ?? [{ label: "", value: "" }]
+                })) ?? [{ label: "", value: "", link: "/" }]
               }
               widthOption="600px"
               title={item.name}
@@ -72,7 +80,11 @@ const HeadMenu = () => {
               button={
                 <Button
                   sx={styleButton}
-                  className="xs:mb-1 mb-1 px-2 text-black-default hover:bg-error-main hover:text-white-primary md:mb-0"
+                  className={`xs:mb-1 mb-1  px-2 text-black-default hover:bg-error-main hover:text-white-primary md:mb-0 ${
+                    router.pathname === item.link
+                      ? "bg-primary-main"
+                      : "bg-grey-A100"
+                  }`}
                   variant="contained"
                   size="large"
                 >

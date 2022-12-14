@@ -14,7 +14,7 @@ const TopPlayer = () => {
     <>
       <Card
         sx={{ maxWidth: "449px" }}
-        className="rounded-md bg-grey-A100 p-2"
+        className="rounded-md bg-grey-A100 p-2 md:h-[465px]"
       >
         <CardTitle
           width="433px"

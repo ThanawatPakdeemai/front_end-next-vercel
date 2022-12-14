@@ -8,14 +8,7 @@ export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   href: string
   icon?: React.ReactNode
   variant?: "text" | "outlined" | "contained"
-  color?:
-    | "primary"
-    | "secondary"
-    | "success"
-    | "error"
-    | "info"
-    | "warning"
-    | "tertiary"
+  color?: "primary" | "secondary" | "success" | "error" | "info" | "warning"
   size?: "small" | "medium" | "large"
   className?: string
   textColor?: string

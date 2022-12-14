@@ -6,7 +6,6 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber"
 import { IMAGES } from "@constants/images"
 import { Image } from "@components/atoms/image"
 import HighlightOffIcon from "@mui/icons-material/HighlightOff"
-import ToasterBox from "./ToasterBox"
 
 interface IToastProps {
   text: string

@@ -8,6 +8,9 @@ import ButtonLink from "@components/atoms/button/ButtonLink"
 import Image from "next/image"
 import { SOCIAL } from "@constants/socialShare"
 import Link from "next/link"
+import { NAKA_ECOSYSTEMSS } from "@constants/nakaEcosystemss"
+import { NAKA_SERVICES } from "@constants/nakaServices"
+import { NAKA_GAME } from "@constants/nakaGame"
 
 const Footer = () => (
   <>
@@ -16,48 +19,58 @@ const Footer = () => (
       <div className="flex justify-center">
         <div className="w-48">
           <div className="mb-4 uppercase text-white-primary">game</div>
-          <Typography className="text-[10px] uppercase text-black-default">
-            Play To earn
-          </Typography>
-          <h4>Play To Earn Mode</h4>
-          <Typography className="text-[10px] uppercase text-black-default">
-            Free to play
-          </Typography>
-          <h4>Free Mode</h4>
-          <h4>Story Mode</h4>
-          <Typography className="text-[10px] uppercase text-black-default">
-            Events
-          </Typography>
-          <h4>Tournament</h4>
+          {NAKA_GAME?.map((item) => (
+            <>
+              <Typography
+                key={item.label}
+                className="pb-[10px] text-[10px] uppercase text-black-default"
+              >
+                {item.label}
+              </Typography>
+              {item.game.map((game) => (
+                <h1
+                  key={item.label}
+                  className="pb-[14px]"
+                >
+                  {game.name}
+                </h1>
+              ))}
+            </>
+          ))}
         </div>
         <div className="w-48">
           <div className="mb-4 uppercase text-white-primary">services</div>
-          <h4>P2P DEX</h4>
-          <h4>Staking</h4>
-          <h4>Referral Program</h4>
-          <h4>Coupon</h4>
+          {NAKA_SERVICES?.map((item) => (
+            <h4
+              key={item.label}
+              className="pb-[14px]"
+            >
+              {item.label}
+            </h4>
+          ))}
         </div>
         <div className="w-48">
           <div className="mb-4 uppercase text-white-primary">
             NAKA ecosystemss
           </div>
-          <h4>Blog</h4>
-          <div className="flex">
-            <h4>About Us</h4>
-            <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />
-          </div>
-          <div className="flex">
-            <h4>Marketplace</h4>
-            <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />
-          </div>
-          <div className="flex">
-            <h4>Nakaverse</h4>
-            <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />
-          </div>
-          <div className="flex">
-            <h4>Nakapunks</h4>
-            <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />
-          </div>
+          {NAKA_ECOSYSTEMSS?.map((item) =>
+            item.newpage === false ? (
+              <h4
+                key={item.label}
+                className="pb-[14px]"
+              >
+                Blog
+              </h4>
+            ) : (
+              <div
+                key={item.label}
+                className="flex pb-[14px]"
+              >
+                <h4>{item.label}</h4>
+                <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />
+              </div>
+            )
+          )}
         </div>
       </div>
       <div className="flex justify-center pt-[20px] lg:justify-center lg:p-0">
@@ -79,15 +92,16 @@ const Footer = () => (
             />
           </div>
           {/* grid grid-cols-7 */}
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap ">
             {SOCIAL?.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
                 target="_blank"
               >
-                <div className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg bg-[#18181C] ">
+                <div className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg bg-[#18181C]  ">
                   <Image
+                    className="transition duration-300 hover:translate-x-1 hover:rotate-[17deg]"
                     src={item.img}
                     alt={item.label}
                     width={item.width}
@@ -100,7 +114,7 @@ const Footer = () => (
         </div>
       </div>
     </div>
-    <div className="flex pt-[80px] text-[12px]">
+    <div className="pt-[80px] text-[12px] sm:flex">
       <Card
         sx={{
           backgroundColor: "#18181C",
@@ -118,7 +132,7 @@ const Footer = () => (
                 text="Become a Naka Devs"
                 icon={<DvrOutlinedIcon />}
                 size="medium"
-                color="secondary"
+                color="tertiary"
                 variant="outlined"
                 className="w-[230px]"
               />
@@ -135,10 +149,9 @@ const Footer = () => (
                 text="Become a Partner"
                 icon={<LocalAtmOutlinedIcon />}
                 size="medium"
-                color="secondary"
+                color="tertiary"
                 variant="outlined"
                 className="w-[230px]"
-                // className="w-full"
               />
             </div>
             <h3 className="w-2/4 pl-[30px] text-grey-neutral04">
@@ -148,10 +161,10 @@ const Footer = () => (
         </div>
       </Card>
       <Card
+        className="mt-[10px] flex grid content-center justify-center sm:mt-0 sm:ml-[12px] sm:w-auto"
         sx={{
           backgroundColor: "#18181C",
           height: "fit",
-          marginLeft: 2,
           padding: 5
         }}
       >
@@ -160,7 +173,13 @@ const Footer = () => (
     </div>
     <div className="flex justify-between py-[50px] text-[10px] uppercase text-[#4E5057]">
       <h4>Copyright 2022 © Nakamoto Games</h4>
-      <h4>icon</h4>
+      <Image
+        src="/assets/icons/logo_master.png"
+        alt="naka-logo"
+        className="object-contain object-left"
+        width={50}
+        height={50}
+      />
       <h4>Scure by : polygon network</h4>
     </div>
   </>

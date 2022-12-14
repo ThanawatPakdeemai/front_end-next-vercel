@@ -25,8 +25,9 @@
   @apply bg-grey-900;
 }
 
-.top-player {
-  transition: width 0.9s ease-in-out;
+.top-player .squre-no-player {
+  width: 58px;
+  height: 58px;
 }
 .top-player:hover {
   transition: 5s;
@@ -37,10 +38,11 @@
   transition-timing-function: linear;
 }
 .top-player:hover .squre-no-player {
-  width: 70px;
+  width: 58px;
+  height: 58px;
 }
 .top-player:hover .animation-box {
-  animation: mymove 1s;
+  animation: mymove 1s !important;
   animation-timing-function: linear;
   animation-duration: 0.5s;
 }

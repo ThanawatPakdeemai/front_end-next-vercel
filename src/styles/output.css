@@ -80,8 +80,9 @@
   background-color: rgb(35 35 41 / var(--tw-bg-opacity));
 }
 
-.top-player {
-  transition: width 0.9s ease-in-out;
+.top-player .squre-no-player {
+  width: 58px;
+  height: 58px;
 }
 
 .top-player:hover {
@@ -95,11 +96,12 @@
 }
 
 .top-player:hover .squre-no-player {
-  width: 70px;
+  width: 58px;
+  height: 58px;
 }
 
 .top-player:hover .animation-box {
-  animation: mymove 1s;
+  animation: mymove 1s !important;
   animation-timing-function: linear;
   animation-duration: 0.5s;
 }

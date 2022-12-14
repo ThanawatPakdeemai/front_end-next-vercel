@@ -31,7 +31,10 @@
 }
 
 .top-player {
-  transition: width 0.9s ease-in-out; //, box-shadow 0.3s ease-in-out;
+  .squre-no-player {
+    width: 58px;
+    height: 58px;
+  }
   &:hover {
     transition: 5s;
     .show-arrow {
@@ -40,10 +43,11 @@
       transition-timing-function: linear;
     }
     .squre-no-player {
-      width: 70px;
+      width: 58px;
+      height: 58px;
     }
     .animation-box {
-      animation: mymove 1s;
+      animation: mymove 1s !important;
       animation-timing-function: linear;
       animation-duration: 0.5s;
     }

@@ -40,7 +40,7 @@ const Footer = () => (
         </div>
         <div className="w-48">
           <div className="mb-4 uppercase text-white-primary">services</div>
-          {NAKA_SERVICES?.map((item, index) => (
+          {NAKA_SERVICES?.map((item) => (
             <h4
               key={item.label}
               className="pb-[14px]"

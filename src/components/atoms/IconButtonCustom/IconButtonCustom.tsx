@@ -3,8 +3,8 @@ import { styled } from "@mui/material/styles"
 import IconButton, { IconButtonProps } from "@mui/material/IconButton"
 
 interface ExpandMoreProps extends IconButtonProps {
-  expand?: boolean
-  hover?: boolean
+  expand?: boolean | string
+  hover?: boolean | string
 }
 
 const IconButtonCustom = styled((props: ExpandMoreProps) => {

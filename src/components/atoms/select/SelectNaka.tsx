@@ -84,11 +84,11 @@ const SelectNaka = ({
                       onClick={() => popupState.close()}
                     >
                       <div className="image-square ml-2 font-neue-machina text-default ">
-                        <div className="select-global-square  h-7 w-7 rotate-45 rounded-less  bg-error-main hover:h-[38px] hover:w-[38px] hover:rotate-0" />
+                        <div className="select-global-square h-8 w-8 rotate-45  rounded-[8px] bg-error-main hover:h-[35px] hover:w-[35px] hover:rotate-0" />
                       </div>
 
                       <Divider
-                        className="select-square absolute bottom-[13px] left-[14px] w-[15px] border border-[#f1f4f4]"
+                        className="select-square absolute bottom-[16px] left-[16px] w-[15px] border border-[#f1f4f4]"
                         orientation="vertical"
                         flexItem
                       />

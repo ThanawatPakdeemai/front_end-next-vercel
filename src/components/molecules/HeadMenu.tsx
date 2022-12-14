@@ -32,11 +32,11 @@ const HeadMenu = () => {
             >
               <Button
                 sx={styleButton}
-                className=" xs:mb-1 mb-1 text-black-default hover:bg-error-main hover:text-white-primary md:mb-0"
+                className=" xs:mb-1 mb-1  text-black-default hover:bg-error-main hover:text-white-primary md:mb-0"
                 variant="contained"
                 size="large"
               >
-                <Typography className="font-neue-machina-semi text-default">
+                <Typography className="font-neue-machina-semi text-sm">
                   {t(`${item.name}`)}
                 </Typography>
               </Button>

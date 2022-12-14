@@ -30,6 +30,9 @@ body {
   animation-timing-function: linear;
   animation-duration: 0.5s;
 }
+.button-global .button-arrow {
+  display: none;
+}
 .button-global:hover .button-icon {
   display: none;
 }
@@ -84,24 +87,33 @@ body {
   @apply border-white-primary bg-white-primary text-primary-main;
 }
 
+.image-square .select-global-square {
+  animation: mymove-global-square-not 1s;
+  animation-duration: 0.5s;
+}
 .image-square .select-global-square:hover {
   animation: mymove-global-square 1s;
   animation-duration: 0.5s;
 }
 .image-square:hover + .select-square {
   left: 18px !important;
-  bottom: 19px !important;
+  bottom: 17px !important;
 }
 
 @keyframes mymove-global-square {
   0% {
-    rotate: 90deg;
-  }
-  50% {
-    rotate: 45deg;
+    rotate: -45deg;
   }
   100% {
     rotate: 90deg;
+  }
+}
+@keyframes mymove-global-square-not {
+  0% {
+    rotate: 90deg;
+  }
+  100% {
+    rotate: 180deg;
   }
 }
 .slick-slider .slick-slide.slick-active {

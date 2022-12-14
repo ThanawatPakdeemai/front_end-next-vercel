@@ -33,12 +33,12 @@ const HeadLogo = () => {
       <Box
         component="div"
         className={`head-logo flex items-center justify-center ${
-          scrollPage === 0 ? "mr-0" : "mr-[19rem]"
+          scrollPage < 100 ? "mr-0" : "mr-[19rem]"
         }`}
       >
         <div
           className={`flex items-center justify-center  ${
-            scrollPage === 0 ? "block" : " hidden"
+            scrollPage < 100 ? "block" : " hidden"
           } `}
         >
           <LogoNaka />

@@ -13,6 +13,13 @@ export const IMAGES = {
     height: 319,
     alt: "table-com"
   },
+  nakaLogoMaster: {
+    src: "/assets/icons/logo_master.svg",
+    blurDataURL: "/assets/icons/logo_master.svg",
+    width: 24,
+    height: 11,
+    alt: "naka-logo-master"
+  },
   nakaBand: {
     src: "/images/home/nakamoto-band.svg",
     blurDataURL: "/images/home/nakamoto-band.svg",

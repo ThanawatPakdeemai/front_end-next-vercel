@@ -6,11 +6,11 @@ import WineBarOutlinedIcon from "@mui/icons-material/WineBarOutlined"
 import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import Image from "next/image"
-import { SOCIAL } from "@constants/socialShare"
+import { SOCIAL } from "@configs/socialShare"
 import Link from "next/link"
-import { NAKA_ECOSYSTEMSS } from "@constants/nakaEcosystemss"
-import { NAKA_SERVICES } from "@constants/nakaServices"
-import { NAKA_GAME } from "@constants/nakaGame"
+import { NAKA_GAME } from "@configs/nakaGame"
+import { NAKA_SERVICES } from "@configs/nakaServices"
+import { NAKA_ECOSYSTEMSS } from "@configs/nakaEcosystems"
 
 const Footer = () => (
   <>

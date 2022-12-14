@@ -20,27 +20,27 @@ const Footer = () => (
         <div className="w-48">
           <div className="mb-4 uppercase text-white-primary">game</div>
           {NAKA_GAME?.map((item) => (
-            <>
+            <div key={`game_${item.label}`}>
               <Typography
-                key={item.label}
+                key={`${item.label}`}
                 className="pb-[10px] text-[10px] uppercase text-black-default"
               >
                 {item.label}
               </Typography>
               {item.game.map((game) => (
                 <h1
-                  key={item.label}
+                  key={`game-${item.label}-${game.name}`}
                   className="pb-[14px]"
                 >
                   {game.name}
                 </h1>
               ))}
-            </>
+            </div>
           ))}
         </div>
         <div className="w-48">
           <div className="mb-4 uppercase text-white-primary">services</div>
-          {NAKA_SERVICES?.map((item) => (
+          {NAKA_SERVICES?.map((item, index) => (
             <h4
               key={item.label}
               className="pb-[14px]"
@@ -122,10 +122,7 @@ const Footer = () => (
         }}
       >
         <div className="md:flex">
-          <div
-            className="flex md:w-2/4"
-            text-white-primary
-          >
+          <div className="flex md:w-2/4">
             <div className="">
               <ButtonLink
                 href="/"

@@ -1,8 +1,5 @@
-@tailwind base;
-@tailwind components;
-
 .card-title-page {
-  @apply rounded-default bg-purple-primary;
+  @apply rounded-default;
   .MuiCardHeader-content {
     span {
       @apply font-neue-machina text-default font-[700] uppercase text-white-primary;
@@ -23,27 +20,58 @@
   /* Handle */
 
   &::-webkit-scrollbar-thumb {
-    @apply border border-solid border-black-03 bg-purple-primary;
+    @apply border border-solid border-grey-900 bg-purple-primary;
     border-radius: 10px;
   }
 
   /* Handle on hover */
   &::-webkit-scrollbar-thumb:hover {
-    @apply bg-black-03;
+    @apply bg-grey-900;
   }
 }
 
 .top-player {
-  transition: width 0.9s ease-in-out; //, box-shadow 0.3s ease-in-out;
+  .animation-box {
+    width: 58px;
+    height: 58px;
+  }
   &:hover {
-    transition: 5s;
     .show-arrow {
       display: block !important;
       transition-duration: 700ms;
       transition-timing-function: linear;
     }
-    .squre-no-player {
+    .animation-box {
       width: 70px;
+      animation: mymove 0.5s !important;
+      animation-timing-function: linear;
     }
+    .animation-image {
+      animation: mymove-image 0.5s;
+      animation-timing-function: linear;
+    }
+  }
+}
+
+@keyframes mymove-image {
+  0% {
+    margin-right: -43px;
+  }
+  50% {
+    margin-right: 0;
+  }
+  100% {
+    margin-right: -15px;
+  }
+}
+@keyframes mymove {
+  0% {
+    width: 65px;
+  }
+  50% {
+    width: 70px;
+  }
+  100% {
+    width: 65px;
   }
 }

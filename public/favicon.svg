@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="53px" height="51px" viewBox="0 0 53 51" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="53px" height="51px" viewBox="0 0 53 51" version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>Group 5</title>
     <defs>
         <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
@@ -8,7 +10,7 @@
         </linearGradient>
         <polygon id="path-2" points="0 0 27.0241852 0 27.0241852 50.6833517 0 50.6833517"></polygon>
     </defs>
-    <g id="Platform" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="Platform" stroke="none" strokeWidth="1" fill="none" fill-rule="evenodd">
         <g id="0-NAKAMOTO" transform="translate(-54.000000, -74.000000)">
             <g id="Group-5" transform="translate(54.000000, 74.000000)">
                 <g id="Group-33" transform="translate(0.000000, 0.140148)" fill="url(#linearGradient-1)">

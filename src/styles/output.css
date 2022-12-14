@@ -873,10 +873,6 @@ video {
   }
 }
 
-.fixed {
-  position: fixed;
-}
-
 .absolute {
   position: absolute;
 }
@@ -939,10 +935,6 @@ video {
 
 .z-\[999\] {
   z-index: 999;
-}
-
-.z-50 {
-  z-index: 50;
 }
 
 .z-10 {
@@ -1119,10 +1111,6 @@ video {
 
 .h-10 {
   height: 2.5rem;
-}
-
-.h-36 {
-  height: 9rem;
 }
 
 .h-auto {
@@ -1378,10 +1366,6 @@ video {
   overflow: hidden;
 }
 
-.overflow-clip {
-  overflow: clip;
-}
-
 .overflow-y-scroll {
   overflow-y: scroll;
 }
@@ -1604,10 +1588,6 @@ video {
 
 .p-0 {
   padding: 0px;
-}
-
-.p-52 {
-  padding: 13rem;
 }
 
 .\!p-4 {

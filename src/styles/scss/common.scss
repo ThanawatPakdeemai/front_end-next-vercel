@@ -31,6 +31,9 @@ body {
     animation-timing-function: linear;
     animation-duration: 0.5s;
   }
+  .button-arrow {
+    display: none;
+  }
   &:hover {
     .button-icon {
       display: none;

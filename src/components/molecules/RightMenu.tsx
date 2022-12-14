@@ -73,16 +73,17 @@ const RightMenu = () => {
           />
           {/* expand button */}
           <IconButtonCustom
-            expand={expanded}
-            hover={hoverExpand}
+            expand={expanded.toString()}
+            hover={hoverExpand.toString()}
             onClick={handleOnExpandClick}
-            aria-expanded={expanded}
+            aria-expanded={Boolean(expanded)}
             aria-label="expanded-menu-profile"
             className={`mr-[2px] h-10 w-10 rounded-[13px] border-[2px] border-grey-900 duration-400 ease-bounce  ${
               !expanded
                 ? "bg-secondary-main hover:scale-[85%]"
                 : "bg-error-main"
-            } ${!expanded ? "rotate-0	" : "rotate-180"} ${
+            } 
+            ${!expanded ? "rotate-0	" : "rotate-180"} ${
               expanded && !hoverExpand
                 ? "rotate-[-45deg] scale-[75%]"
                 : "scale-1 rotate-0"
@@ -118,6 +119,7 @@ const RightMenu = () => {
           variant="naka"
           token="NAKA"
         />
+
         <StatProfile
           exp={{
             level: PROFILE_MOCKUP.level,

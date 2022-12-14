@@ -1,7 +1,7 @@
 import LogoNaka from "@components/atoms/logo/LogoNaka"
 import SelectNaka from "@components/atoms/select/SelectNaka"
 import { Button, Divider, Typography, Box } from "@mui/material"
-import { memo } from "react"
+import { memo, useCallback, useEffect, useState } from "react"
 import LanguageIcon from "@mui/icons-material/Language"
 import DragHandleIcon from "@mui/icons-material/DragHandle"
 import { useRouter } from "next/router"
@@ -11,12 +11,30 @@ import { styleIcon } from "./HeadMenu"
 
 const HeadLogo = () => {
   const router = useRouter()
+  const [scrollPage, setScrollY] = useState(0)
+
+  const onScroll = useCallback(() => {
+    const { pageYOffset } = window // scrollY
+    // console.log("yOffset", pageYOffset, "scrollY", scrollY)
+    setScrollY(pageYOffset)
+  }, [])
+
+  useEffect(() => {
+    // add eventlistener to window
+    window.addEventListener("scroll", onScroll, { passive: true })
+    // remove event on unmount to prevent a memory leak with the cleanup
+    return () => {
+      window.removeEventListener("scroll", onScroll)
+    }
+  }, [onScroll])
 
   return (
     <>
       <Box
         component="div"
-        className="flex items-center justify-center"
+        className={`head-logo flex items-center justify-center ${
+          scrollPage === 0 ? "block" : "hidden"
+        } `}
       >
         <LogoNaka />
         <Divider

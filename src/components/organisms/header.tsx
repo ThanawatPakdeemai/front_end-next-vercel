@@ -1,3 +1,4 @@
+import HeadLogo from "@components/molecules/HeadLogo"
 import HeadMenu from "@components/molecules/HeadMenu"
 import RightMenu from "@components/molecules/RightMenu"
 import { Box } from "@mui/material"
@@ -29,13 +30,13 @@ const Header = () => (
    * };
    */
 
-  <header className="header flex h-36 items-center justify-between overflow-clip">
+  <header className="header sticky top-10 z-[999]">
     <Box
       component="div"
       className="my-10 items-center justify-between lg:flex"
     >
+      <HeadLogo />
       <HeadMenu />
-      <div className="text-error-main">MENU</div>
       <RightMenu />
     </Box>
 

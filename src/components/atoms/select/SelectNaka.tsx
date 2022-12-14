@@ -12,6 +12,7 @@ import {
   Box
 } from "@mui/material"
 import { useTranslation } from "react-i18next"
+import { useRouter } from "next/router"
 
 interface IProp {
   button: React.ReactNode
@@ -22,7 +23,7 @@ interface IProp {
     icon?: string | React.ReactNode
     image?: React.ReactNode
     textEnd?: string
-    handelClick?: () => void
+    link: string
   }[]
   imageSelectd?: React.ReactNode
   widthOption?: string
@@ -37,6 +38,7 @@ const SelectNaka = ({
   left
 }: IProp) => {
   const { t } = useTranslation()
+  const router = useRouter()
 
   return (
     <>
@@ -100,11 +102,13 @@ const SelectNaka = ({
                     <MenuList className="w-full">
                       {options.map((option) => (
                         <MenuItem
-                          className="menu-select-naka"
+                          className={`${
+                            router.pathname === option.link ? "active" : ""
+                          } menu-select-naka`}
                           key={option.value}
                           onClick={() => {
-                            option.handelClick && option.handelClick()
                             popupState.close()
+                            router.push(option.link)
                           }}
                         >
                           <ListItemIcon className="text-primary-contrastText">
@@ -121,7 +125,7 @@ const SelectNaka = ({
                               className="w-max "
                             >
                               <ListItemText className="text-end-select-naka rounded-less border border-grey-900 bg-primary-main px-2 text-center font-neue-machina-semi text-sm uppercase ">
-                                <Typography className="uppercase text-primary-contrastText hover:text-grey-900 " />
+                                <Typography className="uppercase text-primary-contrastText" />
                                 {option.textEnd}
                               </ListItemText>
                             </Box>

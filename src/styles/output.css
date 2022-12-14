@@ -237,13 +237,14 @@ body {
   }
 }
 
-.menu-select-naka:hover .text-end-select-naka {
+.menu-select-naka:hover .text-end-select-naka,
+.menu-select-naka.active .text-end-select-naka {
   --tw-border-opacity: 1;
   border-color: rgb(225 226 226 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
   background-color: rgb(225 226 226 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgb(1 1 1 / var(--tw-text-opacity));
+  color: rgb(225 226 226 / var(--tw-text-opacity));
 }
 
 .image-square .select-global-square {
@@ -1514,6 +1515,11 @@ video {
   background-color: rgb(24 24 28 / var(--tw-bg-opacity)) !important;
 }
 
+.bg-primary-main {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(1 1 1 / var(--tw-bg-opacity)) !important;
+}
+
 .bg-secondary-main {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(123 91 230 / var(--tw-bg-opacity)) !important;
@@ -1540,11 +1546,6 @@ video {
 .bg-red-card {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(244 39 40 / var(--tw-bg-opacity)) !important;
-}
-
-.bg-primary-main {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(1 1 1 / var(--tw-bg-opacity)) !important;
 }
 
 .bg-\[\#010101\] {
@@ -1959,11 +1960,6 @@ h6 {
 .hover\:text-white-primary:hover {
   --tw-text-opacity: 1 !important;
   color: rgb(225 226 226 / var(--tw-text-opacity)) !important;
-}
-
-.hover\:text-grey-900:hover {
-  --tw-text-opacity: 1 !important;
-  color: rgb(35 35 41 / var(--tw-text-opacity)) !important;
 }
 
 @media (min-width: 640px) {

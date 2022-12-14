@@ -18,7 +18,7 @@ export const MENU = [
   },
   {
     name: "Games",
-    link: "/",
+    link: "/games",
     isChide: true,
     left: "100px !important",
     image: {
@@ -33,19 +33,24 @@ export const MENU = [
         link: "/",
         icon: AttachMoneyIcon
       },
-      { name: "Free Mode", link: "/", icon: MoneyOffIcon, textRight: "Free" },
+      {
+        name: "Free Mode",
+        link: "/free",
+        icon: MoneyOffIcon,
+        textRight: "Free"
+      },
       {
         name: "Story Mode",
-        link: "/",
+        link: "/story",
         icon: MapOutlinedIcon,
         textRight: "Free"
       },
-      { name: "Tournament", link: "/", icon: DiamondIcon }
+      { name: "Tournament", link: "/tournament", icon: DiamondIcon }
     ]
   },
   {
     name: "Services",
-    link: "/",
+    link: "/services",
     isChide: true,
     image: {
       src: IMAGES.tableCom.src,
@@ -56,27 +61,27 @@ export const MENU = [
     chide: [
       {
         name: "Play To Earn Mode Services",
-        link: "/",
+        link: "/free",
         icon: AttachMoneyIcon
       },
       {
         name: "Free Mode Services",
-        link: "/",
+        link: "/free",
         icon: MoneyOffIcon,
         textRight: "Free"
       },
       {
         name: "Story Mode Services",
-        link: "/",
+        link: "/free",
         icon: MapOutlinedIcon,
         textRight: "Free"
       },
-      { name: "Tournament Services", link: "/", icon: DiamondIcon }
+      { name: "Tournament Services", link: "/free", icon: DiamondIcon }
     ]
   },
   {
     name: "Naka Ecosystems",
-    link: "/",
+    link: "/naka-ecosystems",
     isChide: true,
     left: "-155px !important",
     image: {
@@ -88,22 +93,22 @@ export const MENU = [
     chide: [
       {
         name: "Play To Earn Mode Ecosystems",
-        link: "/",
+        link: "/free",
         icon: AttachMoneyIcon
       },
       {
         name: "Free Mode Ecosystems",
-        link: "/",
+        link: "/free",
         icon: MoneyOffIcon,
         textRight: "Free"
       },
       {
         name: "Story Mode Ecosystems",
-        link: "/",
+        link: "/free",
         icon: MapOutlinedIcon,
         textRight: "Free"
       },
-      { name: "Tournament Ecosystems", link: "/", icon: DiamondIcon }
+      { name: "Tournament Ecosystems", link: "/free", icon: DiamondIcon }
     ]
   }
 ]

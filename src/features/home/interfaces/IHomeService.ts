@@ -26,5 +26,5 @@ export interface IPointCurrent {
 
 export interface IPointCurrentResponse {
   status: boolean
-  data: IPointCurrent[]
+  data: IPointCurrent
 }

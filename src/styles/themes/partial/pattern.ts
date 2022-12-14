@@ -11,6 +11,7 @@ export const PaletteCustom: Palette | any = theme &&
     info: theme.colors["info"],
     success: theme.colors["success"],
     warning: theme.colors["warning"],
+    tertiary: theme.colors["tertiary"],
     background: {
       default: theme.colors["grey"]["900"],
       paper: "#2f3441"

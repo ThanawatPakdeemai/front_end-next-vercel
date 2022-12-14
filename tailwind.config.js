@@ -40,6 +40,12 @@ module.exports = {
         dark: "#E1D35A",
         contrastText: "#010101"
       },
+      tertiary: {
+        main: "#757575",
+        light: "#757575",
+        dark: "#757575",
+        contrastText: "#010101"
+      },
       grey: {
         50: "#fafafa",
         100: "#f5f5f5",

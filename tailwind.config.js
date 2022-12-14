@@ -161,7 +161,7 @@ module.exports = {
       }
     }
   },
-  // important: true,
+  important: true,
   // eslint-disable-next-line global-require
   plugins: [require("@tailwindcss/line-clamp")],
   babel: {

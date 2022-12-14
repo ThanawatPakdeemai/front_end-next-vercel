@@ -27,7 +27,7 @@ const RightMenu = () => {
       <Card
         className={`${
           expanded ? "rounded-t-[13px] rounded-b-none" : "rounded-[13px]"
-        } flex items-center justify-center`}
+        } m-auto flex items-center justify-center`}
         sx={{
           maxWidth: 277,
           width: 277,

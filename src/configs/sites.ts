@@ -8,7 +8,8 @@ export const DEFAULT_VALUE = {
 // Base site information
 export const siteInfo = {
   title: "NAKAMOTO",
-  description: "Secure, simple, enjoy and earn $NAKA!"
+  description: "Secure, simple, enjoy and earn $NAKA!",
+  contract: "0x311434160D7537be358930def317AfB606C0D737"
 }
 
 // Setting slick player ranking

@@ -1,10 +1,11 @@
 import IconDollar from "@components/icons/dollarIcon"
-import React, { memo, useState } from "react"
+import React, { memo, useEffect, useState } from "react"
 import AddIcon from "@mui/icons-material/Add"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import IconArrowLeft from "@components/icons/arrowLeftIcon"
-import { motion } from "framer-motion"
+import { motion, useAnimation } from "framer-motion"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import { Chip } from "@mui/material"
 
 export interface ISlideList extends React.HTMLAttributes<HTMLDivElement> {
   id: string
@@ -17,6 +18,12 @@ export interface IHeaderSlide {
   title: string
   menuList: ISlideList[]
   theme: string
+  stickerRotate: number
+}
+
+interface IProps extends IHeaderSlide {
+  curType: string
+  setCurType: (_type: string) => void
   onView?: () => void
   onNext?: () => void
   onPrev?: () => void
@@ -27,14 +34,27 @@ const GameCarouselHeader = ({
   title,
   menuList,
   theme,
+  stickerRotate,
+  curType,
+  setCurType,
   onView,
   onNext,
   onPrev
-}: IHeaderSlide) => {
-  const [currentType, setCurrentType] = useState<string>(menuList[0].type)
+}: IProps) => {
+  const animateControls = useAnimation()
 
+  const rotateSticker = async (_rotate: number) => {
+    await animateControls.start({
+      rotateZ: _rotate,
+      transition: {
+        duration: 2,
+        type: "spring",
+        stiffness: 300
+      }
+    })
+  }
   const onChangeType = (_type: string) => {
-    setCurrentType(_type)
+    setCurType(_type)
   }
 
   const onClickedView = () => {
@@ -55,30 +75,39 @@ const GameCarouselHeader = ({
     }
   }
 
+  useEffect(() => {
+    let rotate = stickerRotate
+    const delay = 4
+    const interval = setInterval(() => {
+      rotateSticker(rotate)
+      rotate *= -1
+    }, (delay + 1) * 1000)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
+
   return (
     <div className="slick-header-container relative mb-4 h-[50px] w-full">
       <motion.div
         className="absolute top-[-80px] left-[-80px]"
-        initial={{ rotateZ: -15 }}
-        animate={{
-          rotateZ: [-15, -15, 15, 15, -15],
-          transition: {
-            duration: 12,
-            times: [0, 0.4, 0.425, 0.975, 1],
-            repeat: 2
-          }
-        }}
+        initial={{ rotateZ: stickerRotate }}
+        animate={animateControls}
         whileHover={{ rotateZ: 0 }}
-        transition={{ duration: 1, type: "spring", stiffness: 300 }}
+        transition={{
+          duration: 1,
+          type: "spring",
+          stiffness: 300
+        }}
       >
         {icon}
       </motion.div>
       <div className="flex h-full w-full items-center justify-between">
-        <div className="relative flex h-full w-fit items-center justify-between rounded-default border-2 border-neutral-800 bg-[#010101] bg-opacity-40 px-1 text-[10px] capitalize backdrop-blur-[25px]">
-          <div className="flex items-center py-1 pl-4 font-bold">
+        <div className="border-grey-A100 relative flex h-full w-fit items-center justify-between rounded-default border-2 bg-[#010101] bg-opacity-40 px-1 text-[10px] capitalize backdrop-blur-[25px]">
+          <div className="flex items-center py-1 pl-4 font-bold ">
             <IconDollar.Ori className={`slick-header-${theme}-icon`} />
             <p
-              className={`slick-header-${theme}-text h-[10px] pl-2 pr-2 font-neue-machina-bold font-bold uppercase`}
+              className={`text-${theme}-main h-[10px] pl-2 pr-2 font-neue-machina-bold font-bold uppercase`}
             >
               {title}
             </p>
@@ -87,12 +116,18 @@ const GameCarouselHeader = ({
             <button
               type="button"
               key={item.id}
+              className={`${item.className} ml-1 !cursor-pointer`}
               onClick={() => onChangeType(item.type)}
-              className={`${item.className} slick-header-${theme}-background-${
-                currentType === item.type ? "active" : "default"
-              } ml-1 h-10 rounded-sm font-neue-machina text-sm font-bold capitalize text-black-default hover:text-white-primary`}
             >
-              {item.label}
+              <Chip
+                label={item.label}
+                size="medium"
+                className={`h-full w-full cursor-pointer font-bold hover:bg-${theme}-main font-bold capitalize hover:text-white-primary ${
+                  curType === item.type
+                    ? `bg-${theme}-main text-white-primary`
+                    : "bg-neutral-800 text-black-default"
+                }`}
+              />
             </button>
           ))}
         </div>

@@ -20,8 +20,8 @@ const CardTitle = ({
     <Card
       sx={{ maxWidth: width ?? "auto" }}
       className={`card-title-page mb-3 ${
-        background === "purple" && "bg-purple-primary"
-      } ${background === "red" && "bg-red-card"}`}
+        background === "purple" && "!bg-purple-primary"
+      } ${background === "red" && "!bg-red-card"}`}
     >
       <CardHeader
         title={

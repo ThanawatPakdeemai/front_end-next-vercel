@@ -16,10 +16,10 @@ const Balance = ({ variant }: IProps) => (
     // sx={{ maxWidth: 277, width: 277, height: 62 }}
   >
     <Card
-      className="flex items-center justify-between rounded-[13px] bg-grey-A100 p-[5px]"
+      className="flex items-center justify-between rounded-[13px] bg-neutral-800 p-[5px]"
       sx={{ maxWidth: 265, minWidth: 265, height: 50 }}
     >
-      <div className="flex h-full flex-1 items-center rounded-[13px] bg-grey-A200 py-2 px-[10px]">
+      <div className="flex h-full flex-1 items-center rounded-[13px] bg-neutral-900 py-2 px-[10px]">
         <Image
           src="/assets/icons/logo_master.png"
           alt="logo_master"
@@ -32,7 +32,7 @@ const Balance = ({ variant }: IProps) => (
         />
       </div>
       <IconButtonCustom
-        className="ml-[5px] h-10 w-10 rotate-90 rounded-[13px] border-[2px] border-grey-900 bg-transparent bg-secondary-main hover:scale-105 hover:bg-secondary-main"
+        className="ml-[5px] h-10 w-10 rotate-90 rounded-[13px] border-[2px] border-neutral-700 bg-secondary-main hover:scale-105 hover:bg-secondary-main"
         aria-label="notification-button"
       >
         <SyncAltIcon className="text-white-primary transition-all duration-300 ease-bounce hover:rotate-[12deg]" />

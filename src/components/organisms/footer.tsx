@@ -97,7 +97,7 @@ const Footer = () => (
                 href={item.href}
                 target="_blank"
               >
-                <div className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-grey-900 bg-grey-A100">
+                <div className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800">
                   <Image
                     className="transition duration-300 hover:translate-x-1 hover:rotate-[17deg]"
                     src={item.img}
@@ -113,12 +113,9 @@ const Footer = () => (
       </div>
     </div>
     <div className="pt-[80px] text-[12px] sm:flex">
-      <div className="rounded-[20px] bg-grey-A100 p-8">
+      <div className="rounded-[20px] bg-neutral-800 p-8">
         <div className="md:flex">
-          <div
-            className="flex md:w-2/4"
-            text-white-primary
-          >
+          <div className="flex md:w-2/4">
             <ButtonLink
               href="/"
               text="Become a Naka Devs"
@@ -152,7 +149,7 @@ const Footer = () => (
           </div>
         </div>
       </div>
-      <div className="mt-[10px] flex grid content-center justify-center rounded-[20px] bg-grey-A100 p-8  sm:mt-0 sm:ml-[12px] sm:w-auto">
+      <div className="mt-[10px] flex grid content-center justify-center rounded-[20px] bg-neutral-800 p-8  sm:mt-0 sm:ml-[12px] sm:w-auto">
         <NorthOutlinedIcon />
       </div>
     </div>

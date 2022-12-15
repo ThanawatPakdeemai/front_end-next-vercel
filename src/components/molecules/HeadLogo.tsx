@@ -43,7 +43,7 @@ const HeadLogo = () => {
         >
           <LogoNaka />
           <Divider
-            className="mx-5 my-2 border-grey-900"
+            className="mx-5 my-2 border-neutral-700"
             orientation="vertical"
             flexItem
           />
@@ -51,7 +51,7 @@ const HeadLogo = () => {
             component="div"
             className="flex items-center"
           >
-            <LanguageIcon className="text-error-main" />
+            <LanguageIcon className="!text-error-main" />
             <SelectNaka
               imageSelectd={
                 <Image
@@ -89,14 +89,14 @@ const HeadLogo = () => {
               button={
                 <Button
                   sx={{ minWidth: "10px !important" }}
-                  className="text-error-main"
+                  className="!text-error-main"
                   variant="contained"
                 >
-                  <Typography className="font-neue-machina-semi text-sm">
+                  <Typography className="!font-neue-machina-semi !text-sm">
                     {router.locale}
                   </Typography>
                   <DragHandleIcon
-                    className="ml-2"
+                    className="!ml-2"
                     sx={styleIcon}
                   />
                 </Button>

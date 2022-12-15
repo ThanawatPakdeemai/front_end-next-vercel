@@ -25,6 +25,7 @@ interface IProps {
   headerMenu: ISlideList[]
   theme: string
   checkTimer?: boolean
+  stickerRotate: number
 }
 
 type TColor =
@@ -43,9 +44,10 @@ const GameCarousel = ({
   headerIcon,
   headerMenu,
   theme,
-  checkTimer = false
+  checkTimer = false,
+  stickerRotate
 }: IProps) => {
-  const staminaRecovery = new Date("2022-12-14T22:24:00.000Z")
+  const staminaRecovery = new Date("2022-12-18T22:24:00.000Z")
 
   const [cooldown, setCooldown] = useState<boolean>(false)
 
@@ -65,7 +67,7 @@ const GameCarousel = ({
   const showSlide = list && list.length > 6 ? 6 : list.length
 
   const settings: Settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: showSlide,
@@ -143,6 +145,7 @@ const GameCarousel = ({
         onNext={onSlideNext}
         onPrev={onSlidePrev}
         theme={theme}
+        stickerRotate={stickerRotate}
       />
       <Slider
         ref={sliderRef}
@@ -199,7 +202,7 @@ const GameCarousel = ({
               </motion.div>
               <div className="relative z-[3]">
                 <div className="slick-card-desc flex h-10 w-full items-center">
-                  <p className="relative truncate uppercase hover:text-clip">
+                  <p className="slick-card-desc relative truncate uppercase hover:text-clip">
                     {item.desc}
                   </p>
                 </div>

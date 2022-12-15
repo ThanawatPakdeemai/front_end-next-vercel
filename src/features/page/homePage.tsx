@@ -27,6 +27,7 @@ const Home = () => (
         tag={F2PHeaderMenu.title}
         headerMenu={F2PHeaderMenu.menuList}
         theme={F2PHeaderMenu.theme}
+        stickerRotate={F2PHeaderMenu.stickerRotate}
         checkTimer
         headerIcon={
           <IconFree
@@ -43,6 +44,7 @@ const Home = () => (
         tag={P2EHeaderMenu.title}
         headerMenu={P2EHeaderMenu.menuList}
         theme={P2EHeaderMenu.theme}
+        stickerRotate={P2EHeaderMenu.stickerRotate}
         headerIcon={
           <IconNakaWorld
             width={180}

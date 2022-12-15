@@ -276,7 +276,8 @@ export const P2EHeaderMenu: IHeaderSlide = {
   icon: "",
   title: "play to earn",
   menuList: p2eMenu,
-  theme: "error"
+  theme: "error",
+  stickerRotate: 15
 }
 
 const f2pMenu: ISlideList[] = [
@@ -304,7 +305,8 @@ export const F2PHeaderMenu: IHeaderSlide = {
   icon: "",
   title: "free to earn",
   menuList: f2pMenu,
-  theme: "secondary"
+  theme: "secondary",
+  stickerRotate: -15
 }
 export const GAME_DOWNLOAD: IGameDownloadSlide[] = [
   {

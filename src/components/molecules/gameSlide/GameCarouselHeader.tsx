@@ -1,9 +1,9 @@
 import IconDollar from "@components/icons/dollarIcon"
-import React, { memo, useState } from "react"
+import React, { memo, useEffect, useState } from "react"
 import AddIcon from "@mui/icons-material/Add"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import IconArrowLeft from "@components/icons/arrowLeftIcon"
-import { motion } from "framer-motion"
+import { motion, useAnimation } from "framer-motion"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 
 export interface ISlideList extends React.HTMLAttributes<HTMLDivElement> {
@@ -17,6 +17,7 @@ export interface IHeaderSlide {
   title: string
   menuList: ISlideList[]
   theme: string
+  stickerRotate: number
   onView?: () => void
   onNext?: () => void
   onPrev?: () => void
@@ -27,12 +28,24 @@ const GameCarouselHeader = ({
   title,
   menuList,
   theme,
+  stickerRotate,
   onView,
   onNext,
   onPrev
 }: IHeaderSlide) => {
   const [currentType, setCurrentType] = useState<string>(menuList[0].type)
+  const animateControls = useAnimation()
 
+  const rotateSticker = async (_rotate: number) => {
+    await animateControls.start({
+      rotateZ: _rotate,
+      transition: {
+        duration: 2,
+        type: "spring",
+        stiffness: 300
+      }
+    })
+  }
   const onChangeType = (_type: string) => {
     setCurrentType(_type)
   }
@@ -55,21 +68,30 @@ const GameCarouselHeader = ({
     }
   }
 
+  useEffect(() => {
+    let rotate = stickerRotate
+    const delay = 4
+    const interval = setInterval(() => {
+      rotateSticker(rotate)
+      rotate *= -1
+    }, (delay + 1) * 1000)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
+
   return (
     <div className="slick-header-container relative mb-4 h-[50px] w-full">
       <motion.div
         className="absolute top-[-80px] left-[-80px]"
-        initial={{ rotateZ: -15 }}
-        animate={{
-          rotateZ: [-15, -15, 15, 15, -15],
-          transition: {
-            duration: 12,
-            times: [0, 0.4, 0.425, 0.975, 1],
-            repeat: 2
-          }
-        }}
+        initial={{ rotateZ: stickerRotate }}
+        animate={animateControls}
         whileHover={{ rotateZ: 0 }}
-        transition={{ duration: 1, type: "spring", stiffness: 300 }}
+        transition={{
+          duration: 1,
+          type: "spring",
+          stiffness: 300
+        }}
       >
         {icon}
       </motion.div>
@@ -90,7 +112,7 @@ const GameCarouselHeader = ({
               onClick={() => onChangeType(item.type)}
               className={`${item.className} slick-header-${theme}-background-${
                 currentType === item.type ? "active" : "default"
-              } ml-1 h-10 rounded-sm font-neue-machina text-sm font-bold capitalize text-black-default hover:text-white-primary`}
+              } ml-1 h-10 rounded-sm font-neue-machina text-sm font-bold capitalize hover:text-white-primary`}
             >
               {item.label}
             </button>

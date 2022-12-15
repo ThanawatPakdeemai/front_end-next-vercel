@@ -5,6 +5,7 @@ import IconArrowRight from "@components/icons/arrowRightIcon"
 import IconArrowLeft from "@components/icons/arrowLeftIcon"
 import { motion, useAnimation } from "framer-motion"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import { Chip } from "@mui/material"
 
 export interface ISlideList extends React.HTMLAttributes<HTMLDivElement> {
   id: string
@@ -18,6 +19,11 @@ export interface IHeaderSlide {
   menuList: ISlideList[]
   theme: string
   stickerRotate: number
+}
+
+interface IProps extends IHeaderSlide {
+  curType: string
+  setCurType: (_type: string) => void
   onView?: () => void
   onNext?: () => void
   onPrev?: () => void
@@ -29,11 +35,12 @@ const GameCarouselHeader = ({
   menuList,
   theme,
   stickerRotate,
+  curType,
+  setCurType,
   onView,
   onNext,
   onPrev
-}: IHeaderSlide) => {
-  const [currentType, setCurrentType] = useState<string>(menuList[0].type)
+}: IProps) => {
   const animateControls = useAnimation()
 
   const rotateSticker = async (_rotate: number) => {
@@ -47,7 +54,7 @@ const GameCarouselHeader = ({
     })
   }
   const onChangeType = (_type: string) => {
-    setCurrentType(_type)
+    setCurType(_type)
   }
 
   const onClickedView = () => {
@@ -97,10 +104,10 @@ const GameCarouselHeader = ({
       </motion.div>
       <div className="flex h-full w-full items-center justify-between">
         <div className="relative flex h-full w-fit items-center justify-between rounded-default border-2 border-grey-A100 bg-[#010101] bg-opacity-40 px-1 text-[10px] capitalize backdrop-blur-[25px]">
-          <div className="flex items-center py-1 pl-4 font-bold">
+          <div className="flex items-center py-1 pl-4 font-bold ">
             <IconDollar.Ori className={`slick-header-${theme}-icon`} />
             <p
-              className={`slick-header-${theme}-text h-[10px] pl-2 pr-2 font-neue-machina-bold font-bold uppercase`}
+              className={`text-${theme}-main h-[10px] pl-2 pr-2 font-neue-machina-bold font-bold uppercase`}
             >
               {title}
             </p>
@@ -109,12 +116,18 @@ const GameCarouselHeader = ({
             <button
               type="button"
               key={item.id}
+              className={`${item.className} ml-1 !cursor-pointer`}
               onClick={() => onChangeType(item.type)}
-              className={`${item.className} slick-header-${theme}-background-${
-                currentType === item.type ? "active" : "default"
-              } ml-1 h-10 rounded-sm font-neue-machina text-sm font-bold capitalize hover:text-white-primary`}
             >
-              {item.label}
+              <Chip
+                label={item.label}
+                size="medium"
+                className={`h-full w-full cursor-pointer font-bold hover:bg-${theme}-main font-bold capitalize hover:text-white-primary ${
+                  curType === item.type
+                    ? `bg-${theme}-main text-white-primary`
+                    : "bg-grey-A100 text-black-default "
+                }`}
+              />
             </button>
           ))}
         </div>

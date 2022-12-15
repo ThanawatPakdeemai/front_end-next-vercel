@@ -373,54 +373,8 @@ body {
   stroke: #7b5be6;
 }
 
-.slick-header-secondary-background-active {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(123 91 230 / var(--tw-bg-opacity)) !important;
-  --tw-text-opacity: 1 !important;
-  color: rgb(225 226 226 / var(--tw-text-opacity)) !important;
-}
-
-.slick-header-secondary-background-default {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(24 24 28 / var(--tw-bg-opacity)) !important;
-  --tw-text-opacity: 1 !important;
-  color: rgb(112 114 123 / var(--tw-text-opacity)) !important;
-}
-
-.slick-header-secondary-background-default:hover {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(123 91 230 / var(--tw-bg-opacity)) !important;
-}
-
-.slick-header-secondary-text {
-  --tw-text-opacity: 1;
-  color: rgb(123 91 230 / var(--tw-text-opacity));
-}
-
 .slick-header-error-icon {
   stroke: #f42728;
-}
-
-.slick-header-error-background-active {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(244 39 40 / var(--tw-bg-opacity)) !important;
-  --tw-text-opacity: 1 !important;
-  color: rgb(225 226 226 / var(--tw-text-opacity)) !important;
-}
-
-.slick-header-error-background-default {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(24 24 28 / var(--tw-bg-opacity)) !important;
-}
-
-.slick-header-error-background-default:hover {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(244 39 40 / var(--tw-bg-opacity)) !important;
-}
-
-.slick-header-error-text {
-  --tw-text-opacity: 1;
-  color: rgb(244 39 40 / var(--tw-text-opacity));
 }
 
 .btn-icon-container .icon-start {
@@ -1322,10 +1276,6 @@ video {
   margin-left: 5px !important;
 }
 
-.mb-10 {
-  margin-bottom: 2.5rem !important;
-}
-
 .ml-1 {
   margin-left: 0.25rem !important;
 }
@@ -1664,6 +1614,10 @@ video {
   cursor: pointer !important;
 }
 
+.\!cursor-pointer {
+  cursor: pointer !important;
+}
+
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 }
@@ -1791,12 +1745,12 @@ video {
   border-radius: 24px !important;
 }
 
-.rounded-sm {
-  border-radius: 11px !important;
-}
-
 .rounded-\[2px\] {
   border-radius: 2px !important;
+}
+
+.rounded-sm {
+  border-radius: 11px !important;
 }
 
 .rounded-2xl {
@@ -1940,11 +1894,6 @@ video {
 .bg-grey-A200 {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(1 1 1 / var(--tw-bg-opacity)) !important;
-}
-
-.bg-polygon-default {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(130 71 229 / var(--tw-bg-opacity)) !important;
 }
 
 .bg-green-card {
@@ -2267,6 +2216,11 @@ video {
 .text-\[\#ffffff\] {
   --tw-text-opacity: 1 !important;
   color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
+}
+
+.\!text-white-primary {
+  --tw-text-opacity: 1 !important;
+  color: rgb(225 226 226 / var(--tw-text-opacity)) !important;
 }
 
 .text-white-default {

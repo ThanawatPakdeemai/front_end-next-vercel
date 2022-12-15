@@ -3,26 +3,8 @@
 .slick-header-secondary-icon {
   @apply stroke-secondary-main;
 }
-.slick-header-secondary-background-active {
-  @apply bg-secondary-main text-white-primary !important;
-}
-.slick-header-secondary-background-default {
-  @apply bg-grey-A100 text-black-default hover:bg-secondary-main !important;
-}
-.slick-header-secondary-text {
-  @apply text-secondary-main;
-}
 .slick-header-error-icon {
   @apply stroke-error-main;
-}
-.slick-header-error-background-active {
-  @apply bg-error-main text-white-primary !important;
-}
-.slick-header-error-background-default {
-  @apply bg-grey-A100 hover:bg-error-main !important;
-}
-.slick-header-error-text {
-  @apply text-error-main;
 }
 
 .btn-icon-container .icon-start {
@@ -93,7 +75,6 @@
     transform: scaleX(1.6);
   }
 }
-
 @keyframes fadeInOut {
   0% {
     opacity: 0.7;

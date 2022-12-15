@@ -9,6 +9,7 @@ import GameCarouselHeader, {
 import TimerStamina from "@components/atoms/timer/TimerStamina"
 import { motion } from "framer-motion"
 import IconHourglass from "@components/icons/hourglassIcon"
+import NumberRank from "@feature/ranking/components/atoms/NumberRank"
 import ButtonToggleIcon from "./ButtonToggleIcon"
 
 export interface ISlide {
@@ -26,6 +27,8 @@ interface IProps {
   theme: string
   checkTimer?: boolean
   stickerRotate: number
+  curType: string
+  setCurType: (_type: string) => void
 }
 
 type TColor =
@@ -45,24 +48,12 @@ const GameCarousel = ({
   headerMenu,
   theme,
   checkTimer = false,
-  stickerRotate
+  stickerRotate,
+  curType,
+  setCurType
 }: IProps) => {
   const staminaRecovery = new Date("2022-12-18T22:24:00.000Z")
-
   const [cooldown, setCooldown] = useState<boolean>(false)
-
-  const orderColor = (_no: number) => {
-    if (_no === 1) {
-      return "bg-red-card"
-    }
-    if (_no === 2) {
-      return "bg-polygon-default"
-    }
-    if (_no === 3) {
-      return "bg-green-card"
-    }
-    return "bg-grey-A100 border-2 border-grey-900"
-  }
 
   const showSlide = list && list.length > 6 ? 6 : list.length
 
@@ -146,6 +137,8 @@ const GameCarousel = ({
         onPrev={onSlidePrev}
         theme={theme}
         stickerRotate={stickerRotate}
+        curType={curType}
+        setCurType={setCurType}
       />
       <Slider
         ref={sliderRef}
@@ -165,13 +158,11 @@ const GameCarousel = ({
                 variants={cardImg}
               >
                 {showNo ? (
-                  <div
-                    className={`${orderColor(
-                      index + 1
-                    )} absolute top-0 right-0 m-[10px] flex h-10 w-10 items-center justify-center rounded-sm font-neue-machina text-default font-bold text-white-primary`}
-                  >
-                    {index + 1}
-                  </div>
+                  <NumberRank
+                    index={index}
+                    fixColor={false}
+                    className="absolute top-0 right-0 m-[10px] h-10 w-10 text-default text-white-primary"
+                  />
                 ) : null}
                 <ImageCustom
                   src={item.image}

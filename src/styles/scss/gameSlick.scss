@@ -6,33 +6,10 @@
     &-icon {
       @apply stroke-secondary-main;
     }
-    &-background {
-      &-active {
-        @apply bg-secondary-main text-white-primary #{!important};
-      }
-      &-default {
-        @apply bg-grey-A100 text-black-default hover:bg-secondary-main #{!important};
-      }
-    }
-    &-text {
-      @apply text-secondary-main;
-    }
   }
-
   &-error {
     &-icon {
       @apply stroke-error-main;
-    }
-    &-background {
-      &-active {
-        @apply bg-error-main text-white-primary #{!important};
-      }
-      &-default {
-        @apply bg-grey-A100 hover:bg-error-main #{!important};
-      }
-    }
-    &-text {
-      @apply text-error-main;
     }
   }
 }

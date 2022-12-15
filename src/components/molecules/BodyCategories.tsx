@@ -1,15 +1,12 @@
-import ButtonLink from "@components/atoms/button/ButtonLink"
 import { CATEGORIES } from "@constants/categories"
 import { Image } from "@components/atoms/image/index"
-import { Card, Grid } from "@mui/material"
-import React, { useState } from "react"
+import { Grid } from "@mui/material"
+import React from "react"
 import { motion } from "framer-motion"
 import ImageCustom from "@components/atoms/image/Image"
 import ButtonToggleIcon from "./gameSlide/ButtonToggleIcon"
 
 const BodyCategories = () => {
-  const [cooldown, setCooldown] = useState<boolean>(false)
-
   const onHandleClick = () => {}
 
   const cardImg = {

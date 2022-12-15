@@ -1,4 +1,4 @@
-import { Card, Divider, Typography } from "@mui/material"
+import { Divider, Typography } from "@mui/material"
 import DvrOutlinedIcon from "@mui/icons-material/DvrOutlined"
 import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined"
 import NorthOutlinedIcon from "@mui/icons-material/NorthOutlined"
@@ -57,7 +57,7 @@ const Footer = () => (
             item.newpage === false ? (
               <h4
                 key={item.label}
-                className="pb-[14px]"
+                className="pb-[14px] "
               >
                 Blog
               </h4>
@@ -88,10 +88,8 @@ const Footer = () => (
               size="medium"
               color="secondary"
               variant="contained"
-              // className="w-full"
             />
           </div>
-          {/* grid grid-cols-7 */}
           <div className="flex flex-wrap ">
             {SOCIAL?.map((item) => (
               <Link
@@ -99,7 +97,7 @@ const Footer = () => (
                 href={item.href}
                 target="_blank"
               >
-                <div className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg bg-[#18181C]  ">
+                <div className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-grey-900 bg-grey-A100">
                   <Image
                     className="transition duration-300 hover:translate-x-1 hover:rotate-[17deg]"
                     src={item.img}
@@ -115,38 +113,35 @@ const Footer = () => (
       </div>
     </div>
     <div className="pt-[80px] text-[12px] sm:flex">
-      <Card
-        sx={{
-          backgroundColor: "#18181C",
-          padding: 4
-        }}
-      >
+      <div className="rounded-[20px] bg-grey-A100 p-8">
         <div className="md:flex">
-          <div className="flex md:w-2/4">
-            <div className="">
-              <ButtonLink
-                href="/"
-                text="Become a Naka Devs"
-                icon={<DvrOutlinedIcon />}
-                size="medium"
-                color="tertiary"
-                variant="outlined"
-                className="w-[230px]"
-              />
-            </div>
+          <div
+            className="flex md:w-2/4"
+            text-white-primary
+          >
+            <ButtonLink
+              href="/"
+              text="Become a Naka Devs"
+              icon={<DvrOutlinedIcon />}
+              size="medium"
+              color="primary"
+              variant="outlined"
+              className="w-[230px]"
+            />
+
             <h3 className="w-2/4 pl-[30px] text-grey-neutral04">
               Join the industry&apos;s first comprehensive Play to Earn
               ecosystem.
             </h3>
           </div>
-          <div className="mt-[20px] flex md:mt-0 md:w-2/4">
+          <div className="mt-[20px] flex md:mt-0 md:w-3/4">
             <div className=" ">
               <ButtonLink
                 href="/"
                 text="Become a Partner"
                 icon={<LocalAtmOutlinedIcon />}
                 size="medium"
-                color="tertiary"
+                color="primary"
                 variant="outlined"
                 className="w-[230px]"
               />
@@ -156,17 +151,10 @@ const Footer = () => (
             </h3>
           </div>
         </div>
-      </Card>
-      <Card
-        className="mt-[10px] flex grid content-center justify-center sm:mt-0 sm:ml-[12px] sm:w-auto"
-        sx={{
-          backgroundColor: "#18181C",
-          height: "fit",
-          padding: 5
-        }}
-      >
+      </div>
+      <div className="mt-[10px] flex grid content-center justify-center rounded-[20px] bg-grey-A100 p-8  sm:mt-0 sm:ml-[12px] sm:w-auto">
         <NorthOutlinedIcon />
-      </Card>
+      </div>
     </div>
     <div className="flex justify-between py-[50px] text-[10px] uppercase text-[#4E5057]">
       <h4>Copyright 2022 © Nakamoto Games</h4>

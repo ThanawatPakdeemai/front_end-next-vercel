@@ -67,10 +67,6 @@ export const MuiButton: Components<Omit<Theme, "components">>["MuiButton"] = {
         "&Info": {
           borderColor: PaletteCustom.info.main,
           color: PaletteCustom.info.main
-        },
-        "&Tertiary": {
-          borderColor: PaletteCustom.tertiary.main,
-          color: PaletteCustom.tertiary.main
         }
       },
       "&.button-transparent": {
@@ -106,9 +102,6 @@ export const MuiButton: Components<Omit<Theme, "components">>["MuiButton"] = {
         },
         "&Info": {
           backgroundColor: PaletteCustom.info.main
-        },
-        "Tertiary": {
-          backgroundColor: PaletteCustom.tertiary.main
         }
       }
     }

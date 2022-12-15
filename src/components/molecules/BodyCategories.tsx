@@ -16,7 +16,7 @@ const BodyCategories = () => (
           item
           xs={12 / 5}
         >
-          <Card className="relative bg-grey-A100 hover:flex hover:flex-col hover:bg-primary-main md:h-[100%]">
+          <Card className="relative bg-neutral-800 hover:flex hover:flex-col hover:bg-primary-main md:h-[100%]">
             <div className="transform duration-500 hover:flex hover:scale-y-75 hover:scale-x-90 ">
               <Image
                 src={item.img}

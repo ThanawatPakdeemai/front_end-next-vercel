@@ -93,6 +93,7 @@
     transform: scaleX(1.6);
   }
 }
+
 @keyframes fadeInOut {
   0% {
     opacity: 0.7;

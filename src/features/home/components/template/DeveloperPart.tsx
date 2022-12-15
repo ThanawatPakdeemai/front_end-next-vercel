@@ -3,8 +3,8 @@ import { memo } from "react"
 import AddIcon from "@mui/icons-material/Add"
 import DvrIcon from "@mui/icons-material/Dvr"
 import ButtonLink from "@components/atoms/button/ButtonLink"
-import CardTitle from "@components/organisms/cardTitle"
-import TopPlayer from "@feature/ranking/components/template/topPlayer"
+import CardTitle from "@components/organisms/CardTitle"
+import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import Developer from "../organisms/Developer"
 
 const developerPart = () => (

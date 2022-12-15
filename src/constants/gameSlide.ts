@@ -135,7 +135,7 @@ export const GAME_FREE = [
     image: "/assets/images/home/medium_nakadui.png",
     to: `${CONFIGS.BASE_URL.GAME}/free/dui/?${Helper.createEncryptLink(
       8
-    )}${btoa(`${CONFIGS.BASE_URL.FRONTEND}`)}`,
+    )}${Buffer.from(`${CONFIGS.BASE_URL.FRONTEND}`)}`,
     gameName: "NAKA DUI",
     icon: ""
   },
@@ -145,7 +145,7 @@ export const GAME_FREE = [
     image: "/assets/images/home/medium_alien_apocalypse.png",
     to: `${
       CONFIGS.BASE_URL.GAME
-    }/free/alien-apocalypse/?${Helper.createEncryptLink(8)}${btoa(
+    }/free/alien-apocalypse/?${Helper.createEncryptLink(8)}${Buffer.from(
       `${CONFIGS.BASE_URL.FRONTEND}`
     )}`,
     gameName: "Alien Apocalypse",
@@ -157,7 +157,7 @@ export const GAME_FREE = [
     image: "/assets/images/home/medium_cat_rocket.png",
     to: `${CONFIGS.BASE_URL.GAME}/free/cat-planet/?${Helper.createEncryptLink(
       8
-    )}${btoa(`${CONFIGS.BASE_URL.FRONTEND}`)}`,
+    )}${Buffer.from(`${CONFIGS.BASE_URL.FRONTEND}`)}`,
     gameName: "Cat Planet",
     icon: ""
   }

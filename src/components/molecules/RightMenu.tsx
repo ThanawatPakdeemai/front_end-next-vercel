@@ -37,7 +37,7 @@ const RightMenu = () => {
         }}
       >
         <CardActions
-          className="flex justify-between rounded-[13px] border-2  border-grey-900 bg-[#18181cff] px-0"
+          className="flex justify-between rounded-[13px] border-2  border-neutral-700 bg-[#18181cff] px-0"
           sx={{ maxWidth: 265, width: 265, height: 50 }}
           disableSpacing
         >
@@ -45,7 +45,7 @@ const RightMenu = () => {
           <IconButtonCustom
             onClick={handleOnNotiClick}
             className={`h-10 w-10 rounded-[13px] border-[2px]
-             border-grey-900 bg-transparent duration-300 ease-bounce hover:scale-125 hover:bg-transparent`}
+             border-neutral-700 bg-transparent duration-300 ease-bounce hover:scale-125 hover:bg-transparent`}
             aria-label="notification-button"
           >
             <NotificationsOutlinedIcon className="text-white-primary transition-all duration-300 hover:rotate-[15deg]" />
@@ -78,7 +78,7 @@ const RightMenu = () => {
             onClick={handleOnExpandClick}
             aria-expanded={Boolean(expanded)}
             aria-label="expanded-menu-profile"
-            className={`mr-[2px] h-10 w-10 rounded-[13px] border-[2px] border-grey-900 duration-400 ease-bounce  ${
+            className={`mr-[2px] h-10 w-10 rounded-[13px] border-[2px] border-neutral-700 duration-400 ease-bounce  ${
               !expanded
                 ? "bg-secondary-main hover:scale-[85%]"
                 : "bg-error-main"

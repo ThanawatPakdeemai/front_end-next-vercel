@@ -23,7 +23,7 @@ const HeadMenu = () => {
   return (
     <Box
       component="div"
-      className="xs:table xs:my-5 m-auto my-5 w-max items-center justify-center gap-1 rounded-default bg-grey-900 p-1 md:flex lg:my-0"
+      className="xs:table xs:my-5 m-auto my-5 w-max items-center justify-center gap-1 rounded-default bg-neutral-700 p-1 md:flex lg:my-0"
     >
       {MENU.map((item) => {
         if (!item.isChide) {
@@ -38,7 +38,7 @@ const HeadMenu = () => {
                 className={` xs:mb-1 mb-1  text-black-default hover:bg-error-main hover:text-white-primary ${
                   router.pathname === item.link
                     ? "bg-primary-main"
-                    : "bg-grey-A100"
+                    : "bg-neutral-800"
                 } md:mb-0`}
                 variant="contained"
                 size="large"
@@ -83,7 +83,7 @@ const HeadMenu = () => {
                   className={`xs:mb-1 mb-1  px-2 text-black-default hover:bg-error-main hover:text-white-primary md:mb-0 ${
                     router.pathname === item.link
                       ? "bg-primary-main"
-                      : "bg-grey-A100"
+                      : "bg-neutral-800"
                   }`}
                   variant="contained"
                   size="large"

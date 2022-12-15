@@ -31,7 +31,7 @@ const InsideStatProfile = ({ type, barColor, exp, energy }: IProps) => {
   }
 
   return (
-    <div className="flex h-full flex-1 flex-col rounded-[13px] bg-grey-A200 p-[10px_15px]">
+    <div className="flex h-full flex-1 flex-col rounded-[13px] bg-neutral-900 p-[10px_15px]">
       <Typography className={`text-xs font-bold uppercase ${barColor}`}>
         {type === "exp" ? `level ${exp && exp.level}` : "free energy"}
       </Typography>
@@ -49,7 +49,7 @@ const InsideStatProfile = ({ type, barColor, exp, energy }: IProps) => {
         <LinearProgress
           variant="determinate"
           color="error"
-          className="mt-1 w-full rotate-180 rounded-[2px] bg-grey-A100 "
+          className="mt-1 w-full rotate-180 rounded-[2px] bg-neutral-800 "
           value={expValue}
         />
       ) : (

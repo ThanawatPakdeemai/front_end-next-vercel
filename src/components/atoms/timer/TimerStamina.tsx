@@ -54,7 +54,7 @@ const TimerStamina = ({ time, show, setShow }: IProps) => {
   }, [])
 
   return show ? (
-    <div className="flex w-fit items-center justify-center rounded-less border-[1px] border-grey-900 px-2 tracking-wider">
+    <div className="flex w-fit items-center justify-center rounded-less border-[1px] border-neutral-700 px-2 tracking-wider">
       {timer}
     </div>
   ) : (

@@ -72,7 +72,7 @@ const SelectNaka = ({
               }}
             >
               <div className="bg-primary-main p-1">
-                <div className="rounded-default bg-grey-900 p-1">
+                <div className="rounded-default bg-neutral-700 p-1">
                   <div className="flex items-center justify-between">
                     <div className="w-full rounded-default bg-primary-main px-4 py-2">
                       <ListItemText>
@@ -99,7 +99,7 @@ const SelectNaka = ({
                   </div>
                 </div>
                 <div className="flex items-center justify-between bg-primary-main pt-2 ">
-                  <div className="flex w-full items-center  justify-between rounded-default bg-grey-900 p-1">
+                  <div className="flex w-full items-center  justify-between rounded-default bg-neutral-700 p-1">
                     <MenuList className="w-full">
                       {options.map((option) => (
                         <MenuItem
@@ -129,7 +129,7 @@ const SelectNaka = ({
                               component="div"
                               className="w-max "
                             >
-                              <ListItemText className="text-end-select-naka rounded-less border border-grey-900 bg-primary-main px-2 text-center font-neue-machina-semi text-sm uppercase ">
+                              <ListItemText className="text-end-select-naka rounded-less border border-neutral-700 bg-primary-main px-2 text-center font-neue-machina-semi text-sm uppercase ">
                                 <Typography className="uppercase text-primary-contrastText" />
                                 {option.textEnd}
                               </ListItemText>

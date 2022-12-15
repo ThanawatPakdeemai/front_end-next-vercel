@@ -7,7 +7,7 @@
   @apply bg-secondary-main text-white-primary !important;
 }
 .slick-header-secondary-background-default {
-  @apply bg-grey-A100 hover:bg-secondary-main !important;
+  @apply bg-neutral-800 hover:bg-secondary-main !important;
 }
 .slick-header-secondary-text {
   @apply text-secondary-main;
@@ -19,7 +19,7 @@
   @apply bg-error-main text-white-primary !important;
 }
 .slick-header-error-background-default {
-  @apply bg-grey-A100 hover:bg-error-main !important;
+  @apply bg-neutral-800 hover:bg-error-main !important;
 }
 .slick-header-error-text {
   @apply text-error-main;

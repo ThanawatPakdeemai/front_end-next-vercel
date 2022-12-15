@@ -47,7 +47,7 @@ export const MuiButton: Components<Omit<Theme, "components">>["MuiButton"] = {
         }
       },
       "&.MuiButton-outlined": {
-        border: `1px solid ${PaletteCustom.grey[900]}`,
+        border: `1px solid ${PaletteCustom.neutral[700]}`,
         "&Secondary": {
           borderColor: PaletteCustom.secondary.main,
           color: PaletteCustom.secondary.main

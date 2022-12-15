@@ -1,4 +1,4 @@
-import { Card, Divider, Typography } from "@mui/material"
+import { Divider, Typography } from "@mui/material"
 import DvrOutlinedIcon from "@mui/icons-material/DvrOutlined"
 import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined"
 import NorthOutlinedIcon from "@mui/icons-material/NorthOutlined"

@@ -1,4 +1,6 @@
 import "@styles/globals.css"
+import "slick-carousel/slick/slick-theme.css"
+import "slick-carousel/slick/slick.css"
 
 import { ReactElement, ReactNode } from "react"
 import type { NextPage } from "next"
@@ -12,8 +14,11 @@ import { DATA_META_TAG } from "@configs/metaTagData"
 import { ProviderApp, Web3Provider } from "@providers/index"
 import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material"
 import { theme } from "@styles/themes/darkTheme"
-import "slick-carousel/slick/slick-theme.css"
-import "slick-carousel/slick/slick.css"
+import dayjs from "dayjs"
+import rt from "dayjs/plugin/relativeTime"
+
+dayjs.extend(rt)
+
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (_page: ReactElement) => ReactNode

@@ -16,18 +16,18 @@ const PlayerList = ({ item, index, className }: IProp) => {
   return (
     <div className={`${className} flex items-center`}>
       <div>
-        <Typography className="text-right font-neue-machina text-sm uppercase text-white-primary">
+        <Typography className="!text-right !font-neue-machina !text-sm !uppercase !text-white-primary">
           {item.username}
         </Typography>
         <Typography
-          className={`rounded-less border border-solid border-neutral-700 p-2 text-right font-neue-machina text-xs uppercase text-grey-neutral04 ${
+          className={`!rounded-less !border !border-solid !border-neutral-700 p-2 !text-right !font-neue-machina !text-xs !uppercase !text-grey-neutral04 ${
             index > 2 && "bg-neutral-900"
           }`}
         >
           {formatNumber(item.naka_earn, { maximumFractionDigits: 4 })} NAKA
         </Typography>
       </div>
-      <div className="animation-image ml-2 h-[58px] w-[58px]">
+      <div className="animation-image !ml-2 h-[58px] w-[58px]">
         <Image
           src={item.avatar}
           width="200"

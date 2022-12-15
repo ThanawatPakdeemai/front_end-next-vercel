@@ -115,10 +115,7 @@ const Footer = () => (
     <div className="pt-[80px] text-[12px] sm:flex">
       <div className="rounded-[20px] bg-neutral-800 p-8">
         <div className="md:flex">
-          <div
-            className="flex md:w-2/4"
-            text-white-primary
-          >
+          <div className="flex md:w-2/4">
             <ButtonLink
               href="/"
               text="Become a Naka Devs"

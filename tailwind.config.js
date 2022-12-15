@@ -36,7 +36,7 @@ module.exports = {
       },
       warning: {
         main: "#E1D35A",
-        light: "#E1D35A",
+        light: "#FBE88E",
         dark: "#E1D35A",
         contrastText: "#010101"
       },

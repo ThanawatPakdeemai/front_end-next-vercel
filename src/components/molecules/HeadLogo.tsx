@@ -43,7 +43,7 @@ const HeadLogo = () => {
         >
           <LogoNaka />
           <Divider
-            className="!mx-5 !my-2 !border-grey-900"
+            className="mx-5 my-2 border-neutral-700"
             orientation="vertical"
             flexItem
           />

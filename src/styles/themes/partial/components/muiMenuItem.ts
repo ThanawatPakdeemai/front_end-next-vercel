@@ -12,7 +12,7 @@ export const MuiMenuItem: Components<Omit<Theme, "components">>["MuiMenuItem"] =
         marginBottom: "5px",
         padding: "8px 5px 8px 5px",
         "&:last-child": { marginBottom: 0 },
-        backgroundColor: PaletteCustom.grey["A100"],
+        backgroundColor: PaletteCustom.neutral["800"],
         "&:hover": {
           backgroundColor: PaletteCustom.error.main, // "transparent"
           color: PaletteCustom.white.primary

@@ -5,20 +5,20 @@ module.exports = {
     /* base config */
     colors: {
       primary: {
-        main: "#A6A9AE",
-        light: "#A6A9AE",
-        dark: "#A6A9AE",
-        contrastText: "#010101"
+        main: "#010101",
+        light: "#010101",
+        dark: "#010101",
+        contrastText: "#A6A9AE"
       },
       secondary: {
         main: "#7B5BE6",
-        light: "#7B5BE6",
+        light: "#CFB6F6",
         dark: "#7B5BE6",
         contrastText: "#010101"
       },
       error: {
         main: "#F42728",
-        light: "#F42728",
+        light: "#FFAEAB",
         dark: "#F42728",
         contrastText: "#010101"
       },
@@ -30,31 +30,26 @@ module.exports = {
       },
       success: {
         main: "#5DBE74",
-        light: "#5DBE74",
+        light: "#D8F3D5",
         dark: "#5DBE74",
         contrastText: "#010101"
       },
       warning: {
         main: "#E1D35A",
-        light: "#E1D35A",
+        light: "#FBE88E",
         dark: "#E1D35A",
         contrastText: "#010101"
       },
-      grey: {
-        50: "#fafafa",
-        100: "#f5f5f5",
-        200: "#eeeeee",
-        300: "#e0e0e0",
-        400: "#bdbdbd",
-        500: "#9e9e9e",
-        600: "#757575",
-        700: "#616161",
-        800: "#424242",
-        900: "#232329",
-        A100: "#18181C",
-        A200: "#010101",
-        A400: "#303030",
-        A700: "#616161"
+      neutral: {
+        100: "#F7FBFA",
+        200: "#F1F4F4",
+        300: "#E1E2E2",
+        400: "#A6A9AE",
+        500: "#70727B",
+        600: "#4E5057",
+        700: "#232329",
+        800: "#18181C",
+        900: "#010101"
       }
     },
     fontFamily: {

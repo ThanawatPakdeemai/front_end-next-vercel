@@ -12,10 +12,10 @@ export const PaletteCustom: Palette | any = theme &&
     success: theme.colors["success"],
     warning: theme.colors["warning"],
     background: {
-      default: theme.colors["grey"]["900"],
+      default: theme.colors["neutral"]["700"],
       paper: "#2f3441"
     },
-    divider: theme.colors["grey"]["900"],
+    divider: theme.colors["neutral"]["700"],
     common: {
       black: "#000",
       white: "#fff"
@@ -23,11 +23,11 @@ export const PaletteCustom: Palette | any = theme &&
     mode: "dark",
     contrastThreshold: 1,
     tonalOffset: 1,
-    grey: theme.colors["grey"],
+    neutral: theme.colors["neutral"],
     white: theme.colors["white"],
     text: {
       primary: theme.colors["black"]["default"],
-      secondary: theme.colors["grey"]["neutral04"],
+      secondary: theme.colors["neutral"]["400"],
       disabled: theme.colors["black"]["default"]
     },
     action: {

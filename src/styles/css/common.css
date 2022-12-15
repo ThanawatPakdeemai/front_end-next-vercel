@@ -17,7 +17,7 @@ strong {
 
 body {
   color: theme("colors.grey.default");
-  background: url("/images/common/bg.png") theme("colors.grey.900");
+  background: url("/images/common/bg.png") theme("colors.neutral.700");
 }
 
 .text {

@@ -1,5 +1,6 @@
 import IconFree from "@components/icons/freeIcon"
 import IconNakaWorld from "@components/icons/nakaWorldIcon"
+import BodyCategories from "@components/molecules/BodyCategories"
 import GameCarousel, {
   ISlide
 } from "@components/molecules/gameSlide/GameCarousel"
@@ -135,6 +136,7 @@ const Home = () => {
         width={24}
         height={24}
       />
+      <BodyCategories />
     </>
   )
 }

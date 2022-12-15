@@ -1,6 +1,6 @@
 import React from "react"
-import Header from "@components/organisms/header"
-import Footer from "@components/organisms/footer"
+import Footer from "@components/organisms/Footer"
+import Header from "@components/organisms/Header"
 
 export default function Layout({
   children

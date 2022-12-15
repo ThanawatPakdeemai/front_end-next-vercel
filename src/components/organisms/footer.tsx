@@ -11,6 +11,7 @@ import Link from "next/link"
 import { NAKA_GAME } from "@configs/nakaGame"
 import { NAKA_SERVICES } from "@configs/nakaServices"
 import { NAKA_ECOSYSTEMSS } from "@configs/nakaEcosystems"
+import { motion } from "framer-motion"
 
 const Footer = () => (
   <>
@@ -28,12 +29,14 @@ const Footer = () => (
                 {item.label}
               </Typography>
               {item.game.map((game) => (
-                <h1
+                <motion.h1
+                  whileHover={{ scale: 1.1, originX: -1 }}
+                  transition={{ type: "spring", stiffness: 300 }}
                   key={`game-${item.label}-${game.name}`}
                   className="pb-[14px]"
                 >
                   {game.name}
-                </h1>
+                </motion.h1>
               ))}
             </div>
           ))}
@@ -41,12 +44,14 @@ const Footer = () => (
         <div className="w-48">
           <div className="mb-4 uppercase text-white-primary">services</div>
           {NAKA_SERVICES?.map((item) => (
-            <h4
+            <motion.h4
+              whileHover={{ scale: 1.1, originX: -1 }}
+              transition={{ type: "spring", stiffness: 300 }}
               key={item.label}
               className="pb-[14px]"
             >
               {item.label}
-            </h4>
+            </motion.h4>
           ))}
         </div>
         <div className="w-48">
@@ -55,20 +60,40 @@ const Footer = () => (
           </div>
           {NAKA_ECOSYSTEMSS?.map((item) =>
             item.newpage === false ? (
-              <h4
+              <motion.h4
+                whileHover={{ scale: 1.1, originX: -1 }}
+                transition={{ type: "spring", stiffness: 300 }}
                 key={item.label}
-                className="pb-[14px] "
+                className="pb-[14px]"
               >
                 Blog
-              </h4>
+              </motion.h4>
             ) : (
-              <div
+              <motion.div
+                whileHover={{
+                  scale: 1.1,
+                  originX: -1
+                }}
+                transition={{ type: "spring", stiffness: 300 }}
                 key={item.label}
                 className="flex pb-[14px]"
               >
+                {/* <SlashContainer variants={slashMotion}>
+                  <svg
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 27 50"
+                  >
+                    <path
+                      fill="#154FFF"
+                      d="M21.177 0L0 50h5.818L26.995 0z"
+                      fillRule="evenodd"
+                    />
+                  </svg>
+                </SlashContainer> */}
                 <h4>{item.label}</h4>
                 <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />
-              </div>
+              </motion.div>
             )
           )}
         </div>
@@ -90,7 +115,7 @@ const Footer = () => (
               variant="contained"
             />
           </div>
-          <div className="flex flex-wrap ">
+          <div className="flex flex-wrap">
             {SOCIAL?.map((item) => (
               <Link
                 key={item.label}
@@ -128,24 +153,21 @@ const Footer = () => (
               variant="outlined"
               className="w-[230px]"
             />
-
             <h3 className="w-2/4 pl-[30px] text-grey-neutral04">
               Join the industry&apos;s first comprehensive Play to Earn
               ecosystem.
             </h3>
           </div>
           <div className="mt-[20px] flex md:mt-0 md:w-3/4">
-            <div className=" ">
-              <ButtonLink
-                href="/"
-                text="Become a Partner"
-                icon={<LocalAtmOutlinedIcon />}
-                size="medium"
-                color="primary"
-                variant="outlined"
-                className="w-[230px]"
-              />
-            </div>
+            <ButtonLink
+              href="/"
+              text="Become a Partner"
+              icon={<LocalAtmOutlinedIcon />}
+              size="medium"
+              color="primary"
+              variant="outlined"
+              className="w-[230px]"
+            />
             <h3 className="w-2/4 pl-[30px] text-grey-neutral04">
               Earn some serious cash promoting Nakamoto.Games
             </h3>

@@ -118,11 +118,27 @@ body {
   }
 }
 .menu-select-naka.active {
-  background-color: #f42728;
-  color: #e1e2e2;
+  background-color: theme("colors.error.main") !important;
+  color: theme("colors.white.default") !important;
+}
+.menu-select-naka .text-end-select-naka .MuiTypography-root {
+  color: theme("colors.white.primary") !important;
+  font-family: theme("fontFamily.neue-machina-semi") !important;
+  font-size: theme("fontSize.sm") !important;
 }
 .menu-select-naka:hover .text-end-select-naka {
-  @apply border-white-primary bg-white-primary text-white-primary;
+  border: theme("colors.white.primary") !important;
+  background-color: theme("colors.white.primary") !important;
+}
+.menu-select-naka:hover .text-end-select-naka .MuiTypography-root {
+  color: theme("colors.primary.main") !important;
+  font-family: theme("fontFamily.neue-machina-semi") !important;
+  font-size: theme("fontSize.sm") !important;
+}
+
+.button-select-naka:hover {
+  background: theme("colors.error.main") !important;
+  color: theme("colors.white.default") !important;
 }
 
 .image-square .select-global-square {
@@ -134,8 +150,8 @@ body {
   animation-duration: 0.5s;
 }
 .image-square:hover + .select-square {
-  left: 18px !important;
-  bottom: 17px !important;
+  left: 16px !important;
+  bottom: 16px !important;
 }
 
 @keyframes mymove-global-square {

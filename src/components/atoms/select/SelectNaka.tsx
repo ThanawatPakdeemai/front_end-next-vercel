@@ -76,7 +76,7 @@ const SelectNaka = ({
                   <div className="flex items-center justify-between">
                     <div className="w-full rounded-default bg-primary-main px-4 py-2">
                       <ListItemText>
-                        <Typography className="overflow-hidden truncate font-neue-machina text-default">
+                        <Typography className="overflow-hidden !truncate !font-neue-machina-semi !text-sm">
                           {t(`${title}`)}
                         </Typography>
                       </ListItemText>
@@ -87,11 +87,11 @@ const SelectNaka = ({
                       onClick={() => popupState.close()}
                     >
                       <div className="image-square ml-2 font-neue-machina text-default ">
-                        <div className="select-global-square h-8 w-8 rotate-45  rounded-[8px] bg-error-main hover:h-[35px] hover:w-[35px] hover:rotate-0" />
+                        <div className="select-global-square !hover:h-[35px] !hover:w-[35px] !hover:rotate-0  h-8 w-8 rotate-45 rounded-[8px] !bg-error-main" />
                       </div>
 
                       <Divider
-                        className="select-square absolute bottom-[16px] left-[16px] w-[15px] border border-[#f1f4f4]"
+                        className="select-square absolute bottom-[16px] left-[16px] w-[15px] !border !border-[#f1f4f4]"
                         orientation="vertical"
                         flexItem
                       />
@@ -116,11 +116,11 @@ const SelectNaka = ({
                             }
                           }}
                         >
-                          <ListItemIcon className="text-primary-contrastText">
+                          <ListItemIcon className="!text-primary-contrastText">
                             {option.icon}
                           </ListItemIcon>
                           <ListItemText className="w-50">
-                            <Typography className="font-neue-machina text-default">
+                            <Typography className="!font-neue-machina-semi !text-sm">
                               {option.label}
                             </Typography>
                           </ListItemText>
@@ -129,9 +129,10 @@ const SelectNaka = ({
                               component="div"
                               className="w-max "
                             >
-                              <ListItemText className="text-end-select-naka rounded-less border border-grey-900 bg-primary-main px-2 text-center font-neue-machina-semi text-sm uppercase ">
-                                <Typography className="uppercase text-primary-contrastText" />
-                                {option.textEnd}
+                              <ListItemText className="text-end-select-naka rounded-less border border-grey-900 bg-primary-main px-2  ">
+                                <Typography className=" text-center font-neue-machina-semi text-sm uppercase  text-primary-contrastText">
+                                  {option.textEnd}
+                                </Typography>
                               </ListItemText>
                             </Box>
                           )}

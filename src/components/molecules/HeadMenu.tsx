@@ -9,17 +9,16 @@ import Link from "next/link"
 import { IMAGES } from "@constants/images"
 import { useRouter } from "next/router"
 
-const styleButton = {
-  minWidth: "10px !important",
-  borderRadius: "15px !important"
-}
 export const styleIcon = {
   fontSize: "20px !important"
 }
 const HeadMenu = () => {
   const { t } = useTranslation()
   const router = useRouter()
-
+  const styleButton = {
+    minWidth: "10px !important",
+    borderRadius: "15px !important"
+  }
   return (
     <Box
       component="div"
@@ -35,15 +34,15 @@ const HeadMenu = () => {
             >
               <Button
                 sx={styleButton}
-                className={` xs:mb-1 mb-1  text-black-default hover:bg-error-main hover:text-white-primary ${
+                className={`button-select-naka xs:mb-1 !hover:bg-error-main !hover:text-white-primary mb-1 !text-black-default ${
                   router.pathname === item.link
-                    ? "bg-primary-main"
-                    : "bg-grey-A100"
+                    ? "!bg-primary-main"
+                    : "!bg-grey-A100"
                 } md:mb-0`}
                 variant="contained"
                 size="large"
               >
-                <Typography className="font-neue-machina-semi text-sm">
+                <Typography className="!font-neue-machina-semi !text-sm">
                   {t(`${item.name}`)}
                 </Typography>
               </Button>
@@ -80,15 +79,15 @@ const HeadMenu = () => {
               button={
                 <Button
                   sx={styleButton}
-                  className={`xs:mb-1 mb-1  px-2 text-black-default hover:bg-error-main hover:text-white-primary md:mb-0 ${
+                  className={`button-select-naka xs:mb-1 !hover:bg-error-main  !hover:text-white-primary mb-1 px-2 !text-black-default md:mb-0 ${
                     router.pathname === item.link
-                      ? "bg-primary-main"
-                      : "bg-grey-A100"
+                      ? "!bg-primary-main"
+                      : "!bg-grey-A100"
                   }`}
                   variant="contained"
                   size="large"
                 >
-                  <Typography className="whitespace-nowrap font-neue-machina-semi text-sm">
+                  <Typography className="!whitespace-nowrap !font-neue-machina-semi !text-sm">
                     {t(`${item.name}`)}
                   </Typography>
                   <DragHandleIcon

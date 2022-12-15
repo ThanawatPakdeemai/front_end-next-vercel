@@ -22,13 +22,13 @@ export default function CardNextSlide({ slideNext, gotoNext }: ICardNextSlide) {
           component="img"
           width={200}
           height={200}
-          image={slideNext.image_category_list}
-          alt={slideNext.name}
+          image={slideNext?.image_category_list}
+          alt={slideNext?.name}
         />
       </div>
       <div className="slide-next--content relative w-3/4">
         <NextButtonSlide />
-        <Typography variant="h3">{slideNext.name}</Typography>
+        <Typography variant="h3">{slideNext?.name}</Typography>
         <ProgressBarSlide />
       </div>
     </button>

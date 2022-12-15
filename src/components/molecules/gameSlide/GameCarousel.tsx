@@ -9,6 +9,7 @@ import GameCarouselHeader, {
 import TimerStamina from "@components/atoms/timer/TimerStamina"
 import { motion } from "framer-motion"
 import IconHourglass from "@components/icons/hourglassIcon"
+import NumberRank from "@feature/ranking/components/atoms/NumberRank"
 import ButtonToggleIcon from "./ButtonToggleIcon"
 
 export interface ISlide {
@@ -25,6 +26,9 @@ interface IProps {
   headerMenu: ISlideList[]
   theme: string
   checkTimer?: boolean
+  stickerRotate: number
+  curType: string
+  setCurType: (_type: string) => void
 }
 
 type TColor =
@@ -43,29 +47,18 @@ const GameCarousel = ({
   headerIcon,
   headerMenu,
   theme,
-  checkTimer = false
+  checkTimer = false,
+  stickerRotate,
+  curType,
+  setCurType
 }: IProps) => {
-  const staminaRecovery = new Date("2022-12-14T22:24:00.000Z")
-
+  const staminaRecovery = new Date("2022-12-18T22:24:00.000Z")
   const [cooldown, setCooldown] = useState<boolean>(false)
-
-  const orderColor = (_no: number) => {
-    if (_no === 1) {
-      return "bg-red-card"
-    }
-    if (_no === 2) {
-      return "bg-polygon-default"
-    }
-    if (_no === 3) {
-      return "bg-green-card"
-    }
-    return "bg-neutral-800 border-2 border-neutral-700"
-  }
 
   const showSlide = list && list.length > 6 ? 6 : list.length
 
   const settings: Settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: showSlide,
@@ -143,6 +136,9 @@ const GameCarousel = ({
         onNext={onSlideNext}
         onPrev={onSlidePrev}
         theme={theme}
+        stickerRotate={stickerRotate}
+        curType={curType}
+        setCurType={setCurType}
       />
       <Slider
         ref={sliderRef}
@@ -162,13 +158,11 @@ const GameCarousel = ({
                 variants={cardImg}
               >
                 {showNo ? (
-                  <div
-                    className={`${orderColor(
-                      index + 1
-                    )} absolute top-0 right-0 m-[10px] flex h-10 w-10 items-center justify-center rounded-sm font-neue-machina text-default font-bold text-white-primary`}
-                  >
-                    {index + 1}
-                  </div>
+                  <NumberRank
+                    index={index}
+                    fixColor={false}
+                    className="absolute top-0 right-0 m-[10px] h-10 w-10 text-default text-white-primary"
+                  />
                 ) : null}
                 <ImageCustom
                   src={item.image}
@@ -199,7 +193,7 @@ const GameCarousel = ({
               </motion.div>
               <div className="relative z-[3]">
                 <div className="slick-card-desc flex h-10 w-full items-center">
-                  <p className="relative truncate uppercase hover:text-clip">
+                  <p className="slick-card-desc relative truncate uppercase hover:text-clip">
                     {item.desc}
                   </p>
                 </div>

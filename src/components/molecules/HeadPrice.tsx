@@ -7,6 +7,11 @@ import { IMAGES } from "@constants/images"
 import { siteInfo } from "@configs/sites"
 import Helper from "@utils/helper"
 import dayjs from "dayjs"
+import CircleNakaIcon from "@components/icons/CircleNakaIcon"
+import { BUY_NAKA_MENU } from "@constants/tabMenu"
+import ButtonClose from "@components/atoms/button/ButtonClose"
+import { ModalCustom } from "./ModalCustom"
+import TabMenu from "./TabMenu"
 
 interface IProp {
   showRate?: boolean
@@ -25,6 +30,10 @@ const HeadPrice = ({
 }: IProp) => {
   // const { t } = useTranslation()
   const [price, setPrice] = useState<IPointCurrent>()
+  const [open, setOpen] = useState<boolean>(false)
+
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
 
   const getPrice = async () => {
     const prices = await getPriceCurrent()
@@ -139,6 +148,7 @@ const HeadPrice = ({
       <button
         type="button"
         className="z-[51] flex w-[15%] flex-row items-center justify-evenly rounded-br-lg bg-error-main "
+        onClick={handleOpen}
       >
         <div className="font-neue-machina text-sm uppercase text-white-primary">
           BUY NAKA
@@ -150,6 +160,34 @@ const HeadPrice = ({
           alt={IMAGES.nakaLogoMaster.alt}
         />
       </button>
+      <ModalCustom
+        open={open}
+        onClose={handleClose}
+        className="gap-3 rounded-[34px] p-[10px]"
+      >
+        <Box className="rounded-md bg-neutral-900 p-4">
+          <Box
+            className="flex items-center rounded-lg bg-neutral-800 pl-5"
+            sx={{ height: "54px" }}
+          >
+            <div className="flex flex-1 flex-row items-center">
+              <CircleNakaIcon />
+              <Typography className="pl-[15px] uppercase text-neutral-300">
+                BUY NAKA
+              </Typography>
+            </div>
+            <ButtonClose onClick={handleClose} />
+          </Box>
+          {BUY_NAKA_MENU.map((ele) => (
+            <TabMenu
+              key={ele.text}
+              icon={ele.icon}
+              text={ele.text}
+              className="mt-4"
+            />
+          ))}
+        </Box>
+      </ModalCustom>
     </Box>
   )
 }

@@ -26,5 +26,19 @@ export const IMAGES = {
     width: 166,
     height: 30,
     alt: "nakamoto-band"
+  },
+  frontBlogBand: {
+    src: "/images/home/front_blog.svg",
+    blurDataURL: "/images/home/front_blog.svg",
+    width: 123,
+    height: 123,
+    alt: "blog-band"
+  },
+  backBlogBand: {
+    src: "/images/home/back_blog.svg",
+    blurDataURL: "/images/home/back_blog.svg",
+    width: 123,
+    height: 123,
+    alt: "blog-band"
   }
 }

@@ -50,12 +50,12 @@ export const MuiChip: Components<Omit<Theme, "components">>["MuiChip"] = {
         "&-outlined": {
           backgroundColor: "transparent",
           "&Default": {
-            borderColor: PaletteCustom.grey[900],
-            backgroundColor: PaletteCustom.grey.A200,
+            borderColor: PaletteCustom.neutral[700],
+            backgroundColor: PaletteCustom.neutral[900],
             color: PaletteCustom.text.secondary
           },
           "&Primary": {
-            borderColor: PaletteCustom.grey[900],
+            borderColor: PaletteCustom.neutral[700],
             color: PaletteCustom.text.secondary
           },
           "&Secondary": {

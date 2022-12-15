@@ -11,7 +11,7 @@
         @apply bg-secondary-main text-white-primary #{!important};
       }
       &-default {
-        @apply bg-grey-A100 hover:bg-secondary-main #{!important};
+        @apply bg-neutral-800 hover:bg-secondary-main #{!important};
       }
     }
     &-text {
@@ -28,7 +28,7 @@
         @apply bg-error-main text-white-primary #{!important};
       }
       &-default {
-        @apply bg-grey-A100 hover:bg-error-main #{!important};
+        @apply bg-neutral-800 hover:bg-error-main #{!important};
       }
     }
     &-text {

@@ -59,7 +59,7 @@ const GameCarousel = ({
     if (_no === 3) {
       return "bg-green-card"
     }
-    return "bg-grey-A100 border-2 border-grey-900"
+    return "bg-neutral-800 border-2 border-neutral-700"
   }
 
   const showSlide = list && list.length > 6 ? 6 : list.length

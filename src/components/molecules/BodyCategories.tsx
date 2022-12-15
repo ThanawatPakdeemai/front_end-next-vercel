@@ -82,7 +82,7 @@ const BodyCategories = () => {
                     }
                     text={item.text}
                     handleClick={onHandleClick}
-                    className="btn-rainbow-theme z-[2] h-12 w-full bg-primary-main capitalize "
+                    className="z-[2] h-[48px] w-full bg-primary-main capitalize "
                   />
                 </motion.div>
               </motion.div>

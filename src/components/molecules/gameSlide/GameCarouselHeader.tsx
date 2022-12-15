@@ -125,7 +125,7 @@ const GameCarouselHeader = ({
                 className={`h-full w-full cursor-pointer font-bold hover:bg-${theme}-main font-bold capitalize hover:text-white-primary ${
                   curType === item.type
                     ? `bg-${theme}-main text-white-primary`
-                    : "bg-grey-A100 text-black-default "
+                    : "bg-neutral-800 text-black-default"
                 }`}
               />
             </button>

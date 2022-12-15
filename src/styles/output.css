@@ -2040,7 +2040,7 @@ video {
 
 .text-primary-main {
   --tw-text-opacity: 1 !important;
-  color: rgb(1 1 1 / var(--tw-text-opacity)) !important;
+  color: rgb(166 169 174 / var(--tw-text-opacity)) !important;
 }
 
 .text-purple-primary {
@@ -2080,7 +2080,7 @@ video {
 
 .text-primary-contrastText {
   --tw-text-opacity: 1 !important;
-  color: rgb(166 169 174 / var(--tw-text-opacity)) !important;
+  color: rgb(1 1 1 / var(--tw-text-opacity)) !important;
 }
 
 .text-\[\#ffffff\] {

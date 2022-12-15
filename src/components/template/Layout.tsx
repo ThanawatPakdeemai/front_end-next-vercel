@@ -1,6 +1,7 @@
 import React from "react"
-import Footer from "@components/organisms/Footer"
-import Header from "@components/organisms/Header"
+/* still have import Uppercase&Lowercase problem */
+import Footer from "@components/organisms/footer"
+import Header from "@components/organisms/header"
 
 export default function Layout({
   children

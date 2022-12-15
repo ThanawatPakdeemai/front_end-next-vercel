@@ -17,7 +17,7 @@ strong {
 
 body {
   color: theme("colors.grey.default");
-  background: url("/images/common/bg.png") theme("colors.grey.900");
+  background: url("/images/common/bg.png") theme("colors.neutral.700");
 }
 
 .text {
@@ -27,7 +27,15 @@ body {
 
 .button-global {
   .button-icon {
-    animation: mymove-image-icon-button 1s;
+    animation: mymove-image-icon-button 0.5;
+    animation-timing-function: linear;
+    animation-duration: 0.5s;
+  }
+  .button-arrow {
+    display: none;
+  }
+  .animation-button-text {
+    animation: mymove-button-text 0.5s;
     animation-timing-function: linear;
     animation-duration: 0.5s;
   }
@@ -39,12 +47,12 @@ body {
       display: block;
     }
     .animation-arrow {
-      animation: mymove-image-icon-arrow 1s;
+      animation: mymove-image-icon-arrow 0.5;
       animation-timing-function: linear;
       animation-duration: 0.5s;
     }
     .animation-button-text {
-      animation: mymove-image-button-text 1s;
+      animation: mymove-image-button-text 0.5s;
       animation-timing-function: linear;
       animation-duration: 0.5s;
     }
@@ -55,22 +63,52 @@ body {
   0% {
     margin-right: -10px;
   }
+  25% {
+    margin-right: 0px;
+  }
   50% {
     margin-right: 5px;
   }
+  75% {
+    margin-right: 8px;
+  }
   100% {
-    margin-right: 0px;
+    margin-right: 5px;
   }
 }
 @keyframes mymove-image-button-text {
   0% {
     margin-right: -8px;
   }
-  50% {
+  25% {
     margin-right: 15px;
+  }
+  50% {
+    margin-right: 8px;
+  }
+  75% {
+    margin-right: 3px;
   }
   100% {
     margin-right: 8px;
+  }
+}
+
+@keyframes animation-button-text {
+  0% {
+    margin-right: -9px;
+  }
+  25% {
+    margin-right: 9px;
+  }
+  50% {
+    margin-right: -9px;
+  }
+  75% {
+    margin-right: 15px;
+  }
+  100% {
+    margin-right: 0px;
   }
 }
 @keyframes mymove-image-icon-arrow {
@@ -85,31 +123,69 @@ body {
   }
 }
 
-.menu-select-naka:hover {
+.menu-select-naka {
+  &.active {
+    background-color: theme("colors.error.main") !important;
+    color: theme("colors.white.default") !important;
+  }
   .text-end-select-naka {
-    @apply border-white-primary bg-white-primary text-primary-main;
+    .MuiTypography-root {
+      color: theme("colors.white.primary") !important;
+      font-family: theme("fontFamily.neue-machina-semi") !important;
+      font-size: theme("fontSize.sm") !important;
+    }
+  }
+  &:hover {
+    .text-end-select-naka {
+      border: theme("colors.white.primary") !important;
+      background-color: theme("colors.white.primary") !important;
+      .MuiTypography-root {
+        color: theme("colors.primary.main") !important;
+        font-family: theme("fontFamily.neue-machina-semi") !important;
+        font-size: theme("fontSize.sm") !important;
+      }
+    }
   }
 }
+
+.button-select-naka {
+  &:hover {
+    background: theme("colors.error.main") !important;
+    color: theme("colors.white.default") !important;
+  }
+}
+
 .image-square {
+  .select-global-square {
+    animation: mymove-global-square-not 1s;
+    animation-duration: 0.5s;
+  }
+
   .select-global-square:hover {
     animation: mymove-global-square 1s;
     animation-duration: 0.5s;
   }
   &:hover + .select-square {
-    left: 18px !important;
-    bottom: 19px !important;
+    left: 16px !important;
+    bottom: 16px !important;
   }
 }
 
 @keyframes mymove-global-square {
   0% {
-    rotate: 90deg;
-  }
-  50% {
-    rotate: 45deg;
+    rotate: -45deg;
   }
   100% {
     rotate: 90deg;
+  }
+}
+
+@keyframes mymove-global-square-not {
+  0% {
+    rotate: 90deg;
+  }
+  100% {
+    rotate: 180deg;
   }
 }
 

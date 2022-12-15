@@ -34,7 +34,7 @@ const ButtonLink = ({
       startIcon={<div className="button-icon animation-arrow">{icon}</div>}
       className={`${className} button-global`}
       endIcon={
-        <div className="button-arrow animation-arrow hidden">
+        <div className="button-arrow animation-arrow">
           <ArrowForwardIcon className={arrowColor} />
         </div>
       }

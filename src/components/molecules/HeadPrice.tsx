@@ -38,14 +38,17 @@ const HeadPrice = ({
   }, [])
 
   return (
-    <Box className="flex h-[30px] w-[100%]  flex-row justify-between rounded-b-lg bg-grey-A100">
+    <Box className="flex h-[30px] w-[100%]  flex-row justify-between rounded-b-lg bg-neutral-800">
       <Typography className="text-black-01 flex w-[15%] items-center justify-center rounded-bl-lg  bg-secondary-main">
         <span className="font-neue-machina text-sm uppercase text-primary-main">
           TOKENS INFO =
         </span>
       </Typography>
       <div className="mx-3 flex w-[100%] flex-row justify-between">
-        <Typography className="flex items-center font-neue-machina text-sm uppercase">
+        <Box
+          component="div"
+          className="flex items-center font-neue-machina text-sm uppercase"
+        >
           <span className="mr-2 text-black-default">NAKA Contract </span>
           <div className="flex flex-row items-center">
             <span className="mr-1 text-purple-primary">Polygon : </span>
@@ -61,7 +64,7 @@ const HeadPrice = ({
               </Typography>
             )}
           </div>
-        </Typography>
+        </Box>
         {price ? (
           <Box className="flex items-center justify-center">
             {showTime && (

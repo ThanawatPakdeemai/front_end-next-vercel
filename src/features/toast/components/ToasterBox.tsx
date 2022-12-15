@@ -15,7 +15,7 @@ const toastOptions: DefaultToastOptions = {
 
 const ToasterBox = () => (
   <Toaster
-    position="bottom-right"
+    position="top-right"
     reverseOrder={false}
     toastOptions={toastOptions}
   />

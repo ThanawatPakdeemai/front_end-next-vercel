@@ -40,5 +40,26 @@ export const IMAGES = {
     width: 123,
     height: 123,
     alt: "blog-band"
+  },
+  nakaIconWhite: {
+    src: "/images/alert/nakaIcon.svg",
+    blurDataURL: "/images/alert/nakaIcon.svg",
+    width: 25,
+    height: 25,
+    alt: "nakaIcon"
+  },
+  flagIcon: {
+    src: "/images/alert/flagIcon.svg",
+    blurDataURL: "/images/alert/flagIcon.svg",
+    width: 25,
+    height: 25,
+    alt: "flagIcon"
+  },
+  radiation: {
+    src: "/images/alert/radiation.svg",
+    blurDataURL: "/images/alert/radiation.svg",
+    width: 25,
+    height: 25,
+    alt: "radiation"
   }
 }

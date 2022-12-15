@@ -6,9 +6,11 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 
 export default function Home() {
   return (
-    <article className="h-full w-full">
-      <HomePage />
-    </article>
+    <>
+      <article className="h-full w-full">
+        <HomePage />
+      </article>
+    </>
   )
 }
 

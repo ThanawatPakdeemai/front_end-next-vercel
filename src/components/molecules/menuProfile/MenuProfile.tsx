@@ -8,7 +8,7 @@ import { Image } from "@components/atoms/image"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 
 const MenuProfile = () => (
-  <MenuList className="mx-[6px] mt-[14px] mb-[6px] rounded-[13px] bg-grey-900 p-[6px]">
+  <MenuList className="mx-[6px] mt-[14px] mb-[6px] rounded-[13px] bg-neutral-700 p-[6px]">
     {MENU_PROFILE.map((ele) => (
       <MenuItem key={ele.name}>
         <ListItemIcon>

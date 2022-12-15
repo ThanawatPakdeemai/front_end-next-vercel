@@ -20,37 +20,35 @@
   /* Handle */
 
   &::-webkit-scrollbar-thumb {
-    @apply border border-solid border-grey-900 bg-purple-primary;
+    @apply border border-solid border-neutral-700 bg-purple-primary;
     border-radius: 10px;
   }
 
   /* Handle on hover */
   &::-webkit-scrollbar-thumb:hover {
-    @apply bg-grey-900;
+    @apply bg-neutral-700;
   }
 }
 
 .top-player {
-  transition: width 0.9s ease-in-out; //, box-shadow 0.3s ease-in-out;
+  .animation-box {
+    width: 58px;
+    height: 58px;
+  }
   &:hover {
-    transition: 5s;
     .show-arrow {
       display: block !important;
       transition-duration: 700ms;
       transition-timing-function: linear;
     }
-    .squre-no-player {
-      width: 70px;
-    }
     .animation-box {
-      animation: mymove 1s;
+      width: 70px;
+      animation: mymove 0.5s !important;
       animation-timing-function: linear;
-      animation-duration: 0.5s;
     }
     .animation-image {
-      animation: mymove-image 1s;
+      animation: mymove-image 0.5s;
       animation-timing-function: linear;
-      animation-duration: 0.5s;
     }
   }
 }
@@ -68,12 +66,12 @@
 }
 @keyframes mymove {
   0% {
-    width: 70px;
-  }
-  50% {
     width: 65px;
   }
-  100% {
+  50% {
     width: 70px;
+  }
+  100% {
+    width: 65px;
   }
 }

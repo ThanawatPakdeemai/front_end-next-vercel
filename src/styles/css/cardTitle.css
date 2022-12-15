@@ -18,36 +18,30 @@
   border-radius: 10px;
 }
 .custom-scroll::-webkit-scrollbar-thumb {
-  @apply border border-solid border-grey-900 bg-purple-primary;
+  @apply border border-solid border-neutral-700 bg-purple-primary;
   border-radius: 10px;
 }
 .custom-scroll::-webkit-scrollbar-thumb:hover {
-  @apply bg-grey-900;
+  @apply bg-neutral-700;
 }
 
-.top-player {
-  transition: width 0.9s ease-in-out;
-}
-.top-player:hover {
-  transition: 5s;
+.top-player .animation-box {
+  width: 58px;
+  height: 58px;
 }
 .top-player:hover .show-arrow {
   display: block !important;
   transition-duration: 700ms;
   transition-timing-function: linear;
 }
-.top-player:hover .squre-no-player {
-  width: 70px;
-}
 .top-player:hover .animation-box {
-  animation: mymove 1s;
+  width: 70px;
+  animation: mymove 0.5s !important;
   animation-timing-function: linear;
-  animation-duration: 0.5s;
 }
 .top-player:hover .animation-image {
-  animation: mymove-image 1s;
+  animation: mymove-image 0.5s;
   animation-timing-function: linear;
-  animation-duration: 0.5s;
 }
 
 @keyframes mymove-image {
@@ -63,12 +57,12 @@
 }
 @keyframes mymove {
   0% {
-    width: 70px;
-  }
-  50% {
     width: 65px;
   }
-  100% {
+  50% {
     width: 70px;
+  }
+  100% {
+    width: 65px;
   }
 }

@@ -5,10 +5,10 @@ module.exports = {
     /* base config */
     colors: {
       primary: {
-        main: "#010101",
-        light: "#010101",
-        dark: "#010101",
-        contrastText: "#A6A9AE"
+        main: "#A6A9AE",
+        light: "#A6A9AE",
+        dark: "#A6A9AE",
+        contrastText: "#010101"
       },
       secondary: {
         main: "#7B5BE6",
@@ -38,12 +38,6 @@ module.exports = {
         main: "#E1D35A",
         light: "#E1D35A",
         dark: "#E1D35A",
-        contrastText: "#010101"
-      },
-      tertiary: {
-        main: "#757575",
-        light: "#757575",
-        dark: "#757575",
         contrastText: "#010101"
       },
       grey: {

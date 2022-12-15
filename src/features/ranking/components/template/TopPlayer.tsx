@@ -5,7 +5,7 @@ import TrackChangesIcon from "@mui/icons-material/TrackChanges"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import CardTitle from "@components/organisms/cardTitle"
 import { useTopPlayer } from "../../containers/hook/useTopPlayer"
-import CardBodyList from "../organisms/cardBodyList"
+import CardBodyList from "../organisms/CardBodyList"
 
 const TopPlayer = () => {
   const { topPlayerAllGame } = useTopPlayer()

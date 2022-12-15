@@ -17,7 +17,7 @@ export default function CardNextSlide({ slideNext, gotoNext }: ICardNextSlide) {
       type="button"
       className="slide-next relative flex w-full items-center gap-4 rounded-3xl border-[1px] border-white-default/20 p-4 text-left"
     >
-      <div className="slide-next--image w-1/3">
+      {/* <div className="slide-next--image w-1/3">
         <CardMedia
           component="img"
           width={200}
@@ -30,7 +30,7 @@ export default function CardNextSlide({ slideNext, gotoNext }: ICardNextSlide) {
         <NextButtonSlide />
         <Typography variant="h3">{slideNext.name}</Typography>
         <ProgressBarSlide />
-      </div>
+      </div> */}
     </button>
   )
 }

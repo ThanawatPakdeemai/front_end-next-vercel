@@ -1,5 +1,6 @@
 import IconFree from "@components/icons/freeIcon"
 import IconNakaWorld from "@components/icons/nakaWorldIcon"
+import BodyCategories from "@components/molecules/BodyCategories"
 import GameCarousel from "@components/molecules/gameSlide/GameCarousel"
 import {
   F2PHeaderMenu,
@@ -50,6 +51,7 @@ const Home = () => (
           />
         }
       />
+      <BodyCategories />
     </div>
   </>
 )

@@ -1087,8 +1087,8 @@ video {
 }
 
 .my-16 {
-  margin-top: 4rem !important;
-  margin-bottom: 4rem !important;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
 }
 
 .mt-10 {
@@ -1803,8 +1803,8 @@ video {
 }
 
 .bg-info-main {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(39 241 236 / var(--tw-bg-opacity)) !important;
+  --tw-bg-opacity: 1;
+  background-color: rgb(39 241 236 / var(--tw-bg-opacity));
 }
 
 .bg-primary-main {
@@ -2203,13 +2203,13 @@ video {
 }
 
 .text-white-default {
-  --tw-text-opacity: 1 !important;
-  color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .text-neutral-800 {
-  --tw-text-opacity: 1 !important;
-  color: rgb(24 24 28 / var(--tw-text-opacity)) !important;
+  --tw-text-opacity: 1;
+  color: rgb(24 24 28 / var(--tw-text-opacity));
 }
 
 .\!text-primary-contrastText {
@@ -2223,11 +2223,6 @@ video {
 }
 
 .text-\[\#ffffff\] {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-white-default {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
@@ -2299,12 +2294,6 @@ video {
     var(--tw-backdrop-sepia);
 }
 
-.transition-all {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
 .transition {
   transition-property: color, background-color, border-color,
     text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
@@ -2315,6 +2304,12 @@ video {
   transition-property: color, background-color, border-color,
     text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
     backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.transition-all {
+  transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }

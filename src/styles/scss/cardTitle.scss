@@ -20,13 +20,13 @@
   /* Handle */
 
   &::-webkit-scrollbar-thumb {
-    @apply border border-solid border-grey-900 bg-purple-primary;
+    @apply border border-solid border-neutral-700 bg-purple-primary;
     border-radius: 10px;
   }
 
   /* Handle on hover */
   &::-webkit-scrollbar-thumb:hover {
-    @apply bg-grey-900;
+    @apply bg-neutral-700;
   }
 }
 

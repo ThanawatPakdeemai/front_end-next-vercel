@@ -3,6 +3,7 @@ import IconNakaWorld from "@components/icons/nakaWorldIcon"
 import GameCarousel, {
   ISlide
 } from "@components/molecules/gameSlide/GameCarousel"
+import Tagline from "@components/molecules/tagline/Tagline"
 import {
   F2PHeaderMenu,
   mockF2PGame,
@@ -75,6 +76,15 @@ const Home = () => {
     <>
       <BannerSlide />
       {/* Testing display a CarouselSlide component, waiting to merge with team */}
+      <Tagline
+        bgColor="bg-secondary-main"
+        textColor="text-white-default"
+        text="Secue. fun. simple. earn $naka AND enjoy "
+        alt="logo_master"
+        src="/assets/icons/logo_master.png"
+        width={24}
+        height={24}
+      />
       <div className="grid grid-cols-2 gap-6">
         <></>
         <CarouselSlide />
@@ -116,6 +126,15 @@ const Home = () => {
           }
         />
       </div>
+      <Tagline
+        bgColor="bg-info-main"
+        textColor="text-neutral-800 font-bold"
+        text="Show your God Mode for the blockchain gaming landscape"
+        alt="logo_shape"
+        src="/assets/icons/logo_shape.png"
+        width={24}
+        height={24}
+      />
     </>
   )
 }

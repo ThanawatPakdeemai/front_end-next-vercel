@@ -7,7 +7,6 @@ import {
 } from "@components/molecules/gameSlide/GameCarouselHeader"
 import { IGameDownloadSlide } from "@feature/slider/interfaces/ISlides"
 
-
 export const GAME_BANNER_SLIDES = [
   {
     link: "/duckhunter",
@@ -307,7 +306,6 @@ export const F2PHeaderMenu: IHeaderSlide = {
   menuList: f2pMenu,
   theme: "secondary"
 }
-
 export const GAME_DOWNLOAD: IGameDownloadSlide[] = [
   {
     name: "Escape",
@@ -328,4 +326,3 @@ export const GAME_DOWNLOAD: IGameDownloadSlide[] = [
     link: "https://play.google.com/store/apps/details?id=com.nakama.nakarunner"
   }
 ]
-

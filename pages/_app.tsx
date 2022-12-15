@@ -19,7 +19,6 @@ import rt from "dayjs/plugin/relativeTime"
 
 dayjs.extend(rt)
 
-
 type NextPageWithLayout = NextPage & {
   getLayout?: (_page: ReactElement) => ReactNode
 }

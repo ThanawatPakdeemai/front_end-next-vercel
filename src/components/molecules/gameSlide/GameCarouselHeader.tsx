@@ -1,5 +1,5 @@
 import IconDollar from "@components/icons/dollarIcon"
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useEffect } from "react"
 import AddIcon from "@mui/icons-material/Add"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import IconArrowLeft from "@components/icons/arrowLeftIcon"

@@ -3,7 +3,6 @@ import MenuItem from "@mui/material/MenuItem"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state"
 import {
-  Divider,
   ListItemIcon,
   ListItemText,
   MenuList,

@@ -1,7 +1,6 @@
 import { Divider, Typography } from "@mui/material"
 import DvrOutlinedIcon from "@mui/icons-material/DvrOutlined"
 import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined"
-import NorthOutlinedIcon from "@mui/icons-material/NorthOutlined"
 import WineBarOutlinedIcon from "@mui/icons-material/WineBarOutlined"
 import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
 import ButtonLink from "@components/atoms/button/ButtonLink"
@@ -12,6 +11,102 @@ import { NAKA_GAME } from "@configs/nakaGame"
 import { NAKA_SERVICES } from "@configs/nakaServices"
 import { NAKA_ECOSYSTEMSS } from "@configs/nakaEcosystems"
 import { motion } from "framer-motion"
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
+import styled from "styled-components"
+
+const arrowMotion = {
+  rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
+  hover: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.4,
+      type: "spring",
+      ease: "easeIn"
+    }
+  }
+}
+
+const textMotion = {
+  visible: {
+    scale: 0.8,
+    transition: { delay: 0.4 }
+  },
+  rest: {
+    color: "#98A0B5",
+    x: 0,
+    transition: {
+      duration: 2,
+      type: "spring",
+      stiffness: 300
+      // ease: "easeIn"
+    }
+  },
+  hover: {
+    color: "#fff",
+    x: 30,
+    transition: {
+      duration: 0.4,
+      stiffness: 300,
+      type: "spring"
+      // ease: "easeIn"
+    }
+  }
+}
+
+const ArrowExpaned = styled.div`
+  .btn {
+    line-height: 22.6px;
+    background-color: transparent;
+    padding: 16px;
+    cursor: pointer;
+  }
+
+  .btn-black {
+    border: 1px solid #232329;
+    border-radius: 16px;
+  }
+
+  .arrow {
+    height: 2px;
+    width: 18px;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 4px;
+    transition: all 0.4s ease;
+    transform: rotate(-90deg);
+  }
+
+  .btn:hover .arrow {
+    width: 24px;
+  }
+
+  .arrow-black {
+    background: #fff;
+  }
+
+  .arrow:before,
+  .arrow:after {
+    content: "";
+    background: #fff;
+    position: absolute;
+    height: 2px;
+    width: 10px;
+    border-radius: 30%;
+  }
+
+  .arrow:before {
+    right: -2px;
+    bottom: -3px;
+    transform: rotate(-45deg);
+  }
+
+  .arrow:after {
+    right: -2px;
+    top: -3px;
+    transform: rotate(45deg);
+  }
+`
 
 const Footer = () => (
   <>
@@ -29,14 +124,31 @@ const Footer = () => (
                 {item.label}
               </Typography>
               {item.game.map((game) => (
-                <motion.h1
-                  whileHover={{ scale: 1.1, originX: -1 }}
-                  transition={{ type: "spring", stiffness: 300 }}
+                <div
                   key={`game-${item.label}-${game.name}`}
-                  className="pb-[14px]"
+                  className="flex"
                 >
-                  {game.name}
-                </motion.h1>
+                  <motion.div
+                    key={item.label}
+                    initial="rest"
+                    whileHover="hover"
+                    animate="rest"
+                    className="relative max-w-[200px] cursor-pointer"
+                  >
+                    <motion.div
+                      className="opacity-1 absolute top-[20%] left-0 translate-y-[-30%]"
+                      variants={arrowMotion}
+                    >
+                      <ArrowForwardIcon sx={{ height: 14 }} />
+                    </motion.div>
+                    <motion.h1
+                      className="pb-[14px]"
+                      variants={textMotion}
+                    >
+                      {game.name}
+                    </motion.h1>
+                  </motion.div>
+                </div>
               ))}
             </div>
           ))}
@@ -44,14 +156,26 @@ const Footer = () => (
         <div className="w-48">
           <div className="mb-4 uppercase text-white-primary">services</div>
           {NAKA_SERVICES?.map((item) => (
-            <motion.h4
-              whileHover={{ scale: 1.1, originX: -1 }}
-              transition={{ type: "spring", stiffness: 300 }}
+            <motion.div
               key={item.label}
-              className="pb-[14px]"
+              initial="rest"
+              whileHover="hover"
+              animate="rest"
+              className="relative max-w-[200px] cursor-pointer"
             >
-              {item.label}
-            </motion.h4>
+              <motion.div
+                className="opacity-1 absolute top-[20%] left-0 translate-y-[-30%]"
+                variants={arrowMotion}
+              >
+                <ArrowForwardIcon sx={{ height: 14 }} />
+              </motion.div>
+              <motion.h1
+                className="pb-[14px]"
+                variants={textMotion}
+              >
+                {item.label}
+              </motion.h1>
+            </motion.div>
           ))}
         </div>
         <div className="w-48">
@@ -60,39 +184,49 @@ const Footer = () => (
           </div>
           {NAKA_ECOSYSTEMSS?.map((item) =>
             item.newpage === false ? (
-              <motion.h4
-                whileHover={{ scale: 1.1, originX: -1 }}
-                transition={{ type: "spring", stiffness: 300 }}
+              <motion.div
                 key={item.label}
-                className="pb-[14px]"
+                initial="rest"
+                whileHover="hover"
+                animate="rest"
+                className="relative max-w-[200px] cursor-pointer"
               >
-                Blog
-              </motion.h4>
+                <motion.div
+                  className="opacity-1 absolute top-[20%] left-0 translate-y-[-30%]"
+                  variants={arrowMotion}
+                >
+                  <ArrowForwardIcon sx={{ height: 14 }} />
+                </motion.div>
+                <motion.h1
+                  className="pb-[14px]"
+                  variants={textMotion}
+                >
+                  {item.label}
+                </motion.h1>
+              </motion.div>
             ) : (
               <motion.div
-                whileHover={{
-                  scale: 1.1,
-                  originX: -1
-                }}
-                transition={{ type: "spring", stiffness: 300 }}
                 key={item.label}
-                className="flex pb-[14px]"
+                initial="rest"
+                whileHover="hover"
+                animate="rest"
+                className="relative max-w-[200px] cursor-pointer"
               >
-                {/* <SlashContainer variants={slashMotion}>
-                  <svg
-                    width="1em"
-                    height="1em"
-                    viewBox="0 0 27 50"
+                <motion.div
+                  className="opacity-1 absolute top-[20%] left-0 translate-y-[-30%]"
+                  variants={arrowMotion}
+                >
+                  <ArrowForwardIcon sx={{ height: 14 }} />
+                </motion.div>
+                <div className="flex">
+                  <motion.div
+                    className="pb-[14px]"
+                    variants={textMotion}
                   >
-                    <path
-                      fill="#154FFF"
-                      d="M21.177 0L0 50h5.818L26.995 0z"
-                      fillRule="evenodd"
-                    />
-                  </svg>
-                </SlashContainer> */}
-                <h4>{item.label}</h4>
-                <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />
+                    {item.label}
+                    <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />
+                  </motion.div>
+                </div>
               </motion.div>
             )
           )}
@@ -123,13 +257,29 @@ const Footer = () => (
                 target="_blank"
               >
                 <div className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800">
-                  <Image
-                    className="transition duration-300 hover:translate-x-1 hover:rotate-[17deg]"
-                    src={item.img}
-                    alt={item.label}
-                    width={item.width}
-                    height={item.height}
-                  />
+                  <motion.div
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 4
+                    }}
+                    whileHover={{
+                      scale: 1.2,
+                      rotate: 17,
+                      transition: {
+                        duration: 0.4,
+                        stiffness: 500,
+                        type: "spring"
+                      }
+                    }}
+                  >
+                    <Image
+                      src={item.img}
+                      alt={item.label}
+                      width={item.width}
+                      height={item.height}
+                    />
+                  </motion.div>
                 </div>
               </Link>
             ))}
@@ -175,10 +325,14 @@ const Footer = () => (
         </div>
       </div>
       <div className="mt-[10px] flex grid content-center justify-center rounded-[20px] bg-neutral-800 p-8  sm:mt-0 sm:ml-[12px] sm:w-auto">
-        <NorthOutlinedIcon />
+        <ArrowExpaned>
+          <div className="btn btn-black">
+            <span className="arrow arrow-black" />
+          </div>
+        </ArrowExpaned>
       </div>
     </div>
-    <div className="flex justify-between py-[50px] text-[10px] uppercase text-[#4E5057]">
+    <div className="flex justify-between py-[50px] text-[10px] uppercase text-neutral-600">
       <h4>Copyright 2022 © Nakamoto Games</h4>
       <Image
         src="/assets/icons/logo_master.png"

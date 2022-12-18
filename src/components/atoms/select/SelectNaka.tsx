@@ -3,7 +3,6 @@ import MenuItem from "@mui/material/MenuItem"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state"
 import {
-  Divider,
   ListItemIcon,
   ListItemText,
   MenuList,
@@ -13,6 +12,7 @@ import {
 } from "@mui/material"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
+import ButtonClose from "../button/ButtonClose"
 
 interface IProp {
   button: React.ReactNode
@@ -76,26 +76,12 @@ const SelectNaka = ({
                   <div className="flex items-center justify-between">
                     <div className="w-full rounded-default bg-primary-main px-4 py-2">
                       <ListItemText>
-                        <Typography className="overflow-hidden truncate font-neue-machina text-default">
+                        <Typography className="overflow-hidden !truncate !font-neue-machina-semi !text-sm">
                           {t(`${title}`)}
                         </Typography>
                       </ListItemText>
                     </div>
-                    <Box
-                      component="div"
-                      className="relative mx-3 cursor-pointer"
-                      onClick={() => popupState.close()}
-                    >
-                      <div className="image-square ml-2 font-neue-machina text-default ">
-                        <div className="select-global-square h-8 w-8 rotate-45  rounded-[8px] bg-error-main hover:h-[35px] hover:w-[35px] hover:rotate-0" />
-                      </div>
-
-                      <Divider
-                        className="select-square absolute bottom-[16px] left-[16px] w-[15px] border border-[#f1f4f4]"
-                        orientation="vertical"
-                        flexItem
-                      />
-                    </Box>
+                    <ButtonClose onClick={() => popupState.close()} />
                   </div>
                 </div>
                 <div className="flex items-center justify-between bg-primary-main pt-2 ">
@@ -116,11 +102,11 @@ const SelectNaka = ({
                             }
                           }}
                         >
-                          <ListItemIcon className="text-primary-contrastText">
+                          <ListItemIcon className="!text-primary-contrastText">
                             {option.icon}
                           </ListItemIcon>
                           <ListItemText className="w-50">
-                            <Typography className="font-neue-machina text-default">
+                            <Typography className="!font-neue-machina-semi !text-sm">
                               {option.label}
                             </Typography>
                           </ListItemText>

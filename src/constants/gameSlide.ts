@@ -135,7 +135,7 @@ export const GAME_FREE = [
     image: "/assets/images/home/medium_nakadui.png",
     to: `${CONFIGS.BASE_URL.GAME}/free/dui/?${Helper.createEncryptLink(
       8
-    )}${btoa(`${CONFIGS.BASE_URL.FRONTEND}`)}`,
+    )}${Buffer.from(`${CONFIGS.BASE_URL.FRONTEND}`, "base64")}`,
     gameName: "NAKA DUI",
     icon: ""
   },
@@ -145,8 +145,9 @@ export const GAME_FREE = [
     image: "/assets/images/home/medium_alien_apocalypse.png",
     to: `${
       CONFIGS.BASE_URL.GAME
-    }/free/alien-apocalypse/?${Helper.createEncryptLink(8)}${btoa(
-      `${CONFIGS.BASE_URL.FRONTEND}`
+    }/free/alien-apocalypse/?${Helper.createEncryptLink(8)}${Buffer.from(
+      `${CONFIGS.BASE_URL.FRONTEND}`,
+      "base64"
     )}`,
     gameName: "Alien Apocalypse",
     icon: ""
@@ -157,7 +158,7 @@ export const GAME_FREE = [
     image: "/assets/images/home/medium_cat_rocket.png",
     to: `${CONFIGS.BASE_URL.GAME}/free/cat-planet/?${Helper.createEncryptLink(
       8
-    )}${btoa(`${CONFIGS.BASE_URL.FRONTEND}`)}`,
+    )}${Buffer.from(`${CONFIGS.BASE_URL.FRONTEND}`, "base64")}`,
     gameName: "Cat Planet",
     icon: ""
   }
@@ -276,7 +277,8 @@ export const P2EHeaderMenu: IHeaderSlide = {
   icon: "",
   title: "play to earn",
   menuList: p2eMenu,
-  theme: "error"
+  theme: "error",
+  stickerRotate: 15
 }
 
 const f2pMenu: ISlideList[] = [
@@ -304,7 +306,8 @@ export const F2PHeaderMenu: IHeaderSlide = {
   icon: "",
   title: "free to earn",
   menuList: f2pMenu,
-  theme: "secondary"
+  theme: "secondary",
+  stickerRotate: -15
 }
 export const GAME_DOWNLOAD: IGameDownloadSlide[] = [
   {

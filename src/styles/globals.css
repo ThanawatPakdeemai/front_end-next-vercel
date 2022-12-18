@@ -1,6 +1,7 @@
 @import "./fonts.css";
 @import "./css/cardTitle.css";
 @import "./css/common.css";
+@import "./css/gameSlick.css";
 
 @tailwind base;
 @tailwind components;

@@ -2484,8 +2484,8 @@ video {
   transition-duration: 300ms;
 }
 
-.duration-400 {
-  transition-duration: 400ms;
+.duration-100 {
+  transition-duration: 100ms;
 }
 
 .ease-bounce {

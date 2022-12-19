@@ -1982,9 +1982,9 @@ video {
   background-color: rgb(244 39 40 / var(--tw-bg-opacity)) !important;
 }
 
-.bg-info-main {
+.bg-green-lemon {
   --tw-bg-opacity: 1;
-  background-color: rgb(39 241 236 / var(--tw-bg-opacity));
+  background-color: rgb(160 237 97 / var(--tw-bg-opacity));
 }
 
 .\!bg-error-main {
@@ -2040,19 +2040,9 @@ video {
   --tw-bg-opacity: 0.4;
 }
 
-.object-contain {
-  -o-object-fit: contain;
-  object-fit: contain;
-}
-
 .object-fill {
   -o-object-fit: fill;
   object-fit: fill;
-}
-
-.object-left {
-  -o-object-position: left;
-  object-position: left;
 }
 
 .object-center {
@@ -2188,6 +2178,11 @@ video {
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
+}
+
+.px-14 {
+  padding-left: 3.5rem;
+  padding-right: 3.5rem;
 }
 
 .pl-5 {

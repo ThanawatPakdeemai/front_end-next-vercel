@@ -1,21 +1,14 @@
 import React from "react"
-import Image, { ImageProps } from "next/image"
 
-interface IProp extends ImageProps {
+interface IProp {
+  icon: React.ReactNode
   textColor: string
   text: string
-  alt: string
 }
 
-const InsideTagLine = ({ textColor, text, alt, ...props }: IProp) => (
+const InsideTagLine = ({ icon, textColor, text }: IProp) => (
   <div className="mr-6 flex w-full items-center">
-    <div className="pr-6">
-      <Image
-        {...props}
-        className="mr-6"
-        alt={alt}
-      />
-    </div>
+    <div className="pr-6">{icon}</div>
     <p className={`${textColor} whitespace-nowrap uppercase`}>{text}</p>
   </div>
 )

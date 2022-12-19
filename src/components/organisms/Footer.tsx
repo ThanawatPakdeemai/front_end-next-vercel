@@ -11,6 +11,7 @@ import Link from "next/link"
 import { NAKA_GAME } from "@configs/nakaGame"
 import { NAKA_SERVICES } from "@configs/nakaServices"
 import { NAKA_ECOSYSTEMSS } from "@configs/nakaEcosystems"
+import LogoIcon from "@components/icons/LogoIcon"
 
 const Footer = () => (
   <>
@@ -155,10 +156,7 @@ const Footer = () => (
     </div>
     <div className="flex justify-between py-[50px] text-[10px] uppercase text-[#4E5057]">
       <h4>Copyright 2022 © Nakamoto Games</h4>
-      <Image
-        src="/assets/icons/logo_master.png"
-        alt="naka-logo"
-        className="object-contain object-left"
+      <LogoIcon
         width={50}
         height={50}
       />

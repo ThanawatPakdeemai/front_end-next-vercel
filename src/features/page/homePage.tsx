@@ -1,5 +1,7 @@
 import IconFree from "@components/icons/freeIcon"
+import LogoIcon from "@components/icons/LogoIcon"
 import IconNakaWorld from "@components/icons/nakaWorldIcon"
+import ShapeIcon from "@components/icons/ShapeIcon"
 import BodyCategories from "@components/molecules/BodyCategories"
 import GameCarousel, {
   ISlide
@@ -81,10 +83,7 @@ const Home = () => {
         bgColor="bg-secondary-main"
         textColor="text-white-default"
         text="Secue. fun. simple. earn $naka AND enjoy "
-        alt="logo_master"
-        src="/assets/icons/logo_master.png"
-        width={24}
-        height={24}
+        icon={<LogoIcon />}
       />
       <div className="grid grid-cols-2 gap-6">
         <></>
@@ -128,13 +127,10 @@ const Home = () => {
         />
       </div>
       <Tagline
-        bgColor="bg-info-main"
+        bgColor="bg-green-lemon"
         textColor="text-neutral-800 font-bold"
         text="Show your God Mode for the blockchain gaming landscape"
-        alt="logo_shape"
-        src="/assets/icons/logo_shape.png"
-        width={24}
-        height={24}
+        icon={<ShapeIcon />}
       />
       <BodyCategories />
     </>

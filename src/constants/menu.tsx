@@ -2,6 +2,13 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
 import MoneyOffIcon from "@mui/icons-material/MoneyOff"
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined"
 import DiamondIcon from "@mui/icons-material/Diamond"
+import EditProfile from "@components/icons/MenunIcon/EditProfileIcon"
+import InventoryIcon from "@components/icons/MenunIcon/InventoryIcon"
+import ItemRewardIcon from "@components/icons/MenunIcon/ItemRewardIcon"
+import PlayHistoryIcon from "@components/icons/MenunIcon/PlayHistoryIcon"
+import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
+import YourMissionIcon from "@components/icons/MenunIcon/YourMissionIcon"
+import WishlistIcon from "@components/icons/MenunIcon/WishlistIcon"
 import { IMAGES } from "./images"
 
 export const MENU = [
@@ -114,16 +121,16 @@ export const MENU_PROFILE = [
   {
     name: "Edit Profile",
     link: "/",
-    icon: "/images/menu/editProfile.png"
+    icon: <EditProfile />
   },
-  { name: "Wishlist", link: "/", icon: "/images/menu/wishlist.png" },
+  { name: "Wishlist", link: "/", icon: <WishlistIcon /> },
   {
     name: "Play History",
     link: "/",
-    icon: "/images/menu/playHistory.png"
+    icon: <PlayHistoryIcon />
   },
-  { name: "Your Mission", link: "/", icon: "/images/menu/yourMission.png" },
-  { name: "Inventory", link: "/", icon: "/images/menu/inventory.png" },
-  { name: "Item Reward", link: "/", icon: "/images/menu/itemReward.png" },
-  { name: "Support", link: "/", icon: "/images/menu/support.png" }
+  { name: "Your Mission", link: "/", icon: <YourMissionIcon /> },
+  { name: "Inventory", link: "/", icon: <InventoryIcon /> },
+  { name: "Item Reward", link: "/", icon: <ItemRewardIcon /> },
+  { name: "Support", link: "/", icon: <SupportIcon /> }
 ]

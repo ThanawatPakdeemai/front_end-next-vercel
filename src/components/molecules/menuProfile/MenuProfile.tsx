@@ -7,7 +7,14 @@ import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 
 const MenuProfile = () => (
   <MenuList className="mx-[6px] mt-[14px] mb-[6px] rounded-[13px] bg-neutral-700 p-[6px]">
-    <MenuItemCustom array={MENU_PROFILE} />
+    {MENU_PROFILE.map((ele) => (
+      <MenuItemCustom
+        key={ele.label}
+        label={ele.label}
+        icon={ele.icon}
+        href={ele.href}
+      />
+    ))}
     <ButtonToggleIcon
       startIcon={<PlugIcon />}
       text="Logout"

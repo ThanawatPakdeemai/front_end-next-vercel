@@ -20,7 +20,7 @@ export const MENU = [
     name: "Games",
     link: "/games",
     isChide: true,
-    left: "100px !important",
+    left: "120px !important",
     image: {
       src: IMAGES.tableCom.src,
       widthImg: 240,
@@ -60,30 +60,28 @@ export const MENU = [
     },
     chide: [
       {
-        name: "Play To Earn Mode Services",
-        link: "/free",
+        name: "P2P DEX",
+        link: "/p2p-dex",
         icon: AttachMoneyIcon
       },
       {
-        name: "Free Mode Services",
-        link: "/free",
-        icon: MoneyOffIcon,
-        textRight: "Free"
+        name: "Staking",
+        link: "/staking",
+        icon: MoneyOffIcon
       },
       {
-        name: "Story Mode Services",
-        link: "/free",
-        icon: MapOutlinedIcon,
-        textRight: "Free"
+        name: "Referral Program",
+        link: "/referral",
+        icon: MapOutlinedIcon
       },
-      { name: "Tournament Services", link: "/free", icon: DiamondIcon }
+      { name: "Coupon", link: "/coupon", icon: DiamondIcon }
     ]
   },
   {
     name: "Naka Ecosystems",
     link: "/naka-ecosystems",
     isChide: true,
-    left: "-155px !important",
+    left: "-180px !important",
     image: {
       src: IMAGES.tableCom.src,
       widthImg: 240,
@@ -92,23 +90,22 @@ export const MENU = [
     },
     chide: [
       {
-        name: "Play To Earn Mode Ecosystems",
-        link: "/free",
+        name: "Blog",
+        link: "/log",
         icon: AttachMoneyIcon
       },
       {
-        name: "Free Mode Ecosystems",
-        link: "/free",
-        icon: MoneyOffIcon,
-        textRight: "Free"
+        name: "About Us",
+        link: "/abount-us",
+        icon: MoneyOffIcon
       },
       {
-        name: "Story Mode Ecosystems",
-        link: "/free",
-        icon: MapOutlinedIcon,
-        textRight: "Free"
+        name: "Marketplace",
+        link: "/marketplace",
+        icon: MapOutlinedIcon
       },
-      { name: "Tournament Ecosystems", link: "/free", icon: DiamondIcon }
+      { name: "Nakaverse", link: "/nakaverse", icon: DiamondIcon },
+      { name: "Nakapunks", link: "/nakapunks", icon: DiamondIcon }
     ]
   }
 ]

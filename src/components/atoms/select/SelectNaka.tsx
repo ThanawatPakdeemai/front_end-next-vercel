@@ -64,9 +64,9 @@ const SelectNaka = ({
                 "& .MuiPaper-root": {
                   borderRadius: "19px",
                   "@media only screen and (min-width: 768px)": {
-                    top: "40px !important",
                     width: widthOption,
-                    marginLeft: left || "0px"
+                    marginLeft: left || "0px",
+                    marginTop: "-5px"
                   }
                 }
               }}

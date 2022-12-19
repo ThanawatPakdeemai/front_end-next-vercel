@@ -6,7 +6,7 @@
     <g id="c">
       <g id="b">
         <g id="a">
-          <path stroke-linecap="square" d="M1.5 9 6 12c-8 13 1 15-6 21 3-7-3-5-3-17" transform="rotate(22.5)"/>
+          <path strokeLinecap="square" d="M1.5 9 6 12c-8 13 1 15-6 21 3-7-3-5-3-17" transform="rotate(22.5)"/>
           <path fill="none" d="M0 11c-2 13 4.5 17 0 22" transform="rotate(22.5)"/>
           <path d="M0 0h6L0 33-6 0h6v33"/>
         </g>

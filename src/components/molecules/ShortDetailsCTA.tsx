@@ -35,7 +35,7 @@ const ShortDetailsCTA = ({
       <ButtonLink
         href={link}
         text="Download"
-        className="carousel-slide__item__content__link !min-w-0 p-0 font-neue-machina"
+        className="carousel-slide__item__content__link max-h-[24.5px] !min-w-0 p-0 font-neue-machina"
         icon={linkIcon || <DownloadIcon />}
       />
     </div>

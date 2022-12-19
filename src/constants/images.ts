@@ -41,6 +41,13 @@ export const IMAGES = {
     height: 123,
     alt: "blog-band"
   },
+  marketPlace: {
+    src: "/assets/icons/marketplace.svg",
+    blurDataURL: "/assets/icons/marketplace.svg",
+    width: 123,
+    height: 123,
+    alt: "blog-band"
+  },
   nakaIconWhite: {
     src: "/images/alert/nakaIcon.svg",
     blurDataURL: "/images/alert/nakaIcon.svg",

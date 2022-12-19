@@ -1,19 +1,19 @@
 import * as React from "react"
 import MenuList from "@mui/material/MenuList"
-import MenuItem from "@mui/material/MenuItem"
-import ListItemText from "@mui/material/ListItemText"
-import ListItemIcon from "@mui/material/ListItemIcon"
 import { MENU_PROFILE } from "@constants/menu"
 import PlugIcon from "@components/icons/MenunIcon/PlugIcon"
+import MenuItemCustom from "@components/atoms/MenuItemCustom"
 import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 
 const MenuProfile = () => (
   <MenuList className="mx-[6px] mt-[14px] mb-[6px] rounded-[13px] bg-neutral-700 p-[6px]">
     {MENU_PROFILE.map((ele) => (
-      <MenuItem key={ele.name}>
-        <ListItemIcon>{ele.icon}</ListItemIcon>
-        <ListItemText>{ele.name}</ListItemText>
-      </MenuItem>
+      <MenuItemCustom
+        key={ele.label}
+        label={ele.label}
+        icon={ele.icon}
+        href={ele.href}
+      />
     ))}
     <ButtonToggleIcon
       startIcon={<PlugIcon />}

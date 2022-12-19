@@ -1430,6 +1430,10 @@ video {
   height: 1px;
 }
 
+.max-h-\[24\.5px\] {
+  max-height: 24.5px;
+}
+
 .w-screen {
   width: 100vw;
 }

@@ -1370,8 +1370,8 @@ video {
   height: 324px;
 }
 
-.h-12 {
-  height: 3rem;
+.h-\[48px\] {
+  height: 48px;
 }
 
 .h-\[30px\] {

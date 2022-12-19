@@ -150,7 +150,7 @@ const Footer = () => (
           </div>
         </div>
       </div>
-      <div className="mt-[10px] flex grid content-center justify-center rounded-[20px] bg-neutral-800 p-8  sm:mt-0 sm:ml-[12px] sm:w-auto">
+      <div className="mt-[10px] grid content-center justify-center rounded-[20px] bg-neutral-800 p-8  sm:mt-0 sm:ml-[12px] sm:w-auto">
         <NorthOutlinedIcon />
       </div>
     </div>

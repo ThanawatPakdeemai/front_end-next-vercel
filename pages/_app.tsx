@@ -8,16 +8,20 @@ import { appWithTranslation } from "next-i18next"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import type { AppProps } from "next/app"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import dayjs from "dayjs"
+import rt from "dayjs/plugin/relativeTime"
 import { useRouter } from "next/router"
 import Head from "next/head"
 import { DATA_META_TAG } from "@configs/metaTagData"
 import { ProviderApp, Web3Provider } from "@providers/index"
 import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material"
 import { theme } from "@styles/themes/darkTheme"
-import dayjs from "dayjs"
-import rt from "dayjs/plugin/relativeTime"
+import createEmotionCache from "@utils/createEmotionCache"
+import { CacheProvider, EmotionCache } from "@emotion/react"
 
 dayjs.extend(rt)
+
+const clientSideEmotionCache = createEmotionCache()
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (_page: ReactElement) => ReactNode
@@ -29,6 +33,7 @@ type AppPropsWithLayout = AppProps & {
 
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? ((page) => page)
+  const emotionCache: EmotionCache = clientSideEmotionCache
   const queryClient = new QueryClient()
   const router = useRouter()
   const pathActive = router.pathname
@@ -120,9 +125,13 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       )}
       <QueryClientProvider client={queryClient}>
         <Web3Provider>
-          <ThemeProvider theme={customTheme}>
-            <ProviderApp>{getLayout(<Component {...pageProps} />)}</ProviderApp>
-          </ThemeProvider>
+          <CacheProvider value={emotionCache}>
+            <ThemeProvider theme={customTheme}>
+              <ProviderApp>
+                {getLayout(<Component {...pageProps} />)}
+              </ProviderApp>
+            </ThemeProvider>
+          </CacheProvider>
         </Web3Provider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

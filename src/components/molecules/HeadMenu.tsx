@@ -70,7 +70,12 @@ const HeadMenu = () => {
                   value: ele.name,
                   textEnd: ele.textRight,
                   link: ele.link,
-                  icon: typeof ele.icon === "string" ? ele.icon : <ele.icon />
+                  icon:
+                    typeof ele.icon === "string" ? (
+                      ele.icon
+                    ) : (
+                      <ele.icon className="!hover:text-neutral-300" />
+                    )
                 })) ?? [{ label: "", value: "", link: "/" }]
               }
               widthOption="600px"

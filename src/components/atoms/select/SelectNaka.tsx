@@ -66,15 +66,15 @@ const SelectNaka = ({
                   "@media only screen and (min-width: 768px)": {
                     width: widthOption,
                     marginLeft: left || "0px",
-                    marginTop: "-5px"
+                    marginTop: "-7px"
                   }
                 }
               }}
             >
-              <div className="bg-primary-main p-1">
-                <div className="rounded-default bg-neutral-700 p-1">
+              <div className="bg-primary-main p-[6px]">
+                <div className="rounded-default bg-neutral-700 p-[3px]">
                   <div className="flex items-center justify-between">
-                    <div className="w-full rounded-default bg-primary-main px-4 py-2">
+                    <div className="m-[3px] w-full rounded-[8px] bg-primary-main px-4 py-[7px]">
                       <ListItemText>
                         <Typography className="overflow-hidden !truncate !font-neue-machina-semi !text-sm">
                           {t(`${title}`)}
@@ -85,13 +85,13 @@ const SelectNaka = ({
                   </div>
                 </div>
                 <div className="flex items-center justify-between bg-primary-main pt-2 ">
-                  <div className="flex w-full items-center  justify-between rounded-default bg-neutral-700 p-1">
-                    <MenuList className="w-full">
+                  <div className="flex w-full items-center  justify-between rounded-default bg-neutral-700 p-[3px]">
+                    <MenuList className="w-full !p-[3px]">
                       {options.map((option) => (
                         <MenuItem
                           className={`${
                             router.pathname === option.link ? "active" : ""
-                          } menu-select-naka`}
+                          } menu-select-naka !rounded-[8px] !p-[10px]`}
                           key={option.value}
                           onClick={() => {
                             popupState.close()
@@ -102,7 +102,7 @@ const SelectNaka = ({
                             }
                           }}
                         >
-                          <ListItemIcon className="!text-primary-contrastText">
+                          <ListItemIcon className="!text-primary-contrastText ">
                             {option.icon}
                           </ListItemIcon>
                           <ListItemText className="w-50">
@@ -115,7 +115,7 @@ const SelectNaka = ({
                               component="div"
                               className="w-max "
                             >
-                              <ListItemText className="text-end-select-naka rounded-less border border-neutral-700 bg-primary-main px-2 text-center font-neue-machina-semi text-sm uppercase ">
+                              <ListItemText className="text-end-select-naka rounded-less border border-neutral-700 bg-primary-main py-[2px] px-2 text-center font-neue-machina-semi text-xs uppercase ">
                                 <Typography className="uppercase text-primary-contrastText" />
                                 {option.textEnd}
                               </ListItemText>

@@ -15,7 +15,10 @@ export const MuiMenuItem: Components<Omit<Theme, "components">>["MuiMenuItem"] =
         backgroundColor: PaletteCustom.neutral["800"],
         "&:hover": {
           backgroundColor: PaletteCustom.error.main, // "transparent"
-          color: PaletteCustom.white.primary
+          color: PaletteCustom.white.primary,
+          ".MuiSvgIcon-root": {
+            color: PaletteCustom.white.primary
+          }
         }
       }
     }

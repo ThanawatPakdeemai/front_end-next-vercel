@@ -9,7 +9,7 @@
     "build:tailwind": "tailwindcss -i ./src/styles/globals.css -o ./src/styles/output.css --watch",
     "build:sass-watch": "sass --no-source-map ./src/styles/scss:./src/styles/css --watch",
     "build:sass": "sass --no-source-map ./src/styles/scss:./src/styles/css",
-    "start": "next start",
+    "start": "next start -p 4004",
     "lint": "next lint --dir src",
     "format:eslint": "eslint --fix --ignore-path .eslintignore \"./**/*.{js,jsx,ts,tsx}\" && yarn format:prettier-tsx",
     "format:prettier": "prettier --write --ignore-path .prettierignore \"./**/*.{js,jsx,ts,tsx,json,css,scss, README.md}\"",
@@ -26,6 +26,7 @@
     "check-lint": "eslint . --ext ts --ext tsx --ext js"
   },
   "dependencies": {
+    "@emotion/cache": "^11.10.5",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@ethersproject/bignumber": "^5.7.0",
@@ -58,6 +59,7 @@
     "react-i18next": "^12.0.0",
     "react-slick": "^0.29.0",
     "save-dev": "^0.0.1-security",
+    "sharp": "^0.31.2",
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.5.3",
     "styled-components": "^5.3.6",

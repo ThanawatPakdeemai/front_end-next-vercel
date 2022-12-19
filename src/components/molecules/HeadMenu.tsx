@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material"
+import { Badge, Box, Button, Typography } from "@mui/material"
 import { memo } from "react"
 import { Image } from "@components/atoms/image/index"
 import SelectNaka from "@components/atoms/select/SelectNaka"
@@ -70,7 +70,12 @@ const HeadMenu = () => {
                   value: ele.name,
                   textEnd: ele.textRight,
                   link: ele.link,
-                  icon: typeof ele.icon === "string" ? ele.icon : <ele.icon />
+                  icon:
+                    typeof ele.icon === "string" ? (
+                      ele.icon
+                    ) : (
+                      <ele.icon className="!hover:text-neutral-300" />
+                    )
                 })) ?? [{ label: "", value: "", link: "/" }]
               }
               widthOption="600px"
@@ -87,11 +92,18 @@ const HeadMenu = () => {
                   variant="contained"
                   size="large"
                 >
-                  <Typography className="!whitespace-nowrap !font-neue-machina-semi !text-sm">
-                    {t(`${item.name}`)}
-                  </Typography>
+                  <Badge
+                    color="error"
+                    variant="dot"
+                    invisible={false} // ถ้ามี แจ้งเตือน false
+                    sx={{ "& .MuiBadge-badge": { margin: "9px -10px 0 0" } }}
+                  >
+                    <Typography className="!whitespace-nowrap !font-neue-machina-semi !text-sm">
+                      {t(`${item.name}`)}
+                    </Typography>
+                  </Badge>
                   <DragHandleIcon
-                    className="ml-2"
+                    className="ml-4"
                     sx={styleIcon}
                   />
                 </Button>

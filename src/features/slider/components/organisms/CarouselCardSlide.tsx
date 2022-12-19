@@ -6,13 +6,15 @@ import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined"
 import { CardMedia } from "@mui/material"
 
 export interface CarouselCardSlideProps extends IShortDetailsCTA {
-  image: string
+  video?: boolean
+  src: string
   name: string
   index: number
   activeIndex: number
 }
 const CarouselCardSlide = ({
-  image,
+  video = false,
+  src,
   name,
   index,
   activeIndex,
@@ -27,10 +29,12 @@ const CarouselCardSlide = ({
     >
       <div className="carousel-slide__item__image">
         <CardMedia
-          component="img"
+          component={video ? "video" : "img"}
           alt={name}
           height={468}
-          image={image}
+          src={src}
+          autoPlay
+          controls
         />
       </div>
       <ShortDetailsCTA

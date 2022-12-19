@@ -14,6 +14,7 @@ import { motion } from "framer-motion"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import IconArrowLeft from "@components/icons/arrowLeftIcon"
+import LogoIcon from "@components/icons/LogoIcon"
 
 const arrowMotion = {
   rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
@@ -299,10 +300,14 @@ const Footer = () => {
       </div>
       <div className="flex justify-between py-[50px] text-[10px] uppercase text-neutral-600">
         <h4>Copyright 2022 © Nakamoto Games</h4>
-        <Image
+        {/* <Image
           src="/assets/icons/logo_master.png"
           alt="naka-logo"
           className="object-contain object-left"
+          width={50}
+          height={50}
+        /> */}
+        <LogoIcon
           width={50}
           height={50}
         />

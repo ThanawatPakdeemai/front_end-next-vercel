@@ -8,7 +8,7 @@ export const MuiList: Components<Omit<Theme, "components">>["MuiList"] = {
   styleOverrides: {
     root: {
       backgroundColor: PaletteCustom.neutral["700"],
-      padding: 0,
+      padding: "6px",
       borderRadius: "5px",
       color: "#70727B"
     }

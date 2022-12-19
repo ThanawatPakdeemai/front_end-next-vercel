@@ -9,6 +9,7 @@ import PlayHistoryIcon from "@components/icons/MenunIcon/PlayHistoryIcon"
 import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
 import YourMissionIcon from "@components/icons/MenunIcon/YourMissionIcon"
 import WishlistIcon from "@components/icons/MenunIcon/WishlistIcon"
+import { IMenuBase } from "@interfaces/IMenu"
 import { IMAGES } from "./images"
 
 export const MENU = [
@@ -117,20 +118,20 @@ export const MENU = [
   }
 ]
 
-export const MENU_PROFILE = [
+export const MENU_PROFILE: IMenuBase[] = [
   {
-    name: "Edit Profile",
-    link: "/",
+    label: "Edit Profile",
+    href: "/",
     icon: <EditProfile />
   },
-  { name: "Wishlist", link: "/", icon: <WishlistIcon /> },
+  { label: "Wishlist", href: "/", icon: <WishlistIcon /> },
   {
-    name: "Play History",
-    link: "/",
+    label: "Play History",
+    href: "/",
     icon: <PlayHistoryIcon />
   },
-  { name: "Your Mission", link: "/", icon: <YourMissionIcon /> },
-  { name: "Inventory", link: "/", icon: <InventoryIcon /> },
-  { name: "Item Reward", link: "/", icon: <ItemRewardIcon /> },
-  { name: "Support", link: "/", icon: <SupportIcon /> }
+  { label: "Your Mission", href: "/", icon: <YourMissionIcon /> },
+  { label: "Inventory", href: "/", icon: <InventoryIcon /> },
+  { label: "Item Reward", href: "/", icon: <ItemRewardIcon /> },
+  { label: "Support", href: "/", icon: <SupportIcon /> }
 ]

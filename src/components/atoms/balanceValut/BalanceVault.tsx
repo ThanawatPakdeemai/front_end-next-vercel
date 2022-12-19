@@ -14,44 +14,25 @@ const BalanceVault = ({ className, variant }: IProp) => {
   const busdBalance: number = 466264
   const nakaBalance: number = 1235446
 
+  const renderAmount = (amount: number) => (
+    <Typography
+      id="amount"
+      className={className}
+    >
+      {profile && amount ? Helper.formatNumber(Helper.number4digit(amount)) : 0}
+    </Typography>
+  )
+
   switch (variant) {
     case "busd":
-      return (
-        <Typography
-          id="amount"
-          className={className}
-        >
-          {profile && busdBalance
-            ? Helper.formatNumber(Helper.number4digit(busdBalance))
-            : 0}
-        </Typography>
-      )
+      return renderAmount(busdBalance)
     case "vault":
-      return (
-        <Typography
-          id="amount"
-          className={className}
-        >
-          {profile &&
-          balance !== 0 &&
-          !Number.isNaN(parseFloat(balance.toString()))
-            ? Helper.number4digit(balance)
-            : 0}
-        </Typography>
-      )
+      return renderAmount(balance)
     case "naka":
-      return (
-        <Typography
-          id="amount"
-          className={className}
-        >
-          {profile && nakaBalance
-            ? Helper.formatNumber(Helper.number4digit(nakaBalance))
-            : 0}
-        </Typography>
-      )
+      return renderAmount(nakaBalance)
     default:
       return null
   }
 }
+
 export default BalanceVault

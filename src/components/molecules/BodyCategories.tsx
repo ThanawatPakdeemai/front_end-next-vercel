@@ -57,7 +57,7 @@ const BodyCategories = () => {
               animate="animate"
             >
               <motion.div
-                className="group relative flex h-[324px] w-full "
+                className="group relative flex h-[324px] w-full"
                 variants={cardImg}
               >
                 <ImageCustom
@@ -65,7 +65,7 @@ const BodyCategories = () => {
                   alt="home-slide"
                   width={264}
                   height={324}
-                  className="rounded-md group-hover:h-[250px]"
+                  className="rounded-md object-cover group-hover:h-[250px]"
                 />
                 <motion.div
                   variants={btnCard}
@@ -82,7 +82,7 @@ const BodyCategories = () => {
                     }
                     text={item.text}
                     handleClick={onHandleClick}
-                    className="z-[2] h-[48px] w-full bg-primary-main capitalize "
+                    className="z-[2] h-[50px] w-full bg-primary-main capitalize "
                   />
                 </motion.div>
               </motion.div>

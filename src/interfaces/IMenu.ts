@@ -4,7 +4,7 @@ interface ILink {
   href: string
 }
 
-interface IMenuBase extends ILink {
+export interface IMenuBase extends ILink {
   label: string
   icon: string | React.ReactElement
 }

@@ -8,8 +8,8 @@ import { siteInfo } from "@configs/sites"
 import Helper from "@utils/helper"
 import dayjs from "dayjs"
 import CircleNakaIcon from "@components/icons/CircleNakaIcon"
-import { BUY_NAKA_MENU } from "@constants/tabMenu"
 import ButtonClose from "@components/atoms/button/ButtonClose"
+import { BUY_NAKA_MENU } from "@configs/buynaka"
 import { ModalCustom } from "./ModalCustom"
 import TabMenu from "./TabMenu"
 
@@ -180,9 +180,10 @@ const HeadPrice = ({
           </Box>
           {BUY_NAKA_MENU.map((ele) => (
             <TabMenu
-              key={ele.text}
+              key={ele.title}
               icon={ele.icon}
-              text={ele.text}
+              text={ele.title}
+              link={ele.link}
               className="mt-4"
             />
           ))}

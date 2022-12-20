@@ -121,10 +121,13 @@ body {
   background-color: theme("colors.error.main") !important;
   color: theme("colors.white.default") !important;
 }
-.menu-select-naka .text-end-select-naka .MuiTypography-root {
+.menu-select-naka.active .MuiSvgIcon-root {
   color: theme("colors.white.primary") !important;
+}
+.menu-select-naka .text-end-select-naka .MuiTypography-root {
+  color: theme("colors.neutral.300") !important;
   font-family: theme("fontFamily.neue-machina-semi") !important;
-  font-size: theme("fontSize.sm") !important;
+  font-size: theme("fontSize.xs") !important;
 }
 .menu-select-naka:hover .text-end-select-naka {
   border: theme("colors.white.primary") !important;
@@ -133,7 +136,7 @@ body {
 .menu-select-naka:hover .text-end-select-naka .MuiTypography-root {
   color: theme("colors.primary.main") !important;
   font-family: theme("fontFamily.neue-machina-semi") !important;
-  font-size: theme("fontSize.sm") !important;
+  font-size: theme("fontSize.xs") !important;
 }
 
 .button-select-naka:hover {

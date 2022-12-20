@@ -1370,8 +1370,8 @@ video {
   height: 324px;
 }
 
-.h-\[48px\] {
-  height: 48px;
+.h-\[50px\] {
+  height: 50px;
 }
 
 .h-\[30px\] {
@@ -1380,10 +1380,6 @@ video {
 
 .h-10 {
   height: 2.5rem;
-}
-
-.h-\[50px\] {
-  height: 50px;
 }
 
 .h-8 {
@@ -2027,6 +2023,11 @@ video {
 .object-contain {
   -o-object-fit: contain;
   object-fit: contain;
+}
+
+.object-cover {
+  -o-object-fit: cover;
+  object-fit: cover;
 }
 
 .object-fill {

@@ -1467,6 +1467,10 @@ video {
   width: 2.5rem;
 }
 
+.w-\[200px\] {
+  width: 200px;
+}
+
 .w-48 {
   width: 12rem;
 }
@@ -1710,6 +1714,10 @@ video {
 
 .gap-4 {
   gap: 1rem;
+}
+
+.gap-5 {
+  gap: 1.25rem;
 }
 
 .gap-6 {
@@ -2040,6 +2048,10 @@ video {
   --tw-bg-opacity: 0.4;
 }
 
+.stroke-neutral-300 {
+  stroke: #e1e2e2;
+}
+
 .object-cover {
   -o-object-fit: cover;
   object-fit: cover;
@@ -2071,16 +2083,16 @@ video {
   padding: 0px;
 }
 
+.p-\[6px\] {
+  padding: 6px;
+}
+
 .p-8 {
   padding: 2rem;
 }
 
 .\!p-4 {
   padding: 1rem !important;
-}
-
-.p-\[6px\] {
-  padding: 6px;
 }
 
 .p-\[3px\] {

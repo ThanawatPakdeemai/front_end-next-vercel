@@ -1,62 +1,66 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Box, LinearProgress, Typography } from "@mui/material"
 import Helper from "@utils/helper"
+import { unstable_batchedUpdates } from "react-dom"
+import { IEnergy, IExp } from "@interfaces/IProfileMenu"
 
 interface IProps {
   type: "exp" | "energy"
   barColor: string
-  exp?: {
-    level: number
-    expAmount: number
-    maxExp: number
-  }
-  energy?: {
-    staminaPoint: number
-    totalStamina: number
-  }
+  exp?: IExp
+  energy?: IEnergy
 }
 
 const InsideStatProfile = ({ type, barColor, exp, energy }: IProps) => {
-  const [staminaValue, setStaminaValue] = React.useState<number>(0)
-  const [expValue, setExpValue] = React.useState<number>(0)
+  const [value, setValue] = React.useState<number>(0)
+  const [max, setMax] = React.useState<number>(0)
+  const [label, setLabel] = React.useState<string>("")
 
-  if (!staminaValue && energy) {
-    setStaminaValue(
-      Helper.percentageCalc(energy.staminaPoint, energy.totalStamina)
-    )
+  const refetchValue = (data: IExp | IEnergy) => {
+    unstable_batchedUpdates(() => {
+      setValue("expAmount" in data ? data.expAmount : data.staminaPoint)
+      setMax("maxExp" in data ? data.maxExp : data.totalStamina)
+      setLabel("level" in data ? `level ${data.level}` : "free energy")
+    })
   }
 
-  if (!expValue && exp) {
-    setExpValue(Helper.percentageCalc(exp.expAmount, exp.maxExp))
-  }
+  useEffect(() => {
+    if (type === "exp" && exp) {
+      refetchValue(exp)
+    } else if (type === "energy" && energy) {
+      refetchValue(energy)
+    }
+  }, [type, exp, energy])
+
+  const percentage = Helper.percentageCalc(value, max)
 
   return (
     <div className="flex h-full flex-1 flex-col rounded-[13px] bg-neutral-900 p-[10px_15px]">
       <Typography className={`text-xs font-bold uppercase ${barColor}`}>
-        {type === "exp" ? `level ${exp && exp.level}` : "free energy"}
+        {label}
       </Typography>
       <Box
         component="div"
         className="flex text-xs font-bold uppercase text-white-default"
       >
-        {type === "exp" ? `exp ` : `stamina `}
+        {type === "exp" ? "exp " : "stamina "}
         <Typography className={`ml-1 text-xs font-bold uppercase ${barColor}`}>
-          {(energy && energy.staminaPoint) || (exp && exp.expAmount)}
+          {value}
         </Typography>
-        / {(energy && energy.totalStamina) || (exp && exp.maxExp)}
+        / {max}
       </Box>
       {type === "exp" ? (
         <LinearProgress
           variant="determinate"
           color="error"
           className="mt-1 w-full rotate-180 rounded-[2px] bg-neutral-800 "
-          value={expValue}
+          value={percentage}
         />
       ) : (
         <LinearProgress
           variant="determinate"
           className="progress-bar-energy mt-1 w-full rotate-180"
-          value={staminaValue}
+          value={percentage}
           sx={[
             {
               ".MuiLinearProgress-bar1Determinate": {

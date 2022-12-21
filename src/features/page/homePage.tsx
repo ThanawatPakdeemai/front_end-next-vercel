@@ -1,6 +1,4 @@
-import IconFree from "@components/icons/freeIcon"
 import LogoIcon from "@components/icons/LogoIcon"
-import IconNakaWorld from "@components/icons/nakaWorldIcon"
 import ShapeIcon from "@components/icons/ShapeIcon"
 import BodyCategories from "@components/molecules/BodyCategories"
 import GameCarousel, {
@@ -92,38 +90,20 @@ const Home = () => {
       <DeveloperPart />
       <div className="my-20 h-full w-full">
         <GameCarousel
+          menu={F2PHeaderMenu}
           list={f2pGame}
-          tag={F2PHeaderMenu.title}
-          headerMenu={F2PHeaderMenu.menuList}
-          theme={F2PHeaderMenu.theme}
-          stickerRotate={F2PHeaderMenu.stickerRotate}
-          checkTimer
           curType={f2pCurType}
           setCurType={setF2PCurType}
-          headerIcon={
-            <IconFree
-              width={200}
-              height={100}
-            />
-          }
+          checkTimer
         />
       </div>
       <div className="my-20 h-full w-full">
         <GameCarousel
+          menu={P2EHeaderMenu}
           list={p2eGame}
-          showNo
-          tag={P2EHeaderMenu.title}
-          headerMenu={P2EHeaderMenu.menuList}
-          theme={P2EHeaderMenu.theme}
-          stickerRotate={P2EHeaderMenu.stickerRotate}
           curType={p2eCurType}
           setCurType={setP2ECurType}
-          headerIcon={
-            <IconNakaWorld
-              width={180}
-              height={125}
-            />
-          }
+          showNo
         />
       </div>
       <Tagline

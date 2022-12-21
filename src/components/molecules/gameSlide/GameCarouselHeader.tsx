@@ -1,5 +1,4 @@
-import IconDollar from "@components/icons/dollarIcon"
-import React, { memo, useEffect } from "react"
+import React, { memo, useEffect, useState } from "react"
 import AddIcon from "@mui/icons-material/Add"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import IconArrowLeft from "@components/icons/arrowLeftIcon"
@@ -14,6 +13,7 @@ export interface ISlideList extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export interface IHeaderSlide {
+  sticker: React.ReactNode
   icon: React.ReactNode
   title: string
   menuList: ISlideList[]
@@ -21,7 +21,8 @@ export interface IHeaderSlide {
   stickerRotate: number
 }
 
-interface IProps extends IHeaderSlide {
+interface IProps {
+  menu: IHeaderSlide
   curType: string
   setCurType: (_type: string) => void
   onView?: () => void
@@ -30,18 +31,17 @@ interface IProps extends IHeaderSlide {
 }
 
 const GameCarouselHeader = ({
-  icon,
-  title,
-  menuList,
-  theme,
-  stickerRotate,
+  menu,
   curType,
   setCurType,
   onView,
   onNext,
   onPrev
 }: IProps) => {
+  const bgColor = `!bg-${menu.theme}-main`
+
   const animateControls = useAnimation()
+  const [isHover, setIsHover] = useState<boolean>(false)
 
   const rotateSticker = async (_rotate: number) => {
     await animateControls.start({
@@ -53,6 +53,7 @@ const GameCarouselHeader = ({
       }
     })
   }
+
   const onChangeType = (_type: string) => {
     setCurType(_type)
   }
@@ -76,23 +77,26 @@ const GameCarouselHeader = ({
   }
 
   useEffect(() => {
-    let rotate = stickerRotate
-    const delay = 4
+    let rotate = menu.stickerRotate
+    const delay = isHover ? 0 : 4
     const interval = setInterval(() => {
-      rotateSticker(rotate)
-      rotate *= -1
+      if (!isHover) {
+        rotateSticker(rotate)
+        rotate *= -1
+      }
     }, (delay + 1) * 1000)
     return () => {
       clearInterval(interval)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [isHover])
 
   return (
     <div className="slick-header-container relative mb-4 h-[50px] w-full">
       <motion.div
+        key={`sticker_${menu.title}`}
         className="absolute top-[-80px] left-[-80px]"
-        initial={{ rotateZ: stickerRotate }}
+        initial={{ rotateZ: menu.stickerRotate }}
         animate={animateControls}
         whileHover={{ rotateZ: 0 }}
         transition={{
@@ -100,20 +104,22 @@ const GameCarouselHeader = ({
           type: "spring",
           stiffness: 300
         }}
+        onHoverStart={() => setIsHover(true)}
+        onHoverEnd={() => setIsHover(false)}
       >
-        {icon}
+        {menu.sticker}
       </motion.div>
       <div className="flex h-full w-full items-center justify-between">
-        <div className="border-grey-A100 relative flex h-full w-fit items-center justify-between rounded-default border-2 bg-[#010101] bg-opacity-40 px-1 text-[10px] capitalize backdrop-blur-[25px]">
+        <div className="relative flex h-full w-fit items-center justify-between rounded-default border-2 border-neutral-800 bg-[#010101] bg-opacity-40 px-1 text-[10px] capitalize backdrop-blur-[25px]">
           <div className="flex items-center py-1 pl-4 font-bold ">
-            <IconDollar.Ori className={`slick-header-${theme}-icon`} />
+            {menu.icon}
             <p
-              className={`text-${theme}-main h-[10px] pl-2 pr-2 font-neue-machina-bold font-bold uppercase`}
+              className={`text-${menu.theme}-main h-[10px] pl-2 pr-2 font-neue-machina-bold font-bold uppercase`}
             >
-              {title}
+              {menu.title}
             </p>
           </div>
-          {menuList.map((item) => (
+          {menu.menuList.map((item) => (
             <button
               type="button"
               key={item.id}
@@ -123,11 +129,14 @@ const GameCarouselHeader = ({
               <Chip
                 label={item.label}
                 size="medium"
-                className={`h-full w-full cursor-pointer font-bold hover:bg-${theme}-main font-bold capitalize hover:text-white-primary ${
+                className={` h-full w-full cursor-pointer font-bold hover:bg-${
+                  menu.theme
+                }-main !hover:text-white-primary capitalize ${
                   curType === item.type
-                    ? `bg-${theme}-main text-white-primary`
-                    : "bg-neutral-800 text-black-default"
+                    ? `!text-white-primary ${bgColor}`
+                    : "text-black-default hover:text-white-primary"
                 }`}
+                sx={{ background: "red" }}
               />
             </button>
           ))}

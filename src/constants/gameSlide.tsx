@@ -6,6 +6,9 @@ import {
   ISlideList
 } from "@components/molecules/gameSlide/GameCarouselHeader"
 import { IGameDownloadSlide } from "@feature/slider/interfaces/ISlides"
+import IconNakaWorld from "@components/icons/nakaWorldIcon"
+import IconDollar from "@components/icons/dollarIcon"
+import IconFree from "@components/icons/freeIcon"
 
 export const GAME_BANNER_SLIDES = [
   {
@@ -274,11 +277,17 @@ const p2eMenu: ISlideList[] = [
   }
 ]
 export const P2EHeaderMenu: IHeaderSlide = {
-  icon: "",
+  sticker: (
+    <IconNakaWorld
+      width={180}
+      height={125}
+    />
+  ),
   title: "play to earn",
   menuList: p2eMenu,
   theme: "error",
-  stickerRotate: 15
+  stickerRotate: 15,
+  icon: <IconDollar.Ori className="slick-header-error-icon" />
 }
 
 const f2pMenu: ISlideList[] = [
@@ -303,7 +312,13 @@ const f2pMenu: ISlideList[] = [
 ]
 
 export const F2PHeaderMenu: IHeaderSlide = {
-  icon: "",
+  sticker: (
+    <IconFree
+      width={200}
+      height={100}
+    />
+  ),
+  icon: <IconDollar.Not className="slick-header-secondary-icon" />,
   title: "free to earn",
   menuList: f2pMenu,
   theme: "secondary",

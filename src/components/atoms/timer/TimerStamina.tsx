@@ -30,7 +30,7 @@ const TimerStamina = ({ time, show, setShow }: IProps) => {
     const sec = date2.diff(date1, "seconds")
     const seconds = (sec % 60) * -1
 
-    if (seconds >= 0) {
+    if (seconds > 0) {
       setTimer(
         `${displayTimer(hours)}:${displayTimer(minutes)}:${displayTimer(
           seconds

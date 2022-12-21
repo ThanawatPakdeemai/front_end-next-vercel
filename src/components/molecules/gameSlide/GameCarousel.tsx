@@ -4,7 +4,7 @@ import ImageCustom from "@components/atoms/image/Image"
 import { Chip } from "@mui/material"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import GameCarouselHeader, {
-  ISlideList
+  IHeaderSlide
 } from "@components/molecules/gameSlide/GameCarouselHeader"
 import TimerStamina from "@components/atoms/timer/TimerStamina"
 import { motion } from "framer-motion"
@@ -19,19 +19,15 @@ export interface ISlide {
 }
 
 interface IProps {
+  menu: IHeaderSlide
   list: ISlide[]
-  tag: string
   showNo?: boolean
-  headerIcon: React.ReactNode
-  headerMenu: ISlideList[]
-  theme: string
   checkTimer?: boolean
-  stickerRotate: number
   curType: string
   setCurType: (_type: string) => void
 }
 
-type TColor =
+export type TColor =
   | "default"
   | "primary"
   | "secondary"
@@ -41,22 +37,15 @@ type TColor =
   | "warning"
 
 const GameCarousel = ({
+  menu,
   list,
   showNo = false,
-  tag,
-  headerIcon,
-  headerMenu,
-  theme,
   checkTimer = false,
-  stickerRotate,
   curType,
   setCurType
 }: IProps) => {
   const staminaRecovery = new Date("2022-12-18T22:24:00.000Z")
-  const [cooldown, setCooldown] = useState<boolean>(false)
-
   const showSlide = list && list.length > 6 ? 6 : list.length
-
   const settings: Settings = {
     dots: false,
     infinite: true,
@@ -66,32 +55,6 @@ const GameCarousel = ({
     arrows: false,
     variableWidth: false
   }
-
-  const sliderRef = useRef<Slider>(null)
-
-  const onSlideNext = () => {
-    sliderRef?.current?.slickNext()
-  }
-  const onSlidePrev = () => {
-    sliderRef?.current?.slickPrev()
-  }
-
-  const onViewAll = () => {}
-
-  const onHandleClick = () => {}
-
-  const cardImg = {
-    init: {
-      scale: 1
-    },
-    onHover: {
-      scale: [1, 0.94, 0.96, 0.94],
-      transition: {
-        duration: 0.4
-      }
-    }
-  }
-
   const btnCard = {
     init: {
       y: 40,
@@ -107,6 +70,20 @@ const GameCarousel = ({
       }
     }
   }
+
+  const sliderRef = useRef<Slider>(null)
+  const [cooldown, setCooldown] = useState<boolean>(false)
+
+  const onSlideNext = () => {
+    sliderRef?.current?.slickNext()
+  }
+  const onSlidePrev = () => {
+    sliderRef?.current?.slickPrev()
+  }
+
+  const onViewAll = () => {}
+
+  const onHandleClick = () => {}
 
   const onChipColor = (_theme: string | undefined) => {
     let chip: TColor = "default"
@@ -129,15 +106,11 @@ const GameCarousel = ({
   return (
     <div className="mb-10">
       <GameCarouselHeader
-        icon={headerIcon}
-        title={tag}
-        menuList={headerMenu}
+        menu={menu}
+        curType={curType}
         onView={onViewAll}
         onNext={onSlideNext}
         onPrev={onSlidePrev}
-        theme={theme}
-        stickerRotate={stickerRotate}
-        curType={curType}
         setCurType={setCurType}
       />
       <Slider
@@ -148,20 +121,17 @@ const GameCarousel = ({
           list.map((item, index) => (
             <motion.div
               key={`${item.id}_game`}
-              className="slick-card-container"
+              className="slick-card-container flex flex-col justify-center blur-none"
               initial="init"
               whileHover="onHover"
               animate="animate"
             >
-              <motion.div
-                className="relative flex h-[218px] w-full overflow-hidden"
-                variants={cardImg}
-              >
+              <motion.div className="relative flex h-[218px] w-full items-center justify-center overflow-hidden">
                 {showNo ? (
                   <NumberRank
                     index={index}
                     fixColor={false}
-                    className="absolute top-0 right-0 m-[10px] h-10 w-10 text-default text-white-primary"
+                    className="slick-card-number absolute top-0 right-0 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
                   />
                 ) : null}
                 <ImageCustom
@@ -169,7 +139,7 @@ const GameCarousel = ({
                   alt="home-slide"
                   width={218}
                   height={218}
-                  className="rounded-md"
+                  className="slick-card-content rounded-md"
                 />
                 <motion.div
                   variants={btnCard}
@@ -193,15 +163,15 @@ const GameCarousel = ({
               </motion.div>
               <div className="relative z-[3]">
                 <div className="slick-card-desc flex h-10 w-full items-center">
-                  <p className="slick-card-desc relative truncate uppercase hover:text-clip">
+                  <p className="relative truncate uppercase hover:text-clip">
                     {item.desc}
                   </p>
                 </div>
                 <div className="relative grid w-full grid-cols-2 gap-2 text-xs uppercase">
                   <Chip
-                    label={tag}
+                    label={menu.title}
                     size="small"
-                    color={onChipColor(theme)}
+                    color={onChipColor(menu.theme)}
                     className="font-bold"
                   />
                   {checkTimer ? (

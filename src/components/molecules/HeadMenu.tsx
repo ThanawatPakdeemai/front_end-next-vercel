@@ -4,10 +4,10 @@ import { Image } from "@components/atoms/image/index"
 import SelectNaka from "@components/atoms/select/SelectNaka"
 import DragHandleIcon from "@mui/icons-material/DragHandle"
 import { useTranslation } from "next-i18next"
-import { MENU } from "@constants/menu"
 import Link from "next/link"
 import { IMAGES } from "@constants/images"
 import { useRouter } from "next/router"
+import { MENU } from "@configs/menu"
 
 export const styleIcon = {
   fontSize: "20px !important"

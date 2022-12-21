@@ -35,7 +35,7 @@ const InsideStatProfile = ({ type, barColor, exp, energy }: IProps) => {
   const percentage = Helper.percentageCalc(value, max)
 
   return (
-    <div className="flex h-full flex-1 flex-col rounded-[13px] bg-neutral-900 p-[10px_15px]">
+    <div className="flex h-full w-full flex-1 flex-col rounded-[13px] bg-neutral-900 p-[10px_15px]">
       <Typography className={`text-xs font-bold uppercase ${barColor}`}>
         {label}
       </Typography>

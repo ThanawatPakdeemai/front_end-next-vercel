@@ -42,11 +42,39 @@ export const IMAGES = {
     alt: "blog-band"
   },
   marketPlace: {
-    src: "/assets/icons/marketplace.svg",
-    blurDataURL: "/assets/icons/marketplace.svg",
-    width: 123,
-    height: 123,
-    alt: "blog-band"
+    src: "/images/home/marketplace.svg",
+    blurDataURL: "/images/home/marketplace.svg",
+    width: 678,
+    height: 218,
+    alt: "marketPlace"
+  },
+  nakaVerse: {
+    src: "/images/home/nakaVerse.svg",
+    blurDataURL: "/images/home/nakaVerse.svg",
+    width: 678,
+    height: 218,
+    alt: "blog-nakaVerse"
+  },
+  worldNakaverse: {
+    src: "/images/home/world.svg",
+    blurDataURL: "/images/home/world.svg",
+    width: 170,
+    height: 173,
+    alt: "worldNakaverse"
+  },
+  ringNakaverse: {
+    src: "/images/home/ring.svg",
+    blurDataURL: "/images/home/ring.svg",
+    width: 239,
+    height: 9,
+    alt: "ringNakaverse"
+  },
+  nakaVerseMascot: {
+    src: "/images/home/nakaVerseMascot.svg",
+    blurDataURL: "/images/home/nakaVerseMascot.svg",
+    width: 238,
+    height: 239,
+    alt: "nakaVerseMascot"
   },
   nakaIconWhite: {
     src: "/images/alert/nakaIcon.svg",

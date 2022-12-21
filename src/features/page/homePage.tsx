@@ -11,6 +11,8 @@ import {
 import DeveloperPart from "@feature/home/components/template/DeveloperPart"
 import BannerSlide from "@feature/slider/components/templates/BannerSlide"
 import CarouselSlide from "@feature/slider/components/templates/CarouselSlide"
+import CardMarketplace from "@components/molecules/CardMarketplace"
+import CardNakaverse from "@components/molecules/CardNakaverse"
 
 const Home = () => (
   <>
@@ -50,6 +52,12 @@ const Home = () => (
           />
         }
       />
+    </div>
+    <div className="my-20 h-full w-full">
+      <CardMarketplace />
+    </div>
+    <div className="my-20 h-full w-full">
+      <CardNakaverse />
     </div>
   </>
 )

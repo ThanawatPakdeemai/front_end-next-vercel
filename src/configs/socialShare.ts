@@ -1,58 +1,39 @@
-export const SOCIAL = [
+import { IMenuBase } from "@interfaces/IMenu"
+
+export const SOCIAL: IMenuBase[] = [
   {
-    link: "/telegram",
-    img: "/assets/icons/social_icon/telegram.svg",
+    icon: "/assets/icons/social_icon/telegram.svg",
     label: "telegram",
-    href: "https://t.me/NakamotoGames",
-    width: 18,
-    height: 18
+    href: "https://t.me/NakamotoGames"
   },
   {
-    link: "/twitter",
-    img: "/assets/icons/social_icon/twitter.svg",
+    icon: "/assets/icons/social_icon/twitter.svg",
     label: "twitter",
-    href: "https://twitter.com/NakamotoGames",
-    width: 18,
-    height: 18
+    href: "https://twitter.com/NakamotoGames"
   },
   {
-    link: "/substack",
-    img: "/assets/icons/social_icon/substack.svg",
+    icon: "/assets/icons/social_icon/substack.svg",
     label: "substack",
-    href: "https://nakamotogames.substack.com/",
-    width: 13,
-    height: 13
+    href: "https://nakamotogames.substack.com/"
   },
   {
-    link: "/medium",
-    img: "/assets/icons/social_icon/medium.svg",
+    icon: "/assets/icons/social_icon/medium.svg",
     label: "medium",
-    href: "https://medium.com/@nakamotogames",
-    width: 20,
-    height: 20
+    href: "https://medium.com/@nakamotogames"
   },
   {
-    link: "/facebook",
-    img: "/assets/icons/social_icon/facebook.svg",
+    icon: "/assets/icons/social_icon/facebook.svg",
     label: "facebook",
-    href: "https://www.facebook.com/play.nakamoto.games",
-    width: 10,
-    height: 10
+    href: "https://www.facebook.com/play.nakamoto.games"
   },
   {
-    link: "/discord",
-    img: "/assets/icons/social_icon/discord.svg",
+    icon: "/assets/icons/social_icon/discord.svg",
     label: "discord",
-    href: "https://discord.com/invite/nakamoto-games",
-    width: 20,
-    height: 20
+    href: "https://discord.com/invite/nakamoto-games"
   },
   {
-    link: "/tiktok",
-    img: "/assets/icons/social_icon/tiktok.svg",
+    icon: "/assets/icons/social_icon/tiktok.svg",
     label: "tiktok",
-    href: "https://www.tiktok.com/@nakamotogames",
-    width: 16,
-    height: 16
+    href: "https://www.tiktok.com/@nakamotogames"
   }
 ]

@@ -1,10 +1,5 @@
 import { Divider, Typography } from "@mui/material"
-import DvrOutlinedIcon from "@mui/icons-material/DvrOutlined"
-import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined"
-import WineBarOutlinedIcon from "@mui/icons-material/WineBarOutlined"
 import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import Image from "next/image"
 import { SOCIAL } from "@configs/socialShare"
 import Link from "next/link"
 import { NAKA_GAME } from "@configs/nakaGame"
@@ -13,8 +8,11 @@ import { NAKA_ECOSYSTEMSS } from "@configs/nakaEcosystems"
 import { motion } from "framer-motion"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import IconArrowLeft from "@components/icons/arrowLeftIcon"
 import LogoIcon from "@components/icons/LogoIcon"
+import WineIcon from "@components/icons/WineIcon"
+import DesktopIcon from "@components/icons/DesktopIcon"
+import DollarPaperIcon from "@components/icons/DollarPaperIcon"
+import IconArrowTop from "@components/icons/arrowTopIcon"
 
 const arrowMotion = {
   rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
@@ -64,6 +62,12 @@ const iconmotion = {
       stiffness: 500,
       type: "spring"
     }
+  }
+}
+const iconArrow = {
+  hover: {
+    scaleY: 1.2,
+    ease: "easeIn"
   }
 }
 
@@ -201,13 +205,11 @@ const Footer = () => {
             Join the industry&apos;s first comprehensive Play to Earn ecosystem
             and explore the many benefits it has to offer.
             <div className="my-8 w-[280px]">
-              <ButtonLink
-                href="/"
+              <ButtonToggleIcon
+                handleClick={onHandleClick}
+                startIcon={<WineIcon />}
                 text="join The Revolutions"
-                icon={<WineBarOutlinedIcon />}
-                size="medium"
-                color="secondary"
-                variant="contained"
+                className="btn-rainbow-theme b h-[50px] w-[220px] bg-secondary-main font-bold capitalize text-white-default"
               />
             </div>
             <div className="flex flex-wrap">
@@ -229,12 +231,7 @@ const Footer = () => {
                         damping: 4
                       }}
                     >
-                      <Image
-                        src={item.img}
-                        alt={item.label}
-                        width={item.width}
-                        height={item.height}
-                      />
+                      {item.icon}
                     </motion.div>
                   </motion.div>
                 </Link>
@@ -243,70 +240,57 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="pt-[80px] text-[12px] sm:flex">
-        <div className="rounded-[20px] bg-neutral-800 p-8">
+      <div className="pt-[80px] text-[12px] lg:flex">
+        <div className="w-full rounded-[20px] bg-neutral-800 p-8">
           <div className="md:flex">
             <div
-              className="flex md:w-2/4"
+              className="flex items-center md:w-2/4 md:pr-[20px]"
               text-white-primary
             >
               <ButtonToggleIcon
                 handleClick={onHandleClick}
-                startIcon={
-                  <Image
-                    src="/assets/icons/logo_master.png"
-                    width={18}
-                    height={18}
-                    alt="logo_master"
-                  />
-                }
+                startIcon={<DesktopIcon />}
                 text="Become a Naka Devs"
-                className="z-[2] h-[48px] w-[200px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
+                className="z-[2] h-[50px] w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
               />
               <h3 className="pl-[30px] text-grey-neutral04 md:w-[300px]">
                 Join the industry&apos;s first comprehensive Play to Earn
                 ecosystem.
               </h3>
             </div>
-            <div className="mt-[20px] flex md:mt-0 md:w-3/4">
+            <div className="mt-[20px] flex items-center md:mt-0 md:w-3/4">
               <ButtonToggleIcon
                 handleClick={onHandleClick}
-                startIcon={
-                  <Image
-                    src="/assets/icons/logo_master.png"
-                    width={18}
-                    height={18}
-                    alt="logo_master"
-                  />
-                }
+                startIcon={<DollarPaperIcon />}
                 text="Become a Partner"
-                className="z-[2] h-[48px] w-[200px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
+                className="z-[2] h-[50px] w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
               />
-              <h3 className="w-2/4 pl-[30px] text-grey-neutral04">
+              <h3 className="pl-[30px] text-grey-neutral04 md:w-[300px]">
                 Earn some serious cash promoting Nakamoto.Games
               </h3>
             </div>
           </div>
         </div>
-        <div className="arrow-slick-container mt-[10px] flex grid rotate-90  content-center justify-center rounded-[20px] bg-neutral-800 p-8  sm:mt-0 sm:ml-[12px] sm:w-auto">
-          <button
-            type="button"
-            className="flex h-full w-full items-center justify-center"
-            onClick={() => {}}
+        <div className="ml-[10px] flex h-auto w-[126px] justify-center rounded-[20px] bg-neutral-800">
+          <motion.div
+            className="h-fit cursor-pointer self-center rounded-[15px] border border-neutral-700 p-4 "
+            whileHover="hover"
           >
-            <IconArrowLeft />
-          </button>
+            <motion.div
+              variants={iconArrow}
+              transition={{
+                type: "spring",
+                stiffness: 400,
+                damping: 5
+              }}
+            >
+              <IconArrowTop className="text-white-default" />
+            </motion.div>
+          </motion.div>
         </div>
       </div>
       <div className="flex justify-between py-[50px] text-[10px] uppercase text-neutral-600">
         <h4>Copyright 2022 © Nakamoto Games</h4>
-        {/* <Image
-          src="/assets/icons/logo_master.png"
-          alt="naka-logo"
-          className="object-contain object-left"
-          width={50}
-          height={50}
-        /> */}
         <LogoIcon
           width={50}
           height={50}

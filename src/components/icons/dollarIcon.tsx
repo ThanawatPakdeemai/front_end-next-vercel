@@ -135,7 +135,7 @@ function IconDollarMask({
 
 const IconDollar = {
   Ori: IconDollarOri,
-  Hover: IconDollarNot,
+  Not: IconDollarNot,
   Mask: IconDollarMask
 }
 export default IconDollar

@@ -1,19 +1,14 @@
 import React, { useEffect } from "react"
 import { Box, LinearProgress, Typography } from "@mui/material"
 import Helper from "@utils/helper"
+import { unstable_batchedUpdates } from "react-dom"
+import { IEnergy, IExp } from "@interfaces/IProfileMenu"
 
 interface IProps {
   type: "exp" | "energy"
   barColor: string
-  exp?: {
-    level: number
-    expAmount: number
-    maxExp: number
-  }
-  energy?: {
-    staminaPoint: number
-    totalStamina: number
-  }
+  exp?: IExp
+  energy?: IEnergy
 }
 
 const InsideStatProfile = ({ type, barColor, exp, energy }: IProps) => {
@@ -21,15 +16,19 @@ const InsideStatProfile = ({ type, barColor, exp, energy }: IProps) => {
   const [max, setMax] = React.useState<number>(0)
   const [label, setLabel] = React.useState<string>("")
 
+  const refetchValue = (data: IExp | IEnergy) => {
+    unstable_batchedUpdates(() => {
+      setValue("expAmount" in data ? data.expAmount : data.staminaPoint)
+      setMax("maxExp" in data ? data.maxExp : data.totalStamina)
+      setLabel("level" in data ? `level ${data.level}` : "free energy")
+    })
+  }
+
   useEffect(() => {
     if (type === "exp" && exp) {
-      setValue(exp.expAmount)
-      setMax(exp.maxExp)
-      setLabel(`level ${exp.level}`)
+      refetchValue(exp)
     } else if (type === "energy" && energy) {
-      setValue(energy.staminaPoint)
-      setMax(energy.totalStamina)
-      setLabel("free energy")
+      refetchValue(energy)
     }
   }, [type, exp, energy])
 

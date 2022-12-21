@@ -1,17 +1,11 @@
+import { IEnergy, IExp } from "@interfaces/IProfileMenu"
 import { Card, CardContent } from "@mui/material"
 import React from "react"
 import InsideStatProfile from "../insideStatProfile/InsideStatProfile"
 
 interface IProps {
-  exp: {
-    level: number
-    expAmount: number
-    maxExp: number
-  }
-  energy: {
-    staminaPoint: number
-    totalStamina: number
-  }
+  exp: IExp
+  energy: IEnergy
 }
 
 const StatProfile = ({ exp, energy }: IProps) => (

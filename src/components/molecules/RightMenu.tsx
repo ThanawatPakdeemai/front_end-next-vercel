@@ -117,6 +117,11 @@ const RightMenu = () => {
         <Balance
           variant="naka"
           token="NAKA"
+          sx={{
+            maxWidth: 265,
+            minWidth: 265,
+            height: "auto"
+          }}
         />
 
         <StatProfile
@@ -128,6 +133,11 @@ const RightMenu = () => {
           energy={{
             staminaPoint: PROFILE_MOCKUP.stamina_point,
             totalStamina: PROFILE_MOCKUP.total_stamina
+          }}
+          sx={{
+            maxWidth: 265,
+            minWidth: 265,
+            height: 70
           }}
         />
         <MenuProfile />

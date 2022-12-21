@@ -9,6 +9,9 @@ import PlayHistoryIcon from "@components/icons/MenunIcon/PlayHistoryIcon"
 import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
 import YourMissionIcon from "@components/icons/MenunIcon/YourMissionIcon"
 import WishlistIcon from "@components/icons/MenunIcon/WishlistIcon"
+import IconDollar from "@components/icons/dollarIcon"
+import StoryBoardIcon from "@components/icons/StoryBoardIcon"
+import TournamentIcon from "@components/icons/TournamentIcon"
 import { IMenuBase } from "@interfaces/IMenu"
 import { IMAGES } from "./images"
 
@@ -134,4 +137,27 @@ export const MENU_PROFILE: IMenuBase[] = [
   { label: "Inventory", href: "/", icon: <InventoryIcon /> },
   { label: "Item Reward", href: "/", icon: <ItemRewardIcon /> },
   { label: "Support", href: "/", icon: <SupportIcon /> }
+]
+
+export const MENU_GAMES: IMenuBase[] = [
+  {
+    label: "Play To Earn Mode",
+    href: "/",
+    icon: <IconDollar.Ori className="stroke-neutral-300" />
+  },
+  {
+    label: "Free Mode",
+    href: "/",
+    icon: <IconDollar.Mask className="stroke-neutral-300" />
+  },
+  {
+    label: "Story Mode",
+    href: "/",
+    icon: <StoryBoardIcon className="stroke-neutral-300" />
+  },
+  {
+    label: "Tournament",
+    href: "/",
+    icon: <TournamentIcon className="stroke-neutral-300" />
+  }
 ]

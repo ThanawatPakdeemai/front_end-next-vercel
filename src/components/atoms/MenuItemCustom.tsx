@@ -16,6 +16,7 @@ const MenuItemCustom = ({ active, ...props }: IProp) => (
     href={props.href}
     aria-label={props.id}
     sx={{
+      color: active ? "#E1E2E2" : null,
       backgroundColor: active ? "#010101" : null
     }}
   >

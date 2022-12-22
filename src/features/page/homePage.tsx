@@ -3,6 +3,7 @@ import LogoIcon from "@components/icons/LogoIcon"
 import IconNakaWorld from "@components/icons/nakaWorldIcon"
 import ShapeIcon from "@components/icons/ShapeIcon"
 import BodyCategories from "@components/molecules/BodyCategories"
+import Dropdown from "@components/molecules/Dropdown"
 import GameCarousel, {
   ISlide
 } from "@components/molecules/gameSlide/GameCarousel"
@@ -79,17 +80,28 @@ const Home = () => {
     <>
       <BannerSlide />
       {/* Testing display a CarouselSlide component, waiting to merge with team */}
+      {/* <Dropdown
+        title="Dropdown"
+        className="w-[150px]"
+      />
+      <Dropdown
+        title="Test"
+        className="w-[300px]"
+      /> */}
       <Tagline
         bgColor="bg-secondary-main"
         textColor="text-white-default"
         text="Secue. fun. simple. earn $naka AND enjoy "
         icon={<LogoIcon />}
       />
+
       <div className="grid grid-cols-2 gap-6">
         <></>
         <CarouselSlide />
       </div>
+
       <DeveloperPart />
+
       <div className="my-20 h-full w-full">
         <GameCarousel
           list={f2pGame}

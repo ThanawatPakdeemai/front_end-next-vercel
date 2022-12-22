@@ -3,7 +3,7 @@ import { ListItemIcon, ListItemText, MenuItem } from "@mui/material"
 import React from "react"
 
 interface IProp extends IMenu {
-  active: boolean
+  active?: boolean
 }
 
 /**

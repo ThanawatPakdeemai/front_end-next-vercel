@@ -7,11 +7,14 @@ import ItemRewardIcon from "@components/icons/MenunIcon/ItemRewardIcon"
 import YourMissionIcon from "@components/icons/MenunIcon/YourMissionIcon"
 import PlayHistoryIcon from "@components/icons/MenunIcon/PlayHistoryIcon"
 import EditProfileIcon from "@components/icons/MenunIcon/EditProfileIcon"
+import AllCategoriesIcon from "@components/icons/AllCategoriesIcon"
+import AllGamesIcon from "@components/icons/AllGamesIcon"
+import AllDevicesIcon from "@components/icons/AllDevicesIcon"
 
 export const DROPDOWN: IDropdown[] = [
   {
-    title: "Dropdown",
-    icon: <WishlistIcon />,
+    title: "All Categories",
+    icon: <AllCategoriesIcon />,
     className: "w-[200px]",
     text: "string",
     details: [
@@ -33,8 +36,8 @@ export const DROPDOWN: IDropdown[] = [
     ]
   },
   {
-    title: "Test",
-    icon: <YourMissionIcon />,
+    title: "All Game Assets",
+    icon: <AllGamesIcon />,
     className: "w-[200px]",
     text: "string",
     details: [
@@ -44,6 +47,27 @@ export const DROPDOWN: IDropdown[] = [
         icon: <EditProfileIcon />
       },
       { label: "Wishlist", href: "/", icon: <WishlistIcon /> }
+    ]
+  },
+  {
+    title: "All Devices",
+    icon: <AllDevicesIcon />,
+    className: "w-[200px]",
+    text: "string",
+    details: [
+      {
+        label: "Edit Profile",
+        href: "/",
+        icon: <EditProfileIcon />
+      },
+      { label: "Wishlist", href: "/", icon: <WishlistIcon /> },
+      {
+        label: "Play History",
+        href: "/",
+        icon: <PlayHistoryIcon />
+      },
+      { label: "Your Mission", href: "/", icon: <YourMissionIcon /> },
+      { label: "Inventory", href: "/", icon: <InventoryIcon /> }
     ]
   }
 ]

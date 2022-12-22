@@ -2,9 +2,9 @@ import * as React from "react"
 import { useState } from "react"
 import { Collapse } from "@mui/material"
 import DropdownIcon from "@components/icons/DropdownIcon"
-import SelectDropdown from "@components/atoms/dropdown/SelectDropdown"
 import { DROPDOWN } from "@configs/dropdown"
 import { IDropdown } from "@interfaces/IMenu"
+import { SelectDropdown } from "@components/atoms/selectDropdown"
 
 interface IProp {
   icon?: React.ReactNode
@@ -26,7 +26,7 @@ const Dropdown = ({ title, className }: IProp) => {
               <button
                 type="button"
                 onClick={handleOnExpandClick}
-                className={`${className} m-[6px] flex h-[40px] w-[280px] min-w-[200px] flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 hover:text-white-primary`}
+                className={`${className} mb-1 flex h-[40px] w-[100%] flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary`}
               >
                 {item.icon}
                 <span className="">{item.title}</span>
@@ -45,7 +45,6 @@ const Dropdown = ({ title, className }: IProp) => {
                 timeout="auto"
                 className="rounded-[19px]"
                 sx={{
-                  position: "absolute",
                   backgroundColor: "#010101D9",
                   zIndex: 99999
                 }}

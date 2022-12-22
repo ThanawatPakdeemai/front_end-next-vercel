@@ -1,9 +1,7 @@
-import IconFree from "@components/icons/freeIcon"
 import LogoIcon from "@components/icons/LogoIcon"
-import IconNakaWorld from "@components/icons/nakaWorldIcon"
 import ShapeIcon from "@components/icons/ShapeIcon"
 import BodyCategories from "@components/molecules/BodyCategories"
-import Dropdown from "@components/molecules/Dropdown"
+import Dropdown from "@components/atoms/DropdownCustom"
 import GameCarousel, {
   ISlide
 } from "@components/molecules/gameSlide/GameCarousel"
@@ -80,14 +78,6 @@ const Home = () => {
     <>
       <BannerSlide />
       {/* Testing display a CarouselSlide component, waiting to merge with team */}
-      {/* <Dropdown
-        title="Dropdown"
-        className="w-[150px]"
-      />
-      <Dropdown
-        title="Test"
-        className="w-[300px]"
-      /> */}
       <Tagline
         bgColor="bg-secondary-main"
         textColor="text-white-default"
@@ -104,38 +94,20 @@ const Home = () => {
 
       <div className="my-20 h-full w-full">
         <GameCarousel
+          menu={F2PHeaderMenu}
           list={f2pGame}
-          tag={F2PHeaderMenu.title}
-          headerMenu={F2PHeaderMenu.menuList}
-          theme={F2PHeaderMenu.theme}
-          stickerRotate={F2PHeaderMenu.stickerRotate}
-          checkTimer
           curType={f2pCurType}
           setCurType={setF2PCurType}
-          headerIcon={
-            <IconFree
-              width={200}
-              height={100}
-            />
-          }
+          checkTimer
         />
       </div>
       <div className="my-20 h-full w-full">
         <GameCarousel
+          menu={P2EHeaderMenu}
           list={p2eGame}
-          showNo
-          tag={P2EHeaderMenu.title}
-          headerMenu={P2EHeaderMenu.menuList}
-          theme={P2EHeaderMenu.theme}
-          stickerRotate={P2EHeaderMenu.stickerRotate}
           curType={p2eCurType}
           setCurType={setP2ECurType}
-          headerIcon={
-            <IconNakaWorld
-              width={180}
-              height={125}
-            />
-          }
+          showNo
         />
       </div>
       <Tagline

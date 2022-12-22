@@ -11,7 +11,7 @@ interface IProp {
 
 const SelectDropdown = ({ title, className }: IProp) => (
   <MenuList
-    className={`${className} mx-[6px] mt-[6px] mb-[6px] min-w-[200px] rounded-[13px] bg-neutral-700 p-[6px]`}
+    className={`${className} mx-[6px] mt-[6px] mb-[6px] rounded-[13px] bg-neutral-700 p-[6px]`}
   >
     {DROPDOWN.map(
       (ele: IDropdown) =>
@@ -22,6 +22,8 @@ const SelectDropdown = ({ title, className }: IProp) => (
             label={item.label}
             icon={item.icon}
             href={item.href}
+            id=""
+            external={false}
           />
         ))
     )}

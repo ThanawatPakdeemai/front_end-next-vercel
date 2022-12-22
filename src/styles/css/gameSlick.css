@@ -46,6 +46,14 @@
 .slick-card-container .slick-card-desc {
   @apply text-black-default;
 }
+.slick-card-container:hover .slick-card-number {
+  transform: scale(0.96);
+}
+.slick-card-container:hover .slick-card-content {
+  transform: scale(0.96);
+  transition: all 0.4s ease;
+  animation: springZoom 0.4s ease;
+}
 .slick-card-container:hover .slick-card-desc {
   @apply text-white-primary;
   transition: all 0.4s ease;
@@ -87,5 +95,19 @@
   }
   100% {
     opacity: 1;
+  }
+}
+@keyframes springZoom {
+  0% {
+    transform: scale(1);
+  }
+  33% {
+    transform: scale(0.96);
+  }
+  66% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(0.96);
   }
 }

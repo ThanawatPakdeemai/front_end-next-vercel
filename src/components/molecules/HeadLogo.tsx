@@ -43,7 +43,7 @@ const HeadLogo = () => {
         >
           <LogoNaka />
           <Divider
-            className="mx-5 my-2 border-neutral-700"
+            className="!mx-5 my-2 border-neutral-700"
             orientation="vertical"
             flexItem
           />
@@ -66,7 +66,7 @@ const HeadLogo = () => {
               }
               options={
                 router.locales?.map((item) => ({
-                  label: item,
+                  label: item.toUpperCase(),
                   value: item,
                   icon: (
                     <Image
@@ -89,10 +89,10 @@ const HeadLogo = () => {
               button={
                 <Button
                   sx={{ minWidth: "10px !important" }}
-                  className="!text-error-main"
+                  className="!rounded-[8px] !text-error-main"
                   variant="contained"
                 >
-                  <Typography className="!font-neue-machina-semi !text-sm">
+                  <Typography className="!font-neue-machina-semi !text-sm !uppercase">
                     {router.locale}
                   </Typography>
                   <DragHandleIcon

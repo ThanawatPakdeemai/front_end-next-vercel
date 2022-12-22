@@ -4,11 +4,12 @@ import ImageCustom from "@components/atoms/image/Image"
 import { Chip } from "@mui/material"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import GameCarouselHeader, {
-  ISlideList
+  IHeaderSlide
 } from "@components/molecules/gameSlide/GameCarouselHeader"
 import TimerStamina from "@components/atoms/timer/TimerStamina"
 import { motion } from "framer-motion"
 import IconHourglass from "@components/icons/hourglassIcon"
+import NumberRank from "@feature/ranking/components/atoms/NumberRank"
 import ButtonToggleIcon from "./ButtonToggleIcon"
 
 export interface ISlide {
@@ -18,16 +19,15 @@ export interface ISlide {
 }
 
 interface IProps {
+  menu: IHeaderSlide
   list: ISlide[]
-  tag: string
   showNo?: boolean
-  headerIcon: React.ReactNode
-  headerMenu: ISlideList[]
-  theme: string
   checkTimer?: boolean
+  curType: string
+  setCurType: (_type: string) => void
 }
 
-type TColor =
+export type TColor =
   | "default"
   | "primary"
   | "secondary"
@@ -37,35 +37,17 @@ type TColor =
   | "warning"
 
 const GameCarousel = ({
+  menu,
   list,
   showNo = false,
-  tag,
-  headerIcon,
-  headerMenu,
-  theme,
-  checkTimer = false
+  checkTimer = false,
+  curType,
+  setCurType
 }: IProps) => {
-  const staminaRecovery = new Date("2022-12-14T22:24:00.000Z")
-
-  const [cooldown, setCooldown] = useState<boolean>(false)
-
-  const orderColor = (_no: number) => {
-    if (_no === 1) {
-      return "bg-red-card"
-    }
-    if (_no === 2) {
-      return "bg-polygon-default"
-    }
-    if (_no === 3) {
-      return "bg-green-card"
-    }
-    return "bg-neutral-800 border-2 border-neutral-700"
-  }
-
+  const staminaRecovery = new Date("2022-12-18T22:24:00.000Z")
   const showSlide = list && list.length > 6 ? 6 : list.length
-
   const settings: Settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: showSlide,
@@ -73,32 +55,6 @@ const GameCarousel = ({
     arrows: false,
     variableWidth: false
   }
-
-  const sliderRef = useRef<Slider>(null)
-
-  const onSlideNext = () => {
-    sliderRef?.current?.slickNext()
-  }
-  const onSlidePrev = () => {
-    sliderRef?.current?.slickPrev()
-  }
-
-  const onViewAll = () => {}
-
-  const onHandleClick = () => {}
-
-  const cardImg = {
-    init: {
-      scale: 1
-    },
-    onHover: {
-      scale: [1, 0.94, 0.96, 0.94],
-      transition: {
-        duration: 0.4
-      }
-    }
-  }
-
   const btnCard = {
     init: {
       y: 40,
@@ -114,6 +70,20 @@ const GameCarousel = ({
       }
     }
   }
+
+  const sliderRef = useRef<Slider>(null)
+  const [cooldown, setCooldown] = useState<boolean>(false)
+
+  const onSlideNext = () => {
+    sliderRef?.current?.slickNext()
+  }
+  const onSlidePrev = () => {
+    sliderRef?.current?.slickPrev()
+  }
+
+  const onViewAll = () => {}
+
+  const onHandleClick = () => {}
 
   const onChipColor = (_theme: string | undefined) => {
     let chip: TColor = "default"
@@ -136,13 +106,12 @@ const GameCarousel = ({
   return (
     <div className="mb-10">
       <GameCarouselHeader
-        icon={headerIcon}
-        title={tag}
-        menuList={headerMenu}
+        menu={menu}
+        curType={curType}
         onView={onViewAll}
         onNext={onSlideNext}
         onPrev={onSlidePrev}
-        theme={theme}
+        setCurType={setCurType}
       />
       <Slider
         ref={sliderRef}
@@ -152,30 +121,25 @@ const GameCarousel = ({
           list.map((item, index) => (
             <motion.div
               key={`${item.id}_game`}
-              className="slick-card-container"
+              className="slick-card-container flex flex-col justify-center blur-none"
               initial="init"
               whileHover="onHover"
               animate="animate"
             >
-              <motion.div
-                className="relative flex h-[218px] w-full overflow-hidden"
-                variants={cardImg}
-              >
+              <motion.div className="relative flex h-[218px] w-full items-center justify-center overflow-hidden">
                 {showNo ? (
-                  <div
-                    className={`${orderColor(
-                      index + 1
-                    )} absolute top-0 right-0 m-[10px] flex h-10 w-10 items-center justify-center rounded-sm font-neue-machina text-default font-bold text-white-primary`}
-                  >
-                    {index + 1}
-                  </div>
+                  <NumberRank
+                    index={index}
+                    fixColor={false}
+                    className="slick-card-number absolute top-0 right-0 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
+                  />
                 ) : null}
                 <ImageCustom
                   src={item.image}
                   alt="home-slide"
                   width={218}
                   height={218}
-                  className="rounded-md"
+                  className="slick-card-content rounded-md"
                 />
                 <motion.div
                   variants={btnCard}
@@ -205,9 +169,9 @@ const GameCarousel = ({
                 </div>
                 <div className="relative grid w-full grid-cols-2 gap-2 text-xs uppercase">
                   <Chip
-                    label={tag}
+                    label={menu.title}
                     size="small"
-                    color={onChipColor(theme)}
+                    color={onChipColor(menu.theme)}
                     className="font-bold"
                   />
                   {checkTimer ? (

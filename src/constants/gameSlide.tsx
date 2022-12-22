@@ -6,6 +6,9 @@ import {
   ISlideList
 } from "@components/molecules/gameSlide/GameCarouselHeader"
 import { IGameDownloadSlide } from "@feature/slider/interfaces/ISlides"
+import IconNakaWorld from "@components/icons/nakaWorldIcon"
+import IconDollar from "@components/icons/dollarIcon"
+import IconFree from "@components/icons/freeIcon"
 
 export const GAME_BANNER_SLIDES = [
   {
@@ -135,7 +138,7 @@ export const GAME_FREE = [
     image: "/assets/images/home/medium_nakadui.png",
     to: `${CONFIGS.BASE_URL.GAME}/free/dui/?${Helper.createEncryptLink(
       8
-    )}${Buffer.from(`${CONFIGS.BASE_URL.FRONTEND}`)}`,
+    )}${Buffer.from(`${CONFIGS.BASE_URL.FRONTEND}`, "base64")}`,
     gameName: "NAKA DUI",
     icon: ""
   },
@@ -146,7 +149,8 @@ export const GAME_FREE = [
     to: `${
       CONFIGS.BASE_URL.GAME
     }/free/alien-apocalypse/?${Helper.createEncryptLink(8)}${Buffer.from(
-      `${CONFIGS.BASE_URL.FRONTEND}`
+      `${CONFIGS.BASE_URL.FRONTEND}`,
+      "base64"
     )}`,
     gameName: "Alien Apocalypse",
     icon: ""
@@ -157,7 +161,7 @@ export const GAME_FREE = [
     image: "/assets/images/home/medium_cat_rocket.png",
     to: `${CONFIGS.BASE_URL.GAME}/free/cat-planet/?${Helper.createEncryptLink(
       8
-    )}${Buffer.from(`${CONFIGS.BASE_URL.FRONTEND}`)}`,
+    )}${Buffer.from(`${CONFIGS.BASE_URL.FRONTEND}`, "base64")}`,
     gameName: "Cat Planet",
     icon: ""
   }
@@ -273,10 +277,17 @@ const p2eMenu: ISlideList[] = [
   }
 ]
 export const P2EHeaderMenu: IHeaderSlide = {
-  icon: "",
+  sticker: (
+    <IconNakaWorld
+      width={180}
+      height={125}
+    />
+  ),
   title: "play to earn",
   menuList: p2eMenu,
-  theme: "error"
+  theme: "error",
+  stickerRotate: 15,
+  icon: <IconDollar.Ori className="slick-header-error-icon" />
 }
 
 const f2pMenu: ISlideList[] = [
@@ -301,10 +312,17 @@ const f2pMenu: ISlideList[] = [
 ]
 
 export const F2PHeaderMenu: IHeaderSlide = {
-  icon: "",
+  sticker: (
+    <IconFree
+      width={200}
+      height={100}
+    />
+  ),
+  icon: <IconDollar.Not className="slick-header-secondary-icon" />,
   title: "free to earn",
   menuList: f2pMenu,
-  theme: "secondary"
+  theme: "secondary",
+  stickerRotate: -15
 }
 export const GAME_DOWNLOAD: IGameDownloadSlide[] = [
   {

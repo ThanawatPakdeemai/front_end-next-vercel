@@ -101,7 +101,8 @@ module.exports = {
         green: {
           card: "#5DBE74",
           "01": "#5DBE74",
-          to: "#ED3030"
+          to: "#ED3030",
+          "lemon": "#A0ED61"
         },
         binance: {
           default: "#fcd535"

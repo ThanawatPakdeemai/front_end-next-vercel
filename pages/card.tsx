@@ -1,78 +1,61 @@
-/* eslint-disable prettier/prettier */
-import React from "react"
-import PropTypes from "prop-types"
-import { Image } from "@components/atoms/image/index"
+import React, { useState } from "react"
+import { motion } from "framer-motion"
+import Image from "next/image"
+import AddIcon from "@mui/icons-material/Add"
 import { IMAGES } from "@constants/images"
 import ButtonLink from "@components/atoms/button/ButtonLink"
-import IShoppingCart from "@components/icons/ShoppingCart"
-import { Card, CardContent } from "@mui/material"
 
-interface ICardNakaverse {
-  title: string
-  image: string
-  href: string
-  btnText: string
-}
+const CardLink = () => {
+  const [isHover, setIsHover] = useState<boolean>(false)
 
-const CardNakaverse = ({ title, image, href, btnText }: ICardNakaverse) => (
-  <>
-    <Card
-      variant="outlined"
-      className="flex h-[218px] w-[678px] max-w-full overflow-hidden"
-      sx={{ backgroundImage: `url(${image})`, backgroundColor: "none" }}
+  const onHoverCard = () => {
+    setIsHover(!isHover)
+  }
+
+  return (
+    <motion.div
+      className="relative h-[218px] w-[218px] overflow-hidden rounded-3xl"
+      onHoverStart={onHoverCard}
+      onHoverEnd={onHoverCard}
     >
-      <CardContent className="py-[30px] pr-0 pl-[45px] max-[226px]:p-[30px]">
-        <h6 className="m-0 py-[35px] px-0 font-neue-machina text-[22px] font-bold not-italic tracking-[1px] text-white-default">
-          {title}
-        </h6>
-        <ButtonLink
-          href={href}
-          text={btnText}
-          icon={<IShoppingCart />}
-          size="medium"
-          color="secondary"
-          variant="contained"
+      <motion.div
+        className="absolute h-[218px] w-[218px] rounded-3xl bg-warning-light"
+        whileHover={{ marginTop: "18%" }}
+        transition={{
+          type: "spring",
+          damping: 10,
+          stiffness: 150
+        }}
+      >
+        <Image
+          src={IMAGES.frontBlogBand.src}
+          alt={IMAGES.frontBlogBand.alt}
+          width={IMAGES.frontBlogBand.width}
+          height={IMAGES.frontBlogBand.height}
+          className={`absolute left-[50px] top-[35px] z-[1] ${
+            isHover ? "top-[-36px] w-40" : "top-[35px"
+          }`}
+          style={{ transition: "all 0.2s ease-in" }}
         />
-      </CardContent>
-      <CardContent className="relative w-full">
-        <div className="absolute left-[10%] top-[10.5%] h-[239.32px] w-[238.62px] max-[480px]:hidden max-[226px]:hidden">
-          <Image
-            src={IMAGES.nakaVerseMascot.src}
-            alt={IMAGES.nakaVerseMascot.alt}
-            className="h-full w-full"
-          />
-        </div>
-        <div className="absolute right-[12%] top-[15%] max-[480px]:top-[20%] max-[480px]:w-[70%] max-[226px]:hidden">
-          <Image
-            src={IMAGES.worldNakaverse.src}
-            alt={IMAGES.worldNakaverse.alt}
-            className="rotate-world-nakaverse relative h-full w-full"
-          />
-        </div>
-        <div className="absolute right-[10%] top-[13%] max-[480px]:top-[17%] max-[480px]:right-[6%] max-[480px]:w-[80%] max-[226px]:hidden">
-          <Image
-            src={IMAGES.ringNakaverse.src}
-            alt={IMAGES.ringNakaverse.alt}
-            className="h-full w-full"
-          />
-        </div>
-      </CardContent>
-    </Card>
-  </>
-)
-
-CardNakaverse.defaultProps = {
-  title: "NAKAVERSE",
-  image: IMAGES.nakaVerse.src,
-  href: "/",
-  btnText: "Visit Now"
+        <Image
+          src={IMAGES.backBlogBand.src}
+          alt={IMAGES.backBlogBand.alt}
+          width={IMAGES.backBlogBand.width}
+          height={IMAGES.backBlogBand.height}
+          className={`absolute left-[50px] my-auto mx-0 ${
+            isHover ? "left-[75px] top-4 w-[60px]" : "top-[35px]"
+          }`}
+          style={{ transition: "0.2s" }}
+        />
+      </motion.div>
+      <ButtonLink
+        href="/"
+        text="View All"
+        icon={<AddIcon />}
+        size="small"
+        className="button-global button-transparent absolute left-2.5 right-2.5 bottom-2.5 border border-solid border-[#01010133] text-primary-main"
+      />
+    </motion.div>
+  )
 }
-
-CardNakaverse.propTypes = {
-  title: PropTypes.string,
-  image: PropTypes.string,
-  href: PropTypes.string,
-  btnText: PropTypes.string
-}
-
-export default CardNakaverse
+export default CardLink

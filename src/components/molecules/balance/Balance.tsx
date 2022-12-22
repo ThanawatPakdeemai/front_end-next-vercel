@@ -1,31 +1,28 @@
 import * as React from "react"
-import { Image } from "@components/atoms/image"
 import IconButtonCustom from "@components/atoms/IconButtonCustom/IconButtonCustom"
 import SyncAltIcon from "@mui/icons-material/SyncAlt"
-import { Card, CardContent } from "@mui/material"
+import { Card, CardContent, SxProps, Theme } from "@mui/material"
 import BalanceVault from "@components/atoms/balanceValut/BalanceVault"
+import LogoIcon from "@components/icons/LogoIcon"
 
 interface IProps {
   token: string
   variant: "naka" | "busd" | "vault"
+  className?: string
+  sx?: SxProps<Theme> | undefined
 }
 
-const Balance = ({ variant }: IProps) => (
+const Balance = ({ variant, className, sx }: IProps) => (
   <CardContent
-    className="flex items-center justify-center py-1 px-3"
+    className={`flex items-center justify-center py-1 px-3 ${className}`}
     // sx={{ maxWidth: 277, width: 277, height: 62 }}
   >
     <Card
       className="flex items-center justify-between rounded-[13px] bg-neutral-800 p-[5px]"
-      sx={{ maxWidth: 265, minWidth: 265, height: 50 }}
+      sx={sx}
     >
       <div className="flex h-full flex-1 items-center rounded-[13px] bg-neutral-900 py-2 px-[10px]">
-        <Image
-          src="/assets/icons/logo_master.png"
-          alt="logo_master"
-          width={24}
-          height={11}
-        />
+        <LogoIcon />
         <BalanceVault
           variant={variant}
           className="ml-6 text-sm font-bold text-white-primary"

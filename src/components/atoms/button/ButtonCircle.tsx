@@ -7,6 +7,7 @@ interface IProps {
   dotClassName?: string
   multiCircle?: boolean
   notify?: boolean
+  className?: string
   onClick?: () => void
 }
 
@@ -16,6 +17,7 @@ const ButtonCircle = ({
   dotClassName,
   multiCircle = false,
   notify = false,
+  className,
   onClick
 }: IProps) => {
   const onHandleClick = async () => {
@@ -26,7 +28,7 @@ const ButtonCircle = ({
   if (multiCircle) {
     return (
       <IconButton
-        className="sticky-btn-container"
+        className={`${className} sticky-btn-container`}
         disableRipple
         onClick={onHandleClick}
       >
@@ -49,7 +51,7 @@ const ButtonCircle = ({
   }
   return (
     <IconButton
-      className="sticky-btn"
+      className={`${className} sticky-btn`}
       disableRipple
       onClick={onHandleClick}
     >

@@ -33,7 +33,7 @@
     "@ethersproject/providers": "^5.7.2",
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.10.16",
-    "@mui/material": "^5.10.9",
+    "@mui/material": "^5.11.1",
     "@mui/styled-engine-sc": "^5.10.6",
     "@next/bundle-analyzer": "^13.0.2",
     "@svgr/webpack": "^6.5.1",

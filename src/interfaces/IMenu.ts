@@ -9,6 +9,14 @@ export interface IMenuBase extends ILink {
   icon: string | React.ReactElement
 }
 
+export interface IDropdown {
+  icon: React.ReactNode
+  title: string
+  className: string
+  text: string
+  details: IMenuBase[]
+}
+
 interface IMenuExtend {
   external: boolean
   isLive?: boolean

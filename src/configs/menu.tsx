@@ -47,7 +47,7 @@ export const MENU = [
       },
       {
         name: "Free Mode",
-        link: "/free",
+        link: "/free-to-play-games",
         icon: MoneyOffIcon,
         textRight: "Free"
       },

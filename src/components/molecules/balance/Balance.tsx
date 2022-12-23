@@ -35,7 +35,7 @@ const Balance = ({ variant, className, sx }: IProps) => (
       className="flex items-center justify-between rounded-[13px] bg-neutral-800 p-[5px]"
       sx={sx}
     >
-      <div className="flex h-full flex-1 items-center rounded-[13px] bg-neutral-900 py-2 px-[10px]">
+      <div className="flex h-full flex-1 items-center rounded-lg bg-neutral-900 py-[11px] px-[10px]">
         <LogoIcon />
         <BalanceVault
           variant={variant}
@@ -49,7 +49,7 @@ const Balance = ({ variant, className, sx }: IProps) => (
         icon={
           <SyncAltIcon className="h-[20px] w-[20px] rotate-90 text-white-primary" />
         }
-        className="ml-1 flex h-[40px] w-[40px] items-center justify-center rounded-[14px] border border-neutral-700 bg-secondary-main"
+        className="ml-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg border border-neutral-700 bg-secondary-main"
       />
     </Card>
   </CardContent>

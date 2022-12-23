@@ -1,5 +1,6 @@
 import React from "react"
 import { motion, Transition, Variants } from "framer-motion"
+import { Button, ButtonProps } from "@mui/material"
 
 export interface IButtonIcon {
   type?: "square" | "circle"
@@ -8,6 +9,7 @@ export interface IButtonIcon {
   className?: string
   variants?: Variants | undefined
   transition?: Transition | undefined
+  onClick?: () => void
 }
 
 const ButtonIcon = ({
@@ -16,7 +18,8 @@ const ButtonIcon = ({
   whileHover,
   className,
   variants,
-  transition
+  transition,
+  onClick
 }: IButtonIcon) => {
   const typeButton = {
     "circle": "!min-w-0 w-auto h-auto rounded-full !p-4",
@@ -25,6 +28,7 @@ const ButtonIcon = ({
   return (
     <div>
       <motion.div
+        onClick={onClick}
         whileHover={whileHover}
         className={`${className} ${typeButton[type]}`}
       >

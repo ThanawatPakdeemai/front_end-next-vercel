@@ -1,5 +1,4 @@
 import ShapeIcon from "@components/icons/ShapeIcon"
-import Dropdown from "@components/atoms/DropdownCustom"
 import SidebarGames from "@components/molecules/SidebarGames"
 import Tagline from "@components/molecules/tagline/Tagline"
 import { memo } from "react"

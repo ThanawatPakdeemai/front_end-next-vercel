@@ -1,7 +1,6 @@
 import LogoIcon from "@components/icons/LogoIcon"
 import ShapeIcon from "@components/icons/ShapeIcon"
 import BodyCategories from "@components/molecules/BodyCategories"
-import Dropdown from "@components/atoms/DropdownCustom"
 import GameCarousel, {
   ISlide
 } from "@components/molecules/gameSlide/GameCarousel"

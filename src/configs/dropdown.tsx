@@ -1,5 +1,5 @@
 import * as React from "react"
-import { IDropdown, IMenuBase } from "@interfaces/IMenu"
+import { IDropdown } from "@interfaces/IMenu"
 import InventoryIcon from "@components/icons/MenunIcon/InventoryIcon"
 import WishlistIcon from "@components/icons/MenunIcon/WishlistIcon"
 import SupportIcon from "@components/icons/MenunIcon/SupportIcon"

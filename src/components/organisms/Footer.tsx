@@ -5,14 +5,17 @@ import Link from "next/link"
 import { NAKA_GAME } from "@configs/nakaGame"
 import { NAKA_SERVICES } from "@configs/nakaServices"
 import { NAKA_ECOSYSTEMSS } from "@configs/nakaEcosystems"
-import { motion } from "framer-motion"
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import LogoIcon from "@components/icons/LogoIcon"
 import WineIcon from "@components/icons/WineIcon"
 import DesktopIcon from "@components/icons/DesktopIcon"
 import DollarPaperIcon from "@components/icons/DollarPaperIcon"
 import IconArrowTop from "@components/icons/arrowTopIcon"
+import ButtonIcon from "@components/atoms/button/ButtonIcon"
+import NakaMask1 from "@components/icons/Footer/NaKaMask1"
+import NakaMask2 from "@components/icons/Footer/NaKaMask2"
+import NakaMask3 from "@components/icons/Footer/NaKaMask3"
+import { useCallback, useEffect, useState } from "react"
+import TextLink from "@components/atoms/textLink"
 
 const arrowMotion = {
   rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
@@ -71,8 +74,36 @@ const iconArrow = {
   }
 }
 
+const images = [<NakaMask2 key="NaKaMask" />, <NakaMask3 key="NaKaMask" />]
+function ShakeIcon() {
+  const [newImage, setnewImage] = useState<any>()
+
+  const shuffle = useCallback(() => {
+    const index = Math.floor(Math.random() * images.length)
+    setnewImage(images[index])
+  }, [])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      shuffle()
+    }, 100)
+
+    return () => clearInterval(interval)
+  }, [])
+  return <div>{newImage}</div>
+}
+
 const Footer = () => {
   const onHandleClick = () => {}
+  const [isHover, setIsHover] = useState<boolean>(false)
+  const handleMouseEnter = () => {
+    setIsHover(true)
+  }
+
+  const handleMouseLeave = () => {
+    setIsHover(false)
+  }
+
   return (
     <>
       <Divider sx={{ marginTop: 10, marginBottom: 10 }} />
@@ -93,26 +124,15 @@ const Footer = () => {
                     key={`game-${item.label}-${game.name}`}
                     className="flex"
                   >
-                    <motion.div
+                    <TextLink
                       key={item.label}
+                      name={game.name}
                       initial="rest"
                       whileHover="hover"
                       animate="rest"
-                      className="relative max-w-[200px] cursor-pointer"
-                    >
-                      <motion.div
-                        className="opacity-1 absolute left-0 translate-y-[-30%]"
-                        variants={arrowMotion}
-                      >
-                        <ArrowForwardIcon sx={{ height: 14 }} />
-                      </motion.div>
-                      <motion.h1
-                        className="pb-[14px]"
-                        variants={textMotion}
-                      >
-                        {game.name}
-                      </motion.h1>
-                    </motion.div>
+                      variantsArrow={arrowMotion}
+                      variantsText={textMotion}
+                    />
                   </div>
                 ))}
               </div>
@@ -121,26 +141,15 @@ const Footer = () => {
           <div className="w-48">
             <div className="mb-4 uppercase text-white-primary">services</div>
             {NAKA_SERVICES?.map((item) => (
-              <motion.div
+              <TextLink
                 key={item.label}
+                name={item.label}
                 initial="rest"
                 whileHover="hover"
                 animate="rest"
-                className="relative max-w-[200px] cursor-pointer"
-              >
-                <motion.div
-                  className="opacity-1 absolute left-0 translate-y-[-30%]"
-                  variants={arrowMotion}
-                >
-                  <ArrowForwardIcon sx={{ height: 14 }} />
-                </motion.div>
-                <motion.h1
-                  className="pb-[14px]"
-                  variants={textMotion}
-                >
-                  {item.label}
-                </motion.h1>
-              </motion.div>
+                variantsArrow={arrowMotion}
+                variantsText={textMotion}
+              />
             ))}
           </div>
           <div className="w-48">
@@ -148,51 +157,27 @@ const Footer = () => {
               NAKA ecosystemss
             </div>
             {NAKA_ECOSYSTEMSS?.map((item) =>
-              item.newpage === false ? (
-                <motion.div
+              item.icon === false ? (
+                <TextLink
                   key={item.label}
+                  name={item.label}
                   initial="rest"
                   whileHover="hover"
                   animate="rest"
-                  className="relative max-w-[200px] cursor-pointer"
-                >
-                  <motion.div
-                    className="opacity-1 absolute left-0 translate-y-[-30%]"
-                    variants={arrowMotion}
-                  >
-                    <ArrowForwardIcon sx={{ height: 14 }} />
-                  </motion.div>
-                  <motion.h1
-                    className="pb-[14px]"
-                    variants={textMotion}
-                  >
-                    {item.label}
-                  </motion.h1>
-                </motion.div>
+                  variantsArrow={arrowMotion}
+                  variantsText={textMotion}
+                />
               ) : (
-                <motion.div
+                <TextLink
                   key={item.label}
+                  name={item.label}
                   initial="rest"
                   whileHover="hover"
                   animate="rest"
-                  className="relative max-w-[200px] cursor-pointer"
-                >
-                  <motion.div
-                    className="opacity-1 absolute left-0 translate-y-[-30%]"
-                    variants={arrowMotion}
-                  >
-                    <ArrowForwardIcon sx={{ height: 14 }} />
-                  </motion.div>
-                  <div className="flex">
-                    <motion.div
-                      className="pb-[14px]"
-                      variants={textMotion}
-                    >
-                      {item.label}
-                      <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />
-                    </motion.div>
-                  </div>
-                </motion.div>
+                  variantsArrow={arrowMotion}
+                  variantsText={textMotion}
+                  icon={<ArrowOutwardOutlinedIcon sx={{ height: 14 }} />}
+                />
               )
             )}
           </div>
@@ -204,7 +189,7 @@ const Footer = () => {
             </div>
             Join the industry&apos;s first comprehensive Play to Earn ecosystem
             and explore the many benefits it has to offer.
-            <div className="my-8 w-[280px]">
+            <div className="my-8">
               <ButtonToggleIcon
                 handleClick={onHandleClick}
                 startIcon={<WineIcon />}
@@ -219,21 +204,13 @@ const Footer = () => {
                   href={item.href}
                   target="_blank"
                 >
-                  <motion.div
+                  <ButtonIcon
+                    variants={iconmotion}
                     whileHover="hover"
+                    transition={{ type: "spring", stiffness: 400, damping: 4 }}
+                    icon={item.icon}
                     className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                  >
-                    <motion.div
-                      variants={iconmotion}
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 4
-                      }}
-                    >
-                      {item.icon}
-                    </motion.div>
-                  </motion.div>
+                  />
                 </Link>
               ))}
             </div>
@@ -241,7 +218,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="pt-[80px] text-[12px] lg:flex">
-        <div className="w-full rounded-[20px] bg-neutral-800 p-8">
+        <div className="w-full rounded-[20px] bg-neutral-800 p-6 lg:w-[90%]">
           <div className="md:flex">
             <div
               className="flex items-center md:w-2/4 md:pr-[20px]"
@@ -253,7 +230,7 @@ const Footer = () => {
                 text="Become a Naka Devs"
                 className="z-[2] h-[50px] w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
               />
-              <h3 className="pl-[30px] text-grey-neutral04 md:w-[300px]">
+              <h3 className="pl-[30px] text-grey-neutral04 md:w-[280px]">
                 Join the industry&apos;s first comprehensive Play to Earn
                 ecosystem.
               </h3>
@@ -271,30 +248,31 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="ml-[10px] flex h-auto w-[126px] justify-center rounded-[20px] bg-neutral-800">
-          <motion.div
-            className="h-fit cursor-pointer self-center rounded-[15px] border border-neutral-700 p-4 "
-            whileHover="hover"
-          >
-            <motion.div
+        <div className="flex justify-center pt-2 lg:pt-0">
+          <div className="flex h-[82px] w-[90px] items-center justify-center self-center rounded-[20px] bg-neutral-800 lg:ml-[10px] lg:h-full">
+            <ButtonIcon
               variants={iconArrow}
+              whileHover="hover"
               transition={{
                 type: "spring",
                 stiffness: 400,
                 damping: 5
               }}
-            >
-              <IconArrowTop className="text-white-default" />
-            </motion.div>
-          </motion.div>
+              icon={<IconArrowTop className="text-white-default" />}
+              className="h-fit cursor-pointer self-center rounded-[15px] border border-neutral-700 p-4"
+            />
+          </div>
         </div>
       </div>
-      <div className="flex justify-between py-[50px] text-[10px] uppercase text-neutral-600">
+      <div className="m-4 flex items-center justify-between py-[20px] text-[10px] uppercase text-neutral-600">
         <h4>Copyright 2022 © Nakamoto Games</h4>
-        <LogoIcon
-          width={50}
-          height={50}
-        />
+        <div
+          className="h-[80px] cursor-pointer"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          {isHover ? <ShakeIcon /> : <NakaMask1 />}
+        </div>
         <h4>Scure by : polygon network</h4>
       </div>
     </>

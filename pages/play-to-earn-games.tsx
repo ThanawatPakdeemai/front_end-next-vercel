@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import PlayToEarnGamesPage from "@feature/page/playToEarnGamesPage"

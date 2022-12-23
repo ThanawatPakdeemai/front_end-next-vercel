@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 import { Layout } from "@components/template"
 import { ReactElement } from "react"
 import HomePage from "@feature/page/homePage"

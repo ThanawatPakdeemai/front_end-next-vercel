@@ -1,6 +1,5 @@
 import React from "react"
 import { motion, Transition, Variants } from "framer-motion"
-import { Button, ButtonProps } from "@mui/material"
 
 export interface IButtonIcon {
   type?: "square" | "circle"

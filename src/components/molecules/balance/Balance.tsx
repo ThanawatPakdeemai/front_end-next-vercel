@@ -1,5 +1,4 @@
 import * as React from "react"
-import IconButtonCustom from "@components/atoms/IconButtonCustom/IconButtonCustom"
 import SyncAltIcon from "@mui/icons-material/SyncAlt"
 import { Card, CardContent, SxProps, Theme } from "@mui/material"
 import BalanceVault from "@components/atoms/balanceValut/BalanceVault"

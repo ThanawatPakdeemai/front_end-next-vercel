@@ -156,30 +156,22 @@ const Footer = () => {
             <div className="mb-4 uppercase text-white-primary">
               NAKA ecosystemss
             </div>
-            {NAKA_ECOSYSTEMSS?.map((item) =>
-              item.icon === false ? (
-                <TextLink
-                  key={item.label}
-                  name={item.label}
-                  initial="rest"
-                  whileHover="hover"
-                  animate="rest"
-                  variantsArrow={arrowMotion}
-                  variantsText={textMotion}
-                />
-              ) : (
-                <TextLink
-                  key={item.label}
-                  name={item.label}
-                  initial="rest"
-                  whileHover="hover"
-                  animate="rest"
-                  variantsArrow={arrowMotion}
-                  variantsText={textMotion}
-                  icon={<ArrowOutwardOutlinedIcon sx={{ height: 14 }} />}
-                />
-              )
-            )}
+            {NAKA_ECOSYSTEMSS?.map((item) => (
+              <TextLink
+                key={item.label}
+                name={item.label}
+                initial="rest"
+                whileHover="hover"
+                animate="rest"
+                variantsArrow={arrowMotion}
+                variantsText={textMotion}
+                icon={
+                  item.icon ? (
+                    <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />
+                  ) : null
+                }
+              />
+            ))}
           </div>
         </div>
         <div className="flex justify-center pt-[20px] lg:justify-center lg:p-0">

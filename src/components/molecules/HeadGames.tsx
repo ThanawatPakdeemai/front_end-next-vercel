@@ -1,5 +1,6 @@
 import Dropdown from "@components/atoms/DropdownCustom"
-import { Grid } from "@mui/material"
+import SearchIcon from "@components/icons/SearchIcon"
+import { Grid, TextField } from "@mui/material"
 import React from "react"
 
 const HeadGames = () => (
@@ -34,6 +35,21 @@ const HeadGames = () => (
         <Dropdown
           title="All Devices"
           className=""
+        />
+      </Grid>
+      <Grid
+        item
+        xs={3}
+      />
+      <Grid
+        item
+        xs={3}
+      >
+        <TextField
+          placeholder="Search Games..."
+          InputProps={{
+            startAdornment: <SearchIcon className="mr-4" />
+          }}
         />
       </Grid>
     </Grid>

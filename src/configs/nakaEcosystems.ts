@@ -2,26 +2,26 @@ export const NAKA_ECOSYSTEMSS = [
   {
     label: "Blog",
     path: "/",
-    newpage: false
+    icon: false
   },
   {
     label: "About Us",
     path: "/",
-    newpage: true
+    icon: true
   },
   {
     label: "Marketplace",
     path: "/",
-    newpage: true
+    icon: true
   },
   {
     label: "Nakaverse",
     path: "/",
-    newpage: true
+    icon: true
   },
   {
     label: "Nakapunks",
     path: "/",
-    newpage: true
+    icon: true
   }
 ]

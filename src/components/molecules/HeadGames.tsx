@@ -3,12 +3,13 @@ import SearchIcon from "@components/icons/SearchIcon"
 import { Grid, TextField } from "@mui/material"
 import React from "react"
 
-const HeadGames = () => (
+const HeadGames = ({ children }: { children: React.ReactNode }) => (
   <div className="w-[calc(100%)]">
     <Grid
       container
       spacing={2}
       columns={15}
+      className="mb-10"
     >
       <Grid
         item
@@ -53,6 +54,7 @@ const HeadGames = () => (
         />
       </Grid>
     </Grid>
+    {children}
   </div>
 )
 export default HeadGames

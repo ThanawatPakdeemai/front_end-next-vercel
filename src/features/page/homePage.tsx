@@ -1,6 +1,7 @@
 import LogoIcon from "@components/icons/LogoIcon"
 import ShapeIcon from "@components/icons/ShapeIcon"
 import BodyCategories from "@components/molecules/BodyCategories"
+import Dropdown from "@components/atoms/DropdownCustom"
 import GameCarousel, {
   ISlide
 } from "@components/molecules/gameSlide/GameCarousel"
@@ -83,11 +84,14 @@ const Home = () => {
         text="Secue. fun. simple. earn $naka AND enjoy "
         icon={<LogoIcon />}
       />
+
       <div className="grid grid-cols-2 gap-6">
         <></>
         <CarouselSlide />
       </div>
+
       <DeveloperPart />
+
       <div className="my-20 h-full w-full">
         <GameCarousel
           menu={F2PHeaderMenu}

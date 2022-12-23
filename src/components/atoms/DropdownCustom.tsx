@@ -4,7 +4,7 @@ import { Collapse } from "@mui/material"
 import DropdownIcon from "@components/icons/DropdownIcon"
 import { DROPDOWN } from "@configs/dropdown"
 import { IDropdown } from "@interfaces/IMenu"
-import { SelectDropdown } from "@components/atoms/selectDropdown"
+import SelectDropdown from "./selectDropdown/SelectDropdown"
 
 interface IProp {
   icon?: React.ReactNode

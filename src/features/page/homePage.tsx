@@ -19,7 +19,7 @@ import BannerSlide from "@feature/slider/components/templates/BannerSlide"
 import CarouselSlide from "@feature/slider/components/templates/CarouselSlide"
 import CardMarketplace from "@components/molecules/CardMarketplace"
 import CardNakaverse from "@components/molecules/CardNakaverse"
-import { Grid } from "@mui/material"
+import { Box, Grid } from "@mui/material"
 import ICoupon from "@components/icons/Coupon"
 import IDiamond from "@components/icons/Diamond"
 import { IMAGES } from "@constants/images"
@@ -105,11 +105,46 @@ const Home = () => {
         </div>
       </div>
       <div className="grid grid-cols-2 gap-6">
-        <></>
+        <Box>
+          <CardMarketplace />
+          <div className="mt-4 grid grid-cols-3 gap-6">
+            <CardLink
+              classNameSecond="bg-red-card"
+              imageClassNameSecond="scale-[1.35]"
+              iconBtn={<INakaSwap />}
+              textBtn="NAKA Swap"
+              href="/"
+              srcMain={IMAGES.frontNakaSwap.src}
+              altMain={IMAGES.frontNakaSwap.alt}
+              srcSecond={IMAGES.backNakaSwap.src}
+              altSecond={IMAGES.backNakaSwap.alt}
+            />
+            <CardLink
+              classNameSecond="bg-warning-dark"
+              imageClassNameSecond="scale-[1.35]"
+              iconBtn={<IStacking />}
+              textBtn="Staking"
+              href="/"
+              srcMain={IMAGES.frontStaking.src}
+              altMain={IMAGES.frontStaking.alt}
+              srcSecond={IMAGES.backStaking.src}
+              altSecond={IMAGES.backStaking.alt}
+            />
+            <CardLink
+              classNameSecond="bg-info-light"
+              imageClassNameSecond="scale-[1.35]"
+              iconBtn={<IReferrals />}
+              textBtn="Referrals"
+              href="/"
+              srcMain={IMAGES.frontReferrals.src}
+              altMain={IMAGES.frontReferrals.alt}
+              srcSecond={IMAGES.backReferrals.src}
+              altSecond={IMAGES.backReferrals.alt}
+            />
+          </div>
+        </Box>
         <CarouselSlide />
       </div>
-
-      <DeveloperPart />
 
       <div className="my-20 h-full w-full">
         <GameCarousel
@@ -135,82 +170,11 @@ const Home = () => {
         text="Show your God Mode for the blockchain gaming landscape"
         icon={<ShapeIcon />}
       />
-      <div className="mt-10 mb-10">
-        <div className="mt-2.5 mb-2.5">
-          <Grid
-            container
-            spacing={2}
-          >
-            <Grid
-              item
-              sm={12}
-              md={6}
-            >
-              <CardMarketplace />
-            </Grid>
-          </Grid>
-        </div>
-        <div className="mt-2.5 mb-2.5">
-          <Grid
-            container
-            spacing={2}
-          >
-            <Grid
-              item
-              sm={12}
-              md={2}
-            >
-              <CardLink
-                classNameSecond="bg-red-card"
-                imageClassNameSecond="scale-[1.35]"
-                iconBtn={<INakaSwap />}
-                textBtn="NAKA Swap"
-                href="/"
-                srcMain={IMAGES.frontNakaSwap.src}
-                altMain={IMAGES.frontNakaSwap.alt}
-                srcSecond={IMAGES.backNakaSwap.src}
-                altSecond={IMAGES.backNakaSwap.alt}
-              />
-            </Grid>
-            <Grid
-              item
-              sm={12}
-              md={2}
-            >
-              <CardLink
-                classNameSecond="bg-warning-dark"
-                imageClassNameSecond="scale-[1.35]"
-                iconBtn={<IStacking />}
-                textBtn="Staking"
-                href="/"
-                srcMain={IMAGES.frontStaking.src}
-                altMain={IMAGES.frontStaking.alt}
-                srcSecond={IMAGES.backStaking.src}
-                altSecond={IMAGES.backStaking.alt}
-              />
-            </Grid>
-            <Grid
-              item
-              sm={12}
-              md={2}
-            >
-              <CardLink
-                classNameSecond="bg-info-light"
-                imageClassNameSecond="scale-[1.35]"
-                iconBtn={<IReferrals />}
-                textBtn="Referrals"
-                href="/"
-                srcMain={IMAGES.frontReferrals.src}
-                altMain={IMAGES.frontReferrals.alt}
-                srcSecond={IMAGES.backReferrals.src}
-                altSecond={IMAGES.backReferrals.alt}
-              />
-            </Grid>
-          </Grid>
-        </div>
-      </div>
+      <BodyCategories />
 
-      <div className="mt-10 mb-10">
+      <DeveloperPart />
+
+      <div className="mt-4 mb-10">
         <Grid
           container
           spacing={2}
@@ -266,8 +230,6 @@ const Home = () => {
           </Grid>
         </Grid>
       </div>
-
-      <BodyCategories />
     </>
   )
 }

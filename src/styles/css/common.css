@@ -212,6 +212,150 @@ body {
   background-size: 5% !important;
 }
 
+.btn-sticky-out {
+  width: 88px;
+  height: 88px;
+  border-radius: 44px;
+  background: linear-gradient(#1c1c21, #18181b) padding-box,
+    linear-gradient(to bottom, #252627, #18181b) border-box;
+  border: 1px solid transparent;
+  animation: firCircle 3s ease-in-out infinite;
+}
+
+.btn-sticky-in {
+  width: 66px;
+  height: 66px;
+  border-radius: 34px;
+  background: linear-gradient(#212125, #222324) padding-box,
+    linear-gradient(to bottom, #27282b, #1a1a1e) border-box;
+  border: 1px solid transparent;
+  position: absolute;
+  animation: secCircle 3s ease-in-out infinite;
+}
+
+.btn-sticky-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: red;
+  position: absolute;
+  right: 28%;
+  top: 28%;
+  animation: dotCircle 3s ease-in-out infinite;
+}
+
+.btn-sticky-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 24px;
+  position: absolute !important;
+  background: linear-gradient(#202025, #1e1e23) padding-box,
+    linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(0, 0, 0, 0) 100%
+      )
+      border-box;
+  border: 1px solid transparent;
+}
+
+@keyframes firCircle {
+  0% {
+    scale: 1;
+  }
+  20% {
+    scale: 1;
+    opacity: 1;
+  }
+  25% {
+    scale: 1.05;
+    opacity: 0.96;
+  }
+  30% {
+    scale: 1;
+    opacity: 1;
+  }
+  35% {
+    scale: 1.01;
+    opacity: 0.96;
+  }
+  40% {
+    scale: 1;
+    opacity: 1;
+  }
+  100% {
+    scale: 1;
+  }
+}
+@keyframes secCircle {
+  0% {
+    scale: 1;
+  }
+  70% {
+    scale: 1;
+    opacity: 1;
+  }
+  75% {
+    scale: 1.1;
+    opacity: 0.92;
+  }
+  80% {
+    scale: 1;
+    opacity: 1;
+  }
+  85% {
+    scale: 1.04;
+    opacity: 0.92;
+  }
+  90% {
+    scale: 1;
+    opacity: 1;
+  }
+  100% {
+    scale: 1;
+  }
+}
+@keyframes dotCircle {
+  0% {
+    scale: 1;
+  }
+  20% {
+    scale: 1;
+  }
+  25% {
+    scale: 0.6;
+  }
+  30% {
+    scale: 0.8;
+  }
+  35% {
+    scale: 0.7;
+  }
+  40% {
+    scale: 0.8;
+  }
+  45% {
+    scale: 0.8;
+  }
+  70% {
+    scale: 0.8;
+  }
+  75% {
+    scale: 1.2;
+  }
+  80% {
+    scale: 1;
+  }
+  85% {
+    scale: 1.1;
+  }
+  90% {
+    scale: 1;
+  }
+  100% {
+    scale: 1;
+  }
+}
 .MuiTooltip-tooltipPlacementRight .MuiTooltip-arrow {
   right: auto !important;
   left: 0;

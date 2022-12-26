@@ -1,6 +1,8 @@
 import LogoIcon from "@components/icons/LogoIcon"
+import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
 import ShapeIcon from "@components/icons/ShapeIcon"
 import BodyCategories from "@components/molecules/BodyCategories"
+import ButtonSticky from "@components/molecules/ButtonSticky"
 import GameCarousel, {
   ISlide
 } from "@components/molecules/gameSlide/GameCarousel"
@@ -77,13 +79,21 @@ const Home = () => {
     <>
       <BannerSlide />
       {/* Testing display a CarouselSlide component, waiting to merge with team */}
-      <Tagline
-        bgColor="bg-secondary-main"
-        textColor="text-white-default"
-        text="Secue. fun. simple. earn $naka AND enjoy "
-        icon={<LogoIcon />}
-      />
-
+      <div className="relative">
+        <Tagline
+          bgColor="bg-secondary-main"
+          textColor="text-white-default"
+          text="Secue. fun. simple. earn $naka AND enjoy "
+          icon={<LogoIcon />}
+        />
+        <div className="absolute top-[-50%] right-[-10%] z-[5] flex flex-col items-center justify-center">
+          <ButtonSticky icon={<SupportIcon />} />
+          <ButtonSticky
+            multi
+            notify
+          />
+        </div>
+      </div>
       <div className="grid grid-cols-2 gap-6">
         <></>
         <CarouselSlide />

@@ -5,21 +5,24 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight"
 
 interface IProp {
   totalPage: number
-  defaultPage: number
+  defaultPage?: number
+  // eslint-disable-next-line no-unused-vars
+  setPage: (value: number) => void
 }
-const PaginationNaka = ({ totalPage, defaultPage }: IProp) => {
-  const [page, setPage] = React.useState(defaultPage)
+const PaginationNaka = ({ totalPage, defaultPage, setPage }: IProp) => {
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    event.preventDefault()
     setPage(value)
   }
+
   return (
     <>
       <Stack spacing={2}>
         <Pagination
-          count={totalPage ?? 10}
+          count={totalPage}
           hideNextButton
           hidePrevButton
-          defaultPage={page}
+          defaultPage={defaultPage ?? 1}
           variant="outlined"
           shape="rounded"
           size="large"

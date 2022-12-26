@@ -240,47 +240,148 @@ body {
   background-size: 5% !important;
 }
 
-.sticky-btn-container {
+.btn-sticky-out {
   width: 88px;
   height: 88px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(28, 28, 33, 0.1) !important;
-  background-image: radial-gradient(
-    circle closest-side,
-    #252526,
-    #252527
-  ) !important;
   border-radius: 44px;
-  border: 1px solid;
-  border-color: rgba(68, 68, 68, 0.1) !important;
+  background: linear-gradient(#1a1b1d, #1c1c21, #18181b) padding-box,
+    linear-gradient(to bottom, #252627, #18181b) border-box;
+  border: 1px solid transparent;
+  animation: firCircle 3s ease-in-out infinite;
 }
 
-.sticky-btn-secondary {
-  width: 68px;
-  height: 68px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.btn-sticky-in {
+  width: 66px;
+  height: 66px;
   border-radius: 34px;
-  background-color: #232325 !important;
-  background-image: radial-gradient(
-    circle closest-side,
-    #212125,
-    #202023
-  ) !important;
-  border: 1px solid;
-  border-color: rgba(68, 68, 68, 0.2) !important;
+  background: linear-gradient(#202025, #1d1d22) padding-box,
+    linear-gradient(to bottom, #27282b, #1a1a1e) border-box;
+  border: 1px solid transparent;
+  position: absolute;
+  animation: secCircle 3s ease-in-out infinite;
+}
+.btn-sticky-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: red;
+  position: absolute;
+  right: 28%;
+  top: 28%;
+  animation: dotCircle 3s ease-in-out infinite;
 }
 
-.sticky-btn {
+.btn-sticky-icon {
   width: 46px;
   height: 46px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 23px;
-  border-top: 1px solid #3b3d44;
-  background: rgba(28, 28, 33, 255) !important;
+  border-radius: 24px;
+  position: absolute !important;
+  background: linear-gradient(#202025, #1c1c21) padding-box,
+    linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(0, 0, 0, 0) 100%
+      )
+      border-box;
+  border: 1px solid transparent;
+}
+
+@keyframes firCircle {
+  0% {
+    scale: 1;
+  }
+  20% {
+    scale: 1;
+    opacity: 1;
+  }
+  25% {
+    scale: 1.05;
+    opacity: 0.96;
+  }
+  30% {
+    scale: 1;
+    opacity: 1;
+  }
+  35% {
+    scale: 1.01;
+    opacity: 0.96;
+  }
+  40% {
+    scale: 1;
+    opacity: 1;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+@keyframes secCircle {
+  0% {
+    scale: 1;
+  }
+  70% {
+    scale: 1;
+    opacity: 1;
+  }
+  75% {
+    scale: 1.1;
+    opacity: 0.92;
+  }
+  80% {
+    scale: 1;
+    opacity: 1;
+  }
+  85% {
+    scale: 1.04;
+    opacity: 0.92;
+  }
+  90% {
+    scale: 1;
+    opacity: 1;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+@keyframes dotCircle {
+  0% {
+    scale: 1;
+  }
+  20% {
+    scale: 1;
+  }
+  25% {
+    scale: 0.6;
+  }
+  30% {
+    scale: 0.8;
+  }
+  35% {
+    scale: 0.7;
+  }
+  40% {
+    scale: 0.8;
+  }
+  45% {
+    scale: 0.8;
+  }
+  70% {
+    scale: 0.8;
+  }
+  75% {
+    scale: 1.2;
+  }
+  80% {
+    scale: 1;
+  }
+  85% {
+    scale: 1.1;
+  }
+  90% {
+    scale: 1;
+  }
+  100% {
+    scale: 1;
+  }
 }

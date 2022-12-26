@@ -16,7 +16,7 @@ import NakaMask2 from "@components/icons/Footer/NaKaMask2"
 import NakaMask3 from "@components/icons/Footer/NaKaMask3"
 import { useState } from "react"
 import { ShakeIcon } from "@components/atoms/LigthShake"
-import TextLink from "@components/atoms/textLink"
+import TextLink from "@components/atoms/TextLink"
 
 const arrowMotion = {
   rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },

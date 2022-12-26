@@ -4,10 +4,11 @@ import { Box, ModalUnstyledOwnProps, Modal } from "@mui/material"
 interface IProps extends ModalUnstyledOwnProps {
   bgcolor?: string
   className?: string
+  width?: string | number
 }
 
 export const ModalCustom = ({ ...props }: IProps) => {
-  const { children, bgcolor, className } = props
+  const { children, bgcolor, className, width } = props
   return (
     <Modal {...props}>
       <Box
@@ -15,7 +16,7 @@ export const ModalCustom = ({ ...props }: IProps) => {
           position: "absolute" as "absolute",
           top: "50%",
           left: "50%",
-          width: 400,
+          width: width || "auto",
           transform: "translate(-50%, -50%)",
           bgcolor: bgcolor || "#01010133"
         }}

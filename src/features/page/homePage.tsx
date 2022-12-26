@@ -93,11 +93,14 @@ const Home = () => {
         text="Secue. fun. simple. earn $naka AND enjoy "
         icon={<LogoIcon />}
       />
+
       <div className="grid grid-cols-2 gap-6">
         <></>
         <CarouselSlide />
       </div>
+
       <DeveloperPart />
+
       <div className="my-20 h-full w-full">
         <GameCarousel
           menu={F2PHeaderMenu}

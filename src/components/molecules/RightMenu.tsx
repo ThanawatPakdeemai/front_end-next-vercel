@@ -9,10 +9,24 @@ import Helper from "@utils/helper"
 import StatProfile from "@components/molecules/statProfile/StatProfile"
 import MenuProfile from "@components/molecules/menuProfile/MenuProfile"
 import { PROFILE_MOCKUP } from "@constants/profileMockup"
+import ButtonIcon from "@components/atoms/button/ButtonIcon"
 
 const RightMenu = () => {
   const [expanded, setExpanded] = useState<boolean>(false)
   const [hoverExpand, setHoverExpand] = useState<boolean>(false)
+
+  const iconmotion = {
+    hover: {
+      scale: 1.2,
+      rotate: 20,
+      ease: "easeIn",
+      transition: {
+        duration: 0.4,
+        stiffness: 500,
+        type: "spring"
+      }
+    }
+  }
 
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
@@ -42,14 +56,16 @@ const RightMenu = () => {
           disableSpacing
         >
           {/* notification */}
-          <IconButtonCustom
+          <ButtonIcon
             onClick={handleOnNotiClick}
-            className={`h-10 w-10 rounded-[13px] border-[2px]
-             border-neutral-700 bg-transparent duration-300 ease-bounce hover:scale-125 hover:bg-transparent`}
+            variants={iconmotion}
+            whileHover="hover"
+            transition={{ type: "spring", stiffness: 400, damping: 4 }}
+            icon={<NotificationsOutlinedIcon className="text-white-primary" />}
+            className="ml-1 mr-5 flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-lg border border-neutral-700 bg-transparent"
             aria-label="notification-button"
-          >
-            <NotificationsOutlinedIcon className="text-white-primary transition-all duration-300 hover:rotate-[15deg]" />
-          </IconButtonCustom>
+          />
+
           <div className="flex-1 flex-col items-center">
             <Typography className="text-sm font-bold">
               {PROFILE_MOCKUP.username}

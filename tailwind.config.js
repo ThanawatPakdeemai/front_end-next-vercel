@@ -104,6 +104,9 @@ module.exports = {
           to: "#ED3030",
           "lemon": "#A0ED61"
         },
+        varidian: {
+          default: "#3DCD95"
+        },
         binance: {
           default: "#fcd535"
         },

@@ -1,20 +1,20 @@
-import { Layout } from "@components/template"
 import { ReactElement } from "react"
-import HomePage from "@feature/page/homePage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import GamePageLayout from "@components/template/GamePageLayout"
+import StoryModeGamesPage from "@feature/page/storyModeGamesPage"
 
-export default function Home() {
+export default function StoryModeGames() {
   return (
     <>
       <article className="h-full w-full">
-        <HomePage />
+        <StoryModeGamesPage />
       </article>
     </>
   )
 }
 
-Home.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>
+StoryModeGames.getLayout = function getLayout(page: ReactElement) {
+  return <GamePageLayout>{page}</GamePageLayout>
 }
 
 export async function getStaticProps({ locale }) {

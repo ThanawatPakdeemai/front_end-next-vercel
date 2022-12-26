@@ -15,6 +15,7 @@ import { PaletteCustom } from "./partial/pattern"
 import { TypographyCustom } from "./partial/typography"
 import { MuiTypography as _muiTypography } from "./partial/components/muiTypography"
 import { MuiChip as _muiChip } from "./partial/components/muiChip"
+import { MuiTextfield as _muiTextField } from "./partial/components/muiTextfield"
 
 export const theme: ThemeOptions = {
   typography: TypographyCustom,
@@ -45,6 +46,7 @@ export const theme: ThemeOptions = {
     MuiFab: _muiFab,
     MuiAutocomplete: _muiAutocomplete,
     MuiTypography: _muiTypography,
-    MuiChip: _muiChip
+    MuiChip: _muiChip,
+    MuiTextField: _muiTextField
   }
 }

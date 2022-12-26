@@ -39,7 +39,6 @@ const CarouselCardSlide = ({
         />
       </div>
       <ShortDetailsCTA
-        video={video}
         description={props.description}
         link={props.link}
         startIcon={

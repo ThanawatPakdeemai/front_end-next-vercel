@@ -41,6 +41,76 @@ export const IMAGES = {
     height: 123,
     alt: "blog-band"
   },
+  frontCouponBand: {
+    src: "/images/home/front_coupon.svg",
+    blurDataURL: "/images/home/front_coupon.svg",
+    width: 123,
+    height: 123,
+    alt: "coupon-band"
+  },
+  backCouponBand: {
+    src: "/images/home/back_coupon.svg",
+    blurDataURL: "/images/home/back_coupon.svg",
+    width: 123,
+    height: 123,
+    alt: "coupon-band"
+  },
+  frontNakaBand: {
+    src: "/images/home/front_naka.svg",
+    blurDataURL: "/images/home/front_naka.svg",
+    width: 123,
+    height: 123,
+    alt: "naka-band"
+  },
+  backNakaBand: {
+    src: "/images/home/back_naka.svg",
+    blurDataURL: "/images/home/back_naka.svg",
+    width: 123,
+    height: 123,
+    alt: "naka-band"
+  },
+  frontNakaSwap: {
+    src: "/images/home/front_naka_swap.svg",
+    blurDataURL: "/images/home/front_naka_swap.svg",
+    width: 123,
+    height: 123,
+    alt: "naka-swap"
+  },
+  backNakaSwap: {
+    src: "/images/home/back_naka_swap.svg",
+    blurDataURL: "/images/home/back_naka_swap.svg",
+    width: 123,
+    height: 123,
+    alt: "naka-swap"
+  },
+  frontStaking: {
+    src: "/images/home/front_staking.svg",
+    blurDataURL: "/images/home/front_staking.svg",
+    width: 123,
+    height: 123,
+    alt: "naka-staking"
+  },
+  backStaking: {
+    src: "/images/home/back_staking.svg",
+    blurDataURL: "/images/home/back_staking.svg",
+    width: 123,
+    height: 123,
+    alt: "naka-staking"
+  },
+  frontReferrals: {
+    src: "/images/home/front_referrals.svg",
+    blurDataURL: "/images/home/front_referrals.svg",
+    width: 123,
+    height: 123,
+    alt: "naka-referrals"
+  },
+  backReferrals: {
+    src: "/images/home/back_referrals.svg",
+    blurDataURL: "/images/home/back_referrals.svg",
+    width: 123,
+    height: 123,
+    alt: "naka-referrals"
+  },
   marketPlace: {
     src: "/images/home/marketplace.svg",
     blurDataURL: "/images/home/marketplace.svg",

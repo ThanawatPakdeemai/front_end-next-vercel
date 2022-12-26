@@ -1,19 +1,19 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import PlayToEarnGamesPage from "@feature/page/playToEarnGamesPage"
 import GamePageLayout from "@components/template/GamePageLayout"
+import FreeToPlayGamesPage from "@feature/page/freeToPlayGamesPage"
 
-export default function PlayToEarnGames() {
+export default function FreeToPlayGames() {
   return (
     <>
       <article className="h-full w-full">
-        <PlayToEarnGamesPage />
+        <FreeToPlayGamesPage />
       </article>
     </>
   )
 }
 
-PlayToEarnGames.getLayout = function getLayout(page: ReactElement) {
+FreeToPlayGames.getLayout = function getLayout(page: ReactElement) {
   return <GamePageLayout>{page}</GamePageLayout>
 }
 

@@ -1,19 +1,19 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import PlayToEarnGamesPage from "@feature/page/playToEarnGamesPage"
 import GamePageLayout from "@components/template/GamePageLayout"
+import StoryModeGamesPage from "@feature/page/storyModeGamesPage"
 
-export default function PlayToEarnGames() {
+export default function StoryModeGames() {
   return (
     <>
       <article className="h-full w-full">
-        <PlayToEarnGamesPage />
+        <StoryModeGamesPage />
       </article>
     </>
   )
 }
 
-PlayToEarnGames.getLayout = function getLayout(page: ReactElement) {
+StoryModeGames.getLayout = function getLayout(page: ReactElement) {
   return <GamePageLayout>{page}</GamePageLayout>
 }
 

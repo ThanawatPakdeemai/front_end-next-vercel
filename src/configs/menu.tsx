@@ -42,12 +42,12 @@ export const MENU = [
     chide: [
       {
         name: "Play To Earn Mode",
-        link: "/",
+        link: "/play-to-earn-games",
         icon: AttachMoneyIcon
       },
       {
         name: "Free Mode",
-        link: "/free",
+        link: "/free-to-play-games",
         icon: MoneyOffIcon,
         textRight: "Free"
       },

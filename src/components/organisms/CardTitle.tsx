@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 import React, { memo } from "react"
 import { Card, CardHeader } from "@mui/material"
 

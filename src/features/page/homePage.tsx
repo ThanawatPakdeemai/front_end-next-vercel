@@ -98,7 +98,9 @@ const Home = () => {
         <></>
         <CarouselSlide />
       </div>
+
       <DeveloperPart />
+
       <div className="my-20 h-full w-full">
         <GameCarousel
           menu={F2PHeaderMenu}

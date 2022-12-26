@@ -45,10 +45,10 @@ function OrionProtocolIcon({
           y2="4.10492"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FE37AF" />
+          <stop stopColor="#FE37AF" />
           <stop
             offset="1"
-            stop-color="#FE079C"
+            stopColor="#FE079C"
           />
         </linearGradient>
         <linearGradient
@@ -59,10 +59,10 @@ function OrionProtocolIcon({
           y2="12.8902"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#09EFFB" />
+          <stop stopColor="#09EFFB" />
           <stop
             offset="1"
-            stop-color="#FE37AF"
+            stopColor="#FE37AF"
           />
         </linearGradient>
         <linearGradient
@@ -73,10 +73,10 @@ function OrionProtocolIcon({
           y2="14.7096"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#891AEA" />
+          <stop stopColor="#891AEA" />
           <stop
             offset="1"
-            stop-color="#A047EE"
+            stopColor="#A047EE"
           />
         </linearGradient>
         <linearGradient
@@ -87,10 +87,10 @@ function OrionProtocolIcon({
           y2="15.4715"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FE37AF" />
+          <stop stopColor="#FE37AF" />
           <stop
             offset="1"
-            stop-color="#FE079C"
+            stopColor="#FE079C"
           />
         </linearGradient>
         <linearGradient
@@ -101,10 +101,10 @@ function OrionProtocolIcon({
           y2="19.6618"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#891AEA" />
+          <stop stopColor="#891AEA" />
           <stop
             offset="1"
-            stop-color="#FE079C"
+            stopColor="#FE079C"
           />
         </linearGradient>
       </defs>

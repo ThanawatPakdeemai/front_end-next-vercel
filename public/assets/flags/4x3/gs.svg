@@ -2,17 +2,17 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" id="flag-icons-gs" viewBox="0 0 640 480">
   <defs>
     <linearGradient id="b">
-      <stop offset="0" stop-color="#d5dfff"/>
-      <stop offset="1" stop-color="#fff"/>
+      <stop offset="0" stopColor="#d5dfff"/>
+      <stop offset="1" stopColor="#fff"/>
     </linearGradient>
     <linearGradient id="a">
-      <stop offset="0" stop-color="#474747"/>
-      <stop offset="1" stop-color="#f50"/>
+      <stop offset="0" stopColor="#474747"/>
+      <stop offset="1" stopColor="#f50"/>
     </linearGradient>
     <linearGradient xlink:href="#a" id="c" x1="109.3" x2="110.9" y1="218.5" y2="173.4" gradientTransform="matrix(1.178 0 0 .50849 388 38.3)" gradientUnits="userSpaceOnUse"/>
     <linearGradient id="d" x1="125.9" x2="126" y1="316.4" y2="337.2" gradientTransform="matrix(.96067 0 0 .6235 388 38.3)" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#b50000"/>
-      <stop offset="1" stop-color="#ffc500"/>
+      <stop offset="0" stopColor="#b50000"/>
+      <stop offset="1" stopColor="#ffc500"/>
     </linearGradient>
     <linearGradient xlink:href="#b" id="e" x1="407.9" x2="456.4" y1="149.4" y2="147.4" gradientTransform="matrix(.4361 0 0 1.37349 388 38.3)" gradientUnits="userSpaceOnUse"/>
     <linearGradient xlink:href="#a" id="f" x1="215.8" x2="229" y1="103" y2="103" gradientTransform="matrix(.57794 0 0 1.03641 388 38.3)" gradientUnits="userSpaceOnUse"/>

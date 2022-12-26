@@ -5,8 +5,8 @@
     <title>Group 5</title>
     <defs>
         <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
-            <stop stop-color="#F03232" offset="0%"></stop>
-            <stop stop-color="#DB2727" offset="100%"></stop>
+            <stop stopColor="#F03232" offset="0%"></stop>
+            <stop stopColor="#DB2727" offset="100%"></stop>
         </linearGradient>
         <polygon id="path-2" points="0 0 27.0241852 0 27.0241852 50.6833517 0 50.6833517"></polygon>
     </defs>

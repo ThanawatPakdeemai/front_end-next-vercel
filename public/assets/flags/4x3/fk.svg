@@ -7,8 +7,8 @@
     <linearGradient xlink:href="#a" id="e" x1="472.4" x2="445.3" y1="578.7" y2="580.2" gradientTransform="matrix(1.08448 0 0 1.26674 49.7 -414.7)" gradientUnits="userSpaceOnUse"/>
     <linearGradient xlink:href="#a" id="f" x1="518" x2="456.4" y1="553.7" y2="558.1" gradientTransform="matrix(1.01941 0 0 1.3554 49.7 -414.7)" gradientUnits="userSpaceOnUse"/>
     <linearGradient id="a">
-      <stop offset="0" stop-color="#a43907"/>
-      <stop offset="1" stop-color="#fff"/>
+      <stop offset="0" stopColor="#a43907"/>
+      <stop offset="1" stopColor="#fff"/>
     </linearGradient>
     <linearGradient xlink:href="#a" id="h" x1="388.5" x2="677.4" y1="507.2" y2="508.8" gradientTransform="matrix(.88927 0 0 1.54542 50.4 -413.6)" gradientUnits="userSpaceOnUse"/>
     <linearGradient xlink:href="#a" id="i" x1="579.8" x2="556.8" y1="504.9" y2="505.9" gradientTransform="matrix(.91096 0 0 1.52008 49.7 -414.7)" gradientUnits="userSpaceOnUse"/>

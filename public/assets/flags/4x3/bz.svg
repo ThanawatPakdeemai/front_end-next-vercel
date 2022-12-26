@@ -2,12 +2,12 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" id="flag-icons-bz" viewBox="0 0 640 480">
   <defs>
     <radialGradient id="a">
-      <stop offset="0" stop-color="#ffef5d"/>
-      <stop offset="1" stop-color="#ea5700"/>
+      <stop offset="0" stopColor="#ffef5d"/>
+      <stop offset="1" stopColor="#ea5700"/>
     </radialGradient>
     <radialGradient id="b">
-      <stop offset="0" stop-color="#952d1a"/>
-      <stop offset="1" stop-color="#570a00"/>
+      <stop offset="0" stopColor="#952d1a"/>
+      <stop offset="1" stopColor="#570a00"/>
     </radialGradient>
     <radialGradient xlink:href="#a" id="c" cx="247.1" cy="238.3" r="36" fx="247.1" fy="238.3" gradientTransform="scale(1.22624 .8155)" gradientUnits="userSpaceOnUse"/>
     <radialGradient xlink:href="#a" id="d" cx="322" cy="152.9" r="10.6" fx="322" fy="152.9" gradientTransform="scale(.93615 1.06821)" gradientUnits="userSpaceOnUse"/>

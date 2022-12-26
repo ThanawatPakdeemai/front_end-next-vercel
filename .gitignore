@@ -40,5 +40,6 @@ next-env.d.ts
 
 # lock files
 package-lock.json
+yarn.lock
 
 *src/styles/output.css

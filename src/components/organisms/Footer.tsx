@@ -212,10 +212,7 @@ const Footer = () => {
       <div className="pt-[80px] text-[12px] lg:flex">
         <div className="w-full rounded-[20px] bg-neutral-800 p-6 lg:w-[90%]">
           <div className="md:flex">
-            <div
-              className="flex items-center md:w-2/4 md:pr-[20px]"
-              text-white-primary
-            >
+            <div className="flex items-center md:w-2/4 md:pr-[20px]">
               <ButtonToggleIcon
                 handleClick={onHandleClick}
                 startIcon={<DesktopIcon />}

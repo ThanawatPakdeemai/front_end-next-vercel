@@ -10,7 +10,7 @@
         </linearGradient>
         <polygon id="path-2" points="0 0 27.0241852 0 27.0241852 50.6833517 0 50.6833517"></polygon>
     </defs>
-    <g id="Platform" stroke="none" strokeWidth="1" fill="none" fill-rule="evenodd">
+    <g id="Platform" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
         <g id="0-NAKAMOTO" transform="translate(-54.000000, -74.000000)">
             <g id="Group-5" transform="translate(54.000000, 74.000000)">
                 <g id="Group-33" transform="translate(0.000000, 0.140148)" fill="url(#linearGradient-1)">

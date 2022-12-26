@@ -14,8 +14,9 @@ import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import NakaMask1 from "@components/icons/Footer/NaKaMask1"
 import NakaMask2 from "@components/icons/Footer/NaKaMask2"
 import NakaMask3 from "@components/icons/Footer/NaKaMask3"
-import { useCallback, useEffect, useState } from "react"
-import TextLink from "@components/atoms/textLink"
+import { useState } from "react"
+import TextLink from "@components/atoms/TextLink"
+import { ShakeIcon } from "@components/atoms/LigthShake"
 
 const arrowMotion = {
   rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
@@ -72,25 +73,6 @@ const iconArrow = {
     scaleY: 1.2,
     ease: "easeIn"
   }
-}
-
-const images = [<NakaMask2 key="NaKaMask" />, <NakaMask3 key="NaKaMask" />]
-function ShakeIcon() {
-  const [newImage, setnewImage] = useState<any>()
-
-  const shuffle = useCallback(() => {
-    const index = Math.floor(Math.random() * images.length)
-    setnewImage(images[index])
-  }, [])
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      shuffle()
-    }, 100)
-
-    return () => clearInterval(interval)
-  }, [])
-  return <div>{newImage}</div>
 }
 
 const Footer = () => {
@@ -263,7 +245,17 @@ const Footer = () => {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          {isHover ? <ShakeIcon /> : <NakaMask1 />}
+          {isHover ? (
+            <ShakeIcon
+              iconArray={[
+                <NakaMask2 key="NaKaMask" />,
+                <NakaMask3 key="NaKaMask" />
+              ]}
+              second={100}
+            />
+          ) : (
+            <NakaMask1 />
+          )}
         </div>
         <h4>Scure by : polygon network</h4>
       </div>

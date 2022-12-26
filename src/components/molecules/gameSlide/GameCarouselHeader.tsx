@@ -17,7 +17,15 @@ export interface IHeaderSlide {
   icon: React.ReactNode
   title: string
   menuList: ISlideList[]
-  theme: string
+  theme:
+    | "default"
+    | "primary"
+    | "secondary"
+    | "error"
+    | "info"
+    | "success"
+    | "warning"
+    | undefined
   stickerRotate: number
 }
 
@@ -129,6 +137,7 @@ const GameCarouselHeader = ({
               <Chip
                 label={item.label}
                 size="medium"
+                color={curType === item.type ? menu.theme : undefined}
                 className={` h-full w-full cursor-pointer font-bold hover:bg-${
                   menu.theme
                 }-main !hover:text-white-primary capitalize ${

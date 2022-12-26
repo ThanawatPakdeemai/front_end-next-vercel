@@ -1,6 +1,6 @@
 import { Button } from "@mui/material"
 import Link from "next/link"
-import React from "react"
+import React, { useMemo } from "react"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 
 export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
@@ -13,6 +13,7 @@ export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   className?: string
   textColor?: string
   arrowColor?: string
+  onClick?: () => void
 }
 
 const ButtonLink = ({
@@ -24,24 +25,43 @@ const ButtonLink = ({
   size,
   className,
   textColor,
-  arrowColor
-}: IButtonLink) => (
-  <Link href={href}>
-    <Button
-      variant={variant}
-      color={color}
-      size={size}
-      startIcon={<div className="button-icon animation-arrow">{icon}</div>}
-      className={`${className} button-global`}
-      endIcon={
-        <div className="button-arrow animation-arrow">
-          <ArrowForwardIcon className={arrowColor} />
-        </div>
-      }
-    >
-      <span className={`animation-button-text ${textColor}`}>{text}</span>
-    </Button>
-  </Link>
-)
+  arrowColor,
+  onClick
+}: IButtonLink) => {
+  const ButtonSelf = useMemo(
+    () => (
+      <Button
+        variant={variant}
+        color={color}
+        size={size}
+        startIcon={<div className="button-icon animation-arrow">{icon}</div>}
+        className={`${className} button-global`}
+        onClick={() => {
+          if (onClick) onClick()
+        }}
+        endIcon={
+          <div className="button-arrow animation-arrow">
+            <ArrowForwardIcon className={arrowColor} />
+          </div>
+        }
+      >
+        <span className={`animation-button-text ${textColor}`}>{text}</span>
+      </Button>
+    ),
+    [
+      arrowColor,
+      className,
+      color,
+      icon,
+      onClick,
+      size,
+      text,
+      textColor,
+      variant
+    ]
+  )
+
+  return <>{!onClick ? <Link href={href}>{ButtonSelf}</Link> : ButtonSelf}</>
+}
 
 export default ButtonLink

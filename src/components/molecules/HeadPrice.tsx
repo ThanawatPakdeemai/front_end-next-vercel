@@ -164,6 +164,7 @@ const HeadPrice = ({
         open={open}
         onClose={handleClose}
         className="gap-3 rounded-[34px] p-[10px]"
+        width={400}
       >
         <Box className="rounded-md bg-neutral-900 p-4">
           <Box

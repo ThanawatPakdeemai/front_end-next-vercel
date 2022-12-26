@@ -28,85 +28,85 @@ export const IMAGES = {
     alt: "nakamoto-band"
   },
   frontBlogBand: {
-    src: "/images/home/front_blog.svg",
-    blurDataURL: "/images/home/front_blog.svg",
+    src: "/images/AnimationIcon/front_blog.svg",
+    blurDataURL: "/images/AnimationIcon/front_blog.svg",
     width: 123,
     height: 123,
     alt: "blog-band"
   },
   backBlogBand: {
-    src: "/images/home/back_blog.svg",
-    blurDataURL: "/images/home/back_blog.svg",
+    src: "/images/AnimationIcon/back_blog.svg",
+    blurDataURL: "/images/AnimationIcon/back_blog.svg",
     width: 123,
     height: 123,
     alt: "blog-band"
   },
   frontCouponBand: {
-    src: "/images/home/front_coupon.svg",
-    blurDataURL: "/images/home/front_coupon.svg",
+    src: "/images/AnimationIcon/front_coupon.svg",
+    blurDataURL: "/images/AnimationIcon/front_coupon.svg",
     width: 123,
     height: 123,
     alt: "coupon-band"
   },
   backCouponBand: {
-    src: "/images/home/back_coupon.svg",
-    blurDataURL: "/images/home/back_coupon.svg",
+    src: "/images/AnimationIcon/back_coupon.svg",
+    blurDataURL: "/images/AnimationIcon/back_coupon.svg",
     width: 123,
     height: 123,
     alt: "coupon-band"
   },
   frontNakaBand: {
-    src: "/images/home/front_naka.svg",
-    blurDataURL: "/images/home/front_naka.svg",
+    src: "/images/AnimationIcon/front_naka.svg",
+    blurDataURL: "/images/AnimationIcon/front_naka.svg",
     width: 123,
     height: 123,
     alt: "naka-band"
   },
   backNakaBand: {
-    src: "/images/home/back_naka.svg",
-    blurDataURL: "/images/home/back_naka.svg",
+    src: "/images/AnimationIcon/back_naka.svg",
+    blurDataURL: "/images/AnimationIcon/back_naka.svg",
     width: 123,
     height: 123,
     alt: "naka-band"
   },
   frontNakaSwap: {
-    src: "/images/home/front_naka_swap.svg",
-    blurDataURL: "/images/home/front_naka_swap.svg",
+    src: "/images/AnimationIcon/front_naka_swap.svg",
+    blurDataURL: "/images/AnimationIcon/front_naka_swap.svg",
     width: 123,
     height: 123,
     alt: "naka-swap"
   },
   backNakaSwap: {
-    src: "/images/home/back_naka_swap.svg",
-    blurDataURL: "/images/home/back_naka_swap.svg",
+    src: "/images/AnimationIcon/back_naka_swap.svg",
+    blurDataURL: "/images/AnimationIcon/back_naka_swap.svg",
     width: 123,
     height: 123,
     alt: "naka-swap"
   },
   frontStaking: {
-    src: "/images/home/front_staking.svg",
-    blurDataURL: "/images/home/front_staking.svg",
+    src: "/images/AnimationIcon/front_staking.svg",
+    blurDataURL: "/images/AnimationIcon/front_staking.svg",
     width: 123,
     height: 123,
     alt: "naka-staking"
   },
   backStaking: {
-    src: "/images/home/back_staking.svg",
-    blurDataURL: "/images/home/back_staking.svg",
+    src: "/images/AnimationIcon/back_staking.svg",
+    blurDataURL: "/images/AnimationIcon/back_staking.svg",
     width: 123,
     height: 123,
     alt: "naka-staking"
   },
   frontReferrals: {
-    src: "/images/home/front_referrals.svg",
-    blurDataURL: "/images/home/front_referrals.svg",
+    src: "/images/AnimationIcon/front_referrals.svg",
+    blurDataURL: "/images/AnimationIcon/front_referrals.svg",
     width: 123,
     height: 123,
     alt: "naka-referrals"
   },
   backReferrals: {
-    src: "/images/home/back_referrals.svg",
-    blurDataURL: "/images/home/back_referrals.svg",
+    src: "/images/AnimationIcon/back_referrals.svg",
+    blurDataURL: "/images/AnimationIcon/back_referrals.svg",
     width: 123,
     height: 123,
     alt: "naka-referrals"

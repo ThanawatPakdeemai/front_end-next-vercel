@@ -16,6 +16,8 @@ import { TypographyCustom } from "./partial/typography"
 import { MuiTypography as _muiTypography } from "./partial/components/muiTypography"
 import { MuiChip as _muiChip } from "./partial/components/muiChip"
 import { MuiTextfield as _muiTextField } from "./partial/components/muiTextfield"
+import { MuiPagination as _muiPagination } from "./partial/components/muiPagination"
+import { MuiPaginationItem as _muiPaginationItem } from "./partial/components/muiPaginationItem"
 
 export const theme: ThemeOptions = {
   typography: TypographyCustom,
@@ -47,6 +49,8 @@ export const theme: ThemeOptions = {
     MuiAutocomplete: _muiAutocomplete,
     MuiTypography: _muiTypography,
     MuiChip: _muiChip,
-    MuiTextField: _muiTextField
+    MuiTextField: _muiTextField,
+    MuiPagination: _muiPagination,
+    MuiPaginationItem: _muiPaginationItem
   }
 }

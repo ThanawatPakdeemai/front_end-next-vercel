@@ -2,22 +2,22 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" id="flag-icons-ni" viewBox="0 0 640 480">
   <defs>
     <linearGradient id="f" x1="498.7" x2="500.6" y1="289.1" y2="283.4" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#510000"/>
-      <stop offset=".3" stop-color="#8a0000"/>
-      <stop offset="1" stop-color="#a00"/>
+      <stop offset="0" stopColor="#510000"/>
+      <stop offset=".3" stopColor="#8a0000"/>
+      <stop offset="1" stopColor="#a00"/>
     </linearGradient>
     <linearGradient id="g" x1="501.4" x2="502.9" y1="291.4" y2="287.4" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#ff2a2a"/>
-      <stop offset="1" stop-color="red"/>
+      <stop offset="0" stopColor="#ff2a2a"/>
+      <stop offset="1" stopColor="red"/>
     </linearGradient>
     <linearGradient id="b" x1="484.8" x2="484.8" y1="311.7" y2="317.6" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#F5F549"/>
-      <stop offset="1" stop-color="#97C924"/>
+      <stop offset="0" stopColor="#F5F549"/>
+      <stop offset="1" stopColor="#97C924"/>
     </linearGradient>
     <linearGradient id="a">
-      <stop offset="0" stop-color="#025"/>
-      <stop offset=".5" stop-color="#04a"/>
-      <stop offset="1" stop-color="#025"/>
+      <stop offset="0" stopColor="#025"/>
+      <stop offset=".5" stopColor="#04a"/>
+      <stop offset="1" stopColor="#025"/>
     </linearGradient>
     <linearGradient xlink:href="#a" id="h" x1="444.5" x2="634.4" y1="317.5" y2="317.5" gradientUnits="userSpaceOnUse"/>
     <linearGradient xlink:href="#b" id="v" x1="484.8" x2="484.8" y1="311.7" y2="317.6" gradientUnits="userSpaceOnUse"/>

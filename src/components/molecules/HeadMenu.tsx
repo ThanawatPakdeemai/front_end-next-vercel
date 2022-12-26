@@ -85,7 +85,9 @@ const HeadMenu = () => {
                 <Button
                   sx={styleButton}
                   className={`button-select-naka xs:mb-1 !hover:bg-error-main  !hover:text-white-primary mb-1 px-2 !text-black-default md:mb-0 ${
-                    router.pathname === item.link
+                    router.pathname ===
+                    item.chide?.find((ele) => ele.link === router.pathname)
+                      ?.link
                       ? "!bg-primary-main"
                       : "!bg-neutral-800"
                   }`}

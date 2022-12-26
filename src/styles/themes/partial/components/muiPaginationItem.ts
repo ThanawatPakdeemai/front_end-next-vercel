@@ -15,12 +15,18 @@ export const MuiPaginationItem: Components<
         backgroundColor: PaletteCustom.neutral["800"],
         border: `1px solid ${PaletteCustom.primary.main}`
       },
+      "&.MuiPaginationItem-root:hover": {
+        borderRadius: "999px"
+      },
       "&.MuiPaginationItem-ellipsis": {
         backgroundColor: PaletteCustom.neutral["800"],
         border: `1px solid ${PaletteCustom.primary.main}`,
         div: {
           margin: "auto 0"
         }
+      },
+      "&.MuiPaginationItem-ellipsis:hover": {
+        borderRadius: "999px"
       },
       "&.MuiPaginationItem-sizeLarge": {
         padding: "10px 0 7px 0"
@@ -31,7 +37,8 @@ export const MuiPaginationItem: Components<
       },
       "&.Mui-selected:hover": {
         backgroundColor: PaletteCustom.error.main,
-        color: PaletteCustom.neutral["300"]
+        color: PaletteCustom.neutral["300"],
+        borderRadius: "999px"
       }
     }
   }

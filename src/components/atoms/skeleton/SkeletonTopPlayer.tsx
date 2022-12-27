@@ -1,5 +1,5 @@
 import { Skeleton } from "@mui/material"
-import React from "react"
+import React, { memo } from "react"
 
 interface IProps {
   className?: string
@@ -36,4 +36,4 @@ const SkeletonTopPlayer = ({ className }: IProps) => (
   </div>
 )
 
-export default SkeletonTopPlayer
+export default memo(SkeletonTopPlayer)

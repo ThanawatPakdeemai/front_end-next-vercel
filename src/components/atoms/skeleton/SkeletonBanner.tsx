@@ -1,5 +1,5 @@
 import { Skeleton } from "@mui/material"
-import React from "react"
+import React, { memo } from "react"
 
 const SkeletonBanner = () => (
   <div className="relativew flex h-[468px] w-full items-center justify-center gap-4">
@@ -22,4 +22,4 @@ const SkeletonBanner = () => (
   </div>
 )
 
-export default SkeletonBanner
+export default memo(SkeletonBanner)

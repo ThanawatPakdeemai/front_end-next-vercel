@@ -1,5 +1,5 @@
 import { Skeleton } from "@mui/material"
-import React from "react"
+import React, { memo } from "react"
 
 const SkeletonCard = () => (
   <div className="relative h-[282px] w-[218px]">
@@ -17,4 +17,4 @@ const SkeletonCard = () => (
   </div>
 )
 
-export default SkeletonCard
+export default memo(SkeletonCard)

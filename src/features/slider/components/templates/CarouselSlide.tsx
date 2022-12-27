@@ -1,4 +1,5 @@
 import useGetGames from "@feature/home/containers/hook/useGetGames"
+import { Skeleton } from "@mui/material"
 import React from "react"
 import Slider, { Settings } from "react-slick"
 import CarouselCardSlide from "../organisms/CarouselCardSlide"
@@ -7,7 +8,7 @@ const CarouselSlide = () => {
   /**
    * @description get slide games
    */
-  const { slideGames } = useGetGames()
+  const { slideGames, isLoading } = useGetGames()
   const [activeIndex, setActiveIndex] = React.useState(0)
   /**
    * @description Slider settings
@@ -27,6 +28,15 @@ const CarouselSlide = () => {
     afterChange(currentSlide) {
       setActiveIndex(currentSlide)
     }
+  }
+
+  if (isLoading) {
+    return (
+      <Skeleton
+        variant="rectangular"
+        className="h-[476px] w-full rounded-md"
+      />
+    )
   }
 
   return (

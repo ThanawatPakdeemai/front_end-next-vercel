@@ -1,3 +1,4 @@
+import SkeletonBanner from "@components/atoms/skeleton/SkeletonBanner"
 import { TagCircle } from "@components/atoms/tagCircle"
 import NewGameIcon from "@components/icons/NewGameIcon"
 import useGetGames from "@feature/home/containers/hook/useGetGames"
@@ -9,7 +10,7 @@ const BannerSlide = () => {
   /**
    * @description get slide games
    */
-  const { slideGames } = useGetGames()
+  const { slideGames, isLoading } = useGetGames()
   /**
    * @description Slider ref
    */
@@ -42,31 +43,35 @@ const BannerSlide = () => {
           icon={<NewGameIcon />}
         />
       </div>
-      <Slider
-        ref={sliderRef}
-        {...settings}
-      >
-        {slideGames &&
-          slideGames.slice(0, 5).map((slide, index) => (
-            <div key={slide.id}>
-              {slide[index] !== undefined ? (
-                <BannerCardSlide
-                  slide={slide}
-                  slideNext={
-                    index === 4 ? slideGames[0] : slideGames[index + 1]
-                  }
-                  gotoNext={gotoNext}
-                />
-              ) : (
-                <BannerCardSlide
-                  slide={slide}
-                  slideNext={slideGames[0]}
-                  gotoNext={gotoNext}
-                />
-              )}
-            </div>
-          ))}
-      </Slider>
+      {isLoading ? (
+        <SkeletonBanner />
+      ) : (
+        <Slider
+          ref={sliderRef}
+          {...settings}
+        >
+          {slideGames &&
+            slideGames.slice(0, 5).map((slide, index) => (
+              <div key={slide.id}>
+                {slide[index] !== undefined ? (
+                  <BannerCardSlide
+                    slide={slide}
+                    slideNext={
+                      index === 4 ? slideGames[0] : slideGames[index + 1]
+                    }
+                    gotoNext={gotoNext}
+                  />
+                ) : (
+                  <BannerCardSlide
+                    slide={slide}
+                    slideNext={slideGames[0]}
+                    gotoNext={gotoNext}
+                  />
+                )}
+              </div>
+            ))}
+        </Slider>
+      )}
     </section>
   )
 }

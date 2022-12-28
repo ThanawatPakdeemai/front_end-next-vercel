@@ -4,11 +4,14 @@ import AddIcon from "@mui/icons-material/Add"
 import TrackChangesIcon from "@mui/icons-material/TrackChanges"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import CardTitle from "@components/organisms/CardTitle"
-import { useTopPlayer } from "../../containers/hook/useTopPlayer"
+import useTopPlayer from "@feature/ranking/containers/hook/useTopPlayer"
+import { v4 as uuid } from "uuid"
+import SkeletonTopPlayer from "@components/atoms/skeleton/SkeletonTopPlayer"
 import CardBodyList from "../organisms/CardBodyList"
 
 const TopPlayer = () => {
-  const { topPlayerAllGame } = useTopPlayer()
+  const { topPlayerAllGame, isLoading } = useTopPlayer()
+  const skeleton = 10
 
   return (
     <>
@@ -31,11 +34,22 @@ const TopPlayer = () => {
             />
           }
         />
-        {topPlayerAllGame && (
-          <CardBodyList
-            width="433px"
-            players={topPlayerAllGame}
-          />
+        {isLoading ? (
+          <div className="custom-scroll h-[375px] overflow-y-scroll pr-4">
+            {[...Array(skeleton)].map((item, index) => (
+              <SkeletonTopPlayer
+                key={uuid()}
+                className={index > 2 ? "!bg-neutral-700" : "!bg-neutral-900"}
+              />
+            ))}
+          </div>
+        ) : (
+          topPlayerAllGame && (
+            <CardBodyList
+              width="433px"
+              players={topPlayerAllGame}
+            />
+          )
         )}
       </Card>
     </>

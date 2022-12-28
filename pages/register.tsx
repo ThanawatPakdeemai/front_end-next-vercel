@@ -17,6 +17,7 @@ import {
   unstable_createMuiStrictModeTheme
 } from "@mui/material/styles"
 import { Card, Container } from "@mui/material"
+import HeadLogo from "@components/molecules/HeadLogo"
 import IRectagle from "./icons/rectagle"
 
 function Copyright(props) {
@@ -61,20 +62,20 @@ export default function SignInSide() {
           // sx={{ height: "100vh", border: "5px solid red", padding: "10px" }}
         >
           {/* <CssBaseline /> */}
+          <Box
+            component="div"
+            className="absolute m-5 items-center justify-between lg:flex"
+          >
+            <HeadLogo />
+          </Box>
           <Grid
             item
             xs={false}
             sm={4}
             md={6}
+            className="rounded-[14px] bg-cover bg-no-repeat"
             sx={{
-              backgroundImage: "url(/images/home/rectagle.svg)",
-              backgroundRepeat: "no-repeat",
-              backgroundColor: (t) =>
-                t.palette.mode === "light"
-                  ? t.palette.grey[50]
-                  : t.palette.grey[900],
-              backgroundSize: "cover",
-              backgroundPosition: "center"
+              backgroundImage: "url(/images/home/rectagle.svg)"
             }}
           />
           {/* <IRectagle /> */}

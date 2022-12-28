@@ -15,8 +15,9 @@ import NakaMask1 from "@components/icons/Footer/NaKaMask1"
 import NakaMask2 from "@components/icons/Footer/NaKaMask2"
 import NakaMask3 from "@components/icons/Footer/NaKaMask3"
 import { useState } from "react"
-import { ShakeIcon } from "@components/atoms/LigthShake"
 import TextLink from "@components/atoms/TextLink"
+import { ShakeIcon } from "@components/atoms/LigthShake"
+import CountItem from "@components/molecules/CountItem"
 
 const arrowMotion = {
   rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
@@ -56,7 +57,7 @@ const textMotion = {
   }
 }
 
-const iconmotion = {
+export const iconmotion = {
   hover: {
     scale: 1.2,
     rotate: 17,
@@ -88,6 +89,7 @@ const Footer = () => {
 
   return (
     <>
+      <div className="flex items-center" />
       <Divider sx={{ marginTop: 10, marginBottom: 10 }} />
       <div className="justify-between text-[12px] lg:flex">
         <div className="flex justify-center">
@@ -194,7 +196,10 @@ const Footer = () => {
       <div className="pt-[80px] text-[12px] lg:flex">
         <div className="w-full rounded-[20px] bg-neutral-800 p-6 lg:w-[90%]">
           <div className="md:flex">
-            <div className="flex items-center md:w-2/4 md:pr-[20px]">
+            <div
+              className="flex items-center md:w-2/4 md:pr-[20px]"
+              text-white-primary
+            >
               <ButtonToggleIcon
                 handleClick={onHandleClick}
                 startIcon={<DesktopIcon />}

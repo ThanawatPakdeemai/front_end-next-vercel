@@ -1,4 +1,5 @@
 import useGetGames from "@feature/home/containers/hook/useGetGames"
+import { Skeleton } from "@mui/material"
 import React from "react"
 import Slider, { Settings } from "react-slick"
 import CarouselCardSlide from "../organisms/CarouselCardSlide"
@@ -7,7 +8,7 @@ const CarouselSlide = () => {
   /**
    * @description get slide games
    */
-  const { slideGames } = useGetGames()
+  const { slideGames, isLoading } = useGetGames()
   const [activeIndex, setActiveIndex] = React.useState(0)
   /**
    * @description Slider settings
@@ -29,15 +30,27 @@ const CarouselSlide = () => {
     }
   }
 
+  if (isLoading) {
+    return (
+      <Skeleton
+        variant="rectangular"
+        className="h-[476px] w-full rounded-md"
+      />
+    )
+  }
+
   return (
     <Slider {...settings}>
       {slideGames &&
         slideGames.slice(0, 5).map((item, index) => (
           <div key={item.id}>
             <CarouselCardSlide
-              // video
-              src={item.image_home_banner}
-              // src="https://files.outs.im/videos/Lark20220401-134307.mp4"
+              video={index === 1}
+              src={
+                index === 1
+                  ? "https://files.outs.im/videos/Lark20220401-134307.mp4"
+                  : item.image_home_banner
+              }
               name={item.name}
               description={item.banner_description}
               link={item.game_url}

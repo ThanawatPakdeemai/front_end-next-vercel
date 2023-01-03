@@ -14,6 +14,7 @@ export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   textColor?: string
   arrowColor?: string
   onClick?: () => void
+  type?: "submit" | "button"
 }
 
 const ButtonLink = ({
@@ -26,19 +27,19 @@ const ButtonLink = ({
   className,
   textColor,
   arrowColor,
-  onClick
+  onClick,
+  type
 }: IButtonLink) => {
   const ButtonSelf = useMemo(
     () => (
       <Button
         variant={variant}
+        type={type ?? "button"}
         color={color}
         size={size}
         startIcon={<div className="button-icon animation-arrow">{icon}</div>}
         className={`${className} button-global`}
-        onClick={() => {
-          if (onClick) onClick()
-        }}
+        onClick={onClick}
         endIcon={
           <div className="button-arrow animation-arrow">
             <ArrowForwardIcon className={arrowColor} />
@@ -57,11 +58,25 @@ const ButtonLink = ({
       size,
       text,
       textColor,
+      type,
       variant
     ]
   )
 
-  return <>{!onClick ? <Link href={href}>{ButtonSelf}</Link> : ButtonSelf}</>
+  return (
+    <>
+      {!onClick ? (
+        <Link
+          href={href}
+          className="w-auto"
+        >
+          {ButtonSelf}
+        </Link>
+      ) : (
+        ButtonSelf
+      )}
+    </>
+  )
 }
 
 export default ButtonLink

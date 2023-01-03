@@ -105,7 +105,7 @@ const RightMenuLogIn = () => {
                     ? "bg-secondary-main hover:scale-[85%]"
                     : "bg-error-main"
                 } 
-            ${!expanded ? "rotate-0	" : "rotate-180"} ${
+            ${!expanded ? "rotate-0" : "rotate-180"} ${
                   expanded && !hoverExpand
                     ? "rotate-[-45deg] scale-[75%]"
                     : "scale-1 rotate-0"

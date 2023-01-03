@@ -11,7 +11,8 @@ import {
   IGameCategoryService,
   IGetAllGameRooms,
   IGetPlayerInRoom,
-  IClaimEarnedRewardByPlayerId
+  IClaimEarnedRewardByPlayerId,
+  IGetGameByTypesProps
 } from "@feature/game/interfaces/IGameService"
 
 export const getAllGames = () =>
@@ -153,6 +154,30 @@ export const getGameRoomWithoutEmail = (_gameId: string) =>
   new Promise<IGameRoomDetailService>((resolve, reject) => {
     services
       .get<IGameRoomDetailService>(`/gameroom/without-email/${_gameId}`)
+      .then((response) => resolve(response.data))
+      .catch((error) => reject(error))
+  })
+
+export const getGameByTypes = ({
+  _type,
+  _limit,
+  _page,
+  _categoryId,
+  _deviceSup,
+  _itemId,
+  _search
+}: IGetGameByTypesProps) =>
+  new Promise<IGameRoomDetailService>((resolve, reject) => {
+    const data = {
+      limit: _limit,
+      skip: _page,
+      category_id: _categoryId,
+      device_support: _deviceSup,
+      item_id: _itemId,
+      search: _search
+    }
+    services
+      .post<IGameRoomDetailService>(`/game/${_type}`, { ...data })
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

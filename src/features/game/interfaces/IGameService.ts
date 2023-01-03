@@ -12,6 +12,16 @@ export type TTypeCode =
   | "multi_02"
   | "story_01"
 
+export interface IGetGameByTypesProps {
+  _type: "play-to-earn" | "free-to-earn" | "story-mode"
+  _limit: number
+  _page: number
+  _categoryId?: string
+  _deviceSup?: string
+  _itemId?: string
+  _search?: string
+}
+
 export interface IGameHowTo {
   title: string
   details: string

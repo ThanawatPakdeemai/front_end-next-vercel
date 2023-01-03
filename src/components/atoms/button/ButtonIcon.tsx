@@ -29,7 +29,7 @@ const ButtonIcon = ({
       <motion.div
         onClick={onClick}
         whileHover={whileHover}
-        className={`${className} ${typeButton[type]}`}
+        className={`${className} ${typeButton[type]} cursor-pointer`}
       >
         <motion.div
           variants={variants}

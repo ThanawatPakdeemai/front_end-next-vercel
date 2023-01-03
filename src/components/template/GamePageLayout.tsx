@@ -20,7 +20,6 @@ const GamePageLayout = ({
       icon={<ShapeIcon fill="#4E5057" />}
     />
     <Banner data={GAME_BANNER} />
-    <Banner data={GAME_DETAILS_BANNER} />
     <div className="flex flex-row gap-3">
       <SidebarGames />
       <HeadGames>{children}</HeadGames>

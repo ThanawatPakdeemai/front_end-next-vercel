@@ -8,6 +8,7 @@ import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 
 const MenuProfile = () => {
   const { onReset } = useProfileStore()
+
   return (
     <MenuList className="mx-[6px] mt-[14px] mb-[6px] rounded-[13px] bg-neutral-700 p-[6px]">
       {MENU_LOGGEDIN.map((ele) => (

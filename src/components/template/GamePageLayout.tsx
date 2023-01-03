@@ -1,4 +1,5 @@
 import ShapeIcon from "@components/icons/ShapeIcon"
+import Banner from "@components/molecules/Banner"
 import HeadGames from "@components/molecules/HeadGames"
 import SidebarGames from "@components/molecules/SidebarGames"
 import Tagline from "@components/molecules/tagline/Tagline"
@@ -17,6 +18,7 @@ const GamePageLayout = ({
       text="This Christmas, you’re the best gift I could ask for."
       icon={<ShapeIcon fill="#4E5057" />}
     />
+    <Banner />
     <div className="flex flex-row gap-3">
       <SidebarGames />
       <HeadGames>{children}</HeadGames>

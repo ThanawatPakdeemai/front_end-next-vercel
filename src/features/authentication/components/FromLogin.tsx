@@ -71,6 +71,7 @@ const FormLogin = () => {
             }}
             {...register("_email")}
             id="email-login"
+            placeholder="Email"
             size="medium"
             InputProps={{
               startAdornment: (
@@ -97,6 +98,7 @@ const FormLogin = () => {
             size="medium"
             {...register("_password")}
             type={showPassword ? "text" : "password"}
+            placeholder="Password"
             helperText="A number or symbol, atleast 6 characters"
             required
             InputProps={{

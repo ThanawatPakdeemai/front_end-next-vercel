@@ -166,7 +166,7 @@ const HeadPrice = ({
         className="gap-3 rounded-[34px] p-[10px]"
         width={400}
       >
-        <Box className="rounded-md bg-neutral-900 p-4">
+        <>
           <Box
             className="flex items-center rounded-lg bg-neutral-800 pl-5"
             sx={{ height: "54px" }}
@@ -188,7 +188,7 @@ const HeadPrice = ({
               className="mt-4"
             />
           ))}
-        </Box>
+        </>
       </ModalCustom>
     </Box>
   )

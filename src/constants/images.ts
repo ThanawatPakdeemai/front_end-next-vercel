@@ -166,5 +166,12 @@ export const IMAGES = {
     width: 25,
     height: 25,
     alt: "radiation"
+  },
+  metamask: {
+    src: "/images/home/metamask.svg",
+    blurDataURL: "/images/home/metamask.svg",
+    width: 35,
+    height: 35,
+    alt: "metamask-icon"
   }
 }

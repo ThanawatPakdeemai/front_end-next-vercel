@@ -13,21 +13,24 @@ const StatisticGameDetail = () => (
     <div className="flex flex-col justify-between">
       <StatWithIcon
         icon={<PlayersIcon className="rotate-0" />}
-        color="error"
+        className="bg-error-main"
+        textColor="text-error-main"
         title="player today"
         amount="3345"
         unit="people"
       />
       <StatWithIcon
         icon={<InvestIcon className="rotate-0" />}
-        color="secondary"
+        className="bg-secondary-main"
+        textColor="text-secondary-main"
         title="invest today"
         amount="876345.867"
         unit="naka"
       />
       <StatWithIcon
         icon={<RewardIcon className="rotate-0" />}
-        color="success"
+        className="bg-varidian-default"
+        textColor="text-varidian-default"
         title="reward today"
         amount="902345.867"
         unit="naka"

@@ -11,6 +11,21 @@ export interface IButtonIcon {
   onClick?: () => void
 }
 
+const iconmotionDefault = {
+  hover: {
+    scale: 1.2,
+    rotate: 17,
+    ease: "easeIn",
+    transition: {
+      duration: 0.4,
+      stiffness: 500,
+      type: "spring"
+    }
+  }
+}
+
+const transitionDefault = { type: "spring", stiffness: 400, damping: 4 }
+
 const ButtonIcon = ({
   type = "square",
   icon,
@@ -25,20 +40,18 @@ const ButtonIcon = ({
     "square": "!min-w-0"
   }
   return (
-    <div>
+    <motion.div
+      onClick={onClick}
+      whileHover={whileHover || "hover"}
+      className={`${className} ${typeButton[type]} cursor-pointer`}
+    >
       <motion.div
-        onClick={onClick}
-        whileHover={whileHover}
-        className={`${className} ${typeButton[type]} cursor-pointer`}
+        variants={variants || iconmotionDefault}
+        transition={transition || transitionDefault}
       >
-        <motion.div
-          variants={variants}
-          transition={transition}
-        >
-          {icon}
-        </motion.div>
+        {icon}
       </motion.div>
-    </div>
+    </motion.div>
   )
 }
 

@@ -22,7 +22,7 @@ const Banner = ({ data }: IProp) => (
         return (
           <div
             key={item.type}
-            className="absolute h-full w-full"
+            className="absolute"
           >
             {item.img && (
               <Image

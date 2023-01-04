@@ -157,9 +157,6 @@ module.exports = {
         "time-progress": "time-progress 5s linear forwards",
         "rotating": "rotating 7s linear infinite",
         "right-to-left": "right-to-left 100s linear infinite"
-      },
-      backgroundImage: {
-        "nakaverse": "url(/images/home/nakaVerse.svg)"
       }
     }
   },

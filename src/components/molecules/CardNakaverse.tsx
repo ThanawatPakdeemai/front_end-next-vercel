@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import React from "react"
-import PropTypes from "prop-types"
 import { Image } from "@components/atoms/image/index"
 import { IMAGES } from "@constants/images"
 import ButtonLink from "@components/atoms/button/ButtonLink"

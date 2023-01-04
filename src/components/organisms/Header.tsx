@@ -2,8 +2,8 @@ import React, { memo } from "react"
 import { Box } from "@mui/material"
 import HeadLogo from "@components/molecules/HeadLogo"
 import HeadMenu from "@components/molecules/HeadMenu"
-import RightMenu from "@components/molecules/RightMenu"
 import HeadPrice from "@components/molecules/HeadPrice"
+import { RightMenu } from "@components/molecules/rightMenu"
 
 const Header = () => (
   <>

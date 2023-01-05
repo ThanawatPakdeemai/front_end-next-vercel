@@ -1,3 +1,5 @@
+import TimerLobby from "@components/atoms/timer/TimerLobby"
+import TimerStamina from "@components/atoms/timer/TimerStamina"
 import ShineIcon from "@components/icons/ShineIcon"
 import Banner from "@components/molecules/Banner"
 import LikeNoLobby from "@components/molecules/LikeNoLobby"

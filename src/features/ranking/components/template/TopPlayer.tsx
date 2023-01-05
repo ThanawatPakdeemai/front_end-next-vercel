@@ -7,31 +7,61 @@ import CardTitle from "@components/organisms/CardTitle"
 import useTopPlayer from "@feature/ranking/containers/hook/useTopPlayer"
 import { v4 as uuid } from "uuid"
 import SkeletonTopPlayer from "@components/atoms/skeleton/SkeletonTopPlayer"
+import Dropdown from "@components/atoms/DropdownCustom"
+import Note from "@components/molecules/Note"
 import CardBodyList from "../organisms/CardBodyList"
 
-const TopPlayer = () => {
+export interface IPlayer {
+  element?: "button" | "select"
+  className?: string
+  rank?: boolean
+  note?: boolean
+  subtitle?: boolean
+  elevation?: number
+  background?: "purple" | "red" | "neutral"
+}
+
+const TopPlayer = ({
+  element = "button",
+  className,
+  rank,
+  note = false,
+  subtitle,
+  elevation,
+  background
+}: IPlayer) => {
   const { topPlayerAllGame, isLoading } = useTopPlayer()
   const skeleton = 10
 
   return (
     <>
       <Card
-        sx={{ maxWidth: "449px" }}
-        className="!md:h-[465px] rounded-md !bg-neutral-800 !p-2"
+        sx={{ maxWidth: "550px" }}
+        className={`${className} rounded-md !p-2`}
       >
         <CardTitle
-          width="433px"
+          width="534px"
           icon={<TrackChangesIcon className="mr-2" />}
           title="Top NAKA Players"
+          subtitle={subtitle}
+          background={background}
+          elevation={elevation}
           rightTitle={
-            <ButtonLink
-              href="/"
-              text="View All"
-              icon={<AddIcon />}
-              color="secondary"
-              size="small"
-              className="button-global button-transparent"
-            />
+            element === "button" ? (
+              <ButtonLink
+                href="/"
+                text="View All"
+                icon={<AddIcon />}
+                color="secondary"
+                size="small"
+                className="button-global button-transparent"
+              />
+            ) : (
+              <Dropdown
+                title="Currently Week"
+                className=""
+              />
+            )
           }
         />
         {isLoading ? (
@@ -52,6 +82,16 @@ const TopPlayer = () => {
           )
         )}
       </Card>
+      {note ? (
+        <Note
+          className="flex  w-[550px] uppercase"
+          textTitle=" System will distribute these rewards every Sunday 0:00 UTC and reset
+        Tier (Bronze, Silver, Gold, Platinum)"
+          subTitle=" Rank 1st - 10th from totals score."
+        />
+      ) : (
+        <></>
+      )}
     </>
   )
 }

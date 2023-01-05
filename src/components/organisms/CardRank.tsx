@@ -1,4 +1,5 @@
 import Dropdown from "@components/atoms/DropdownCustom"
+import Note from "@components/molecules/Note"
 import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import { Card, Divider } from "@mui/material"
 import Image from "next/image"
@@ -71,19 +72,20 @@ const CardRank = () => (
         <Divider />
       </div>
     </div>
-    <div className="flex w-[580px] pt-4 uppercase ">
-      <div className="h-fit w-fit rounded-[4px] border border-neutral-800 py-1 px-4 text-[10px] ">
-        note
-      </div>
-      <div className="pl-4 text-[10px] text-neutral-600">
-        <h1>
-          System will distribute these rewards every Sunday 0:00 UTC and reset
-          Tier (Bronze, Silver, Gold, Platinum)
-        </h1>
-        <h1 className="pt-4 font-bold">Rank 1st - 10th from totals score.</h1>
-      </div>
-    </div>
-    <TopPlayer />
+    <Note
+      className="flex  w-[580px] uppercase"
+      textTitle=" System will distribute these rewards every Sunday 0:00 UTC and reset
+        Tier (Bronze, Silver, Gold, Platinum)"
+      subTitle=" Rank 1st - 10th from totals score."
+    />
+    <TopPlayer
+      element="select"
+      subtitle
+      background="neutral"
+      note
+      elevation={0}
+      className="!w-[550px] !bg-primary-main"
+    />
   </>
 )
 

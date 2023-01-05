@@ -1,4 +1,4 @@
-import { Card } from "@mui/material"
+import { Card, Divider } from "@mui/material"
 import { memo } from "react"
 import AddIcon from "@mui/icons-material/Add"
 import TrackChangesIcon from "@mui/icons-material/TrackChanges"
@@ -7,31 +7,63 @@ import CardTitle from "@components/organisms/CardTitle"
 import useTopPlayer from "@feature/ranking/containers/hook/useTopPlayer"
 import { v4 as uuid } from "uuid"
 import SkeletonTopPlayer from "@components/atoms/skeleton/SkeletonTopPlayer"
-import CardBodyList from "../organisms/CardBodyList"
+import Dropdown from "@components/atoms/DropdownCustom"
+import Note from "@components/molecules/Note"
+import Image from "next/image"
+import CardRank from "@components/organisms/CardRank"
+import CardBodyList from "../molecules/CardBodyList"
 
-const TopPlayer = () => {
+export interface IPlayer {
+  element?: "button" | "select"
+  className?: string
+  rank?: boolean
+  note?: boolean
+  subtitle?: boolean
+  elevation?: number
+  background?: "purple" | "red" | "neutral"
+}
+
+const TopPlayer = ({
+  element = "button",
+  className,
+  rank,
+  note = false,
+  subtitle,
+  elevation,
+  background
+}: IPlayer) => {
   const { topPlayerAllGame, isLoading } = useTopPlayer()
   const skeleton = 10
 
   return (
-    <>
+    <div className="flex flex-col">
       <Card
-        sx={{ maxWidth: "449px" }}
-        className="!md:h-[465px] rounded-md !bg-neutral-800 !p-2"
+        sx={{ maxWidth: "550px" }}
+        className={`${className} rounded-md !p-2`}
       >
         <CardTitle
-          width="433px"
+          width="534px"
           icon={<TrackChangesIcon className="mr-2" />}
           title="Top NAKA Players"
+          subtitle={subtitle}
+          background={background}
+          elevation={elevation}
           rightTitle={
-            <ButtonLink
-              href="/"
-              text="View All"
-              icon={<AddIcon />}
-              color="secondary"
-              size="small"
-              className="button-global button-transparent"
-            />
+            element === "button" ? (
+              <ButtonLink
+                href="/"
+                text="View All"
+                icon={<AddIcon />}
+                color="secondary"
+                size="small"
+                className="button-global button-transparent"
+              />
+            ) : (
+              <Dropdown
+                title="Currently Week"
+                className=""
+              />
+            )
           }
         />
         {isLoading ? (
@@ -44,15 +76,31 @@ const TopPlayer = () => {
             ))}
           </div>
         ) : (
-          topPlayerAllGame && (
-            <CardBodyList
-              width="433px"
-              players={topPlayerAllGame}
-            />
-          )
+          <div>
+            {rank ? (
+              <CardRank />
+            ) : (
+              topPlayerAllGame && (
+                <CardBodyList
+                  width="433px"
+                  players={topPlayerAllGame}
+                />
+              )
+            )}
+          </div>
         )}
       </Card>
-    </>
+      {note ? (
+        <Note
+          className="flex w-[550px] pt-6 uppercase"
+          textTitle=" System will distribute these rewards every Sunday 0:00 UTC and reset
+        Tier (Bronze, Silver, Gold, Platinum)"
+          subTitle=" Rank 1st - 10th from totals score."
+        />
+      ) : (
+        <></>
+      )}
+    </div>
   )
 }
 

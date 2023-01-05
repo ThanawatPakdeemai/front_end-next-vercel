@@ -9,7 +9,7 @@ import StatsDetail from "./StatsDetail"
 import StatWithIcon from "./StatWithIcon"
 
 const StatisticGameDetail = () => (
-  <div className="flex flex-col gap-2 rounded-lg border-[1px] border-neutral-700 border-opacity-80 p-2 md:flex-row">
+  <div className="flex h-[424px] flex-col gap-2 rounded-lg border-[1px] border-neutral-700 border-opacity-80 p-2 md:flex-row">
     <div className="flex flex-col justify-between">
       <StatWithIcon
         icon={<PlayersIcon className="rotate-0" />}

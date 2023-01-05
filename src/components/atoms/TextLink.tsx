@@ -10,9 +10,18 @@ export interface ITextLink {
   variantsArrow?: Variants
   variantsText?: Variants
   icon?: ReactNode
+  arrow?: boolean
+  className?: string
 }
 
-const TextLink = ({ name, variantsArrow, variantsText, icon }: ITextLink) => (
+const TextLink = ({
+  name,
+  variantsArrow,
+  variantsText,
+  icon,
+  arrow = true,
+  className
+}: ITextLink) => (
   <motion.div
     initial="rest"
     whileHover="hover"
@@ -23,11 +32,11 @@ const TextLink = ({ name, variantsArrow, variantsText, icon }: ITextLink) => (
       className="opacity-1 absolute left-0 translate-y-[-30%]"
       variants={variantsArrow}
     >
-      <ArrowForwardIcon sx={{ height: 14 }} />
+      {arrow ? <ArrowForwardIcon sx={{ height: 14 }} /> : <></>}
     </motion.div>
     <div className="flex">
       <motion.div
-        className="pb-[14px]"
+        className={`pb-[14px]  ${className}`}
         variants={variantsText}
       >
         {name}

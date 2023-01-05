@@ -28,7 +28,7 @@ const CreateProfile = () => {
 
   return (
     <>
-      TODO YUI OPEN WHEN TEST CREATE PROFILE
+      {/* TODO YUI OPEN WHEN TEST CREATE PROFILE */}
       {/* <Button onClick={handleOpen}>open</Button> */}
       <ModalCustom
         open={open}

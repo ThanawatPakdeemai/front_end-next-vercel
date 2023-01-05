@@ -3,7 +3,8 @@ import React from "react"
 function IconArrowRight({
   width = 24,
   height = 24,
-  className
+  className,
+  stroke
 }: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -16,7 +17,7 @@ function IconArrowRight({
     >
       <path
         d="M13 6.5L18.5 12M18.5 12L13 17.5M18.5 12H4"
-        stroke="#E1E2E2"
+        stroke={stroke || "#E1E2E2"}
         strokeWidth="1.2"
       />
     </svg>

@@ -3,7 +3,7 @@ import React from "react"
 import { useTimer } from "react-timer-hook"
 
 interface IProp {
-  time: Date
+  time?: Date
   initTheme: string
   onExpire?: () => void
 }
@@ -19,7 +19,7 @@ interface IProp {
 const TimerLobby = ({ time, onExpire, initTheme }: IProp) => {
   const { hours, minutes, seconds } = useTimer({
     autoStart: true,
-    expiryTimestamp: time,
+    expiryTimestamp: time as Date,
     onExpire
   })
 
@@ -32,7 +32,7 @@ const TimerLobby = ({ time, onExpire, initTheme }: IProp) => {
   }
 
   return (
-    <div className="relative top-1 flex font-normal">
+    <div className="relative top-[2px] flex font-normal">
       <Typography
         sx={{
           color: hours > 0 ? initTheme : "#4E5057"

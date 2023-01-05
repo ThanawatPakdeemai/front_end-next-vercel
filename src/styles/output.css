@@ -1472,6 +1472,10 @@ video {
   left: 16px;
 }
 
+.top-\[2px\] {
+  top: 2px;
+}
+
 .top-0 {
   top: 0px;
 }
@@ -1893,6 +1897,10 @@ video {
 
 .h-\[80px\] {
   height: 80px;
+}
+
+.h-\[666px\] {
+  height: 666px;
 }
 
 .\!h-\[424px\] {
@@ -2852,6 +2860,10 @@ video {
 
 .bg-room-list {
   background-image: url("/images/lobbybackground.webp");
+}
+
+.bg-contain {
+  background-size: contain;
 }
 
 .fill-error-main {

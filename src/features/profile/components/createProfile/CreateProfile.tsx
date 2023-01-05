@@ -1,6 +1,6 @@
 import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import ModalHeader from "@components/molecules/Modal/ModalHeader"
-import { Button, Stack } from "@mui/material"
+import { Stack } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
 import React, { memo, useState, useEffect } from "react"
 import FormCreateProfile from "./FormCreateProfile"
@@ -28,6 +28,8 @@ const CreateProfile = () => {
 
   return (
     <>
+      TODO YUI OPEN WHEN TEST CREATE PROFILE
+      {/* <Button onClick={handleOpen}>open</Button> */}
       <ModalCustom
         open={open}
         onClose={handleClose}

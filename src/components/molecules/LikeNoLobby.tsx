@@ -17,7 +17,7 @@ interface IProp {
 
 const LikeNoLobby = ({ value, maxValue, imgSrc, imgAlt }: IProp) => (
   <div>
-    <div className="mb-3 flex w-[218px] flex-col gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 p-4">
+    <div className="mb-3 flex w-full flex-col gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 p-4 md:w-[218px]">
       <GaugeStats
         value={value}
         maxValue={maxValue}
@@ -38,7 +38,7 @@ const LikeNoLobby = ({ value, maxValue, imgSrc, imgAlt }: IProp) => (
         />
       </div>
     </div>
-    <div className="h-[218px] w-[218px] rounded-lg border-[1px] border-neutral-700 border-opacity-80 p-4">
+    <div className="flex h-[218px] w-full justify-center rounded-lg border-[1px] border-neutral-700 border-opacity-80 p-4 md:w-[218px] md:justify-start">
       <Image
         src={imgSrc || "/images/gameDetails/nakamoto-wars.webp"}
         alt={imgAlt || "nakamoto-wars"}

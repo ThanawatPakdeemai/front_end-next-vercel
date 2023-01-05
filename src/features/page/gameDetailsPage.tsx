@@ -1,6 +1,9 @@
 import ShineIcon from "@components/icons/ShineIcon"
+import Banner from "@components/molecules/Banner"
 import LikeNoLobby from "@components/molecules/LikeNoLobby"
+import StatisticGameDetail from "@components/molecules/statistic/StatisticGameDetail"
 import Tagline from "@components/molecules/tagline/Tagline"
+import { GAME_DETAILS_BANNER } from "@constants/gameBanner"
 import React, { useState } from "react"
 
 /**
@@ -12,13 +15,17 @@ const GameDetailsPage = () => {
 
   return (
     <>
+      <Banner data={GAME_DETAILS_BANNER} />
       <Tagline
         bgColor="bg-neutral-800"
         textColor="text-neutral-500 font-bold"
         text="Don't miss the information analysis about this game"
         icon={<ShineIcon />}
       />
-      <LikeNoLobby value={percentageOfLike} />
+      <div className="flex flex-col gap-3 md:flex-row">
+        <LikeNoLobby value={percentageOfLike} />
+        <StatisticGameDetail />
+      </div>
     </>
   )
 }

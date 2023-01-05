@@ -10,7 +10,7 @@ import dayjs from "dayjs"
 import CircleNakaIcon from "@components/icons/CircleNakaIcon"
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import { BUY_NAKA_MENU } from "@configs/buynaka"
-import { ModalCustom } from "./ModalCustom"
+import { ModalCustom } from "./Modal/ModalCustom"
 import TabMenu from "./TabMenu"
 
 interface IProp {

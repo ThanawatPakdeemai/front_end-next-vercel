@@ -22,7 +22,9 @@ import useGetAvatar from "@feature/avatar/containers/hook/useGetAvatar"
 const FormCreateProfile = () => {
   const profile = useProfileStore((state) => state.profile.data)
 
-  const [defaultAvatar, setDefaultAvatar] = useState<string>(profile?.avatar)
+  const [defaultAvatar, setDefaultAvatar] = useState<string>(
+    profile ? profile?.avatar : ""
+  )
   const { errorToast } = useToast()
   const { avatar } = useGetAvatar()
 

@@ -1,4 +1,4 @@
-import { Card } from "@mui/material"
+import { Card, Divider } from "@mui/material"
 import { memo } from "react"
 import AddIcon from "@mui/icons-material/Add"
 import TrackChangesIcon from "@mui/icons-material/TrackChanges"
@@ -9,7 +9,9 @@ import { v4 as uuid } from "uuid"
 import SkeletonTopPlayer from "@components/atoms/skeleton/SkeletonTopPlayer"
 import Dropdown from "@components/atoms/DropdownCustom"
 import Note from "@components/molecules/Note"
-import CardBodyList from "../organisms/CardBodyList"
+import Image from "next/image"
+import CardRank from "@components/organisms/CardRank"
+import CardBodyList from "../molecules/CardBodyList"
 
 export interface IPlayer {
   element?: "button" | "select"
@@ -34,7 +36,7 @@ const TopPlayer = ({
   const skeleton = 10
 
   return (
-    <>
+    <div className="flex flex-col">
       <Card
         sx={{ maxWidth: "550px" }}
         className={`${className} rounded-md !p-2`}
@@ -74,17 +76,23 @@ const TopPlayer = ({
             ))}
           </div>
         ) : (
-          topPlayerAllGame && (
-            <CardBodyList
-              width="433px"
-              players={topPlayerAllGame}
-            />
-          )
+          <div>
+            {rank ? (
+              <CardRank />
+            ) : (
+              topPlayerAllGame && (
+                <CardBodyList
+                  width="433px"
+                  players={topPlayerAllGame}
+                />
+              )
+            )}
+          </div>
         )}
       </Card>
       {note ? (
         <Note
-          className="flex  w-[550px] uppercase"
+          className="flex w-[550px] pt-6 uppercase"
           textTitle=" System will distribute these rewards every Sunday 0:00 UTC and reset
         Tier (Bronze, Silver, Gold, Platinum)"
           subTitle=" Rank 1st - 10th from totals score."
@@ -92,7 +100,7 @@ const TopPlayer = ({
       ) : (
         <></>
       )}
-    </>
+    </div>
   )
 }
 

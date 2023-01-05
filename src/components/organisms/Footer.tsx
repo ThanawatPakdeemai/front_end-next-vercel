@@ -17,8 +17,6 @@ import NakaMask3 from "@components/icons/Footer/NaKaMask3"
 import { useState } from "react"
 import TextLink from "@components/atoms/TextLink"
 import { ShakeIcon } from "@components/atoms/LigthShake"
-import CountItem from "@components/molecules/CountItem"
-import CardRank from "./CardRank"
 
 const arrowMotion = {
   rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
@@ -90,7 +88,7 @@ const Footer = () => {
 
   return (
     <>
-      <CardRank />
+      {/* <CardRank /> */}
       <div className="flex items-center" />
       <Divider sx={{ marginTop: 10, marginBottom: 10 }} />
       <div className="justify-between text-[12px] lg:flex">

@@ -1,5 +1,6 @@
 import React, { memo } from "react"
 import { Card, CardHeader, Divider } from "@mui/material"
+import Dropdown from "@components/atoms/DropdownCustom"
 
 interface Iprop {
   width: string
@@ -29,15 +30,37 @@ const CardTitle = ({
        ${background === "neutral" && "!bg-neutral-800"}
       `}
     >
-      <CardHeader
-        title={
-          <div className="flex items-center">
-            <div>{icon}</div>
-            <div>{title}</div>
+      {subtitle ? (
+        <>
+          <div className="flex justify-between rounded-2xl bg-neutral-800 p-4">
+            <div className="uppercase">
+              <h1 className="col-span-2 text-[14px]">
+                weekly prize pool :
+                <span className="text-info-main"> 5467,987 naka</span>
+              </h1>
+              <h1 className="pt-2 text-[10px] text-neutral-600">
+                07 dec 2022 - 14 dec 2022
+              </h1>
+            </div>
+            <div>
+              <Dropdown
+                title="Currently Week"
+                className=""
+              />
+            </div>
           </div>
-        }
-        action={rightTitle ?? ""}
-      />
+        </>
+      ) : (
+        <CardHeader
+          title={
+            <div className="flex items-center">
+              <div>{icon}</div>
+              <div>{title}</div>
+            </div>
+          }
+          action={rightTitle ?? ""}
+        />
+      )}
     </Card>
     {subtitle ? (
       <>

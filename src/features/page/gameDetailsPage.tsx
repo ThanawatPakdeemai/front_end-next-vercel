@@ -4,6 +4,7 @@ import LikeNoLobby from "@components/molecules/LikeNoLobby"
 import StatisticGameDetail from "@components/molecules/statistic/StatisticGameDetail"
 import Tagline from "@components/molecules/tagline/Tagline"
 import { GAME_DETAILS_BANNER } from "@constants/gameBanner"
+import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import React, { useState } from "react"
 
 /**
@@ -25,6 +26,15 @@ const GameDetailsPage = () => {
       <div className="flex flex-col gap-3 md:flex-row">
         <LikeNoLobby value={percentageOfLike} />
         <StatisticGameDetail />
+        <TopPlayer
+          element="select"
+          subtitle
+          background="neutral"
+          note
+          elevation={0}
+          className="!h-[424px] !w-[550px] !bg-primary-main"
+          rank
+        />
       </div>
     </>
   )

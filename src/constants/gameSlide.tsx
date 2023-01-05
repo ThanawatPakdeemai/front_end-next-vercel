@@ -178,37 +178,37 @@ export const GAME_COMING_SOON = [
 
 export const mockF2PGame: ISlide[] = [
   {
-    id: 1,
+    id: "1",
     image: "/images/mocks/free2playGames/camoratuc_game.png",
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   },
   {
-    id: 2,
+    id: "2",
     image: "/images/mocks/free2playGames/bumig_game.png",
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   },
   {
-    id: 3,
+    id: "3",
     image: "/images/mocks/free2playGames/mette_game.png",
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   },
   {
-    id: 4,
+    id: "4",
     image: "/images/mocks/free2playGames/funlttte_game.png",
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   },
   {
-    id: 5,
+    id: "5",
     image: "/images/mocks/free2playGames/cute_game.png",
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   },
   {
-    id: 6,
+    id: "6",
     image: "/images/mocks/free2playGames/enz2_game.png",
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   },
   {
-    id: 7,
+    id: "7",
     image: "/images/mocks/free2playGames/tfttss_game.png",
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   }
@@ -216,47 +216,47 @@ export const mockF2PGame: ISlide[] = [
 
 export const mockP2EGame: ISlide[] = [
   {
-    id: 1,
+    id: "1",
     image: "/images/mocks/play2earnGames/rarkaak_game.png",
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   },
   {
-    id: 2,
+    id: "2",
     image: "/images/mocks/play2earnGames/faps_game.png",
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   },
   {
-    id: 3,
+    id: "3",
     image: "/images/mocks/play2earnGames/nakn_game.png",
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   },
   {
-    id: 4,
+    id: "4",
     image: "/images/mocks/play2earnGames/duninutss_game.png",
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   },
   {
-    id: 5,
+    id: "5",
     image: "/images/mocks/play2earnGames/rovr_game.png",
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   },
   {
-    id: 6,
+    id: "6",
     image: "/images/mocks/play2earnGames/vaanne_game.png",
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   },
   {
-    id: 7,
+    id: "7",
     image: "/images/mocks/play2earnGames/gartiig_game.png",
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   },
   {
-    id: 8,
+    id: "8",
     image: "/images/mocks/play2earnGames/oiryhk2_game.png",
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   },
   {
-    id: 9,
+    id: "9",
     image: "/images/mocks/play2earnGames/fatf_game.png",
     desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   }

@@ -1,5 +1,5 @@
 import dayjs from "dayjs"
-import React, { useEffect, useState } from "react"
+import React, { memo, useEffect, useState } from "react"
 
 interface IProps {
   time: Date
@@ -30,7 +30,7 @@ const TimerStamina = ({ time, show, setShow }: IProps) => {
     const sec = date2.diff(date1, "seconds")
     const seconds = (sec % 60) * -1
 
-    if (seconds > 0) {
+    if (seconds >= 0) {
       setTimer(
         `${displayTimer(hours)}:${displayTimer(minutes)}:${displayTimer(
           seconds
@@ -53,12 +53,10 @@ const TimerStamina = ({ time, show, setShow }: IProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return show ? (
+  return show && timer ? (
     <div className="flex w-fit items-center justify-center rounded-less border-[1px] border-neutral-700 px-2 tracking-wider">
       {timer}
     </div>
-  ) : (
-    <></>
-  )
+  ) : null
 }
-export default TimerStamina
+export default memo(TimerStamina)

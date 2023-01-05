@@ -69,5 +69,19 @@ export const DROPDOWN: IDropdown[] = [
       { label: "Your Mission", href: "/", icon: <YourMissionIcon /> },
       { label: "Inventory", href: "/", icon: <InventoryIcon /> }
     ]
+  },
+  {
+    title: "Currently Week",
+    icon: null,
+    className: "w-[200px]",
+    text: "string",
+    details: [
+      {
+        label: "Edit Profile",
+        href: "/",
+        icon: <EditProfileIcon />
+      },
+      { label: "Wishlist", href: "/", icon: <WishlistIcon /> }
+    ]
   }
 ]

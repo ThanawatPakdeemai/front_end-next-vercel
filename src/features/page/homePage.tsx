@@ -46,18 +46,18 @@ const Home = () => {
 
   const fetchF2PStoryMode = async () => {
     // serivce
-    const result = mockF2PGame.filter((fp2) => fp2.id > 3).reverse()
+    const result = mockF2PGame
     setF2PGame(result)
   }
 
   const fetchF2PMustTry = async () => {
     // serivce
-    const result = mockF2PGame.filter((fp2) => fp2.id > 3)
+    const result = mockF2PGame
     setF2PGame(result)
   }
   const fetchP2EHotGame = async () => {
     // serive
-    const result = mockP2EGame.filter((p2e) => p2e.id < 5)
+    const result = mockP2EGame
     setP2EGame(result)
   }
 

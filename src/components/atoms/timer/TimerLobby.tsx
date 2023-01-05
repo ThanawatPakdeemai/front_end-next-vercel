@@ -1,35 +1,29 @@
 import Typography from "@mui/material/Typography"
 import React from "react"
 import { useTimer } from "react-timer-hook"
-import fullConfig from "../../../../tailwindResolver"
 
 interface IProp {
-  color: string
-  shade: string
+  time: Date
+  initTheme: string
+  onExpire?: () => void
 }
 
 /**
  *
+ * @param time is how many time left
+ * @param onExpire is what you want to do after timeout
  * @param color is parent key in tailwind.config.js
  * @param shade is child key in tailwind.config.js
  */
 
-const TimerLobby = ({ color, shade }: IProp) => {
-  const time = new Date()
-  time.setSeconds(time.getSeconds() + 3605)
-
+const TimerLobby = ({ time, onExpire, initTheme }: IProp) => {
   const { hours, minutes, seconds } = useTimer({
     autoStart: true,
-    expiryTimestamp: time
+    expiryTimestamp: time,
+    onExpire
   })
-  const { theme } = fullConfig
 
-  const formatTimer = (_time: number) => {
-    if (_time > 9) {
-      return `${_time}`
-    }
-    return `0${_time}`
-  }
+  const formatTimer = (_time: number) => (_time > 9 ? `${_time}` : `0${_time}`)
 
   const initTimer = {
     h: formatTimer(hours),
@@ -37,10 +31,8 @@ const TimerLobby = ({ color, shade }: IProp) => {
     s: formatTimer(seconds)
   }
 
-  const initTheme = theme && theme.colors && theme.colors[color][shade]
-
   return (
-    <div className="flex">
+    <div className="relative top-1 flex font-normal">
       <Typography
         sx={{
           color: hours > 0 ? initTheme : "#4E5057"

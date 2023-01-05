@@ -9,6 +9,7 @@ interface IProps {
   text: string
   handleClick: () => void
   className?: string
+  style?: React.CSSProperties
 }
 
 const ButtonToggleIcon = ({
@@ -16,7 +17,8 @@ const ButtonToggleIcon = ({
   endIcon = <IconArrowRight />,
   text,
   handleClick,
-  className
+  className,
+  style
 }: IProps) => {
   const stiffValue = 300
 
@@ -68,6 +70,7 @@ const ButtonToggleIcon = ({
   return (
     <motion.button
       className={`btn-icon-container flex h-10 w-full items-center justify-center rounded-md ${className}`}
+      style={style}
       initial="rest"
       whileHover="hover"
       type="button"

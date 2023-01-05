@@ -1,4 +1,5 @@
-import * as React from "react"
+/* eslint-disable no-console */
+import React from "react"
 import Avatar from "@mui/material/Avatar"
 import Button from "@mui/material/Button"
 import CssBaseline from "@mui/material/CssBaseline"
@@ -13,11 +14,29 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import Typography from "@mui/material/Typography"
 import {
   createTheme,
+  styled,
   ThemeProvider,
   unstable_createMuiStrictModeTheme
 } from "@mui/material/styles"
-import { Card, Container } from "@mui/material"
+import {
+  Card,
+  CardContent,
+  Container,
+  IconButton,
+  InputAdornment
+} from "@mui/material"
 import HeadLogo from "@components/molecules/HeadLogo"
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
+import ButtonClose from "@components/atoms/button/ButtonClose"
+import CircleNakaIcon from "@components/icons/CircleNakaIcon"
+import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
+import type { Palette } from "@mui/material/styles"
+import fullConfig from "tailwindResolver"
+import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import BeenhereOutlinedIcon from "@mui/icons-material/BeenhereOutlined"
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined"
+import ILock from "@components/icons/Lock"
 import IRectagle from "./icons/rectagle"
 
 function Copyright(props) {
@@ -40,9 +59,51 @@ function Copyright(props) {
   )
 }
 
-const theme = createTheme()
+const CssTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#70727B"
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "green"
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "red",
+      border: "1px solid #232329",
+      background: "#18181C",
+      borderRadius: "8px",
+      color: "#70727B",
+      fontStyle: "normal",
+      fontWeight: "400",
+      fontSize: "14px",
+      lineHeight: "22px",
+      flex: "none",
+      order: 1,
+      flexGrow: 0
+    },
+    "&:hover fieldset": {
+      borderColor: "#7b5be6"
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#7b5be6"
+    }
+  }
+})
+
+const { theme } = fullConfig
 
 export default function SignInSide() {
+  const emailRegexp =
+    /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)$/
+
+  const [showPassword, setShowPassword] = React.useState(false)
+  const handleClickShowPassword = () => setShowPassword((show) => !show)
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault()
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
@@ -52,9 +113,13 @@ export default function SignInSide() {
     // })
   }
 
+  const handleClose = () => {
+    console.log("test")
+  }
+
   return (
-    <ThemeProvider theme={theme}>
-      <Box className="bg-primary-main p-5">
+    <Box>
+      <Box className="p-5">
         <Grid
           container
           component="main"
@@ -71,7 +136,7 @@ export default function SignInSide() {
           <Grid
             item
             xs={false}
-            sm={4}
+            sm={6}
             md={6}
             className="rounded-[14px] bg-cover bg-no-repeat"
             sx={{
@@ -82,7 +147,7 @@ export default function SignInSide() {
           <Grid
             item
             xs={12}
-            sm={8}
+            sm={6}
             md={6}
             component={Paper}
             elevation={6}
@@ -97,85 +162,208 @@ export default function SignInSide() {
                 alignItems: "center"
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography
-                component="h1"
-                variant="h5"
-              >
-                Sign in
-              </Typography>
               <Box
-                component="form"
-                noValidate
-                onSubmit={handleSubmit}
-                sx={{ mt: 1 }}
+              // style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}
               >
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      value="remember"
-                      color="primary"
-                    />
-                  }
-                  label="Remember me"
-                />
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                <Grid
+                  container
+                  spacing={1}
                 >
-                  Sign In
-                </Button>
-                <Grid container>
                   <Grid
                     item
-                    xs
+                    xs={12}
                   >
-                    <Link
-                      href="#"
-                      variant="body2"
-                    >
-                      Forgot password?
-                    </Link>
+                    <TextField
+                      className="w-full"
+                      type="email"
+                      placeholder="Email"
+                      label="Email Address"
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          width: "100%",
+                          fontWeight: 400,
+                          fontSize: 14,
+                          fontWight: 700,
+                          fontFamily: "neueMachina"
+                        },
+                        "& .MuiInputLabel-root": {
+                          color: "#70727B",
+                          fontFamily: "neueMachina",
+                          textTransform: "uppercase"
+                        }
+                      }}
+                      id="email"
+                      size="medium"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <EmailOutlinedIcon />
+                          </InputAdornment>
+                        )
+                      }}
+                    />
                   </Grid>
-                  <Grid item>
-                    {/* <Link
-                    href="#"
-                    variant="body2"
+                  <Grid
+                    item
+                    xs={12}
                   >
-                    Don't have an account? Sign Up
-                  </Link> */}
+                    <TextField
+                      className="w-full"
+                      type="text"
+                      placeholder="Verification code"
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          width: "100%",
+                          fontWeight: 400,
+                          fontSize: 14,
+                          fontWight: 700,
+                          fontFamily: "neueMachina",
+                          padding: "0px 16px"
+                        }
+                      }}
+                      id="code"
+                      size="medium"
+                    />
+                    <Button className="btn-rainbow-theme rounded-lg bg-error-main text-sm text-neutral-300">
+                      Get Code
+                    </Button>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                  >
+                    <TextField
+                      className="w-full"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Password"
+                      label="Password"
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          width: "100%",
+                          fontWeight: 400,
+                          fontSize: 14,
+                          fontWight: 700,
+                          fontFamily: "neueMachina"
+                        },
+                        "& .MuiInputLabel-root": {
+                          color: "#70727B",
+                          fontFamily: "neueMachina",
+                          textTransform: "uppercase"
+                        }
+                      }}
+                      id="email"
+                      size="medium"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <ILock />
+                          </InputAdornment>
+                        ),
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                              {showPassword ? (
+                                <VisibilityOffOutlinedIcon className="text-neutral-300" />
+                              ) : (
+                                <VisibilityOutlinedIcon className="text-neutral-300" />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+                    <TextField
+                      className="w-full"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Confirm Password"
+                      label="A Number or Symbol, Atleast 6 Characters"
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          width: "100%",
+                          fontWeight: 400,
+                          fontSize: 14,
+                          fontWight: 700,
+                          fontFamily: "neueMachina"
+                        },
+                        "& .MuiInputLabel-root": {
+                          color: "#70727B",
+                          fontFamily: "neueMachina",
+                          textTransform: "uppercase"
+                        }
+                      }}
+                      id="email"
+                      size="medium"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <BeenhereOutlinedIcon />
+                          </InputAdornment>
+                        ),
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                              {showPassword ? (
+                                <VisibilityOffOutlinedIcon className="text-neutral-300" />
+                              ) : (
+                                <VisibilityOutlinedIcon className="text-neutral-300" />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                  >
+                    <TextField
+                      label="Enter your comment"
+                      multiline
+                      rows={4}
+                      placeholder="Enter your comment"
+                      variant="outlined"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                  >
+                    <FormControlLabel
+                      control={<Checkbox defaultChecked />}
+                      label="I agree my submitted data is collected and stored"
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                  >
+                    <Button
+                      size="large"
+                      type="submit"
+                      variant="contained"
+                      fullWidth
+                    >
+                      Submit
+                    </Button>
                   </Grid>
                 </Grid>
-                <Copyright sx={{ mt: 5 }} />
               </Box>
             </Box>
           </Grid>
         </Grid>
       </Box>
-    </ThemeProvider>
+    </Box>
   )
 }

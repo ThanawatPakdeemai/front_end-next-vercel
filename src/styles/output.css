@@ -1732,6 +1732,30 @@ video {
   margin-right: 2px;
 }
 
+.mt-3 {
+  margin-top: 0.75rem;
+}
+
+.mb-\[10px\] {
+  margin-bottom: 10px;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.ml-5 {
+  margin-left: 1.25rem;
+}
+
+.mr-14 {
+  margin-right: 3.5rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
 .mt-5 {
   margin-top: 1.25rem;
 }
@@ -1867,6 +1891,18 @@ video {
 
 .h-\[10px\] {
   height: 10px;
+}
+
+.h-\[264px\] {
+  height: 264px;
+}
+
+.h-6 {
+  height: 1.5rem;
+}
+
+.h-\[87px\] {
+  height: 87px;
 }
 
 .h-\[58px\] {
@@ -2025,6 +2061,10 @@ video {
 
 .w-\[100px\] {
   width: 100px;
+}
+
+.w-6 {
+  width: 1.5rem;
 }
 
 .w-\[58px\] {
@@ -2337,6 +2377,10 @@ video {
   white-space: nowrap;
 }
 
+.whitespace-pre-wrap {
+  white-space: pre-wrap;
+}
+
 .rounded-\[13px\] {
   border-radius: 13px;
 }
@@ -2640,6 +2684,11 @@ video {
   background-color: #18181cff;
 }
 
+.bg-varidian-default {
+  --tw-bg-opacity: 1;
+  background-color: rgb(61 205 149 / var(--tw-bg-opacity));
+}
+
 .bg-purple-primary {
   --tw-bg-opacity: 1;
   background-color: rgb(123 91 230 / var(--tw-bg-opacity));
@@ -2754,6 +2803,10 @@ video {
 
 .p-2 {
   padding: 0.5rem;
+}
+
+.p-\[18px\] {
+  padding: 18px;
 }
 
 .\!p-2 {
@@ -3195,6 +3248,16 @@ video {
   color: rgb(255 255 255 / 0.5);
 }
 
+.text-info-main {
+  --tw-text-opacity: 1;
+  color: rgb(39 241 236 / var(--tw-text-opacity));
+}
+
+.text-warning-main {
+  --tw-text-opacity: 1;
+  color: rgb(225 211 90 / var(--tw-text-opacity));
+}
+
 .opacity-50 {
   opacity: 0.5;
 }
@@ -3386,6 +3449,10 @@ h6 {
   .sm\:h-auto {
     height: auto;
   }
+
+  .sm\:justify-start {
+    justify-content: flex-start;
+  }
 }
 
 @media (min-width: 768px) {
@@ -3456,6 +3523,10 @@ h6 {
     height: 100%;
   }
 
+  .md\:w-\[218px\] {
+    width: 218px;
+  }
+
   .md\:w-2\/4 {
     width: 50%;
   }
@@ -3472,12 +3543,28 @@ h6 {
     width: 300px;
   }
 
+  .md\:w-\[130px\] {
+    width: 130px;
+  }
+
+  .md\:w-\[269px\] {
+    width: 269px;
+  }
+
   .md\:w-3\/5 {
     width: 60%;
   }
 
+  .md\:flex-row {
+    flex-direction: row;
+  }
+
   .md\:flex-col {
     flex-direction: column;
+  }
+
+  .md\:justify-start {
+    justify-content: flex-start;
   }
 
   .md\:gap-4 {

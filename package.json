@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 12819",
+    "dev": "next dev -p 4002",
     "build": "next build",
     "build:css": "yarn build:sass && npx tailwindcss -i ./src/styles/globals.css -o ./src/styles/output.css && yarn format:prettier-css",
     "build:tailwind": "tailwindcss -i ./src/styles/globals.css -o ./src/styles/output.css --watch",

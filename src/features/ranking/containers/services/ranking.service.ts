@@ -16,6 +16,20 @@ const getPlayersRanking = (url: string) =>
     }
   })
 
+const getPlayerRankByGameId = (_gameId: string) =>
+  new Promise<IPlayerRanking[]>((resolve, reject) => {
+    if (_gameId) {
+      services
+        .get<IPlayerRanking[]>(`/game/ranks/${_gameId}`)
+        .then((reponse) => {
+          resolve(reponse.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    }
+  })
+
 // Call api to get players in the game order by NAKA Play to Earn
 const getPlayersPlayToEarnRanking = ({ _game_id, _top_total }: IRanking) =>
   new Promise<IPlayerRanking>((resolve, reject) => {
@@ -55,6 +69,7 @@ const getPlayersSurvivalRanking = ({ _game_id, _top_total }: IRanking) =>
 
 export {
   getPlayersRanking,
+  getPlayerRankByGameId,
   getPlayersPlayToEarnRanking,
   getPlayersSurvivalRanking
 }

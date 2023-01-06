@@ -1,27 +1,25 @@
-import { Layout } from "@components/template"
-import { ReactElement } from "react"
+import { ReactElement, useEffect, useState } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import GameRoomLayout from "@components/template/GameRoomLayout"
 import GameDetailsPage from "@feature/page/gameDetailsPage"
+import useGameStore from "@stores/game"
 
 export default function GameDetails() {
   return (
     <>
-      <article className="h-full w-full">
-        <GameDetailsPage />
-      </article>
+      <GameDetailsPage />
     </>
   )
 }
 
 GameDetails.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>
+  return <GameRoomLayout>{page}</GameRoomLayout>
 }
 
-export async function getStaticProps({ locale }) {
+export async function getServerSideProps({ locale }: { locale: string }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"]))
-      // Will be passed to the page component as props
     }
   }
 }

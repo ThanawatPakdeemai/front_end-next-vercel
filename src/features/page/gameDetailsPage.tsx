@@ -1,10 +1,3 @@
-import ShineIcon from "@components/icons/ShineIcon"
-import Banner from "@components/molecules/Banner"
-import LikeNoLobby from "@components/molecules/LikeNoLobby"
-import StatisticGameDetail from "@components/molecules/statistic/StatisticGameDetail"
-import Tagline from "@components/molecules/tagline/Tagline"
-import { GAME_DETAILS_BANNER } from "@constants/gameBanner"
-import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import { Divider, TextField } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
@@ -16,6 +9,8 @@ import useGetAllGameRooms from "@feature/game/containers/hooks/useGetAllGameRoom
 import useProfileStore from "@stores/profileStore"
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import { useRouter } from "next/dist/client/router"
+import useGameStore from "@stores/game"
+import { IGame } from "@feature/game/interfaces/IGameService"
 
 /**
  *
@@ -24,26 +19,37 @@ import { useRouter } from "next/dist/client/router"
 const GameDetailsPage = () => {
   /* mockup data */
   const profile = useProfileStore((state) => state.profile.data)
-  const [stateProfile, setStateProfile] = useState<IProfile | null>()
+  const data = useGameStore((state) => state.data)
   const router = useRouter()
 
+  const [stateProfile, setStateProfile] = useState<IProfile>()
+  const [gameData, setGameData] = useState<IGame>()
+
   useEffect(() => {
-    setStateProfile(profile)
+    if (data) {
+      setGameData(data)
+    }
+  }, [data])
+
+  useEffect(() => {
+    if (profile) {
+      setStateProfile(profile)
+    }
   }, [profile])
 
   const { allGameRooms } = useGetAllGameRooms({
-    _gameId: "62907d05eb767c39ff09e2a6",
+    _gameId: gameData ? gameData.id : "",
     _email: stateProfile ? stateProfile.email : "",
-    _itemId: "61976479dffe844091ab8df1"
+    // mockup wait for lobby
+    _itemId: "63072b0dd0be6934c17b5438"
   })
 
   return (
     <>
-      <Banner data={GAME_DETAILS_BANNER} />
       <div className="rounded-3xl border border-neutral-700">
         <div className="flex justify-between p-4">
           <h1 className="self-center uppercase text-white-default">
-            Lobby :{" Nakamoto wars "}
+            Lobby :{gameData && gameData.name}
             <span className="text-secondary-main">Skull XL</span>
           </h1>
           <div className="flex">
@@ -74,45 +80,26 @@ const GameDetailsPage = () => {
         <Divider />
         <div className="custom-scroll flex h-[666px] flex-col items-center gap-[27px] overflow-y-scroll bg-room-list bg-contain p-[43px]">
           {profile && allGameRooms && allGameRooms.length > 0
-            ? allGameRooms.map((data) => {
-                const initEndTime = new Date(data.end_time)
+            ? allGameRooms.map((_data) => {
+                const initEndTime = new Date(_data.end_time)
                 return (
                   <RoomListBar
-                    key={data.id}
+                    key={_data.id}
                     timer={{
                       time: initEndTime,
                       onExpire: () => null
                     }}
                     player={{
-                      currentPlayer: data.amount_current_player,
-                      maxPlayer: data.max_players
+                      currentPlayer: _data.amount_current_player,
+                      maxPlayer: _data.max_players
                     }}
-                    roomId={data.room_number}
+                    roomId={_data.room_number}
                     roomName="Room Name"
                   />
                 )
               })
             : "Empty"}
         </div>
-      </div>
-      <Tagline
-        bgColor="bg-neutral-800"
-        textColor="text-neutral-500 font-bold"
-        text="Don't miss the information analysis about this game"
-        icon={<ShineIcon />}
-      />
-      <div className="flex flex-col gap-3 md:flex-row">
-        <LikeNoLobby value={78.34} />
-        <StatisticGameDetail />
-        <TopPlayer
-          element="select"
-          subtitle
-          background="neutral"
-          note
-          elevation={0}
-          className="!h-[424px] !w-[550px] !bg-primary-main"
-          rank
-        />
       </div>
     </>
   )

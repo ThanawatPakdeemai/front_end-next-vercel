@@ -15,9 +15,7 @@ const StatsDetail = ({ icon, title, type, amount, unit }: IProp) => (
     {icon}
     <Typography className="mb-4 text-xs font-bold">{title}</Typography>
     <Typography className="text-default font-bold">
-      {type === "normal"
-        ? Helper.formatNumber(amount as number)
-        : `$ ${amount}`}
+      {type === "normal" ? Helper.formatNumber(amount as number) : `${amount}`}
     </Typography>
     <Typography className="text-xs font-bold">{unit}</Typography>
   </div>

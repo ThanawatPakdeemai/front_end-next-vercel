@@ -3,12 +3,17 @@ import ControllerIcon from "@components/icons/ControllerIcon"
 import InvestIcon from "@components/icons/Stats/InvestIcon"
 import PlayersIcon from "@components/icons/Stats/PlayersIcon"
 import RewardIcon from "@components/icons/Stats/RewardIcon"
+import { IGameReportService } from "@feature/game/interfaces/IGameService"
 import React from "react"
 import StatEstimatedProfit from "./StatEstimatedProfit"
 import StatsDetail from "./StatsDetail"
 import StatWithIcon from "./StatWithIcon"
 
-const StatisticGameDetail = () => (
+interface IProp {
+  statsGameById: IGameReportService
+}
+
+const StatisticGameDetail = ({ statsGameById }: IProp) => (
   <div className="flex h-[424px] flex-col gap-2 rounded-lg border-[1px] border-neutral-700 border-opacity-80 p-2 md:flex-row">
     <div className="flex flex-col justify-between">
       <StatWithIcon
@@ -16,7 +21,7 @@ const StatisticGameDetail = () => (
         className="bg-error-main"
         textColor="text-error-main"
         title="player today"
-        amount="3345"
+        amount={statsGameById.data.player_number}
         unit="people"
       />
       <StatWithIcon
@@ -24,7 +29,7 @@ const StatisticGameDetail = () => (
         className="bg-secondary-main"
         textColor="text-secondary-main"
         title="invest today"
-        amount="876345.867"
+        amount={statsGameById.data.invest}
         unit="naka"
       />
       <StatWithIcon
@@ -32,7 +37,7 @@ const StatisticGameDetail = () => (
         className="bg-varidian-default"
         textColor="text-varidian-default"
         title="reward today"
-        amount="902345.867"
+        amount={statsGameById.data.reward_naka}
         unit="naka"
       />
     </div>
@@ -42,20 +47,20 @@ const StatisticGameDetail = () => (
           icon={<ControllerIcon />}
           title="game per day"
           type="normal"
-          amount={3456}
+          amount={statsGameById.data.numnber_game_play}
           unit="games"
         />
         <StatsDetail
           icon={<BankIcon />}
           title="cost per game"
           type="range"
-          amount={`${2} - ${12}`}
-          unit={`= ${0.3} - ${0.5} naka`}
+          amount={statsGameById.data.cost_per_game_doller}
+          unit={`= ${statsGameById.data.cost_per_game_naka}`}
         />
       </div>
       <StatEstimatedProfit
-        minValue={`+${10}%`}
-        maxValue={`+${456}%`}
+        minValue={`+${statsGameById.data.profit_potential_min}%`}
+        maxValue={`+${statsGameById.data.profit_potential_max}%`}
       />
     </div>
   </div>

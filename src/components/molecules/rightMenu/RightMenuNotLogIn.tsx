@@ -1,9 +1,9 @@
 import React, { memo, useState } from "react"
-import { Box, Divider, Stack, Typography } from "@mui/material"
-import ButtonClose from "@components/atoms/button/ButtonClose"
-import { ModalCustom } from "../ModalCustom"
+import { Box, Stack } from "@mui/material"
+import { ModalCustom } from "../Modal/ModalCustom"
 import ButtonLogin from "./ButtonLogin"
 import FormLogin from "../../../features/authentication/components/FromLogin"
+import ModalHeader from "../Modal/ModalHeader"
 
 const RightMenuNotLogIn = () => {
   const [open, setOpen] = useState<boolean>(false)
@@ -16,8 +16,6 @@ const RightMenuNotLogIn = () => {
       <Box className="m-auto w-max rounded-xl bg-neutral-700 p-1">
         <Box className="xs:flex-col items-center justify-between gap-1 lg:flex">
           <ButtonLogin handleButton={handleOpen} />
-          {/* <Typography className="mx-3 text-center">or</Typography> */}
-          {/* <ButtonMetamask handleButton={handleOpen} /> */}
         </Box>
         <ModalCustom
           open={open}
@@ -29,13 +27,11 @@ const RightMenuNotLogIn = () => {
             spacing={3}
             className="md:p-5"
           >
-            <Box className="flex items-center justify-between">
-              <Typography className="text-lg text-neutral-300">
-                Login
-              </Typography>
-              <ButtonClose onClick={() => handleClose()} />
-            </Box>
-            <Divider />
+            <ModalHeader
+              handleClose={handleClose}
+              title="Login"
+            />
+
             <FormLogin />
           </Stack>
         </ModalCustom>

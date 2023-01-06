@@ -8,7 +8,7 @@ export default function GameLobby() {
   const router = useRouter()
   const { name } = router.query
 
-  // mockup waiting for lobbu
+  // mockup waiting for lobby
   return (
     <>
       <Button

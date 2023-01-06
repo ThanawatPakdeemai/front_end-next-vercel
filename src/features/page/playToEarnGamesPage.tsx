@@ -85,7 +85,7 @@ const PlayToEarnGamesPage = () => {
                   image: game.image_category_list,
                   desc: game.name
                 }}
-                onHandleClick={() => onHandleClick(game.game_url, game)}
+                onHandleClick={() => onHandleClick(game.path, game)}
               />
             ))
           : null}

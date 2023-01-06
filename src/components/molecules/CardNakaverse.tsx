@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 import React from "react"
-import { Image } from "@components/atoms/image/index"
+import { Image } from "@components/atoms/image"
 import { IMAGES } from "@constants/images"
 import ButtonLink from "@components/atoms/button/ButtonLink"
-import { Card, CardContent, styled } from "@mui/material"
+import { Box, Card, CardContent, styled } from "@mui/material"
 import IOpenNew from "@components/icons/OpenNew"
 
 interface ICardNakaverse {
@@ -34,11 +34,18 @@ const CardNakaverse = ({
   <>
     <Card
       variant="outlined"
-      className="flex h-[218px] w-[678px] max-w-full overflow-hidden max-[480px]:w-auto"
-      sx={{ backgroundImage: `url(${image})` }}
+      className=" relative flex h-[218px] w-[678px] max-w-full overflow-hidden  max-[480px]:w-auto"
     >
+      <Image
+        src={image}
+        width={IMAGES.nakaVerse.width}
+        height={IMAGES.nakaVerse.height}
+        alt={IMAGES.nakaBand.alt}
+        className="absolute h-full w-full"
+      />
+
       <CardContent className="py-[30px] pr-0 pl-[45px] max-[480px]:p-[30px]">
-        <h6 className="m-0 py-[35px] px-0 font-neue-machina text-[22px] font-bold not-italic tracking-[1px] text-white-default">
+        <h6 className="relative m-0 py-[35px] px-0 font-neue-machina text-[22px] font-bold not-italic tracking-[1px] text-white-default">
           {title}
         </h6>
         <ButtonLink

@@ -7,6 +7,7 @@ import DragHandleIcon from "@mui/icons-material/DragHandle"
 import { useRouter } from "next/router"
 import { Image } from "@components/atoms/image/index"
 import { FLAGS } from "@constants/flags"
+import Link from "next/link"
 import { styleIcon } from "./HeadMenu"
 
 const HeadLogo = () => {
@@ -41,7 +42,9 @@ const HeadLogo = () => {
             scrollPage < 100 ? "block" : " hidden"
           } `}
         >
-          <LogoNaka />
+          <Link href="/">
+            <LogoNaka />
+          </Link>
           <Divider
             className="!mx-5 my-2 border-neutral-700"
             orientation="vertical"

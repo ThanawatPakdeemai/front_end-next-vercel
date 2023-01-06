@@ -6,7 +6,7 @@ import Tagline from "@components/molecules/tagline/Tagline"
 import { GAME_DETAILS_BANNER } from "@constants/gameBanner"
 import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import { Divider, TextField } from "@mui/material"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import PlusIcon from "@components/icons/CountIcon/PlusIcon"
 import Dropdown from "@components/atoms/DropdownCustom"
@@ -14,6 +14,8 @@ import SearchIcon from "@components/icons/SearchIcon"
 import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import useGetAllGameRooms from "@feature/game/containers/hooks/useGetAllGameRooms"
 import useProfileStore from "@stores/profileStore"
+import { IProfile } from "@feature/profile/interfaces/IProfileService"
+import { useRouter } from "next/dist/client/router"
 
 /**
  *
@@ -22,11 +24,17 @@ import useProfileStore from "@stores/profileStore"
 const GameDetailsPage = () => {
   /* mockup data */
   const profile = useProfileStore((state) => state.profile.data)
+  const [stateProfile, setStateProfile] = useState<IProfile | null>()
+  const router = useRouter()
+
+  useEffect(() => {
+    setStateProfile(profile)
+  }, [profile])
 
   const { allGameRooms } = useGetAllGameRooms({
-    _gameId: "62d8efdc7714b68ab8b8ca77",
-    _email: profile ? profile.email : "",
-    _itemId: "62e0f49ec6d23a66ae3e1212"
+    _gameId: "62907d05eb767c39ff09e2a6",
+    _email: stateProfile ? stateProfile.email : "",
+    _itemId: "61976479dffe844091ab8df1"
   })
 
   return (
@@ -56,7 +64,7 @@ const GameDetailsPage = () => {
               }}
             />
             <ButtonToggleIcon
-              handleClick={() => null}
+              handleClick={() => router.reload()}
               startIcon={<PlusIcon />}
               text="Create Room"
               className="btn-rainbow-theme z-[2] h-[50px] w-[156px] bg-secondary-main font-bold capitalize text-white-primary"
@@ -76,7 +84,7 @@ const GameDetailsPage = () => {
                       onExpire: () => null
                     }}
                     player={{
-                      currentPlayer: data.amount_played,
+                      currentPlayer: data.amount_current_player,
                       maxPlayer: data.max_players
                     }}
                     roomId={data.room_number}
@@ -84,7 +92,7 @@ const GameDetailsPage = () => {
                   />
                 )
               })
-            : "Loading..."}
+            : "Empty"}
         </div>
       </div>
       <Tagline

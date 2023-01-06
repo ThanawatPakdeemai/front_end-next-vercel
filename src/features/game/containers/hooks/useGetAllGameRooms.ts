@@ -7,15 +7,23 @@ const useGetAllGameRooms = ({ _gameId, _email, _itemId }: IGetAllGameRooms) => {
     data: allGameRooms,
     error,
     isLoading,
-    isError
+    isError,
+    isStale,
+    refetch
   } = useQuery(
     ["getAllGameRooms"],
     () => getAllGameRooms({ _gameId, _email, _itemId }),
     {
       /* prevent hook state problem */
-      staleTime: Infinity
+      staleTime: Infinity,
+      retry: false,
+      refetchInterval: 10000
     }
   )
+
+  if (isStale) {
+    refetch()
+  }
 
   return {
     allGameRooms:

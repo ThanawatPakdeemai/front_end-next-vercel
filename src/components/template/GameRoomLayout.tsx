@@ -54,7 +54,7 @@ const GameRoomLayout = ({
           elevation={0}
           className="!h-[424px] !w-[550px] !bg-primary-main"
           rank
-          topPlayerGameId={topPlayerGameId}
+          topPlayerGameId={topPlayerGameId && topPlayerGameId}
         />
       </div>
       <Footer />

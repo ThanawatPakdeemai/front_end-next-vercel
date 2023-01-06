@@ -22,7 +22,23 @@ interface IProp {
 }
 
 const RoomListBar = ({ roomId, roomName, btnText, timer, player }: IProp) => (
-  <motion.div className="flex w-[563px] min-w-[563px] items-center justify-between gap-8  rounded-l-[16px] rounded-r-[36px] border border-neutral-700 bg-neutral-800 p-2">
+  <motion.div
+    style={{
+      minWidth: 563,
+      padding: 8
+    }}
+    transition={{
+      type: "spring",
+      stiffness: 300,
+      damping: 4
+    }}
+    whileHover={{
+      padding: 14,
+      x: -12,
+      width: 590
+    }}
+    className="flex items-center justify-between gap-8 rounded-l-[16px] rounded-r-[36px] border border-neutral-700 bg-neutral-800 p-2"
+  >
     <div className="flex flex-1 gap-2">
       <ButtonIcon
         // whileHover="none"

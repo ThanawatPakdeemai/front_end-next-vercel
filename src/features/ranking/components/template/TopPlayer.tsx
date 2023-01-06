@@ -11,6 +11,7 @@ import Dropdown from "@components/atoms/DropdownCustom"
 import Note from "@components/molecules/Note"
 import Image from "next/image"
 import CardRank from "@components/organisms/CardRank"
+import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
 import CardBodyList from "../molecules/CardBodyList"
 
 export interface IPlayer {
@@ -21,6 +22,7 @@ export interface IPlayer {
   subtitle?: boolean
   elevation?: number
   background?: "purple" | "red" | "neutral"
+  topPlayerGameId?: IPlayerRanking[]
 }
 
 const TopPlayer = ({
@@ -30,7 +32,8 @@ const TopPlayer = ({
   note = false,
   subtitle,
   elevation,
-  background
+  background,
+  topPlayerGameId
 }: IPlayer) => {
   const { topPlayerAllGame, isLoading } = useTopPlayer()
   const skeleton = 10
@@ -77,8 +80,18 @@ const TopPlayer = ({
           </div>
         ) : (
           <div>
-            {rank ? (
-              <CardRank />
+            {/* {rank
+              ? topPlayerGameId && (
+                  <CardRank topPlayerGameId={topPlayerGameId} />
+                )
+              : topPlayerAllGame && (
+                  <CardBodyList
+                    width="433px"
+                    players={topPlayerAllGame}
+                  />
+                )} */}
+            {rank && topPlayerGameId ? (
+              <CardRank topPlayerGameId={topPlayerGameId} />
             ) : (
               topPlayerAllGame && (
                 <CardBodyList

@@ -6,8 +6,22 @@ const useTopPlayerByGameId = (_gameId: string) => {
     data: topPlayerGameId,
     error,
     isLoading,
-    isError
-  } = useQuery(["getTopPlayersByGameId"], () => getPlayerRankByGameId(_gameId))
+    isError,
+    isStale,
+    refetch
+  } = useQuery(
+    ["getTopPlayersByGameId"],
+    () => getPlayerRankByGameId(_gameId),
+    {
+      /* prevent hook state problem */
+      staleTime: Infinity,
+      retry: false
+    }
+  )
+
+  if (isStale) {
+    refetch()
+  }
 
   return {
     topPlayerGameId:

@@ -16,7 +16,7 @@ import { IGame } from "@feature/game/interfaces/IGameService"
  *
  * @description this page is only mockup for design before use with real api
  */
-const GameDetailsPage = () => {
+const GameRoomListPage = () => {
   /* mockup data */
   const profile = useProfileStore((state) => state.profile.data)
   const data = useGameStore((state) => state.data)
@@ -105,4 +105,4 @@ const GameDetailsPage = () => {
   )
 }
 
-export default GameDetailsPage
+export default GameRoomListPage

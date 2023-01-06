@@ -10,6 +10,9 @@ import React, { memo, useEffect, useRef, useState } from "react"
 import { v4 as uuid } from "uuid"
 import useGameStore from "@stores/game/index"
 import { IGame } from "@feature/game/interfaces/IGameService"
+import useProfileStore from "@stores/profileStore"
+import { IProfile } from "@feature/profile/interfaces/IProfileService"
+import { toast } from "react-hot-toast"
 
 const PlayToEarnGamesPage = () => {
   const type = "play-to-earn"
@@ -19,12 +22,16 @@ const PlayToEarnGamesPage = () => {
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
   const router = useRouter()
-  const { setGameID, onSetGameData, clearGameData, clearGameID } =
-    useGameStore()
+  const { onSetGameData, clearGameData, clearGameID } = useGameStore()
+  const profile = useProfileStore((state) => state.profile.data)
+  const [stateProfile, setStateProfile] = useState<IProfile | null>()
+
+  useEffect(() => {
+    setStateProfile(profile)
+  }, [profile])
 
   const {
     isLoading,
-    isFetching,
     isPreviousData,
     data: gameData
   } = useGames({
@@ -54,8 +61,12 @@ const PlayToEarnGamesPage = () => {
   }, [clearGameData, clearGameID, gameData, isPreviousData, page, queryClient])
 
   const onHandleClick = (_gameUrl: string, _gameData: IGame) => {
-    router.push(`play-to-earn-games/${_gameUrl}`)
-    onSetGameData(_gameData)
+    if (stateProfile) {
+      router.push(`play-to-earn-games/${_gameUrl}`)
+      onSetGameData(_gameData)
+    } else {
+      toast.error("Please Login")
+    }
   }
 
   return (

@@ -62,7 +62,7 @@ const PlayToEarnGamesPage = () => {
 
   const onHandleClick = (_gameUrl: string, _gameData: IGame) => {
     if (stateProfile) {
-      router.push(`play-to-earn-games/${_gameUrl}`)
+      router.push(`/${_gameUrl}`)
       onSetGameData(_gameData)
     } else {
       toast.error("Please Login")

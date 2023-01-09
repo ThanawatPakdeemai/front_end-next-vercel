@@ -25,7 +25,7 @@ const GameCardSlide = ({ slide, ...props }: IBannerCardSlide) => {
           <CardMedia
             component="img"
             height={1080}
-            image={datagame.data[0].image_background}
+            image={datagame.data.image_background}
             // image="/images/gamePage/Image.png"
             // image={slide.image_home_banner}
             alt=""

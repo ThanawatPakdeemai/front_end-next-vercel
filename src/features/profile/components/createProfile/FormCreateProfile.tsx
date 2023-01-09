@@ -1,4 +1,4 @@
-import React, { memo, useRef, useState } from "react"
+import React, { memo, useState } from "react"
 
 import { Box, InputAdornment, TextField, Typography } from "@mui/material"
 import AvatarProfile from "@components/atoms/avatar/AvatarProfile"

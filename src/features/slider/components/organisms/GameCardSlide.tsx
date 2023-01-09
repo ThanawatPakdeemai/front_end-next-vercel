@@ -11,7 +11,8 @@ export interface IBannerCardSlide extends ICardNextSlide {
 }
 
 const GameCardSlide = ({ slide, ...props }: IBannerCardSlide) => {
-  const datagame1 = useGameStore(
+  // eslint-disable-next-line no-async-promise-executor
+  const datagame: any = useGameStore(
     (state) => ({
       data: state.data
     }),
@@ -20,14 +21,16 @@ const GameCardSlide = ({ slide, ...props }: IBannerCardSlide) => {
   return (
     <div className="slide-item relative gap-4 align-middle text-white-default md:flex">
       <div className="slide-item--image w-full overflow-hidden rounded-2xl md:w-3/5 xl:w-3/4">
-        <CardMedia
-          component="img"
-          height={1080}
-          image={datagame1.data[0].image_background}
-          // image="/images/gamePage/Image.png"
-          // image={slide.image_home_banner}
-          alt=""
-        />
+        {datagame && (
+          <CardMedia
+            component="img"
+            height={1080}
+            image={datagame.data[0].image_background}
+            // image="/images/gamePage/Image.png"
+            // image={slide.image_home_banner}
+            alt=""
+          />
+        )}
       </div>
       <div className="w-full justify-between md:flex md:w-3/5 md:flex-col md:gap-4 xl:w-1/4">
         <CardGameSlide

@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Head from "next/head"
 import { Layout } from "@components/template"
 import GameSlide from "@feature/slider/components/templates/GameSlide"
@@ -21,7 +21,8 @@ export default function Gamehome() {
   )
 
   const fetchGameAll = async () => {
-    const { data, status } = await getAllGames()
+    // eslint-disable-next-line no-async-promise-executor
+    const { data }: any = await getAllGames()
     const gamefilter = data.filter((data) => data.game_url.includes(Path[1]))
     setGameHome(gamefilter)
     setGame(gamefilter)

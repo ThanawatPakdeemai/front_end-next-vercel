@@ -7,13 +7,14 @@ import fullConfig from "../../../../tailwindResolver"
 
 interface IProp {
   timer?: {
-    time?: Date
+    time: Date
     onExpire?: () => void
   }
   player?: {
     currentPlayer: number
     maxPlayer?: number
   }
+  icon?: React.ReactNode
   color: string
   shade: string
   type: "timer" | "player"
@@ -27,13 +28,13 @@ interface IProp {
  * @param shade is child key in tailwind.config.js
  */
 
-const RoomListBox = ({ timer, player, color, shade, type }: IProp) => {
+const RoomListBox = ({ timer, player, icon, color, shade, type }: IProp) => {
   const { theme } = fullConfig
 
   const initTheme: string = theme && theme.colors && theme.colors[color][shade]
 
   return type === "timer" ? (
-    <div className="flex w-[131px] items-center justify-center gap-3 rounded-lg bg-neutral-900 py-2 align-baseline">
+    <div className="flex w-[131px] items-center justify-center gap-3 rounded-lg border border-neutral-700 bg-neutral-900 py-2 align-baseline">
       <StopwatchIcon stroke={initTheme} />
       {timer && (
         <TimerLobby
@@ -44,7 +45,8 @@ const RoomListBox = ({ timer, player, color, shade, type }: IProp) => {
       )}
     </div>
   ) : (
-    <div className="flex w-[105px] items-center justify-center rounded-lg bg-neutral-900 py-2 align-baseline">
+    <div className="flex w-fit items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900 p-2 align-baseline">
+      {icon}
       <PlayersIcon
         stroke={initTheme}
         className="mr-[10px]"

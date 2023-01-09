@@ -12,16 +12,24 @@ interface IProp {
   roomName: string
   btnText?: string
   timer?: {
-    time?: Date
+    time: Date
     onExpire?: () => void
   }
   player?: {
     currentPlayer: number
     maxPlayer?: number
   }
+  onClick?: () => void
 }
 
-const RoomListBar = ({ roomId, roomName, btnText, timer, player }: IProp) => (
+const RoomListBar = ({
+  roomId,
+  roomName,
+  btnText,
+  timer,
+  player,
+  onClick
+}: IProp) => (
   <motion.div
     style={{
       minWidth: 563,
@@ -68,7 +76,7 @@ const RoomListBar = ({ roomId, roomName, btnText, timer, player }: IProp) => (
         shade="500"
       />
       <ButtonToggleIcon
-        handleClick={() => null}
+        handleClick={onClick}
         startIcon={<></>}
         endIcon={<IconArrowRight stroke="#010101" />}
         text={btnText || "Join"}

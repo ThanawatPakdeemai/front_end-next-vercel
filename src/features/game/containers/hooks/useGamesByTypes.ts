@@ -7,10 +7,10 @@ interface IProps {
   _page: number
 }
 
-const useGames = ({ _type, _limit, _page }: IProps) => {
+const useGamesByTypes = ({ _type, _limit, _page }: IProps) => {
   const { data, isLoading, isFetching, isPreviousData, isError, error } =
     useQuery({
-      queryKey: ["games", _type, _page],
+      queryKey: ["getGameByTypes", _type, _page],
       queryFn: () => getGameByTypes({ _type, _limit, _page }),
       keepPreviousData: true,
       staleTime: 5000
@@ -19,4 +19,4 @@ const useGames = ({ _type, _limit, _page }: IProps) => {
   return { data, isLoading, isFetching, isPreviousData, isError, error }
 }
 
-export default useGames
+export default useGamesByTypes

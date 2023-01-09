@@ -1,7 +1,7 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import GamePageLayout from "@components/template/GamePageLayout"
-import FreeToPlayGamesPage from "@feature/page/freeToPlayGamesPage"
+import FreeToPlayGamesPage from "@feature/page/games/freeToPlayGamesPage"
 
 export default function FreeToPlayGames() {
   return (

@@ -7,7 +7,7 @@ interface IProps {
   startIcon: ReactNode
   endIcon?: ReactNode
   text: string
-  handleClick: () => void
+  handleClick?: () => void
   className?: string
 }
 

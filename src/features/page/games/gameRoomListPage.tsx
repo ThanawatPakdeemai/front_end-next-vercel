@@ -33,6 +33,10 @@ const GameRoomListPage = () => {
     _itemId: "63072b0dd0be6934c17b5438"
   })
 
+  const handleJoinRoom = (_roomId: string) => {
+    router.push(`/${router.asPath}/${_roomId}`)
+  }
+
   useEffect(() => {
     if (data) {
       setGameData(data)
@@ -98,6 +102,7 @@ const GameRoomListPage = () => {
                   }}
                   roomId={_data.room_number}
                   roomName="Room Name"
+                  onClick={() => handleJoinRoom(_data.id)}
                 />
               )
             })}

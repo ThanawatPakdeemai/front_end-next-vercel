@@ -6,7 +6,7 @@ interface IProp {
 }
 
 const PlayersAmount = ({ currentPlayer, maxPlayer }: IProp) => (
-  <span className="relative top-1 font-normal text-neutral-300">
+  <span className="relative top-[2px] font-normal text-neutral-300">
     <span
       className={
         currentPlayer !== maxPlayer ? "text-neutral-500" : "text-neutral-300"

@@ -1,7 +1,7 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import GamePageLayout from "@components/template/GamePageLayout"
-import StoryModeGamesPage from "@feature/page/storyModeGamesPage"
+import StoryModeGamesPage from "@feature/page/games/storyModeGamesPage"
 
 export default function StoryModeGames() {
   return (

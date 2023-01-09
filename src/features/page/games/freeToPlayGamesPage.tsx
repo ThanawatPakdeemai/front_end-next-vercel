@@ -1,15 +1,15 @@
-import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
+import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { F2PHeaderMenu } from "@constants/gameSlide"
 import GameCard from "@feature/game/containers/components/molecules/GameCard"
-import useGames from "@feature/game/containers/hook/useGames"
+import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import { getGameByTypes } from "@feature/game/containers/services/game.service"
 import { useQueryClient } from "@tanstack/react-query"
 import { memo, useEffect, useRef, useState } from "react"
 import { v4 as uuid } from "uuid"
 
-const StoryModeGamesPage = () => {
-  const type = "story-mode"
+const FreeToPlayGamesPage = () => {
+  const type = "free-to-play"
   const limit = 30
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
   const [page, setPage] = useState<number>(1)
@@ -22,7 +22,7 @@ const StoryModeGamesPage = () => {
     isLoading,
     isPreviousData,
     data: gameData
-  } = useGames({
+  } = useGamesByTypes({
     _type: type,
     _limit: limit,
     _page: page
@@ -83,4 +83,4 @@ const StoryModeGamesPage = () => {
   )
 }
 
-export default memo(StoryModeGamesPage)
+export default memo(FreeToPlayGamesPage)

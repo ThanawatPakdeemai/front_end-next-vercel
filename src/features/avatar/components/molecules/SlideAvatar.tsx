@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unstable-nested-components */
 import { Box } from "@mui/material"
-import React, { memo, useEffect, useMemo, useRef, useState } from "react"
+import React, { memo, useEffect, useMemo, useRef } from "react"
 import Slider from "react-slick"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"

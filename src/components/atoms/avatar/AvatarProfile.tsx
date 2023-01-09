@@ -1,6 +1,5 @@
 import { Box, Avatar } from "@mui/material"
 import React, { memo } from "react"
-import { IMAGES } from "@constants/images"
 import { Image } from "@components/atoms/image"
 
 interface IProp {

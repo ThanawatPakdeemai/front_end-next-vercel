@@ -20,7 +20,6 @@ const FreeToPlayGamesPage = () => {
 
   const {
     isLoading,
-    isFetching,
     isPreviousData,
     data: gameData
   } = useGames({

@@ -1,6 +1,5 @@
 import React from "react"
 import { Image } from "@components/atoms/image"
-import EarthIcon from "@components/icons/EarthIcon"
 import TableIcon from "@components/icons/TableIcon"
 
 interface IDetails {

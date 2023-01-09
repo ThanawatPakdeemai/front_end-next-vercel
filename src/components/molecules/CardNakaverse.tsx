@@ -3,7 +3,7 @@ import React from "react"
 import { Image } from "@components/atoms/image"
 import { IMAGES } from "@constants/images"
 import ButtonLink from "@components/atoms/button/ButtonLink"
-import { Box, Card, CardContent, styled } from "@mui/material"
+import { Card, CardContent, styled } from "@mui/material"
 import IOpenNew from "@components/icons/OpenNew"
 
 interface ICardNakaverse {

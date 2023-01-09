@@ -20,7 +20,6 @@ const StoryModeGamesPage = () => {
 
   const {
     isLoading,
-    isFetching,
     isPreviousData,
     data: gameData
   } = useGames({

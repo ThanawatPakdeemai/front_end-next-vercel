@@ -5,8 +5,14 @@ import GameCard from "@feature/game/containers/components/molecules/GameCard"
 import useGames from "@feature/game/containers/hook/useGames"
 import { getGameByTypes } from "@feature/game/containers/services/game.service"
 import { useQueryClient } from "@tanstack/react-query"
+import { useRouter } from "next/router"
 import React, { memo, useEffect, useRef, useState } from "react"
 import { v4 as uuid } from "uuid"
+import useGameStore from "@stores/game/index"
+import { IGame } from "@feature/game/interfaces/IGameService"
+import useProfileStore from "@stores/profileStore"
+import { IProfile } from "@feature/profile/interfaces/IProfileService"
+import { toast } from "react-hot-toast"
 
 const PlayToEarnGamesPage = () => {
   const type = "play-to-earn"
@@ -15,10 +21,17 @@ const PlayToEarnGamesPage = () => {
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
+  const router = useRouter()
+  const { onSetGameData, clearGameData, clearGameID } = useGameStore()
+  const profile = useProfileStore((state) => state.profile.data)
+  const [stateProfile, setStateProfile] = useState<IProfile | null>()
+
+  useEffect(() => {
+    setStateProfile(profile)
+  }, [profile])
 
   const {
     isLoading,
-    isFetching,
     isPreviousData,
     data: gameData
   } = useGames({
@@ -43,9 +56,18 @@ const PlayToEarnGamesPage = () => {
           getGameByTypes({ _type: type, _limit: limit, _page: page + 1 })
       })
     }
-  }, [gameData, isPreviousData, page, queryClient])
+    clearGameID()
+    clearGameData()
+  }, [clearGameData, clearGameID, gameData, isPreviousData, page, queryClient])
 
-  const onHandleClick = () => {}
+  const onHandleClick = (_gameUrl: string, _gameData: IGame) => {
+    if (stateProfile) {
+      router.push(`play-to-earn-games/${_gameUrl}`)
+      onSetGameData(_gameData)
+    } else {
+      toast.error("Please Login")
+    }
+  }
 
   return (
     <div className="flex flex-col">
@@ -63,7 +85,7 @@ const PlayToEarnGamesPage = () => {
                   image: game.image_category_list,
                   desc: game.name
                 }}
-                onHandleClick={onHandleClick}
+                onHandleClick={() => onHandleClick(game.path, game)}
               />
             ))
           : null}

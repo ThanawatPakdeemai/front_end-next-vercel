@@ -128,6 +128,9 @@ module.exports = {
         default: "16px",
         md: "24px"
       },
+      backgroundImage: {
+        "room-list": "url('/images/lobbybackground.webp')"
+      },
       transitionDuration: {
         400: "400ms"
       },

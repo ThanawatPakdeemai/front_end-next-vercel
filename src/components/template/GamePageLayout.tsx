@@ -5,7 +5,7 @@ import SidebarGames from "@components/molecules/SidebarGames"
 import Tagline from "@components/molecules/tagline/Tagline"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
-import { GAME_BANNER, GAME_DETAILS_BANNER } from "@constants/gameBanner"
+import { GAME_BANNER } from "@constants/gameBanner"
 import React from "react"
 
 const GamePageLayout = ({

@@ -31,7 +31,8 @@ const useGetAllGameRooms = ({ _gameId, _email, _itemId }: IGetAllGameRooms) => {
         : undefined,
     isLoading,
     isError,
-    error
+    error,
+    refetch
   }
 }
 

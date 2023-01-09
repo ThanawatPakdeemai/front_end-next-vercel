@@ -6,18 +6,21 @@ interface IProps {
   notify?: boolean
   multi?: boolean
   className?: string
+  onClick?: () => void
 }
 
 const ButtonSticky = ({
   icon = <YourMissionIcon />,
   notify = false,
   multi = false,
-  className
+  className,
+  onClick
 }: IProps) => {
   const hasNotify = notify ? <div className="btn-sticky-dot" /> : null
   return (
     <button
       type="button"
+      onClick={onClick}
       className={`${className} relative z-[5] flex h-[88px] w-[88px] items-center justify-center`}
     >
       {multi ? (

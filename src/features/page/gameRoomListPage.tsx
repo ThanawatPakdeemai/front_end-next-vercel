@@ -11,6 +11,8 @@ import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import { useRouter } from "next/dist/client/router"
 import useGameStore from "@stores/game"
 import { IGame } from "@feature/game/interfaces/IGameService"
+import ButtonSticky from "@components/molecules/ButtonSticky"
+import ReloadIcon from "@components/icons/ReloadIcon"
 
 /**
  *
@@ -21,9 +23,15 @@ const GameRoomListPage = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const data = useGameStore((state) => state.data)
   const router = useRouter()
-
   const [stateProfile, setStateProfile] = useState<IProfile>()
   const [gameData, setGameData] = useState<IGame>()
+
+  const { allGameRooms, refetch } = useGetAllGameRooms({
+    _gameId: gameData ? gameData.id : "",
+    _email: stateProfile ? stateProfile.email : "",
+    // mockup wait for lobby
+    _itemId: "63072b0dd0be6934c17b5438"
+  })
 
   useEffect(() => {
     if (data) {
@@ -36,13 +44,6 @@ const GameRoomListPage = () => {
       setStateProfile(profile)
     }
   }, [profile])
-
-  const { allGameRooms } = useGetAllGameRooms({
-    _gameId: gameData ? gameData.id : "",
-    _email: stateProfile ? stateProfile.email : "",
-    // mockup wait for lobby
-    _itemId: "63072b0dd0be6934c17b5438"
-  })
 
   return (
     <>
@@ -79,26 +80,33 @@ const GameRoomListPage = () => {
         </div>
         <Divider />
         <div className="custom-scroll flex h-[666px] flex-col items-center gap-[27px] overflow-y-scroll bg-room-list bg-contain p-[43px]">
-          {profile && allGameRooms && allGameRooms.length > 0
-            ? allGameRooms.map((_data) => {
-                const initEndTime = new Date(_data.end_time)
-                return (
-                  <RoomListBar
-                    key={_data.id}
-                    timer={{
-                      time: initEndTime,
-                      onExpire: () => null
-                    }}
-                    player={{
-                      currentPlayer: _data.amount_current_player,
-                      maxPlayer: _data.max_players
-                    }}
-                    roomId={_data.room_number}
-                    roomName="Room Name"
-                  />
-                )
-              })
-            : "Empty"}
+          {profile &&
+            allGameRooms &&
+            allGameRooms.length > 0 &&
+            allGameRooms.map((_data) => {
+              const initEndTime = new Date(_data.end_time)
+              return (
+                <RoomListBar
+                  key={_data.id}
+                  timer={{
+                    time: initEndTime,
+                    onExpire: () => null
+                  }}
+                  player={{
+                    currentPlayer: _data.amount_current_player,
+                    maxPlayer: _data.max_players
+                  }}
+                  roomId={_data.room_number}
+                  roomName="Room Name"
+                />
+              )
+            })}
+          <ButtonSticky
+            icon={<ReloadIcon />}
+            className="mt-10"
+            multi
+            onClick={refetch}
+          />
         </div>
       </div>
     </>

@@ -12,25 +12,20 @@ import Footer from "@components/organisms/Footer"
 import useGetStatisticsGameById from "@feature/game/containers/hooks/useGetStatisticsGameById"
 import useGameStore from "@stores/game"
 
-/**
- *
- * @description this page is only mockup for design before use with real api
- */
 const GameRoomLayout = ({
   children
 }: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) => {
   /* mockup data */
   const data = useGameStore((state) => state.data)
   const [gameId, setGameId] = useState<string>("")
+  const { topPlayerGameId } = useTopPlayerByGameId(gameId)
+  const { statsGameById } = useGetStatisticsGameById(gameId)
 
   useEffect(() => {
     if (data) {
       setGameId(data.id)
     }
   }, [data])
-
-  const { topPlayerGameId } = useTopPlayerByGameId(gameId)
-  const { statsGameById } = useGetStatisticsGameById(gameId)
 
   return (
     <div className="main-container mx-auto">

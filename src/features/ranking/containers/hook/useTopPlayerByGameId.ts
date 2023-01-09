@@ -7,7 +7,6 @@ const useTopPlayerByGameId = (_gameId: string) => {
     error,
     isLoading,
     isError,
-    isStale,
     refetch
   } = useQuery(
     ["getTopPlayersByGameId"],
@@ -19,7 +18,7 @@ const useTopPlayerByGameId = (_gameId: string) => {
     }
   )
 
-  if (isStale) {
+  if (!topPlayerGameId) {
     refetch()
   }
 

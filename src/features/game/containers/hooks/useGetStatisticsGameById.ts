@@ -7,7 +7,6 @@ const useGetStatisticsGameById = (_gameId: string) => {
     error,
     isLoading,
     isError,
-    isStale,
     refetch
   } = useQuery(
     ["getStatisticsGameById"],
@@ -19,7 +18,7 @@ const useGetStatisticsGameById = (_gameId: string) => {
     }
   )
 
-  if (isStale) {
+  if (!statsGameById) {
     refetch()
   }
 

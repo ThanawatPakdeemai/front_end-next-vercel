@@ -8,7 +8,6 @@ const useGetAllGameRooms = ({ _gameId, _email, _itemId }: IGetAllGameRooms) => {
     error,
     isLoading,
     isError,
-    isStale,
     refetch
   } = useQuery(
     ["getAllGameRooms"],
@@ -21,7 +20,7 @@ const useGetAllGameRooms = ({ _gameId, _email, _itemId }: IGetAllGameRooms) => {
     }
   )
 
-  if (isStale) {
+  if (!allGameRooms) {
     refetch()
   }
 

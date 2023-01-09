@@ -48,7 +48,7 @@ const GameRoomListPage = () => {
     <>
       <div className="rounded-3xl border border-neutral-700">
         <div className="flex justify-between p-4">
-          <h1 className="self-center uppercase text-white-default">
+          <h1 className="text-white-defzault self-center uppercase">
             Lobby :{gameData && gameData.name}
             <span className="text-secondary-main">Skull XL</span>
           </h1>

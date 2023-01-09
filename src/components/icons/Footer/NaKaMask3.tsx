@@ -1,6 +1,6 @@
 import React from "react"
 
-function NakaMask1({
+function NakaMask3({
   width = 225,
   height = 70,
   className
@@ -167,4 +167,4 @@ function NakaMask1({
   )
 }
 
-export default NakaMask1
+export default NakaMask3

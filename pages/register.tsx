@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import React from "react"
+import React, { useState } from "react"
 import Avatar from "@mui/material/Avatar"
 import Button from "@mui/material/Button"
 import CssBaseline from "@mui/material/CssBaseline"
@@ -12,6 +11,7 @@ import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import Typography from "@mui/material/Typography"
+import { pink } from "@mui/material/colors"
 import {
   createTheme,
   styled,
@@ -22,8 +22,10 @@ import {
   Card,
   CardContent,
   Container,
+  Divider,
   IconButton,
-  InputAdornment
+  InputAdornment,
+  InputLabel
 } from "@mui/material"
 import HeadLogo from "@components/molecules/HeadLogo"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
@@ -36,67 +38,29 @@ import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import BeenhereOutlinedIcon from "@mui/icons-material/BeenhereOutlined"
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined"
+
+import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined"
+import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlineBlankOutlined"
+import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined"
+import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined"
+
+import Beenhere from "@components/icons/Beenhere"
 import ILock from "@components/icons/Lock"
+import ICheckMark from "@components/icons/CheckMark"
+import { Padding } from "@mui/icons-material"
+import IEdit from "@components/icons/Edit"
+import { SOCIAL } from "@configs/socialShare"
+import ButtonIcon from "@components/atoms/button/ButtonIcon"
+
+import { SocialRegister } from "@configs/socialRegister"
 import IRectagle from "./icons/rectagle"
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link
-        color="inherit"
-        href="https://mui.com/"
-      >
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-    </Typography>
-  )
-}
-
-const CssTextField = styled(TextField)({
-  "& label.Mui-focused": {
-    color: "#70727B"
-  },
-  "& .MuiInput-underline:after": {
-    borderBottomColor: "green"
-  },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "red",
-      border: "1px solid #232329",
-      background: "#18181C",
-      borderRadius: "8px",
-      color: "#70727B",
-      fontStyle: "normal",
-      fontWeight: "400",
-      fontSize: "14px",
-      lineHeight: "22px",
-      flex: "none",
-      order: 1,
-      flexGrow: 0
-    },
-    "&:hover fieldset": {
-      borderColor: "#7b5be6"
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "#7b5be6"
-    }
-  }
-})
-
-const { theme } = fullConfig
 
 export default function SignInSide() {
   const emailRegexp =
     /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)$/
 
-  const [showPassword, setShowPassword] = React.useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [hoverCheckBox, setHoverCheckBox] = useState(false)
   const handleClickShowPassword = () => setShowPassword((show) => !show)
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -114,6 +78,7 @@ export default function SignInSide() {
   }
 
   const handleClose = () => {
+    // eslint-disable-next-line no-console
     console.log("test")
   }
 
@@ -124,9 +89,7 @@ export default function SignInSide() {
           container
           component="main"
           className="h-screen rounded-3xl border border-solid border-neutral-800 p-2.5"
-          // sx={{ height: "100vh", border: "5px solid red", padding: "10px" }}
         >
-          {/* <CssBaseline /> */}
           <Box
             component="div"
             className="absolute m-5 items-center justify-between lg:flex"
@@ -143,7 +106,7 @@ export default function SignInSide() {
               backgroundImage: "url(/images/home/rectagle.svg)"
             }}
           />
-          {/* <IRectagle /> */}
+
           <Grid
             item
             xs={12}
@@ -152,6 +115,9 @@ export default function SignInSide() {
             component={Paper}
             elevation={6}
             square
+            sx={{
+              background: "#050505"
+            }}
           >
             <Box
               sx={{
@@ -162,17 +128,30 @@ export default function SignInSide() {
                 alignItems: "center"
               }}
             >
-              <Box
+              {/* <Box
               // style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}
-              >
+              > */}
+              <Box style={{ width: 333, height: 638 }}>
                 <Grid
                   container
-                  spacing={1}
+                  spacing={2.25}
                 >
                   <Grid
                     item
                     xs={12}
                   >
+                    <Box
+                      className="flex items-center rounded-lg"
+                      sx={{ height: "54px" }}
+                    >
+                      <div className="flex flex-1 flex-row items-center">
+                        <Typography className="text-lg uppercase text-neutral-300">
+                          Register
+                        </Typography>
+                      </div>
+                      <ButtonClose onClick={handleClose} />
+                    </Box>
+                    <Divider className="mx-0 mt-5 mb-8" />
                     <TextField
                       className="w-full"
                       type="email"
@@ -206,34 +185,48 @@ export default function SignInSide() {
                   <Grid
                     item
                     xs={12}
+                    container
+                    direction="row"
+                    // justifyContent="center"
+                    // alignItems="center"
                   >
-                    <TextField
-                      className="w-full"
-                      type="text"
-                      placeholder="Verification code"
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          width: "100%",
-                          fontWeight: 400,
-                          fontSize: 14,
-                          fontWight: 700,
-                          fontFamily: "neueMachina",
-                          padding: "0px 16px"
-                        }
-                      }}
-                      id="code"
-                      size="medium"
-                    />
-                    <Button className="btn-rainbow-theme rounded-lg bg-error-main text-sm text-neutral-300">
-                      Get Code
-                    </Button>
+                    <Grid
+                      item
+                      // md={6}
+                    >
+                      <TextField
+                        className="mr-2 w-[235px]"
+                        type="text"
+                        placeholder="Verification code"
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            width: "100%",
+                            fontWeight: 400,
+                            fontSize: 14,
+                            fontWight: 700,
+                            fontFamily: "neueMachina",
+                            padding: "0px 16px"
+                          }
+                        }}
+                        id="code"
+                        size="medium"
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      // md={2}
+                    >
+                      <Button className="btn-rainbow-theme h-[40px] !min-w-[90px] rounded-lg bg-error-main text-sm text-neutral-300">
+                        Get Code
+                      </Button>
+                    </Grid>
                   </Grid>
                   <Grid
                     item
                     xs={12}
                   >
                     <TextField
-                      className="w-full"
+                      className="w-full pt-3.5"
                       type={showPassword ? "text" : "password"}
                       placeholder="Password"
                       label="Password"
@@ -278,7 +271,7 @@ export default function SignInSide() {
                       }}
                     />
                     <TextField
-                      className="w-full"
+                      className="mt-2.5 w-full"
                       type={showPassword ? "text" : "password"}
                       placeholder="Confirm Password"
                       label="A Number or Symbol, Atleast 6 Characters"
@@ -291,6 +284,7 @@ export default function SignInSide() {
                           fontFamily: "neueMachina"
                         },
                         "& .MuiInputLabel-root": {
+                          width: "max-content",
                           color: "#70727B",
                           fontFamily: "neueMachina",
                           textTransform: "uppercase"
@@ -301,7 +295,7 @@ export default function SignInSide() {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <BeenhereOutlinedIcon />
+                            <Beenhere />
                           </InputAdornment>
                         ),
                         endAdornment: (
@@ -327,36 +321,137 @@ export default function SignInSide() {
                     item
                     xs={12}
                   >
-                    <TextField
-                      label="Enter your comment"
-                      multiline
-                      rows={4}
-                      placeholder="Enter your comment"
-                      variant="outlined"
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                  >
                     <FormControlLabel
-                      control={<Checkbox defaultChecked />}
-                      label="I agree my submitted data is collected and stored"
+                      control={
+                        <Checkbox
+                          sx={{
+                            "&:hover": { bgcolor: "transparent" },
+                            ":hover": {
+                              "& .MuiSvgIcon-root": {
+                                background: "transparent",
+                                border: "2px solid #7a5be6 !important"
+                              }
+                            }
+                          }}
+                          icon={
+                            <CheckBoxOutlineBlankOutlinedIcon
+                              className="border-2 border-solid border-neutral-600 text-transparent"
+                              sx={{
+                                borderRadius: "8.5px"
+                              }}
+                            />
+                          }
+                          checkedIcon={
+                            <ICheckMark
+                              className="border-2 border-solid border-purple-primary bg-neutral-800 p-1 text-purple-primary"
+                              style={{
+                                borderRadius: "8.5px"
+                              }}
+                            />
+                          }
+                        />
+                      }
+                      label="Would you like to subscribe to Nakamoto Games Newsletter?"
+                      sx={{
+                        "& .MuiTypography-root": {
+                          fontSize: 10,
+                          color: "#70727B",
+                          textTransform: "uppercase"
+                        }
+                      }}
                     />
+                    {/* <Checkbox
+                      sx={{
+                        "&:hover": { bgcolor: "transparent" },
+                        ":hover": {
+                          "& .MuiSvgIcon-root": {
+                            background: "transparent",
+                            border: "2px solid #7a5be6 !important"
+                          }
+                        }
+                      }}
+                      icon={
+                        <CheckBoxOutlineBlankOutlinedIcon
+                          className="border-2 border-solid border-neutral-600 text-transparent"
+                          sx={{
+                            borderRadius: "8.5px"
+                          }}
+                        />
+                      }
+                      checkedIcon={
+                        <ICheckMark
+                          className="border-2 border-solid border-purple-primary bg-neutral-800 p-1 text-purple-primary"
+                          style={{
+                            borderRadius: "8.5px"
+                          }}
+                        />
+                      }
+                    /> */}
                   </Grid>
                   <Grid
                     item
-                    xs={12}
+                    container
+                    direction="row"
+                    justifyContent="space-between"
+                    // md={12}
                   >
-                    <Button
-                      size="large"
-                      type="submit"
-                      variant="contained"
-                      fullWidth
-                    >
-                      Submit
-                    </Button>
+                    <Grid item>
+                      <Button
+                        size="large"
+                        type="submit"
+                        variant="outlined"
+                        className="h-[40px] !min-w-[108px]"
+                      >
+                        Submit
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <ButtonToggleIcon
+                        handleClick={() => {}}
+                        startIcon={<IEdit />}
+                        text="Regiter"
+                        className="btn-rainbow-theme h-[40px] w-[209px] bg-secondary-main font-bold capitalize text-white-default"
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <p className="text-xs uppercase">OR join us with</p>
+                    </Grid>
+                    <Grid item>
+                      <Divider className="w-[208px]" />
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                  >
+                    <div className="flex flex-wrap">
+                      {SocialRegister?.map((item) => (
+                        <Link
+                          key={item.label}
+                          href={item.href}
+                          target="_blank"
+                        >
+                          <ButtonIcon
+                            // variants={iconmotion}
+                            whileHover="hover"
+                            transition={{
+                              type: "spring",
+                              stiffness: 400,
+                              damping: 4
+                            }}
+                            icon={item.icon}
+                            className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                          />
+                        </Link>
+                      ))}
+                    </div>
                   </Grid>
                 </Grid>
               </Box>

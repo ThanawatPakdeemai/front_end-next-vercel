@@ -19,7 +19,7 @@ import BannerSlide from "@feature/slider/components/templates/BannerSlide"
 import CarouselSlide from "@feature/slider/components/templates/CarouselSlide"
 import CardMarketplace from "@components/molecules/CardMarketplace"
 import CardNakaverse from "@components/molecules/CardNakaverse"
-import { Box, Grid, Typography } from "@mui/material"
+import { Box, Grid } from "@mui/material"
 import ICoupon from "@components/icons/Coupon"
 import IDiamond from "@components/icons/Diamond"
 import { IMAGES } from "@constants/images"
@@ -27,11 +27,6 @@ import CardLink from "@components/molecules/CardLink"
 import INakaSwap from "@components/icons/NakaSwap"
 import IStacking from "@components/icons/Stacking"
 import IReferrals from "@components/icons/Referrals"
-import CircleNakaIcon from "@components/icons/CircleNakaIcon"
-import { ModalCustom } from "@components/molecules/ModalCustom"
-import { BUY_NAKA_MENU } from "@configs/buynaka"
-import TabMenu from "@components/molecules/TabMenu"
-import ButtonClose from "@components/atoms/button/ButtonClose"
 
 const Home = () => {
   const [f2pGame, setF2PGame] = useState<ISlide[]>(mockF2PGame)
@@ -42,11 +37,6 @@ const Home = () => {
   const [p2eCurType, setP2ECurType] = useState<string>(
     P2EHeaderMenu.menuList[0].type
   )
-
-  const [open, setOpen] = useState<boolean>(false)
-
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
 
   const fetchF2PGame = async () => {
     // serivce
@@ -238,45 +228,6 @@ const Home = () => {
           >
             <CardNakaverse href="/" />
           </Grid>
-          <button
-            type="button"
-            className="z-[51] flex w-[15%] flex-row items-center justify-evenly rounded-br-lg bg-error-main "
-            onClick={handleOpen}
-          >
-            <div className="font-neue-machina text-sm uppercase text-white-primary">
-              BUY NAKA
-            </div>
-          </button>
-          <ModalCustom
-            open={open}
-            onClose={handleClose}
-            className="gap-3 rounded-[34px] p-[10px]"
-            width={400}
-          >
-            <Box className="rounded-md bg-neutral-900 p-4">
-              <Box
-                className="flex items-center rounded-lg bg-neutral-800 pl-5"
-                sx={{ height: "54px" }}
-              >
-                <div className="flex flex-1 flex-row items-center">
-                  <CircleNakaIcon />
-                  <Typography className="pl-[15px] uppercase text-neutral-300">
-                    BUY NAKA
-                  </Typography>
-                </div>
-                <ButtonClose onClick={handleClose} />
-              </Box>
-              {BUY_NAKA_MENU.map((ele) => (
-                <TabMenu
-                  key={ele.title}
-                  icon={ele.icon}
-                  text={ele.title}
-                  link={ele.link}
-                  className="mt-4"
-                />
-              ))}
-            </Box>
-          </ModalCustom>
         </Grid>
       </div>
     </>

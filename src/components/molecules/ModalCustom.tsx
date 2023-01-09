@@ -22,7 +22,7 @@ export const ModalCustom = ({ ...props }: IProps) => {
         }}
         className={className}
       >
-        {children}
+        <Box className="rounded-md bg-neutral-900 p-4">{children}</Box>
       </Box>
     </Modal>
   )

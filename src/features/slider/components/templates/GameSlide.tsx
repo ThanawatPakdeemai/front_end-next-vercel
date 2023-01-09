@@ -1,12 +1,10 @@
 import SkeletonBanner from "@components/atoms/skeleton/SkeletonBanner"
-import { TagCircle } from "@components/atoms/tagCircle"
-import NewGameIcon from "@components/icons/NewGameIcon"
 import useGetGames from "@feature/home/containers/hook/useGetGames"
 import React, { useRef } from "react"
 import Slider, { Settings } from "react-slick"
-import BannerCardSlide from "../organisms/BannerCardSlide"
+import GameCardSlide from "../organisms/GameCardSlide"
 
-const BannerSlide = () => {
+const GameSlide = () => {
   /**
    * @description get slide games
    */
@@ -18,6 +16,10 @@ const BannerSlide = () => {
   const gotoNext = () => {
     sliderRef?.current?.slickNext()
   }
+  const gotoPrev = () => {
+    sliderRef?.current?.slickPrev()
+  }
+
   /**
    * @description Slider settings
    */
@@ -32,17 +34,11 @@ const BannerSlide = () => {
     draggable: true,
     fade: true,
     pauseOnHover: false,
-    dots: true
+    dots: false
   }
 
   return (
     <section className="relative w-full overflow-hidden">
-      <div className="absolute left-4 top-4 z-10">
-        <TagCircle
-          color="secondary"
-          icon={<NewGameIcon />}
-        />
-      </div>
       {isLoading ? (
         <SkeletonBanner />
       ) : (
@@ -54,18 +50,20 @@ const BannerSlide = () => {
             slideGames.slice(0, 5).map((slide, index) => (
               <div key={slide.id}>
                 {slide[index] !== undefined ? (
-                  <BannerCardSlide
+                  <GameCardSlide
                     slide={slide}
                     slideNext={
                       index === 4 ? slideGames[0] : slideGames[index + 1]
                     }
                     gotoNext={gotoNext}
+                    gotoPrev={gotoPrev}
                   />
                 ) : (
-                  <BannerCardSlide
+                  <GameCardSlide
                     slide={slide}
                     slideNext={slideGames[index + 1]}
                     gotoNext={gotoNext}
+                    gotoPrev={gotoPrev}
                   />
                 )}
               </div>
@@ -76,4 +74,4 @@ const BannerSlide = () => {
   )
 }
 
-export default BannerSlide
+export default GameSlide

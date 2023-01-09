@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react"
+import React, { memo, useRef, useState } from "react"
 
 import { Box, InputAdornment, TextField, Typography } from "@mui/material"
 import AvatarProfile from "@components/atoms/avatar/AvatarProfile"
@@ -19,6 +19,7 @@ import useGetAvatar from "@feature/avatar/containers/hook/useGetAvatar"
 
 const FormCreateProfile = () => {
   const profile = useProfileStore((state) => state.profile.data)
+  const scrollRef = useRef(null)
 
   const [defaultAvatar, setDefaultAvatar] = useState<string>(
     profile ? profile?.avatar : ""
@@ -139,11 +140,14 @@ const FormCreateProfile = () => {
             Avatar
           </Typography>
           {avatar ? (
-            <Box className="hide-scroll mt-2 flex w-[350px] items-center gap-3 overflow-x-scroll pb-3">
+            <Box className="hide-scroll mt-2 flex w-[350px] snap-x snap-mandatory items-center gap-3 overflow-x-scroll pb-3">
               {avatar.map((item, index) => (
                 <Box
+                  id={item.name}
+                  className="snap-center"
+                  ref={scrollRef}
                   key={Number(index)}
-                  onClick={async () => {
+                  onClick={() => {
                     slideTo()
                     setDefaultAvatar(item.value)
                   }}

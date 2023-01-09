@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unstable-nested-components */
 import { Box } from "@mui/material"
-import React, { memo, useEffect, useMemo, useRef } from "react"
+import React, { memo, useEffect, useMemo, useRef, useState } from "react"
 import Slider from "react-slick"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
@@ -15,6 +15,7 @@ interface IProp {
   slideTo: () => void
   setDefaultAvatar: (value: string) => void
 }
+
 const SlideAvatar = ({
   avatar,
   defaultAvatar,
@@ -23,12 +24,6 @@ const SlideAvatar = ({
 }: IProp) => {
   const sliderRef = useRef<Slider>(null)
 
-  const onSlideNext = () => {
-    sliderRef?.current?.slickNext()
-  }
-  const onSlidePrev = () => {
-    sliderRef?.current?.slickPrev()
-  }
   const indexAvatar = useMemo(
     () => avatar.findIndex((item) => item.value === defaultAvatar),
     [avatar, defaultAvatar]
@@ -43,6 +38,14 @@ const SlideAvatar = ({
     [avatar, defaultAvatar]
   )
 
+  const onSlideNext = () => {
+    sliderRef?.current?.slickNext()
+  }
+
+  const onSlidePrev = () => {
+    sliderRef?.current?.slickPrev()
+  }
+
   useEffect(() => {
     onSlideTo()
   }, [onSlideTo, valueAvatar])
@@ -56,10 +59,17 @@ const SlideAvatar = ({
     arrows: true,
     initialSlide: indexAvatar,
     beforeChange: (current, next) => {
-      if (valueAvatar) setDefaultAvatar(valueAvatar)
+      if (avatar) {
+        const _avatar = avatar.find((item, index) => index === next)
+        if (_avatar) {
+          setDefaultAvatar(_avatar.value)
+          const element = document.getElementById(_avatar?.name)
+          if (element) element.scrollIntoView({ behavior: "smooth" })
+        }
+      }
     },
     // afterChange: (current) => {
-    //   if (valueAvatar) setDefaultAvatar(current)
+    //   setAction({ ...action, prev: current + 1 })
     // },
     prevArrow: (
       <>
@@ -82,6 +92,7 @@ const SlideAvatar = ({
       </>
     )
   }
+
   return (
     <>
       <Slider

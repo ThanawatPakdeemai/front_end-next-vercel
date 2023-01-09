@@ -11,21 +11,24 @@ import Header from "@components/organisms/Header"
 import Footer from "@components/organisms/Footer"
 import useGetStatisticsGameById from "@feature/game/containers/hooks/useGetStatisticsGameById"
 import useGameStore from "@stores/game"
+import { unstable_batchedUpdates } from "react-dom"
 
 const GameRoomLayout = ({
   children
 }: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) => {
   /* mockup data */
   const data = useGameStore((state) => state.data)
-  const [gameId, setGameId] = useState<string>("")
-  const { topPlayerGameId } = useTopPlayerByGameId(gameId)
-  const { statsGameById } = useGetStatisticsGameById(gameId)
+  const { topPlayerGameId, fetchTopPlayersByGameId } = useTopPlayerByGameId()
+  const { statsGameById, fetchStatsGameById } = useGetStatisticsGameById()
 
   useEffect(() => {
-    if (data) {
-      setGameId(data.id)
+    if (data && fetchStatsGameById && fetchTopPlayersByGameId) {
+      unstable_batchedUpdates(() => {
+        fetchStatsGameById(data.id)
+        fetchTopPlayersByGameId(data.id)
+      })
     }
-  }, [data])
+  }, [data, fetchStatsGameById, fetchTopPlayersByGameId])
 
   return (
     <div className="main-container mx-auto">

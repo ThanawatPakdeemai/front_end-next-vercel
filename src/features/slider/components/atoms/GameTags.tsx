@@ -15,16 +15,14 @@ const GameTags = ({ gameTags }: ICardGameTag) => (
           key={`${`tag--${index}`}`}
           className="relative z-[1] flex items-center justify-center"
         >
-          <a>
-            <Chip
-              key={`${`tag--${index}`}`}
-              id={`${`tag--${index}`}`}
-              label={gameTag.name}
-              variant="outlined"
-              size="small"
-              className="cursor-pointer uppercase"
-            />
-          </a>
+          <Chip
+            key={`${`tag--${index}`}`}
+            id={`${`tag--${index}`}`}
+            label={gameTag.name}
+            variant="outlined"
+            size="small"
+            className="cursor-pointer uppercase"
+          />
         </Link>
       ) : null
     )}

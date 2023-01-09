@@ -25,9 +25,9 @@ function IconDollarOri({
 function IconDollarNot({
   width = 24,
   height = 24,
-  className,
-  stroke
-}: React.SVGProps<SVGSVGElement>) {
+  className
+}: // stroke
+React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       width={width}

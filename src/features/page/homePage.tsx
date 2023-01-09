@@ -19,7 +19,7 @@ import BannerSlide from "@feature/slider/components/templates/BannerSlide"
 import CarouselSlide from "@feature/slider/components/templates/CarouselSlide"
 import CardMarketplace from "@components/molecules/CardMarketplace"
 import CardNakaverse from "@components/molecules/CardNakaverse"
-import { Box, Grid } from "@mui/material"
+import { Box } from "@mui/material"
 import ICoupon from "@components/icons/Coupon"
 import IDiamond from "@components/icons/Diamond"
 import { IMAGES } from "@constants/images"
@@ -46,18 +46,18 @@ const Home = () => {
 
   const fetchF2PStoryMode = async () => {
     // serivce
-    const result = mockF2PGame.filter((fp2) => fp2.id > 3).reverse()
+    const result = mockF2PGame
     setF2PGame(result)
   }
 
   const fetchF2PMustTry = async () => {
     // serivce
-    const result = mockF2PGame.filter((fp2) => fp2.id > 3)
+    const result = mockF2PGame
     setF2PGame(result)
   }
   const fetchP2EHotGame = async () => {
     // serive
-    const result = mockP2EGame.filter((p2e) => p2e.id < 5)
+    const result = mockP2EGame
     setP2EGame(result)
   }
 
@@ -104,7 +104,7 @@ const Home = () => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Box>
           <CardMarketplace />
           <div className="mt-4 grid grid-cols-3 gap-6">
@@ -155,6 +155,7 @@ const Home = () => {
           checkTimer
         />
       </div>
+
       <div className="my-20 h-full w-full">
         <GameCarousel
           menu={P2EHeaderMenu}
@@ -164,72 +165,49 @@ const Home = () => {
           showNo
         />
       </div>
+
       <Tagline
         bgColor="bg-green-lemon"
         textColor="text-neutral-800 font-bold"
         text="Show your God Mode for the blockchain gaming landscape"
         icon={<ShapeIcon />}
       />
+
       <BodyCategories />
 
       <DeveloperPart />
+      <Box className="xs:flex-col mt-4 mb-10 gap-3 lg:flex">
+        <Box className="xs:grid-cols-1 mb-3 grid gap-3 sm:grid-cols-2 lg:mb-0 lg:grid-cols-3">
+          <CardLink
+            textBtn="View All"
+            href="/"
+          />
 
-      <div className="mt-4 mb-10">
-        <Grid
-          container
-          spacing={2}
-        >
-          <Grid
-            item
-            sm={12}
-            md={2}
-          >
-            <CardLink
-              textBtn="View All"
-              href="/"
-            />
-          </Grid>
-          <Grid
-            item
-            sm={12}
-            md={2}
-          >
-            <CardLink
-              classNameSecond="bg-secondary-light"
-              iconBtn={<ICoupon />}
-              textBtn="Coupon"
-              href="/"
-              srcMain={IMAGES.frontCouponBand.src}
-              altMain={IMAGES.frontCouponBand.alt}
-              srcSecond={IMAGES.backCouponBand.src}
-              altSecond={IMAGES.backCouponBand.alt}
-            />
-          </Grid>
-          <Grid
-            item
-            sm={12}
-            md={2}
-          >
-            <CardLink
-              classNameSecond="bg-info-light"
-              iconBtn={<IDiamond />}
-              textBtn="NAKA NFT"
-              href="/"
-              srcMain={IMAGES.frontNakaBand.src}
-              altMain={IMAGES.frontNakaBand.alt}
-              srcSecond={IMAGES.backNakaBand.src}
-              altSecond={IMAGES.backNakaBand.alt}
-            />
-          </Grid>
-          <Grid
-            item
-            sm={12}
-            md={6}
-          >
-            <CardNakaverse href="/" />
-          </Grid>
-        </Grid>
-      </div>
+          <CardLink
+            classNameSecond="bg-secondary-light"
+            iconBtn={<ICoupon />}
+            textBtn="Coupon"
+            href="/"
+            srcMain={IMAGES.frontCouponBand.src}
+            altMain={IMAGES.frontCouponBand.alt}
+            srcSecond={IMAGES.backCouponBand.src}
+            altSecond={IMAGES.backCouponBand.alt}
+          />
+
+          <CardLink
+            classNameSecond="bg-info-light"
+            iconBtn={<IDiamond />}
+            textBtn="NAKA NFT"
+            href="/"
+            srcMain={IMAGES.frontNakaBand.src}
+            altMain={IMAGES.frontNakaBand.alt}
+            srcSecond={IMAGES.backNakaBand.src}
+            altSecond={IMAGES.backNakaBand.alt}
+          />
+        </Box>
+
+        <CardNakaverse href="/" />
+      </Box>
     </>
   )
 }

@@ -27,19 +27,6 @@ const CountItem = () => {
           input: {
             textAlign: "center"
           },
-          // "& .MuiInput-root": {
-          // "&:before": {
-          //   borderBottom: "1px solid grey"
-          // },
-          // "&:after": {
-          //   borderBottom: "2px solid white"
-          // },
-          // "&:hover fieldset": {
-          //   borderColor: "grey"
-          // }
-          // "&.Mui-focused fieldset": {
-          //   borderColor: "yellow"
-          // }
           "& label.Mui-focused": {
             color: "white"
           },

@@ -38,10 +38,14 @@ export const getAllGameRooms = ({
   _itemId
 }: IGetAllGameRooms) =>
   new Promise<IGameRoomDetailService>((resolve, reject) => {
-    services
-      .post<IGameRoomDetailService>(`/gameroom/${_gameId}/${_email}/${_itemId}`)
-      .then((reponse) => resolve(reponse.data))
-      .catch((error) => reject(error))
+    if (_gameId !== "" && _email !== "" && _itemId !== "") {
+      services
+        .post<IGameRoomDetailService>(
+          `/gameroom/${_gameId}/${_email}/${_itemId}`
+        )
+        .then((reponse) => resolve(reponse.data))
+        .catch((error) => reject(error))
+    }
   })
 
 export const getGameRoomById = (_roomId: string) =>

@@ -1,26 +1,16 @@
-import { useQuery } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 import { getPlayerRankByGameId } from "../services/ranking.service"
 
-const useTopPlayerByGameId = (_gameId: string) => {
+const useTopPlayerByGameId = () => {
   const {
     data: topPlayerGameId,
     error,
     isLoading,
     isError,
-    refetch
-  } = useQuery(
-    ["getTopPlayersByGameId"],
-    () => getPlayerRankByGameId(_gameId),
-    {
-      /* prevent hook state problem */
-      staleTime: Infinity,
-      retry: false
-    }
-  )
-
-  if (!topPlayerGameId) {
-    refetch()
-  }
+    mutate: fetchTopPlayersByGameId
+  } = useMutation((_gameId: string) => getPlayerRankByGameId(_gameId), {
+    retry: false
+  })
 
   return {
     topPlayerGameId:
@@ -29,7 +19,8 @@ const useTopPlayerByGameId = (_gameId: string) => {
         : undefined,
     isLoading,
     isError,
-    error
+    error,
+    fetchTopPlayersByGameId
   }
 }
 

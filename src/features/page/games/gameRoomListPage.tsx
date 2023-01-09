@@ -13,6 +13,7 @@ import useGameStore from "@stores/game"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import ButtonSticky from "@components/molecules/ButtonSticky"
 import ReloadIcon from "@components/icons/ReloadIcon"
+import { unstable_batchedUpdates } from "react-dom"
 
 /**
  *
@@ -23,31 +24,27 @@ const GameRoomListPage = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const data = useGameStore((state) => state.data)
   const router = useRouter()
-  const [stateProfile, setStateProfile] = useState<IProfile>()
   const [gameData, setGameData] = useState<IGame>()
 
-  const { allGameRooms, refetch } = useGetAllGameRooms({
-    _gameId: gameData ? gameData.id : "",
-    _email: stateProfile ? stateProfile.email : "",
-    // mockup wait for lobby
-    _itemId: "63072b0dd0be6934c17b5438"
-  })
+  const { allGameRooms, fetchAllGameRoom } = useGetAllGameRooms()
 
   const handleJoinRoom = (_roomId: string) => {
     router.push(`/${router.asPath}/${_roomId}`)
   }
 
   useEffect(() => {
-    if (data) {
-      setGameData(data)
+    if (data && profile && fetchAllGameRoom) {
+      unstable_batchedUpdates(() => {
+        setGameData(data)
+        fetchAllGameRoom({
+          _gameId: data._id,
+          _email: profile.email,
+          // mock for waiting price of items
+          _itemId: "63072b0dd0be6934c17b5438"
+        })
+      })
     }
-  }, [data])
-
-  useEffect(() => {
-    if (profile) {
-      setStateProfile(profile)
-    }
-  }, [profile])
+  }, [data, fetchAllGameRoom, profile])
 
   return (
     <>
@@ -110,7 +107,6 @@ const GameRoomListPage = () => {
             icon={<ReloadIcon />}
             className="mt-10"
             multi
-            onClick={refetch}
           />
         </div>
       </div>

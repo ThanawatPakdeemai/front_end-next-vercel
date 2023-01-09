@@ -1,50 +1,54 @@
-import React, { useEffect, useState } from "react"
-import Head from "next/head"
-import { Layout } from "@components/template"
-import GameSlide from "@feature/slider/components/templates/GameSlide"
-import { getAllGames } from "@feature/game/containers/services/game.service"
+import { ReactElement, useEffect, useState } from "react"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import GameRoomLayout from "@components/template/GameRoomLayout"
+import { Button } from "@mui/material"
 import { useRouter } from "next/router"
-import useGameStore from "@src/stores/game/index"
-import shallow from "zustand/shallow"
+import useGameStore from "@stores/game"
+import GameSlide from "@feature/slider/components/templates/GameSlide"
 import SkeletonBanner from "@components/atoms/skeleton/SkeletonBanner"
+import { IGame } from "@feature/game/interfaces/IGameService"
 
-export default function Gamehome() {
-  const [gameHome, setGameHome] = useState()
+export default function GameLobby() {
   const router = useRouter()
-  const Path = router.asPath.split("/")
-  const setGame = useGameStore((state) => state.setGame)
-  const datagame = useGameStore(
-    (state) => ({
-      data: state.data
-    }),
-    shallow
-  )
+  const data = useGameStore((state) => state.data)
+  const [gameData, setGameData] = useState<IGame>()
 
-  const fetchGameAll = async () => {
-    // eslint-disable-next-line no-async-promise-executor
-    const { data }: any = await getAllGames()
-    const gamefilter = data.filter((data) => data.game_url.includes(Path[1]))
-    setGameHome(gamefilter)
-    setGame(gamefilter)
-  }
   useEffect(() => {
-    fetchGameAll()
-  }, [])
+    if (data) {
+      setGameData(data)
+    }
+  }, [data])
 
   return (
     <>
-      <Head>
-        <meta
-          name="viewport"
-          content="initial-scale=1.0, width=device-width"
-        />
-        <link
-          rel="shortcut icon"
-          href="favicon.ico"
-          type="image/x-icon"
-        />
-      </Head>
-      <Layout>{gameHome ? <GameSlide /> : <SkeletonBanner />}</Layout>
+      {gameData ? (
+        <>
+          <GameSlide />
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              router.push(`/${router.asPath}/roomlist`)
+            }}
+          >
+            Click
+          </Button>
+        </>
+      ) : (
+        <SkeletonBanner />
+      )}
     </>
   )
+}
+
+GameLobby.getLayout = function getLayout(page: ReactElement) {
+  return <GameRoomLayout>{page}</GameRoomLayout>
+}
+
+export async function getServerSideProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"]))
+    }
+  }
 }

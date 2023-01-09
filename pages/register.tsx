@@ -53,6 +53,9 @@ import { SOCIAL } from "@configs/socialShare"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 
 import { SocialRegister } from "@configs/socialRegister"
+import Tagline from "@components/molecules/tagline/Tagline"
+import MetaMarkIcon from "@components/icons/SocialIcon/Metamask"
+import VectorIcon from "@components/icons/VectorIcon"
 import IRectagle from "./icons/rectagle"
 
 export default function SignInSide() {
@@ -90,12 +93,12 @@ export default function SignInSide() {
           component="main"
           className="h-screen rounded-3xl border border-solid border-neutral-800 p-2.5"
         >
-          <Box
+          {/* <Box
             component="div"
             className="absolute m-5 items-center justify-between lg:flex"
           >
             <HeadLogo />
-          </Box>
+          </Box> */}
           <Grid
             item
             xs={false}
@@ -105,8 +108,35 @@ export default function SignInSide() {
             sx={{
               backgroundImage: "url(/images/home/rectagle.svg)"
             }}
-          />
-
+          >
+            <div>
+              <Box
+                component="div"
+                className="absolute m-5 items-center justify-between lg:flex"
+              >
+                <HeadLogo />
+              </Box>
+              <Box>
+                <Tagline
+                  bgColor="bg-neutral-800"
+                  textColor="text-neutral-500"
+                  text="Secue. fun. simple. earn $naka AND enjoy "
+                  icon={<VectorIcon />}
+                />
+              </Box>
+            </div>
+          </Grid>
+          {/* <Box
+            component="div"
+            className="absolute z-10"
+          > */}
+          {/* </Box> */}
+          {/* <Box
+            component="div"
+            className="absolute m-5 items-center justify-between lg:flex"
+          >
+            <HeadLogo />
+          </Box> */}
           <Grid
             item
             xs={12}

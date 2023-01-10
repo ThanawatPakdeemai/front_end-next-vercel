@@ -1,88 +1,71 @@
 import React, { useState } from "react"
-import Avatar from "@mui/material/Avatar"
-import Button from "@mui/material/Button"
-import CssBaseline from "@mui/material/CssBaseline"
-import TextField from "@mui/material/TextField"
-import FormControlLabel from "@mui/material/FormControlLabel"
-import Checkbox from "@mui/material/Checkbox"
-import Link from "@mui/material/Link"
-import Paper from "@mui/material/Paper"
-import Box from "@mui/material/Box"
-import Grid from "@mui/material/Grid"
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
-import Typography from "@mui/material/Typography"
-import { pink } from "@mui/material/colors"
+import { Image } from "@components/atoms/image/index"
+import { IMAGES } from "@constants/images"
 import {
-  createTheme,
-  styled,
-  ThemeProvider,
-  unstable_createMuiStrictModeTheme
-} from "@mui/material/styles"
-import {
-  Card,
-  CardContent,
-  Container,
+  Box,
+  Button,
+  Checkbox,
   Divider,
+  FormControlLabel,
+  Grid,
   IconButton,
   InputAdornment,
-  InputLabel
+  Link,
+  Paper,
+  styled,
+  TextField,
+  Typography
 } from "@mui/material"
 import HeadLogo from "@components/molecules/HeadLogo"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
 import ButtonClose from "@components/atoms/button/ButtonClose"
-import CircleNakaIcon from "@components/icons/CircleNakaIcon"
-import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
-import type { Palette } from "@mui/material/styles"
-import fullConfig from "tailwindResolver"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import BeenhereOutlinedIcon from "@mui/icons-material/BeenhereOutlined"
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined"
-
-import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined"
 import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlineBlankOutlined"
-import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined"
-import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined"
-
 import Beenhere from "@components/icons/Beenhere"
 import ILock from "@components/icons/Lock"
 import ICheckMark from "@components/icons/CheckMark"
-import { Padding } from "@mui/icons-material"
 import IEdit from "@components/icons/Edit"
-import { SOCIAL } from "@configs/socialShare"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
-
 import { SocialRegister } from "@configs/socialRegister"
 import Tagline from "@components/molecules/tagline/Tagline"
-import MetaMarkIcon from "@components/icons/SocialIcon/Metamask"
 import VectorIcon from "@components/icons/VectorIcon"
-import IRectagle from "./icons/rectagle"
+
+const KeyFramesClockwise = styled("div")({
+  "@keyframes rotation": {
+    from: {
+      transform: "rotate(0deg)"
+    },
+    to: {
+      transform: "rotate(359deg)"
+    }
+  },
+  animation: "rotation 10s infinite linear"
+})
+
+const KeyFramesAnticlockwise = styled("div")({
+  "@keyframes rotation": {
+    from: {
+      transform: "rotate(0deg)"
+    },
+    to: {
+      transform: "rotate(359deg)"
+    }
+  },
+  animation: "rotation 10s infinite linear"
+})
 
 export default function SignInSide() {
   const emailRegexp =
     /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)$/
 
   const [showPassword, setShowPassword] = useState(false)
-  const [hoverCheckBox, setHoverCheckBox] = useState(false)
   const handleClickShowPassword = () => setShowPassword((show) => !show)
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault()
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password")
-    // })
-  }
-
-  const handleClose = () => {
-    // eslint-disable-next-line no-console
-    console.log("test")
   }
 
   return (
@@ -93,54 +76,38 @@ export default function SignInSide() {
           component="main"
           className="h-screen rounded-3xl border border-solid border-neutral-800 p-2.5"
         >
-          {/* <Box
+          <Box
             component="div"
-            className="absolute m-5 items-center justify-between lg:flex"
+            className="absolute z-[1] m-5 items-center justify-between lg:flex"
           >
             <HeadLogo />
-          </Box> */}
+          </Box>
           <Grid
             item
-            xs={false}
-            sm={6}
+            xs={0}
+            sm={0}
             md={6}
             className="rounded-[14px] bg-cover bg-no-repeat"
             sx={{
-              backgroundImage: "url(/images/home/rectagle.svg)"
+              backgroundImage: `url(${IMAGES.rectagle.src})`
             }}
           >
-            <div>
-              <Box
-                component="div"
-                className="absolute m-5 items-center justify-between lg:flex"
-              >
-                <HeadLogo />
-              </Box>
-              <Box>
-                <Tagline
-                  bgColor="bg-neutral-800"
-                  textColor="text-neutral-500"
-                  text="Secue. fun. simple. earn $naka AND enjoy "
-                  icon={<VectorIcon />}
-                />
-              </Box>
-            </div>
+            <Box
+              component="div"
+              className="relative bottom-[-45rem]"
+            >
+              <Tagline
+                bgColor="bg-neutral-800"
+                textColor="text-neutral-500"
+                text="Secue. fun. simple. earn $naka AND enjoy "
+                icon={<VectorIcon />}
+              />
+            </Box>
           </Grid>
-          {/* <Box
-            component="div"
-            className="absolute z-10"
-          > */}
-          {/* </Box> */}
-          {/* <Box
-            component="div"
-            className="absolute m-5 items-center justify-between lg:flex"
-          >
-            <HeadLogo />
-          </Box> */}
           <Grid
             item
             xs={12}
-            sm={6}
+            sm={12}
             md={6}
             component={Paper}
             elevation={6}
@@ -150,6 +117,29 @@ export default function SignInSide() {
             }}
           >
             <Box
+              component="div"
+              className="flex justify-end"
+            >
+              <div className="absolute">
+                <KeyFramesClockwise>
+                  <Image
+                    src={IMAGES.ro.src}
+                    alt={IMAGES.ro.alt}
+                    className="h-full w-full"
+                  />
+                </KeyFramesClockwise>
+              </div>
+              <div className="absolute">
+                <KeyFramesAnticlockwise>
+                  <Image
+                    src={IMAGES.vectorWorld.src}
+                    alt={IMAGES.vectorWorld.alt}
+                    className="relative h-full w-full p-[5px]"
+                  />
+                </KeyFramesAnticlockwise>
+              </div>
+            </Box>
+            <Box
               sx={{
                 my: 8,
                 mx: 4,
@@ -158,9 +148,6 @@ export default function SignInSide() {
                 alignItems: "center"
               }}
             >
-              {/* <Box
-              // style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}
-              > */}
               <Box style={{ width: 333, height: 638 }}>
                 <Grid
                   container
@@ -179,7 +166,7 @@ export default function SignInSide() {
                           Register
                         </Typography>
                       </div>
-                      <ButtonClose onClick={handleClose} />
+                      <ButtonClose onClick={() => {}} />
                     </Box>
                     <Divider className="mx-0 mt-5 mb-8" />
                     <TextField
@@ -301,7 +288,7 @@ export default function SignInSide() {
                       }}
                     />
                     <TextField
-                      className="mt-2.5 w-full"
+                      className="mt-[5px] w-full"
                       type={showPassword ? "text" : "password"}
                       placeholder="Confirm Password"
                       label="A Number or Symbol, Atleast 6 Characters"
@@ -317,7 +304,9 @@ export default function SignInSide() {
                           width: "max-content",
                           color: "#70727B",
                           fontFamily: "neueMachina",
-                          textTransform: "uppercase"
+                          textTransform: "uppercase",
+                          paddingTop: "0.5rem",
+                          paddingBottom: "0.5rem"
                         }
                       }}
                       id="email"
@@ -390,33 +379,6 @@ export default function SignInSide() {
                         }
                       }}
                     />
-                    {/* <Checkbox
-                      sx={{
-                        "&:hover": { bgcolor: "transparent" },
-                        ":hover": {
-                          "& .MuiSvgIcon-root": {
-                            background: "transparent",
-                            border: "2px solid #7a5be6 !important"
-                          }
-                        }
-                      }}
-                      icon={
-                        <CheckBoxOutlineBlankOutlinedIcon
-                          className="border-2 border-solid border-neutral-600 text-transparent"
-                          sx={{
-                            borderRadius: "8.5px"
-                          }}
-                        />
-                      }
-                      checkedIcon={
-                        <ICheckMark
-                          className="border-2 border-solid border-purple-primary bg-neutral-800 p-1 text-purple-primary"
-                          style={{
-                            borderRadius: "8.5px"
-                          }}
-                        />
-                      }
-                    /> */}
                   </Grid>
                   <Grid
                     item
@@ -426,14 +388,16 @@ export default function SignInSide() {
                     // md={12}
                   >
                     <Grid item>
-                      <Button
-                        size="large"
-                        type="submit"
-                        variant="outlined"
-                        className="h-[40px] !min-w-[108px]"
-                      >
-                        Submit
-                      </Button>
+                      <Link href="/login">
+                        <Button
+                          size="large"
+                          type="submit"
+                          variant="outlined"
+                          className="h-[40px] !min-w-[108px]"
+                        >
+                          Login
+                        </Button>
+                      </Link>
                     </Grid>
                     <Grid item>
                       <ButtonToggleIcon
@@ -449,6 +413,7 @@ export default function SignInSide() {
                     container
                     justifyContent="space-between"
                     alignItems="center"
+                    className="mt-8 mb-8"
                   >
                     <Grid item>
                       <p className="text-xs uppercase">OR join us with</p>
@@ -485,6 +450,19 @@ export default function SignInSide() {
                   </Grid>
                 </Grid>
               </Box>
+              <Grid
+                item
+                container
+                // direction="row"
+                // justifyContent="space-between"
+                justifyContent="center"
+                alignItems="center"
+                className="absolute bottom-0.5"
+              >
+                <Typography className="text-sm uppercase text-neutral-700">
+                  Copyright 2022 © Nakamoto Games
+                </Typography>
+              </Grid>
             </Box>
           </Grid>
         </Grid>

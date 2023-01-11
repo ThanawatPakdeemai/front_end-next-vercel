@@ -11,11 +11,6 @@ export default function Layout({
   return (
     <div className="main-container mx-auto">
       <Header />
-      <Howto
-        title=""
-        details=""
-      />
-      <Banner data={GAME_DETAILS_BANNER} />
       {children}
       <Footer />
     </div>

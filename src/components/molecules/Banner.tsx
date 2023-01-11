@@ -1,6 +1,5 @@
 import React from "react"
 import { Image } from "@components/atoms/image"
-import EarthIcon from "@components/icons/EarthIcon"
 import TableIcon from "@components/icons/TableIcon"
 
 interface IDetails {
@@ -22,7 +21,7 @@ const Banner = ({ data }: IProp) => (
         return (
           <div
             key={item.type}
-            className="absolute h-full w-full"
+            className="absolute"
           >
             {item.img && (
               <Image

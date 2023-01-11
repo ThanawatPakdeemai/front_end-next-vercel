@@ -64,7 +64,7 @@ const BannerSlide = () => {
                 ) : (
                   <BannerCardSlide
                     slide={slide}
-                    slideNext={slideGames[0]}
+                    slideNext={slideGames[index + 1]}
                     gotoNext={gotoNext}
                   />
                 )}

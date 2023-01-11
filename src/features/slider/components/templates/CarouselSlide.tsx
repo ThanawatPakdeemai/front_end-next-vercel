@@ -47,12 +47,9 @@ const CarouselSlide = () => {
         slideGames.slice(0, 5).map((item, index) => (
           <div key={item.id}>
             <CarouselCardSlide
-              video={index === 1}
-              src={
-                index === 1
-                  ? "https://files.outs.im/videos/Lark20220401-134307.mp4"
-                  : item.image_home_banner
-              }
+              // video={index === 1}
+              // src={index === 1 ? "" : item.image_home_banner}
+              src={item.image_home_banner}
               name={item.name}
               description={item.banner_description}
               link={item.game_url}

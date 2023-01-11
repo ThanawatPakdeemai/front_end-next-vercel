@@ -18,7 +18,7 @@ export const GAME_BANNER = [
 export const GAME_DETAILS_BANNER = [
   {
     link: "/",
-    img: "/images/gamePage/bannerGame.png",
+    img: "/images/gamePage/bannerGame.webp",
     type: "banner"
   },
   {

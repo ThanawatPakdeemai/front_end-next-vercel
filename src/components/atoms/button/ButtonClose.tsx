@@ -2,13 +2,14 @@ import { Box, Divider } from "@mui/material"
 import React from "react"
 
 interface IProps {
+  className?: string
   onClick: () => void
 }
 
-const ButtonClose = ({ onClick }: IProps) => (
+const ButtonClose = ({ onClick, className }: IProps) => (
   <Box
     component="div"
-    className="relative mr-2 cursor-pointer"
+    className={`relative mr-2 cursor-pointer ${className}`}
     onClick={onClick}
   >
     <div className="image-square ml-2 font-neue-machina text-default ">

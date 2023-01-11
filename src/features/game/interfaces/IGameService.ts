@@ -13,7 +13,7 @@ export type TTypeCode =
   | "story_01"
 
 export interface IGetGameByTypesProps {
-  _type: "play-to-earn" | "free-to-earn" | "story-mode"
+  _type: "play-to-earn" | "free-to-play" | "story-mode"
   _limit: number
   _page: number
   _categoryId?: string
@@ -300,4 +300,8 @@ export interface IGetPlayerInRoom {
 export interface IClaimEarnedRewardByPlayerId {
   _playerId: string
   _rewardId: string
+}
+
+export interface IGetGameByTypes extends IFormatService, IGameAllState {
+  message: string
 }

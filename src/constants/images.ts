@@ -119,11 +119,11 @@ export const IMAGES = {
     alt: "marketPlace"
   },
   nakaVerse: {
-    src: "/images/home/nakaVerse.svg",
-    blurDataURL: "/images/home/nakaVerse.svg",
+    src: "/images/home/nakaverse-bg.webp",
+    blurDataURL: "/images/home/nakaverse-bg.webp",
     width: 678,
     height: 218,
-    alt: "blog-nakaVerse"
+    alt: "blog-nakaVerse-bg"
   },
   worldNakaverse: {
     src: "/images/home/world.svg",
@@ -166,5 +166,12 @@ export const IMAGES = {
     width: 25,
     height: 25,
     alt: "radiation"
+  },
+  metamask: {
+    src: "/images/home/metamask.svg",
+    blurDataURL: "/images/home/metamask.svg",
+    width: 35,
+    height: 35,
+    alt: "metamask-icon"
   }
 }

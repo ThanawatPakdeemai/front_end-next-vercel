@@ -2,13 +2,13 @@ import IconCustoms from "@components/atoms/IconCustom"
 import FavouriteIcon from "@components/icons/HowToPlayIcon/FavouriteIcon"
 import HowToPlayIcon from "@components/icons/HowToPlayIcon/HowToPlayIcon"
 import ShareIcon from "@components/icons/HowToPlayIcon/ShareIcon"
+import { IGame } from "@feature/game/interfaces/IGameService"
 import useGetGames from "@feature/home/containers/hook/useGetGames"
-import { Divider, Typography } from "@mui/material"
+import { Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 
-interface IProps {
-  title: string
-  details: string
+interface IProp {
+  data: IGame
 }
 
 export interface IGameDevice {
@@ -29,29 +29,25 @@ export interface IIconCustoms {
   support: boolean
 }
 
-const Howto = ({ title, details }: IProps) => {
+const Howto = ({ data }: IProp) => {
   // useState
   const [device, setDevice] = useState<IGameDevice[]>([])
   const [browser, setBrowser] = useState<IGameBrowser[]>([])
-  const [data, setData] = useState<any>()
-
-  const { slideGames, isLoading } = useGetGames()
 
   useEffect(() => {
     let cancel = false
-    if (slideGames) {
-      setData(slideGames[0])
-      setDevice(slideGames[0].device_support)
-      setBrowser(slideGames[0].browser_support)
+    if (data) {
+      setDevice(data.device_support)
+      setBrowser(data.browser_support)
       return () => {
         cancel = true
       }
     }
-  }, [slideGames])
+  }, [data])
 
   return (
     <>
-      <div className="mb-3 flex flex-col items-center justify-between rounded-2xl bg-[#1d2029] p-5  xl:flex-row">
+      <div className="mb-3 flex flex-col items-center justify-between rounded-2xl bg-neutral-800 p-5  xl:flex-row">
         <div className="mb-2 flex flex-col items-center gap-2 md:flex-row md:gap-0 xl:mb-0">
           <div className="xs:mb-[20px] flex items-center justify-center">
             <Typography className="text-sm uppercase">
@@ -114,7 +110,7 @@ const Howto = ({ title, details }: IProps) => {
               }}
               className="text-1 cursor-pointer"
             > */}
-          <Typography className="flex text-sm text-neutral-400">
+          <Typography className="flex items-center text-sm text-neutral-400">
             <HowToPlayIcon
               color="#FFFFFF"
               className="mr-2"
@@ -122,7 +118,7 @@ const Howto = ({ title, details }: IProps) => {
             How to play
           </Typography>
           <div className="mx-5 h-3 border-[1px] border-solid border-neutral-600" />
-          <Typography className="flex text-sm text-neutral-400">
+          <Typography className="flex items-center text-sm text-neutral-400">
             <ShareIcon
               color="#FFFFFF"
               className="mr-2"
@@ -130,7 +126,7 @@ const Howto = ({ title, details }: IProps) => {
             Share
           </Typography>
           <div className="mx-5 h-3 border-[1px] border-solid border-neutral-600" />
-          <Typography className="flex text-sm text-neutral-400">
+          <Typography className="flex items-center text-sm text-neutral-400">
             <FavouriteIcon
               color="#FFFFFF"
               className="mr-2"

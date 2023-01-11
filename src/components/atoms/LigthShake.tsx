@@ -11,7 +11,7 @@ export const ShakeIcon = ({ iconArray, second }: IShakeIcone) => {
   const shuffle = useCallback(() => {
     const index = Math.floor(Math.random() * iconArray.length)
     setnewImage(iconArray[index])
-  }, [])
+  }, [iconArray])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -19,6 +19,6 @@ export const ShakeIcon = ({ iconArray, second }: IShakeIcone) => {
     }, second)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [second, shuffle])
   return <div>{newImage}</div>
 }

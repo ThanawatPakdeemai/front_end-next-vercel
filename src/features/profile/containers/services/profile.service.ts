@@ -1,3 +1,4 @@
+/* eslint-disable no-new */
 import services from "@configs/axiosGlobalConfig"
 import {
   IDataPlayerInfoResponse,
@@ -119,3 +120,16 @@ export const getPlayerInfoByPlayerId = ({
       })
       .catch((error) => reject(error))
   })
+
+export const getGeoInfo = () => {
+  const promise = new Promise((resolve, reject) => {
+    const urlGetCountry = "https://ipapi.co/json/"
+    fetch(urlGetCountry)
+      .then((response) => {
+        resolve(response.json())
+      })
+      .catch((error) => reject(error))
+  })
+
+  return Promise.resolve(promise)
+}

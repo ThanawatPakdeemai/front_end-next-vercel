@@ -48,7 +48,7 @@ const developerPart = () => (
         xs={12}
         md={4}
       >
-        <TopPlayer />
+        <TopPlayer className="!md:h-[465px] w-[449px] !bg-neutral-800 !p-2" />
       </Grid>
     </Grid>
   </>

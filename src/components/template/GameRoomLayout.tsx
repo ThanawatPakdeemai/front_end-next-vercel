@@ -50,7 +50,7 @@ const GameRoomLayout = ({
           background="neutral"
           note
           elevation={0}
-          className="!h-[424px] !w-[550px] !bg-primary-main"
+          className="!h-[424px] !w-[550px] border border-[1px] border-neutral-900 border-opacity-80 !bg-warning-contrastText"
           rank
           topPlayerGameId={topPlayerGameId && topPlayerGameId}
         />

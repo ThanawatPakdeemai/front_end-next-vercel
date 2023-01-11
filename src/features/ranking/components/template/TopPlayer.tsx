@@ -79,7 +79,7 @@ const TopPlayer = ({
           </div>
         ) : (
           <div>
-            {/* {rank
+            {rank
               ? topPlayerGameId && (
                   <CardRank topPlayerGameId={topPlayerGameId} />
                 )
@@ -88,8 +88,8 @@ const TopPlayer = ({
                     width="433px"
                     players={topPlayerAllGame}
                   />
-                )} */}
-            {rank && topPlayerGameId ? (
+                )}
+            {/* {rank && topPlayerGameId ? (
               <CardRank topPlayerGameId={topPlayerGameId} />
             ) : (
               topPlayerAllGame && (
@@ -98,7 +98,7 @@ const TopPlayer = ({
                   players={topPlayerAllGame}
                 />
               )
-            )}
+            )} */}
           </div>
         )}
       </Card>

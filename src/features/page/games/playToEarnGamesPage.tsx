@@ -22,7 +22,7 @@ const PlayToEarnGamesPage = () => {
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
   const router = useRouter()
-  const { onSetGameData, clearGameData, clearGameID } = useGameStore()
+  const { onSetGameData, clearGameData } = useGameStore()
   const profile = useProfileStore((state) => state.profile.data)
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
 
@@ -56,9 +56,8 @@ const PlayToEarnGamesPage = () => {
           getGameByTypes({ _type: type, _limit: limit, _page: page + 1 })
       })
     }
-    clearGameID()
     clearGameData()
-  }, [clearGameData, clearGameID, gameData, isPreviousData, page, queryClient])
+  }, [clearGameData, gameData, isPreviousData, page, queryClient])
 
   const onHandleClick = (_gameUrl: string, _gameData: IGame) => {
     if (stateProfile) {

@@ -1,4 +1,5 @@
 import Banner from "@components/molecules/Banner"
+import Howto from "@components/molecules/HowToPlay"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
 import { GAME_DETAILS_BANNER } from "@constants/gameBanner"
@@ -10,6 +11,10 @@ export default function Layout({
   return (
     <div className="main-container mx-auto">
       <Header />
+      <Howto
+        title=""
+        details=""
+      />
       <Banner data={GAME_DETAILS_BANNER} />
       {children}
       <Footer />

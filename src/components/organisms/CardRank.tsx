@@ -6,8 +6,8 @@ import { motion } from "framer-motion"
 import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
 import Helper from "@utils/helper"
 import NumberRank from "@feature/ranking/components/atoms/NumberRank"
-import Nodata from "@components/molecules/NoData"
-import NodataIcon from "@components/icons/NoDataIcon"
+import NoDataIcon from "@components/icons/NoDataIcon"
+import NoData from "@components/molecules/NoData"
 
 interface IProp {
   topPlayerGameId: IPlayerRanking[]
@@ -94,9 +94,9 @@ const CardRank = ({ topPlayerGameId }: IProp) => (
         </div>
       ))
     ) : (
-      <Nodata
+      <NoData
         className="m-4 grid justify-items-center"
-        icon={<NodataIcon />}
+        icon={<NoDataIcon />}
       />
     )}
   </div>

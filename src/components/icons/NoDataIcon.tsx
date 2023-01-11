@@ -1,6 +1,6 @@
 import React from "react"
 
-const NodataIcon = ({
+const NoDataIcon = ({
   width = 125,
   height = 125,
   className
@@ -39,4 +39,4 @@ const NodataIcon = ({
   </svg>
 )
 
-export default NodataIcon
+export default NoDataIcon

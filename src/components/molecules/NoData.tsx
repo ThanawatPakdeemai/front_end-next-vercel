@@ -6,7 +6,7 @@ export interface INoData {
   icon?: React.ReactNode
 }
 
-const Nodata = ({ className, icon }: INoData) => (
+const NoData = ({ className, icon }: INoData) => (
   <div className={`${className}`}>
     {icon}
     <Typography className="mt-4 rounded-[14px] rounded-[14px] border border-neutral-800 p-4">
@@ -15,4 +15,4 @@ const Nodata = ({ className, icon }: INoData) => (
   </div>
 )
 
-export default Nodata
+export default NoData

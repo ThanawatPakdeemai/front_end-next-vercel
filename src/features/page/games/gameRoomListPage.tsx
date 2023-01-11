@@ -14,6 +14,7 @@ import { IGame } from "@feature/game/interfaces/IGameService"
 import ButtonSticky from "@components/molecules/ButtonSticky"
 import ReloadIcon from "@components/icons/ReloadIcon"
 import { unstable_batchedUpdates } from "react-dom"
+import HeaderRoomList from "@components/organisms/HeaderRoomList"
 
 /**
  *
@@ -49,36 +50,7 @@ const GameRoomListPage = () => {
   return (
     <>
       <div className="rounded-3xl border border-neutral-700">
-        <div className="flex justify-between p-4">
-          <h1 className="text-white-defzault self-center uppercase">
-            Lobby :{gameData && gameData.name}
-            <span className="text-secondary-main">Skull XL</span>
-          </h1>
-          <div className="flex">
-            <Dropdown
-              title="All Categories"
-              className="w-[174px] rounded-lg"
-            />
-            <TextField
-              className="px-2"
-              placeholder="Search Room"
-              InputProps={{
-                style: {
-                  fontSize: "14px",
-                  fontFamily: "neueMachina",
-                  width: "174px"
-                },
-                startAdornment: <SearchIcon className="mr-4" />
-              }}
-            />
-            <ButtonToggleIcon
-              handleClick={() => router.reload()}
-              startIcon={<PlusIcon />}
-              text="Create Room"
-              className="btn-rainbow-theme z-[2] h-[50px] w-[156px] bg-secondary-main font-bold capitalize text-white-primary"
-            />
-          </div>
-        </div>
+        {gameData && <HeaderRoomList lobby={gameData.name} />}
         <Divider />
         <div className="custom-scroll flex h-[666px] flex-col items-center gap-[27px] overflow-y-scroll bg-room-list bg-contain p-[43px]">
           {profile &&

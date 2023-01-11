@@ -38,6 +38,8 @@ const CarouselSlide = () => {
       />
     )
   }
+  // eslint-disable-next-line no-console
+  console.log("slide", slideGames)
 
   return (
     <Slider {...settings}>

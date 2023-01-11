@@ -6,8 +6,8 @@ import { motion } from "framer-motion"
 import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
 import Helper from "@utils/helper"
 import NumberRank from "@feature/ranking/components/atoms/NumberRank"
-import Nodata from "@components/molecules/Nodata"
-import NodataIcon from "@components/icons/NodataIcon"
+import Nodata from "@components/molecules/NoData"
+import NodataIcon from "@components/icons/NoDataIcon"
 
 interface IProp {
   topPlayerGameId: IPlayerRanking[]

@@ -20,7 +20,7 @@ function Ellipse({
         r="10"
         fill={fill}
         stroke={stroke}
-        stroke-width="10"
+        strokeWidth="10"
       />
     </svg>
   )

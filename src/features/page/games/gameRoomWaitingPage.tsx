@@ -1,12 +1,13 @@
 import HeaderWaitingRoom from "@components/organisms/HeaderWaitingRoom"
 import WaitingRoom from "@feature/game/components/templates/singlePlayer/WaitingRoom"
 import useGetCurrentPlayerGameSingle from "@feature/game/containers/hooks/useGetCurrentPlayerGameSingle"
-import useGetGameRoomById from "@feature/game/containers/hooks/useGetGameRoomById"
+
+import { useToast } from "@feature/toast/containers"
 import { Box, Typography } from "@mui/material"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import React, { useEffect, useMemo } from "react"
+import React, { useCallback, useEffect, useMemo } from "react"
 import { unstable_batchedUpdates } from "react-dom"
 
 interface IProp {
@@ -17,26 +18,47 @@ const GameRoomWaitingPage = ({ _roomId }: IProp) => {
   // const { gameRoomById } = useGetGameRoomById(_roomId)
   const profile = useProfileStore((state) => state.profile.data)
   const gameData = useGameStore((state) => state.data)
-
+  const router = useRouter()
   const { isLoading, playerGameSingle, fetchPlayerGameSingle } =
     useGetCurrentPlayerGameSingle()
 
-  useEffect(() => {
-    let load = true
-    if (load)
+  const fetchPlayers = useCallback(
+    (_type: "in" | "out") => {
       if (gameData && profile && _roomId && fetchPlayerGameSingle) {
         unstable_batchedUpdates(() => {
           fetchPlayerGameSingle({
             _roomId,
             _playerId: profile.id,
-            _type: "in"
+            _type
           })
         })
       }
+    },
+    [_roomId, fetchPlayerGameSingle, gameData, profile]
+  )
+
+  useEffect(() => {
+    let load = true
+    if (load) fetchPlayers("in")
     return () => {
       load = false
     }
-  }, [_roomId, gameData, fetchPlayerGameSingle, profile])
+  }, [fetchPlayers])
+
+  useEffect(() => {
+    router.beforePopState(({ as }) => {
+      if (as !== router.asPath) {
+        // Will run when leaving the current page; on back/forward actions
+        // out room this game
+        fetchPlayers("out")
+      }
+      return true
+    })
+
+    return () => {
+      router.beforePopState(() => true)
+    }
+  }, [fetchPlayers, router])
 
   const playersMap = useMemo(() => {
     const player_in = playerGameSingle?.current_player ?? []
@@ -53,11 +75,11 @@ const GameRoomWaitingPage = ({ _roomId }: IProp) => {
 
   return (
     <>
-      <Box className="gpa-5 xs:block gap-2 md:grid md:grid-flow-col">
+      <Box className="block gap-3 lg:grid lg:grid-flow-col">
         {_roomId &&
           (playerGameSingle && gameData ? (
             <>
-              <Box className="rounded-3xl border border-neutral-700">
+              <Box className=" rounded-3xl border border-neutral-700">
                 <HeaderWaitingRoom
                   roomId={_roomId}
                   roomTag={playerGameSingle?.room_number}
@@ -66,16 +88,11 @@ const GameRoomWaitingPage = ({ _roomId }: IProp) => {
                     time: new Date(playerGameSingle?.end_time)
                   }}
                   player={{
-                    currentPlayer: playerGameSingle?.current_player.length ?? 0,
+                    currentPlayer: playersMap.filter((ele) => ele).length ?? 0,
                     maxPlayer: playerGameSingle?.max_players ?? 8
                   }}
                 />
-                {!isLoading && (
-                  <WaitingRoom
-                    _roomId={_roomId}
-                    _playerGameSingle={playersMap}
-                  />
-                )}
+                {!isLoading && <WaitingRoom _playerGameSingle={playersMap} />}
               </Box>
             </>
           ) : (

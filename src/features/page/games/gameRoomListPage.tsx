@@ -29,7 +29,7 @@ const GameRoomListPage = () => {
   const { allGameRooms, fetchAllGameRoom } = useGetAllGameRooms()
 
   const handleJoinRoom = (_roomId: string) => {
-    router.push(`/${router.asPath}/${_roomId}`)
+    router.push(`${router.asPath}/${_roomId}`)
   }
 
   useEffect(() => {

@@ -14,17 +14,7 @@ const SeatPlayers = ({ players }: IProps) => {
   return (
     <>
       <Box>
-        <Box
-          className={`xs:grid-cols-2 custom-scroll m-auto  my-10 grid  h-[365px] w-[520px] gap-3 overflow-y-auto 
-          sm:grid-cols-2 ${
-            players[0] && "pt-4"
-          }  md:grid-cols-3 lg:grid-cols-4`}
-        >
-          <PlayerCard
-            players={players}
-            OnPlayGame={OnPlayGame}
-          />
-        </Box>
+        <PlayerCard players={players} />
         <Box className="mb-10  flex justify-center">
           <Box className="w-fit items-center justify-center gap-3 rounded-[50px] border border-neutral-800 bg-primary-main p-3 md:flex">
             <Typography className=" mx-4 w-[200px] font-neue-machina text-sm text-error-main">

@@ -79,11 +79,7 @@ const PlayToEarnGamesPage = () => {
               <GameCard
                 key={game.id}
                 menu={P2EHeaderMenu}
-                data={{
-                  id: game._id,
-                  image: game.image_category_list,
-                  desc: game.name
-                }}
+                data={game}
                 onHandleClick={() => onHandleClick(game.path, game)}
               />
             ))

@@ -4,20 +4,19 @@ import GameCarouselHeader, {
   IHeaderSlide
 } from "@components/molecules/gameSlide/GameCarouselHeader"
 import GameCard from "@feature/game/containers/components/molecules/GameCard"
-
-export interface ISlide {
-  id: string
-  image: string
-  desc: string
-}
+import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
+import useGameStore from "@stores/game"
+import useProfileStore from "@stores/profileStore"
+import { useRouter } from "next/router"
+import toast from "react-hot-toast"
 
 interface IProps {
   menu: IHeaderSlide
-  list: ISlide[]
+  list: IGame[]
   showNo?: boolean
   checkTimer?: boolean
-  curType: string
-  setCurType: (_type: string) => void
+  curType: IGetType
+  setCurType: (_type: IGetType) => void
 }
 
 export type TColor =
@@ -38,7 +37,7 @@ const GameCarousel = ({
   setCurType
 }: IProps) => {
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
-  const showSlide = list && list.length > 6 ? 6 : list.length
+  const showSlide = 6
   const settings: Settings = {
     dots: false,
     infinite: true,
@@ -48,6 +47,9 @@ const GameCarousel = ({
     arrows: false,
     variableWidth: false
   }
+  const profile = useProfileStore((state) => state.profile.data)
+  const { onSetGameData } = useGameStore()
+  const router = useRouter()
 
   const sliderRef = useRef<Slider>(null)
   const [cooldown, setCooldown] = useState<boolean>(false)
@@ -59,9 +61,30 @@ const GameCarousel = ({
     sliderRef?.current?.slickPrev()
   }
 
-  const onViewAll = () => {}
+  const onViewAll = () => {
+    switch (curType) {
+      case "play-to-earn":
+        router.push(`/play-to-earn-games`)
+        break
+      case "free-to-play":
+        router.push(`/free-to-play-games`)
+        break
+      case "story-mode":
+        router.push(`/story-mode-games`)
+        break
+      default:
+        router.push(`/play-to-earn-games`)
+    }
+  }
 
-  const onHandleClick = () => {}
+  const onHandleClick = (_gameUrl: string, _gameData: IGame) => {
+    if (profile) {
+      router.push(`/${_gameUrl}`)
+      onSetGameData(_gameData)
+    } else {
+      toast.error("Please Login")
+    }
+  }
 
   return (
     <div className="mb-10">
@@ -84,12 +107,12 @@ const GameCarousel = ({
               menu={menu}
               data={item}
               showNo={showNo}
-              no={index}
+              no={index + 1}
               checkTimer={checkTimer}
               cooldown={cooldown}
               setCooldown={setCooldown}
               staminaRecovery={staminaRecovery}
-              onHandleClick={onHandleClick}
+              onHandleClick={() => onHandleClick(item.path, item)}
             />
           ))}
       </Slider>

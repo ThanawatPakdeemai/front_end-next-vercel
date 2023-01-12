@@ -4,16 +4,9 @@ import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
 import ShapeIcon from "@components/icons/ShapeIcon"
 import BodyCategories from "@components/molecules/BodyCategories"
 import ButtonSticky from "@components/molecules/ButtonSticky"
-import GameCarousel, {
-  ISlide
-} from "@components/molecules/gameSlide/GameCarousel"
+import GameCarousel from "@components/molecules/gameSlide/GameCarousel"
 import Tagline from "@components/molecules/tagline/Tagline"
-import {
-  F2PHeaderMenu,
-  mockF2PGame,
-  mockP2EGame,
-  P2EHeaderMenu
-} from "@constants/gameSlide"
+import { F2PHeaderMenu, P2EHeaderMenu } from "@constants/gameSlide"
 import DeveloperPart from "@feature/home/components/template/DeveloperPart"
 import BannerSlide from "@feature/slider/components/templates/BannerSlide"
 import CarouselSlide from "@feature/slider/components/templates/CarouselSlide"
@@ -27,63 +20,56 @@ import CardLink from "@components/molecules/CardLink"
 import INakaSwap from "@components/icons/NakaSwap"
 import IStacking from "@components/icons/Stacking"
 import IReferrals from "@components/icons/Referrals"
+import useGetHotGames from "@feature/game/containers/hooks/useGetHotGames"
+import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
+import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
+import useGameStore from "@stores/game"
 
 const Home = () => {
-  const [f2pGame, setF2PGame] = useState<ISlide[]>(mockF2PGame)
-  const [f2pCurType, setF2PCurType] = useState<string>(
-    F2PHeaderMenu.menuList[0].type
-  )
-  const [p2eGame, setP2EGame] = useState<ISlide[]>(mockP2EGame)
-  const [p2eCurType, setP2ECurType] = useState<string>(
-    P2EHeaderMenu.menuList[0].type
-  )
+  const [f2pGame, setF2PGame] = useState<IGame[]>()
+  const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-play")
 
-  const fetchF2PGame = async () => {
-    // serivce
-    const result = mockF2PGame
-    setF2PGame(result)
-  }
+  const [p2eGame, setP2EGame] = useState<IGame[]>()
+  const [p2eCurType, setP2ECurType] = useState<IGetType>("hot-game")
 
-  const fetchF2PStoryMode = async () => {
-    // serivce
-    const result = mockF2PGame
-    setF2PGame(result)
-  }
+  const { data: gameStoreData, clearGameData } = useGameStore()
 
-  const fetchF2PMustTry = async () => {
-    // serivce
-    const result = mockF2PGame
-    setF2PGame(result)
-  }
-  const fetchP2EHotGame = async () => {
-    // serive
-    const result = mockP2EGame
-    setP2EGame(result)
-  }
+  const { hotGameData } = useGetHotGames()
+  const { data: p2eGameData } = useGamesByTypes({
+    _type: p2eCurType,
+    _limit: 10,
+    _page: 1
+  })
 
-  const fetchP2EGame = async () => {
-    // serive
-    const result = mockP2EGame
-    setP2EGame(result)
-  }
+  const { data: f2pGameData } = useGamesByTypes({
+    _type: f2pCurType,
+    _limit: 10,
+    _page: 1
+  })
 
   useEffect(() => {
-    if (f2pCurType === "story_mode") {
-      fetchF2PStoryMode()
-    } else if (f2pCurType === "must_try") {
-      fetchF2PMustTry()
-    } else {
-      fetchF2PGame()
+    if (gameStoreData) {
+      clearGameData()
     }
-  }, [f2pCurType])
+  }, [clearGameData, gameStoreData])
 
   useEffect(() => {
-    if (p2eCurType === "play_to_earn") {
-      fetchP2EGame()
-    } else {
-      fetchP2EHotGame()
+    if (f2pGameData) {
+      setF2PGame(f2pGameData.data)
     }
-  }, [p2eCurType])
+  }, [f2pCurType, f2pGameData, p2eGameData])
+
+  useEffect(() => {
+    if (p2eCurType === "hot-game") {
+      if (hotGameData) {
+        setP2EGame(hotGameData.data)
+      }
+    } else if (p2eCurType === "play-to-earn") {
+      if (p2eGameData) {
+        setP2EGame(p2eGameData.data)
+      }
+    }
+  }, [p2eCurType, hotGameData, p2eGameData])
 
   return (
     <>
@@ -147,23 +133,31 @@ const Home = () => {
       </div>
 
       <div className="my-20 h-full w-full">
-        <GameCarousel
-          menu={F2PHeaderMenu}
-          list={f2pGame}
-          curType={f2pCurType}
-          setCurType={setF2PCurType}
-          checkTimer
-        />
+        {f2pGame ? (
+          <GameCarousel
+            menu={F2PHeaderMenu}
+            list={f2pGame}
+            curType={f2pCurType}
+            setCurType={setF2PCurType}
+            checkTimer
+          />
+        ) : (
+          "loading..."
+        )}
       </div>
 
       <div className="my-20 h-full w-full">
-        <GameCarousel
-          menu={P2EHeaderMenu}
-          list={p2eGame}
-          curType={p2eCurType}
-          setCurType={setP2ECurType}
-          showNo
-        />
+        {p2eGame ? (
+          <GameCarousel
+            menu={P2EHeaderMenu}
+            list={p2eGame}
+            curType={p2eCurType}
+            setCurType={setP2ECurType}
+            showNo
+          />
+        ) : (
+          "loading..."
+        )}
       </div>
 
       <Tagline

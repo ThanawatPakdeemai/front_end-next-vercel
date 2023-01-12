@@ -13,24 +13,14 @@ const useTopPlayer = () => {
     queryFn: () => getPlayersRanking("game/ranks-all").then((res) => res)
   })
 
-  if (isLoading) {
-    return {
-      isLoading
-    }
-  }
-  if (isError) {
-    return {
-      isError,
-      error
-    }
-  }
-  if (topPlayerAllGame && topPlayerAllGame.length > 0) {
-    return {
-      topPlayerAllGame
-    }
-  }
   return {
-    topPlayerAllGame: undefined
+    topPlayerAllGame:
+      topPlayerAllGame && topPlayerAllGame.length > 0
+        ? topPlayerAllGame
+        : undefined,
+    error,
+    isLoading,
+    isError
   }
 }
 

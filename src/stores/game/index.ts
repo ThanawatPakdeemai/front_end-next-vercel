@@ -9,6 +9,7 @@ export interface IUseGameItemStore {
   onSetGameData: (_game: IGame) => void
   clearGameData: () => void
   setGameID: (_gameID: GameAllId[]) => void
+  // eslint-disable-next-line no-unused-vars
   setGame: (game: IGame) => void
   clearGameID: () => void
   getGame: () => void

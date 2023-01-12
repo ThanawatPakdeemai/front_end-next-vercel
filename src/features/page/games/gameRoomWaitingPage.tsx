@@ -2,7 +2,6 @@ import HeaderWaitingRoom from "@components/organisms/HeaderWaitingRoom"
 import WaitingRoom from "@feature/game/components/templates/singlePlayer/WaitingRoom"
 import useGetCurrentPlayerGameSingle from "@feature/game/containers/hooks/useGetCurrentPlayerGameSingle"
 
-import { useToast } from "@feature/toast/containers"
 import { Box, Typography } from "@mui/material"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"

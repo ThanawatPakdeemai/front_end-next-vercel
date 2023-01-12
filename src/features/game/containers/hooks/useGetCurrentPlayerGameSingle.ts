@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 import { IGetPlayerInRoom } from "@feature/game/interfaces/IGameService"
 import { getPlayerInRoom } from "../services/game.service"
 

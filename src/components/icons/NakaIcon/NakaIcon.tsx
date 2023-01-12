@@ -5,7 +5,7 @@ const NakaIcon = (fill = "red") => (
     width="128"
     height="68"
     viewBox="0 0 128 68"
-    fill="none"
+    fill={fill}
     xmlns="http://www.w3.org/2000/svg"
   >
     <mask

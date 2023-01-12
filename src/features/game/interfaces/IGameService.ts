@@ -294,7 +294,7 @@ export interface IGetAllGameRooms {
 export interface IGetPlayerInRoom {
   _roomId: string
   _playerId: string
-  _type: string
+  _type: "in" | "out"
 }
 
 export interface IClaimEarnedRewardByPlayerId {

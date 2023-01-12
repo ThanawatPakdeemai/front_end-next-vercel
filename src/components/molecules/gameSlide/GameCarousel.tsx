@@ -3,7 +3,7 @@ import Slider, { Settings } from "react-slick"
 import GameCarouselHeader, {
   IHeaderSlide
 } from "@components/molecules/gameSlide/GameCarouselHeader"
-import GameCard from "@feature/game/containers/components/molecules/GameCard"
+import GameCard from "@feature/game/components/molecules/GameCard"
 
 export interface ISlide {
   id: string

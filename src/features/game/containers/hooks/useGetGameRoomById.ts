@@ -6,17 +6,13 @@ const useGetGameRoomById = (_roomId: string) => {
     data: gameRoomById,
     error,
     isLoading,
-    isError,
-    refetch
+    isError
   } = useQuery(["getGameRoom", _roomId], () => getGameRoomById(_roomId), {
     /* prevent hook state problem */
     staleTime: Infinity,
-    retry: false
+    retry: false,
+    enabled: _roomId !== "" && _roomId !== undefined
   })
-
-  if (!gameRoomById) {
-    refetch()
-  }
 
   return {
     gameRoomById: gameRoomById || undefined,

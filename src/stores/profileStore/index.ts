@@ -82,11 +82,6 @@ const useProfileStore = create<IUseProfileStore>()(
             "ProfileStore/onSetProfileToken"
           )
           Helper.setLocalStorage({ key: ELocalKey.token, value: _token })
-          Helper.setCookie(
-            `token=${_token};expires=${dayjs()
-              .add(30, "minute")
-              .add(7, "hour")}`
-          )
         }
       }),
       configZustandDevTools("Profile-Store")

@@ -14,9 +14,6 @@ const Helper = {
   setLocalStorage({ key, value }: ILocal) {
     localStorage.setItem(key, value || "")
   },
-  setCookie(value) {
-    document.cookie = value
-  },
   getLocalStorage(_key: TLocalKey) {
     return typeof window !== "undefined" ? localStorage.getItem(_key) : null
   },

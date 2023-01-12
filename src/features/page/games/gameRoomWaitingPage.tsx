@@ -65,12 +65,23 @@ const GameRoomWaitingPage = ({ _roomId }: IProp) => {
       (thing, index, self) =>
         index === self.findIndex((t) => t.player_id === thing.player_id)
     )
+
+    const playerMe = uniquePlayerIn.find((ele) => ele.player_id === profile?.id)
+    const playerMeIndex = uniquePlayerIn.findIndex(
+      (ele) => ele.player_id === profile?.id
+    )
+    uniquePlayerIn.splice(playerMeIndex, 1)
+    if (playerMe) uniquePlayerIn.splice(0, 1, playerMe)
     const player_blank = Array(
       (playerGameSingle?.max_players ?? 8) - uniquePlayerIn.length
     ).map((ele) => ele)
     const itemPlayer = [...uniquePlayerIn, ...player_blank]
     return itemPlayer
-  }, [playerGameSingle])
+  }, [
+    playerGameSingle?.current_player,
+    playerGameSingle?.max_players,
+    profile?.id
+  ])
 
   return (
     <>

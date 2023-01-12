@@ -40,7 +40,7 @@ const PlayerCard = ({ players }: IProps) => {
                     </Typography>
                     {profile?.id === item.player_id ? (
                       <Typography className=" text-center font-neue-machina text-xs uppercase text-purple-primary">
-                        owner
+                        me
                       </Typography>
                     ) : (
                       <Typography className=" text-center font-neue-machina text-xs uppercase text-error-main">

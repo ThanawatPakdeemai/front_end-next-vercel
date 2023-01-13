@@ -8,6 +8,7 @@ import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import toast from "react-hot-toast"
 import { useToast } from "@feature/toast/containers"
+import { MESSAGES } from "@constants/messages"
 
 interface IContentFooterBannerSlide {
   gameData: IGame
@@ -28,7 +29,7 @@ const CardFooterSlide = ({
       router.push(`/${_gameUrl}`)
       onSetGameData(_gameData)
     } else {
-      errorToast("Please Login")
+      errorToast(MESSAGES.please_login)
     }
   }
 

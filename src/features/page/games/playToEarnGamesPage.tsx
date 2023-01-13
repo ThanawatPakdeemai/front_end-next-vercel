@@ -11,7 +11,7 @@ import useGameStore from "@stores/game/index"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import useProfileStore from "@stores/profileStore"
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
-import { toast } from "react-hot-toast"
+import { MESSAGES } from "@constants/messages"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import { useToast } from "@feature/toast/containers"
 
@@ -66,7 +66,7 @@ const PlayToEarnGamesPage = () => {
       router.push(`/${_gameUrl}`)
       onSetGameData(_gameData)
     } else {
-      errorToast("Please Login")
+      errorToast(MESSAGES.please_login)
     }
   }
 

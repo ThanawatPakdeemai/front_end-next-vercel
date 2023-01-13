@@ -16,6 +16,7 @@ import ButtonLink from "@components/atoms/button/ButtonLink"
 import Link from "next/link"
 import useProfileStore from "@stores/profileStore"
 import { useToast } from "@feature/toast/containers"
+import { MESSAGES } from "@constants/messages"
 import { ISignIn } from "../interfaces/IAuthService"
 import useSignIn from "../containers/hooks/useSignIn"
 
@@ -40,15 +41,15 @@ const FormLogin = () => {
           onSetProfileData(_profile)
           onSetProfileAddress(_profile.address)
           onSetProfileJWT(_profile.jwtToken)
-          successToast("Sign in successfully")
+          successToast(MESSAGES.sign_in_success)
         }
       })
       .catch(() => {
-        errorToast("Please fill completely")
+        errorToast(MESSAGES.please_fill)
       })
   }
   const onError = () => {
-    errorToast("Please fill completely")
+    errorToast(MESSAGES.please_fill)
   }
 
   return (

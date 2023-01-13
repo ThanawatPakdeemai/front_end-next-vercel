@@ -42,7 +42,7 @@ const ButtonGame = ({ startIcon, handleClick, text, className }: IProp) => {
   return (
     <>
       <motion.button
-        className={`btn-icon-container flex h-10 w-full items-center ${className}`}
+        className={`btn-icon-container m-auto mt-5 flex h-10 w-full items-center md:mt-0 ${className}`}
         initial="rest"
         whileHover="hover"
         type="button"

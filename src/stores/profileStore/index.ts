@@ -7,7 +7,6 @@ import {
 import configZustandDevTools from "@utils/configDevtools"
 import Helper from "@utils/helper"
 import { ELocalKey } from "@interfaces/ILocal"
-import dayjs from "dayjs"
 
 export interface IUseProfileStore {
   address: string | undefined

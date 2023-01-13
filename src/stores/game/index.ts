@@ -9,8 +9,6 @@ export interface IUseGameItemStore {
   onSetGameData: (_game: IGame) => void
   clearGameData: () => void
   setGameID: (_gameID: GameAllId[]) => void
-  // eslint-disable-next-line no-unused-vars
-  setGame: (game: IGame) => void
   clearGameID: () => void
   getGame: () => void
 }
@@ -29,9 +27,6 @@ const useGameStore = create<IUseGameItemStore>()(
         },
         setGameID: (_gameID) => {
           set(() => ({ gameId: _gameID }), false, "GameStore/setGameID")
-        },
-        setGame: (data) => {
-          set(() => ({ data }))
         },
         clearGameID: () => {
           set(() => ({ gameId: [] }), false, "GameStore/clearGameID")

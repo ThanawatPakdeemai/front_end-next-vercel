@@ -88,7 +88,6 @@ const Footer = () => {
 
   return (
     <>
-      {/* <CardRank /> */}
       <div className="flex items-center" />
       <Divider sx={{ marginTop: 10, marginBottom: 10 }} />
       <div className="justify-between text-[12px] lg:flex">

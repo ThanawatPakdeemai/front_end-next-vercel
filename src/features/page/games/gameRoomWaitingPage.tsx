@@ -15,19 +15,21 @@ const GameRoomWaitingPage = ({ _roomId }: IProp) => {
   const profile = useProfileStore((state) => state.profile.data)
   const gameData = useGameStore((state) => state.data)
 
-  if (profile && gameData) {
-    switch (gameData.game_type) {
-      case "singleplayer":
-        return <GameSinglePlayer _roomId={_roomId} />
-      case "multiplayer":
-        return <GameMultiPlayer />
-      case "storymode":
-        return <GameStorymode />
-      default:
-        return <Box className="m-auto block">No Data</Box>
+  const getTemplateGame = () => {
+    if (gameData) {
+      switch (gameData.game_type) {
+        case "singleplayer":
+          return <GameSinglePlayer _roomId={_roomId} />
+        case "multiplayer":
+          return <GameMultiPlayer />
+        case "storymode":
+          return <GameStorymode />
+        default:
+          return <Box className="m-auto block">No Data</Box>
+      }
     }
   }
-  return <></>
+  return <>{profile && getTemplateGame()}</>
 }
 
 export default GameRoomWaitingPage

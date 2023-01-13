@@ -12,6 +12,7 @@ import Footer from "@components/organisms/Footer"
 import useGetStatisticsGameById from "@feature/game/containers/hooks/useGetStatisticsGameById"
 import useGameStore from "@stores/game"
 import { unstable_batchedUpdates } from "react-dom"
+import Howto from "@components/molecules/HowToPlay"
 
 const GameRoomLayout = ({
   children
@@ -34,6 +35,7 @@ const GameRoomLayout = ({
     <div className="main-container mx-auto">
       <Header />
       <Banner data={GAME_DETAILS_BANNER} />
+      {data && <Howto data={data} />}
       {children}
       <Tagline
         bgColor="bg-neutral-800"
@@ -50,7 +52,7 @@ const GameRoomLayout = ({
           background="neutral"
           note
           elevation={0}
-          className="!h-[424px] !w-[550px] !bg-primary-main"
+          className="!h-[424px] !w-[550px] border border-[1px] border-neutral-900 border-opacity-80 !bg-warning-contrastText"
           rank
           topPlayerGameId={topPlayerGameId && topPlayerGameId}
         />

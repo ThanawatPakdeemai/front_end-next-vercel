@@ -86,11 +86,16 @@ const GameSinglePlayer = ({ _roomId }: IProp) => {
 
   return (
     <>
-      <Box className="block gap-3 lg:grid lg:grid-flow-col">
+      <Box className=" block gap-3 lg:grid lg:grid-flow-col">
         {_roomId &&
           (playerGameSingle && gameData ? (
             <>
-              <Box className=" rounded-3xl border border-neutral-700">
+              <Box className="spark-fire relative rounded-3xl border border-neutral-700">
+                {/* <div className="stars" />
+                <div className="stars2" />
+                <div className="stars3" /> */}
+                {/* <div className="comet" /> */}
+
                 <HeaderWaitingRoom
                   roomId={_roomId}
                   roomTag={playerGameSingle?.room_number}

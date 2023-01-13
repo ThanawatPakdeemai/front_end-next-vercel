@@ -8,7 +8,8 @@ import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import toast from "react-hot-toast"
+import { MESSAGES } from "@constants/messages"
+import { useToast } from "@feature/toast/containers"
 
 interface IProps {
   menu: IHeaderSlide
@@ -50,6 +51,7 @@ const GameCarousel = ({
   const profile = useProfileStore((state) => state.profile.data)
   const { onSetGameData } = useGameStore()
   const router = useRouter()
+  const { errorToast } = useToast()
 
   const sliderRef = useRef<Slider>(null)
   const [cooldown, setCooldown] = useState<boolean>(false)
@@ -82,7 +84,7 @@ const GameCarousel = ({
       router.push(`/${_gameUrl}`)
       onSetGameData(_gameData)
     } else {
-      toast.error("Please Login")
+      errorToast(MESSAGES.please_login)
     }
   }
 

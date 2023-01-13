@@ -27,25 +27,24 @@ const GameRoomListPage = () => {
   const router = useRouter()
   const [gameData, setGameData] = useState<IGame>()
 
-  const { allGameRooms, fetchAllGameRoom } = useGetAllGameRooms()
+  const { allGameRooms, refetchAllGameRooms } = useGetAllGameRooms({
+    _gameId: data ? data._id : "",
+    _email: profile ? profile.email : "",
+    // mock for waiting price of items
+    _itemId: "63072b0dd0be6934c17b5438"
+  })
 
   const handleJoinRoom = (_roomId: string) => {
     router.push(`/${router.asPath}/${_roomId}`)
   }
 
   useEffect(() => {
-    if (data && profile && fetchAllGameRoom) {
+    if (data) {
       unstable_batchedUpdates(() => {
         setGameData(data)
-        fetchAllGameRoom({
-          _gameId: data._id,
-          _email: profile.email,
-          // mock for waiting price of items
-          _itemId: "63072b0dd0be6934c17b5438"
-        })
       })
     }
-  }, [data, fetchAllGameRoom, profile])
+  }, [data, profile])
 
   return (
     <>
@@ -65,6 +64,7 @@ const GameRoomListPage = () => {
                     time: initEndTime,
                     onExpire: () => null
                   }}
+                  unlimited={_data.no_limit_time}
                   player={{
                     currentPlayer: _data.amount_current_player,
                     maxPlayer: _data.max_players
@@ -79,6 +79,7 @@ const GameRoomListPage = () => {
             icon={<ReloadIcon />}
             className="mt-10"
             multi
+            onClick={refetchAllGameRooms}
           />
         </div>
       </div>

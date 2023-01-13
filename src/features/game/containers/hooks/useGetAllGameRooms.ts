@@ -1,21 +1,20 @@
 import { IGetAllGameRooms } from "@feature/game/interfaces/IGameService"
-import { useMutation } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 import { getAllGameRooms } from "../services/game.service"
 
-const useGetAllGameRooms = () => {
+const useGetAllGameRooms = ({ _gameId, _email, _itemId }: IGetAllGameRooms) => {
   const {
     data: allGameRooms,
     error,
     isLoading,
     isError,
-    mutate: fetchAllGameRoom
-  } = useMutation(
-    ({ _gameId, _email, _itemId }: IGetAllGameRooms) =>
-      getAllGameRooms({ _gameId, _email, _itemId }),
-    {
-      retry: false
-    }
-  )
+    refetch: refetchAllGameRooms
+  } = useQuery({
+    queryKey: ["getAllGameRooms", { _gameId, _email, _itemId }],
+    queryFn: () => getAllGameRooms({ _gameId, _email, _itemId }),
+    retry: false,
+    enabled: _gameId !== "" && _email !== "" && _itemId !== ""
+  })
 
   return {
     allGameRooms:
@@ -25,7 +24,7 @@ const useGetAllGameRooms = () => {
     isLoading,
     isError,
     error,
-    fetchAllGameRoom
+    refetchAllGameRooms
   }
 }
 

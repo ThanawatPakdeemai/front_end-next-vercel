@@ -59,11 +59,7 @@ const StoryModeGamesPage = () => {
               <GameCard
                 key={game.id}
                 menu={F2PHeaderMenu}
-                data={{
-                  id: game._id,
-                  image: game.image_category_list,
-                  desc: game.name
-                }}
+                data={game}
                 checkTimer
                 staminaRecovery={staminaRecovery}
                 cooldown={cooldown}

@@ -12,8 +12,15 @@ export type TTypeCode =
   | "multi_02"
   | "story_01"
 
+export type IGetType =
+  | "play-to-earn"
+  | "free-to-play"
+  | "story-mode"
+  | "must-try"
+  | "hot-game"
+
 export interface IGetGameByTypesProps {
-  _type: "play-to-earn" | "free-to-play" | "story-mode"
+  _type: IGetType
   _limit: number
   _page: number
   _categoryId?: string
@@ -150,7 +157,7 @@ export interface IGameRewardByPlayer extends IGameBase {
 }
 
 export interface IGameService extends IFormatService {
-  data: IGame
+  data: IGame[]
 }
 
 export interface IGameCurrentPlayer extends IGameBase {

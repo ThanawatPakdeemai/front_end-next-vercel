@@ -16,6 +16,7 @@ export interface IIconCustoms {
 
 const IconCustoms = (props: IIconCustoms) => {
   const { icon_key, support } = props
+
   return (
     <>
       {support ? (

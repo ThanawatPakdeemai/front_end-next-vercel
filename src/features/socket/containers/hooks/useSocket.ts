@@ -6,7 +6,7 @@ import {
 } from "@feature/socket/containers/socketSetup"
 import useProfileStore from "@stores/profileStore"
 import { useToast } from "@feature/toast/containers"
-import { messages } from "@constants/messages"
+import { MESSAGES } from "@constants/messages"
 import helper from "@utils/helper"
 import CONFIGS from "@configs/index"
 
@@ -37,7 +37,7 @@ export function useSocket({ path, query }: IUseSocket) {
   useEffect(() => {
     socketInit.current.on("connect_error", (err) => {
       if (err && err.message === "jwt expired") {
-        errorToast(messages["error-socket"])
+        errorToast(MESSAGES["error-socket"])
       }
     })
 

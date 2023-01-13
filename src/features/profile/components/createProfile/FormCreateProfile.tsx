@@ -16,6 +16,7 @@ import CheckBoxNaka from "@components/atoms/checkBox/CheckBoxNaka"
 import { IGeoProfile } from "@feature/profile/interfaces/IProfileService"
 import SlideAvatar from "@feature/avatar/components/molecules/SlideAvatar"
 import useGetAvatar from "@feature/avatar/containers/hook/useGetAvatar"
+import { MESSAGES } from "@constants/messages"
 
 const FormCreateProfile = () => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -54,16 +55,16 @@ const FormCreateProfile = () => {
           }
         })
         .catch(() => {
-          errorToast("Can't update data")
+          errorToast(MESSAGES.cant_update_data)
         })
     } else {
-      errorToast("Please login")
+      errorToast(MESSAGES.please_login)
     }
   }
 
   const onError = (data) => {
     if (data) {
-      errorToast("Please fill completely")
+      errorToast(MESSAGES.please_fill)
     }
   }
 

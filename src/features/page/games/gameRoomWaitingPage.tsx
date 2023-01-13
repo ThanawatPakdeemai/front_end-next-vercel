@@ -1,6 +1,6 @@
-import GameMultiPlayer from "@feature/game/components/templates/waitingRoom/multiPlayer/GameMultiPlayer"
-import GameSinglePlayer from "@feature/game/components/templates/waitingRoom/singlePlayer/GameSinglePlayer"
-import GameStorymode from "@feature/game/components/templates/waitingRoom/storymode/GameStorymode"
+import MultiWaiting from "@feature/game/components/templates/waitingRoom/multiPlayer/MultiWaiting"
+import SingleWaiting from "@feature/game/components/templates/waitingRoom/singlePlayer/SingleWaiting"
+import StoryWaiting from "@feature/game/components/templates/waitingRoom/storymode/StoryWaiting"
 import { Box } from "@mui/material"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
@@ -19,11 +19,11 @@ const GameRoomWaitingPage = ({ _roomId }: IProp) => {
     if (gameData) {
       switch (gameData.game_type) {
         case "singleplayer":
-          return <GameSinglePlayer _roomId={_roomId} />
+          return <SingleWaiting _roomId={_roomId} />
         case "multiplayer":
-          return <GameMultiPlayer />
+          return <MultiWaiting />
         case "storymode":
-          return <GameStorymode />
+          return <StoryWaiting />
         default:
           return <Box className="m-auto block">No Data</Box>
       }

@@ -4,7 +4,9 @@ import React from "react"
 import useProfileStore from "@stores/profileStore"
 import useGameStore from "@stores/game"
 
-import GameSingle from "@feature/game/components/templates/roomList/singlePlayer/GameSingle"
+import SingleRoomList from "@feature/game/components/templates/roomList/singlePlayer/SingleRoomList"
+import MultiRoomList from "@feature/game/components/templates/roomList/multiPlayer/MultiRoomList"
+import StoryRoomList from "@feature/game/components/templates/roomList/storymode/StoryRoomList"
 
 /**
  *
@@ -19,11 +21,11 @@ const GameRoomListPage = () => {
     if (gameData) {
       switch (gameData.game_type) {
         case "singleplayer":
-          return <GameSingle />
+          return <SingleRoomList />
         case "multiplayer":
-          return <>multiplayer</>
+          return <MultiRoomList />
         case "storymode":
-          return <>GameStorymode</>
+          return <StoryRoomList />
         default:
           return <Box className="m-auto block">No Data</Box>
       }

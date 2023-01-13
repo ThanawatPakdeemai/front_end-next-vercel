@@ -25,11 +25,15 @@ const SeatPlayers = ({ players }: IProps) => {
               startIcon={<Ellipse />}
               handleClick={OnPlayGame}
               text={
-                <Typography className="w-full font-neue-machina text-2xl text-neutral-800">
+                <Typography className="w-full font-neue-machina text-2xl text-neutral-600">
                   START
                 </Typography>
               }
-              className="btn-green-rainbow h-[60px] w-[194px] rounded-[50px] bg-green-lemon font-bold capitalize text-neutral-900"
+              className={`h-[60px] w-[194px] rounded-[50px] ${
+                players ? " bg-neutral-800" : "bg-green-lemon "
+              }${
+                players ? " " : "btn-green-rainbow  "
+              } font-bold capitalize text-neutral-900`}
             />
           </Box>
         </Box>

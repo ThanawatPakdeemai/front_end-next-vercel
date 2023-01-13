@@ -23,35 +23,29 @@ import IReferrals from "@components/icons/Referrals"
 import useGetHotGames from "@feature/game/containers/hooks/useGetHotGames"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
-import useGameStore from "@stores/game"
+import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
+import { v4 as uuid } from "uuid"
 
 const Home = () => {
+  const limit = 10
   const [f2pGame, setF2PGame] = useState<IGame[]>()
   const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-play")
 
   const [p2eGame, setP2EGame] = useState<IGame[]>()
   const [p2eCurType, setP2ECurType] = useState<IGetType>("hot-game")
 
-  const { data: gameStoreData, clearGameData } = useGameStore()
-
   const { hotGameData } = useGetHotGames()
   const { data: p2eGameData } = useGamesByTypes({
     _type: p2eCurType,
-    _limit: 10,
+    _limit: limit,
     _page: 1
   })
 
   const { data: f2pGameData } = useGamesByTypes({
     _type: f2pCurType,
-    _limit: 10,
+    _limit: limit,
     _page: 1
   })
-
-  useEffect(() => {
-    if (gameStoreData) {
-      clearGameData()
-    }
-  }, [clearGameData, gameStoreData])
 
   useEffect(() => {
     if (f2pGameData) {
@@ -142,7 +136,11 @@ const Home = () => {
             checkTimer
           />
         ) : (
-          "loading..."
+          <div className="flex gap-x-3">
+            {[...Array(6)].map(() => (
+              <SkeletonCard key={uuid()} />
+            ))}
+          </div>
         )}
       </div>
 
@@ -156,7 +154,11 @@ const Home = () => {
             showNo
           />
         ) : (
-          "loading..."
+          <div className="flex gap-x-3">
+            {[...Array(6)].map(() => (
+              <SkeletonCard key={uuid()} />
+            ))}
+          </div>
         )}
       </div>
 

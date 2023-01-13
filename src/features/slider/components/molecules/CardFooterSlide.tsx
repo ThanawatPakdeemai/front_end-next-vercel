@@ -7,6 +7,7 @@ import { useRouter } from "next/router"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import toast from "react-hot-toast"
+import { useToast } from "@feature/toast/containers"
 
 interface IContentFooterBannerSlide {
   gameData: IGame
@@ -20,13 +21,14 @@ const CardFooterSlide = ({
   const profile = useProfileStore((state) => state.profile.data)
   const { onSetGameData } = useGameStore()
   const router = useRouter()
+  const { errorToast } = useToast()
 
   const onHandleClick = (_gameUrl: string, _gameData: IGame) => {
     if (profile) {
       router.push(`/${_gameUrl}`)
       onSetGameData(_gameData)
     } else {
-      toast.error("Please Login")
+      errorToast("Please Login")
     }
   }
 

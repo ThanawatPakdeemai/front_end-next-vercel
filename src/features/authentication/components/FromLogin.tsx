@@ -15,42 +15,40 @@ import { useForm } from "react-hook-form"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import Link from "next/link"
 import useProfileStore from "@stores/profileStore"
-import {
-  IProfile,
-  IProfileResponse
-} from "@feature/profile/interfaces/IProfileService"
 import { useToast } from "@feature/toast/containers"
-import { signIn } from "../containers/services/auth.service"
 import { ISignIn } from "../interfaces/IAuthService"
+import useSignIn from "../containers/hooks/useSignIn"
 
 const FormLogin = () => {
   const { onSetProfileData, onSetProfileAddress, onSetProfileJWT } =
     useProfileStore()
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const handleShowPassword = () => setShowPassword(!showPassword)
-  const { errorToast } = useToast()
+  const { errorToast, successToast } = useToast()
   const { register, handleSubmit } = useForm({
     defaultValues: {
       _email: "",
       _password: ""
     }
   })
+  const { mutateSignIn } = useSignIn()
+
   const onSubmit = (data: ISignIn) => {
-    signIn({ _email: data._email, _password: data._password }).then(
-      (_profile: IProfileResponse) => {
-        const profile = _profile as unknown as IProfile
-        if (profile) {
-          onSetProfileData(profile)
-          onSetProfileAddress(profile.address)
-          onSetProfileJWT(profile.jwtToken)
+    mutateSignIn({ _email: data._email, _password: data._password })
+      .then((_profile) => {
+        if (_profile) {
+          onSetProfileData(_profile)
+          onSetProfileAddress(_profile.address)
+          onSetProfileJWT(_profile.jwtToken)
+          successToast("Sign in successfully")
         }
-      }
-    )
+      })
+      .catch(() => {
+        errorToast("Please fill completely")
+      })
   }
-  const onError = (data) => {
-    if (data) {
-      errorToast("Please fill completely")
-    }
+  const onError = () => {
+    errorToast("Please fill completely")
   }
 
   return (

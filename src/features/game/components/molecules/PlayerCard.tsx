@@ -34,6 +34,7 @@ const PlayerCard = ({ players }: IProps) => {
                       }
                       src={item.avatar}
                       imageBadge={`/images/gamePage/rank/${item.rank}.svg`}
+                      badgeCenter={{ status: true, name: "Ready" }}
                     />
                     <Box className="m-auto w-[92px] py-3">
                       <Typography className="text-center font-neue-machina text-sm uppercase text-[700] text-neutral-300">
@@ -56,7 +57,7 @@ const PlayerCard = ({ players }: IProps) => {
                   <Box className="  rounded-3xl">
                     <AvatarProfile
                       image={{
-                        width: "!w-[82px] p-3 !bg-neutral-800 rounded-xl",
+                        width: "!w-[82px] p-2 !bg-neutral-800 rounded-xl",
                         height: "!h-auto"
                       }}
                       key={Number(index)}

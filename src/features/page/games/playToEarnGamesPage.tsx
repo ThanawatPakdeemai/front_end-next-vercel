@@ -11,8 +11,9 @@ import useGameStore from "@stores/game/index"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import useProfileStore from "@stores/profileStore"
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
-import { toast } from "react-hot-toast"
+import { MESSAGES } from "@constants/messages"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
+import { useToast } from "@feature/toast/containers"
 
 const PlayToEarnGamesPage = () => {
   const type = "play-to-earn"
@@ -25,6 +26,7 @@ const PlayToEarnGamesPage = () => {
   const { onSetGameData, clearGameData } = useGameStore()
   const profile = useProfileStore((state) => state.profile.data)
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
+  const { errorToast } = useToast()
 
   useEffect(() => {
     setStateProfile(profile)
@@ -64,7 +66,7 @@ const PlayToEarnGamesPage = () => {
       router.push(`/${_gameUrl}`)
       onSetGameData(_gameData)
     } else {
-      toast.error("Please Login")
+      errorToast(MESSAGES.please_login)
     }
   }
 
@@ -79,11 +81,7 @@ const PlayToEarnGamesPage = () => {
               <GameCard
                 key={game.id}
                 menu={P2EHeaderMenu}
-                data={{
-                  id: game._id,
-                  image: game.image_category_list,
-                  desc: game.name
-                }}
+                data={game}
                 onHandleClick={() => onHandleClick(game.path, game)}
               />
             ))

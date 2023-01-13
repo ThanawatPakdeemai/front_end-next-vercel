@@ -1,5 +1,5 @@
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import { ISlide, TColor } from "@components/molecules/gameSlide/GameCarousel"
+import { TColor } from "@components/molecules/gameSlide/GameCarousel"
 import { IHeaderSlide } from "@components/molecules/gameSlide/GameCarouselHeader"
 import NumberRank from "@feature/ranking/components/atoms/NumberRank"
 import { Chip } from "@mui/material"
@@ -9,10 +9,11 @@ import ImageCustom from "@components/atoms/image/Image"
 import IconHourglass from "@components/icons/hourglassIcon"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import TimerStamina from "@components/atoms/timer/TimerStamina"
+import { IGame } from "@feature/game/interfaces/IGameService"
 
 interface IProps {
   menu: IHeaderSlide
-  data: ISlide
+  data: IGame
   showNo?: boolean
   no?: number
   checkTimer?: boolean
@@ -76,13 +77,13 @@ const GameCard = ({
       <motion.div className="relative flex h-[218px] w-full items-center justify-center overflow-hidden">
         {showNo && no ? (
           <NumberRank
-            index={no}
+            index={no - 1}
             fixColor={false}
-            className="slick-card-number absolute top-0 right-0 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
+            className="slick-card-number absolute top-2 right-1 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
           />
         ) : null}
         <ImageCustom
-          src={data.image}
+          src={data.image_category_list}
           alt="home-slide"
           width={218}
           height={218}
@@ -107,7 +108,7 @@ const GameCard = ({
       <div className="relative z-[3]">
         <div className="slick-card-desc flex h-10 w-full items-center">
           <p className="relative truncate uppercase hover:text-clip">
-            {data.desc}
+            {data.name}
           </p>
         </div>
         <div className="relative grid w-full grid-cols-2 gap-2 text-xs uppercase">

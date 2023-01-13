@@ -71,8 +71,11 @@ const GameSinglePlayer = ({ _roomId }: IProp) => {
     const playerMeIndex = uniquePlayerIn.findIndex(
       (ele) => ele.player_id === profile?.id
     )
-    uniquePlayerIn.splice(playerMeIndex, 1)
-    if (playerMe) uniquePlayerIn.splice(0, 1, playerMe)
+    if (playerMeIndex !== 0) {
+      uniquePlayerIn.splice(playerMeIndex, 1)
+      if (playerMe) uniquePlayerIn.splice(0, 0, playerMe)
+    }
+
     const player_blank = Array(
       (playerGameSingle?.max_players ?? 8) - uniquePlayerIn.length
     ).map((ele) => ele)

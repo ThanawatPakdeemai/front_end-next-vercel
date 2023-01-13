@@ -1,22 +1,64 @@
-import { useCallback, useRef, useState } from "react"
-import { Socket } from "socket.io-client"
-import { socketSetupManager } from "@feature/socket/containers/socketSetup"
+import { useCallback, useEffect, useRef, useState } from "react"
+import { Manager, Socket } from "socket.io-client"
+import { IUseSocket } from "@feature/socket/containers/socketSetup"
+import useProfileStore from "@stores/profileStore"
+import { useToast } from "@feature/toast/containers"
+import { messages } from "@constants/messages"
+import helper from "@utils/helper"
+import CONFIGS from "@configs/index"
 
-interface IUseSocket {
-  path: string
-}
-
-export function useSocket({ path }: IUseSocket) {
+export function useSocket({ path, query }: IUseSocket) {
   const [isConnected, setIsConnected] = useState(false)
-  const socketInit = useRef<Socket>(socketSetupManager.socket(`${path}`))
+
+  const dataSetup = {
+    autoConnect: false,
+    reconnection: true,
+    secure: true,
+    withCredentials: true,
+    transports: ["polling", "websocket"],
+    query,
+    extraHeaders: {
+      Authorization: `Bearer ${helper.getLocalStorage("token")}`
+    }
+  }
+
+  const setUp = new Manager(`${CONFIGS.BASE_URL.API}`, { ...dataSetup })
+
+  const socketInit = useRef<Socket>(setUp.socket(`/${path}`))
+
+  const profile = useProfileStore((state) => state.profile.data)
+  const { errorToast } = useToast()
 
   const onSetConnectedSocket = useCallback((_status: boolean) => {
     setIsConnected(_status)
   }, [])
 
+  useEffect(() => {
+    socketInit.current.on("connect_error", (err) => {
+      if (err && err.message === "jwt expired") {
+        errorToast(messages["error-socket"])
+      }
+    })
+
+    return () => {}
+  }, [errorToast, profile, socketInit])
+
+  useEffect(() => {
+    socketInit.current.on("connect", () => {
+      if (socketInit.current.connected) {
+        setIsConnected(true)
+      }
+    })
+
+    return () => {
+      setIsConnected(false)
+    }
+  }, [socketInit])
+
   return {
     socketInit: socketInit.current,
     isConnected,
-    onSetConnectedSocket
+    onSetConnectedSocket,
+    setUp
   }
 }

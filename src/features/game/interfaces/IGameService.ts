@@ -2,7 +2,7 @@ import {
   IGameItem,
   IGameItemList
 } from "@feature/gameItem/interfaces/IGameItemService"
-import { IFormatService } from "@interfaces/IHelper"
+import { IFormatService, IInfo } from "@interfaces/IHelper"
 
 export type TGameType = "singleplayer" | "multiplayer" | "storymode"
 export type TTypeCode =
@@ -303,5 +303,62 @@ export interface IClaimEarnedRewardByPlayerId {
 }
 
 export interface IGetGameByTypes extends IFormatService, IGameAllState {
+  message: string
+}
+
+export interface ICreateRoomDetail {
+  no_room: string
+  number_of_item: number
+  public_room: boolean
+  player_create: string
+}
+
+export interface CurrentPlayer extends IGameCurrentPlayer {
+  _id: string //
+  player_id: string //
+  socket_id: string //
+}
+export interface IGameRoomListSocket {
+  create_room_detail: ICreateRoomDetail
+  start_time: Date
+  end_time: Date
+  room_status: string
+  amount_current_player: number
+  amount_send_reward: number
+  mutiplayer: boolean
+  tournament: boolean
+  user_create: boolean
+  createdAt: Date
+  updatedAt: Date
+  no_limit_time: boolean
+  room_lock: boolean
+  _id: string
+  current_player: CurrentPlayer[]
+  current_player_item_status: any[]
+  history_user_play: any[]
+  rewards: any[]
+  current_time: Date
+  game_id: string
+  max_players: number
+  rank_id: null
+  amount_played: number
+  is_active: boolean
+  status: string
+  map_id: number
+  room_number: number
+  item_id: string
+  id: string
+}
+
+export interface IDataRoomListSocket {
+  gameRoomDetail: IGameRoomListSocket[]
+  game_item_id: string
+}
+export interface IResSocketRoomList {
+  info: IInfo
+  data: IDataRoomListSocket
+}
+
+export interface IError {
   message: string
 }

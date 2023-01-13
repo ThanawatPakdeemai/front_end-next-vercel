@@ -16,10 +16,6 @@ export interface IIconCustoms {
 
 const IconCustoms = (props: IIconCustoms) => {
   const { icon_key, support } = props
-
-  // eslint-disable-next-line no-console
-  console.log("in", icon_key, support)
-
   return (
     <>
       {support ? (

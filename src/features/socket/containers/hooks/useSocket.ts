@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Manager, Socket } from "socket.io-client"
-import { IUseSocket } from "@feature/socket/containers/socketSetup"
+import {
+  IUseSocket,
+  dataSetupSocketRoomList
+} from "@feature/socket/containers/socketSetup"
 import useProfileStore from "@stores/profileStore"
 import { useToast } from "@feature/toast/containers"
 import { messages } from "@constants/messages"
@@ -11,18 +14,16 @@ export function useSocket({ path, query }: IUseSocket) {
   const [isConnected, setIsConnected] = useState(false)
 
   const dataSetup = {
-    autoConnect: false,
-    reconnection: true,
-    secure: true,
-    withCredentials: true,
-    transports: ["polling", "websocket"],
     query,
     extraHeaders: {
       Authorization: `Bearer ${helper.getLocalStorage("token")}`
     }
   }
 
-  const setUp = new Manager(`${CONFIGS.BASE_URL.API}`, { ...dataSetup })
+  const setUp = new Manager(`${CONFIGS.BASE_URL.API}`, {
+    ...dataSetupSocketRoomList,
+    ...dataSetup
+  })
 
   const socketInit = useRef<Socket>(setUp.socket(`/${path}`))
 

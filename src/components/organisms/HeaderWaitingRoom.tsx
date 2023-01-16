@@ -10,7 +10,6 @@ import { useRouter } from "next/dist/client/router"
 import React from "react"
 
 interface IProp {
-  roomId: string
   roomTag: string | number
   roomName: string
   timer?: {
@@ -21,6 +20,7 @@ interface IProp {
     currentPlayer: number
     maxPlayer?: number
   }
+  onOutRoom: () => void
 }
 
 const HeaderWaitingRoom = ({
@@ -28,11 +28,9 @@ const HeaderWaitingRoom = ({
   roomName,
   timer,
   player,
-  roomId
+  onOutRoom
 }: IProp) => {
   const router = useRouter()
-  const { fetchPlayerGameSingle } = useGetCurrentPlayerGameSingle()
-  const profile = useProfileStore((state) => state.profile.data)
 
   return (
     <div className="flex h-[72px] items-center gap-5 border-b  border-neutral-800">
@@ -40,12 +38,7 @@ const HeaderWaitingRoom = ({
         <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800">
           <ButtonClose
             onClick={() => {
-              if (profile)
-                fetchPlayerGameSingle({
-                  _roomId: roomId,
-                  _playerId: profile.id,
-                  _type: "out"
-                })
+              onOutRoom()
               router.back()
             }}
           />

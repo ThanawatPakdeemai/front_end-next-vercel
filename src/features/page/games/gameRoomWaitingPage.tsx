@@ -21,7 +21,7 @@ const GameRoomWaitingPage = ({ _roomId }: IProp) => {
         case "singleplayer":
           return <SingleWaiting _roomId={_roomId} />
         case "multiplayer":
-          return <MultiWaiting />
+          return <MultiWaiting _roomId={_roomId} />
         case "storymode":
           return <StoryWaiting />
         default:

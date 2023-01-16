@@ -1,12 +1,12 @@
 import EVENTS from "@configs/events"
-import { IDataRoomListSocket } from "@feature/game/interfaces/IGameService"
+import { IResSocketRoomList } from "@feature/game/interfaces/IGameService"
 import { useSocket } from "@feature/socket"
 
 export interface IPropsSocketRoomList {
   _path: string
   _profileId: string
   _gameId: string
-  _itemId: string
+  _itemId: string | undefined
 }
 
 const useSocketRoomList = (props: IPropsSocketRoomList) => {
@@ -29,7 +29,7 @@ const useSocketRoomList = (props: IPropsSocketRoomList) => {
     new Promise((resolve, reject) => {
       socketRoomList.on(
         EVENTS.LISTENERS.LOBBY_ONLINE,
-        (response: IDataRoomListSocket) => {
+        (response: IResSocketRoomList) => {
           if (response) {
             resolve(response)
           } else {

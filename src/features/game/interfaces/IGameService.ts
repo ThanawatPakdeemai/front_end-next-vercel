@@ -320,7 +320,11 @@ export interface ICreateRoomDetail {
   player_create: string
 }
 
-export interface CurrentPlayer extends IGameCurrentPlayer {
+interface IMultiPlayer {
+  owner?: boolean
+  kick?: boolean
+}
+export interface CurrentPlayer extends IGameCurrentPlayer, IMultiPlayer {
   _id: string //
   player_id: string //
   socket_id: string //

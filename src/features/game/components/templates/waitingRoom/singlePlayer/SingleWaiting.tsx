@@ -10,11 +10,11 @@ import { useRouter } from "next/router"
 import React, { useCallback, useEffect, useMemo } from "react"
 import { unstable_batchedUpdates } from "react-dom"
 
-interface IProp {
+export interface IPropWaitingSingle {
   _roomId: string
 }
 
-const GameSinglePlayer = ({ _roomId }: IProp) => {
+const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
   // const { gameRoomById } = useGetGameRoomById(_roomId)
   const profile = useProfileStore((state) => state.profile.data)
   const gameData = useGameStore((state) => state.data)
@@ -87,6 +87,16 @@ const GameSinglePlayer = ({ _roomId }: IProp) => {
     profile?.id
   ])
 
+  const outRoom = () => {
+    if (_roomId && profile) {
+      fetchPlayerGameSingle({
+        _roomId,
+        _playerId: profile.id,
+        _type: "out"
+      })
+    }
+  }
+
   return (
     <>
       <Box className=" block gap-3 lg:grid lg:grid-flow-col">
@@ -94,13 +104,7 @@ const GameSinglePlayer = ({ _roomId }: IProp) => {
           (playerGameSingle && gameData ? (
             <>
               <Box className="spark-fire relative rounded-3xl border border-neutral-700">
-                {/* <div className="stars" />
-                <div className="stars2" />
-                <div className="stars3" /> */}
-                {/* <div className="comet" /> */}
-
                 <HeaderWaitingRoom
-                  roomId={_roomId}
                   roomTag={playerGameSingle?.room_number}
                   roomName={`#${gameData?.name} ${playerGameSingle?.room_number}`}
                   timer={{
@@ -110,6 +114,7 @@ const GameSinglePlayer = ({ _roomId }: IProp) => {
                     currentPlayer: playersMap.filter((ele) => ele).length ?? 0,
                     maxPlayer: playerGameSingle?.max_players ?? 8
                   }}
+                  onOutRoom={outRoom}
                 />
                 {!isLoading && (
                   <>

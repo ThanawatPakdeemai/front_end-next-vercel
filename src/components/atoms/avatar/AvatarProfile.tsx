@@ -27,14 +27,16 @@ const AvatarProfile = ({
       <Badge
         sx={{ "span": { backgroundColor: "transparent !important" } }}
         badgeContent={
-          imageBadge && (
+          imageBadge ? (
             <Image
-              src={imageBadge ?? imageBadge}
+              src={imageBadge}
               width={40}
               height={40}
-              alt={`image-${src}`}
+              alt="image-profile"
               className="$ h-[44px] w-[44px] rounded-xl object-cover object-center p-[3px]"
             />
+          ) : (
+            <></>
           )
         }
         color="primary"
@@ -54,11 +56,11 @@ const AvatarProfile = ({
                   alt={`image-${src}`}
                   className={`${image.width} rounded-xl object-cover object-center p-[3px] ${image.height}`}
                 />
-                {badgeCenter.status && (
+                {badgeCenter.status && badgeCenter.name && (
                   <Chip
                     size="small"
                     label={
-                      <Typography className=" font-neue-machina text-xs text-primary-main">
+                      <Typography className=" font-neue-machina text-xs capitalize text-primary-main">
                         {badgeCenter.name}
                       </Typography>
                     }

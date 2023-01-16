@@ -3,7 +3,10 @@ import ButtonSticky from "@components/molecules/ButtonSticky"
 import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
 import useSocketRoomList from "@feature/game/containers/hooks/useSocketRoomList"
-import { IGameRoomListSocket } from "@feature/game/interfaces/IGameService"
+import {
+  IGameRoomListSocket,
+  IResSocketRoomList
+} from "@feature/game/interfaces/IGameService"
 import { Box, Divider } from "@mui/material"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
@@ -22,9 +25,14 @@ const MultiRoomList = () => {
       _path: gameData?.socket_info?.url_lobby ?? "",
       _profileId: profile?.id ?? "",
       _gameId: gameData?._id ?? "",
-      _itemId: "61976479dffe844091ab8df1" // 1$ mock
+      _itemId: gameData?.play_to_earn ? undefined : "61976479dffe844091ab8df1" // 1$ mock
     }),
-    [gameData?._id, gameData?.socket_info?.url_lobby, profile?.id]
+    [
+      gameData?._id,
+      gameData?.play_to_earn,
+      gameData?.socket_info?.url_lobby,
+      profile?.id
+    ]
   )
   const {
     onSetConnectedSocket,
@@ -53,9 +61,11 @@ const MultiRoomList = () => {
 
   useMemo(async () => {
     if (isConnected) {
-      const roomMulti: any = await getRoomListMultiPlayer()
+      const roomMulti = await getRoomListMultiPlayer()
       if (roomMulti) {
-        const uniquePlayerIn = roomMulti.data.gameRoomDetail.filter(
+        const uniquePlayerIn = (
+          roomMulti as IResSocketRoomList
+        ).data.gameRoomDetail.filter(
           (thing, index, self) =>
             index === self.findIndex((t) => t?._id === thing?._id)
         )
@@ -68,6 +78,7 @@ const MultiRoomList = () => {
   const handleJoinRoom = (_roomId: string) => {
     router.push(`${router.asPath}/${_roomId}`)
   }
+
   return (
     <>
       <Box className="rounded-3xl border border-neutral-700">
@@ -101,6 +112,7 @@ const MultiRoomList = () => {
             icon={<ReloadIcon />}
             className="mt-10"
             multi
+            onClick={getRoomListMultiPlayer}
           />
         </div>
       </Box>

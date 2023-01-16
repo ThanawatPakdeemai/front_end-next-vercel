@@ -1,8 +1,11 @@
-import React, { memo } from "react"
+import React, { memo, useMemo } from "react"
 import { IGameCurrentPlayer } from "@feature/game/interfaces/IGameService"
 import AvatarProfile from "@components/atoms/avatar/AvatarProfile"
 import { Box, Typography } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
+import useGameStore from "@stores/game"
+import { useRouter } from "next/router"
+import useSocketWaitingRoom from "@feature/game/containers/hooks/useSocketWaitingRoom"
 
 interface IProps {
   players: IGameCurrentPlayer[] | undefined[]
@@ -10,6 +13,25 @@ interface IProps {
 
 const PlayerCard = ({ players }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
+  const gameData = useGameStore((state) => state.data)
+
+  const router = useRouter()
+  const { id } = router.query
+
+  const checkText = (item) => {
+    if (gameData?.game_type === "multiplayer") {
+      if ("owner" in item && item.owner) {
+        return "OWNER"
+      }
+      return <span className="cursor-pointer">KICK</span>
+    }
+    if (profile?.id === item.player_id) {
+      return "ME"
+    }
+
+    return "Player"
+  }
+
   return (
     <>
       <Box className="custom-scroll mb-5 overflow-y-auto">
@@ -33,22 +55,29 @@ const PlayerCard = ({ players }: IProps) => {
                           : "border-error-main border-lemon-rainbow"
                       }
                       src={item.avatar}
-                      imageBadge={`/images/gamePage/rank/${item.rank}.svg`}
-                      badgeCenter={{ status: true, name: "Ready" }}
+                      imageBadge={
+                        item.rank
+                          ? `/images/gamePage/rank/${item.rank}.svg`
+                          : ""
+                      }
+                      badgeCenter={{
+                        status: item.status,
+                        name: item.status ?? "Ready"
+                      }}
                     />
                     <Box className="m-auto w-[92px] py-3">
                       <Typography className="text-center font-neue-machina text-sm uppercase text-[700] text-neutral-300">
                         {item.username}
                       </Typography>
-                      {profile?.id === item.player_id ? (
-                        <Typography className=" text-center font-neue-machina text-xs uppercase text-purple-primary">
-                          me
-                        </Typography>
-                      ) : (
-                        <Typography className=" text-center font-neue-machina text-xs uppercase text-error-main">
-                          player
-                        </Typography>
-                      )}
+                      <Typography
+                        className={` text-center font-neue-machina text-xs uppercase ${
+                          profile?.id === item.player_id
+                            ? "text-purple-primary"
+                            : "  text-error-main"
+                        }`}
+                      >
+                        {checkText(item)}
+                      </Typography>
                     </Box>
                   </Box>
                 </>

@@ -10,6 +10,7 @@ export interface IBannerCardSlide extends ICardNextSlide {
   slide: IGame
 }
 
+// eslint-disable-next-line no-unused-vars
 const GameCardSlide = ({ slide, ...props }: IBannerCardSlide) => {
   // eslint-disable-next-line no-async-promise-executor
   const datagame: any = useGameStore(

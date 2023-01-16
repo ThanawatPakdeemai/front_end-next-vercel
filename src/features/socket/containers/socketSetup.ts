@@ -5,10 +5,19 @@ export interface ISocketContext {
   socketIO: Manager
 }
 
-export const socketSetupManager = new Manager(`${CONFIGS.BASE_URL.API}`, {
+export interface IUseSocket {
+  path: string
+  query?: any
+}
+
+export const dataSetupSocketRoomList = {
   autoConnect: false,
   reconnection: true,
   secure: true,
   withCredentials: true,
   transports: ["polling", "websocket"]
+}
+
+export const socketSetupManager = new Manager(`${CONFIGS.BASE_URL.API}`, {
+  ...dataSetupSocketRoomList
 })

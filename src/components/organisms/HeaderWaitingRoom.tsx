@@ -4,6 +4,8 @@ import LockIcon from "@components/icons/LockIcon"
 import PlusOutlineIcon from "@components/icons/PlusOutlineIcon"
 import SettingIcon from "@components/icons/SettingIcon"
 import RoomListBox from "@components/molecules/roomList/RoomListBox"
+import useGetCurrentPlayerGameSingle from "@feature/game/containers/hooks/useGetCurrentPlayerGameSingle"
+import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/dist/client/router"
 import React from "react"
 
@@ -18,16 +20,28 @@ interface IProp {
     currentPlayer: number
     maxPlayer?: number
   }
+  onOutRoom: () => void
 }
 
-const HeaderWaitingRoom = ({ roomTag, roomName, timer, player }: IProp) => {
+const HeaderWaitingRoom = ({
+  roomTag,
+  roomName,
+  timer,
+  player,
+  onOutRoom
+}: IProp) => {
   const router = useRouter()
 
   return (
     <div className="flex h-[72px] items-center gap-5 border-b  border-neutral-800">
       <div className="ml-4 flex flex-1 items-center  gap-5">
         <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800">
-          <ButtonClose onClick={() => router.back()} />
+          <ButtonClose
+            onClick={() => {
+              onOutRoom()
+              router.back()
+            }}
+          />
         </div>
         <span
           className="text-xs text-neutral-500 "

@@ -5,7 +5,7 @@ import StatisticGameDetail from "@components/molecules/statistic/StatisticGameDe
 import Tagline from "@components/molecules/tagline/Tagline"
 import { GAME_DETAILS_BANNER } from "@constants/gameBanner"
 import TopPlayer from "@feature/ranking/components/template/TopPlayer"
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import useTopPlayerByGameId from "@feature/ranking/containers/hook/useTopPlayerByGameId"
 import Header from "@components/organisms/Header"
 import Footer from "@components/organisms/Footer"
@@ -52,7 +52,7 @@ const GameRoomLayout = ({
           background="neutral"
           note
           elevation={0}
-          className="!h-[424px] !w-[550px] border border-[1px] border-neutral-900 border-opacity-80 !bg-warning-contrastText"
+          className="!h-[424px] !w-[550px] border border-neutral-900 border-opacity-80 !bg-warning-contrastText"
           rank
           topPlayerGameId={topPlayerGameId && topPlayerGameId}
         />

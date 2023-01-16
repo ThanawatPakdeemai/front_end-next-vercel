@@ -10,7 +10,8 @@ const useTopPlayer = () => {
     isError
   } = useQuery<IPlayerRanking[]>({
     queryKey: ["topPlayer"],
-    queryFn: () => getPlayersRanking("game/ranks-all").then((res) => res)
+    queryFn: () => getPlayersRanking("game/ranks-all").then((res) => res),
+    staleTime: Infinity
   })
 
   return {

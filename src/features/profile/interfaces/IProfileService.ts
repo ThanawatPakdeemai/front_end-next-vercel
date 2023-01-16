@@ -42,6 +42,7 @@ export interface IProfile extends IProfileMain {
   max_exp: number
   exp: number
   level: number
+  message?: string
 }
 
 export interface IGetProfileResponse extends IProfileMain {

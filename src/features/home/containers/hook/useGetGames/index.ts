@@ -8,7 +8,7 @@ const useGetGames = () => {
     isLoading,
     isError
   } = useQuery(["slideGames"], getHomeSlide, {
-    cacheTime: 1000 * 60 * 60 * 24
+    staleTime: Infinity
   })
 
   return {

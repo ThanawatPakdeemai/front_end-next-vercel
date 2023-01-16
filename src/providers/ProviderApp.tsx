@@ -8,11 +8,11 @@ function ProviderApp({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <SocketProvider>
-        <ToasterBox />
-        {/* <ModalProvider>{children}</ModalProvider> */}
-        {children}
-      </SocketProvider>
+      {/* <SocketProvider> */}
+      <ToasterBox />
+      {/* <ModalProvider>{children}</ModalProvider> */}
+      {children}
+      {/* </SocketProvider> */}
     </>
   )
 }

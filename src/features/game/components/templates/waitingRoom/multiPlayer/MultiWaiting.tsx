@@ -10,6 +10,7 @@ import {
   IGameRoomListSocket
 } from "@feature/game/interfaces/IGameService"
 import SeatPlayers from "@feature/game/components/organisms/SeatPlayers"
+import { Box } from "@mui/material"
 import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
 export interface IPropWaitingMulti extends IPropWaitingSingle {}
@@ -110,24 +111,31 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingMulti) => {
 
   return (
     <>
-      {dataPlayers && (
-        <HeaderWaitingRoom
-          roomTag={dataPlayers.create_room_detail.no_room}
-          roomName="#ROOM NAME"
-          timer={{
-            time: new Date(dataPlayers.end_time)
-          }}
-          player={{
-            currentPlayer: dataPlayers.amount_current_player,
-            maxPlayer: dataPlayers.max_players
-          }}
-          onOutRoom={outRoom}
-        />
-      )}
+      <Box className=" gap-3 md:flex">
+        <Box className="w-full shrink  rounded-3xl border border-neutral-800">
+          {dataPlayers && (
+            <HeaderWaitingRoom
+              roomTag={dataPlayers.create_room_detail.no_room}
+              roomName="#ROOM NAME"
+              timer={{
+                time: new Date(dataPlayers.end_time)
+              }}
+              player={{
+                currentPlayer: dataPlayers.amount_current_player,
+                maxPlayer: dataPlayers.max_players
+              }}
+              onOutRoom={outRoom}
+            />
+          )}
 
-      {dataPlayers && dataPlayers.current_player && (
-        <SeatPlayers players={dataPlayers?.current_player} />
-      )}
+          {dataPlayers && dataPlayers.current_player && (
+            <SeatPlayers players={dataPlayers?.current_player} />
+          )}
+        </Box>
+        <Box className="w-[333px]  flex-none rounded-3xl border border-neutral-800">
+          right box
+        </Box>
+      </Box>
     </>
   )
 }

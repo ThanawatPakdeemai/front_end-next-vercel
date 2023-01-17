@@ -1,7 +1,8 @@
 import React, { memo, useMemo, useState } from "react"
 import {
   CurrentPlayer,
-  IGameCurrentPlayer
+  IGameCurrentPlayer,
+  IGameCurrentPlayerMulti
 } from "@feature/game/interfaces/IGameService"
 import { Box, Typography } from "@mui/material"
 import Ellipse from "@components/icons/Ellipse/Ellipse"
@@ -10,7 +11,7 @@ import ButtonGame from "../atoms/ButtonGame"
 import PlayerCard from "../molecules/PlayerCard"
 
 interface IProps {
-  players: IGameCurrentPlayer[] | undefined[]
+  players: IGameCurrentPlayerMulti[] | undefined[]
   // eslint-disable-next-line no-unused-vars
   handleKick?: (player_id: string) => void
   roomId: string

@@ -170,6 +170,10 @@ export interface IGameCurrentPlayer extends IGameBase {
   rank: string
 }
 
+export interface IGameCurrentPlayerMulti extends IGameCurrentPlayer {
+  owner?: boolean
+}
+
 export interface IGameHistoryUserPlay extends IGameBase {
   status: string
   timestamp: Date

@@ -1,29 +1,52 @@
+/* eslint-disable react/button-has-type */
+/* eslint-disable jsx-a11y/no-redundant-roles */
 import React, { memo, useMemo } from "react"
-import { IGameCurrentPlayer } from "@feature/game/interfaces/IGameService"
+import {
+  CurrentPlayer,
+  IGameCurrentPlayer
+} from "@feature/game/interfaces/IGameService"
 import AvatarProfile from "@components/atoms/avatar/AvatarProfile"
 import { Box, Typography } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
 import useGameStore from "@stores/game"
 import { useRouter } from "next/router"
-import useSocketWaitingRoom from "@feature/game/containers/hooks/useSocketWaitingRoom"
+import { useToast } from "@feature/toast/containers"
 
 interface IProps {
   players: IGameCurrentPlayer[] | undefined[]
+  // eslint-disable-next-line no-unused-vars
+  onKick?: (player_id: string) => void
 }
 
-const PlayerCard = ({ players }: IProps) => {
+const PlayerCard = ({ players, onKick }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
   const gameData = useGameStore((state) => state.data)
-
   const router = useRouter()
-  const { id } = router.query
-
-  const checkText = (item) => {
+  const { errorToast } = useToast()
+  const checkText = (item: CurrentPlayer) => {
     if (gameData?.game_type === "multiplayer") {
       if ("owner" in item && item.owner) {
         return "OWNER"
       }
-      return <span className="cursor-pointer">KICK</span>
+      if ("owner" in item && !item.owner && item.player_id !== profile?.id) {
+        return (
+          <button
+            role="button"
+            className="cursor-pointer"
+            onClick={() => {
+              if (item.player_id && onKick) {
+                onKick(item.player_id)
+                if (item.player_id === profile?.id) {
+                  router.push(`/${gameData.path}/roomlist`)
+                  errorToast("You out room by owner")
+                }
+              }
+            }}
+          >
+            KICK
+          </button>
+        )
+      }
     }
     if (profile?.id === item.player_id) {
       return "ME"

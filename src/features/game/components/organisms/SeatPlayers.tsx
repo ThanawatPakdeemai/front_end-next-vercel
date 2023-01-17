@@ -7,14 +7,19 @@ import PlayerCard from "../molecules/PlayerCard"
 
 interface IProps {
   players: IGameCurrentPlayer[] | undefined[]
+  // eslint-disable-next-line no-unused-vars
+  handleKick?: (player_id: string) => void
 }
 
-const SeatPlayers = ({ players }: IProps) => {
+const SeatPlayers = ({ players, handleKick }: IProps) => {
   const OnPlayGame = () => {}
   return (
     <>
       <Box>
-        <PlayerCard players={players} />
+        <PlayerCard
+          players={players}
+          onKick={handleKick}
+        />
         <Box className="mb-10  flex justify-center">
           <Box className="w-fit items-center justify-center gap-3 rounded-[50px] border border-neutral-800 bg-primary-main p-3 md:flex">
             <Typography className=" mx-4 w-[200px] font-neue-machina text-sm text-error-main">

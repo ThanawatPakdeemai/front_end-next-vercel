@@ -46,12 +46,9 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
       )
     })
 
-  const handleKick = () => {
-    socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_KICK, (response) => {
-      if (response) {
-        errorToast("You were kicked out of the room.")
-        router.back()
-      }
+  const kickRoom = (player_id: string) => {
+    socketWaitingRoom.emit(EVENTS.ACTION.WAITING_ROOM_KICKPLAYER, {
+      player_id
     })
   }
 
@@ -60,7 +57,7 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     onSetConnectedSocket,
     isConnected,
     getPlayersMulti,
-    handleKick
+    kickRoom
   }
 }
 

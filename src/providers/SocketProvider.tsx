@@ -1,9 +1,18 @@
-import SocketContext from "@feature/socket/containers/contexts/socketContext"
-import { socketSetupManager } from "@feature/socket/containers/socketSetup"
-import { PropsWithChildren, useMemo } from "react"
+import { ISocketContext, useSocket } from "@feature/socket"
+import { ReactNode, createContext, useContext, useMemo } from "react"
 
-function SocketProvider({ children }: PropsWithChildren<unknown>) {
-  const socket = useMemo(() => ({ socketIO: socketSetupManager }), [])
+interface IProp {
+  propsSocket: any
+  children: ReactNode // PropsWithChildren<unknown>
+}
+function SocketProvider({ propsSocket, children }: IProp) {
+  const { setUp } = useSocket({ ...propsSocket })
+
+  const SocketContext = createContext<ISocketContext>({
+    socketIO: setUp
+  })
+
+  const socket = useMemo(() => ({ socketIO: setUp }), [setUp])
 
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>

@@ -18,6 +18,6 @@ export const dataSetupSocketRoomList = {
   transports: ["polling", "websocket"]
 }
 
-export const socketSetupManager = new Manager(`${CONFIGS.BASE_URL.API}`, {
-  ...dataSetupSocketRoomList
-})
+// export const socketSetupManager = new Manager(`${CONFIGS.BASE_URL.API}`, {
+//   ...dataSetupSocketRoomList
+// })

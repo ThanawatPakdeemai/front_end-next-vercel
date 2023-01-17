@@ -1,5 +1,5 @@
 import HeaderWaitingRoom from "@components/organisms/HeaderWaitingRoom"
-import React, { memo, useEffect, useMemo, useState } from "react"
+import React, { memo, useEffect, useMemo, useState, useCallback } from "react"
 import useProfileStore from "@stores/profileStore"
 import useGameStore from "@stores/game"
 import { useRouter } from "next/router"
@@ -11,6 +11,7 @@ import {
 } from "@feature/game/interfaces/IGameService"
 import SeatPlayers from "@feature/game/components/organisms/SeatPlayers"
 import { Box } from "@mui/material"
+import SocketProvider from "@providers/SocketProvider"
 import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
 export interface IPropWaitingMulti extends IPropWaitingSingle {}
@@ -18,6 +19,7 @@ export interface IPropWaitingMulti extends IPropWaitingSingle {}
 const GameMultiPlayer = ({ _roomId }: IPropWaitingMulti) => {
   const profile = useProfileStore((state) => state.profile.data)
   const gameData = useGameStore((state) => state.data)
+
   const [dataPlayers, setDataPlayers] = useState<
     IGameRoomListSocket | undefined
   >()
@@ -29,11 +31,14 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingMulti) => {
       _roomId,
       _profileId: profile?.id ?? "",
       _gameId: gameData?._id ?? "",
-      _itemId: gameData?.play_to_earn ? undefined : "61976479dffe844091ab8df1" // 1$ mock
+      _itemId: gameData?.play_to_earn
+        ? gameData.item[0]._id
+        : "61976479dffe844091ab8df1" // TODO YUI 1$ mock
     }),
     [
       _roomId,
       gameData?._id,
+      gameData?.item,
       gameData?.play_to_earn,
       gameData?.socket_info?.url_room,
       profile?.id
@@ -44,7 +49,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingMulti) => {
     isConnected,
     socketWaitingRoom,
     getPlayersMulti,
-    handleKick
+    kickRoom
   } = useSocketWaitingRoom({
     ...propsSocketWaitingRoom
   })
@@ -95,7 +100,26 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingMulti) => {
     }
   }, [getPlayersMulti, isConnected])
 
-  const outRoom = () => {}
+  const outRoom = useCallback(() => {
+    if (gameData) router.push(`/${gameData.path}/roomlist`)
+  }, [gameData, router])
+
+  useEffect(() => {
+    router.beforePopState(({ as }) => {
+      if (as !== router.asPath) {
+        // Will run when leaving the current page; on back/forward actions
+        // out room this game
+        outRoom()
+      }
+      return true
+    })
+
+    return () => {
+      router.beforePopState(() => true)
+    }
+  }, [outRoom, router])
+
+  // const outRoom = () => {handleKick}
 
   // if (value.room_status === "playing") {
   //   // send owner burn item
@@ -111,31 +135,38 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingMulti) => {
 
   return (
     <>
-      <Box className=" gap-3 md:flex">
-        <Box className="w-full shrink  rounded-3xl border border-neutral-800">
-          {dataPlayers && (
-            <HeaderWaitingRoom
-              roomTag={dataPlayers.create_room_detail.no_room}
-              roomName="#ROOM NAME"
-              timer={{
-                time: new Date(dataPlayers.end_time)
-              }}
-              player={{
-                currentPlayer: dataPlayers.amount_current_player,
-                maxPlayer: dataPlayers.max_players
-              }}
-              onOutRoom={outRoom}
-            />
-          )}
+      <SocketProvider propsSocket={propsSocketWaitingRoom}>
+        <Box className=" gap-3 md:flex">
+          <Box className="w-full shrink  rounded-3xl border border-neutral-800">
+            {dataPlayers && gameData && (
+              <HeaderWaitingRoom
+                roomTag={dataPlayers.create_room_detail.no_room}
+                roomName="#ROOM NAME"
+                timer={{
+                  time: new Date(dataPlayers.end_time)
+                }}
+                player={{
+                  currentPlayer: dataPlayers.amount_current_player,
+                  maxPlayer: dataPlayers.max_players
+                }}
+                onOutRoom={() => {
+                  outRoom()
+                }}
+              />
+            )}
 
-          {dataPlayers && dataPlayers.current_player && (
-            <SeatPlayers players={dataPlayers?.current_player} />
-          )}
+            {dataPlayers && dataPlayers.current_player && (
+              <SeatPlayers
+                players={dataPlayers?.current_player}
+                handleKick={kickRoom}
+              />
+            )}
+          </Box>
+          <Box className="w-[333px]  flex-none rounded-3xl border border-neutral-800">
+            right box
+          </Box>
         </Box>
-        <Box className="w-[333px]  flex-none rounded-3xl border border-neutral-800">
-          right box
-        </Box>
-      </Box>
+      </SocketProvider>
     </>
   )
 }

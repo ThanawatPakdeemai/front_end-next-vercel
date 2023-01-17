@@ -11,7 +11,6 @@ interface IProp {
 }
 
 const GameRoomWaitingPage = ({ _roomId }: IProp) => {
-  // const { gameRoomById } = useGetGameRoomById(_roomId)
   const profile = useProfileStore((state) => state.profile.data)
   const gameData = useGameStore((state) => state.data)
 

@@ -5,11 +5,9 @@ import useGameStore from "@stores/game"
 import { useRouter } from "next/router"
 import useSocketWaitingRoom from "@feature/game/containers/hooks/useSocketWaitingRoom"
 import helper from "@utils/helper"
-import {
-  CurrentPlayer,
-  IGameRoomListSocket
-} from "@feature/game/interfaces/IGameService"
+import { IGameRoomListSocket } from "@feature/game/interfaces/IGameService"
 import SeatPlayers from "@feature/game/components/organisms/SeatPlayers"
+import ChatTemplate from "@feature/chat/components/templates/ChatTemplate"
 import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
 export interface IPropWaitingMulti extends IPropWaitingSingle {}
@@ -128,6 +126,8 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingMulti) => {
       {dataPlayers && dataPlayers.current_player && (
         <SeatPlayers players={dataPlayers?.current_player} />
       )}
+
+      <ChatTemplate />
     </>
   )
 }

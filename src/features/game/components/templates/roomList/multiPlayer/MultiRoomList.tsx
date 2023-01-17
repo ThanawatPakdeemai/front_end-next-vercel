@@ -4,6 +4,7 @@ import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
 import useSocketRoomList from "@feature/game/containers/hooks/useSocketRoomList"
 import {
+  IGame,
   IGameRoomListSocket,
   IResSocketRoomList
 } from "@feature/game/interfaces/IGameService"
@@ -41,6 +42,7 @@ const MultiRoomList = () => {
       profile?.id
     ]
   )
+
   const {
     onSetConnectedSocket,
     isConnected,
@@ -88,7 +90,12 @@ const MultiRoomList = () => {
   }, [fetchRoom])
 
   const handleJoinRoom = (_data: IGameRoomListSocket) => {
-    if (_data.amount_current_player < _data.max_players) {
+    if (new Date() > new Date(_data.end_time)) {
+      errorToast("This room is full")
+    } else if (
+      _data.amount_current_player < _data.max_players &&
+      new Date() < new Date(_data.end_time)
+    ) {
       router.push(`${router.asPath}/${_data._id}`)
     } else {
       errorToast("This room is full")

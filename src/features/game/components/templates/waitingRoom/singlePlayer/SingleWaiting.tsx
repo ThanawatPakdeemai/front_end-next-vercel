@@ -1,6 +1,5 @@
 import HeaderWaitingRoom from "@components/organisms/HeaderWaitingRoom"
-import SeatPlayers from "@feature/game/components/organisms/SeatPlayers"
-
+import SeatPlayersSingle from "@feature/game/components/organisms/SeatPlayerSingle"
 import useGetCurrentPlayerGameSingle from "@feature/game/containers/hooks/useGetCurrentPlayerGameSingle"
 
 import { Box, Typography } from "@mui/material"
@@ -15,7 +14,6 @@ export interface IPropWaitingSingle {
 }
 
 const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
-  // const { gameRoomById } = useGetGameRoomById(_roomId)
   const profile = useProfileStore((state) => state.profile.data)
   const gameData = useGameStore((state) => state.data)
   const router = useRouter()
@@ -118,7 +116,10 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
                 />
                 {!isLoading && (
                   <>
-                    <SeatPlayers players={playersMap} />
+                    <SeatPlayersSingle
+                      players={playersMap}
+                      roomId={_roomId}
+                    />
                   </>
                 )}
               </Box>

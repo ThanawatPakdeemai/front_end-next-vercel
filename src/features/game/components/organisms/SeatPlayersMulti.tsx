@@ -36,7 +36,7 @@ const SeatPlayersSingle = ({ players, handleKick, roomId }: IProps) => {
   const playerOwnerRoom = useMemo(() => {
     if (profile && playerInroom)
       return playerInroom.find((ele) => {
-        if (ele && "owner" in ele) {
+        if (ele && "owner" in ele && ele.owner) {
           return ele.owner
         }
         return undefined

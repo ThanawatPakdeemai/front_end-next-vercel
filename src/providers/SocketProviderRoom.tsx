@@ -2,11 +2,10 @@
 import { ReactNode, createContext, useContext, useMemo } from "react"
 
 interface IPropSocket {
-  // eslint-disable-next-line no-unused-vars
   getRoomListMultiPlayer: () => void
 }
 interface IProp {
-  propsSocket: IPropSocket
+  propsSocket: IPropSocket | undefined
   children: ReactNode // PropsWithChildren<unknown>
 }
 

@@ -13,6 +13,7 @@ const ButtonClose = ({ onClick, className }: IProps) => (
     onClick={onClick}
   >
     <Box
+      component="div"
       className="group ml-2 flex
             h-8 w-8 rotate-45
              items-center rounded-[8px] !bg-error-main duration-150 ease-bounce hover:rotate-0 hover:bg-error-main"

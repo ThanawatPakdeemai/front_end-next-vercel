@@ -3,7 +3,7 @@ import Dropdown from "@components/atoms/DropdownCustom"
 import PlusIcon from "@components/icons/CountIcon/PlusIcon"
 import SearchIcon from "@components/icons/SearchIcon"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import { TextField } from "@mui/material"
+import { TextField, Typography } from "@mui/material"
 import { useRouter } from "next/router"
 import React from "react"
 
@@ -23,7 +23,7 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
           </div>
           <h1 className="text-white-defzault self-center uppercase">
             Lobby :{lobby}
-            <span className="text-secondary-main">Skull XL</span>
+            <Typography className="text-secondary-main">Skull XL</Typography>
           </h1>
         </div>
         <div className="flex">

@@ -1,29 +1,50 @@
-import React, { memo, useMemo } from "react"
-import { IGameCurrentPlayer } from "@feature/game/interfaces/IGameService"
+/* eslint-disable react/button-has-type */
+/* eslint-disable jsx-a11y/no-redundant-roles */
+import React, { memo, useEffect, useMemo } from "react"
+import {
+  CurrentPlayer,
+  IGameCurrentPlayer
+} from "@feature/game/interfaces/IGameService"
 import AvatarProfile from "@components/atoms/avatar/AvatarProfile"
 import { Box, Typography } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
 import useGameStore from "@stores/game"
 import { useRouter } from "next/router"
-import useSocketWaitingRoom from "@feature/game/containers/hooks/useSocketWaitingRoom"
+import { useToast } from "@feature/toast/containers"
+import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
 
 interface IProps {
   players: IGameCurrentPlayer[] | undefined[]
 }
 
 const PlayerCard = ({ players }: IProps) => {
+  const propsSocket = useSocketProviderWaiting()
+  const { kickRoom } = propsSocket
   const profile = useProfileStore((state) => state.profile.data)
   const gameData = useGameStore((state) => state.data)
-
   const router = useRouter()
-  const { id } = router.query
+  const { errorToast } = useToast()
 
-  const checkText = (item) => {
+  const checkText = (item: CurrentPlayer) => {
     if (gameData?.game_type === "multiplayer") {
       if ("owner" in item && item.owner) {
         return "OWNER"
       }
-      return <span className="cursor-pointer">KICK</span>
+      if ("owner" in item && !item.owner && item.player_id !== profile?.id) {
+        return (
+          <button
+            role="button"
+            className="cursor-pointer"
+            onClick={() => {
+              if (item.player_id && kickRoom) {
+                kickRoom(item.player_id)
+              }
+            }}
+          >
+            KICK
+          </button>
+        )
+      }
     }
     if (profile?.id === item.player_id) {
       return "ME"

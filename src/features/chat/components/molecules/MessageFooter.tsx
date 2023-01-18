@@ -11,13 +11,9 @@ interface IMessageFooter {}
 const MessageFooter = ({}: IMessageFooter) => {
   const { handleInputChat } = useChat()
   const { message, setMessage } = useChatContext()
-  const { onSend } = useSocketWaitingRoom({
-    "_path": "8ballpool-f2p",
-    "_roomId": "63c7a5d2c9460f58eb3e35e2",
-    "_profileId": "615d8646ef28627d2ff3da0d",
-    "_gameId": "63636fb5c81000f1fbb2c0b2",
-    _itemId: undefined
-  })
+  // const { onSend } = useSocketWaitingRoom({
+  // })
+
   const iconmotion = {
     hover: {
       scale: 1.2,
@@ -58,7 +54,7 @@ const MessageFooter = ({}: IMessageFooter) => {
         icon={<SendIcon />}
         className="absolute right-4 flex h-[18px] w-[18px] cursor-pointer items-center justify-center rounded-lg bg-transparent"
         aria-label="send-button"
-        onClick={onSend}
+        // onClick={onSend}
       />
     </Box>
   )

@@ -20,6 +20,7 @@ const GameRoomLayout = ({
 }: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) => {
   /* mockup data */
   const data = useGameStore((state) => state.data)
+  const [gameData, setGameData] = useState<IGame>()
   const { topPlayerGameId, fetchTopPlayersByGameId } = useTopPlayerByGameId()
   const { statsGameById, fetchStatsGameById } = useGetStatisticsGameById()
   const [gameData, setGameData] = useState<IGame>()
@@ -31,13 +32,17 @@ const GameRoomLayout = ({
   }, [data])
 
   useEffect(() => {
-    if (data && fetchStatsGameById && fetchTopPlayersByGameId) {
+    if (data) setGameData(data)
+  }, [data])
+
+  useEffect(() => {
+    if (gameData && fetchStatsGameById && fetchTopPlayersByGameId) {
       unstable_batchedUpdates(() => {
-        fetchStatsGameById(data.id)
-        fetchTopPlayersByGameId(data.id)
+        fetchStatsGameById(gameData._id)
+        fetchTopPlayersByGameId(gameData._id)
       })
     }
-  }, [data, fetchStatsGameById, fetchTopPlayersByGameId])
+  }, [gameData, fetchStatsGameById, fetchTopPlayersByGameId])
 
   return (
     <div className="main-container mx-auto">

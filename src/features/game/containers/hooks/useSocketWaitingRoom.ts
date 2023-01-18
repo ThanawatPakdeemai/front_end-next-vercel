@@ -4,36 +4,37 @@ import { IGameRoomListSocket } from "@feature/game/interfaces/IGameService"
 import { useSocket } from "@feature/socket"
 import { useToast } from "@feature/toast/containers"
 import { useRouter } from "next/router"
-import dayjs from "dayjs"
-import { IChat } from "@feature/chat/interface/IChat"
-import { useState } from "react"
+import { useEffect } from "react"
+import helper from "@utils/helper"
+import useGameStore from "@stores/game"
+import { IPropsSocketRoomList } from "./useSocketRoomList"
 import useChatContext from "@feature/chat/containers/contexts/useChatContext"
+import { IChat } from "@feature/chat/interface/IChat"
+import dayjs from "dayjs"
 
-export interface IPropsSocketWaiting {
-  _path: string
-  _profileId: string
-  _gameId: string
-  _roomId: string
-  _itemId: string | undefined
+export interface IPropsSocketWaiting extends IPropsSocketRoomList {
+  room_id: string
 }
 
 const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
   const { errorToast } = useToast()
   const router = useRouter()
-  const { _path, _profileId, _gameId, _itemId, _roomId } = props
   const { message, setMessage } = useChatContext()
+  const gameData = useGameStore((state) => state.data)
+
+  const { path, player_id, game_id, room_id, item_id } = props
 
   const {
     socketInit: socketWaitingRoom,
     onSetConnectedSocket,
     isConnected
   } = useSocket({
-    path: _path,
+    path,
     query: {
-      player_id: _profileId,
-      game_id: _gameId,
-      room_id: _roomId,
-      item_id: _itemId
+      player_id,
+      game_id,
+      room_id,
+      item_id
     }
   })
 
@@ -51,14 +52,21 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
       )
     })
 
-  const handleKick = () => {
-    socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_KICK, (response) => {
-      if (response) {
-        errorToast("You were kicked out of the room.")
-        router.back()
-      }
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const kickRoom = (_player_id: string) => {
+    socketWaitingRoom.emit(EVENTS.ACTION.WAITING_ROOM_KICKPLAYER, {
+      player_id: _player_id
     })
   }
+
+  useEffect(() => {
+    socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_KICK, (value) => {
+      if (gameData) {
+        errorToast("You were kicked out of the room.")
+        router.push(`/${gameData.path}/roomlist`)
+      }
+    })
+  }, [errorToast, gameData, router, socketWaitingRoom])
 
   /**
    * @description Calling socket chatting
@@ -106,7 +114,8 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     onSetConnectedSocket,
     isConnected,
     getPlayersMulti,
-    handleKick,
+    kickRoom,
+    room_id,
     getChat,
     onSend
   }

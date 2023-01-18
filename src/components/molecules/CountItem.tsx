@@ -10,12 +10,16 @@ import React from "react"
 interface IProp {
   endIcon?: React.ReactNode
   label?: string
+  _minusItem?: () => void
+  _addItem?: () => void
+  _item?: number
 }
 
-const CountItem = ({ endIcon, label }: IProp) => {
+const CountItem = ({ endIcon, label, _minusItem, _addItem, _item }: IProp) => {
   const minusItem = useCountStore((state: any) => state.decrease)
   const addItem = useCountStore((state: any) => state.increase)
   const item = useCountStore((state: any) => state.count)
+
   return (
     <div className="flex flex-col items-start">
       {label && (
@@ -25,7 +29,7 @@ const CountItem = ({ endIcon, label }: IProp) => {
       )}
       <div className="flex items-center">
         <ButtonIcon
-          onClick={minusItem}
+          onClick={_minusItem || minusItem}
           variants={iconmotion}
           whileHover="hover"
           transition={{ type: "spring", stiffness: 400, damping: 4 }}
@@ -48,7 +52,7 @@ const CountItem = ({ endIcon, label }: IProp) => {
               }
             }
           }}
-          value={item}
+          value={_item || item}
           InputProps={{
             readOnly: true,
             endAdornment: endIcon || <SkullIcon />,
@@ -62,7 +66,7 @@ const CountItem = ({ endIcon, label }: IProp) => {
           focused={false}
         />
         <ButtonIcon
-          onClick={addItem}
+          onClick={_addItem || addItem}
           variants={iconmotion}
           whileHover="hover"
           transition={{ type: "spring", stiffness: 400, damping: 4 }}

@@ -3,7 +3,6 @@ import FavouriteIcon from "@components/icons/HowToPlayIcon/FavouriteIcon"
 import HowToPlayIcon from "@components/icons/HowToPlayIcon/HowToPlayIcon"
 import ShareIcon from "@components/icons/HowToPlayIcon/ShareIcon"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import useGetGames from "@feature/home/containers/hook/useGetGames"
 import { Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 

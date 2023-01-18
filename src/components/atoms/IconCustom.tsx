@@ -10,12 +10,11 @@ import React from "react"
 
 export interface IIconCustoms {
   icon_key: string
-  name: string
   support: boolean
 }
 
 const IconCustoms = (props: IIconCustoms) => {
-  const { icon_key, support, name } = props
+  const { icon_key, support } = props
 
   return (
     <>

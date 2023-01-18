@@ -1,6 +1,6 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/no-redundant-roles */
-import React, { memo, useMemo } from "react"
+import React, { memo, useEffect, useMemo } from "react"
 import {
   CurrentPlayer,
   IGameCurrentPlayer
@@ -11,18 +11,20 @@ import useProfileStore from "@stores/profileStore"
 import useGameStore from "@stores/game"
 import { useRouter } from "next/router"
 import { useToast } from "@feature/toast/containers"
+import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
 
 interface IProps {
   players: IGameCurrentPlayer[] | undefined[]
-  // eslint-disable-next-line no-unused-vars
-  onKick?: (player_id: string) => void
 }
 
-const PlayerCard = ({ players, onKick }: IProps) => {
+const PlayerCard = ({ players }: IProps) => {
+  const propsSocket = useSocketProviderWaiting()
+  const { kickRoom } = propsSocket
   const profile = useProfileStore((state) => state.profile.data)
   const gameData = useGameStore((state) => state.data)
   const router = useRouter()
   const { errorToast } = useToast()
+
   const checkText = (item: CurrentPlayer) => {
     if (gameData?.game_type === "multiplayer") {
       if ("owner" in item && item.owner) {
@@ -34,12 +36,8 @@ const PlayerCard = ({ players, onKick }: IProps) => {
             role="button"
             className="cursor-pointer"
             onClick={() => {
-              if (item.player_id && onKick) {
-                onKick(item.player_id)
-                if (item.player_id === profile?.id) {
-                  router.push(`/${gameData.path}/roomlist`)
-                  errorToast("You out room by owner")
-                }
+              if (item.player_id && kickRoom) {
+                kickRoom(item.player_id)
               }
             }}
           >

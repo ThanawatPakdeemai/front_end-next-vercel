@@ -17,29 +17,27 @@ import PlayerCard from "../molecules/PlayerCard"
 
 interface IProps {
   players: IGameCurrentPlayer[] | undefined[]
-  // eslint-disable-next-line no-unused-vars
-  handleKick?: (player_id: string) => void
-  roomId: string
+  room_id: string
 }
 const baseUrlGame = CONFIGS.BASE_URL.GAME
 const baseUrlApi = CONFIGS.BASE_URL.API
 const baseUrlFront = CONFIGS.BASE_URL.FRONTEND
 
-const SeatPlayers = ({ players, handleKick, roomId }: IProps) => {
+const SeatPlayers = ({ players, room_id }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
   const gameData = useGameStore((state) => state.data)
   const ip = useIpAddressStore((state) => state.ipAddress)
 
   const router = useRouter()
 
-  const item_id = useMemo(() => roomId, [roomId]) // TODO YUI ITEM
+  const item_id = useMemo(() => room_id, [room_id]) // TODO YUI ITEM
 
-  const { gameRoomById } = useGetGameRoomById(roomId)
+  const { gameRoomById } = useGetGameRoomById(room_id)
 
   const OnPlayGame = () => {
-    if (gameRoomById && gameData && profile && roomId) {
+    if (gameRoomById && gameData && profile && room_id) {
       const gameURL = `${baseUrlGame}/${gameData.id}/?${Helper.makeID(8)}${btoa(
-        `${roomId}:|:${profile.id}:|:${item_id}:|:${
+        `${room_id}:|:${profile.id}:|:${item_id}:|:${
           profile.email
         }:|:${Helper.getLocalStorage(
           "token"
@@ -59,10 +57,7 @@ const SeatPlayers = ({ players, handleKick, roomId }: IProps) => {
   return (
     <>
       <Box>
-        <PlayerCard
-          players={players}
-          onKick={handleKick}
-        />
+        <PlayerCard players={players} />
         <Box className="mb-10  flex justify-center">
           <Box className="w-fit items-center justify-center gap-3 rounded-[50px] border border-neutral-800 bg-primary-main p-3 md:flex">
             <Typography className=" mx-4 w-[200px] font-neue-machina text-sm ">

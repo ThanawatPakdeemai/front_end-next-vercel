@@ -47,14 +47,14 @@ export function useSocket({ path, query }: IUseSocket) {
   useEffect(() => {
     socketInit.current.on("connect", () => {
       if (socketInit.current.connected) {
-        setIsConnected(true)
+        onSetConnectedSocket(socketInit.current.connected)
       }
     })
 
     return () => {
       setIsConnected(false)
     }
-  }, [socketInit])
+  }, [onSetConnectedSocket, socketInit])
 
   return {
     socketInit: socketInit.current,

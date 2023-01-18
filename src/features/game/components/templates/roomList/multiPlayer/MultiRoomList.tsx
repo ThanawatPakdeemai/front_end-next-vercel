@@ -8,9 +8,10 @@ import {
   IGameRoomListSocket,
   IResSocketRoomList
 } from "@feature/game/interfaces/IGameService"
+import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import { useToast } from "@feature/toast/containers"
 import { Box, Divider } from "@mui/material"
-import SocketProvider from "@providers/SocketProvider"
+import SocketProviderRoom from "@providers/SocketProviderRoom"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import helper from "@utils/helper"
@@ -22,15 +23,15 @@ const MultiRoomList = () => {
   const router = useRouter()
   const { errorToast } = useToast()
   const gameData = useGameStore((state) => state.data)
+
   const [dataRoom, setDataRoom] = useState<IGameRoomListSocket[]>()
-  const token = helper.getTokenFromLocal()
 
   const propsSocketRoomlist = useMemo(
     () => ({
-      _path: gameData?.socket_info?.url_lobby ?? "",
-      _profileId: profile?.id ?? "",
-      _gameId: gameData?._id ?? "",
-      _itemId: gameData?.play_to_earn
+      path: gameData?.socket_info?.url_lobby ?? "",
+      player_id: profile?.id ?? "",
+      game_id: gameData?._id ?? "",
+      item_id: gameData?.play_to_earn
         ? gameData.item[0]._id
         : "61976479dffe844091ab8df1" // TODO YUI 1$ mock
     }),
@@ -43,17 +44,15 @@ const MultiRoomList = () => {
     ]
   )
 
-  const {
-    onSetConnectedSocket,
-    isConnected,
-    socketRoomList,
-    getRoomListMultiPlayer
-  } = useSocketRoomList({
-    ...propsSocketRoomlist
-  })
+  const { socketRoomList, isConnected, getRoomListMultiPlayer } =
+    useSocketRoomList({
+      ...propsSocketRoomlist
+    })
 
   useEffect(() => {
     if (profile) {
+      const token = helper.getTokenFromLocal()
+
       if (token) {
         socketRoomList.auth = { token }
         socketRoomList.connect()
@@ -64,24 +63,20 @@ const MultiRoomList = () => {
       if (socketRoomList.connected === false) return
       socketRoomList.disconnect()
     }
-  }, [onSetConnectedSocket, profile, socketRoomList, token])
-
-  const mapRoom = (roomMulti) => {
-    if (roomMulti) {
-      const uniquePlayerIn = (
-        roomMulti as IResSocketRoomList
-      ).data.gameRoomDetail.filter(
-        (thing, index, self) =>
-          index === self.findIndex((t) => t?._id === thing?._id)
-      )
-      setDataRoom(uniquePlayerIn)
-    }
-  }
+  }, [profile, socketRoomList])
 
   const fetchRoom = useCallback(async () => {
     if (isConnected) {
       const roomMulti = await getRoomListMultiPlayer()
-      mapRoom(roomMulti)
+      if (roomMulti) {
+        const uniquePlayerIn = (
+          roomMulti as IResSocketRoomList
+        ).data.gameRoomDetail.filter(
+          (thing, index, self) =>
+            index === self.findIndex((t) => t?._id === thing?._id)
+        )
+        setDataRoom(uniquePlayerIn)
+      }
     }
   }, [getRoomListMultiPlayer, isConnected])
 
@@ -104,7 +99,7 @@ const MultiRoomList = () => {
 
   return (
     <>
-      <SocketProvider propsSocket={propsSocketRoomlist}>
+      <SocketProviderRoom propsSocket={propsSocketRoomlist}>
         <Box className="rounded-3xl border border-neutral-700">
           {gameData && <HeaderRoomList lobby={gameData.name} />}
           <Divider />
@@ -117,7 +112,7 @@ const MultiRoomList = () => {
                 const initEndTime = new Date(_data.end_time)
                 return (
                   <RoomListBar
-                    key={_data.id}
+                    key={Number(_data.id)}
                     timer={{
                       time: initEndTime,
                       onExpire: () => null
@@ -140,7 +135,7 @@ const MultiRoomList = () => {
             />
           </div>
         </Box>
-      </SocketProvider>
+      </SocketProviderRoom>
     </>
   )
 }

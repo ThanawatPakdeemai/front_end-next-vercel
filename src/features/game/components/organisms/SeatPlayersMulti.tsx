@@ -12,12 +12,9 @@ import PlayerCard from "../molecules/PlayerCard"
 
 interface IProps {
   players: IGameCurrentPlayerMulti[] | undefined[]
-  // eslint-disable-next-line no-unused-vars
-  handleKick?: (player_id: string) => void
-  roomId: string
 }
 
-const SeatPlayersSingle = ({ players, handleKick, roomId }: IProps) => {
+const SeatPlayersSingle = ({ players }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
   const [ownerPressReady, setOwnPressReady] = useState(false)
   const [playerPressReady, setPlayerPressReady] = useState(false)
@@ -101,10 +98,7 @@ const SeatPlayersSingle = ({ players, handleKick, roomId }: IProps) => {
   return (
     <>
       <Box>
-        <PlayerCard
-          players={players}
-          onKick={handleKick}
-        />
+        <PlayerCard players={players} />
         <Box className="mb-10  flex justify-center">
           <Box
             className={` ${

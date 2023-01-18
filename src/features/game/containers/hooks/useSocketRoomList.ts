@@ -1,29 +1,45 @@
 import EVENTS from "@configs/events"
 import { IResSocketRoomList } from "@feature/game/interfaces/IGameService"
 import { useSocket } from "@feature/socket"
+import helper from "@utils/helper"
+import { useEffect } from "react"
 
 export interface IPropsSocketRoomList {
-  _path: string
-  _profileId: string
-  _gameId: string
-  _itemId: string | undefined
+  path: string
+  player_id: string
+  game_id: string
+  item_id: string | undefined
 }
 
 const useSocketRoomList = (props: IPropsSocketRoomList) => {
-  const { _path, _profileId, _gameId, _itemId } = props
+  const { path, player_id, game_id, item_id } = props
 
   const {
     socketInit: socketRoomList,
     onSetConnectedSocket,
     isConnected
   } = useSocket({
-    path: _path,
+    path,
     query: {
-      player_id: _profileId,
-      game_id: _gameId,
-      item_id: _itemId
+      player_id,
+      game_id,
+      item_id
     }
   })
+
+  useEffect(() => {
+    const token = helper.getTokenFromLocal()
+
+    if (token && !socketRoomList.connected) {
+      socketRoomList.auth = { token }
+      socketRoomList.connect()
+    }
+
+    return () => {
+      if (socketRoomList.connected === false) return
+      socketRoomList.disconnect()
+    }
+  }, [socketRoomList])
 
   const getRoomListMultiPlayer = () =>
     new Promise((resolve, reject) => {

@@ -118,7 +118,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
                   <>
                     <SeatPlayersSingle
                       players={playersMap}
-                      roomId={_roomId}
+                      room_id={_roomId}
                     />
                   </>
                 )}

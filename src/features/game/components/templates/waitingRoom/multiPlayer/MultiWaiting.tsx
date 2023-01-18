@@ -10,28 +10,27 @@ import {
   IGameRoomListSocket
 } from "@feature/game/interfaces/IGameService"
 import { Box } from "@mui/material"
-import SocketProvider from "@providers/SocketProvider"
+import SocketProvider from "@providers/SocketProviderWaiting"
 import SeatPlayersMulti from "@feature/game/components/organisms/SeatPlayersMulti"
+import { useToast } from "@feature/toast/containers"
 import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
-export interface IPropWaitingMulti extends IPropWaitingSingle {}
-
-const GameMultiPlayer = ({ _roomId }: IPropWaitingMulti) => {
+const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   const profile = useProfileStore((state) => state.profile.data)
   const gameData = useGameStore((state) => state.data)
-
+  const router = useRouter()
+  const { errorToast } = useToast()
   const [dataPlayers, setDataPlayers] = useState<
     IGameRoomListSocket | undefined
   >()
-  const router = useRouter()
 
   const propsSocketWaitingRoom = useMemo(
     () => ({
-      _path: gameData?.socket_info?.url_room ?? "",
-      _roomId,
-      _profileId: profile?.id ?? "",
-      _gameId: gameData?._id ?? "",
-      _itemId: gameData?.play_to_earn
+      path: gameData?.socket_info?.url_room ?? "",
+      room_id: _roomId,
+      player_id: profile?.id ?? "",
+      game_id: gameData?._id ?? "",
+      item_id: gameData?.play_to_earn
         ? gameData.item[0]._id
         : "61976479dffe844091ab8df1" // TODO YUI 1$ mock
     }),
@@ -50,9 +49,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingMulti) => {
     socketWaitingRoom,
     getPlayersMulti,
     kickRoom
-  } = useSocketWaitingRoom({
-    ...propsSocketWaitingRoom
-  })
+  } = useSocketWaitingRoom({ ...propsSocketWaitingRoom })
 
   useEffect(() => {
     if (profile) {
@@ -74,31 +71,37 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingMulti) => {
     if (isConnected) {
       const _dataPlayers = await getPlayersMulti()
       if (_dataPlayers) {
-        const uniquePlayerIn = (
-          _dataPlayers as IGameRoomListSocket
-        ).current_player.filter(
-          (thing, index, self) =>
-            index === self.findIndex((t) => t?.player_id === thing?.player_id)
-        )
-        const data = _dataPlayers as IGameRoomListSocket
+        const _play = _dataPlayers as IGameRoomListSocket
+        if ("current_player" in _play) {
+          const uniquePlayerIn = _play.current_player.filter(
+            (thing, index, self) =>
+              index === self.findIndex((t) => t?.player_id === thing?.player_id)
+          )
+          const data = _dataPlayers as IGameRoomListSocket
 
-        if (_dataPlayers && uniquePlayerIn) {
-          const _p = uniquePlayerIn.map((ele) => {
-            const owner =
-              data.create_room_detail.player_create === ele.player_id
-            return {
-              ...ele,
-              owner
-            }
-          })
-          const player_blank = Array(
-            (data.max_players <= 8 ? 8 : data.max_players) - _p.length
-          ).map((ele) => ele)
-          setDataPlayers({ ...data, current_player: [..._p, ...player_blank] })
+          if (_dataPlayers && uniquePlayerIn) {
+            const _p = uniquePlayerIn.map((ele) => {
+              const owner =
+                data.create_room_detail.player_create === ele.player_id
+              return {
+                ...ele,
+                owner
+              }
+            })
+            const player_blank = Array(
+              (data.max_players <= 8 ? 8 : data.max_players) - _p.length
+            ).map((ele) => ele)
+            setDataPlayers({
+              ...data,
+              current_player: [..._p, ...player_blank]
+            })
+          }
+        } else {
+          errorToast("No Player in Room")
         }
       }
     }
-  }, [getPlayersMulti, isConnected])
+  }, [errorToast, getPlayersMulti, isConnected])
 
   const outRoom = useCallback(() => {
     if (gameData) router.push(`/${gameData.path}/roomlist`)
@@ -191,7 +194,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingMulti) => {
 
   return (
     <>
-      <SocketProvider propsSocket={propsSocketWaitingRoom}>
+      <SocketProvider propsSocket={{ kickRoom }}>
         <Box className=" gap-3 md:flex">
           <Box className="w-full shrink  rounded-3xl border border-neutral-800">
             {dataPlayers && gameData && (
@@ -212,11 +215,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingMulti) => {
             )}
 
             {dataPlayers && dataPlayers.current_player && (
-              <SeatPlayersMulti
-                players={dataPlayers?.current_player}
-                handleKick={kickRoom}
-                roomId={_roomId}
-              />
+              <SeatPlayersMulti players={dataPlayers?.current_player} />
             )}
           </Box>
           <Box className="w-[333px]  flex-none rounded-3xl border border-neutral-800">

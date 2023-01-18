@@ -99,7 +99,7 @@ const MultiRoomList = () => {
 
   return (
     <>
-      <SocketProviderRoom propsSocket={propsSocketRoomlist}>
+      <SocketProviderRoom propsSocket={{ getRoomListMultiPlayer }}>
         <Box className="rounded-3xl border border-neutral-700">
           {gameData && <HeaderRoomList lobby={gameData.name} />}
           <Divider />

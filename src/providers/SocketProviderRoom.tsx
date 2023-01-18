@@ -3,10 +3,10 @@ import { ReactNode, createContext, useContext, useMemo } from "react"
 
 interface IPropSocket {
   // eslint-disable-next-line no-unused-vars
-  // kickRoom: (player_id: string) => void
+  getRoomListMultiPlayer: () => void
 }
 interface IProp {
-  propsSocket: any
+  propsSocket: IPropSocket
   children: ReactNode // PropsWithChildren<unknown>
 }
 

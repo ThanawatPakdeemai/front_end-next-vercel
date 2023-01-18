@@ -1,9 +1,23 @@
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import SendIcon from "@components/icons/SendIcon"
+import useChatContext from "@feature/chat/containers/contexts/useChatContext"
+import useChat from "@feature/chat/containers/hooks/useChat"
+import useSocketWaitingRoom from "@feature/game/containers/hooks/useSocketWaitingRoom"
 import { Box, TextField } from "@mui/material"
-import React from "react"
+import React, { useState } from "react"
 
-const MessageFooter = () => {
+interface IMessageFooter {}
+
+const MessageFooter = ({}: IMessageFooter) => {
+  const { handleInputChat } = useChat()
+  const { message, setMessage } = useChatContext()
+  const { onSend } = useSocketWaitingRoom({
+    "_path": "8ballpool-f2p",
+    "_roomId": "63c78f2170cf8168ab354508",
+    "_profileId": "615d8646ef28627d2ff3da0d",
+    "_gameId": "63636fb5c81000f1fbb2c0b2",
+    _itemId: undefined
+  })
   const iconmotion = {
     hover: {
       scale: 1.2,
@@ -29,19 +43,22 @@ const MessageFooter = () => {
             padding: "9px 15px"
           }
         }}
-        // {...register("_email")}
         id="message-input"
         placeholder="Message Here"
         size="medium"
+        value={message}
+        onKeyPress={handleInputChat}
+        onChange={(e) => setMessage(e.target.value)}
+        autoComplete="off"
       />
       <ButtonIcon
-        // onClick={handleOnNotiClick}
         variants={iconmotion}
         whileHover="hover"
         transition={{ type: "spring", stiffness: 400, damping: 4 }}
         icon={<SendIcon />}
         className="absolute right-4 flex h-[18px] w-[18px] cursor-pointer items-center justify-center rounded-lg bg-transparent"
-        aria-label="notification-button"
+        aria-label="send-button"
+        onClick={onSend}
       />
     </Box>
   )

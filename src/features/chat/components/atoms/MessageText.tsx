@@ -9,7 +9,7 @@ const MessageText = ({ message, isMe }: IMessageTextProps) => (
     className={`border-opacity-80rounded-2xl relative rounded-lg p-3 ${
       isMe
         ? "bg-neutral-300 text-neutral-900"
-        : "border-[1px] border-neutral-700 bg-neutral-800"
+        : "border-[1px] border-neutral-700 bg-neutral-800 "
     }`}
   >
     <div

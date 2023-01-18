@@ -62,7 +62,9 @@ const Howto = ({ data }: IProp) => {
             <div className="text-sm uppercase">
               <span className=" text-neutral-600">Assets: </span>
               <span className="text-neutral-400">
-                {data && data.item ? data.item[0].name : null}
+                {data && data.item && data.item.length > 0
+                  ? data.item[0].name
+                  : null}
               </span>
             </div>
             <div className="mx-2 h-3 border-[1px] border-solid border-neutral-600" />

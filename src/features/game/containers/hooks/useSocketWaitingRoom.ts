@@ -4,6 +4,10 @@ import { IGameRoomListSocket } from "@feature/game/interfaces/IGameService"
 import { useSocket } from "@feature/socket"
 import { useToast } from "@feature/toast/containers"
 import { useRouter } from "next/router"
+import dayjs from "dayjs"
+import { IChat } from "@feature/chat/interface/IChat"
+import { useState } from "react"
+import useChatContext from "@feature/chat/containers/contexts/useChatContext"
 
 export interface IPropsSocketWaiting {
   _path: string
@@ -17,6 +21,7 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
   const { errorToast } = useToast()
   const router = useRouter()
   const { _path, _profileId, _gameId, _itemId, _roomId } = props
+  const { message, setMessage } = useChatContext()
 
   const {
     socketInit: socketWaitingRoom,
@@ -55,12 +60,55 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     })
   }
 
+  /**
+   * @description Calling socket chatting
+   */
+  const getChat = () => {
+    return new Promise((resolve, reject) => {
+      socketWaitingRoom.on(EVENTS.LISTENERS.ROOM_MESSAGE, (response: IChat) => {
+        if (response) {
+          response["time"] = dayjs().format("HH:mm")
+          resolve(response)
+        } else {
+          reject(response)
+        }
+      })
+    })
+  }
+
+  /**
+   * @description When enter to send message
+   */
+  const onSend = () => {
+    return new Promise((resolve, reject) => {
+      socketWaitingRoom.emit(
+        EVENTS.ACTION.CHAT_SEND_MESSAGE,
+        {
+          message: message
+        },
+        (response: any, error: any) => {
+          console.log("response", response)
+          if (error) {
+            reject(error)
+            console.error("Error", error)
+          } else {
+            setMessage("")
+            resolve(response)
+          }
+          console.log("response", response)
+        }
+      )
+    })
+  }
+
   return {
     socketWaitingRoom,
     onSetConnectedSocket,
     isConnected,
     getPlayersMulti,
-    handleKick
+    handleKick,
+    getChat,
+    onSend
   }
 }
 

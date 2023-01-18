@@ -13,7 +13,6 @@ const MessageContent = ({ chat }: IMessageContentProps) => {
     <div className="messages-list relative">
       <div className="custom-scroll flex h-[347px] flex-col-reverse overflow-y-scroll pr-4">
         {chat.map((data) => {
-          console.log("data", data.player_id, profile?.id)
           return (
             <MessageBody
               message={data.message}

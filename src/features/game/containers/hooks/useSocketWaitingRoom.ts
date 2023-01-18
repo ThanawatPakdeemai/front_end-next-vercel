@@ -4,13 +4,16 @@ import { IGameRoomListSocket } from "@feature/game/interfaces/IGameService"
 import { useSocket } from "@feature/socket"
 import { useToast } from "@feature/toast/containers"
 import { useRouter } from "next/router"
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import helper from "@utils/helper"
 import useGameStore from "@stores/game"
 import { IPropsSocketRoomList } from "./useSocketRoomList"
 import useChatContext from "@feature/chat/containers/contexts/useChatContext"
 import { IChat } from "@feature/chat/interface/IChat"
 import dayjs from "dayjs"
+import { Manager } from "socket.io-client"
+import CONFIGS from "@configs/index"
+import useChat from "@feature/chat/containers/hooks/useChat"
 
 export interface IPropsSocketWaiting extends IPropsSocketRoomList {
   room_id: string
@@ -19,7 +22,7 @@ export interface IPropsSocketWaiting extends IPropsSocketRoomList {
 const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
   const { errorToast } = useToast()
   const router = useRouter()
-  const { message, setMessage } = useChatContext()
+  const { message, setMessage, setChat } = useChatContext()
   const gameData = useGameStore((state) => state.data)
 
   const { path, player_id, game_id, room_id, item_id } = props
@@ -71,8 +74,8 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
   /**
    * @description Calling socket chatting
    */
-  const getChat = () => {
-    return new Promise((resolve, reject) => {
+  const getChat = () =>
+    new Promise((resolve, reject) => {
       socketWaitingRoom.on(EVENTS.LISTENERS.ROOM_MESSAGE, (response: IChat) => {
         if (response) {
           response["time"] = dayjs().format("HH:mm")
@@ -82,32 +85,6 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
         }
       })
     })
-  }
-
-  /**
-   * @description When enter to send message
-   */
-  const onSend = () => {
-    return new Promise((resolve, reject) => {
-      socketWaitingRoom.emit(
-        EVENTS.ACTION.CHAT_SEND_MESSAGE,
-        {
-          message: message
-        },
-        (response: any, error: any) => {
-          console.log("response", response)
-          if (error) {
-            reject(error)
-            console.error("Error", error)
-          } else {
-            setMessage("")
-            resolve(response)
-          }
-          console.log("response", response)
-        }
-      )
-    })
-  }
 
   return {
     socketWaitingRoom,
@@ -116,8 +93,7 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     getPlayersMulti,
     kickRoom,
     room_id,
-    getChat,
-    onSend
+    getChat
   }
 }
 

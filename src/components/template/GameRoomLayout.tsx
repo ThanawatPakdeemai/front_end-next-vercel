@@ -23,7 +23,6 @@ const GameRoomLayout = ({
   const [gameData, setGameData] = useState<IGame>()
   const { topPlayerGameId, fetchTopPlayersByGameId } = useTopPlayerByGameId()
   const { statsGameById, fetchStatsGameById } = useGetStatisticsGameById()
-  const [gameData, setGameData] = useState<IGame>()
 
   useEffect(() => {
     if (data) {

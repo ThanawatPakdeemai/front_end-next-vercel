@@ -1,5 +1,6 @@
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import SendIcon from "@components/icons/SendIcon"
+import EVENTS from "@configs/events"
 import useChatContext from "@feature/chat/containers/contexts/useChatContext"
 import useChat from "@feature/chat/containers/hooks/useChat"
 import useSocketWaitingRoom from "@feature/game/containers/hooks/useSocketWaitingRoom"
@@ -9,10 +10,8 @@ import React, { useState } from "react"
 interface IMessageFooter {}
 
 const MessageFooter = ({}: IMessageFooter) => {
-  const { handleInputChat } = useChat()
+  const { handleInputChat, onSend } = useChat()
   const { message, setMessage } = useChatContext()
-  // const { onSend } = useSocketWaitingRoom({
-  // })
 
   const iconmotion = {
     hover: {
@@ -54,7 +53,7 @@ const MessageFooter = ({}: IMessageFooter) => {
         icon={<SendIcon />}
         className="absolute right-4 flex h-[18px] w-[18px] cursor-pointer items-center justify-center rounded-lg bg-transparent"
         aria-label="send-button"
-        // onClick={onSend}
+        onClick={onSend}
       />
     </Box>
   )

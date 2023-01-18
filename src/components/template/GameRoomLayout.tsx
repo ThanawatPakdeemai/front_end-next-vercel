@@ -5,7 +5,7 @@ import StatisticGameDetail from "@components/molecules/statistic/StatisticGameDe
 import Tagline from "@components/molecules/tagline/Tagline"
 import { GAME_DETAILS_BANNER } from "@constants/gameBanner"
 import TopPlayer from "@feature/ranking/components/template/TopPlayer"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import useTopPlayerByGameId from "@feature/ranking/containers/hook/useTopPlayerByGameId"
 import Header from "@components/organisms/Header"
 import Footer from "@components/organisms/Footer"
@@ -13,6 +13,7 @@ import useGetStatisticsGameById from "@feature/game/containers/hooks/useGetStati
 import useGameStore from "@stores/game"
 import { unstable_batchedUpdates } from "react-dom"
 import Howto from "@components/molecules/HowToPlay"
+import { IGame } from "@feature/game/interfaces/IGameService"
 
 const GameRoomLayout = ({
   children
@@ -21,6 +22,13 @@ const GameRoomLayout = ({
   const data = useGameStore((state) => state.data)
   const { topPlayerGameId, fetchTopPlayersByGameId } = useTopPlayerByGameId()
   const { statsGameById, fetchStatsGameById } = useGetStatisticsGameById()
+  const [gameData, setGameData] = useState<IGame>()
+
+  useEffect(() => {
+    if (data) {
+      setGameData(data)
+    }
+  }, [data])
 
   useEffect(() => {
     if (data && fetchStatsGameById && fetchTopPlayersByGameId) {
@@ -35,7 +43,7 @@ const GameRoomLayout = ({
     <div className="main-container mx-auto">
       <Header />
       <Banner data={GAME_DETAILS_BANNER} />
-      {data && <Howto data={data} />}
+      {gameData && <Howto data={gameData} />}
       {children}
       <Tagline
         bgColor="bg-neutral-800"

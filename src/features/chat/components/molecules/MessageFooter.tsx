@@ -13,7 +13,7 @@ const MessageFooter = ({}: IMessageFooter) => {
   const { message, setMessage } = useChatContext()
   const { onSend } = useSocketWaitingRoom({
     "_path": "8ballpool-f2p",
-    "_roomId": "63c78f2170cf8168ab354508",
+    "_roomId": "63c7a5d2c9460f58eb3e35e2",
     "_profileId": "615d8646ef28627d2ff3da0d",
     "_gameId": "63636fb5c81000f1fbb2c0b2",
     _itemId: undefined

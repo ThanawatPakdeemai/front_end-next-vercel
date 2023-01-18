@@ -1,7 +1,4 @@
 import { IChat } from "@feature/chat/interface/IChat"
-import useSocketWaitingRoom, {
-  IPropsSocketWaiting
-} from "@feature/game/containers/hooks/useSocketWaitingRoom"
 import React, { useMemo, useState } from "react"
 import MessageContent, {
   IMessageContentProps

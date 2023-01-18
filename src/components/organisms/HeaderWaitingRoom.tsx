@@ -4,8 +4,6 @@ import LockIcon from "@components/icons/LockIcon"
 import PlusOutlineIcon from "@components/icons/PlusOutlineIcon"
 import SettingIcon from "@components/icons/SettingIcon"
 import RoomListBox from "@components/molecules/roomList/RoomListBox"
-import useGetCurrentPlayerGameSingle from "@feature/game/containers/hooks/useGetCurrentPlayerGameSingle"
-import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/dist/client/router"
 import React from "react"
 

@@ -1,6 +1,6 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/no-redundant-roles */
-import React, { memo, useEffect, useMemo } from "react"
+import React, { memo } from "react"
 import {
   CurrentPlayer,
   IGameCurrentPlayer
@@ -9,8 +9,8 @@ import AvatarProfile from "@components/atoms/avatar/AvatarProfile"
 import { Box, Typography } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
 import useGameStore from "@stores/game"
-import { useRouter } from "next/router"
-import { useToast } from "@feature/toast/containers"
+// import { useRouter } from "next/router"
+// import { useToast } from "@feature/toast/containers"
 import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
 
 interface IProps {
@@ -22,8 +22,8 @@ const PlayerCard = ({ players }: IProps) => {
   const { kickRoom } = propsSocket
   const profile = useProfileStore((state) => state.profile.data)
   const gameData = useGameStore((state) => state.data)
-  const router = useRouter()
-  const { errorToast } = useToast()
+  // const router = useRouter()
+  // const { errorToast } = useToast()
 
   const checkText = (item: CurrentPlayer) => {
     if (gameData?.game_type === "multiplayer") {

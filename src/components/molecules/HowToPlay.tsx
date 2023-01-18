@@ -33,14 +33,14 @@ const Howto = ({ data }: IProp) => {
   const [browser, setBrowser] = useState<IGameBrowser[]>([])
 
   useEffect(() => {
-    let cancel = false
+    // let cancel = false
     if (data) {
       setDevice(data.device_support)
       setBrowser(data.browser_support)
-      return () => {
-        cancel = true
-      }
     }
+    // return () => {
+    //   cancel = true
+    // }
   }, [data])
 
   //  <div

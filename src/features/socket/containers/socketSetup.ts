@@ -1,6 +1,3 @@
-import CONFIGS from "@configs/index"
-import { Manager } from "socket.io-client"
-
 export interface ISocketWaitingData {
   // eslint-disable-next-line no-unused-vars
   kickRoom: (playerId: string) => void

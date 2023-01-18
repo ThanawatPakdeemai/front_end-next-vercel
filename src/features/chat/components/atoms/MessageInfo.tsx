@@ -1,6 +1,5 @@
 import React from "react"
 import Image from "next/image"
-import MessageText, { IMessageTextProps } from "./MessageText"
 
 interface IMessageInfoProps {
   avatar: string

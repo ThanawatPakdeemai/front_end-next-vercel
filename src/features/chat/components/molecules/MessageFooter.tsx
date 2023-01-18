@@ -1,17 +1,13 @@
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import SendIcon from "@components/icons/SendIcon"
-import EVENTS from "@configs/events"
-import useChatContext from "@feature/chat/containers/contexts/useChatContext"
+// import useChatContext from "@feature/chat/containers/contexts/useChatContext"
 import useChat from "@feature/chat/containers/hooks/useChat"
-import useSocketWaitingRoom from "@feature/game/containers/hooks/useSocketWaitingRoom"
 import { Box, TextField } from "@mui/material"
-import React, { useState } from "react"
+import React from "react"
 
-interface IMessageFooter {}
-
-const MessageFooter = ({}: IMessageFooter) => {
+const MessageFooter = () => {
   const { handleInputChat, onSend } = useChat()
-  const { message, setMessage } = useChatContext()
+  // const { message, setMessage } = useChatContext()
 
   const iconmotion = {
     hover: {
@@ -41,9 +37,9 @@ const MessageFooter = ({}: IMessageFooter) => {
         id="message-input"
         placeholder="Message Here"
         size="medium"
-        value={message}
+        // value={message}
         onKeyPress={handleInputChat}
-        onChange={(e) => setMessage(e.target.value)}
+        // onChange={(e) => setMessage(e.target.value)}
         autoComplete="off"
       />
       <ButtonIcon

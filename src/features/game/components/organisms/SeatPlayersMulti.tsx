@@ -1,7 +1,7 @@
 import React, { memo, useMemo, useState } from "react"
 import {
-  CurrentPlayer,
-  IGameCurrentPlayer,
+  // CurrentPlayer,
+  // IGameCurrentPlayer,
   IGameCurrentPlayerMulti
 } from "@feature/game/interfaces/IGameService"
 import { Box, Typography } from "@mui/material"
@@ -17,7 +17,7 @@ interface IProps {
 const SeatPlayersSingle = ({ players }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
   const [ownerPressReady, setOwnPressReady] = useState(false)
-  const [playerPressReady, setPlayerPressReady] = useState(false)
+  const [playerPressReady] = useState(false)
 
   const playerInroom = useMemo(() => {
     if (players) {
@@ -26,10 +26,10 @@ const SeatPlayersSingle = ({ players }: IProps) => {
     }
   }, [players])
 
-  const playerMe = useMemo(() => {
-    if (profile && playerInroom)
-      return playerInroom.find((ele) => ele?.player_id === profile.id)
-  }, [playerInroom, profile])
+  // const playerMe = useMemo(() => {
+  //   if (profile && playerInroom)
+  //     return playerInroom.find((ele) => ele?.player_id === profile.id)
+  // }, [playerInroom, profile])
 
   const playerOwnerRoom = useMemo(() => {
     if (profile && playerInroom)
@@ -54,15 +54,15 @@ const SeatPlayersSingle = ({ players }: IProps) => {
     }
   }, [playerInroom, playerReady])
 
-  const playerNotReady = useMemo(() => {
-    if (playerReady && playerInroom) {
-      return playerReady.length < playerInroom.length
-    }
-  }, [playerInroom, playerReady])
+  // const playerNotReady = useMemo(() => {
+  //   if (playerReady && playerInroom) {
+  //     return playerReady.length < playerInroom.length
+  //   }
+  // }, [playerInroom, playerReady])
 
-  const onReady = () => {
-    setPlayerPressReady(!playerPressReady)
-  }
+  // const onReady = () => {
+  //   setPlayerPressReady(!playerPressReady)
+  // }
 
   const onPlayGame = () => {
     setOwnPressReady(!ownerPressReady)

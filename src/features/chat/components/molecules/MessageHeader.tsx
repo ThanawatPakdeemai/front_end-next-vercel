@@ -1,5 +1,5 @@
 import MessageIcon from "@components/icons/MessageIcon"
-import { memo } from "react"
+import React from "react"
 
 const MessageHeader = () => (
   <div className="mb-4 rounded-lg bg-neutral-800">

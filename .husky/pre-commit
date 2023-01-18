@@ -6,7 +6,7 @@
 # BY KAEN
 
 echo "🧐 lint staged active..."
-# yarn lint-staged
+yarn lint-staged
 
 # Building Tailwind CSS
 yarn build:css ||

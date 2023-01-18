@@ -5,22 +5,14 @@ import useGameStore from "@stores/game"
 import { useRouter } from "next/router"
 import useSocketWaitingRoom from "@feature/game/containers/hooks/useSocketWaitingRoom"
 import helper from "@utils/helper"
-import {
-  IGame,
-  IGameRoomListSocket
-} from "@feature/game/interfaces/IGameService"
+import { IGameRoomListSocket } from "@feature/game/interfaces/IGameService"
 import { Box } from "@mui/material"
 import SocketProvider from "@providers/SocketProviderWaiting"
 import SeatPlayersMulti from "@feature/game/components/organisms/SeatPlayersMulti"
 import { useToast } from "@feature/toast/containers"
-import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
-import { ChatProvider } from "@feature/chat/containers/contexts/ChatProvider"
 import Chat from "@feature/chat/components/organisms/Chat"
 import { IChat } from "@feature/chat/interface/IChat"
-import useChat from "@feature/chat/containers/hooks/useChat"
-import useChatContext from "@feature/chat/containers/contexts/useChatContext"
-import dayjs from "dayjs"
-import EVENTS from "@configs/events"
+import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
 const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -139,7 +131,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
         setChat((oldData) => [_dataChat as IChat, ...oldData])
       }
     }
-  }, [chat, isConnected])
+  }, [isConnected, getChat])
 
   return (
     <>

@@ -12,7 +12,7 @@ import useIpAddressStore from "@stores/ipAddress"
 import CONFIGS from "@configs/index"
 import useGameStore from "@stores/game"
 import Helper from "@utils/helper"
-import ButtonGame from "../atoms/ButtonGame"
+import ButtonGame from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 
 interface IProps {

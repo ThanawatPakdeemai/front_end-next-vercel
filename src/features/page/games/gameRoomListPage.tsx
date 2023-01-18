@@ -1,6 +1,5 @@
-import { Box } from "@mui/material"
+import { Box, Divider } from "@mui/material"
 import React from "react"
-
 import useProfileStore from "@stores/profileStore"
 import useGameStore from "@stores/game"
 

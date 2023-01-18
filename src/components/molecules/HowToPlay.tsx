@@ -75,7 +75,6 @@ const Howto = ({ data }: IProp) => {
               >
                 <IconCustoms
                   icon_key={item.key}
-                  name={item.name}
                   support={item.supported}
                 />
               </div>
@@ -95,7 +94,6 @@ const Howto = ({ data }: IProp) => {
                 >
                   <IconCustoms
                     icon_key={item.key}
-                    name={item.name}
                     support={item.supported}
                   />
                 </div>

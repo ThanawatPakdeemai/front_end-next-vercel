@@ -33,7 +33,7 @@ const HeadBlog = ({ children }: { children: React.ReactNode }) => {
                     variant="contained"
                     size="large"
                   >
-                    {item.icon}
+                    <div className="hover:bg-grey-default">{item.icon}</div>
                     <Typography className="!font-neue-machina-semi !text-sm">
                       {item.name}
                     </Typography>

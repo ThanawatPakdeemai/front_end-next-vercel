@@ -1,5 +1,5 @@
 import React from "react"
-import moment from "moment"
+import dayjs from "dayjs"
 import { motion, Variants } from "framer-motion"
 import { v4 as uuid } from "uuid"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
@@ -54,7 +54,7 @@ const BlogCard = ({
       <Typography className="mt-4 text-sm">{description}</Typography>
       <motion.div className="mt-[20px] flex justify-center gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 py-[10px] px-[30px]">
         <Typography className="self-center text-sm">
-          {moment(date_released).format("DD MMM YYYY")}
+          {dayjs(date_released).format("DD MMM YYYY")}
         </Typography>
         <div className="border-r border-neutral-700 border-opacity-80" />
         <div className="flex items-center">

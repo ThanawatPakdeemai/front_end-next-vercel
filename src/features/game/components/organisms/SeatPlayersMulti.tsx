@@ -137,7 +137,7 @@ const SeatPlayersSingle = ({ players }: IProps) => {
                   playerAllReady
                     ? onPlayGame
                     : () => {
-                        onPlayGame()
+                        onPlayGame() // TODO YUI
                       }
                 }
                 text={

@@ -55,7 +55,22 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     })
   }
 
+  const cancelReady = () => {
+    socketWaitingRoom.emit(EVENTS.ACTION.WAITING_ROOM_CANCEL)
+  }
+
   useEffect(() => {
+    // check room time out
+    socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_TIMEOUT, (value) => {
+      if (gameData) {
+        errorToast("Room expried")
+        router.push(`/${gameData.path}/roomlist`)
+      }
+    })
+  }, [errorToast, gameData, router, socketWaitingRoom])
+
+  useEffect(() => {
+    // check owner kick
     socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_KICK, (value) => {
       if (gameData) {
         errorToast("You were kicked out of the room.")
@@ -70,7 +85,8 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     isConnected,
     getPlayersMulti,
     kickRoom,
-    room_id
+    room_id,
+    cancelReady
   }
 }
 

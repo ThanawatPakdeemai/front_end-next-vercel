@@ -48,7 +48,8 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     isConnected,
     socketWaitingRoom,
     getPlayersMulti,
-    kickRoom
+    kickRoom,
+    cancelReady
   } = useSocketWaitingRoom({ ...propsSocketWaitingRoom })
 
   useEffect(() => {
@@ -194,7 +195,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
 
   return (
     <>
-      <SocketProvider propsSocket={{ kickRoom }}>
+      <SocketProvider propsSocket={{ kickRoom, cancelReady }}>
         <Box className=" gap-3 md:flex">
           <Box className="w-full shrink  rounded-3xl border border-neutral-800">
             {dataPlayers && gameData && (

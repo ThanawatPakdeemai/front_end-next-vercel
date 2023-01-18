@@ -11,7 +11,10 @@ interface IProp {
   children: ReactNode // PropsWithChildren<unknown>
 }
 
-const SocketContext = createContext<any>({})
+const SocketContext = createContext<IPropSocket>({
+  kickRoom: () => {},
+  cancelReady: () => {}
+})
 
 function SocketProvider({ propsSocket, children }: IProp) {
   // const { setUp } = useSocket({ ...propsSocket })

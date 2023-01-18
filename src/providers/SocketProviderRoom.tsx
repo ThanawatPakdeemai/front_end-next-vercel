@@ -5,11 +5,13 @@ interface IPropSocket {
   getRoomListMultiPlayer: () => void
 }
 interface IProp {
-  propsSocket: IPropSocket | undefined
+  propsSocket: IPropSocket
   children: ReactNode // PropsWithChildren<unknown>
 }
 
-const SocketContext = createContext<any>({})
+const SocketContext = createContext<IPropSocket>({
+  getRoomListMultiPlayer: () => {}
+})
 
 function SocketProvider({ propsSocket, children }: IProp) {
   // const { setUp } = useSocket({ ...propsSocket })

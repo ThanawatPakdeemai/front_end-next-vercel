@@ -5,7 +5,6 @@ import { useSocket } from "@feature/socket"
 import { useToast } from "@feature/toast/containers"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
-import helper from "@utils/helper"
 import useGameStore from "@stores/game"
 import { IPropsSocketRoomList } from "./useSocketRoomList"
 

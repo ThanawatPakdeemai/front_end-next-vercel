@@ -70,6 +70,6 @@ export const SOCIAL_SHARE_SUMMARY: IMenuBase[] = [
   {
     icon: <LinkIcon className="rotate-[-45deg] text-error-main" />,
     label: "link",
-    href: undefined
+    href: ""
   }
 ]

@@ -50,7 +50,7 @@ const SummaryMain = () => {
             {SOCIAL_SHARE_SUMMARY.map((item) => (
               <Link
                 key={item.label}
-                href={item.href}
+                href={item.href !== "" ? item.href : undefined}
                 target="_blank"
               >
                 <ButtonIcon

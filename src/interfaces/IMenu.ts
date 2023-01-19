@@ -1,7 +1,7 @@
 import React from "react"
 
 interface ILink {
-  href?: string
+  href: string
 }
 
 export interface IMenuBase extends ILink {

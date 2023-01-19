@@ -1,4 +1,7 @@
 import React, { useState } from "react"
+import { useForm } from "react-hook-form"
+import * as yup from "yup"
+import { yupResolver } from "@hookform/resolvers/yup"
 import { Image } from "@components/atoms/image/index"
 import { IMAGES } from "@constants/images"
 import {
@@ -56,16 +59,71 @@ const KeyFramesAnticlockwise = styled("div")({
   animation: "rotation 10s infinite linear"
 })
 
-export default function SignInSide() {
-  const emailRegexp =
-    /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)$/
+interface TFormData {
+  email: string
+  password: string
+  confirmPassword: string
+  code: number | null
+}
 
+const SignupSchema = yup
+  .object({
+    email: yup.string().required(),
+    password: yup.string().defined(),
+    confirmPassword: yup.string().defined(),
+    code: yup.number().required().positive().integer()
+  })
+  .required()
+
+const defaultValues: TFormData = {
+  email: "",
+  password: "",
+  confirmPassword: "",
+  code: null
+}
+
+const Register = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<TFormData>({
+    resolver: yupResolver(SignupSchema)
+  })
+
+  // const patternCode = "[0-9]{1,6}"
+  const patternCode = "^[0-9]*$."
+
+  const [verifiCode, setVerifiCode] = useState("")
   const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
   const handleClickShowPassword = () => setShowPassword((show) => !show)
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault()
+  }
+
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword((show) => !show)
+  const handleMouseDownConfirmPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault()
+  }
+
+  const onSubmitRegister = (values: TFormData) => {
+    // eslint-disable-next-line no-console
+    console.log("test-values", values)
+  }
+
+  const isNumber = (_keyCode: string) => {
+    if (_keyCode.includes(".")) {
+      setVerifiCode(_keyCode.split(".").join(""))
+    } else {
+      setVerifiCode(_keyCode)
+    }
   }
 
   return (
@@ -148,308 +206,331 @@ export default function SignInSide() {
                 alignItems: "center"
               }}
             >
-              <Box style={{ width: 333, height: 638 }}>
-                <Grid
-                  container
-                  spacing={2.25}
-                >
+              <form onSubmit={handleSubmit(onSubmitRegister)}>
+                <Box style={{ width: 333, height: 638 }}>
                   <Grid
-                    item
-                    xs={12}
-                  >
-                    <Box
-                      className="flex items-center rounded-lg"
-                      sx={{ height: "54px" }}
-                    >
-                      <div className="flex flex-1 flex-row items-center">
-                        <Typography className="text-lg uppercase text-neutral-300">
-                          Register
-                        </Typography>
-                      </div>
-                      <ButtonClose onClick={() => {}} />
-                    </Box>
-                    <Divider className="mx-0 mt-5 mb-8" />
-                    <TextField
-                      className="w-full"
-                      type="email"
-                      placeholder="Email"
-                      label="Email Address"
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          width: "100%",
-                          fontWeight: 400,
-                          fontSize: 14,
-                          fontWight: 700,
-                          fontFamily: "neueMachina"
-                        },
-                        "& .MuiInputLabel-root": {
-                          color: "#70727B",
-                          fontFamily: "neueMachina",
-                          textTransform: "uppercase"
-                        }
-                      }}
-                      id="email"
-                      size="medium"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <EmailOutlinedIcon />
-                          </InputAdornment>
-                        )
-                      }}
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
                     container
-                    direction="row"
-                    // justifyContent="center"
-                    // alignItems="center"
+                    spacing={2.25}
                   >
                     <Grid
                       item
-                      // md={6}
+                      xs={12}
                     >
+                      <Box
+                        className="flex items-center rounded-lg"
+                        sx={{ height: "54px" }}
+                      >
+                        <div className="flex flex-1 flex-row items-center">
+                          <Typography className="text-lg uppercase text-neutral-300">
+                            Register
+                          </Typography>
+                        </div>
+                        <ButtonClose onClick={() => {}} />
+                      </Box>
+                      <Divider className="mx-0 mt-5 mb-8" />
                       <TextField
-                        className="mr-2 w-[235px]"
-                        type="text"
-                        placeholder="Verification code"
+                        className="w-full"
+                        type="email"
+                        placeholder="Email"
+                        label="Email Address"
+                        {...register("email")}
                         sx={{
                           "& .MuiOutlinedInput-root": {
                             width: "100%",
                             fontWeight: 400,
                             fontSize: 14,
                             fontWight: 700,
+                            fontFamily: "neueMachina"
+                          },
+                          "& .MuiInputLabel-root": {
+                            color: "#70727B",
                             fontFamily: "neueMachina",
-                            padding: "0px 16px"
+                            textTransform: "uppercase"
                           }
                         }}
-                        id="code"
+                        id="email"
                         size="medium"
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <EmailOutlinedIcon />
+                            </InputAdornment>
+                          )
+                        }}
+                      />
+                      {errors.email && (
+                        <p style={{ color: "red" }}>{errors.email.message}</p>
+                      )}
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      container
+                      direction="row"
+                      // justifyContent="center"
+                      // alignItems="center"
+                    >
+                      <Grid
+                        item
+                        // md={6}
+                      >
+                        <TextField
+                          className="hidden-arrow-number Mui-error mr-2 w-[235px]"
+                          type="number"
+                          placeholder="Verification code"
+                          onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            e.target.value = e.target.value.slice(0, 6)
+                          }}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            isNumber(e.target.value.toString())
+                          }
+                          value={verifiCode}
+                          inputProps={{
+                            // pattern: patternCode,
+                            // maxLength: 6
+                            pattern: "[0-9]{1,6}",
+                            maxLength: 6
+                          }}
+                          // {...register("code")}
+                          sx={{
+                            "& .MuiOutlinedInput-root": {
+                              width: "100%",
+                              fontWeight: 400,
+                              fontSize: 14,
+                              fontWight: 700,
+                              fontFamily: "neueMachina",
+                              padding: "0px 16px"
+                            }
+                          }}
+                          id="code"
+                          size="medium"
+                        />
+                      </Grid>
+                      <Grid
+                        item
+                        // md={2}
+                      >
+                        <Button className="btn-rainbow-theme h-[40px] !min-w-[90px] rounded-lg bg-error-main text-sm text-neutral-300">
+                          Get Code
+                        </Button>
+                      </Grid>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                    >
+                      <TextField
+                        className="w-full pt-3.5"
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Password"
+                        label="Password"
+                        {...register("password")}
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            width: "100%",
+                            fontWeight: 400,
+                            fontSize: 14,
+                            fontWight: 700,
+                            fontFamily: "neueMachina"
+                          },
+                          "& .MuiInputLabel-root": {
+                            color: "#70727B",
+                            fontFamily: "neueMachina",
+                            textTransform: "uppercase"
+                          }
+                        }}
+                        id="email"
+                        size="medium"
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <ILock />
+                            </InputAdornment>
+                          ),
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                              >
+                                {showPassword ? (
+                                  <VisibilityOffOutlinedIcon className="text-neutral-300" />
+                                ) : (
+                                  <VisibilityOutlinedIcon className="text-neutral-300" />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          )
+                        }}
+                      />
+                      <TextField
+                        className="mt-[5px] w-full"
+                        type={showConfirmPassword ? "text" : "password"}
+                        placeholder="Confirm Password"
+                        label="A Number or Symbol, Atleast 6 Characters"
+                        {...register("confirmPassword")}
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            width: "100%",
+                            fontWeight: 400,
+                            fontSize: 14,
+                            fontWight: 700,
+                            fontFamily: "neueMachina"
+                          },
+                          "& .MuiInputLabel-root": {
+                            width: "max-content",
+                            color: "#70727B",
+                            fontFamily: "neueMachina",
+                            textTransform: "uppercase",
+                            paddingTop: "0.5rem",
+                            paddingBottom: "0.5rem"
+                          }
+                        }}
+                        id="email"
+                        size="medium"
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <Beenhere />
+                            </InputAdornment>
+                          ),
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowConfirmPassword}
+                                onMouseDown={handleMouseDownConfirmPassword}
+                                edge="end"
+                              >
+                                {showConfirmPassword ? (
+                                  <VisibilityOffOutlinedIcon className="text-neutral-300" />
+                                ) : (
+                                  <VisibilityOutlinedIcon className="text-neutral-300" />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          )
+                        }}
                       />
                     </Grid>
                     <Grid
                       item
-                      // md={2}
+                      xs={12}
                     >
-                      <Button className="btn-rainbow-theme h-[40px] !min-w-[90px] rounded-lg bg-error-main text-sm text-neutral-300">
-                        Get Code
-                      </Button>
-                    </Grid>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                  >
-                    <TextField
-                      className="w-full pt-3.5"
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Password"
-                      label="Password"
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          width: "100%",
-                          fontWeight: 400,
-                          fontSize: 14,
-                          fontWight: 700,
-                          fontFamily: "neueMachina"
-                        },
-                        "& .MuiInputLabel-root": {
-                          color: "#70727B",
-                          fontFamily: "neueMachina",
-                          textTransform: "uppercase"
-                        }
-                      }}
-                      id="email"
-                      size="medium"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <ILock />
-                          </InputAdornment>
-                        ),
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                              edge="end"
-                            >
-                              {showPassword ? (
-                                <VisibilityOffOutlinedIcon className="text-neutral-300" />
-                              ) : (
-                                <VisibilityOutlinedIcon className="text-neutral-300" />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        )
-                      }}
-                    />
-                    <TextField
-                      className="mt-[5px] w-full"
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Confirm Password"
-                      label="A Number or Symbol, Atleast 6 Characters"
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          width: "100%",
-                          fontWeight: 400,
-                          fontSize: 14,
-                          fontWight: 700,
-                          fontFamily: "neueMachina"
-                        },
-                        "& .MuiInputLabel-root": {
-                          width: "max-content",
-                          color: "#70727B",
-                          fontFamily: "neueMachina",
-                          textTransform: "uppercase",
-                          paddingTop: "0.5rem",
-                          paddingBottom: "0.5rem"
-                        }
-                      }}
-                      id="email"
-                      size="medium"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <Beenhere />
-                          </InputAdornment>
-                        ),
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                              edge="end"
-                            >
-                              {showPassword ? (
-                                <VisibilityOffOutlinedIcon className="text-neutral-300" />
-                              ) : (
-                                <VisibilityOutlinedIcon className="text-neutral-300" />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        )
-                      }}
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                  >
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          sx={{
-                            "&:hover": { bgcolor: "transparent" },
-                            ":hover": {
-                              "& .MuiSvgIcon-root": {
-                                background: "transparent",
-                                border: "2px solid #7a5be6 !important"
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            sx={{
+                              "&:hover": { bgcolor: "transparent" },
+                              ":hover": {
+                                "& .MuiSvgIcon-root": {
+                                  background: "transparent",
+                                  border: "2px solid #7a5be6 !important"
+                                }
                               }
+                            }}
+                            icon={
+                              <CheckBoxOutlineBlankOutlinedIcon
+                                className="border-2 border-solid border-neutral-600 text-transparent"
+                                sx={{
+                                  borderRadius: "8.5px"
+                                }}
+                              />
                             }
-                          }}
-                          icon={
-                            <CheckBoxOutlineBlankOutlinedIcon
-                              className="border-2 border-solid border-neutral-600 text-transparent"
-                              sx={{
-                                borderRadius: "8.5px"
-                              }}
-                            />
-                          }
-                          checkedIcon={
-                            <ICheckMark
-                              className="border-2 border-solid border-purple-primary bg-neutral-800 p-1 text-purple-primary"
-                              style={{
-                                borderRadius: "8.5px"
-                              }}
-                            />
-                          }
-                        />
-                      }
-                      label="Would you like to subscribe to Nakamoto Games Newsletter?"
-                      sx={{
-                        "& .MuiTypography-root": {
-                          fontSize: 10,
-                          color: "#70727B",
-                          textTransform: "uppercase"
+                            checkedIcon={
+                              <ICheckMark
+                                className="border-2 border-solid border-purple-primary bg-neutral-800 p-1 text-purple-primary"
+                                style={{
+                                  borderRadius: "8.5px"
+                                }}
+                              />
+                            }
+                          />
                         }
-                      }}
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    container
-                    direction="row"
-                    justifyContent="space-between"
-                    // md={12}
-                  >
-                    <Grid item>
-                      <Link href="/login">
-                        <Button
-                          size="large"
-                          type="submit"
-                          variant="outlined"
-                          className="h-[40px] !min-w-[108px]"
-                        >
-                          Login
-                        </Button>
-                      </Link>
-                    </Grid>
-                    <Grid item>
-                      <ButtonToggleIcon
-                        handleClick={() => {}}
-                        startIcon={<IEdit />}
-                        text="Regiter"
-                        className="btn-rainbow-theme h-[40px] w-[209px] bg-secondary-main font-bold capitalize text-white-default"
+                        label="Would you like to subscribe to Nakamoto Games Newsletter?"
+                        sx={{
+                          "& .MuiTypography-root": {
+                            fontSize: 10,
+                            color: "#70727B",
+                            textTransform: "uppercase"
+                          }
+                        }}
                       />
                     </Grid>
-                  </Grid>
-                  <Grid
-                    item
-                    container
-                    justifyContent="space-between"
-                    alignItems="center"
-                    className="mt-8 mb-8"
-                  >
-                    <Grid item>
-                      <p className="text-xs uppercase">OR join us with</p>
-                    </Grid>
-                    <Grid item>
-                      <Divider className="w-[208px]" />
-                    </Grid>
-                  </Grid>
-                  <Grid
-                    item
-                    container
-                  >
-                    <div className="flex flex-wrap">
-                      {SocialRegister?.map((item) => (
-                        <Link
-                          key={item.label}
-                          href={item.href}
-                          target="_blank"
-                        >
-                          <ButtonIcon
-                            // variants={iconmotion}
-                            whileHover="hover"
-                            transition={{
-                              type: "spring",
-                              stiffness: 400,
-                              damping: 4
-                            }}
-                            icon={item.icon}
-                            className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                          />
+                    <Grid
+                      item
+                      container
+                      direction="row"
+                      justifyContent="space-between"
+                      // md={12}
+                    >
+                      <Grid item>
+                        <Link href="/login">
+                          <Button
+                            size="large"
+                            type="submit"
+                            variant="outlined"
+                            className="h-[40px] !min-w-[108px]"
+                          >
+                            Login
+                          </Button>
                         </Link>
-                      ))}
-                    </div>
+                      </Grid>
+                      <Grid item>
+                        <ButtonToggleIcon
+                          handleClick={() => {}}
+                          type="submit"
+                          startIcon={<IEdit />}
+                          text="Regiter"
+                          className="btn-rainbow-theme h-[40px] w-[209px] bg-secondary-main font-bold capitalize text-white-default"
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid
+                      item
+                      container
+                      justifyContent="space-between"
+                      alignItems="center"
+                      className="mt-8 mb-8"
+                    >
+                      <Grid item>
+                        <p className="text-xs uppercase">OR join us with</p>
+                      </Grid>
+                      <Grid item>
+                        <Divider className="w-[208px]" />
+                      </Grid>
+                    </Grid>
+                    <Grid
+                      item
+                      container
+                    >
+                      <div className="flex flex-wrap">
+                        {SocialRegister?.map((item) => (
+                          <Link
+                            key={item.label}
+                            href={item.href}
+                            target="_blank"
+                          >
+                            <ButtonIcon
+                              // variants={iconmotion}
+                              whileHover="hover"
+                              transition={{
+                                type: "spring",
+                                stiffness: 400,
+                                damping: 4
+                              }}
+                              icon={item.icon}
+                              className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                            />
+                          </Link>
+                        ))}
+                      </div>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </Box>
+                </Box>
+              </form>
               <Grid
                 item
                 container
@@ -470,3 +551,5 @@ export default function SignInSide() {
     </Box>
   )
 }
+
+export default Register

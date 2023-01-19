@@ -3,6 +3,7 @@ import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined
 import { motion } from "framer-motion"
 import React, { ReactNode } from "react"
 
+type TTypeButton = "submit" | "reset" | "button" | undefined
 interface IProps {
   startIcon: ReactNode
   endIcon?: ReactNode
@@ -10,6 +11,7 @@ interface IProps {
   handleClick: () => void
   className?: string
   style?: React.CSSProperties
+  type: TTypeButton
 }
 
 const ButtonToggleIcon = ({
@@ -18,7 +20,8 @@ const ButtonToggleIcon = ({
   text,
   handleClick,
   className,
-  style
+  style,
+  type = "button"
 }: IProps) => {
   const stiffValue = 300
 
@@ -73,7 +76,7 @@ const ButtonToggleIcon = ({
       style={style}
       initial="rest"
       whileHover="hover"
-      type="button"
+      type={type}
       onClick={handleClick}
     >
       <motion.span

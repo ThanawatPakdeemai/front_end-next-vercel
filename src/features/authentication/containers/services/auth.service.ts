@@ -1,5 +1,5 @@
 import axios from "axios"
-import { IRefreshToken } from "@interfaces/IAuth"
+import { IRefreshToken, IRevorkToken } from "@interfaces/IAuth"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
 import services from "@configs/axiosGlobalConfig"
@@ -141,3 +141,35 @@ export const createNewPassword = ({
       })
       .catch((error) => reject(error))
   })
+
+export const revokeToken = async () => {
+  const token = localStorage.getItem("token")
+  return (
+    axios
+      // สั่งให้ token รอบต่อไป จะหมดอายุ เพื่อไม่ให้ refresh อีก
+      .post<IRevorkToken>(`/auth/revoke-token`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((res) => res.data)
+      .catch((error: Error) => error)
+  )
+}
+
+export const refreshToken = async () =>
+  axios
+    .post<IRefreshToken>(`/auth/refresh-token`)
+    .then((res) => ({
+      address: res.data.address,
+      jwtToken: res.data.jwtToken,
+      id: res.data.id
+    }))
+    .catch(
+      () => ({
+        address: "",
+        jwtToken: "",
+        id: ""
+      })
+      // return error;
+    )

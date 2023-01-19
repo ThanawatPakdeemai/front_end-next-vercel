@@ -37,7 +37,11 @@ const ButtonLink = ({
         type={type ?? "button"}
         color={color}
         size={size}
-        startIcon={<div className="button-icon animation-arrow">{icon}</div>}
+        startIcon={
+          <div className={`button-icon animation-arrow ${textColor}`}>
+            {icon}
+          </div>
+        }
         className={`${className} button-global`}
         onClick={onClick}
         endIcon={

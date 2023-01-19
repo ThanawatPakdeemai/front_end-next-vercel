@@ -1,14 +1,10 @@
 import React, { memo, useCallback, useEffect, useMemo } from "react"
-import {
-  CurrentPlayer,
-  IGameCurrentPlayer
-} from "@feature/game/interfaces/IGameService"
+import { IGameCurrentPlayer } from "@feature/game/interfaces/IGameService"
 import { Box, Typography } from "@mui/material"
 import Ellipse from "@components/icons/Ellipse/Ellipse"
 import useProfileStore from "@stores/profileStore"
 import useGetGameRoomById from "@feature/game/containers/hooks/useGetGameRoomById"
 import { useRouter } from "next/router"
-import useIpAddressStore from "@stores/ipAddress"
 import CONFIGS from "@configs/index"
 import useGameStore from "@stores/game"
 import Helper from "@utils/helper"
@@ -28,7 +24,6 @@ const baseUrlFront = CONFIGS.BASE_URL.FRONTEND
 const SeatPlayers = ({ players, room_id }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
   const gameData = useGameStore((state) => state.data)
-  const ip = useIpAddressStore((state) => state.ipAddress)
   const { errorToast } = useToast()
   const router = useRouter()
   const addrsss = "0x1BFa565383EBb149E6889F99013d1C88da190915" // "0xd8fBF6b391a7EbA72772763716537FB43769E845" // TODO YUI Change ACCOUNT
@@ -42,20 +37,18 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
 
   const { gameRoomById } = useGetGameRoomById(room_id)
 
-  const { balanceofItem, isLoading } = useGetBalanceOf({
+  const { balanceofItem } = useGetBalanceOf({
     _address: address ?? "",
     _item_id: item_id ?? 0
   })
 
   const checkRoomTimeout = useCallback(() => {
-    if (gameRoomById && gameRoomById.end_time) {
-      const endTime: Date = new Date(gameRoomById.end_time)
-      const currentTime: Date = new Date()
-      if (currentTime >= endTime) {
-        return true
-      }
-    }
-    return false
+    if (!gameRoomById) return false
+
+    const endTime = new Date(gameRoomById.end_time)
+    const currentTime = new Date()
+
+    return currentTime >= endTime
   }, [gameRoomById])
 
   useEffect(() => {
@@ -71,8 +64,10 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
     if (balanceofItem && balanceofItem.data > 0) {
       return true
     }
-    errorToast("You don't have item for this game. Please buy Item")
-    if (balanceofItem === undefined) return false
+    if (balanceofItem === undefined) {
+      errorToast("You don't have item for this game. Please buy Item")
+      return false
+    }
     return false
   }
 

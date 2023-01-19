@@ -1,38 +1,32 @@
-/* eslint-disable react/button-has-type */
-/* eslint-disable jsx-a11y/no-redundant-roles */
-import React, { memo, useEffect, useMemo } from "react"
-import {
-  CurrentPlayer,
-  IGameCurrentPlayer
-} from "@feature/game/interfaces/IGameService"
+import { IGameCurrentPlayer } from "@feature/game/interfaces/IGameService"
 import AvatarProfile from "@components/atoms/avatar/AvatarProfile"
 import { Box, Typography } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
 import useGameStore from "@stores/game"
-import { useRouter } from "next/router"
-import { useToast } from "@feature/toast/containers"
 import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
-import { ICurrentPlayer } from "@feature/profile/interfaces/IProfileService"
+import { memo } from "react"
 
 interface IProps {
   players: IGameCurrentPlayer[] | undefined[]
 }
 
+interface IItemPlyer extends IGameCurrentPlayer {
+  owner: boolean
+}
 const PlayerCard = ({ players }: IProps) => {
   const propsSocket = useSocketProviderWaiting()
   const { kickRoom } = propsSocket
   const profile = useProfileStore((state) => state.profile.data)
   const gameData = useGameStore((state) => state.data)
-  const router = useRouter()
-  const { errorToast } = useToast()
 
-  const checkText = (item: CurrentPlayer) => {
+  const checkText = (item: IItemPlyer) => {
     if (gameData?.game_type === "multiplayer") {
-      if ("owner" in item && item.owner) {
+      if (item.owner) {
         return "OWNER"
       }
-      if ("owner" in item && !item.owner && item.player_id !== profile?.id) {
+      if (item.owner && item.player_id !== profile?.id) {
         return (
+          // eslint-disable-next-line react/button-has-type, jsx-a11y/no-redundant-roles
           <button
             role="button"
             className="cursor-pointer"

@@ -60,7 +60,7 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
 
   useEffect(() => {
     // check room time out
-    socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_TIMEOUT, (value) => {
+    socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_TIMEOUT, () => {
       if (gameData) {
         errorToast("Room expried")
         router.push(`/${gameData.path}/roomlist`)
@@ -70,7 +70,7 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
 
   useEffect(() => {
     // check owner kick
-    socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_KICK, (value) => {
+    socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_KICK, () => {
       if (gameData) {
         errorToast("You were kicked out of the room.")
         router.push(`/${gameData.path}/roomlist`)

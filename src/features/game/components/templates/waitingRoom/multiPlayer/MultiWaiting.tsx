@@ -5,10 +5,7 @@ import useGameStore from "@stores/game"
 import { useRouter } from "next/router"
 import useSocketWaitingRoom from "@feature/game/containers/hooks/useSocketWaitingRoom"
 import helper from "@utils/helper"
-import {
-  CurrentPlayer,
-  IGameRoomListSocket
-} from "@feature/game/interfaces/IGameService"
+import { IGameRoomListSocket } from "@feature/game/interfaces/IGameService"
 import { Box } from "@mui/material"
 import SocketProvider from "@providers/SocketProviderWaiting"
 import SeatPlayersMulti from "@feature/game/components/organisms/SeatPlayersMulti"
@@ -122,76 +119,6 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
       router.beforePopState(() => true)
     }
   }, [outRoom, router])
-
-  // const statusReady = useMemo(() => {
-  //   if (
-  //     dataPlayers &&
-  //     dataPlayers.current_player &&
-  //     dataPlayers.current_player.length > 0
-  //   ) {
-  //     const _ready = dataPlayers.current_player.map((player: CurrentPlayer) => {
-  //       if (player) {
-  //         return player.player_id === profile?.id && player.status === "ready"
-  //       }
-  //       return undefined
-  //     })
-  //     return _ready
-  //   }
-  //   return false
-  // }, [dataPlayers, profile?.id])
-
-  // const textButton = () => {
-  //   if (profile) {
-  //     if (players && players.length > 0) {
-  //       const __player = [...players].filter((ele) => ele)
-  //       const _player = __player.find((ele) => ele?.player_id === profile.id)
-  //       if (_player && __player) {
-  //         const playeNotReady = __player.filter(
-  //           (ele) => ele?.status !== "ready"
-  //         )
-  //         const allReady = __player.filter((ele) => ele?.status === "ready")
-
-  //         if ("owner" in _player && _player.owner) {
-  //           // owner
-  //           if (__player.length === 1) {
-  //             return (
-  //               <span className=" text-secondary-main">
-  //                 The game is starting now, prepare to play!
-  //               </span>
-  //             )
-  //           }
-  //           if (playeNotReady.length > 0) {
-  //             return (
-  //               <span className="text-error-main">
-  //                 The game will begin as soon as all players are ready
-  //               </span>
-  //             )
-  //           }
-  //           return (
-  //             <span className=" text-green-lemon">
-  //               Everyone's here and we're ready to go. Let's start the game!
-  //             </span>
-  //           )
-  //         }
-  //         if (_player.status === "ready") {
-  //           return "Please wait for them to begin"
-  //         }
-  //         if (allReady.length === __player.length)
-  //           return "It's time to play! Press the 'Ready’"
-
-  //         return (
-  //           <span className=" text-green-lemon">
-  //             The game is starting now, prepare to play!
-  //           </span>
-  //         )
-
-  //         // player
-  //       }
-  //     }
-  //     return "Don't have Player, please out room"
-  //   }
-  //   return "Please Login"
-  // }
 
   return (
     <>

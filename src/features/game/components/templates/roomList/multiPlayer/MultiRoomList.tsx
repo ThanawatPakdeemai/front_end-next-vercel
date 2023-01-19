@@ -4,11 +4,9 @@ import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
 import useSocketRoomList from "@feature/game/containers/hooks/useSocketRoomList"
 import {
-  IGame,
   IGameRoomListSocket,
   IResSocketRoomList
 } from "@feature/game/interfaces/IGameService"
-import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import { useToast } from "@feature/toast/containers"
 import { Box, Divider } from "@mui/material"
 import SocketProviderRoom from "@providers/SocketProviderRoom"

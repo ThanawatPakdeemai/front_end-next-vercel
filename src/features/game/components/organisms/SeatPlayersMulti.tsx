@@ -1,15 +1,13 @@
-import React, { memo, useMemo, useState } from "react"
-import {
-  CurrentPlayer,
-  IGameCurrentPlayer,
-  IGameCurrentPlayerMulti
-} from "@feature/game/interfaces/IGameService"
+import React, { memo, useEffect, useMemo, useState } from "react"
+import { IGameCurrentPlayerMulti } from "@feature/game/interfaces/IGameService"
 import { Box, Typography } from "@mui/material"
 import Ellipse from "@components/icons/Ellipse/Ellipse"
 import useProfileStore from "@stores/profileStore"
 import HighlightOffIcon from "@mui/icons-material/HighlightOff"
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty"
 import { useToast } from "@feature/toast/containers"
+import Helper from "@utils/helper"
+import { IResGetIp } from "@interfaces/IGetIP"
 import ButtonPlayer from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 import ButtonOwner from "../atoms/ButtonOwner"
@@ -24,6 +22,16 @@ const SeatPlayersSingle = ({ players }: IProps) => {
   const [ownerPressReady, setOwnPressReady] = useState(false)
   const [playerPressReady, setPlayerPressReady] = useState(false)
   const { errorToast } = useToast()
+  const [, setIp] = useState<string>("")
+
+  useEffect(() => {
+    Helper.getIP().then((res) => {
+      setIp((res as IResGetIp).ip)
+    })
+    return () => {
+      setIp("")
+    }
+  }, [])
 
   const playerInroom = useMemo(() => {
     if (players) {
@@ -61,18 +69,10 @@ const SeatPlayersSingle = ({ players }: IProps) => {
     }
   }, [playerInroom, playerReady])
 
-  const onReady = () => {
-    setPlayerPressReady(!playerPressReady)
-  }
-
-  const onPlayGame = () => {
-    setOwnPressReady(!ownerPressReady)
-  }
-
   const checkText = useMemo(() => {
     if (isOwnerRoom) {
       // ผู้เล่น เป็น owner
-      if (!playerAllReady && !ownerPressReady) {
+      if (!playerAllReady && !ownerPressReady && playerNotReady) {
         return "The game will begin as soon as all players are ready"
       }
       if (playerAllReady) {
@@ -88,8 +88,21 @@ const SeatPlayersSingle = ({ players }: IProps) => {
       return "The game is starting now, prepare to play!"
     }
     return "It's time to play! Press the Ready"
-  }, [isOwnerRoom, playerPressReady, ownerPressReady, playerAllReady])
+  }, [
+    isOwnerRoom,
+    playerPressReady,
+    ownerPressReady,
+    playerAllReady,
+    playerNotReady
+  ])
 
+  const onReady = () => {
+    setPlayerPressReady(!playerPressReady)
+  }
+
+  const onPlayGame = () => {
+    setOwnPressReady(!ownerPressReady)
+  }
   return (
     <>
       <Box>

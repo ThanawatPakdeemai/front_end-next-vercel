@@ -13,6 +13,7 @@ interface IProp {
 const ButtonCountdown = ({
   handleClick,
   text,
+  // eslint-disable-next-line no-unused-vars
   endTime,
   className,
   endIcon,

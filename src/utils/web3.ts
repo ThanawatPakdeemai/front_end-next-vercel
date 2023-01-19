@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import Web3 from "web3"
 import { HttpProviderOptions } from "web3-core-helpers"
 import { ARCHIVED_NODE } from "@constants/endpoints"

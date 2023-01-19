@@ -19,6 +19,7 @@ interface IProp {
   color: string
   shade: string
   type: "timer" | "player"
+  borderColor?: string
   unlimited?: boolean
 }
 
@@ -28,6 +29,7 @@ interface IProp {
  * @param onExpire is what you want to do after timeout
  * @param color is parent key in tailwind.config.js
  * @param shade is child key in tailwind.config.js
+ * @param borderColor is child key in tailwind.config.js
  */
 
 const RoomListBox = ({
@@ -37,6 +39,7 @@ const RoomListBox = ({
   color,
   shade,
   type,
+  borderColor = "border-neutral-700",
   unlimited
 }: IProp) => {
   const { theme } = fullConfig
@@ -44,7 +47,11 @@ const RoomListBox = ({
   const initTheme: string = theme && theme.colors && theme.colors[color][shade]
 
   return type === "timer" ? (
-    <div className="flex w-[131px] items-center justify-center gap-3 rounded-lg border border-neutral-700 bg-neutral-900 py-2 align-baseline">
+    <div
+      className={`flex w-[131px] items-center justify-center gap-3 rounded-lg border ${
+        borderColor ?? "border-neutral-700"
+      } bg-neutral-900 py-2 align-baseline`}
+    >
       <StopwatchIcon stroke={initTheme} />
       {timer && !unlimited ? (
         <TimerLobby

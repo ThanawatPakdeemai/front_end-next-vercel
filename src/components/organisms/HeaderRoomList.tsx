@@ -1,9 +1,9 @@
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import Dropdown from "@components/atoms/DropdownCustom"
 import SearchIcon from "@components/icons/SearchIcon"
+import { TextField, Typography } from "@mui/material"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import ModalCreateRoom from "@feature/rooms/components/molecules/ModalCreateRoom"
-import { TextField } from "@mui/material"
 import useGameStore from "@stores/game"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
@@ -32,7 +32,7 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
           </div>
           <h1 className="text-white-defzault self-center uppercase">
             Lobby :{lobby}
-            <span className="text-secondary-main">Skull XL</span>
+            <Typography className="text-secondary-main">Skull XL</Typography>
           </h1>
         </div>
         <div className="flex">

@@ -1,38 +1,42 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import * as React from "react"
 import MenuList from "@mui/material/MenuList"
 import MenuItemList from "@components/atoms/MenuItemList"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+import { InjectedProps } from "material-ui-popup-state"
+import { Box } from "@mui/system"
+import { useToast } from "@feature/toast/containers"
+import { MESSAGES } from "@constants/messages"
 
-interface RootObject {
-  _id: string
-  name: string
-  detail: string
-  price: number
-  image: string
-  item_id_smartcontract: number
-  min_item: number
-  image_icon: string
-  image_icon_color: string
-  item_size: string
-  id: string
-}
 interface IProp {
   className: string
-  details: RootObject[]
+  details: IGameItemListData[]
   title: string
+  onChangeItem: (_item: IGameItemListData) => void
 }
 
-const SelectDropdownList = ({ className, details, title }: IProp) => (
+const SelectDropdownList = ({
+  className,
+  details,
+  title,
+  onChangeItem
+}: IProp) => (
   <MenuList
     className={`${className} mx-[6px] mt-[6px] mb-[6px] rounded-[13px] bg-neutral-700 p-[6px]`}
   >
-    {details.map((item: RootObject) => (
-      <MenuItemList
-        title={title}
+    {details.map((item: IGameItemListData) => (
+      <Box
+        className="mb-1"
+        onClick={() => onChangeItem(item)}
         key={item.id}
-        data={item}
-        id=""
-        external={false}
-      />
+      >
+        <MenuItemList
+          title={title}
+          data={item}
+          id={item.id}
+          external={false}
+        />
+      </Box>
     ))}
   </MenuList>
 )

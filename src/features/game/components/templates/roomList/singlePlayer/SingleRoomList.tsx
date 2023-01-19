@@ -26,7 +26,7 @@ const GameRoomList = () => {
     _gameId: data ? data._id : "",
     _email: profile ? profile.email : "",
     // mock for waiting price of items
-    _itemId: "63072b0dd0be6934c17b5438"
+    _itemId: "61976479dffe844091ab8df1" // 1$
   })
 
   const handleJoinRoom = (_roomId: string) => {

@@ -15,6 +15,7 @@ export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   arrowColor?: string
   onClick?: () => void
   type?: "submit" | "button"
+  disabled?: boolean
 }
 
 const ButtonLink = ({
@@ -28,11 +29,13 @@ const ButtonLink = ({
   textColor,
   arrowColor,
   onClick,
-  type
+  type,
+  disabled = false
 }: IButtonLink) => {
   const ButtonSelf = useMemo(
     () => (
       <Button
+        disabled={disabled}
         variant={variant}
         type={type ?? "button"}
         color={color}
@@ -57,6 +60,7 @@ const ButtonLink = ({
       arrowColor,
       className,
       color,
+      disabled,
       icon,
       onClick,
       size,

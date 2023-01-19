@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react"
+import React, { memo } from "react"
 import { Box, ButtonGroup } from "@mui/material"
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"
 import ButtonLink from "@components/atoms/button/ButtonLink"
@@ -8,7 +8,7 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined"
 import useGameStore from "@stores/game"
 import { CURENCY } from "@configs/dropdown"
-import Image from "next/image"
+import { Image } from "@components/atoms/image"
 
 const iconmotion = {
   hover: {
@@ -23,7 +23,7 @@ const iconmotion = {
   }
 }
 
-const FormLogin = () => {
+const FromButItem = () => {
   const game = useGameStore((state) => state.data)
 
   return (
@@ -31,7 +31,7 @@ const FormLogin = () => {
       {game && (
         <form>
           <Box>
-            <div className="flex grid grid-cols-2 justify-center gap-4">
+            <div className=" grid grid-cols-2 justify-center gap-4">
               <div className="flex justify-center rounded-2xl border-[1px] border-[#232329]">
                 <Image
                   src="/images/gamePage/Silver_Skull.png"
@@ -52,7 +52,7 @@ const FormLogin = () => {
               </div>
             </div>
           </Box>
-          <Box className="my-4 w-full">
+          <Box className="my-4 w-full pr-4">
             <p className="py-2 uppercase text-[#70727B]">Tier assets</p>
             <DropdownList
               title="List Items"
@@ -60,7 +60,7 @@ const FormLogin = () => {
               className="w-[410px]"
             />
           </Box>
-          <Box className="my-4 w-full">
+          <Box className="my-4 w-full pr-4">
             <p className="py-2 uppercase text-[#70727B]">Currency</p>
             <DropdownList
               title="Item Game"
@@ -70,7 +70,7 @@ const FormLogin = () => {
           </Box>
           <p className="uppercase text-[#7B5BE6]">Skull XL = 13.8389 NAKA</p>
 
-          <div className="my-4 my-2 grid grid-cols-6  content-center gap-4">
+          <div className="my-4  grid grid-cols-6  content-center gap-4">
             <div className="btn">
               <ButtonIcon
                 variants={iconmotion}
@@ -87,9 +87,9 @@ const FormLogin = () => {
                 <div className="text-center">
                   <p className="h-full w-[220px] pt-2 text-center">0.00 </p>
                 </div>
-                <img
+                <Image
                   src="/images/gamePage/skull.png"
-                  alt=""
+                  alt="skull"
                 />
               </div>
             </div>
@@ -113,7 +113,7 @@ const FormLogin = () => {
               <p className="pr-2">0.00</p>
               <Image
                 src="/images/logo/Logo-Master2.png"
-                alt=""
+                alt="Master2"
                 width="30"
                 height="30"
               />
@@ -148,4 +148,4 @@ const FormLogin = () => {
     </>
   )
 }
-export default memo(FormLogin)
+export default memo(FromButItem)

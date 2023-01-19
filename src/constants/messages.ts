@@ -13,5 +13,6 @@ export const MESSAGES = {
   "please-wait-player-all-ready": "Please wait player all ready",
   "room-full": "This room is full",
   "no-player": "No Player in Room",
-  "you-were-kicked": "You were kicked out of the room."
+  "you-were-kicked": "You were kicked out of the room.",
+  "please_item": "Please select Item."
 }

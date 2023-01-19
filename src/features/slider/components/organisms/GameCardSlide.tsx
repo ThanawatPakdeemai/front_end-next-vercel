@@ -3,7 +3,7 @@ import { CardMedia } from "@mui/material"
 import React from "react"
 import useGameStore from "@src/stores/game/index"
 import CardGameSlide, { ICardNextSlide } from "../molecules/CardGameSlide"
-import CardButItem from "../molecules/CardButItem"
+import CardButItem from "../../../gameItem/components/molecules/CardButItem"
 
 export interface IBannerCardSlide extends ICardNextSlide {
   slide: IGame

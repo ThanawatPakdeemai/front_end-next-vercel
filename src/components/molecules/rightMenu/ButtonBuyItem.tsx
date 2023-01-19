@@ -15,7 +15,7 @@ const ButtonBuyItem = ({ handleButton }: IProp) => (
       size="small"
       color="error"
       variant="contained"
-      textColor="text-[#ffffff]"
+      className=" !text-neutral-300"
     />
   </>
 )

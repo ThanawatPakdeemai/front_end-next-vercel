@@ -46,7 +46,10 @@ const MenuItemList = ({ data, ...props }: IProp | undefined | any) => (
     {props.title === "List Items" ? (
       <>
         <p className="px-2">{data.name}</p>
-        <p className="px-2 text-[#ffffff]">XL {data.price} USD</p>
+        <div className="flex w-full items-center justify-between">
+          <span className="px-2 text-[#ffffff]">XL {data.price} USD</span>
+          {data.qty && <span className="px-2">{data.qty} item</span>}
+        </div>
       </>
     ) : (
       <>

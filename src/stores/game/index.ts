@@ -1,3 +1,4 @@
+import { IGameItemList } from "@feature/gameItem/interfaces/IGameItemService"
 import { GameAllId, IGame } from "@src/features/game/interfaces/IGameService"
 import configZustandDevTools from "@src/utils/configDevtools"
 import create from "zustand"
@@ -11,6 +12,9 @@ export interface IUseGameItemStore {
   setGameID: (_gameID: GameAllId[]) => void
   clearGameID: () => void
   getGame: () => void
+  getItemSelected: () => void
+  itemSelected: IGameItemList | null
+  onSetGameItemSelectd: (_item: IGameItemList) => void
 }
 
 const useGameStore = create<IUseGameItemStore>()(
@@ -31,7 +35,16 @@ const useGameStore = create<IUseGameItemStore>()(
         clearGameID: () => {
           set(() => ({ gameId: [] }), false, "GameStore/clearGameID")
         },
-        getGame: () => get().data
+        getGame: () => get().data,
+        getItemSelected: () => get().itemSelected,
+        itemSelected: null,
+        onSetGameItemSelectd: (_item) => {
+          set(
+            () => ({ itemSelected: _item }),
+            false,
+            "GameStore/setGameItemSelected"
+          )
+        }
       }),
       configZustandDevTools("Game-Store")
     )

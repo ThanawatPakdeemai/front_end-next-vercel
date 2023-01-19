@@ -1,16 +1,6 @@
-import React, {
-  createContext,
-  FC,
-  ReactNode,
-  useContext,
-  useEffect,
-  useMemo,
-  useState
-} from "react"
-import { baseContractAddress, chainIdConfig } from "@src/constants/sites"
+import React, { createContext, ReactNode, useContext, useState } from "react"
+import { chainIdConfig } from "@src/constants/sites"
 import { ethers } from "ethers"
-import useAuth from "@hooks/useAuth"
-import { useTokenAllowance } from "@usedapp/core"
 import Web3 from "web3"
 
 interface IProp {
@@ -49,6 +39,7 @@ const NetworkContext = createContext<Context>({
 })
 
 export function useNetworkContext() {
+  // eslint-disable-next-line max-len
   // const context = { ...useContext(NetworkContext), account: undefined };  เอาไว้เทสว่า อยากให้ account undefined
   const context = useContext(NetworkContext)
   const [accountMetamask, setAccountMetamask] = useState("")

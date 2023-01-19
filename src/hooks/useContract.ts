@@ -5,6 +5,7 @@ import BalanceVault from "@configs/abi/BalanceVault.json"
 import Shop from "@configs/abi/Shop.json"
 import erc20Abi from "@configs/abi/ERC20.json"
 import { ethers } from "ethers"
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { AbiItem } from "web3-utils"
 import Web3 from "web3"
 import {

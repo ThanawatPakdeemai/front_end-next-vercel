@@ -12,7 +12,8 @@ import {
   IGetAllGameRooms,
   IGetPlayerInRoom,
   IClaimEarnedRewardByPlayerId,
-  IGetGameByTypesProps
+  IGetGameByTypesProps,
+  IGetGameByTypes
 } from "@feature/game/interfaces/IGameService"
 
 export const getAllGames = () =>
@@ -37,10 +38,14 @@ export const getAllGameRooms = ({
   _itemId
 }: IGetAllGameRooms) =>
   new Promise<IGameRoomDetailService>((resolve, reject) => {
-    services
-      .post<IGameRoomDetailService>(`/gameroom/${_gameId}/${_email}/${_itemId}`)
-      .then((reponse) => resolve(reponse.data))
-      .catch((error) => reject(error))
+    if (_gameId !== "" && _email !== "" && _itemId !== "") {
+      services
+        .post<IGameRoomDetailService>(
+          `/gameroom/${_gameId}/${_email}/${_itemId}`
+        )
+        .then((reponse) => resolve(reponse.data))
+        .catch((error) => reject(error))
+    }
   })
 
 export const getGameRoomById = (_roomId: string) =>
@@ -167,7 +172,7 @@ export const getGameByTypes = ({
   _itemId,
   _search
 }: IGetGameByTypesProps) =>
-  new Promise<IGameRoomDetailService>((resolve, reject) => {
+  new Promise<IGetGameByTypes>((resolve, reject) => {
     const data = {
       limit: _limit,
       skip: _page,
@@ -177,7 +182,7 @@ export const getGameByTypes = ({
       search: _search
     }
     services
-      .post<IGameRoomDetailService>(`/game/${_type}`, { ...data })
+      .post<IGetGameByTypes>(`/game/${_type}`, { ...data })
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

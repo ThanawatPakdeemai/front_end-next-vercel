@@ -1,6 +1,5 @@
 import React from "react"
 import { Image } from "@components/atoms/image"
-import EarthIcon from "@components/icons/EarthIcon"
 import TableIcon from "@components/icons/TableIcon"
 
 interface IDetails {
@@ -16,7 +15,7 @@ interface IProp {
   data: IDetails[]
 }
 const Banner = ({ data }: IProp) => (
-  <div className="mb-12 flex h-[180px] flex-row rounded-[24px] border-[1px] border-neutral-800 bg-primary-main">
+  <div className="mb-12 flex h-[180px] flex-row rounded-[24px] border-[1px] border-neutral-800 bg-primary-main uppercase">
     {data.map((item: IDetails) => {
       if (item.type === "banner") {
         return (

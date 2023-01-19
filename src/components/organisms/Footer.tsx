@@ -88,7 +88,6 @@ const Footer = () => {
 
   return (
     <>
-      {/* <CardRank /> */}
       <div className="flex items-center" />
       <Divider sx={{ marginTop: 10, marginBottom: 10 }} />
       <div className="justify-between text-[12px] lg:flex">
@@ -183,7 +182,11 @@ const Footer = () => {
                   <ButtonIcon
                     variants={iconmotion}
                     whileHover="hover"
-                    transition={{ type: "spring", stiffness: 400, damping: 4 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 4
+                    }}
                     icon={item.icon}
                     className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                   />

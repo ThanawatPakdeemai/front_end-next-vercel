@@ -8,10 +8,11 @@ interface IProps {
   startIcon: ReactNode
   endIcon?: ReactNode
   text: string
-  handleClick: () => void
+  handleClick?: () => void
   className?: string
   style?: React.CSSProperties
   type: TTypeButton
+  disabled?: boolean
 }
 
 const ButtonToggleIcon = ({
@@ -21,7 +22,8 @@ const ButtonToggleIcon = ({
   handleClick,
   className,
   style,
-  type = "button"
+  type = "button",
+  disabled
 }: IProps) => {
   const stiffValue = 300
 
@@ -78,6 +80,7 @@ const ButtonToggleIcon = ({
       whileHover="hover"
       type={type}
       onClick={handleClick}
+      disabled={disabled}
     >
       <motion.span
         variants={iconStart}

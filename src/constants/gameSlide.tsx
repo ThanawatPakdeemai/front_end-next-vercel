@@ -1,6 +1,5 @@
 import Helper from "@utils/helper"
 import CONFIGS from "@configs/index"
-import { ISlide } from "@components/molecules/gameSlide/GameCarousel"
 import {
   IHeaderSlide,
   ISlideList
@@ -176,103 +175,17 @@ export const GAME_COMING_SOON = [
   }
 ]
 
-export const mockF2PGame: ISlide[] = [
-  {
-    id: 1,
-    image: "/images/mocks/free2playGames/camoratuc_game.png",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-  },
-  {
-    id: 2,
-    image: "/images/mocks/free2playGames/bumig_game.png",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-  },
-  {
-    id: 3,
-    image: "/images/mocks/free2playGames/mette_game.png",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-  },
-  {
-    id: 4,
-    image: "/images/mocks/free2playGames/funlttte_game.png",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-  },
-  {
-    id: 5,
-    image: "/images/mocks/free2playGames/cute_game.png",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-  },
-  {
-    id: 6,
-    image: "/images/mocks/free2playGames/enz2_game.png",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-  },
-  {
-    id: 7,
-    image: "/images/mocks/free2playGames/tfttss_game.png",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-  }
-]
-
-export const mockP2EGame: ISlide[] = [
-  {
-    id: 1,
-    image: "/images/mocks/play2earnGames/rarkaak_game.png",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-  },
-  {
-    id: 2,
-    image: "/images/mocks/play2earnGames/faps_game.png",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-  },
-  {
-    id: 3,
-    image: "/images/mocks/play2earnGames/nakn_game.png",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-  },
-  {
-    id: 4,
-    image: "/images/mocks/play2earnGames/duninutss_game.png",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-  },
-  {
-    id: 5,
-    image: "/images/mocks/play2earnGames/rovr_game.png",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-  },
-  {
-    id: 6,
-    image: "/images/mocks/play2earnGames/vaanne_game.png",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-  },
-  {
-    id: 7,
-    image: "/images/mocks/play2earnGames/gartiig_game.png",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-  },
-  {
-    id: 8,
-    image: "/images/mocks/play2earnGames/oiryhk2_game.png",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-  },
-  {
-    id: 9,
-    image: "/images/mocks/play2earnGames/fatf_game.png",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-  }
-]
-
 const p2eMenu: ISlideList[] = [
   {
     id: "11",
     label: "hot games",
-    type: "hot_game",
+    type: "hot-game",
     className: "w-[110px]"
   },
   {
     id: "12",
     label: "play to earn games",
-    type: "play_to_earn",
+    type: "play-to-earn",
     className: "w-[166px]"
   }
 ]
@@ -294,19 +207,19 @@ const f2pMenu: ISlideList[] = [
   {
     id: "13",
     label: "free mode",
-    type: "free_mode",
+    type: "free-to-play",
     className: "w-[110px]"
   },
   {
     id: "14",
     label: "story mode",
-    type: "story_mode",
+    type: "story-mode",
     className: "w-[166px]"
   },
   {
     id: "15",
     label: "must try",
-    type: "must_try",
+    type: "must-try",
     className: "w-[166px]"
   }
 ]

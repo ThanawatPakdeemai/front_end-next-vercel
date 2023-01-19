@@ -2,7 +2,7 @@ import React from "react"
 
 function IReferrals({
   width = 24,
-  height = 24,
+  // height = 24,
   className
 }: React.SVGProps<SVGSVGElement>) {
   return (

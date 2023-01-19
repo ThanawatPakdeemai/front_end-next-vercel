@@ -4,7 +4,7 @@ import MenuItemCustom from "@components/atoms/MenuItemCustom"
 import { IMenuBase } from "@interfaces/IMenu"
 
 interface IProp {
-  className: string
+  className?: string
   details: IMenuBase[]
 }
 

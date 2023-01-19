@@ -1,7 +1,7 @@
 export const NAKA_ECOSYSTEMSS = [
   {
     label: "Blog",
-    path: "/",
+    path: "/blog",
     icon: false
   },
   {

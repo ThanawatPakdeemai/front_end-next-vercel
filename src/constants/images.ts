@@ -119,11 +119,11 @@ export const IMAGES = {
     alt: "marketPlace"
   },
   nakaVerse: {
-    src: "/images/home/nakaVerse.svg",
-    blurDataURL: "/images/home/nakaVerse.svg",
+    src: "/images/home/nakaverse-bg.webp",
+    blurDataURL: "/images/home/nakaverse-bg.webp",
     width: 678,
     height: 218,
-    alt: "blog-nakaVerse"
+    alt: "blog-nakaVerse-bg"
   },
   worldNakaverse: {
     src: "/images/home/world.svg",

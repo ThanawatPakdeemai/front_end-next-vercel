@@ -5,6 +5,7 @@ import IconArrowLeft from "@components/icons/arrowLeftIcon"
 import { motion, useAnimation } from "framer-motion"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { Chip } from "@mui/material"
+import { IGetType } from "@feature/game/interfaces/IGameService"
 
 export interface ISlideList extends React.HTMLAttributes<HTMLDivElement> {
   id: string
@@ -32,7 +33,7 @@ export interface IHeaderSlide {
 interface IProps {
   menu: IHeaderSlide
   curType: string
-  setCurType: (_type: string) => void
+  setCurType: (_type: IGetType) => void
   onView?: () => void
   onNext?: () => void
   onPrev?: () => void
@@ -62,7 +63,7 @@ const GameCarouselHeader = ({
     })
   }
 
-  const onChangeType = (_type: string) => {
+  const onChangeType = (_type: IGetType) => {
     setCurType(_type)
   }
 
@@ -132,7 +133,7 @@ const GameCarouselHeader = ({
               type="button"
               key={item.id}
               className={`${item.className} ml-1 !cursor-pointer`}
-              onClick={() => onChangeType(item.type)}
+              onClick={() => onChangeType(item.type as IGetType)}
             >
               <Chip
                 label={item.label}

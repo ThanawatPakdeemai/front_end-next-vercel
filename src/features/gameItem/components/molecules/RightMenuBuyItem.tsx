@@ -32,7 +32,7 @@ const RightMenuBuyItem = () => {
               title="Buy Assets"
             />
           </div>
-          <Box className=" hide-scroll  h-[500px] w-full overflow-y-scroll ">
+          <Box className="hide-scroll h-[480px] w-full overflow-y-scroll ">
             <FromButItem />
           </Box>
         </Stack>

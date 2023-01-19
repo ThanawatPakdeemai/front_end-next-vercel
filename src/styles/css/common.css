@@ -230,6 +230,38 @@ body {
     inset 1px 1px 1px rgba(255, 255, 255, 0.25);
 }
 
+.border-pink-rainbow:hover {
+  background: linear-gradient(#010101, #010101) padding-box,
+    linear-gradient(to right, #27f1ec, #7b5be6, #d91212) border-box;
+  border-radius: 13px;
+  border: 2px solid transparent;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15),
+    0px -13px 60px rgba(0, 255, 130, 0.07),
+    0px -5.43109px 25.0666px rgba(0, 255, 130, 0.0503198),
+    0px -2.90372px 13.4018px rgba(0, 255, 130, 0.0417275),
+    0px -1.6278px 7.51293px rgba(0, 255, 130, 0.035),
+    0px -0.864513px 3.99006px rgba(0, 255, 130, 0.0282725),
+    0px -0.359743px 1.66035px rgba(0, 255, 130, 0.0196802),
+    inset -1px -1px 1px rgba(0, 0, 0, 0.25),
+    inset 1px 1px 1px rgba(255, 255, 255, 0.25);
+}
+
+.border-lemon-rainbow:hover {
+  background: linear-gradient(#010101, #010101) padding-box,
+    linear-gradient(to right, #27f1ec, #5bff82, #a0ed61) border-box;
+  border-radius: 13px;
+  border: 2px solid transparent;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15),
+    0px -13px 60px rgba(0, 255, 130, 0.07),
+    0px -5.43109px 25.0666px rgba(0, 255, 130, 0.0503198),
+    0px -2.90372px 13.4018px rgba(0, 255, 130, 0.0417275),
+    0px -1.6278px 7.51293px rgba(0, 255, 130, 0.035),
+    0px -0.864513px 3.99006px rgba(0, 255, 130, 0.0282725),
+    0px -0.359743px 1.66035px rgba(0, 255, 130, 0.0196802),
+    inset -1px -1px 1px rgba(0, 0, 0, 0.25),
+    inset 1px 1px 1px rgba(255, 255, 255, 0.25);
+}
+
 .btn-sticky-out {
   width: 88px;
   height: 88px;

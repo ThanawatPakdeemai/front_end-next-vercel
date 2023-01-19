@@ -28,7 +28,7 @@ export default function GameLobby() {
             variant="contained"
             color="secondary"
             onClick={() => {
-              router.push(`/${router.asPath}/roomlist`)
+              router.push(`${router.asPath}/roomlist`)
             }}
           >
             Click

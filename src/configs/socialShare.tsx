@@ -7,6 +7,8 @@ import MediumIcon from "@components/icons/SocialIcon/MediumIcon"
 import TiktokIcon from "@components/icons/SocialIcon/TiktokIcon"
 import { IMenuBase } from "@interfaces/IMenu"
 
+import LinkIcon from "@mui/icons-material/Link"
+
 export const SOCIAL: IMenuBase[] = [
   {
     icon: <TelegramIcon />,
@@ -42,5 +44,28 @@ export const SOCIAL: IMenuBase[] = [
     icon: <TiktokIcon />,
     label: "tiktok",
     href: "https://www.tiktok.com/@nakamotogames"
+  }
+]
+
+export const SOCIAL_SHARE: IMenuBase[] = [
+  {
+    icon: <TelegramIcon />,
+    label: "telegram",
+    href: "https://t.me/NakamotoGames"
+  },
+  {
+    icon: <TwitterIcon />,
+    label: "twitter",
+    href: "https://twitter.com/NakamotoGames"
+  },
+  {
+    icon: <FacebookIcon />,
+    label: "facebook",
+    href: "https://www.facebook.com/play.nakamoto.games"
+  },
+  {
+    icon: <LinkIcon className="rotate-[-45deg] text-error-main" />,
+    label: "link",
+    href: undefined
   }
 ]

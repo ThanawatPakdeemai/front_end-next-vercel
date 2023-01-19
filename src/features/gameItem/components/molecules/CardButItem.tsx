@@ -1,51 +1,23 @@
-import React, { useEffect, useState, memo, useCallback, useMemo } from "react"
+import React, { useEffect, useState, useMemo } from "react"
 import ButtonLink from "@components/atoms/button/ButtonLink"
-import AddIcon from "@mui/icons-material/Add"
 import LogoutIcon from "@mui/icons-material/Logout"
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
-import {
-  CardMedia,
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Button
-} from "@mui/material"
-import { useGameItemContext } from "@src/contexts/gameItemContext"
+import { CardMedia } from "@mui/material"
 import useProfileStore from "@stores/profileStore/index"
-import ItemSize from "@components/atoms/loading/itemSize"
-import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown"
 import useGameStore from "@stores/game"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import {
-  IGameItem,
-  IGameItemList,
-  IGameItemListData
-} from "@feature/gameItem/interfaces/IGameItemService"
-import Dropdown from "@components/atoms/DropdownCustom"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import RightMenuBuyItem from "@feature/gameItem/components/molecules/RightMenuBuyItem"
 import { useRouter } from "next/router"
-import Input from "@mui/material/Input"
 import DropdownList from "@components/atoms/DropdownList"
-// import { useWeb3 } from "@hooks/useWeb3"
-import { Trans, useTranslation } from "react-i18next"
-// import { useNetworkContext } from "@src/contexts/networkContext"
-// import useContractAction from "@hooks/useContract"
-import useLongPress from "@hooks/useLongPress"
-import {
-  calculateItemPerPrice,
-  encodeURILink,
-  number4digit
-} from "@utils/helpers"
-
+import { useTranslation } from "react-i18next"
 import { Image } from "@components/atoms/image"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import { MESSAGES } from "@constants/messages"
 
 export default function CardButItem() {
   // const web3 = useWeb3()
+  // eslint-disable-next-line no-unused-vars
   const { t } = useTranslation()
   const { data, onSetGameItemSelectd, itemSelected } = useGameStore()
   const [gameObject, setGameObject] = useState<IGame | undefined>()

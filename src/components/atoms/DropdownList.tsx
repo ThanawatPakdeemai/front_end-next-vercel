@@ -1,8 +1,7 @@
 import * as React from "react"
-import { useEffect, useState } from "react"
-import { Collapse, Popover } from "@mui/material"
+import { useState } from "react"
+import { Popover } from "@mui/material"
 import DropdownIcon from "@components/icons/DropdownIcon"
-import { IDropdown } from "@interfaces/IMenu"
 import Image from "next/image"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 // eslint-disable-next-line import/no-extraneous-dependencies

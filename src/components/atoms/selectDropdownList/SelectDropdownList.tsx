@@ -1,12 +1,8 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import * as React from "react"
 import MenuList from "@mui/material/MenuList"
 import MenuItemList from "@components/atoms/MenuItemList"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
-import { InjectedProps } from "material-ui-popup-state"
-import { Box } from "@mui/system"
-import { useToast } from "@feature/toast/containers"
-import { MESSAGES } from "@constants/messages"
+import { Box } from "@mui/material"
 
 interface IProp {
   className: string

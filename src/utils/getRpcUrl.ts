@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import random from "lodash/random"
 
 // Array of available nodes to connect to

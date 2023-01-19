@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import toast from "react-hot-toast"
 import { CHAIN_ID, MATIC_ICON, CHAIN_NAME } from "@constants/wallets"
 

@@ -1,7 +1,6 @@
 import services from "@configs/axiosGlobalConfig"
 import {
   IGameItemBalanceService,
-  IGameItemList,
   IGameItemService,
   IGameItemListService,
   IGetGameItemsByGameId,

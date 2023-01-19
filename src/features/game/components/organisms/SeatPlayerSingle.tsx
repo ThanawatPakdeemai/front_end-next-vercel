@@ -94,7 +94,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   const OnPlayGame = () => {
     if (gameRoomById && gameData && profile && room_id) {
       const frontendUrl = `${baseUrlFront}/${gameData.path}/summary/${room_id}`
-
+      // eslint-disable-next-line no-unused-vars
       const gameURL = `${baseUrlGame}/${gameData.id}/?${Helper.makeID(8)}${btoa(
         `${room_id}:|:${profile.id}:|:${item_id}:|:${
           profile.email
@@ -111,6 +111,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
         }`
       )}`
 
+      // eslint-disable-next-line no-unused-vars
       const gameURLShow = `${baseUrlGame}/${gameData.id}/?${Helper.makeID(
         8
       )}${`${room_id}:|:${profile.id}:|:${item_id}:|:${

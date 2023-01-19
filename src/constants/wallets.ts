@@ -1,12 +1,11 @@
-import { number } from "prop-types"
-import { Config, ConnectorNames } from "../types/wallet"
+import { Config, EConnectorNames } from "../types/wallet"
 import { defaultvalue } from "./sites"
 
 const connectors: Config[] = [
   {
     title: "Metamask",
     icon: "Metamask.svg",
-    connectorId: ConnectorNames.Injected
+    connectorId: EConnectorNames.Injected
   }
   // ,{
   //   title: "Fortmatic",

@@ -1,20 +1,13 @@
-import { ReactElement, useCallback, useEffect, useState } from "react"
+import { ReactElement, useEffect, useState } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import GameRoomLayout from "@components/template/GameRoomLayout"
-import { Button } from "@mui/material"
-import { useRouter } from "next/router"
 import useGameStore from "@stores/game"
 import GameSlide from "@feature/slider/components/templates/GameSlide"
 import SkeletonBanner from "@components/atoms/skeleton/SkeletonBanner"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import {
-  getAllGames,
-  getGameById
-} from "@feature/game/containers/services/game.service"
 import useGamesById from "@feature/game/containers/hooks/useGamesById"
 
 export default function GameLobby() {
-  const router = useRouter()
   const [gameData, setGameData] = useState<IGame>()
   const { data } = useGameStore()
   const { dataGame, isLoading } = useGamesById({ _gameId: data ? data.id : "" })

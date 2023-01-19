@@ -5,13 +5,7 @@ export interface IMessageTextProps {
   isMe: boolean
 }
 const MessageText = ({ message, isMe }: IMessageTextProps) => (
-  <div
-    className={`border-opacity-80rounded-2xl relative rounded-lg p-3 ${
-      isMe
-        ? "bg-neutral-300 text-neutral-900"
-        : "border-[1px] border-neutral-700 bg-neutral-800 "
-    }`}
-  >
+  <div className={`relative flex ${isMe ? "justify-end" : "justify-start"}`}>
     <div
       className={`absolute ${
         isMe ? "right-[15px]" : "left-[15px]"
@@ -22,7 +16,15 @@ const MessageText = ({ message, isMe }: IMessageTextProps) => (
         color={`${isMe ? "bg-neutral-300" : "bg-neutral-800"}`}
       />
     </div>
-    {message}
+    <div
+      className={`rounded-lg border-opacity-80 p-3 ${
+        isMe
+          ? "bg-neutral-300 text-neutral-900"
+          : "border-[1px] border-neutral-700 bg-neutral-800 "
+      }`}
+    >
+      {message}
+    </div>
   </div>
 )
 

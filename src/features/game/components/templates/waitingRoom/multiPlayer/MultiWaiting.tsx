@@ -1,3 +1,4 @@
+import useChatContext from "@feature/chat/containers/contexts/useChatContext"
 import HeaderWaitingRoom from "@components/organisms/HeaderWaitingRoom"
 import React, { memo, useEffect, useMemo, useState, useCallback } from "react"
 import useProfileStore from "@stores/profileStore"
@@ -22,8 +23,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   const [dataPlayers, setDataPlayers] = useState<
     IGameRoomListSocket | undefined
   >()
-  // const { chat, setChat } = useChatContext()
-  const [chat, setChat] = useState<IChat[]>([])
+  const { chat, setChat } = useChatContext()
 
   const propsSocketWaitingRoom = useMemo(
     () => ({
@@ -50,7 +50,8 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     socketWaitingRoom,
     getPlayersMulti,
     kickRoom,
-    getChat
+    getChat,
+    onSendMessage
   } = useSocketWaitingRoom({ ...propsSocketWaitingRoom })
 
   useEffect(() => {
@@ -124,18 +125,26 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     }
   }, [outRoom, router])
 
-  useMemo(async () => {
-    if (isConnected) {
-      const _dataChat = await getChat()
-      if (_dataChat) {
-        setChat((oldData) => [_dataChat as IChat, ...oldData])
-      }
+  /**
+   * @description Calling chatting function
+   */
+  const onChat = useCallback(async () => {
+    const _dataChat = await getChat()
+    if (_dataChat) {
+      setChat((oldData) => [_dataChat as IChat, ...oldData])
     }
-  }, [isConnected, getChat])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chat])
+
+  useEffect(() => {
+    if (isConnected) {
+      onChat()
+    }
+  }, [isConnected, onChat])
 
   return (
     <>
-      <SocketProvider propsSocket={{ kickRoom }}>
+      <SocketProvider propsSocket={{ kickRoom, onSendMessage }}>
         <Box className=" gap-3 md:flex">
           <Box className="w-full shrink  rounded-3xl border border-neutral-800">
             {dataPlayers && gameData && (
@@ -160,7 +169,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
             )}
           </Box>
           <Box className="w-[333px] flex-none">
-            {chat && <Chat chat={chat} />}
+            <Chat />
           </Box>
         </Box>
       </SocketProvider>

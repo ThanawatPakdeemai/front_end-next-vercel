@@ -47,3 +47,14 @@ export const getCurrentNaka = () =>
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })
+
+export const getCurrentNakaExternal = async () => {
+  const nakaPrice = (async () => {
+    const response = await fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=nakamoto-games&vs_currencies=usd"
+    )
+    const data = await response.json()
+    return data["nakamoto-games"].usd
+  })()
+  return nakaPrice
+}

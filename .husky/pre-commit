@@ -12,14 +12,14 @@ yarn lint-staged
 yarn build:css ||
 (
   echo '🎨🎨🎨 I am building the CSS 🎨🎨🎨'
-  false; 
+  false;
 )
 
 # Format code.
 echo "🤓 Formating code ... "
 yarn format:prettier
 
-# Check Prettier standards  
+# Check Prettier standards
 yarn check:prettier ||
 (
   echo '🤢🤮🤢🤮 Its FOKING RAW - Your styling looks disgusting. 🤢🤮🤢🤮

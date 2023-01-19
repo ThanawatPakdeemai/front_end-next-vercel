@@ -13,6 +13,7 @@ import SeatPlayersMulti from "@feature/game/components/organisms/SeatPlayersMult
 import { useToast } from "@feature/toast/containers"
 import Chat from "@feature/chat/components/organisms/Chat"
 import { IChat } from "@feature/chat/interface/IChat"
+import { MESSAGES } from "@constants/messages"
 import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
 const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
@@ -51,7 +52,8 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     getPlayersMulti,
     kickRoom,
     getChat,
-    onSendMessage
+    onSendMessage,
+    cancelReady
   } = useSocketWaitingRoom({ ...propsSocketWaitingRoom })
 
   useEffect(() => {
@@ -100,7 +102,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
             })
           }
         } else {
-          errorToast("No Player in Room")
+          errorToast(MESSAGES["no-player"])
         }
       }
     }
@@ -144,7 +146,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
 
   return (
     <>
-      <SocketProvider propsSocket={{ kickRoom, onSendMessage }}>
+      <SocketProvider propsSocket={{ kickRoom, cancelReady, onSendMessage }}>
         <Box className=" gap-3 md:flex">
           <Box className="w-full shrink  rounded-3xl border border-neutral-800">
             {dataPlayers && gameData && (

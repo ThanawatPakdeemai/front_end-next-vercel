@@ -1,12 +1,17 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import { ReactNode, createContext, useContext, useMemo } from "react"
 
+interface IPropSocket {
+  getRoomListMultiPlayer: () => void
+}
 interface IProp {
-  propsSocket: any
+  propsSocket: IPropSocket
   children: ReactNode // PropsWithChildren<unknown>
 }
 
-const SocketContext = createContext<any>({})
+const SocketContext = createContext<IPropSocket>({
+  getRoomListMultiPlayer: () => {}
+})
 
 function SocketProvider({ propsSocket, children }: IProp) {
   // const { setUp } = useSocket({ ...propsSocket })

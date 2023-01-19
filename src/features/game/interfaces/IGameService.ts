@@ -161,7 +161,7 @@ export interface IGameService extends IFormatService {
 }
 
 export interface IGameCurrentPlayer extends IGameBase {
-  status: string
+  status: string // "inroom" | "ready" | "played" | "playing"
   item_burn: boolean
   transaction_status: boolean
   avatar: string

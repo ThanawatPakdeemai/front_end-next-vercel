@@ -2,6 +2,7 @@ import ReloadIcon from "@components/icons/ReloadIcon"
 import ButtonSticky from "@components/molecules/ButtonSticky"
 import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
+import { MESSAGES } from "@constants/messages"
 import useSocketRoomList from "@feature/game/containers/hooks/useSocketRoomList"
 import {
   IGameRoomListSocket,
@@ -84,20 +85,20 @@ const MultiRoomList = () => {
 
   const handleJoinRoom = (_data: IGameRoomListSocket) => {
     if (new Date() > new Date(_data.end_time)) {
-      errorToast("This room is full")
+      errorToast(MESSAGES["room-timeout"])
     } else if (
       _data.amount_current_player < _data.max_players &&
       new Date() < new Date(_data.end_time)
     ) {
       router.push(`${router.asPath}/${_data._id}`)
     } else {
-      errorToast("This room is full")
+      errorToast(MESSAGES["room-full"])
     }
   }
 
   return (
     <>
-      <SocketProviderRoom propsSocket={propsSocketRoomlist}>
+      <SocketProviderRoom propsSocket={{ getRoomListMultiPlayer }}>
         <Box className="rounded-3xl border border-neutral-700">
           {gameData && <HeaderRoomList lobby={gameData.name} />}
           <Divider />

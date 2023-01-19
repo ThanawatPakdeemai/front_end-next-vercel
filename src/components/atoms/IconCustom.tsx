@@ -10,7 +10,6 @@ import React from "react"
 
 export interface IIconCustoms {
   icon_key: string
-  name: string
   support: boolean
 }
 

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { IDropdown } from "@interfaces/IMenu"
+import { IDropdown, ICURENCY } from "@interfaces/IMenu"
 import InventoryIcon from "@components/icons/MenunIcon/InventoryIcon"
 import WishlistIcon from "@components/icons/MenunIcon/WishlistIcon"
 import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
@@ -83,5 +83,32 @@ export const DROPDOWN: IDropdown[] = [
       },
       { label: "Wishlist", href: "/", icon: <WishlistIcon /> }
     ]
+  },
+  {
+    title: "Item Game",
+    icon: null,
+    className: "w-full",
+    text: "string",
+    details: [
+      {
+        label: "1 Item",
+        href: "/",
+        icon: <EditProfileIcon />
+      },
+      { label: "1 Item", href: "/", icon: <WishlistIcon /> }
+    ]
+  }
+]
+
+export const CURENCY: ICURENCY[] = [
+  {
+    id: "1",
+    name: "Naka",
+    image_icon: "/images/logo/Logo-Master1.png"
+  },
+  {
+    id: "2",
+    name: "UPO",
+    image_icon: "/images/logo/Logo-Master1.png"
   }
 ]

@@ -238,16 +238,6 @@ const Helper = {
   percentageCalc(amount: number, total: number) {
     return (amount / total) * 100
   }
-  // async helperAxiosAPI<T>(promiseAPI: Promise<AxiosResponse<T, any>>) {
-  //   return promiseAPI
-  //     .then((res) => ({ response: res.data, error: null }))
-  //     .catch((error) => {
-  //       if (error.response && typeof error.response.data === "object") {
-  //         return { response: null, error: error.response.data.message }
-  //       }
-  //       return { response: null, error }
-  //     })
-  // }
 }
 
 export default Helper

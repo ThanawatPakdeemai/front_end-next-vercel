@@ -4,28 +4,31 @@ import { IHeaderSlide } from "@components/molecules/gameSlide/GameCarouselHeader
 import NumberRank from "@feature/ranking/components/atoms/NumberRank"
 import { Chip } from "@mui/material"
 import { motion } from "framer-motion"
-import React, { memo } from "react"
+import React, { memo, useEffect, useState } from "react"
 import ImageCustom from "@components/atoms/image/Image"
 import IconHourglass from "@components/icons/hourglassIcon"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import TimerStamina from "@components/atoms/timer/TimerStamina"
 import { IGame } from "@feature/game/interfaces/IGameService"
+import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 
 interface IProps {
   menu: IHeaderSlide
-  data: IGame
+  data: IGame | IPartnerGameData
+  img?: string
   showNo?: boolean
   no?: number
   checkTimer?: boolean
   cooldown?: boolean
   staminaRecovery?: Date
   setCooldown?: (_value: boolean) => void
-  onHandleClick: () => void
+  onHandleClick?: () => void
 }
 
 const GameCard = ({
   menu,
   data,
+  img,
   showNo,
   no,
   checkTimer,
@@ -34,6 +37,8 @@ const GameCard = ({
   setCooldown,
   onHandleClick
 }: IProps) => {
+  const [imageSrc, setImageSrc] = useState<string>("")
+
   const btnCard = {
     init: {
       y: 40,
@@ -67,6 +72,14 @@ const GameCard = ({
     return chip
   }
 
+  useEffect(() => {
+    if (img && img !== undefined) {
+      setImageSrc(img)
+    } else if (!img && img === undefined && data && data.image_category_list) {
+      setImageSrc(data.image_category_list)
+    }
+  }, [img, data])
+
   return (
     <motion.div
       className="slick-card-container flex flex-col justify-center blur-none"
@@ -83,7 +96,7 @@ const GameCard = ({
           />
         ) : null}
         <ImageCustom
-          src={data.image_category_list}
+          src={imageSrc}
           alt="home-slide"
           width={218}
           height={218}

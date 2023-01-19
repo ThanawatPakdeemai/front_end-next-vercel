@@ -4,15 +4,15 @@ import { P2EHeaderMenu } from "@constants/gameSlide"
 import GameCard from "@feature/game/containers/components/molecules/GameCard"
 import { getAllPartnerGames } from "@feature/game/containers/services/game.service"
 import { useQueryClient } from "@tanstack/react-query"
-import { useRouter } from "next/router"
+// import { useRouter } from "next/router"
 import React, { memo, useEffect, useRef, useState } from "react"
 import { v4 as uuid } from "uuid"
 import useGameStore from "@stores/game/index"
 import useProfileStore from "@stores/profileStore"
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
-import { MESSAGES } from "@constants/messages"
+// import { MESSAGES } from "@constants/messages"
 import usePartnerGame from "@feature/game/containers/hooks/usePartnerGame"
-import { useToast } from "@feature/toast/containers"
+// import { useToast } from "@feature/toast/containers"
 
 const PartnerGames = () => {
   const search = ""
@@ -21,8 +21,8 @@ const PartnerGames = () => {
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
-  const router = useRouter()
-  const { onSetGameData, clearGameData } = useGameStore()
+  // const router = useRouter()
+  const { clearGameData } = useGameStore()
   const profile = useProfileStore((state) => state.profile.data)
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
 
@@ -40,7 +40,6 @@ const PartnerGames = () => {
     _page: page
   })
   useEffect(() => {
-    // totalCount
     if (!fetchRef.current && gameData?.info && gameData) {
       fetchRef.current = true
       setTotalCount(gameData.info?.totalCount)
@@ -71,12 +70,12 @@ const PartnerGames = () => {
         {gameData &&
           gameData.data &&
           gameData.data.map((game) => (
-            <></>
-            // <GameCard
-            //   key={game.id}
-            //   menu={P2EHeaderMenu}
-            //   data={game}
-            // />
+            <GameCard
+              key={game.id}
+              menu={P2EHeaderMenu}
+              data={game}
+              img={game.image_thumbnail}
+            />
           ))}
       </div>
       <PaginationNaka

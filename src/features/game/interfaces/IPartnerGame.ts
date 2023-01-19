@@ -5,17 +5,18 @@ export interface IGenres {
   name: string
   slug: string
 }
-export interface IGameCardDatas {
+export interface IPartnerGameData {
   _id: string
   name: string
   slug: string
   description: string
   genres: IGenres[]
   id: string
-  image_thumbnail?: string
+  image_category_list: string | undefined
+  image_thumbnail: string | undefined
 }
 
-export type IGameCards = IGameCardDatas[]
+export type IGameCards = IPartnerGameData[]
 
 export interface IGetPartnerGameService {
   _limit: number

@@ -9,6 +9,7 @@ import Ellipse from "@components/icons/Ellipse/Ellipse"
 import useProfileStore from "@stores/profileStore"
 import HighlightOffIcon from "@mui/icons-material/HighlightOff"
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty"
+import { useToast } from "@feature/toast/containers"
 import ButtonPlayer from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 import ButtonOwner from "../atoms/ButtonOwner"
@@ -22,6 +23,7 @@ const SeatPlayersSingle = ({ players }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
   const [ownerPressReady, setOwnPressReady] = useState(false)
   const [playerPressReady, setPlayerPressReady] = useState(false)
+  const { errorToast } = useToast()
 
   const playerInroom = useMemo(() => {
     if (players) {
@@ -112,7 +114,13 @@ const SeatPlayersSingle = ({ players }: IProps) => {
             {ownerPressReady && (
               <ButtonCountdown
                 time
-                handleClick={onPlayGame}
+                handleClick={() => {
+                  playerAllReady
+                    ? onPlayGame()
+                    : () => {
+                        errorToast("Please Wait player all ready") // TODO YUI
+                      }
+                }}
                 endIcon={
                   isOwnerRoom ? (
                     <HighlightOffIcon className="text-secondary-main " />
@@ -133,13 +141,13 @@ const SeatPlayersSingle = ({ players }: IProps) => {
                 startIcon={
                   <Ellipse fill={playerAllReady ? "#A0ED61" : "#F42728"} />
                 }
-                handleClick={
+                handleClick={() => {
                   playerAllReady
-                    ? onPlayGame
+                    ? onPlayGame()
                     : () => {
-                        onPlayGame() // TODO YUI
+                        errorToast("Please Wait player all ready") // TODO YUI
                       }
-                }
+                }}
                 text={
                   <Typography className="w-full font-neue-machina text-2xl uppercase text-neutral-600">
                     START
@@ -179,9 +187,7 @@ const SeatPlayersSingle = ({ players }: IProps) => {
                 }
                 endIcon={<HighlightOffIcon className=" text-primary-main" />}
                 className={` h-[60px] w-[60px]
-                  
                     rounded-full bg-green-lemon
-                   
                 text-primary-main ${
                   players ? " " : "btn-green-rainbow  "
                 } font-bold capitalize text-neutral-900`}

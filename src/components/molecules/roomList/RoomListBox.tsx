@@ -2,6 +2,7 @@ import PlayersAmount from "@components/atoms/PlayersAmount"
 import TimerLobby from "@components/atoms/timer/TimerLobby"
 import PlayersIcon from "@components/icons/PlayersIcon"
 import StopwatchIcon from "@components/icons/StopwatchIcon"
+import { Typography } from "@mui/material"
 import React from "react"
 import fullConfig from "../../../../tailwindResolver"
 
@@ -19,7 +20,7 @@ interface IProp {
   shade: string
   type: "timer" | "player"
   borderColor?: string
-  bordershade?: string
+  unlimited?: boolean
 }
 
 /**
@@ -38,7 +39,8 @@ const RoomListBox = ({
   color,
   shade,
   type,
-  borderColor = "border-neutral-700"
+  borderColor = "border-neutral-700",
+  unlimited
 }: IProp) => {
   const { theme } = fullConfig
 
@@ -51,12 +53,20 @@ const RoomListBox = ({
       } bg-neutral-900 py-2 align-baseline`}
     >
       <StopwatchIcon stroke={initTheme} />
-      {timer && (
+      {timer && !unlimited ? (
         <TimerLobby
           time={timer.time}
           initTheme={initTheme}
           onExpire={timer.onExpire}
         />
+      ) : (
+        <Typography
+          sx={{
+            color: initTheme || "#4E5057"
+          }}
+        >
+          Unlimited
+        </Typography>
       )}
     </div>
   ) : (

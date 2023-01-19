@@ -1,4 +1,4 @@
-import Triangle from "../../../../components/atoms/Triangle"
+import Triangle from "@components/atoms/Triangle"
 
 export interface IMessageTextProps {
   message: string

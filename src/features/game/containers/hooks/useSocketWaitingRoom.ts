@@ -6,6 +6,7 @@ import { useToast } from "@feature/toast/containers"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 import useGameStore from "@stores/game"
+import { MESSAGES } from "@constants/messages"
 import { IPropsSocketRoomList } from "./useSocketRoomList"
 
 export interface IPropsSocketWaiting extends IPropsSocketRoomList {
@@ -62,7 +63,7 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     // check room time out
     socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_TIMEOUT, () => {
       if (gameData) {
-        errorToast("Room expried")
+        errorToast(MESSAGES["room-expried"])
         router.push(`/${gameData.path}/roomlist`)
       }
     })
@@ -72,7 +73,7 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     // check owner kick
     socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_KICK, () => {
       if (gameData) {
-        errorToast("You were kicked out of the room.")
+        errorToast(MESSAGES["you-were-kicked"])
         router.push(`/${gameData.path}/roomlist`)
       }
     })

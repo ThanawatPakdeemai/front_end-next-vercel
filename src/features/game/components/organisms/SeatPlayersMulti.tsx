@@ -8,6 +8,7 @@ import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty"
 import { useToast } from "@feature/toast/containers"
 import Helper from "@utils/helper"
 import { IResGetIp } from "@interfaces/IGetIP"
+import { MESSAGES } from "@constants/messages"
 import ButtonPlayer from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 import ButtonOwner from "../atoms/ButtonOwner"
@@ -71,7 +72,7 @@ const SeatPlayersSingle = ({ players }: IProps) => {
 
   const checkText = useMemo(() => {
     if (isOwnerRoom) {
-      // ผู้เล่น เป็น owner
+      //  owner
       if (!playerAllReady && !ownerPressReady && playerNotReady) {
         return "The game will begin as soon as all players are ready"
       }
@@ -80,7 +81,7 @@ const SeatPlayersSingle = ({ players }: IProps) => {
       }
     }
 
-    // ผู้เล่น เป็น player
+    // player
     if (playerPressReady && !ownerPressReady) {
       return "Please wait for them to begin"
     }
@@ -131,7 +132,7 @@ const SeatPlayersSingle = ({ players }: IProps) => {
                   playerAllReady
                     ? onPlayGame()
                     : () => {
-                        errorToast("Please Wait player all ready") // TODO YUI
+                        errorToast(MESSAGES["please-wait-player-all-ready"]) // TODO YUI
                       }
                 }}
                 endIcon={
@@ -158,7 +159,7 @@ const SeatPlayersSingle = ({ players }: IProps) => {
                   playerAllReady
                     ? onPlayGame()
                     : () => {
-                        errorToast("Please Wait player all ready") // TODO YUI
+                        errorToast(MESSAGES["please-wait-player-all-ready"]) // TODO YUI
                       }
                 }}
                 text={

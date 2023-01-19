@@ -10,6 +10,7 @@ import { Box } from "@mui/material"
 import SocketProvider from "@providers/SocketProviderWaiting"
 import SeatPlayersMulti from "@feature/game/components/organisms/SeatPlayersMulti"
 import { useToast } from "@feature/toast/containers"
+import { MESSAGES } from "@constants/messages"
 import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
 const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
@@ -95,7 +96,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
             })
           }
         } else {
-          errorToast("No Player in Room")
+          errorToast(MESSAGES["no-player"])
         }
       }
     }

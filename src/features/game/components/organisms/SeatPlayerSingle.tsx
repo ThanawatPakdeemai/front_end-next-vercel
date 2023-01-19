@@ -10,6 +10,7 @@ import useGameStore from "@stores/game"
 import Helper from "@utils/helper"
 import { useToast } from "@feature/toast/containers"
 import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
+import { MESSAGES } from "@constants/messages"
 import ButtonGame from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 
@@ -55,7 +56,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
     const statueTimout = checkRoomTimeout()
     if (statueTimout) {
       router.push(`/${gameData?.path}/roomlist`)
-      errorToast("Room timeout")
+      errorToast(MESSAGES["room-timeout"])
     }
     return () => {}
   }, [checkRoomTimeout, errorToast, gameData?.path, gameRoomById, router])
@@ -65,7 +66,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
       return true
     }
     if (balanceofItem === undefined) {
-      errorToast("You don't have item for this game. Please buy Item")
+      errorToast(MESSAGES["you-don't-have-item"])
       return false
     }
     return false
@@ -77,7 +78,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
       (profile && profile.role === "BACKLIST") ||
       (profile && profile.role === "BANNED")
     ) {
-      errorToast("You are banned. Please contact admin")
+      errorToast(MESSAGES["you-are-banned"])
       return false
     }
     return true
@@ -87,7 +88,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
     if (profile && profile.address === addrsss) {
       return true
     }
-    errorToast("Please connect wallet again!")
+    errorToast(MESSAGES["please-connect-wallet"])
     return false
   }
   const OnPlayGame = () => {
@@ -134,7 +135,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
         // window.location.href = gameURL
       }
     } else {
-      errorToast("You can't play game.")
+      errorToast(MESSAGES["you-can't-play-game"])
     }
   }
 

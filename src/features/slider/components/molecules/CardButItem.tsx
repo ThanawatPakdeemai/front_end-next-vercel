@@ -41,6 +41,7 @@ import {
 } from "@utils/helpers"
 import { buyItems } from "@src/features/buyItem/containers/services/buyItem.service"
 import toast from "react-hot-toast"
+import { Image } from "@components/atoms/image"
 
 const ariaLabel = { "aria-label": "description" }
 
@@ -372,10 +373,11 @@ export default function CardButItem() {
             <div className="flex w-full flex-col justify-between">
               <div className="mb-2 flex w-full justify-between rounded-xl bg-[#E1E2E2]  p-2 text-center text-[#111111]">
                 <p>0.00</p>
-
-                <img
+                <Image
                   src="/images/gamePage/skull.png"
-                  alt=""
+                  alt="skull"
+                  width="30"
+                  height="30"
                 />
               </div>
               <div className="mb-2 flex w-full justify-between rounded-xl bg-[#232329] p-2 text-center text-[#70727B]">
@@ -402,7 +404,7 @@ export default function CardButItem() {
                 variant="contained"
                 className="w-full"
                 onClick={() => {
-                  router.push(`/${router.asPath}/roomlist`)
+                  router.push(`${router.asPath}/roomlist`)
                 }}
               />
             ) : (

@@ -7,15 +7,13 @@ import { IGetEventLog } from "@interfaces/ITransaction"
 import { ILocal, TLocalKey, ELocalKey } from "@interfaces/ILocal"
 import { ICurrentNakaData } from "@feature/inventory/interfaces/IInventoryService"
 import { getCurrentNaka } from "@feature/inventory/containers/services/inventory.service"
+import { IResGetIp } from "@interfaces/IGetIP"
 
 const names = ["wei", "kwei", "mwei", "gwei", "szabo", "finney", "ether"]
 
 const Helper = {
   setLocalStorage({ key, value }: ILocal) {
     localStorage.setItem(key, value || "")
-  },
-  setCookie(value) {
-    document.cookie = value
   },
   getLocalStorage(_key: TLocalKey) {
     return typeof window !== "undefined" ? localStorage.getItem(_key) : null
@@ -127,7 +125,7 @@ const Helper = {
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve) => {
       const response = await fetch("https://api.ipify.org/?format=json")
-      const data = await response.json()
+      const data: IResGetIp = await response.json()
       resolve(data)
     })
   },

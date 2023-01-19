@@ -143,8 +143,9 @@ const FormCreateProfile = () => {
             <Box className="hide-scroll mt-2 flex w-[350px] items-center gap-3 overflow-x-scroll pb-3">
               {avatar.map((item, index) => (
                 <Box
+                  id={item.name}
                   key={Number(index)}
-                  onClick={async () => {
+                  onClick={() => {
                     slideTo()
                     setDefaultAvatar(item.value)
                   }}

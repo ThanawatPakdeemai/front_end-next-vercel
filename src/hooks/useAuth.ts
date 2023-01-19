@@ -8,6 +8,7 @@ import {
 } from "@web3-react/walletconnect-connector"
 import { setupNetwork } from "@utils/wallet"
 import erc20Abi from "@configs/abi/ERC20.json"
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { AbiItem } from "web3-utils"
 import toast from "react-hot-toast"
 import useProfileStore from "@stores/profileStore/index"

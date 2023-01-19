@@ -1,10 +1,12 @@
+import { ChatProvider } from "@feature/chat/containers/contexts/ChatProvider"
 import MultiWaiting from "@feature/game/components/templates/waitingRoom/multiPlayer/MultiWaiting"
 import SingleWaiting from "@feature/game/components/templates/waitingRoom/singlePlayer/SingleWaiting"
 import StoryWaiting from "@feature/game/components/templates/waitingRoom/storymode/StoryWaiting"
+import { IGame } from "@feature/game/interfaces/IGameService"
 import { Box } from "@mui/material"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 interface IProp {
   _roomId: string
@@ -12,7 +14,14 @@ interface IProp {
 
 const GameRoomWaitingPage = ({ _roomId }: IProp) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const gameData = useGameStore((state) => state.data)
+  const data = useGameStore((state) => state.data)
+  const [gameData, setGameData] = useState<IGame>()
+
+  useEffect(() => {
+    if (data) {
+      setGameData(data)
+    }
+  }, [data])
 
   const getTemplateGame = () => {
     if (gameData) {
@@ -20,7 +29,11 @@ const GameRoomWaitingPage = ({ _roomId }: IProp) => {
         case "singleplayer":
           return <SingleWaiting _roomId={_roomId} />
         case "multiplayer":
-          return <MultiWaiting _roomId={_roomId} />
+          return (
+            <ChatProvider>
+              <MultiWaiting _roomId={_roomId} />
+            </ChatProvider>
+          )
         case "storymode":
           return <StoryWaiting />
         default:

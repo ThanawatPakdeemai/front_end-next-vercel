@@ -4,6 +4,7 @@ import { ReactNode, createContext, useContext, useMemo } from "react"
 interface IPropSocket {
   // eslint-disable-next-line no-unused-vars
   kickRoom: (player_id: string) => void
+  onSendMessage: () => void
   cancelReady: () => void
 }
 interface IProp {
@@ -13,7 +14,8 @@ interface IProp {
 
 const SocketContext = createContext<IPropSocket>({
   kickRoom: () => {},
-  cancelReady: () => {}
+  cancelReady: () => {},
+  onSendMessage: () => {}
 })
 
 function SocketProvider({ propsSocket, children }: IProp) {

@@ -14,6 +14,8 @@ import useGameStore from "@stores/game"
 import { unstable_batchedUpdates } from "react-dom"
 import Howto from "@components/molecules/HowToPlay"
 import { IGame } from "@feature/game/interfaces/IGameService"
+import { useRouter } from "next/router"
+// import { baseUrl } from "@constants/sites"
 
 const GameRoomLayout = ({
   children
@@ -23,6 +25,16 @@ const GameRoomLayout = ({
   const [gameData, setGameData] = useState<IGame>()
   const { topPlayerGameId, fetchTopPlayersByGameId } = useTopPlayerByGameId()
   const { statsGameById, fetchStatsGameById } = useGetStatisticsGameById()
+
+  const location = useRouter()
+  const searchParams = new URLSearchParams(location.pathname)
+  const lang = searchParams.get("lang")
+
+  useEffect(() => {
+    if (data) {
+      setGameData(data)
+    }
+  }, [data])
 
   useEffect(() => {
     if (data) setGameData(data)
@@ -36,6 +48,16 @@ const GameRoomLayout = ({
       })
     }
   }, [gameData, fetchStatsGameById, fetchTopPlayersByGameId])
+
+  useEffect(() => {
+    if (gameData) {
+      // const link =
+      //   `${baseUrl.baseSite}/${gameData.path}/roomLists/${
+      //     gameData.play_to_earn ? "" : item_size
+      //   }?search=${code}` +
+      //   `${lang !== "en" && lang !== null ? `&lang=${lang}` : ""}`
+    }
+  }, [gameData])
 
   return (
     <div className="main-container mx-auto">

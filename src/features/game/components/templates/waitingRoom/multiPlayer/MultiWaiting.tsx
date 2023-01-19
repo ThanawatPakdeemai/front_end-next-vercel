@@ -1,3 +1,4 @@
+import useChatContext from "@feature/chat/containers/contexts/useChatContext"
 import HeaderWaitingRoom from "@components/organisms/HeaderWaitingRoom"
 import React, { memo, useEffect, useMemo, useState, useCallback } from "react"
 import useProfileStore from "@stores/profileStore"
@@ -10,6 +11,8 @@ import { Box } from "@mui/material"
 import SocketProvider from "@providers/SocketProviderWaiting"
 import SeatPlayersMulti from "@feature/game/components/organisms/SeatPlayersMulti"
 import { useToast } from "@feature/toast/containers"
+import Chat from "@feature/chat/components/organisms/Chat"
+import { IChat } from "@feature/chat/interface/IChat"
 import { MESSAGES } from "@constants/messages"
 import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
@@ -21,6 +24,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   const [dataPlayers, setDataPlayers] = useState<
     IGameRoomListSocket | undefined
   >()
+  const { chat, setChat } = useChatContext()
 
   const propsSocketWaitingRoom = useMemo(
     () => ({
@@ -47,6 +51,8 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     socketWaitingRoom,
     getPlayersMulti,
     kickRoom,
+    getChat,
+    onSendMessage,
     cancelReady
   } = useSocketWaitingRoom({ ...propsSocketWaitingRoom })
 
@@ -121,9 +127,26 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     }
   }, [outRoom, router])
 
+  /**
+   * @description Calling chatting function
+   */
+  const onChat = useCallback(async () => {
+    const _dataChat = await getChat()
+    if (_dataChat) {
+      setChat((oldData) => [_dataChat as IChat, ...oldData])
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chat])
+
+  useEffect(() => {
+    if (isConnected) {
+      onChat()
+    }
+  }, [isConnected, onChat])
+
   return (
     <>
-      <SocketProvider propsSocket={{ kickRoom, cancelReady }}>
+      <SocketProvider propsSocket={{ kickRoom, cancelReady, onSendMessage }}>
         <Box className=" gap-3 md:flex">
           <Box className="w-full shrink  rounded-3xl border border-neutral-800">
             {dataPlayers && gameData && (
@@ -147,8 +170,8 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
               <SeatPlayersMulti players={dataPlayers?.current_player} />
             )}
           </Box>
-          <Box className="w-[333px]  flex-none rounded-3xl border border-neutral-800">
-            right box
+          <Box className="w-[333px] flex-none">
+            <Chat />
           </Box>
         </Box>
       </SocketProvider>

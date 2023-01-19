@@ -25,6 +25,12 @@ const GameRoomLayout = ({
   const { statsGameById, fetchStatsGameById } = useGetStatisticsGameById()
 
   useEffect(() => {
+    if (data) {
+      setGameData(data)
+    }
+  }, [data])
+
+  useEffect(() => {
     if (data) setGameData(data)
   }, [data])
 

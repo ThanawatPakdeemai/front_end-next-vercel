@@ -244,5 +244,7 @@
   "played": "游戏次数",
   "win_rate": "胜率",
   "no_badge": "无徽章",
-  "lang_name": "語"
+  "lang_name": "語",
+  "chat": "聊天",
+  "in_room": "在房间里"
 }

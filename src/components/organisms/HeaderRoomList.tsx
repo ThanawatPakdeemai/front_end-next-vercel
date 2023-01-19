@@ -1,12 +1,12 @@
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import Dropdown from "@components/atoms/DropdownCustom"
-import PlusIcon from "@components/icons/CountIcon/PlusIcon"
 import SearchIcon from "@components/icons/SearchIcon"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { IGame } from "@feature/game/interfaces/IGameService"
+import ModalCreateRoom from "@feature/rooms/components/molecules/ModalCreateRoom"
 import { TextField } from "@mui/material"
+import useGameStore from "@stores/game"
 import { useRouter } from "next/router"
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 export interface IHeaderRoomList {
   lobby: string
@@ -14,6 +14,14 @@ export interface IHeaderRoomList {
 
 const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
   const router = useRouter()
+  const { data } = useGameStore()
+  const [gameData, setGameData] = useState<IGame>()
+
+  useEffect(() => {
+    if (data) {
+      setGameData(data)
+    }
+  }, [data])
 
   return (
     <>
@@ -44,12 +52,9 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
               startAdornment: <SearchIcon className="mr-4" />
             }}
           />
-          <ButtonToggleIcon
-            handleClick={() => router.reload()}
-            startIcon={<PlusIcon />}
-            text="Create Room"
-            className="btn-rainbow-theme z-[2] h-[50px] w-[156px] bg-secondary-main font-bold capitalize text-white-primary"
-          />
+          {gameData && gameData.game_type === "multiplayer" ? (
+            <ModalCreateRoom gameData={gameData} />
+          ) : null}
         </div>
       </div>
     </>

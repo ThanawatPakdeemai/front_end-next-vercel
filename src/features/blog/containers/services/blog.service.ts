@@ -42,12 +42,7 @@ const getBlogDetail = (blog_id: string) =>
     }
   })
 
-const getCategoryBlogAll = ({
-  limit = 20,
-  skip = 1,
-  search = "",
-  sort = ""
-}: Blog) =>
+const getCategoryBlogAll = ({ limit, skip, search, sort }: Blog) =>
   new Promise<ICategoryResponse>((resolve, reject) => {
     const data = {
       search,

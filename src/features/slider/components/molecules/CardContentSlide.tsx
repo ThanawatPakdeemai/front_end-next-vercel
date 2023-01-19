@@ -40,7 +40,7 @@ const CardContentSlide = ({ slide }: ICardContentSlide) => {
         title={slide.name}
         description={slide.banner_description}
       />
-      <CardFooterSlide link={slide.path} />
+      <CardFooterSlide gameData={slide} />
     </div>
   )
 }

@@ -5,6 +5,9 @@ import React from "react"
 import { motion } from "framer-motion"
 import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
 import Helper from "@utils/helper"
+import NumberRank from "@feature/ranking/components/atoms/NumberRank"
+import NoDataIcon from "@components/icons/NoDataIcon"
+import NoData from "@components/molecules/NoData"
 
 interface IProp {
   topPlayerGameId: IPlayerRanking[]
@@ -21,6 +24,7 @@ const expandMotion = {
   },
   hover: {
     width: "55px",
+    marginRight: "14px",
     transition: {
       duration: 0.8,
       stiffness: 300,
@@ -45,19 +49,19 @@ const CardRank = ({ topPlayerGameId }: IProp) => (
           >
             <motion.div
               variants={expandMotion}
-              className="h-[40px] w-[70px]"
+              transition={{ type: "spring", stiffness: 400, damping: 5 }}
             >
               <motion.div
                 variants={expandMotion}
                 transition={{ type: "spring", stiffness: 400, damping: 5 }}
-                className={`flex h-[35px]  w-[35px]  items-center justify-center rounded-lg bg-error-main	text-primary-main ${
-                  index > 2 ? "!bg-neutral-700 text-white-default" : ""
-                } `}
               >
-                {index + 1}
+                <NumberRank
+                  className="m-0 p-2 px-[16px]"
+                  index={index}
+                />
               </motion.div>
             </motion.div>
-            <div className="flex w-full">
+            <div className="ml-4 flex w-full">
               <div className="w-4/5 self-center">
                 <div className="flex items-center">
                   <Image
@@ -90,7 +94,10 @@ const CardRank = ({ topPlayerGameId }: IProp) => (
         </div>
       ))
     ) : (
-      <div>No data</div>
+      <NoData
+        className="m-4 grid justify-items-center"
+        icon={<NoDataIcon />}
+      />
     )}
   </div>
 )

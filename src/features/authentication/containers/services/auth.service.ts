@@ -3,7 +3,10 @@ import { IRefreshToken, IRevorkToken } from "@interfaces/IAuth"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
 import services from "@configs/axiosGlobalConfig"
-import { IProfileResponse } from "@feature/profile/interfaces/IProfileService"
+import {
+  IProfile,
+  IProfileResponse
+} from "@feature/profile/interfaces/IProfileService"
 import { ELocalKey } from "@interfaces/ILocal"
 import {
   ICreateNewPassword,
@@ -15,7 +18,7 @@ import {
 } from "@feature/authentication/interfaces/IAuthService"
 
 export const signIn = ({ _email, _password }: ISignIn) =>
-  new Promise<IProfileResponse>((resolve, reject) => {
+  new Promise<IProfile>((resolve, reject) => {
     const data = {
       data: {
         email: _email,
@@ -23,7 +26,7 @@ export const signIn = ({ _email, _password }: ISignIn) =>
       }
     }
     services
-      .put<IProfileResponse>("/auth/authentication", { ...data })
+      .put<IProfile>("/auth/authentication", { ...data })
       .then((response) => {
         resolve(response.data)
       })

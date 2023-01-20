@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import CrumbCustom from "@components/atoms/CrumbCustom"
 import SettingIcon from "@components/icons/SettingIcon"
 import ShapeIcon from "@components/icons/ShapeIcon"
@@ -12,7 +12,11 @@ import useProfileStore from "@stores/profileStore"
 
 const ProfileContent = () => {
   const profile = useProfileStore((state) => state.profile.data)
-  // console.log(profile)
+  const [openEdit, setOpenEdit] = useState<boolean>(false)
+
+  const handleOnExpandClick = () => {
+    setOpenEdit(!openEdit)
+  }
 
   return (
     <div>

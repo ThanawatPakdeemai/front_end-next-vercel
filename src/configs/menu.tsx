@@ -15,6 +15,13 @@ import MoneyOffIcon from "@mui/icons-material/MoneyOff"
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined"
 import DiamondIcon from "@mui/icons-material/Diamond"
 import { IMAGES } from "@constants/images"
+import AboutUsIcon from "@components/icons/BlogIcon/AboutUsIcon"
+import MarketPlaceIcon from "@components/icons/BlogIcon/MarketPlaceIcon"
+import NakaverseIcon from "@components/icons/BlogIcon/NakaverseIcon"
+import NakapunksIcon from "@components/icons/BlogIcon/NakapunksIcon"
+import NewIcon from "@components/icons/BlogIcon/NewIcon"
+import Discusion from "@components/icons/BlogIcon/Discusion"
+import FireOutLineIcon from "@components/icons/BlogIcon/FireOutLineIcon"
 
 export const MENU = [
   {
@@ -103,7 +110,7 @@ export const MENU = [
     chide: [
       {
         name: "Blog",
-        link: "/log",
+        link: "/blog",
         icon: AttachMoneyIcon
       },
       {
@@ -157,14 +164,14 @@ export const MENU_LOGGEDIN: IMenu[] = [
   {
     id: "edit-profile",
     label: "Edit Profile",
-    href: "/",
+    href: "/profile",
     icon: <EditProfileIcon />,
     external: false
   },
   {
     id: "wishlist",
     label: "Wishlist",
-    href: "/",
+    href: "/wishlsit",
     icon: <WishlistIcon />,
     external: false
   },
@@ -178,7 +185,7 @@ export const MENU_LOGGEDIN: IMenu[] = [
   {
     id: "your-mission",
     label: "Your Mission",
-    href: "/",
+    href: "/mission",
     icon: <YourMissionIcon />,
     external: false
   },
@@ -257,5 +264,65 @@ export const MENU_MAIN_PC: IMenuIcon[] = [
     href: `/`,
     src: "/assets/images/icons/icon_p2p.svg",
     alt: `My Order`
+  }
+]
+
+export const MENU_BLOG: IMenu[] = [
+  {
+    id: "about-us",
+    label: "About Us",
+    icon: <AboutUsIcon className="stroke-neutral-300" />,
+    href: "/",
+    external: false
+  },
+  {
+    id: "marketplace",
+    label: "Marketplace",
+    icon: <MarketPlaceIcon className="stroke-neutral-300" />,
+    href: "/",
+    external: false
+  },
+  {
+    id: "nakaverse",
+    label: "Nakaverse",
+    icon: <NakaverseIcon className="stroke-neutral-300" />,
+    href: "/",
+    external: false
+  },
+  {
+    id: "nakapunks",
+    label: "Nakapunks",
+    icon: <NakapunksIcon className="stroke-neutral-300" />,
+    href: "/",
+    external: false
+  }
+]
+
+export const MENU_BLOG_HEADER = [
+  {
+    name: "All",
+    link: "",
+    isChide: false,
+    icon: null
+  },
+  {
+    name: "New",
+    link: "",
+    isChide: true,
+    left: "120px !important",
+    icon: <NewIcon className="mr-2" />
+  },
+  {
+    name: "Hot",
+    link: "",
+    isChide: true,
+    icon: <FireOutLineIcon className="mr-2 stroke-[#6F727B]" />
+  },
+  {
+    name: "Discusion",
+    link: "",
+    isChide: true,
+    left: "-180px !important",
+    icon: <Discusion className="mr-2" />
   }
 ]

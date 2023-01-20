@@ -22,25 +22,24 @@ const GameRoomList = () => {
   const router = useRouter()
   const [gameData, setGameData] = useState<IGame>()
 
-  const { allGameRooms, fetchAllGameRoom } = useGetAllGameRooms()
+  const { allGameRooms } = useGetAllGameRooms({
+    _gameId: data ? data._id : "",
+    _email: profile ? profile.email : "",
+    // mock for waiting price of items
+    _itemId: "63072b0dd0be6934c17b5438"
+  })
 
   const handleJoinRoom = (_roomId: string) => {
     router.push(`${router.asPath}/${_roomId}`)
   }
 
   useEffect(() => {
-    if (data && profile && fetchAllGameRoom) {
+    if (data) {
       unstable_batchedUpdates(() => {
         setGameData(data)
-        fetchAllGameRoom({
-          _gameId: data._id,
-          _email: profile.email,
-          // mock for waiting price of items
-          _itemId: "63072b0dd0be6934c17b5438"
-        })
       })
     }
-  }, [data, fetchAllGameRoom, profile])
+  }, [allGameRooms, data])
 
   return (
     <>

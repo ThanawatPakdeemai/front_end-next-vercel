@@ -9,6 +9,7 @@ interface IProps {
   text: string
   handleClick?: () => void
   className?: string
+  disabled?: boolean
 }
 
 const ButtonToggleIcon = ({
@@ -16,7 +17,8 @@ const ButtonToggleIcon = ({
   endIcon = <IconArrowRight />,
   text,
   handleClick,
-  className
+  className,
+  disabled
 }: IProps) => {
   const stiffValue = 300
 
@@ -72,6 +74,7 @@ const ButtonToggleIcon = ({
       whileHover="hover"
       type="button"
       onClick={handleClick}
+      disabled={disabled}
     >
       <motion.span
         variants={iconStart}

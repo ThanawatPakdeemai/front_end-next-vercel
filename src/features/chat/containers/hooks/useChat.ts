@@ -1,22 +1,18 @@
+import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
 import React from "react"
 
 const useChat = () => {
-  const onSend = async () => {
-    // socketWaitingRoom.emit(EVENTS.ACTION.CHAT_SEND_MESSAGE, {
-    //   message: message
-    // })
-    // setMessage("")
-  }
+  const propsSocket = useSocketProviderWaiting()
+  const { onSendMessage } = propsSocket
 
   const handleInputChat = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter") {
-      onSend()
+      onSendMessage()
     }
   }
 
   return {
-    handleInputChat,
-    onSend
+    handleInputChat
   }
 }
 

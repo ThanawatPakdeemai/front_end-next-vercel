@@ -1,4 +1,6 @@
 {
   "welcome_to_react": "สวัสดีจ้า",
-  "lang_name": "ภาษา"
+  "lang_name": "ภาษา",
+  "chat": "แชท",
+  "in_room": "อยู่ในห้อง"
 }

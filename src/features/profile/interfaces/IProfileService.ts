@@ -70,7 +70,7 @@ export interface IRegister extends IProfileBase {
 
 export interface IProfileResponse {
   status: boolean
-  data: IProfile | null
+  data: IProfile | undefined
   message: string | null
 }
 

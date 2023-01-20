@@ -33,14 +33,15 @@ const Howto = ({ data }: IProp) => {
   const [browser, setBrowser] = useState<IGameBrowser[]>([])
 
   useEffect(() => {
-    // let cancel = false
+    // eslint-disable-next-line no-unused-vars
+    let cancel = false
     if (data) {
       setDevice(data.device_support)
       setBrowser(data.browser_support)
     }
-    // return () => {
-    //   cancel = true
-    // }
+    return () => {
+      cancel = true
+    }
   }, [data])
 
   //  <div
@@ -82,7 +83,6 @@ const Howto = ({ data }: IProp) => {
               >
                 <IconCustoms
                   icon_key={item.key}
-                  name={item.name}
                   support={item.supported}
                 />
               </div>
@@ -102,7 +102,6 @@ const Howto = ({ data }: IProp) => {
                 >
                   <IconCustoms
                     icon_key={item.key}
-                    name={item.name}
                     support={item.supported}
                   />
                 </div>

@@ -1,4 +1,5 @@
 import EarthIcon from "@components/icons/EarthIcon"
+import MaskBlogIcon from "@components/icons/MaskBlogIcon"
 import NakamotoWarIcon from "@components/icons/NakamotoWarIcon"
 
 export const GAME_BANNER = [
@@ -24,6 +25,20 @@ export const GAME_DETAILS_BANNER = [
   {
     link: "/",
     icon: <NakamotoWarIcon className="naka-banner-icon absolute z-10" />,
+    table: true,
+    type: "blinkIcon"
+  }
+]
+
+export const GAME_BLOG_BANNER = [
+  {
+    link: "/",
+    text: "Naka Ecosystems",
+    type: "text"
+  },
+  {
+    link: "/",
+    icon: <MaskBlogIcon className="z-10 mt-8 flex" />,
     table: true,
     type: "blinkIcon"
   }

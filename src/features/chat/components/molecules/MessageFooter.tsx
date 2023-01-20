@@ -1,13 +1,16 @@
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import SendIcon from "@components/icons/SendIcon"
-// import useChatContext from "@feature/chat/containers/contexts/useChatContext"
+import useChatContext from "@feature/chat/containers/contexts/useChatContext"
 import useChat from "@feature/chat/containers/hooks/useChat"
 import { Box, TextField } from "@mui/material"
+import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
 import React from "react"
 
 const MessageFooter = () => {
-  const { handleInputChat, onSend } = useChat()
-  // const { message, setMessage } = useChatContext()
+  const { handleInputChat } = useChat()
+  const { message, setMessage } = useChatContext()
+  const propsSocket = useSocketProviderWaiting()
+  const { onSendMessage } = propsSocket
 
   const iconmotion = {
     hover: {
@@ -37,9 +40,9 @@ const MessageFooter = () => {
         id="message-input"
         placeholder="Message Here"
         size="medium"
-        // value={message}
+        value={message}
         onKeyPress={handleInputChat}
-        // onChange={(e) => setMessage(e.target.value)}
+        onChange={(e) => setMessage(e.target.value)}
         autoComplete="off"
       />
       <ButtonIcon
@@ -49,7 +52,7 @@ const MessageFooter = () => {
         icon={<SendIcon />}
         className="absolute right-4 flex h-[18px] w-[18px] cursor-pointer items-center justify-center rounded-lg bg-transparent"
         aria-label="send-button"
-        onClick={onSend}
+        onClick={onSendMessage}
       />
     </Box>
   )

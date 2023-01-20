@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react"
+import React, { useEffect, useState, useMemo, useCallback } from "react"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import LogoutIcon from "@mui/icons-material/Logout"
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
@@ -9,18 +9,22 @@ import { IGame } from "@feature/game/interfaces/IGameService"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import RightMenuBuyItem from "@feature/gameItem/components/molecules/RightMenuBuyItem"
 import { useRouter } from "next/router"
-import DropdownList from "@components/atoms/DropdownList"
-import { useTranslation } from "react-i18next"
 import { Image } from "@components/atoms/image"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import { MESSAGES } from "@constants/messages"
+import Helper from "@utils/helper"
+import { useTranslation } from "react-i18next"
+import { ICURENCY } from "@interfaces/ICurrency"
+import { useToast } from "@feature/toast/containers"
+import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 
 export default function CardButItem() {
-  // const web3 = useWeb3()
-  // eslint-disable-next-line no-unused-vars
   const { t } = useTranslation()
   const { data, onSetGameItemSelectd, itemSelected } = useGameStore()
   const [gameObject, setGameObject] = useState<IGame | undefined>()
+  const [totalPrice, setTotalPrice] = useState<number>(0)
+  const { errorToast } = useToast()
+
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
   const { gameItemList } = useGamesByGameId({
@@ -28,22 +32,47 @@ export default function CardButItem() {
     _gameId: gameObject ? gameObject._id : ""
   })
 
+  const getTotalPriceItemSelectProfile = useCallback(async () => {
+    if (itemSelected) {
+      const priceUsd = await Helper.getPriceNakaCurrent()
+      if (priceUsd) {
+        setTotalPrice(itemSelected.qty * itemSelected.price) //  is dallor $
+        // Naka
+        // Helper.calculateItemPerPrice(Number(itemSelected.price) ?? 0).then(
+        //   (value) => {
+        //     // eslint-disable-next-line no-restricted-globals
+        //     if (isNaN(value)) {
+        //       setTotalPrice(0)
+        //     } else {
+        //       setTotalPrice(Number(value) * Number(itemSelected.qty ?? 0))
+        //     }
+        //   }
+        // )
+      }
+    }
+  }, [itemSelected])
+
   useEffect(() => {
     if (data) setGameObject(data)
+    if (itemSelected) getTotalPriceItemSelectProfile()
     return () => {
       setGameObject(undefined)
     }
-  }, [data])
+  }, [data, getTotalPriceItemSelectProfile, itemSelected])
 
   const onChangeSelectItem = (_item: IGameItemListData) => {
-    onSetGameItemSelectd(_item)
+    if (_item.qty > 0) {
+      onSetGameItemSelectd(_item as IGameItemListData)
+    } else {
+      errorToast(MESSAGES["you-don't-have-item"])
+    }
   }
 
   const buttonInToGame = useMemo(() => {
     if (itemSelected && (itemSelected as IGameItemListData).qty > 0) {
       return (
         <ButtonLink
-          text="Join Game"
+          text={t("join-game")}
           href=""
           icon={<LogoutIcon />}
           size="medium"
@@ -69,7 +98,7 @@ export default function CardButItem() {
         onClick={() => {}}
       />
     )
-  }, [itemSelected, router])
+  }, [itemSelected, router, t])
 
   return (
     <>
@@ -77,17 +106,21 @@ export default function CardButItem() {
         <div className="p-4 ">
           {gameItemList && (
             <>
-              <DropdownList
-                title="List Items"
+              <DropdownListItem
+                isCheck
                 list={gameItemList}
-                className="w-[300px]"
+                className="w-[300px] "
                 onChangeSelect={onChangeSelectItem}
               />
             </>
           )}
           <div className="my-2 w-full rounded-xl border-[1px] border-[#111111] bg-[#111111] p-2">
             <p className="uppercase text-[#ffffff]">
-              MY <span className="text-[#7B5BE6]">Skull XL</span> BAG
+              {t("my")}{" "}
+              <span className="text-[#7B5BE6]">
+                {itemSelected?.name} {itemSelected?.item_size}
+              </span>{" "}
+              {t("bag")}
             </p>
           </div>
 
@@ -100,9 +133,9 @@ export default function CardButItem() {
                 alt=""
               />
             </div>
-            <div className="flex w-full flex-col justify-between">
+            <div className="flex w-full flex-col justify-center">
               <div className="mb-2 flex w-full justify-between rounded-xl bg-[#E1E2E2]  p-2 text-center text-[#111111]">
-                <p>0.00</p>
+                <p>{itemSelected?.qty}</p>
                 <Image
                   src="/images/gamePage/skull.png"
                   alt="skull"
@@ -111,7 +144,7 @@ export default function CardButItem() {
                 />
               </div>
               <div className="mb-2 flex w-full justify-between rounded-xl bg-[#232329] p-2 text-center text-[#70727B]">
-                <p>= 0.00 </p>
+                <p>= {totalPrice}</p>
                 {/* <Input
                   defaultValue=" 0.00"
                   inputProps={ariaLabel}
@@ -128,7 +161,7 @@ export default function CardButItem() {
               buttonInToGame
             ) : (
               <ButtonLink
-                text="Please Login and Connect Wallet"
+                text={t("please_login")}
                 href="/"
                 icon={<LogoutIcon />}
                 size="medium"

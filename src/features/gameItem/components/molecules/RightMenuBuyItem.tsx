@@ -1,7 +1,7 @@
 import React, { memo, useState } from "react"
 import { Box, Stack } from "@mui/material"
 import { ModalCustom } from "../../../../components/molecules/Modal/ModalCustom"
-import ButtonBuyItem from "../../../../components/molecules/rightMenu/ButtonBuyItem"
+import ButtonBuyItem from "../../atoms/ButtonBuyItem"
 import FromButItem from "./FromButItem"
 import ModalHeader from "../../../../components/molecules/Modal/ModalHeader"
 

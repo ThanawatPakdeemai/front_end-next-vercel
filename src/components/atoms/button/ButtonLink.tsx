@@ -1,10 +1,10 @@
 import { Button } from "@mui/material"
 import Link from "next/link"
-import React, { useMemo } from "react"
+import React, { ReactNode, useMemo } from "react"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 
 export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
-  text?: string
+  text?: string | ReactNode
   href: string
   icon?: React.ReactNode
   variant?: "text" | "outlined" | "contained"

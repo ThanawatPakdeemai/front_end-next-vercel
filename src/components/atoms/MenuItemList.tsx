@@ -43,7 +43,7 @@ const MenuItemList = ({ data, ...props }: IProp | undefined | any) => (
       />
     </div>
 
-    {props.title === "List Items" ? (
+    {props.title === "Items" ? (
       <>
         <p className="px-2">{data.name}</p>
         <div className="flex w-full items-center justify-between">

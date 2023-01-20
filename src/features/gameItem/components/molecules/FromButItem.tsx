@@ -1,14 +1,22 @@
 import React, { memo } from "react"
-import { Box, ButtonGroup } from "@mui/material"
+import { Box, ButtonGroup, Typography } from "@mui/material"
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"
 import ButtonLink from "@components/atoms/button/ButtonLink"
-import DropdownList from "@components/atoms/DropdownList"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined"
 import useGameStore from "@stores/game"
-import { CURENCY } from "@configs/dropdown"
+import { CURRENCY } from "@configs/currency"
 import { Image } from "@components/atoms/image"
+import { Controller, useForm } from "react-hook-form"
+import useProfileStore from "@stores/profileStore"
+import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
+import DropdownListCurrency from "@feature/gameItem/atoms/DropdownListCurrency"
+import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
+import { useToast } from "@feature/toast/containers"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+import { useTranslation } from "next-i18next"
+import { registTournament } from "@feature/tournament/containers/services/tournament.service"
 
 const iconmotion = {
   hover: {
@@ -24,55 +32,123 @@ const iconmotion = {
 }
 
 const FromButItem = () => {
+  const { t } = useTranslation()
   const game = useGameStore((state) => state.data)
+  const profile = useProfileStore((state) => state.profile.data)
+  const { errorToast } = useToast()
 
+  const { gameItemList } = useGamesByGameId({
+    _playerId: profile ? profile.id : "",
+    _gameId: game ? game._id : ""
+  })
+  const {
+    handleSubmit,
+    watch,
+    setValue,
+    register,
+    control,
+    formState: { errors }
+  } = useForm({
+    defaultValues: {
+      player_id: profile ? profile?.id : "",
+      item_id: "",
+      currency_id: "",
+      qty: 1,
+      item: {},
+      currency: {}
+    }
+  })
+  const onSubmit = (data) => {
+    // console.log(data)
+  }
+
+  const onError = (data) => {
+    errorToast("error")
+  }
   return (
     <>
       {game && (
-        <form>
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
           <Box>
             <div className=" grid grid-cols-2 justify-center gap-4">
               <div className="flex justify-center rounded-2xl border-[1px] border-[#232329]">
                 <Image
-                  src="/images/gamePage/Silver_Skull.png"
-                  alt=""
+                  src={
+                    (watch("item") as IGameItemListData).image_icon ??
+                    "/images/gamePage/Silver_Skull.png"
+                  }
+                  alt="Silver_Skull"
                   width={100}
                   height={100}
                   className="w-full p-4"
                 />
               </div>
               <div className="">
-                <p className="text-[#ffffff]">Asset name</p>
-                <p className="text-[#70727B]">Skull</p>
-                <p className="text-[#ffffff]">Descriptions</p>
+                <p className="text-[#ffffff]">Asset</p>
                 <p className="text-[#70727B]">
-                  Our skull game assets are the perfect addition to any dark and
-                  cyberpunk game <span className="text-[#7B5BE6]">...</span>
+                  {(watch("item") as IGameItemListData).name}
                 </p>
+                <p className="text-[#ffffff]">Descriptions</p>
+                <div className=" text-[#70727B] line-clamp-4 ">
+                  {(watch("item") as IGameItemListData).detail}
+                </div>
               </div>
             </div>
           </Box>
           <Box className="my-4 w-full pr-4">
             <p className="py-2 uppercase text-[#70727B]">Tier assets</p>
-            <DropdownList
-              title="List Items"
-              list={game.item}
-              className="w-[410px]"
-            />
+            {gameItemList && (
+              <Controller
+                name="item_id"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <DropdownListItem
+                    {...field}
+                    list={gameItemList}
+                    className="w-[410px]"
+                    onChangeSelect={(_item) => {
+                      setValue("item", _item)
+                      setValue("item_id", _item._id)
+                    }}
+                  />
+                )}
+              />
+            )}
+            {"item_id" in errors && (
+              <p className="text-sm text-error-main">{t("required")}</p>
+            )}
           </Box>
           <Box className="my-4 w-full pr-4">
             <p className="py-2 uppercase text-[#70727B]">Currency</p>
-            <DropdownList
-              title="Item Game"
-              list={CURENCY}
-              className="w-[410px]"
+            <Controller
+              name="currency_id"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <DropdownListCurrency
+                  {...field}
+                  list={CURRENCY}
+                  className="w-[410px]"
+                  onChangeSelect={(_item) => {
+                    setValue("currency", _item)
+                    setValue("currency_id", _item.id)
+                  }}
+                />
+              )}
             />
+            {"currency_id" in errors && (
+              <p className="text-sm text-error-main">{t("required")}</p>
+            )}
           </Box>
-          <p className="uppercase text-[#7B5BE6]">Skull XL = 13.8389 NAKA</p>
+          <p className="uppercase text-[#7B5BE6]">Skull {} = 13.8389 NAKA</p>
 
           <div className="my-4  grid grid-cols-6  content-center gap-4">
             <div className="btn">
               <ButtonIcon
+                onClick={() =>
+                  setValue("qty", watch("qty") <= 1 ? 1 : watch("qty") - 1)
+                }
                 variants={iconmotion}
                 whileHover="hover"
                 transition={{ type: "spring", stiffness: 400, damping: 4 }}
@@ -83,9 +159,23 @@ const FromButItem = () => {
               />
             </div>
             <div className="input col-span-4">
-              <div className="flex h-full w-full justify-between rounded-xl bg-[#232329] p-2  text-[#70727B]">
+              <div className="flex h-full w-full justify-between rounded-xl bg-neutral-700 p-2  text-neutral-500">
                 <div className="text-center">
-                  <p className="h-full w-[220px] pt-2 text-center">0.00 </p>
+                  <input
+                    {...register("qty", { required: true })}
+                    onChange={(event: any) => {
+                      const qty = Number(event.target.value)
+                      if (qty <= 1) {
+                        setValue("qty", 1)
+                      } else if (qty >= 99) {
+                        setValue("qty", 99)
+                      } else {
+                        setValue("qty", qty)
+                      }
+                    }}
+                    className="h-full w-[220px] bg-neutral-700 pt-2 text-center text-neutral-500 focus-visible:outline-0"
+                    value={watch("qty")}
+                  />
                 </div>
                 <Image
                   src="/images/gamePage/skull.png"
@@ -95,6 +185,9 @@ const FromButItem = () => {
             </div>
             <div className="btn">
               <ButtonIcon
+                onClick={() =>
+                  setValue("qty", watch("qty") >= 99 ? 99 : watch("qty") + 1)
+                }
                 variants={iconmotion}
                 whileHover="hover"
                 transition={{ type: "spring", stiffness: 400, damping: 4 }}
@@ -124,10 +217,11 @@ const FromButItem = () => {
           </div>
           <ButtonGroup className="mt-10 flex flex-col  gap-3">
             <ButtonLink
-              href="/"
+              href=""
               size="medium"
               className="h-[40px] w-full text-sm "
-              text="Buy Now"
+              text={t("buy-now")}
+              onClick={() => {}}
               type="submit"
               color="secondary"
               variant="contained"

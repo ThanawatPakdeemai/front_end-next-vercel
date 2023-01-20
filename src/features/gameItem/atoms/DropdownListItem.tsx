@@ -106,28 +106,27 @@ const DropdownListItem = ({
                   <SelectDropdown
                     className={className}
                     details={
-                      list
-                        ? list.map((ele) => ({
-                            label: (
-                              <div className="flex items-center justify-between">
-                                <p>
-                                  {ele.name} <span>[ {ele.item_size} ]</span>
-                                </p>
-                                <p>{`${ele.qty ?? 0} ${t("item")}`}</p>
-                              </div>
-                            ),
-                            icon: (
-                              <Image
-                                src={ele.image_icon ?? ""}
-                                alt={ele.name}
-                                width="20"
-                                height="20"
-                              />
-                            ),
-                            data: ele,
-                            href: ""
-                          }))
-                        : { icon: "", href: "", label: "" }
+                      list &&
+                      list.map((ele) => ({
+                        label: (
+                          <div className="flex items-center justify-between">
+                            <p>
+                              {ele.name} <span>[ {ele.item_size} ]</span>
+                            </p>
+                            <p>{`${ele.qty ?? 0} ${t("item")}`}</p>
+                          </div>
+                        ),
+                        icon: (
+                          <Image
+                            src={ele.image_icon ?? ""}
+                            alt={ele.name}
+                            width="20"
+                            height="20"
+                          />
+                        ),
+                        data: ele,
+                        href: ""
+                      }))
                     }
                     onChange={(item: IGameItemListData) => {
                       popupState.close()

@@ -1,13 +1,10 @@
 import * as React from "react"
 import { useState } from "react"
 import { Popover } from "@mui/material"
-import DropdownIcon from "@components/icons/DropdownIcon"
 import Image from "next/image"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
-import { useToast } from "@feature/toast/containers"
-import { MESSAGES } from "@constants/messages"
 import { useTranslation } from "react-i18next"
 import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
 import { ICURENCY } from "@interfaces/ICurrency"
@@ -80,25 +77,24 @@ const DropdownListCurrency = ({ list, className, onChangeSelect }: IProp) => {
                   <SelectDropdown
                     className={className}
                     details={
-                      list
-                        ? list.map((ele) => ({
-                            label: (
-                              <div className="flex items-center justify-between">
-                                <p>{ele.name}</p>
-                              </div>
-                            ),
-                            icon: (
-                              <Image
-                                src={ele.image_icon ?? ""}
-                                alt={ele.name}
-                                width="20"
-                                height="20"
-                              />
-                            ),
-                            data: ele,
-                            href: ""
-                          }))
-                        : { icon: "", href: "", label: "" }
+                      list &&
+                      list.map((ele) => ({
+                        label: (
+                          <div className="flex items-center justify-between">
+                            <p>{ele.name}</p>
+                          </div>
+                        ),
+                        icon: (
+                          <Image
+                            src={ele.image_icon ?? ""}
+                            alt={ele.name}
+                            width="20"
+                            height="20"
+                          />
+                        ),
+                        data: ele,
+                        href: ""
+                      }))
                     }
                     onChange={(item: IGameItemListData) => {
                       onChangeItem(item)

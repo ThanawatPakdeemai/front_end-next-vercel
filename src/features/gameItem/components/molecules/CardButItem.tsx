@@ -14,7 +14,6 @@ import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameI
 import { MESSAGES } from "@constants/messages"
 import Helper from "@utils/helper"
 import { useTranslation } from "react-i18next"
-import { ICURENCY } from "@interfaces/ICurrency"
 import { useToast } from "@feature/toast/containers"
 import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 

@@ -1,13 +1,9 @@
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import React from "react"
-import { ICURENCY } from "./ICurrency"
 
 interface ILink {
   href: string
 }
-// export interface IMenuBaseCurrency {
-//   data?: ICURENCY
-// }
 export interface IMenuBaseItem {
   data?: any
 }

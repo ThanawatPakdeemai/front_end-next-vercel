@@ -111,14 +111,15 @@ const FormLogin = () => {
                   position="end"
                   className="cursor-pointer"
                 >
-                  <VisibilityOutlinedIcon
-                    className={`${showPassword ? "" : "hidden"}`}
-                    onClick={() => handleShowPassword()}
-                  />
-                  <VisibilityOffOutlinedIcon
-                    className={`${showPassword ? "hidden" : ""}`}
-                    onClick={() => handleShowPassword()}
-                  />
+                  {showPassword ? (
+                    <VisibilityOutlinedIcon
+                      onClick={() => handleShowPassword()}
+                    />
+                  ) : (
+                    <VisibilityOffOutlinedIcon
+                      onClick={() => handleShowPassword()}
+                    />
+                  )}
                 </InputAdornment>
               )
             }}

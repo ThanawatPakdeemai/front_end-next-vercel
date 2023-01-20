@@ -6,7 +6,6 @@ import { IGame } from "@feature/game/interfaces/IGameService"
 import { useRouter } from "next/router"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
-import toast from "react-hot-toast"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 

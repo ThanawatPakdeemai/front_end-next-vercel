@@ -11,7 +11,7 @@ interface IProp {
 
 const Tagline = ({ icon, bgColor, textColor, text, className }: IProp) => (
   <div
-    className={`relative ${bgColor} ${className} my-16 flex h-8 w-full items-center overflow-hidden rounded-lg`}
+    className={`relative ${bgColor} my-16 flex h-8 w-full items-center overflow-hidden rounded-lg ${className}`}
   >
     <div className="absolute flex w-full animate-right-to-left flex-row">
       <InsideTagLine

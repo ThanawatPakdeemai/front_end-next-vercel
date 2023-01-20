@@ -3,13 +3,13 @@ import Slider, { Settings } from "react-slick"
 import GameCarouselHeader, {
   IHeaderSlide
 } from "@components/molecules/gameSlide/GameCarouselHeader"
-import GameCard from "@feature/game/containers/components/molecules/GameCard"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
 import { MESSAGES } from "@constants/messages"
 import { useToast } from "@feature/toast/containers"
+import GameCard from "@feature/game/components/molecules/GameCard"
 
 interface IProps {
   menu: IHeaderSlide

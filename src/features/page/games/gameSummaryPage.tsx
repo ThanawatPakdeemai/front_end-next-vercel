@@ -13,6 +13,7 @@ const GameSummaryPage = ({ _roomId }: IProp) => {
   return gameRoomById ? (
     <>
       <HeaderWaitingRoom
+        onOutRoom={() => {}}
         roomTag={gameRoomById.room_number}
         roomName="#china town"
         timer={{

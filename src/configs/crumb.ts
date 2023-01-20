@@ -7,6 +7,6 @@ export const PROFILE_CRUMB: ICrumb[] = [
   },
   {
     title: "profile",
-    href: window.location.pathname
+    href: typeof window !== "undefined" ? window.location.pathname : "/"
   }
 ]

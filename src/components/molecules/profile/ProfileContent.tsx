@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import CrumbCustom from "@components/atoms/CrumbCustom"
 import SettingIcon from "@components/icons/SettingIcon"
 import ShapeIcon from "@components/icons/ShapeIcon"
@@ -9,16 +9,28 @@ import { Divider, Typography } from "@mui/material"
 import IconArrowLeft from "@components/icons/arrowLeftIcon"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import useProfileStore from "@stores/profileStore"
+import { IProfile } from "@src/types/profile"
+import { RandomReveal } from "react-random-reveal"
+import { CHAR_SET_JP } from "@constants/characterSet"
+import dayjs from "dayjs"
+import Image from "next/image"
 
 const ProfileContent = () => {
-  const profile = useProfileStore((state) => state.profile.data)
+  const profile = useProfileStore((state) => state.profile)
   const [openEdit, setOpenEdit] = useState<boolean>(false)
+  const [profileData, setProfileData] = useState<IProfile>()
+
+  useEffect(() => {
+    if (profile && profile.data) {
+      setProfileData(profile.data as IProfile)
+    }
+  }, [profile])
 
   const handleOnExpandClick = () => {
     setOpenEdit(!openEdit)
   }
 
-  return (
+  return profileData ? (
     <div>
       <div className="relative">
         <div className="h-[180px] rounded-lg bg-neutral-700">img</div>
@@ -37,11 +49,16 @@ const ProfileContent = () => {
           text="Nakamoto.Games - Secue. fun. simple. earn $naka AND enjoy"
           bgColor="bg-error-main"
           icon={<ShapeIcon />}
-          textColor="text-neutral-900"
+          textColor="text-neutral-900 font-bold text-sm"
         />
         <div className="flex w-full justify-center">
           <div className="absolute bottom-[-50px] z-10 h-[150px] w-[150px] rounded-3xl border-8 border-neutral-900 bg-neutral-700">
-            img profile
+            <Image
+              src={profileData.avatar}
+              fill
+              alt="profile-avatar"
+              className="rounded-3xl"
+            />
           </div>
         </div>
       </div>
@@ -49,17 +66,24 @@ const ProfileContent = () => {
         <TableIcon className="absolute" />
       </div>
       <div className="mt-[50px] flex w-full justify-center">
-        <Typography className="text-[46px] text-error-main shadow-error-main  drop-shadow-lg drop-shadow-xl">
-          Desingner Game
+        <Typography className="font-mondwest text-[46px] uppercase  text-error-main shadow-error-main drop-shadow-xl">
+          <RandomReveal
+            isPlaying
+            duration={0.1}
+            revealDuration={1}
+            characters={profileData.username}
+            onComplete={() => ({ shouldRepeat: true, delay: 6 })}
+            characterSet={CHAR_SET_JP}
+          />
         </Typography>
       </div>
       <div className="flex w-full justify-center">
-        <Typography className="text-xs uppercase text-error-main">
-          Joined : Sep 2021
+        <Typography className="text-xs font-bold uppercase text-error-main">
+          Joined : {dayjs(profileData.createdAt).format("MMM YYYY")}
         </Typography>
       </div>
       <div className="flex justify-center">
-        <div className="mt-[50px] grid w-[50%] grid-cols-3 gap-4">
+        <div className="mt-[50px] grid grid-cols-3 gap-4">
           <div className="h-[110px] w-[190px] rounded-lg	border border-solid border-neutral-700 p-[20px]">
             <Typography className="font-digital-7 text-[26px] text-error-main ">
               356
@@ -159,7 +183,7 @@ const ProfileContent = () => {
       </div>
       <div />
     </div>
-  )
+  ) : null
 }
 
 export default ProfileContent

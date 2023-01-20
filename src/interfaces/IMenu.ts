@@ -46,3 +46,8 @@ export interface ICURENCY {
   name: string
   image_icon: string | React.ReactNode
 }
+
+export interface ICrumb extends ILink {
+  title: string
+  onClick?: () => void
+}

@@ -11,7 +11,8 @@ import Helper from "@utils/helper"
 import { useToast } from "@feature/toast/containers"
 import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import { MESSAGES } from "@constants/messages"
-import { useCreateWeb3Provider } from "@hooks/useWeb3Provider"
+import handleConnectWithMetamask from "@hooks/useWeb3Provider/useCreateWeb3Provider"
+import { useWeb3Provider } from "@providers/Web3Provider"
 import ButtonGame from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 
@@ -29,21 +30,10 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   const { errorToast } = useToast()
   const router = useRouter()
   const [account, setAccount] = useState<string | undefined>(undefined)
-  const { handleConnectWithMetamask, accounts } = useCreateWeb3Provider()
-
-  useEffect(() => {
-    let load = true
-    if (load) {
-      handleConnectWithMetamask()
-    }
-    return () => {
-      load = false
-    }
-  }, [handleConnectWithMetamask])
+  const { accounts } = useWeb3Provider()
 
   useEffect(() => {
     if (accounts) setAccount(accounts[0])
-
     return () => {
       setAccount(undefined)
     }
@@ -193,3 +183,6 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
 }
 
 export default memo(SeatPlayers)
+function Web3Context() {
+  throw new Error("Function not implemented.")
+}

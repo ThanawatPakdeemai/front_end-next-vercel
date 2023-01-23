@@ -1,4 +1,5 @@
 import React, { memo } from "react"
+import { Image } from "@components/atoms/image"
 
 interface IProp {
   image_icon: string
@@ -7,9 +8,9 @@ interface IProp {
   price: number
 }
 
-const ItemSize = ({ image_icon, item_size, name, price }: IProp) => (
+const ItemSize = ({ image_icon, name, price }: IProp) => (
   <div className="txet-[#70727B] flex min-w-[140px] items-center">
-    <img
+    <Image
       className="m-2 w-6"
       src={image_icon}
       alt={name}

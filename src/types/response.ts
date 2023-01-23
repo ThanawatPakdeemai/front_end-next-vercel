@@ -1,29 +1,30 @@
+/* eslint-disable no-unused-vars */
 import { IGame } from "./games"
 
 /**
  * Response type for Create New Password
  */
+
+interface ICreateNewPasswordMessage {
+  message: string[]
+}
 export interface ICreateNewPasswordResponse {
   status: boolean
   // eslint-disable-next-line no-use-before-define
-  data: any // ICreateNewPasswordResponseMessage
-}
-
-interface ICreateNewPasswordResponseMessage {
-  message: string[]
+  data: any // ICreateNewPasswordMessage
 }
 
 /**
  * Response type for Forgot Password
  */
+
+interface IForgotPasswordResponseMessage {
+  message: string
+}
 export interface IForgotPasswordResponse {
   status: boolean
   // eslint-disable-next-line no-use-before-define
   data: any // IForgotPasswordResponseMessage
-}
-
-interface IForgotPasswordResponseMessage {
-  message: string
 }
 
 /**

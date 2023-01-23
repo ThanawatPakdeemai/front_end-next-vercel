@@ -18,7 +18,7 @@ interface IProp {
     currentPlayer: number
     maxPlayer?: number
   }
-  onOutRoom: () => void
+  onOutRoom?: () => void
 }
 
 const HeaderWaitingRoom = ({
@@ -36,7 +36,7 @@ const HeaderWaitingRoom = ({
         <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800">
           <ButtonClose
             onClick={() => {
-              onOutRoom()
+              if (onOutRoom) onOutRoom()
               router.back()
             }}
           />

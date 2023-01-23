@@ -28,10 +28,12 @@ const DropdownListItem = ({
   isCheck = false
 }: IProp) => {
   const { t } = useTranslation()
-  const { data: gameData } = useGameStore()
+  const { data: gameData, itemSelected } = useGameStore()
   const { errorToast } = useToast()
 
-  const [defaultItem, setDefaultItem] = useState<IGameItemListData>()
+  const [defaultItem, setDefaultItem] = useState<IGameItemListData | null>(
+    itemSelected ?? null
+  )
 
   const onChangeItem = (_item: IGameItemListData) => {
     if (isCheck) {
@@ -44,16 +46,16 @@ const DropdownListItem = ({
   return (
     <>
       {list && (
-        <div>
+        <>
           <PopupState
             variant="popover"
             popupId="demo-popup-popover"
           >
             {(popupState) => (
-              <div>
+              <>
                 <div
                   {...bindTrigger(popupState)}
-                  className={`m-auto block ${className}`}
+                  className={` ${className}`} // m-auto block
                 >
                   <ButtonDropdown
                     className={`${className} `}
@@ -134,10 +136,10 @@ const DropdownListItem = ({
                     }}
                   />
                 </Popover>
-              </div>
+              </>
             )}
           </PopupState>
-        </div>
+        </>
       )}
     </>
   )

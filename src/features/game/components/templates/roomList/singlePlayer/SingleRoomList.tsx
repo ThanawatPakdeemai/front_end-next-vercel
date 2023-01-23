@@ -1,5 +1,5 @@
 import { Divider } from "@mui/material"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import useGetAllGameRooms from "@feature/game/containers/hooks/useGetAllGameRooms"
 import useProfileStore from "@stores/profileStore"
@@ -10,6 +10,8 @@ import ButtonSticky from "@components/molecules/ButtonSticky"
 import ReloadIcon from "@components/icons/ReloadIcon"
 import { unstable_batchedUpdates } from "react-dom"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
+import { useToast } from "@feature/toast/containers"
+import { MESSAGES } from "@constants/messages"
 
 /**
  *
@@ -18,19 +20,38 @@ import HeaderRoomList from "@components/organisms/HeaderRoomList"
 const GameRoomList = () => {
   /* mockup data */
   const profile = useProfileStore((state) => state.profile.data)
-  const data = useGameStore((state) => state.data)
+  const { data, itemSelected } = useGameStore()
   const router = useRouter()
+  const { errorToast } = useToast()
   const [gameData, setGameData] = useState<IGame>()
+
+  const item = useMemo(() => {
+    if (data) {
+      if (data.play_to_earn || data.tournament) {
+        return data.item[0]._id
+      }
+      if (itemSelected) {
+        return itemSelected._id
+      }
+    } else {
+      return ""
+    }
+  }, [data, itemSelected])
 
   const { allGameRooms } = useGetAllGameRooms({
     _gameId: data ? data._id : "",
     _email: profile ? profile.email : "",
-    // mock for waiting price of items
-    _itemId: "61976479dffe844091ab8df1" // 1$
+    _itemId: item ?? ""
   })
 
   const handleJoinRoom = (_roomId: string) => {
-    router.push(`${router.asPath}/${_roomId}`)
+    if (data && (data.play_to_earn || data.tournament)) {
+      router.push(`${router.asPath}/${_roomId}`)
+    } else if (itemSelected && itemSelected.qty > 0) {
+      router.push(`${router.asPath}/${_roomId}`)
+    } else {
+      errorToast(MESSAGES["please_item"])
+    }
   }
 
   useEffect(() => {
@@ -64,7 +85,7 @@ const GameRoomList = () => {
                     maxPlayer: _data.max_players
                   }}
                   roomId={_data.room_number}
-                  roomName="Room Name"
+                  roomName="Room NAKA"
                   onClick={() => handleJoinRoom(_data.id)}
                 />
               )

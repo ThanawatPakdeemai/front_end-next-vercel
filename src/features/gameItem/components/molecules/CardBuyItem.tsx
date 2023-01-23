@@ -36,7 +36,7 @@ export default function CardButItem() {
       const priceUsd = await Helper.getPriceNakaCurrent()
       if (priceUsd) {
         setTotalPrice(itemSelected.qty * itemSelected.price) //  is dallor $
-        // Naka
+        //  isNaka
         // Helper.calculateItemPerPrice(Number(itemSelected.price) ?? 0).then(
         //   (value) => {
         //     // eslint-disable-next-line no-restricted-globals
@@ -68,40 +68,38 @@ export default function CardButItem() {
   }
 
   const buttonInToGame = useMemo(() => {
-    if (itemSelected && (itemSelected as IGameItemListData).qty > 0) {
+    if (router.pathname === "/[GameHome]") {
+      if (itemSelected && (itemSelected as IGameItemListData).qty > 0) {
+        return (
+          <ButtonLink
+            text={t("join-game")}
+            href={`${router.asPath}/roomlist`}
+            icon={<LogoutIcon />}
+            size="medium"
+            color="secondary"
+            variant="contained"
+            className="w-full"
+          />
+        )
+      }
       return (
         <ButtonLink
-          text={t("join-game")}
-          href=""
+          text={MESSAGES["please_item"]}
           icon={<LogoutIcon />}
+          href={`${router.asPath}`}
           size="medium"
           color="secondary"
           variant="contained"
           className="w-full"
-          onClick={() => {
-            router.push(`${router.asPath}/roomlist`)
-          }}
+          disabled
         />
       )
     }
-    return (
-      <ButtonLink
-        text={MESSAGES["please_item"]}
-        icon={<LogoutIcon />}
-        href={`${router.asPath}`}
-        size="medium"
-        color="secondary"
-        variant="contained"
-        className="w-full"
-        disabled
-        onClick={() => {}}
-      />
-    )
   }, [itemSelected, router, t])
 
   return (
     <>
-      <div className="h-full w-full rounded-3xl border-[1px] border-[#18181C] bg-[#18181C] ">
+      <div className="h-fit w-fit rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 ">
         <div className="p-4 ">
           {gameItemList && (
             <>
@@ -113,8 +111,8 @@ export default function CardButItem() {
               />
             </>
           )}
-          <div className="my-2 w-full rounded-xl border-[1px] border-[#111111] bg-[#111111] p-2">
-            <p className="uppercase text-[#ffffff]">
+          <div className="my-2 w-fit rounded-xl border-[1px] border-primary-main bg-primary-main p-2">
+            <p className="w-[285px] uppercase text-[#ffffff]">
               {t("my")}{" "}
               <span className="text-[#7B5BE6]">
                 {itemSelected?.name} {itemSelected?.item_size}
@@ -123,11 +121,12 @@ export default function CardButItem() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 ">
-            <div className="rounded-xl border-[1px] border-[#111111] bg-[#111111]">
+          <div className="grid w-fit grid-cols-2 gap-4 ">
+            <div className="rounded-xl border-[1px] border-primary-main bg-primary-main ">
               <CardMedia
+                className="m-auto block w-[124px]"
                 component="img"
-                height={180}
+                height={124}
                 image="/images/gamePage/Silver_Skull.png"
                 alt=""
               />

@@ -1,10 +1,12 @@
-import React, { useState } from "react"
+/* eslint-disable no-console */
+import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Image } from "@components/atoms/image/index"
 import { IMAGES } from "@constants/images"
 import {
+  Alert,
   Box,
   Button,
   Checkbox,
@@ -34,6 +36,7 @@ import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import { SocialRegister } from "@configs/socialRegister"
 import Tagline from "@components/molecules/tagline/Tagline"
 import VectorIcon from "@components/icons/VectorIcon"
+import { motion } from "framer-motion"
 
 const KeyFramesClockwise = styled("div")({
   "@keyframes rotation": {
@@ -64,39 +67,49 @@ interface TFormData {
   password: string
   confirmPassword: string
   code: number | null
+  subscription: boolean
 }
 
 const SignupSchema = yup
   .object({
     email: yup.string().required(),
-    password: yup.string().defined(),
-    confirmPassword: yup.string().defined(),
-    code: yup.number().required().positive().integer()
+    password: yup.string().required(),
+    confirmPassword: yup.string().required(),
+    code: yup.number().required().positive().integer(),
+    subscription: yup.string().defined()
   })
   .required()
 
-const defaultValues: TFormData = {
-  email: "",
-  password: "",
-  confirmPassword: "",
-  code: null
-}
-
 const Register = () => {
+  const defaultValues: TFormData = {
+    email: "",
+    password: "",
+    confirmPassword: "",
+    code: null,
+    subscription: false
+  }
+
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors }
   } = useForm<TFormData>({
     resolver: yupResolver(SignupSchema)
   })
 
-  // const patternCode = "[0-9]{1,6}"
-  const patternCode = "^[0-9]*$."
+  const patternCode = "[0-9]{1,6}"
+  const patternPasswordUppercase = /[A-Z]/
+  const patternEmail =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
   const [verifiCode, setVerifiCode] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [emailCorrect, setEmailCorrect] = useState(true)
+  const [passwordCorrect, setPasswordCorrect] = useState(false)
+  const [characterPasswordLength, setCharacterPasswordLength] = useState(true)
+  const [characterUppercase, setCharacterUppercase] = useState(true)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
   const handleMouseDownPassword = (
@@ -114,8 +127,23 @@ const Register = () => {
   }
 
   const onSubmitRegister = (values: TFormData) => {
-    // eslint-disable-next-line no-console
     console.log("test-values", values)
+    const { email, code, password, confirmPassword, subscription } = values
+    console.log("test-values:-email", email)
+    console.log("test-values:-code", code)
+    console.log("test-values:-password", password)
+    console.log("test-values:-confirmPassword", confirmPassword)
+    console.log("test-values:-subscription", subscription)
+  }
+
+  const isEmail = (_email: string) => {
+    if (patternEmail.test(_email)) {
+      setEmailCorrect(true)
+      console.log("test-email-true", patternEmail.test(_email), _email)
+    } else {
+      setEmailCorrect(false)
+      console.log("test-email-false", patternEmail.test(_email), _email)
+    }
   }
 
   const isNumber = (_keyCode: string) => {
@@ -125,6 +153,44 @@ const Register = () => {
       setVerifiCode(_keyCode)
     }
   }
+
+  const isConfirmPassword = (_password: string, _confirmPassword: string) => {
+    console.log("test-password", _password)
+    console.log("test-confirmPassword", _confirmPassword)
+    if (_password === _confirmPassword) {
+      console.log("test-conrect", _password === _confirmPassword)
+      setPasswordCorrect(true)
+    } else {
+      console.log("test-inconrect", _password === _confirmPassword)
+      setPasswordCorrect(false)
+    }
+  }
+
+  const isCharacters = (_characters: string) => {
+    console.log("test-isCharacters", _characters)
+    if (_characters.length >= 6) {
+      setCharacterPasswordLength(true)
+      console.log("test-isCharacters >=6", _characters)
+      if (patternPasswordUppercase.test(_characters)) {
+        setCharacterUppercase(true)
+        console.log("test-isCharacters UpCase", _characters)
+      } else {
+        setCharacterUppercase(false)
+      }
+    } else {
+      setCharacterPasswordLength(false)
+      console.log("test-isCharacters <=6", _characters)
+    }
+  }
+
+  useEffect(() => {
+    isConfirmPassword(watch("password"), watch("confirmPassword"))
+  }, [watch("password"), watch("confirmPassword")])
+
+  console.log("test-password", watch("password"))
+  console.log("test-conPassword", watch("confirmPassword"))
+  console.log("test-err", errors.confirmPassword, passwordCorrect)
+  console.log("test-email-check", emailCorrect)
 
   return (
     <Box>
@@ -233,6 +299,9 @@ const Register = () => {
                         type="email"
                         placeholder="Email"
                         label="Email Address"
+                        onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          isEmail(e.target.value.toString())
+                        }}
                         {...register("email")}
                         sx={{
                           "& .MuiOutlinedInput-root": {
@@ -241,6 +310,12 @@ const Register = () => {
                             fontSize: 14,
                             fontWight: 700,
                             fontFamily: "neueMachina"
+                            // input: {
+                            //   "&:-webkit-autofill": {
+                            //     WebkitBoxShadow: "0 0 0 100px #7B5BE6 inset",
+                            //     WebkitTextFillColor: "#232329"
+                            //   }
+                            // }
                           },
                           "& .MuiInputLabel-root": {
                             color: "#70727B",
@@ -259,7 +334,40 @@ const Register = () => {
                         }}
                       />
                       {errors.email && (
-                        <p style={{ color: "red" }}>{errors.email.message}</p>
+                        <>
+                          <motion.div
+                            initial={{ opacity: 0, marginBottom: 0 }}
+                            animate={{
+                              opacity: 1,
+                              marginTop: 10
+                            }}
+                          >
+                            <Alert
+                              severity="warning"
+                              className="rounded-lg"
+                            >
+                              Email is a required field
+                            </Alert>
+                          </motion.div>
+                        </>
+                      )}
+                      {emailCorrect === false && (
+                        <>
+                          <motion.div
+                            initial={{ opacity: 0, marginBottom: 0 }}
+                            animate={{
+                              opacity: 1,
+                              marginTop: 10
+                            }}
+                          >
+                            <Alert
+                              severity="warning"
+                              className="rounded-lg"
+                            >
+                              Invalid Email Format
+                            </Alert>
+                          </motion.div>
+                        </>
                       )}
                     </Grid>
                     <Grid
@@ -267,31 +375,23 @@ const Register = () => {
                       xs={12}
                       container
                       direction="row"
-                      // justifyContent="center"
-                      // alignItems="center"
                     >
-                      <Grid
-                        item
-                        // md={6}
-                      >
+                      <Grid item>
                         <TextField
                           className="hidden-arrow-number Mui-error mr-2 w-[235px]"
                           type="number"
                           placeholder="Verification code"
                           onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                             e.target.value = e.target.value.slice(0, 6)
-                          }}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                             isNumber(e.target.value.toString())
-                          }
+                          }}
                           value={verifiCode}
                           inputProps={{
-                            // pattern: patternCode,
-                            // maxLength: 6
-                            pattern: "[0-9]{1,6}",
+                            pattern: patternCode,
                             maxLength: 6
                           }}
-                          // {...register("code")}
+                          autoComplete="new-password'"
+                          {...register("code")}
                           sx={{
                             "& .MuiOutlinedInput-root": {
                               width: "100%",
@@ -306,15 +406,38 @@ const Register = () => {
                           size="medium"
                         />
                       </Grid>
-                      <Grid
-                        item
-                        // md={2}
-                      >
-                        <Button className="btn-rainbow-theme h-[40px] !min-w-[90px] rounded-lg bg-error-main text-sm text-neutral-300">
+                      <Grid item>
+                        <Button
+                          disabled={!emailCorrect}
+                          className="btn-rainbow-theme h-[40px] !min-w-[90px] rounded-lg bg-error-main text-sm text-neutral-300"
+                        >
                           Get Code
                         </Button>
                       </Grid>
                     </Grid>
+                    {errors.code && (
+                      <Grid
+                        item
+                        xs={12}
+                      >
+                        <>
+                          <motion.div
+                            initial={{ opacity: 0, marginBottom: 0 }}
+                            animate={{
+                              opacity: 1,
+                              marginTop: -10
+                            }}
+                          >
+                            <Alert
+                              severity="warning"
+                              className="rounded-lg"
+                            >
+                              Code is a required field
+                            </Alert>
+                          </motion.div>
+                        </>
+                      </Grid>
+                    )}
                     <Grid
                       item
                       xs={12}
@@ -324,6 +447,11 @@ const Register = () => {
                         type={showPassword ? "text" : "password"}
                         placeholder="Password"
                         label="Password"
+                        autoComplete="new-password'"
+                        onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          e.target.value = e.target.value.slice(0, 128)
+                          isCharacters(e.target.value)
+                        }}
                         {...register("password")}
                         sx={{
                           "& .MuiOutlinedInput-root": {
@@ -365,11 +493,71 @@ const Register = () => {
                           )
                         }}
                       />
+                      {errors.password && (
+                        <>
+                          <motion.div
+                            initial={{ opacity: 0, marginBottom: 0 }}
+                            animate={{
+                              opacity: 1,
+                              marginTop: 10
+                            }}
+                          >
+                            <Alert
+                              severity="warning"
+                              className="rounded-lg"
+                            >
+                              Password is a required field
+                            </Alert>
+                          </motion.div>
+                        </>
+                      )}
+                      {characterPasswordLength === false && (
+                        <>
+                          <motion.div
+                            initial={{ opacity: 0, marginBottom: 0 }}
+                            animate={{
+                              opacity: 1,
+                              marginTop: 10
+                            }}
+                          >
+                            <Alert
+                              severity="warning"
+                              className="rounded-lg"
+                            >
+                              The password must contain at least 6 characters.
+                            </Alert>
+                          </motion.div>
+                        </>
+                      )}
+                      {characterUppercase === false && (
+                        <>
+                          <motion.div
+                            initial={{ opacity: 0, marginBottom: 0 }}
+                            animate={{
+                              opacity: 1,
+                              marginTop: 10
+                            }}
+                          >
+                            <Alert
+                              severity="warning"
+                              className="rounded-lg"
+                            >
+                              The password must contain at least one uppercase
+                              letter.
+                            </Alert>
+                          </motion.div>
+                        </>
+                      )}
                       <TextField
                         className="mt-[5px] w-full"
                         type={showConfirmPassword ? "text" : "password"}
                         placeholder="Confirm Password"
                         label="A Number or Symbol, Atleast 6 Characters"
+                        autoComplete="new-password'"
+                        onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          e.target.value = e.target.value.slice(0, 128)
+                          isCharacters(e.target.value)
+                        }}
                         {...register("confirmPassword")}
                         sx={{
                           "& .MuiOutlinedInput-root": {
@@ -414,6 +602,40 @@ const Register = () => {
                           )
                         }}
                       />
+                      {errors.confirmPassword && (
+                        <>
+                          <motion.div
+                            initial={{ opacity: 0, marginBottom: 0 }}
+                            animate={{
+                              opacity: 1,
+                              marginTop: 10
+                            }}
+                          >
+                            <Alert
+                              severity="warning"
+                              className="rounded-lg"
+                            >
+                              ConfirmPassword is a required field
+                            </Alert>
+                          </motion.div>
+                        </>
+                      )}
+                      {!passwordCorrect && (
+                        <motion.div
+                          initial={{ opacity: 0, marginBottom: 0 }}
+                          animate={{
+                            opacity: 1,
+                            marginTop: 10
+                          }}
+                        >
+                          <Alert
+                            severity="warning"
+                            className="rounded-lg"
+                          >
+                            Password is incorrect
+                          </Alert>
+                        </motion.div>
+                      )}
                     </Grid>
                     <Grid
                       item
@@ -447,6 +669,7 @@ const Register = () => {
                                 }}
                               />
                             }
+                            {...register("subscription")}
                           />
                         }
                         label="Would you like to subscribe to Nakamoto Games Newsletter?"
@@ -464,7 +687,6 @@ const Register = () => {
                       container
                       direction="row"
                       justifyContent="space-between"
-                      // md={12}
                     >
                       <Grid item>
                         <Link href="/login">
@@ -534,8 +756,6 @@ const Register = () => {
               <Grid
                 item
                 container
-                // direction="row"
-                // justifyContent="space-between"
                 justifyContent="center"
                 alignItems="center"
                 className="absolute bottom-0.5"

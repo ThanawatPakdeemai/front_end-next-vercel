@@ -1,7 +1,7 @@
+import React, { ReactNode } from "react"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import { motion } from "framer-motion"
-import React, { ReactNode } from "react"
 
 type TTypeButton = "submit" | "reset" | "button" | undefined
 interface IProps {

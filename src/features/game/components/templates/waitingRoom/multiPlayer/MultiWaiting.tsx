@@ -18,7 +18,7 @@ import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
 const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const gameData = useGameStore((state) => state.data)
+  const { data: gameData, itemSelected } = useGameStore()
   const router = useRouter()
   const { errorToast } = useToast()
   const [dataPlayers, setDataPlayers] = useState<
@@ -26,22 +26,32 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   >()
   const { chat, setChat } = useChatContext()
 
+  const item_id = useMemo(() => {
+    if (gameData) {
+      if (gameData.play_to_earn || gameData.tournament) {
+        return gameData.item[0]._id
+      }
+      if (itemSelected) {
+        return itemSelected._id
+      }
+    } else {
+      return ""
+    }
+  }, [gameData, itemSelected])
+
   const propsSocketWaitingRoom = useMemo(
     () => ({
       path: gameData?.socket_info?.url_room ?? "",
       room_id: _roomId,
       player_id: profile?.id ?? "",
       game_id: gameData?._id ?? "",
-      item_id: gameData?.play_to_earn
-        ? gameData.item[0]._id
-        : "61976479dffe844091ab8df1" // TODO YUI 1$ mock
+      item_id
     }),
     [
       _roomId,
       gameData?._id,
-      gameData?.item,
-      gameData?.play_to_earn,
       gameData?.socket_info?.url_room,
+      item_id,
       profile?.id
     ]
   )
@@ -136,7 +146,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
       setChat((oldData) => [_dataChat as IChat, ...oldData])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chat])
+  }, [getChat])
 
   useEffect(() => {
     if (isConnected) {

@@ -24,22 +24,20 @@ const PlayerCard = ({ players }: IProps) => {
       if (item.owner) {
         return "OWNER"
       }
-      if (item.owner && item.player_id !== profile?.id) {
-        return (
-          // eslint-disable-next-line react/button-has-type, jsx-a11y/no-redundant-roles
-          <button
-            role="button"
-            className="cursor-pointer"
-            onClick={() => {
-              if (item.player_id && kickRoom) {
-                kickRoom(item.player_id)
-              }
-            }}
-          >
-            KICK
-          </button>
-        )
-      }
+      return (
+        // eslint-disable-next-line react/button-has-type, jsx-a11y/no-redundant-roles
+        <button
+          role="button"
+          className="cursor-pointer"
+          onClick={() => {
+            if (item.player_id && kickRoom) {
+              kickRoom(item.player_id)
+            }
+          }}
+        >
+          KICK
+        </button>
+      )
     }
     if (profile?.id === item.player_id) {
       return "ME"

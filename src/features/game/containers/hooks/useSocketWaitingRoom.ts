@@ -52,7 +52,6 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
       )
     })
 
-  // eslint-disable-next-line @typescript-eslint/no-shadow
   const kickRoom = (_player_id: string) => {
     socketWaitingRoom.emit(EVENTS.ACTION.WAITING_ROOM_KICKPLAYER, {
       player_id: _player_id

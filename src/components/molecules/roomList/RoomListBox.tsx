@@ -21,6 +21,7 @@ interface IProp {
   type: "timer" | "player"
   borderColor?: string
   unlimited?: boolean
+  onClick?: () => void
 }
 
 /**
@@ -30,6 +31,7 @@ interface IProp {
  * @param color is parent key in tailwind.config.js
  * @param shade is child key in tailwind.config.js
  * @param borderColor is child key in tailwind.config.js
+ * @param onClick is what you want to do when click invite function
  */
 
 const RoomListBox = ({
@@ -40,7 +42,8 @@ const RoomListBox = ({
   shade,
   type,
   borderColor = "border-neutral-700",
-  unlimited
+  unlimited,
+  onClick
 }: IProp) => {
   const { theme } = fullConfig
 
@@ -71,7 +74,12 @@ const RoomListBox = ({
     </div>
   ) : (
     <div className="flex w-fit items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900 p-2 align-baseline">
-      {icon}
+      <button
+        type="button"
+        onClick={onClick}
+      >
+        {icon}
+      </button>
       <PlayersIcon
         stroke={initTheme}
         className="mr-[10px]"

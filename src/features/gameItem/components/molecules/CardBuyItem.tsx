@@ -99,19 +99,27 @@ export default function CardButItem() {
 
   return (
     <>
-      <div className="h-fit w-fit rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 ">
+      <div
+        className={`h-fit ${
+          router.pathname === "/[GameHome]" ? "w-full" : "w-fit"
+        } rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 `}
+      >
         <div className="p-4 ">
           {gameItemList && (
             <>
               <DropdownListItem
                 isCheck
                 list={gameItemList}
-                className="w-[300px] "
+                className={`  w-[300px]`}
                 onChangeSelect={onChangeSelectItem}
               />
             </>
           )}
-          <div className="my-2 w-fit rounded-xl border-[1px] border-primary-main bg-primary-main p-2">
+          <div
+            className={`${
+              router.pathname === "/[GameHome]" ? "w-full" : "w-fit"
+            } mb-1 rounded-xl border-[1px] border-primary-main bg-primary-main p-2 first-letter:my-2`}
+          >
             <p className="w-[285px] uppercase text-[#ffffff]">
               {t("my")}{" "}
               <span className="text-[#7B5BE6]">
@@ -121,7 +129,11 @@ export default function CardButItem() {
             </p>
           </div>
 
-          <div className="grid w-fit grid-cols-2 gap-4 ">
+          <div
+            className={`grid ${
+              router.pathname === "/[GameHome]" ? "w-full" : "w-fit"
+            } grid-cols-2 gap-4 `}
+          >
             <div className="rounded-xl border-[1px] border-primary-main bg-primary-main ">
               <CardMedia
                 className="m-auto block w-[124px]"
@@ -132,8 +144,8 @@ export default function CardButItem() {
               />
             </div>
             <div className="flex w-full flex-col justify-center">
-              <div className="mb-2 flex w-full justify-between rounded-xl bg-[#E1E2E2]  p-2 text-center text-[#111111]">
-                <p>{itemSelected?.qty}</p>
+              <div className="mb-2 flex w-full justify-between rounded-xl bg-neutral-300  p-2 text-center text-[#111111]">
+                <p>{itemSelected?.qty ?? 0}</p>
                 <Image
                   src="/images/gamePage/skull.png"
                   alt="skull"

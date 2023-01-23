@@ -5,13 +5,14 @@ import useGetAllGameRooms from "@feature/game/containers/hooks/useGetAllGameRoom
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/dist/client/router"
 import useGameStore from "@stores/game"
-import { IGame } from "@feature/game/interfaces/IGameService"
+import { IGame, IGameRoomDetail } from "@feature/game/interfaces/IGameService"
 import ButtonSticky from "@components/molecules/ButtonSticky"
 import ReloadIcon from "@components/icons/ReloadIcon"
 import { unstable_batchedUpdates } from "react-dom"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
+import CONFIGS from "@configs/index"
 
 /**
  *
@@ -44,8 +45,19 @@ const GameRoomList = () => {
     _itemId: item ?? ""
   })
 
-  const handleJoinRoom = (_roomId: string) => {
-    if (data && (data.play_to_earn || data.tournament)) {
+  const handleJoinRoom = (_dataRoom: IGameRoomDetail) => {
+    const data_player_me = _dataRoom.current_player.find((ele) => {
+      if (profile) {
+        return ele.player_id === profile.id
+      }
+      return undefined
+    })
+    const _roomId = _dataRoom._id
+    if (data_player_me && data_player_me.status === "played" && data) {
+      router.push(
+        `${CONFIGS.BASE_URL.FRONTEND}/${data.path}/summary/${_roomId}`
+      )
+    } else if (data && (data.play_to_earn || data.tournament)) {
       router.push(`${router.asPath}/${_roomId}`)
     } else if (itemSelected && itemSelected.qty > 0) {
       router.push(`${router.asPath}/${_roomId}`)
@@ -86,7 +98,7 @@ const GameRoomList = () => {
                   }}
                   roomId={_data.room_number}
                   roomName="Room NAKA"
-                  onClick={() => handleJoinRoom(_data.id)}
+                  onClick={() => handleJoinRoom(_data)}
                 />
               )
             })}

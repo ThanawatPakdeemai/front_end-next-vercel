@@ -29,6 +29,19 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   const router = useRouter()
   const addrsss = "0x1BFa565383EBb149E6889F99013d1C88da190915" // "0xd8fBF6b391a7EbA72772763716537FB43769E845" // TODO YUI Change ACCOUNT
 
+  const item_id = useMemo(() => {
+    if (data) {
+      if (data.play_to_earn || data.tournament) {
+        return data?.item[0]._id
+      }
+      if (itemSelected) {
+        return itemSelected._id
+      }
+      return undefined
+    }
+    return undefined
+  }, [data, itemSelected])
+
   const item_id_smartcontract = useMemo(() => {
     if (data) {
       if (data.play_to_earn || data.tournament) {
@@ -99,11 +112,10 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
     return false
   }
   const OnPlayGame = () => {
-    if (gameRoomById && data && profile && room_id) {
+    if (gameRoomById && data && profile && room_id && item_id) {
       const frontendUrl = `${baseUrlFront}/${data.path}/summary/${room_id}`
-      // eslint-disable-next-line no-unused-vars
       const gameURL = `${baseUrlGame}/${data.id}/?${Helper.makeID(8)}${btoa(
-        `${room_id}:|:${profile.id}:|:${item_id_smartcontract}:|:${
+        `${room_id}:|:${profile.id}:|:${item_id}:|:${
           profile.email
         }:|:${Helper.getLocalStorage(
           "token"
@@ -118,30 +130,17 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
         }`
       )}`
 
-      // eslint-disable-next-line no-unused-vars
-      const gameURLShow = `${baseUrlGame}/${data.id}/?${Helper.makeID(
-        8
-      )}${`${room_id}:|:${profile.id}:|:${item_id_smartcontract}:|:${
-        profile.email
-      }:|:${Helper.getLocalStorage(
-        "token"
-      )}:|:${baseUrlFront}:|:${baseUrlApi}:|:${gameRoomById.rank_name}:|:${
-        gameRoomById.room_number
-      }:|:${new Date(gameRoomById.start_time).getTime()}${
-        gameRoomById.stage_id !== undefined
-          ? `:|:${gameRoomById.stage_id}`
-          : ":|:0"
-      }:|:${profile.username}:|:${
-        data.play_to_earn === true ? "free" : "not_free"
-      }`}`
-
       if (
         checkBalanceOfItem() &&
         checkPlayerIsNotBanned() &&
         checkAccountProfile()
       ) {
-        // window.location.href = gameURL
+        window.location.href = gameURL
       }
+    } else if (!item_id) {
+      errorToast(MESSAGES["please_item"])
+    } else if (!room_id) {
+      errorToast(MESSAGES["room-id-not-found"])
     } else {
       errorToast(MESSAGES["you-can't-play-game"])
     }

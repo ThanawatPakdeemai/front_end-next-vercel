@@ -14,5 +14,6 @@ export const MESSAGES = {
   "room-full": "This room is full",
   "no-player": "No Player in Room",
   "you-were-kicked": "You were kicked out of the room.",
-  "please_item": "Please select Item."
+  "please_item": "Please select Item.",
+  "room-id-not-found": "Room Id not found"
 }

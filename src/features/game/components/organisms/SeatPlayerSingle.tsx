@@ -11,7 +11,6 @@ import Helper from "@utils/helper"
 import { useToast } from "@feature/toast/containers"
 import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import { MESSAGES } from "@constants/messages"
-import handleConnectWithMetamask from "@hooks/useWeb3Provider/useCreateWeb3Provider"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import ButtonGame from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
@@ -183,6 +182,3 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
 }
 
 export default memo(SeatPlayers)
-function Web3Context() {
-  throw new Error("Function not implemented.")
-}

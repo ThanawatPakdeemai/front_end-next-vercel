@@ -24,7 +24,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   const [dataPlayers, setDataPlayers] = useState<
     IGameRoomListSocket | undefined
   >()
-  const { chat, setChat } = useChatContext()
+  const { setChat } = useChatContext()
 
   const item_id = useMemo(() => {
     if (gameData) {

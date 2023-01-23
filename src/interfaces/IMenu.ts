@@ -1,4 +1,4 @@
-import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+// import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import React from "react"
 
 interface ILink {

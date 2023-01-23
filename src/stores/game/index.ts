@@ -1,7 +1,4 @@
-import {
-  IGameItemList,
-  IGameItemListData
-} from "@feature/gameItem/interfaces/IGameItemService"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { GameAllId, IGame } from "@src/features/game/interfaces/IGameService"
 import configZustandDevTools from "@src/utils/configDevtools"
 import create from "zustand"

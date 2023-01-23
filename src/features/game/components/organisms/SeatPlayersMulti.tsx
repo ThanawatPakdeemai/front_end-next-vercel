@@ -9,7 +9,7 @@ import { useToast } from "@feature/toast/containers"
 import Helper from "@utils/helper"
 import { IResGetIp } from "@interfaces/IGetIP"
 import { MESSAGES } from "@constants/messages"
-import useGameStore from "@stores/game"
+// import useGameStore from "@stores/game"
 import ButtonPlayer from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 import ButtonOwner from "../atoms/ButtonOwner"
@@ -21,7 +21,7 @@ interface IProps {
 
 const SeatPlayersSingle = ({ players }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { data, itemSelected } = useGameStore()
+  // const { data, itemSelected } = useGameStore()
   const [ownerPressReady, setOwnPressReady] = useState(false)
   const [playerPressReady, setPlayerPressReady] = useState(false)
   const { errorToast } = useToast()

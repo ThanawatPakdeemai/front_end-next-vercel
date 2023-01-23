@@ -1,5 +1,5 @@
 import React, { memo } from "react"
-import { Box, ButtonGroup, Typography } from "@mui/material"
+import { Box, ButtonGroup } from "@mui/material"
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
@@ -16,7 +16,7 @@ import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 import { useToast } from "@feature/toast/containers"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { useTranslation } from "next-i18next"
-import { registTournament } from "@feature/tournament/containers/services/tournament.service"
+// import { registTournament } from "@feature/tournament/containers/services/tournament.service"
 
 const iconmotion = {
   hover: {
@@ -58,11 +58,11 @@ const FromButItem = () => {
       currency: {}
     }
   })
-  const onSubmit = (data) => {
+  const onSubmit = (_data) => {
     // console.log(data)
   }
 
-  const onError = (data) => {
+  const onError = (_data) => {
     errorToast("error")
   }
   return (

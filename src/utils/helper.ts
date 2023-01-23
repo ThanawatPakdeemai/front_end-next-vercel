@@ -5,10 +5,7 @@ import CryptoJS from "crypto-js"
 import { IPropsFormatNumberOption } from "@interfaces/IHelper"
 import { IGetEventLog } from "@interfaces/ITransaction"
 import { ILocal, TLocalKey, ELocalKey } from "@interfaces/ILocal"
-import {
-  ICurrentNakaData,
-  ICurrentNakaResponse
-} from "@feature/inventory/interfaces/IInventoryService"
+import { ICurrentNakaResponse } from "@feature/inventory/interfaces/IInventoryService"
 import { getCurrentNaka } from "@feature/inventory/containers/services/inventory.service"
 import { IResGetIp } from "@interfaces/IGetIP"
 import { getPriceCurrent } from "@feature/home/containers/services/home.service"

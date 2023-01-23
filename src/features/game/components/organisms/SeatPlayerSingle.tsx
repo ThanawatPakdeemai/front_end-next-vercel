@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useMemo } from "react"
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react"
 import { IGameCurrentPlayer } from "@feature/game/interfaces/IGameService"
 import { Box, Typography } from "@mui/material"
 import Ellipse from "@components/icons/Ellipse/Ellipse"
@@ -11,6 +11,7 @@ import Helper from "@utils/helper"
 import { useToast } from "@feature/toast/containers"
 import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import { MESSAGES } from "@constants/messages"
+import { useCreateWeb3Provider } from "@hooks/useWeb3Provider"
 import ButtonGame from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 
@@ -27,7 +28,26 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   const { data, itemSelected } = useGameStore()
   const { errorToast } = useToast()
   const router = useRouter()
-  const addrsss = "0x1BFa565383EBb149E6889F99013d1C88da190915" // "0xd8fBF6b391a7EbA72772763716537FB43769E845" // TODO YUI Change ACCOUNT
+  const [account, setAccount] = useState<string | undefined>(undefined)
+  const { handleConnectWithMetamask, accounts } = useCreateWeb3Provider()
+
+  useEffect(() => {
+    let load = true
+    if (load) {
+      handleConnectWithMetamask()
+    }
+    return () => {
+      load = false
+    }
+  }, [handleConnectWithMetamask])
+
+  useEffect(() => {
+    if (accounts) setAccount(accounts[0])
+
+    return () => {
+      setAccount(undefined)
+    }
+  }, [accounts])
 
   const item_id = useMemo(() => {
     if (data) {
@@ -105,7 +125,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   }
 
   const checkAccountProfile = () => {
-    if (profile && profile.address === addrsss) {
+    if (profile && profile.address === account) {
       return true
     }
     errorToast(MESSAGES["please-connect-wallet"])

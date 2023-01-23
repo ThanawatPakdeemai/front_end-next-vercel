@@ -48,7 +48,7 @@ export interface ITransWalletService extends IFormatService {
 
 interface IParamTrans {
   _playerId: string
-  _type: string | null
+  _type: string | string[]
 }
 
 export interface ICreateTransWallet extends IParamTrans {

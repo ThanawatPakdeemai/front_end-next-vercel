@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState } from "react"
 import { Popover } from "@mui/material"
-import DropdownIcon from "@components/icons/DropdownIcon"
+// import DropdownIcon from "@components/icons/DropdownIcon"
 import Image from "next/image"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -9,8 +9,8 @@ import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import { useTranslation } from "react-i18next"
 import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
 import useGameStore from "@stores/game"
-import { useToast } from "@feature/toast/containers"
-import { MESSAGES } from "@constants/messages"
+// import { useToast } from "@feature/toast/containers"
+// import { MESSAGES } from "@constants/messages"
 import ButtonDropdown from "./ButtonDropdown"
 
 interface IProp {
@@ -29,7 +29,7 @@ const DropdownListItem = ({
 }: IProp) => {
   const { t } = useTranslation()
   const { data: gameData, itemSelected } = useGameStore()
-  const { errorToast } = useToast()
+  // const { errorToast } = useToast()
 
   const [defaultItem, setDefaultItem] = useState<IGameItemListData | null>(
     itemSelected ?? null

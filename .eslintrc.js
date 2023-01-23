@@ -128,5 +128,12 @@ module.exports = {
     ],
     camelcase: "off",
     "react/no-unused-prop-types": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   }
 }

@@ -22,6 +22,7 @@ const GameSummaryPage = ({ _roomId }: IProp) => {
           currentPlayer: gameRoomById.amount_current_player,
           maxPlayer: gameRoomById.max_players
         }}
+        onOutRoom={() => {}}
       />
       <SummaryMain />
     </>

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-export enum ConnectorNames {
+// eslint-disable-next-line no-shadow
+export enum EConnectorNames {
   Injected = "injected",
   WalletConnect = "walletconnect"
 }
@@ -7,7 +8,7 @@ export enum ConnectorNames {
 export interface Config {
   title: string
   icon: string
-  connectorId: ConnectorNames
+  connectorId: EConnectorNames
 }
 
 export interface IExchangePlatform {
@@ -16,4 +17,4 @@ export interface IExchangePlatform {
   link: string
 }
 
-export type Login = (connectorId: ConnectorNames) => void
+export type Login = (_connectorId: EConnectorNames) => void

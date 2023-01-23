@@ -1,12 +1,11 @@
-import { number } from "prop-types"
-import { Config, ConnectorNames } from "../types/wallet"
+import { Config, EConnectorNames } from "../types/wallet"
 import { defaultvalue } from "./sites"
 
 const connectors: Config[] = [
   {
     title: "Metamask",
     icon: "Metamask.svg",
-    connectorId: ConnectorNames.Injected
+    connectorId: EConnectorNames.Injected
   }
   // ,{
   //   title: "Fortmatic",
@@ -36,7 +35,7 @@ const connectors: Config[] = [
 ]
 
 // eslint-disable-next-line import/no-mutable-exports
-const CHAIN_ID: number = 0
+let CHAIN_ID: number = 0
 // if (pathname === "p2p-dex") {
 //   if (process.env.NEXT_PUBLIC_MODE === "development") {
 //     CHAIN_ID = Number(97)
@@ -45,9 +44,9 @@ const CHAIN_ID: number = 0
 //   }
 // } else
 if (process.env.NEXT_PUBLIC_MODE === "development") {
-  const CHAIN_ID = Number(80001)
+  CHAIN_ID = Number(80001)
 } else {
-  const CHAIN_ID = Number(137)
+  CHAIN_ID = Number(137)
 }
 
 export { CHAIN_ID }

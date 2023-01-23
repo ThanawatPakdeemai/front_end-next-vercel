@@ -66,9 +66,9 @@ const SummaryMain = ({ summaryData }: IProp) => {
             Send to friends
           </span>
           <div className="flex">
-            {SOCIAL_SHARE_SUMMARY.map((item) => (
+            {SOCIAL_SHARE_SUMMARY.map((item, index) => (
               <Link
-                key={item.label}
+                key={Number(index)}
                 href={item.href !== "" ? item.href : undefined}
                 target="_blank"
               >

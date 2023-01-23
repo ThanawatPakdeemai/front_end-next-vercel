@@ -24,15 +24,35 @@ const baseUrlFront = CONFIGS.BASE_URL.FRONTEND
 
 const SeatPlayers = ({ players, room_id }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const gameData = useGameStore((state) => state.data)
+  const { data, itemSelected } = useGameStore()
   const { errorToast } = useToast()
   const router = useRouter()
   const addrsss = "0x1BFa565383EBb149E6889F99013d1C88da190915" // "0xd8fBF6b391a7EbA72772763716537FB43769E845" // TODO YUI Change ACCOUNT
 
-  const item_id = useMemo(
-    () => gameData?.item[0].item_id_smartcontract,
-    [gameData]
-  ) // TODO YUI ITEM
+  const item_id = useMemo(() => {
+    if (data) {
+      if (data.play_to_earn || data.tournament) {
+        return data?.item[0]._id
+      }
+      if (itemSelected) {
+        return itemSelected._id
+      }
+      return undefined
+    }
+    return undefined
+  }, [data, itemSelected])
+
+  const item_id_smartcontract = useMemo(() => {
+    if (data) {
+      if (data.play_to_earn || data.tournament) {
+        return Number(data?.item[0].item_id_smartcontract)
+      }
+      if (itemSelected) {
+        return Number(itemSelected.item_id_smartcontract)
+      }
+    }
+    return 0
+  }, [data, itemSelected])
 
   const address = useMemo(() => profile?.address, [profile?.address])
 
@@ -40,7 +60,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
 
   const { balanceofItem } = useGetBalanceOf({
     _address: address ?? "",
-    _item_id: item_id ?? 0
+    _item_id: item_id_smartcontract ?? 0
   })
 
   const checkRoomTimeout = useCallback(() => {
@@ -55,11 +75,11 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   useEffect(() => {
     const statueTimout = checkRoomTimeout()
     if (statueTimout) {
-      router.push(`/${gameData?.path}/roomlist`)
+      router.push(`/${data?.path}/roomlist`)
       errorToast(MESSAGES["room-timeout"])
     }
     return () => {}
-  }, [checkRoomTimeout, errorToast, gameData?.path, gameRoomById, router])
+  }, [checkRoomTimeout, errorToast, data?.path, gameRoomById, router])
 
   const checkBalanceOfItem = () => {
     if (balanceofItem && balanceofItem.data > 0) {
@@ -92,10 +112,9 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
     return false
   }
   const OnPlayGame = () => {
-    if (gameRoomById && gameData && profile && room_id) {
-      const frontendUrl = `${baseUrlFront}/${gameData.path}/summary/${room_id}`
-
-      const gameURL = `${baseUrlGame}/${gameData.id}/?${Helper.makeID(8)}${btoa(
+    if (gameRoomById && data && profile && room_id && item_id) {
+      const frontendUrl = `${baseUrlFront}/${data.path}/summary/${room_id}`
+      const gameURL = `${baseUrlGame}/${data.id}/?${Helper.makeID(8)}${btoa(
         `${room_id}:|:${profile.id}:|:${item_id}:|:${
           profile.email
         }:|:${Helper.getLocalStorage(
@@ -107,33 +126,21 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
             ? `:|:${gameRoomById.stage_id}`
             : ":|:0"
         }:|:${profile.username}:|:${
-          gameData.play_to_earn === true ? "free" : "not_free"
+          data.play_to_earn === true ? "free" : "not_free"
         }`
       )}`
-
-      const gameURLShow = `${baseUrlGame}/${gameData.id}/?${Helper.makeID(
-        8
-      )}${`${room_id}:|:${profile.id}:|:${item_id}:|:${
-        profile.email
-      }:|:${Helper.getLocalStorage(
-        "token"
-      )}:|:${baseUrlFront}:|:${baseUrlApi}:|:${gameRoomById.rank_name}:|:${
-        gameRoomById.room_number
-      }:|:${new Date(gameRoomById.start_time).getTime()}${
-        gameRoomById.stage_id !== undefined
-          ? `:|:${gameRoomById.stage_id}`
-          : ":|:0"
-      }:|:${profile.username}:|:${
-        gameData.play_to_earn === true ? "free" : "not_free"
-      }`}`
 
       if (
         checkBalanceOfItem() &&
         checkPlayerIsNotBanned() &&
         checkAccountProfile()
       ) {
-        // window.location.href = gameURL
+        window.location.href = gameURL
       }
+    } else if (!item_id) {
+      errorToast(MESSAGES["please_item"])
+    } else if (!room_id) {
+      errorToast(MESSAGES["room-id-not-found"])
     } else {
       errorToast(MESSAGES["you-can't-play-game"])
     }

@@ -1,15 +1,19 @@
 import React, { memo } from "react"
 import { Card } from "@mui/material"
 import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
+import { IGameReward } from "@src/types/games"
 import NumberRank from "../atoms/NumberRank"
 import PlayerList from "./PlayerList"
 
 interface IProp {
   width: string
-  players: IPlayerRanking[]
+  players: IPlayerRanking[] | IGameReward[]
+  className?: string
 }
-const CardBodyList = ({ width, players }: IProp) => (
-  <div className="custom-scroll h-[375px] overflow-y-scroll pr-4">
+const CardBodyList = ({ width, players, className }: IProp) => (
+  <div
+    className={`custom-scroll ${className} h-[375px] overflow-y-scroll pr-4`}
+  >
     {players.map((item, index: number) => (
       <Card
         key={item._id}

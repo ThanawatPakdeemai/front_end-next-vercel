@@ -12,7 +12,6 @@ export interface IPartnerGameData {
   description: string
   genres: IGenres[]
   id: string
-  image_category_list: string | undefined
   image_thumbnail: string | undefined
 }
 

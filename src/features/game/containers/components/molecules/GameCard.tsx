@@ -14,8 +14,9 @@ import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 
 interface IProps {
   menu: IHeaderSlide
-  data: IGame | IPartnerGameData
-  img?: string
+  data?: IGame
+  partnerdata?: IPartnerGameData
+  imgPartner?: string | undefined
   showNo?: boolean
   no?: number
   checkTimer?: boolean
@@ -28,7 +29,8 @@ interface IProps {
 const GameCard = ({
   menu,
   data,
-  img,
+  partnerdata,
+  imgPartner,
   showNo,
   no,
   checkTimer,
@@ -37,8 +39,13 @@ const GameCard = ({
   setCooldown,
   onHandleClick
 }: IProps) => {
-  const [imageSrc, setImageSrc] = useState<string>("")
-
+  const mock = {
+    no_image: "/images/common/no_image.png"
+  }
+  const [imageSrc, setImageSrc] = useState<string>(mock.no_image)
+  const [chipLable, setChipLable] = useState<string>("")
+  const [theme, setTheme] = useState<string>("")
+  const [lableButton, setLableButton] = useState<string>("play now")
   const btnCard = {
     init: {
       y: 40,
@@ -73,12 +80,28 @@ const GameCard = ({
   }
 
   useEffect(() => {
-    if (img && img !== undefined) {
-      setImageSrc(img)
-    } else if (!img && img === undefined && data && data.image_category_list) {
+    if (imgPartner && imgPartner !== undefined) {
+      setImageSrc(imgPartner)
+    } else if (
+      !imgPartner &&
+      imgPartner === undefined &&
+      data &&
+      data.image_category_list
+    ) {
       setImageSrc(data.image_category_list)
     }
-  }, [img, data])
+  }, [imgPartner, data])
+
+  useEffect(() => {
+    if (partnerdata) {
+      setChipLable("partner")
+      setTheme("warning")
+      setLableButton("view detail")
+    } else if (!partnerdata && menu.title && menu.theme) {
+      setChipLable(menu.title)
+      setTheme(menu.theme)
+    }
+  }, [menu, partnerdata, data])
 
   return (
     <motion.div
@@ -100,7 +123,9 @@ const GameCard = ({
           alt="home-slide"
           width={218}
           height={218}
-          className="slick-card-content rounded-md"
+          className={`slick-card-content rounded-md ${
+            partnerdata ? " sm:h-2/4 lg:h-4/6 xl:h-full" : ""
+          }`}
         />
         <motion.div
           variants={btnCard}
@@ -110,7 +135,7 @@ const GameCard = ({
             startIcon={
               cooldown ? <IconHourglass /> : <SportsEsportsOutlinedIcon />
             }
-            text={cooldown ? "cooldown..." : "play now"}
+            text={cooldown ? "cooldown..." : lableButton}
             handleClick={onHandleClick}
             className={`btn-rainbow-theme z-[2] w-[198px] ${
               cooldown ? "bg-error-main" : "bg-secondary-main "
@@ -121,16 +146,30 @@ const GameCard = ({
       <div className="relative z-[3]">
         <div className="slick-card-desc flex h-10 w-full items-center">
           <p className="relative truncate uppercase hover:text-clip">
-            {data.name}
+            {data?.name ? data.name : partnerdata?.name}
           </p>
         </div>
         <div className="relative grid w-full grid-cols-2 gap-2 text-xs uppercase">
           <Chip
-            label={menu.title}
+            label={chipLable}
             size="small"
-            color={onChipColor(menu.theme)}
+            color={onChipColor(theme)}
             className="font-bold"
           />
+          {partnerdata ? (
+            <Chip
+              label={
+                partnerdata.genres &&
+                partnerdata.genres.map((el) => `${el.name}, `)
+              }
+              size="small"
+              color={onChipColor("default")}
+              className="font-bold"
+            />
+          ) : (
+            ""
+          )}
+
           {checkTimer && staminaRecovery && cooldown && setCooldown ? (
             <TimerStamina
               time={staminaRecovery}

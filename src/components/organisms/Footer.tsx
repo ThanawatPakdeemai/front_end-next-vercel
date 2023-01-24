@@ -1,7 +1,6 @@
-import { Divider, Typography } from "@mui/material"
+import { Divider, Link, Typography } from "@mui/material"
 import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
 import { SOCIAL } from "@configs/socialShare"
-import Link from "next/link"
 import { NAKA_GAME } from "@configs/nakaGame"
 import { NAKA_SERVICES } from "@configs/nakaServices"
 import { NAKA_ECOSYSTEMSS } from "@configs/nakaEcosystems"
@@ -173,9 +172,9 @@ const Footer = () => {
               />
             </div>
             <div className="flex flex-wrap">
-              {SOCIAL?.map((item) => (
+              {SOCIAL?.map((item, index) => (
                 <Link
-                  key={item.label}
+                  key={Number(index)}
                   href={item.href}
                   target="_blank"
                 >

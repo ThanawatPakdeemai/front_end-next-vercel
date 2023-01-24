@@ -1,7 +1,7 @@
 import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { F2PHeaderMenu } from "@constants/gameSlide"
-import GameCard from "@feature/game/containers/components/molecules/GameCard"
+import GameCard from "@feature/game/components/molecules/GameCard"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import { getGameByTypes } from "@feature/game/containers/services/game.service"
 import { useQueryClient } from "@tanstack/react-query"

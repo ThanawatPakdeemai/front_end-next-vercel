@@ -11,6 +11,7 @@ import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined
 import TimerStamina from "@components/atoms/timer/TimerStamina"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
+import { IMAGES } from "@constants/images"
 
 interface IProps {
   menu: IHeaderSlide
@@ -39,10 +40,7 @@ const GameCard = ({
   setCooldown,
   onHandleClick
 }: IProps) => {
-  const mock = {
-    no_image: "/images/common/no_image.png"
-  }
-  const [imageSrc, setImageSrc] = useState<string>(mock.no_image)
+  const [imageSrc, setImageSrc] = useState<string>(IMAGES.no_image.src)
   const [chipLable, setChipLable] = useState<string>("")
   const [theme, setTheme] = useState<string>("")
   const [lableButton, setLableButton] = useState<string>("play now")

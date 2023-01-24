@@ -250,5 +250,11 @@
   "lang_name": "Language",
   "chat": "Chat",
   "in_room": "In Room",
-  "gas_now": "GAS NOW"
+  "gas_now": "GAS NOW",
+  "join-game" : "Join Game",
+  "my": "my",
+  "bag": "BAG",
+  "please-select-item":"Please select Item.",
+  "buy-now":"Buy Now",
+  "required": "Required"
 }

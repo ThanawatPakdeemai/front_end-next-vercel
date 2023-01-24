@@ -172,9 +172,9 @@ const Footer = () => {
               />
             </div>
             <div className="flex flex-wrap">
-              {SOCIAL?.map((item) => (
+              {SOCIAL?.map((item, index) => (
                 <Link
-                  key={item.label}
+                  key={Number(index)}
                   href={item.href}
                   target="_blank"
                 >

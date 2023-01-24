@@ -14,7 +14,7 @@ import useGameStore from "@stores/game"
 import { unstable_batchedUpdates } from "react-dom"
 import Howto from "@components/molecules/HowToPlay"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { useRouter } from "next/router"
+// import { useRouter } from "next/router"
 // import { baseUrl } from "@constants/sites"
 
 const GameRoomLayout = ({
@@ -26,9 +26,9 @@ const GameRoomLayout = ({
   const { topPlayerGameId, fetchTopPlayersByGameId } = useTopPlayerByGameId()
   const { statsGameById, fetchStatsGameById } = useGetStatisticsGameById()
 
-  const location = useRouter()
-  const searchParams = new URLSearchParams(location.pathname)
-  const lang = searchParams.get("lang")
+  // const location = useRouter()
+  // const searchParams = new URLSearchParams(location.pathname)
+  // const lang = searchParams.get("lang")
 
   useEffect(() => {
     if (data) {

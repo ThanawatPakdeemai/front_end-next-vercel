@@ -1,11 +1,14 @@
+// import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import React from "react"
 
 interface ILink {
   href: string
 }
-
-export interface IMenuBase extends ILink {
-  label: string
+export interface IMenuBaseItem {
+  data?: any
+}
+export interface IMenuBase extends ILink, IMenuBaseItem {
+  label: string | React.ReactElement
   icon: string | React.ReactElement
 }
 
@@ -40,9 +43,4 @@ export interface IMenuIcon extends ILink {
   title: string
   src: string
   alt: string
-}
-export interface ICURENCY {
-  id: string
-  name: string
-  image_icon: string | React.ReactNode
 }

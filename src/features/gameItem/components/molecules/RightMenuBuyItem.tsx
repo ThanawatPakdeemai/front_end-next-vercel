@@ -1,9 +1,9 @@
 import React, { memo, useState } from "react"
 import { Box, Stack } from "@mui/material"
-import { ModalCustom } from "../Modal/ModalCustom"
-import ButtonBuyItem from "./ButtonBuyItem"
-import FromButItem from "../../../features/authentication/components/FromButItem"
-import ModalHeader from "../Modal/ModalHeader"
+import { ModalCustom } from "../../../../components/molecules/Modal/ModalCustom"
+import ButtonBuyItem from "../../atoms/ButtonBuyItem"
+import FromButItem from "./FromButItem"
+import ModalHeader from "../../../../components/molecules/Modal/ModalHeader"
 
 const RightMenuBuyItem = () => {
   const [open, setOpen] = useState<boolean>(false)
@@ -19,7 +19,7 @@ const RightMenuBuyItem = () => {
       <ModalCustom
         open={open}
         onClose={handleClose}
-        className="min-w-[500px] gap-3 rounded-[34px] p-[10px]"
+        className="min-w-[515px] gap-3 rounded-[34px] p-[10px]"
         width={400}
       >
         <Stack
@@ -32,7 +32,9 @@ const RightMenuBuyItem = () => {
               title="Buy Assets"
             />
           </div>
-          <FromButItem />
+          <Box className="hide-scroll h-[480px] w-full overflow-y-scroll ">
+            <FromButItem />
+          </Box>
         </Stack>
       </ModalCustom>
     </>

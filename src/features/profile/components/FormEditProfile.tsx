@@ -23,7 +23,7 @@ const FormEditProfile = () => {
     profile ? profile?.avatar : ""
   )
 
-  const { register, handleSubmit, watch, setValue } = useForm({
+  const { register, watch, setValue } = useForm({
     defaultValues: {
       _email: profile?.email,
       _username: profile?.username,

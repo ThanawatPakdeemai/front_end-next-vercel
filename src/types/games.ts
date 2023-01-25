@@ -82,19 +82,19 @@ export interface IGameStoryModeData {
   max_value: number
 }
 
-interface IRewardPaymentRate {
-  item_reward_amount: number
-  no: number
-}
-interface ICategory {
-  name: string
-  id: string
-}
+// interface IRewardPaymentRate {
+//   item_reward_amount: number
+//   no: number
+// }
+// interface ICategory {
+//   name: string
+//   id: string
+// }
 
-interface IGameHowto {
-  title: string
-  details: string
-}
+// interface IGameHowto {
+//   title: string
+//   details: string
+// }
 
 export interface IGameItem {
   crate_date: Date

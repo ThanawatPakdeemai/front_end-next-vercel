@@ -60,10 +60,10 @@ const PlayToEarnGamesPage = () => {
     clearGameData()
   }, [clearGameData, gameData, isPreviousData, page, queryClient])
 
-  const onHandleClick = (_gameUrl: string, _gameData: IGame) => {
+  const onHandleClick = async (_gameUrl: string, _gameData: IGame) => {
     if (stateProfile) {
-      router.push(`/${_gameUrl}`)
-      onSetGameData(_gameData)
+      await onSetGameData(_gameData)
+      await router.push(`/${_gameUrl}`)
     } else {
       errorToast(MESSAGES.please_login)
     }

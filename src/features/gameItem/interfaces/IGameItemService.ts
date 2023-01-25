@@ -16,9 +16,8 @@ export interface IGameItemList extends IGameItem {
   _id: string
 }
 
-export interface IGameItemListData extends IGameItem {
+export interface IGameItemListData extends IGameItemList {
   crate_date: Date
-  _id: string
   current_time: Date
   is_active: boolean
   model_id?: number

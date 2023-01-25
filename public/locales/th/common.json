@@ -2,5 +2,11 @@
   "welcome_to_react": "สวัสดีจ้า",
   "lang_name": "ภาษา",
   "chat": "แชท",
-  "in_room": "อยู่ในห้อง"
+  "in_room": "อยู่ในห้อง",
+  "join-game": "เล่นเกมส์",
+  "please-select-item":"กรุณาเลือก Items",
+   "buy-now":"ซื้อเลย",
+  "required": "กรุณากรอกข้อมูล"
+
+
 }

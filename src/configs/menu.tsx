@@ -283,7 +283,7 @@ export const MENU_PROFILE_Datell: IMenu[] = [
   {
     id: "your mission",
     label: "Your Mission",
-    icon: <Campfire className="stroke-neutral-300" />,
+    icon: <Campfire />,
     href: "/mission",
     external: false
   },

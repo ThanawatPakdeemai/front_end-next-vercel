@@ -8,7 +8,7 @@ interface IProp {
 
 const CrumbCustom = ({ text, background }: IProp) => (
   <Typography
-    className={`cursor-pointer rounded ${background} py-[5px] px-[10px] text-xs font-bold uppercase text-error-contrastText`}
+    className={`cursor-pointer rounded ${background} h-fit py-[5px] px-[10px] text-xs font-bold uppercase text-error-contrastText`}
   >
     {text}
   </Typography>

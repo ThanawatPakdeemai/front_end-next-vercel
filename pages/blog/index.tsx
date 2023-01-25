@@ -8,7 +8,6 @@ export default function BlogPage() {
   return (
     <>
       <article className="h-full w-full">
-        <ProfileContent />
         <BlogListPage />
       </article>
     </>

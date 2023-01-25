@@ -200,19 +200,14 @@ export interface PlayDetail {
 }
 
 export interface IPlayerInfoGameData {
-  _id: string
-  player_id: string
-  wallet_address: string
-  tx_address: string
-  current_score: number
-  cheat: boolean
-  play_detail: PlayDetail
-  is_active: boolean
-  naka_for_player?: number
-  gamerooms: IPlayerInfoGamerooms
-  games: IGamesData
-  rewards: IPlayerInfoReward[]
-  id: string
+  name: string
+  story: string
+  image: string
+  game_type: string
+  winrate: string
+  played: number
+  rank: string
+  rankScore: number
 }
 
 export interface IPlayerPageInfo {

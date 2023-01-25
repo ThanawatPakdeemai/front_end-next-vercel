@@ -24,3 +24,11 @@
   font-style: normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: "Digital";
+  src: url("/assets/fonts/digital-7.ttf") format("TrueType");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

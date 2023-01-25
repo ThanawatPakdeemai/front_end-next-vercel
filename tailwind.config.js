@@ -65,7 +65,8 @@ module.exports = {
         "Helvetica",
         "Arial",
         "sans-serif"
-      ]
+      ],
+      digital: ["Digital", "cursive"]
     },
     /* extend config here */
     extend: {

@@ -16,13 +16,22 @@ import MapOutlinedIcon from "@mui/icons-material/MapOutlined"
 import DiamondIcon from "@mui/icons-material/Diamond"
 import { IMAGES } from "@constants/images"
 import BlogIcon from "@components/icons/BlogIcon/BlogIcon"
+import Inventory from "@components/icons/Inventory"
+import ItemReward from "@components/icons/ItemReward"
+import Support from "@components/icons/Support"
+import Profile from "@components/icons/Profile"
 import AboutUsIcon from "@components/icons/BlogIcon/AboutUsIcon"
+import Campfire from "@components/icons/Campfire"
 import MarketPlaceIcon from "@components/icons/BlogIcon/MarketPlaceIcon"
 import NakaverseIcon from "@components/icons/BlogIcon/NakaverseIcon"
 import NakapunksIcon from "@components/icons/BlogIcon/NakapunksIcon"
 import NewIcon from "@components/icons/BlogIcon/NewIcon"
 import Discusion from "@components/icons/BlogIcon/Discusion"
 import FireOutLineIcon from "@components/icons/BlogIcon/FireOutLineIcon"
+import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined"
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined"
+import QueryBuilderOutlinedIcon from "@mui/icons-material/QueryBuilderOutlined"
+import AccessTimeIcon from "@mui/icons-material/AccessTime"
 
 export const MENU = [
   {
@@ -252,7 +261,57 @@ export const MENU_PROFILE = [
     external: false
   }
 ]
-
+export const MENU_PROFILE_Datell: IMenu[] = [
+  {
+    id: "my profile",
+    label: "My Profile",
+    icon: <Profile className="stroke-neutral-300" />,
+    href: "/",
+    external: false
+  },
+  {
+    id: "wishlist",
+    label: "Wishlist",
+    icon: <FavoriteBorderOutlinedIcon className="stroke-neutral-300" />,
+    href: "/",
+    external: false
+  },
+  {
+    id: "play history",
+    label: "Play History",
+    icon: <AccessTimeIcon className="stroke-neutral-300" />,
+    href: "/history",
+    external: false
+  },
+  {
+    id: "your mission",
+    label: "Your Mission",
+    icon: <Campfire className="stroke-neutral-300" />,
+    href: "/mission",
+    external: false
+  },
+  {
+    id: "inventory",
+    label: "Inventory",
+    icon: <Inventory className="stroke-neutral-300" />,
+    href: "/inventory",
+    external: false
+  },
+  {
+    id: "item reward",
+    label: "Item Reward",
+    icon: <ItemReward className="stroke-neutral-300" />,
+    href: "/item-reward",
+    external: false
+  },
+  {
+    id: "support",
+    label: "Support",
+    icon: <Support className="stroke-neutral-300" />,
+    href: "/profile",
+    external: false
+  }
+]
 export const MENU_MAIN_PC: IMenuIcon[] = [
   {
     title: "P2P Trading",

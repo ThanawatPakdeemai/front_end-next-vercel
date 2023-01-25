@@ -27,26 +27,7 @@ export default function GameLobby() {
     fetchGameAll()
   }, [])
 
-  return (
-    <>
-      {gameData ? (
-        <>
-          <GameSlide />
-          {/* <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => {
-              router.push(`/${router.asPath}/roomlist`)
-            }}
-          >
-            Click
-          </Button> */}
-        </>
-      ) : (
-        <SkeletonBanner />
-      )}
-    </>
-  )
+  return <>{gameData ? <GameSlide /> : <SkeletonBanner />}</>
 }
 
 GameLobby.getLayout = function getLayout(page: ReactElement) {

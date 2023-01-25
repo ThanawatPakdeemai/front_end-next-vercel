@@ -1,4 +1,5 @@
-import { Layout } from "@components/template"
+import ProfileLayout from "@components/template/ProfileLayout"
+import { ITEM_REWARD_CRUMB } from "@configs/crumb"
 import EarnRewardPage from "@feature/page/EarnRewardPage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import React, { ReactElement } from "react"
@@ -6,7 +7,7 @@ import React, { ReactElement } from "react"
 export default function EarnReward() {
   return (
     <>
-      <article className="h-full w-full">
+      <article className="flex h-full w-full justify-center">
         <EarnRewardPage />
       </article>
     </>
@@ -14,7 +15,7 @@ export default function EarnReward() {
 }
 
 EarnReward.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>
+  return <ProfileLayout _breadcrumb={ITEM_REWARD_CRUMB()}>{page}</ProfileLayout>
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {

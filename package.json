@@ -23,7 +23,7 @@
     "release": "semantic-release --no-ci",
     "precommit": "git-format-staged --formatter \"prettier --stdin\" \"./**/*.{js,jsx,ts,tsx,json,css,scss}\"",
     "check-types": "tsc --pretty --noEmit",
-    "check-lint": "eslint . --ext ts --ext tsx --ext js"
+    "check-lint": "eslint . --ext ts --ext tsx --ext js --max-warnings=0"
   },
   "dependencies": {
     "@emotion/cache": "^11.10.5",

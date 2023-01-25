@@ -1,31 +1,47 @@
-import HeaderWaitingRoom from "@components/organisms/HeaderWaitingRoom"
-import useGetGameRoomById from "@feature/game/containers/hooks/useGetGameRoomById"
-import React from "react"
+import { ChatProvider } from "@feature/chat/containers/contexts/ChatProvider"
+import MultiWaiting from "@feature/game/components/templates/waitingRoom/multiPlayer/MultiWaiting"
+import SingleWaiting from "@feature/game/components/templates/waitingRoom/singlePlayer/SingleWaiting"
+import StoryWaiting from "@feature/game/components/templates/waitingRoom/storymode/StoryWaiting"
+import { IGame } from "@feature/game/interfaces/IGameService"
+import { Box } from "@mui/material"
+import useGameStore from "@stores/game"
+import useProfileStore from "@stores/profileStore"
+import React, { useEffect, useState } from "react"
 
 interface IProp {
   _roomId: string
 }
 
 const GameRoomWaitingPage = ({ _roomId }: IProp) => {
-  const { gameRoomById } = useGetGameRoomById(_roomId)
+  const profile = useProfileStore((state) => state.profile.data)
+  const data = useGameStore((state) => state.data)
+  const [gameData, setGameData] = useState<IGame>()
 
-  return gameRoomById ? (
-    <div className="rounded-3xl border border-neutral-700">
-      <HeaderWaitingRoom
-        roomTag={gameRoomById.room_number}
-        roomName="#china town"
-        timer={{
-          time: new Date(gameRoomById.end_time)
-        }}
-        player={{
-          currentPlayer: gameRoomById.amount_current_player,
-          maxPlayer: gameRoomById.max_players
-        }}
-      />
-    </div>
-  ) : (
-    <>Loading...</>
-  )
+  useEffect(() => {
+    if (data) {
+      setGameData(data)
+    }
+  }, [data])
+
+  const getTemplateGame = () => {
+    if (gameData) {
+      switch (gameData.game_type) {
+        case "singleplayer":
+          return <SingleWaiting _roomId={_roomId} />
+        case "multiplayer":
+          return (
+            <ChatProvider>
+              <MultiWaiting _roomId={_roomId} />
+            </ChatProvider>
+          )
+        case "storymode":
+          return <StoryWaiting />
+        default:
+          return <Box className="m-auto block">No Data</Box>
+      }
+    }
+  }
+  return <>{profile && getTemplateGame()}</>
 }
 
 export default GameRoomWaitingPage

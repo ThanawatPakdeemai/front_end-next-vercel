@@ -1,8 +1,8 @@
 /* eslint-disable no-use-before-define */
 import { IconClose } from "@components/icons/Icons"
+import Image from "next/image"
 import React from "react"
 import styled from "styled-components"
-import { InjectedProps } from "@src/types/modal"
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,8 +27,7 @@ const ModalBox: React.FC<Props> = ({
   onDismiss,
   children,
   closeable = true,
-  isFooter = true,
-  style
+  isFooter = true
 }) => (
   <ModalWrapper>
     <ModalMain className="modal-box">
@@ -36,7 +35,7 @@ const ModalBox: React.FC<Props> = ({
         {title === "Buy NAKA" ? (
           <ModalTitle className="flex items-center">
             {title}{" "}
-            <img
+            <Image
               src="/assets/images/icons/icon-naka.svg"
               alt="Paris"
               className="iconnaka"

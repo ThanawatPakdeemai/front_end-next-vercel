@@ -23,7 +23,7 @@ const ConnectWalletModal: React.FC<Props> = ({
         footer={t("connected_your_wallet_footer")}
         onDismiss={onDismiss}
       >
-        {config.map((entry, index) => (
+        {config.map((entry) => (
           <WalletCard
             key={entry.title}
             login={login}

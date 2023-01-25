@@ -3,7 +3,7 @@ import RightMenuWallet from "@components/molecules/rightMenu/RightMenuWallet"
 import INaka from "@components/icons/Naka"
 import IBusd from "@components/icons/Busd"
 import React, { useState } from "react"
-import { Card, CardContent, styled } from "@mui/material"
+import { styled } from "@mui/material"
 
 const KeyFramesRotate = styled("div")({
   "@keyframes rotation": {

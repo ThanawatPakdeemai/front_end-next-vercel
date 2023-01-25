@@ -26,9 +26,15 @@
 }
 
 @font-face {
-  font-family: "Digital";
-  src: url("/assets/fonts/digital-7.ttf") format("TrueType");
+  font-family: "mondwest";
+  src: url("/assets/fonts/PPMondwest-Regular.woff") format("woff"),
+    url("/assets/fonts/PPMondwest-Regular.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+}
+
+@font-face {
+  font-family: "Digital";
+  src: url("/assets/fonts/digital-7.ttf") format("TrueType");
 }

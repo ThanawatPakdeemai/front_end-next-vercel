@@ -8,6 +8,7 @@ import {
 } from "@web3-react/walletconnect-connector"
 import { setupNetwork } from "@utils/wallet"
 import erc20Abi from "@configs/abi/ERC20.json"
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { AbiItem } from "web3-utils"
 import toast from "react-hot-toast"
 import useProfileStore from "@stores/profileStore/index"
@@ -27,7 +28,7 @@ import {
 } from "@src/features/authentication/containers/services/auth.service"
 import { useRouter } from "next/router"
 import { connectorsByName } from "@src/utils/web3React"
-import { ConnectorNames } from "../types/wallet"
+import { EConnectorNames } from "../types/wallet"
 import { connectorLocalStorageKey } from "../constants/wallets"
 
 const useAuth = () => {
@@ -48,7 +49,7 @@ const useAuth = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const windowETH: any = window.ethereum
   const connectWallet = useCallback(
-    (connectorID: ConnectorNames) => {
+    (connectorID: EConnectorNames) => {
       if (pathname !== "p2p-dex") {
         const connector = connectorsByName[connectorID]
         if (connector) {
@@ -186,8 +187,11 @@ const useAuth = () => {
     new Promise((resolve, reject) => {
       const res = revokeTokenService()
       deleteToken()
-
-      resolve(res)
+      if (res) {
+        resolve(res)
+      } else {
+        reject(res)
+      }
     })
 
   const refreshToken = () =>
@@ -211,7 +215,7 @@ const useAuth = () => {
 
   const accountsChanged = () => {
     if (windowETH) {
-      windowETH.on("accountsChanged", async (accounts: Array<string>) => {
+      windowETH.on("accountsChanged", async (_accounts: Array<string>) => {
         // console.log("accounts", accounts);
       })
     }
@@ -233,14 +237,14 @@ const useAuth = () => {
           params: providerRequest
         })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .then((res: any) => {
+        .then((_res: any) => {
           // The result varies by RPC method.
           // For example, this method will return a transaction hash hexadecimal string on success.
           // console.log("res", res);
           // onChainChanged()
         })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .catch((error: any) => {
+        .catch((_error: any) => {
           // If the request fails, the Promise will reject with an error.
           // console.log("error", error);
         })
@@ -252,7 +256,7 @@ const useAuth = () => {
   const onChainChanged = () => {
     if (windowETH) {
       windowETH
-        .on("chainChanged", async (accounts: string) => {
+        .on("chainChanged", async (_accounts: string) => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const provider = new ethers.providers.Web3Provider(windowETH, "any")
           await provider.send("eth_requestAccounts", [])
@@ -265,12 +269,12 @@ const useAuth = () => {
           }
         })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .then((result: any) => {
+        .then((_result: any) => {
           // The result varies by RPC method.
           // For example, this method will return a transaction hash hexadecimal string on success.
         })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .catch((error: any) => {
+        .catch((_error: any) => {
           // If the request fails, the Promise will reject with an error.
         })
     }

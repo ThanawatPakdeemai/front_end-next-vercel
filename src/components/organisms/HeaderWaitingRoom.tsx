@@ -4,6 +4,7 @@ import LockIcon from "@components/icons/LockIcon"
 import PlusOutlineIcon from "@components/icons/PlusOutlineIcon"
 import SettingIcon from "@components/icons/SettingIcon"
 import RoomListBox from "@components/molecules/roomList/RoomListBox"
+import { Chip } from "@mui/material"
 import { useRouter } from "next/dist/client/router"
 import React from "react"
 
@@ -18,16 +19,35 @@ interface IProp {
     currentPlayer: number
     maxPlayer?: number
   }
+  onOutRoom?: () => void
+  className?: string
+  isSummaryPage?: boolean
+  onClick?: () => void
 }
 
-const HeaderWaitingRoom = ({ roomTag, roomName, timer, player }: IProp) => {
+const HeaderWaitingRoom = ({
+  roomTag,
+  roomName,
+  timer,
+  player,
+  onOutRoom,
+  className,
+  isSummaryPage,
+  onClick
+}: IProp) => {
   const router = useRouter()
 
   return (
-    <div className="flex h-[72px] items-center gap-5 border-b  border-neutral-800">
+    <div
+      className={`flex h-[72px] items-center gap-5 border-b  border-neutral-800 ${className}`}
+    >
       <div className="ml-4 flex flex-1 items-center  gap-5">
         <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800">
-          <ButtonClose onClick={() => router.back()} />
+          <ButtonClose
+            onClick={() => {
+              onOutRoom ? onOutRoom() : router.back()
+            }}
+          />
         </div>
         <span
           className="text-xs text-neutral-500 "
@@ -42,6 +62,15 @@ const HeaderWaitingRoom = ({ roomTag, roomName, timer, player }: IProp) => {
         >
           ROOM : {roomName}
         </span>
+        {isSummaryPage && (
+          <Chip
+            label="FINISHED GAME"
+            variant="filled"
+            color="success"
+            size="small"
+            className="!bg-green-lemon"
+          />
+        )}
       </div>
       <RoomListBox
         type="timer"
@@ -54,11 +83,11 @@ const HeaderWaitingRoom = ({ roomTag, roomName, timer, player }: IProp) => {
         player={player}
         // for invite button
         icon={
-          <PlusOutlineIcon
-            onClick={() => null}
-            className="mr-[15px]"
-          />
+          !isSummaryPage ? (
+            <PlusOutlineIcon className="mr-[15px] cursor-pointer" />
+          ) : null
         }
+        onClick={onClick}
         //
         color="neutral"
         shade="500"

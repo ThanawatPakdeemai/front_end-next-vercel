@@ -4,9 +4,6 @@ import { Card, CardContent, SxProps, Theme } from "@mui/material"
 import INaka from "@components/icons/Naka"
 import IBusd from "@components/icons/Busd"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import useProfileStore from "@stores/profileStore"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined"
 // import useWalletModal from "@hooks/useWalletModal"
 // import useAuth from "@hooks/useAuth"
 
@@ -31,8 +28,8 @@ const iconmotion = {
   }
 }
 
-const Balance = ({ variant, className, sx, tokenUnit }: IProps) => {
-  const profile = useProfileStore((state) => state.profile.data)
+const Balance = ({ className, sx }: IProps) => {
+  // const profile = useProfileStore((state) => state.profile.data)
   // const { connectWallet, disconnectWallet, walletConnect } = useAuth()
   // const { onPresentConnectModal } = useWalletModal(
   //   connectWallet,

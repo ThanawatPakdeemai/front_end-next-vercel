@@ -1,6 +1,4 @@
-import ButtonLink from "@components/atoms/button/ButtonLink"
 import { memo } from "react"
-import AddIcon from "@mui/icons-material/Add"
 import Image from "next/image"
 
 interface IProp {

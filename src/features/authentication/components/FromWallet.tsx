@@ -1,10 +1,6 @@
-import React, { memo, useState } from "react"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import DropdownList from "@components/atoms/DropdownList"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
+import React, { memo } from "react"
 import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined"
 import useGameStore from "@stores/game"
-import { CURENCY } from "@configs/dropdown"
 import Image from "next/image"
 
 interface IProp {

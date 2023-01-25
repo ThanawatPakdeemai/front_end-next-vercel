@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { BSC, BSCTestnet, BUSD, Mumbai, Polygon, TestBUSD } from "@usedapp/core"
 import { CHAIN_ID, CHAIN_NAME, MATIC_ICON } from "./wallets"
 

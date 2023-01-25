@@ -1,10 +1,6 @@
 import React from "react"
 
-function Campfire({
-  width = 24,
-  height = 24,
-  className
-}: React.SVGProps<SVGSVGElement>) {
+function Campfire() {
   return (
     <svg
       width="24"

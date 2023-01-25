@@ -5,6 +5,7 @@ import BalanceVault from "@configs/abi/BalanceVault.json"
 import Shop from "@configs/abi/Shop.json"
 import erc20Abi from "@configs/abi/ERC20.json"
 import { ethers } from "ethers"
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { AbiItem } from "web3-utils"
 import Web3 from "web3"
 import {
@@ -56,9 +57,11 @@ const useContractAction = () => {
   )
 
   const ownerAddress = `${baseContractAddress.owner}`
+  // eslint-disable-next-line max-len
   // Set TOKEN ADDRESS -------------------------------------------------------------------- TOKEN ADDRESS
   const useERC20 = (address: string) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-shadow, @typescript-eslint/no-shadow
     const web3: any | Web3 = useWeb3()
     return useMemo(() => getErc20Contract(address, web3), [address, web3])
   }
@@ -180,6 +183,7 @@ const useContractAction = () => {
   }
 
   // Check Approval ---------------------------------------------------------------
+  // eslint-disable-next-line max-len
   // Returns true if the operator is approved to make ENS registry operations on behalf of the owner.
   const IsApproved = (address: string) =>
     new Promise((resolve, reject) => {
@@ -209,7 +213,7 @@ const useContractAction = () => {
         message: "",
         error: null
       }))
-      .catch((error) => ({
+      .catch((_error) => ({
         status: false,
         data: null,
         message: "",

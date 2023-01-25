@@ -6,6 +6,7 @@ interface IconProp {
 }
 export const IconRedeem: React.FC<IconProp> = ({ color, className }) => (
   <svg
+    className={className}
     width="20"
     height="20"
     viewBox="0 0 20 20"
@@ -33,7 +34,7 @@ export const IconClose: React.FC<IconProp> = ({ color, className }) => (
   </svg>
 )
 
-export const IconClose2: React.FC<IconProp> = ({ color, className }) => (
+export const IconClose2: React.FC<IconProp> = ({ className }) => (
   <svg
     className={className}
     version="1.1"
@@ -222,7 +223,7 @@ export const IconInventory: React.FC<IconProp> = ({ color, className }) => (
     >
       <g
         transform="translate(-192.000000, -342.000000)"
-        fill="#98A0B5"
+        fill={color || "#98A0B5"}
       >
         <g transform="translate(192.000000, 342.000000)">
           <path
@@ -241,6 +242,7 @@ export const IconInventory: React.FC<IconProp> = ({ color, className }) => (
 
 export const IconTransactions: React.FC<IconProp> = ({ color, className }) => (
   <svg
+    className={className}
     width="18px"
     height="19px"
     viewBox="0 0 18 19"
@@ -254,7 +256,7 @@ export const IconTransactions: React.FC<IconProp> = ({ color, className }) => (
     >
       <g
         transform="translate(-257.000000, -342.000000)"
-        fill="#98A0B5"
+        fill={color || "#98A0B5"}
       >
         <g transform="translate(257.000000, 342.000000)">
           <path
@@ -279,6 +281,7 @@ export const IconTransactions: React.FC<IconProp> = ({ color, className }) => (
 
 export const IconReferrals: React.FC<IconProp> = ({ color, className }) => (
   <svg
+    className={className}
     width="18px"
     height="19px"
     viewBox="0 0 36 25"
@@ -296,7 +299,7 @@ export const IconReferrals: React.FC<IconProp> = ({ color, className }) => (
       <g
         id="Referrals"
         transform="translate(-529.000000, -522.000000)"
-        fill="#CBCCCD"
+        fill={color || "#CBCCCD"}
         fillRule="nonzero"
       >
         <g
@@ -876,6 +879,7 @@ export const IconBanned: React.FC<IconProp> = ({ color, className }) => (
 
 export const IconBlog: React.FC<IconProp> = ({ color, className }) => (
   <svg
+    className={className}
     width="18px"
     height="18px"
     viewBox="0 0 18 18"
@@ -894,7 +898,7 @@ export const IconBlog: React.FC<IconProp> = ({ color, className }) => (
       <g
         id="1-BLOG"
         transform="translate(-83.000000, -369.000000)"
-        fill="#98A0B5"
+        fill={color || "#98A0B5"}
       >
         <g
           id="Group-3-Copy-3"
@@ -1042,8 +1046,9 @@ export const IconArrow: React.FC<IconProp> = ({ color, className }) => (
   </svg>
 )
 
-export const IconPig: React.FC<IconProp> = ({ color, className }) => (
+export const IconPig: React.FC<IconProp> = ({ className }) => (
   <svg
+    className={className}
     width="66"
     height="68"
     viewBox="0 0 66 68"
@@ -1219,8 +1224,9 @@ export const IconPig: React.FC<IconProp> = ({ color, className }) => (
   </svg>
 )
 
-export const IconReword: React.FC<IconProp> = ({ color, className }) => (
+export const IconReword: React.FC<IconProp> = ({ className }) => (
   <svg
+    className={className}
     width="60"
     height="64"
     viewBox="0 0 60 64"
@@ -1314,8 +1320,9 @@ export const IconReword: React.FC<IconProp> = ({ color, className }) => (
   </svg>
 )
 
-export const IconUser: React.FC<IconProp> = ({ color, className }) => (
+export const IconUser: React.FC<IconProp> = ({ className }) => (
   <svg
+    className={className}
     width="68"
     height="60"
     viewBox="0 0 68 60"
@@ -1823,7 +1830,7 @@ export const IconDiscord: React.FC<IconProp> = ({ color, className }) => (
   </svg>
 )
 
-export const IconGoogle: React.FC<IconProp> = ({ color, className }) => (
+export const IconGoogle: React.FC<IconProp> = ({ className }) => (
   <svg
     width="21px"
     height="22px"
@@ -2066,7 +2073,7 @@ export const IconSafari: React.FC<IconProp> = ({ color, className }) => (
   </svg>
 )
 
-export const IconBlockOpera: React.FC<IconProp> = ({ color, className }) => (
+export const IconBlockOpera: React.FC<IconProp> = ({ className }) => (
   <svg
     width="41px"
     height="37px"
@@ -2108,7 +2115,7 @@ export const IconBlockOpera: React.FC<IconProp> = ({ color, className }) => (
   </svg>
 )
 
-export const IconBlockEdge: React.FC<IconProp> = ({ color, className }) => (
+export const IconBlockEdge: React.FC<IconProp> = ({ className }) => (
   <svg
     width="39px"
     height="37px"
@@ -2150,7 +2157,7 @@ export const IconBlockEdge: React.FC<IconProp> = ({ color, className }) => (
   </svg>
 )
 
-export const IconBlockMobile: React.FC<IconProp> = ({ color, className }) => (
+export const IconBlockMobile: React.FC<IconProp> = ({ className }) => (
   <svg
     width="33px"
     height="34px"
@@ -2192,7 +2199,7 @@ export const IconBlockMobile: React.FC<IconProp> = ({ color, className }) => (
   </svg>
 )
 
-export const IconBlockDesktop: React.FC<IconProp> = ({ color, className }) => (
+export const IconBlockDesktop: React.FC<IconProp> = ({ className }) => (
   <svg
     width="33px"
     height="32px"
@@ -2238,7 +2245,7 @@ export const IconBlockDesktop: React.FC<IconProp> = ({ color, className }) => (
   </svg>
 )
 
-export const IconBlockChrom: React.FC<IconProp> = ({ color, className }) => (
+export const IconBlockChrom: React.FC<IconProp> = ({ className }) => (
   <svg
     width="40px"
     height="37px"
@@ -2280,7 +2287,7 @@ export const IconBlockChrom: React.FC<IconProp> = ({ color, className }) => (
   </svg>
 )
 
-export const IconBlockSafari: React.FC<IconProp> = ({ color, className }) => (
+export const IconBlockSafari: React.FC<IconProp> = ({ className }) => (
   <svg
     width="41px"
     height="37px"
@@ -2322,7 +2329,7 @@ export const IconBlockSafari: React.FC<IconProp> = ({ color, className }) => (
   </svg>
 )
 
-export const IconBlockFireFox: React.FC<IconProp> = ({ color, className }) => (
+export const IconBlockFireFox: React.FC<IconProp> = ({ className }) => (
   <svg
     width="41px"
     height="37px"
@@ -2837,10 +2844,6 @@ export const IconTiktok: React.FC<IconProp> = ({ color, className }) => (
 )
 
 export const IconPartnerGames: React.FC<IconProp> = ({ color, className }) => (
-  // <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-  // <path fillRule="evenodd" clipRule="evenodd" d="M0 4.8C0 3.11984 0 2.27976 0.32698 1.63803C0.6146 1.07354 1.07354 0.6146 1.63803 0.32698C2.27976 0 3.11984 0 4.8 0H15.2C16.8802 0 17.7202 0 18.362 0.32698C18.9265 0.6146 19.3854 1.07354 19.673 1.63803C20 2.27976 20 3.11984 20 4.8V11.2C20 12.8802 20 13.7202 19.673 14.362C19.3854 14.9265 18.9265 15.3854 18.362 15.673C17.7202 16 16.8802 16 15.2 16H4.8C3.11984 16 2.27976 16 1.63803 15.673C1.07354 15.3854 0.6146 14.9265 0.32698 14.362C0 13.7202 0 12.8802 0 11.2V4.8ZM8 10C8 9.4477 8.4477 9 9 9H11C11.5523 9 12 9.4477 12 10C12 10.5523 11.5523 11 11 11H9C8.4477 11 8 10.5523 8 10ZM15 9C14.4477 9 14 9.4477 14 10C14 10.5523 14.4477 11 15 11C15.5523 11 16 10.5523 16 10C16 9.4477 15.5523 9 15 9ZM4 10C4 9.4477 4.44772 9 5 9C5.55228 9 6 9.4477 6 10C6 10.5523 5.55228 11 5 11C4.44772 11 4 10.5523 4 10ZM13 5C12.4477 5 12 5.44772 12 6C12 6.5523 12.4477 7 13 7H15C15.5523 7 16 6.5523 16 6C16 5.44772 15.5523 5 15 5H13ZM8 6C8 5.44772 8.4477 5 9 5C9.5523 5 10 5.44772 10 6C10 6.5523 9.5523 7 9 7C8.4477 7 8 6.5523 8 6ZM5 5C4.44772 5 4 5.44772 4 6C4 6.5523 4.44772 7 5 7C5.55228 7 6 6.5523 6 6C6 5.44772 5.55228 5 5 5Z" fill="#98A0B5"/>
-  // </svg>
-
   <svg
     className={`${className} ml-[-2px]`}
     version="1.0"

@@ -1,44 +1,21 @@
-import React, { useEffect, useState, memo, useCallback, useMemo } from "react"
+import React, { useEffect, useState, useMemo } from "react"
 import ButtonLink from "@components/atoms/button/ButtonLink"
-import AddIcon from "@mui/icons-material/Add"
 import LogoutIcon from "@mui/icons-material/Logout"
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
-import {
-  CardMedia,
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Button
-} from "@mui/material"
-import { useGameItemContext } from "@src/contexts/gameItemContext"
+import { CardMedia, SelectChangeEvent } from "@mui/material"
 import useProfileStore from "@stores/profileStore/index"
-import ItemSize from "@components/atoms/loading/itemSize"
-import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown"
 import useGameStore from "@stores/game"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import {
-  IGameItem,
-  IGameItemList,
-  IGameItemListData
-} from "@feature/gameItem/interfaces/IGameItemService"
-import Dropdown from "@components/atoms/DropdownCustom"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import RightMenuBuyItem from "@components/molecules/rightMenu/RightMenuBuyItem"
 import { useRouter } from "next/router"
-import Input from "@mui/material/Input"
 import DropdownList from "@components/atoms/DropdownList"
 // import { useWeb3 } from "@hooks/useWeb3"
-import { Trans, useTranslation } from "react-i18next"
+import { useTranslation } from "react-i18next"
 // import { useNetworkContext } from "@src/contexts/networkContext"
 // import useContractAction from "@hooks/useContract"
 import useLongPress from "@hooks/useLongPress"
-import {
-  calculateItemPerPrice,
-  encodeURILink,
-  number4digit
-} from "@utils/helpers"
+import { calculateItemPerPrice } from "@utils/helpers"
 import { buyItems } from "@src/features/buyItem/containers/services/buyItem.service"
 import toast from "react-hot-toast"
 

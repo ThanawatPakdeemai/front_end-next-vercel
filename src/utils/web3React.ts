@@ -5,7 +5,6 @@ import { CHAIN_ID } from "@src/constants/wallets"
 import { ConnectorNames } from "@src/types/wallet"
 import getNodeUrl from "./getRpcUrl"
 
-const POLLING_INTERVAL = 12000
 const chainId = CHAIN_ID
 
 const injected = new InjectedConnector({ supportedChainIds: [chainId] })

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -216,6 +216,7 @@ const Register = () => {
 
   useEffect(() => {
     isConfirmPassword(watch("password"), watch("confirmPassword"))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch("password"), watch("confirmPassword")])
 
   return (

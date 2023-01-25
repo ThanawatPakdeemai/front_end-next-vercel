@@ -1,11 +1,11 @@
 import services from "@configs/axiosGlobalConfig"
 import { IBadgeResponse } from "@feature/badge/interfaces/IBadgeService"
 
-const getBadgeplayerId = (player_id: string) =>
+const getBadgeplayerId = (_playerId: string) =>
   new Promise<IBadgeResponse>((resolve, reject) => {
-    if (player_id) {
+    if (_playerId) {
       services
-        .get(`/badge/collected/${player_id}`)
+        .get(`/badge/collected/${_playerId}`)
         .then((res) => {
           resolve(res.data)
         })

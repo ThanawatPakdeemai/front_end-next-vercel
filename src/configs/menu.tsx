@@ -164,14 +164,14 @@ export const MENU_LOGGEDIN: IMenu[] = [
   {
     id: "edit-profile",
     label: "Edit Profile",
-    href: "/",
+    href: "/profile",
     icon: <EditProfileIcon />,
     external: false
   },
   {
     id: "wishlist",
     label: "Wishlist",
-    href: "/",
+    href: "/wishlsit",
     icon: <WishlistIcon />,
     external: false
   },
@@ -185,7 +185,7 @@ export const MENU_LOGGEDIN: IMenu[] = [
   {
     id: "your-mission",
     label: "Your Mission",
-    href: "/",
+    href: "/mission",
     icon: <YourMissionIcon />,
     external: false
   },

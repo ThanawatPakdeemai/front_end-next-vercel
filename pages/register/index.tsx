@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import * as yup from "yup"
@@ -42,8 +41,9 @@ import Tagline from "@components/molecules/tagline/Tagline"
 import VectorIcon from "@components/icons/VectorIcon"
 import { motion } from "framer-motion"
 import { MESSAGES } from "@constants/messages"
-import useSignUp from "@feature/authentication/containers/hooks/useSignUp"
 import { useToast } from "@feature/toast/containers"
+import useVerifyCode from "@feature/authentication/containers/hooks/useVerifyCode"
+import useSignUp from "@feature/authentication/containers/hooks/useSignUp"
 
 const KeyFramesClockwise = styled("div")({
   "@keyframes rotation": {
@@ -73,7 +73,7 @@ interface TFormData {
   email: string
   password: string
   confirmPassword: string
-  code: number | null
+  code: number
   subscription: boolean
 }
 
@@ -83,19 +83,11 @@ const SignupSchema = yup
     password: yup.string().required(),
     confirmPassword: yup.string().required(),
     code: yup.number().required().positive().integer(),
-    subscription: yup.string().defined()
+    subscription: yup.boolean().defined()
   })
   .required()
 
 const Register = () => {
-  const defaultValues: TFormData = {
-    email: "",
-    password: "",
-    confirmPassword: "",
-    code: null,
-    subscription: false
-  }
-
   const {
     register,
     handleSubmit,
@@ -110,6 +102,7 @@ const Register = () => {
   const patternEmail =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
   const { executeRecaptcha } = useGoogleReCaptcha()
+  const { mutateVerifyCode } = useVerifyCode()
   const { mutateSignUp } = useSignUp()
   const { errorToast, successToast } = useToast()
 
@@ -140,10 +133,8 @@ const Register = () => {
   const isEmail = (_email: string) => {
     if (patternEmail.test(_email)) {
       setEmailCorrect(true)
-      console.log("test-email-true", patternEmail.test(_email), _email)
     } else {
       setEmailCorrect(false)
-      console.log("test-email-false", patternEmail.test(_email), _email)
     }
   }
 
@@ -156,36 +147,27 @@ const Register = () => {
   }
 
   const isConfirmPassword = (_password: string, _confirmPassword: string) => {
-    console.log("test-password", _password)
-    console.log("test-confirmPassword", _confirmPassword)
     if (_password === _confirmPassword) {
-      console.log("test-conrect", _password === _confirmPassword)
       setPasswordCorrect(true)
     } else {
-      console.log("test-inconrect", _password === _confirmPassword)
       setPasswordCorrect(false)
     }
   }
 
   const isCharacters = (_characters: string) => {
-    console.log("test-isCharacters", _characters)
     if (_characters.length >= 6) {
       setCharacterPasswordLength(true)
-      console.log("test-isCharacters >=6", _characters)
       if (patternPasswordUppercase.test(_characters)) {
         setCharacterUppercase(true)
-        console.log("test-isCharacters UpCase", _characters)
       } else {
         setCharacterUppercase(false)
       }
     } else {
       setCharacterPasswordLength(false)
-      console.log("test-isCharacters <=6", _characters)
     }
   }
 
   const onClickGetCode = async (_email: string) => {
-    console.log("test-result-code-email", _email)
     if (!executeRecaptcha) {
       return
     }
@@ -194,16 +176,13 @@ const Register = () => {
     ;(async () => {
       try {
         result = await executeRecaptcha("getCodeVerify")
-        console.log("test-result-code-result", result)
       } catch (error) {
-        console.log("test-result-code-errors", error)
+        errorToast("Verify Error")
       }
     })()
-    console.log("test-result-code", result)
-    mutateSignUp({ _email, _recaptcha: result })
+    mutateVerifyCode({ _email, _recaptcha: result })
       .then((_profile) => {
         if (_profile) {
-          console.log("test-result-_profile", _profile)
           successToast(MESSAGES.sign_in_success)
         }
       })
@@ -213,19 +192,24 @@ const Register = () => {
   }
 
   const onSubmitRegister = (values: TFormData) => {
-    console.log("test-values", values)
-    const { email, code, password, confirmPassword, subscription } = values
-    console.log("test-values:-email", email)
-    console.log("test-values:-code", code)
-    console.log("test-values:-password", password)
-    console.log("test-values:-confirmPassword", confirmPassword)
-    console.log("test-values:-subscription", subscription)
-    // emailCorrect
-    if (patternEmail && characterPasswordLength && characterUppercase) {
-      console.log("test-values:FormSubmitErrors-false", values)
+    const { email, code, password, subscription } = values
+    if (emailCorrect && characterPasswordLength && characterUppercase) {
       setFormSubmitErrors(false)
+      mutateSignUp({
+        _email: email,
+        _password: password,
+        _verifycode: code,
+        _subscription: subscription
+      })
+        .then((_res) => {
+          if (_res) {
+            successToast(MESSAGES.sign_in_success)
+          }
+        })
+        .catch(() => {
+          errorToast(MESSAGES.please_fill)
+        })
     } else {
-      console.log("test-values:FormSubmitErrors-true", values)
       setFormSubmitErrors(true)
     }
   }
@@ -233,12 +217,6 @@ const Register = () => {
   useEffect(() => {
     isConfirmPassword(watch("password"), watch("confirmPassword"))
   }, [watch("password"), watch("confirmPassword")])
-
-  console.log("test-password", watch("password"))
-  console.log("test-conPassword", watch("confirmPassword"))
-  console.log("test-email", watch("email"))
-  console.log("test-err", errors.confirmPassword, passwordCorrect)
-  console.log("test-email-check", emailCorrect)
 
   return (
     <Box>

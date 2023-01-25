@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query"
-import { getVerifyCode } from "../services/auth.service"
+import { signUp } from "../services/auth.service"
 
 const useSignUp = () => {
   const {
@@ -8,8 +8,8 @@ const useSignUp = () => {
     isLoading,
     isError,
     mutateAsync: mutateSignUp
-  } = useMutation(getVerifyCode, {
-    mutationKey: ["getVerifyCode"],
+  } = useMutation(signUp, {
+    mutationKey: ["signUp"],
     retry: false
   })
 

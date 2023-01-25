@@ -9,6 +9,7 @@ interface IProp {
   src?: string
   imageBadge?: string
   badgeCenter?: { status: boolean; name: string }
+  height?: string
 }
 const AvatarProfile = ({
   border = { width: "!w-[92px]", height: "!h-[92px]" },
@@ -16,11 +17,12 @@ const AvatarProfile = ({
   image = { width: "!w-[88px]", height: "!h-[88px]" },
   imageBadge,
   src,
-  badgeCenter = { status: false, name: "" }
+  badgeCenter = { status: false, name: "" },
+  height = "h-[92px]"
 }: IProp) => (
-  <>
+  <div className="flex justify-center	">
     <Box
-      className={` flex h-[92px] items-center justify-center
+      className={` flex ${height} items-center justify-center
         ${border.width}  ${border.height}] 
         rounded-xl border-2 ${borderColor}`}
     >
@@ -74,6 +76,6 @@ const AvatarProfile = ({
         </Avatar>
       </Badge>
     </Box>
-  </>
+  </div>
 )
 export default memo(AvatarProfile)

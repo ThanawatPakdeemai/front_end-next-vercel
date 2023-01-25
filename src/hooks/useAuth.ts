@@ -22,7 +22,6 @@ import { IProfile, IResetPassword } from "@src/types/profile"
 import { ethers } from "ethers"
 import { useNetworkContext } from "@src/contexts/networkContext"
 import { useWeb3 } from "@src/hooks/useWeb3"
-import Web3 from "web3"
 import {
   revokeToken as revokeTokenService,
   refreshToken as refreshTokenService
@@ -36,7 +35,7 @@ const useAuth = () => {
   const { onSetProfileData, onReset } = useProfileStore()
   const router = useRouter()
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const web3: any | Web3 = useWeb3()
+  const web3: any = useWeb3()
   const { activate, deactivate } = useWeb3React()
   const { setChainId } = useNetworkContext()
   const { account } = useWeb3React()

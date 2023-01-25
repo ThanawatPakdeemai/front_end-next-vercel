@@ -1,10 +1,14 @@
 /* eslint-disable no-console */
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Image } from "@components/atoms/image/index"
 import { IMAGES } from "@constants/images"
+import {
+  GoogleReCaptchaProvider,
+  useGoogleReCaptcha
+} from "react-google-recaptcha-v3"
 import {
   Alert,
   Box,
@@ -37,6 +41,9 @@ import { SocialRegister } from "@configs/socialRegister"
 import Tagline from "@components/molecules/tagline/Tagline"
 import VectorIcon from "@components/icons/VectorIcon"
 import { motion } from "framer-motion"
+import { MESSAGES } from "@constants/messages"
+import useSignUp from "@feature/authentication/containers/hooks/useSignUp"
+import { useToast } from "@feature/toast/containers"
 
 const KeyFramesClockwise = styled("div")({
   "@keyframes rotation": {
@@ -102,6 +109,9 @@ const Register = () => {
   const patternPasswordUppercase = /[A-Z]/
   const patternEmail =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+  const { executeRecaptcha } = useGoogleReCaptcha()
+  const { mutateSignUp } = useSignUp()
+  const { errorToast, successToast } = useToast()
 
   const [verifiCode, setVerifiCode] = useState("")
   const [showPassword, setShowPassword] = useState(false)
@@ -110,6 +120,7 @@ const Register = () => {
   const [passwordCorrect, setPasswordCorrect] = useState(false)
   const [characterPasswordLength, setCharacterPasswordLength] = useState(true)
   const [characterUppercase, setCharacterUppercase] = useState(true)
+  const [formSubmitErrors, setFormSubmitErrors] = useState(false)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
   const handleMouseDownPassword = (
@@ -124,16 +135,6 @@ const Register = () => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault()
-  }
-
-  const onSubmitRegister = (values: TFormData) => {
-    console.log("test-values", values)
-    const { email, code, password, confirmPassword, subscription } = values
-    console.log("test-values:-email", email)
-    console.log("test-values:-code", code)
-    console.log("test-values:-password", password)
-    console.log("test-values:-confirmPassword", confirmPassword)
-    console.log("test-values:-subscription", subscription)
   }
 
   const isEmail = (_email: string) => {
@@ -183,12 +184,59 @@ const Register = () => {
     }
   }
 
+  const onClickGetCode = async (_email: string) => {
+    console.log("test-result-code-email", _email)
+    if (!executeRecaptcha) {
+      return
+    }
+    let result = ""
+
+    ;(async () => {
+      try {
+        result = await executeRecaptcha("getCodeVerify")
+        console.log("test-result-code-result", result)
+      } catch (error) {
+        console.log("test-result-code-errors", error)
+      }
+    })()
+    console.log("test-result-code", result)
+    mutateSignUp({ _email, _recaptcha: result })
+      .then((_profile) => {
+        if (_profile) {
+          console.log("test-result-_profile", _profile)
+          successToast(MESSAGES.sign_in_success)
+        }
+      })
+      .catch(() => {
+        errorToast(MESSAGES.please_fill)
+      })
+  }
+
+  const onSubmitRegister = (values: TFormData) => {
+    console.log("test-values", values)
+    const { email, code, password, confirmPassword, subscription } = values
+    console.log("test-values:-email", email)
+    console.log("test-values:-code", code)
+    console.log("test-values:-password", password)
+    console.log("test-values:-confirmPassword", confirmPassword)
+    console.log("test-values:-subscription", subscription)
+    // emailCorrect
+    if (patternEmail && characterPasswordLength && characterUppercase) {
+      console.log("test-values:FormSubmitErrors-false", values)
+      setFormSubmitErrors(false)
+    } else {
+      console.log("test-values:FormSubmitErrors-true", values)
+      setFormSubmitErrors(true)
+    }
+  }
+
   useEffect(() => {
     isConfirmPassword(watch("password"), watch("confirmPassword"))
   }, [watch("password"), watch("confirmPassword")])
 
   console.log("test-password", watch("password"))
   console.log("test-conPassword", watch("confirmPassword"))
+  console.log("test-email", watch("email"))
   console.log("test-err", errors.confirmPassword, passwordCorrect)
   console.log("test-email-check", emailCorrect)
 
@@ -272,69 +320,88 @@ const Register = () => {
                 alignItems: "center"
               }}
             >
-              <form onSubmit={handleSubmit(onSubmitRegister)}>
-                <Box style={{ width: 333, height: 638 }}>
-                  <Grid
-                    container
-                    spacing={2.25}
-                  >
+              <GoogleReCaptchaProvider
+                reCaptchaKey={`${process.env.NEXT_PUBLIC_KEY_RECAPTCHA}`}
+                scriptProps={{ async: true }}
+              >
+                <form onSubmit={handleSubmit(onSubmitRegister)}>
+                  <Box style={{ width: 333, height: 638 }}>
                     <Grid
-                      item
-                      xs={12}
+                      container
+                      spacing={2.25}
                     >
-                      <Box
-                        className="flex items-center rounded-lg"
-                        sx={{ height: "54px" }}
+                      <Grid
+                        item
+                        xs={12}
                       >
-                        <div className="flex flex-1 flex-row items-center">
-                          <Typography className="text-lg uppercase text-neutral-300">
-                            Register
-                          </Typography>
-                        </div>
-                        <ButtonClose onClick={() => {}} />
-                      </Box>
-                      <Divider className="mx-0 mt-5 mb-8" />
-                      <TextField
-                        className="w-full"
-                        type="email"
-                        placeholder="Email"
-                        label="Email Address"
-                        onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          isEmail(e.target.value.toString())
-                        }}
-                        {...register("email")}
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            width: "100%",
-                            fontWeight: 400,
-                            fontSize: 14,
-                            fontWight: 700,
-                            fontFamily: "neueMachina"
-                            // input: {
-                            //   "&:-webkit-autofill": {
-                            //     WebkitBoxShadow: "0 0 0 100px #7B5BE6 inset",
-                            //     WebkitTextFillColor: "#232329"
-                            //   }
-                            // }
-                          },
-                          "& .MuiInputLabel-root": {
-                            color: "#70727B",
-                            fontFamily: "neueMachina",
-                            textTransform: "uppercase"
-                          }
-                        }}
-                        id="email"
-                        size="medium"
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <EmailOutlinedIcon />
-                            </InputAdornment>
-                          )
-                        }}
-                      />
-                      {errors.email && (
-                        <>
+                        <Box
+                          className="flex items-center rounded-lg"
+                          sx={{ height: "54px" }}
+                        >
+                          <div className="flex flex-1 flex-row items-center">
+                            <Typography className="text-lg uppercase text-neutral-300">
+                              Register
+                            </Typography>
+                          </div>
+                          <ButtonClose onClick={() => {}} />
+                        </Box>
+                        <Divider className="mx-0 mt-5 mb-8" />
+                        {formSubmitErrors && (
+                          <motion.div
+                            animate={{
+                              opacity: 1,
+                              marginTop: -20,
+                              marginBottom: 2
+                            }}
+                          >
+                            <Alert
+                              severity="error"
+                              className="rounded-lg"
+                            >
+                              The form is filled with incorrect information.
+                            </Alert>
+                          </motion.div>
+                        )}
+                        <TextField
+                          className="w-full"
+                          type="email"
+                          placeholder="Email"
+                          label="Email Address"
+                          onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            isEmail(e.target.value.toString())
+                          }}
+                          {...register("email")}
+                          sx={{
+                            "& .MuiOutlinedInput-root": {
+                              width: "100%",
+                              fontWeight: 400,
+                              fontSize: 14,
+                              fontWight: 700,
+                              fontFamily: "neueMachina"
+                              // input: {
+                              //   "&:-webkit-autofill": {
+                              //     WebkitBoxShadow: "0 0 0 100px #7B5BE6 inset",
+                              //     WebkitTextFillColor: "#232329"
+                              //   }
+                              // }
+                            },
+                            "& .MuiInputLabel-root": {
+                              color: "#70727B",
+                              fontFamily: "neueMachina",
+                              textTransform: "uppercase"
+                            }
+                          }}
+                          id="email"
+                          size="medium"
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <EmailOutlinedIcon />
+                              </InputAdornment>
+                            )
+                          }}
+                        />
+                        {errors.email && (
                           <motion.div
                             initial={{ opacity: 0, marginBottom: 0 }}
                             animate={{
@@ -349,10 +416,8 @@ const Register = () => {
                               Email is a required field
                             </Alert>
                           </motion.div>
-                        </>
-                      )}
-                      {emailCorrect === false && (
-                        <>
+                        )}
+                        {!emailCorrect && (
                           <motion.div
                             initial={{ opacity: 0, marginBottom: 0 }}
                             animate={{
@@ -367,60 +432,61 @@ const Register = () => {
                               Invalid Email Format
                             </Alert>
                           </motion.div>
-                        </>
-                      )}
-                    </Grid>
-                    <Grid
-                      item
-                      xs={12}
-                      container
-                      direction="row"
-                    >
-                      <Grid item>
-                        <TextField
-                          className="hidden-arrow-number Mui-error mr-2 w-[235px]"
-                          type="number"
-                          placeholder="Verification code"
-                          onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            e.target.value = e.target.value.slice(0, 6)
-                            isNumber(e.target.value.toString())
-                          }}
-                          value={verifiCode}
-                          inputProps={{
-                            pattern: patternCode,
-                            maxLength: 6
-                          }}
-                          autoComplete="new-password'"
-                          {...register("code")}
-                          sx={{
-                            "& .MuiOutlinedInput-root": {
-                              width: "100%",
-                              fontWeight: 400,
-                              fontSize: 14,
-                              fontWight: 700,
-                              fontFamily: "neueMachina",
-                              padding: "0px 16px"
-                            }
-                          }}
-                          id="code"
-                          size="medium"
-                        />
+                        )}
                       </Grid>
-                      <Grid item>
-                        <Button
-                          disabled={!emailCorrect}
-                          className="btn-rainbow-theme h-[40px] !min-w-[90px] rounded-lg bg-error-main text-sm text-neutral-300"
-                        >
-                          Get Code
-                        </Button>
-                      </Grid>
-                    </Grid>
-                    {errors.code && (
                       <Grid
                         item
                         xs={12}
+                        container
+                        direction="row"
                       >
-                        <>
+                        <Grid item>
+                          <TextField
+                            className="hidden-arrow-number Mui-error mr-2 w-[235px]"
+                            type="number"
+                            placeholder="Verification code"
+                            onInput={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              e.target.value = e.target.value.slice(0, 6)
+                              isNumber(e.target.value.toString())
+                            }}
+                            value={verifiCode}
+                            inputProps={{
+                              pattern: patternCode,
+                              maxLength: 6
+                            }}
+                            autoComplete="new-password'"
+                            {...register("code")}
+                            sx={{
+                              "& .MuiOutlinedInput-root": {
+                                width: "100%",
+                                fontWeight: 400,
+                                fontSize: 14,
+                                fontWight: 700,
+                                fontFamily: "neueMachina",
+                                padding: "0px 16px"
+                              }
+                            }}
+                            id="code"
+                            size="medium"
+                          />
+                        </Grid>
+                        <Grid item>
+                          <Button
+                            disabled={!emailCorrect || watch("email") === ""}
+                            onClick={() => onClickGetCode(watch("email"))}
+                            className="btn-rainbow-theme h-[40px] !min-w-[90px] rounded-lg bg-error-main text-sm text-neutral-300"
+                          >
+                            Get Code
+                          </Button>
+                        </Grid>
+                      </Grid>
+                      {errors.code && (
+                        <Grid
+                          item
+                          xs={12}
+                        >
                           <motion.div
                             initial={{ opacity: 0, marginBottom: 0 }}
                             animate={{
@@ -435,66 +501,64 @@ const Register = () => {
                               Code is a required field
                             </Alert>
                           </motion.div>
-                        </>
-                      </Grid>
-                    )}
-                    <Grid
-                      item
-                      xs={12}
-                    >
-                      <TextField
-                        className="w-full pt-3.5"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Password"
-                        label="Password"
-                        autoComplete="new-password'"
-                        onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          e.target.value = e.target.value.slice(0, 128)
-                          isCharacters(e.target.value)
-                        }}
-                        {...register("password")}
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            width: "100%",
-                            fontWeight: 400,
-                            fontSize: 14,
-                            fontWight: 700,
-                            fontFamily: "neueMachina"
-                          },
-                          "& .MuiInputLabel-root": {
-                            color: "#70727B",
-                            fontFamily: "neueMachina",
-                            textTransform: "uppercase"
-                          }
-                        }}
-                        id="email"
-                        size="medium"
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <ILock />
-                            </InputAdornment>
-                          ),
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                                edge="end"
-                              >
-                                {showPassword ? (
-                                  <VisibilityOffOutlinedIcon className="text-neutral-300" />
-                                ) : (
-                                  <VisibilityOutlinedIcon className="text-neutral-300" />
-                                )}
-                              </IconButton>
-                            </InputAdornment>
-                          )
-                        }}
-                      />
-                      {errors.password && (
-                        <>
+                        </Grid>
+                      )}
+                      <Grid
+                        item
+                        xs={12}
+                      >
+                        <TextField
+                          className="w-full pt-3.5"
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Password"
+                          label="Password"
+                          autoComplete="new-password'"
+                          onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            e.target.value = e.target.value.slice(0, 128)
+                            isCharacters(e.target.value)
+                          }}
+                          {...register("password")}
+                          sx={{
+                            "& .MuiOutlinedInput-root": {
+                              width: "100%",
+                              fontWeight: 400,
+                              fontSize: 14,
+                              fontWight: 700,
+                              fontFamily: "neueMachina"
+                            },
+                            "& .MuiInputLabel-root": {
+                              color: "#70727B",
+                              fontFamily: "neueMachina",
+                              textTransform: "uppercase"
+                            }
+                          }}
+                          id="email"
+                          size="medium"
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <ILock />
+                              </InputAdornment>
+                            ),
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowPassword}
+                                  onMouseDown={handleMouseDownPassword}
+                                  edge="end"
+                                >
+                                  {showPassword ? (
+                                    <VisibilityOffOutlinedIcon className="text-neutral-300" />
+                                  ) : (
+                                    <VisibilityOutlinedIcon className="text-neutral-300" />
+                                  )}
+                                </IconButton>
+                              </InputAdornment>
+                            )
+                          }}
+                        />
+                        {errors.password && (
                           <motion.div
                             initial={{ opacity: 0, marginBottom: 0 }}
                             animate={{
@@ -509,10 +573,8 @@ const Register = () => {
                               Password is a required field
                             </Alert>
                           </motion.div>
-                        </>
-                      )}
-                      {characterPasswordLength === false && (
-                        <>
+                        )}
+                        {characterPasswordLength === false && (
                           <motion.div
                             initial={{ opacity: 0, marginBottom: 0 }}
                             animate={{
@@ -527,10 +589,8 @@ const Register = () => {
                               The password must contain at least 6 characters.
                             </Alert>
                           </motion.div>
-                        </>
-                      )}
-                      {characterUppercase === false && (
-                        <>
+                        )}
+                        {characterUppercase === false && (
                           <motion.div
                             initial={{ opacity: 0, marginBottom: 0 }}
                             animate={{
@@ -546,64 +606,62 @@ const Register = () => {
                               letter.
                             </Alert>
                           </motion.div>
-                        </>
-                      )}
-                      <TextField
-                        className="mt-[5px] w-full"
-                        type={showConfirmPassword ? "text" : "password"}
-                        placeholder="Confirm Password"
-                        label="A Number or Symbol, Atleast 6 Characters"
-                        autoComplete="new-password'"
-                        onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          e.target.value = e.target.value.slice(0, 128)
-                          isCharacters(e.target.value)
-                        }}
-                        {...register("confirmPassword")}
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            width: "100%",
-                            fontWeight: 400,
-                            fontSize: 14,
-                            fontWight: 700,
-                            fontFamily: "neueMachina"
-                          },
-                          "& .MuiInputLabel-root": {
-                            width: "max-content",
-                            color: "#70727B",
-                            fontFamily: "neueMachina",
-                            textTransform: "uppercase",
-                            paddingTop: "0.5rem",
-                            paddingBottom: "0.5rem"
-                          }
-                        }}
-                        id="email"
-                        size="medium"
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <Beenhere />
-                            </InputAdornment>
-                          ),
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowConfirmPassword}
-                                onMouseDown={handleMouseDownConfirmPassword}
-                                edge="end"
-                              >
-                                {showConfirmPassword ? (
-                                  <VisibilityOffOutlinedIcon className="text-neutral-300" />
-                                ) : (
-                                  <VisibilityOutlinedIcon className="text-neutral-300" />
-                                )}
-                              </IconButton>
-                            </InputAdornment>
-                          )
-                        }}
-                      />
-                      {errors.confirmPassword && (
-                        <>
+                        )}
+                        <TextField
+                          className="mt-[5px] w-full"
+                          type={showConfirmPassword ? "text" : "password"}
+                          placeholder="Confirm Password"
+                          label="A Number or Symbol, Atleast 6 Characters"
+                          autoComplete="new-password'"
+                          onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            e.target.value = e.target.value.slice(0, 128)
+                            isCharacters(e.target.value)
+                          }}
+                          {...register("confirmPassword")}
+                          sx={{
+                            "& .MuiOutlinedInput-root": {
+                              width: "100%",
+                              fontWeight: 400,
+                              fontSize: 14,
+                              fontWight: 700,
+                              fontFamily: "neueMachina"
+                            },
+                            "& .MuiInputLabel-root": {
+                              width: "max-content",
+                              color: "#70727B",
+                              fontFamily: "neueMachina",
+                              textTransform: "uppercase",
+                              paddingTop: "0.5rem",
+                              paddingBottom: "0.5rem"
+                            }
+                          }}
+                          id="email"
+                          size="medium"
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <Beenhere />
+                              </InputAdornment>
+                            ),
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowConfirmPassword}
+                                  onMouseDown={handleMouseDownConfirmPassword}
+                                  edge="end"
+                                >
+                                  {showConfirmPassword ? (
+                                    <VisibilityOffOutlinedIcon className="text-neutral-300" />
+                                  ) : (
+                                    <VisibilityOutlinedIcon className="text-neutral-300" />
+                                  )}
+                                </IconButton>
+                              </InputAdornment>
+                            )
+                          }}
+                        />
+                        {errors.confirmPassword && (
                           <motion.div
                             initial={{ opacity: 0, marginBottom: 0 }}
                             animate={{
@@ -618,141 +676,140 @@ const Register = () => {
                               ConfirmPassword is a required field
                             </Alert>
                           </motion.div>
-                        </>
-                      )}
-                      {!passwordCorrect && (
-                        <motion.div
-                          initial={{ opacity: 0, marginBottom: 0 }}
-                          animate={{
-                            opacity: 1,
-                            marginTop: 10
-                          }}
-                        >
-                          <Alert
-                            severity="warning"
-                            className="rounded-lg"
-                          >
-                            Password is incorrect
-                          </Alert>
-                        </motion.div>
-                      )}
-                    </Grid>
-                    <Grid
-                      item
-                      xs={12}
-                    >
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            sx={{
-                              "&:hover": { bgcolor: "transparent" },
-                              ":hover": {
-                                "& .MuiSvgIcon-root": {
-                                  background: "transparent",
-                                  border: "2px solid #7a5be6 !important"
-                                }
-                              }
+                        )}
+                        {!passwordCorrect && (
+                          <motion.div
+                            initial={{ opacity: 0, marginBottom: 0 }}
+                            animate={{
+                              opacity: 1,
+                              marginTop: 10
                             }}
-                            icon={
-                              <CheckBoxOutlineBlankOutlinedIcon
-                                className="border-2 border-solid border-neutral-600 text-transparent"
-                                sx={{
-                                  borderRadius: "8.5px"
-                                }}
-                              />
-                            }
-                            checkedIcon={
-                              <ICheckMark
-                                className="border-2 border-solid border-purple-primary bg-neutral-800 p-1 text-purple-primary"
-                                style={{
-                                  borderRadius: "8.5px"
-                                }}
-                              />
-                            }
-                            {...register("subscription")}
-                          />
-                        }
-                        label="Would you like to subscribe to Nakamoto Games Newsletter?"
-                        sx={{
-                          "& .MuiTypography-root": {
-                            fontSize: 10,
-                            color: "#70727B",
-                            textTransform: "uppercase"
-                          }
-                        }}
-                      />
-                    </Grid>
-                    <Grid
-                      item
-                      container
-                      direction="row"
-                      justifyContent="space-between"
-                    >
-                      <Grid item>
-                        <Link href="/login">
-                          <Button
-                            size="large"
-                            type="submit"
-                            variant="outlined"
-                            className="h-[40px] !min-w-[108px]"
                           >
-                            Login
-                          </Button>
-                        </Link>
+                            <Alert
+                              severity="warning"
+                              className="rounded-lg"
+                            >
+                              Password is incorrect
+                            </Alert>
+                          </motion.div>
+                        )}
                       </Grid>
-                      <Grid item>
-                        <ButtonToggleIcon
-                          handleClick={() => {}}
-                          type="submit"
-                          startIcon={<IEdit />}
-                          text="Regiter"
-                          className="btn-rainbow-theme h-[40px] w-[209px] bg-secondary-main font-bold capitalize text-white-default"
+                      <Grid
+                        item
+                        xs={12}
+                      >
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              sx={{
+                                "&:hover": { bgcolor: "transparent" },
+                                ":hover": {
+                                  "& .MuiSvgIcon-root": {
+                                    background: "transparent",
+                                    border: "2px solid #7a5be6 !important"
+                                  }
+                                }
+                              }}
+                              icon={
+                                <CheckBoxOutlineBlankOutlinedIcon
+                                  className="border-2 border-solid border-neutral-600 text-transparent"
+                                  sx={{
+                                    borderRadius: "8.5px"
+                                  }}
+                                />
+                              }
+                              checkedIcon={
+                                <ICheckMark
+                                  className="border-2 border-solid border-purple-primary bg-neutral-800 p-1 text-purple-primary"
+                                  style={{
+                                    borderRadius: "8.5px"
+                                  }}
+                                />
+                              }
+                              {...register("subscription")}
+                            />
+                          }
+                          label="Would you like to subscribe to Nakamoto Games Newsletter?"
+                          sx={{
+                            "& .MuiTypography-root": {
+                              fontSize: 10,
+                              color: "#70727B",
+                              textTransform: "uppercase"
+                            }
+                          }}
                         />
                       </Grid>
-                    </Grid>
-                    <Grid
-                      item
-                      container
-                      justifyContent="space-between"
-                      alignItems="center"
-                      className="mt-8 mb-8"
-                    >
-                      <Grid item>
-                        <p className="text-xs uppercase">OR join us with</p>
-                      </Grid>
-                      <Grid item>
-                        <Divider className="w-[208px]" />
-                      </Grid>
-                    </Grid>
-                    <Grid
-                      item
-                      container
-                    >
-                      <div className="flex flex-wrap">
-                        {SocialRegister?.map((item) => (
-                          <Link
-                            key={item.label}
-                            href={item.href}
-                            target="_blank"
-                          >
-                            <ButtonIcon
-                              // variants={iconmotion}
-                              whileHover="hover"
-                              transition={{
-                                type: "spring",
-                                stiffness: 400,
-                                damping: 4
-                              }}
-                              icon={item.icon}
-                              className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                            />
+                      <Grid
+                        item
+                        container
+                        direction="row"
+                        justifyContent="space-between"
+                      >
+                        <Grid item>
+                          <Link href="/login">
+                            <Button
+                              size="large"
+                              type="submit"
+                              variant="outlined"
+                              className="h-[40px] !min-w-[108px]"
+                            >
+                              Login
+                            </Button>
                           </Link>
-                        ))}
-                      </div>
+                        </Grid>
+                        <Grid item>
+                          <ButtonToggleIcon
+                            handleClick={() => {}}
+                            type="submit"
+                            startIcon={<IEdit />}
+                            text="Regiter"
+                            className="btn-rainbow-theme h-[40px] w-[209px] bg-secondary-main font-bold capitalize text-white-default"
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid
+                        item
+                        container
+                        justifyContent="space-between"
+                        alignItems="center"
+                        className="mt-8 mb-8"
+                      >
+                        <Grid item>
+                          <p className="text-xs uppercase">OR join us with</p>
+                        </Grid>
+                        <Grid item>
+                          <Divider className="w-[208px]" />
+                        </Grid>
+                      </Grid>
+                      <Grid
+                        item
+                        container
+                      >
+                        <div className="flex flex-wrap">
+                          {SocialRegister?.map((item) => (
+                            <Link
+                              key={item.label}
+                              href={item.href}
+                              target="_blank"
+                            >
+                              <ButtonIcon
+                                whileHover="hover"
+                                transition={{
+                                  type: "spring",
+                                  stiffness: 400,
+                                  damping: 4
+                                }}
+                                icon={item.icon}
+                                className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                              />
+                            </Link>
+                          ))}
+                        </div>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </Box>
-              </form>
+                  </Box>
+                </form>
+              </GoogleReCaptchaProvider>
               <Grid
                 item
                 container

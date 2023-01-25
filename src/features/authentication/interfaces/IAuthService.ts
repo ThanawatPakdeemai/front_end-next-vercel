@@ -31,7 +31,8 @@ export interface ISignUp extends ISignIn {
   _subscription: string
 }
 
-export interface IGetVerifyCode extends ISignIn {
+export interface IGetVerifyCode {
+  _email: string
   _recaptcha: string
 }
 

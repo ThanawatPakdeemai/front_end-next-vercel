@@ -38,7 +38,7 @@ export const GAME_BLOG_BANNER = [
   },
   {
     link: "/",
-    icon: <MaskBlogIcon className="naka-banner-icon-up-down absolute z-10" />,
+    icon: <MaskBlogIcon className="z-10 mt-8 flex" />,
     table: true,
     type: "blinkIcon"
   }

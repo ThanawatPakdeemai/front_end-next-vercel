@@ -100,12 +100,11 @@ export default function WalletPage() {
                     className={type === "NAKA" ? "" : "mr-2"}
                   />
                   <p
-                    className={`${
+                    className={`font-digital ml-2 text-3xl ${
                       type === "NAKA"
                         ? " text-NAKA text-[#F42728] shadow-lg"
                         : "text-BUSD text-[#F0B90C]"
-                    } ml-2
-                        font-digital text-3xl
+                    }
                   `}
                   >
                     340,395.8 {type}

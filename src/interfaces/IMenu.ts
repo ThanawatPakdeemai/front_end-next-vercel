@@ -44,3 +44,13 @@ export interface IMenuIcon extends ILink {
   src: string
   alt: string
 }
+export interface ICURENCY {
+  id: string
+  name: string
+  image_icon: string | React.ReactNode
+}
+
+export interface ICrumb extends ILink {
+  title: string
+  onClick?: () => void
+}

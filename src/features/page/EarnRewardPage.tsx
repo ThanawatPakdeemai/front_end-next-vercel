@@ -1,6 +1,7 @@
 import CheckMarkIcon from "@components/icons/CheckMarkIcon"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import ItemRewardDetails from "@feature/game/containers/components/molecules/ItemRewardDetails"
+import SkeletonDetails from "@feature/game/containers/components/molecules/SkeletonDetails"
 import useClaimReward from "@feature/game/containers/hooks/useClaimEarnedRewardByPlayerId"
 import useGetAllGames from "@feature/game/containers/hooks/useGetAllGame"
 import useGetP2ERewardByPlayerId from "@feature/game/containers/hooks/useGetP2ERewardByPlayerId"
@@ -69,6 +70,26 @@ const EarnRewardPage = () => {
     }
   }, [allGameData, earnRewardData])
 
+  let content: React.ReactElement | React.ReactElement[]
+
+  if (isLoading || isGameLoading) {
+    content = <SkeletonDetails />
+  } else if (rewardList && rewardList.length > 0) {
+    content = rewardList.map((data) => (
+      <ItemRewardDetails
+        key={uuidv4()}
+        rewardData={data}
+        onClaim={() => handleClaimReward(data._id)}
+      />
+    ))
+  } else {
+    content = (
+      <div className="flex w-full justify-center rounded-lg border border-neutral-800 bg-neutral-700 py-3 text-center">
+        No data
+      </div>
+    )
+  }
+
   return (
     <div className="flex w-[678px] flex-col gap-10">
       <div className="flex items-center justify-end">
@@ -101,32 +122,11 @@ const EarnRewardPage = () => {
           backdropFilter: "blur(2.5px)"
         }}
       >
-        <Typography className="text-shadow-red text-[26px] text-error-main">
+        <Typography className="text-shadow-red font-digital-7 text-[26px] text-error-main">
           Earn item rewards while you play your favorite games
         </Typography>
       </Box>
-      <div className="flex flex-col gap-[10px]">
-        {isLoading && isGameLoading ? (
-          <div className="flex w-full justify-center rounded-lg border border-neutral-800 bg-neutral-700 py-3 text-center">
-            Loading...
-          </div>
-        ) : null}
-        {!isLoading && !isGameLoading && !rewardList?.length ? (
-          <div className="flex w-full justify-center rounded-lg border border-neutral-800 bg-neutral-700 py-3 text-center">
-            No data
-          </div>
-        ) : null}
-        {!isLoading &&
-          rewardList &&
-          rewardList.length > 0 &&
-          rewardList.map((data) => (
-            <ItemRewardDetails
-              key={uuidv4()}
-              rewardData={data}
-              onClaim={() => handleClaimReward(data._id)}
-            />
-          ))}
-      </div>
+      <div className="flex flex-col gap-[10px]">{content}</div>
     </div>
   )
 }

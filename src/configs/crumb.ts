@@ -30,7 +30,7 @@ export const ITEM_REWARD_CRUMB = () => {
     },
     {
       title: "Item Reward",
-      href: typeof window !== "undefined" ? window.location.pathname : "/"
+      href: "/earn-reward"
     }
   ] as ICrumb[]
 }

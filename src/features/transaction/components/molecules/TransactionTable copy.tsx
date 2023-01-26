@@ -7,16 +7,12 @@ import useGetTransWallet from "@feature/transaction/containers/hooks/useGetTrans
 import dayjs from "dayjs"
 import {
   Box,
-  Chip,
   Divider,
-  Grid,
   InputAdornment,
   Paper,
   Popover,
-  Stack,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TableHead,
   TableRow,
@@ -217,120 +213,6 @@ export default function TransactionTable() {
         </Table>
         {isLoading ? <div>Loading ...</div> : null}
       </TableContainer>
-      <Box className="rounded-[14px] bg-neutral-800">
-        <Box sx={{ my: 3, mx: 2 }}>
-          <Grid
-            container
-            alignItems="center"
-          >
-            <Grid item>
-              <TableHead
-                className="uppercase"
-                sx={{
-                  "& .MuiTableCell-root": {
-                    borderBottom: "none"
-                  }
-                }}
-              >
-                <TableRow>
-                  <TableCell className="font-neue-machina-bold text-xs text-neutral-600 ">
-                    Time
-                  </TableCell>
-                  <TableCell className="font-neue-machina-bold text-xs text-neutral-600">
-                    type
-                  </TableCell>
-                  <TableCell className="font-neue-machina-bold text-xs text-neutral-600">
-                    time
-                  </TableCell>
-                  <TableCell className="font-neue-machina-bold text-xs text-neutral-600">
-                    amount (NAKA)
-                  </TableCell>
-                  <TableCell className="font-neue-machina-bold text-xs text-neutral-600">
-                    fee (MATIC)
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-            </Grid>
-          </Grid>
-          <Box
-            sx={{ my: 10, mx: 2 }}
-            className="rounded-[9px] bg-primary-main"
-          >
-            {/* <Typography
-              color="text.secondary"
-              variant="body2"
-            >
-              Pinstriped cornflower blue cotton blouse takes you on a walk to
-              the park or just down the hall.
-            </Typography> */}
-            <br />
-            <Divider variant="middle" />
-            <TableBody className="px-4">
-              {TransData &&
-                TransData.data.map((item) => (
-                  <>
-                    <div className="px-4">
-                      <TableRow
-                        key={item.id}
-                        // sx={{ borderBottom: "5px solid red" }}
-                        // className="border-b-[1px] border-neutral-700"
-                        sx={{
-                          "& .MuiTableCell-root": {
-                            borderBottom: "1px solid rgb(0 0 255)"
-                          }
-                        }}
-                        className="border-b-lime-400"
-                      >
-                        <TableCell align="left">
-                          {dayjs(item.current_time).format("DD MMM YYYY")}
-                        </TableCell>
-                        <TableCell align="left">{item.type}</TableCell>
-                        <TableCell align="left">
-                          {dayjs(item.current_time).format("hh:mm A")}
-                        </TableCell>
-                        <TableCell align="left">{item.amount}</TableCell>
-                        <TableCell align="left">{item.fee}</TableCell>
-                      </TableRow>
-                    </div>
-                    {/* <Grid
-                    item
-                    container
-                  >
-                    <TableRow>
-                      {row.name}
-                      <Divider variant="middle" />
-                    </TableRow>
-                    <TableRow>
-                      {row.calories}
-                      <Divider variant="middle" />
-                    </TableRow>
-                    <TableRow>
-                      {row.fat}
-                      <Divider variant="middle" />
-                    </TableRow>
-                    <TableRow>
-                      {row.carbs}
-                      <Divider variant="middle" />
-                    </TableRow>
-                    <TableRow>
-                      {row.protein}
-                      <Divider variant="middle" />
-                    </TableRow>
-                  </Grid> */}
-                  </>
-                ))}
-            </TableBody>
-          </Box>
-        </Box>
-        <Box sx={{ m: 2 }}>
-          <Stack
-            direction="row"
-            spacing={1}
-          >
-            <Chip label="Extra Soft" />
-          </Stack>
-        </Box>
-      </Box>
       <div className="my-5 flex justify-between">
         <PaginationNaka
           totalCount={totalCount}

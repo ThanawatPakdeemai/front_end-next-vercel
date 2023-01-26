@@ -94,6 +94,6 @@ export const SOCIAL_SHARE: IMenuBase[] = [
   {
     icon: <LinkIcon className="rotate-[-45deg] text-error-main" />,
     label: "link",
-    href: undefined
+    href: "/"
   }
 ]

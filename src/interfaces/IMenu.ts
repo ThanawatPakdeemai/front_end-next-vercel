@@ -2,7 +2,7 @@
 import React from "react"
 
 interface ILink {
-  href?: string
+  href: string
 }
 export interface IMenuBaseItem {
   data?: any

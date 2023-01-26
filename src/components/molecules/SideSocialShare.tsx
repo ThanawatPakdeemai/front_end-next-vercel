@@ -2,6 +2,7 @@ import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import { SOCIAL_SHARE } from "@configs/socialShare"
 import { Link, Typography } from "@mui/material"
 import React from "react"
+import { v4 as uuidv4 } from "uuid"
 
 const SideSocialShare = () => (
   <div className="absolute right-3 top-[15rem] rounded-3xl border border-neutral-800 p-2 ">
@@ -18,7 +19,7 @@ const SideSocialShare = () => (
       <div>
         {SOCIAL_SHARE.map((item) => (
           <Link
-            key={item.label}
+            key={uuidv4()}
             href={item.href}
             target="_blank"
           >

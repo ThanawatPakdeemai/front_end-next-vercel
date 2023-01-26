@@ -15,18 +15,41 @@ import useGetAvatar from "@feature/avatar/containers/hook/useGetAvatar"
 import AvatarProfile from "@components/atoms/avatar/AvatarProfile"
 import CameraIcon from "@components/icons/CameraIcon"
 import RepeatIcon from "@components/icons/RepeatIcon"
+import { useToast } from "@feature/toast/containers"
+import { MESSAGES } from "@constants/messages"
+import useUpdateProfile from "../containers/hook/getUpdateProfile"
+import { IGeoProfile } from "../interfaces/IProfileService"
+import { getGeoInfo } from "../containers/services/profile.service"
 
-const FormEditProfile = () => {
+interface IProp {
+  platinumCount: number
+  userName: string
+  userImage: string
+  onCloseModal: () => void
+  onRefetchProfile: () => void
+}
+
+const FormEditProfile = ({
+  platinumCount,
+  userName,
+  userImage,
+  onCloseModal,
+  onRefetchProfile
+}: IProp) => {
   const profile = useProfileStore((state) => state.profile.data)
+  const onSetProfileData = useProfileStore((state) => state.onSetProfileData)
   const { avatar } = useGetAvatar()
   const [defaultAvatar, setDefaultAvatar] = useState<string>(
-    profile ? profile?.avatar : ""
+    userImage || (profile ? profile.avatar : "")
   )
 
-  const { register, watch, setValue } = useForm({
+  const { errorToast, successToast } = useToast()
+  const { mutateUpdateProfile } = useUpdateProfile()
+
+  const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
       _email: profile?.email,
-      _username: profile?.username,
+      _username: userName,
       _avatar: profile?.avatar,
       _subscription: Boolean(profile?.subscription),
       _country: profile?.country,
@@ -34,20 +57,59 @@ const FormEditProfile = () => {
     }
   })
 
+  const onSubmit = (data) => {
+    if (data && profile) {
+      getGeoInfo()
+        .then((res: unknown) => {
+          const geo = res as unknown as IGeoProfile
+          if (res) {
+            mutateUpdateProfile({
+              _email: data._email,
+              _username: data._username,
+              _avatar: defaultAvatar,
+              _subscription: data._subscription,
+              _country: geo.country,
+              _user_ip_address: geo.ip
+            })
+              .then((_res) => {
+                if (_res) {
+                  successToast(MESSAGES.edit_profile_success)
+                  onRefetchProfile()
+                  onCloseModal()
+                  onSetProfileData(_res)
+                }
+              })
+              .catch(() => {
+                errorToast(MESSAGES.please_fill)
+              })
+          }
+        })
+        .catch(() => {
+          errorToast(MESSAGES.cant_update_data)
+        })
+    }
+  }
+
   const slideTo = () => {}
 
   return (
     <Box className="w-[350px]">
       {profile && (
-        <form onSubmit={() => {}}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Typography className="mt-2 mb-1 font-neue-machina text-xs uppercase  text-neutral-500">
             Banner UPload Only Rank Platinum
           </Typography>
           <div className="flex h-[66px] items-center	justify-center rounded-xl bg-neutral-700">
             <CameraIcon />
           </div>
-          <Typography className="mt-2 font-neue-machina text-xs uppercase  text-neutral-500">
-            Recommendsize : W908 x H180
+          <Typography
+            className={`mt-2 font-neue-machina text-xs uppercase ${
+              platinumCount === 0 ? "text-error-main" : "text-neutral-500"
+            }`}
+          >
+            {platinumCount === 0
+              ? "Minimum 1 Platinum Rank"
+              : "Recommendsize : W908 x H180"}
           </Typography>
           <Divider className="my-6" />
           <Typography className="mt-2 mb-1 font-neue-machina text-xs uppercase text-neutral-500">
@@ -155,6 +217,7 @@ const FormEditProfile = () => {
             className="btn-rainbow-theme mt-[38px] w-full text-sm"
             variant="contained"
             size="large"
+            type="submit"
           >
             Save
           </Button>

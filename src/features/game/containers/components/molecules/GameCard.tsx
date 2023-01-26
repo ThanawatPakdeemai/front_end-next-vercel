@@ -4,28 +4,34 @@ import { IHeaderSlide } from "@components/molecules/gameSlide/GameCarouselHeader
 import NumberRank from "@feature/ranking/components/atoms/NumberRank"
 import { Chip } from "@mui/material"
 import { motion } from "framer-motion"
-import React, { memo } from "react"
+import React, { memo, useEffect, useState } from "react"
 import ImageCustom from "@components/atoms/image/Image"
 import IconHourglass from "@components/icons/hourglassIcon"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import TimerStamina from "@components/atoms/timer/TimerStamina"
 import { IGame } from "@feature/game/interfaces/IGameService"
+import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
+import { IMAGES } from "@constants/images"
 
 interface IProps {
   menu: IHeaderSlide
-  data: IGame
+  data?: IGame
+  partnerdata?: IPartnerGameData
+  imgPartner?: string | undefined
   showNo?: boolean
   no?: number
   checkTimer?: boolean
   cooldown?: boolean
   staminaRecovery?: Date
   setCooldown?: (_value: boolean) => void
-  onHandleClick: () => void
+  onHandleClick?: () => void
 }
 
 const GameCard = ({
   menu,
   data,
+  partnerdata,
+  imgPartner,
   showNo,
   no,
   checkTimer,
@@ -34,6 +40,10 @@ const GameCard = ({
   setCooldown,
   onHandleClick
 }: IProps) => {
+  const [imageSrc, setImageSrc] = useState<string>(IMAGES.no_image.src)
+  const [chipLable, setChipLable] = useState<string>("")
+  const [theme, setTheme] = useState<string>("")
+  const [lableButton, setLableButton] = useState<string>("play now")
   const btnCard = {
     init: {
       y: 40,
@@ -67,6 +77,30 @@ const GameCard = ({
     return chip
   }
 
+  useEffect(() => {
+    if (imgPartner && imgPartner !== undefined) {
+      setImageSrc(imgPartner)
+    } else if (
+      !imgPartner &&
+      imgPartner === undefined &&
+      data &&
+      data.image_category_list
+    ) {
+      setImageSrc(data.image_category_list)
+    }
+  }, [imgPartner, data])
+
+  useEffect(() => {
+    if (partnerdata) {
+      setChipLable("partner")
+      setTheme("warning")
+      setLableButton("view detail")
+    } else if (!partnerdata && menu.title && menu.theme) {
+      setChipLable(menu.title)
+      setTheme(menu.theme)
+    }
+  }, [menu, partnerdata, data])
+
   return (
     <motion.div
       className="slick-card-container flex flex-col justify-center blur-none"
@@ -83,11 +117,13 @@ const GameCard = ({
           />
         ) : null}
         <ImageCustom
-          src={data.image_category_list}
+          src={imageSrc}
           alt="home-slide"
           width={218}
           height={218}
-          className="slick-card-content rounded-md"
+          className={`slick-card-content rounded-md ${
+            partnerdata ? " sm:h-2/4 lg:h-4/6 xl:h-full" : ""
+          }`}
         />
         <motion.div
           variants={btnCard}
@@ -97,27 +133,42 @@ const GameCard = ({
             startIcon={
               cooldown ? <IconHourglass /> : <SportsEsportsOutlinedIcon />
             }
-            text={cooldown ? "cooldown..." : "play now"}
+            text={cooldown ? "cooldown..." : lableButton}
             handleClick={onHandleClick}
             className={`btn-rainbow-theme z-[2] w-[198px] ${
               cooldown ? "bg-error-main" : "bg-secondary-main "
             } capitalize`}
+            type="button"
           />
         </motion.div>
       </motion.div>
       <div className="relative z-[3]">
         <div className="slick-card-desc flex h-10 w-full items-center">
           <p className="relative truncate uppercase hover:text-clip">
-            {data.name}
+            {data?.name ? data.name : partnerdata?.name}
           </p>
         </div>
         <div className="relative grid w-full grid-cols-2 gap-2 text-xs uppercase">
           <Chip
-            label={menu.title}
+            label={chipLable}
             size="small"
-            color={onChipColor(menu.theme)}
+            color={onChipColor(theme)}
             className="font-bold"
           />
+          {partnerdata ? (
+            <Chip
+              label={
+                partnerdata.genres &&
+                partnerdata.genres.map((el) => `${el.name}, `)
+              }
+              size="small"
+              color={onChipColor("default")}
+              className="font-bold"
+            />
+          ) : (
+            ""
+          )}
+
           {checkTimer && staminaRecovery && cooldown && setCooldown ? (
             <TimerStamina
               time={staminaRecovery}

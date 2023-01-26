@@ -12,7 +12,7 @@ function PlusIcon({ width = 24, height = 24 }: React.SVGProps<SVGSVGElement>) {
       <path
         d="M12 4V20M20 12H4"
         stroke="#E1E2E2"
-        stroke-width="1.2"
+        strokeWidth="1.2"
       />
     </svg>
   )

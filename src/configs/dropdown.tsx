@@ -83,5 +83,19 @@ export const DROPDOWN: IDropdown[] = [
       },
       { label: "Wishlist", href: "/", icon: <WishlistIcon /> }
     ]
+  },
+  {
+    title: "Item Game",
+    icon: null,
+    className: "w-full",
+    text: "string",
+    details: [
+      {
+        label: "1 Item",
+        href: "/",
+        icon: <EditProfileIcon />
+      },
+      { label: "1 Item", href: "/", icon: <WishlistIcon /> }
+    ]
   }
 ]

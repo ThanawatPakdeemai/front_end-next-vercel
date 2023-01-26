@@ -5,17 +5,17 @@ import CryptoJS from "crypto-js"
 import { IPropsFormatNumberOption } from "@interfaces/IHelper"
 import { IGetEventLog } from "@interfaces/ITransaction"
 import { ILocal, TLocalKey, ELocalKey } from "@interfaces/ILocal"
-import { ICurrentNakaData } from "@feature/inventory/interfaces/IInventoryService"
+import { ICurrentNakaResponse } from "@feature/inventory/interfaces/IInventoryService"
 import { getCurrentNaka } from "@feature/inventory/containers/services/inventory.service"
+import { IResGetIp } from "@interfaces/IGetIP"
+import { getPriceCurrent } from "@feature/home/containers/services/home.service"
+import { IPointCurrentResponse } from "@feature/home/interfaces/IHomeService"
 
 const names = ["wei", "kwei", "mwei", "gwei", "szabo", "finney", "ether"]
 
 const Helper = {
   setLocalStorage({ key, value }: ILocal) {
     localStorage.setItem(key, value || "")
-  },
-  setCookie(value) {
-    document.cookie = value
   },
   getLocalStorage(_key: TLocalKey) {
     return typeof window !== "undefined" ? localStorage.getItem(_key) : null
@@ -127,7 +127,7 @@ const Helper = {
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve) => {
       const response = await fetch("https://api.ipify.org/?format=json")
-      const data = await response.json()
+      const data: IResGetIp = await response.json()
       resolve(data)
     })
   },
@@ -183,8 +183,9 @@ const Helper = {
     return this.parseUnits(_ether, 18)
   },
   async calItemToNaka(_qty: number, _bulletPerUSD: number) {
-    const response: ICurrentNakaData = await getCurrentNaka()
-    const bulletPrice = _bulletPerUSD / parseFloat(response.last)
+    const response = await getCurrentNaka()
+    const { data } = response as unknown as ICurrentNakaResponse
+    const bulletPrice = _bulletPerUSD / parseFloat(data.last)
     const bulletToFixed = bulletPrice.toFixed(5)
     const bulletPerNaka = parseFloat(
       bulletToFixed.substring(0, bulletToFixed.length - 1)
@@ -199,6 +200,7 @@ const Helper = {
     const itemPerNaka = parseFloat(
       itemToFixed.substring(0, itemToFixed.length - 1)
     )
+
     return itemPerNaka
   },
   getFeeGas(effectiveGasPrice: string, gasUsed: number) {
@@ -237,17 +239,21 @@ const Helper = {
   },
   percentageCalc(amount: number, total: number) {
     return (amount / total) * 100
+  },
+  async getPriceNakaCurrent() {
+    const currenr_price = await getPriceCurrent()
+    return currenr_price
+  },
+  async getItemPriceUsd(_priceItem: number, _qty?: number) {
+    const qty: number = _qty ?? 1
+    const priceData = await this.getPriceNakaCurrent()
+    if (priceData) {
+      const priceUsd = Number((priceData as IPointCurrentResponse).data.buy)
+      const price = _priceItem * priceUsd * qty
+      return this.number4digit(price)
+    }
+    return this.number4digit(0)
   }
-  // async helperAxiosAPI<T>(promiseAPI: Promise<AxiosResponse<T, any>>) {
-  //   return promiseAPI
-  //     .then((res) => ({ response: res.data, error: null }))
-  //     .catch((error) => {
-  //       if (error.response && typeof error.response.data === "object") {
-  //         return { response: null, error: error.response.data.message }
-  //       }
-  //       return { response: null, error }
-  //     })
-  // }
 }
 
 export default Helper

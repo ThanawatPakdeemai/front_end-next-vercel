@@ -1,3 +1,4 @@
+import React from "react"
 import DiscordIcon from "@components/icons/SocialIcon/DiscordIcon"
 import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 import TelegramIcon from "@components/icons/SocialIcon/TelegramIcon"
@@ -5,9 +6,8 @@ import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import SubstackIcon from "@components/icons/SocialIcon/SubstackIcon"
 import MediumIcon from "@components/icons/SocialIcon/MediumIcon"
 import TiktokIcon from "@components/icons/SocialIcon/TiktokIcon"
-import { IMenuBase } from "@interfaces/IMenu"
-
 import LinkIcon from "@mui/icons-material/Link"
+import { IMenuBase } from "@interfaces/IMenu"
 
 export const SOCIAL: IMenuBase[] = [
   {
@@ -47,19 +47,47 @@ export const SOCIAL: IMenuBase[] = [
   }
 ]
 
-export const SOCIAL_SHARE: IMenuBase[] = [
+export const SOCIAL_SHARE_SUMMARY: IMenuBase[] = [
   {
-    icon: <TelegramIcon />,
+    icon: <TelegramIcon fill="#F42728" />,
     label: "telegram",
     href: "https://t.me/NakamotoGames"
   },
   {
-    icon: <TwitterIcon />,
+    icon: <TwitterIcon fill="#F42728" />,
     label: "twitter",
     href: "https://twitter.com/NakamotoGames"
   },
   {
-    icon: <FacebookIcon />,
+    icon: <FacebookIcon fill="#F42728" />,
+    label: "facebook",
+    href: "https://www.facebook.com/play.nakamoto.games"
+  },
+  {
+    icon: <DiscordIcon fill="#F42728" />,
+    label: "discord",
+    href: "https://discord.com/invite/nakamoto-games"
+  },
+  {
+    icon: <LinkIcon className="rotate-[-45deg] text-error-main" />,
+    label: "link",
+    href: ""
+  }
+]
+
+export const SOCIAL_SHARE: IMenuBase[] = [
+  {
+    icon: <TelegramIcon fill="#F42728" />,
+    label: "telegram",
+    href: "https://t.me/NakamotoGames"
+  },
+  {
+    icon: <TwitterIcon fill="#F42728" />,
+    label: "twitter",
+    href: "https://twitter.com/NakamotoGames"
+  },
+  {
+    icon: <FacebookIcon fill="#F42728" />,
     label: "facebook",
     href: "https://www.facebook.com/play.nakamoto.games"
   },

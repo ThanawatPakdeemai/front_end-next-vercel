@@ -1,10 +1,10 @@
 import { Button } from "@mui/material"
 import Link from "next/link"
-import React, { useMemo } from "react"
+import React, { ReactNode, useMemo } from "react"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 
 export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
-  text?: string
+  text?: string | ReactNode
   href: string
   icon?: React.ReactNode
   variant?: "text" | "outlined" | "contained"
@@ -15,6 +15,7 @@ export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   arrowColor?: string
   onClick?: () => void
   type?: "submit" | "button"
+  disabled?: boolean
 }
 
 const ButtonLink = ({
@@ -28,16 +29,22 @@ const ButtonLink = ({
   textColor,
   arrowColor,
   onClick,
-  type
+  type,
+  disabled = false
 }: IButtonLink) => {
   const ButtonSelf = useMemo(
     () => (
       <Button
+        disabled={disabled}
         variant={variant}
         type={type ?? "button"}
         color={color}
         size={size}
-        startIcon={<div className="button-icon animation-arrow">{icon}</div>}
+        startIcon={
+          <div className={`button-icon animation-arrow ${textColor}`}>
+            {icon}
+          </div>
+        }
         className={`${className} button-global`}
         onClick={onClick}
         endIcon={
@@ -53,6 +60,7 @@ const ButtonLink = ({
       arrowColor,
       className,
       color,
+      disabled,
       icon,
       onClick,
       size,

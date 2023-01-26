@@ -19,6 +19,7 @@ interface IProp {
     currentPlayer: number
     maxPlayer?: number
   }
+  unlimited?: boolean
   onClick?: () => void
 }
 
@@ -28,6 +29,7 @@ const RoomListBar = ({
   btnText,
   timer,
   player,
+  unlimited,
   onClick
 }: IProp) => (
   <motion.div
@@ -68,6 +70,7 @@ const RoomListBar = ({
         timer={timer}
         color="green"
         shade="lemon"
+        unlimited={unlimited}
       />
       <RoomListBox
         type="player"
@@ -81,6 +84,7 @@ const RoomListBar = ({
         endIcon={<IconArrowRight stroke="#010101" />}
         text={btnText || "Join"}
         className="btn-green-rainbow z-[2] h-[50px] w-[95px] bg-green-lemon font-bold capitalize text-neutral-900"
+        type="button"
       />
     </div>
   </motion.div>

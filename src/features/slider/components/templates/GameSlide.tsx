@@ -29,7 +29,7 @@ const GameSlide = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 5000,
     draggable: true,
     fade: true,

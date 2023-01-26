@@ -173,5 +173,12 @@ export const IMAGES = {
     width: 35,
     height: 35,
     alt: "metamask-icon"
+  },
+  no_image: {
+    src: "/images/common/no_image.png",
+    blurDataURL: "/images/common/no_image.png",
+    width: 218,
+    height: 218,
+    alt: "no_image"
   }
 }

@@ -66,6 +66,7 @@ module.exports = {
         "Arial",
         "sans-serif"
       ],
+      "digital-7": "digital-7",
       "mondwest": ["mondwest", "Helvetica", "Arial", "sans-serif"]
     },
     /* extend config here */

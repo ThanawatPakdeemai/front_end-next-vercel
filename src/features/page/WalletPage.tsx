@@ -8,7 +8,6 @@ import MetamaskWallet from "@components/molecules/balance/MetamaskWallet"
 import useProfileStore from "@stores/profileStore"
 import Gas from "@components/molecules/Gas"
 
-
 const KeyFramesRotate = styled("div")({
   "@keyframes rotation": {
     from: {

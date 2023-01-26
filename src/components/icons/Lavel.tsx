@@ -33,10 +33,10 @@ function Lavel({
           width="40"
           height="40"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
           <feFlood
-            flood-opacity="0"
+            floodOpacity="0"
             result="BackgroundImageFix"
           />
           <feBlend
@@ -98,10 +98,10 @@ function Lavel({
           y2="43"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F42728" />
+          <stop stopColor="#F42728" />
           <stop
             offset="1"
-            stop-color="#C90001"
+            stopColor="#C90001"
           />
         </linearGradient>
       </defs>

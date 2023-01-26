@@ -37,7 +37,6 @@ const FormEditProfile = ({
   onRefetchProfile
 }: IProp) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const onSetProfileData = useProfileStore((state) => state.onSetProfileData)
   const { avatar } = useGetAvatar()
   const [defaultAvatar, setDefaultAvatar] = useState<string>(
     userImage || (profile ? profile.avatar : "")
@@ -76,7 +75,6 @@ const FormEditProfile = ({
                   successToast(MESSAGES.edit_profile_success)
                   onRefetchProfile()
                   onCloseModal()
-                  onSetProfileData(_res)
                 }
               })
               .catch(() => {
@@ -189,6 +187,7 @@ const FormEditProfile = ({
                 <Box
                   id={item.name}
                   key={Number(index)}
+                  className="cursor-pointer"
                   onClick={() => {
                     slideTo()
                     setDefaultAvatar(item.value)

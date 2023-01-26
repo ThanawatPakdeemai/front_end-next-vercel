@@ -20,6 +20,7 @@ import {
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import FilterIcon from "@components/icons/FilterIcon"
 import SortIcon from "@components/icons/SortIcon"
+import CheckBoxNaka from "@components/atoms/checkBox/CheckBoxNaka"
 import TransHead from "../atoms/TransHead"
 import TransBody from "../atoms/TransBody"
 
@@ -33,6 +34,8 @@ export default function TransactionTable() {
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
+  const [checkDeposit, setCheckDeposit] = useState<boolean>(false)
+  const [checkWithdraw, setCheckWithdraw] = useState<boolean>(false)
 
   const {
     isLoading,
@@ -147,7 +150,7 @@ export default function TransactionTable() {
                 }}
               >
                 <Typography sx={{ p: 2 }}>
-                  <select
+                  {/* <select
                     value={type}
                     name="type"
                     id="type"
@@ -156,7 +159,19 @@ export default function TransactionTable() {
                     <option value="all">All</option>
                     <option value="DepositNaka">DepositNaka</option>
                     <option value="WithdrawNaka">WithdrawNaka</option>
-                  </select>
+                  </select> */}
+                  <CheckBoxNaka
+                    value={checkDeposit}
+                    onHandle={() => setCheckDeposit(!checkDeposit)}
+                    text="DepositNaka"
+                    className="flex items-center"
+                  />
+                  <CheckBoxNaka
+                    value={checkWithdraw}
+                    onHandle={() => setCheckWithdraw(!checkWithdraw)}
+                    text="WithdrawNaka"
+                    className="flex items-center"
+                  />
                 </Typography>
               </Popover>
               <TransHead

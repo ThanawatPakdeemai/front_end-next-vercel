@@ -767,7 +767,7 @@ const Register = () => {
                         <div className="flex flex-wrap">
                           {SocialRegister?.map((item) => (
                             <Link
-                              key={item.label}
+                              key={item.label.toString()}
                               href={item.href}
                               target="_blank"
                             >

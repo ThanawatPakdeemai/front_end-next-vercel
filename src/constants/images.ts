@@ -174,6 +174,27 @@ export const IMAGES = {
     height: 35,
     alt: "metamask-icon"
   },
+  ro: {
+    src: "/images/home/ro.svg",
+    blurDataURL: "/images/home/ro.svg",
+    width: 60.75,
+    height: 60.75,
+    alt: "ro-icon"
+  },
+  vectorWorld: {
+    src: "/images/home/vectorWorld.svg",
+    blurDataURL: "/images/home/vectorWorld.svg",
+    width: 50,
+    height: 50,
+    alt: "vectorWorld"
+  },
+  rectagle: {
+    src: "/images/home/rectagle.svg",
+    blurDataURL: "/images/home/rectagle.svg",
+    width: 764,
+    height: 840,
+    alt: "vectorWorld"
+  },
   no_image: {
     src: "/images/common/no_image.png",
     blurDataURL: "/images/common/no_image.png",

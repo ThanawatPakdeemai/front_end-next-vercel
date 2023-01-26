@@ -1,3 +1,4 @@
+import React from "react"
 import DiscordIcon from "@components/icons/SocialIcon/DiscordIcon"
 import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 import TelegramIcon from "@components/icons/SocialIcon/TelegramIcon"

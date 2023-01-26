@@ -72,6 +72,7 @@ const ProfiileLayout = ({
               router.push("/")
             }}
             className="btn-rainbow-theme bg-error-main px-14 text-sm text-white-default"
+            type="button"
           />
         </div>
         <div className="mx-6 flex h-full w-[100%] flex-col">{children}</div>

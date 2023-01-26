@@ -133,6 +133,7 @@ const SummaryMain = ({ summaryData }: IProp) => {
               className="btn-green-rainbow bg-green-lemon font-bold text-neutral-900"
               // wait for wallet page then chnage to path/wallet
               handleClick={() => router.push("/")}
+              type="button"
             />
           </div>
         </div>

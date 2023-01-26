@@ -26,12 +26,13 @@ export interface ISignIn {
 }
 
 export interface ISignUp extends ISignIn {
-  _verifycode: string
-  _referral: string
-  _subscription: string
+  _verifycode: number | string
+  _referral?: string
+  _subscription: boolean
 }
 
-export interface IGetVerifyCode extends ISignIn {
+export interface IGetVerifyCode {
+  _email: string
   _recaptcha: string
 }
 

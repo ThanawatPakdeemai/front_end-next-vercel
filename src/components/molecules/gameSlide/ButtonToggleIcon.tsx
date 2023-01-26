@@ -11,7 +11,7 @@ interface IProps {
   handleClick?: () => void
   className?: string
   style?: React.CSSProperties
-  type: TTypeButton
+  type?: TTypeButton
   disabled?: boolean
 }
 

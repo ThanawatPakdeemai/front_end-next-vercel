@@ -10,7 +10,8 @@ const useGetBadge = (_playerId: string) => {
     isFetching
   } = useQuery({
     queryKey: ["getBadgeData", _playerId],
-    queryFn: () => getBadgeplayerId(_playerId)
+    queryFn: () => getBadgeplayerId(_playerId),
+    staleTime: Infinity
   })
   return {
     getBadgeData,

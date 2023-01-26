@@ -6,6 +6,8 @@ import React, { useState } from "react"
 import { styled } from "@mui/material"
 import MetamaskWallet from "@components/molecules/balance/MetamaskWallet"
 import useProfileStore from "@stores/profileStore"
+import Gas from "@components/molecules/Gas"
+
 
 const KeyFramesRotate = styled("div")({
   "@keyframes rotation": {
@@ -230,7 +232,9 @@ export default function WalletPage() {
             </div>
           </div>
         </div>
-        <div className="col-span-2 h-full w-full items-center justify-center gap-1 rounded-default bg-neutral-700" />
+        <div className="col-span-2 h-full w-full items-center justify-center">
+          <Gas />
+        </div>
         <div className="col-span-4 h-full w-full items-center justify-center gap-1">
           <MetamaskWallet
             isConnected={isConnected}

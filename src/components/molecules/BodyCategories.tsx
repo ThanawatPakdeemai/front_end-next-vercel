@@ -80,6 +80,7 @@ const BodyCategories = () => {
                         alt={item.text}
                       />
                     }
+                    type="button"
                     text={item.text}
                     handleClick={onHandleClick}
                     className="z-[2] h-[50px] w-full bg-primary-main capitalize "

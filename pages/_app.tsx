@@ -133,7 +133,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
             </ThemeProvider>
           </CacheProvider>
         </Web3Provider>
-        <ReactQueryDevtools initialIsOpen={false} />
+        <ReactQueryDevtools initialIsOpen />
       </QueryClientProvider>
     </>
   )

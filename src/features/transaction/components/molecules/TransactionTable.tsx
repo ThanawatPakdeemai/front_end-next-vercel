@@ -6,6 +6,7 @@ import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import useGetTransWallet from "@feature/transaction/containers/hooks/useGetTransWallet"
 import dayjs from "dayjs"
 import {
+  FormControl,
   InputAdornment,
   Paper,
   Popover,
@@ -15,16 +16,23 @@ import {
   TableHead,
   TableRow,
   TextField,
-  Typography
+  Typography,
+  InputLabel,
+  OutlinedInput,
+  IconButton
 } from "@mui/material"
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import FilterIcon from "@components/icons/FilterIcon"
 import SortIcon from "@components/icons/SortIcon"
 import CheckBoxNaka from "@components/atoms/checkBox/CheckBoxNaka"
+import useProfileStore from "@stores/profileStore"
+import { Visibility, VisibilityOff } from "@mui/icons-material"
+import { v4 as uuid } from "uuid"
 import TransHead from "../atoms/TransHead"
 import TransBody from "../atoms/TransBody"
 
 export default function TransactionTable() {
+  const profile = useProfileStore((state) => state.profile.data)
   const initialType = ["DepositNaka", "WithdrawNaka"]
   const [type, setType] = useState<string[]>(["DepositNaka", "WithdrawNaka"])
   const playerId = "61a72d7e970fbe264d627bf5"
@@ -36,6 +44,7 @@ export default function TransactionTable() {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
   const [checkDeposit, setCheckDeposit] = useState<boolean>(false)
   const [checkWithdraw, setCheckWithdraw] = useState<boolean>(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const {
     isLoading,
@@ -103,6 +112,16 @@ export default function TransactionTable() {
   const open = Boolean(anchorEl)
   const id = open ? "simple-popover" : undefined
 
+  console.log(profile)
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show)
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault()
+  }
+
   return (
     <div>
       <p className="my-5 font-neue-machina-bold text-default uppercase">
@@ -129,7 +148,7 @@ export default function TransactionTable() {
               }
             }}
           >
-            <TableRow>
+            <TableRow key={uuid()}>
               <TransHead
                 label="TIME"
                 icon={SortIcon}
@@ -205,7 +224,7 @@ export default function TransactionTable() {
             {TransData
               ? TransData.data.map((data) => (
                   <TransBody
-                    key={data.id}
+                    key={uuid()}
                     date={dayjs(data.current_time).format("DD MMM YYYY")}
                     time={dayjs(data.current_time).format("hh:mm A")}
                     type={data.type}
@@ -225,11 +244,11 @@ export default function TransactionTable() {
           page={page}
           setPage={setPage}
         />
-        <TextField
+        {/* <TextField
           // label="Show 6"
           className="ml-3"
           select
-          value={[10, 15, 20, 25, 30]}
+          value={0}
           placeholder="Show 6"
           InputProps={{
             startAdornment: (
@@ -241,7 +260,30 @@ export default function TransactionTable() {
               </InputAdornment>
             )
           }}
-        />
+        /> */}
+        <FormControl
+          sx={{ m: 1, width: "25ch" }}
+          variant="outlined"
+        >
+          <InputLabel htmlFor="outlined-adornment-password">Show</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={showPassword ? "text" : "password"}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+          />
+        </FormControl>
       </div>
     </div>
   )

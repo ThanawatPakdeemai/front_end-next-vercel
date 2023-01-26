@@ -2,6 +2,7 @@ import TitleWithChip from "@components/atoms/TitleWithChip"
 import TooltipsCustom from "@components/atoms/TooltipsCustom"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { IPlayToEarnRewardData } from "@src/types/games"
+import Helper from "@utils/helper"
 import Image from "next/image"
 import React from "react"
 
@@ -15,13 +16,17 @@ const ItemRewardDetails = ({ rewardData, onClaim }: IProp) =>
     <div className="flex w-full flex-row justify-between rounded-[14px] border border-neutral-800 bg-neutral-780 p-2">
       {/* left */}
       <div className="flex items-center">
-        <Image
-          src={rewardData.game_image || ""}
-          alt={rewardData.game_name || ""}
-          width={75}
-          height={75}
-          className="rounded-[6px] object-cover"
-        />
+        {rewardData.game_image && rewardData.game_name ? (
+          <Image
+            src={rewardData.game_image}
+            alt={rewardData.game_name}
+            width={75}
+            height={75}
+            className="rounded-[6px] object-cover"
+          />
+        ) : (
+          <>No Image</>
+        )}
       </div>
       {/* data */}
       <div className="ml-2 grid w-[336px] grid-cols-3 items-center justify-center gap-[22px] px-5 uppercase">
@@ -33,7 +38,7 @@ const ItemRewardDetails = ({ rewardData, onClaim }: IProp) =>
         />
         <TitleWithChip
           title="Score"
-          label={rewardData.score}
+          label={Helper.formatNumber(rewardData.score) || 0}
           color="primary"
           className="!bg-primary-main"
         />

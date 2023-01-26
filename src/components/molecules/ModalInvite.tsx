@@ -30,6 +30,7 @@ const ModalInvite = () => {
         startIcon=""
         text="Invite"
         className="btn-rainbow-theme z-[2] h-[50px] w-[156px] bg-secondary-main font-bold capitalize text-white-primary"
+        type="button"
       />
       <ModalCustom
         open={open}

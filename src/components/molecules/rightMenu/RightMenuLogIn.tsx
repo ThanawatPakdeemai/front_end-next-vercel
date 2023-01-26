@@ -104,7 +104,7 @@ const RightMenuLogIn = () => {
                   !expanded
                     ? "bg-secondary-main hover:scale-[85%]"
                     : "bg-error-main"
-                } 
+                }
             ${!expanded ? "rotate-0" : "rotate-180"} ${
                   expanded && !hoverExpand
                     ? "rotate-[-45deg] scale-[75%]"
@@ -141,6 +141,7 @@ const RightMenuLogIn = () => {
             <Balance
               variant="naka"
               token="NAKA"
+              tokenUnit="NAKA"
               sx={{
                 maxWidth: 265,
                 minWidth: 265,
@@ -163,6 +164,7 @@ const RightMenuLogIn = () => {
                 minWidth: 265,
                 height: 70
               }}
+              type="row"
             />
             <MenuProfile />
           </Collapse>

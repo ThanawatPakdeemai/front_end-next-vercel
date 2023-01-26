@@ -80,6 +80,7 @@ const ProfileContent = () => {
             startIcon={<SettingIcon />}
             text="Edit Profile"
             className="z-[2] h-[50px] w-[148px] bg-neutral-900 font-bold capitalize text-white-default"
+            type="button"
           />
         </div>
         <EditProfileModal

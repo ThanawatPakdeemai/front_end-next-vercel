@@ -138,6 +138,7 @@ const GameCard = ({
             className={`btn-rainbow-theme z-[2] w-[198px] ${
               cooldown ? "bg-error-main" : "bg-secondary-main "
             } capitalize`}
+            type="button"
           />
         </motion.div>
       </motion.div>

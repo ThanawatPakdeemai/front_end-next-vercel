@@ -12,10 +12,8 @@ import Web3 from "web3"
  */
 const useWeb3 = () => {
   const { library } = useWeb3React()
-
   const refEth = useRef(library)
   const [web3, setweb3] = useState(library ? new Web3(library) : web3NoAccount)
-
   useEffect(() => {
     if (library !== refEth.current) {
       setweb3(library ? new Web3(library) : web3NoAccount)

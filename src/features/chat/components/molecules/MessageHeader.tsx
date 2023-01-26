@@ -1,6 +1,6 @@
 import MessageIcon from "@components/icons/MessageIcon"
 import React from "react"
-import { useTranslation } from "react-i18next"
+import { useTranslation } from "next-i18next"
 
 const MessageHeader = () => {
   const { t } = useTranslation()

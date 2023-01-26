@@ -25,7 +25,7 @@ function RepeatIcon({
       <path
         d="M16 6H4V15M8 18H20V9"
         stroke="#E1E2E2"
-        stroke-width="1.2"
+        strokeWidth="1.2"
       />
     </svg>
   )

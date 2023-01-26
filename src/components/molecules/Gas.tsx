@@ -2,7 +2,7 @@ import React from "react"
 import GasCard from "@components/atoms/GasCard"
 import Box from "@mui/material/Box"
 import Card from "@mui/material/Card"
-import { useTranslation } from "react-i18next"
+import { useTranslation } from "next-i18next"
 import GasIcon from "./tagline/GasIcon"
 
 const Gas = () => {

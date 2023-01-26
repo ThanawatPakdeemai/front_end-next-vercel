@@ -1,8 +1,8 @@
 import React from "react"
 
 function SortIcon({
-  width = 18,
-  height = 18,
+  width = 14,
+  height = 14,
   className
 }: React.SVGProps<SVGSVGElement>) {
   return (

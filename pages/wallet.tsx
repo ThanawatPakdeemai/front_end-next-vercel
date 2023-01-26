@@ -5,9 +5,9 @@ import TransactionTable from "@feature/transaction/components/molecules/Transact
 
 export default function Wallet() {
   return (
-    <>
+    <article className="h-full w-full">
       <TransactionTable />
-    </>
+    </article>
   )
 }
 

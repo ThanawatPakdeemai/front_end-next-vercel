@@ -5,29 +5,34 @@ import { getTransWallet } from "@feature/transaction/containers/services/transac
 import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import useGetTransWallet from "@feature/transaction/containers/hooks/useGetTransWallet"
 import dayjs from "dayjs"
-import { v4 as uuid } from "uuid"
 import {
+  InputAdornment,
   Paper,
+  Popover,
   Table,
   TableBody,
   TableContainer,
   TableHead,
-  TableRow
+  TableRow,
+  TextField,
+  Typography
 } from "@mui/material"
-import CheckBoxNaka from "@components/atoms/checkBox/CheckBoxNaka"
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
+import FilterIcon from "@components/icons/FilterIcon"
+import SortIcon from "@components/icons/SortIcon"
 import TransHead from "../atoms/TransHead"
 import TransBody from "../atoms/TransBody"
-import TransTextField from "../atoms/TransTextField"
 
 export default function TransactionTable() {
+  const initialType = ["DepositNaka", "WithdrawNaka"]
   const [type, setType] = useState<string[]>(["DepositNaka", "WithdrawNaka"])
   const playerId = "61a72d7e970fbe264d627bf5"
-  const limit = 5
+  const limit = 10
   const [page, setPage] = useState<number>(1)
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
 
   const {
     isLoading,
@@ -61,48 +66,103 @@ export default function TransactionTable() {
           })
       })
     }
-  }, [TransData, isPreviousData, page, queryClient, type])
+  }, [TransData, isPreviousData, page, queryClient])
 
-  const typeSelect = (e) => {
-    // selectType.some((st) => st === e) ? selectType.pop() : selectType.push(e)
-    // const updatedType = type.filter((item) => (e === item ? item : undefined))
-    // setSelectType(updatedType)
-    // console.log(selectType)
+  useEffect(() => {
+    if (type) {
+      queryClient.fetchQuery({
+        queryKey: ["getTransWallet", playerId, type, page],
+        queryFn: () =>
+          getTransWallet({
+            _playerId: playerId,
+            _type: type,
+            _limit: limit,
+            _page: page
+          })
+      })
+    }
+  }, [type])
+
+  const setChangeType = (selected: any) => {
+    selected =
+      selected.target.value === "all" ? initialType : [selected.target.value]
+    setType(selected)
   }
-  console.log(TransData)
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
+  const open = Boolean(anchorEl)
+  const id = open ? "simple-popover" : undefined
+
   return (
     <div>
-      <p className="my-5">Naka Storage Transactions</p>
+      <p className="my-5 font-neue-machina-bold text-default uppercase">
+        Naka Storage Transactions
+      </p>
       <TableContainer
         sx={{ width: "700px", borderRadius: "16px" }}
         component={Paper}
-        className="bg-neutral-800 p-2"
+        className="items-center bg-[#101013] px-1.5 pb-1.5 pt-5"
       >
         <Table
           sx={{
-            padding: 0,
             "& .MuiTableCell-root": {
               borderBottom: "none"
             }
           }}
           aria-label="simple table"
         >
-          <TableHead>
+          <TableHead
+            sx={{
+              "& .MuiTableCell-root": {
+                padding: "0px",
+                paddingLeft: "16px"
+              }
+            }}
+          >
             <TableRow>
-              <TransHead label="TIME" />
-              <TransHead label="TYPE" />
-              {type
-                ? type.map((e) => (
-                    <CheckBoxNaka
-                      key={e}
-                      value={false}
-                      onHandle={() => typeSelect(e)}
-                      text={e}
-                      className="items-center"
-                    />
-                  ))
-                : null}
-              <TransHead label="AMOUNT (NAKA)" />
+              <TransHead
+                label="TIME"
+                icon={SortIcon}
+              />
+              <TransHead
+                label="TYPE"
+                icon={FilterIcon}
+                onHandle={(e) => handleClick(e)}
+              />
+              <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left"
+                }}
+              >
+                <Typography sx={{ p: 2 }}>
+                  <select
+                    value={type}
+                    name="type"
+                    id="type"
+                    onChange={setChangeType}
+                  >
+                    <option value="all">All</option>
+                    <option value="DepositNaka">DepositNaka</option>
+                    <option value="WithdrawNaka">WithdrawNaka</option>
+                  </select>
+                </Typography>
+              </Popover>
+              <TransHead
+                label="AMOUNT (NAKA)"
+                icon={SortIcon}
+              />
               <TransHead
                 label="FEE (MATIC)"
                 className="justify-end"
@@ -111,8 +171,7 @@ export default function TransactionTable() {
           </TableHead>
           <TableBody
             sx={{
-              "tr:first-of-type td": { borderTop: 0 },
-              "tr:last-of-type td": { borderBottom: 0 },
+              "tr:last-of-type": { borderBottom: 0 },
               "tr:first-of-type td:first-of-type": {
                 borderTopLeftRadius: "9px"
               },
@@ -128,9 +187,6 @@ export default function TransactionTable() {
             }}
             className="bg-neutral-900"
           >
-            {isLoading
-              ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
-              : null}
             {TransData
               ? TransData.data.map((data) => (
                   <TransBody
@@ -145,15 +201,32 @@ export default function TransactionTable() {
               : null}
           </TableBody>
         </Table>
+        {isLoading ? <div>Loading ...</div> : null}
       </TableContainer>
-      <div className="my-5 flex">
+      <div className="my-5 flex justify-between">
         <PaginationNaka
           totalCount={totalCount}
           limit={limit}
           page={page}
           setPage={setPage}
         />
-        <TransTextField />
+        <TextField
+          // label="Show 6"
+          className="ml-3"
+          select
+          value={[10, 15, 20, 25, 30]}
+          placeholder="Show 6"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <VisibilityOutlinedIcon />
+                <span className="ml-[18px] font-neue-machina-bold text-xs uppercase">
+                  show
+                </span>
+              </InputAdornment>
+            )
+          }}
+        />
       </div>
     </div>
   )

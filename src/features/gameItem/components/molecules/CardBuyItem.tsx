@@ -13,7 +13,7 @@ import { Image } from "@components/atoms/image"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import { MESSAGES } from "@constants/messages"
 import Helper from "@utils/helper"
-import { useTranslation } from "react-i18next"
+import { useTranslation } from "next-i18next"
 import { useToast } from "@feature/toast/containers"
 import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 

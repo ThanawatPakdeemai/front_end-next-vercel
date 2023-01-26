@@ -1,6 +1,6 @@
 import React from "react"
 import { Login } from "@src/types/wallet"
-import { Trans, useTranslation } from "react-i18next"
+import { Trans, useTranslation } from "next-i18next"
 import Modal from "@src/components/atoms/modal/ModalBox"
 import WalletCard from "@src/components/atoms/modal/components/WalletCard"
 import config from "@src/constants/wallets"

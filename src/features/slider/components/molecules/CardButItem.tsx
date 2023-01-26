@@ -2,13 +2,13 @@ import React, { useEffect, useState, useMemo } from "react"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import LogoutIcon from "@mui/icons-material/Logout"
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
-import { CardMedia, SelectChangeEvent } from "@mui/material"
+import { CardMedia } from "@mui/material"
 import useProfileStore from "@stores/profileStore/index"
 import useGameStore from "@stores/game"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
-import RightMenuBuyItem from "@components/molecules/rightMenu/RightMenuBuyItem"
 import { useRouter } from "next/router"
+import { Image } from "@components/atoms/image"
 import DropdownList from "@components/atoms/DropdownList"
 // import { useWeb3 } from "@hooks/useWeb3"
 import { useTranslation } from "react-i18next"
@@ -18,8 +18,9 @@ import useLongPress from "@hooks/useLongPress"
 import { calculateItemPerPrice } from "@utils/helpers"
 import { buyItems } from "@src/features/buyItem/containers/services/buyItem.service"
 import toast from "react-hot-toast"
+import RightMenuBuyItem from "@feature/gameItem/components/molecules/RightMenuBuyItem"
 
-const ariaLabel = { "aria-label": "description" }
+// const ariaLabel = { "aria-label": "description" }
 
 export default function CardButItem() {
   // const web3 = useWeb3()
@@ -35,16 +36,16 @@ export default function CardButItem() {
   const [amount, setAmount] = useState(0)
   const [buttonDisabled, setButton] = useState(true)
   const [nakaPerItem, setNakaPerItem] = useState<number>(0)
-  const [status, setStatus] = useState<boolean>(false)
+  // const [status, setStatus] = useState<boolean>(false)
   const [nakaPriceBuying, setNakaPriceBuying] = useState<number>(0)
 
-  const vaultBalance = "11240.999822406691"
+  // const vaultBalance = "11240.999822406691"
 
   const [gameItemMultiple, setGameItemMultiple] = useState<IGameItemListData[]>(
     []
   )
   const [gameItemSelected, setGameItemSelected] = useState<IGameItemListData>()
-  const [gameItemPrice, setGameItemPrice] = useState<string>("")
+  // const [gameItemPrice, setGameItemPrice] = useState<string>("")
 
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("naka")
@@ -74,25 +75,25 @@ export default function CardButItem() {
     setTotal(x * nakaPerItem)
   }
 
-  const handleBulletChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const _number = e.target.value ? Math.abs(parseInt(e.target.value, 10)) : 0
-    setAmount(_number)
-    const x = _number < 0 ? 0 : _number
-    setTotal(x * nakaPerItem)
-  }
+  // const handleBulletChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const _number = e.target.value ? Math.abs(parseInt(e.target.value, 10)) : 0
+  //   setAmount(_number)
+  //   const x = _number < 0 ? 0 : _number
+  //   setTotal(x * nakaPerItem)
+  // }
 
-  const decreseLongPress = useLongPress(handleBuyDecrease, 500)
-  const increaseLongPress = useLongPress(handleBuyIncrease, 500)
+  // const decreseLongPress = useLongPress(handleBuyDecrease, 500)
+  // const increaseLongPress = useLongPress(handleBuyIncrease, 500)
 
-  const outFocus = () => {
-    const _number = Math.abs(amount)
-    if (_number) {
-      setAmount(_number)
-      setTotal(_number * nakaPerItem)
-    } else {
-      setAmount(0)
-    }
-  }
+  // const outFocus = () => {
+  //   const _number = Math.abs(amount)
+  //   if (_number) {
+  //     setAmount(_number)
+  //     setTotal(_number * nakaPerItem)
+  //   } else {
+  //     setAmount(0)
+  //   }
+  // }
 
   // 1. Get all items from backend
   // 2. Get item amount from smart contact item vault
@@ -132,60 +133,60 @@ export default function CardButItem() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameItemSelected])
 
-  const totalNakaPrice = useMemo(() => {
-    if (gameItemSelected && gameItemSelected.qty > 0 && nakaPerItem > 0) {
-      return gameItemSelected.qty * nakaPerItem
-    }
-    return 0
-  }, [gameItemSelected, nakaPerItem])
+  // const totalNakaPrice = useMemo(() => {
+  //   if (gameItemSelected && gameItemSelected.qty > 0 && nakaPerItem > 0) {
+  //     return gameItemSelected.qty * nakaPerItem
+  //   }
+  //   return 0
+  // }, [gameItemSelected, nakaPerItem])
 
   // Do Transection buy bullets and then get qty of bullets
-  const onBuyItem = async (itemId: string) => {
-    let cancel = false
+  // const onBuyItem = async (itemId: string) => {
+  //   let cancel = false
 
-    // if (profile && profile.email && account) {/
-    if (profile && profile.email) {
-      setStatus(true)
-      // Set overflow hidden when open modal.
-      // document.body.style.overflow = "hidden";
-      const response = await buyItems({
-        player_id: profile.id,
-        item_id: itemId, // gameObject.item[0]._id
-        qty: amount
-      }).catch((error) => undefined)
-      if (response) {
-        // const balance = await getNakaBalanceOf(profile.address)
-        // if (balance && balance.data) {
-        //   const nakaBalance = Number(
-        //     web3.utils.fromWei(balance.data.toString(), "ether")
-        //   ).toFixed(4)
-        //   setVaultBalance(Number(nakaBalance))
-        // }
-        if (!cancel) {
-          setStatus(false)
-          setButton(true)
-          setAmount(0)
-          setTotal(0)
-          // fetchItems()
-          // Remove overflow hidden when tracsection is loading.
-          // document.body.style.removeProperty("overflow");
-        }
-      } else {
-        toast.error("Cannot buy items.")
-        if (!cancel) {
-          setStatus(false)
-          setButton(true)
-          setAmount(0)
-          setTotal(0)
-          // Remove overflow hidden when transection finised.
-          // document.body.style.removeProperty("overflow");
-        }
-      }
-    }
-    return () => {
-      cancel = true
-    }
-  }
+  //   // if (profile && profile.email && account) {/
+  //   if (profile && profile.email) {
+  //     // setStatus(true)
+  //     // Set overflow hidden when open modal.
+  //     // document.body.style.overflow = "hidden";
+  //     const response = await buyItems({
+  //       player_id: profile.id,
+  //       item_id: itemId, // gameObject.item[0]._id
+  //       qty: amount
+  //     }).catch((error) => undefined)
+  //     if (response) {
+  //       // const balance = await getNakaBalanceOf(profile.address)
+  //       // if (balance && balance.data) {
+  //       //   const nakaBalance = Number(
+  //       //     web3.utils.fromWei(balance.data.toString(), "ether")
+  //       //   ).toFixed(4)
+  //       //   setVaultBalance(Number(nakaBalance))
+  //       // }
+  //       if (!cancel) {
+  //         // setStatus(false)
+  //         setButton(true)
+  //         setAmount(0)
+  //         setTotal(0)
+  //         // fetchItems()
+  //         // Remove overflow hidden when tracsection is loading.
+  //         // document.body.style.removeProperty("overflow");
+  //       }
+  //     } else {
+  //       toast.error("Cannot buy items.")
+  //       if (!cancel) {
+  //         // setStatus(false)
+  //         setButton(true)
+  //         setAmount(0)
+  //         setTotal(0)
+  //         // Remove overflow hidden when transection finised.
+  //         // document.body.style.removeProperty("overflow");
+  //       }
+  //     }
+  //   }
+  //   return () => {
+  //     cancel = true
+  //   }
+  // }
 
   // Buy Button ----------------------------------------------------------
   const handleSubmit = () => {
@@ -209,52 +210,52 @@ export default function CardButItem() {
       toast.error(t("please_login"))
     }
   }
-  const dataPayment = {
-    open,
-    setOpen,
-    value,
-    setValue,
-    nakaPerItem,
-    amount,
-    nakaPriceBuying,
-    submit: handleSubmit,
-    icon: gameObject?.item?.[0]?.image_icon,
-    priceTotal,
-    setPriceTotal,
-    NAKAPerUSD,
-    setNAKAPerUSD
-  }
+  // const dataPayment = {
+  //   open,
+  //   setOpen,
+  //   value,
+  //   setValue,
+  //   nakaPerItem,
+  //   amount,
+  //   nakaPriceBuying,
+  //   submit: handleSubmit,
+  //   icon: gameObject?.item?.[0]?.image_icon,
+  //   priceTotal,
+  //   setPriceTotal,
+  //   NAKAPerUSD,
+  //   setNAKAPerUSD
+  // }
 
   // Get value form backend
   // const fetchItems = async () => {
   //   fetchGameItem()
   // }
 
-  const handleChange = async (event: SelectChangeEvent) => {
-    const _value = await calculateItemPerPrice(
-      parseFloat(event.target.value as string)
-    )
-    if (_value) {
-      setNakaPerItem(_value)
-    }
-    setGameItemPrice(event.target.value as string)
-    // Clear all previous value
-    setButton(true)
-    setAmount(0)
-    setTotal(0)
+  // const handleChange = async (event: SelectChangeEvent) => {
+  //   const _value = await calculateItemPerPrice(
+  //     parseFloat(event.target.value as string)
+  //   )
+  //   if (_value) {
+  //     setNakaPerItem(_value)
+  //   }
+  //   // setGameItemPrice(event.target.value as string)
+  //   // Clear all previous value
+  //   setButton(true)
+  //   setAmount(0)
+  //   setTotal(0)
 
-    // Find current data item selected and set to redux
-    const result: any = gameItemMultiple.find(
-      (item: any) => item.price === parseFloat(event.target.value as string)
-    )
-    if (result) {
-      if (result.qty >= result.min_item) {
-        setButton(false)
-      }
-      // Set selected value
-      setGameItemSelected(result)
-    }
-  }
+  //   // Find current data item selected and set to redux
+  //   const result: any = gameItemMultiple.find(
+  //     (item: any) => item.price === parseFloat(event.target.value as string)
+  //   )
+  //   if (result) {
+  //     if (result.qty >= result.min_item) {
+  //       setButton(false)
+  //     }
+  //     // Set selected value
+  //     setGameItemSelected(result)
+  //   }
+  // }
 
   useEffect(() => {
     if (data) {
@@ -350,9 +351,11 @@ export default function CardButItem() {
               <div className="mb-2 flex w-full justify-between rounded-xl bg-[#E1E2E2]  p-2 text-center text-[#111111]">
                 <p>0.00</p>
 
-                <img
+                <Image
                   src="/images/gamePage/skull.png"
                   alt=""
+                  width={24}
+                  height={24}
                 />
               </div>
               <div className="mb-2 flex w-full justify-between rounded-xl bg-[#232329] p-2 text-center text-[#70727B]">

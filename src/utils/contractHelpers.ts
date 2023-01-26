@@ -1,4 +1,5 @@
 import Web3 from "web3"
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { AbiItem } from "web3-utils"
 import web3NoAccount from "@utils/web3"
 

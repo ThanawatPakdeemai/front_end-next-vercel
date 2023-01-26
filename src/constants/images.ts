@@ -194,5 +194,12 @@ export const IMAGES = {
     width: 764,
     height: 840,
     alt: "vectorWorld"
+  },
+  no_image: {
+    src: "/images/common/no_image.png",
+    blurDataURL: "/images/common/no_image.png",
+    width: 218,
+    height: 218,
+    alt: "no_image"
   }
 }

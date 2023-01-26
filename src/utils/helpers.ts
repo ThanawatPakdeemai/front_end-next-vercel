@@ -1,13 +1,4 @@
-import axios from "axios"
-import {
-  getAllGames,
-  getGameById
-} from "@src/features/game/containers/services/game.service"
-import {
-  getCurrentNaka,
-  getCurrentNakaExternal
-} from "@src/features/inventory/containers/services/inventory.service"
-import { IGame, IGameAllResponse } from "@src/types/games"
+import { getCurrentNaka } from "@src/features/inventory/containers/services/inventory.service"
 import { IPriceCurrentResponse } from "@src/types/transaction"
 import { encrypt } from "@src/helpers/encrypt"
 import toast from "react-hot-toast"
@@ -59,7 +50,7 @@ export const lazyLoad = () => {
         if (lazyImage.dataset.src) {
           lazyImage.src = lazyImage.dataset.src
           lazyImageObserver.unobserve(lazyImage)
-          lazyImage.onload = function () {
+          lazyImage.onload = () => {
             lazyImage.classList.remove("lazy")
           }
         }

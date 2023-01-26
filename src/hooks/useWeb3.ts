@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef } from "react"
 import { ethers } from "ethers"
-import Web3 from "web3"
 import { useWeb3React } from "@web3-react/core"
 import web3NoAccount from "@utils/web3"
 import { simpleRpcProvider } from "@utils/providers"
+import Web3 from "web3"
 
 /**
  * Provides a web3 instance using the provider provided by useWallet
@@ -12,10 +12,8 @@ import { simpleRpcProvider } from "@utils/providers"
  */
 const useWeb3 = () => {
   const { library } = useWeb3React()
-
   const refEth = useRef(library)
   const [web3, setweb3] = useState(library ? new Web3(library) : web3NoAccount)
-
   useEffect(() => {
     if (library !== refEth.current) {
       setweb3(library ? new Web3(library) : web3NoAccount)

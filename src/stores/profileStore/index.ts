@@ -7,7 +7,6 @@ import {
 import configZustandDevTools from "@utils/configDevtools"
 import Helper from "@utils/helper"
 import { ELocalKey } from "@interfaces/ILocal"
-import dayjs from "dayjs"
 
 export interface IUseProfileStore {
   address: string | undefined
@@ -30,7 +29,7 @@ const useProfileStore = create<IUseProfileStore>()(
         isLogin: false,
         profile: {
           status: false,
-          data: null,
+          data: undefined,
           message: null
         },
         getProfile: () => get().profile,
@@ -39,7 +38,7 @@ const useProfileStore = create<IUseProfileStore>()(
         onReset: () => {
           const resetData = {
             status: false,
-            data: null,
+            data: undefined,
             message: null
           }
           set(
@@ -82,11 +81,6 @@ const useProfileStore = create<IUseProfileStore>()(
             "ProfileStore/onSetProfileToken"
           )
           Helper.setLocalStorage({ key: ELocalKey.token, value: _token })
-          Helper.setCookie(
-            `token=${_token};expires=${dayjs()
-              .add(30, "minute")
-              .add(7, "hour")}`
-          )
         }
       }),
       configZustandDevTools("Profile-Store")

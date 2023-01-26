@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { Collapse } from "@mui/material"
 import DropdownIcon from "@components/icons/DropdownIcon"
 import Image from "next/image"
-import SelectDropdownList from "./selectDropdownList/SelectDropdownList"
+import SelectDropdownList from "@components/atoms/selectDropdown/SelectDropdown"
 
 interface IProp {
   icon?: React.ReactNode

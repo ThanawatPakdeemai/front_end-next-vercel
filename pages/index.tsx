@@ -1,8 +1,8 @@
 import { Layout } from "@components/template"
 import { ReactElement } from "react"
 import HomePage from "@feature/page/homePage"
-import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import Gas from "@components/molecules/Gas"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 
 export default function Home() {
   return (

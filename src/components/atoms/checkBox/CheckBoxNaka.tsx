@@ -5,7 +5,7 @@ import React, { memo } from "react"
 
 interface IProp {
   value: boolean
-  onHandle: () => void
+  onHandle: (_event?: React.ChangeEvent<HTMLInputElement>) => void
   text?: string
   className?: string
 }

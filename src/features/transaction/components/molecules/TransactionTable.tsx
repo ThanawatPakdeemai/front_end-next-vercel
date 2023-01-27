@@ -6,12 +6,15 @@ import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import useGetTransWallet from "@feature/transaction/containers/hooks/useGetTransWallet"
 import dayjs from "dayjs"
 import {
-  FormControl,
+  Box,
+  Chip,
+  Grid,
   InputAdornment,
-  Paper,
   Popover,
+  Stack,
   Table,
   TableBody,
+  TableCell,
   TableContainer,
   TableHead,
   TableRow,
@@ -24,27 +27,33 @@ import {
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import FilterIcon from "@components/icons/FilterIcon"
 import SortIcon from "@components/icons/SortIcon"
+import IconArrowTop from "@components/icons/arrowTopIcon"
 import CheckBoxNaka from "@components/atoms/checkBox/CheckBoxNaka"
 import useProfileStore from "@stores/profileStore"
-import { Visibility, VisibilityOff } from "@mui/icons-material"
 import { v4 as uuid } from "uuid"
-import TransHead from "../atoms/TransHead"
-import TransBody from "../atoms/TransBody"
+
+interface IPropCheckbox {
+  name: string
+  value: boolean
+}
 
 export default function TransactionTable() {
   const profile = useProfileStore((state) => state.profile.data)
-  const initialType = ["DepositNaka", "WithdrawNaka"]
-  const [type, setType] = useState<string[]>(["DepositNaka", "WithdrawNaka"])
+  // const initialType = ["DepositNaka", "WithdrawNaka"]
+  const type = ["DepositNaka", "WithdrawNaka"]
   const playerId = "61a72d7e970fbe264d627bf5"
   const limit = 10
   const [page, setPage] = useState<number>(1)
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
-  const [checkDeposit, setCheckDeposit] = useState<boolean>(false)
-  const [checkWithdraw, setCheckWithdraw] = useState<boolean>(false)
-  const [showPassword, setShowPassword] = useState(false)
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
+  const open = Boolean(anchorEl)
+  const id = open ? "simple-popover" : undefined
+  const [valueCheckbox, setValueCheckbox] = useState<IPropCheckbox[]>([
+    { name: "DepositNaka", value: false },
+    { name: "WithdrawNaka", value: false }
+  ])
 
   const {
     isLoading,
@@ -66,40 +75,43 @@ export default function TransactionTable() {
   }, [TransData])
 
   useEffect(() => {
+    const value = valueCheckbox
+      .filter((ele) => ele.value)
+      ?.map((ele) => ele.name)
     if (!isPreviousData && TransData) {
       queryClient.prefetchQuery({
-        queryKey: ["getTransWallet", playerId, type, page + 1],
+        queryKey: ["getTransWallet", playerId, value, page + 1],
         queryFn: () =>
           getTransWallet({
             _playerId: playerId,
-            _type: type,
+            _type: value,
             _limit: limit,
             _page: page + 1
           })
       })
     }
-  }, [TransData, isPreviousData, page, queryClient])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [TransData, isPreviousData, page, queryClient, valueCheckbox])
 
-  useEffect(() => {
-    if (type) {
-      queryClient.fetchQuery({
-        queryKey: ["getTransWallet", playerId, type, page],
-        queryFn: () =>
-          getTransWallet({
-            _playerId: playerId,
-            _type: type,
-            _limit: limit,
-            _page: page
-          })
-      })
-    }
-  }, [type])
+  // useEffect(() => {
+  //   const valueReal = valueCheckbox.filter((ele) => ele.value)
+  //   console.log(valueReal)
+  //   console.log(valueCheckbox)
 
-  const setChangeType = (selected: any) => {
-    selected =
-      selected.target.value === "all" ? initialType : [selected.target.value]
-    setType(selected)
-  }
+  //   if (type) {
+  //     queryClient.fetchQuery({
+  //       queryKey: ["getTransWallet", playerId, type, page],
+  //       queryFn: () =>
+  //         getTransWallet({
+  //           _playerId: playerId,
+  //           _type: type,
+  //           _limit: limit,
+  //           _page: page
+  //         })
+  //     })
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [valueCheckbox])
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -109,134 +121,184 @@ export default function TransactionTable() {
     setAnchorEl(null)
   }
 
-  const open = Boolean(anchorEl)
-  const id = open ? "simple-popover" : undefined
+  const queryByType = (_valueCheck) => {
+    // const valueReal = valueCheckbox.filter((ele) => ele.value)
+    // console.log(valueReal)
+    // console.log(valueCheckbox)
+    console.log(_valueCheck)
 
-  console.log(profile)
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show)
-
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault()
+    if (_valueCheck) {
+      queryClient.fetchQuery({
+        queryKey: ["getTransWallet", playerId, _valueCheck, page],
+        queryFn: () =>
+          getTransWallet({
+            _playerId: playerId,
+            _type: _valueCheck,
+            _limit: limit,
+            _page: page
+          })
+      })
+    }
   }
-
+  console.log(TransData)
   return (
     <div>
       <p className="my-5 font-neue-machina-bold text-default uppercase">
         Naka Storage Transactions
       </p>
-      <TableContainer
-        sx={{ width: "700px", borderRadius: "16px" }}
-        component={Paper}
-        className="items-center bg-[#101013] px-1.5 pb-1.5 pt-5"
-      >
-        <Table
-          sx={{
-            "& .MuiTableCell-root": {
-              borderBottom: "none"
-            }
-          }}
-          aria-label="simple table"
-        >
-          <TableHead
-            sx={{
-              "& .MuiTableCell-root": {
-                padding: "0px",
-                paddingLeft: "16px"
-              }
-            }}
+      <Box className="w-[563px] rounded-[14px] bg-neutral-800 px-1.5 pb-1.5 pt-5">
+        <Box>
+          <Grid
+            container
+            alignItems="center"
           >
-            <TableRow key={uuid()}>
-              <TransHead
-                label="TIME"
-                icon={SortIcon}
-              />
-              <TransHead
-                label="TYPE"
-                icon={FilterIcon}
-                onHandle={(e) => handleClick(e)}
-              />
-              <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left"
+            <Grid item>
+              <TableHead
+                className="uppercase"
+                sx={{
+                  "& .MuiTableCell-root": {
+                    borderBottom: "none"
+                  }
                 }}
               >
-                <Typography sx={{ p: 2 }}>
-                  {/* <select
-                    value={type}
-                    name="type"
-                    id="type"
-                    onChange={setChangeType}
-                  >
-                    <option value="all">All</option>
-                    <option value="DepositNaka">DepositNaka</option>
-                    <option value="WithdrawNaka">WithdrawNaka</option>
-                  </select> */}
-                  <CheckBoxNaka
-                    value={checkDeposit}
-                    onHandle={() => setCheckDeposit(!checkDeposit)}
-                    text="DepositNaka"
-                    className="flex items-center"
-                  />
-                  <CheckBoxNaka
-                    value={checkWithdraw}
-                    onHandle={() => setCheckWithdraw(!checkWithdraw)}
-                    text="WithdrawNaka"
-                    className="flex items-center"
-                  />
-                </Typography>
-              </Popover>
-              <TransHead
-                label="AMOUNT (NAKA)"
-                icon={SortIcon}
-              />
-              <TransHead
-                label="FEE (MATIC)"
-                className="justify-end"
-              />
-            </TableRow>
-          </TableHead>
-          <TableBody
-            sx={{
-              "tr:last-of-type": { borderBottom: 0 },
-              "tr:first-of-type td:first-of-type": {
-                borderTopLeftRadius: "9px"
-              },
-              "tr:first-of-type td:last-of-type": {
-                borderTopRightRadius: "9px"
-              },
-              "tr:last-of-type td:first-of-type": {
-                borderBottomLeftRadius: "9px"
-              },
-              "tr:last-of-type td:last-of-type": {
-                borderBottomRightRadius: "9px"
-              }
-            }}
-            className="bg-neutral-900"
-          >
-            {TransData
-              ? TransData.data.map((data) => (
-                  <TransBody
-                    key={uuid()}
-                    date={dayjs(data.current_time).format("DD MMM YYYY")}
-                    time={dayjs(data.current_time).format("hh:mm A")}
-                    type={data.type}
-                    amount={data.amount}
-                    fee={data.fee}
-                  />
-                ))
-              : null}
-          </TableBody>
-        </Table>
-        {isLoading ? <div>Loading ...</div> : null}
-      </TableContainer>
+                <TableRow className="grid grid-cols-5 gap-0.5 pl-4">
+                  <TableCell className="col-span-2 flex p-0 font-neue-machina-bold text-xs text-neutral-600">
+                    Time
+                    <SortIcon className="mt-1" />
+                  </TableCell>
+                  <TableCell className="flex p-0 font-neue-machina-bold text-xs text-neutral-600">
+                    type
+                    <IconButton
+                      aria-label="filter type"
+                      onClick={(e) => handleClick(e)}
+                    >
+                      <FilterIcon />
+                    </IconButton>
+                    <Popover
+                      id={id}
+                      open={open}
+                      anchorEl={anchorEl}
+                      onClose={handleClose}
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "left"
+                      }}
+                    >
+                      <Typography sx={{ p: 2 }}>
+                        {valueCheckbox.map((value, index) => (
+                          <CheckBoxNaka
+                            key={Number(index)}
+                            value={value.value}
+                            onHandle={(_event) => {
+                              // handleCheckbox(value, _event?.target.checked)
+                              const _index = valueCheckbox.findIndex(
+                                (ele) => ele.name === value.name
+                              )
+                              valueCheckbox.splice(_index, 1, {
+                                name: value.name,
+                                value: Boolean(_event?.target.checked)
+                              })
+                              setValueCheckbox(valueCheckbox)
+                              handleClose()
+                              console.log(valueCheckbox)
+                              queryByType(
+                                valueCheckbox
+                                  .filter((ele) => ele.value)
+                                  ?.map((ele) => ele.name)
+                              )
+                            }}
+                            text={value.name}
+                            className="flex items-center"
+                          />
+                        ))}
+                      </Typography>
+                    </Popover>
+                  </TableCell>
+                  <TableCell className="flex p-0 font-neue-machina-bold text-xs text-neutral-600">
+                    amount (NAKA)
+                    <SortIcon className="mt-1" />
+                  </TableCell>
+                  <TableCell className="flex justify-end p-0 font-neue-machina-bold text-xs text-neutral-600">
+                    fee (MATIC)
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+            </Grid>
+          </Grid>
+          <Box className="rounded-[9px] bg-primary-main px-3.5">
+            <TableBody>
+              {TransData &&
+                TransData.data.map((item) => (
+                  <>
+                    <div>
+                      <TableRow
+                        key={item.id}
+                        sx={{
+                          "& .MuiTableCell-root": {
+                            borderBottom: "1px solid rgb(24 24 28)"
+                          }
+                        }}
+                        className="grid grid-cols-5"
+                      >
+                        <TableCell
+                          align="left"
+                          className="col-span-2 flex items-center pl-0 pr-0 font-neue-machina-bold text-xs"
+                        >
+                          <span className="rounded-[4px] border border-neutral-700 p-1 uppercase text-neutral-400 ">
+                            {dayjs(item.current_time).format("DD MMM YYYY")}
+                          </span>
+                          <span className="px-5 text-neutral-500">
+                            {dayjs(item.current_time).format("hh:mm A")}
+                          </span>
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          className="px-0"
+                        >
+                          <Chip
+                            label={item.type}
+                            size="small"
+                            className={`font-neue-machina-bold uppercase !text-neutral-900 ${
+                              item.type && item.type === "DepositNaka"
+                                ? "!bg-varidian-default"
+                                : "!bg-red-card"
+                            }`}
+                          />
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          className={`flex items-center font-neue-machina-bold text-sm ${
+                            item.type && item.type === "DepositNaka"
+                              ? "text-varidian-default"
+                              : "text-red-card"
+                          }`}
+                        >
+                          <div className="flex flex-row">
+                            <div className="pr-[8.35px]">
+                              {item.type && item.type === "DepositNaka" ? (
+                                <IconArrowTop className="rotate-180" />
+                              ) : (
+                                <IconArrowTop />
+                              )}
+                            </div>
+                            {item.amount.toFixed(2)}
+                          </div>
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          className="flex items-center pr-0 font-neue-machina-bold text-sm"
+                        >
+                          - {item.fee.toFixed(4)}
+                        </TableCell>
+                      </TableRow>
+                      {isLoading ? <div>Loading ...</div> : null}
+                    </div>
+                  </>
+                ))}
+            </TableBody>
+          </Box>
+        </Box>
+      </Box>
       <div className="my-5 flex justify-between">
         <PaginationNaka
           totalCount={totalCount}
@@ -245,11 +307,9 @@ export default function TransactionTable() {
           setPage={setPage}
         />
         {/* <TextField
-          // label="Show 6"
           className="ml-3"
           select
           value={0}
-          placeholder="Show 6"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -261,29 +321,6 @@ export default function TransactionTable() {
             )
           }}
         /> */}
-        <FormControl
-          sx={{ m: 1, width: "25ch" }}
-          variant="outlined"
-        >
-          <InputLabel htmlFor="outlined-adornment-password">Show</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={showPassword ? "text" : "password"}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl>
       </div>
     </div>
   )

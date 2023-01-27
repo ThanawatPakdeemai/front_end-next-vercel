@@ -29,7 +29,7 @@ const useProfileStore = create<IUseProfileStore>()(
         isLogin: false,
         profile: {
           status: false,
-          data: null,
+          data: undefined,
           message: null
         },
         getProfile: () => get().profile,
@@ -38,7 +38,7 @@ const useProfileStore = create<IUseProfileStore>()(
         onReset: () => {
           const resetData = {
             status: false,
-            data: null,
+            data: undefined,
             message: null
           }
           set(

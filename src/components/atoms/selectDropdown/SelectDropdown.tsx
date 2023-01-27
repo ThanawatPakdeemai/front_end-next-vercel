@@ -8,6 +8,7 @@ interface IProp {
   className?: string
   details: IMenuBase[]
   onChange?: (_value) => void
+  title?: string
 }
 
 const SelectDropdown = ({ className, details, onChange }: IProp) => (

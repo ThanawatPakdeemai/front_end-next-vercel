@@ -39,7 +39,7 @@ export const updateProfile = ({
   _country,
   _user_ip_address
 }: IUpdateProfile) =>
-  new Promise((resolve, reject) => {
+  new Promise<IProfile>((resolve, reject) => {
     const data = {
       data: {
         email: _email,
@@ -51,7 +51,7 @@ export const updateProfile = ({
       }
     }
     services
-      .put(`/profile/update`, { ...data })
+      .put<IProfile>(`/profile/update`, { ...data })
       .then((response) => {
         resolve(response.data)
       })

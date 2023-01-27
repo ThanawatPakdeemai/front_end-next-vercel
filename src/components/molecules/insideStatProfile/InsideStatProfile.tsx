@@ -16,7 +16,8 @@ const InsideStatProfile = ({ type, barColor, exp, energy }: IProps) => {
   const [max, setMax] = React.useState<number>(0)
   const [label, setLabel] = React.useState<string>("")
 
-  const refetchValue = (data: IExp | IEnergy) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const refetchValue = (data: any | IEnergy) => {
     unstable_batchedUpdates(() => {
       setValue("expAmount" in data ? data.expAmount : data.staminaPoint)
       setMax("maxExp" in data ? data.maxExp : data.totalStamina)

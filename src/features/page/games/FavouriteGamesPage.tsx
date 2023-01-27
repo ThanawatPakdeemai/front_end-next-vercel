@@ -7,10 +7,10 @@ import { getFavoriteGameByUser } from "@feature/favourite/containers/services/fa
 import { v4 as uuid } from "uuid"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { PaginationNaka } from "@components/atoms/pagination"
-import GameCard from "@feature/game/components/molecules/GameCard"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import { P2EHeaderMenu } from "@constants/gameSlide"
+import GameCard from "@feature/game/containers/components/molecules/GameCard"
 
 const FavouriteGamesPage = () => {
   const router = useRouter()
@@ -119,7 +119,8 @@ const FavouriteGamesPage = () => {
     return () => {
       load = false
     }
-  }, [currentPage, search, device_support, item_id, category_id, getData])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, search, device_support, item_id, category_id])
 
   useEffect(() => {
     // totalCount

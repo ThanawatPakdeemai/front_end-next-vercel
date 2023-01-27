@@ -2,7 +2,12 @@ import {
   IGameItem,
   IGameItemList
 } from "@feature/gameItem/interfaces/IGameItemService"
-import { IFormatService, IInfo } from "@interfaces/IHelper"
+import {
+  IFormatMessageService,
+  IFormatService,
+  IInfo
+} from "@interfaces/IHelper"
+import { IPlayToEarnRewardData } from "@src/types/games"
 
 export type TGameType = "singleplayer" | "multiplayer" | "storymode"
 export type TTypeCode =
@@ -380,10 +385,10 @@ export interface IGameReportService extends IFormatService {
 }
 
 export interface IGamePlayToEarnService extends IFormatService {
-  data: IGameRewardByPlayer
+  data: IPlayToEarnRewardData[]
 }
 
-export interface IGameClaimEarnedRewardService extends IFormatService {
+export interface IGameClaimEarnedRewardService extends IFormatMessageService {
   data: string
 }
 

@@ -33,7 +33,7 @@ const NoDataIcon = ({
       stroke="#F42728"
       strokeWidth="1.81951"
       stroke-miterlimit="10"
-      stroke-linecap="round"
+      strokeLinecap="round"
       stroke-linejoin="round"
     />
   </svg>

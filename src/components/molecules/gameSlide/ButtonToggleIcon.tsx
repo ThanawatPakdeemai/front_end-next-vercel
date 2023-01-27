@@ -1,14 +1,17 @@
+import React, { ReactNode } from "react"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import { motion } from "framer-motion"
-import React, { ReactNode } from "react"
 
+type TTypeButton = "submit" | "reset" | "button" | undefined
 interface IProps {
   startIcon: ReactNode
   endIcon?: ReactNode
   text: string
   handleClick?: () => void
   className?: string
+  style?: React.CSSProperties
+  type?: TTypeButton
   disabled?: boolean
 }
 
@@ -18,6 +21,8 @@ const ButtonToggleIcon = ({
   text,
   handleClick,
   className,
+  style,
+  type = "button",
   disabled
 }: IProps) => {
   const stiffValue = 300
@@ -70,9 +75,10 @@ const ButtonToggleIcon = ({
   return (
     <motion.button
       className={`btn-icon-container flex h-10 w-full items-center justify-center rounded-md ${className}`}
+      style={style}
       initial="rest"
       whileHover="hover"
-      type="button"
+      type={type}
       onClick={handleClick}
       disabled={disabled}
     >

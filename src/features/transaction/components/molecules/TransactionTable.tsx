@@ -9,19 +9,12 @@ import {
   Box,
   Chip,
   Grid,
-  InputAdornment,
   Popover,
-  Stack,
-  Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
-  TextField,
   Typography,
-  InputLabel,
-  OutlinedInput,
   IconButton
 } from "@mui/material"
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
@@ -29,8 +22,6 @@ import FilterIcon from "@components/icons/FilterIcon"
 import SortIcon from "@components/icons/SortIcon"
 import IconArrowTop from "@components/icons/arrowTopIcon"
 import CheckBoxNaka from "@components/atoms/checkBox/CheckBoxNaka"
-import useProfileStore from "@stores/profileStore"
-import { v4 as uuid } from "uuid"
 
 interface IPropCheckbox {
   name: string
@@ -38,7 +29,7 @@ interface IPropCheckbox {
 }
 
 export default function TransactionTable() {
-  const profile = useProfileStore((state) => state.profile.data)
+  // const profile = useProfileStore((state) => state.profile.data)
   // const initialType = ["DepositNaka", "WithdrawNaka"]
   const type = ["DepositNaka", "WithdrawNaka"]
   const playerId = "61a72d7e970fbe264d627bf5"

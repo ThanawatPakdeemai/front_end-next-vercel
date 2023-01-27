@@ -178,7 +178,7 @@ export const MENU_LOGGEDIN: IMenu[] = [
   {
     id: "wishlist",
     label: "Wishlist",
-    href: "/wishlsit",
+    href: "/favourite-games",
     icon: <WishlistIcon />,
     external: false
   },

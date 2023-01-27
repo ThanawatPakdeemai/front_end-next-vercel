@@ -17,7 +17,6 @@ import {
   Typography,
   IconButton
 } from "@mui/material"
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import FilterIcon from "@components/icons/FilterIcon"
 import SortIcon from "@components/icons/SortIcon"
 import IconArrowTop from "@components/icons/arrowTopIcon"

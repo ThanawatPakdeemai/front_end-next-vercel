@@ -4,10 +4,7 @@ import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Image } from "@components/atoms/image/index"
 import { IMAGES } from "@constants/images"
-import {
-  GoogleReCaptchaProvider,
-  useGoogleReCaptcha
-} from "react-google-recaptcha-v3"
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 import {
   Alert,
   Box,

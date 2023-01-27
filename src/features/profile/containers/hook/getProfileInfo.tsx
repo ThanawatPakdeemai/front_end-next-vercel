@@ -13,7 +13,8 @@ const useGetProfileInfo = ({
     error,
     isLoading,
     isError,
-    isFetching
+    isFetching,
+    refetch: refetchGetProfile
   } = useQuery({
     queryKey: ["getPlayerInfo", _playerId],
     queryFn: () => getPlayerInfoByPlayerId({ _playerId, _limit, _page, _sort }),
@@ -25,7 +26,8 @@ const useGetProfileInfo = ({
     error,
     isLoading,
     isError,
-    isFetching
+    isFetching,
+    refetchGetProfile
   }
 }
 

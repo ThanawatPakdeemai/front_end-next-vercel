@@ -3,6 +3,7 @@ export const MESSAGES = {
   "getdata-success": "Get Data Success",
   "please_login": "Please Login",
   "sign_in_success": "Sign in successfully",
+  "edit_profile_success": "Edit Profile successfully",
   "please_fill": "Please fill completely",
   "cant_update_data": "Cannot Update Data",
   "you-can't-play-game": "You can't play game.",

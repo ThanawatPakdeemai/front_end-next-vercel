@@ -17,7 +17,7 @@ function Lavel({
       <path
         d="M24.7647 2.23098C23.7901 1.25634 22.2099 1.25634 21.2353 2.23098L16.4 7.06621L9.56198 7.06621C8.18362 7.06621 7.06625 8.18358 7.06625 9.56194L7.06625 16.4L2.23098 21.2353C1.25634 22.2099 1.25634 23.7901 2.23098 24.7647L7.06625 29.6L7.06625 36.438C7.06625 37.8164 8.18362 38.9338 9.56197 38.9338H16.4L21.2353 43.769C22.2099 44.7437 23.7901 44.7437 24.7647 43.769L29.6 38.9338H36.4381C37.8164 38.9338 38.9338 37.8164 38.9338 36.438V29.6L43.769 24.7647C44.7437 23.7901 44.7437 22.2099 43.769 21.2353L38.9338 16.4V9.56194C38.9338 8.18358 37.8164 7.06621 36.4381 7.06621L29.6 7.06621L24.7647 2.23098Z"
         stroke="#010101"
-        stroke-width="3"
+        strokeWidth="3"
       />
       <g filter="url(#filter0_ii_14_392)">
         <path
@@ -33,10 +33,10 @@ function Lavel({
           width="40"
           height="40"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
           <feFlood
-            flood-opacity="0"
+            floodOpacity="0"
             result="BackgroundImageFix"
           />
           <feBlend
@@ -98,10 +98,10 @@ function Lavel({
           y2="43"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F42728" />
+          <stop stopColor="#F42728" />
           <stop
             offset="1"
-            stop-color="#C90001"
+            stopColor="#C90001"
           />
         </linearGradient>
       </defs>

@@ -1,13 +1,24 @@
 import CheckBoxNaka from "@components/atoms/checkBox/CheckBoxNaka"
 import CrumbCustom from "@components/atoms/CrumbCustom"
+import TooltipsCustom from "@components/atoms/TooltipsCustom"
 import IconArrowLeft from "@components/icons/arrowLeftIcon"
 import IconArrowRight from "@components/icons/arrowRightIcon"
+import useGetBadge from "@feature/badge/containers/hook/useGetBadge"
 import { Divider } from "@mui/material"
-import React, { useRef, useState } from "react"
+import Image from "next/image"
+import React, { useEffect, useRef, useState } from "react"
 import Slider, { Settings } from "react-slick"
+import { v4 as uuid } from "uuid"
+import { motion } from "framer-motion"
+import BadgesPlacrhoder from "@components/icons/Banner/BadgesPlacrhoder"
 
-const SliderBadges = () => {
+interface IProp {
+  _playerId: string
+}
+const SliderBadges = ({ _playerId }: IProp) => {
   const [openBadges, setOpenBadges] = useState<boolean>(false)
+  const { getBadgeData, isLoading } = useGetBadge(_playerId)
+
   const handleOnExpandClick = () => {
     setOpenBadges(!openBadges)
   }
@@ -19,15 +30,20 @@ const SliderBadges = () => {
   const onSlidePrev = () => {
     sliderRef?.current?.slickPrev()
   }
+  const showSlide = 5
   const settings: Settings = {
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: showSlide,
+    slidesToScroll: showSlide,
     arrows: false,
-    draggable: true,
-    dots: true
+    // draggable: true,
+    dots: true,
+    variableWidth: false
   }
+
+  useEffect(() => {})
+
   return (
     <>
       <div className="mt-[90px] flex items-center justify-between">
@@ -58,27 +74,48 @@ const SliderBadges = () => {
       </div>
       {openBadges ? null : (
         <>
-          <div className="mt-[30px] h-[216px] rounded-lg bg-neutral-700">
-            <Slider
-              ref={sliderRef}
-              {...settings}
-              className="!w-[1080px]"
-            >
-              <div className="h-[220px]">text</div>
-              <IconArrowLeft />
-              <IconArrowLeft />
-              <IconArrowLeft />
-              <IconArrowLeft />
-              <IconArrowRight />
-              <IconArrowRight />
-              <IconArrowRight />
-              <IconArrowRight />
-              <IconArrowLeft />
-              <IconArrowRight />
-              <IconArrowRight />
-              <IconArrowRight />
-              <IconArrowRight />
-            </Slider>
+          <div className="mt-[30px] flex h-[216px] items-center rounded-lg border border-neutral-700 bg-neutral-800">
+            {isLoading ? (
+              "loading"
+            ) : (
+              <Slider
+                ref={sliderRef}
+                {...settings}
+                className="!w-full"
+              >
+                {getBadgeData &&
+                  getBadgeData.badges.map((badge) => (
+                    <motion.div
+                      whileHover={{ rotate: 15 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 4
+                        // ease: "easeIn"
+                      }}
+                      key={uuid()}
+                      className="h-[170px]"
+                    >
+                      <TooltipsCustom
+                        placement="top"
+                        title={badge.name}
+                        color="warning"
+                      >
+                        <Image
+                          src={badge.image}
+                          alt={badge.name}
+                          fill
+                          objectFit="contain"
+                        />
+                      </TooltipsCustom>
+                    </motion.div>
+                  ))}
+                <BadgesPlacrhoder />
+                <BadgesPlacrhoder />
+                <BadgesPlacrhoder />
+                <BadgesPlacrhoder />
+              </Slider>
+            )}
           </div>
           <div className="arrow-slick-container bg-black mt-8 grid h-10 w-[100px] grid-cols-2 divide-x divide-neutral-700 rounded-md border border-neutral-700 text-white-primary">
             <button

@@ -1,7 +1,6 @@
 import { Layout } from "@components/template"
 import { ReactElement } from "react"
 import HomePage from "@feature/page/homePage"
-import Gas from "@components/molecules/Gas"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 
 export default function Home() {
@@ -9,7 +8,6 @@ export default function Home() {
     <>
       <article className="h-full w-full">
         <HomePage />
-        <Gas />
       </article>
     </>
   )

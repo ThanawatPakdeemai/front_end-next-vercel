@@ -4,6 +4,9 @@ import INaka from "@components/icons/Naka"
 import IBusd from "@components/icons/Busd"
 import React, { useState } from "react"
 import { styled } from "@mui/material"
+import MetamaskWallet from "@components/molecules/balance/MetamaskWallet"
+import useProfileStore from "@stores/profileStore"
+import Gas from "@components/molecules/Gas"
 
 const KeyFramesRotate = styled("div")({
   "@keyframes rotation": {
@@ -16,8 +19,20 @@ const KeyFramesRotate = styled("div")({
   },
   animation: "rotation 10s infinite linear"
 })
+
 export default function WalletPage() {
+  const { profile } = useProfileStore()
   const [type, setType] = useState<string>("NAKA")
+  const [isConnected, setIsConnected] = useState<boolean>(false)
+
+  const handleConnectWallet = () => {
+    setIsConnected(true)
+  }
+
+  const handleOnDisconnectWallet = () => {
+    setIsConnected(false)
+  }
+
   return (
     <>
       <div className="mx-2 grid w-full grid-cols-12 gap-4">
@@ -216,8 +231,17 @@ export default function WalletPage() {
             </div>
           </div>
         </div>
-        <div className="col-span-2 h-full w-full items-center justify-center gap-1 rounded-default bg-neutral-700" />
-        <div className="col-span-4 h-full w-full items-center justify-center gap-1 rounded-default bg-neutral-700" />
+        <div className="col-span-2 h-full w-full items-center justify-center">
+          <Gas />
+        </div>
+        <div className="col-span-4 h-full w-full items-center justify-center gap-1">
+          <MetamaskWallet
+            isConnected={isConnected}
+            handleConnectWallet={handleConnectWallet}
+            handleOnDisconnectWallet={handleOnDisconnectWallet}
+            profile={profile.data}
+          />
+        </div>
       </div>
     </>
   )

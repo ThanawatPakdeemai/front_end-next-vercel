@@ -105,10 +105,10 @@ h6 {
 .wavy-line:before {
   content: attr(data-text);
   position: relative;
-  top: -15px;
+  top: -20px;
   color: rgba(0, 0, 0, 0);
   width: calc(100% + 27px);
-  font-size: 10px;
+  font-size: 20px;
   text-decoration-style: wavy;
   text-decoration-color: #25173a;
   text-decoration-line: underline;
@@ -146,4 +146,13 @@ h6 {
 .text-BUSD {
   color: #f0b90c;
   text-shadow: #ffc400 1px 0 5px;
+}
+
+.GasCard {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.Cardtext {
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
 }

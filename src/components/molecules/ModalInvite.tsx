@@ -63,7 +63,7 @@ const ModalInvite = () => {
               </div>
             </Box>
           </div>
-          <div className="flex w-full justify-center rounded-2xl  border border-[#2f2f2f]">
+          <div className="flex w-full justify-center rounded-2xl  border border-black-200">
             <ButtonLink
               className="h-[40px] w-full text-sm"
               href="/"

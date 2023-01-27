@@ -21,7 +21,7 @@ const EditProfileModal = ({ openEdit, handleClose }: IProp) => (
         spacing={3}
         className=""
       >
-        <div className="flex rounded-2xl border-[1px] border-[#232329] bg-[#18181c] p-2">
+        <div className="flex rounded-2xl border-[1px] border-neutral-700 bg-neutral-800 p-2">
           <div className="flex flex-1 flex-row items-center">
             <Typography className="pl-[22px] uppercase text-neutral-300">
               Edit Profile

@@ -119,7 +119,7 @@ const GameCarouselHeader = ({
         {menu.sticker}
       </motion.div>
       <div className="flex h-full w-full items-center justify-between">
-        <div className="relative flex h-full w-fit items-center justify-between rounded-default border-2 border-neutral-800 bg-[#010101] bg-opacity-40 px-1 text-[10px] capitalize backdrop-blur-[25px]">
+        <div className="relative flex h-full w-fit items-center justify-between rounded-default border-2 border-neutral-800 bg-neutral-900 bg-opacity-40 px-1 text-[10px] capitalize backdrop-blur-[25px]">
           <div className="flex items-center py-1 pl-4 font-bold ">
             {menu.icon}
             <p

@@ -19,7 +19,7 @@ const ButtonClose = ({ onClick, className }: IProps) => (
              items-center rounded-[8px] !bg-error-main duration-150 ease-bounce hover:rotate-0 hover:bg-error-main"
     >
       <Divider
-        className="m-auto mx-2 w-[16px] origin-center  rotate-[315deg] !border !border-[#f1f4f4] group-hover:rotate-0"
+        className="m-auto mx-2 w-[16px] origin-center  rotate-[315deg] !border !border-neutral-200 group-hover:rotate-0"
         orientation="vertical"
         flexItem
       />

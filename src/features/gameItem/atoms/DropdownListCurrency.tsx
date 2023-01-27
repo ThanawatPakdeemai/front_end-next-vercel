@@ -49,7 +49,7 @@ const DropdownListCurrency = ({ list, className, onChangeSelect }: IProp) => {
                             height="30"
                           />
                           <p className="px-2">{t("currency")}</p>
-                          <p className="px-2 text-[#ffffff]">
+                          <p className="px-2 text-white-default">
                             {defaultItem?.name}
                           </p>
                         </div>

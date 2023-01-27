@@ -9,11 +9,11 @@ import ImageCustom from "@components/atoms/image/Image"
 import IconHourglass from "@components/icons/hourglassIcon"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import TimerStamina from "@components/atoms/timer/TimerStamina"
-import { IGame } from "@feature/game/interfaces/IGameService"
+import { IGame, IGameFav } from "@feature/game/interfaces/IGameService"
 
 interface IProps {
   menu: IHeaderSlide
-  data: IGame
+  data: IGame | IGameFav
   showNo?: boolean
   no?: number
   checkTimer?: boolean
@@ -82,13 +82,15 @@ const GameCard = ({
             className="slick-card-number absolute top-2 right-1 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
           />
         ) : null}
-        <ImageCustom
-          src={data.image_category_list}
-          alt="home-slide"
-          width={218}
-          height={218}
-          className="slick-card-content rounded-md"
-        />
+        {data && (
+          <ImageCustom
+            src={data.image_category_list}
+            alt="home-slide"
+            width={218}
+            height={218}
+            className="slick-card-content rounded-md"
+          />
+        )}
         <motion.div
           variants={btnCard}
           className="absolute bottom-0 flex w-full justify-center text-white-primary"
@@ -108,7 +110,7 @@ const GameCard = ({
       <div className="relative z-[3]">
         <div className="slick-card-desc flex h-10 w-full items-center">
           <p className="relative truncate uppercase hover:text-clip">
-            {data.name}
+            {data && data.name}
           </p>
         </div>
         <div className="relative grid w-full grid-cols-2 gap-2 text-xs uppercase">

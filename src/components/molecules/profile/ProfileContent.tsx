@@ -56,15 +56,6 @@ const ProfileContent = () => {
   return profileData && getProfileInfo && !isFetching ? (
     <div>
       <div className="relative">
-        {/* <div className="h-[148px] rounded-xl bg-neutral-700">
-          <ProfileBanner />
-          <Image
-            src="/images/common/profile_banner.svg"
-            alt="123"
-            fill
-            objectFit="contain"
-          />
-        </div> */}
         <Box
           component="img"
           sx={{

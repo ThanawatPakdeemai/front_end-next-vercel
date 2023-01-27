@@ -7,19 +7,23 @@ import { useRouter } from "next/router"
 import useSocketWaitingRoom from "@feature/game/containers/hooks/useSocketWaitingRoom"
 import helper from "@utils/helper"
 import { IGameRoomListSocket } from "@feature/game/interfaces/IGameService"
-import { Box } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 import SocketProvider from "@providers/SocketProviderWaiting"
 import SeatPlayersMulti from "@feature/game/components/organisms/SeatPlayersMulti"
 import { useToast } from "@feature/toast/containers"
 import Chat from "@feature/chat/components/organisms/Chat"
 import { IChat } from "@feature/chat/interface/IChat"
 import { MESSAGES } from "@constants/messages"
+import CardButItem from "@feature/gameItem/components/molecules/CardBuyItem"
+import ButtonLink from "@components/atoms/button/ButtonLink"
+import { useTranslation } from "next-i18next"
 import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
 const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { data: gameData, itemSelected } = useGameStore()
+  const { data: gameData, itemSelected, qtyItemOfRoom } = useGameStore()
   const router = useRouter()
+  const { t } = useTranslation()
   const { errorToast } = useToast()
   const [dataPlayers, setDataPlayers] = useState<
     IGameRoomListSocket | undefined
@@ -63,7 +67,11 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     kickRoom,
     getChat,
     onSendMessage,
-    cancelReady
+    cancelReadyPlayer,
+    onReadyPlayerBurnItem,
+    onOwnerBurnItem,
+    getPlayersCheckItemOfPlayerListen,
+    getPlayersCheckRoomRollbackListen
   } = useSocketWaitingRoom({ ...propsSocketWaitingRoom })
 
   useEffect(() => {
@@ -82,15 +90,15 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     }
   }, [onSetConnectedSocket, profile, socketWaitingRoom])
 
-  useMemo(async () => {
-    if (isConnected) {
-      const _dataPlayers = await getPlayersMulti()
+  const mapPlayer = useCallback(
+    (_dataPlayers: IGameRoomListSocket) => {
       if (_dataPlayers) {
         const _play = _dataPlayers as IGameRoomListSocket
         if ("current_player" in _play) {
           const uniquePlayerIn = _play.current_player.filter(
             (thing, index, self) =>
-              index === self.findIndex((t) => t?.player_id === thing?.player_id)
+              index ===
+              self.findIndex((_self) => _self?.player_id === thing?.player_id)
           )
           const data = _dataPlayers as IGameRoomListSocket
 
@@ -115,8 +123,20 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
           errorToast(MESSAGES["no-player"])
         }
       }
+    },
+    [errorToast]
+  )
+
+  useEffect(() => {
+    if (isConnected) {
+      getPlayersMulti().then((res) => {
+        if (res) {
+          const data = res as IGameRoomListSocket
+          mapPlayer(data)
+        }
+      })
     }
-  }, [errorToast, getPlayersMulti, isConnected])
+  }, [getPlayersMulti, isConnected, mapPlayer])
 
   const outRoom = useCallback(() => {
     if (gameData) router.push(`/${gameData.path}/roomlist`)
@@ -137,6 +157,33 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     }
   }, [outRoom, router])
 
+  const player = useMemo(() => {
+    if (dataPlayers && profile) {
+      const _player = dataPlayers.current_player.find((ele) => {
+        if (ele) {
+          return ele.player_id === profile?.id
+        }
+        return undefined
+      })
+      return _player
+    }
+    return undefined
+  }, [dataPlayers, profile])
+
+  /**
+   * @description call check owner burn item after create room and into waiting room
+   */
+  useEffect(() => {
+    if (dataPlayers) {
+      if (dataPlayers.room_status === "playing") {
+        // send owner burn item
+        if (player && player.owner && itemSelected) {
+          onOwnerBurnItem(player.item_burn, itemSelected?._id, qtyItemOfRoom)
+        }
+      }
+    }
+  }, [dataPlayers, itemSelected, onOwnerBurnItem, player, qtyItemOfRoom])
+
   /**
    * @description Calling chatting function
    */
@@ -154,9 +201,38 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     }
   }, [isConnected, onChat])
 
+  useEffect(() => {
+    if (isConnected) {
+      getPlayersCheckItemOfPlayerListen().then((res) => {
+        if (res) {
+          const data = res as IGameRoomListSocket
+          mapPlayer(data)
+        }
+      })
+    }
+  }, [getPlayersCheckItemOfPlayerListen, isConnected, mapPlayer])
+
+  useEffect(() => {
+    if (isConnected) {
+      getPlayersCheckRoomRollbackListen().then((res) => {
+        if (res) {
+          const data = res as IGameRoomListSocket
+          mapPlayer(data)
+        }
+      })
+    }
+  }, [getPlayersCheckRoomRollbackListen, isConnected, mapPlayer])
+
   return (
     <>
-      <SocketProvider propsSocket={{ kickRoom, cancelReady, onSendMessage }}>
+      <SocketProvider
+        propsSocket={{
+          kickRoom,
+          cancelReadyPlayer,
+          onSendMessage,
+          onReadyPlayerBurnItem
+        }}
+      >
         <Box className=" gap-3 md:flex">
           <Box className="w-full shrink  rounded-3xl border border-neutral-800">
             {dataPlayers && gameData && (
@@ -176,11 +252,29 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
               />
             )}
 
-            {dataPlayers && dataPlayers.current_player && (
+            {dataPlayers && dataPlayers.current_player ? (
               <SeatPlayersMulti players={dataPlayers?.current_player} />
+            ) : (
+              <>
+                <Typography className="my-5 text-center">
+                  {t("no-player")}
+                </Typography>
+                {gameData && (
+                  <ButtonLink
+                    href={`/${gameData?.path}/roomlist`}
+                    text={t("out-room")}
+                    icon=""
+                    size="medium"
+                    className="m-auto"
+                    color="secondary"
+                    variant="contained"
+                  />
+                )}
+              </>
             )}
           </Box>
-          <Box className="w-[333px] flex-none">
+          <Box className=" w-[333px] flex-none gap-2">
+            <CardButItem />
             <Chat />
           </Box>
         </Box>

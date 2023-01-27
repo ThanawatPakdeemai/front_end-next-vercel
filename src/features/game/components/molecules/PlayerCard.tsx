@@ -14,8 +14,7 @@ interface IItemPlyer extends IGameCurrentPlayer {
   owner: boolean
 }
 const PlayerCard = ({ players }: IProps) => {
-  const propsSocket = useSocketProviderWaiting()
-  const { kickRoom } = propsSocket
+  const { kickRoom } = useSocketProviderWaiting()
   const profile = useProfileStore((state) => state.profile.data)
   const gameData = useGameStore((state) => state.data)
 
@@ -24,20 +23,23 @@ const PlayerCard = ({ players }: IProps) => {
       if (item.owner) {
         return "OWNER"
       }
-      return (
-        // eslint-disable-next-line react/button-has-type, jsx-a11y/no-redundant-roles
-        <button
-          role="button"
-          className="cursor-pointer"
-          onClick={() => {
-            if (item.player_id && kickRoom) {
-              kickRoom(item.player_id)
-            }
-          }}
-        >
-          KICK
-        </button>
-      )
+      if (!item.owner && item.player_id !== profile?.id) {
+        // isn't owner and player_id != profile.id show button kick
+        return (
+          // eslint-disable-next-line react/button-has-type, jsx-a11y/no-redundant-roles
+          <button
+            role="button"
+            className="cursor-pointer"
+            onClick={() => {
+              if (item.player_id && kickRoom) {
+                kickRoom(item.player_id)
+              }
+            }}
+          >
+            KICK
+          </button>
+        )
+      }
     }
     if (profile?.id === item.player_id) {
       return "ME"

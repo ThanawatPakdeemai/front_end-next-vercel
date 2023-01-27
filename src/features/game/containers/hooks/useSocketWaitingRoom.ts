@@ -6,9 +6,11 @@ import { useRouter } from "next/router"
 import { IChat } from "@feature/chat/interface/IChat"
 import dayjs from "dayjs"
 import useChatContext from "@feature/chat/containers/contexts/useChatContext"
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import useGameStore from "@stores/game"
 import { MESSAGES } from "@constants/messages"
+import { burnItem } from "@feature/inventory/containers/services/inventory.service"
+import { IBurnItemResponse } from "@feature/inventory/interfaces/IInventoryService"
 import { IPropsSocketRoomList } from "./useSocketRoomList"
 
 export interface IPropsSocketWaiting extends IPropsSocketRoomList {
@@ -16,7 +18,7 @@ export interface IPropsSocketWaiting extends IPropsSocketRoomList {
 }
 
 const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
-  const { errorToast } = useToast()
+  const { errorToast, successToast } = useToast()
   const router = useRouter()
   const { message, setMessage } = useChatContext()
 
@@ -38,6 +40,10 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     }
   })
 
+  /**
+   *
+   * @returns
+   */
   const getPlayersMulti = () =>
     new Promise((resolve, reject) => {
       socketWaitingRoom.on(
@@ -52,14 +58,19 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
       )
     })
 
+  /**
+   *
+   * @param _player_id
+   */
   const kickRoom = (_player_id: string) => {
     socketWaitingRoom.emit(EVENTS.ACTION.WAITING_ROOM_KICKPLAYER, {
       player_id: _player_id
     })
   }
 
-  const cancelReady = () => {
+  const cancelReadyPlayer = () => {
     socketWaitingRoom.emit(EVENTS.ACTION.WAITING_ROOM_CANCEL)
+    successToast(MESSAGES["you-cancel-ready"])
   }
 
   useEffect(() => {
@@ -104,6 +115,172 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     setMessage("")
   }
 
+  /**
+   *
+   * @param _player_id
+   * @param _item_burn
+   * @returns
+   */
+  const waitingRoomItemBurnAction = (_player_id: string, _item_burn: boolean) =>
+    socketWaitingRoom.emit(EVENTS.ACTION.WAITING_ROOM_ITEMBURN, {
+      player_id: _player_id,
+      item_burn: _item_burn
+    })
+
+  /**
+   *
+   * @returns
+   */
+  const waitingRoomReadyAction = () =>
+    socketWaitingRoom.emit(EVENTS.ACTION.WAITING_ROOM_READY)
+
+  const waitingRoomRollbackAction = () =>
+    socketWaitingRoom.emit(EVENTS.ACTION.WAITING_ROOM_DATA_ROLLBACK)
+
+  /**
+   *
+   * @param _item_id
+   * @param _qty
+   * @param _owner
+   * @returns
+   */
+  const burnItemNowStatus = (_item_id: string, _qty: number, _owner: boolean) =>
+    new Promise((resolve, reject) => {
+      burnItem({
+        player_id,
+        item_id: _item_id,
+        room_id,
+        qty: _qty
+      }).then(async (_res: IBurnItemResponse) => {
+        if (_res) {
+          resolve(_res.status)
+          successToast(MESSAGES["you-burn-item"])
+        }
+        reject(_res)
+      })
+    })
+
+  /**
+   *
+   * @param status
+   */
+  const transactionAction = (status: boolean) => {
+    socketWaitingRoom.emit(EVENTS.ACTION.WAITING_ROOM_TRANSACTION_PROCESS, {
+      status
+    })
+  }
+
+  /**
+   *
+   * @description for player
+   * @param _player
+   * @param _item_id
+   * @param _qty
+   * @param _owner
+   * @returns
+   */
+  const onReadyPlayerBurnItem = (
+    _itemBurn: boolean,
+    _item_id: string,
+    _qty: number
+  ) =>
+    new Promise((resolve) => {
+      if (_itemBurn) {
+        // system burn item
+        waitingRoomReadyAction()
+        resolve(true)
+      }
+
+      // system not burn item
+      transactionAction(true)
+      burnItemNowStatus(_item_id, _qty, false).then((res) => {
+        if (res) {
+          transactionAction(false)
+          waitingRoomReadyAction()
+          waitingRoomItemBurnAction(player_id, true)
+          resolve(true)
+          successToast(MESSAGES["burn-item-success"])
+        }
+      })
+
+      transactionAction(false)
+      MESSAGES["transaction-error"]
+      resolve(false)
+    })
+
+  /**
+   *
+   * @description for owner
+   * @param _player
+   * @param _item_id
+   * @param _qty
+   * @param _isOwner
+   * @returns
+   */
+  const onOwnerBurnItem = (
+    _item_burn: boolean,
+    _item_id: string,
+    _qty: number
+  ) =>
+    new Promise((resolve) => {
+      if (!_item_burn) {
+        transactionAction(true)
+        burnItemNowStatus(_item_id, _qty, true).then((res) => {
+          if (res) {
+            transactionAction(false)
+            waitingRoomItemBurnAction(player_id, true)
+            resolve(true)
+          }
+        })
+        transactionAction(false)
+        waitingRoomRollbackAction()
+        errorToast(MESSAGES["transaction-error"])
+        resolve(false)
+      }
+      transactionAction(false)
+      waitingRoomItemBurnAction(player_id, true)
+      resolve(true)
+    })
+
+  const getPlayersCheckItemOfPlayerListen = useCallback(
+    () =>
+      new Promise((resolve, reject) => {
+        socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_ITEM, (response) => {
+          if (response) {
+            resolve(response)
+          } else {
+            reject(response)
+          }
+        })
+      }),
+    [socketWaitingRoom]
+  )
+
+  const getPlayersCheckRoomRollbackListen = useCallback(
+    () =>
+      new Promise((resolve, reject) => {
+        socketWaitingRoom.on(
+          EVENTS.LISTENERS.WAITING_ROOM_ROLLBACK,
+          (response) => {
+            if (response) {
+              resolve(response)
+            } else {
+              reject(response)
+            }
+          }
+        )
+      }),
+    [socketWaitingRoom]
+  )
+
+  useEffect(() => {
+    getPlayersCheckRoomRollbackListen()
+  }, [getPlayersCheckRoomRollbackListen, isConnected])
+
+  useEffect(() => {
+    getPlayersCheckItemOfPlayerListen()
+  }, [getPlayersCheckItemOfPlayerListen, isConnected])
+
   return {
     socketWaitingRoom,
     onSetConnectedSocket,
@@ -113,7 +290,12 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     room_id,
     getChat,
     onSendMessage,
-    cancelReady
+    cancelReadyPlayer,
+    onReadyPlayerBurnItem,
+    onOwnerBurnItem,
+    getPlayersCheckItemOfPlayerListen,
+    getPlayersCheckRoomRollbackListen,
+    burnItemNowStatus
   }
 }
 

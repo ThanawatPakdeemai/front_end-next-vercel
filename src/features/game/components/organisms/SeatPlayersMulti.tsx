@@ -10,6 +10,8 @@ import Helper from "@utils/helper"
 import { IResGetIp } from "@interfaces/IGetIP"
 import { MESSAGES } from "@constants/messages"
 // import useGameStore from "@stores/game"
+import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
+import useGameStore from "@stores/game"
 import ButtonPlayer from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 import ButtonOwner from "../atoms/ButtonOwner"
@@ -20,9 +22,12 @@ interface IProps {
 }
 
 const SeatPlayersSingle = ({ players }: IProps) => {
+  const { onReadyPlayerBurnItem, cancelReadyPlayer } =
+    useSocketProviderWaiting()
+
   const profile = useProfileStore((state) => state.profile.data)
-  // const { data, itemSelected } = useGameStore()
-  const [ownerPressReady, setOwnPressReady] = useState(false)
+  const { itemSelected, qtyItemOfRoom } = useGameStore()
+  const [ownerPressPlay, setOwnPressPlay] = useState(false)
   const [playerPressReady, setPlayerPressReady] = useState(false)
   const { errorToast } = useToast()
   const [, setIp] = useState<string>("")
@@ -75,7 +80,7 @@ const SeatPlayersSingle = ({ players }: IProps) => {
   const checkText = useMemo(() => {
     if (isOwnerRoom) {
       //  owner
-      if (!playerAllReady && !ownerPressReady && playerNotReady) {
+      if (!playerAllReady && !ownerPressPlay && playerNotReady) {
         return "The game will begin as soon as all players are ready"
       }
       if (playerAllReady) {
@@ -84,132 +89,153 @@ const SeatPlayersSingle = ({ players }: IProps) => {
     }
 
     // player
-    if (playerPressReady && !ownerPressReady) {
+    if (playerPressReady && !ownerPressPlay) {
       return "Please wait for them to begin"
     }
-    if (ownerPressReady || playerPressReady) {
+    if (ownerPressPlay || playerPressReady) {
       return "The game is starting now, prepare to play!"
     }
     return "It's time to play! Press the Ready"
   }, [
     isOwnerRoom,
     playerPressReady,
-    ownerPressReady,
+    ownerPressPlay,
     playerAllReady,
     playerNotReady
   ])
 
-  const onReady = () => {
-    setPlayerPressReady(!playerPressReady)
+  const onReady = async () => {
+    if (playerMe && itemSelected && qtyItemOfRoom > 0) {
+      await onReadyPlayerBurnItem(
+        playerMe?.item_burn,
+        itemSelected._id,
+        qtyItemOfRoom
+      )
+
+      await setPlayerPressReady(!playerPressReady)
+    } else if (!playerMe) {
+      errorToast(MESSAGES["no-player"])
+    } else if (!itemSelected || qtyItemOfRoom < 1) {
+      errorToast(MESSAGES["please_item"])
+    }
   }
 
   const onPlayGame = () => {
-    setOwnPressReady(!ownerPressReady)
+    setOwnPressPlay(!setOwnPressPlay)
   }
+
   return (
     <>
       <Box>
         <PlayerCard players={players} />
         <Box className="mb-10  flex justify-center">
-          <Box
-            className={` ${
-              ownerPressReady && " border-secondary-main"
-            } w-fit items-center justify-center gap-3 rounded-[50px] border border-neutral-800 bg-primary-main p-3 md:flex`}
-          >
-            <Typography
-              className={`${
-                (ownerPressReady || playerPressReady) && "text-secondary-main"
-              }  ${
-                (playerAllReady || playerPressReady) && " text-green-lemon"
-              } ${isOwnerRoom && " text-error-main"}  ${
-                playerMe && playerMe.status === "inroom" && "text-neutral-300 "
-              } mx-4 w-[200px] font-neue-machina text-sm `}
+          {players.length > 0 && (
+            <Box
+              className={` ${
+                ownerPressPlay && " border-secondary-main"
+              } w-fit items-center justify-center gap-3 rounded-[50px] border border-neutral-800 bg-primary-main p-3 md:flex`}
             >
-              {checkText}
-            </Typography>
-            {ownerPressReady && (
-              <ButtonCountdown
-                time
-                handleClick={() => {
-                  playerAllReady
-                    ? onPlayGame()
-                    : () => {
-                        errorToast(MESSAGES["please-wait-player-all-ready"]) // TODO YUI
-                      }
-                }}
-                endIcon={
-                  isOwnerRoom ? (
-                    <HighlightOffIcon className="text-secondary-main " />
-                  ) : (
-                    <HourglassEmptyIcon className="text-primary-main " />
-                  )
-                }
-                className={`h-[60px] w-[60px] rounded-full ${
-                  isOwnerRoom
-                    ? " border border-secondary-main bg-neutral-900 text-secondary-main"
-                    : " bg-secondary-main text-neutral-900"
-                }   font-bold capitalize`}
-              />
-            )}
+              <Typography
+                className={`${
+                  // || playerPressReady
+                  ownerPressPlay && "text-secondary-main"
+                }  ${
+                  (playerAllReady || playerPressReady) && " text-green-lemon"
+                } ${isOwnerRoom && " text-error-main"}  ${
+                  playerMe &&
+                  playerMe.status === "inroom" &&
+                  "text-neutral-300 "
+                } mx-4 w-[200px] font-neue-machina text-sm `}
+              >
+                {checkText}
+              </Typography>
+              {ownerPressPlay && (
+                <ButtonCountdown
+                  time
+                  handleClick={() => {
+                    playerAllReady
+                      ? onPlayGame()
+                      : () => {
+                          errorToast(MESSAGES["please-wait-player-all-ready"]) // TODO YUI
+                        }
+                  }}
+                  endIcon={
+                    isOwnerRoom ? (
+                      <HighlightOffIcon className="text-secondary-main " />
+                    ) : (
+                      <HourglassEmptyIcon className="text-primary-main " />
+                    )
+                  }
+                  className={`h-[60px] w-[60px] rounded-full ${
+                    isOwnerRoom
+                      ? " border border-secondary-main bg-neutral-900 text-secondary-main"
+                      : " bg-secondary-main text-neutral-900"
+                  }   font-bold capitalize`}
+                />
+              )}
 
-            {isOwnerRoom && !ownerPressReady && (
-              <ButtonOwner
-                startIcon={
-                  <Ellipse fill={playerAllReady ? "#A0ED61" : "#F42728"} />
-                }
-                handleClick={() => {
-                  playerAllReady
-                    ? onPlayGame()
-                    : () => {
-                        errorToast(MESSAGES["please-wait-player-all-ready"]) // TODO YUI
-                      }
-                }}
-                text={
-                  <Typography className="w-full font-neue-machina text-2xl uppercase text-neutral-600">
-                    START
-                  </Typography>
-                }
-                className={`h-[60px] w-[194px] rounded-[50px] ${
-                  playerAllReady
-                    ? " btn-green-rainbow bg-green-lemon text-neutral-900"
-                    : "bg-neutral-800  text-neutral-600"
-                } font-bold capitalize`}
-              />
-            )}
+              {isOwnerRoom && !ownerPressPlay && (
+                <ButtonOwner
+                  startIcon={
+                    <Ellipse fill={playerAllReady ? "#A0ED61" : "#F42728"} />
+                  }
+                  handleClick={() => {
+                    playerAllReady
+                      ? onPlayGame()
+                      : () => {
+                          errorToast(MESSAGES["please-wait-player-all-ready"]) // TODO YUI
+                        }
+                  }}
+                  text={
+                    <Typography className="w-full font-neue-machina text-2xl uppercase text-neutral-600">
+                      START
+                    </Typography>
+                  }
+                  className={`h-[60px] w-[194px] rounded-[50px] ${
+                    playerAllReady
+                      ? " btn-green-rainbow bg-green-lemon text-neutral-900"
+                      : "bg-neutral-800  text-neutral-600"
+                  } font-bold capitalize`}
+                />
+              )}
 
-            {!isOwnerRoom && !playerPressReady && (
-              <ButtonPlayer
-                startIcon={<Ellipse fill="#A0ED61" />}
-                handleClick={onReady}
-                text={
-                  <Typography className="w-full font-neue-machina text-2xl uppercase text-primary-main">
-                    READY
-                  </Typography>
-                }
-                className={` btn-green-rainbow  
+              {!isOwnerRoom && !playerPressReady && (
+                <ButtonPlayer
+                  startIcon={<Ellipse fill="#A0ED61" />}
+                  handleClick={onReady}
+                  text={
+                    <Typography className="w-full font-neue-machina text-2xl uppercase text-primary-main">
+                      READY
+                    </Typography>
+                  }
+                  className={` btn-green-rainbow  
                      h-[60px] w-[194px]  rounded-[50px]
                       bg-green-lemon
                   font-bold capitalize text-neutral-900`}
-              />
-            )}
+                />
+              )}
 
-            {!isOwnerRoom && playerPressReady && (
-              <ButtonCountdown
-                handleClick={onReady}
-                text={
-                  <Typography className="w-full font-neue-machina text-2xl uppercase  text-green-lemon">
-                    You are ready
-                  </Typography>
-                }
-                endIcon={<HighlightOffIcon className=" text-primary-main" />}
-                className={` h-[60px] w-[60px]
+              {!isOwnerRoom && playerPressReady && (
+                <ButtonCountdown
+                  handleClick={() => {
+                    setPlayerPressReady(false)
+                    cancelReadyPlayer()
+                  }}
+                  text={
+                    <Typography className="w-full font-neue-machina text-2xl uppercase  text-green-lemon">
+                      You are ready
+                    </Typography>
+                  }
+                  endIcon={<HighlightOffIcon className=" text-primary-main" />}
+                  className={` h-[60px] w-[60px]
                     rounded-full bg-green-lemon
                 text-primary-main ${
                   players ? " " : "btn-green-rainbow  "
                 } font-bold capitalize text-neutral-900`}
-              />
-            )}
-          </Box>
+                />
+              )}
+            </Box>
+          )}
         </Box>
       </Box>
     </>

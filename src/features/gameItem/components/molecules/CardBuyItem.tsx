@@ -68,40 +68,38 @@ export default function CardButItem() {
   }
 
   const buttonInToGame = useMemo(() => {
-    if (router.pathname === "/[GameHome]") {
-      if (itemSelected && (itemSelected as IGameItemListData).qty > 0) {
-        return (
-          <ButtonLink
-            text={t("join-game")}
-            href={`${router.asPath}/roomlist`}
-            icon={<LogoutIcon />}
-            size="medium"
-            color="secondary"
-            variant="contained"
-            className="w-full"
-          />
-        )
-      }
+    if (itemSelected && (itemSelected as IGameItemListData).qty > 0) {
       return (
         <ButtonLink
-          text={MESSAGES["please_item"]}
+          text={t("join-game")}
+          href={`${router.asPath}/roomlist`}
           icon={<LogoutIcon />}
-          href={`${router.asPath}`}
           size="medium"
           color="secondary"
           variant="contained"
           className="w-full"
-          disabled
         />
       )
     }
+    return (
+      <ButtonLink
+        text={MESSAGES["please_item"]}
+        icon={<LogoutIcon />}
+        href={`${router.asPath}`}
+        size="medium"
+        color="secondary"
+        variant="contained"
+        className="w-full"
+        disabled
+      />
+    )
   }, [itemSelected, router, t])
 
   return (
     <>
       <div
         className={`h-fit ${
-          router.pathname === "/[GameHome]" ? "w-full" : "w-fit"
+          router.pathname === "/[GameHome]" ? "w-full" : "mb-3 w-fit"
         } rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 `}
       >
         <div className="p-4 ">
@@ -131,7 +129,7 @@ export default function CardButItem() {
 
           <div
             className={`grid ${
-              router.pathname === "/[GameHome]" ? "w-full" : "w-fit"
+              router.pathname === "/[GameHome]" ? "w-full" : " w-fit"
             } grid-cols-2 gap-4 `}
           >
             <div className="rounded-xl border-[1px] border-primary-main bg-primary-main ">
@@ -166,20 +164,22 @@ export default function CardButItem() {
               </div>
             </div>
           </div>
-          <div className="mt-4 w-full">
-            {profile ? (
-              buttonInToGame
-            ) : (
-              <ButtonLink
-                text={t("please_login")}
-                href="/"
-                icon={<LogoutIcon />}
-                size="medium"
-                color="secondary"
-                className="w-full"
-              />
-            )}
-          </div>
+          {router.pathname === "/[GameHome]" && (
+            <div className="mt-4 w-full">
+              {profile ? (
+                buttonInToGame
+              ) : (
+                <ButtonLink
+                  text={t("please_login")}
+                  href="/"
+                  icon={<LogoutIcon />}
+                  size="medium"
+                  color="secondary"
+                  className="w-full"
+                />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>

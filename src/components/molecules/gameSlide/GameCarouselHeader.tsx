@@ -157,6 +157,7 @@ const GameCarouselHeader = ({
             text="view all"
             handleClick={onClickedView}
             className="flex h-full w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
+            type="button"
           />
           <div className="arrow-slick-container bg-black ml-4 grid h-full w-[100px] grid-cols-2 divide-x divide-neutral-700 rounded-md border border-neutral-700 text-white-primary ">
             <button

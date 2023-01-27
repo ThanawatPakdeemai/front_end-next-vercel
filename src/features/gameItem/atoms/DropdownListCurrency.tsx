@@ -5,7 +5,7 @@ import Image from "next/image"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
-import { useTranslation } from "react-i18next"
+import { useTranslation } from "next-i18next"
 import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
 import { ICURENCY } from "@interfaces/ICurrency"
 import ButtonDropdown from "./ButtonDropdown"

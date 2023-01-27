@@ -23,7 +23,6 @@ const ProfileContent = () => {
   const [openEdit, setOpenEdit] = useState<boolean>(false)
   const [profileData, setProfileData] = useState<IProfile>()
   const [idPlayer, setIdPlayer] = useState<string>("")
-  // const { getBadgeData, isLoading } = useGetBadge("61bc302f7f8867700b66dd4b")
 
   useEffect(() => {
     if (profile && profile.data) {
@@ -32,7 +31,7 @@ const ProfileContent = () => {
     }
   }, [profile])
 
-  const { getProfileInfo } = useGetProfileInfo({
+  const { getProfileInfo, refetchGetProfile, isFetching } = useGetProfileInfo({
     _limit: 20,
     _playerId: idPlayer,
     _page: 1,
@@ -54,7 +53,7 @@ const ProfileContent = () => {
   const silverCount = getRankCount("silver")
   const platinumCount = getRankCount("platinum")
 
-  return profileData ? (
+  return profileData && getProfileInfo && !isFetching ? (
     <div>
       <div className="relative">
         {/* <div className="h-[148px] rounded-xl bg-neutral-700">
@@ -81,38 +80,51 @@ const ProfileContent = () => {
             startIcon={<SettingIcon />}
             text="Edit Profile"
             className="z-[2] h-[50px] w-[148px] bg-neutral-900 font-bold capitalize text-white-default"
+            type="button"
           />
         </div>
         <EditProfileModal
+          onRefetchProfile={refetchGetProfile}
           handleClose={handleClose}
+          showModal={handleOnExpandClick}
           openEdit={openEdit}
+          platinumCount={platinumCount}
+          userName={getProfileInfo.data.username}
+          userImage={getProfileInfo.data.avatar}
         />
       </div>
       <div className="relative">
         <Tagline
           className="my-0 mt-4 mb-4"
           text="Nakamoto.Games - Secue. fun. simple. earn $naka AND enjoy"
-          bgColor="bg-error-main"
-          icon={<ShapeIcon />}
-          textColor="text-neutral-900 font-bold text-sm"
+          bgColor={platinumCount === 0 ? `bg-neutral-800` : `bg-error-main`}
+          icon={
+            <ShapeIcon fill={platinumCount === 0 ? `#4E5057` : `#18181C`} />
+          }
+          textColor={`font-bold text-sm ${
+            platinumCount === 0 ? "text-neutral-600" : "text-neutral-900"
+          } `}
         />
         <div className="flex w-full justify-center">
           <div className="absolute bottom-[-50px] z-10 h-[150px] w-[150px] rounded-3xl border-8 border-neutral-900 bg-neutral-700">
+            <div
+              className="absolute top-[-20px] right-[28px]
+    z-20"
+            >
+              <div className="relative">
+                <Lavel className="absolute" />
+                <Typography className="absolute flex h-[45px] w-[45px] items-center justify-center p-2 font-digital-7 text-[24px] text-white-default">
+                  {profileData.level}
+                </Typography>
+              </div>
+            </div>
+
             <Image
-              src={profileData.avatar}
+              src={getProfileInfo.data.avatar}
               fill
               alt="profile-avatar"
               className="absolute rounded-3xl"
             />
-          </div>
-          {/* <div className="absolute z-20">13</div> */}
-          <div className="absolute z-20">
-            <div className="relative">
-              <Lavel className="absolute" />
-              <Typography className="absolute font-digital-7 text-[24px] text-white-default">
-                13
-              </Typography>
-            </div>
           </div>
         </div>
       </div>
@@ -121,14 +133,16 @@ const ProfileContent = () => {
       </div>
       <div className="mt-[50px] flex w-full justify-center">
         <Typography className="font-mondwest text-[46px] uppercase  text-error-main shadow-error-main drop-shadow-xl">
-          <RandomReveal
-            isPlaying
-            duration={0.1}
-            revealDuration={1}
-            characters={profileData.username}
-            onComplete={() => ({ shouldRepeat: true, delay: 6 })}
-            characterSet={CHAR_SET_JP}
-          />
+          {getProfileInfo && (
+            <RandomReveal
+              isPlaying
+              duration={0.1}
+              revealDuration={1}
+              characters={getProfileInfo.data.username}
+              onComplete={() => ({ shouldRepeat: true, delay: 6 })}
+              characterSet={CHAR_SET_JP}
+            />
+          )}
         </Typography>
       </div>
       <div className="flex w-full justify-center">
@@ -177,7 +191,7 @@ const ProfileContent = () => {
           )}
         </div>
       </div>
-      <SliderBadges />
+      <SliderBadges _playerId={profileData.id} />
     </div>
   ) : null
 }

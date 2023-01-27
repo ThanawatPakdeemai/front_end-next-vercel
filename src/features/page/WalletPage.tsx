@@ -3,8 +3,10 @@ import RightMenuWallet from "@components/molecules/rightMenu/RightMenuWallet"
 import Gas from "@components/molecules/Gas"
 import INaka from "@components/icons/Naka"
 import IBusd from "@components/icons/Busd"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { styled } from "@mui/material"
+import MetamaskWallet from "@components/molecules/balance/MetamaskWallet"
+import useProfileStore from "@stores/profileStore"
 // import { ethers } from "ethers"
 // import getWeb3NoAccount from "@src/utils/web3"
 
@@ -19,10 +21,51 @@ const KeyFramesRotate = styled("div")({
   },
   animation: "rotation 10s infinite linear"
 })
+
 export default function WalletPage() {
+  const { profile } = useProfileStore()
   const [type, setType] = useState<string>("NAKA")
-  // const webdsfsdf = getWeb3NoAccount
-  // console.log("webdsfsdf", webdsfsdf)
+  const [isConnected, setIsConnected] = useState<boolean>(false)
+
+  const [haveMetamask, sethaveMetamask] = useState(true)
+
+  const [client, setclient] = useState<any>({
+    isConnected: false
+  })
+  const checkConnection = async () => {
+    const { ethereum }: any = window
+    if (ethereum) {
+      sethaveMetamask(haveMetamask)
+      const accounts = await ethereum.request({ method: "eth_accounts" })
+      if (accounts.length > 0) {
+        setIsConnected(true)
+        setclient({
+          isConnected: true,
+          address: accounts[0]
+        })
+      } else {
+        setclient({
+          isConnected: false
+        })
+      }
+    } else {
+      sethaveMetamask(false)
+    }
+  }
+
+  useEffect(() => {
+    checkConnection()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [client])
+
+  const handleConnectWallet = () => {
+    setIsConnected(true)
+  }
+
+  const handleOnDisconnectWallet = () => {
+    setIsConnected(false)
+  }
+
   return (
     <>
       <div className="mx-2 grid w-full grid-cols-12 gap-4">
@@ -158,24 +201,34 @@ export default function WalletPage() {
                     />
                   </div>
                   <div className="">
-                    {/* <Image
-                      src="/images/Profile/Wallet/Vector-line.svg"
-                      alt=""
-                      width={155}
-                      height={155}
-                    /> */}
-                    <div
-                      className="wavy-line wavy-line-green"
-                      data-text="'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
-                    />
+                    {isConnected ? (
+                      <div
+                        className="wavy-line wavy-line-green"
+                        data-text="'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
+                      />
+                    ) : (
+                      <div
+                        className="wavy-line-DS wavy-line-DS"
+                        data-text="''''''''''''''''''''''''''''''''''''''''''''"
+                      />
+                    )}
                   </div>
                   <div className="border-1 ml-1 rounded-[5px] bg-neutral-800 py-1 px-1">
-                    <Image
-                      src="/images/Profile/Wallet/MetaMask.svg"
-                      alt=""
-                      width={35}
-                      height={35}
-                    />
+                    {isConnected ? (
+                      <Image
+                        src="/images/Profile/Wallet/MetaMask.svg"
+                        alt=""
+                        width={35}
+                        height={35}
+                      />
+                    ) : (
+                      <Image
+                        src="/images/Profile/Wallet/MetaMaskDS.svg"
+                        alt=""
+                        width={35}
+                        height={35}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
@@ -222,7 +275,14 @@ export default function WalletPage() {
         <div className="col-span-2 h-full w-full items-center justify-center gap-1 rounded-default bg-neutral-800">
           <Gas />
         </div>
-        <div className="col-span-4 h-full w-full items-center justify-center gap-1 rounded-default bg-neutral-800" />
+        <div className="col-span-4 h-full w-full items-center justify-center gap-1">
+          <MetamaskWallet
+            isConnected={isConnected}
+            handleConnectWallet={handleConnectWallet}
+            handleOnDisconnectWallet={handleOnDisconnectWallet}
+            profile={profile.data}
+          />
+        </div>
       </div>
     </>
   )

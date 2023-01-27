@@ -13,7 +13,7 @@ import { Image } from "@components/atoms/image"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import { MESSAGES } from "@constants/messages"
 import Helper from "@utils/helper"
-import { useTranslation } from "react-i18next"
+import { useTranslation } from "next-i18next"
 import { useToast } from "@feature/toast/containers"
 import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 
@@ -145,7 +145,7 @@ export default function CardButItem() {
               />
             </div>
             <div className="flex w-full flex-col justify-center">
-              <div className="mb-2 flex w-full justify-between rounded-xl bg-neutral-300  p-2 text-center text-black-700">
+              <div className="mb-2 flex w-full justify-between rounded-xl bg-[#E1E2E2]  p-2 text-center text-[#111111]">
                 <p>{itemSelected?.qty ?? 0}</p>
                 <Image
                   src="/images/gamePage/skull.png"
@@ -154,7 +154,7 @@ export default function CardButItem() {
                   height="30"
                 />
               </div>
-              <div className="mb-2 flex w-full justify-between rounded-xl bg-neutral-700 p-2 text-center text-black-default">
+              <div className="mb-2 flex w-full justify-between rounded-xl bg-[#111111] p-2 text-center text-black-default">
                 <p>= {totalPrice}</p>
                 {/* <Input
                   defaultValue=" 0.00"

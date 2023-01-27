@@ -1,8 +1,9 @@
 import HeaderWaitingRoom from "@components/organisms/HeaderWaitingRoom"
 import SeatPlayersSingle from "@feature/game/components/organisms/SeatPlayerSingle"
 import useGetCurrentPlayerGameSingle from "@feature/game/containers/hooks/useGetCurrentPlayerGameSingle"
+import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 
-import { Box, Typography } from "@mui/material"
+import { Box } from "@mui/material"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
@@ -15,14 +16,14 @@ export interface IPropWaitingSingle {
 
 const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const gameData = useGameStore((state) => state.data)
+  const { data } = useGameStore()
   const router = useRouter()
   const { isLoading, playerGameSingle, fetchPlayerGameSingle } =
     useGetCurrentPlayerGameSingle()
 
   const fetchPlayers = useCallback(
     (_type: "in" | "out") => {
-      if (gameData && profile && _roomId && fetchPlayerGameSingle) {
+      if (data && profile && _roomId && fetchPlayerGameSingle) {
         unstable_batchedUpdates(() => {
           fetchPlayerGameSingle({
             _roomId,
@@ -32,7 +33,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
         })
       }
     },
-    [_roomId, fetchPlayerGameSingle, gameData, profile]
+    [_roomId, fetchPlayerGameSingle, data, profile]
   )
 
   useEffect(() => {
@@ -99,21 +100,25 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
     <>
       <Box className=" block gap-3 lg:grid lg:grid-flow-col">
         {_roomId &&
-          (playerGameSingle && gameData ? (
+          (data ? (
             <>
-              <Box className="spark-fire relative rounded-3xl border border-neutral-700">
-                <HeaderWaitingRoom
-                  roomTag={playerGameSingle?.room_number}
-                  roomName={`#${gameData?.name} ${playerGameSingle?.room_number}`}
-                  timer={{
-                    time: new Date(playerGameSingle?.end_time)
-                  }}
-                  player={{
-                    currentPlayer: playersMap.filter((ele) => ele).length ?? 0,
-                    maxPlayer: playerGameSingle?.max_players ?? 8
-                  }}
-                  onOutRoom={outRoom}
-                />
+              <Box className="relative w-full rounded-3xl border border-neutral-700 lg:w-[1020px]">
+                {playerGameSingle && (
+                  <HeaderWaitingRoom
+                    roomTag={playerGameSingle.room_number}
+                    roomName={`#${data.name} ${playerGameSingle.room_number}`}
+                    timer={{
+                      time: new Date(playerGameSingle.end_time)
+                    }}
+                    player={{
+                      currentPlayer:
+                        playersMap.filter((ele) => ele).length ?? 0,
+                      maxPlayer: playerGameSingle.max_players ?? 8
+                    }}
+                    onOutRoom={outRoom}
+                  />
+                )}
+
                 {!isLoading && (
                   <>
                     <SeatPlayersSingle
@@ -127,9 +132,11 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
           ) : (
             <>Loading...</>
           ))}
-        <Box className="h-[238px] rounded-3xl border border-neutral-700">
-          <Typography className="m-3">Right Tab</Typography>
-        </Box>
+        {(!data?.play_to_earn || !data.tournament) && (
+          <Box className=" w-full rounded-3xl">
+            <CardBuyItem />
+          </Box>
+        )}
       </Box>
     </>
   )

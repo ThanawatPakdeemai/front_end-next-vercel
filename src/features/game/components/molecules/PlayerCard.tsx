@@ -93,20 +93,21 @@ const PlayerCard = ({ players }: IProps) => {
                 </Box>
               </Box>
             ) : (
-              <>
-                <Box className="  rounded-3xl">
-                  <AvatarProfile
-                    image={{
-                      width: "!w-[82px] p-2 !bg-neutral-800 rounded-xl",
-                      height: "!h-auto"
-                    }}
-                    key={Number(index)}
-                    borderColor=" border-neutral-800"
-                    src="/images/home/logoNakaMaster.svg"
-                  />
-                  <Box className="h-[57px] py-3" />
-                </Box>
-              </>
+              <Box
+                className="  rounded-3xl"
+                key={Number(index)}
+              >
+                <AvatarProfile
+                  image={{
+                    width: "!w-[82px] p-2 !bg-neutral-800 rounded-xl",
+                    height: "!h-auto"
+                  }}
+                  key={Number(index)}
+                  borderColor=" border-neutral-800"
+                  src="/images/home/logoNakaMaster.svg"
+                />
+                <Box className="h-[57px] py-3" />
+              </Box>
             )
           )}
         </Box>

@@ -14,7 +14,7 @@ export interface IHeaderRoomList {
 
 const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
   const router = useRouter()
-  const { data } = useGameStore()
+  const { data, itemSelected } = useGameStore()
   const [gameData, setGameData] = useState<IGame>()
 
   useEffect(() => {
@@ -28,11 +28,19 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
       <div className="flex justify-between p-4">
         <div className="flex gap-4">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800">
-            <ButtonClose onClick={() => router.back()} />
+            <ButtonClose onClick={() => router.push(`/${gameData?.path}`)} />
           </div>
           <h1 className="text-white-defzault self-center uppercase">
             Lobby :{lobby}
-            <Typography className="text-secondary-main">Skull XL</Typography>
+            {gameData?.play_to_earn || gameData?.tournament ? (
+              ""
+            ) : (
+              <Typography className="uppercase text-secondary-main">
+                {`${itemSelected && itemSelected.name} ${
+                  itemSelected && itemSelected.item_size
+                }`}
+              </Typography>
+            )}
           </h1>
         </div>
         <div className="flex">
@@ -52,9 +60,9 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
               startAdornment: <SearchIcon className="mr-4" />
             }}
           />
-          {gameData && gameData.game_type === "multiplayer" ? (
+          {gameData && gameData.game_type === "multiplayer" && (
             <ModalCreateRoom gameData={gameData} />
-          ) : null}
+          )}
         </div>
       </div>
     </>

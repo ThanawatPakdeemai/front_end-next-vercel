@@ -169,12 +169,13 @@ const Footer = () => {
                 startIcon={<WineIcon />}
                 text="join The Revolutions"
                 className="btn-rainbow-theme b h-[50px] w-[220px] bg-secondary-main font-bold capitalize text-white-default"
+                type="button"
               />
             </div>
             <div className="flex flex-wrap">
-              {SOCIAL?.map((item) => (
+              {SOCIAL?.map((item, index) => (
                 <Link
-                  key={item.label}
+                  key={Number(index)}
                   href={item.href}
                   target="_blank"
                 >
@@ -204,6 +205,7 @@ const Footer = () => {
                 startIcon={<DesktopIcon />}
                 text="Become a Naka Devs"
                 className="z-[2] h-[50px] w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
+                type="button"
               />
               <h3 className="pl-[30px] text-grey-neutral04 md:w-[280px]">
                 Join the industry&apos;s first comprehensive Play to Earn
@@ -216,6 +218,7 @@ const Footer = () => {
                 startIcon={<DollarPaperIcon />}
                 text="Become a Partner"
                 className="z-[2] h-[50px] w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
+                type="button"
               />
               <h3 className="pl-[30px] text-grey-neutral04 md:w-[300px]">
                 Earn some serious cash promoting Nakamoto.Games

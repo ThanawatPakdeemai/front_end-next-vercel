@@ -1,11 +1,7 @@
-import React, { createContext, ReactNode, useContext, useState } from "react"
+import React, { createContext, useContext, useState } from "react"
 import { chainIdConfig } from "@src/constants/sites"
 import { ethers } from "ethers"
 import Web3 from "web3"
-
-interface IProp {
-  children: ReactNode
-}
 
 interface Context {
   chainId: number

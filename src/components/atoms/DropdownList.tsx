@@ -2,9 +2,8 @@ import * as React from "react"
 import { useEffect, useState } from "react"
 import { Collapse } from "@mui/material"
 import DropdownIcon from "@components/icons/DropdownIcon"
-import { IDropdown } from "@interfaces/IMenu"
 import Image from "next/image"
-import SelectDropdownList from "./selectDropdownList/SelectDropdownList"
+import SelectDropdownList from "@components/atoms/selectDropdown/SelectDropdown"
 
 interface IProp {
   icon?: React.ReactNode
@@ -22,6 +21,7 @@ const DropdownList = ({ title, list, className }: IProp) => {
   }
   useEffect(() => {
     setData(list[0])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

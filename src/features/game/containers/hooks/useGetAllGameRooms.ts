@@ -17,10 +17,7 @@ const useGetAllGameRooms = ({ _gameId, _email, _itemId }: IGetAllGameRooms) => {
   })
 
   return {
-    allGameRooms:
-      allGameRooms && allGameRooms.gameRoomDetail.length > 0
-        ? allGameRooms.gameRoomDetail
-        : undefined,
+    allGameRooms: allGameRooms ? allGameRooms.gameRoomDetail : undefined,
     isLoading,
     isError,
     error,

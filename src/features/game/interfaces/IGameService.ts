@@ -145,6 +145,7 @@ export interface IGame {
   image_home_banner: string
   game_free_url?: string
   image_free_to_earn_icon?: string
+  play_total_count?: number
 }
 
 interface IGameHowto {

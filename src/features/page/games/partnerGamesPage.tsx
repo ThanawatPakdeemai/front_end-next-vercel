@@ -4,15 +4,11 @@ import { P2EHeaderMenu } from "@constants/gameSlide"
 import GameCard from "@feature/game/containers/components/molecules/GameCard"
 import { getAllPartnerGames } from "@feature/game/containers/services/game.service"
 import { useQueryClient } from "@tanstack/react-query"
-import { useRouter } from "next/router"
 import React, { memo, useEffect, useRef, useState } from "react"
 import { v4 as uuid } from "uuid"
 import useGameStore from "@stores/game/index"
-import useProfileStore from "@stores/profileStore"
-import { IProfile } from "@feature/profile/interfaces/IProfileService"
-import { MESSAGES } from "@constants/messages"
 import usePartnerGame from "@feature/game/containers/hooks/usePartnerGame"
-import { useToast } from "@feature/toast/containers"
+import useGlobal from "@hooks/useGlobal"
 
 const PartnerGames = () => {
   const search = ""
@@ -21,15 +17,8 @@ const PartnerGames = () => {
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
-  const router = useRouter()
   const { clearGameData } = useGameStore()
-  const profile = useProfileStore((state) => state.profile.data)
-  const [stateProfile, setStateProfile] = useState<IProfile | null>()
-  const { errorToast } = useToast()
-
-  useEffect(() => {
-    setStateProfile(profile)
-  }, [profile])
+  const { onHandleClick } = useGlobal()
 
   const {
     isLoading,
@@ -62,14 +51,6 @@ const PartnerGames = () => {
     clearGameData()
   }, [clearGameData, gameData, isPreviousData, page, queryClient])
 
-  const onHandleClick = (_gameUrl: string) => {
-    if (stateProfile) {
-      router.push(`/${_gameUrl}`)
-      // onSetGameData(_gameData)
-    } else {
-      errorToast(MESSAGES.please_login)
-    }
-  }
   return (
     <div className="flex flex-col">
       <div className="mb-6 grid grid-cols-5 gap-y-4 gap-x-2">

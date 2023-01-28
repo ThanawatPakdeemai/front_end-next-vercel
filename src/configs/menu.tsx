@@ -67,11 +67,21 @@ export const MENU = [
       },
       {
         name: "Story Mode",
-        link: "/story",
+        link: "/story-mode-games",
         icon: MapOutlinedIcon,
         textRight: "Free"
       },
-      { name: "Tournament", link: "/tournament", icon: DiamondIcon }
+      { name: "Tournament", link: "/tournament", icon: DiamondIcon },
+      {
+        name: "Partner Games",
+        link: "/partner-games",
+        icon: MapOutlinedIcon
+      },
+      {
+        name: "NFT Games",
+        link: "/nft-games",
+        icon: MapOutlinedIcon
+      }
     ]
   },
   {

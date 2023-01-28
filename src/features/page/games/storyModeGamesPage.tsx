@@ -4,6 +4,7 @@ import { F2PHeaderMenu } from "@constants/gameSlide"
 import GameCard from "@feature/game/components/molecules/GameCard"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import { getGameByTypes } from "@feature/game/containers/services/game.service"
+import useGlobal from "@hooks/useGlobal"
 import { useQueryClient } from "@tanstack/react-query"
 import { memo, useEffect, useRef, useState } from "react"
 import { v4 as uuid } from "uuid"
@@ -17,6 +18,7 @@ const StoryModeGamesPage = () => {
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
+  const { onHandleClick } = useGlobal()
 
   const {
     isLoading,
@@ -46,8 +48,6 @@ const StoryModeGamesPage = () => {
     }
   }, [gameData, isPreviousData, page, queryClient])
 
-  const onHandleClick = () => {}
-
   return (
     <div className="flex flex-col">
       <div className="mb-6 grid grid-cols-5 gap-y-4 gap-x-2">
@@ -64,7 +64,7 @@ const StoryModeGamesPage = () => {
                 staminaRecovery={staminaRecovery}
                 cooldown={cooldown}
                 setCooldown={setCooldown}
-                onHandleClick={onHandleClick}
+                onHandleClick={() => onHandleClick(game.path, game)}
               />
             ))
           : null}

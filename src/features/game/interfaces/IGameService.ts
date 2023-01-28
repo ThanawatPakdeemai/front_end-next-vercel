@@ -128,6 +128,7 @@ export interface IGame {
   version: string
   developer: string
   category: IGameCategory
+  category_list: IGameCategory[]
   game_type: TGameType
   type_code: TTypeCode
   game_url: string

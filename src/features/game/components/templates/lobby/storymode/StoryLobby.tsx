@@ -22,10 +22,14 @@ const StoryLobby = () => {
    */
   // TODO: change slide.category.id to slide.category.slug
   gameData &&
-    gameTags.push({
-      name: gameData.category.name,
-      link: `category/${gameData.category.id}`
-    })
+    gameData.category_list &&
+    gameData.category_list.length > 0 &&
+    gameData.category_list.map((category) =>
+      gameTags.push({
+        name: category.name,
+        link: `category/${category.id}`
+      })
+    )
 
   return (
     <div className="flex h-full items-center justify-center">

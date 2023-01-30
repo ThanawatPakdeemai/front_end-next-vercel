@@ -9,8 +9,8 @@ const ButtonWallet = ({ handleButton, title }: IProp) => (
   <>
     <button
       type="button"
-      className={`ml-2 flex rounded-3xl p-3 text-[#010101] ${
-        title === "withdraw" ? "bg-[#F42728]" : "bg-[#3DCD95]"
+      className={`ml-2 flex rounded-3xl p-3 text-primary-main ${
+        title === "withdraw" ? "bg-error-main" : "bg-varidian-default"
       }`}
       onClick={() => handleButton()}
     >

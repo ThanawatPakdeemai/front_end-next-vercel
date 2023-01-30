@@ -6,7 +6,12 @@ import ProfileRegister from "@components/template/Register"
 const RegisterPage = () => (
   <GoogleReCaptchaProvider
     reCaptchaKey={`${process.env.NEXT_PUBLIC_KEY_RECAPTCHA}`}
-    scriptProps={{ async: true }}
+    scriptProps={{
+      async: true,
+      defer: false,
+      appendTo: "head",
+      nonce: undefined
+    }}
   >
     <ProfileRegister />
   </GoogleReCaptchaProvider>

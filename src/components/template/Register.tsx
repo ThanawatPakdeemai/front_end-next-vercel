@@ -16,7 +16,6 @@ import {
   IconButton,
   InputAdornment,
   Link,
-  Paper,
   styled,
   TextField,
   Typography
@@ -84,7 +83,7 @@ const SignupSchema = yup
   })
   .required()
 
-const ProfileRegister = () => {
+const RegisterLayout = () => {
   const {
     register,
     handleSubmit,
@@ -168,24 +167,24 @@ const ProfileRegister = () => {
     if (!executeRecaptcha) {
       return
     }
-    let result = ""
+    let _recaptcha = ""
 
     ;(async () => {
       try {
-        result = await executeRecaptcha("getCodeVerify")
+        _recaptcha = await executeRecaptcha("getCodeVerify")
+        await mutateVerifyCode({ _email, _recaptcha })
+          .then((_profile) => {
+            if (_profile) {
+              successToast(MESSAGES.sign_in_success)
+            }
+          })
+          .catch(() => {
+            errorToast(MESSAGES.please_fill)
+          })
       } catch (error) {
         errorToast("Verify Error")
       }
     })()
-    mutateVerifyCode({ _email, _recaptcha: result })
-      .then((_profile) => {
-        if (_profile) {
-          successToast(MESSAGES.sign_in_success)
-        }
-      })
-      .catch(() => {
-        errorToast(MESSAGES.please_fill)
-      })
   }
 
   const onSubmitRegister = (values: TFormData) => {
@@ -220,35 +219,34 @@ const ProfileRegister = () => {
     <Box>
       <Box className="p-5">
         <Grid
+          item
           container
-          component="main"
+          component="div"
           className="h-screen rounded-3xl border border-solid border-neutral-800 p-2.5"
         >
-          <Box
-            component="div"
-            className="absolute z-[1] m-5 items-center justify-between lg:flex"
-          >
-            <HeadLogo />
-          </Box>
           <Grid
             item
             xs={0}
             sm={0}
             md={6}
-            className="rounded-[14px] bg-cover bg-no-repeat"
+            className="relative rounded-[14px] bg-cover bg-center bg-no-repeat"
             sx={{
               backgroundImage: `url(${IMAGES.rectagle.src})`
             }}
           >
             <Box
               component="div"
-              className="relative bottom-[-45rem]"
+              className="absolute z-[1] m-5 items-center justify-between lg:flex"
             >
+              <HeadLogo />
+            </Box>
+            <Box className="container absolute bottom-0.5 overflow-hidden">
               <Tagline
                 bgColor="bg-neutral-800"
                 textColor="text-neutral-500"
                 text="Secue. fun. simple. earn $naka AND enjoy "
                 icon={<VectorIcon />}
+                className="!my-4"
               />
             </Box>
           </Grid>
@@ -257,9 +255,7 @@ const ProfileRegister = () => {
             xs={12}
             sm={12}
             md={6}
-            component={Paper}
-            elevation={6}
-            square
+            className="relative rounded-[14px] bg-cover bg-center bg-no-repeat"
             sx={{
               background: "#050505"
             }}
@@ -446,6 +442,7 @@ const ProfileRegister = () => {
                         <Button
                           disabled={!emailCorrect || watch("email") === ""}
                           onClick={() => onClickGetCode(watch("email"))}
+                          // onClick={(e) => onClickGetCode(e)}
                           className="btn-rainbow-theme h-[40px] !min-w-[90px] rounded-lg bg-error-main text-sm text-neutral-300"
                         >
                           Get Code
@@ -502,7 +499,7 @@ const ProfileRegister = () => {
                             textTransform: "uppercase"
                           }
                         }}
-                        id="email"
+                        id="password"
                         size="medium"
                         InputProps={{
                           startAdornment: (
@@ -605,7 +602,7 @@ const ProfileRegister = () => {
                             paddingBottom: "0.5rem"
                           }
                         }}
-                        id="email"
+                        id="confirmPassword"
                         size="medium"
                         InputProps={{
                           startAdornment: (
@@ -798,4 +795,4 @@ const ProfileRegister = () => {
   )
 }
 
-export default ProfileRegister
+export default RegisterLayout

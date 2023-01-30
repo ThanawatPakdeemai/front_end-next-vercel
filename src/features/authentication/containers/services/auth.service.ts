@@ -42,11 +42,13 @@ export const signUp = ({
 }: ISignUp) =>
   new Promise<IProfileResponse>((resolve, reject) => {
     const data = {
-      email: _email,
-      password: _password,
-      verifycode: _verifycode,
-      referral: _referral,
-      subscription: _subscription
+      data: {
+        email: _email,
+        password: _password,
+        verifycode: _verifycode,
+        referral: _referral,
+        subscription: _subscription
+      }
     }
     services
       .post<IProfileResponse>("/profile/create", { ...data })

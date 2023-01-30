@@ -1,18 +1,16 @@
-import { ReactElement } from "react"
+import ProfileContent from "@components/molecules/profile/ProfileContent"
+import ProfileLayout from "@components/template/ProfileLayout"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import LeftSidebarLayout from "@components/template/LeftSidebarLayout"
-import GameStatOverview from "@feature/playerProfile/components/organisms/GameStatOverview"
+import React, { ReactElement } from "react"
 
-export default function PlayerProfile() {
-  return (
-    <>
-      <GameStatOverview />
-    </>
-  )
-}
+const ProfilePage = () => (
+  <article className="h-full w-full">
+    <ProfileContent />
+  </article>
+)
 
-PlayerProfile.getLayout = function getLayout(page: ReactElement) {
-  return <LeftSidebarLayout>{page}</LeftSidebarLayout>
+ProfilePage.getLayout = function getLayout(page: ReactElement) {
+  return <ProfileLayout>{page}</ProfileLayout>
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {
@@ -22,3 +20,5 @@ export async function getServerSideProps({ locale }: { locale: string }) {
     }
   }
 }
+
+export default ProfilePage

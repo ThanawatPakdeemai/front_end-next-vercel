@@ -8,18 +8,25 @@
 echo "🧐 lint staged active..."
 yarn lint-staged
 
+yarn check-lint ||
+(
+  echo '🙅‍♀️🙅‍♀️🙅‍♀️ Get that weak shit out of here! 🙅‍♀️🙅‍♀️🙅‍♀️
+    ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
+  false;
+)
+
 # Building Tailwind CSS
 yarn build:css ||
 (
   echo '🎨🎨🎨 I am building the CSS 🎨🎨🎨'
-  false; 
+  false;
 )
 
 # Format code.
 echo "🤓 Formating code ... "
 yarn format:prettier
 
-# Check Prettier standards  
+# Check Prettier standards
 yarn check:prettier ||
 (
   echo '🤢🤮🤢🤮 Its FOKING RAW - Your styling looks disgusting. 🤢🤮🤢🤮

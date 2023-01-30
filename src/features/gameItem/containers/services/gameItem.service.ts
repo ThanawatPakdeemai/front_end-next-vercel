@@ -1,11 +1,11 @@
 import services from "@configs/axiosGlobalConfig"
 import {
   IGameItemBalanceService,
-  IGameItemList,
   IGameItemService,
   IGameItemListService,
   IGetGameItemsByGameId,
-  IGetGameItemsBalanceByItemId
+  IGetGameItemsBalanceByItemId,
+  IGameItemListData
 } from "@feature/gameItem/interfaces/IGameItemService"
 
 export const getAllGameItems = () =>
@@ -28,9 +28,9 @@ export const getGameItemsByGameId = ({
   _playerId,
   _gameId
 }: IGetGameItemsByGameId) =>
-  new Promise<IGameItemList[]>((resolve, reject) => {
+  new Promise<IGameItemListData[]>((resolve, reject) => {
     services
-      .get<IGameItemList[]>(`/game/item-list/${_gameId}/${_playerId}`)
+      .get<IGameItemListData[]>(`/game/item-list/${_gameId}/${_playerId}`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

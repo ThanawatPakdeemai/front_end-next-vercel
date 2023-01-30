@@ -2,6 +2,7 @@ import ReloadIcon from "@components/icons/ReloadIcon"
 import ButtonSticky from "@components/molecules/ButtonSticky"
 import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
+import { MESSAGES } from "@constants/messages"
 import useSocketRoomList from "@feature/game/containers/hooks/useSocketRoomList"
 import {
   IGameRoomListSocket,
@@ -20,26 +21,31 @@ const MultiRoomList = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
   const { errorToast } = useToast()
-  const gameData = useGameStore((state) => state.data)
+  const { data, itemSelected } = useGameStore()
 
   const [dataRoom, setDataRoom] = useState<IGameRoomListSocket[]>()
 
+  const item = useMemo(() => {
+    if (data) {
+      if (data.play_to_earn || data.tournament) {
+        return data.item[0]._id
+      }
+      if (itemSelected) {
+        return itemSelected._id
+      }
+    } else {
+      return ""
+    }
+  }, [data, itemSelected])
+
   const propsSocketRoomlist = useMemo(
     () => ({
-      path: gameData?.socket_info?.url_lobby ?? "",
+      path: data?.socket_info?.url_lobby ?? "",
       player_id: profile?.id ?? "",
-      game_id: gameData?._id ?? "",
-      item_id: gameData?.play_to_earn
-        ? gameData.item[0]._id
-        : "61976479dffe844091ab8df1" // TODO YUI 1$ mock
+      game_id: data?._id ?? "",
+      item_id: item ?? ""
     }),
-    [
-      gameData?._id,
-      gameData?.item,
-      gameData?.play_to_earn,
-      gameData?.socket_info?.url_lobby,
-      profile?.id
-    ]
+    [data?._id, data?.socket_info?.url_lobby, item, profile?.id]
   )
 
   const { socketRoomList, isConnected, getRoomListMultiPlayer } =
@@ -84,22 +90,22 @@ const MultiRoomList = () => {
 
   const handleJoinRoom = (_data: IGameRoomListSocket) => {
     if (new Date() > new Date(_data.end_time)) {
-      errorToast("This room is full")
+      errorToast(MESSAGES["room-timeout"])
     } else if (
       _data.amount_current_player < _data.max_players &&
       new Date() < new Date(_data.end_time)
     ) {
       router.push(`${router.asPath}/${_data._id}`)
     } else {
-      errorToast("This room is full")
+      errorToast(MESSAGES["room-full"])
     }
   }
 
   return (
     <>
-      <SocketProviderRoom propsSocket={propsSocketRoomlist}>
+      <SocketProviderRoom propsSocket={{ getRoomListMultiPlayer }}>
         <Box className="rounded-3xl border border-neutral-700">
-          {gameData && <HeaderRoomList lobby={gameData.name} />}
+          {data && <HeaderRoomList lobby={data.name} />}
           <Divider />
 
           <div className="custom-scroll flex h-[666px] flex-col items-center gap-[27px] overflow-y-scroll bg-room-list bg-contain p-[43px]">

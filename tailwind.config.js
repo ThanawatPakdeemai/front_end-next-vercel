@@ -48,6 +48,7 @@ module.exports = {
         500: "#70727B",
         600: "#4E5057",
         700: "#232329",
+        780: "#101013",
         800: "#18181C",
         900: "#010101"
       }
@@ -65,7 +66,9 @@ module.exports = {
         "Helvetica",
         "Arial",
         "sans-serif"
-      ]
+      ],
+      "digital-7": "digital-7",
+      "mondwest": ["mondwest", "Helvetica", "Arial", "sans-serif"]
     },
     /* extend config here */
     extend: {

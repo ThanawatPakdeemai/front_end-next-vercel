@@ -20,7 +20,9 @@ const MenuItemCustom = ({ active, endIcon, ...props }: IProp) => {
     <MenuItem
       key={props.id}
       aria-label={props.id}
-      onClick={() => router.push(props.href)}
+      onClick={() => {
+        if (props.href && props.href !== "") router.push(props.href)
+      }}
       sx={{
         color: active ? "#E1E2E2" : null,
         backgroundColor: active ? "#010101" : null

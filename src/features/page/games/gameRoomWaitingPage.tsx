@@ -1,3 +1,4 @@
+import { ChatProvider } from "@feature/chat/containers/contexts/ChatProvider"
 import MultiWaiting from "@feature/game/components/templates/waitingRoom/multiPlayer/MultiWaiting"
 import SingleWaiting from "@feature/game/components/templates/waitingRoom/singlePlayer/SingleWaiting"
 import StoryWaiting from "@feature/game/components/templates/waitingRoom/storymode/StoryWaiting"
@@ -28,7 +29,11 @@ const GameRoomWaitingPage = ({ _roomId }: IProp) => {
         case "singleplayer":
           return <SingleWaiting _roomId={_roomId} />
         case "multiplayer":
-          return <MultiWaiting _roomId={_roomId} />
+          return (
+            <ChatProvider>
+              <MultiWaiting _roomId={_roomId} />
+            </ChatProvider>
+          )
         case "storymode":
           return <StoryWaiting />
         default:

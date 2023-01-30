@@ -2,7 +2,12 @@ import {
   IGameItem,
   IGameItemList
 } from "@feature/gameItem/interfaces/IGameItemService"
-import { IFormatService, IInfo } from "@interfaces/IHelper"
+import {
+  IFormatMessageService,
+  IFormatService,
+  IInfo
+} from "@interfaces/IHelper"
+import { IPlayToEarnRewardData } from "@src/types/games"
 
 export type TGameType = "singleplayer" | "multiplayer" | "storymode"
 export type TTypeCode =
@@ -161,7 +166,7 @@ export interface IGameService extends IFormatService {
 }
 
 export interface IGameCurrentPlayer extends IGameBase {
-  status: string
+  status: string // "inroom" | "ready" | "played" | "playing"
   item_burn: boolean
   transaction_status: boolean
   avatar: string
@@ -285,10 +290,10 @@ export interface IGameReportService extends IFormatService {
 }
 
 export interface IGamePlayToEarnService extends IFormatService {
-  data: IGameRewardByPlayer
+  data: IPlayToEarnRewardData[]
 }
 
-export interface IGameClaimEarnedRewardService extends IFormatService {
+export interface IGameClaimEarnedRewardService extends IFormatMessageService {
   data: string
 }
 

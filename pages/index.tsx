@@ -17,11 +17,10 @@ Home.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>
 }
 
-export async function getStaticProps({ locale }) {
+export async function getServerSideProps({ locale }: { locale: string }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"]))
-      // Will be passed to the page component as props
     }
   }
 }

@@ -8,8 +8,15 @@ interface IProp {
   onHandle: (_event?: React.ChangeEvent<HTMLInputElement>) => void
   text?: string
   className?: string
+  fontStyle?: string
 }
-const CheckBoxNaka = ({ value, onHandle, text, className }: IProp) => (
+const CheckBoxNaka = ({
+  value,
+  onHandle,
+  text,
+  className,
+  fontStyle = "text-sm text-neutral-500"
+}: IProp) => (
   <>
     <label className={`${className} flex`}>
       <Checkbox
@@ -28,7 +35,7 @@ const CheckBoxNaka = ({ value, onHandle, text, className }: IProp) => (
           </Box>
         }
       />
-      <Typography className="cursor-pointer font-neue-machina text-sm text-neutral-500">
+      <Typography className={`cursor-pointer font-neue-machina ${fontStyle}`}>
         {text ?? ""}
       </Typography>
     </label>

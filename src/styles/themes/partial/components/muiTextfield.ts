@@ -7,6 +7,7 @@ export const MuiTextfield: Components<
   defaultProps: {},
   styleOverrides: {
     root: {
+      fontFamily: "Neue Machina",
       "& .MuiOutlinedInput-notchedOutline": {
         display: "none",
         "& legend": {
@@ -43,7 +44,6 @@ export const MuiTextfield: Components<
         }
       },
       "& .MuiOutlinedInput-root": {
-        width: 234,
         height: 40,
         borderRadius: "8px",
         background: PaletteCustom.neutral[800],
@@ -53,6 +53,12 @@ export const MuiTextfield: Components<
         },
         "&.Mui-error": {
           border: `1px solid ${PaletteCustom.error.main}`
+        },
+        input: {
+          "&:-webkit-autofill": {
+            WebkitBoxShadow: `0 0 0 100px ${PaletteCustom.secondary.main} inset`,
+            WebkitTextFillColor: PaletteCustom.neutral[700]
+          }
         }
       },
       ":hover": {

@@ -13,11 +13,11 @@ import { MESSAGES } from "@constants/messages"
 import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
 import useGameStore from "@stores/game"
 import CONFIGS from "@configs/index"
-import ButtonPlayer from "../atoms/ButtonPlayer"
-import PlayerCard from "../molecules/PlayerCard"
-import ButtonOwner from "../atoms/ButtonOwner"
-import ButtonCountdown from "../atoms/ButtonCountdown"
-import ButtonGame from "../molecules/buttonGame"
+import ButtonGame from "@feature/game/components/molecules/ButtonGame"
+import ButtonCountdown from "@feature/game/components/atoms/ButtonCountdown"
+import ButtonOwner from "@feature/game/components/atoms/ButtonOwner"
+import ButtonPlayer from "@feature/game/components/atoms/ButtonPlayer"
+import PlayerCard from "@feature/game/components/molecules/PlayerCard"
 
 interface IProps {
   players: IGameCurrentPlayerMulti[] | undefined[]

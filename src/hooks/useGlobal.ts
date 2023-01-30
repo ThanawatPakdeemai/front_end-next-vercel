@@ -6,6 +6,7 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { MESSAGES } from "@constants/messages"
+import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 
 const useGlobal = () => {
   const router = useRouter()
@@ -22,7 +23,10 @@ const useGlobal = () => {
    * @param _gameUrl
    * @param _gameData
    */
-  const onHandleClick = async (_gameUrl: string, _gameData?: IGame) => {
+  const onHandleClick = async (
+    _gameUrl: string,
+    _gameData?: IGame | IPartnerGameData
+  ) => {
     if (stateProfile) {
       if (_gameData) onSetGameData(_gameData)
       await router.push(`/${_gameUrl}`)

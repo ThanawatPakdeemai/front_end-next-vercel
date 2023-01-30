@@ -8,6 +8,7 @@ import {
   IInfo
 } from "@interfaces/IHelper"
 import { IPlayToEarnRewardData } from "@src/types/games"
+import { IPartnerGameData } from "./IPartnerGame"
 
 export type TGameType = "singleplayer" | "multiplayer" | "storymode"
 export type TTypeCode =
@@ -23,6 +24,8 @@ export type IGetType =
   | "story-mode"
   | "must-try"
   | "hot-game"
+  | "partner-game"
+  | "nft-game"
 
 export interface IGetGameByTypesProps {
   _type: IGetType
@@ -259,7 +262,7 @@ export interface IGameRewardByPlayer extends IGameBase {
 }
 
 export interface IGameService extends IFormatService {
-  data: IGame[]
+  data: IGame[] | IPartnerGameData
 }
 
 export interface IGameCurrentPlayer extends IGameBase {

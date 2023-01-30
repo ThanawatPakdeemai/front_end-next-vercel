@@ -54,7 +54,7 @@ function OverviewIcon({
         d="M12 11L12 2"
         stroke="#010101"
         stroke-width="1.2"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
       />
     </svg>
   )

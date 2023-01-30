@@ -1,3 +1,4 @@
+import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { GameAllId, IGame } from "@src/features/game/interfaces/IGameService"
 import configZustandDevTools from "@src/utils/configDevtools"
@@ -5,9 +6,9 @@ import create from "zustand"
 import { devtools, persist } from "zustand/middleware"
 
 export interface IUseGameItemStore {
-  data: IGame | null
+  data: IGame | IPartnerGameData | null
   gameId: GameAllId[]
-  onSetGameData: (_game: IGame) => void
+  onSetGameData: (_game: IGame | IPartnerGameData) => void
   clearGameData: () => void
   setGameID: (_gameID: GameAllId[]) => void
   clearGameID: () => void

@@ -14,6 +14,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
 import MoneyOffIcon from "@mui/icons-material/MoneyOff"
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined"
 import DiamondIcon from "@mui/icons-material/Diamond"
+import Diamond from "@components/icons/Diamond"
 import { IMAGES } from "@constants/images"
 import AboutUsIcon from "@components/icons/BlogIcon/AboutUsIcon"
 import Campfire from "@components/icons/Campfire"
@@ -29,6 +30,7 @@ import Inventory from "@components/icons/Inventory"
 import ItemReward from "@components/icons/ItemReward"
 import Support from "@components/icons/Support"
 import Profile from "@components/icons/Profile"
+import GlobalIcon from "@components/icons/GlobalIcon"
 
 export const MENU = [
   {
@@ -173,6 +175,20 @@ export const MENU_GUEST: IMenu[] = [
     label: "Tournament",
     icon: <TournamentIcon className="stroke-neutral-300" />,
     href: "/tournament/636e5091feb7364211af6858/naka-runner-tournament-hosted-by-slayer",
+    external: false
+  },
+  {
+    id: "partner-games",
+    label: "Partner Games",
+    icon: <GlobalIcon className="stroke-neutral-300" />,
+    href: "/partner-games",
+    external: false
+  },
+  {
+    id: "nft-games",
+    label: "NFT Games",
+    icon: <Diamond stroke="#E1E2E2" />,
+    href: "/nft-games",
     external: false
   }
 ]

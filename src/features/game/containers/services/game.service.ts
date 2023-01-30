@@ -209,3 +209,11 @@ export const getAllPartnerGames = ({
       })
       .catch((error) => reject(error))
   })
+
+export const getGamePartnerById = (_gameId: string) =>
+  new Promise<IGameService>((resolve, reject) => {
+    services
+      .get<IGameService>(`/partner-game-content/${_gameId}`)
+      .then((reponse) => resolve(reponse.data))
+      .catch((error) => reject(error))
+  })

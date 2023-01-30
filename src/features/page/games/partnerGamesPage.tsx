@@ -65,7 +65,9 @@ const PartnerGames = () => {
               menu={P2EHeaderMenu}
               partnerdata={game}
               imgPartner={game.image_thumbnail}
-              onHandleClick={() => onHandleClick("partner-games/test")}
+              onHandleClick={() =>
+                onHandleClick(`partner-games/${game.slug}`, game)
+              }
             />
           ))}
       </div>

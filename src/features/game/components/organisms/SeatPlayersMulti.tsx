@@ -17,6 +17,7 @@ import ButtonPlayer from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 import ButtonOwner from "../atoms/ButtonOwner"
 import ButtonCountdown from "../atoms/ButtonCountdown"
+import ButtonGame from "../molecules/buttonGame"
 
 interface IProps {
   players: IGameCurrentPlayerMulti[] | undefined[]
@@ -206,6 +207,11 @@ const SeatPlayersSingle = ({ players }: IProps) => {
       <Box>
         <PlayerCard players={players} />
         <Box className="mb-10  flex justify-center">
+          <ButtonGame
+            textButton="play"
+            description="playyyyyyyyy"
+            url=""
+          />
           {players.length > 0 && (
             <Box
               className={` ${
@@ -264,7 +270,7 @@ const SeatPlayersSingle = ({ players }: IProps) => {
                         }
                   }}
                   text={
-                    <Typography className="w-full font-neue-machina text-2xl uppercase text-neutral-600">
+                    <Typography className="w-full font-neue-machina text-2xl uppercase text-primary-main">
                       START
                     </Typography>
                   }

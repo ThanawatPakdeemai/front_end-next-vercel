@@ -1,41 +1,39 @@
 import { ReactElement, useEffect, useState } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import useGameStore from "@stores/game"
-import useGamesById from "@feature/game/containers/hooks/useGamesById"
 import GamePageDefault from "@components/template/GamePageDefault"
 import SkeletonGamePartner from "@components/atoms/skeleton/SkeletonGamePartner"
 import Overview from "@components/organisms/Overview"
 import OverviewIcon from "@components/icons/OverviewIcon"
-import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { IGameTag } from "@feature/slider/interfaces/IGameTags"
 import TagMultiple from "@components/molecules/TagMultiple"
 import TagSingular from "@components/molecules/TagSingular"
+import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
+import useGlobal from "@hooks/useGlobal"
 
 export default function GamePartnerDetails() {
-  const [gameData, setGameData] = useState<IPartnerGameData>()
-  const { data } = useGameStore()
-  const { dataGame, isLoading } = useGamesById({
-    _gameId: data ? data.id : "",
-    _type: "partner-game"
-  })
+  const { gamePartnerData } = useGlobal()
+  const { onSetGamePartnersData } = useGameStore()
 
   useEffect(() => {
-    if (!isLoading && dataGame) setGameData(dataGame.data as IPartnerGameData)
-  }, [dataGame, isLoading])
+    if (gamePartnerData) {
+      onSetGamePartnersData(gamePartnerData)
+    }
+  }, [gamePartnerData, onSetGamePartnersData])
 
-  return <>{gameData ? <>Test</> : <SkeletonGamePartner />}</>
+  return <>{gamePartnerData ? <>Test</> : <SkeletonGamePartner />}</>
 }
 
 const OverviewContent = () => {
-  const { data } = useGameStore()
+  const { dataGamePartner } = useGameStore()
   const [gameData, setGameData] = useState<IPartnerGameData>()
   const gameTags: IGameTag[] = []
 
   useEffect(() => {
-    if (data) {
-      setGameData(data as IPartnerGameData)
+    if (dataGamePartner) {
+      setGameData(dataGamePartner)
     }
-  }, [data])
+  }, [dataGamePartner])
 
   gameData &&
     gameData.genres.length > 0 &&
@@ -77,7 +75,10 @@ const OverviewContent = () => {
             )}
           <p
             dangerouslySetInnerHTML={{
-              __html: data && "description" in data ? data.description : ""
+              __html:
+                gameData && "description" in gameData
+                  ? gameData.description
+                  : ""
             }}
           />
         </div>

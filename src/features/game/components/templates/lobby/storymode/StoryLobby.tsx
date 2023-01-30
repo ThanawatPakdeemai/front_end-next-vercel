@@ -14,7 +14,7 @@ const StoryLobby = () => {
   const [gameData, setGameData] = useState<IGame>()
 
   useEffect(() => {
-    if (data) setGameData(data as IGame)
+    if (data) setGameData(data)
   }, [data])
 
   /**
@@ -70,10 +70,10 @@ const StoryLobby = () => {
             />
             <TagSingular
               title={`${t("play_count_title")}`}
-              tag={
+              label={
                 gameData && gameData.play_total_count
-                  ? { name: gameData.play_total_count.toString(), link: "" }
-                  : { name: "0", link: "" }
+                  ? gameData.play_total_count.toString()
+                  : ""
               }
             />
           </div>

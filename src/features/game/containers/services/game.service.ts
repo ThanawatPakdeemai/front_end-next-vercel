@@ -13,7 +13,8 @@ import {
   IGetPlayerInRoom,
   IClaimEarnedRewardByPlayerId,
   IGetGameByTypesProps,
-  IGetGameByTypes
+  IGetGameByTypes,
+  IGamePartnerService
 } from "@feature/game/interfaces/IGameService"
 
 import { IGetPartnerGameService } from "@feature/game/interfaces/IPartnerGame"
@@ -211,9 +212,11 @@ export const getAllPartnerGames = ({
   })
 
 export const getGamePartnerById = (_gameId: string) =>
-  new Promise<IGameService>((resolve, reject) => {
+  new Promise<IGameService | IGamePartnerService>((resolve, reject) => {
     services
-      .get<IGameService>(`/partner-game-content/${_gameId}`)
+      .get<IGameService | IGamePartnerService>(
+        `/partner-game-content/${_gameId}`
+      )
       .then((reponse) => resolve(reponse.data))
       .catch((error) => reject(error))
   })

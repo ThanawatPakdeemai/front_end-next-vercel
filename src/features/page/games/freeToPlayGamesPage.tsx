@@ -67,7 +67,9 @@ const FreeToPlayGamesPage = () => {
                 staminaRecovery={staminaRecovery}
                 cooldown={cooldown}
                 setCooldown={setCooldown}
-                onHandleClick={() => onHandleClick(game.game_url, game)}
+                onHandleClick={() =>
+                  onHandleClick("free-to-play", game.game_url, game)
+                }
               />
             ))
           : null}

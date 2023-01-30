@@ -37,7 +37,7 @@ const OverviewContent = () => {
   const { data } = useGameStore()
   const [gameData, setGameData] = useState<IGame>()
   useEffect(() => {
-    if (data) setGameData(data as IGame)
+    if (data) setGameData(data)
   }, [data])
   return (
     <div className="flex flex-col">

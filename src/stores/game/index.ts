@@ -6,10 +6,13 @@ import create from "zustand"
 import { devtools, persist } from "zustand/middleware"
 
 export interface IUseGameItemStore {
-  data: IGame | IPartnerGameData | null
+  data: IGame | null
+  dataGamePartner: IPartnerGameData | null
   gameId: GameAllId[]
-  onSetGameData: (_game: IGame | IPartnerGameData) => void
+  onSetGameData: (_game: IGame) => void
+  onSetGamePartnersData: (_game: IPartnerGameData) => void
   clearGameData: () => void
+  clearGamePartnersData: () => void
   setGameID: (_gameID: GameAllId[]) => void
   clearGameID: () => void
   getGame: () => void
@@ -23,9 +26,20 @@ const useGameStore = create<IUseGameItemStore>()(
     persist(
       (set, get) => ({
         data: null,
+        dataGamePartner: null,
         gameId: [],
         onSetGameData: (_game) => {
           set(() => ({ data: _game }), false, "GameStore/setGame")
+        },
+        onSetGamePartnersData: (_game) => {
+          set(
+            () => ({ dataGamePartner: _game }),
+            false,
+            "GameStore/setGamePartners"
+          )
+        },
+        clearGamePartnersData: () => {
+          set(() => ({ data: null }), false, "GameStore/clearGamePartnersData")
         },
         clearGameData: () => {
           set(() => ({ data: null }), false, "GameStore/clearGameData")

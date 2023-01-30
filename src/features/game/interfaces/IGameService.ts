@@ -262,7 +262,11 @@ export interface IGameRewardByPlayer extends IGameBase {
 }
 
 export interface IGameService extends IFormatService {
-  data: IGame[] | IPartnerGameData
+  data: IGame[]
+}
+
+export interface IGamePartnerService extends IFormatService {
+  data: IPartnerGameData
 }
 
 export interface IGameCurrentPlayer extends IGameBase {

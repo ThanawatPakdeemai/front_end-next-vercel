@@ -61,7 +61,9 @@ const PlayToEarnGamesPage = () => {
                 key={game.id}
                 menu={P2EHeaderMenu}
                 data={game}
-                onHandleClick={() => onHandleClick(game.path, game)}
+                onHandleClick={() =>
+                  onHandleClick("play-to-earn", game.path, game)
+                }
               />
             ))
           : null}

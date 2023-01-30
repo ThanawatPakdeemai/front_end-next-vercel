@@ -64,7 +64,9 @@ const StoryModeGamesPage = () => {
                 staminaRecovery={staminaRecovery}
                 cooldown={cooldown}
                 setCooldown={setCooldown}
-                onHandleClick={() => onHandleClick(game.path, game)}
+                onHandleClick={() =>
+                  onHandleClick("story-mode", game.path, game)
+                }
               />
             ))
           : null}

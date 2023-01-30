@@ -17,7 +17,7 @@ const PartnerGames = () => {
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
-  const { clearGameData } = useGameStore()
+  const { clearGamePartnersData } = useGameStore()
   const { onHandleClick } = useGlobal()
 
   const {
@@ -48,8 +48,8 @@ const PartnerGames = () => {
           })
       })
     }
-    clearGameData()
-  }, [clearGameData, gameData, isPreviousData, page, queryClient])
+    clearGamePartnersData()
+  }, [clearGamePartnersData, gameData, isPreviousData, page, queryClient])
 
   return (
     <div className="flex flex-col">
@@ -66,7 +66,11 @@ const PartnerGames = () => {
               partnerdata={game}
               imgPartner={game.image_thumbnail}
               onHandleClick={() =>
-                onHandleClick(`partner-games/${game.slug}`, game)
+                onHandleClick(
+                  "partner-game",
+                  `partner-games/${game.slug}`,
+                  game
+                )
               }
             />
           ))}

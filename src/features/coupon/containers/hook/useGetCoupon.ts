@@ -28,19 +28,19 @@ const useGetCoupon = () => {
   //   refetch
   // }
   const {
-    mutateAsync: useGetRedeemCode,
-    data: useGetCouponRedeem,
+    mutateAsync: getRedeemCode,
+    data: getCouponData,
     error,
     isLoading,
     isError,
     isSuccess
   } = useMutation(redeemCode, {
-    mutationKey: ["getCouponRedeem"],
+    mutationKey: ["getCouponData"],
     retry: false
   })
   return {
-    useGetRedeemCode,
-    useGetCouponRedeem,
+    getRedeemCode,
+    getCouponData,
     error,
     isLoading,
     isError,

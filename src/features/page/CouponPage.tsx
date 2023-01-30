@@ -2,21 +2,34 @@ import { Button, InputAdornment, TextField, Typography } from "@mui/material"
 import React, { useState } from "react"
 import CouponIcon from "@components/icons/CouponIcon"
 import Image from "next/image"
-// import useGetCoupon from "@feature/coupon/containers/hook/useGetCoupon"
+import useGetCoupon from "@feature/coupon/containers/hook/useGetCoupon"
+import { useToast } from "@feature/toast/containers"
 
 const CouponPage = () => {
   const [coupon, setCoupon] = useState<string>("")
-  // const { useGetCouponRedeem, refetch } = useGetCoupon(coupon)
-  // const { useGetCouponRedeem } = useGetCoupon()
+  const { errorToast, successToast } = useToast()
+  const { getRedeemCode } = useGetCoupon()
 
   const handleClick = (event) => {
+    if (coupon) {
+      getRedeemCode(coupon)
+        .then((res) => {
+          successToast(res.message)
+        })
+        .catch((error) => {
+          errorToast(error.message)
+        })
+    }
     setCoupon(event.target.value)
+
+    // if (event) {
+    //   redeemCode(coupon)
+    //   setCoupon(event.target.value)
+    // }
+    // null
+    // useGetRedeemCode(coupon)
     // refetch()
     // event.preventDefault()
-
-    // eslint-disable-next-line no-console
-    console.log("handleClick 👉️", coupon)
-    // console.log("useGetCouponRedeem 👉️", useGetCouponRedeem?.message)
   }
   return (
     <div className="grid w-3/4 grid-cols-2 rounded-lg border border-neutral-700 bg-neutral-800">

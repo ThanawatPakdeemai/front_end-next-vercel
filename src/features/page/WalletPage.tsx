@@ -3,12 +3,21 @@ import RightMenuWallet from "@components/molecules/rightMenu/RightMenuWallet"
 import Gas from "@components/molecules/Gas"
 import INaka from "@components/icons/Naka"
 import IBusd from "@components/icons/Busd"
+import ISubtract from "@components/icons/Subtract"
+import IBattery from "@components/icons/Battery"
+import IVector from "@components/icons/Vector"
+import ISignalTube from "@components/icons/SignalTube"
+import IGMDesignerGame from "@components/icons/GMDesignerGame"
+import IStickerSolid from "@components/icons/StickerSolid"
+import ILogoMaster from "@components/icons/LogoMaster"
+import IMetaMask from "@components/icons/MetaMask"
 import React, { useState, useEffect } from "react"
 import { styled } from "@mui/material"
 import MetamaskWallet from "@components/molecules/balance/MetamaskWallet"
 import useProfileStore from "@stores/profileStore"
 // import { ethers } from "ethers"
 // import getWeb3NoAccount from "@src/utils/web3"
+import { IMAGES } from "@constants/images"
 
 const KeyFramesRotate = styled("div")({
   "@keyframes rotation": {
@@ -113,9 +122,7 @@ export default function WalletPage() {
             <div className="col-span-5 m-2">
               <div className="mb-2 flex w-full flex-row items-center  justify-between gap-1 rounded-default bg-black-100 py-4">
                 <div className="ml-2 flex flex-row items-center text-red-card">
-                  <Image
-                    src="/images/Profile/Wallet/battery.svg"
-                    alt=""
+                  <IBattery
                     width={25}
                     height={25}
                   />
@@ -123,9 +130,7 @@ export default function WalletPage() {
                 </div>
                 <div className="flex h-[10px] w-[140px] flex-row items-center text-neutral-700">
                   <p>signal</p>
-                  <Image
-                    src="/images/Profile/Wallet/signal-tube.svg"
-                    alt=""
+                  <ISignalTube
                     width={70}
                     height={10}
                   />
@@ -136,17 +141,18 @@ export default function WalletPage() {
                   Your NAKA in storage{" "}
                 </p>
                 <div className="mb-4 flex w-[250px] items-center">
-                  <Image
-                    src={
-                      type === "NAKA"
-                        ? "/images/Profile/Wallet/Subtract.svg"
-                        : "/images/Profile/Wallet/BUSD.svg"
-                    }
-                    alt=""
-                    width={type === "NAKA" ? 40 : 30}
-                    height={type === "NAKA" ? 40 : 30}
-                    className={type === "NAKA" ? "" : "mr-2"}
-                  />
+                  {type === "NAKA" ? (
+                    <ISubtract
+                      width="40"
+                      height="40"
+                    />
+                  ) : (
+                    <IBusd
+                      width="35"
+                      height="40"
+                      className="mr-2"
+                    />
+                  )}
                   <p
                     className={`font-digital ml-2 text-2xl ${
                       type === "NAKA" ? " text-NAKA " : "text-BUSD"
@@ -156,27 +162,21 @@ export default function WalletPage() {
                     340,395.8 {type}
                   </p>
                 </div>
-                <Image
-                  src="/images/Profile/Wallet/Vector.svg"
-                  alt=""
-                  width={325}
-                  height={325}
+                <IVector
+                  width="325"
+                  height="6"
                   className="mb-2"
                 />
-                <Image
-                  src="/images/Profile/Wallet/GM-Designer-Game.svg"
-                  alt=""
-                  width={225}
-                  height={225}
+                <IGMDesignerGame
+                  width="225"
+                  height="24"
                 />
 
                 <div className="absolute top-2 right-2">
                   <KeyFramesRotate>
-                    <Image
-                      src="/images/Profile/Wallet/StickerSolid.svg"
-                      alt=""
-                      width={70}
-                      height={70}
+                    <IStickerSolid
+                      width="70"
+                      height="70"
                     />
                   </KeyFramesRotate>
                 </div>
@@ -191,13 +191,11 @@ export default function WalletPage() {
                     NAKA storage model:S
                   </p>
                 </div>
-                <div className="col-span-5 flex  h-[30px] content-center items-center justify-between rounded-[6px] bg-black-100 p-2">
-                  <div className=" border-1 mr-1 rounded-[5px] bg-neutral-800 py-2 px-1">
-                    <Image
-                      src="/images/Profile/Wallet/LogoMaster.svg"
-                      alt=""
-                      width={35}
-                      height={35}
+                <div className="col-span-5 flex  h-[35px] content-center items-center justify-between rounded-[6px] bg-black-100 px-0.5 py-2 ">
+                  <div className=" border-1 mr-1 rounded-[5px] bg-neutral-800 py-2 px-0.5 ">
+                    <ILogoMaster
+                      width="25"
+                      height="12"
                     />
                   </div>
                   <div className="">
@@ -213,17 +211,15 @@ export default function WalletPage() {
                       />
                     )}
                   </div>
-                  <div className="border-1 ml-1 rounded-[5px] bg-neutral-800 py-1 px-1">
+                  <div className="border-1 ml-1 rounded-[5px] bg-neutral-800 p-0.5">
                     {isConnected ? (
-                      <Image
-                        src="/images/Profile/Wallet/MetaMask.svg"
-                        alt=""
-                        width={35}
-                        height={35}
+                      <IMetaMask
+                        width="25"
+                        height="25"
                       />
                     ) : (
                       <Image
-                        src="/images/Profile/Wallet/MetaMaskDS.svg"
+                        src={IMAGES.MetaMaskds.src}
                         alt=""
                         width={35}
                         height={35}
@@ -235,19 +231,12 @@ export default function WalletPage() {
             </div>
             <div className="col-span-2 m-2 flex">
               <Image
-                src="/images/Profile/Wallet/Frame.png"
+                src={IMAGES.Frame.src}
                 alt=""
                 width={120}
                 height={80}
                 className="mr-2"
               />
-              {/* <Image
-                src="/images/Profile/Wallet/WORM.png"
-                alt=""
-                width={20}
-                height={20}
-                className="mr-1"
-              /> */}
               <div className="mr-2 flex h-[365px] justify-center rounded-sm border-4 border-black-900 bg-black-100 p-[2px]">
                 <div className="loader">
                   <div className="loaderBar" />
@@ -256,14 +245,14 @@ export default function WalletPage() {
             </div>
             <div className="absolute top-[75px] left-[-16px]">
               <Image
-                src="/images/Profile/Wallet/Rectangle-red.svg"
+                src={IMAGES.RectangleRed.src}
                 alt=""
                 width={10}
                 height={10}
                 className="mb-2"
               />
               <Image
-                src="/images/Profile/Wallet/Rectangle-black.svg"
+                src={IMAGES.RectangleBlack.src}
                 alt=""
                 width={10}
                 height={10}

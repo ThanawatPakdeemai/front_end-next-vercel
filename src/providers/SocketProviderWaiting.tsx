@@ -10,6 +10,7 @@ interface IPropSocket {
     _item_id: string,
     _qty: number
   ) => void
+  room_id: string
 }
 interface IProp {
   propsSocket: IPropSocket
@@ -20,7 +21,8 @@ const SocketContext = createContext<IPropSocket>({
   kickRoom: () => {},
   cancelReadyPlayer: () => {},
   onSendMessage: () => {},
-  onReadyPlayerBurnItem: () => {}
+  onReadyPlayerBurnItem: () => {},
+  room_id: ""
 })
 
 function SocketProvider({ propsSocket, children }: IProp) {

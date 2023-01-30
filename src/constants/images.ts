@@ -6,6 +6,13 @@ export const IMAGES = {
     height: 37,
     alt: "naka-logo"
   },
+  nakaBannerHover: {
+    src: "/images/home/naka-band-hover.svg",
+    blurDataURL: "/images/home/naka-band-hover.svg",
+    width: 225,
+    height: 37,
+    alt: "naka-logo-hover"
+  },
   tableCom: {
     src: "/images/home/table-com.svg",
     blurDataURL: "/images/home/table-com.svg",

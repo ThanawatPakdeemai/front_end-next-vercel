@@ -121,7 +121,14 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
     return false
   }
   const OnPlayGame = () => {
-    if (gameRoomById && data && profile && room_id && item_id) {
+    if (
+      gameRoomById &&
+      profile &&
+      room_id &&
+      item_id &&
+      data &&
+      data.game_type === "singleplayer"
+    ) {
       const frontendUrl = `${baseUrlFront}/${data.path}/summary/${room_id}`
       const gameURL = `${baseUrlGame}/${data.id}/?${Helper.makeID(8)}${btoa(
         `${room_id}:|:${profile.id}:|:${item_id}:|:${

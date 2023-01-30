@@ -12,6 +12,7 @@ import { MESSAGES } from "@constants/messages"
 // import useGameStore from "@stores/game"
 import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
 import useGameStore from "@stores/game"
+import CONFIGS from "@configs/index"
 import ButtonPlayer from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 import ButtonOwner from "../atoms/ButtonOwner"
@@ -21,16 +22,24 @@ interface IProps {
   players: IGameCurrentPlayerMulti[] | undefined[]
 }
 
+const baseUrlGame = CONFIGS.BASE_URL.GAME
+const baseUrlApi = CONFIGS.BASE_URL.API
+const baseUrlFront = CONFIGS.BASE_URL.FRONTEND
+
 const SeatPlayersSingle = ({ players }: IProps) => {
-  const { onReadyPlayerBurnItem, cancelReadyPlayer } =
+  const { onReadyPlayerBurnItem, cancelReadyPlayer, room_id } =
     useSocketProviderWaiting()
 
   const profile = useProfileStore((state) => state.profile.data)
-  const { itemSelected, qtyItemOfRoom } = useGameStore()
+  const { data: gameData, itemSelected, qtyItemOfRoom } = useGameStore()
   const [ownerPressPlay, setOwnPressPlay] = useState(false)
   const [playerPressReady, setPlayerPressReady] = useState(false)
   const { errorToast } = useToast()
   const [, setIp] = useState<string>("")
+  const [, setGameUrl] = useState<string>("")
+  const [room_number] = useState<string>("")
+  const [rank_name] = useState<string>("")
+  const [start_time] = useState<string>("")
 
   useEffect(() => {
     Helper.getIP().then((res) => {
@@ -40,6 +49,62 @@ const SeatPlayersSingle = ({ players }: IProps) => {
       setIp("")
     }
   }, [])
+
+  useEffect(() => {
+    if (
+      gameData &&
+      itemSelected &&
+      profile &&
+      gameData.game_type === "multiplayer"
+    ) {
+      const frontendUrl = `${baseUrlFront}/${gameData.path}/summary/${room_id}`
+      let gameURL = ""
+      if (gameData.type_code === "multi_02") {
+        gameURL = `${baseUrlGame}/${gameData.id}/?query=${Helper.makeID(8)}`
+        // console.log(">>>>>  02")
+        // console.log(gameURL)
+      } else {
+        gameURL = `${gameData.game_url}/${gameData.id}/?query=${Helper.makeID(
+          8
+        )}${btoa(
+          `${room_id}:|:${profile?.id}:|:${itemSelected._id}:|:${
+            profile?.email
+          }:|:${Helper.getLocalStorage(
+            "token"
+          )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
+            start_time
+          ).getTime()}:|:${profile?.username}`
+        )}`
+      }
+
+      setGameUrl(gameURL)
+      // console.log(">>>>> not 02")
+
+      // console.log(
+      //   `${gameData.game_url}/${gameData.id}/?query=${Helper.makeID(
+      //     8
+      //   )}${`${room_id}:|:${profile?.id}:|:${itemSelected._id}:|:${
+      //     profile?.email
+      //   }:|:${Helper.getLocalStorage(
+      //     "token"
+      //   )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
+      //     start_time
+      //   ).getTime()}:|:${profile?.username}`}`
+      // )
+    }
+
+    return () => {
+      setGameUrl("")
+    }
+  }, [
+    gameData,
+    itemSelected,
+    profile,
+    rank_name,
+    room_id,
+    room_number,
+    start_time
+  ])
 
   const playerInroom = useMemo(() => {
     if (players) {
@@ -65,11 +130,23 @@ const SeatPlayersSingle = ({ players }: IProps) => {
     }
   }, [playerInroom])
 
+  const playerBurnItem = useMemo(() => {
+    if (playerInroom) {
+      const _player = [...playerInroom].filter((ele) => ele?.item_burn)
+      return _player
+    }
+  }, [playerInroom])
+
   const playerAllReady = useMemo(() => {
-    if (playerReady && playerInroom) {
+    if (
+      playerReady &&
+      playerInroom &&
+      playerInroom.length > 1 &&
+      playerBurnItem?.length === playerInroom.length
+    ) {
       return playerReady.length === playerInroom.length
     }
-  }, [playerInroom, playerReady])
+  }, [playerBurnItem, playerInroom, playerReady])
 
   const playerNotReady = useMemo(() => {
     if (playerReady && playerInroom) {

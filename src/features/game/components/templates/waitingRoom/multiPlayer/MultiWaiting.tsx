@@ -71,7 +71,8 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     onReadyPlayerBurnItem,
     onOwnerBurnItem,
     getPlayersCheckItemOfPlayerListen,
-    getPlayersCheckRoomRollbackListen
+    getPlayersCheckRoomRollbackListen,
+    room_id
   } = useSocketWaitingRoom({ ...propsSocketWaitingRoom })
 
   useEffect(() => {
@@ -230,7 +231,8 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
           kickRoom,
           cancelReadyPlayer,
           onSendMessage,
-          onReadyPlayerBurnItem
+          onReadyPlayerBurnItem,
+          room_id
         }}
       >
         <Box className=" gap-3 md:flex">
@@ -256,6 +258,20 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
               <SeatPlayersMulti players={dataPlayers?.current_player} />
             ) : (
               <>
+                <HeaderWaitingRoom
+                  roomTag="0000"
+                  roomName="#ROOM NAME"
+                  timer={{
+                    time: new Date()
+                  }}
+                  player={{
+                    currentPlayer: 0,
+                    maxPlayer: 0
+                  }}
+                  onOutRoom={() => {
+                    outRoom()
+                  }}
+                />
                 <Typography className="my-5 text-center">
                   {t("no-player")}
                 </Typography>

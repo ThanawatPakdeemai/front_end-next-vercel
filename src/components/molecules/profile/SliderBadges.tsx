@@ -6,7 +6,7 @@ import IconArrowRight from "@components/icons/arrowRightIcon"
 import useGetBadge from "@feature/badge/containers/hook/useGetBadge"
 import { Divider } from "@mui/material"
 import Image from "next/image"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useMemo, useRef, useState } from "react"
 import Slider, { Settings } from "react-slick"
 import { v4 as uuid } from "uuid"
 import { motion } from "framer-motion"
@@ -48,18 +48,17 @@ const SliderBadges = ({ _playerId }: IProp) => {
     new Array(5).fill(<BadgesPlacrhoder key={uuid()} />)
   )
 
-  useEffect(() => {
+  useMemo(() => {
     if (getBadgeData && getBadgeData.badges.length <= 5) {
       getBadgeData.badges.map((data, index) => {
-        const newData = slideArray
         slideArray[index] = data
+        const newData = slideArray
         return setSlideArray(newData)
       })
     } else if (getBadgeData && getBadgeData.badges) {
       setSlideArray(getBadgeData.badges)
     }
   }, [getBadgeData, slideArray])
-  // console.log(slideArray)
 
   return (
     <>
@@ -104,38 +103,41 @@ const SliderBadges = ({ _playerId }: IProp) => {
               {...settings}
               className="!w-full overflow-x-auto"
             >
-              {slideArray &&
-                slideArray.map((item) => {
-                  if ("name" in item) {
-                    return (
-                      <motion.div
-                        whileHover={{ rotate: 15 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 100,
-                          damping: 4
-                          // ease: "easeIn"
-                        }}
-                        key={uuid()}
-                        className="h-[170px] overflow-auto"
-                      >
-                        <TooltipsCustom
-                          placement="top"
-                          title={item.name}
-                          color="warning"
+              {slideArray
+                ? slideArray.map((item) => {
+                    if ("name" in item) {
+                      return (
+                        <motion.div
+                          whileHover={{ rotate: 15 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 100,
+                            damping: 4
+                            // ease: "easeIn"
+                          }}
+                          key={uuid()}
+                          className="h-[170px] overflow-auto"
                         >
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-                            fill
-                            objectFit="contain"
-                          />
-                        </TooltipsCustom>
-                      </motion.div>
-                    )
-                  }
-                  return item
-                })}
+                          <TooltipsCustom
+                            placement="top"
+                            title={item.name}
+                            color="warning"
+                          >
+                            <Image
+                              src={item.image}
+                              alt={item.name}
+                              fill
+                              style={{
+                                objectFit: "contain"
+                              }}
+                            />
+                          </TooltipsCustom>
+                        </motion.div>
+                      )
+                    }
+                    return item
+                  })
+                : null}
             </Slider>
           </div>
           <div className="arrow-slick-container bg-black mt-8 grid h-10 w-[100px] grid-cols-2 divide-x divide-neutral-700 rounded-md border border-neutral-700 text-white-primary">

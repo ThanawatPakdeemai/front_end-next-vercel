@@ -5,7 +5,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 
 export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   text?: string | ReactNode
-  href: string
+  href?: string
   icon?: React.ReactNode
   variant?: "text" | "outlined" | "contained"
   color?: "primary" | "secondary" | "success" | "error" | "info" | "warning"

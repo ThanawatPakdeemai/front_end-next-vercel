@@ -33,6 +33,7 @@
     "@ethersproject/providers": "^5.7.2",
     "@fontsource/roboto": "^4.5.8",
     "@hookform/resolvers": "^2.9.10",
+    "@metamask/logo": "^3.1.1",
     "@mui/icons-material": "^5.10.16",
     "@mui/material": "^5.11.1",
     "@mui/styled-engine-sc": "^5.10.6",

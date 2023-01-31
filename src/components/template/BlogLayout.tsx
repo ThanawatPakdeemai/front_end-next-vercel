@@ -26,7 +26,7 @@ const BlogLayout = ({
     <div className="flex flex-row gap-3">
       <MenuList className="h-fit w-[200px] rounded-[13px] bg-neutral-800 p-[6px]">
         <div>
-          <div className="mb-1 flex h-[40px] items-center rounded-xl bg-[#000]">
+          <div className="mb-1 flex h-[40px] items-center rounded-xl bg-black-100">
             <BlogIcon className="mr-[12px] ml-1 stroke-neutral-300 text-white-default" />
             <Typography className="text-[14px] text-white-default">
               Blog

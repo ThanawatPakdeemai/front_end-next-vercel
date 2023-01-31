@@ -399,7 +399,7 @@ export const MENU_BLOG_HEADER = [
     name: "Hot",
     link: "",
     isChide: true,
-    icon: <FireOutLineIcon className="mr-2 stroke-[#6F727B]" />
+    icon: <FireOutLineIcon className="mr-2 stroke-black-600" />
   },
   {
     name: "Discusion",

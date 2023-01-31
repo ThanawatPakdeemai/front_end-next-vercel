@@ -14,10 +14,10 @@ const FromWallet = ({ title }: IProp) => {
     <>
       {game && (
         <form>
-          <p className="mb-2 text-sm uppercase text-[#70727B]">
+          <p className="mb-2 text-sm uppercase text-neutral-500">
             I want to {title}
           </p>
-          <div className="my-2 flex w-full justify-between rounded-xl border border-[#232329] p-4">
+          <div className="my-2 flex w-full justify-between rounded-xl border border-neutral-700 bg-neutral-800 p-4">
             <div className="flex items-baseline">
               <Image
                 src="/images/Profile/Wallet/LogoMaster-sv.svg"
@@ -25,21 +25,24 @@ const FromWallet = ({ title }: IProp) => {
                 width="30"
                 height="30"
               />
-              <p className="ml-2 text-[#70727B]">Enter amount </p>
+              <p className="ml-2 text-neutral-500">Enter amount </p>
             </div>
-            <p className="pr-2 text-[#ffffff]">ALL</p>
+            <p className="pr-2 text-white-default">ALL</p>
           </div>
-          <p className="mb-4 text-xs uppercase text-[#70727B]">
+          <p className="mb-4 text-xs uppercase text-neutral-500">
             your naka storage :
-            <span className="uppercase text-[#7B5BE6]"> 340,398.654 NAKA</span>
+            <span className="uppercase text-purple-primary">
+              {" "}
+              340,398.654 NAKA
+            </span>
           </p>
 
           <div className="my-2 w-full text-end">
             <button
               className={`flex  w-full justify-center rounded-3xl p-3 ${
                 title === "withdraw"
-                  ? "bg-[#F42728] text-[#efefef]"
-                  : "bg-[#3DCD95] text-[#000000]"
+                  ? "bg-red-card text-neutral-100"
+                  : "bg-varidian-default text-black-100"
               }`}
               type="submit"
             >

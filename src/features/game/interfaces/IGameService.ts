@@ -149,6 +149,101 @@ export interface IGame {
   image_free_to_earn_icon?: string
 }
 
+interface IGameHowto {
+  title: string
+  details: string
+}
+
+interface ICategory {
+  name: string
+  id: string
+}
+
+interface IGameDevice {
+  key: string
+  name: string
+  supported: boolean
+}
+
+interface IGameBrowser {
+  key: string
+  name: string
+  supported: boolean
+}
+
+interface IRewardPaymentRate {
+  item_reward_amount: number
+  no: number
+}
+
+interface IGameStoryModeData {
+  item_key: string
+  item_name: string
+  type: string
+  image: string
+  mini_image: string
+  active_display: boolean
+  default_value: number
+  max_value: number
+}
+
+export interface IGameFav {
+  number_of_played: number
+  date_start_event: string | Date
+  date_end_event: string | Date
+  play_to_earn_status: string
+  play_to_earn: boolean
+  howto: IGameHowto
+  item: IGameItem[]
+  name: string
+  story: string
+  tournament: boolean
+  is_active: boolean
+  max_players: number
+  play_time: number
+  hot_game_status: boolean
+  hot_game_no: number
+  banner_status: boolean
+  banner_no: number
+  version: string
+  developer: string
+  category: ICategory
+  game_type: string
+  type_code: string
+  game_url: string
+  path: string
+  image_waiting: string
+  image_sum: string
+  image_room: string
+  image_banner: string
+  image_reward: string
+  image_main: string
+  image_background: string
+  banner_description: string
+  game_free_status: boolean
+  game_free_url: string
+  image_category_list: string
+  image_free_to_earn_icon: string
+  image_home_banner: string
+  image_list: string
+  min_player: number
+  map: IGameMap[]
+  socket_info: {
+    url_room: string
+    url_lobby: string
+  }
+  id: string
+  device_support: IGameDevice[]
+  browser_support: IGameBrowser[]
+  num: number
+  title: string
+  image: string
+  _id: string
+  reward_payment_rate: IRewardPaymentRate[]
+  meta_data_list: IGameStoryModeData[]
+  play_total_count?: number
+}
+
 export interface IGameRewardByPlayer extends IGameBase {
   claim_status: boolean
   item_amount: number

@@ -25,7 +25,6 @@ import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { v4 as uuid } from "uuid"
-import SideSocialShare from "@components/molecules/SideSocialShare"
 
 const Home = () => {
   const limit = 10
@@ -69,7 +68,6 @@ const Home = () => {
   return (
     <>
       <BannerSlide />
-      <SideSocialShare />
       {/* Testing display a CarouselSlide component, waiting to merge with team */}
       <div className="relative">
         <Tagline

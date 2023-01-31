@@ -13,10 +13,10 @@ import dayjs from "dayjs"
 import Image from "next/image"
 import useGetProfileInfo from "@feature/profile/containers/hook/getProfileInfo"
 import Lavel from "@components/icons/Lavel"
-// import useGetBadge from "@feature/badge/containers/hook/useGetBadge"
 import EditProfileModal from "./EditProfileModal"
 import TotalCardContent from "./TotalCardContent"
 import SliderBadges from "./SliderBadges"
+import SideSocialShare from "../SideSocialShare"
 
 const ProfileContent = () => {
   const profile = useProfileStore((state) => state.profile)
@@ -54,7 +54,7 @@ const ProfileContent = () => {
   const platinumCount = getRankCount("platinum")
 
   return profileData && getProfileInfo && !isFetching ? (
-    <div>
+    <div className="w-[90%]">
       <div className="relative">
         <Box
           component="img"
@@ -83,6 +83,7 @@ const ProfileContent = () => {
           userName={getProfileInfo.data.username}
           userImage={getProfileInfo.data.avatar}
         />
+        <SideSocialShare />
       </div>
       <div className="relative">
         <Tagline

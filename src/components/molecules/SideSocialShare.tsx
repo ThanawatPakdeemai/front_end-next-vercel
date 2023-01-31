@@ -5,7 +5,7 @@ import React from "react"
 import { v4 as uuidv4 } from "uuid"
 
 const SideSocialShare = () => (
-  <div className="absolute right-3 top-[15rem] rounded-3xl border border-neutral-800 p-2 ">
+  <div className="absolute right-[-10%] top-[0px] rounded-3xl border border-neutral-800 p-2 ">
     <div className="flex flex-col items-center">
       <Typography
         sx={{

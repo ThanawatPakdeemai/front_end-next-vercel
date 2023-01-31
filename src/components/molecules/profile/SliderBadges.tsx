@@ -128,7 +128,7 @@ const SliderBadges = ({ _playerId }: IProp) => {
             <Slider
               ref={sliderRef}
               {...settings}
-              className="h-[200px] !w-[1050px]"
+              className="h-[200px] !w-[1030px]"
             >
               {slideArray
                 ? slideArray.map((item) => {

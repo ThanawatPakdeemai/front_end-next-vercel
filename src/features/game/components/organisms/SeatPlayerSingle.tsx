@@ -30,6 +30,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   const router = useRouter()
   const [account, setAccount] = useState<string | undefined>(undefined)
   const { accounts } = useWeb3Provider()
+  const [gameUrl, setGameUrl] = useState<string>("")
 
   useEffect(() => {
     if (accounts) setAccount(accounts[0])
@@ -120,7 +121,8 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
     errorToast(MESSAGES["please-connect-wallet"])
     return false
   }
-  const OnPlayGame = () => {
+
+  useEffect(() => {
     if (
       gameRoomById &&
       profile &&
@@ -145,14 +147,20 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
           data.play_to_earn === true ? "free" : "not_free"
         }`
       )}`
+      setGameUrl(gameURL)
+    }
+    return () => {
+      setGameUrl("")
+    }
+  }, [data, gameRoomById, item_id, profile, room_id])
 
-      if (
-        checkBalanceOfItem() &&
-        checkPlayerIsNotBanned() &&
-        checkAccountProfile()
-      ) {
-        window.location.href = gameURL
-      }
+  const OnPlayGame = () => {
+    if (
+      checkBalanceOfItem() &&
+      checkPlayerIsNotBanned() &&
+      checkAccountProfile()
+    ) {
+      window.location.href = gameUrl
     } else if (!item_id) {
       errorToast(MESSAGES["please_item"])
     } else if (!room_id) {

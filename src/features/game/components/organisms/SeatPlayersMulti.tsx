@@ -7,15 +7,13 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff"
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty"
 import { useToast } from "@feature/toast/containers"
 import Helper from "@utils/helper"
-import { IResGetIp } from "@interfaces/IGetIP"
+// import { IResGetIp } from "@interfaces/IGetIP"
 import { MESSAGES } from "@constants/messages"
 // import useGameStore from "@stores/game"
 import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
 import useGameStore from "@stores/game"
 import CONFIGS from "@configs/index"
-import ButtonGame from "@feature/game/components/molecules/ButtonGame"
 import ButtonCountdown from "@feature/game/components/atoms/ButtonCountdown"
-import ButtonOwner from "@feature/game/components/atoms/ButtonOwner"
 import ButtonPlayer from "@feature/game/components/atoms/ButtonPlayer"
 import PlayerCard from "@feature/game/components/molecules/PlayerCard"
 
@@ -36,20 +34,19 @@ const SeatPlayersSingle = ({ players }: IProps) => {
   const [ownerPressPlay, setOwnPressPlay] = useState(false)
   const [playerPressReady, setPlayerPressReady] = useState(false)
   const { errorToast } = useToast()
-  const [, setIp] = useState<string>("")
   const [, setGameUrl] = useState<string>("")
   const [room_number] = useState<string>("")
   const [rank_name] = useState<string>("")
   const [start_time] = useState<string>("")
 
-  useEffect(() => {
-    Helper.getIP().then((res) => {
-      setIp((res as IResGetIp).ip)
-    })
-    return () => {
-      setIp("")
-    }
-  }, [])
+  // useEffect(() => {
+  //   Helper.getIP().then((res) => {
+  //     setIp((res as IResGetIp).ip)
+  //   })
+  //   return () => {
+  //     setIp("")
+  //   }
+  // }, [])
 
   useEffect(() => {
     if (
@@ -62,8 +59,6 @@ const SeatPlayersSingle = ({ players }: IProps) => {
       let gameURL = ""
       if (gameData.type_code === "multi_02") {
         gameURL = `${baseUrlGame}/${gameData.id}/?query=${Helper.makeID(8)}`
-        // console.log(">>>>>  02")
-        // console.log(gameURL)
       } else {
         gameURL = `${gameData.game_url}/${gameData.id}/?query=${Helper.makeID(
           8
@@ -79,19 +74,6 @@ const SeatPlayersSingle = ({ players }: IProps) => {
       }
 
       setGameUrl(gameURL)
-      // console.log(">>>>> not 02")
-
-      // console.log(
-      //   `${gameData.game_url}/${gameData.id}/?query=${Helper.makeID(
-      //     8
-      //   )}${`${room_id}:|:${profile?.id}:|:${itemSelected._id}:|:${
-      //     profile?.email
-      //   }:|:${Helper.getLocalStorage(
-      //     "token"
-      //   )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
-      //     start_time
-      //   ).getTime()}:|:${profile?.username}`}`
-      // )
     }
 
     return () => {
@@ -207,11 +189,6 @@ const SeatPlayersSingle = ({ players }: IProps) => {
       <Box>
         <PlayerCard players={players} />
         <Box className="mb-10  flex justify-center">
-          <ButtonGame
-            textButton="play"
-            description="playyyyyyyyy"
-            url=""
-          />
           {players.length > 0 && (
             <Box
               className={` ${
@@ -258,16 +235,14 @@ const SeatPlayersSingle = ({ players }: IProps) => {
               )}
 
               {isOwnerRoom && !ownerPressPlay && (
-                <ButtonOwner
+                <ButtonPlayer
                   startIcon={
                     <Ellipse fill={playerAllReady ? "#A0ED61" : "#F42728"} />
                   }
                   handleClick={() => {
                     playerAllReady
                       ? onPlayGame()
-                      : () => {
-                          errorToast(MESSAGES["please-wait-player-all-ready"]) // TODO YUI
-                        }
+                      : errorToast(MESSAGES["please-wait-player-all-ready"])
                   }}
                   text={
                     <Typography className="w-full font-neue-machina text-2xl uppercase text-primary-main">

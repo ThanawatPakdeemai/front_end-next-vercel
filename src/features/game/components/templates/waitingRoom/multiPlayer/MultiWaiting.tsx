@@ -143,11 +143,12 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     if (gameData) router.push(`/${gameData.path}/roomlist`)
   }, [gameData, router])
 
+  /**
+   *@description Will run when leaving the current page; on back/forward actions out room this game
+   */
   useEffect(() => {
     router.beforePopState(({ as }) => {
       if (as !== router.asPath) {
-        // Will run when leaving the current page; on back/forward actions
-        // out room this game
         outRoom()
       }
       return true

@@ -10,12 +10,14 @@ import {
 import { IPlayToEarnRewardData } from "@src/types/games"
 
 export type TGameType = "singleplayer" | "multiplayer" | "storymode"
+
 export type TTypeCode =
   | "single_01"
   | "single_02"
   | "multi_01"
   | "multi_02"
   | "story_01"
+  | "survival_01"
 
 export type IGetType =
   | "play-to-earn"

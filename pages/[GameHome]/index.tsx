@@ -16,26 +16,7 @@ export default function GameLobby() {
     if (!isLoading && dataGame) setGameData(dataGame.data[0])
   }, [dataGame, isLoading])
 
-  return (
-    <>
-      {gameData ? (
-        <>
-          <GameSlide />
-          {/* <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => {
-              router.push(`${router.asPath}/roomlist`)
-            }}
-          >
-            Click
-          </Button> */}
-        </>
-      ) : (
-        <SkeletonBanner />
-      )}
-    </>
-  )
+  return <>{gameData ? <GameSlide /> : <SkeletonBanner />}</>
 }
 
 GameLobby.getLayout = function getLayout(page: ReactElement) {

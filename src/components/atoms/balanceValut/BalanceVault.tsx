@@ -1,18 +1,19 @@
 import { Typography } from "@mui/material"
 import React from "react"
 import Helper from "@utils/helper"
+import useProfileStore from "@stores/profileStore"
+import useWalletStore from "@stores/wallet"
 
 interface IProp {
   className?: string
-  variant: "naka" | "busd" | "vault"
+  variant: "naka" | "busd" | "vault" | string
 }
 
 const BalanceVault = ({ className, variant }: IProp) => {
-  /* mock data */
-  const profile = ["mockupName"]
-  const balance: number = 256235
-  const busdBalance: number = 466264
-  const nakaBalance: number = 1235446
+  const profile = useProfileStore((state) => state.profile.data)
+  const vaultBalance = useWalletStore((state) => state.vaultBalance)
+  const nakaBalance = useWalletStore((state) => state.nakaBalance)
+  const busdBalance = useWalletStore((state) => state.busdBalance)
 
   const renderAmount = (amount: number) => (
     <Typography
@@ -27,7 +28,7 @@ const BalanceVault = ({ className, variant }: IProp) => {
     case "busd":
       return renderAmount(busdBalance)
     case "vault":
-      return renderAmount(balance)
+      return renderAmount(vaultBalance)
     case "naka":
       return renderAmount(nakaBalance)
     default:

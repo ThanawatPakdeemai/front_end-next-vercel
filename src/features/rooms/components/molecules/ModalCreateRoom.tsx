@@ -108,6 +108,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
         startIcon={<PlusIcon />}
         text="Create Room"
         className="btn-rainbow-theme z-[2] h-[50px] w-[156px] bg-secondary-main font-bold capitalize text-white-primary"
+        type="button"
       />
       <ModalCustom
         open={open}
@@ -217,6 +218,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
             startIcon={null}
             text="Create"
             handleClick={handleSubmit}
+            type="button"
           />
         </div>
       </ModalCustom>

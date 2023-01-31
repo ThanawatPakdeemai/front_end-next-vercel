@@ -48,8 +48,20 @@ module.exports = {
         500: "#70727B",
         600: "#4E5057",
         700: "#232329",
+        780: "#101013",
         800: "#18181C",
         900: "#010101"
+      },
+      black: {
+        100: "#000000",
+        200: "#2f2f2f",
+        300: "#01010133",
+        400: "#010101D9",
+        500: "#18181cff",
+        600: "#6F727B",
+        700: "#111111",
+        800: "#0101015e",
+        900: "#24242498"
       }
     },
     fontFamily: {
@@ -66,6 +78,7 @@ module.exports = {
         "Arial",
         "sans-serif"
       ],
+      "digital-7": "digital-7",
       "mondwest": ["mondwest", "Helvetica", "Arial", "sans-serif"]
     },
     /* extend config here */

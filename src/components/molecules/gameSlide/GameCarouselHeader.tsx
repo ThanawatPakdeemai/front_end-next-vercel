@@ -119,7 +119,7 @@ const GameCarouselHeader = ({
         {menu.sticker}
       </motion.div>
       <div className="flex h-full w-full items-center justify-between">
-        <div className="relative flex h-full w-fit items-center justify-between rounded-default border-2 border-neutral-800 bg-[#010101] bg-opacity-40 px-1 text-[10px] capitalize backdrop-blur-[25px]">
+        <div className="relative flex h-full w-fit items-center justify-between rounded-default border-2 border-neutral-800 bg-neutral-900 bg-opacity-40 px-1 text-[10px] capitalize backdrop-blur-[25px]">
           <div className="flex items-center py-1 pl-4 font-bold ">
             {menu.icon}
             <p
@@ -157,6 +157,7 @@ const GameCarouselHeader = ({
             text="view all"
             handleClick={onClickedView}
             className="flex h-full w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
+            type="button"
           />
           <div className="arrow-slick-container bg-black ml-4 grid h-full w-[100px] grid-cols-2 divide-x divide-neutral-700 rounded-md border border-neutral-700 text-white-primary ">
             <button

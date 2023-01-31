@@ -15,14 +15,14 @@ const TagCircle = ({
   ...props
 }: IPropsTag) => {
   const hasColor = {
-    primary: "bg-[#010101]",
-    secondary: "bg-[#7B5BE6]"
+    primary: "bg-neutral-900",
+    secondary: "bg-purple-primary"
   }
   return (
     <Box
       role="status"
       aria-label=""
-      className={`${hasColor[color]} relative flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#ffffff]`}
+      className={`${hasColor[color]} relative flex h-20 w-20 items-center justify-center rounded-full border-2 border-white-default`}
       {...props}
     >
       <span className={`icon--outside ${animation ? "animate-rotating" : ""}`}>
@@ -30,7 +30,9 @@ const TagCircle = ({
       </span>
       <span className="icon--inside absolute">
         <LogoIcon
-          className={`${hasColor[color] !== "primary"} ? "text-[#ffffff]" : ""`}
+          className={`${
+            hasColor[color] !== "primary"
+          } ? "text-white-default" : ""`}
         />
       </span>
     </Box>

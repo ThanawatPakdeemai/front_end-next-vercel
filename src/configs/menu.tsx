@@ -29,6 +29,10 @@ import Inventory from "@components/icons/Inventory"
 import ItemReward from "@components/icons/ItemReward"
 import Support from "@components/icons/Support"
 import Profile from "@components/icons/Profile"
+import ICoupon from "@components/icons/Coupon"
+import IReferrals from "@components/icons/Referrals"
+import IStacking from "@components/icons/Stacking"
+import IconSwap from "@components/icons/SwapIcon"
 
 export const MENU = [
   {
@@ -381,5 +385,37 @@ export const MENU_BLOG_HEADER = [
     isChide: true,
     left: "-180px !important",
     icon: <Discusion className="mr-2" />
+  }
+]
+
+export const MENU_SERVICES: IMenu[] = [
+  {
+    id: "p2p-dex",
+    label: "P2P DEX",
+    icon: <IconSwap className="stroke-neutral-300" />,
+    href: "/P2P DEX",
+    external: false
+  },
+  {
+    id: "staking",
+    label: "Staking",
+    icon: <IStacking stroke="#E1E2E2" />,
+    href: "/staking",
+    external: false
+  },
+
+  {
+    id: "referral-program",
+    label: "Referral Program",
+    icon: <IReferrals stroke="#E1E2E2" />,
+    href: "/referral",
+    external: false
+  },
+  {
+    id: "coupon",
+    label: "Coupon",
+    icon: <ICoupon stroke="#E1E2E2" />,
+    href: "/coupon",
+    external: false
   }
 ]

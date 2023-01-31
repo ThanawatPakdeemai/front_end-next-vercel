@@ -2,10 +2,13 @@ import React from "react"
 
 export interface IRedBanner {
   message: string
+  className?: string
 }
 
-const RedBanner = ({ message }: IRedBanner) => (
-  <div className="relative w-full rounded-[13px] bg-[#2C0909] py-14">
+const RedBanner = ({ message, className }: IRedBanner) => (
+  <div
+    className={`relative w-full rounded-[13px] bg-[#2C0909] py-14 ${className}`}
+  >
     <div
       className="glitch text-center font-digital-7 text-[26px] uppercase text-red-card"
       style={{

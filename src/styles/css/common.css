@@ -671,3 +671,24 @@ body {
   clip: rect(0, 900px, 0, 0);
   animation: noise-anim-2 3s infinite linear alternate-reverse;
 }
+
+.progress-wrapper {
+  /* border: 3px solid blue; */
+  margin: 0.5rem;
+}
+
+.progress-container {
+  background-color: #18181c;
+  padding: 0.25rem;
+}
+
+.progress-barCompleted {
+  background-color: #101013;
+  width: 55%;
+}
+
+.progress-label {
+  font-family: theme("fontFamily.neue-machina-bold");
+  font-size: 10px;
+  color: #e1e2e2;
+}

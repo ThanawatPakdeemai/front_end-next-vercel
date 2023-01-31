@@ -23,33 +23,12 @@ const HeadStaking = ({ children }: { children: React.ReactNode }) => (
         item
         xs={6}
       >
-        {/* <Grid
-          container
-          spacing={2}
-          className="rounded-[13px] bg-[#232329] p-4"
-          columns={12}
-        >
-          <Grid
-            item
-            xs={6}
-            className="rounded-lg bg-[#18181C]"
-          >
-            Variable APR
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            className="rounded-lg bg-[#010101]"
-          >
-            Fixed APR
-          </Grid>
-        </Grid> */}
-        <div className="grid grid-cols-2 items-center justify-center gap-x-2 rounded-[13px] bg-[#232329] p-1.5 text-center">
-          <div className="flex h-full items-center justify-center rounded-lg bg-[#18181C] py-3">
+        <div className="grid grid-cols-2 items-center justify-center gap-x-2 rounded-[13px] bg-neutral-700 p-1.5 text-center">
+          <div className="flex h-full items-center justify-center rounded-lg bg-neutral-800 py-3">
             <IconBarGraphOne stroke="#E1E2E2" />
             <span className="ml-3">Variable APR</span>
           </div>
-          <div className="flex h-full items-center justify-center rounded-lg bg-[#18181C] py-3">
+          <div className="flex h-full items-center justify-center rounded-lg bg-neutral-800 py-3">
             <IconBarGraphTwo stroke="#E1E2E2" />
             <span className="ml-3">Fixed APR</span>
           </div>

@@ -388,18 +388,28 @@ export const MENU_BLOG_HEADER = [
   }
 ]
 
-export const MENU_SERVICES: IMenu[] = [
+export const MENU_SERVICES = [
   {
     id: "p2p-dex",
     label: "P2P DEX",
-    icon: <IconSwap className="stroke-neutral-300" />,
+    icon: (
+      <IconSwap
+        className="stroke-neutral-300"
+        stroke="#E1E2E2"
+      />
+    ),
     href: "/P2P DEX",
     external: false
   },
   {
     id: "staking",
     label: "Staking",
-    icon: <IStacking stroke="#E1E2E2" />,
+    icon: (
+      <IStacking
+        className="stroke-neutral-300"
+        stroke="#E1E2E2"
+      />
+    ),
     href: "/staking",
     external: false
   },
@@ -407,14 +417,24 @@ export const MENU_SERVICES: IMenu[] = [
   {
     id: "referral-program",
     label: "Referral Program",
-    icon: <IReferrals stroke="#E1E2E2" />,
+    icon: (
+      <IReferrals
+        className="stroke-neutral-300"
+        stroke="#E1E2E2"
+      />
+    ),
     href: "/referral",
     external: false
   },
   {
     id: "coupon",
     label: "Coupon",
-    icon: <ICoupon stroke="#E1E2E2" />,
+    icon: (
+      <ICoupon
+        className="stroke-neutral-300"
+        stroke="#E1E2E2"
+      />
+    ),
     href: "/coupon",
     external: false
   }

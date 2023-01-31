@@ -3,10 +3,11 @@ import { useTranslation } from "react-i18next"
 import Image from "next/image"
 import useGameStore from "@stores/game"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { Chip } from "@mui/material"
+import { Chip, Typography } from "@mui/material"
 import { IGameTag } from "@feature/slider/interfaces/IGameTags"
 import TagMultiple from "@components/molecules/TagMultiple"
 import TagSingular from "@components/molecules/TagSingular"
+import ButtonGame from "@feature/game/components/molecules/ButtonGame"
 
 const StoryLobby = () => {
   const { t } = useTranslation()
@@ -78,9 +79,22 @@ const StoryLobby = () => {
             />
           </div>
         </div>
-        <p className="text-center text-sm text-neutral-500">{`${t(
-          "game_story_text"
-        )}`}</p>
+        {gameData && (
+          <div className="flex justify-center">
+            <ButtonGame
+              description={"ready to go. Let's start the game!"}
+              textButton="Start"
+              url={gameData.game_url}
+            />
+          </div>
+        )}
+        <Typography
+          className="mt-3 text-center text-sm uppercase text-neutral-500"
+          variant="body1"
+          dangerouslySetInnerHTML={{
+            __html: t("game_story_text")
+          }}
+        />
       </div>
     </div>
   )

@@ -40,6 +40,7 @@ import { MESSAGES } from "@constants/messages"
 import { useToast } from "@feature/toast/containers"
 import useVerifyCode from "@feature/authentication/containers/hooks/useVerifyCode"
 import useSignUp from "@feature/authentication/containers/hooks/useSignUp"
+import ButtonLink from "@components/atoms/button/ButtonLink"
 
 const KeyFramesClockwise = styled("div")({
   "@keyframes rotation": {
@@ -71,6 +72,7 @@ interface TFormData {
   confirmPassword: string
   code: number
   subscription: boolean
+  referral: string
 }
 
 const SignupSchema = yup
@@ -79,7 +81,8 @@ const SignupSchema = yup
     password: yup.string().required(),
     confirmPassword: yup.string().required(),
     code: yup.number().required().positive().integer(),
-    subscription: yup.boolean().defined()
+    subscription: yup.boolean().defined(),
+    referral: yup.string().defined()
   })
   .required()
 
@@ -188,12 +191,14 @@ const RegisterLayout = () => {
   }
 
   const onSubmitRegister = (values: TFormData) => {
-    const { email, code, password, subscription } = values
+    const { email, code, password, subscription, referral } = values
+
     if (emailCorrect && characterPasswordLength && characterUppercase) {
       setFormSubmitErrors(false)
       mutateSignUp({
         _email: email,
         _password: password,
+        _referral: referral,
         _verifycode: code,
         _subscription: subscription
       })
@@ -714,14 +719,13 @@ const RegisterLayout = () => {
                     >
                       <Grid item>
                         <Link href="/login">
-                          <Button
-                            size="large"
-                            type="submit"
-                            variant="outlined"
-                            className="h-[40px] !min-w-[108px]"
-                          >
-                            Login
-                          </Button>
+                          <ButtonLink
+                            href="/login"
+                            text="Login"
+                            icon={null}
+                            size="medium"
+                            className="h-[40px] !min-w-[108px] border border-solid border-neutral-700 text-sm hover:h-[45px]"
+                          />
                         </Link>
                       </Grid>
                       <Grid item>

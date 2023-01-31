@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material"
 import { memo } from "react"
 import Ellipse from "@components/icons/Ellipse/Ellipse"
 import { useRouter } from "next/router"
-import ButtonOwner from "../atoms/ButtonOwner"
+import ButtonPlayer from "@feature/game/components/atoms/ButtonPlayer"
 
 interface IProp {
   description: string
@@ -25,7 +25,7 @@ const ButtonGame = ({
         className={` ${""} w-fit items-center justify-center gap-3 rounded-[50px] border border-neutral-800 bg-primary-main  p-3 text-neutral-300 md:flex`}
       >
         <Typography className="mx-4 text-default">{description}</Typography>
-        <ButtonOwner
+        <ButtonPlayer
           startIcon={<Ellipse fill={fillIcon} />}
           handleClick={() => {
             router.push(`${url}`)

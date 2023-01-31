@@ -21,7 +21,7 @@ const MultiRoomList = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
   const { errorToast } = useToast()
-  const { data, itemSelected } = useGameStore()
+  const { data, itemSelected, qtyItemOfRoom } = useGameStore()
 
   const [dataRoom, setDataRoom] = useState<IGameRoomListSocket[]>()
 
@@ -90,13 +90,26 @@ const MultiRoomList = () => {
 
   const handleJoinRoom = (_data: IGameRoomListSocket) => {
     if (profile) {
+      const player_me = _data.current_player.find(
+        (ele) => ele.player_id === profile.id
+      )
       if (new Date() > new Date(_data.end_time)) {
         errorToast(MESSAGES["room-timeout"])
       } else if (
         _data.amount_current_player < _data.max_players &&
-        new Date() < new Date(_data.end_time)
+        new Date() < new Date(_data.end_time) &&
+        itemSelected &&
+        itemSelected?.qty >= qtyItemOfRoom
       ) {
-        router.push(`${router.asPath}/${_data._id}`)
+        if (player_me && player_me.status === "played") {
+          errorToast(MESSAGES["you-played"])
+        } else {
+          router.push(`${router.asPath}/${_data._id}`)
+        }
+      } else if (itemSelected && itemSelected?.qty < qtyItemOfRoom) {
+        errorToast(MESSAGES["pleate-item"])
+      } else if (player_me && player_me.status === "played") {
+        errorToast(MESSAGES["you-played"])
       } else {
         errorToast(MESSAGES["room-full"])
       }
@@ -118,6 +131,9 @@ const MultiRoomList = () => {
               dataRoom.length > 0 &&
               dataRoom.map((_data) => {
                 const initEndTime = new Date(_data.end_time)
+                const player = _data.current_player.find(
+                  (ele) => ele.player_id === profile.id
+                )
                 return (
                   <RoomListBar
                     key={Number(_data.id)}
@@ -125,6 +141,9 @@ const MultiRoomList = () => {
                       time: initEndTime,
                       onExpire: () => null
                     }}
+                    btnText={
+                      player && player.status === "played" ? "played" : "join"
+                    }
                     player={{
                       currentPlayer: _data.amount_current_player,
                       maxPlayer: _data.max_players

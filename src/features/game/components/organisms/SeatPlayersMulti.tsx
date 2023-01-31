@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useMemo, useState } from "react"
 import { IGameCurrentPlayerMulti } from "@feature/game/interfaces/IGameService"
-import { Box, Typography } from "@mui/material"
+import { Box, CircularProgress, Typography } from "@mui/material"
 import Ellipse from "@components/icons/Ellipse/Ellipse"
 import useProfileStore from "@stores/profileStore"
 import HighlightOffIcon from "@mui/icons-material/HighlightOff"
@@ -16,6 +16,7 @@ import CONFIGS from "@configs/index"
 import ButtonCountdown from "@feature/game/components/atoms/ButtonCountdown"
 import ButtonPlayer from "@feature/game/components/atoms/ButtonPlayer"
 import PlayerCard from "@feature/game/components/molecules/PlayerCard"
+import { IResGetIp } from "@interfaces/IGetIP"
 
 interface IProps {
   players: IGameCurrentPlayerMulti[] | undefined[]
@@ -25,28 +26,44 @@ const baseUrlGame = CONFIGS.BASE_URL.GAME
 const baseUrlApi = CONFIGS.BASE_URL.API
 const baseUrlFront = CONFIGS.BASE_URL.FRONTEND
 
-const SeatPlayersSingle = ({ players }: IProps) => {
-  const { onReadyPlayerBurnItem, cancelReadyPlayer, room_id } =
-    useSocketProviderWaiting()
+const SeatPlayersMulti = ({ players }: IProps) => {
+  const {
+    onReadyPlayerBurnItem,
+    cancelReadyPlayer,
+    room_id,
+    onOwnerBurnItem,
+    dataPlayers
+  } = useSocketProviderWaiting()
 
   const profile = useProfileStore((state) => state.profile.data)
   const { data: gameData, itemSelected, qtyItemOfRoom } = useGameStore()
   const [ownerPressPlay, setOwnPressPlay] = useState(false)
   const [playerPressReady, setPlayerPressReady] = useState(false)
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const [ip, setIp] = useState("")
+
   const { errorToast } = useToast()
-  const [, setGameUrl] = useState<string>("")
+  const [gameUrl, setGameUrl] = useState<string>("")
   const [room_number] = useState<string>("")
   const [rank_name] = useState<string>("")
   const [start_time] = useState<string>("")
 
-  // useEffect(() => {
-  //   Helper.getIP().then((res) => {
-  //     setIp((res as IResGetIp).ip)
-  //   })
-  //   return () => {
-  //     setIp("")
-  //   }
-  // }, [])
+  useEffect(() => {
+    Helper.getIP().then((res) => {
+      setIp((res as IResGetIp).ip)
+    })
+    return () => {
+      setIp("")
+    }
+  }, [])
+
+  const playerInroom = useMemo(() => {
+    if (players) {
+      const __player = [...players].filter((ele) => ele)
+      return __player
+    }
+  }, [players])
 
   useEffect(() => {
     if (
@@ -57,8 +74,20 @@ const SeatPlayersSingle = ({ players }: IProps) => {
     ) {
       const frontendUrl = `${baseUrlFront}/${gameData.path}/summary/${room_id}`
       let gameURL = ""
-      if (gameData.type_code === "multi_02") {
-        gameURL = `${baseUrlGame}/${gameData.id}/?query=${Helper.makeID(8)}`
+      if (gameData.type_code === "multi_02" && ip) {
+        gameURL = `${baseUrlGame}/${gameData.id}/?query=${Helper.makeID(
+          8
+        )}${btoa(
+          `${room_id}:|:${profile?.id}:|:${itemSelected._id}:|:${
+            profile?.email
+          }:|:${Helper.getLocalStorage(
+            "token"
+          )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
+            start_time
+          ).getTime()}:|:${profile?.username}:|:${playerInroom}:|:${
+            dataPlayers?.map_id
+          }:|:${ip}`
+        )}`
       } else {
         gameURL = `${gameData.game_url}/${gameData.id}/?query=${Helper.makeID(
           8
@@ -80,21 +109,17 @@ const SeatPlayersSingle = ({ players }: IProps) => {
       setGameUrl("")
     }
   }, [
+    dataPlayers?.map_id,
     gameData,
+    ip,
     itemSelected,
+    playerInroom,
     profile,
     rank_name,
     room_id,
     room_number,
     start_time
   ])
-
-  const playerInroom = useMemo(() => {
-    if (players) {
-      const __player = [...players].filter((ele) => ele)
-      return __player
-    }
-  }, [players])
 
   const playerMe = useMemo(() => {
     if (profile && playerInroom)
@@ -120,16 +145,17 @@ const SeatPlayersSingle = ({ players }: IProps) => {
     }
   }, [playerInroom])
 
+  const playerAllBurnItem = useMemo(() => {
+    if (playerBurnItem && playerInroom && playerInroom.length > 1) {
+      return playerBurnItem.length === playerInroom?.length
+    }
+  }, [playerBurnItem, playerInroom])
+
   const playerAllReady = useMemo(() => {
-    if (
-      playerReady &&
-      playerInroom &&
-      playerInroom.length > 1 &&
-      playerBurnItem?.length === playerInroom.length
-    ) {
+    if (playerReady && playerInroom && playerInroom.length > 1) {
       return playerReady.length === playerInroom.length
     }
-  }, [playerBurnItem, playerInroom, playerReady])
+  }, [playerInroom, playerReady])
 
   const playerNotReady = useMemo(() => {
     if (playerReady && playerInroom) {
@@ -138,52 +164,129 @@ const SeatPlayersSingle = ({ players }: IProps) => {
   }, [playerInroom, playerReady])
 
   const checkText = useMemo(() => {
-    if (isOwnerRoom) {
-      //  owner
-      if (!playerAllReady && !ownerPressPlay && playerNotReady) {
+    if (playerInroom && playerInroom.length > 0) {
+      if (isOwnerRoom) {
+        //  owner
+        if (playerNotReady) {
+          return "The game will begin as soon as all players are ready"
+        }
+        if (playerAllReady && playerAllBurnItem) {
+          return "Everyone's here and we're ready to go. Let's start the game!"
+        }
         return "The game will begin as soon as all players are ready"
       }
-      if (playerAllReady) {
-        return "Everyone's here and we're ready to go. Let's start the game!"
-      }
-    }
 
-    // player
-    if (playerPressReady && !ownerPressPlay) {
-      return "Please wait for them to begin"
+      // player
+      if (
+        playerPressReady &&
+        playerMe &&
+        playerMe?.status === "ready" &&
+        playerMe.item_burn
+      ) {
+        return "Please wait for them to begin"
+      }
+      if (playerAllReady && playerAllBurnItem && ownerPressPlay) {
+        return "The game is starting now, prepare to play!"
+      }
+      return "It's time to play! Press the Ready"
     }
-    if (ownerPressPlay || playerPressReady) {
-      return "The game is starting now, prepare to play!"
-    }
-    return "It's time to play! Press the Ready"
+    return "Don't have player in this room. please out room"
   }, [
+    playerInroom,
     isOwnerRoom,
     playerPressReady,
-    ownerPressPlay,
+    playerMe,
     playerAllReady,
+    playerAllBurnItem,
+    ownerPressPlay,
     playerNotReady
   ])
 
-  const onReady = async () => {
-    if (playerMe && itemSelected && qtyItemOfRoom > 0) {
-      await onReadyPlayerBurnItem(
-        playerMe?.item_burn,
-        itemSelected._id,
-        qtyItemOfRoom
-      )
+  useEffect(() => {
+    if (playerInroom && playerAllReady && playerAllBurnItem && ownerPressPlay) {
+      // console.log("goto game")
+      if (dataPlayers && dataPlayers.room_status === "room_ready") {
+        setInterval(() => {
+          window.open(gameUrl, "_blank")
+        }, 7000)
+      }
+    } else {
+      // console.log("not to game")
+    }
+  }, [
+    dataPlayers,
+    gameUrl,
+    ownerPressPlay,
+    playerAllBurnItem,
+    playerAllReady,
+    playerBurnItem,
+    playerInroom
+  ])
 
-      await setPlayerPressReady(!playerPressReady)
-    } else if (!playerMe) {
-      errorToast(MESSAGES["no-player"])
-    } else if (!itemSelected || qtyItemOfRoom < 1) {
-      errorToast(MESSAGES["please_item"])
+  const onReady = async () => {
+    if (profile) {
+      if (
+        playerMe &&
+        itemSelected &&
+        qtyItemOfRoom > 0 &&
+        itemSelected.qty >= qtyItemOfRoom
+      ) {
+        setLoading(true)
+        await onReadyPlayerBurnItem(
+          playerMe?.item_burn,
+          itemSelected._id,
+          qtyItemOfRoom
+        )
+
+        await setPlayerPressReady(true)
+        await setLoading(false)
+      } else if (!playerMe) {
+        setPlayerPressReady(false)
+        errorToast(MESSAGES["no-player"])
+      } else if (
+        !itemSelected ||
+        qtyItemOfRoom < 1 ||
+        itemSelected.qty < qtyItemOfRoom
+      ) {
+        setPlayerPressReady(false)
+        errorToast(MESSAGES["please_item"])
+      }
+    } else {
+      setPlayerPressReady(false)
+      errorToast(MESSAGES["please_login"])
     }
   }
 
   const onPlayGame = () => {
-    setOwnPressPlay(!setOwnPressPlay)
+    if (profile) {
+      if (
+        playerMe &&
+        itemSelected &&
+        qtyItemOfRoom > 0 &&
+        playerAllReady &&
+        itemSelected.qty >= qtyItemOfRoom
+      ) {
+        onOwnerBurnItem(playerMe.item_burn, itemSelected?._id, qtyItemOfRoom)
+        setOwnPressPlay(true)
+      } else if (!playerMe) {
+        setOwnPressPlay(false)
+        errorToast(MESSAGES["no-player"])
+      } else if (
+        !itemSelected ||
+        qtyItemOfRoom < 1 ||
+        itemSelected.qty < qtyItemOfRoom
+      ) {
+        setOwnPressPlay(false)
+        errorToast(MESSAGES["please_item"])
+      }
+    } else {
+      setOwnPressPlay(false)
+      errorToast(MESSAGES["please_login"])
+    }
   }
+  // console.log(dataPlayers)
 
+  const time = new Date()
   return (
     <>
       <Box>
@@ -192,16 +295,23 @@ const SeatPlayersSingle = ({ players }: IProps) => {
           {players.length > 0 && (
             <Box
               className={` ${
-                ownerPressPlay && " border-secondary-main"
+                ownerPressPlay && playerAllBurnItem && " border-secondary-main"
               } w-fit items-center justify-center gap-3 rounded-[50px] border border-neutral-800 bg-primary-main p-3 md:flex`}
             >
               <Typography
                 className={`${
                   // || playerPressReady
-                  ownerPressPlay && "text-secondary-main"
+                  // ownerPressPlay &&
+                  playerAllBurnItem &&
+                  playerAllReady &&
+                  ownerPressPlay &&
+                  "text-secondary-main"
+                }  ${isOwnerRoom && " text-error-main"}  ${
+                  playerAllReady &&
+                  // !playerAllBurnItem &&
+                  !ownerPressPlay &&
+                  " text-green-lemon" // playerPressReady
                 }  ${
-                  (playerAllReady || playerPressReady) && " text-green-lemon"
-                } ${isOwnerRoom && " text-error-main"}  ${
                   playerMe &&
                   playerMe.status === "inroom" &&
                   "text-neutral-300 "
@@ -209,15 +319,21 @@ const SeatPlayersSingle = ({ players }: IProps) => {
               >
                 {checkText}
               </Typography>
-              {ownerPressPlay && (
+
+              {/* owner */}
+              {playerAllReady && playerAllBurnItem && ownerPressPlay && (
                 <ButtonCountdown
                   time
-                  handleClick={() => {
+                  endTime={
                     playerAllReady
-                      ? onPlayGame()
-                      : () => {
-                          errorToast(MESSAGES["please-wait-player-all-ready"]) // TODO YUI
-                        }
+                      ? new Date(time.setSeconds(time.getSeconds() + 5))
+                      : new Date()
+                  }
+                  handleClick={() => {
+                    isOwnerRoom &&
+                      (playerAllReady && !ownerPressPlay
+                        ? onPlayGame()
+                        : errorToast(MESSAGES["please-wait-player-all-ready"])) // TODO YUI
                   }}
                   endIcon={
                     isOwnerRoom ? (
@@ -233,8 +349,7 @@ const SeatPlayersSingle = ({ players }: IProps) => {
                   }   font-bold capitalize`}
                 />
               )}
-
-              {isOwnerRoom && !ownerPressPlay && (
+              {isOwnerRoom && !ownerPressPlay && !playerAllBurnItem && (
                 <ButtonPlayer
                   startIcon={
                     <Ellipse fill={playerAllReady ? "#A0ED61" : "#F42728"} />
@@ -256,42 +371,54 @@ const SeatPlayersSingle = ({ players }: IProps) => {
                   } font-bold capitalize`}
                 />
               )}
-
-              {!isOwnerRoom && !playerPressReady && (
-                <ButtonPlayer
-                  startIcon={<Ellipse fill="#A0ED61" />}
-                  handleClick={onReady}
-                  text={
-                    <Typography className="w-full font-neue-machina text-2xl uppercase text-primary-main">
-                      READY
-                    </Typography>
-                  }
-                  className={` btn-green-rainbow  
+              {/* player */}
+              {!isOwnerRoom &&
+                !playerPressReady &&
+                playerMe?.status === "inroom" && (
+                  <ButtonPlayer
+                    startIcon={<Ellipse fill="#A0ED61" />}
+                    handleClick={onReady}
+                    text={
+                      loading ? (
+                        <CircularProgress
+                          color="primary"
+                          size={25}
+                        />
+                      ) : (
+                        <Typography className="w-full font-neue-machina text-2xl uppercase text-primary-main">
+                          READY
+                        </Typography>
+                      )
+                    }
+                    className={` btn-green-rainbow  
                      h-[60px] w-[194px]  rounded-[50px]
                       bg-green-lemon
                   font-bold capitalize text-neutral-900`}
-                />
-              )}
-
-              {!isOwnerRoom && playerPressReady && (
-                <ButtonCountdown
-                  handleClick={() => {
-                    setPlayerPressReady(false)
-                    cancelReadyPlayer()
-                  }}
-                  text={
-                    <Typography className="w-full font-neue-machina text-2xl uppercase  text-green-lemon">
-                      You are ready
-                    </Typography>
-                  }
-                  endIcon={<HighlightOffIcon className=" text-primary-main" />}
-                  className={` h-[60px] w-[60px]
+                  />
+                )}
+              {!isOwnerRoom &&
+                playerPressReady &&
+                playerMe?.status === "ready" && (
+                  <ButtonCountdown
+                    handleClick={() => {
+                      cancelReadyPlayer()
+                      setPlayerPressReady(false)
+                    }}
+                    text={
+                      <Typography className="w-full font-neue-machina text-2xl uppercase  text-green-lemon">
+                        You are ready
+                      </Typography>
+                    }
+                    endIcon={
+                      <HighlightOffIcon className=" text-primary-main" />
+                    }
+                    className={` h-[60px] w-[60px]
                     rounded-full bg-green-lemon
                 text-primary-main ${
                   players ? " " : "btn-green-rainbow  "
                 } font-bold capitalize text-neutral-900`}
-                />
-              )}
+                  />
+                )}
             </Box>
           )}
         </Box>
@@ -300,4 +427,4 @@ const SeatPlayersSingle = ({ players }: IProps) => {
   )
 }
 
-export default memo(SeatPlayersSingle)
+export default memo(SeatPlayersMulti)

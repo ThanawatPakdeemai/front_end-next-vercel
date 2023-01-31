@@ -20,5 +20,6 @@ export const MESSAGES = {
   "transaction-error": "Transaction error. please try again!!",
   "you-out-room": "You out room success",
   "you-cancel-ready": "You cancel playing game",
-  "you-burn-item": "You burn Item success"
+  "you-burn-item": "You burn Item success",
+  "you-played": "you played game this room!"
 }

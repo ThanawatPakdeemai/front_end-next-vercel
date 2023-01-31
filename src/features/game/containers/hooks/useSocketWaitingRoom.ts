@@ -73,6 +73,17 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     successToast(MESSAGES["you-cancel-ready"])
   }
 
+  const startGame = () => {
+    socketWaitingRoom.emit(EVENTS.ACTION.WAITING_ROOM_START, {
+      player_id,
+      room_id
+    })
+  }
+
+  const changeStatusOwner = () => {
+    socketWaitingRoom.emit(EVENTS.ACTION.WAITING_ROOM_PLAY)
+  }
+
   useEffect(() => {
     // check room time out
     socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_TIMEOUT, () => {
@@ -180,12 +191,12 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
    * @returns
    */
   const onReadyPlayerBurnItem = (
-    _itemBurn: boolean,
+    _item_burn: boolean,
     _item_id: string,
     _qty: number
   ) =>
     new Promise((resolve) => {
-      if (_itemBurn) {
+      if (_item_burn) {
         // system burn item
         waitingRoomReadyAction()
         resolve(true)
@@ -198,14 +209,14 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
           transactionAction(false)
           waitingRoomReadyAction()
           waitingRoomItemBurnAction(player_id, true)
-          resolve(true)
           successToast(MESSAGES["burn-item-success"])
+          resolve(true)
+        } else {
+          transactionAction(false)
+          MESSAGES["transaction-error"]
+          resolve(false)
         }
       })
-
-      transactionAction(false)
-      MESSAGES["transaction-error"]
-      resolve(false)
     })
 
   /**
@@ -230,12 +241,13 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
             transactionAction(false)
             waitingRoomItemBurnAction(player_id, true)
             resolve(true)
+          } else {
+            transactionAction(false)
+            waitingRoomRollbackAction()
+            errorToast(MESSAGES["transaction-error"])
+            resolve(false)
           }
         })
-        transactionAction(false)
-        waitingRoomRollbackAction()
-        errorToast(MESSAGES["transaction-error"])
-        resolve(false)
       }
       transactionAction(false)
       waitingRoomItemBurnAction(player_id, true)
@@ -295,7 +307,9 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     onOwnerBurnItem,
     getPlayersCheckItemOfPlayerListen,
     getPlayersCheckRoomRollbackListen,
-    burnItemNowStatus
+    burnItemNowStatus,
+    startGame,
+    changeStatusOwner
   }
 }
 

@@ -5,7 +5,7 @@ import Image from "next/image"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
-import { useTranslation } from "react-i18next"
+import { useTranslation } from "next-i18next"
 import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
 import { ICURENCY } from "@interfaces/ICurrency"
 import ButtonDropdown from "./ButtonDropdown"
@@ -49,7 +49,7 @@ const DropdownListCurrency = ({ list, className, onChangeSelect }: IProp) => {
                             height="30"
                           />
                           <p className="px-2">{t("currency")}</p>
-                          <p className="px-2 text-[#ffffff]">
+                          <p className="px-2 text-white-default">
                             {defaultItem?.name}
                           </p>
                         </div>

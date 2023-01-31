@@ -178,7 +178,7 @@ export const MENU_LOGGEDIN: IMenu[] = [
   {
     id: "wishlist",
     label: "Wishlist",
-    href: "/wishlsit",
+    href: "/favourite-games",
     icon: <WishlistIcon />,
     external: false
   },
@@ -373,7 +373,7 @@ export const MENU_BLOG_HEADER = [
     name: "Hot",
     link: "",
     isChide: true,
-    icon: <FireOutLineIcon className="mr-2 stroke-[#6F727B]" />
+    icon: <FireOutLineIcon className="mr-2 stroke-black-600" />
   },
   {
     name: "Discusion",

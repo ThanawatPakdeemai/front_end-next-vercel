@@ -11,7 +11,7 @@ export interface IGameStatus {
   _id: string
 }
 export interface IProfile {
-  game_status: IGameStatus[] | null | undefined
+  game_status?: IGameStatus[] | null | undefined
   status: number
   createdAt: Date
   updatedAt: Date

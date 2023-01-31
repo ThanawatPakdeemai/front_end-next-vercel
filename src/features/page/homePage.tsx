@@ -36,13 +36,13 @@ const Home = () => {
   const [p2eCurType, setP2ECurType] = useState<IGetType>("hot-game")
 
   const { hotGameData } = useGetHotGames()
-  const { data: p2eGameData } = useGamesByTypes({
+  const { data: p2eGameData, isFetching: p2eLoading } = useGamesByTypes({
     _type: p2eCurType,
     _limit: limit,
     _page: 1
   })
 
-  const { data: f2pGameData } = useGamesByTypes({
+  const { data: f2pGameData, isFetching: f2pLoading } = useGamesByTypes({
     _type: f2pCurType,
     _limit: limit,
     _page: 1
@@ -129,7 +129,7 @@ const Home = () => {
       </div>
 
       <div className="my-20 h-full w-full">
-        {f2pGame ? (
+        {f2pGame && !f2pLoading ? (
           <GameCarousel
             menu={F2PHeaderMenu}
             list={f2pGame}
@@ -147,7 +147,7 @@ const Home = () => {
       </div>
 
       <div className="my-20 h-full w-full">
-        {p2eGame ? (
+        {p2eGame && !p2eLoading ? (
           <GameCarousel
             menu={P2EHeaderMenu}
             list={p2eGame}

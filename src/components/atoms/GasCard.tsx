@@ -9,21 +9,17 @@ interface IGasCardProps {
 }
 
 const GasCard = ({ title, gwei, color, second }: IGasCardProps) => (
-  <Box className="flex justify-center">
-    <Card className="h-full w-full !rounded-lg !bg-[#232329]">
-      <div className="mx-auto  items-center justify-between px-2 py-2 text-center">
+  <Box className=" flex justify-center">
+    <Card className="GasCard h-full w-full !rounded-lg !bg-neutral-700">
+      <div className="mx-auto  items-center justify-between px-2 py-2 text-center text-[14px]">
         <div>
-          <p className="text-[10px] uppercase text-[#4E5057]">{title}</p>
+          <p className="uppercase text-black-default">{title}</p>
         </div>
         <div>
-          <p className={`${color.toString()} pt-1 text-[10px] uppercase`}>
-            {gwei} GWEI
-          </p>
+          <p className={`${color.toString()} pt-1  uppercase`}>{gwei} GWEI</p>
         </div>
         <div>
-          <p className="pt-1 text-[10px] uppercase text-[#4E5057]">
-            {second} SECS
-          </p>
+          <p className="pt-1 uppercase text-black-default">{second} SECS</p>
         </div>
       </div>
     </Card>

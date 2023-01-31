@@ -258,5 +258,7 @@
   "game_story_text": "这个游戏是故事模式游戏。 如果你想挑战自己，你必须试试这个！",
   "genre": "类型",
   "play_count_title": "戏剧",
-  "developer": "开发商"
+  "developer": "开发商",
+  "out-room": "出房间",
+  "no-player": "没有玩家"
 }

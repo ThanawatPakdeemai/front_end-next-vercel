@@ -5,7 +5,7 @@ import React, { memo } from "react"
 
 interface IProp {
   value: boolean
-  onHandle: () => void
+  onHandle: (_event?: React.ChangeEvent<HTMLInputElement>) => void
   text?: string
   className?: string
   fontStyle?: string
@@ -20,7 +20,7 @@ const CheckBoxNaka = ({
   <>
     <label className={`${className} flex`}>
       <Checkbox
-        id="subscribe"
+        id={text}
         defaultChecked={value}
         onChange={onHandle}
         icon={

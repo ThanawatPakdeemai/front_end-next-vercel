@@ -25,7 +25,7 @@ const MultiRoomList = () => {
 
   const [dataRoom, setDataRoom] = useState<IGameRoomListSocket[]>()
 
-  const item = useMemo(() => {
+  const item_id = useMemo(() => {
     if (data) {
       if (data.play_to_earn || data.tournament) {
         return data.item[0]._id
@@ -43,9 +43,9 @@ const MultiRoomList = () => {
       path: data?.socket_info?.url_lobby ?? "",
       player_id: profile?.id ?? "",
       game_id: data?._id ?? "",
-      item_id: item ?? ""
+      item_id
     }),
-    [data?._id, data?.socket_info?.url_lobby, item, profile?.id]
+    [data?._id, data?.socket_info?.url_lobby, item_id, profile?.id]
   )
 
   const { socketRoomList, isConnected, getRoomListMultiPlayer } =
@@ -89,15 +89,19 @@ const MultiRoomList = () => {
   }, [fetchRoom])
 
   const handleJoinRoom = (_data: IGameRoomListSocket) => {
-    if (new Date() > new Date(_data.end_time)) {
-      errorToast(MESSAGES["room-timeout"])
-    } else if (
-      _data.amount_current_player < _data.max_players &&
-      new Date() < new Date(_data.end_time)
-    ) {
-      router.push(`${router.asPath}/${_data._id}`)
+    if (profile) {
+      if (new Date() > new Date(_data.end_time)) {
+        errorToast(MESSAGES["room-timeout"])
+      } else if (
+        _data.amount_current_player < _data.max_players &&
+        new Date() < new Date(_data.end_time)
+      ) {
+        router.push(`${router.asPath}/${_data._id}`)
+      } else {
+        errorToast(MESSAGES["room-full"])
+      }
     } else {
-      errorToast(MESSAGES["room-full"])
+      errorToast(MESSAGES["please_login"])
     }
   }
 

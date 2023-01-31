@@ -12,6 +12,8 @@ import { v4 as uuid } from "uuid"
 import { motion } from "framer-motion"
 import BadgesPlacrhoder from "@components/icons/Banner/BadgesPlacrhoder"
 import { IBadge } from "@src/types/profile"
+import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
+import ButtonSticky from "../ButtonSticky"
 
 interface IProp {
   _playerId: string
@@ -80,7 +82,7 @@ const SliderBadges = ({ _playerId }: IProp) => {
 
   return (
     <>
-      <div className="mt-[90px] flex items-center justify-between">
+      <div className="relative mt-[90px] flex items-center justify-between">
         <div className="flex">
           <CrumbCustom
             text="My emblems are more than just symbols"
@@ -111,15 +113,22 @@ const SliderBadges = ({ _playerId }: IProp) => {
             background="bg-purple-primary"
           />
         </div>
+        <div className="absolute top-[180%] right-[-24%] z-[5] flex flex-col items-center justify-center">
+          <ButtonSticky icon={<SupportIcon />} />
+          <ButtonSticky
+            multi
+            notify
+          />
+        </div>
       </div>
 
       {openBadges ? null : (
         <>
-          <div className="mt-[30px] flex h-[216px] items-center rounded-lg border border-neutral-700 bg-neutral-800">
+          <div className="mt-[30px] flex h-[216px]  items-center rounded-lg border border-neutral-700 bg-neutral-800">
             <Slider
               ref={sliderRef}
               {...settings}
-              className="!w-full overflow-x-auto"
+              className="h-[200px] !w-[1050px]"
             >
               {slideArray
                 ? slideArray.map((item) => {
@@ -131,10 +140,9 @@ const SliderBadges = ({ _playerId }: IProp) => {
                             type: "spring",
                             stiffness: 100,
                             damping: 4
-                            // ease: "easeIn"
                           }}
                           key={uuid()}
-                          className="h-[170px] overflow-auto"
+                          className="m-auto !grid h-[210px] content-center justify-center"
                         >
                           <TooltipsCustom
                             placement="top"
@@ -142,12 +150,12 @@ const SliderBadges = ({ _playerId }: IProp) => {
                             color="warning"
                           >
                             <Image
+                              className="p-2"
+                              key={uuid()}
                               src={item.image}
                               alt={item.name}
-                              fill
-                              style={{
-                                objectFit: "contain"
-                              }}
+                              width={150}
+                              height={128}
                             />
                           </TooltipsCustom>
                         </motion.div>

@@ -33,7 +33,7 @@ const RightMenuWallet = ({ title }: IProp) => {
           spacing={3}
           className="md:p-5"
         >
-          <div className="rounded-2xl border-[1px] border-[#232329] bg-[#18181c] p-2">
+          <div className="rounded-2xl border-[1px] border-neutral-700 bg-neutral-800 p-2">
             <ModalHeader
               handleClose={handleClose}
               title={title}

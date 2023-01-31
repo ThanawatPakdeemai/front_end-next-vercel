@@ -13,7 +13,7 @@ import { Image } from "@components/atoms/image"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import { MESSAGES } from "@constants/messages"
 import Helper from "@utils/helper"
-import { useTranslation } from "react-i18next"
+import { useTranslation } from "next-i18next"
 import { useToast } from "@feature/toast/containers"
 import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 
@@ -26,6 +26,7 @@ export default function CardButItem() {
 
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
+
   const { gameItemList } = useGamesByGameId({
     _playerId: profile ? profile.id : "",
     _gameId: gameObject ? gameObject._id : ""
@@ -120,9 +121,9 @@ export default function CardButItem() {
               router.pathname === "/[GameHome]" ? "w-full" : "w-fit"
             } mb-1 rounded-xl border-[1px] border-primary-main bg-primary-main p-2 first-letter:my-2`}
           >
-            <p className="w-[285px] uppercase text-[#ffffff]">
+            <p className="w-[285px] uppercase text-white-default">
               {t("my")}{" "}
-              <span className="text-[#7B5BE6]">
+              <span className="text-purple-primary]">
                 {itemSelected?.name} {itemSelected?.item_size}
               </span>{" "}
               {t("bag")}
@@ -144,7 +145,7 @@ export default function CardButItem() {
               />
             </div>
             <div className="flex w-full flex-col justify-center">
-              <div className="mb-2 flex w-full justify-between rounded-xl bg-neutral-300  p-2 text-center text-[#111111]">
+              <div className="mb-2 flex w-full justify-between rounded-xl bg-[#E1E2E2]  p-2 text-center text-[#111111]">
                 <p>{itemSelected?.qty ?? 0}</p>
                 <Image
                   src="/images/gamePage/skull.png"
@@ -153,7 +154,7 @@ export default function CardButItem() {
                   height="30"
                 />
               </div>
-              <div className="mb-2 flex w-full justify-between rounded-xl bg-[#232329] p-2 text-center text-[#70727B]">
+              <div className="mb-2 flex w-full justify-between rounded-xl bg-[#111111] p-2 text-center text-black-default">
                 <p>= {totalPrice}</p>
                 {/* <Input
                   defaultValue=" 0.00"

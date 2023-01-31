@@ -19,7 +19,7 @@ interface IProp {
 const SliderBadges = ({ _playerId }: IProp) => {
   const [openBadges, setOpenBadges] = useState<boolean>(false)
   const { getBadgeData } = useGetBadge(_playerId)
-  // const { getBadgeData, isLoading } = useGetBadge("61d51db5e64c9751321a8ecc")
+  // const { getBadgeData } = useGetBadge("61d51db5e64c9751321a8ecc")
 
   const handleOnExpandClick = () => {
     setOpenBadges(!openBadges)
@@ -45,7 +45,25 @@ const SliderBadges = ({ _playerId }: IProp) => {
   }
 
   const [slideArray, setSlideArray] = useState<IBadge[] | React.ReactElement[]>(
-    new Array(5).fill(<BadgesPlacrhoder key={uuid()} />)
+    new Array(5).fill(
+      <TooltipsCustom
+        className="uppercase"
+        placement="top"
+        title="emblem info"
+        color="warning"
+      >
+        <motion.div
+          whileHover={{ rotate: 15 }}
+          transition={{
+            type: "spring",
+            stiffness: 100,
+            damping: 4
+          }}
+        >
+          <BadgesPlacrhoder key={uuid()} />
+        </motion.div>
+      </TooltipsCustom>
+    )
   )
 
   useMemo(() => {

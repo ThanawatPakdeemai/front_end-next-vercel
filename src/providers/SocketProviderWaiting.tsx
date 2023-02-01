@@ -1,11 +1,21 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
+import { IGameRoomListSocket } from "@feature/game/interfaces/IGameService"
 import { ReactNode, createContext, useContext, useMemo } from "react"
 
 interface IPropSocket {
-  // eslint-disable-next-line no-unused-vars
-  kickRoom: (player_id: string) => void
+  kickRoom: (_player_id: string) => void
   onSendMessage: () => void
-  cancelReady: () => void
+  cancelReadyPlayer: () => void
+  onReadyPlayerBurnItem: (
+    _itemBurn: boolean,
+    _item_id: string,
+    _qty: number
+  ) => void
+  room_id: string
+  onOwnerBurnItem: (_itemBurn: boolean, _item_id: string, _qty: number) => void
+  dataPlayers: IGameRoomListSocket | undefined
+  waitingRoomPlay: () => void
+  startGame: () => void
 }
 interface IProp {
   propsSocket: IPropSocket
@@ -14,8 +24,14 @@ interface IProp {
 
 const SocketContext = createContext<IPropSocket>({
   kickRoom: () => {},
-  cancelReady: () => {},
-  onSendMessage: () => {}
+  cancelReadyPlayer: () => {},
+  onSendMessage: () => {},
+  onReadyPlayerBurnItem: () => {},
+  room_id: "",
+  onOwnerBurnItem: () => {},
+  dataPlayers: undefined,
+  waitingRoomPlay: () => {},
+  startGame: () => {}
 })
 
 function SocketProvider({ propsSocket, children }: IProp) {

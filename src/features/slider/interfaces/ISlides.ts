@@ -15,6 +15,6 @@ export interface IVerticalThumbSlide {
 
 export interface IVerticalThumbCardSlideProps {
   item: IVerticalThumbSlide
-  index: number
-  activeIndex: number
+  index?: number
+  activeIndex?: number
 }

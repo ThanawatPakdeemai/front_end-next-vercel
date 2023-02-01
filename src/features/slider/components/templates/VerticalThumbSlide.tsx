@@ -9,14 +9,22 @@ interface IVerticalThumbSlideProps {
   items: IVerticalThumbSlide[]
 }
 
-const SlickSlideBoxCSS: SxProps = {
+const SlickMainSlideCSS: SxProps = {
   ".slick-slider, .slick-list, .slick-track": {
     height: "100%"
   }
 }
 
+const SlickThumbnailSlideCSS: SxProps = {
+  ".slick-vertical .slick-current .card-media": {
+    borderColor: "#A0ED61"
+  },
+  ".slick-vertical .slick-cloned": {
+    display: "none"
+  }
+}
+
 const VerticalThumbSlide = ({ items }: IVerticalThumbSlideProps) => {
-  const [activeIndex, setActiveIndex] = React.useState(0)
   const [nav1, setNav1] = useState<Slider | undefined | null>()
   const [nav2, setNav2] = useState<Slider | undefined | null>()
 
@@ -34,31 +42,24 @@ const VerticalThumbSlide = ({ items }: IVerticalThumbSlideProps) => {
     draggable: true,
     fade: true,
     pauseOnHover: false,
-    dots: true,
-    arrows: false,
-    afterChange(currentSlide) {
-      setActiveIndex(currentSlide)
-    }
+    dots: false,
+    arrows: false
   }
 
   const settingSlideThumbnail: Settings = {
     infinite: true,
-    speed: 500,
+    speed: 1000,
     slidesToShow: 5,
-    slidesToScroll: 1,
     arrows: false,
     vertical: true,
-    swipeToSlide: true,
     focusOnSelect: true,
-    afterChange(currentSlide) {
-      setActiveIndex(currentSlide)
-    }
+    dots: false
   }
 
   return (
     <div className="my-4 flex w-full items-center justify-between">
       <Box
-        sx={SlickSlideBoxCSS}
+        sx={SlickMainSlideCSS}
         className="flex h-[390px] w-full max-w-[592px] flex-col justify-center overflow-hidden rounded-2xl"
       >
         <Slider
@@ -73,27 +74,28 @@ const VerticalThumbSlide = ({ items }: IVerticalThumbSlideProps) => {
                 item={item}
                 key={item.id}
                 index={index}
-                activeIndex={activeIndex}
               />
             ))}
         </Slider>
       </Box>
-      <Box className="flex h-[390px] w-[80px] flex-col rounded-2xl border-[1px] border-neutral-700 border-opacity-80 p-1">
+      <Box
+        sx={SlickThumbnailSlideCSS}
+        className="relative flex h-[390px] w-[80px] flex-col overflow-hidden rounded-2xl border-[1px] border-neutral-700 border-opacity-80 p-1"
+      >
         <Slider
           asNavFor={nav1 as Slider}
           ref={(slider2) => setNav2(slider2)}
           {...settingSlideThumbnail}
         >
           {items &&
-            items.map((item, index) => (
+            items.map((item) => (
               <VerticalThumbSmallCardSlide
                 item={item}
                 key={item.id}
-                index={index}
-                activeIndex={activeIndex}
               />
             ))}
         </Slider>
+        <div className="absolute bottom-0 left-0 h-20 w-full bg-gradient-to-b from-neutral-900/0 to-neutral-900" />
       </Box>
     </div>
   )

@@ -24,6 +24,13 @@ export interface ISocial {
   tiktok: string
 }
 
+export type TMediaType = "video" | "image"
+export interface IMediaList {
+  path: string
+  _id: string
+  media_type: TMediaType
+}
+
 export interface IPartnerGameData {
   _id: string
   name: string
@@ -40,8 +47,9 @@ export interface IPartnerGameData {
   social: ISocial
   item_and_nft: any[]
   image_banner: string
-  media_list: MediaList[]
+  media_list: IMediaList[]
 }
+
 export type IGameCards = IPartnerGameData[]
 
 export interface IGetPartnerGameService {

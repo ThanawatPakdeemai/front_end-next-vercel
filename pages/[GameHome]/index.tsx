@@ -5,10 +5,9 @@ import GameSlide from "@feature/slider/components/templates/GameSlide"
 import SkeletonBanner from "@components/atoms/skeleton/SkeletonBanner"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import useGamesById from "@feature/game/containers/hooks/useGamesById"
-import StoryLobby from "@feature/game/components/templates/lobby/storymode/StoryLobby"
+import StoryLobby from "@feature/game/components/templates/lobby/StoryLobby"
 import GamePageDefault from "@components/template/GamePageDefault"
-import Overview from "@components/organisms/Overview"
-import OverviewIcon from "@components/icons/OverviewIcon"
+import OverViewGameStoryMode from "@components/organisms/OverviewGameStoryMode"
 
 export default function GameLobby() {
   const [gameData, setGameData] = useState<IGame>()
@@ -33,31 +32,12 @@ export default function GameLobby() {
   return <>{gameData ? getTemplateLobby() : <SkeletonBanner />}</>
 }
 
-const OverviewContent = () => {
-  const { data } = useGameStore()
-  const [gameData, setGameData] = useState<IGame>()
-  useEffect(() => {
-    if (data) setGameData(data)
-  }, [data])
-  return (
-    <div className="flex flex-col">
-      <Overview
-        icon={<OverviewIcon />}
-        title="Game overview"
-      >
-        <p
-          className="px-6 py-2 text-start text-sm text-neutral-500"
-          dangerouslySetInnerHTML={{
-            __html: gameData ? gameData.banner_description : ""
-          }}
-        />
-      </Overview>
-    </div>
-  )
-}
-
 GameLobby.getLayout = function getLayout(page: ReactElement) {
-  return <GamePageDefault component={OverviewContent()}>{page}</GamePageDefault>
+  return (
+    <GamePageDefault component={OverViewGameStoryMode()}>
+      {page}
+    </GamePageDefault>
+  )
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {

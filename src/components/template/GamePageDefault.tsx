@@ -1,43 +1,58 @@
 import Banner from "@components/molecules/Banner"
+import BannerSingle from "@components/molecules/BannerSingle"
 import Howto from "@components/molecules/HowToPlay"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
 import { GAME_DETAILS_BANNER } from "@constants/gameBanner"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
+import useGlobal from "@hooks/useGlobal"
 import useGameStore from "@stores/game"
 import React, { useEffect, useState } from "react"
 
 interface IGamePageDefaultProps {
-  children: React.ReactNode
   component: React.ReactNode
+  component2?: React.ReactNode
+  component3?: React.ReactNode
+  // sAdd more components here
 }
 
 const GamePageDefault = ({
-  children,
-  // title,
-  component
+  component,
+  component2,
+  component3
 }: IGamePageDefaultProps) => {
   const data = useGameStore((state) => state.data)
+  const { gamePartnerData } = useGlobal()
   const [gameData, setGameData] = useState<IGame | IPartnerGameData>()
 
   useEffect(() => {
-    if (data) setGameData(data)
-  }, [data])
+    if (data) {
+      setGameData(data as IGame)
+    } else if (gamePartnerData) {
+      setGameData(gamePartnerData as IPartnerGameData)
+    }
+  }, [data, gamePartnerData])
 
   return (
     <div className="main-container mx-auto">
       <Header />
-      <Banner data={GAME_DETAILS_BANNER} />
+      {gameData && "image_banner" in gameData ? (
+        <BannerSingle
+          src={gameData.image_banner}
+          alt={gameData.name}
+        />
+      ) : (
+        <Banner data={GAME_DETAILS_BANNER} />
+      )}
+
       {gameData && "device" in gameData && <Howto data={gameData as IGame} />}
-      <div className="flex-row gap-3 md:flex">
-        <div className="mb-3 min-h-[500px] w-full rounded-md border-[1px] border-neutral-700 border-opacity-80 p-4 md:w-4/6">
-          {children}
-        </div>
-        <div className="mb-3 min-h-[500px] rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 md:w-2/6">
-          {component}
-        </div>
-      </div>
+      {component}
+      {/**
+       * @description In case there is a need to add another component
+       */}
+      {component2 && <div className="mt-12">{component2}</div>}
+      {component3 && <div className="mt-12">{component3}</div>}
       <Footer />
     </div>
   )

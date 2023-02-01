@@ -8,14 +8,15 @@ interface IOverviewProps extends IPanelHeaderProps {
   children: React.ReactNode
 }
 
-const Overview = ({ children, ...props }: IOverviewProps) => (
+const AsideLayout = ({ children, ...props }: IOverviewProps) => (
   <div className="panel-overview">
     <PanelHeader
       title={props.title}
       icon={props.icon}
+      adornmentButton={props.adornmentButton}
     />
     <PanelContent height="h-[432px]">{children}</PanelContent>
   </div>
 )
 
-export default Overview
+export default AsideLayout

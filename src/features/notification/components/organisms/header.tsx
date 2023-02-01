@@ -4,6 +4,7 @@ import { ButtonAllAsRead } from "../molecules/buttonAllAsRead"
 
 interface IProps {
   unread: number
+  onHandleClick?: () => void
 }
 const Header = ({ unread }: IProps) => (
   <div className="mb-8 flex justify-between">

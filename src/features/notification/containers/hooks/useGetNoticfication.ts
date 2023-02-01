@@ -1,8 +1,11 @@
 import { useQuery } from "@tanstack/react-query"
 import { getNotificationById } from "../services/notification.service"
-import { INotification } from "../../interfaces/INotificationService"
+// import { INotification } from "../../interfaces/INotificationService"
 
-const useGetNoticfication = ({ player_id }: INotification) => {
+interface IProps {
+  player_id: string
+}
+const useGetNoticfication = ({ player_id }: IProps) => {
   const { data, isLoading, isFetching, isPreviousData, isError, error } =
     useQuery({
       queryKey: ["noticficationPage", player_id],

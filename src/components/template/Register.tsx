@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import * as yup from "yup"
@@ -15,7 +16,6 @@ import {
   Grid,
   IconButton,
   InputAdornment,
-  Link,
   styled,
   TextField,
   Typography
@@ -32,7 +32,6 @@ import ILock from "@components/icons/Lock"
 import ICheckMark from "@components/icons/CheckMark"
 import IEdit from "@components/icons/Edit"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import { SocialRegister } from "@configs/socialRegister"
 import Tagline from "@components/molecules/tagline/Tagline"
 import VectorIcon from "@components/icons/VectorIcon"
 import { motion } from "framer-motion"
@@ -40,7 +39,23 @@ import { MESSAGES } from "@constants/messages"
 import { useToast } from "@feature/toast/containers"
 import useVerifyCode from "@feature/authentication/containers/hooks/useVerifyCode"
 import useSignUp from "@feature/authentication/containers/hooks/useSignUp"
+import useUserAction from "@hooks/useProfile"
 import ButtonLink from "@components/atoms/button/ButtonLink"
+import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
+import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
+import GoogleIcon from "@components/icons/SocialIcon/GoogleIcon"
+import MetaMarkIcon from "@components/icons/SocialIcon/Metamask"
+import {
+  FacebookAuthProvider,
+  TwitterAuthProvider,
+  GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+  Auth
+} from "firebase/auth"
+import { initializeApp } from "@firebase/app"
+import { IError } from "@src/types/contract"
+import { useRouter } from "next/router"
 
 const KeyFramesClockwise = styled("div")({
   "@keyframes rotation": {
@@ -72,7 +87,7 @@ interface TFormData {
   confirmPassword: string
   code: number
   subscription: boolean
-  referral: string
+  referralId: string | string[]
 }
 
 const SignupSchema = yup
@@ -82,18 +97,24 @@ const SignupSchema = yup
     confirmPassword: yup.string().required(),
     code: yup.number().required().positive().integer(),
     subscription: yup.boolean().defined(),
-    referral: yup.string().defined()
+    referralId: yup.string().defined()
   })
   .required()
 
 const RegisterLayout = () => {
+  const router = useRouter()
+  const { referral } = router.query
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors }
   } = useForm<TFormData>({
-    resolver: yupResolver(SignupSchema)
+    resolver: yupResolver(SignupSchema),
+    defaultValues: {
+      referralId: referral || ""
+    }
   })
 
   const patternCode = "[0-9]{1,6}"
@@ -104,6 +125,20 @@ const RegisterLayout = () => {
   const { mutateVerifyCode } = useVerifyCode()
   const { mutateSignUp } = useSignUp()
   const { errorToast, successToast } = useToast()
+  const userActions = useUserAction()
+
+  const config = {
+    apiKey: "AIzaSyAszETPfcbQt0gd2Ifpep83_C05zOt_k1c",
+    authDomain: "able-study-326414.firebaseapp.com",
+    projectId: "able-study-326414",
+    storageBucket: "able-study-326414.appspot.com",
+    messagingSenderId: "104862138123",
+    appId: "1:104862138123:web:2e7578e0d8a80277052c0e",
+    measurementId: "G-4NN0JPG9X4"
+  }
+
+  const app = initializeApp(config)
+  const auth: Auth = getAuth(app)
 
   const [verifiCode, setVerifiCode] = useState("")
   const [showPassword, setShowPassword] = useState(false)
@@ -178,11 +213,11 @@ const RegisterLayout = () => {
         await mutateVerifyCode({ _email, _recaptcha })
           .then((_profile) => {
             if (_profile) {
-              successToast(MESSAGES.sign_in_success)
+              successToast(MESSAGES.success_get_code)
             }
           })
           .catch(() => {
-            errorToast(MESSAGES.please_fill)
+            errorToast(MESSAGES.code_number_not_expired)
           })
       } catch (error) {
         errorToast("Verify Error")
@@ -190,15 +225,128 @@ const RegisterLayout = () => {
     })()
   }
 
+  const facebookLogin = async () => {
+    const provider = new FacebookAuthProvider()
+    provider.addScope("email")
+    await signInWithPopup(auth, provider)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .then((result) => {
+        console.log("test-facebookLogin-then", result)
+
+        // const _user = result.user
+        // const { _tokenResponse } = result
+        // const _userObject: IUserObject = { ..._user, ..._tokenResponse }
+        // if (referral) {
+        //   userActions.loginProvider({
+        //     email: _userObject.email,
+        //     provider: "facebook",
+        //     providerUUID: _userObject.uid,
+        //     referral
+        //   })
+        // } else {
+        //   userActions.loginProvider({
+        //     email: _userObject.email,
+        //     provider: "facebook",
+        //     providerUUID: _userObject.uid
+        //   })
+        // }
+      })
+      .catch(async (error: IError) => {
+        if (error.code) {
+          errorToast(MESSAGES.auth_popup_closed_by_user)
+        }
+      })
+  }
+
+  const twitterLogin = async () => {
+    const provider = new TwitterAuthProvider()
+    provider.addScope("email")
+    // await signInWithPopup(auth, provider)
+    //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    //   .then((result: any) => {
+    //     const _user = result.user
+    //     const _tokenResponse = result._tokenResponse
+    //     const _userObject: IUserObject = { ..._user, ..._tokenResponse }
+    //     if (referral) {
+    //       userActions.loginProvider({
+    //         email: _userObject.email,
+    //         provider: "twitter",
+    //         providerUUID: _userObject.uid,
+    //         referral: referral
+    //       })
+    //     } else {
+    //       userActions.loginProvider({
+    //         email: _userObject.email,
+    //         provider: "twitter",
+    //         providerUUID: _userObject.uid
+    //       })
+    //     }
+    //   })
+    //   .catch(async (error: IError) => {
+    //     if (error.code) {
+    //       //("Something went wrong");
+    //     }
+    //   })
+  }
+
+  const googleRegister = async () => {
+    const provider = new GoogleAuthProvider()
+    provider.addScope("email")
+    console.log("test-googleRegister", provider)
+
+    await signInWithPopup(auth, provider)
+      // eslint-disable-next-line no-undef
+      .then((result) => {
+        console.log("test-googleRegister-result", result)
+
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        const token = credential?.accessToken
+        // The signed-in user info.
+        const { user } = result
+
+        console.log("test-credential", credential)
+        console.log("test-token", token)
+        console.log("test-user", user)
+        console.log("test-user-2", user.providerData[0])
+
+        // const _user: auth.UserCredential = result.user
+        // const { _tokenResponse } = result
+        // const _userObject: IUserObject = { ..._user, ..._tokenResponse }
+
+        if (referral) {
+          userActions.loginProvider({
+            email: user.providerData[0].email,
+            provider: "google",
+            providerUUID: user.uid,
+            referral
+          })
+        } else {
+          userActions.loginProvider({
+            email: user.providerData[0].email,
+            provider: "google",
+            providerUUID: user.uid
+          })
+        }
+      })
+      .catch(async (error: IError) => {
+        if (error.code) {
+          errorToast(MESSAGES.auth_popup_closed_by_user)
+        }
+      })
+  }
+
   const onSubmitRegister = (values: TFormData) => {
-    const { email, code, password, subscription, referral } = values
+    const { email, code, password, subscription, referralId } = values
+
+    console.log("test-values", values, referral)
 
     if (emailCorrect && characterPasswordLength && characterUppercase) {
       setFormSubmitErrors(false)
       mutateSignUp({
         _email: email,
         _password: password,
-        _referral: referral,
+        _referral: referralId,
         _verifycode: code,
         _subscription: subscription
       })
@@ -245,13 +393,13 @@ const RegisterLayout = () => {
             >
               <HeadLogo />
             </Box>
-            <Box className="container absolute bottom-0.5 overflow-hidden">
+            <Box className="container absolute bottom-0 overflow-hidden">
               <Tagline
                 bgColor="bg-neutral-800"
                 textColor="text-neutral-500"
                 text="Secue. fun. simple. earn $naka AND enjoy "
                 icon={<VectorIcon />}
-                className="!my-4"
+                className="!my-[2.938rem]"
               />
             </Box>
           </Grid>
@@ -447,7 +595,6 @@ const RegisterLayout = () => {
                         <Button
                           disabled={!emailCorrect || watch("email") === ""}
                           onClick={() => onClickGetCode(watch("email"))}
-                          // onClick={(e) => onClickGetCode(e)}
                           className="btn-rainbow-theme h-[40px] !min-w-[90px] rounded-lg bg-error-main text-sm text-neutral-300"
                         >
                           Get Code
@@ -718,15 +865,14 @@ const RegisterLayout = () => {
                       justifyContent="space-between"
                     >
                       <Grid item>
-                        <Link href="/login">
-                          <ButtonLink
-                            href="/login"
-                            text="Login"
-                            icon={null}
-                            size="medium"
-                            className="h-[40px] !min-w-[108px] border border-solid border-neutral-700 text-sm hover:h-[45px]"
-                          />
-                        </Link>
+                        <ButtonLink
+                          href="/login"
+                          text="Login"
+                          icon={null}
+                          size="medium"
+                          disabledEndIcon
+                          className="h-[40px] !min-w-[108px] border border-solid border-neutral-700 text-sm hover:h-[45px]"
+                        />
                       </Grid>
                       <Grid item>
                         <ButtonToggleIcon
@@ -757,24 +903,50 @@ const RegisterLayout = () => {
                       container
                     >
                       <div className="flex flex-wrap">
-                        {SocialRegister?.map((item) => (
-                          <Link
-                            key={item.label.toString()}
-                            href={item.href}
-                            target="_blank"
-                          >
-                            <ButtonIcon
-                              whileHover="hover"
-                              transition={{
-                                type: "spring",
-                                stiffness: 400,
-                                damping: 4
-                              }}
-                              icon={item.icon}
-                              className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                            />
-                          </Link>
-                        ))}
+                        <ButtonIcon
+                          whileHover="hover"
+                          transition={{
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 4
+                          }}
+                          onClick={facebookLogin}
+                          icon={<FacebookIcon />}
+                          className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                        />
+                        <ButtonIcon
+                          whileHover="hover"
+                          transition={{
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 4
+                          }}
+                          onClick={twitterLogin}
+                          icon={<TwitterIcon />}
+                          className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                        />
+                        <ButtonIcon
+                          whileHover="hover"
+                          transition={{
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 4
+                          }}
+                          onClick={googleRegister}
+                          icon={<GoogleIcon />}
+                          className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                        />
+                        <ButtonIcon
+                          whileHover="hover"
+                          transition={{
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 4
+                          }}
+                          onClick={facebookLogin}
+                          icon={<MetaMarkIcon />}
+                          className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                        />
                       </div>
                     </Grid>
                   </Grid>

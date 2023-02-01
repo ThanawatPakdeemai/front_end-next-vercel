@@ -3,6 +3,8 @@ export const MESSAGES = {
   "getdata-success": "Get Data Success",
   "please_login": "Please Login",
   "sign_in_success": "Sign in successfully",
+  "success_get_code": "Success get code",
+  "code_number_not_expired": "Code number not expired",
   "edit_profile_success": "Edit Profile successfully",
   "please_fill": "Please fill completely",
   "cant_update_data": "Cannot Update Data",
@@ -16,5 +18,6 @@ export const MESSAGES = {
   "no-player": "No Player in Room",
   "you-were-kicked": "You were kicked out of the room.",
   "please_item": "Please select Item.",
-  "room-id-not-found": "Room Id not found"
+  "room-id-not-found": "Room Id not found",
+  "auth_popup_closed_by_user": "auth/popup-closed-by-user"
 }

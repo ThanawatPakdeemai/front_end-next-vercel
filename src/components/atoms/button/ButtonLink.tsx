@@ -16,6 +16,8 @@ export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   onClick?: () => void
   type?: "submit" | "button"
   disabled?: boolean
+  disabledStartIcon?: boolean
+  disabledEndIcon?: boolean
 }
 
 const ButtonLink = ({
@@ -30,7 +32,9 @@ const ButtonLink = ({
   arrowColor,
   onClick,
   type,
-  disabled = false
+  disabled = false,
+  disabledStartIcon = false,
+  disabledEndIcon = false
 }: IButtonLink) => {
   const ButtonSelf = useMemo(
     () => (
@@ -41,16 +45,20 @@ const ButtonLink = ({
         color={color}
         size={size}
         startIcon={
-          <div className={`button-icon animation-arrow ${textColor}`}>
-            {icon}
-          </div>
+          !disabledStartIcon && (
+            <div className={`button-icon animation-arrow ${textColor}`}>
+              {icon}
+            </div>
+          )
         }
         className={`${className} button-global`}
         onClick={onClick}
         endIcon={
-          <div className="button-arrow animation-arrow">
-            <ArrowForwardIcon className={arrowColor} />
-          </div>
+          !disabledEndIcon && (
+            <div className="button-arrow animation-arrow">
+              <ArrowForwardIcon className={arrowColor} />
+            </div>
+          )
         }
       >
         <span className={`animation-button-text ${textColor}`}>{text}</span>
@@ -61,6 +69,8 @@ const ButtonLink = ({
       className,
       color,
       disabled,
+      disabledEndIcon,
+      disabledStartIcon,
       icon,
       onClick,
       size,

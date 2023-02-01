@@ -55,6 +55,7 @@ const ProfileContent = () => {
 
   return profileData && getProfileInfo && !isFetching ? (
     <div className="w-[90%]">
+      <SideSocialShare />
       <div className="relative">
         <Box
           component="img"
@@ -83,7 +84,6 @@ const ProfileContent = () => {
           userName={getProfileInfo.data.username}
           userImage={getProfileInfo.data.avatar}
         />
-        <SideSocialShare />
       </div>
       <div className="relative">
         <Tagline

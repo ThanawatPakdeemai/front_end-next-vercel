@@ -72,7 +72,9 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     onOwnerBurnItem,
     getPlayersCheckItemOfPlayerListen,
     getPlayersCheckRoomRollbackListen,
-    room_id
+    room_id,
+    waitingRoomPlay,
+    startGame
   } = useSocketWaitingRoom({ ...propsSocketWaitingRoom })
 
   useEffect(() => {
@@ -160,20 +162,6 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   }, [outRoom, router])
 
   /**
-   * @description call check owner burn item after create room and into waiting room
-   */
-  // useEffect(() => {
-  //   if (dataPlayers) {
-  //     if (dataPlayers.room_status === "online") {
-  //       // send owner burn item
-  //       if (player && player.owner && itemSelected) {
-  //         onOwnerBurnItem(player.item_burn, itemSelected?._id, qtyItemOfRoom)
-  //       }
-  //     }
-  //   }
-  // }, [dataPlayers, itemSelected, onOwnerBurnItem, player, qtyItemOfRoom])
-
-  /**
    * @description Calling chatting function
    */
   const onChat = useCallback(async () => {
@@ -195,8 +183,6 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
       getPlayersCheckItemOfPlayerListen().then((res) => {
         if (res) {
           const data = res as IGameRoomListSocket
-          // console.log("ItemP", data)
-
           mapPlayer(data)
         }
       })
@@ -214,8 +200,6 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
       getPlayersCheckRoomRollbackListen().then((res) => {
         if (res) {
           const data = res as IGameRoomListSocket
-          // console.log("ItemPRollback", data)
-
           mapPlayer(data)
         }
       })
@@ -238,7 +222,9 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
           onReadyPlayerBurnItem,
           room_id,
           onOwnerBurnItem,
-          dataPlayers
+          dataPlayers,
+          waitingRoomPlay,
+          startGame
         }}
       >
         <Box className=" gap-3 md:flex">

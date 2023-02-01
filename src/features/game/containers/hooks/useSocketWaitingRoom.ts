@@ -80,7 +80,7 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     })
   }
 
-  const changeStatusOwner = () => {
+  const waitingRoomPlay = () => {
     socketWaitingRoom.emit(EVENTS.ACTION.WAITING_ROOM_PLAY)
   }
 
@@ -309,7 +309,7 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     getPlayersCheckRoomRollbackListen,
     burnItemNowStatus,
     startGame,
-    changeStatusOwner
+    waitingRoomPlay
   }
 }
 

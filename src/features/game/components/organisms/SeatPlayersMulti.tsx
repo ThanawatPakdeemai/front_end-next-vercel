@@ -17,6 +17,7 @@ import ButtonCountdown from "@feature/game/components/atoms/ButtonCountdown"
 import ButtonPlayer from "@feature/game/components/atoms/ButtonPlayer"
 import PlayerCard from "@feature/game/components/molecules/PlayerCard"
 import { IResGetIp } from "@interfaces/IGetIP"
+import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 
 interface IProps {
   players: IGameCurrentPlayerMulti[] | undefined[]
@@ -32,7 +33,9 @@ const SeatPlayersMulti = ({ players }: IProps) => {
     cancelReadyPlayer,
     room_id,
     onOwnerBurnItem,
-    dataPlayers
+    dataPlayers,
+    waitingRoomPlay,
+    startGame
   } = useSocketProviderWaiting()
 
   const profile = useProfileStore((state) => state.profile.data)
@@ -58,6 +61,11 @@ const SeatPlayersMulti = ({ players }: IProps) => {
     }
   }, [])
 
+  const { gameItemList } = useGamesByGameId({
+    _playerId: profile ? profile.id : "",
+    _gameId: gameData ? gameData._id : ""
+  })
+
   const playerInroom = useMemo(() => {
     if (players) {
       const __player = [...players].filter((ele) => ele)
@@ -75,31 +83,31 @@ const SeatPlayersMulti = ({ players }: IProps) => {
       const frontendUrl = `${baseUrlFront}/${gameData.path}/summary/${room_id}`
       let gameURL = ""
       if (gameData.type_code === "multi_02" && ip) {
+        const dataLinkGame = `${room_id}:|:${profile?.id}:|:${
+          itemSelected._id
+        }:|:${profile?.email}:|:${Helper.getLocalStorage(
+          "token"
+        )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
+          start_time
+        ).getTime()}:|:${profile?.username}:|:${playerInroom?.length}:|:${
+          dataPlayers?.map_id
+        }:|:${ip}`
+
         gameURL = `${baseUrlGame}/${gameData.id}/?query=${Helper.makeID(
           8
-        )}${btoa(
-          `${room_id}:|:${profile?.id}:|:${itemSelected._id}:|:${
-            profile?.email
-          }:|:${Helper.getLocalStorage(
-            "token"
-          )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
-            start_time
-          ).getTime()}:|:${profile?.username}:|:${playerInroom}:|:${
-            dataPlayers?.map_id
-          }:|:${ip}`
-        )}`
+        )}${btoa(dataLinkGame)}`
       } else {
+        const dataLinkGame = `${room_id}:|:${profile?.id}:|:${
+          itemSelected._id
+        }:|:${profile?.email}:|:${Helper.getLocalStorage(
+          "token"
+        )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
+          start_time
+        ).getTime()}:|:${profile?.username}`
+
         gameURL = `${gameData.game_url}/${gameData.id}/?query=${Helper.makeID(
           8
-        )}${btoa(
-          `${room_id}:|:${profile?.id}:|:${itemSelected._id}:|:${
-            profile?.email
-          }:|:${Helper.getLocalStorage(
-            "token"
-          )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
-            start_time
-          ).getTime()}:|:${profile?.username}`
-        )}`
+        )}${btoa(dataLinkGame)}`
       }
 
       setGameUrl(gameURL)
@@ -203,33 +211,31 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   ])
 
   useEffect(() => {
-    if (playerInroom && playerAllReady && playerAllBurnItem && ownerPressPlay) {
-      // console.log("goto game")
-      if (dataPlayers && dataPlayers.room_status === "room_ready") {
-        setInterval(() => {
-          window.open(gameUrl, "_blank")
-        }, 7000)
-      }
-    } else {
-      // console.log("not to game")
+    // console.log("goto game")
+    if (dataPlayers && dataPlayers.room_status === "playing") {
+      waitingRoomPlay()
     }
-  }, [
-    dataPlayers,
-    gameUrl,
-    ownerPressPlay,
-    playerAllBurnItem,
-    playerAllReady,
-    playerBurnItem,
-    playerInroom
-  ])
+  }, [dataPlayers, waitingRoomPlay])
+
+  useEffect(() => {
+    if (dataPlayers?.room_status === "ready_play") {
+      setInterval(() => {
+        window.location.href = gameUrl
+      }, 10000)
+    }
+    return () => {}
+  }, [dataPlayers?.room_status, gameUrl])
 
   const onReady = async () => {
+    const itemGame = gameItemList?.find((ele) => ele._id === itemSelected?._id)
     if (profile) {
       if (
         playerMe &&
         itemSelected &&
         qtyItemOfRoom > 0 &&
-        itemSelected.qty >= qtyItemOfRoom
+        itemGame &&
+        dataPlayers &&
+        itemGame.qty >= dataPlayers?.create_room_detail.number_of_item
       ) {
         setLoading(true)
         await onReadyPlayerBurnItem(
@@ -237,7 +243,6 @@ const SeatPlayersMulti = ({ players }: IProps) => {
           itemSelected._id,
           qtyItemOfRoom
         )
-
         await setPlayerPressReady(true)
         await setLoading(false)
       } else if (!playerMe) {
@@ -246,7 +251,9 @@ const SeatPlayersMulti = ({ players }: IProps) => {
       } else if (
         !itemSelected ||
         qtyItemOfRoom < 1 ||
-        itemSelected.qty < qtyItemOfRoom
+        (itemGame &&
+          dataPlayers &&
+          itemGame.qty < dataPlayers?.create_room_detail.number_of_item)
       ) {
         setPlayerPressReady(false)
         errorToast(MESSAGES["please_item"])
@@ -255,36 +262,45 @@ const SeatPlayersMulti = ({ players }: IProps) => {
       setPlayerPressReady(false)
       errorToast(MESSAGES["please_login"])
     }
+    setLoading(false)
   }
 
   const onPlayGame = () => {
+    const itemGame = gameItemList?.find((ele) => ele._id === itemSelected?._id)
+
     if (profile) {
       if (
         playerMe &&
         itemSelected &&
         qtyItemOfRoom > 0 &&
         playerAllReady &&
-        itemSelected.qty >= qtyItemOfRoom
+        itemGame &&
+        dataPlayers &&
+        itemGame.qty >= dataPlayers?.create_room_detail.number_of_item
       ) {
         onOwnerBurnItem(playerMe.item_burn, itemSelected?._id, qtyItemOfRoom)
         setOwnPressPlay(true)
+        startGame()
       } else if (!playerMe) {
         setOwnPressPlay(false)
         errorToast(MESSAGES["no-player"])
       } else if (
         !itemSelected ||
         qtyItemOfRoom < 1 ||
-        itemSelected.qty < qtyItemOfRoom
+        (dataPlayers &&
+          itemSelected &&
+          itemSelected.qty < dataPlayers?.create_room_detail.number_of_item)
       ) {
         setOwnPressPlay(false)
         errorToast(MESSAGES["please_item"])
+      } else {
+        errorToast(MESSAGES["error"])
       }
     } else {
       setOwnPressPlay(false)
       errorToast(MESSAGES["please_login"])
     }
   }
-  // console.log(dataPlayers)
 
   const time = new Date()
   return (
@@ -321,56 +337,64 @@ const SeatPlayersMulti = ({ players }: IProps) => {
               </Typography>
 
               {/* owner */}
-              {playerAllReady && playerAllBurnItem && ownerPressPlay && (
-                <ButtonCountdown
-                  time
-                  endTime={
-                    playerAllReady
-                      ? new Date(time.setSeconds(time.getSeconds() + 5))
-                      : new Date()
-                  }
-                  handleClick={() => {
-                    isOwnerRoom &&
-                      (playerAllReady && !ownerPressPlay
+              {playerAllReady &&
+                playerMe?.status === "ready" &&
+                // play &&
+                dataPlayers?.room_status === "ready_play" && (
+                  <ButtonCountdown
+                    time
+                    endTime={
+                      playerAllReady
+                        ? new Date(time.setSeconds(time.getSeconds() + 10))
+                        : new Date()
+                    }
+                    handleClick={() => {
+                      isOwnerRoom &&
+                        (playerAllReady && !ownerPressPlay
+                          ? onPlayGame()
+                          : errorToast(
+                              MESSAGES["please-wait-player-all-ready"]
+                            )) // TODO YUI
+                    }}
+                    endIcon={
+                      isOwnerRoom ? (
+                        <HighlightOffIcon className="text-secondary-main " />
+                      ) : (
+                        <HourglassEmptyIcon className="text-primary-main " />
+                      )
+                    }
+                    className={`h-[60px] w-[60px] rounded-full ${
+                      isOwnerRoom
+                        ? " border border-secondary-main bg-neutral-900 text-secondary-main"
+                        : " bg-secondary-main text-neutral-900"
+                    }   font-bold capitalize`}
+                  />
+                )}
+              {isOwnerRoom &&
+                !ownerPressPlay &&
+                playerMe?.status === "ready" &&
+                dataPlayers?.room_status !== "ready_play" && (
+                  <ButtonPlayer
+                    startIcon={
+                      <Ellipse fill={playerAllReady ? "#A0ED61" : "#F42728"} />
+                    }
+                    handleClick={() => {
+                      playerAllReady
                         ? onPlayGame()
-                        : errorToast(MESSAGES["please-wait-player-all-ready"])) // TODO YUI
-                  }}
-                  endIcon={
-                    isOwnerRoom ? (
-                      <HighlightOffIcon className="text-secondary-main " />
-                    ) : (
-                      <HourglassEmptyIcon className="text-primary-main " />
-                    )
-                  }
-                  className={`h-[60px] w-[60px] rounded-full ${
-                    isOwnerRoom
-                      ? " border border-secondary-main bg-neutral-900 text-secondary-main"
-                      : " bg-secondary-main text-neutral-900"
-                  }   font-bold capitalize`}
-                />
-              )}
-              {isOwnerRoom && !ownerPressPlay && !playerAllBurnItem && (
-                <ButtonPlayer
-                  startIcon={
-                    <Ellipse fill={playerAllReady ? "#A0ED61" : "#F42728"} />
-                  }
-                  handleClick={() => {
-                    playerAllReady
-                      ? onPlayGame()
-                      : errorToast(MESSAGES["please-wait-player-all-ready"])
-                  }}
-                  text={
-                    <Typography className="w-full font-neue-machina text-2xl uppercase text-primary-main">
-                      START
-                    </Typography>
-                  }
-                  className={`h-[60px] w-[194px] rounded-[50px] ${
-                    playerAllReady
-                      ? " btn-green-rainbow bg-green-lemon text-neutral-900"
-                      : "bg-neutral-800  text-neutral-600"
-                  } font-bold capitalize`}
-                />
-              )}
+                        : errorToast(MESSAGES["please-wait-player-all-ready"])
+                    }}
+                    text={
+                      <Typography className="w-full font-neue-machina text-2xl uppercase text-primary-main">
+                        START
+                      </Typography>
+                    }
+                    className={`h-[60px] w-[194px] rounded-[50px] ${
+                      playerAllReady
+                        ? " btn-green-rainbow bg-green-lemon text-neutral-900"
+                        : "bg-neutral-800  text-neutral-600"
+                    } font-bold capitalize`}
+                  />
+                )}
               {/* player */}
               {!isOwnerRoom &&
                 !playerPressReady &&
@@ -398,7 +422,8 @@ const SeatPlayersMulti = ({ players }: IProps) => {
                 )}
               {!isOwnerRoom &&
                 playerPressReady &&
-                playerMe?.status === "ready" && (
+                playerMe?.status === "ready" &&
+                dataPlayers?.room_status !== "ready_play" && (
                   <ButtonCountdown
                     handleClick={() => {
                       cancelReadyPlayer()

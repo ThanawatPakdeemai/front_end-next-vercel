@@ -14,6 +14,8 @@ interface IPropSocket {
   room_id: string
   onOwnerBurnItem: (_itemBurn: boolean, _item_id: string, _qty: number) => void
   dataPlayers: IGameRoomListSocket | undefined
+  waitingRoomPlay: () => void
+  startGame: () => void
 }
 interface IProp {
   propsSocket: IPropSocket
@@ -27,7 +29,9 @@ const SocketContext = createContext<IPropSocket>({
   onReadyPlayerBurnItem: () => {},
   room_id: "",
   onOwnerBurnItem: () => {},
-  dataPlayers: undefined
+  dataPlayers: undefined,
+  waitingRoomPlay: () => {},
+  startGame: () => {}
 })
 
 function SocketProvider({ propsSocket, children }: IProp) {

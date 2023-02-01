@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo, useState } from "react"
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react"
 import { IGameCurrentPlayerMulti } from "@feature/game/interfaces/IGameService"
 import { Box, CircularProgress, Typography } from "@mui/material"
 import Ellipse from "@components/icons/Ellipse/Ellipse"
@@ -51,6 +51,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   const [room_number] = useState<string>("")
   const [rank_name] = useState<string>("")
   const [start_time] = useState<string>("")
+  const time = new Date()
 
   useEffect(() => {
     Helper.getIP().then((res) => {
@@ -217,14 +218,22 @@ const SeatPlayersMulti = ({ players }: IProps) => {
     }
   }, [dataPlayers, waitingRoomPlay])
 
+  const endAndStartTimer = useCallback(() => {
+    let timer
+    clearTimeout(timer)
+    timer = window.setTimeout(() => {
+      window.location.href = gameUrl
+    }, 10000)
+  }, [gameUrl])
+
   useEffect(() => {
     if (dataPlayers?.room_status === "ready_play") {
-      setInterval(() => {
-        window.location.href = gameUrl
-      }, 10000)
+      if (dataPlayers.current_player.length === dataPlayers.max_players) {
+        endAndStartTimer()
+      }
     }
-    return () => {}
-  }, [dataPlayers?.room_status, gameUrl])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataPlayers])
 
   const onReady = async () => {
     const itemGame = gameItemList?.find((ele) => ele._id === itemSelected?._id)
@@ -302,7 +311,6 @@ const SeatPlayersMulti = ({ players }: IProps) => {
     }
   }
 
-  const time = new Date()
   return (
     <>
       <Box>
@@ -311,7 +319,10 @@ const SeatPlayersMulti = ({ players }: IProps) => {
           {players.length > 0 && (
             <Box
               className={` ${
-                ownerPressPlay && playerAllBurnItem && " border-secondary-main"
+                ownerPressPlay &&
+                playerAllBurnItem &&
+                dataPlayers?.room_status === "ready_play" &&
+                " border-secondary-main"
               } w-fit items-center justify-center gap-3 rounded-[50px] border border-neutral-800 bg-primary-main p-3 md:flex`}
             >
               <Typography
@@ -320,7 +331,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
                   // ownerPressPlay &&
                   playerAllBurnItem &&
                   playerAllReady &&
-                  ownerPressPlay &&
+                  dataPlayers?.room_status === "ready_play" &&
                   "text-secondary-main"
                 }  ${isOwnerRoom && " text-error-main"}  ${
                   playerAllReady &&

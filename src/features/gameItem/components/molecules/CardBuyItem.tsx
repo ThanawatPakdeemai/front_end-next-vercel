@@ -85,18 +85,20 @@ export default function CardButItem() {
   }, [gameItemList, itemSelected])
 
   const buttonInToGame = useMemo(() => {
-    if (itemSelected && (itemSelected as IGameItemListData).qty > 0) {
-      return (
-        <ButtonLink
-          text={t("join-game")}
-          href={`${router.asPath}/roomlist`}
-          icon={<LogoutIcon />}
-          size="medium"
-          color="secondary"
-          variant="contained"
-          className="w-full"
-        />
-      )
+    if (qtyItemSelected) {
+      if (qtyItemSelected > 0) {
+        return (
+          <ButtonLink
+            text={t("join-game")}
+            href={`${router.asPath}/roomlist`}
+            icon={<LogoutIcon />}
+            size="medium"
+            color="secondary"
+            variant="contained"
+            className="w-full"
+          />
+        )
+      }
     }
     return (
       <ButtonLink
@@ -110,7 +112,7 @@ export default function CardButItem() {
         disabled
       />
     )
-  }, [itemSelected, router, t])
+  }, [qtyItemSelected, router.asPath, t])
 
   return (
     <>

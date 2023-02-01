@@ -263,5 +263,6 @@
   "play_count_title": "Plays",
   "developer": "Developer",
   "out-room": "Out Room",
-  "no-player":"No Player"
+  "no-player":"No Player",
+  "game_partner_about": "About this game"
 }

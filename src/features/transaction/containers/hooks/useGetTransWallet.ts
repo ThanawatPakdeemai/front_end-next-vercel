@@ -6,16 +6,33 @@ const useGetTransWallet = ({
   _playerId,
   _type,
   _limit,
-  _page
+  _page,
+  _sort
 }: IGetTransWallet) => {
-  const { data, error, isLoading, isPreviousData, isError, isFetching } =
-    useQuery({
-      queryKey: ["getTransWallet", { _playerId, _type, _page }],
-      queryFn: () => getTransWallet({ _playerId, _type, _limit, _page }),
-      keepPreviousData: true,
-      staleTime: Infinity
-    })
-  return { data, isLoading, isFetching, isPreviousData, isError, error }
+  const {
+    data,
+    error,
+    isLoading,
+    isPreviousData,
+    isError,
+    isFetching,
+    refetch
+  } = useQuery({
+    queryKey: ["getTransWallet", { _playerId, _type, _limit, _page, _sort }],
+    queryFn: () => getTransWallet({ _playerId, _type, _limit, _page, _sort }),
+    keepPreviousData: true,
+    staleTime: Infinity,
+    enabled: _playerId !== "" || _playerId !== undefined
+  })
+  return {
+    data,
+    isLoading,
+    isFetching,
+    isPreviousData,
+    isError,
+    error,
+    refetch
+  }
 }
 
 export default useGetTransWallet

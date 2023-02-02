@@ -61,4 +61,5 @@ export interface ICreateTransWallet extends IParamTrans {
 export interface IGetTransWallet extends IParamTrans {
   _limit: string | number
   _page: string | number
+  _sort?: object
 }

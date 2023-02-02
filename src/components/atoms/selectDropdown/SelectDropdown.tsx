@@ -29,6 +29,7 @@ const SelectDropdown = ({ className, details, onChange }: IProp) => (
           href={item.href}
           id=""
           external={false}
+          active={item.active}
         />
       </Box>
     ))}

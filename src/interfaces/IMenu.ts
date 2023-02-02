@@ -4,7 +4,10 @@ import React from "react"
 interface ILink {
   href: string
 }
-export interface IMenuBaseItem {
+interface IActiveMunu {
+  active?: boolean
+}
+export interface IMenuBaseItem extends IActiveMunu {
   data?: any
 }
 export interface IMenuBase extends ILink, IMenuBaseItem {

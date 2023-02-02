@@ -76,6 +76,8 @@ const CardLink = ({
               isHover && "top-[-20px] scale-[1.35]"
             } ${imageClassNameMain}`}
             style={imageStyleMain || { transition: "all 0.2s ease-in" }}
+            loading="eager"
+            priority
           />
           <Image
             src={srcSecond}
@@ -86,6 +88,8 @@ const CardLink = ({
               isHover ? "top-[-15px] scale-50" : "top-[35px]"
             } ${imageClassNameSecond}`}
             style={imageStyleSecond || { transition: "0.2s" }}
+            loading="eager"
+            priority
           />
         </motion.div>
         <ButtonLink

@@ -273,7 +273,7 @@ export default function TransactionTable() {
           </Table>
         )}
       </TableContainer>
-      <div className="my-5 flex justify-between">
+      <div className="my-5 flex w-[678px] justify-between">
         <PaginationNaka
           totalCount={totalCount}
           limit={limit}

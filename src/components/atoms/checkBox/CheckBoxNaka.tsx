@@ -20,7 +20,7 @@ const CheckBoxNaka = ({
   <>
     <label className={`${className} flex`}>
       <Checkbox
-        id="subscribe"
+        id={text}
         defaultChecked={value}
         onChange={(_event?: React.ChangeEvent<HTMLInputElement>) => {
           onHandle(_event)

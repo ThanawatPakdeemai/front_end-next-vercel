@@ -1,18 +1,18 @@
 import React, { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import LeftSidebarLayout from "@components/template/LeftSidebarLayout"
-import TransactionTable from "@feature/transaction/components/molecules/TransactionTable"
+import WalletPage from "@feature/page/WalletPage"
+import ProfileLayout from "@components/template/ProfileLayout"
 
 export default function Wallet() {
   return (
     <article className="h-full w-full">
-      <TransactionTable />
+      <WalletPage />
     </article>
   )
 }
 
 Wallet.getLayout = function getLayout(page: ReactElement) {
-  return <LeftSidebarLayout>{page}</LeftSidebarLayout>
+  return <ProfileLayout>{page}</ProfileLayout>
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {

@@ -55,7 +55,7 @@ const RightMenuLogIn = () => {
             }}
           >
             <CardActions
-              className="flex justify-between rounded-[13px] border-2  border-neutral-700 bg-[#18181cff] px-0"
+              className="flex justify-between rounded-[13px] border-2  border-neutral-700 bg-black-500 px-0"
               sx={{ maxWidth: 265, width: 265, height: 50 }}
               disableSpacing
             >

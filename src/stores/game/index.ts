@@ -1,7 +1,7 @@
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { GameAllId, IGame } from "@src/features/game/interfaces/IGameService"
 import configZustandDevTools from "@src/utils/configDevtools"
-import { create } from "zustand"
+import create from "zustand"
 import { devtools, persist } from "zustand/middleware"
 
 export interface IUseGameItemStore {
@@ -12,9 +12,10 @@ export interface IUseGameItemStore {
   setGameID: (_gameID: GameAllId[]) => void
   clearGameID: () => void
   getGame: () => void
-  getItemSelected: () => void
   itemSelected: IGameItemListData | null
   onSetGameItemSelectd: (_item: IGameItemListData) => void
+  qtyItemOfRoom: number
+  setQtyItemOfRoom: (_qty: number) => void // TODO YUI when create room set qty item
 }
 
 const useGameStore = create<IUseGameItemStore>()(
@@ -36,13 +37,20 @@ const useGameStore = create<IUseGameItemStore>()(
           set(() => ({ gameId: [] }), false, "GameStore/clearGameID")
         },
         getGame: () => get().data,
-        getItemSelected: () => get().itemSelected,
         itemSelected: null,
         onSetGameItemSelectd: (_item) => {
           set(
             () => ({ itemSelected: _item }),
             false,
             "GameStore/setGameItemSelected"
+          )
+        },
+        qtyItemOfRoom: 0,
+        setQtyItemOfRoom: (_qty) => {
+          set(
+            () => ({ qtyItemOfRoom: _qty }),
+            false,
+            "GameStore/setGameItemQtyOfRoom"
           )
         }
       }),

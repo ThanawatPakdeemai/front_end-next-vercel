@@ -1,8 +1,16 @@
 import IconCustoms from "@components/atoms/IconCustom"
+import FavouriteColorIcon from "@components/icons/HowToPlayIcon/FavouriteColorIcon"
 import FavouriteIcon from "@components/icons/HowToPlayIcon/FavouriteIcon"
 import HowToPlayIcon from "@components/icons/HowToPlayIcon/HowToPlayIcon"
 import ShareIcon from "@components/icons/HowToPlayIcon/ShareIcon"
+import {
+  getFavoriteGameByUser,
+  saveFavoriteGame
+} from "@feature/favourite/containers/services/favourite.service"
 import { IGame } from "@feature/game/interfaces/IGameService"
+import { useToast } from "@feature/toast/containers"
+import { Button } from "@mui/material"
+import useProfileStore from "@stores/profileStore"
 import { useEffect, useState } from "react"
 
 interface IProp {
@@ -29,8 +37,49 @@ export interface IIconCustoms {
 
 const Howto = ({ data }: IProp) => {
   // useState
+  const profile = useProfileStore((state) => state.profile.data)
+  const { errorToast, successToast } = useToast()
   const [device, setDevice] = useState<IGameDevice[]>([])
   const [browser, setBrowser] = useState<IGameBrowser[]>([])
+  const [active, setActive] = useState<boolean>(false)
+
+  const getData = async () => {
+    if (profile && data) {
+      await getFavoriteGameByUser(
+        profile.id,
+        10000,
+        1,
+        "",
+        "",
+        "",
+        data.name
+      ).then((res) => {
+        const { status } = res
+        if (status) {
+          setActive(status)
+        }
+      })
+    }
+  }
+
+  const onFavouriteGame = (id: string) => {
+    if (profile && id) {
+      saveFavoriteGame(profile.id, id)
+        .then((res) => {
+          const { status } = res
+          if (status) {
+            // if (getFavoriteGame) saveFavoriteGame()
+            setActive(!active)
+            successToast(`success`)
+          }
+        })
+        .catch((error: { message: string }) => {
+          errorToast(error.message)
+        })
+    } else {
+      errorToast("Please Login")
+    }
+  }
 
   useEffect(() => {
     // eslint-disable-next-line no-unused-vars
@@ -38,18 +87,14 @@ const Howto = ({ data }: IProp) => {
     if (data) {
       setDevice(data.device_support)
       setBrowser(data.browser_support)
+      getData()
     }
     return () => {
       cancel = true
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
 
-  //  <div
-  //             onClick={() => {
-  //               onPresent(HowToPlay(title, details))
-  //             }}
-  //             className="text-1 cursor-pointer"
-  //           >
   return (
     <>
       <div className="mb-3 flex flex-col items-center justify-between rounded-2xl bg-neutral-800 p-5  xl:flex-row">
@@ -125,13 +170,19 @@ const Howto = ({ data }: IProp) => {
             Share
           </div>
           <div className="mx-5 h-3 border-[1px] border-solid border-neutral-600" />
-          <div className="flex items-center text-sm text-neutral-400">
-            <FavouriteIcon
-              color="#FFFFFF"
-              className="mr-2"
-            />
-            Add to favourite
-          </div>
+          <Button onClick={() => onFavouriteGame(data.id)}>
+            <div className="flex items-center text-sm text-neutral-400">
+              {active ? (
+                <FavouriteColorIcon className="mr-2" />
+              ) : (
+                <FavouriteIcon
+                  color="#0b0b0b"
+                  className="mr-2"
+                />
+              )}
+              {active ? "Delete Favourite" : "Add to Favourite"}
+            </div>
+          </Button>
         </div>
       </div>
     </>

@@ -1,6 +1,6 @@
 import { INotification } from "@feature/notification/interfaces/INotificationService"
 import configZustandDevTools from "@utils/configDevtools"
-import { create } from "zustand"
+import create from "zustand"
 import { devtools } from "zustand/middleware"
 
 interface INotiStore {

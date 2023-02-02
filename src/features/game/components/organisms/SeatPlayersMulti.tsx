@@ -227,7 +227,8 @@ const SeatPlayersMulti = ({ players }: IProps) => {
         }, 10000)
       }
     }
-  }, [dataPlayers, gameUrl, playerInroom])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataPlayers])
 
   const onReady = async () => {
     const itemGame = gameItemList?.find((ele) => ele._id === itemSelected?._id)

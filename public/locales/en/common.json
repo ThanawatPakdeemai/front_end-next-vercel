@@ -256,5 +256,7 @@
   "bag": "BAG",
   "please-select-item":"Please select Item.",
   "buy-now":"Buy Now",
-  "required": "Required"
+  "required": "Required",
+  "out-room": "Out Room",
+  "no-player":"No Player"
 }

@@ -144,7 +144,7 @@ export default function CardButItem() {
               />
             </div>
             <div className="flex w-full flex-col justify-center">
-              <div className="text-black-700 mb-2 flex w-full justify-between rounded-xl  bg-neutral-300 p-2 text-center">
+              <div className="mb-2 flex w-full justify-between rounded-xl bg-neutral-300  p-2 text-center text-black-700">
                 <p>{itemSelected?.qty ?? 0}</p>
                 <Image
                   src="/images/gamePage/skull.png"

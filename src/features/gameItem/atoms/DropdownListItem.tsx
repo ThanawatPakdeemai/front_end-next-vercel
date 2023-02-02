@@ -78,7 +78,7 @@ const DropdownListItem = ({
                           <p className="px-2">{defaultItem?.name}</p>
                         </div>
 
-                        <p className="px-2 text-[#ffffff]">
+                        <p className="px-2 text-white-default">
                           {defaultItem?.price
                             ? `XL ${defaultItem?.price ?? 0} USD`
                             : t(`please-select-item`)}

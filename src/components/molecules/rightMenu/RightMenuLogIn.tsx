@@ -10,6 +10,7 @@ import StatProfile from "@components/molecules/statProfile/StatProfile"
 import MenuProfile from "@components/molecules/menuProfile/MenuProfile"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import useProfileStore from "@stores/profileStore"
+import Link from "next/link"
 
 const RightMenuLogIn = () => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -55,7 +56,7 @@ const RightMenuLogIn = () => {
             }}
           >
             <CardActions
-              className="flex justify-between rounded-[13px] border-2  border-neutral-700 bg-[#18181cff] px-0"
+              className="flex justify-between rounded-[13px] border-2  border-neutral-700 bg-black-500 px-0"
               sx={{ maxWidth: 265, width: 265, height: 50 }}
               disableSpacing
             >
@@ -87,13 +88,15 @@ const RightMenuLogIn = () => {
                   {Helper.shortenString(profile?.address)}
                 </Typography>
               </div>
-              <Image
-                src={profile?.avatar}
-                alt="avatar"
-                width={40}
-                height={40}
-                className="mr-[5px] rounded-lg"
-              />
+              <Link href={`/profile/${profile.id}`}>
+                <Image
+                  src={profile?.avatar}
+                  alt="avatar"
+                  width={40}
+                  height={40}
+                  className="mr-[5px] rounded-lg"
+                />
+              </Link>
               {/* expand button */}
               <IconButtonCustom
                 expand={expanded.toString()}

@@ -6,6 +6,13 @@ export const IMAGES = {
     height: 37,
     alt: "naka-logo"
   },
+  nakaBannerHover: {
+    src: "/images/home/naka-band-hover.svg",
+    blurDataURL: "/images/home/naka-band-hover.svg",
+    width: 225,
+    height: 37,
+    alt: "naka-logo-hover"
+  },
   tableCom: {
     src: "/images/home/table-com.svg",
     blurDataURL: "/images/home/table-com.svg",
@@ -201,5 +208,33 @@ export const IMAGES = {
     width: 218,
     height: 218,
     alt: "no_image"
+  },
+  MetaMaskds: {
+    src: "/images/Profile/Wallet/MetaMaskds.svg",
+    blurDataURL: "/images/Profile/Wallet/MetaMaskds.svg",
+    width: 35,
+    height: 35,
+    alt: "meta_maskds"
+  },
+  Frame: {
+    src: "/images/Profile/Wallet/Frame.png",
+    blurDataURL: "/images/Profile/Wallet/Frame.png",
+    width: 120,
+    height: 80,
+    alt: "frame"
+  },
+  RectangleRed: {
+    src: "/images/Profile/Wallet/Rectangle-red.svg",
+    blurDataURL: "/images/Profile/Wallet/Rectangle-red.svg",
+    width: 10,
+    height: 10,
+    alt: "rectangle-red"
+  },
+  RectangleBlack: {
+    src: "/images/Profile/Wallet/Rectangle-black.svg",
+    blurDataURL: "/images/Profile/Wallet/Rectangle-black.svg",
+    width: 10,
+    height: 10,
+    alt: "rectangle-black"
   }
 }

@@ -1,7 +1,6 @@
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { P2EHeaderMenu } from "@constants/gameSlide"
-import GameCard from "@feature/game/components/molecules/GameCard"
 import { getGameByTypes } from "@feature/game/containers/services/game.service"
 import { useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/router"
@@ -14,6 +13,7 @@ import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import { MESSAGES } from "@constants/messages"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import { useToast } from "@feature/toast/containers"
+import GameCard from "@feature/game/containers/components/molecules/GameCard"
 
 const PlayToEarnGamesPage = () => {
   const type = "play-to-earn"

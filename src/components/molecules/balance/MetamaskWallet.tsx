@@ -3,12 +3,12 @@ import Helper from "@utils/helper"
 import React from "react"
 import CircleIcon from "@mui/icons-material/Circle"
 import ChainPolygonIcon from "@components/icons/NetworkIcon/ChainPolygonIcon"
-import MetamaskIcon from "@components/icons/MetamaskIcon"
 import TextLink from "@components/atoms/TextLink"
 import CloseIcon from "@mui/icons-material/Close"
 import { IProfile } from "@src/types/profile"
 import CopyAddress from "@components/atoms/CopyAddress"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import MetamaskLogo from "@components/icons/MetamaskLogo"
 
 interface IProp {
   isConnected?: boolean
@@ -35,7 +35,7 @@ const MetamaskWallet = ({
         <ChainPolygonIcon />
       </div>
       <div className="rounded-full border border-neutral-800 bg-[#34343433] p-6">
-        <MetamaskIcon />
+        <MetamaskLogo />
       </div>
       {/* isConnected */}
       <div className="mt-6 flex flex-col items-center gap-4 uppercase">

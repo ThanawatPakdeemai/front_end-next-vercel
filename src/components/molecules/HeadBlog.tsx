@@ -1,9 +1,10 @@
 import SearchIcon from "@components/icons/SearchIcon"
 import { MENU_BLOG_HEADER } from "@configs/menu"
 import { Button, TextField, Typography } from "@mui/material"
+import useSearchStore from "@stores/blogFilter"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import React, { useState } from "react"
+import React from "react"
 
 const HeadBlog = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter()
@@ -11,7 +12,9 @@ const HeadBlog = ({ children }: { children: React.ReactNode }) => {
     minWidth: "10px !important",
     borderRadius: "15px !important"
   }
-  const [search, setsearch] = useState<string>("")
+
+  const { search: searchBlog, setSearch: setSearchBlog } = useSearchStore()
+
   return (
     <div>
       <div className="flex justify-between">
@@ -57,9 +60,6 @@ const HeadBlog = ({ children }: { children: React.ReactNode }) => {
                   } md:mb-0`}
                   variant="contained"
                   size="large"
-                  onClick={() => {
-                    // console.log("item.name", item.name)
-                  }}
                 >
                   {item.icon}
                   <Typography className="!font-neue-machina-semi !text-sm">
@@ -71,12 +71,11 @@ const HeadBlog = ({ children }: { children: React.ReactNode }) => {
           })}
         </div>
         <TextField
-          value={search}
+          value={searchBlog}
           onChange={(event) => {
             let { value } = event.target
             value = value.replace(/[^A-Za-z0-9]/gi, "")
-            setsearch(value)
-            // console.log("search", search)
+            setSearchBlog(value)
           }}
           className="px-2"
           placeholder="Search Blog"

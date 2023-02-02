@@ -85,8 +85,8 @@ const MultiRoomList = () => {
   }, [getRoomListMultiPlayer, isConnected])
 
   useEffect(() => {
-    fetchRoom()
-  }, [fetchRoom])
+    if (isConnected) fetchRoom()
+  }, [fetchRoom, isConnected])
 
   const handleJoinRoom = (_data: IGameRoomListSocket) => {
     if (profile) {
@@ -120,7 +120,7 @@ const MultiRoomList = () => {
 
   return (
     <>
-      <SocketProviderRoom propsSocket={{ getRoomListMultiPlayer }}>
+      <SocketProviderRoom propsSocket={{ getRoomListMultiPlayer, fetchRoom }}>
         <Box className="rounded-3xl border border-neutral-700">
           {data && <HeaderRoomList lobby={data.name} />}
           <Divider />

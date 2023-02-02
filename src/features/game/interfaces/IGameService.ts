@@ -85,7 +85,7 @@ export interface IGameMetaData {
 
 export interface IGameMap {
   _id: string
-  map_id: number
+  map_id: string
   map_name: string
 }
 

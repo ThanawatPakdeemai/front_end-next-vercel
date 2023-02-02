@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useMemo, useState } from "react"
+import React, { memo, useEffect, useMemo, useState } from "react"
 import { IGameCurrentPlayerMulti } from "@feature/game/interfaces/IGameService"
 import { Box, CircularProgress, Typography } from "@mui/material"
 import Ellipse from "@components/icons/Ellipse/Ellipse"
@@ -18,6 +18,7 @@ import ButtonPlayer from "@feature/game/components/atoms/ButtonPlayer"
 import PlayerCard from "@feature/game/components/molecules/PlayerCard"
 import { IResGetIp } from "@interfaces/IGetIP"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
+import Link from "next/link"
 
 interface IProps {
   players: IGameCurrentPlayerMulti[] | undefined[]
@@ -212,28 +213,22 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   ])
 
   useEffect(() => {
-    // console.log("goto game")
     if (dataPlayers && dataPlayers.room_status === "playing") {
       waitingRoomPlay()
     }
   }, [dataPlayers, waitingRoomPlay])
 
-  const endAndStartTimer = useCallback(() => {
-    let timer
-    clearTimeout(timer)
-    timer = window.setTimeout(() => {
-      window.location.href = gameUrl
-    }, 10000)
-  }, [gameUrl])
-
   useEffect(() => {
-    if (dataPlayers?.room_status === "ready_play") {
-      if (dataPlayers.current_player.length === dataPlayers.max_players) {
-        endAndStartTimer()
+    if (dataPlayers?.room_status === "ready_play" && gameUrl && playerInroom) {
+      if (playerInroom.length === dataPlayers.max_players) {
+        let timer
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          window.location.href = gameUrl
+        }, 10000)
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataPlayers])
+  }, [dataPlayers, gameUrl, playerInroom])
 
   const onReady = async () => {
     const itemGame = gameItemList?.find((ele) => ele._id === itemSelected?._id)
@@ -319,6 +314,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
 
   return (
     <>
+      <Link href={gameUrl}>GO</Link>
       <Box>
         <PlayerCard players={players} />
         <Box className="mb-10  flex justify-center">

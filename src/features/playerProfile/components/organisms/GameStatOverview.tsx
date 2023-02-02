@@ -99,7 +99,7 @@ const GameStatOverview = () => {
 
   // console.log("data", getProfileInfo?.data.game_data.length)
   return (
-    <div className="w-full">
+    <div className="w-[90%]">
       <SliderGameStat
         openBadges={openBadges}
         handleOnExpandClick={handleOnExpandClick}

@@ -13,6 +13,7 @@ import dayjs from "dayjs"
 import Image from "next/image"
 import useGetProfileInfo from "@feature/profile/containers/hook/getProfileInfo"
 import Lavel from "@components/icons/Lavel"
+import Helper from "@utils/helper"
 import EditProfileModal from "./EditProfileModal"
 import TotalCardContent from "./TotalCardContent"
 import SliderBadges from "./SliderBadges"
@@ -158,7 +159,9 @@ const ProfileContent = () => {
               />
               <TotalCardContent
                 text="Total rewards (naka)"
-                totalNumber={getProfileInfo.data.total_reward}
+                totalNumber={Helper.number4digit(
+                  getProfileInfo.data.total_reward
+                )}
                 rank={false}
               />
               <TotalCardContent

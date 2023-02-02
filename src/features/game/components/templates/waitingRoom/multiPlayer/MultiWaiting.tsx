@@ -21,7 +21,7 @@ import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
 const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { data: gameData, itemSelected, qtyItemOfRoom } = useGameStore()
+  const { data: gameData, itemSelected } = useGameStore()
   const router = useRouter()
   const { t } = useTranslation()
   const { errorToast } = useToast()
@@ -72,7 +72,9 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     onOwnerBurnItem,
     getPlayersCheckItemOfPlayerListen,
     getPlayersCheckRoomRollbackListen,
-    room_id
+    room_id,
+    waitingRoomPlay,
+    startGame
   } = useSocketWaitingRoom({ ...propsSocketWaitingRoom })
 
   useEffect(() => {
@@ -159,33 +161,6 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     }
   }, [outRoom, router])
 
-  const player = useMemo(() => {
-    if (dataPlayers && profile) {
-      const _player = dataPlayers.current_player.find((ele) => {
-        if (ele) {
-          return ele.player_id === profile?.id
-        }
-        return undefined
-      })
-      return _player
-    }
-    return undefined
-  }, [dataPlayers, profile])
-
-  /**
-   * @description call check owner burn item after create room and into waiting room
-   */
-  useEffect(() => {
-    if (dataPlayers) {
-      if (dataPlayers.room_status === "playing") {
-        // send owner burn item
-        if (player && player.owner && itemSelected) {
-          onOwnerBurnItem(player.item_burn, itemSelected?._id, qtyItemOfRoom)
-        }
-      }
-    }
-  }, [dataPlayers, itemSelected, onOwnerBurnItem, player, qtyItemOfRoom])
-
   /**
    * @description Calling chatting function
    */
@@ -212,7 +187,13 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
         }
       })
     }
-  }, [getPlayersCheckItemOfPlayerListen, isConnected, mapPlayer])
+  }, [
+    getPlayersCheckItemOfPlayerListen,
+    isConnected,
+    mapPlayer,
+    onReadyPlayerBurnItem,
+    onOwnerBurnItem
+  ])
 
   useEffect(() => {
     if (isConnected) {
@@ -223,7 +204,13 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
         }
       })
     }
-  }, [getPlayersCheckRoomRollbackListen, isConnected, mapPlayer])
+  }, [
+    getPlayersCheckRoomRollbackListen,
+    isConnected,
+    mapPlayer,
+    onReadyPlayerBurnItem,
+    onOwnerBurnItem
+  ])
 
   return (
     <>
@@ -233,7 +220,11 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
           cancelReadyPlayer,
           onSendMessage,
           onReadyPlayerBurnItem,
-          room_id
+          room_id,
+          onOwnerBurnItem,
+          dataPlayers,
+          waitingRoomPlay,
+          startGame
         }}
       >
         <Box className=" gap-3 md:flex">

@@ -58,7 +58,7 @@ const PlayerCard = ({ players }: IProps) => {
           {players.map((item, index) =>
             item ? (
               <Box
-                className="w-fit"
+                className="m-auto w-fit"
                 key={item._id}
               >
                 <AvatarProfile
@@ -94,7 +94,7 @@ const PlayerCard = ({ players }: IProps) => {
               </Box>
             ) : (
               <Box
-                className="  rounded-3xl"
+                className="m-auto  rounded-3xl"
                 key={Number(index)}
               >
                 <AvatarProfile

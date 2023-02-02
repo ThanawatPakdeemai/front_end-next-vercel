@@ -1,27 +1,24 @@
-import { ReactElement } from "react"
+import React, { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import ProfiileLayout from "@components/template/ProfiileLayout"
 import WalletPage from "@feature/page/WalletPage"
+import ProfileLayout from "@components/template/ProfileLayout"
 
 export default function Wallet() {
   return (
-    <>
-      <article className="h-full w-full">
-        <WalletPage />
-      </article>
-    </>
+    <article className="h-full w-full">
+      <WalletPage />
+    </article>
   )
 }
 
 Wallet.getLayout = function getLayout(page: ReactElement) {
-  return <ProfiileLayout>{page}</ProfiileLayout>
+  return <ProfileLayout>{page}</ProfileLayout>
 }
 
-export async function getStaticProps({ locale }) {
+export async function getServerSideProps({ locale }: { locale: string }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"]))
-      // Will be passed to the page component as props
     }
   }
 }

@@ -264,7 +264,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
         itemGame.qty < dataPlayers?.create_room_detail.number_of_item
       ) {
         if (itemSelected && itemGame && itemGame.qty < qtyItemOfRoom) {
-          errorToast(MESSAGES["please_item"])
+          errorToast(MESSAGES["you-not-enough"])
         } else {
           errorToast(MESSAGES["please_item"])
         }

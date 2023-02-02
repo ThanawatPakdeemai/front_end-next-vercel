@@ -284,9 +284,9 @@ const SeatPlayersMulti = ({ players }: IProps) => {
       if (
         playerMe &&
         itemSelected &&
-        qtyItemOfRoom > 0 &&
         playerAllReady &&
         itemGame &&
+        itemGame.qty >= qtyItemOfRoom &&
         dataPlayers &&
         itemGame.qty >= dataPlayers?.create_room_detail.number_of_item
       ) {
@@ -297,14 +297,17 @@ const SeatPlayersMulti = ({ players }: IProps) => {
         setOwnPressPlay(false)
         errorToast(MESSAGES["no-player"])
       } else if (
-        !itemSelected ||
         qtyItemOfRoom < 1 ||
         (dataPlayers &&
           itemSelected &&
           itemSelected.qty < dataPlayers?.create_room_detail.number_of_item)
       ) {
-        setOwnPressPlay(false)
-        errorToast(MESSAGES["please_item"])
+        if (itemSelected && itemGame && itemGame.qty < qtyItemOfRoom) {
+          errorToast(MESSAGES["you-not-enough"])
+        } else {
+          errorToast(MESSAGES["please_item"])
+        }
+        setPlayerPressReady(false)
       } else {
         errorToast(MESSAGES["error"])
       }

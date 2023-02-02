@@ -1,13 +1,22 @@
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
+import useGlobal from "@hooks/useGlobal"
 import useGameStore from "@stores/game"
 import { useQuery } from "@tanstack/react-query"
 import { useEffect, useState } from "react"
-import { getGamePartnerAllReview } from "../services/gamePartners.service"
+import {
+  getGamePartnerAllReview,
+  getGamePartnerNewVersion
+} from "../services/gamePartners.service"
 
-const useGamePartners = (_limit: number, _skip: number) => {
+const useGamePartners = () => {
+  const limit = 5
+  const { page } = useGlobal()
   const { dataGamePartner } = useGameStore()
   const [gameData, setGameData] = useState<IPartnerGameData>()
 
+  /**
+   * @description Get all reviews of game
+   */
   const {
     data: allReviewsData,
     isLoading: allReviewsDataLoading,
@@ -16,14 +25,35 @@ const useGamePartners = (_limit: number, _skip: number) => {
     isError: allReviewsDataError,
     error: allReviewsDataErrorData
   } = useQuery({
-    queryKey: ["gameAllReviews", _limit, _skip, gameData?.id || ""],
+    queryKey: ["gameAllReviews", limit, page, gameData?.id || ""],
     queryFn: () =>
-      gameData ? getGamePartnerAllReview(_limit, _skip, gameData.id) : null,
+      gameData ? getGamePartnerAllReview(limit, page, gameData.id) : null,
     keepPreviousData: true,
     staleTime: Infinity,
     enabled: gameData?.id !== "" && gameData?.id !== undefined
   })
 
+  /**
+   * @description Get new version of game
+   */
+  const {
+    data: newVersionData,
+    isLoading: newVersionDataLoading,
+    isFetching: newVersionDataFetching,
+    isPreviousData: newVersionPreviousData,
+    isError: newVersionDataError,
+    error: newVersionDataErrorData
+  } = useQuery({
+    queryKey: ["gameNewVersion", gameData?.id || ""],
+    queryFn: () => (gameData ? getGamePartnerNewVersion(gameData.id) : null),
+    keepPreviousData: true,
+    staleTime: Infinity,
+    enabled: gameData?.id !== "" && gameData?.id !== undefined
+  })
+
+  /**
+   * @description Set game data
+   */
   useEffect(() => {
     if (dataGamePartner) {
       setGameData(dataGamePartner)
@@ -31,12 +61,19 @@ const useGamePartners = (_limit: number, _skip: number) => {
   }, [dataGamePartner])
 
   return {
+    limit,
     allReviewsData,
     allReviewsDataLoading,
     allReviewsDataFetching,
     allReviewsPreviousData,
     allReviewsDataError,
-    allReviewsDataErrorData
+    allReviewsDataErrorData,
+    newVersionData,
+    newVersionDataLoading,
+    newVersionDataFetching,
+    newVersionPreviousData,
+    newVersionDataError,
+    newVersionDataErrorData
   }
 }
 

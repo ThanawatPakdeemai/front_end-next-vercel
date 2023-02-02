@@ -6,9 +6,9 @@ interface IPanelContentProps {
 }
 
 const PanelContent = ({ children, height }: IPanelContentProps) => (
-  <div className="panel-content relative">
+  <div className="panel-content relative h-full">
     <div
-      className={`custom-scroll min-h-[347px] overflow-y-scroll pr-4 ${height}`}
+      className={`custom-scroll h-full min-h-[347px] overflow-y-scroll pr-4 ${height}`}
     >
       {children}
     </div>

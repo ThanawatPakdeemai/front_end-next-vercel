@@ -17,3 +17,20 @@ export interface IGamePartnerReviewsReponse
     IFormatService {
   data: IGamePartnerReviewsData[]
 }
+
+export interface IGamePartnerNewVersionContentType {
+  _id: string
+  content_type_id: string
+}
+
+export interface IGamePartnerNewVersionReponse {
+  _id: string
+  content_type: IGamePartnerNewVersionContentType[]
+  title: string
+  slug: string
+  description: string
+  content: string
+  version: string
+  image: string
+  id: string
+}

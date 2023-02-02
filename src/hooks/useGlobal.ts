@@ -19,15 +19,27 @@ const useGlobal = () => {
 
   // States
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
+  const [tabValue, setTabValue] = useState("1")
+  const [hydrated, setHydrated] = useState(false)
 
-  // UseEffect
+  /**
+   * @description Set profile
+   */
   useEffect(() => {
     setStateProfile(profile)
   }, [profile])
 
   /**
+   * @description Set hydrate to fix error "Text content does not match server-rendered HTML"
+   */
+  useEffect(() => {
+    setHydrated(true)
+  }, [])
+
+  /**
    * @description Pagination
    */
+  const limit = 10
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
 
@@ -73,14 +85,28 @@ const useGlobal = () => {
     }
   }
 
+  /**
+   * @description Handle change tab
+   * @param newValue
+   */
+  const handleChangeTab = (newValue: string) => {
+    setTabValue(newValue)
+  }
+
   return {
     onHandleClick,
     gamePartnerData,
+    dataGame,
+    limit,
     page,
     setPage,
     totalCount,
     setTotalCount,
-    stateProfile
+    stateProfile,
+    tabValue,
+    setTabValue,
+    handleChangeTab,
+    hydrated
   }
 }
 

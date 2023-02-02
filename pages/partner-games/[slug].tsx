@@ -29,6 +29,7 @@ GamePartnerDetails.getLayout = function getLayout() {
     <GamePageDefault
       component={
         <RightSidebarContent
+          className="mb-24"
           content={<PartnerGameLobby />}
           aside={<OverviewGamePartners />}
         />

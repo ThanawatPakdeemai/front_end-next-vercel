@@ -14,6 +14,7 @@ const AsideLayout = ({ children, ...props }: IOverviewProps) => (
       title={props.title}
       icon={props.icon}
       adornmentButton={props.adornmentButton}
+      average={props.average}
     />
     <PanelContent height="h-[432px]">{children}</PanelContent>
   </div>

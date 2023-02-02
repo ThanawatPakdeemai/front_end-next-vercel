@@ -261,5 +261,8 @@
   "developer": "开发商",
   "out-room": "出房间",
   "no-player": "没有玩家",
-  "review_title": "评论"
+  "review_title": "评论",
+  "no_review": "没有评论",
+  "whats_new": "最新消息",
+  "ntf_game": "NFT游戏"
 }

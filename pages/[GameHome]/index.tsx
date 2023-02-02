@@ -23,7 +23,12 @@ export default function GameLobby() {
     if (gameData) {
       switch (gameData.game_type) {
         case "storymode":
-          return <StoryLobby />
+          return (
+            <RightSidebarContent
+              content={<StoryLobby />}
+              aside={<OverViewGameStoryMode />}
+            />
+          )
         default:
           return <GameSlide />
       }
@@ -34,16 +39,7 @@ export default function GameLobby() {
 }
 
 GameLobby.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <GamePageDefault
-      component={
-        <RightSidebarContent
-          content={page}
-          aside={<OverViewGameStoryMode />}
-        />
-      }
-    />
-  )
+  return <GamePageDefault component={page} />
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {

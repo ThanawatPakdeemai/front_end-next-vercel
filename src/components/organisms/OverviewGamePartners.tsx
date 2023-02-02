@@ -19,11 +19,13 @@ import TelegramIcon from "@components/icons/SocialIcon/TelegramIcon"
 import TiktokIcon from "@components/icons/SocialIcon/TiktokIcon"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import AsideLayout from "@components/template/AsideLayout"
-// import { useTranslation } from "react-i18next"
+import { useTranslation } from "react-i18next"
+import useGlobal from "@hooks/useGlobal"
 
 const OverviewGamePartners = () => {
+  const { hydrated } = useGlobal()
   const { dataGamePartner } = useGameStore()
-  // const { t } = useTranslation()
+  const { t } = useTranslation()
 
   const [gameData, setGameData] = useState<IPartnerGameData>()
   const [gamePartnerSocial, setGamePartnerSocial] = useState<IMenuBase[]>([])
@@ -84,107 +86,107 @@ const OverviewGamePartners = () => {
 
   return (
     <div className="flex flex-col justify-start">
-      <AsideLayout
-        icon={<OverviewIcon />}
-        title="Game overview"
-      >
-        <div className="pl-6 pt-3 pr-3 text-start text-sm text-neutral-500">
-          <TagMultiple
-            // title={`${t("genre")}`}
-            title="Genre"
-            tags={gameTags}
-          />
-          <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-          <TagSingular
-            title="developer"
-            label={gameData?.short_detail?.developer || "-"}
-            link={gameData?.short_detail?.developer || "-"}
-          />
-          <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-          <TagSingular
-            title="publisher"
-            label={gameData?.short_detail?.publisher || "-"}
-            link={gameData?.short_detail?.publisher || "-"}
-          />
-          <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-          <div className="overview-row grid grid-cols-2">
-            <div
-              id="overview-release-date"
-              className="overview-col"
-            >
-              <TagSingular
-                title="relate date"
-                label={
-                  gameData?.short_detail?.release_date
-                    ? dayjs(gameData?.short_detail?.release_date).format(
-                        "DD MMM YYYY"
-                      )
-                    : "-"
-                }
-              />
-            </div>
-            <div
-              id="overview-chain-id"
-              className="overview-col border-l-[1px] border-neutral-700 pl-3"
-            >
-              <TagSingular
-                title="Chain"
-                label={gameData?.short_detail?.network_name || "-"}
-                icon={gameData?.short_detail?.network_icon || ""}
-                width={20}
-                height={20}
-              />
-            </div>
-          </div>
-          {gamePartnerSocial && gamePartnerSocial.length > 0 && (
-            <>
-              <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-              <div className="flex flex-wrap">
-                {gamePartnerSocial.map(
-                  (item, index) =>
-                    item.href && (
-                      <Link
-                        key={Number(index)}
-                        href={item.href}
-                        target="_blank"
-                      >
-                        <ButtonIcon
-                          variants={iconmotion}
-                          whileHover="hover"
-                          transition={{
-                            type: "spring",
-                            stiffness: 400,
-                            damping: 4
-                          }}
-                          icon={item.icon}
-                          className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                        />
-                      </Link>
-                    )
-                )}
-              </div>
-            </>
-          )}
-          <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-          <Typography
-            variant="h2"
-            className="mb-4 mt-6 font-neue-machina-semi text-[14px] uppercase text-neutral-400"
-          >
-            {/* {t("game_partner_about")} */}
-            ABOUT THIS GAME
-          </Typography>
-          <div className="pb-6">
-            <p
-              dangerouslySetInnerHTML={{
-                __html:
-                  gameData && "description" in gameData
-                    ? gameData.description
-                    : ""
-              }}
+      {hydrated && (
+        <AsideLayout
+          icon={<OverviewIcon />}
+          title={t("game_overview")}
+        >
+          <div className="pl-6 pt-3 pr-3 text-start text-sm text-neutral-500">
+            <TagMultiple
+              title={`${t("genre")}`}
+              tags={gameTags}
             />
+            <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+            <TagSingular
+              title="developer"
+              label={gameData?.short_detail?.developer || "-"}
+              link={gameData?.short_detail?.developer || "-"}
+            />
+            <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+            <TagSingular
+              title="publisher"
+              label={gameData?.short_detail?.publisher || "-"}
+              link={gameData?.short_detail?.publisher || "-"}
+            />
+            <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+            <div className="overview-row grid grid-cols-2">
+              <div
+                id="overview-release-date"
+                className="overview-col"
+              >
+                <TagSingular
+                  title="relate date"
+                  label={
+                    gameData?.short_detail?.release_date
+                      ? dayjs(gameData?.short_detail?.release_date).format(
+                          "DD MMM YYYY"
+                        )
+                      : "-"
+                  }
+                />
+              </div>
+              <div
+                id="overview-chain-id"
+                className="overview-col border-l-[1px] border-neutral-700 pl-3"
+              >
+                <TagSingular
+                  title="Chain"
+                  label={gameData?.short_detail?.network_name || "-"}
+                  icon={gameData?.short_detail?.network_icon || ""}
+                  width={20}
+                  height={20}
+                />
+              </div>
+            </div>
+            {gamePartnerSocial && gamePartnerSocial.length > 0 && (
+              <>
+                <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+                <div className="flex flex-wrap">
+                  {gamePartnerSocial.map(
+                    (item, index) =>
+                      item.href && (
+                        <Link
+                          key={Number(index)}
+                          href={item.href}
+                          target="_blank"
+                        >
+                          <ButtonIcon
+                            variants={iconmotion}
+                            whileHover="hover"
+                            transition={{
+                              type: "spring",
+                              stiffness: 400,
+                              damping: 4
+                            }}
+                            icon={item.icon}
+                            className="m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                          />
+                        </Link>
+                      )
+                  )}
+                </div>
+              </>
+            )}
+            <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+            <Typography
+              variant="h2"
+              className="mb-4 mt-6 font-neue-machina-semi text-[14px] uppercase text-neutral-400"
+            >
+              {t("game_partner_about")}
+            </Typography>
+            <div className="pb-6">
+              <p
+                dangerouslySetInnerHTML={{
+                  __html:
+                    gameData && "description" in gameData
+                      ? gameData.description
+                      : ""
+                }}
+              />
+            </div>
           </div>
-        </div>
-      </AsideLayout>
+        </AsideLayout>
+      )}
     </div>
   )
 }

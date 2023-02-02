@@ -14,7 +14,7 @@ interface IGamePageDefaultProps {
   component: React.ReactNode
   component2?: React.ReactNode
   component3?: React.ReactNode
-  // sAdd more components here
+  // Add more components here
 }
 
 const GamePageDefault = ({
@@ -46,7 +46,9 @@ const GamePageDefault = ({
         <Banner data={GAME_DETAILS_BANNER} />
       )}
 
-      {gameData && "device" in gameData && <Howto data={gameData as IGame} />}
+      {gameData && "device_support" in gameData && (
+        <Howto data={gameData as IGame} />
+      )}
       {component}
       {/**
        * @description In case there is a need to add another component

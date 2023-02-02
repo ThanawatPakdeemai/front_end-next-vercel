@@ -8,6 +8,7 @@ import useGamesById from "@feature/game/containers/hooks/useGamesById"
 import StoryLobby from "@feature/game/components/templates/lobby/StoryLobby"
 import GamePageDefault from "@components/template/GamePageDefault"
 import OverViewGameStoryMode from "@components/organisms/OverviewGameStoryMode"
+import RightSidebarContent from "@components/template/RightSidebarContent"
 
 export default function GameLobby() {
   const [gameData, setGameData] = useState<IGame>()
@@ -34,9 +35,14 @@ export default function GameLobby() {
 
 GameLobby.getLayout = function getLayout(page: ReactElement) {
   return (
-    <GamePageDefault component={OverViewGameStoryMode()}>
-      {page}
-    </GamePageDefault>
+    <GamePageDefault
+      component={
+        <RightSidebarContent
+          content={page}
+          aside={<OverViewGameStoryMode />}
+        />
+      }
+    />
   )
 }
 

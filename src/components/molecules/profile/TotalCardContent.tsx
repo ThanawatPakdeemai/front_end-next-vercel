@@ -1,5 +1,5 @@
+import RankIcon from "@feature/playerProfile/components/atoms/RankIcon"
 import { Typography } from "@mui/material"
-import Image from "next/image"
 import React from "react"
 
 interface IProp {
@@ -28,11 +28,10 @@ const TotalCardContent = ({
             </Typography>
           </div>
           <div className="grid content-center	justify-center	">
-            <Image
-              src={`/images/gamePage/rank/${icon}.svg`}
-              alt=""
+            <RankIcon
               width={50}
               height={50}
+              icon={icon}
             />
           </div>
         </div>

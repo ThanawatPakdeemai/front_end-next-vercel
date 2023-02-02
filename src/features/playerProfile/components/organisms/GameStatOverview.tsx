@@ -1,205 +1,247 @@
-import React, { memo, useState } from "react"
-import { Card, Divider, InputAdornment, TextField } from "@mui/material"
+import React, { memo, useEffect, useState } from "react"
+import { Card, InputAdornment, TextField } from "@mui/material"
 import NumberRank from "@feature/ranking/components/atoms/NumberRank"
 import { Image } from "@components/atoms/image"
 import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import { v4 as uuidv4 } from "uuid"
-import CrumbCustom from "@components/atoms/CrumbCustom"
 import SearchIcon from "@components/icons/SearchIcon"
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
+import useGetProfileInfo from "@feature/profile/containers/hook/getProfileInfo"
+import useProfileStore from "@stores/profileStore"
+import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
+import Helper from "@utils/helper"
+import RankIcon from "../atoms/RankIcon"
+import SliderGameStat from "./SliderGameStat"
 
 const GameStatOverview = () => {
   const [page, setPage] = useState<number>(1)
-  const rankingMock = [
-    {
-      rank: 0,
-      name: "NAKAMOTOWARS",
-      detail: "THERE ARE PLENTY OF UNKNOWNS IN",
-      rankName: "PLATINUM",
-      rankScore: 2345,
-      played: 1234,
-      winrate: 99.45,
-      image: "/images/gameDetails/nakamoto-wars.webp",
-      imageRank: "/images/gamePage/rank/platinum.svg"
-    },
-    {
-      rank: 1,
-      name: "NAKAMOTOWARS",
-      detail: "THERE ARE PLENTY OF UNKNOWNS IN",
-      rankName: "PLATINUM",
-      rankScore: 2345,
-      played: 1234,
-      winrate: 99.45,
-      image: "/images/mocks/play2earnGames/duninutss_game.png",
-      imageRank: "/images/gamePage/rank/platinum.svg"
-    },
-    {
-      rank: 2,
-      name: "NAKAMOTOWARS",
-      detail: "THERE ARE PLENTY OF UNKNOWNS IN",
-      rankName: "PLATINUM",
-      rankScore: 2345,
-      played: 1234,
-      winrate: 99.45,
-      image: "/images/gameDetails/nakamoto-wars.webp",
-      imageRank: "/images/gamePage/rank/platinum.svg"
-    },
-    {
-      rank: 3,
-      name: "NAKAMOTOWARS",
-      detail: "THERE ARE PLENTY OF UNKNOWNS IN",
-      rankName: "PLATINUM",
-      rankScore: 2345,
-      played: 1234,
-      winrate: 99.45,
-      image: "/images/gameDetails/nakamoto-wars.webp",
-      imageRank: "/images/gamePage/rank/platinum.svg"
-    }
-  ]
+  const [totalCount, setTotalCount] = useState<number>(0)
+  const limit = 20
+  const profile = useProfileStore((state) => state.profile)
+  // const rankingMock = [
+  //   {
+  //     rank: 0,
+  //     name: "NAKAMOTOWARS",
+  //     detail: "THERE ARE PLENTY OF UNKNOWNS IN",
+  //     rankName: "PLATINUM",
+  //     rankScore: 2345,
+  //     played: 1234,
+  //     winrate: 99.45,
+  //     image: "/images/gameDetails/nakamoto-wars.webp",
+  //     imageRank: "/images/gamePage/rank/platinum.svg"
+  //   },
+  //   {
+  //     rank: 1,
+  //     name: "NAKAMOTOWARS",
+  //     detail: "THERE ARE PLENTY OF UNKNOWNS IN",
+  //     rankName: "PLATINUM",
+  //     rankScore: 2345,
+  //     played: 1234,
+  //     winrate: 99.45,
+  //     image: "/images/mocks/play2earnGames/duninutss_game.png",
+  //     imageRank: "/images/gamePage/rank/platinum.svg"
+  //   },
+  //   {
+  //     rank: 2,
+  //     name: "NAKAMOTOWARS",
+  //     detail: "THERE ARE PLENTY OF UNKNOWNS IN",
+  //     rankName: "PLATINUM",
+  //     rankScore: 2345,
+  //     played: 1234,
+  //     winrate: 99.45,
+  //     image: "/images/gameDetails/nakamoto-wars.webp",
+  //     imageRank: "/images/gamePage/rank/platinum.svg"
+  //   },
+  //   {
+  //     rank: 3,
+  //     name: "NAKAMOTOWARS",
+  //     detail: "THERE ARE PLENTY OF UNKNOWNS IN",
+  //     rankName: "PLATINUM",
+  //     rankScore: 2345,
+  //     played: 1234,
+  //     winrate: 99.45,
+  //     image: "/images/gameDetails/nakamoto-wars.webp",
+  //     imageRank: "/images/gamePage/rank/platinum.svg"
+  //   }
+  // ]
 
+  const [idPlayer, setIdPlayer] = useState<string>("")
+  const { getProfileInfo, isLoading } = useGetProfileInfo({
+    _limit: 20,
+    _playerId: idPlayer,
+    _page: page,
+    _sort: "id"
+  })
+
+  const [openBadges, setOpenBadges] = useState<boolean>(false)
+
+  const handleOnExpandClick = () => {
+    setOpenBadges(!openBadges)
+  }
+
+  useEffect(() => {
+    if (profile && profile.data) {
+      setIdPlayer(profile.data.id as string)
+    }
+  }, [profile])
+
+  // useEffect(() => {
+  //   if (profile && profile.length > 0) {
+  //     setTotalCount(data.length)
+  //   }
+  // }, [profile])
+
+  useEffect(() => {
+    if (getProfileInfo) {
+      setTotalCount(getProfileInfo.data.game_data.length)
+    }
+  }, [getProfileInfo])
+
+  // console.log("data", getProfileInfo?.data.game_data.length)
   return (
     <div className="w-full">
-      <div className="my-[50px] flex items-center justify-between">
-        <div className="flex">
-          <CrumbCustom
-            text="My GAME STATS OVERVIEW"
-            background="text-neutral-400 border border-solid border-neutral-700 p-[20px] mr-0"
-          />
-        </div>
-        {/* <div className="mx-4 border-t border-neutral-700 border-opacity-80" /> */}
-        <Divider className="w-[40%]" />
-        <div className="flex">
-          <div className="mr-4 self-center text-xs uppercase">
-            HIDE MY GAME STATS
-          </div>
-          <CrumbCustom
-            text="View Emblems info"
-            background="bg-purple-primary"
-          />
-        </div>
-      </div>
-
-      <div className="mb-10 flex w-full flex-col gap-2 rounded-[26px] bg-neutral-800 p-2">
-        {rankingMock.map((item) => (
-          <Card
+      <SliderGameStat
+        openBadges={openBadges}
+        handleOnExpandClick={handleOnExpandClick}
+      />
+      {openBadges ? null : (
+        <>
+          <div
             key={uuidv4()}
-            className="grid grid-cols-3 grid-rows-1 rounded-[18px] "
-            sx={{
-              backgroundImage: "none",
-              backgroundColor: "#010101"
-            }}
+            className="mb-10 flex w-full flex-col gap-2 rounded-[26px] bg-neutral-800 p-2"
           >
-            <div className="py-10 px-10">
-              <NumberRank
-                className="m-0 h-6 w-8 rounded-[5px]"
-                index={item.rank}
+            {isLoading
+              ? [...Array(limit)].map(() => <SkeletonCard key={uuidv4()} />)
+              : null}
+            {getProfileInfo &&
+              getProfileInfo.data.game_data.map((item, index) => (
+                <Card
+                  key={uuidv4()}
+                  className="grid grid-cols-3 grid-rows-1 rounded-[18px] "
+                  sx={{
+                    backgroundImage: "none",
+                    backgroundColor: "#010101"
+                  }}
+                >
+                  <div className="py-10 px-10">
+                    <NumberRank
+                      className="m-0 h-6 w-8 rounded-[5px]"
+                      index={index}
+                    />
+                    <h1 className="py-5 text-neutral-300">{item.name}</h1>
+                    {item.story.length > 30 ? (
+                      <p className="text-xs text-neutral-500">
+                        {item.story.substring(0, 30)}ReadMore
+                      </p>
+                    ) : (
+                      <p className="text-xs text-neutral-500">{item.story}</p>
+                    )}
+                  </div>
+                  <div className="my-7 mx-10 grid grid-cols-2 grid-rows-2 gap-5">
+                    <div>
+                      <p className="text-xs text-neutral-600">RANK</p>
+                      <button
+                        type="button"
+                        className="mt-2 rounded-[5px] border-2 border-neutral-700 py-1 px-3 text-xs text-neutral-400"
+                      >
+                        {item.rank}
+                      </button>
+                    </div>
+                    <div>
+                      <p className="text-xs text-neutral-600">RANK SCORE</p>
+                      <button
+                        type="button"
+                        className="mt-2 rounded-[5px] border-2 border-neutral-700  py-1 px-3 text-xs text-neutral-400"
+                      >
+                        {Helper.formatNumber(item.rankScore)}
+                      </button>
+                    </div>
+                    <div>
+                      <p className="text-xs text-neutral-600">PLAYED</p>
+                      <button
+                        type="button"
+                        className="mt-2 rounded-[5px] border-2 border-neutral-700 py-1 px-3 text-xs text-neutral-400"
+                      >
+                        {Helper.formatNumber(item.played)}
+                      </button>
+                    </div>
+                    <div>
+                      <p className="text-xs text-neutral-600">WINRATE</p>
+                      <button
+                        type="button"
+                        className="mt-2 rounded-[5px] border-2 border-neutral-700  py-1 px-3 text-xs text-neutral-400"
+                      >
+                        {item.winrate}
+                      </button>
+                    </div>
+                  </div>
+                  <div className="my-[10px] mr-[10px] flex gap-[10px]">
+                    <div className="w-full">
+                      <Image
+                        className="h-full w-full rounded-[15px]"
+                        src={item.image}
+                        alt={item.name}
+                        width={125}
+                        height={125}
+                      />
+                    </div>
+                    <div className="flex w-full items-center justify-center rounded-[10px] border-2 border-neutral-700">
+                      <RankIcon
+                        width={70}
+                        height={70}
+                        icon={item.rank}
+                      />
+                    </div>
+                  </div>
+                </Card>
+              ))}
+          </div>
+          {/* Wait for API Support */}
+          <div className="flex w-full justify-between">
+            <PaginationNaka
+              totalCount={totalCount}
+              limit={limit}
+              page={page}
+              setPage={setPage}
+            />
+            <div>
+              <TextField
+                // label="Search Game..."
+                sx={{
+                  input: {
+                    "&[type=text]": {
+                      paddingLeft: "15px"
+                    }
+                  }
+                }}
+                placeholder="Search Game..."
+                size="medium"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <SearchIcon />
+                    </InputAdornment>
+                  )
+                }}
               />
-              <h1 className="py-5 text-neutral-300">{item.name}</h1>
-              <p className="text-xs text-neutral-500">{item.detail}</p>
-            </div>
-            <div className="my-7 mx-10 grid grid-cols-2 grid-rows-2 gap-5">
-              <div>
-                <p className="text-xs text-neutral-600">RANK</p>
-                <button
-                  type="button"
-                  className="mt-2 rounded-[5px] border-2 border-neutral-700 py-1 px-3 text-xs text-neutral-400"
-                >
-                  {item.rankName}
-                </button>
-              </div>
-              <div>
-                <p className="text-xs text-neutral-600">RANK SCORE</p>
-                <button
-                  type="button"
-                  className="mt-2 rounded-[5px] border-2 border-neutral-700  py-1 px-3 text-xs text-neutral-400"
-                >
-                  {item.rankScore}
-                </button>
-              </div>
-              <div>
-                <p className="text-xs text-neutral-600">PLAYED</p>
-                <button
-                  type="button"
-                  className="mt-2 rounded-[5px] border-2 border-neutral-700 py-1 px-3 text-xs text-neutral-400"
-                >
-                  {item.played}
-                </button>
-              </div>
-              <div>
-                <p className="text-xs text-neutral-600">WINRATE</p>
-                <button
-                  type="button"
-                  className="mt-2 rounded-[5px] border-2 border-neutral-700  py-1 px-3 text-xs text-neutral-400"
-                >
-                  {item.winrate}%
-                </button>
-              </div>
-            </div>
-            <div className="flex">
-              <div className="my-[10px] w-full">
-                <Image
-                  className="h-full w-full rounded-[15px]"
-                  src={item.image}
-                  alt=""
-                />
-              </div>
-              <div className="my-[10px] mx-[10px] w-full rounded-[10px] border-2 border-neutral-700">
-                <Image
-                  className="ml-[10px] h-full w-full p-6"
-                  src={item.imageRank}
-                  alt=""
-                />
-              </div>
-            </div>
-          </Card>
-        ))}
-      </div>
 
-      <div className="flex w-full justify-between">
-        <PaginationNaka
-          totalCount={rankingMock.length}
-          limit={2}
-          page={page}
-          setPage={setPage}
-        />
-        <div>
-          <TextField
-            // label="Search Game..."
-            sx={{
-              input: {
-                "&::placeholder": {
-                  paddingLeft: "15px"
-                }
-              }
-            }}
-            placeholder="Search Game..."
-            size="medium"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <SearchIcon />
-                </InputAdornment>
-              )
-            }}
-          />
+              <TextField
+                // label="Show 6"
+                className="ml-3"
+                select
+                placeholder="Show 6"
+                // value={0}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <VisibilityOutlinedIcon />
+                    </InputAdornment>
+                  )
+                }}
+              />
+            </div>
 
-          <TextField
-            // label="Show 6"
-            className="ml-3"
-            select
-            placeholder="Show 6"
-            // value={0}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <VisibilityOutlinedIcon />
-                </InputAdornment>
-              )
-            }}
-          />
-        </div>
-
-        {/* {gameData && gameData.type_code === "multi_02" && (
+            {/* {gameData && gameData.type_code === "multi_02" && (
           <TextField
             label="select map"
             select
@@ -228,40 +270,9 @@ const GameStatOverview = () => {
               ))}
           </TextField>
         )} */}
-
-        {/* <TextField
-          label="Room Name"
-          placeholder="Room Name..."
-          size="medium"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <VisibilityOutlinedIcon />
-              </InputAdornment>
-            )
-          }}
-        /> */}
-
-        {/* <div className="w-[20%] rounded-[10px] bg-[#18181C]">
-          <button
-            className="py-2 pl-5 text-[#70727B]"
-            type="button"
-          >
-            Search Game...
-            <SearchIcon />
-          </button>
-        </div>
-        <div className="ml-2 w-[15%] rounded-[10px] bg-[#18181C]">
-          <button
-            className="flex py-2 pl-5 text-[#70727B]"
-            type="button"
-          >
-            <VisibilityOutlinedIcon />
-            Show
-            <p className="ml-2 text-[#E1E2E2]">6</p>
-          </button>
-        </div> */}
-      </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }

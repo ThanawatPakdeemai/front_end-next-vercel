@@ -18,7 +18,6 @@ import ButtonPlayer from "@feature/game/components/atoms/ButtonPlayer"
 import PlayerCard from "@feature/game/components/molecules/PlayerCard"
 import { IResGetIp } from "@interfaces/IGetIP"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
-import Link from "next/link"
 
 interface IProps {
   players: IGameCurrentPlayerMulti[] | undefined[]
@@ -314,7 +313,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
 
   return (
     <>
-      <Link href={gameUrl}>GO</Link>
+      {/* <Link href={gameUrl}>GO</Link> */}
       <Box>
         <PlayerCard players={players} />
         <Box className="mb-10  flex justify-center">

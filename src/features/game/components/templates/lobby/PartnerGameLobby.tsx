@@ -49,7 +49,7 @@ const PartnerGame = () => {
               label="partner"
               size="small"
               color="success"
-              className="font-bold uppercase"
+              className="!bg-green-lemon font-bold uppercase"
             />
             <h2>{gameData.name}</h2>
           </div>

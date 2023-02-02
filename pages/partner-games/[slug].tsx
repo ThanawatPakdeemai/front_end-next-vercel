@@ -7,8 +7,8 @@ import useGlobal from "@hooks/useGlobal"
 import OverviewGamePartners from "@components/organisms/OverviewGamePartners"
 import PartnerGameLobby from "@feature/game/components/templates/lobby/PartnerGameLobby"
 import RightSidebarContent from "@components/template/RightSidebarContent"
-import Review from "@feature/review/components/templates/Review"
-import PartnerGameDetails from "@feature/game/components/organisms/PartnerGameDetails"
+import PartnerGameContent from "@feature/game/partnerGames/components/organisms/PartnerGameContent"
+import PartnerGameReviews from "@feature/game/partnerGames/components/molecules/PartnerGameReviews"
 
 export default function GamePartnerDetails() {
   const { gamePartnerData } = useGlobal()
@@ -35,8 +35,8 @@ GamePartnerDetails.getLayout = function getLayout() {
       }
       component2={
         <RightSidebarContent
-          content={<PartnerGameDetails />}
-          aside={<Review />}
+          content={<PartnerGameContent />}
+          aside={<PartnerGameReviews />}
         />
       }
     />

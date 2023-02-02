@@ -1,8 +1,6 @@
-import {
-  getGameById,
-  getGamePartnerById
-} from "@feature/game/containers/services/game.service"
+import { getGameById } from "@feature/game/containers/services/game.service"
 import { IGetType } from "@feature/game/interfaces/IGameService"
+import { getGamePartnerById } from "@feature/game/partnerGames/containers/services/gamePartners.service"
 import { useQuery } from "@tanstack/react-query"
 
 interface IProps {

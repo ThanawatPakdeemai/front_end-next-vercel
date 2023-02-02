@@ -11,13 +11,25 @@ import useGamesById from "@feature/game/containers/hooks/useGamesById"
 
 const useGlobal = () => {
   const router = useRouter()
-  const [stateProfile, setStateProfile] = useState<IProfile | null>()
+
+  // hook
   const { onSetGameData, onSetGamePartnersData } = useGameStore()
   const profile = useProfileStore((state) => state.profile.data)
   const { errorToast } = useToast()
+
+  // States
+  const [stateProfile, setStateProfile] = useState<IProfile | null>()
+
+  // UseEffect
   useEffect(() => {
     setStateProfile(profile)
   }, [profile])
+
+  /**
+   * @description Pagination
+   */
+  const [page, setPage] = useState<number>(1)
+  const [totalCount, setTotalCount] = useState<number>(0)
 
   /**
    * @description Get game partner data
@@ -63,7 +75,12 @@ const useGlobal = () => {
 
   return {
     onHandleClick,
-    gamePartnerData
+    gamePartnerData,
+    page,
+    setPage,
+    totalCount,
+    setTotalCount,
+    stateProfile
   }
 }
 

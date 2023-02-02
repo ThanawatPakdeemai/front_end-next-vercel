@@ -1,7 +1,7 @@
-import { getAllPartnerGames } from "@feature/game/containers/services/game.service"
 import { useQuery } from "@tanstack/react-query"
 // eslint-disable-next-line prettier/prettier
 import { IGetPartnerGameService } from "@feature/game/interfaces/IPartnerGame"
+import { getAllPartnerGames } from "@feature/game/partnerGames/containers/services/gamePartners.service"
 
 const usePartnerGame = ({ _limit, _page, _search }: IGetPartnerGameService) => {
   const { data, isLoading, isFetching, isPreviousData, isError, error } =

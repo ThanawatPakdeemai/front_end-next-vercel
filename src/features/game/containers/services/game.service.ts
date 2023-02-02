@@ -13,11 +13,8 @@ import {
   IGetPlayerInRoom,
   IClaimEarnedRewardByPlayerId,
   IGetGameByTypesProps,
-  IGetGameByTypes,
-  IGamePartnerService
+  IGetGameByTypes
 } from "@feature/game/interfaces/IGameService"
-
-import { IGetPartnerGameService } from "@feature/game/interfaces/IPartnerGame"
 
 export const getAllGames = () =>
   new Promise<IGameService>((resolve, reject) => {
@@ -187,36 +184,5 @@ export const getGameByTypes = ({
     services
       .post<IGetGameByTypes>(`/game/${_type}`, { ...data })
       .then((response) => resolve(response.data))
-      .catch((error) => reject(error))
-  })
-
-export const getAllPartnerGames = ({
-  _limit,
-  _page,
-  _search
-}: IGetPartnerGameService) =>
-  new Promise<IGetPartnerGameService>((resolve, reject) => {
-    const data = {
-      data: {
-        limit: _limit,
-        page: _page,
-        search: _search
-      }
-    }
-    services
-      .post<IGetPartnerGameService>("/partner-game-content/all/", { ...data })
-      .then((response) => {
-        resolve(response.data)
-      })
-      .catch((error) => reject(error))
-  })
-
-export const getGamePartnerById = (_gameId: string) =>
-  new Promise<IGameService | IGamePartnerService>((resolve, reject) => {
-    services
-      .get<IGameService | IGamePartnerService>(
-        `/partner-game-content/${_gameId}`
-      )
-      .then((reponse) => resolve(reponse.data))
       .catch((error) => reject(error))
   })

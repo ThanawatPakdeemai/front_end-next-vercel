@@ -7,7 +7,7 @@ type TTypeButton = "submit" | "reset" | "button" | undefined
 interface IProps {
   startIcon: ReactNode
   endIcon?: ReactNode
-  text: string
+  text: string | ReactNode
   handleClick?: () => void
   className?: string
   style?: React.CSSProperties

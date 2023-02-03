@@ -8,6 +8,7 @@ import {
   IInfo
 } from "@interfaces/IHelper"
 import { IPlayToEarnRewardData } from "@src/types/games"
+import { IPartnerGameData } from "./IPartnerGame"
 
 export type TGameType = "singleplayer" | "multiplayer" | "storymode"
 
@@ -25,6 +26,8 @@ export type IGetType =
   | "story-mode"
   | "must-try"
   | "hot-game"
+  | "partner-game"
+  | "nft-game"
 
 export interface IGetGameByTypesProps {
   _type: IGetType
@@ -85,7 +88,7 @@ export interface IGameMetaData {
 
 export interface IGameMap {
   _id: string
-  map_id: number
+  map_id: string
   map_name: string
 }
 
@@ -130,6 +133,7 @@ export interface IGame {
   version: string
   developer: string
   category: IGameCategory
+  category_list: IGameCategory[]
   game_type: TGameType
   type_code: TTypeCode
   game_url: string
@@ -147,6 +151,7 @@ export interface IGame {
   image_home_banner: string
   game_free_url?: string
   image_free_to_earn_icon?: string
+  play_total_count?: number
 }
 
 interface IGameHowto {
@@ -260,6 +265,10 @@ export interface IGameRewardByPlayer extends IGameBase {
 
 export interface IGameService extends IFormatService {
   data: IGame[]
+}
+
+export interface IGamePartnerService extends IFormatService {
+  data: IPartnerGameData
 }
 
 export interface IGameCurrentPlayer extends IGameBase {

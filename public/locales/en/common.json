@@ -257,6 +257,16 @@
   "please-select-item":"Please select Item.",
   "buy-now":"Buy Now",
   "required": "Required",
+  "game_overview": "Game Overview",
+  "game_story_text": "This game is story mode game. <br> If you would like to challange yourself you must try this!",
+  "genre": "Genre",
+  "play_count_title": "Plays",
+  "developer": "Developer",
   "out-room": "Out Room",
-  "no-player":"No Player"
+  "no-player":"No Player",
+  "game_partner_about": "About this game",
+  "review_title": "Reviews AVG.",
+  "no_review": "No Review",
+  "whats_new": "What's new",
+  "ntf_game": "NFT Items"
 }

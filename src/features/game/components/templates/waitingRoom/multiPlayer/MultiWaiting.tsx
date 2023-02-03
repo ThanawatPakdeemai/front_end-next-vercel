@@ -227,64 +227,70 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
           startGame
         }}
       >
-        <Box className=" gap-3 md:flex">
-          <Box className="w-full shrink  rounded-3xl border border-neutral-800">
-            {dataPlayers && gameData && (
-              <HeaderWaitingRoom
-                roomTag={dataPlayers.create_room_detail.no_room}
-                roomName="#ROOM NAME"
-                timer={{
-                  time: new Date(dataPlayers.end_time)
-                }}
-                player={{
-                  currentPlayer: dataPlayers.amount_current_player,
-                  maxPlayer: dataPlayers.max_players
-                }}
-                onOutRoom={() => {
-                  outRoom()
-                }}
-              />
-            )}
-
-            {dataPlayers && dataPlayers.current_player ? (
-              <SeatPlayersMulti players={dataPlayers?.current_player} />
-            ) : (
-              <>
+        <Box className="block gap-3 lg:flex ">
+          {/* <Box className=" block gap-3 lg:grid lg:grid-flow-col"> */}
+          {/* <Box className=" block gap-3 lg:grid lg:grid-flow-col"> */}
+          <Box className="w-full gap-3 md:flex">
+            <Box className="w-full shrink rounded-3xl border border-neutral-800">
+              {dataPlayers && gameData && (
                 <HeaderWaitingRoom
-                  roomTag="0000"
+                  roomTag={dataPlayers.create_room_detail.no_room}
                   roomName="#ROOM NAME"
                   timer={{
-                    time: new Date()
+                    time: new Date(dataPlayers.end_time)
                   }}
                   player={{
-                    currentPlayer: 0,
-                    maxPlayer: 0
+                    currentPlayer: dataPlayers.amount_current_player,
+                    maxPlayer: dataPlayers.max_players
                   }}
                   onOutRoom={() => {
                     outRoom()
                   }}
                 />
-                <Typography className="my-5 text-center">
-                  {t("no-player")}
-                </Typography>
-                {gameData && (
-                  <ButtonLink
-                    href={`/${gameData?.path}/roomlist`}
-                    text={t("out-room")}
-                    icon=""
-                    size="medium"
-                    className="m-auto"
-                    color="secondary"
-                    variant="contained"
+              )}
+
+              {dataPlayers && dataPlayers.current_player ? (
+                <SeatPlayersMulti players={dataPlayers?.current_player} />
+              ) : (
+                <>
+                  <HeaderWaitingRoom
+                    roomTag="0000"
+                    roomName="#ROOM NAME"
+                    timer={{
+                      time: new Date()
+                    }}
+                    player={{
+                      currentPlayer: 0,
+                      maxPlayer: 0
+                    }}
+                    onOutRoom={() => {
+                      outRoom()
+                    }}
                   />
-                )}
-              </>
-            )}
+                  <Typography className="my-5 text-center">
+                    {t("no-player")}
+                  </Typography>
+                  {gameData && (
+                    <ButtonLink
+                      href={`/${gameData?.path}/roomlist`}
+                      text={t("out-room")}
+                      icon=""
+                      size="medium"
+                      className="m-auto"
+                      color="secondary"
+                      variant="contained"
+                    />
+                  )}
+                </>
+              )}
+            </Box>
           </Box>
-          <Box className=" w-[333px] flex-none gap-2">
-            <CardButItem />
-            <Chat />
-          </Box>
+          {gameData && (!gameData?.play_to_earn || !gameData.tournament) && (
+            <Box className=" w-[333px] flex-none gap-2">
+              <CardButItem />
+              <Chat />
+            </Box>
+          )}
         </Box>
       </SocketProvider>
     </>

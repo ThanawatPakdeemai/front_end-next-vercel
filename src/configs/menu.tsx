@@ -22,7 +22,6 @@ import MarketPlaceIcon from "@components/icons/BlogIcon/MarketPlaceIcon"
 import NakaverseIcon from "@components/icons/BlogIcon/NakaverseIcon"
 import NakapunksIcon from "@components/icons/BlogIcon/NakapunksIcon"
 import NewIcon from "@components/icons/BlogIcon/NewIcon"
-import Discusion from "@components/icons/BlogIcon/Discusion"
 import FireOutLineIcon from "@components/icons/BlogIcon/FireOutLineIcon"
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined"
 import AccessTimeIcon from "@mui/icons-material/AccessTime"
@@ -382,30 +381,34 @@ export const MENU_BLOG: IMenu[] = [
 ]
 
 export const MENU_BLOG_HEADER = [
-  {
-    name: "All",
-    link: "",
-    isChide: false,
-    icon: null
-  },
+  // {
+  //   name: "All",
+  //   link: "date_released",
+  //   isChide: false,
+  //   icon: null
+  // },
   {
     name: "New",
-    link: "",
+    link: "date_released",
     isChide: true,
     left: "120px !important",
-    icon: <NewIcon className="mr-2" />
+    icon: (
+      <NewIcon className="mr-2 stroke-black-600  group-hover:!fill-white-default group-hover:!stroke-white-default" />
+    )
   },
   {
     name: "Hot",
-    link: "",
+    link: "info.like",
     isChide: true,
-    icon: <FireOutLineIcon className="mr-2 stroke-black-600" />
-  },
-  {
-    name: "Discusion",
-    link: "",
-    isChide: true,
-    left: "-180px !important",
-    icon: <Discusion className="mr-2" />
+    icon: (
+      <FireOutLineIcon className="mr-2  stroke-black-600 group-hover:!stroke-white-default" />
+    )
   }
+  // {
+  //   name: "Discusion",
+  //   link: "",
+  //   isChide: true,
+  //   left: "-180px !important",
+  //   icon: <Discusion className="mr-2" />
+  // }
 ]

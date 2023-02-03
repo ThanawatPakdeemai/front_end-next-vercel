@@ -15,7 +15,7 @@ const useSearchStore = create<ISearch>()(
         set(() => ({ search: _search }), false, "SearchStore/SetSearch")
       }
     }),
-    configZustandDevTools("Count-Store")
+    configZustandDevTools("Search-Store")
   )
 )
 

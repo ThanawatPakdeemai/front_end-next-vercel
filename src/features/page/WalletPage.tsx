@@ -18,6 +18,7 @@ import useProfileStore from "@stores/profileStore"
 // import { ethers } from "ethers"
 // import getWeb3NoAccount from "@src/utils/web3"
 import { IMAGES } from "@constants/images"
+import TransactionTable from "@feature/transaction/components/molecules/TransactionTable"
 
 const KeyFramesRotate = styled("div")({
   "@keyframes rotation": {
@@ -273,6 +274,7 @@ export default function WalletPage() {
           />
         </div>
       </div>
+      <TransactionTable />
     </>
   )
 }

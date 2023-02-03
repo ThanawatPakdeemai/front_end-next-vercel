@@ -7,36 +7,49 @@ import PlayersIcon from "@components/icons/PlayersIcon"
 import CountItem from "@components/molecules/CountItem"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import useGetAllGameRooms from "@feature/game/containers/hooks/useGetAllGameRooms"
+import { MESSAGES } from "@constants/messages"
 import { IGame, IGameMap } from "@feature/game/interfaces/IGameService"
+import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useCreateRoom from "@feature/rooms/hooks/useCreateRoom"
+import { useToast } from "@feature/toast/containers"
 import { MapOutlined } from "@mui/icons-material"
 import {
   Box,
   InputAdornment,
   MenuItem,
   TextField,
-  Typography
+  Typography,
+  CircularProgress
 } from "@mui/material"
+import { useSocketProviderRoom } from "@providers/SocketProviderRoom"
 import useCountStore from "@stores/countComponant"
+import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
+import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import { unstable_batchedUpdates } from "react-dom"
 
 interface IProp {
   gameData: IGame
 }
-
+interface IPropMessage {
+  status: boolean
+  message: string
+}
 const ModalCreateRoom = ({ gameData }: IProp) => {
   const [maps, setMaps] = useState<IGameMap[]>([])
   const [map, setMap] = useState<number>(1)
   const [itemUse, setItemUse] = useState<number>(1)
-  const [isPublicRoom, setIsPublicRoom] = useState<boolean>(false)
+  const [isPublicRoom, setIsPublicRoom] = useState<boolean>(true)
   const [open, setOpen] = useState<boolean>(false)
   const [profile, setProfile] = useState<IProfile>()
 
+  const router = useRouter()
+  const { successToast, errorToast } = useToast()
+  const { fetchRoom } = useSocketProviderRoom()
   const profileStore = useProfileStore((state) => state.profile)
+  const { itemSelected, setQtyItemOfRoom } = useGameStore()
   const count = useCountStore((state) => state.count)
   const setCount = useCountStore((state) => state.setCount)
   const setMin = useCountStore((state) => state.setMin)
@@ -45,12 +58,11 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const { mutateCreateRoom, isSuccess } = useCreateRoom()
-  const { refetchAllGameRooms } = useGetAllGameRooms({
-    _gameId: gameData.id,
-    _email: profile ? profile.email : "",
-    // mock for waiting price of items
-    _itemId: "63072b0dd0be6934c17b5438"
+  const { mutateCreateRoom, isLoading } = useCreateRoom()
+
+  const { gameItemList } = useGamesByGameId({
+    _playerId: profile ? profile.id : "",
+    _gameId: gameData ? gameData._id : ""
   })
 
   const handleSetIsCurrent = (status: boolean) => {
@@ -58,26 +70,42 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
   }
 
   const handleSubmit = () => {
-    if (gameData && gameData.play_to_earn === true) {
-      setItemUse(0)
-    }
+    if (gameItemList) {
+      const gameItem = gameItemList.find((ele) => ele._id === itemSelected?._id)
+      if (gameItem && gameItem.qty >= itemUse) {
+        if (gameData && gameData.play_to_earn === true) {
+          setItemUse(0)
+        }
 
-    if (profile) {
-      setOpen(false)
-      mutateCreateRoom({
-        _gameId: gameData.id,
-        _playerId: profile.id,
-        _walletAddress: profile.address,
-        // mock for waiting price of items
-        _itemId: "63072b0dd0be6934c17b5438",
-        _maxPlayer: count,
-        _numberItem: itemUse,
-        _mapId: map,
-        _publicRoom: isPublicRoom
-      })
-      if (isSuccess) {
-        refetchAllGameRooms()
-        setCount(gameData.min_player || 2)
+        if (profile && itemSelected) {
+          mutateCreateRoom({
+            _gameId: gameData.id,
+            _playerId: profile.id,
+            _walletAddress: profile.address,
+            _itemId: itemSelected?._id,
+            _maxPlayer: count,
+            _numberItem: itemUse,
+            _mapId: map,
+            _publicRoom: isPublicRoom
+          })
+            .then(async (_res) => {
+              if (_res) {
+                await setOpen(false)
+                fetchRoom()
+                setQtyItemOfRoom(itemUse)
+                setCount(gameData.min_player || 2)
+                successToast(MESSAGES["create-room-success"])
+                await router.push(
+                  `/${gameData.path}/roomlist/${_res?.data.room_id}`
+                )
+              }
+            })
+            .catch((error) => {
+              errorToast((error as IPropMessage).message)
+            })
+        }
+      } else {
+        errorToast(MESSAGES["you-not-enough"])
       }
     }
   }
@@ -157,14 +185,14 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
               }}
             >
               {maps &&
-                maps.map((option) => (
+                maps.map((option: IGameMap) => (
                   <MenuItem
                     sx={{
                       borderRadius: 4
                     }}
                     key={option.map_id}
                     value={option.map_id}
-                    onClick={() => setMap(option.map_id)}
+                    onClick={() => setMap(Number(option.map_id))}
                   >
                     {option.map_name}
                   </MenuItem>
@@ -178,7 +206,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
               type="button"
               onClick={() => handleSetIsCurrent(true)}
             >
-              <span className={!isPublicRoom ? "!text-neutral-300" : ""}>
+              <span className={isPublicRoom ? "!text-neutral-300" : ""}>
                 Public
               </span>
             </button>
@@ -197,7 +225,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
               type="button"
               onClick={() => handleSetIsCurrent(false)}
             >
-              <span className={isPublicRoom ? "!text-neutral-300" : ""}>
+              <span className={!isPublicRoom ? "!text-neutral-300" : ""}>
                 Private
               </span>
             </button>
@@ -216,7 +244,16 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
           <ButtonToggleIcon
             className="bg-secondary-main text-white-default"
             startIcon={null}
-            text="Create"
+            text={
+              isLoading ? (
+                <CircularProgress
+                  color="primary"
+                  size={20}
+                />
+              ) : (
+                "Create"
+              )
+            }
             handleClick={handleSubmit}
             type="button"
           />

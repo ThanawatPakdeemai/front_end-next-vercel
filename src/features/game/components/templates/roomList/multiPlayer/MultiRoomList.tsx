@@ -8,6 +8,7 @@ import {
   IGameRoomListSocket,
   IResSocketRoomList
 } from "@feature/game/interfaces/IGameService"
+import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import { useToast } from "@feature/toast/containers"
 import { Box, Divider } from "@mui/material"
 import SocketProviderRoom from "@providers/SocketProviderRoom"
@@ -21,11 +22,11 @@ const MultiRoomList = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
   const { errorToast } = useToast()
-  const { data, itemSelected } = useGameStore()
+  const { data, itemSelected, qtyItemOfRoom } = useGameStore()
 
   const [dataRoom, setDataRoom] = useState<IGameRoomListSocket[]>()
 
-  const item = useMemo(() => {
+  const item_id = useMemo(() => {
     if (data) {
       if (data.play_to_earn || data.tournament) {
         return data.item[0]._id
@@ -43,9 +44,9 @@ const MultiRoomList = () => {
       path: data?.socket_info?.url_lobby ?? "",
       player_id: profile?.id ?? "",
       game_id: data?._id ?? "",
-      item_id: item ?? ""
+      item_id
     }),
-    [data?._id, data?.socket_info?.url_lobby, item, profile?.id]
+    [data?._id, data?.socket_info?.url_lobby, item_id, profile?.id]
   )
 
   const { socketRoomList, isConnected, getRoomListMultiPlayer } =
@@ -85,61 +86,93 @@ const MultiRoomList = () => {
   }, [getRoomListMultiPlayer, isConnected])
 
   useEffect(() => {
-    fetchRoom()
-  }, [fetchRoom])
+    if (isConnected) fetchRoom()
+  }, [fetchRoom, isConnected])
 
   const handleJoinRoom = (_data: IGameRoomListSocket) => {
-    if (new Date() > new Date(_data.end_time)) {
-      errorToast(MESSAGES["room-timeout"])
-    } else if (
-      _data.amount_current_player < _data.max_players &&
-      new Date() < new Date(_data.end_time)
-    ) {
-      router.push(`${router.asPath}/${_data._id}`)
+    if (profile) {
+      const player_me = _data.current_player.find(
+        (ele) => ele.player_id === profile.id
+      )
+      if (new Date() > new Date(_data.end_time)) {
+        errorToast(MESSAGES["room-timeout"])
+      } else if (data && (data.play_to_earn || data.tournament)) {
+        router.push(`${router.asPath}/${_data.id}`)
+      } else if (
+        _data.amount_current_player < _data.max_players &&
+        new Date() < new Date(_data.end_time) &&
+        itemSelected &&
+        itemSelected?.qty >= qtyItemOfRoom
+      ) {
+        if (player_me && player_me.status === "played") {
+          errorToast(MESSAGES["you-played"])
+        } else {
+          router.push(`${router.asPath}/${_data._id}`)
+        }
+      } else if (itemSelected && itemSelected?.qty < qtyItemOfRoom) {
+        errorToast(MESSAGES["pleate-item"])
+      } else if (player_me && player_me.status === "played") {
+        errorToast(MESSAGES["you-played"])
+      } else {
+        errorToast(MESSAGES["room-full"])
+      }
     } else {
-      errorToast(MESSAGES["room-full"])
+      errorToast(MESSAGES["please_login"])
     }
   }
 
   return (
     <>
-      <SocketProviderRoom propsSocket={{ getRoomListMultiPlayer }}>
-        <Box className="rounded-3xl border border-neutral-700">
-          {data && <HeaderRoomList lobby={data.name} />}
-          <Divider />
+      <Box className=" block gap-3 lg:flex">
+        <SocketProviderRoom propsSocket={{ getRoomListMultiPlayer, fetchRoom }}>
+          <Box className="w-full rounded-3xl border border-neutral-700">
+            {data && <HeaderRoomList lobby={data.name} />}
+            <Divider />
 
-          <div className="custom-scroll flex h-[666px] flex-col items-center gap-[27px] overflow-y-scroll bg-room-list bg-contain p-[43px]">
-            {profile &&
-              dataRoom &&
-              dataRoom.length > 0 &&
-              dataRoom.map((_data) => {
-                const initEndTime = new Date(_data.end_time)
-                return (
-                  <RoomListBar
-                    key={Number(_data.id)}
-                    timer={{
-                      time: initEndTime,
-                      onExpire: () => null
-                    }}
-                    player={{
-                      currentPlayer: _data.amount_current_player,
-                      maxPlayer: _data.max_players
-                    }}
-                    roomId={_data.create_room_detail.no_room}
-                    roomName="Room Name"
-                    onClick={() => handleJoinRoom(_data)}
-                  />
-                )
-              })}
-            <ButtonSticky
-              icon={<ReloadIcon />}
-              className="mt-10"
-              multi
-              // onClick={() => fetch()}
-            />
-          </div>
-        </Box>
-      </SocketProviderRoom>
+            <div className="custom-scroll flex h-[666px] flex-col items-center gap-[27px] overflow-y-scroll bg-room-list bg-contain p-[43px]">
+              {profile &&
+                dataRoom &&
+                dataRoom.length > 0 &&
+                dataRoom.map((_data) => {
+                  const initEndTime = new Date(_data.end_time)
+                  const player = _data.current_player.find(
+                    (ele) => ele.player_id === profile.id
+                  )
+                  return (
+                    <RoomListBar
+                      key={Number(_data.id)}
+                      timer={{
+                        time: initEndTime,
+                        onExpire: () => null
+                      }}
+                      btnText={
+                        player && player.status === "played" ? "played" : "join"
+                      }
+                      player={{
+                        currentPlayer: _data.amount_current_player,
+                        maxPlayer: _data.max_players
+                      }}
+                      roomId={_data.create_room_detail.no_room}
+                      roomName="Room Name"
+                      onClick={() => handleJoinRoom(_data)}
+                    />
+                  )
+                })}
+              <ButtonSticky
+                icon={<ReloadIcon />}
+                className="mt-10"
+                multi
+                // onClick={() => fetch()}
+              />
+            </div>
+          </Box>
+        </SocketProviderRoom>
+        {data && (!data?.play_to_earn || !data.tournament) && (
+          <Box className=" w-[333px] flex-none gap-2">
+            <CardBuyItem />
+          </Box>
+        )}
+      </Box>
     </>
   )
 }

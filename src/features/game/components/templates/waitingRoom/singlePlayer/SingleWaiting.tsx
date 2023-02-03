@@ -87,18 +87,19 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
   ])
 
   const outRoom = () => {
-    if (_roomId && profile) {
+    if (_roomId && profile && data) {
       fetchPlayerGameSingle({
         _roomId,
         _playerId: profile.id,
         _type: "out"
       })
+      router.push(`/${data.path}/roomlist`)
     }
   }
 
   return (
     <>
-      <Box className=" block gap-3 lg:grid lg:grid-flow-col">
+      <Box className="block gap-3 lg:flex ">
         {_roomId &&
           (data ? (
             <>
@@ -133,7 +134,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
             <>Loading...</>
           ))}
         {(!data?.play_to_earn || !data.tournament) && (
-          <Box className=" w-full rounded-3xl">
+          <Box className=" w-[333px] rounded-3xl">
             <CardBuyItem />
           </Box>
         )}

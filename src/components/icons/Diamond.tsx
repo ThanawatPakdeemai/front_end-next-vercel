@@ -3,7 +3,8 @@ import React from "react"
 function IDiamond({
   width = 24,
   height = 24,
-  className
+  className,
+  stroke = "#010101"
 }: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -16,7 +17,7 @@ function IDiamond({
     >
       <path
         d="M2.5 9.33333L7.04545 4H12.5M2.5 9.33333L12.5 20M2.5 9.33333H8.5M12.5 20L22.5 9.33333M12.5 20L8.5 9.33333M12.5 20L16.5 9.33333M22.5 9.33333L17.9545 4H12.5M22.5 9.33333H16.5M12.5 4L8.5 9.33333M12.5 4L16.5 9.33333M8.5 9.33333H16.5"
-        stroke="#010101"
+        stroke={stroke}
         strokeWidth="1.2"
       />
     </svg>

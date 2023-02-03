@@ -220,9 +220,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   useEffect(() => {
     if (dataPlayers?.room_status === "ready_play" && gameUrl && playerInroom) {
       if (playerInroom.length === dataPlayers.max_players) {
-        let timer
-        clearTimeout(timer)
-        timer = setTimeout(() => {
+        setTimeout(() => {
           window.location.href = gameUrl
         }, 10000)
       }

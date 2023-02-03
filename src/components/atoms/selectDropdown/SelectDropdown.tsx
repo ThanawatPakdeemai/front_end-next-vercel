@@ -45,6 +45,7 @@ const SelectDropdown = ({
           href={item.href}
           id=""
           external={false}
+          active={item.active}
         />
       </Box>
     ))}

@@ -75,7 +75,7 @@ const ButtonLink = ({
     <>
       {!onClick ? (
         <Link
-          href={href}
+          href={href || "/"}
           className="w-auto"
         >
           {ButtonSelf}

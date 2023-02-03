@@ -13,6 +13,7 @@ import {
   IGameCategory,
   IGameItem
 } from "@feature/dropdown/interfaces/IDropdownService"
+import useFilterStore from "@stores/blogFilter"
 import SelectDropdown from "./selectDropdown/SelectDropdown"
 
 interface IProp {
@@ -26,40 +27,39 @@ const Dropdown = ({ title, className }: IProp) => {
   const [gameData, setGameData] = useState<
     IGameItem[] | IGameCategory[] | IDevice[]
   >([])
-  const [onTitle, setOnTitle] = useState<IGameCategory | IGameItem>()
+  const [onTitle, setOnTitle] = useState<IGameCategory | IGameItem | IDevice>()
+  const { errorToast } = useToast()
+  const {
+    setCategory: setCategoryDropdown,
+    setGameItem: setGameItemDropdown,
+    setDevice: setDeviceDropdown
+  } = useFilterStore()
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
   }
-  const { errorToast } = useToast()
 
   const onGameAssets = () => {
     getGameAssets()
       .then((res) => {
         res.splice(0, 0, {
-          create_date: "2022-05-17T03:23:54.313Z",
-          _id: "63059f49f700aaf1893132fe",
-          current_time: "2022-05-17T07:46:59.620Z",
+          create_date: "",
+          _id: "",
+          current_time: "",
           name: "All Game Assets",
-          detail: "The marble can be used in other games such as NAKA ZAKA",
+          detail: "",
           is_active: true,
-          price: 0.5,
-          min_item: 1,
-          item_id_smartcontract: 43,
-          model_id: 43,
-          image_icon_color:
-            "https://nakamoto-prod-new.s3.eu-central-1.amazonaws.com/game_item/d58df97a040197b02da514b92645cfde/icon_color/marble_red.png",
-          image_icon:
-            "https://nakamoto-prod-new.s3.eu-central-1.amazonaws.com/game_item/d58df97a040197b02da514b92645cfde/icon/marble_white.png",
-          image:
-            "https://nakamoto-prod-new.s3.eu-central-1.amazonaws.com/game_item/d58df97a040197b02da514b92645cfde/image/marble.png",
-          item_size: "0.5$",
-          craft_time: 60,
+          price: 0,
+          min_item: 0,
+          item_id_smartcontract: 0,
+          model_id: 0,
+          image_icon_color: "",
+          image_icon: "",
+          image: "",
+          item_size: "",
+          craft_time: 0,
           id: "all"
         })
         setGameData(res)
-
-        // eslint-disable-next-line no-console
-        console.log("status", res)
       })
       .catch((error) => {
         errorToast(error.message)
@@ -89,38 +89,25 @@ const Dropdown = ({ title, className }: IProp) => {
       })
   }
 
-  // const onGameAlls = () => {
-  //   getGameAlls()
-  //     .then((res) => {
-  //       // setGameData(res)
-  //       // eslint-disable-next-line no-console
-  //       console.log("status_All", res)
-  //     })
-  //     .catch((error) => {
-  //       errorToast(error.message)
-  //     })
-  // }
-
   const device = [
     {
-      key: "all",
+      _id: "",
       name: "All Devices",
       supported: true
     },
     {
-      key: "mobile",
+      _id: "mobile",
       name: "Mobile and Tablet",
       supported: true
     },
     {
-      key: "desktop",
+      _id: "desktop",
       name: "Desktop",
       supported: true
     }
   ]
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
     if (title === "All Categories") {
       onCategories()
     } else if (title === "All Game Assets") {
@@ -130,6 +117,19 @@ const Dropdown = ({ title, className }: IProp) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if (onTitle) {
+      if (title === "All Categories") {
+        setCategoryDropdown(onTitle._id)
+      } else if (title === "All Game Assets") {
+        setGameItemDropdown(onTitle._id)
+      } else if (title === "All Devices") {
+        setDeviceDropdown(onTitle._id)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onTitle])
 
   return (
     <>

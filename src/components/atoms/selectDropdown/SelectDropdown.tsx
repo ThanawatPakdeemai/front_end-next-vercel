@@ -11,7 +11,7 @@ import {
 interface IProp {
   className?: string
   details: IGameCategory[] | IGameItem[] | IDevice[]
-  setOnTitle?: (_value: IGameCategory | IGameItem) => void
+  setOnTitle?: (_value: IGameCategory | IGameItem | IDevice) => void
   setExpanded?: (_value: boolean) => void
   title?: string
 }
@@ -31,9 +31,6 @@ const SelectDropdown = ({
         className="my-1"
         onClick={() => {
           if (setOnTitle && setExpanded) {
-            // eslint-disable-next-line no-console
-            console.log("de", details)
-
             setOnTitle(item)
             setExpanded(false)
           }

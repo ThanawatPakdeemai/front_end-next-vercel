@@ -1,7 +1,7 @@
 import SearchIcon from "@components/icons/SearchIcon"
 import { MENU_BLOG_HEADER } from "@configs/menu"
 import { Button, TextField, Typography } from "@mui/material"
-import useSearchStore from "@stores/blogFilter"
+import useFilterStore from "@stores/blogFilter"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import React from "react"
@@ -13,7 +13,7 @@ const HeadBlog = ({ children }: { children: React.ReactNode }) => {
     borderRadius: "15px !important"
   }
 
-  const { search: searchBlog, setSearch: setSearchBlog } = useSearchStore()
+  const { search: searchBlog, setSearch: setSearchBlog } = useFilterStore()
 
   return (
     <div>

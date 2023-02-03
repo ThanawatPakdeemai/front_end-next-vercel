@@ -63,7 +63,7 @@ export interface IGameAllResponse {
   }
 }
 export interface IDevice {
-  key: string
+  _id: string
   name: string
   supported: boolean
 }

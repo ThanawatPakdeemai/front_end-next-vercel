@@ -20,6 +20,217 @@ const NotificationList = () => {
     player_id: playerId
   })
 
+  // const data = [
+  //   {
+  //     createdAt: "2022-12-08T11:52:34.110Z",
+  //     detail: "Game Free Calculate Score.",
+  //     game_id: "6364ec14c81000f1fbb2c0b4",
+  //     game_name: "Bubble Shooter free to play",
+  //     naka_for_player: 0,
+  //     path: "bubble-shooter-free-to-play",
+  //     player_id: "63886503aee6350f00de1a30",
+  //     read: false,
+  //     room_id: "638f2b78cf8e5541bd8bbcb2",
+  //     type: "GAME_FREE",
+  //     _id: "6391d00219144777f3124613"
+  //   },
+  //   {
+  //     createdAt: "2022-12-08T11:52:34.110Z",
+  //     detail: "Game Free Calculate Score.",
+  //     game_id: "6364ec14c81000f1fbb2c0b3",
+  //     game_name: "Bubble Shooter free to play",
+  //     naka_for_player: 0,
+  //     path: "bubble-shooter-free-to-play",
+  //     player_id: "63886503aee6350f00de1a30",
+  //     read: true,
+  //     room_id: "638f2b78cf8e5541bd8bbcb2",
+  //     type: "GAME_FREE",
+  //     _id: "6391d00219144777f3124669"
+  //   },
+  //   {
+  //     createdAt: "2022-12-08T11:52:34.110Z",
+  //     detail: "Game Free Calculate Score.",
+  //     game_id: "6364ec14c81000f1fbb2c0b4",
+  //     game_name: "Bubble Shooter free to play",
+  //     naka_for_player: 0,
+  //     path: "bubble-shooter-free-to-play",
+  //     player_id: "63886503aee6350f00de1a30",
+  //     read: true,
+  //     room_id: "638f2b78cf8e5541bd8bbcb2",
+  //     type: "GAME_FREE",
+  //     _id: "6391d00219144777f3124613"
+  //   },
+  //   {
+  //     createdAt: "2022-12-08T11:52:34.110Z",
+  //     detail: "Game Free Calculate Score.",
+  //     game_id: "6364ec14c81000f1fbb2c0b3",
+  //     game_name: "Bubble Shooter free to play",
+  //     naka_for_player: 0,
+  //     path: "bubble-shooter-free-to-play",
+  //     player_id: "63886503aee6350f00de1a30",
+  //     read: true,
+  //     room_id: "638f2b78cf8e5541bd8bbcb2",
+  //     type: "GAME_FREE",
+  //     _id: "6391d00219144777f3124669"
+  //   },
+  //   {
+  //     createdAt: "2022-12-08T11:52:34.110Z",
+  //     detail: "Game Free Calculate Score.",
+  //     game_id: "6364ec14c81000f1fbb2c0b4",
+  //     game_name: "Bubble Shooter free to play",
+  //     naka_for_player: 0,
+  //     path: "bubble-shooter-free-to-play",
+  //     player_id: "63886503aee6350f00de1a30",
+  //     read: true,
+  //     room_id: "638f2b78cf8e5541bd8bbcb2",
+  //     type: "GAME_FREE",
+  //     _id: "6391d00219144777f3124613"
+  //   },
+  //   {
+  //     createdAt: "2022-12-08T11:52:34.110Z",
+  //     detail: "Game Free Calculate Score.",
+  //     game_id: "6364ec14c81000f1fbb2c0b3",
+  //     game_name: "Bubble Shooter free to play",
+  //     naka_for_player: 0,
+  //     path: "bubble-shooter-free-to-play",
+  //     player_id: "63886503aee6350f00de1a30",
+  //     read: true,
+  //     room_id: "638f2b78cf8e5541bd8bbcb2",
+  //     type: "GAME_FREE",
+  //     _id: "6391d00219144777f3124669"
+  //   },
+  //   {
+  //     createdAt: "2022-12-08T11:52:34.110Z",
+  //     detail: "Game Free Calculate Score.",
+  //     game_id: "6364ec14c81000f1fbb2c0b4",
+  //     game_name: "Bubble Shooter free to play",
+  //     naka_for_player: 0,
+  //     path: "bubble-shooter-free-to-play",
+  //     player_id: "63886503aee6350f00de1a30",
+  //     read: true,
+  //     room_id: "638f2b78cf8e5541bd8bbcb2",
+  //     type: "GAME_FREE",
+  //     _id: "6391d00219144777f3124613"
+  //   },
+  //   {
+  //     createdAt: "2022-12-08T11:52:34.110Z",
+  //     detail: "Game Free Calculate Score.",
+  //     game_id: "6364ec14c81000f1fbb2c0b4",
+  //     game_name: "Bubble Shooter free to play",
+  //     naka_for_player: 0,
+  //     path: "bubble-shooter-free-to-play",
+  //     player_id: "63886503aee6350f00de1a30",
+  //     read: true,
+  //     room_id: "638f2b78cf8e5541bd8bbcb2",
+  //     type: "GAME_FREE",
+  //     _id: "6391d00219144777f3124613"
+  //   },
+  //   {
+  //     createdAt: "2022-12-08T11:52:34.110Z",
+  //     detail: "Game Free Calculate Score.",
+  //     game_id: "6364ec14c81000f1fbb2c0b3",
+  //     game_name: "Bubble Shooter free to play",
+  //     naka_for_player: 0,
+  //     path: "bubble-shooter-free-to-play",
+  //     player_id: "63886503aee6350f00de1a30",
+  //     read: true,
+  //     room_id: "638f2b78cf8e5541bd8bbcb2",
+  //     type: "GAME_FREE",
+  //     _id: "6391d00219144777f3124669"
+  //   },
+  //   {
+  //     createdAt: "2022-12-08T11:52:34.110Z",
+  //     detail: "Game Free Calculate Score.",
+  //     game_id: "6364ec14c81000f1fbb2c0b4",
+  //     game_name: "Bubble Shooter free to play",
+  //     naka_for_player: 0,
+  //     path: "bubble-shooter-free-to-play",
+  //     player_id: "63886503aee6350f00de1a30",
+  //     read: true,
+  //     room_id: "638f2b78cf8e5541bd8bbcb2",
+  //     type: "GAME_FREE",
+  //     _id: "6391d00219144777f3124613"
+  //   },
+  //   {
+  //     createdAt: "2022-12-08T11:52:34.110Z",
+  //     detail: "Game Free Calculate Score.",
+  //     game_id: "6364ec14c81000f1fbb2c0b3",
+  //     game_name: "Bubble Shooter free to play",
+  //     naka_for_player: 0,
+  //     path: "bubble-shooter-free-to-play",
+  //     player_id: "63886503aee6350f00de1a30",
+  //     read: true,
+  //     room_id: "638f2b78cf8e5541bd8bbcb2",
+  //     type: "GAME_FREE",
+  //     _id: "6391d00219144777f3124669"
+  //   },
+  //   {
+  //     createdAt: "2022-12-08T11:52:34.110Z",
+  //     detail: "Game Free Calculate Score.",
+  //     game_id: "6364ec14c81000f1fbb2c0b4",
+  //     game_name: "Bubble Shooter free to play",
+  //     naka_for_player: 0,
+  //     path: "bubble-shooter-free-to-play",
+  //     player_id: "63886503aee6350f00de1a30",
+  //     read: true,
+  //     room_id: "638f2b78cf8e5541bd8bbcb2",
+  //     type: "GAME_FREE",
+  //     _id: "6391d00219144777f3124613"
+  //   },
+  //   {
+  //     createdAt: "2022-12-08T11:52:34.110Z",
+  //     detail: "Game Free Calculate Score.",
+  //     game_id: "6364ec14c81000f1fbb2c0b3",
+  //     game_name: "Bubble Shooter free to play",
+  //     naka_for_player: 0,
+  //     path: "bubble-shooter-free-to-play",
+  //     player_id: "63886503aee6350f00de1a30",
+  //     read: true,
+  //     room_id: "638f2b78cf8e5541bd8bbcb2",
+  //     type: "GAME_FREE",
+  //     _id: "6391d00219144777f3124669"
+  //   },
+  //   {
+  //     createdAt: "2022-12-08T11:52:34.110Z",
+  //     detail: "Game Free Calculate Score.",
+  //     game_id: "6364ec14c81000f1fbb2c0b4",
+  //     game_name: "Bubble Shooter free to play",
+  //     naka_for_player: 0,
+  //     path: "bubble-shooter-free-to-play",
+  //     player_id: "63886503aee6350f00de1a30",
+  //     read: true,
+  //     room_id: "638f2b78cf8e5541bd8bbcb2",
+  //     type: "GAME_FREE",
+  //     _id: "6391d00219144777f3124613"
+  //   },
+  //   {
+  //     createdAt: "2022-12-08T11:52:34.110Z",
+  //     detail: "Game Free Calculate Score.",
+  //     game_id: "6364ec14c81000f1fbb2c0b4",
+  //     game_name: "Bubble Shooter free to play",
+  //     naka_for_player: 0,
+  //     path: "bubble-shooter-free-to-play",
+  //     player_id: "63886503aee6350f00de1a30",
+  //     read: true,
+  //     room_id: "638f2b78cf8e5541bd8bbcb2",
+  //     type: "GAME_FREE",
+  //     _id: "6391d00219144777f3124613"
+  //   },
+  //   {
+  //     createdAt: "2022-12-08T11:52:34.110Z",
+  //     detail: "Game Free Calculate Score.",
+  //     game_id: "6364ec14c81000f1fbb2c0b3",
+  //     game_name: "Bubble Shooter free to play",
+  //     naka_for_player: 0,
+  //     path: "bubble-shooter-free-to-play",
+  //     player_id: "63886503aee6350f00de1a30",
+  //     read: true,
+  //     room_id: "638f2b78cf8e5541bd8bbcb2",
+  //     type: "GAME_FREE",
+  //     _id: "6391d00219144777f3124669"
+  //   }
+  // ]
+
   useEffect(() => {
     if (data && data.length > 0) {
       setTotalCount(data.length)
@@ -76,16 +287,12 @@ const NotificationList = () => {
         break
       }
     }
-    // eslint-disable-next-line no-console
-    console.log("sortBy:", sortBy)
   }, [sortBy, data])
 
   const onHandleClick = () => {
     setUnread(0)
   }
   const onHandleSortBy = (_sort: string) => {
-    // eslint-disable-next-line no-console
-    console.log("sortby:", _sort)
     setSortBy(_sort)
   }
 

@@ -42,7 +42,7 @@ const Dropdown = ({ title, className }: IProp) => {
     getGameAssets()
       .then((res) => {
         res.splice(0, 0, {
-          create_date: "",
+          crate_date: "",
           _id: "",
           current_time: "",
           name: "All Game Assets",
@@ -57,7 +57,11 @@ const Dropdown = ({ title, className }: IProp) => {
           image: "",
           item_size: "",
           craft_time: 0,
-          id: "all"
+          id: "all",
+          default: false,
+          amount: 0,
+          index: 0,
+          qty: 0
         })
         setGameData(res)
       })

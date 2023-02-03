@@ -14,7 +14,7 @@ export interface IDetailUsedItems {
 }
 
 export interface IGameItem {
-  crate_date: Date
+  crate_date: string | Date
   _id: string
   name: string
   detail: string
@@ -26,7 +26,8 @@ export interface IGameItem {
   image_icon: string
   image_icon_color: string
   max_item?: number
-  current_time: Date
+  current_time: string | Date
+  model_id: number
   item_size: string
   id: string
   default: boolean
@@ -35,7 +36,8 @@ export interface IGameItem {
   total?: string | number
   index: number
   qty: number
-  detail_used_items: IDetailUsedItems
+  craft_time: number
+  detail_used_items?: IDetailUsedItems
 }
 
 export interface IGameCategory {

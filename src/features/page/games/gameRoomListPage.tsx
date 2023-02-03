@@ -5,7 +5,6 @@ import useGameStore from "@stores/game"
 
 import SingleRoomList from "@feature/game/components/templates/roomList/singlePlayer/SingleRoomList"
 import MultiRoomList from "@feature/game/components/templates/roomList/multiPlayer/MultiRoomList"
-import StoryRoomList from "@feature/game/components/templates/roomList/storymode/StoryRoomList"
 
 /**
  *
@@ -23,8 +22,6 @@ const GameRoomListPage = () => {
           return <SingleRoomList />
         case "multiplayer":
           return <MultiRoomList />
-        case "storymode":
-          return <StoryRoomList />
         default:
           return <Box className="m-auto block">No Data</Box>
       }

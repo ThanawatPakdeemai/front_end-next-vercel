@@ -7,13 +7,12 @@ interface IProp {
   text?: ReactNode | string
   className?: string
   time?: boolean
-  endTime?: string
+  endTime?: Date
   endIcon?: ReactNode
 }
 const ButtonCountdown = ({
   handleClick,
   text,
-  // eslint-disable-next-line no-unused-vars
   endTime,
   className,
   endIcon,
@@ -62,7 +61,7 @@ const ButtonCountdown = ({
           <RoomListBox
             type="timer"
             timer={{
-              time: new Date(),
+              time: endTime ?? new Date(),
               onExpire: () => null
             }}
             color="secondary"

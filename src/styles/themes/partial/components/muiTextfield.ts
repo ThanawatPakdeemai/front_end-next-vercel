@@ -53,6 +53,12 @@ export const MuiTextfield: Components<
         },
         "&.Mui-error": {
           border: `1px solid ${PaletteCustom.error.main}`
+        },
+        input: {
+          "&:-webkit-autofill": {
+            WebkitBoxShadow: `0 0 0 100px ${PaletteCustom.secondary.main} inset`,
+            WebkitTextFillColor: PaletteCustom.neutral[700]
+          }
         }
       },
       ":hover": {

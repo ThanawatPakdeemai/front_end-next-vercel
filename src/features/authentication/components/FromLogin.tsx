@@ -14,15 +14,12 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import { useForm } from "react-hook-form"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import Link from "next/link"
-import useProfileStore from "@stores/profileStore"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import { ISignIn } from "../interfaces/IAuthService"
 import useSignIn from "../containers/hooks/useSignIn"
 
 const FormLogin = () => {
-  const { onSetProfileData, onSetProfileAddress, onSetProfileJWT } =
-    useProfileStore()
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const handleShowPassword = () => setShowPassword(!showPassword)
   const { errorToast, successToast } = useToast()
@@ -38,9 +35,6 @@ const FormLogin = () => {
     mutateSignIn({ _email: data._email, _password: data._password })
       .then((_profile) => {
         if (_profile) {
-          onSetProfileData(_profile)
-          onSetProfileAddress(_profile.address)
-          onSetProfileJWT(_profile.jwtToken)
           successToast(MESSAGES.sign_in_success)
         }
       })

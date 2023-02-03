@@ -30,6 +30,7 @@ const ModalInvite = () => {
         startIcon=""
         text="Invite"
         className="btn-rainbow-theme z-[2] h-[50px] w-[156px] bg-secondary-main font-bold capitalize text-white-primary"
+        type="button"
       />
       <ModalCustom
         open={open}
@@ -63,7 +64,7 @@ const ModalInvite = () => {
               </div>
             </Box>
           </div>
-          <div className="flex w-full justify-center rounded-2xl  border border-[#2f2f2f]">
+          <div className="flex w-full justify-center rounded-2xl  border border-black-200">
             <ButtonLink
               className="h-[40px] w-full text-sm"
               href="/"

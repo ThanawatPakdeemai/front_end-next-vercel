@@ -8,6 +8,7 @@ interface IProp {
   className?: string
   details: IMenuBase[]
   onChange?: (_value) => void
+  title?: string
 }
 
 const SelectDropdown = ({ className, details, onChange }: IProp) => (
@@ -28,6 +29,7 @@ const SelectDropdown = ({ className, details, onChange }: IProp) => (
           href={item.href}
           id=""
           external={false}
+          active={item.active}
         />
       </Box>
     ))}

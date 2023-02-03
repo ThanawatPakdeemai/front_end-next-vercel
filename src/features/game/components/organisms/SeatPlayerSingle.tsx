@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useMemo } from "react"
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react"
 import { IGameCurrentPlayer } from "@feature/game/interfaces/IGameService"
 import { Box, Typography } from "@mui/material"
 import Ellipse from "@components/icons/Ellipse/Ellipse"
@@ -11,6 +11,7 @@ import Helper from "@utils/helper"
 import { useToast } from "@feature/toast/containers"
 import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import { MESSAGES } from "@constants/messages"
+import { useWeb3Provider } from "@providers/Web3Provider"
 import ButtonGame from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 
@@ -27,7 +28,16 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   const { data, itemSelected } = useGameStore()
   const { errorToast } = useToast()
   const router = useRouter()
-  const addrsss = "0x1BFa565383EBb149E6889F99013d1C88da190915" // "0xd8fBF6b391a7EbA72772763716537FB43769E845" // TODO YUI Change ACCOUNT
+  const [account, setAccount] = useState<string | undefined>(undefined)
+  const { accounts } = useWeb3Provider()
+  const [gameUrl, setGameUrl] = useState<string>("")
+
+  useEffect(() => {
+    if (accounts) setAccount(accounts[0])
+    return () => {
+      setAccount(undefined)
+    }
+  }, [accounts])
 
   const item_id = useMemo(() => {
     if (data) {
@@ -105,14 +115,22 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   }
 
   const checkAccountProfile = () => {
-    if (profile && profile.address === addrsss) {
+    if (profile && profile.address === account) {
       return true
     }
     errorToast(MESSAGES["please-connect-wallet"])
     return false
   }
-  const OnPlayGame = () => {
-    if (gameRoomById && data && profile && room_id && item_id) {
+
+  useEffect(() => {
+    if (
+      gameRoomById &&
+      profile &&
+      room_id &&
+      item_id &&
+      data &&
+      data.game_type === "singleplayer"
+    ) {
       const frontendUrl = `${baseUrlFront}/${data.path}/summary/${room_id}`
       const gameURL = `${baseUrlGame}/${data.id}/?${Helper.makeID(8)}${btoa(
         `${room_id}:|:${profile.id}:|:${item_id}:|:${
@@ -129,14 +147,20 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
           data.play_to_earn === true ? "free" : "not_free"
         }`
       )}`
+      setGameUrl(gameURL)
+    }
+    return () => {
+      setGameUrl("")
+    }
+  }, [data, gameRoomById, item_id, profile, room_id])
 
-      if (
-        checkBalanceOfItem() &&
-        checkPlayerIsNotBanned() &&
-        checkAccountProfile()
-      ) {
-        window.location.href = gameURL
-      }
+  const OnPlayGame = () => {
+    if (
+      checkBalanceOfItem() &&
+      checkPlayerIsNotBanned() &&
+      checkAccountProfile()
+    ) {
+      window.location.href = gameUrl
     } else if (!item_id) {
       errorToast(MESSAGES["please_item"])
     } else if (!room_id) {

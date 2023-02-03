@@ -9,6 +9,7 @@ import Helper from "@utils/helper"
 import { ELocalKey } from "@interfaces/ILocal"
 
 export interface IUseProfileStore {
+  wallet: boolean | undefined
   address: string | undefined
   profile: IProfileResponse
   isLogin: boolean
@@ -17,6 +18,7 @@ export interface IUseProfileStore {
   getProfileJWT: () => string | null
   onReset: () => void
   onSetProfileAddress: (_address: string | undefined) => void
+  onSetWallet: () => void
   onSetProfileData: (_profile: IProfile) => void
   onSetProfileJWT: (_token: string) => void
 }
@@ -25,11 +27,12 @@ const useProfileStore = create<IUseProfileStore>()(
   devtools(
     persist(
       (set, get) => ({
+        wallet: false,
         address: undefined,
         isLogin: false,
         profile: {
           status: false,
-          data: null,
+          data: undefined,
           message: null
         },
         getProfile: () => get().profile,
@@ -38,7 +41,7 @@ const useProfileStore = create<IUseProfileStore>()(
         onReset: () => {
           const resetData = {
             status: false,
-            data: null,
+            data: undefined,
             message: null
           }
           set(
@@ -58,6 +61,9 @@ const useProfileStore = create<IUseProfileStore>()(
             false,
             "ProfileStore/onSetProfileAddress"
           )
+        },
+        onSetWallet: () => {
+          set(() => ({ wallet: true }), false, "ProfileStore/onSetWallet")
         },
         onSetProfileData: (_profile) => {
           const dummyProfile = get().profile

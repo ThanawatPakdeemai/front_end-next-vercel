@@ -9,13 +9,13 @@ import ImageCustom from "@components/atoms/image/Image"
 import IconHourglass from "@components/icons/hourglassIcon"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import TimerStamina from "@components/atoms/timer/TimerStamina"
-import { IGame } from "@feature/game/interfaces/IGameService"
+import { IGame, IGameFav } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { IMAGES } from "@constants/images"
 
 interface IProps {
   menu: IHeaderSlide
-  data?: IGame
+  data?: IGame | IGameFav
   partnerdata?: IPartnerGameData
   imgPartner?: string | undefined
   showNo?: boolean
@@ -138,6 +138,7 @@ const GameCard = ({
             className={`btn-rainbow-theme z-[2] w-[198px] ${
               cooldown ? "bg-error-main" : "bg-secondary-main "
             } capitalize`}
+            type="button"
           />
         </motion.div>
       </motion.div>

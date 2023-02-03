@@ -53,16 +53,21 @@ const GameRoomList = () => {
       return undefined
     })
     const _roomId = _dataRoom._id
-    if (data_player_me && data_player_me.status === "played" && data) {
-      router.push(
-        `${CONFIGS.BASE_URL.FRONTEND}/${data.path}/summary/${_roomId}`
-      )
-    } else if (data && (data.play_to_earn || data.tournament)) {
-      router.push(`${router.asPath}/${_roomId}`)
-    } else if (itemSelected && itemSelected.qty > 0) {
-      router.push(`${router.asPath}/${_roomId}`)
+
+    if (profile) {
+      if (data_player_me && data_player_me.status === "played" && data) {
+        router.push(
+          `${CONFIGS.BASE_URL.FRONTEND}/${data.path}/summary/${_roomId}`
+        )
+      } else if (data && (data.play_to_earn || data.tournament)) {
+        router.push(`${router.asPath}/${_roomId}`)
+      } else if (itemSelected && itemSelected.qty > 0) {
+        router.push(`${router.asPath}/${_roomId}`)
+      } else {
+        errorToast(MESSAGES["please_item"])
+      }
     } else {
-      errorToast(MESSAGES["please_item"])
+      errorToast(MESSAGES["please_login"])
     }
   }
 

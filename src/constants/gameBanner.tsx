@@ -38,8 +38,22 @@ export const GAME_BLOG_BANNER = [
   },
   {
     link: "/",
-    icon: <MaskBlogIcon className="naka-banner-icon-up-down absolute z-10" />,
+    icon: <MaskBlogIcon className="z-10 mt-8 flex" />,
     table: true,
-    type: "blinkIcon"
+    type: "MaskBlogIcon"
+  }
+]
+
+export const COUPON_BANNER = [
+  {
+    link: "/",
+    text: "Coupon",
+    type: "text"
+  },
+  {
+    link: "/",
+    icon: <NakamotoWarIcon className="absolute z-10" />,
+    table: true,
+    type: "CouponIcon"
   }
 ]

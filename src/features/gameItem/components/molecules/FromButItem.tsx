@@ -71,7 +71,7 @@ const FromButItem = () => {
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <Box>
             <div className=" grid grid-cols-2 justify-center gap-4">
-              <div className="flex justify-center rounded-2xl border-[1px] border-[#232329]">
+              <div className="flex justify-center rounded-2xl border-[1px] border-neutral-700">
                 <Image
                   src={
                     (watch("item") as IGameItemListData).image_icon ??
@@ -84,19 +84,19 @@ const FromButItem = () => {
                 />
               </div>
               <div className="">
-                <p className="text-[#ffffff]">Asset</p>
-                <p className="text-[#70727B]">
+                <p className="text-white-default">Asset</p>
+                <p className="text-black-default">
                   {(watch("item") as IGameItemListData).name}
                 </p>
-                <p className="text-[#ffffff]">Descriptions</p>
-                <div className=" text-[#70727B] line-clamp-4 ">
+                <p className="text-white-default">Descriptions</p>
+                <div className=" text-black-default line-clamp-4 ">
                   {(watch("item") as IGameItemListData).detail}
                 </div>
               </div>
             </div>
           </Box>
           <Box className="my-4 w-full pr-4">
-            <p className="py-2 uppercase text-[#70727B]">Tier assets</p>
+            <p className="py-2 uppercase text-black-default">Tier assets</p>
             {gameItemList && (
               <Controller
                 name="item_id"
@@ -120,7 +120,7 @@ const FromButItem = () => {
             )}
           </Box>
           <Box className="my-4 w-full pr-4">
-            <p className="py-2 uppercase text-[#70727B]">Currency</p>
+            <p className="py-2 uppercase text-black-default">Currency</p>
             <Controller
               name="currency_id"
               control={control}
@@ -141,7 +141,9 @@ const FromButItem = () => {
               <p className="text-sm text-error-main">{t("required")}</p>
             )}
           </Box>
-          <p className="uppercase text-[#7B5BE6]">Skull {} = 13.8389 NAKA</p>
+          <p className="uppercase text-purple-primary">
+            Skull {} = 13.8389 NAKA
+          </p>
 
           <div className="my-4  grid grid-cols-6  content-center gap-4">
             <div className="btn">
@@ -198,7 +200,7 @@ const FromButItem = () => {
               />
             </div>
           </div>
-          <div className="my-2 flex w-full justify-between rounded-xl border border-[#232329] p-4">
+          <div className="my-2 flex w-full justify-between rounded-xl border border-neutral-700 p-4">
             <div className="">
               <p>TOTAL PRICE:</p>
             </div>
@@ -213,7 +215,7 @@ const FromButItem = () => {
             </div>
           </div>
           <div className="w-full text-end">
-            <p className="text-sm text-[#70727B]">= $0.00</p>
+            <p className="text-sm text-black-default">= $0.00</p>
           </div>
           <ButtonGroup className="mt-10 flex flex-col  gap-3">
             <ButtonLink
@@ -226,7 +228,7 @@ const FromButItem = () => {
               color="secondary"
               variant="contained"
             />
-            <div className="flex w-full justify-center rounded-2xl  border border-[#2f2f2f]">
+            <div className="flex w-full justify-center rounded-2xl  border border-black-200">
               <ButtonLink
                 className="h-[40px] w-full text-sm"
                 href="/"

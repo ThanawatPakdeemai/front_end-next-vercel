@@ -34,13 +34,13 @@ function CopyIcon({
         <path
           d="M3 15L12 9L21 15L12 21L3 15Z"
           stroke="#E1E2E2"
-          stroke-width="1.2"
+          strokeWidth="1.2"
         />
       </g>
       <path
         d="M3 10L12 4L21 10L12 16L3 10Z"
         stroke="#E1E2E2"
-        stroke-width="1.2"
+        strokeWidth="1.2"
       />
     </svg>
   )

@@ -55,7 +55,7 @@ const RightMenuLogIn = () => {
             }}
           >
             <CardActions
-              className="flex justify-between rounded-[13px] border-2  border-neutral-700 bg-[#18181cff] px-0"
+              className="flex justify-between rounded-[13px] border-2  border-neutral-700 bg-black-500 px-0"
               sx={{ maxWidth: 265, width: 265, height: 50 }}
               disableSpacing
             >
@@ -104,7 +104,7 @@ const RightMenuLogIn = () => {
                   !expanded
                     ? "bg-secondary-main hover:scale-[85%]"
                     : "bg-error-main"
-                } 
+                }
             ${!expanded ? "rotate-0" : "rotate-180"} ${
                   expanded && !hoverExpand
                     ? "rotate-[-45deg] scale-[75%]"
@@ -141,6 +141,7 @@ const RightMenuLogIn = () => {
             <Balance
               variant="naka"
               token="NAKA"
+              tokenUnit="NAKA"
               sx={{
                 maxWidth: 265,
                 minWidth: 265,
@@ -163,6 +164,7 @@ const RightMenuLogIn = () => {
                 minWidth: 265,
                 height: 70
               }}
+              type="row"
             />
             <MenuProfile />
           </Collapse>

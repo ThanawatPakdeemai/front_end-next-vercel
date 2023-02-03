@@ -5,11 +5,19 @@ import MenuItemCustom from "@components/atoms/MenuItemCustom"
 import { MENU_LOGGEDIN } from "@configs/menu"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
+import { IProfile } from "@src/types/profile"
 import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 
 const MenuProfile = () => {
-  const { onReset } = useProfileStore()
+  const { profile, onReset } = useProfileStore()
   const router = useRouter()
+  const [profileData, setProfileData] = React.useState<IProfile>()
+
+  React.useEffect(() => {
+    if (profile && profile.data) {
+      setProfileData(profile.data as IProfile)
+    }
+  }, [profile])
 
   return (
     <MenuList className="mx-[6px] mt-[14px] mb-[6px] rounded-[13px] bg-neutral-700 p-[6px]">
@@ -19,7 +27,11 @@ const MenuProfile = () => {
           id={ele.id}
           label={ele.label}
           icon={ele.icon}
-          href={ele.href}
+          href={
+            ele.href === "/profile"
+              ? `/profile/${profileData && profileData.id}`
+              : ele.href
+          }
           external={ele.external}
         />
       ))}
@@ -31,6 +43,7 @@ const MenuProfile = () => {
           router.push("/")
         }}
         className="btn-rainbow-theme my-4 bg-error-main px-14 text-sm text-white-default"
+        type="button"
       />
     </MenuList>
   )

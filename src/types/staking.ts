@@ -113,8 +113,9 @@ export interface IStakingAll {
 }
 
 export interface IStakingGroup {
-  contract_address: string
-  date: string
+  datetime: string
+  data: IStakingAll[]
+  type: string
 }
 
 export interface IValue {

@@ -14,12 +14,12 @@ function StakingIconBanner({
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <g clip-path="url(#clip0_5749_26962)">
+      <g clipPath="url(#clip0_5749_26962)">
         <g filter="url(#filter0_dddddd_5749_26962)">
           <path
             d="M218.5 -45.5C203.167 8.33333 199.8 112.2 309 97C445.5 78 691.5 86.5 559.5 297"
             stroke="#F42728"
-            stroke-width="2"
+            strokeWidth="2"
           />
         </g>
         <rect
@@ -33,7 +33,7 @@ function StakingIconBanner({
           <path
             d="M-31 223.5C21.8333 174 136.5 77 322 160C495.776 237.754 607.833 11.3334 626.5 -107.5"
             stroke="#F42728"
-            stroke-width="2"
+            strokeWidth="2"
           />
         </g>
         <rect
@@ -61,14 +61,14 @@ function StakingIconBanner({
           <path
             d="M559.5 296.999C619.889 200.696 601.163 146.673 550 118.219"
             stroke="#F42728"
-            stroke-width="2"
+            strokeWidth="2"
           />
         </g>
         <g filter="url(#filter3_dddddd_5749_26962)">
           <path
             d="M-31 223.499C21.8333 173.999 136.5 76.9992 322 159.999"
             stroke="#F42728"
-            stroke-width="2"
+            strokeWidth="2"
           />
         </g>
         <rect
@@ -87,10 +87,10 @@ function StakingIconBanner({
           width="548.608"
           height="503.305"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
           <feFlood
-            flood-opacity="0"
+            floodOpacity="0"
             result="BackgroundImageFix"
           />
           <feColorMatrix
@@ -220,10 +220,10 @@ function StakingIconBanner({
           width="819.171"
           height="491.885"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
           <feFlood
-            flood-opacity="0"
+            floodOpacity="0"
             result="BackgroundImageFix"
           />
           <feColorMatrix
@@ -375,10 +375,10 @@ function StakingIconBanner({
           width="208.726"
           height="340.186"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
           <feFlood
-            flood-opacity="0"
+            floodOpacity="0"
             result="BackgroundImageFix"
           />
           <feColorMatrix
@@ -497,10 +497,10 @@ function StakingIconBanner({
           width="514.092"
           height="257.607"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
           <feFlood
-            flood-opacity="0"
+            floodOpacity="0"
             result="BackgroundImageFix"
           />
           <feColorMatrix

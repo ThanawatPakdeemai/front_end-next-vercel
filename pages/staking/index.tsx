@@ -1,27 +1,32 @@
 import ServicesPageLayout from "@components/template/ServicesPageLayout"
-import useGamesById from "@feature/game/containers/hooks/useGamesById"
-import { IGame } from "@feature/game/interfaces/IGameService"
 import FixedAPR from "@feature/staking/components/templates/FixedApr"
-import useGameStore from "@stores/game"
+import VariableAPR from "@feature/staking/components/templates/VariableAPR"
+import useGlobalStaking from "@feature/staking/containers/hook/useGlobalStaking"
+import { TabProvider } from "@feature/tab/contexts/TabProvider"
+import useTabContext from "@feature/tab/contexts/useTabContext"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { ReactElement, useEffect, useState } from "react"
+import { ReactElement } from "react"
 
 export default function StakingPage() {
-  // eslint-disable-next-line no-unused-vars
-  const [gameData, setGameData] = useState<IGame>()
-  const { data } = useGameStore()
-  const { dataGame, isLoading } = useGamesById({ _gameId: data ? data.id : "" })
+  const { flexibleAPRStaking, fixedAPRGroupByDate } = useGlobalStaking()
 
-  useEffect(() => {
-    if (!isLoading && dataGame) setGameData(dataGame.data[0])
-  }, [dataGame, isLoading])
-
-  // return <>{gameData ? <GameSlide /> : <SkeletonBanner />}</>
-  return <FixedAPR />
+  const { tabValue } = useTabContext()
+  switch (tabValue) {
+    case "1":
+      return <VariableAPR data={flexibleAPRStaking} />
+    case "2":
+      return <FixedAPR stakeGroupByDatetime={fixedAPRGroupByDate} />
+    default:
+      return <></>
+  }
 }
 
 StakingPage.getLayout = function getLayout(page: ReactElement) {
-  return <ServicesPageLayout>{page}</ServicesPageLayout>
+  return (
+    <TabProvider>
+      <ServicesPageLayout>{page}</ServicesPageLayout>
+    </TabProvider>
+  )
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {

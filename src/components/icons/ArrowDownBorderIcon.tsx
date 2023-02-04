@@ -20,7 +20,7 @@ function IconArrowDownBorder({
       <path
         d="M12 3L4 3C3.44772 3 3 3.44771 3 4L3 20C3 20.5523 3.44771 21 4 21L20 21C20.5523 21 21 20.5523 21 20L21 4C21 3.44772 20.5523 3 20 3L12 3ZM12 3L12 15M12 15L17 10M12 15L7 10"
         stroke={stroke || "#E1E2E2"}
-        stroke-width="1.2"
+        strokeWidth="1.2"
       />
     </svg>
   )

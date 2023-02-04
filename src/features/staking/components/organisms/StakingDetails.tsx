@@ -1,4 +1,5 @@
 import React from "react"
+import { IStakingAll } from "@src/types/staking"
 import PeriodLabel from "../molecules/PeriodLabel"
 import StakingTitle from "../atoms/StakingTitle"
 import TotalStaked from "../molecules/TotalStaked"
@@ -7,20 +8,18 @@ import NumberBadge from "../atoms/NumberBadge"
 import ActionBar from "../molecules/ActionBar"
 
 export interface IStakingDetails {
-  title?: string
-  days?: number
-  label?: string
+  dataStaking: IStakingAll
   className?: string
 }
 
-const StakingDetails = ({ title, days, label, className }: IStakingDetails) => (
+const StakingDetails = ({ dataStaking, className = "" }: IStakingDetails) => (
   <div className={`${className}`}>
-    {title && <StakingTitle title="Your Fixed Staking" />}
+    <StakingTitle title={dataStaking.title} />
     <div className="grid grid-flow-row-dense grid-cols-4 gap-3 rounded-[13px] bg-neutral-800 p-3 uppercase">
       <div className="row-span-2 rounded-lg shadow-xl">
         <PeriodLabel
-          days={days || 150}
-          label={label || "Fixed APR"}
+          days={30}
+          label={dataStaking.type}
           className="h-full"
         />
       </div>

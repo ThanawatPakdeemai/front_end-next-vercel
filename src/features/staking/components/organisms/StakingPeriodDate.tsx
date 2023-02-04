@@ -5,9 +5,10 @@ import PeriodLabel from "../molecules/PeriodLabel"
 export interface IStakingDate {
   days?: number
   label: string
-  date?: string
-  time?: string
+  date: string
+  time: string
   className?: string
+  onClick?: () => void
 }
 
 const StakingPeriodDate = ({
@@ -15,21 +16,24 @@ const StakingPeriodDate = ({
   label,
   date,
   time,
-  className
+  className,
+  onClick
 }: IStakingDate) => (
-  <div
-    className={`relative flex w-full flex-row rounded-[13px] bg-neutral-800 p-3 uppercase ${className}`}
+  <button
+    type="button"
+    onClick={onClick}
+    className={`relative grid w-full grid-cols-[140px_calc(100%-140px)] items-center rounded-[13px] bg-neutral-800 p-3 uppercase ${className}`}
   >
     <PeriodLabel
-      days={days || 180}
+      days={days}
       label={label}
     />
     <PeriodDate
       date={date}
       time={time}
-      className="ml-3 w-full"
+      className="ml-3"
     />
-  </div>
+  </button>
 )
 
 export default StakingPeriodDate

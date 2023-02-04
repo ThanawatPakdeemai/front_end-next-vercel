@@ -1,5 +1,6 @@
 import { IStakingAll, IStakingGroup } from "@src/types/staking"
 import { useQuery } from "@tanstack/react-query"
+import dayjs from "dayjs"
 import { useEffect, useState } from "react"
 import { getStakingAll } from "../services/staking.service"
 
@@ -55,6 +56,7 @@ const useGlobalStaking = () => {
         const groupByDatetimeArray: IStakingGroup[] = Object.keys(
           groupByDatetime
         ).map((key, index) => ({
+          "locked_status": dayjs(key).isBefore(dayjs()) ? "locked" : "unlocked",
           "datetime": key,
           "data": groupByDatetime[key],
           "type": groupByDatetime[key][index].type

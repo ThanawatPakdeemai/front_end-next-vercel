@@ -116,6 +116,7 @@ export interface IStakingGroup {
   datetime: string
   data: IStakingAll[]
   type: string
+  locked_status: "locked" | "unlocked"
 }
 
 export interface IValue {

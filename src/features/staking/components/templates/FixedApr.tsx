@@ -35,7 +35,7 @@ const FixedAPR = ({ stakeGroupByDatetime }: IFixedAPR) => (
         className="mt-5"
         // onClick={() => onClickStaking(item)}
         link={`/staking/${dayjs(item.datetime)
-          .format("DD MM YYYY")
+          .format("DD MMM YYYY")
           .split(" ")
           .join("-")
           .toLocaleLowerCase()}`}

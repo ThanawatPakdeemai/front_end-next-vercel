@@ -57,8 +57,8 @@ const StakingDetails = ({ dataStaking, className = "" }: IStakingDetails) => {
         </div>
         <div className="col-span-3 shadow-xl">
           <TotalStaked
-            totalPoolLimit={dataStaking.pool_stake_limit}
-            totalPoolStake={dataStaking.pool_reward}
+            totalPoolStake={stakedData?.totalStake || 0}
+            totalPoolReward={dataStaking.pool_reward}
           />
         </div>
         <div className="col-span-3 shadow-xl">

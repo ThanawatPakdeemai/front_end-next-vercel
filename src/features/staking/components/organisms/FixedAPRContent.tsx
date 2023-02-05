@@ -25,7 +25,7 @@ const FixedAPRContent = () => {
   const stakingData = fixedAPRGroupByDate.find(
     (item) =>
       dayjs(item.datetime)
-        .format("DD MM YYYY")
+        .format("DD MMM YYYY")
         .split(" ")
         .join("-")
         .toLocaleLowerCase() === slug

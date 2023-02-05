@@ -3,24 +3,24 @@ import { numberWithCommas } from "@utils/helpers"
 import React from "react"
 
 interface ITotalStaked {
-  totalPoolLimit: number
   totalPoolStake: number
+  totalPoolReward: number
   stakingValueMin?: number
   stakingValueMax?: number
   className?: string
 }
 
 const TotalStaked = ({
-  totalPoolLimit,
   totalPoolStake,
+  totalPoolReward,
   className
 }: ITotalStaked) => {
   /**
    * @description Calculate total naka staked
    */
   const totalNAKAStaked = () => {
-    if (totalPoolLimit > 0 && totalPoolStake > 0) {
-      const result = (totalPoolStake / totalPoolLimit) * 100
+    if (totalPoolStake > 0 && totalPoolReward > 0) {
+      const result = (totalPoolReward / totalPoolStake) * 100
       return result > 0.0001 ? parseFloat(result.toString()).toFixed(4) : 0.0001
     }
     return 0
@@ -46,7 +46,7 @@ const TotalStaked = ({
         </span>
         &nbsp;/&nbsp;
         <span className="text-neutral-300">
-          {numberWithCommas(totalPoolLimit)}
+          {numberWithCommas(totalPoolReward)}
         </span>
       </div>
     </div>

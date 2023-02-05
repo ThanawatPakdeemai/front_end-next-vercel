@@ -78,14 +78,16 @@ const useContractStaking = (_stakingProps: string, _stakingTypes: string) => {
         const durationPromise = stake.duration()
         const startStakeTimePromise = stake.startStakeTime()
         const endStakeTimePromise = stake.endStakeTime()
+        const totalStakePromise = stake.poolStakeTotal()
         let resUnClaim = ethers.BigNumber.from(0)
 
-        const [amount, duration, startStakeTime, endStakeTime] =
+        const [amount, duration, startStakeTime, endStakeTime, totalStake] =
           await Promise.all([
             amountPromise,
             durationPromise,
             startStakeTimePromise,
-            endStakeTimePromise
+            endStakeTimePromise,
+            totalStakePromise
           ])
 
         await stake.getUserUnclaimAmount(_address).then((_res: BigNumber) => {
@@ -106,7 +108,8 @@ const useContractStaking = (_stakingProps: string, _stakingTypes: string) => {
           comInterest: Number(
             Helper.WeiToNumber(resUnClaim.toString()).toFixed(4)
           ),
-          APR: handleAPR(Helper.BNToNumber(duration))
+          APR: handleAPR(Helper.BNToNumber(duration)),
+          totalStake: Helper.WeiToNumber(totalStake)
         })
       } catch (err) {
         resolve({
@@ -117,7 +120,8 @@ const useContractStaking = (_stakingProps: string, _stakingTypes: string) => {
           endDate: "",
           stakeAmount: 0,
           comInterest: 0,
-          APR: 0
+          APR: 0,
+          totalStake: 0
         })
       }
     })

@@ -14,6 +14,8 @@ export interface IMyLockedResponseData {
   stakeAmount: number
   comInterest: number
   APR: number
+  totalStake: number
+  totalReward: number
 }
 
 export interface IStakingOption {

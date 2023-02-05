@@ -8,7 +8,7 @@ export interface IStakingDate {
   label: string
   date: string
   time: string
-  lockedStatus?: "locked" | "unlocked"
+  lockedStatus: "locked" | "unlocked"
   className?: string
   link?: string
   onClick?: () => void

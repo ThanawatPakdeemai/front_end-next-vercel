@@ -8,7 +8,7 @@ export interface IPeriodLabel {
 
 const PeriodLabel = ({ days, label, className }: IPeriodLabel) => (
   <div
-    className={`flex h-full w-[140px] flex-col items-center justify-center rounded-[10px] bg-neutral-900 p-3 text-center ${
+    className={`flex h-full flex-col items-center justify-center rounded-[10px] bg-neutral-900 p-3 text-center ${
       className || ""
     }`}
   >

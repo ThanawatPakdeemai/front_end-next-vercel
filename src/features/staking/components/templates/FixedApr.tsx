@@ -39,6 +39,7 @@ const FixedAPR = ({ stakeGroupByDatetime }: IFixedAPR) => (
           .split(" ")
           .join("-")
           .toLocaleLowerCase()}`}
+        lockedStatus={item.locked_status}
       />
     ))}
     {/* {isFixedAPR ? (

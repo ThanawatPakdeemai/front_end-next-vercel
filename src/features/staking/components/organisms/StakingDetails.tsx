@@ -1,6 +1,8 @@
-import React from "react"
-import { IStakingAll } from "@src/types/staking"
-import dayjs from "dayjs"
+import React, { useState, useEffect, useCallback } from "react"
+import { IMyLockedResponseData, IStakingAll } from "@src/types/staking"
+import useContractStaking from "@feature/contract/containers/hooks/useContractStaking"
+import useProfileStore from "@stores/profileStore"
+import useGlobalStaking from "@feature/staking/containers/hook/useGlobalStaking"
 import PeriodLabel from "../molecules/PeriodLabel"
 import TotalStaked from "../molecules/TotalStaked"
 import StakingPeriod from "../molecules/StakingPeriod"
@@ -13,35 +15,72 @@ export interface IStakingDetails {
 }
 
 const StakingDetails = ({ dataStaking, className = "" }: IStakingDetails) => {
-  const date1 = dayjs(dataStaking.start_stake_time)
-  const date2 = dayjs(dataStaking.end_stake_time)
-  const diff = date2.diff(date1, "day")
+  const [stakedData, setStakedData] = useState<IMyLockedResponseData>()
+  const profile = useProfileStore((state) => state.profile.data)
+  const { getMyLocked } = useContractStaking(
+    dataStaking.contract_address,
+    dataStaking.type
+  )
+  const { handleRedeem } = useGlobalStaking()
+
+  /**
+   * @description Get staking locked data by wallet address
+   * @returns
+   */
+
+  const getStakingLocked = useCallback(async () => {
+    if (profile?.address === undefined) return
+    const result = await getMyLocked(
+      dataStaking.contract_address,
+      profile.address
+    )
+    if (result) {
+      setStakedData(result)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile])
+
+  useEffect(() => {
+    getStakingLocked()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <div className={`${className}`}>
       <div className="grid grid-flow-row-dense grid-cols-4 gap-3 rounded-[13px] bg-neutral-800 p-3 uppercase">
         <div className="row-span-2 rounded-lg shadow-xl">
           <PeriodLabel
-            days={diff && diff > 0 ? diff : 0}
+            days={dataStaking.period}
             label={dataStaking.type}
             className="h-full"
           />
         </div>
         <div className="col-span-3 shadow-xl">
-          <TotalStaked />
+          <TotalStaked
+            totalPoolLimit={dataStaking.pool_stake_limit}
+            totalPoolStake={dataStaking.pool_reward}
+          />
         </div>
         <div className="col-span-3 shadow-xl">
-          <StakingPeriod />
+          <StakingPeriod
+            startDatetime={stakedData?.startDate || "00:00:00"}
+            endDatetime={stakedData?.endDate || "00:00:00"}
+            est={stakedData?.APR || 0}
+            type={dataStaking.type}
+          />
         </div>
         <div className="col-span-2 shadow-xl">
           <NumberBadge
             title="Your NAKA Staked"
             color="red"
+            value={stakedData?.stakeAmount || 0}
           />
         </div>
         <div className="col-span-2 shadow-xl">
           <NumberBadge
             title="Your rewards Unclaimed"
             color="purple"
+            value={stakedData?.comInterest || 0}
           />
         </div>
       </div>
@@ -52,6 +91,8 @@ const StakingDetails = ({ dataStaking, className = "" }: IStakingDetails) => {
         time="08:00 pm"
         textColor="purple"
         className="flex w-full justify-end"
+        stakedData={stakedData}
+        onClickRedeem={() => handleRedeem(stakedData)}
       />
     </div>
   )

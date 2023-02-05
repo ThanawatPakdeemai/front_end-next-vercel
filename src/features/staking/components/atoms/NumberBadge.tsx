@@ -4,7 +4,7 @@ import React from "react"
 export interface INumberBadge {
   title: string
   color?: "purple" | "red"
-  value?: number
+  value: number
   className?: string
 }
 
@@ -24,7 +24,7 @@ const NumberBadge = ({
           color === "purple" ? "text-secondary-main" : "text-red-card"
         }`}
       >
-        {value || 340395.8}
+        {value}
       </p>
       <IconNakaGlitch
         className="ml-4"

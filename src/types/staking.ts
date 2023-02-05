@@ -1,3 +1,21 @@
+export type TStaking = "fixed" | "flexible"
+
+// export interface IMyLockedResponse {
+//   status: boolean
+//   data: IMyLockedResponseData[]
+// }
+
+export interface IMyLockedResponseData {
+  option_title: string
+  period: number
+  addressContract: string
+  startDate: string
+  endDate: string
+  stakeAmount: number
+  comInterest: number
+  APR: number
+}
+
 export interface IStakingOption {
   option_title: string
   period: number
@@ -97,7 +115,7 @@ export interface IGetStack {
 export interface IStakingAll {
   createdAt: string
   updatedAt: string
-  type: string
+  type: TStaking
   status: string
   contract_address: string
   start_stake_time: string
@@ -105,17 +123,22 @@ export interface IStakingAll {
   user_stake_limit: number
   pool_stake_limit: number
   pool_reward: number
-  apr: number
   is_active: boolean
   id: string
   title: string
   date: string
+
+  // Custom values
+  apr: number
+  period: number
+  locked?: IMyLockedResponseData
 }
 
 export interface IStakingGroup {
   datetime: string
   data: IStakingAll[]
-  type: string
+  data_staked?: IMyLockedResponseData
+  type: TStaking
   locked_status: "locked" | "unlocked"
 }
 

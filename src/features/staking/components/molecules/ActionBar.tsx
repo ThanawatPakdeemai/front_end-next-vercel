@@ -3,6 +3,8 @@ import { Button } from "@mui/material"
 import ReloadIcon from "@components/icons/ReloadIcon"
 import LockIcon from "@components/icons/LockIcon"
 import IconArrowDownBorder from "@components/icons/ArrowDownBorderIcon"
+import { IMyLockedResponseData } from "@src/types/staking"
+import dayjs from "dayjs"
 
 export interface IStakingDate {
   label: string
@@ -11,9 +13,10 @@ export interface IStakingDate {
   textColor: "purple" | "red"
   buttonLabelOne?: string
   buttonLabelTwo?: string
-  actionButtonOne?: () => void
-  actionButtonTwo?: () => void
+  onClickStake?: () => void
+  onClickRedeem?: () => void
   className?: string
+  stakedData?: IMyLockedResponseData
 }
 
 const ActionBar = ({
@@ -23,11 +26,19 @@ const ActionBar = ({
   textColor = "red",
   buttonLabelOne,
   buttonLabelTwo,
-  actionButtonOne = () => {},
-  actionButtonTwo = () => {},
-  className
+  onClickStake = () => {},
+  onClickRedeem = () => {},
+  className,
+  stakedData
 }: IStakingDate) => {
+  // eslint-disable-next-line no-unused-vars
   const [disabled, setDisabled] = useState<boolean>(false)
+
+  // useEffect(() => {
+  //   if (stakedData && dayjs(stakedData.endDate).isBefore(dayjs())) {
+  //     setDisabled(true)
+  //   }
+  // }, [])
 
   return (
     <div className={`${className}`}>
@@ -57,10 +68,7 @@ const ActionBar = ({
             variant="contained"
             size="large"
             type="submit"
-            onClick={() => {
-              setDisabled(!disabled)
-              actionButtonOne()
-            }}
+            onClick={onClickStake}
           >
             {disabled ? <LockIcon stroke="#4E5057" /> : <IconArrowDownBorder />}
             <p className="ml-5">
@@ -78,14 +86,22 @@ const ActionBar = ({
             variant="contained"
             size="large"
             type="submit"
-            onClick={() => {
-              setDisabled(!disabled)
-              actionButtonTwo()
-            }}
+            // onClick={() => {
+            //   setDisabled(!disabled)
+            //   actionButtonTwo()
+            // }}
+            onClick={onClickRedeem}
           >
             {disabled ? <LockIcon stroke="#4E5057" /> : <IconArrowDownBorder />}
             <p className="ml-5">
-              {disabled ? "Locked" : `${buttonLabelTwo || "Redeem"}`}
+              <div className="hidden">
+                {disabled ? "Locked" : `${buttonLabelTwo || "Withdraw"}`}
+              </div>
+              {stakedData &&
+              stakedData.comInterest === 0 &&
+              dayjs(stakedData.endDate).isBefore(dayjs())
+                ? "Withdraw"
+                : "Claim"}
             </p>
           </Button>
         </div>

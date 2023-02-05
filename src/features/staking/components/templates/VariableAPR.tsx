@@ -1,4 +1,4 @@
-import { IStakingAll } from "@feature/staking/interfaces/IStakingService"
+import { IStakingAll } from "@src/types/staking"
 import React from "react"
 import RedBanner from "../organisms/RedBanner"
 
@@ -13,7 +13,7 @@ const VariableAPR = ({ data }: IVariableAPR) => (
       className="mb-12"
     />
     {data.map((item) => (
-      <>{item.title}</>
+      <div key={item.id}>{item.title}</div>
     ))}
     {/* <StakingDetails
         title="Variable APR"

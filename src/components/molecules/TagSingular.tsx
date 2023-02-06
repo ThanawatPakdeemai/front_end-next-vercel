@@ -1,5 +1,6 @@
+import { ImageCustom } from "@components/atoms/image/Image"
 import { Chip, Typography } from "@mui/material"
-import Image, { ImageProps } from "next/image"
+import { ImageProps } from "next/image"
 import Link from "next/link"
 
 interface ITagSingular {
@@ -29,7 +30,7 @@ const TagSingular = ({
     {link ? (
       <Link href={link}>
         {icon && (
-          <Image
+          <ImageCustom
             src={icon}
             alt={title}
             width={width}
@@ -46,7 +47,7 @@ const TagSingular = ({
     ) : (
       <>
         {icon && (
-          <Image
+          <ImageCustom
             src={icon}
             alt={title}
             width={width}

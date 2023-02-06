@@ -1,4 +1,4 @@
-import ImageCustom from "@components/atoms/image/Image"
+import Image from "next/image"
 import RightMenuWallet from "@components/molecules/rightMenu/RightMenuWallet"
 import Gas from "@components/molecules/Gas"
 import INaka from "@components/icons/Naka"
@@ -19,6 +19,7 @@ import useProfileStore from "@stores/profileStore"
 // import getWeb3NoAccount from "@src/utils/web3"
 import { IMAGES } from "@constants/images"
 import TransactionTable from "@feature/transaction/components/molecules/TransactionTable"
+import { useWeb3Provider } from "@providers/index"
 
 const KeyFramesRotate = styled("div")({
   "@keyframes rotation": {
@@ -35,46 +36,39 @@ const KeyFramesRotate = styled("div")({
 export default function WalletPage() {
   const { profile } = useProfileStore()
   const [type, setType] = useState<string>("NAKA")
-  const [isConnected, setIsConnected] = useState<boolean>(false)
+  const { address, handleConnectWithMetamask, handleDisconnectWallet } =
+    useWeb3Provider()
+  // const [isConnected, setIsConnected] = useState<boolean>(false)
 
-  const [haveMetamask, sethaveMetamask] = useState(true)
+  // const [haveMetamask, sethaveMetamask] = useState(true)
 
-  const [client, setclient] = useState<any>({
-    isConnected: false
-  })
-  const checkConnection = async () => {
-    const { ethereum }: any = window
-    if (ethereum) {
-      sethaveMetamask(haveMetamask)
-      const accounts = await ethereum.request({ method: "eth_accounts" })
-      if (accounts.length > 0) {
-        setIsConnected(true)
-        setclient({
-          isConnected: true,
-          address: accounts[0]
-        })
-      } else {
-        setclient({
-          isConnected: false
-        })
-      }
-    } else {
-      sethaveMetamask(false)
-    }
-  }
+  // const [client, setclient] = useState<any>({
+  //   isConnected: false
+  // })
+  // const checkConnection = async () => {
+  //   const { ethereum }: any = window
+  //   if (ethereum) {
+  //     sethaveMetamask(haveMetamask)
+  //     const accounts = await ethereum.request({ method: "eth_accounts" })
+  //     if (accounts.length > 0) {
+  //       setIsConnected(true)
+  //       setclient({
+  //         isConnected: true,
+  //         address: accounts[0]
+  //       })
+  //     } else {
+  //       setclient({
+  //         isConnected: false
+  //       })
+  //     }
+  //   } else {
+  //     sethaveMetamask(false)
+  //   }
+  // }
 
   useEffect(() => {
-    checkConnection()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [client])
-
-  const handleConnectWallet = () => {
-    setIsConnected(true)
-  }
-
-  const handleOnDisconnectWallet = () => {
-    setIsConnected(false)
-  }
+    handleConnectWithMetamask
+  }, [handleConnectWithMetamask])
 
   return (
     <>
@@ -200,7 +194,7 @@ export default function WalletPage() {
                     />
                   </div>
                   <div className="">
-                    {isConnected ? (
+                    {address ? (
                       <div
                         className="wavy-line wavy-line-green"
                         data-text="'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''"
@@ -213,13 +207,13 @@ export default function WalletPage() {
                     )}
                   </div>
                   <div className="border-1 ml-1 rounded-[5px] bg-neutral-800 p-0.5">
-                    {isConnected ? (
+                    {address ? (
                       <IMetaMask
                         width="25"
                         height="25"
                       />
                     ) : (
-                      <ImageCustom
+                      <Image
                         src={IMAGES.MetaMaskds.src}
                         alt=""
                         width={35}
@@ -231,7 +225,7 @@ export default function WalletPage() {
               </div>
             </div>
             <div className="col-span-2 m-2 flex">
-              <ImageCustom
+              <Image
                 src={IMAGES.Frame.src}
                 alt=""
                 width={120}
@@ -245,14 +239,14 @@ export default function WalletPage() {
               </div>
             </div>
             <div className="absolute top-[75px] left-[-16px]">
-              <ImageCustom
+              <Image
                 src={IMAGES.RectangleRed.src}
                 alt=""
                 width={10}
                 height={10}
                 className="mb-2"
               />
-              <ImageCustom
+              <Image
                 src={IMAGES.RectangleBlack.src}
                 alt=""
                 width={10}
@@ -267,9 +261,9 @@ export default function WalletPage() {
         </div>
         <div className="col-span-4 h-full w-full items-center justify-center gap-1">
           <MetamaskWallet
-            isConnected={isConnected}
-            handleConnectWallet={handleConnectWallet}
-            handleOnDisconnectWallet={handleOnDisconnectWallet}
+            isConnected={!!address}
+            handleConnectWallet={handleConnectWithMetamask}
+            handleOnDisconnectWallet={handleDisconnectWallet}
             profile={profile.data}
           />
         </div>

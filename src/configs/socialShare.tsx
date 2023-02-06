@@ -74,3 +74,26 @@ export const SOCIAL_SHARE_SUMMARY: IMenuBase[] = [
     href: ""
   }
 ]
+
+export const SOCIAL_SHARE: IMenuBase[] = [
+  {
+    icon: <TelegramIcon fill="#F42728" />,
+    label: "telegram",
+    href: "https://t.me/NakamotoGames"
+  },
+  {
+    icon: <TwitterIcon fill="#F42728" />,
+    label: "twitter",
+    href: "https://twitter.com/NakamotoGames"
+  },
+  {
+    icon: <FacebookIcon fill="#F42728" />,
+    label: "facebook",
+    href: "https://www.facebook.com/play.nakamoto.games"
+  },
+  {
+    icon: <LinkIcon className="rotate-[-45deg] text-error-main" />,
+    label: "link",
+    href: "/"
+  }
+]

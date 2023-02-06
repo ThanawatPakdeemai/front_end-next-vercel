@@ -13,10 +13,10 @@ import dayjs from "dayjs"
 import ImageCustom from "@components/atoms/image/Image"
 import useGetProfileInfo from "@feature/profile/containers/hook/getProfileInfo"
 import Lavel from "@components/icons/Lavel"
-// import useGetBadge from "@feature/badge/containers/hook/useGetBadge"
 import EditProfileModal from "./EditProfileModal"
 import TotalCardContent from "./TotalCardContent"
 import SliderBadges from "./SliderBadges"
+import SideSocialShare from "../SideSocialShare"
 
 const ProfileContent = () => {
   const profile = useProfileStore((state) => state.profile)
@@ -54,17 +54,9 @@ const ProfileContent = () => {
   const platinumCount = getRankCount("platinum")
 
   return profileData && getProfileInfo && !isFetching ? (
-    <div>
+    <div className="w-[90%]">
+      <SideSocialShare />
       <div className="relative">
-        {/* <div className="h-[148px] rounded-xl bg-neutral-700">
-          <ProfileBanner />
-          <Image
-            src="/images/common/profile_banner.svg"
-            alt="123"
-            fill
-            objectFit="contain"
-          />
-        </div> */}
         <Box
           component="img"
           sx={{

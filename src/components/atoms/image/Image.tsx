@@ -1,7 +1,7 @@
 import { memo } from "react"
 import Image, { ImageProps } from "next/image"
 
-const ImageCustom = ({
+export const ImageCustom = ({
   src,
   width,
   height,

@@ -1,14 +1,13 @@
 import { Chip, Typography } from "@mui/material"
-import Image, { ImageProps } from "next/image"
 import Link from "next/link"
+import ImageCustom from "@components/atoms/image/Image"
+import { ImageProps } from "next/image"
 
-interface ITagSingular {
+interface ITagSingular extends ImageProps {
   title: string
   label: string
   link?: string
   icon?: string
-  width?: ImageProps["width"]
-  height?: ImageProps["height"]
   className?: string
 }
 
@@ -18,8 +17,7 @@ const TagSingular = ({
   title,
   className,
   icon,
-  width,
-  height
+  ...props
 }: ITagSingular) => (
   // mb-3
   <div className={`flex items-center gap-3 ${className}`}>
@@ -29,11 +27,11 @@ const TagSingular = ({
     {link ? (
       <Link href={link}>
         {icon && (
-          <Image
+          <ImageCustom
             src={icon}
             alt={title}
-            width={width}
-            height={height}
+            width={props.width}
+            height={props.height}
           />
         )}
         <Chip
@@ -46,11 +44,11 @@ const TagSingular = ({
     ) : (
       <>
         {icon && (
-          <Image
+          <ImageCustom
             src={icon}
             alt={title}
-            width={width}
-            height={height}
+            width={props.width}
+            height={props.height}
           />
         )}
         <Chip

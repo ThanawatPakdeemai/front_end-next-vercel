@@ -8,12 +8,11 @@ interface IProps {
   data: INotification
 }
 
-const NoticItem = ({ data }: IProps) => (
+const NotiItem = ({ data }: IProps) => (
   <TableRow className="flex h-14 pt-3 text-neutral-600">
     <TableCell
       sx={{
-        p: 0,
-        pl: "16px"
+        p: 0
       }}
       className="flex w-40 flex-initial font-neue-machina "
     >
@@ -26,7 +25,7 @@ const NoticItem = ({ data }: IProps) => (
     </TableCell>
     <TableCell
       sx={{
-        py: 0
+        p: 0
       }}
       className="w-32 flex-initial font-neue-machina text-[10px]"
     >
@@ -34,7 +33,7 @@ const NoticItem = ({ data }: IProps) => (
     </TableCell>
     <TableCell
       sx={{
-        py: 0
+        p: 0
       }}
       className="w-32 flex-initial font-neue-machina text-[10px] uppercase text-neutral-300"
     >
@@ -42,7 +41,8 @@ const NoticItem = ({ data }: IProps) => (
     </TableCell>
     <TableCell
       sx={{
-        py: 0
+        p: 0,
+        pr: 1
       }}
       className="w-44 flex-initial font-neue-machina text-[10px] uppercase"
     >
@@ -61,4 +61,4 @@ const NoticItem = ({ data }: IProps) => (
     </TableCell>
   </TableRow>
 )
-export default memo(NoticItem)
+export default memo(NotiItem)

@@ -1,6 +1,6 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import NotificationList from "@feature/notification/components/templates/notificationList/noticficationList"
+import NotificationList from "@feature/notification/components/templates/notificationList/notificationList"
 import GamePageLayout from "@components/template/GamePageLayout"
 
 export default function PartnerGames() {

@@ -10,7 +10,7 @@ import { IProfile } from "@src/types/profile"
 import { RandomReveal } from "react-random-reveal"
 import { CHAR_SET_JP } from "@constants/characterSet"
 import dayjs from "dayjs"
-import Image from "next/image"
+import ImageCustom from "@components/atoms/image/Image"
 import useGetProfileInfo from "@feature/profile/containers/hook/getProfileInfo"
 import Lavel from "@components/icons/Lavel"
 // import useGetBadge from "@feature/badge/containers/hook/useGetBadge"
@@ -119,7 +119,7 @@ const ProfileContent = () => {
               </div>
             </div>
 
-            <Image
+            <ImageCustom
               src={getProfileInfo.data.avatar}
               fill
               alt="profile-avatar"

@@ -2,7 +2,7 @@ import * as React from "react"
 import { useState } from "react"
 import { Popover } from "@mui/material"
 // import DropdownIcon from "@components/icons/DropdownIcon"
-import Image from "next/image"
+import ImageCustom from "@components/atoms/image/Image"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
@@ -64,7 +64,7 @@ const DropdownListItem = ({
                       <>
                         <div className="flex items-start">
                           {defaultItem?.image_icon && (
-                            <Image
+                            <ImageCustom
                               src={
                                 defaultItem?.image_icon && gameData
                                   ? gameData?.item[0].image_icon
@@ -119,7 +119,7 @@ const DropdownListItem = ({
                           </div>
                         ),
                         icon: (
-                          <Image
+                          <ImageCustom
                             src={ele.image_icon ?? ""}
                             alt={ele.name}
                             width="20"

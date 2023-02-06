@@ -18,7 +18,7 @@ function IBattery({
       <path
         d="M20.4 14.5L20.4 17.4L2.6 17.4L2.6 6.6L20.4 6.6L20.4 9.5L20.4 10.1L21 10.1L22.4 10.1L22.4 13.9L21 13.9L20.4 13.9L20.4 14.5Z"
         stroke={color || "#F42728"}
-        stroke-width="1.2"
+        strokeWidth="1.2"
       />
       <rect
         x="15"

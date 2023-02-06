@@ -2,7 +2,7 @@ import * as React from "react"
 import { useEffect, useState } from "react"
 import { Collapse } from "@mui/material"
 import DropdownIcon from "@components/icons/DropdownIcon"
-import Image from "next/image"
+import ImageCustom from "@components/atoms/image/Image"
 import SelectDropdownList from "@components/atoms/selectDropdown/SelectDropdown"
 
 interface IProp {
@@ -36,7 +36,7 @@ const DropdownList = ({ title, list, className }: IProp) => {
             <div className="flex ">
               {title === "List Items" ? (
                 <>
-                  <Image
+                  <ImageCustom
                     src={data.image_icon}
                     alt=""
                     width="20"
@@ -47,7 +47,7 @@ const DropdownList = ({ title, list, className }: IProp) => {
                 </>
               ) : (
                 <>
-                  <Image
+                  <ImageCustom
                     src="/images/logo/Logo-Master1.png"
                     alt=""
                     width="30"

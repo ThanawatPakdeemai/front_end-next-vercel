@@ -122,7 +122,7 @@ export default function CardButItem() {
         } rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 `}
       >
         <div className="p-4 ">
-          {gameItemList && (
+          {gameItemList && router.pathname !== "/[GameHome]/roomlist/[id]" && (
             <>
               <DropdownListItem
                 isCheck

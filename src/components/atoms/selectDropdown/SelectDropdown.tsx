@@ -7,13 +7,16 @@ import {
   IGameCategory,
   IGameItem
 } from "@feature/dropdown/interfaces/IDropdownService"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+import { IMenuBase } from "@interfaces/IMenu"
 
 interface IProp {
   className?: string
-  details: IGameCategory[] | IGameItem[] | IDevice[]
+  details: IGameCategory[] | IGameItem[] | IDevice[] | IMenuBase[] | any
   setOnTitle?: (_value: IGameCategory | IGameItem | IDevice) => void
   setExpanded?: (_value: boolean) => void
   title?: string
+  onChange?: (_onchange: IGameItemListData) => void
 }
 
 const SelectDropdown = ({

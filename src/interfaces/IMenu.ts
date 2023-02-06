@@ -1,5 +1,8 @@
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { IGameItem } from "@feature/gameItem/interfaces/IGameItemService"
+import {
+  IGameItem,
+  IGameItemListData
+} from "@feature/gameItem/interfaces/IGameItemService"
 import React from "react"
 
 interface ILink {
@@ -9,11 +12,12 @@ interface IActiveMunu {
   active?: boolean
 }
 export interface IMenuBaseItem extends IActiveMunu {
-  data?: IGameItem | IGame
+  data?: IGameItem | IGame | IGameItemListData
 }
 export interface IMenuBase extends ILink, IMenuBaseItem {
   label: string
   icon: string | React.ReactElement
+  href: string
 }
 
 export interface IDropdown {

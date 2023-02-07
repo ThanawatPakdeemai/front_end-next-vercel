@@ -40,7 +40,7 @@ export const GAME_BLOG_BANNER = [
     link: "/",
     icon: <MaskBlogIcon className="z-10 mt-8 flex" />,
     table: true,
-    type: "MaskBlogIcon"
+    type: "blinkIcon"
   }
 ]
 

@@ -23,5 +23,6 @@ export const MESSAGES = {
   "you-burn-item": "You burn Item success",
   "you-played": "you played game this room!",
   "you-not-enough": "Your item not enough for play this room",
-  "create-room-success": "Create room success"
+  "create-room-success": "Create room success",
+  "please-ready": "Please Press Ready!"
 }

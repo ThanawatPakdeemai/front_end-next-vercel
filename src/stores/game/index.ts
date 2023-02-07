@@ -17,7 +17,7 @@ export interface IUseGameItemStore {
   clearGameID: () => void
   getGame: () => void
   itemSelected: IGameItemListData | null
-  onSetGameItemSelectd: (_item: IGameItemListData) => void
+  onSetGameItemSelectd: (_item: IGameItemListData | null) => void
   qtyItemOfRoom: number
   setQtyItemOfRoom: (_qty: number) => void // TODO YUI when create room set qty item
 }

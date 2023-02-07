@@ -1,18 +1,15 @@
-/* eslint-disable no-nested-ternary */
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import SyncAltIcon from "@mui/icons-material/SyncAlt"
 import { Card, CardContent, SxProps, Theme } from "@mui/material"
 import INaka from "@components/icons/Naka"
 import IBusd from "@components/icons/Busd"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
-// import useWalletModal from "@hooks/useWalletModal"
-// import useAuth from "@hooks/useAuth"
 import useProfileStore from "@stores/profileStore"
 import Metamask from "@components/atoms/metamask"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import { useTranslation } from "react-i18next"
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet"
-// import useContractAction from "@hooks/useContract"
+import { useWeb3Provider } from "@providers/index"
 
 interface IProps {
   token?: string | undefined
@@ -37,8 +34,8 @@ const iconmotion = {
 
 const Balance = ({ className, sx }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
+  const { address, handleConnectWithMetamask, hasMetamask } = useWeb3Provider()
 
-  const { onSetProfileAddress, onSetWallet } = useProfileStore()
   const { t } = useTranslation()
   // const { weiToNaka, getFeeGas, getEventLog, calFloat } = TransactionHelper()
   // const {
@@ -59,65 +56,60 @@ const Balance = ({ className, sx }: IProps) => {
   const Naka = 294345
   const Busd = 294345
 
-  const [haveMetamask, sethaveMetamask] = useState(true)
+  // const [haveMetamask, sethaveMetamask] = useState(true)
 
-  const [client, setclient] = useState<any>({
-    isConnected: false
-  })
-  const checkConnection = async () => {
-    const { ethereum }: any = window
-    if (ethereum) {
-      sethaveMetamask(true)
-      const accounts = await ethereum.request({ method: "eth_accounts" })
-      if (accounts.length > 0) {
-        setclient({
-          isConnected: true,
-          address: accounts[0]
-        })
-      } else {
-        setclient({
-          isConnected: false
-        })
-      }
-    } else {
-      sethaveMetamask(false)
-    }
-  }
+  // const checkConnection = async () => {
+  //   const { ethereum }: any = window
+  //   if (ethereum) {
+  //     sethaveMetamask(true)
+  //     const accounts = await ethereum.request({ method: "eth_accounts" })
+  //     if (accounts.length > 0) {
+  //       setclient({
+  //         isConnected: true,
+  //         address: accounts[0]
+  //       })
+  //     } else {
+  //       setclient({
+  //         isConnected: false
+  //       })
+  //     }
+  //   } else {
+  //     sethaveMetamask(false)
+  //   }
+  // }
 
-  const connectWeb3 = async () => {
-    try {
-      const { ethereum }: any = window
+  // const connectWeb3 = async () => {
+  //   try {
+  //     const { ethereum }: any = window
 
-      if (!ethereum) {
-        // eslint-disable-next-line no-console
-        console.log("Metamask not detected")
-        return
-      }
+  //     if (!ethereum) {
+  //       // eslint-disable-next-line no-console
+  //       console.log("Metamask not detected")
+  //       return
+  //     }
 
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts"
-      })
-      onSetWallet()
-      onSetProfileAddress(accounts)
-      setclient({
-        isConnected: true,
-        address: accounts[0]
-      })
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log("Error connecting to metamask", error)
-    }
-  }
+  //     const accounts = await ethereum.request({
+  //       method: "eth_requestAccounts"
+  //     })
+  //     onSetWallet()
+  //     onSetProfileAddress(accounts)
+  //     setclient({
+  //       isConnected: true,
+  //       address: accounts[0]
+  //     })
+  //   } catch (error) {
+  //     // eslint-disable-next-line no-console
+  //     console.log("Error connecting to metamask", error)
+  //   }
+  // }
 
   useEffect(() => {
-    checkConnection()
-  }, [client])
+    handleConnectWithMetamask
+  }, [handleConnectWithMetamask])
 
   return (
     <div>
-      {profile && !haveMetamask ? (
-        <Metamask />
-      ) : client.isConnected ? (
+      {address && profile ? (
         <CardContent
           className={`my-2 min-w-[200px] items-center justify-center p-0 ${className}`}
         >
@@ -171,15 +163,19 @@ const Balance = ({ className, sx }: IProps) => {
         </CardContent>
       ) : (
         <div className="my-4">
-          <ButtonLink
-            onClick={connectWeb3}
-            text={t("Connect Wallet")}
-            icon={<AccountBalanceWalletIcon />}
-            size="medium"
-            color="secondary"
-            variant="contained"
-            className="w-full"
-          />
+          {hasMetamask ? (
+            <ButtonLink
+              onClick={handleConnectWithMetamask}
+              text={t("Connect Wallet")}
+              icon={<AccountBalanceWalletIcon />}
+              size="medium"
+              color="secondary"
+              variant="contained"
+              className="w-full"
+            />
+          ) : (
+            <Metamask />
+          )}
         </div>
       )}
     </div>

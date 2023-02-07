@@ -9,7 +9,8 @@ const useGamesByGameId = ({ _playerId, _gameId }: IGetGameItemsByGameId) => {
     isFetching,
     isPreviousData,
     isError,
-    error
+    error,
+    refetch
   } = useQuery({
     queryKey: ["getGameItemsByGameId", _playerId, _gameId],
     queryFn: () => getGameItemsByGameId({ _playerId, _gameId }),
@@ -22,7 +23,15 @@ const useGamesByGameId = ({ _playerId, _gameId }: IGetGameItemsByGameId) => {
       _gameId !== undefined
   })
 
-  return { gameItemList, isLoading, isFetching, isPreviousData, isError, error }
+  return {
+    gameItemList,
+    isLoading,
+    isFetching,
+    isPreviousData,
+    isError,
+    error,
+    refetch
+  }
 }
 
 export default useGamesByGameId

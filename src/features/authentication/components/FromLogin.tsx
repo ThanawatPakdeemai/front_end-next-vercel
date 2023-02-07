@@ -4,7 +4,8 @@ import {
   ButtonGroup,
   InputAdornment,
   TextField,
-  Typography
+  Typography,
+  CircularProgress
 } from "@mui/material"
 import LoginIcon from "@mui/icons-material/Login"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
@@ -29,7 +30,7 @@ const FormLogin = () => {
       _password: ""
     }
   })
-  const { mutateSignIn } = useSignIn()
+  const { mutateSignIn, isLoading } = useSignIn()
 
   const onSubmit = (data: ISignIn) => {
     mutateSignIn({ _email: data._email, _password: data._password })
@@ -131,10 +132,23 @@ const FormLogin = () => {
             icon={<LoginIcon />}
             size="medium"
             color="secondary"
+            disabled={isLoading}
             className="h-[40px] !min-w-[200px]  text-sm"
             href=""
             onClick={() => {}}
-            text="Login"
+            text={
+              <>
+                {isLoading ? (
+                  <CircularProgress
+                    color="primary"
+                    className="ml-4"
+                    size={20}
+                  />
+                ) : (
+                  "Login"
+                )}
+              </>
+            }
             type="submit"
             variant="contained"
           />

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { motion } from "framer-motion"
-import Image from "next/image"
+import ImageCustom from "@components/atoms/image/Image"
 import { IMAGES } from "@constants/images"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import IBookReading from "@components/icons/BookReading"
@@ -67,7 +67,7 @@ const CardLink = ({
           }}
           style={styleSecond || { backgroundColor: `${bgMain}` }}
         >
-          <Image
+          <ImageCustom
             src={srcMain}
             alt={altMain}
             width={123}
@@ -79,7 +79,7 @@ const CardLink = ({
             loading="eager"
             priority
           />
-          <Image
+          <ImageCustom
             src={srcSecond}
             alt={altSecond}
             width={123}

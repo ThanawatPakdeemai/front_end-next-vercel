@@ -5,7 +5,7 @@ import IconArrowLeft from "@components/icons/arrowLeftIcon"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import useGetBadge from "@feature/badge/containers/hook/useGetBadge"
 import { Divider } from "@mui/material"
-import Image from "next/image"
+import ImageCustom from "@components/atoms/image/Image"
 import React, { useMemo, useRef, useState } from "react"
 import Slider, { Settings } from "react-slick"
 import { v4 as uuid } from "uuid"
@@ -22,6 +22,7 @@ const SliderBadges = ({ _playerId }: IProp) => {
   const [openBadges, setOpenBadges] = useState<boolean>(false)
   const { getBadgeData } = useGetBadge(_playerId)
   // const { getBadgeData } = useGetBadge("61d51db5e64c9751321a8ecc")
+  const [isLoading] = useState<boolean>(false)
 
   const handleOnExpandClick = () => {
     setOpenBadges(!openBadges)
@@ -124,47 +125,47 @@ const SliderBadges = ({ _playerId }: IProp) => {
 
       {openBadges ? null : (
         <>
-          <div className="mt-[30px] flex h-[216px]  items-center rounded-lg border border-neutral-700 bg-neutral-800">
-            <Slider
-              ref={sliderRef}
-              {...settings}
-              className="h-[200px] !w-[1030px]"
-            >
-              {slideArray
-                ? slideArray.map((item) => {
-                    if ("name" in item) {
-                      return (
-                        <motion.div
-                          whileHover={{ rotate: 15 }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 100,
-                            damping: 4
-                          }}
-                          key={uuid()}
-                          className="m-auto !grid h-[210px] content-center justify-center"
-                        >
-                          <TooltipsCustom
-                            placement="top"
-                            title={item.name}
-                            color="warning"
-                          >
-                            <Image
-                              className="p-2"
-                              key={uuid()}
-                              src={item.image}
-                              alt={item.name}
-                              width={150}
-                              height={128}
-                            />
-                          </TooltipsCustom>
-                        </motion.div>
-                      )
-                    }
-                    return item
-                  })
-                : null}
-            </Slider>
+          <div className="mt-[30px] flex h-[216px] items-center rounded-lg border border-neutral-700 bg-neutral-800">
+            {isLoading ? (
+              "loading"
+            ) : (
+              <Slider
+                ref={sliderRef}
+                {...settings}
+                className="!w-full"
+              >
+                {getBadgeData &&
+                  getBadgeData.badges.map((badge) => (
+                    <motion.div
+                      whileHover={{ rotate: 15 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 4
+                        // ease: "easeIn"
+                      }}
+                      key={uuid()}
+                      className="h-[170px]"
+                    >
+                      <TooltipsCustom
+                        placement="top"
+                        title={badge.name}
+                        color="warning"
+                      >
+                        <ImageCustom
+                          src={badge.image}
+                          alt={badge.name}
+                          fill
+                        />
+                      </TooltipsCustom>
+                    </motion.div>
+                  ))}
+                <BadgesPlacrhoder />
+                <BadgesPlacrhoder />
+                <BadgesPlacrhoder />
+                <BadgesPlacrhoder />
+              </Slider>
+            )}
           </div>
           <div className="arrow-slick-container bg-black mt-8 grid h-10 w-[100px] grid-cols-2 divide-x divide-neutral-700 rounded-md border border-neutral-700 text-white-primary">
             <button

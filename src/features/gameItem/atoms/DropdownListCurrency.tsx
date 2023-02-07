@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState } from "react"
 import { Popover } from "@mui/material"
-import Image from "next/image"
+import ImageCustom from "@components/atoms/image/Image"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
@@ -88,7 +88,7 @@ const DropdownListCurrency = ({ list, className, onChangeSelect }: IProp) => {
                         ),
                         icon:
                           typeof ele.image_icon === "string" ? (
-                            <Image
+                            <ImageCustom
                               src={ele.image_icon ?? ""}
                               alt={ele.name}
                               width="20"

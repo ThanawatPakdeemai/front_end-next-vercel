@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import Image from "next/image"
+import ImageCustom from "@components/atoms/image/Image"
 import useGameStore from "@stores/game"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { Chip, Typography } from "@mui/material"
@@ -42,7 +42,7 @@ const StoryLobby = () => {
       <div className="mx-auto w-[578px]">
         <div className="mb-4 flex gap-4">
           <div className="h-[230px] w-full justify-center overflow-hidden rounded-3xl border-[1px] border-neutral-700 border-opacity-80 sm:w-[230px] md:justify-start">
-            <Image
+            <ImageCustom
               src={
                 gameData
                   ? gameData.image_category_list

@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react"
 import { IGame } from "@src/types/games"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import { getFavoriteGameByUser } from "@feature/favourite/containers/services/favourite.service"
 import { v4 as uuid } from "uuid"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
@@ -11,6 +10,7 @@ import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import { P2EHeaderMenu } from "@constants/gameSlide"
 import GameCard from "@feature/game/containers/components/molecules/GameCard"
+import useFilterStore from "@stores/blogFilter"
 
 const FavouriteGamesPage = () => {
   const router = useRouter()
@@ -20,13 +20,14 @@ const FavouriteGamesPage = () => {
   // const { onSetGameData } = useGameStore()
   const { errorToast } = useToast()
   const profile = useProfileStore((state) => state.profile.data)
-  const [stateProfile, setStateProfile] = useState<IProfile | null>()
   const [pageSize, setPageSize] = useState<number>(25)
   const [currentPage, setCurrentPage] = useState<number>(1)
-  const [category_id] = useState<string>("")
-  const [item_id] = useState<string>("")
-  const [device_support] = useState<string>("")
-  const [search] = useState<string>("")
+  const {
+    category: categoryDropdown,
+    gameItem: gameItemDropdown,
+    device: deviceDropdown,
+    search: searchDropdown
+  } = useFilterStore()
   const [gameFavourite, setGameFavourite] = useState<IGame[]>()
   const [loading, setLoading] = useState<boolean>(true)
   const [page, setPage] = useState<number>(1)
@@ -35,17 +36,18 @@ const FavouriteGamesPage = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getData = async () => {
-    if (stateProfile) {
+    if (profile) {
       await getFavoriteGameByUser(
-        stateProfile.id,
+        profile.id,
         pageSize,
         currentPage,
-        category_id,
-        item_id,
-        device_support,
-        search
+        categoryDropdown.toLocaleLowerCase(),
+        deviceDropdown.toLocaleLowerCase(),
+        gameItemDropdown.toLocaleLowerCase(),
+        searchDropdown.toLocaleLowerCase()
       ).then((res) => {
         const { data, info } = res
+
         if (data && info) {
           setGameFavourite(data)
           setTotalCount(info.totalCount)
@@ -58,17 +60,13 @@ const FavouriteGamesPage = () => {
   }
 
   const onHandleClick = async (_gameUrl: string, _gameData: IGame) => {
-    if (stateProfile) {
+    if (profile) {
       // onSetGameData(_gameData)
       await router.push(`/${_gameUrl}`)
     } else {
       errorToast(MESSAGES.please_login)
     }
   }
-
-  useEffect(() => {
-    setStateProfile(profile)
-  }, [profile])
 
   // useEffect(() => {
   // getData()
@@ -111,19 +109,24 @@ const FavouriteGamesPage = () => {
   // }, [stateProfile])
 
   useEffect(() => {
+    getData()
     let load = true
     if (load) {
-      getData()
       setLoading(true)
     }
     return () => {
       load = false
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, search, device_support, item_id, category_id])
+  }, [
+    currentPage,
+    searchDropdown,
+    categoryDropdown,
+    gameItemDropdown,
+    deviceDropdown
+  ])
 
   useEffect(() => {
-    // totalCount
     if (!fetchRef.current && gameFavourite) {
       fetchRef.current = true
       setTotalCount(gameFavourite.length)

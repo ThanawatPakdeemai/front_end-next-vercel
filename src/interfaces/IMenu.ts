@@ -1,5 +1,9 @@
-// import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
-import React from "react"
+import { IGame } from "@feature/game/interfaces/IGameService"
+import {
+  IGameItem,
+  IGameItemListData
+} from "@feature/gameItem/interfaces/IGameItemService"
+import React, { ReactNode } from "react"
 
 interface ILink {
   href: string
@@ -8,14 +12,15 @@ interface IActiveMunu {
   active?: boolean
 }
 export interface IMenuBaseItem extends IActiveMunu {
-  data?: any
+  data?: IGameItem | IGame | IGameItemListData
 }
 export interface IMenuBase extends ILink, IMenuBaseItem {
   label: string | React.ReactElement
-  icon: string | React.ReactElement
+  icon: string | React.ReactElement | ReactNode
 }
 
 export interface IDropdown {
+  // title: ReactI18NextChild | Iterable<ReactI18NextChild>
   icon: React.ReactNode
   title: string
   className: string

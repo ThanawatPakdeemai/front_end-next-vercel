@@ -94,11 +94,7 @@ const MultiRoomList = () => {
       const player_me = _data.current_player.find(
         (ele) => ele.player_id === profile.id
       )
-      if (new Date() > new Date(_data.end_time)) {
-        errorToast(MESSAGES["room-timeout"])
-      } else if (data && (data.play_to_earn || data.tournament)) {
-        router.push(`${router.asPath}/${_data.id}`)
-      } else if (
+      if (
         _data.amount_current_player < _data.max_players &&
         new Date() < new Date(_data.end_time) &&
         itemSelected &&
@@ -109,8 +105,12 @@ const MultiRoomList = () => {
         } else {
           router.push(`${router.asPath}/${_data._id}`)
         }
+      } else if (data && (data.play_to_earn || data.tournament)) {
+        router.push(`${router.asPath}/${_data.id}`)
+      } else if (new Date() > new Date(_data.end_time)) {
+        errorToast(MESSAGES["room-timeout"])
       } else if (itemSelected && itemSelected?.qty < qtyItemOfRoom) {
-        errorToast(MESSAGES["pleate-item"])
+        errorToast(MESSAGES["you-don't-have-item"])
       } else if (player_me && player_me.status === "played") {
         errorToast(MESSAGES["you-played"])
       } else {

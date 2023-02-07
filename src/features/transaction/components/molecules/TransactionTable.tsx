@@ -76,7 +76,7 @@ export default function TransactionTable() {
 
   useEffect(() => {
     refetch()
-  }, [profile, refetch, valueCheckbox])
+  }, [refetch, valueCheckbox])
 
   const refreshData = useCallback(
     (_valueCheckbox: IPropCheckbox[]) => {

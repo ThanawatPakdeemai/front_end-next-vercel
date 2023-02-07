@@ -17,7 +17,7 @@ export interface IStakingDetails {
 const StakingDetails = ({ dataStaking, className = "" }: IStakingDetails) => {
   const [stakedData, setStakedData] = useState<IMyLockedResponseData>()
   const profile = useProfileStore((state) => state.profile.data)
-  const { getMyLocked } = useContractStaking(
+  const { getMyLocked, getBasicStakingData } = useContractStaking(
     dataStaking.contract_address,
     dataStaking.type
   )
@@ -28,20 +28,23 @@ const StakingDetails = ({ dataStaking, className = "" }: IStakingDetails) => {
    * @returns
    */
 
-  const getStakingLocked = useCallback(async () => {
-    if (profile?.address === undefined) return
+  const fetchStakingFromSmartContract = useCallback(async () => {
+    // Basic Information
+    const resultBasic = await getBasicStakingData(dataStaking.contract_address)
+    if (!profile?.address) {
+      setStakedData(resultBasic || {})
+      return
+    }
     const result = await getMyLocked(
       dataStaking.contract_address,
       profile.address
     )
-    if (result) {
-      setStakedData(result)
-    }
+    setStakedData(result || {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile])
+  }, [])
 
   useEffect(() => {
-    getStakingLocked()
+    fetchStakingFromSmartContract()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -50,7 +53,7 @@ const StakingDetails = ({ dataStaking, className = "" }: IStakingDetails) => {
       <div className="grid grid-flow-row-dense grid-cols-4 gap-3 rounded-[13px] bg-neutral-800 p-3 uppercase">
         <div className="row-span-2 rounded-lg shadow-xl">
           <PeriodLabel
-            days={dataStaking.period}
+            days={stakedData?.period || 0}
             label={dataStaking.type}
             className="h-full"
           />
@@ -87,8 +90,7 @@ const StakingDetails = ({ dataStaking, className = "" }: IStakingDetails) => {
 
       <ActionBar
         label="Redemption date"
-        date="20 SEB 2023"
-        time="08:00 pm"
+        redeemDatetime={stakedData?.endDate || "00:00:00"}
         textColor="purple"
         className="flex w-full justify-end"
         stakedData={stakedData}

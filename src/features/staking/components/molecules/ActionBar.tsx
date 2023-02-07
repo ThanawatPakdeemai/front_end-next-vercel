@@ -8,8 +8,7 @@ import dayjs from "dayjs"
 
 export interface IStakingDate {
   label: string
-  date?: string
-  time?: string
+  redeemDatetime: string
   textColor: "purple" | "red"
   buttonLabelOne?: string
   buttonLabelTwo?: string
@@ -21,8 +20,7 @@ export interface IStakingDate {
 
 const ActionBar = ({
   label,
-  date,
-  time,
+  redeemDatetime,
   textColor = "red",
   buttonLabelOne,
   buttonLabelTwo,
@@ -49,10 +47,8 @@ const ActionBar = ({
           }`}
         >
           {label}
-          {(date || time) && (
-            <span className="ml-3 text-neutral-300">
-              {date} {time}
-            </span>
+          {redeemDatetime && (
+            <span className="ml-3 text-neutral-300">{redeemDatetime}</span>
           )}
         </p>
 

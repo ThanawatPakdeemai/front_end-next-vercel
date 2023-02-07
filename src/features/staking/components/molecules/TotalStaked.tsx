@@ -1,4 +1,4 @@
-import ProgressBar from "@ramonak/react-progress-bar"
+import { Box, LinearProgress, Typography } from "@mui/material"
 import { numberWithCommas } from "@utils/helpers"
 import React from "react"
 
@@ -28,18 +28,47 @@ const TotalStaked = ({
 
   return (
     <div
-      className={`flex h-full items-center rounded-[10px] bg-neutral-900 ${className}`}
+      className={`flex h-full items-center justify-between rounded-[10px] bg-neutral-900 ${className} px-2`}
     >
-      <div className="w-[30%]">
-        <ProgressBar
-          className="progress-wrapper"
-          barContainerClassName="progress-container"
-          completedClassName="progress-barCompleted"
-          labelClassName="progress-label"
-          completed={`${totalNAKAStaked().toString()}%`}
+      <div className="flex h-[50px] w-[200px] flex-col justify-center py-2">
+        <LinearProgress
+          variant="determinate"
+          className={`progress-bar-energy h-full w-[${Number(
+            totalNAKAStaked()
+          )}] rotate-180`}
+          sx={[
+            {
+              "&.progress-bar-energy": {
+                opacity: 0.5,
+                background: "linear-gradient(90deg, #101013 52%, #101013 52%)",
+                backgroundSize: "1%!important"
+              },
+              ".MuiLinearProgress-bar1Determinate": {
+                opacity: 1,
+                backgroundColor: "#F42728",
+                background:
+                  "linear-gradient(90deg, rgba(1,1,1,1) 52%, #F42728 52%);",
+                backgroundRepeat: "repeat-x",
+                backgroundSize: "1%"
+              }
+            }
+          ]}
+          value={Number(totalNAKAStaked())}
         />
+        <Box
+          className="absolute"
+          sx={{
+            transform: `translateX(calc(${Number(totalNAKAStaked())}%))`
+          }}
+        >
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            className="text-white"
+          >{`${Number(totalNAKAStaked())}%`}</Typography>
+        </Box>
       </div>
-      <div className="pl-5 font-neue-machina-semi text-[14px]">
+      <div className="flex w-[calc(100%-200px)] items-center justify-end whitespace-nowrap pl-5 font-neue-machina-semi text-[14px]">
         <span className="text-neutral-600">total naka staked : </span>
         <span className="text-neutral-300">
           {numberWithCommas(totalPoolStake)}

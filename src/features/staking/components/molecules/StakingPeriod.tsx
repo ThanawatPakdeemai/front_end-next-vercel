@@ -1,4 +1,5 @@
 import IconArrowRight from "@components/icons/arrowRightIcon"
+import { numberWithCommas } from "@src/helpers/addComma"
 import { TStaking } from "@src/types/staking"
 import React from "react"
 
@@ -31,7 +32,9 @@ const StakingPeriod = ({
     </p>
     <p className="text-neutral-600">
       {type === "fixed" ? "Fixed APR." : "Est APR."}
-      <span className="ml-3 text-[15px] text-varidian-default">{est}%</span>
+      <span className="ml-3 text-[15px] text-varidian-default">
+        {est ? numberWithCommas(est) : est}%
+      </span>
     </p>
   </div>
 )

@@ -50,7 +50,6 @@ const GameRoomList = () => {
     _email: profile ? profile.email : "",
     _itemId: item ?? ""
   })
-
   const handleJoinRoom = (_dataRoom: IGameRoomDetail) => {
     const data_player_me = _dataRoom.current_player.find((ele) => {
       if (profile) {
@@ -59,20 +58,17 @@ const GameRoomList = () => {
       return undefined
     })
     const _roomId = _dataRoom._id
-
     if (profile) {
       if (
         itemSelected &&
         itemSelected.qty > 0 &&
         balanceofItem &&
-        balanceofItem?.data > 0 &&
-        data_player_me &&
-        data_player_me.status !== "played"
+        balanceofItem?.data > 0
       ) {
         router.push(`${router.asPath}/${_roomId}`)
       } else if (data && (data.play_to_earn || data.tournament)) {
         router.push(`${router.asPath}/${_roomId}`)
-      } else if (data_player_me && data_player_me.status === "played" && data) {
+      } else if (data && data_player_me && data_player_me.status === "played") {
         router.push(`/${data.path}/summary/${_roomId}`)
       } else if (
         (balanceofItem && balanceofItem?.data < 1) ||

@@ -53,7 +53,11 @@ const ButtonLink = ({
           </div>
         }
       >
-        <span className={`animation-button-text ${textColor}`}>{text}</span>
+        <span
+          className={`animation-button-text flex items-center ${textColor}`}
+        >
+          {text}
+        </span>
       </Button>
     ),
     [

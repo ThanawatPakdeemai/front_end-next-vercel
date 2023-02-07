@@ -16,7 +16,8 @@ import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 import { useToast } from "@feature/toast/containers"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { useTranslation } from "next-i18next"
-// import { registTournament } from "@feature/tournament/containers/services/tournament.service"
+// import Helper from "@utils/helper"
+import useBuyGameItems from "../containers/hooks/useBuyGameItems"
 
 const iconmotion = {
   hover: {
@@ -58,12 +59,30 @@ const FromBuyItem = () => {
       currency: {}
     }
   })
+
+  const { mutateBuyItems } = useBuyGameItems()
   const onSubmit = (_data) => {
     // console.log(_data)
+    mutateBuyItems({
+      _player_id: _data.player_id,
+      _item_id: _data.item_id,
+      _qty: Number(_data.qty)
+    })
+    // .then((res) => {
+    // console.log(res)
+    // })
   }
 
   const onError = (_data) => {
     errorToast("error")
+  }
+
+  const onQtyUp = () => {
+    setValue("qty", watch("qty") >= 99 ? 99 : watch("qty") + 1)
+  }
+
+  const onQtyDown = () => {
+    setValue("qty", watch("qty") < 1 ? 1 : watch("qty") - 1)
   }
   return (
     <>
@@ -124,7 +143,7 @@ const FromBuyItem = () => {
             <Controller
               name="currency_id"
               control={control}
-              rules={{ required: true }}
+              // rules={{ required: true }}
               render={({ field }) => (
                 <DropdownListCurrency
                   {...field}
@@ -148,9 +167,7 @@ const FromBuyItem = () => {
           <div className="my-4  grid grid-cols-6  content-center gap-4">
             <div className="btn">
               <ButtonIcon
-                onClick={() =>
-                  setValue("qty", watch("qty") <= 1 ? 1 : watch("qty") - 1)
-                }
+                onClick={onQtyDown}
                 variants={iconmotion}
                 whileHover="hover"
                 transition={{ type: "spring", stiffness: 400, damping: 4 }}
@@ -166,6 +183,7 @@ const FromBuyItem = () => {
                   <input
                     {...register("qty", { required: true })}
                     onChange={(event: any) => {
+                      event.preventDefault()
                       const qty = Number(event.target.value)
                       if (qty <= 1) {
                         setValue("qty", 1)
@@ -175,7 +193,7 @@ const FromBuyItem = () => {
                         setValue("qty", qty)
                       }
                     }}
-                    className="h-full w-[220px] bg-neutral-700 pt-2 text-center text-neutral-500 focus-visible:outline-0"
+                    className="h-full w-[220px] bg-neutral-700 pt-2 text-center text-neutral-500 focus-visible:bg-neutral-700 focus-visible:outline-0"
                     value={watch("qty")}
                   />
                 </div>
@@ -187,9 +205,7 @@ const FromBuyItem = () => {
             </div>
             <div className="btn">
               <ButtonIcon
-                onClick={() =>
-                  setValue("qty", watch("qty") >= 99 ? 99 : watch("qty") + 1)
-                }
+                onClick={onQtyUp}
                 variants={iconmotion}
                 whileHover="hover"
                 transition={{ type: "spring", stiffness: 400, damping: 4 }}
@@ -205,7 +221,9 @@ const FromBuyItem = () => {
               <p>TOTAL PRICE:</p>
             </div>
             <div className="flex items-baseline text-secondary-main">
-              <p className="pr-2">0.00</p>
+              <p className="pr-2">
+                {/* {Helper.calculateItemPerPrice(watch("item"))} */}
+              </p>
               <Image
                 src="/images/logo/Logo-Master2.png"
                 alt="Master2"

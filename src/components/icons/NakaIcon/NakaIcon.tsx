@@ -1,6 +1,6 @@
 import React, { memo } from "react"
 
-const NakaIcon = (fill = "red") => (
+const NakaIcon = (fill = "#F42728") => (
   <svg
     width="128"
     height="68"

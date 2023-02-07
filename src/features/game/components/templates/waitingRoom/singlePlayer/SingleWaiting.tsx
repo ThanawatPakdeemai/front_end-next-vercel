@@ -86,14 +86,14 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
     profile?.id
   ])
 
-  const outRoom = () => {
+  const outRoom = async () => {
     if (_roomId && profile && data) {
-      fetchPlayerGameSingle({
+      await fetchPlayerGameSingle({
         _roomId,
         _playerId: profile.id,
         _type: "out"
       })
-      router.push(`/${data.path}/roomlist`)
+      await router.push(`/${data.path}/roomlist`)
     }
   }
 

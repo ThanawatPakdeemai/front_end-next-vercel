@@ -31,7 +31,7 @@ const iconmotion = {
   }
 }
 
-const FromButItem = () => {
+const FromBuyItem = () => {
   const { t } = useTranslation()
   const game = useGameStore((state) => state.data)
   const profile = useProfileStore((state) => state.profile.data)
@@ -59,7 +59,7 @@ const FromButItem = () => {
     }
   })
   const onSubmit = (_data) => {
-    // console.log(data)
+    // console.log(_data)
   }
 
   const onError = (_data) => {
@@ -244,4 +244,4 @@ const FromButItem = () => {
     </>
   )
 }
-export default memo(FromButItem)
+export default memo(FromBuyItem)

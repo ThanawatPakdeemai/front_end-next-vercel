@@ -8,6 +8,7 @@ import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import { useTranslation } from "next-i18next"
 import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
 import { ICURENCY } from "@interfaces/ICurrency"
+import INaka from "@components/icons/Naka"
 import ButtonDropdown from "./ButtonDropdown"
 
 interface IProp {
@@ -41,13 +42,14 @@ const DropdownListCurrency = ({ list, className, onChangeSelect }: IProp) => {
                     isOpen={popupState.isOpen}
                     leftContent={
                       <>
-                        <div className="flex">
-                          <Image
-                            src="/images/logo/Logo-Master1.png"
+                        <div className="flex items-center">
+                          <INaka color="#fff" />
+                          {/* <Image
+                            src="/images/home/logoNakaMaster.svg"
                             alt=""
                             width="30"
                             height="30"
-                          />
+                          /> */}
                           <p className="px-2">{t("currency")}</p>
                           <p className="px-2 text-white-default">
                             {defaultItem?.name}
@@ -84,14 +86,17 @@ const DropdownListCurrency = ({ list, className, onChangeSelect }: IProp) => {
                             <p>{ele.name}</p>
                           </div>
                         ),
-                        icon: (
-                          <Image
-                            src={ele.image_icon ?? ""}
-                            alt={ele.name}
-                            width="20"
-                            height="20"
-                          />
-                        ),
+                        icon:
+                          typeof ele.image_icon === "string" ? (
+                            <Image
+                              src={ele.image_icon ?? ""}
+                              alt={ele.name}
+                              width="20"
+                              height="20"
+                            />
+                          ) : (
+                            ele.image_icon
+                          ),
                         data: ele,
                         href: ""
                       }))

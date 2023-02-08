@@ -1,5 +1,5 @@
 import dayjs from "dayjs"
-import { useWeb3Provider } from "@providers/index"
+// import { useWeb3Provider } from "@providers/index"
 import Helper from "@utils/helper"
 import {
   IStakingBasicData,
@@ -9,24 +9,24 @@ import {
 import { ethers } from "ethers"
 import FlexibleStakingAbi from "@configs/abi/FlexibleStaking.json"
 import StakingAbi from "@configs/abi/Staking.json"
-import {
-  getFlexibleStakingContract,
-  getStakingContract
-} from "../contractHelpers"
-// import { useState } from "react"
+// import {
+//   getFlexibleStakingContract,
+//   getStakingContract
+// } from "../contractHelpers"
+// // import { useState } from "react"
 
 const useContractStaking = () => {
-  const { signer } = useWeb3Provider()
+  // const { signer } = useWeb3Provider()
   // const [isLoading, setIsLoading] = useState(false)
   // const stakingAddress = _stakingProps.split(",")
 
-  const getContractProvider = (
-    _contractAddress: string,
-    _stakingTypes: TStaking
-  ) =>
-    _stakingTypes === "flexible"
-      ? getFlexibleStakingContract(_contractAddress, signer)
-      : getStakingContract(_contractAddress, signer)
+  // const getContractProvider = (
+  //   _contractAddress: string,
+  //   _stakingTypes: TStaking
+  // ) =>
+  //   _stakingTypes === "flexible"
+  //     ? getFlexibleStakingContract(_contractAddress, signer)
+  //     : getStakingContract(_contractAddress, signer)
 
   const handleAPR = (period: number) => {
     switch (period) {
@@ -121,9 +121,15 @@ const useContractStaking = () => {
     // eslint-disable-next-line no-async-promise-executor
     new Promise<IUserStakedInfo>(async (resolve) => {
       try {
-        const stake = getContractProvider(_contractAddress, _stakingTypes)
-        const amountPromise = stake.getUserStakeAmount(_address)
-        const userUnclaimPromise = stake.getUserUnclaimAmount(_address)
+        const { ethereum }: any = window
+        const _web3 = new ethers.providers.Web3Provider(ethereum)
+        const stake = new ethers.Contract(
+          _contractAddress,
+          _stakingTypes === "fixed" ? StakingAbi.abi : FlexibleStakingAbi.abi,
+          _web3
+        )
+        const amountPromise = await stake.getUserStakeAmount(_address)
+        const userUnclaimPromise = await stake.getUserUnclaimAmount(_address)
 
         const [amount, userUnclaim] = await Promise.all([
           amountPromise,

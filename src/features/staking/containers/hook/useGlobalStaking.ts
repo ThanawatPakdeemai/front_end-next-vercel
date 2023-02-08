@@ -185,9 +185,9 @@ const useGlobalStaking = () => {
    * @param _stakingTypes
    */
   const onRefresh = (_contractAddress: string, _stakingTypes: TStaking) => {
-    // setBasicStakeInfo({} as IStakingBasicData)
-    // setUserStakedInfo({} as IUserStakedInfo)
-    // fetchStakingInfo(_contractAddress, _stakingTypes)
+    setBasicStakeInfo({} as IStakingBasicData)
+    setUserStakedInfo({} as IUserStakedInfo)
+    fetchStakingInfo(_contractAddress, _stakingTypes)
   }
 
   useMemo(async () => {

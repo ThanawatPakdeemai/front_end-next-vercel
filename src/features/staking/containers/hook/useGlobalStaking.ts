@@ -1,26 +1,32 @@
+import useContractStaking from "@feature/contract/containers/hooks/useContractStaking"
 import {
   IStakingAll,
+  IStakingBasicData,
   IStakingGroup,
   IUserStakedInfo,
   TStaking
 } from "@src/types/staking"
+import useProfileStore from "@stores/profileStore"
 import { useQuery } from "@tanstack/react-query"
-import { useMemo, useState } from "react"
+import dayjs from "dayjs"
+import { useCallback, useMemo, useState } from "react"
 import { getStakingAll } from "../services/staking.service"
 
 const useGlobalStaking = () => {
   const _limit = 9999
   const _skip = 1
 
-  // Hooks
+  const profile = useProfileStore((state) => state.profile.data)
 
-  // const { getBasicStakingData, getUserStakedInfo, handleAPR } =
-  //   useContractStaking()
+  // Hooks
+  const { getBasicStakingData, getUserStakedInfo } = useContractStaking()
 
   // State
   const [fixedStaking, setFixedStaking] = useState<IStakingGroup[]>([])
   const [flexibleStaking, setFlexibleStaking] = useState<IStakingGroup[]>([])
-  // const [basicData, setBasicData] = useState<IStakingBasicData[]>([])
+
+  const [basicStakeInfo, setBasicStakeInfo] = useState<IStakingBasicData>()
+  const [userStakedInfo, setUserStakedInfo] = useState<IUserStakedInfo>()
 
   // const fetchBasicStakingInfo = async (
   //   _contractAddress: string,
@@ -90,18 +96,16 @@ const useGlobalStaking = () => {
     const groupByDatetime = _staking.reduce((group, staking) => {
       const { start_stake_time } = staking
       group[start_stake_time] = group[start_stake_time] ?? []
-      // const date1 = dayjs(staking.start_stake_time)
-      // const date2 = dayjs(staking.end_stake_time)
-      // const diff = date2.diff(date1, "day")
-      // console.log("diff", diff)
-      // const _period = handleAPR(diff)
+      const date1 = dayjs(staking.start_stake_time)
+      const date2 = dayjs(staking.end_stake_time)
+      const diff = date2.diff(date1, "day")
       // dataBasic
       //     ? dataBasic.find(
       //         (item) => item.addressContract === staking.contract_address
       //       )
       group[start_stake_time].push({
-        ...staking
-        // "period": _period || 0,
+        ...staking,
+        "period": diff
         // "dataBasicStake": null,
         // "userStakedInfo": null
       })
@@ -154,6 +158,38 @@ const useGlobalStaking = () => {
 
   const handleStake = () => {}
 
+  const fetchStakingInfo = useCallback(
+    async (_contractAddress: string, _stakingTypes: TStaking) => {
+      const resultBasic = await getBasicStakingData(
+        _contractAddress,
+        _stakingTypes
+      )
+      setBasicStakeInfo(resultBasic || {})
+
+      if (profile?.address) {
+        const resultStakedInfo = await getUserStakedInfo(
+          _contractAddress,
+          profile.address,
+          _stakingTypes
+        )
+        setUserStakedInfo(resultStakedInfo || {})
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
+
+  /**
+   * @description When click refresh staking info
+   * @param _contractAddress
+   * @param _stakingTypes
+   */
+  const onRefresh = (_contractAddress: string, _stakingTypes: TStaking) => {
+    // setBasicStakeInfo({} as IStakingBasicData)
+    // setUserStakedInfo({} as IUserStakedInfo)
+    // fetchStakingInfo(_contractAddress, _stakingTypes)
+  }
+
   useMemo(async () => {
     if (stakingAll) {
       /**
@@ -182,7 +218,11 @@ const useGlobalStaking = () => {
     flexibleStaking,
     fixedStaking,
     handleClaimWithdraw,
-    handleStake
+    handleStake,
+    basicStakeInfo,
+    userStakedInfo,
+    fetchStakingInfo,
+    onRefresh
   }
 }
 

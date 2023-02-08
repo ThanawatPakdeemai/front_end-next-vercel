@@ -1,22 +1,45 @@
-// import { Skeleton } from "@mui/material"
+import NumberBadge from "@feature/staking/components/atoms/NumberBadge"
+import PeriodLabel from "@feature/staking/components/molecules/PeriodLabel"
+import StakingPeriod from "@feature/staking/components/molecules/StakingPeriod"
+import TotalStaked from "@feature/staking/components/molecules/TotalStaked"
+import { t } from "i18next"
 import React from "react"
 
 const SkeletonStake = () => (
-  <div className="relativew h-[468px] w-full gap-4">
-    {/* <Skeleton
-      variant="rectangular"
-      className="h-12 w-full max-w-[1016px] rounded-2xl"
-    />
-    <div className="mt-5 flex h-[calc(100%-50px)] justify-between gap-3">
-      <Skeleton
-        variant="rectangular"
-        className="h-full w-4/5 max-w-[1016px] rounded-2xl"
+  <div className="grid grid-flow-row-dense grid-cols-4 gap-3 rounded-[13px] bg-neutral-800 p-3 uppercase">
+    <div className="row-span-2 rounded-lg shadow-xl">
+      <PeriodLabel
+        days={-1}
+        className="h-full"
       />
-      <Skeleton
-        variant="rectangular"
-        className="h-full w-3/12 max-w-[1016px] rounded-2xl"
+    </div>
+    <div className="col-span-3 shadow-xl">
+      <TotalStaked
+        totalPoolStake={-1}
+        poolLimit={-1}
       />
-    </div> */}
+    </div>
+    <div className="col-span-3 shadow-xl">
+      <StakingPeriod
+        startDatetime="00:00:00"
+        endDatetime="00:00:00"
+        est={-1}
+      />
+    </div>
+    <div className="col-span-2 shadow-xl">
+      <NumberBadge
+        title={t("your_naka_staked")}
+        color="red"
+        value={-1}
+      />
+    </div>
+    <div className="col-span-2 shadow-xl">
+      <NumberBadge
+        title={t("your_naka_unclaimed")}
+        color="purple"
+        value={-1}
+      />
+    </div>
   </div>
 )
 

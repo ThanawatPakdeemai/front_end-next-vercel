@@ -1,10 +1,11 @@
+import { Skeleton } from "@mui/material"
 import { TStaking } from "@src/types/staking"
 import React from "react"
 
 export interface IPeriodLabel {
   days?: number
   className?: string
-  type: TStaking
+  type?: TStaking
 }
 
 const PeriodLabel = ({ days, className, type }: IPeriodLabel) => (
@@ -13,18 +14,25 @@ const PeriodLabel = ({ days, className, type }: IPeriodLabel) => (
       className || ""
     }`}
   >
-    {days && (
-      <p className="text-neutral-30 mb-4 overflow-hidden line-clamp-1">
-        {days} days
-      </p>
+    {(days && days !== -1) || days === undefined ? (
+      <>
+        {days !== undefined && (
+          <p className="text-neutral-30 mb-4 overflow-hidden line-clamp-1">
+            {days} days
+          </p>
+        )}
+
+        <p
+          className={`w-max rounded ${
+            type === "fixed" ? "bg-error-main" : "bg-secondary-main"
+          } px-6 py-1 font-neue-machina-bold text-xs text-neutral-900`}
+        >
+          {type} APR
+        </p>
+      </>
+    ) : (
+      <Skeleton className="mb-4 h-[100px] w-full rounded-sm" />
     )}
-    <p
-      className={`w-max rounded ${
-        type === "fixed" ? "bg-error-main" : "bg-secondary-main"
-      } px-6 py-1 font-neue-machina-bold text-xs text-neutral-900`}
-    >
-      {type} APR
-    </p>
   </div>
 )
 

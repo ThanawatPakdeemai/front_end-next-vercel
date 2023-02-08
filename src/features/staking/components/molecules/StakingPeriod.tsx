@@ -1,4 +1,5 @@
 import IconArrowRight from "@components/icons/arrowRightIcon"
+import { Skeleton } from "@mui/material"
 import { numberWithCommas } from "@src/helpers/addComma"
 import { TStaking } from "@src/types/staking"
 import React from "react"
@@ -8,7 +9,7 @@ interface IStakingPeriod {
   endDatetime: string
   est: number
   className?: string
-  type: TStaking
+  type?: TStaking
 }
 
 const StakingPeriod = ({
@@ -23,18 +24,30 @@ const StakingPeriod = ({
   >
     <p className="flex items-center text-neutral-600">
       Period &nbsp;
-      <span className="text-neutral-300">{startDatetime}</span>
+      {startDatetime !== "00:00:00" ? (
+        <span className="text-neutral-300">{startDatetime}</span>
+      ) : (
+        <Skeleton className="h-[50px] w-[100px] rounded-sm" />
+      )}
       <IconArrowRight
         stroke="#4E5057"
         className="mx-2"
       />
-      <span className="text-neutral-300">{endDatetime}</span>
+      {endDatetime !== "00:00:00" ? (
+        <span className="text-neutral-300">{endDatetime}</span>
+      ) : (
+        <Skeleton className="h-[50px] w-[100px] rounded-sm" />
+      )}
     </p>
-    <p className="text-neutral-600">
+    <p className="flex items-center text-neutral-600">
       {type === "fixed" ? "Fixed APR." : "Est APR."}
-      <span className="ml-3 text-[15px] text-varidian-default">
-        {est ? numberWithCommas(est) : est}%
-      </span>
+      {est !== -1 ? (
+        <span className="ml-3 text-[15px] text-varidian-default">
+          {est ? numberWithCommas(est) : est}%
+        </span>
+      ) : (
+        <Skeleton className="ml-2 h-[50px] w-[100px] rounded-sm" />
+      )}
     </p>
   </div>
 )

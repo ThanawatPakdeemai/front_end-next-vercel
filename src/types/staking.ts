@@ -52,9 +52,9 @@ export interface IStakingAll {
 
   // Custom values
   // apr: number
-  period: number
-  dataBasicStake: IStakingBasicData | null
-  dataUserStaked?: IUserStakedInfo | null
+  // dataBasicStake: IStakingBasicData | null
+  // dataUserStaked?: IUserStakedInfo | null
+  period?: number
 }
 
 export interface IStakingGroup {

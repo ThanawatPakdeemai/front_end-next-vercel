@@ -9,6 +9,7 @@ import {
   TableRow,
   TableCell
 } from "@mui/material"
+import { useTranslation } from "next-i18next"
 import NoticItem from "./notiItem"
 import { INotification } from "../../interfaces/INotificationService"
 
@@ -18,16 +19,19 @@ interface IProps {
   data: INotification[]
   sortBy: string
   onHandleSortBy: (_text: string) => void
+  onHandleView: () => void
 }
 const NotificationsTable = ({
   page,
   limit,
   data,
   sortBy,
-  onHandleSortBy
+  onHandleSortBy,
+  onHandleView
 }: IProps) => {
   const [start, setStart] = useState<number>(0)
   const [end, setEnd] = useState<number>(0)
+  const { t } = useTranslation()
 
   useEffect(() => {
     setStart((page - 1) * limit)
@@ -54,7 +58,7 @@ const NotificationsTable = ({
               }}
               className="flex w-40 flex-initial pt-3 font-neue-machina"
             >
-              time
+              {t("time")}
               <div className="grid">
                 <IconButton
                   size="small"
@@ -88,7 +92,7 @@ const NotificationsTable = ({
               }}
               className="relative flex w-32 flex-initial pt-3 font-neue-machina"
             >
-              issue
+              {t("issue")}
               <div className="absolute right-12 grid">
                 <IconButton
                   size="small"
@@ -122,7 +126,7 @@ const NotificationsTable = ({
               }}
               className="relative flex w-32 flex-initial pt-3 font-neue-machina"
             >
-              game
+              {t("Games")}
               <div className="absolute right-12 grid">
                 <IconButton
                   size="small"
@@ -156,7 +160,7 @@ const NotificationsTable = ({
               }}
               className="flex w-44 flex-initial pt-3 font-neue-machina"
             >
-              details
+              {t("deatils")}
             </TableCell>
             <TableCell
               sx={{
@@ -165,7 +169,7 @@ const NotificationsTable = ({
               }}
               className="flex w-fit pt-3 text-end font-neue-machina"
             >
-              view
+              {t("view")}
             </TableCell>
           </TableRow>
         </TableHead>
@@ -175,6 +179,7 @@ const NotificationsTable = ({
               <NoticItem
                 key={el._id}
                 data={el}
+                onHandleView={onHandleView}
               />
             ))}
         </div>

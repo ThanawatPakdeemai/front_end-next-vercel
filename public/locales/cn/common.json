@@ -255,6 +255,9 @@
   "buy-now":"立即購買",
   "required": "必需的",
   "out-room": "出房间",
-  "no-player": "没有玩家"
-
+  "no-player": "没有玩家",
+  "deatil":"细节",
+  "issue":"问题",
+  "time": "时间"
+  
 }

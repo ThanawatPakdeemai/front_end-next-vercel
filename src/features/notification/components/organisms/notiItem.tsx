@@ -1,14 +1,15 @@
 import React, { memo } from "react"
-import { TableRow, TableCell } from "@mui/material"
+import { Button, TableRow, TableCell, Chip } from "@mui/material"
 import dayjs from "dayjs"
 import Issue from "../atoms/issue"
 import { INotification } from "../../interfaces/INotificationService"
 
 interface IProps {
   data: INotification
+  onHandleView: () => void
 }
 
-const NotiItem = ({ data }: IProps) => (
+const NotiItem = ({ data, onHandleView }: IProps) => (
   <TableRow className="flex h-14 pt-3 text-neutral-600">
     <TableCell
       sx={{
@@ -16,9 +17,12 @@ const NotiItem = ({ data }: IProps) => (
       }}
       className="flex w-40 flex-initial font-neue-machina "
     >
-      <div className="mr-1 mt-1 h-5 w-[78px] rounded border pt-1 pl-0.5 text-[10px] uppercase text-grey-neutral04 ">
-        {dayjs(data.createdAt).format("DD MMM YYYY")}
-      </div>
+      <Chip
+        label={dayjs(data.createdAt).format("DD MMM YYYY")}
+        variant="outlined"
+        size="small"
+        className="mr-1 mt-1 rounded pt-1 pl-0.5 text-[10px] uppercase text-grey-neutral04"
+      />
       <div className="ml-2 pt-2 text-[10px]">
         {dayjs(data.createdAt).format("hh:mm A")}
       </div>
@@ -48,17 +52,21 @@ const NotiItem = ({ data }: IProps) => (
     >
       {data.detail}
     </TableCell>
-    <TableCell
+    <Button
+      variant="outlined"
       sx={{
-        borderBottom: 1,
-        p: 0,
-        pl: "9px",
-        pt: "3px"
+        paddingX: "10px !important",
+        marginTop: "4px !important",
+        minWidth: "10px !important",
+        borderRadius: "5px !important"
       }}
-      className="mt-1 h-5 w-12 flex-none justify-self-end rounded border  font-neue-machina text-[10px] uppercase text-grey-neutral04 "
+      className="h-6 flex-none justify-self-end font-neue-machina text-[10px] uppercase text-grey-neutral04"
+      onClick={() => {
+        onHandleView(data)
+      }}
     >
       view
-    </TableCell>
+    </Button>
   </TableRow>
 )
 export default memo(NotiItem)

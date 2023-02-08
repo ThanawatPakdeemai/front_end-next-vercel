@@ -258,5 +258,9 @@
   "buy-now":"Buy Now",
   "required": "Required",
   "out-room": "Out Room",
-  "no-player":"No Player"
+  "no-player":"No Player",
+  "deatil":"Details",
+  "issue":"Issue",
+  "time": "Time"
+  
 }

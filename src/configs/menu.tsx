@@ -30,6 +30,8 @@ import ItemReward from "@components/icons/ItemReward"
 import Support from "@components/icons/Support"
 import Profile from "@components/icons/Profile"
 import GlobalIcon from "@components/icons/GlobalIcon"
+import BoltIcon from "@mui/icons-material/Bolt"
+import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined"
 
 export const MENU = [
   {
@@ -72,16 +74,26 @@ export const MENU = [
         icon: MapOutlinedIcon,
         textRight: "Free"
       },
-      { name: "Tournament", link: "/tournament", icon: DiamondIcon },
+      {
+        name: "Tournament",
+        link: "/tournament",
+        icon: "/assets/icons/menu/Iconcrown.svg"
+      } /**
+       @description name svgIcon in forder menu in public (if icon is string) */,
       {
         name: "Partner Games",
         link: "/partner-games",
-        icon: MapOutlinedIcon
+        icon: LanguageOutlinedIcon
       },
       {
         name: "NFT Games",
         link: "/nft-games",
-        icon: MapOutlinedIcon
+        icon: DiamondIcon
+      },
+      {
+        name: "NAKA Pass",
+        icon: BoltIcon,
+        link: "/naka-pass"
       }
     ]
   },
@@ -189,6 +201,13 @@ export const MENU_GUEST: IMenu[] = [
     icon: <Diamond stroke="#E1E2E2" />,
     href: "/nft-games",
     external: false
+  },
+  {
+    id: "naka-pass",
+    label: "NAKA Pass",
+    icon: <BoltIcon stroke="#E1E2E2" />,
+    href: "/naka-pass",
+    external: true
   }
 ]
 

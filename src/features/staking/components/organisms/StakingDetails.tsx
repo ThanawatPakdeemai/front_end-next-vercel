@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react"
-import { IMyLockedResponseData, IStakingAll } from "@src/types/staking"
+import {
+  IStakingAll,
+  IStakingBasicData,
+  IUserStakedInfo
+} from "@src/types/staking"
 import useContractStaking from "@feature/contract/containers/hooks/useContractStaking"
 import useProfileStore from "@stores/profileStore"
 import useGlobalStaking from "@feature/staking/containers/hook/useGlobalStaking"
@@ -15,60 +19,60 @@ export interface IStakingDetails {
 }
 
 const StakingDetails = ({ dataStaking, className = "" }: IStakingDetails) => {
-  const [stakedData, setStakedData] = useState<IMyLockedResponseData>()
+  const [basicStakeInfo, setBasicStakeInfo] = useState<IStakingBasicData>()
+  const [userStakedInfo, setUserStakedInfo] = useState<IUserStakedInfo>()
+
   const profile = useProfileStore((state) => state.profile.data)
-  const { getMyLocked, getBasicStakingData } = useContractStaking(
-    dataStaking.contract_address,
-    dataStaking.type
-  )
-  const { handleRedeem } = useGlobalStaking()
+  const { getBasicStakingData, getUserStakedInfo } = useContractStaking()
+  const { handleClaimWithdraw } = useGlobalStaking()
 
   /**
    * @description Get staking locked data by wallet address
    * @returns
    */
-
-  const fetchStakingFromSmartContract = useCallback(async () => {
-    // Basic Information
-    const resultBasic = await getBasicStakingData(dataStaking.contract_address)
-    if (!profile?.address) {
-      setStakedData(resultBasic || {})
-      return
-    }
-    const result = await getMyLocked(
+  const fetchStakingInfo = useCallback(async () => {
+    const resultBasic = await getBasicStakingData(
       dataStaking.contract_address,
-      profile.address
+      dataStaking.type
     )
-    setStakedData(result || {})
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    setBasicStakeInfo(resultBasic || {})
+
+    if (profile?.address) {
+      const resultStakedInfo = await getUserStakedInfo(
+        dataStaking.contract_address,
+        profile.address,
+        dataStaking.type
+      )
+      setUserStakedInfo(resultStakedInfo || {})
+    }
+  }, [dataStaking, profile, getBasicStakingData, getUserStakedInfo])
 
   useEffect(() => {
-    fetchStakingFromSmartContract()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    fetchStakingInfo()
+  }, [fetchStakingInfo])
 
   return (
     <div className={`${className}`}>
       <div className="grid grid-flow-row-dense grid-cols-4 gap-3 rounded-[13px] bg-neutral-800 p-3 uppercase">
         <div className="row-span-2 rounded-lg shadow-xl">
           <PeriodLabel
-            days={stakedData?.period || 0}
-            label={dataStaking.type}
+            days={basicStakeInfo?.period || 0}
             className="h-full"
+            type={dataStaking.type}
           />
         </div>
         <div className="col-span-3 shadow-xl">
           <TotalStaked
-            totalPoolStake={stakedData?.totalStake || 0}
-            totalPoolReward={stakedData?.totalReward || 0}
+            totalPoolStake={basicStakeInfo?.totalStake || 0}
+            poolLimit={basicStakeInfo?.poolLimit || 0}
+            type={dataStaking.type}
           />
         </div>
         <div className="col-span-3 shadow-xl">
           <StakingPeriod
-            startDatetime={stakedData?.startDate || "00:00:00"}
-            endDatetime={stakedData?.endDate || "00:00:00"}
-            est={stakedData?.APR || 0}
+            startDatetime={basicStakeInfo?.startDate || "00:00:00"}
+            endDatetime={basicStakeInfo?.endDate || "00:00:00"}
+            est={basicStakeInfo?.APR || 0}
             type={dataStaking.type}
           />
         </div>
@@ -76,25 +80,28 @@ const StakingDetails = ({ dataStaking, className = "" }: IStakingDetails) => {
           <NumberBadge
             title="Your NAKA Staked"
             color="red"
-            value={stakedData?.stakeAmount || 0}
+            value={userStakedInfo?.stakeAmount ?? 0}
           />
         </div>
         <div className="col-span-2 shadow-xl">
           <NumberBadge
             title="Your rewards Unclaimed"
             color="purple"
-            value={stakedData?.comInterest || 0}
+            value={userStakedInfo?.comInterest ?? 0}
           />
         </div>
       </div>
 
       <ActionBar
-        label="Redemption date"
-        redeemDatetime={stakedData?.endDate || "00:00:00"}
-        textColor="purple"
         className="flex w-full justify-end"
-        stakedData={stakedData}
-        onClickRedeem={() => handleRedeem(stakedData)}
+        status="locked"
+        label="Open until"
+        redeemDatetime={basicStakeInfo?.startDate || "00:00:00"}
+        type={dataStaking.type}
+        onClickRedeem={() => handleClaimWithdraw(userStakedInfo)}
+        onRefresh={fetchStakingInfo}
+        basicStakeInfo={basicStakeInfo}
+        userStakedInfo={userStakedInfo}
       />
     </div>
   )

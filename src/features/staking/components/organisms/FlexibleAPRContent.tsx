@@ -4,9 +4,13 @@ import { v4 as uuid } from "uuid"
 import { Box } from "@mui/material"
 import StakingTitle from "../atoms/StakingTitle"
 import StakingDetails from "./StakingDetails"
+// import { IStakingBasicData, IUserStakedInfo } from "@src/types/staking"
 
 const FlexibleAPRContent = () => {
   const { flexibleStaking } = useGlobalStaking()
+
+  // const [stakeBasicInfo, setStakeBasicInfo] = useState<IStakingBasicData>()
+  // const [useStakedInfo, setUseStakedInfo] = useState<IUserStakedInfo>()
 
   // State
   // const [open, setOpen] = useState<boolean>(false)
@@ -18,12 +22,12 @@ const FlexibleAPRContent = () => {
       {flexibleStaking && (
         <Box component="section">
           {flexibleStaking.map((_item) =>
-            _item.data.map((item) => (
+            _item.dataAPI.map((item) => (
               <div key={uuid()}>
                 <StakingTitle title={`${item.title}`} />
                 <StakingDetails
-                  dataStaking={item}
                   className="mb-10"
+                  dataStaking={item}
                 />
               </div>
             ))

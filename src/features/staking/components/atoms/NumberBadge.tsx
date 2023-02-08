@@ -17,7 +17,7 @@ const NumberBadge = ({
   <div
     className={`flex h-full w-full items-center justify-between rounded-[10px] bg-neutral-900 p-5 uppercase ${className}`}
   >
-    <p className="max-w-[35%]">{title}</p>
+    <p className="max-w-[35%] text-xs text-neutral-600">{title}</p>
     <div className="flex items-center">
       <p
         className={`font-digital-7 text-[26px] ${

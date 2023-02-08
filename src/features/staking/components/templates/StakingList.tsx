@@ -18,7 +18,7 @@ const StakingList = ({ stakeGroupByDatetime }: IFixedAPR) => (
     {stakeGroupByDatetime.map((item) => (
       <StakingPeriodDate
         key={uuid()}
-        label={item.type}
+        type={item.type}
         date={dayjs(item.datetime).format("DD MMM YYYY")}
         time={dayjs(item.datetime).format("h:mm A")}
         className="mt-5"
@@ -28,10 +28,8 @@ const StakingList = ({ stakeGroupByDatetime }: IFixedAPR) => (
           .split(" ")
           .join("-")
           .toLocaleLowerCase()}`}
-        lockedStatus={item.locked_status}
       />
     ))}
   </section>
 )
-
 export default StakingList

@@ -1,19 +1,30 @@
 import dayjs from "dayjs"
 import { useWeb3Provider } from "@providers/index"
 import Helper from "@utils/helper"
-import { IMyLockedResponseData } from "@src/types/staking"
+import {
+  IStakingBasicData,
+  IUserStakedInfo,
+  TStaking
+} from "@src/types/staking"
+import { ethers } from "ethers"
+import FlexibleStakingAbi from "@configs/abi/FlexibleStaking.json"
+import StakingAbi from "@configs/abi/Staking.json"
 import {
   getFlexibleStakingContract,
   getStakingContract
 } from "../contractHelpers"
+// import { useState } from "react"
 
-const useContractStaking = (_stakingProps: string, _stakingTypes: string) => {
+const useContractStaking = () => {
   const { signer } = useWeb3Provider()
   // const [isLoading, setIsLoading] = useState(false)
   // const stakingAddress = _stakingProps.split(",")
 
-  const getContractProvider = (_contractAddress: string) =>
-    _stakingTypes && _stakingTypes === "flexible"
+  const getContractProvider = (
+    _contractAddress: string,
+    _stakingTypes: TStaking
+  ) =>
+    _stakingTypes === "flexible"
       ? getFlexibleStakingContract(_contractAddress, signer)
       : getStakingContract(_contractAddress, signer)
 
@@ -30,17 +41,26 @@ const useContractStaking = (_stakingProps: string, _stakingTypes: string) => {
     }
   }
 
-  const getBasicStakingData = async (_contractAddress: string) =>
+  const getBasicStakingData = async (
+    _contractAddress: string,
+    _stakingTypes: TStaking
+  ) =>
     // eslint-disable-next-line no-async-promise-executor
-    new Promise<IMyLockedResponseData>(async (resolve) => {
+    new Promise<IStakingBasicData>(async (resolve) => {
       try {
-        const stake = getContractProvider(_contractAddress)
-        const durationPromise = stake.duration()
-        const startStakeTimePromise = stake.startStakeTime()
-        const endStakeTimePromise = stake.endStakeTime()
-        const totalStakePromise = stake.poolStakeTotal()
-        const totalRewardPromise = stake.poolReward()
-        const currentAPRPromise = stake.getCurrentAPR()
+        const { ethereum }: any = window
+        const _web3 = new ethers.providers.Web3Provider(ethereum)
+        const stake = new ethers.Contract(
+          _contractAddress,
+          _stakingTypes === "fixed" ? StakingAbi.abi : FlexibleStakingAbi.abi,
+          _web3
+        )
+        const durationPromise = await stake.duration()
+        const startStakeTimePromise = await stake.startStakeTime()
+        const endStakeTimePromise = await stake.endStakeTime()
+        const totalStakePromise = await stake.poolStakeTotal()
+        const totalRewardPromise = await stake.poolReward()
+        const poolLimitPromise = await stake.poolStakeLimit()
 
         const [
           duration,
@@ -48,14 +68,14 @@ const useContractStaking = (_stakingProps: string, _stakingTypes: string) => {
           endStakeTime,
           totalStake,
           totalReward,
-          currentAPR
+          poolLimit
         ] = await Promise.all([
           durationPromise,
           startStakeTimePromise,
           endStakeTimePromise,
           totalStakePromise,
           totalRewardPromise,
-          currentAPRPromise
+          poolLimitPromise
         ])
 
         resolve({
@@ -68,11 +88,14 @@ const useContractStaking = (_stakingProps: string, _stakingTypes: string) => {
           endDate: dayjs
             .unix(Helper.BNToNumber(endStakeTime))
             .format("DD MMM YYYY h:mm A"),
-          APR: handleAPR(Helper.BNToNumber(duration))
-            ? handleAPR(Helper.BNToNumber(duration))
-            : Helper.BNToNumber(currentAPR) / 100,
+          APR:
+            _stakingTypes === "fixed"
+              ? handleAPR(Helper.BNToNumber(duration))
+              : Helper.BNToNumber(await stake.getCurrentAPR()) / 100,
           totalStake: Number(Helper.WeiToNumber(totalStake).toFixed(4)),
-          totalReward: Number(Helper.WeiToNumber(totalReward).toFixed(4))
+          totalReward: Number(Helper.WeiToNumber(totalReward).toFixed(4)),
+          poolLimit: Number(Helper.WeiToNumber(poolLimit).toFixed(4)),
+          stakeType: _stakingTypes
         })
       } catch (err) {
         resolve({
@@ -83,77 +106,40 @@ const useContractStaking = (_stakingProps: string, _stakingTypes: string) => {
           endDate: "",
           APR: 0,
           totalStake: 0,
-          totalReward: 0
+          totalReward: 0,
+          poolLimit: 0,
+          stakeType: _stakingTypes
         })
       }
     })
 
-  const getMyLocked = (_contractAddress: string, _address: string) =>
+  const getUserStakedInfo = (
+    _contractAddress: string,
+    _address: string,
+    _stakingTypes: TStaking
+  ) =>
     // eslint-disable-next-line no-async-promise-executor
-    new Promise<IMyLockedResponseData>(async (resolve) => {
+    new Promise<IUserStakedInfo>(async (resolve) => {
       try {
-        const stake = getContractProvider(_contractAddress)
+        const stake = getContractProvider(_contractAddress, _stakingTypes)
         const amountPromise = stake.getUserStakeAmount(_address)
-        const durationPromise = stake.duration()
-        const startStakeTimePromise = stake.startStakeTime()
-        const endStakeTimePromise = stake.endStakeTime()
-        const totalStakePromise = stake.poolStakeTotal()
-        const totalRewardPromise = stake.poolReward()
         const userUnclaimPromise = stake.getUserUnclaimAmount(_address)
-        const currentAPRPromise = stake.getCurrentAPR()
 
-        const [
-          amount,
-          duration,
-          startStakeTime,
-          endStakeTime,
-          totalStake,
-          totalReward,
-          userUnclaim,
-          currentAPR
-        ] = await Promise.all([
+        const [amount, userUnclaim] = await Promise.all([
           amountPromise,
-          durationPromise,
-          startStakeTimePromise,
-          endStakeTimePromise,
-          totalStakePromise,
-          totalRewardPromise,
-          userUnclaimPromise,
-          currentAPRPromise
+          userUnclaimPromise
         ])
 
         resolve({
-          option_title: `${duration} Days`,
-          period: Helper.BNToNumber(duration),
-          addressContract: _contractAddress,
-          startDate: dayjs
-            .unix(Helper.BNToNumber(startStakeTime))
-            .format("DD MMM YYYY h:mm A"),
-          endDate: dayjs
-            .unix(Helper.BNToNumber(endStakeTime))
-            .format("DD MMM YYYY h:mm A"),
           stakeAmount: Helper.WeiToNumber(amount),
           comInterest: Number(
             Helper.WeiToNumber(userUnclaim.toString()).toFixed(4)
-          ),
-          APR: handleAPR(Helper.BNToNumber(duration))
-            ? handleAPR(Helper.BNToNumber(duration))
-            : Helper.BNToNumber(currentAPR) / 100,
-          totalStake: Number(Helper.WeiToNumber(totalStake).toFixed(4)),
-          totalReward: Number(Helper.WeiToNumber(totalReward).toFixed(4))
+          )
         })
       } catch (err) {
         resolve({
-          option_title: "",
-          period: 0,
-          addressContract: "",
-          startDate: "",
-          endDate: "",
           stakeAmount: 0,
-          comInterest: 0,
-          APR: 0,
-          totalStake: 0,
-          totalReward: 0
+          comInterest: 0
         })
       }
     })
@@ -519,7 +505,7 @@ const useContractStaking = (_stakingProps: string, _stakingTypes: string) => {
     // getOptionPeriod,
     handleAPR,
     getBasicStakingData,
-    getMyLocked
+    getUserStakedInfo
     // stakeNaka,
     // claimReward,
     // withdrawNaka,

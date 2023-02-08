@@ -1,3 +1,4 @@
+import { TStaking, TStakingStatus } from "@src/types/staking"
 import Link from "next/link"
 import React from "react"
 import PeriodDate from "../molecules/PeriodDate"
@@ -5,10 +6,10 @@ import PeriodLabel from "../molecules/PeriodLabel"
 
 export interface IStakingDate {
   days?: number
-  label: string
+  type: TStaking
+  lockedStatus?: TStakingStatus
   date: string
   time: string
-  lockedStatus: "locked" | "unlocked"
   className?: string
   link?: string
   onClick?: () => void
@@ -16,7 +17,7 @@ export interface IStakingDate {
 
 const StakingPeriodDate = ({
   days,
-  label,
+  type,
   date,
   time,
   className,
@@ -32,13 +33,13 @@ const StakingPeriodDate = ({
     >
       <PeriodLabel
         days={days}
-        label={label}
+        type={type}
       />
       <PeriodDate
         date={date}
         time={time}
-        lockedStatus={lockedStatus}
         className="ml-3"
+        lockedStatus={lockedStatus}
       />
     </button>
   )

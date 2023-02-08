@@ -1,6 +1,7 @@
 export type TStaking = "fixed" | "flexible"
+export type TStakingStatus = "locked" | "available"
 
-export interface IMyLockedResponseData {
+export interface IStakingBasicData {
   option_title: string
   period: number
   addressContract: string
@@ -9,8 +10,13 @@ export interface IMyLockedResponseData {
   APR: number
   totalStake: number
   totalReward: number
-  comInterest?: number
-  stakeAmount?: number
+  poolLimit: number
+  stakeType: TStaking
+}
+
+export interface IUserStakedInfo {
+  comInterest: number
+  stakeAmount: number
 }
 
 export interface IStakingOption {
@@ -23,91 +29,10 @@ export interface IStakingOption {
   userStaked?: string
 }
 
-// export interface IStakingInfo {
-//   status: boolean
-//   option_title: string
-//   period: number
-//   addressContract: string
-//   startDate: string
-//   endDate: string
-//   // eslint-disable-next-line no-use-before-define
-//   stakeAmount: any // IStakingInfoCOMInterest
-//   // eslint-disable-next-line no-use-before-define
-//   comInterest: any // IStakingInfoCOMInterest
-//   APR: number
-// }
-
-// export interface IStakingInfoCOMInterest {
-//   type: string
-//   hex: string
-// }
-
-// export interface IPeriodOptions {
-//   status: boolean
-//   option_title: string
-//   period: number
-//   addressContract: string
-//   startDate: string
-//   endDate: string
-//   // eslint-disable-next-line no-use-before-define
-//   userStaked: any // IPeriodOptionsUserStaked | number
-//   APR: number
-//   err?: null
-// }
 export interface IPeriodOptionsUserStaked {
   type: string
   hex: string
 }
-
-// export interface IOptions {
-//   APR: number
-//   addressContract: string
-//   // eslint-disable-next-line no-use-before-define
-//   comInterest: any // BigNumber
-//   endDate: string
-//   option_title: string
-//   period: number
-//   stakeAmount: any // BigNumber
-//   startDate: string
-//   status: boolean
-//   error: any
-// }
-
-// export interface BigNumber {
-//   _hex: string
-//   _isBigNumber: boolean
-// }
-
-// export interface IStakingProps {
-//   stakingProps: string
-//   stakingTypes: string
-// }
-
-//
-// export interface IStaking {
-//   status: boolean
-//   // eslint-disable-next-line no-use-before-define
-//   data: any // IStakingdata
-//   message: string
-// }
-
-// export interface IStakingdata {
-//   // eslint-disable-next-line no-use-before-define
-//   data: any[] // IStakingAll[]
-//   info: {
-//     pages: number
-//     limit: number
-//     currentCount: number
-//     totalCount: number
-//   }
-//   message: string
-//   status: boolean
-// }
-
-// export interface IGetStack {
-//   limit: number
-//   skip: number
-// }
 
 export interface IStakingAll {
   createdAt: string
@@ -126,17 +51,16 @@ export interface IStakingAll {
   date: string
 
   // Custom values
-  apr: number
+  // apr: number
   period: number
-  locked?: IMyLockedResponseData
+  dataBasicStake: IStakingBasicData | null
+  dataUserStaked?: IUserStakedInfo | null
 }
 
 export interface IStakingGroup {
   datetime: string
-  data: IStakingAll[]
-  data_staked?: IMyLockedResponseData
+  dataAPI: IStakingAll[]
   type: TStaking
-  locked_status: "locked" | "unlocked"
 }
 
 // export interface IValue {

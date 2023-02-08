@@ -44,15 +44,14 @@ const FixedAPRContent = () => {
     <>
       {stakingData && (
         <Box component="section">
-          {stakingData.data.map((item) => (
+          {stakingData.dataAPI.map((item) => (
             <div key={uuid()}>
               <StakingTitle title={`${item.title}`} />
               <StakingPeriodDate
                 days={item.period}
-                label={item.type}
+                type={item.type}
                 date={dayjs(item.start_stake_time).format("DD MMM YYYY")}
                 time={dayjs(item.start_stake_time).format("h:mm A")}
-                lockedStatus={stakingData.locked_status}
                 className="mb-4"
                 onClick={handleOpen}
               />

@@ -1,11 +1,12 @@
 import LockIcon from "@components/icons/LockIcon"
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined"
+import { TStakingStatus } from "@src/types/staking"
 import React from "react"
 
 interface IPeriodDate {
   date: string
   time: string
-  lockedStatus?: "locked" | "unlocked"
+  lockedStatus?: TStakingStatus
   className?: string
 }
 

@@ -1,12 +1,13 @@
+import { TStaking } from "@src/types/staking"
 import React from "react"
 
 export interface IPeriodLabel {
   days?: number
-  label: string
   className?: string
+  type: TStaking
 }
 
-const PeriodLabel = ({ days, label, className }: IPeriodLabel) => (
+const PeriodLabel = ({ days, className, type }: IPeriodLabel) => (
   <div
     className={`flex h-full flex-col items-center justify-center rounded-[10px] bg-neutral-900 p-3 text-center ${
       className || ""
@@ -17,8 +18,12 @@ const PeriodLabel = ({ days, label, className }: IPeriodLabel) => (
         {days} days
       </p>
     )}
-    <p className="w-max rounded bg-red-card px-6 py-1 font-neue-machina-bold text-xs text-neutral-900">
-      {label} APR
+    <p
+      className={`w-max rounded ${
+        type === "fixed" ? "bg-error-main" : "bg-secondary-main"
+      } px-6 py-1 font-neue-machina-bold text-xs text-neutral-900`}
+    >
+      {type} APR
     </p>
   </div>
 )

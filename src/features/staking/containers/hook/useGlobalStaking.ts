@@ -1,24 +1,74 @@
 import {
-  IMyLockedResponseData,
   IStakingAll,
-  IStakingGroup
+  IStakingGroup,
+  IUserStakedInfo,
+  TStaking
 } from "@src/types/staking"
-import useProfileStore from "@stores/profileStore"
 import { useQuery } from "@tanstack/react-query"
-import dayjs from "dayjs"
-import { useEffect, useState } from "react"
+import { useMemo, useState } from "react"
 import { getStakingAll } from "../services/staking.service"
 
 const useGlobalStaking = () => {
   const _limit = 9999
   const _skip = 1
 
-  // Redux
-  const profile = useProfileStore((state) => state.profile.data)
+  // Hooks
+
+  // const { getBasicStakingData, getUserStakedInfo, handleAPR } =
+  //   useContractStaking()
 
   // State
   const [fixedStaking, setFixedStaking] = useState<IStakingGroup[]>([])
   const [flexibleStaking, setFlexibleStaking] = useState<IStakingGroup[]>([])
+  // const [basicData, setBasicData] = useState<IStakingBasicData[]>([])
+
+  // const fetchBasicStakingInfo = async (
+  //   _contractAddress: string,
+  //   _stakingTypes: TStaking
+  // ) => {
+  //   const resultBasic = await getBasicStakingData(
+  //     _contractAddress,
+  //     _stakingTypes
+  //   )
+  //   return resultBasic
+  // }
+
+  // const fecthDataBasicStake = async (_staking: IStakingAll[]) => {
+  //   const stakeWithInfo: IStakingBasicData[] = []
+  //   for (let index = 0; index < _staking.length; index++) {
+  //     const result = await getBasicStakingData(
+  //       _staking[index].contract_address,
+  //       _staking[index].type
+  //     )
+  //     if (result) stakeWithInfo.push(result)
+  //   }
+  //   return stakeWithInfo
+  // }
+
+  // const fecthDataBasicStake = async (_staking: IStakingAll[]) => {
+  //   const stakeWithInfo: IStakingBasicData[] = []
+  //   for (let index = 0; index < _staking.length; index++) {
+  //     const result = await getBasicStakingData(
+  //       _staking[index].contract_address,
+  //       _staking[index].type
+  //     )
+  //     if (result) stakeWithInfo.push(result)
+  //   }
+  //   return stakeWithInfo
+  // }
+
+  // const fecthUserStakedInfo = async (_staking: IStakingAll[]) => {
+  //   const userStakedInfo: IUserStakedInfo[] = []
+  //   for (let index = 0; index < _staking.length; index++) {
+  //     const result = await getUserStakedInfo(
+  //       _staking[index].contract_address,
+  //       "0x75c3c967b26526b3a7775f1594bfB906C2739E43",
+  //       _staking[index].type
+  //     )
+  //     if (result) userStakedInfo.push(result)
+  //   }
+  //   return userStakedInfo
+  // }
 
   /**
    * @description Get all staking
@@ -30,37 +80,31 @@ const useGlobalStaking = () => {
     staleTime: Infinity
   })
 
-  const handleGroupStakeByDate = (_staking: IStakingAll[]) => {
+  const handleGroupStakeByDate = async (_staking: IStakingAll[]) => {
+    // const dataBasic = await fecthDataBasicStake(_staking)
+    // console.log("dataBasic", dataBasic)
+
     /**
      * @description Group staking by start_stake_time
      */
     const groupByDatetime = _staking.reduce((group, staking) => {
       const { start_stake_time } = staking
       group[start_stake_time] = group[start_stake_time] ?? []
-      const date1 = dayjs(staking.start_stake_time)
-      const date2 = dayjs(staking.end_stake_time)
-      const diff = date2.diff(date1, "day")
-      // Note: APR is hardcode (Only for fixed staking)
-      let _apr = 0
-      switch (diff) {
-        case 30:
-          _apr = 15
-          break
-        case 60:
-          _apr = 20
-          break
-        case 90:
-          _apr = 25
-          break
-        default:
-          break
-      }
+      // const date1 = dayjs(staking.start_stake_time)
+      // const date2 = dayjs(staking.end_stake_time)
+      // const diff = date2.diff(date1, "day")
+      // console.log("diff", diff)
+      // const _period = handleAPR(diff)
+      // dataBasic
+      //     ? dataBasic.find(
+      //         (item) => item.addressContract === staking.contract_address
+      //       )
       group[start_stake_time].push({
-        ...staking,
-        "apr": _apr,
-        "period": diff && diff > 0 ? diff : 0
+        ...staking
+        // "period": _period || 0,
+        // "dataBasicStake": null,
+        // "userStakedInfo": null
       })
-      // group[start_stake_time].push(staking)
 
       return group
     }, {})
@@ -71,10 +115,11 @@ const useGlobalStaking = () => {
     const groupByDatetimeArray: IStakingGroup[] = Object.keys(
       groupByDatetime
     ).map((key, index) => ({
-      "locked_status": dayjs(key).isBefore(dayjs()) ? "locked" : "unlocked",
       "datetime": key,
-      "data": groupByDatetime[key],
-      "type": groupByDatetime[key][index]?.type || "flexible"
+      "dataAPI": groupByDatetime[key],
+      "type":
+        groupByDatetime[key][index] &&
+        (groupByDatetime[key][index].type as TStaking)
     }))
 
     /**
@@ -83,10 +128,33 @@ const useGlobalStaking = () => {
     const groupByDatetimeArraySorted = groupByDatetimeArray.sort(
       (a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime()
     )
+
     return groupByDatetimeArraySorted
   }
 
-  useEffect(() => {
+  /**
+   * @description Withdraw staked NAKA
+   */
+  // const onWithdraw = () => {}
+
+  /**
+   * @description Claim staked NAKA
+   */
+  // const onClaim = () => {}
+
+  /**
+   * @description Handle claim/withdraw events button
+   */
+  const handleClaimWithdraw = (_userStakedInfo?: IUserStakedInfo) => {
+    // const endDate = _staked ? dayjs(_staked.endDate) : dayjs()
+    // if (!_staked || endDate.isAfter(dayjs())) return
+    // const action = _staked.comInterest === 0 ? onWithdraw : onClaim
+    // action()
+  }
+
+  const handleStake = () => {}
+
+  useMemo(async () => {
     if (stakingAll) {
       /**
        * @description Filter staking by type
@@ -97,44 +165,23 @@ const useGlobalStaking = () => {
       )
 
       if (fixedStakeFilter && fixedStakeFilter.length > 0) {
-        const result = handleGroupStakeByDate(fixedStakeFilter)
+        const result = await handleGroupStakeByDate(fixedStakeFilter)
         if (result) setFixedStaking(result)
       }
 
       if (flexibleStakeFilter && flexibleStakeFilter.length > 0) {
-        const result = handleGroupStakeByDate(flexibleStakeFilter)
-        if (result) setFlexibleStaking(result)
+        const result = await handleGroupStakeByDate(flexibleStakeFilter)
+        if (result) {
+          setFlexibleStaking(result)
+        }
       }
     }
-  }, [stakingAll, profile])
-
-  /**
-   * @description Withdraw staked NAKA
-   */
-  const onWithdraw = () => {}
-
-  /**
-   * @description Claim staked NAKA
-   */
-  const onClaim = () => {}
-
-  /**
-   * @description Handle claim/withdraw events button
-   */
-  const handleRedeem = (_staked?: IMyLockedResponseData) => {
-    const endDate = _staked ? dayjs(_staked.endDate) : dayjs()
-    if (!_staked || endDate.isAfter(dayjs())) return
-
-    const action = _staked.comInterest === 0 ? onWithdraw : onClaim
-    action()
-  }
-
-  const handleStake = () => {}
+  }, [stakingAll])
 
   return {
     flexibleStaking,
     fixedStaking,
-    handleRedeem,
+    handleClaimWithdraw,
     handleStake
   }
 }

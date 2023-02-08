@@ -10,6 +10,8 @@ import useGetProfileInfo from "@feature/profile/containers/hook/getProfileInfo"
 import useProfileStore from "@stores/profileStore"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import Helper from "@utils/helper"
+import TooltipsCustom from "@components/atoms/TooltipsCustom"
+import { motion } from "framer-motion"
 import RankIcon from "../atoms/RankIcon"
 import SliderGameStat from "./SliderGameStat"
 
@@ -97,7 +99,6 @@ const GameStatOverview = () => {
     }
   }, [getProfileInfo])
 
-  // console.log("data", getProfileInfo?.data.game_data.length)
   return (
     <div className="w-[90%]">
       <SliderGameStat
@@ -129,13 +130,29 @@ const GameStatOverview = () => {
                       index={index}
                     />
                     <h1 className="py-5 text-neutral-300">{item.name}</h1>
-                    {item.story.length > 30 ? (
-                      <p className="text-xs text-neutral-500">
-                        {item.story.substring(0, 30)}ReadMore
-                      </p>
-                    ) : (
-                      <p className="text-xs text-neutral-500">{item.story}</p>
-                    )}
+                    <p className=" text-xs text-neutral-500">
+                      <TooltipsCustom
+                        className="truncate hover:text-clip"
+                        placement="bottom"
+                        title={item.story}
+                        color="warning"
+                      >
+                        <div>{item.story}</div>
+                      </TooltipsCustom>
+                      {/* {item.story.substring(0, limitText)}
+                      <button
+                        className="ml-1 text-green-to"
+                        type="button"
+                        onClick={toggleBtn}
+                      >
+                        {isReadMoreShown ? item.story : "...Read More"}
+                      </button> */}
+                      {/* <TooltipsCustom
+                        color="error"
+                        title={item.story || "No Item"}
+                        children={undefined}
+                      /> */}
+                    </p>
                   </div>
                   <div className="my-7 mx-10 grid grid-cols-2 grid-rows-2 gap-5">
                     <div>
@@ -175,22 +192,29 @@ const GameStatOverview = () => {
                       </button>
                     </div>
                   </div>
-                  <div className="my-[10px] mr-[10px] flex gap-[10px]">
-                    <div className="w-full">
-                      <Image
-                        className="h-full w-full rounded-[15px]"
-                        src={item.image}
-                        alt={item.name}
-                        width={125}
-                        height={125}
-                      />
-                    </div>
-                    <div className="flex w-full items-center justify-center rounded-[10px] border-2 border-neutral-700">
-                      <RankIcon
-                        width={70}
-                        height={70}
-                        icon={item.rank}
-                      />
+                  <div className="flex items-center gap-2">
+                    <Image
+                      className="h-40 w-40 rounded-[15px] object-cover"
+                      src={item.image}
+                      alt={item.name}
+                      width={160}
+                      height={160}
+                    />
+                    <div className="flex h-40 w-40 items-center justify-center rounded-[10px] border-2 border-neutral-700 ">
+                      <motion.div
+                        whileHover={{ rotate: 15 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 100,
+                          damping: 4
+                        }}
+                      >
+                        <RankIcon
+                          width={70}
+                          height={70}
+                          icon={item.rank}
+                        />
+                      </motion.div>
                     </div>
                   </div>
                 </Card>

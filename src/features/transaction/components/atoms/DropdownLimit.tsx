@@ -77,21 +77,21 @@ const DropdownLimit = ({
                     className={`${className} w-[155px]`}
                     details={
                       list &&
-                      list.map((ele) => ({
+                      list.map((ele: Number) => ({
                         label: (
                           <div className="flex items-center justify-end pr-7">
                             <p>{`${ele}`}</p>
                           </div>
                         ),
                         icon: "",
-                        data: ele,
+                        data: ele as Number,
                         href: "",
                         active: selectLimit === ele
                       }))
                     }
-                    onChange={(item: number) => {
+                    onChange={(_item) => {
                       popupState.close()
-                      onChangeItem(item)
+                      onChangeItem(_item as number)
                     }}
                   />
                 </Popover>

@@ -83,7 +83,6 @@ const DropdownList = ({ title, list, className }: IProp) => {
             <SelectDropdownList
               className={className}
               details={list}
-              title={title}
             />
           </Collapse>
         </div>

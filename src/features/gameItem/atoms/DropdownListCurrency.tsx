@@ -1,28 +1,27 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import * as React from "react"
 import { useState } from "react"
 import { Popover } from "@mui/material"
 import ImageCustom from "@components/atoms/image/Image"
-import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
-// eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import { useTranslation } from "next-i18next"
 import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
-import { ICURENCY } from "@interfaces/ICurrency"
 import INaka from "@components/icons/Naka"
+import { ICURRENCY } from "@interfaces/ICurrency"
 import ButtonDropdown from "./ButtonDropdown"
 
 interface IProp {
   icon?: React.ReactNode
-  list: ICURENCY[]
+  list: ICURRENCY[]
   className: string
-  onChangeSelect?: (_item: ICURENCY) => void
+  onChangeSelect?: (_item: ICURRENCY) => void
 }
 
 const DropdownListCurrency = ({ list, className, onChangeSelect }: IProp) => {
   const { t } = useTranslation()
-  const [defaultItem, setDefaultItem] = useState<ICURENCY>()
+  const [defaultItem, setDefaultItem] = useState<ICURRENCY>()
 
-  const onChangeItem = (_item: ICURENCY) => {
+  const onChangeItem = (_item: ICURRENCY) => {
     setDefaultItem(_item)
     if (_item && onChangeSelect) onChangeSelect(_item)
   }
@@ -83,7 +82,9 @@ const DropdownListCurrency = ({ list, className, onChangeSelect }: IProp) => {
                       list.map((ele) => ({
                         label: (
                           <div className="flex items-center justify-between">
-                            <p>{ele.name}</p>
+                            <p>
+                              <span> {ele.name} </span>
+                            </p>
                           </div>
                         ),
                         icon:
@@ -95,14 +96,14 @@ const DropdownListCurrency = ({ list, className, onChangeSelect }: IProp) => {
                               height="20"
                             />
                           ) : (
-                            ele.image_icon
+                            ""
                           ),
                         data: ele,
                         href: ""
                       }))
                     }
-                    onChange={(item: IGameItemListData) => {
-                      onChangeItem(item)
+                    onChange={(item) => {
+                      onChangeItem(item as ICURRENCY)
                       popupState.close()
                     }}
                   />

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { Collapse } from "@mui/material"
 import DropdownIcon from "@components/icons/DropdownIcon"
 import {
@@ -22,7 +22,7 @@ interface IProp {
   className: string
 }
 
-const Dropdown = ({ title, className }: IProp) => {
+const DropdownCustom = ({ title, className }: IProp) => {
   const [expanded, setExpanded] = useState<boolean>(false)
   const [gameData, setGameData] = useState<
     IGameItem[] | IGameCategory[] | IDevice[]
@@ -37,6 +37,22 @@ const Dropdown = ({ title, className }: IProp) => {
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
   }
+
+  const dataDetail = useMemo(() => {
+    if (gameData) {
+      return gameData.map((element) => ({
+        label: element.name ?? "",
+        icon: element._id ?? "",
+        data: element,
+        href: ""
+      }))
+    }
+    return Array(1).map(() => ({
+      label: "",
+      icon: "",
+      href: ""
+    }))
+  }, [gameData])
 
   const onGameAssets = () => {
     getGameAssets()
@@ -171,8 +187,10 @@ const Dropdown = ({ title, className }: IProp) => {
           >
             <SelectDropdown
               className={className}
-              details={gameData}
-              setOnTitle={setOnTitle}
+              details={dataDetail}
+              onChange={(_item) =>
+                setOnTitle(_item as IGameCategory | IGameItem | IDevice)
+              }
               setExpanded={setExpanded}
             />
           </Collapse>
@@ -181,4 +199,4 @@ const Dropdown = ({ title, className }: IProp) => {
     </>
   )
 }
-export default Dropdown
+export default DropdownCustom

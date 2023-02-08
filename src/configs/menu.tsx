@@ -95,6 +95,11 @@ export const MENU = [
         icon: BoltIcon,
         link: "/naka-pass"
       }
+      // {
+      //   name: "NFT Pass",
+      //   link: "/nft-pass",
+      //   icon: MapOutlinedIcon
+      // }
     ]
   },
   {

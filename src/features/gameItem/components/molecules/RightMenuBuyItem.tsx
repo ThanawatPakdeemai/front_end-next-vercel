@@ -33,7 +33,7 @@ const RightMenuBuyItem = () => {
             />
           </div>
           <Box className="hide-scroll h-[480px] w-full overflow-y-scroll ">
-            <FromBuyItem />
+            <FromBuyItem handleClose={handleClose} />
           </Box>
         </Stack>
       </ModalCustom>

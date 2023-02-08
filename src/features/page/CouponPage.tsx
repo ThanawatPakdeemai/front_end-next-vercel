@@ -1,7 +1,7 @@
 import { Button, InputAdornment, TextField, Typography } from "@mui/material"
 import React, { useState } from "react"
 import CouponIcon from "@components/icons/CouponIcon"
-import Image from "next/image"
+import ImageCustom from "@components/atoms/image/Image"
 import useGetCoupon from "@feature/coupon/containers/hook/useGetCoupon"
 import { useToast } from "@feature/toast/containers"
 
@@ -84,7 +84,7 @@ const CouponPage = () => {
         </Button>
       </div>
       <div className="flex justify-center">
-        <Image
+        <ImageCustom
           src="/images/coupon.svg"
           alt="coupon"
           width={220}

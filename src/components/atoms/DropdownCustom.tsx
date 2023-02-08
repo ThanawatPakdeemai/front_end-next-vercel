@@ -1,9 +1,19 @@
 import * as React from "react"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { Collapse } from "@mui/material"
 import DropdownIcon from "@components/icons/DropdownIcon"
-import { DROPDOWN } from "@configs/dropdown"
-import { IDropdown } from "@interfaces/IMenu"
+import {
+  getCategories,
+  getGameAssets
+} from "@feature/dropdown/containers/services/dropdown.service"
+import { useToast } from "@feature/toast/containers"
+import AllCategoriesIcon from "@components/icons/AllCategoriesIcon"
+import {
+  IDevice,
+  IGameCategory,
+  IGameItem
+} from "@feature/dropdown/interfaces/IDropdownService"
+import useFilterStore from "@stores/blogFilter"
 import SelectDropdown from "./selectDropdown/SelectDropdown"
 
 interface IProp {
@@ -12,36 +22,148 @@ interface IProp {
   className: string
 }
 
-const Dropdown = ({ title, className }: IProp) => {
+const DropdownCustom = ({ title, className }: IProp) => {
   const [expanded, setExpanded] = useState<boolean>(false)
-  const [data, setData] = useState<IDropdown>()
+  const [gameData, setGameData] = useState<
+    IGameItem[] | IGameCategory[] | IDevice[]
+  >([])
+  const [onTitle, setOnTitle] = useState<IGameCategory | IGameItem | IDevice>()
+  const { errorToast } = useToast()
+  const {
+    setCategory: setCategoryDropdown,
+    setGameItem: setGameItemDropdown,
+    setDevice: setDeviceDropdown
+  } = useFilterStore()
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
   }
 
-  const GetData = () => {
-    const dataFilter = DROPDOWN.filter(
-      (item: IDropdown) =>
-        item.title.toLocaleLowerCase() === title.toLocaleLowerCase()
-    )
-    setData(dataFilter[0])
+  const dataDetail = useMemo(() => {
+    if (gameData) {
+      return gameData.map((element) => ({
+        label: element.name ?? "",
+        icon: element._id ?? "",
+        data: element,
+        href: ""
+      }))
+    }
+    return Array(1).map(() => ({
+      label: "",
+      icon: "",
+      href: ""
+    }))
+  }, [gameData])
+
+  const onGameAssets = () => {
+    getGameAssets()
+      .then((res) => {
+        res.splice(0, 0, {
+          crate_date: "",
+          _id: "",
+          current_time: "",
+          name: "All Game Assets",
+          detail: "",
+          is_active: true,
+          price: 0,
+          min_item: 0,
+          item_id_smartcontract: 0,
+          model_id: 0,
+          image_icon_color: "",
+          image_icon: "",
+          image: "",
+          item_size: "",
+          craft_time: 0,
+          id: "all",
+          default: false,
+          amount: 0,
+          index: 0,
+          qty: 0
+        })
+        setGameData(res)
+      })
+      .catch((error) => {
+        errorToast(error.message)
+      })
   }
 
+  const onCategories = () => {
+    getCategories()
+      .then((res) => {
+        res.splice(0, 0, {
+          id: "all",
+          name: "All Categories",
+          createdAt: "",
+          updatedAt: "",
+          detail: "",
+          slug: "",
+          color_code: "",
+          image_list: "",
+          image_banner: "",
+          is_active: true,
+          _id: ""
+        })
+        setGameData(res)
+      })
+      .catch((error) => {
+        errorToast(error.message)
+      })
+  }
+
+  const device = [
+    {
+      _id: "",
+      name: "All Devices",
+      supported: true
+    },
+    {
+      _id: "mobile",
+      name: "Mobile and Tablet",
+      supported: true
+    },
+    {
+      _id: "desktop",
+      name: "Desktop",
+      supported: true
+    }
+  ]
+
   useEffect(() => {
-    GetData()
-  })
+    if (title === "All Categories") {
+      onCategories()
+    } else if (title === "All Game Assets") {
+      onGameAssets()
+    } else if (title === "All Devices") {
+      setGameData(device)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    if (onTitle) {
+      if (title === "All Categories") {
+        setCategoryDropdown(onTitle._id)
+      } else if (title === "All Game Assets") {
+        setGameItemDropdown(onTitle._id)
+      } else if (title === "All Devices") {
+        setDeviceDropdown(onTitle._id)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onTitle])
 
   return (
     <>
-      {data && (
+      {gameData && (
         <div>
           <button
             type="button"
             onClick={handleOnExpandClick}
             className={`${className} mb-1 flex h-[40px] w-[218px] flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary`}
           >
-            {data.icon}
-            <span className="">{data.title}</span>
+            {onTitle ? "" : <AllCategoriesIcon />}
+            <span className="">
+              {onTitle === undefined ? title : onTitle.name}
+            </span>
             <div
               className={`${
                 expanded === true
@@ -65,7 +187,11 @@ const Dropdown = ({ title, className }: IProp) => {
           >
             <SelectDropdown
               className={className}
-              details={data.details}
+              details={dataDetail}
+              onChange={(_item) =>
+                setOnTitle(_item as IGameCategory | IGameItem | IDevice)
+              }
+              setExpanded={setExpanded}
             />
           </Collapse>
         </div>
@@ -73,4 +199,4 @@ const Dropdown = ({ title, className }: IProp) => {
     </>
   )
 }
-export default Dropdown
+export default DropdownCustom

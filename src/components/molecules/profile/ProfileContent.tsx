@@ -10,14 +10,14 @@ import { IProfile } from "@src/types/profile"
 import { RandomReveal } from "react-random-reveal"
 import { CHAR_SET_JP } from "@constants/characterSet"
 import dayjs from "dayjs"
-import Image from "next/image"
 import useGetProfileInfo from "@feature/profile/containers/hook/getProfileInfo"
 import Lavel from "@components/icons/Lavel"
 import Helper from "@utils/helper"
+import ImageCustom from "@components/atoms/image/Image"
 import EditProfileModal from "./EditProfileModal"
-import TotalCardContent from "./TotalCardContent"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
+import TotalCardContent from "./TotalCardContent"
 
 const ProfileContent = () => {
   const profile = useProfileStore((state) => state.profile)
@@ -112,7 +112,7 @@ const ProfileContent = () => {
               </div>
             </div>
 
-            <Image
+            <ImageCustom
               src={getProfileInfo.data.avatar}
               fill
               alt="profile-avatar"

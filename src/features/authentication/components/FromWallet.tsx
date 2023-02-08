@@ -1,7 +1,7 @@
 import React, { memo } from "react"
 import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined"
 import useGameStore from "@stores/game"
-import Image from "next/image"
+import ImageCustom from "@components/atoms/image/Image"
 
 interface IProp {
   title: string
@@ -19,7 +19,7 @@ const FromWallet = ({ title }: IProp) => {
           </p>
           <div className="my-2 flex w-full justify-between rounded-xl border border-neutral-700 bg-neutral-800 p-4">
             <div className="flex items-baseline">
-              <Image
+              <ImageCustom
                 src="/images/Profile/Wallet/LogoMaster-sv.svg"
                 alt=""
                 width="30"

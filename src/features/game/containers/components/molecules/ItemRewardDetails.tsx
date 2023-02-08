@@ -3,7 +3,7 @@ import TooltipsCustom from "@components/atoms/TooltipsCustom"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { IPlayToEarnRewardData } from "@src/types/games"
 import Helper from "@utils/helper"
-import Image from "next/image"
+import ImageCustom from "@components/atoms/image/Image"
 import React from "react"
 
 interface IProp {
@@ -17,7 +17,7 @@ const ItemRewardDetails = ({ rewardData, onClaim }: IProp) =>
       {/* left */}
       <div className="flex items-center">
         {rewardData.game_image && rewardData.game_name ? (
-          <Image
+          <ImageCustom
             src={rewardData.game_image}
             alt={rewardData.game_name}
             width={75}
@@ -57,7 +57,7 @@ const ItemRewardDetails = ({ rewardData, onClaim }: IProp) =>
         >
           <div className="flex h-[75px] w-[75px] items-center justify-center rounded-[6px] border border-neutral-700 bg-primary-main text-center text-xs ">
             {rewardData.game_item_image && rewardData.game_item_name ? (
-              <Image
+              <ImageCustom
                 src={rewardData.game_item_image}
                 alt={rewardData.game_item_name}
                 width={50}

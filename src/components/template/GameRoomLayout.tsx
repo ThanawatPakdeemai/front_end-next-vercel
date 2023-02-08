@@ -32,12 +32,12 @@ const GameRoomLayout = ({
 
   useEffect(() => {
     if (data) {
-      setGameData(data)
+      setGameData(data as IGame)
     }
   }, [data])
 
   useEffect(() => {
-    if (data) setGameData(data)
+    if (data) setGameData(data as IGame)
   }, [data])
 
   useEffect(() => {

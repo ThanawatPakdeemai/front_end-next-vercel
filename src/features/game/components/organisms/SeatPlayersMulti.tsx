@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useMemo, useState } from "react"
+import React, { memo, useEffect, useMemo, useState } from "react"
 import { IGameCurrentPlayerMulti } from "@feature/game/interfaces/IGameService"
 import { Box, CircularProgress, Typography } from "@mui/material"
 import Ellipse from "@components/icons/Ellipse/Ellipse"
@@ -212,24 +212,17 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   ])
 
   useEffect(() => {
-    // console.log("goto game")
     if (dataPlayers && dataPlayers.room_status === "playing") {
       waitingRoomPlay()
     }
   }, [dataPlayers, waitingRoomPlay])
 
-  const endAndStartTimer = useCallback(() => {
-    let timer
-    clearTimeout(timer)
-    timer = window.setTimeout(() => {
-      window.location.href = gameUrl
-    }, 10000)
-  }, [gameUrl])
-
   useEffect(() => {
-    if (dataPlayers?.room_status === "ready_play") {
-      if (dataPlayers.current_player.length === dataPlayers.max_players) {
-        endAndStartTimer()
+    if (dataPlayers?.room_status === "ready_play" && gameUrl && playerInroom) {
+      if (playerInroom.length === dataPlayers.max_players) {
+        setTimeout(() => {
+          window.location.href = gameUrl
+        }, 10000)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -319,6 +312,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
 
   return (
     <>
+      {/* <Link href={gameUrl}>GO</Link> */}
       <Box>
         <PlayerCard players={players} />
         <Box className="mb-10  flex justify-center">

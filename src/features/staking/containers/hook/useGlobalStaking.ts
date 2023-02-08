@@ -10,6 +10,10 @@ import useProfileStore from "@stores/profileStore"
 import { useQuery } from "@tanstack/react-query"
 import dayjs from "dayjs"
 import { useCallback, useMemo, useState } from "react"
+import {
+  DEFAULT_STAKING_BASIC_DATA,
+  DEFAULT_USER_STAKED_INFO
+} from "../constants/Staking"
 import { getStakingAll } from "../services/staking.service"
 
 const useGlobalStaking = () => {
@@ -19,7 +23,8 @@ const useGlobalStaking = () => {
   const profile = useProfileStore((state) => state.profile.data)
 
   // Hooks
-  const { getBasicStakingData, getUserStakedInfo } = useContractStaking()
+  const { getBasicStakingData, getUserStakedInfo, claimReward, withdrawNaka } =
+    useContractStaking()
 
   // State
   const [fixedStaking, setFixedStaking] = useState<IStakingGroup[]>([])
@@ -27,29 +32,6 @@ const useGlobalStaking = () => {
 
   const [basicStakeInfo, setBasicStakeInfo] = useState<IStakingBasicData>()
   const [userStakedInfo, setUserStakedInfo] = useState<IUserStakedInfo>()
-
-  // const fetchBasicStakingInfo = async (
-  //   _contractAddress: string,
-  //   _stakingTypes: TStaking
-  // ) => {
-  //   const resultBasic = await getBasicStakingData(
-  //     _contractAddress,
-  //     _stakingTypes
-  //   )
-  //   return resultBasic
-  // }
-
-  // const fecthDataBasicStake = async (_staking: IStakingAll[]) => {
-  //   const stakeWithInfo: IStakingBasicData[] = []
-  //   for (let index = 0; index < _staking.length; index++) {
-  //     const result = await getBasicStakingData(
-  //       _staking[index].contract_address,
-  //       _staking[index].type
-  //     )
-  //     if (result) stakeWithInfo.push(result)
-  //   }
-  //   return stakeWithInfo
-  // }
 
   // const fecthDataBasicStake = async (_staking: IStakingAll[]) => {
   //   const stakeWithInfo: IStakingBasicData[] = []
@@ -139,25 +121,57 @@ const useGlobalStaking = () => {
   /**
    * @description Withdraw staked NAKA
    */
-  // const onWithdraw = () => {}
+  const onWithdraw = async (
+    _basicStakeInfo?: IStakingBasicData,
+    _userStakedInfo?: IUserStakedInfo
+  ) => {
+    if (profile && profile.address && _basicStakeInfo && _userStakedInfo) {
+      // console.log("account", account)
+      await withdrawNaka(
+        _basicStakeInfo.addressContract,
+        _basicStakeInfo.stakeType
+      )
+      // console.log("resultBasic", resultBasic)
+    }
+  }
 
   /**
    * @description Claim staked NAKA
    */
-  // const onClaim = () => {}
+  const onClaim = async (
+    _basicStakeInfo?: IStakingBasicData,
+    _userStakedInfo?: IUserStakedInfo
+  ) => {
+    if (profile && profile.address && _basicStakeInfo && _userStakedInfo) {
+      // console.log("account", account)
+      await claimReward(
+        _userStakedInfo.comInterestBN.toString(),
+        _basicStakeInfo.addressContract,
+        _basicStakeInfo.stakeType
+      )
+      // console.log("resultBasic", resultBasic)
+    }
+  }
 
   /**
    * @description Handle claim/withdraw events button
    */
-  const handleClaimWithdraw = (_userStakedInfo?: IUserStakedInfo) => {
-    // const endDate = _staked ? dayjs(_staked.endDate) : dayjs()
-    // if (!_staked || endDate.isAfter(dayjs())) return
-    // const action = _staked.comInterest === 0 ? onWithdraw : onClaim
-    // action()
+  const handleClaimWithdraw = (
+    _basicStakeInfo?: IStakingBasicData,
+    _userStakedInfo?: IUserStakedInfo
+  ) => {
+    if (_userStakedInfo && _userStakedInfo.comInterest === 0) {
+      onWithdraw(_basicStakeInfo, _userStakedInfo)
+    } else {
+      onClaim(_basicStakeInfo, _userStakedInfo)
+    }
   }
 
   const handleStake = () => {}
 
+  /**
+   * @description Fetch staking info
+   */
   const fetchStakingInfo = useCallback(
     async (_contractAddress: string, _stakingTypes: TStaking) => {
       const resultBasic = await getBasicStakingData(
@@ -185,11 +199,14 @@ const useGlobalStaking = () => {
    * @param _stakingTypes
    */
   const onRefresh = (_contractAddress: string, _stakingTypes: TStaking) => {
-    setBasicStakeInfo({} as IStakingBasicData)
-    setUserStakedInfo({} as IUserStakedInfo)
+    setBasicStakeInfo(DEFAULT_STAKING_BASIC_DATA)
+    setUserStakedInfo(DEFAULT_USER_STAKED_INFO)
     fetchStakingInfo(_contractAddress, _stakingTypes)
   }
 
+  /**
+   * @description Handle group staking by date
+   */
   useMemo(async () => {
     if (stakingAll) {
       /**
@@ -213,6 +230,10 @@ const useGlobalStaking = () => {
       }
     }
   }, [stakingAll])
+
+  // useMemo(() => {
+  //   console.log("address", address)
+  // }, [handleConnectWithMetamask])
 
   return {
     flexibleStaking,

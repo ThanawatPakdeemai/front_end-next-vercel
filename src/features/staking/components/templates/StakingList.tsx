@@ -19,10 +19,11 @@ const StakingList = ({ stakeGroupByDatetime }: IFixedAPR) => (
       <StakingPeriodDate
         key={uuid()}
         type={item.type}
-        date={dayjs(item.datetime).format("DD MMM YYYY")}
-        time={dayjs(item.datetime).format("h:mm A")}
+        datetime={item.datetime}
         className="mt-5"
-        // onClick={() => onClickStaking(item)}
+        lockStatus={
+          dayjs().unix() > dayjs(item.datetime).unix() ? "locked" : "available"
+        }
         link={`/staking/${dayjs(item.datetime)
           .format("DD MMM YYYY")
           .split(" ")

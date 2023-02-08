@@ -17,7 +17,7 @@ const PeriodLabel = ({ days, className, type }: IPeriodLabel) => (
     {(days && days !== -1) || days === undefined ? (
       <>
         {days !== undefined && (
-          <p className="text-neutral-30 mb-4 overflow-hidden line-clamp-1">
+          <p className="text-neutral-30 mb-4 overflow-hidden text-sm line-clamp-1">
             {days} days
           </p>
         )}
@@ -25,7 +25,7 @@ const PeriodLabel = ({ days, className, type }: IPeriodLabel) => (
         <p
           className={`w-max rounded ${
             type === "fixed" ? "bg-error-main" : "bg-secondary-main"
-          } px-6 py-1 font-neue-machina-bold text-xs text-neutral-900`}
+          } px-6 py-1 font-neue-machina-bold text-neutral-900`}
         >
           {type} APR
         </p>

@@ -4,6 +4,7 @@ import StakingList from "@feature/staking/components/templates/StakingList"
 import useGlobalStaking from "@feature/staking/containers/hook/useGlobalStaking"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
 import useTabContext from "@feature/tab/contexts/useTabContext"
+// import { useWeb3Provider } from "@providers/Web3Provider"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"
 

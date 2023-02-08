@@ -9,16 +9,20 @@ import {
 import { ethers } from "ethers"
 import FlexibleStakingAbi from "@configs/abi/FlexibleStaking.json"
 import StakingAbi from "@configs/abi/Staking.json"
+import {
+  DEFAULT_STAKING_BASIC_DATA,
+  DEFAULT_USER_STAKED_INFO
+} from "@feature/staking/containers/constants/Staking"
+import { ITransactionResponse } from "@interfaces/ITransaction"
+// import { ErrorDescription } from "@ethersproject/abi/lib/interface"
 // import {
 //   getFlexibleStakingContract,
 //   getStakingContract
 // } from "../contractHelpers"
-// // import { useState } from "react"
+import { UserRejectedRequestError } from "@web3-react/injected-connector"
 
 const useContractStaking = () => {
   // const { signer } = useWeb3Provider()
-  // const [isLoading, setIsLoading] = useState(false)
-  // const stakingAddress = _stakingProps.split(",")
 
   // const getContractProvider = (
   //   _contractAddress: string,
@@ -98,18 +102,7 @@ const useContractStaking = () => {
           stakeType: _stakingTypes
         })
       } catch (err) {
-        resolve({
-          option_title: "",
-          period: 0,
-          addressContract: "",
-          startDate: "",
-          endDate: "",
-          APR: 0,
-          totalStake: 0,
-          totalReward: 0,
-          poolLimit: 0,
-          stakeType: _stakingTypes
-        })
+        resolve(DEFAULT_STAKING_BASIC_DATA)
       }
     })
 
@@ -140,393 +133,75 @@ const useContractStaking = () => {
           stakeAmount: Helper.WeiToNumber(amount),
           comInterest: Number(
             Helper.WeiToNumber(userUnclaim.toString()).toFixed(4)
-          )
+          ),
+          stakeAmountBN: amount,
+          comInterestBN: userUnclaim
         })
       } catch (err) {
-        resolve({
-          stakeAmount: 0,
-          comInterest: 0
-        })
+        resolve(DEFAULT_USER_STAKED_INFO)
       }
     })
 
-  // const getOptionPeriod = async () =>
-  //   // eslint-disable-next-line no-async-promise-executor
-  //   new Promise(async (resolve) => {
-  //     try {
-  //       setIsLoading(true)
-  //       let data: IPeriodOptions[] = []
-  //       const allContractPromise: any = []
-  //       stakingAddress.forEach(async (stakeAddress) => {
-  //         allContractPromise.push(getStakeByAddr(stakeAddress))
-  //       })
+  const claimReward = (
+    _claimAmount: string,
+    _contractAddress: string,
+    _stakingTypes: TStaking
+  ) =>
+    new Promise<ITransactionResponse | UserRejectedRequestError>(
+      (resolve, reject) => {
+        const { ethereum }: any = window
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+        const contract = new ethers.Contract(
+          _contractAddress,
+          _stakingTypes === "fixed" ? StakingAbi.abi : FlexibleStakingAbi.abi,
+          signer
+        )
+        contract
+          .claimReward(_claimAmount)
+          .then((response: ITransactionResponse) => {
+            resolve(response)
+          })
+          .catch((error: Error) => {
+            reject(error)
+          })
+      }
+    )
 
-  //       await Promise.all(allContractPromise).then((values) => {
-  //         data = values
-  //       })
-
-  //       if (data.length > 0) {
-  //         data.forEach((option) => {
-  //           if (option.status === false) {
-  //             return {
-  //               status: false
-  //             }
-  //           }
-  //         })
-  //       }
-
-  //       setIsLoading(false)
-  //       resolve({
-  //         status: true,
-  //         data
-  //       })
-  //     } catch (error) {
-  //       setIsLoading(false)
-  //       resolve({
-  //         status: false,
-  //         error
-  //       })
-  //     }
-  //   })
-
-  // const getMyLocked = async (_contractAddress: string, _address: string) =>
-  //   new Promise<IMyLockedResponse>(async (resolve) => {
-  //     try {
-  //       // setIsLoading(true)
-  //       // let data: IPeriodOptions[] = []
-  //       const result = await getMyLockedFromContract(_contractAddress, _address)
-  //       console.log("result", result)
-  //       // const allContractPromise: any = []
-  //       // stakingAddress.forEach(async (stakeAddress) => {
-  //       //   allContractPromise.push(
-  //       //     getMyLockedFromContract(stakeAddress, _address)
-  //       //   )
-  //       // })
-  //       // await Promise(allContractPromise).then((values) => {
-  //       //   data = values
-  //       // })
-  //       // if (data.length > 0) {
-  //       //   data.forEach((option) => {
-  //       //     if (option.status === false) {
-  //       //       return {
-  //       //         status: false,
-  //       //         error: "error"
-  //       //       }
-  //       //     }
-  //       //   })
-  //       // }
-  //       // setIsLoading(false)
-  //       resolve({
-  //         status: true,
-  //         data: data
-  //       })
-  //     } catch (error) {
-  //       // setIsLoading(false)
-  //       // resolve({
-  //       //   status: false,
-  //       //   data: []
-  //       // })
-  //     }
-  //   })
-
-  // const stakeNaka = async (
-  //   _address: string,
-  //   _stakeAmount: string,
-  //   _contractAddress: string
-  // ) =>
-  //   new Promise((resolve, reject) => {
-  //     setIsLoading(true)
-  //     const stake = getContractProvider(_contractAddress)
-  //     stake
-  //       .stakeNaka(_stakeAmount)
-  //       .send({
-  //         from: _address
-  //       })
-  //       .then((response: any) => {
-  //         setIsLoading(false)
-  //         resolve(response)
-  //       })
-  //       .catch((error: Error) => {
-  //         setIsLoading(false)
-  //         reject(error)
-  //       })
-  //   })
-
-  // const claimReward = (
-  //   _address: string,
-  //   _claimAmount: string,
-  //   _contractAddress: string
-  // ) =>
-  //   new Promise<ITransactionResponse>((resolve, reject) => {
-  //     setIsLoading(true)
-  //     const stake = getContractProvider(_contractAddress)
-  //     stake
-  //       .claimReward(_claimAmount)
-  //       .send({
-  //         from: _address
-  //       })
-  //       .then((response: any) => {
-  //         setIsLoading(false)
-  //         resolve(response)
-  //       })
-  //       .catch((error: Error) => {
-  //         setIsLoading(false)
-  //         reject(error)
-  //       })
-  //   })
-
-  // const withdrawNaka = (_address: string, _contractAddress: string) =>
-  //   new Promise<ITransactionResponse>((resolve, reject) => {
-  //     setIsLoading(true)
-  //     const stake = getContractProvider(_contractAddress)
-  //     stake
-  //       .withdrawNaka()
-  //       .send({
-  //         from: _address
-  //       })
-  //       .then((response: any) => {
-  //         setIsLoading(false)
-  //         resolve(response)
-  //       })
-  //       .catch((error: Error) => {
-  //         setIsLoading(false)
-  //         reject(error)
-  //       })
-  //   })
-
-  // const getPoolStakeLimit = (_contractAddress: string) =>
-  //   new Promise((resolve) => {
-  //     setIsLoading(true)
-  //     const stake = getContractProvider(_contractAddress)
-  //     stake
-  //       .poolStakeLimit()
-  //       .then((_response) => {
-  //         setIsLoading(false)
-  //         resolve({
-  //           status: true,
-  //           data: Helper.WeiToNumber(_response._hex.toString())
-  //         })
-  //       })
-  //       .catch((_error) => {
-  //         setIsLoading(false)
-  //         resolve({ status: false, data: 0 })
-  //       })
-  //   })
-
-  // const getPoolReward = (_contractAddress: string) =>
-  //   new Promise((resolve) => {
-  //     setIsLoading(true)
-  //     const stake = getContractProvider(_contractAddress)
-  //     stake
-  //       .poolReward()
-  //       .then((_response) => {
-  //         setIsLoading(false)
-  //         resolve({
-  //           status: true,
-  //           data: Helper.WeiToNumber(_response._hex.toString())
-  //         })
-  //       })
-  //       .catch((_error) => {
-  //         setIsLoading(false)
-  //         resolve({ status: false, data: 0 })
-  //       })
-  //   })
-
-  // const getPoolStakeTotal = (_contractAddress: string) =>
-  //   new Promise((resolve) => {
-  //     setIsLoading(true)
-  //     const stake = getContractProvider(_contractAddress)
-  //     stake
-  //       .poolStakeTotal()
-  //       .then((_response) => {
-  //         setIsLoading(false)
-  //         resolve({
-  //           status: true,
-  //           data: Helper.WeiToNumber(_response._hex.toString())
-  //         })
-  //       })
-  //       .catch((_error) => {
-  //         setIsLoading(false)
-  //         resolve({
-  //           status: true,
-  //           data: 0
-  //         })
-  //       })
-  //   })
-
-  // const getUserStakeLimit = (_contractAddress: string) =>
-  //   new Promise((resolve) => {
-  //     setIsLoading(true)
-  //     const stake = getContractProvider(_contractAddress)
-  //     stake
-  //       .userStakeLimit()
-  //       .then((_response) => {
-  //         setIsLoading(false)
-  //         resolve({
-  //           status: true,
-  //           data: Helper.WeiToNumber(_response._hex.toString())
-  //         })
-  //       })
-  //       .catch((_error) => {
-  //         setIsLoading(false)
-  //         resolve({
-  //           status: true,
-  //           data: 0
-  //         })
-  //       })
-  //   })
-
-  // const getUserStakeAmount = (_address: string, _contractAddress: string) =>
-  //   new Promise((resolve) => {
-  //     setIsLoading(true)
-  //     const stake = getContractProvider(_contractAddress)
-  //     stake
-  //       .getUserStakeAmount(_address)
-  //       .then((_response) => {
-  //         setIsLoading(false)
-  //         resolve({
-  //           status: true,
-  //           data: Helper.WeiToNumber(_response._hex.toString())
-  //         })
-  //       })
-  //       .catch((_error) => {
-  //         setIsLoading(false)
-  //         resolve({ status: false, data: 0 })
-  //       })
-  //   })
-
-  // const getUserClaimedAmount = (_address: string, _contractAddress: string) =>
-  //   new Promise((resolve) => {
-  //     setIsLoading(true)
-  //     const stake = getContractProvider(_contractAddress)
-  //     stake
-  //       .getUserClaimedAmount(_address)
-  //       .then((_response) => {
-  //         setIsLoading(false)
-  //         resolve({
-  //           status: true,
-  //           data: Helper.WeiToNumber(_response._hex.toString())
-  //         })
-  //       })
-  //       .catch((_error) => {
-  //         setIsLoading(false)
-  //         resolve({ status: false, data: 0 })
-  //       })
-  //   })
-
-  // const getUserUnclaimedAmount = (_address: string, _contractAddress: string) =>
-  //   new Promise((resolve) => {
-  //     setIsLoading(true)
-  //     const stake = getContractProvider(_contractAddress)
-  //     stake
-  //       .getUserUnclaimAmount(_address)
-  //       .then((_response) => {
-  //         setIsLoading(false)
-  //         resolve({
-  //           status: true,
-  //           data: parseFloat(ethers.utils.formatUnits(_response, 18)),
-  //           dataUint: _response
-  //         })
-  //       })
-  //       .catch((_error) => {
-  //         setIsLoading(false)
-  //         resolve({ status: false, data: 0, dataUint: 0 })
-  //       })
-  //   })
-
-  // const startStakeTime = (_contractAddress: string) =>
-  //   new Promise((resolve) => {
-  //     setIsLoading(true)
-  //     const stake = getContractProvider(_contractAddress)
-  //     stake
-  //       .startStakeTime()
-  //       .then((_response) => {
-  //         setIsLoading(false)
-  //         resolve({
-  //           status: true,
-  //           data: Number(_response) * 1000
-  //         })
-  //       })
-  //       .catch((_error) => {
-  //         setIsLoading(false)
-  //         resolve({ status: false, data: 0 })
-  //       })
-  //   })
-
-  // const endStakeTime = (_contractAddress: string) =>
-  //   new Promise((resolve) => {
-  //     setIsLoading(true)
-  //     const stake = getContractProvider(_contractAddress)
-  //     stake
-  //       .endStakeTime()
-  //       .then((_response) => {
-  //         setIsLoading(false)
-  //         resolve({
-  //           status: true,
-  //           data: Number(_response) * 1000
-  //         })
-  //       })
-  //       .catch((_error) => {
-  //         setIsLoading(false)
-  //         resolve({ status: false, data: 0 })
-  //       })
-  //   })
-
-  // const getOnceDuration = (_contractAddress: string) =>
-  //   new Promise((resolve) => {
-  //     setIsLoading(true)
-  //     const stake = getContractProvider(_contractAddress)
-  //     stake
-  //       .duration()
-  //       .then((_response) => {
-  //         setIsLoading(false)
-  //         resolve({
-  //           status: true,
-  //           data: Number(_response)
-  //         })
-  //       })
-  //       .catch((_error) => {
-  //         setIsLoading(false)
-  //         resolve({ status: false, data: 0 })
-  //       })
-  //   })
-
-  // const getOnceAPR = (_contractAddress: string) =>
-  //   new Promise((resolve) => {
-  //     setIsLoading(true)
-  //     const stake = getContractProvider(_contractAddress)
-  //     stake
-  //       .getCurrentAPR()
-  //       .then((_response) => {
-  //         setIsLoading(false)
-  //         resolve({ status: true, data: Number(_response) / 100 })
-  //       })
-  //       .catch((_error) => {
-  //         setIsLoading(false)
-  //         resolve({ status: false, data: 0 })
-  //       })
-  //   })
+  const withdrawNaka = (_contractAddress: string, _stakingTypes: TStaking) =>
+    new Promise<ITransactionResponse>((resolve, reject) => {
+      // setIsLoading(true)
+      // const stake = getContractProvider(_contractAddress, _stakingTypes)
+      const { ethereum }: any = window
+      const provider = new ethers.providers.Web3Provider(ethereum)
+      const signer = provider.getSigner()
+      const contract = new ethers.Contract(
+        _contractAddress,
+        _stakingTypes === "fixed" ? StakingAbi.abi : FlexibleStakingAbi.abi,
+        signer
+      )
+      contract
+        .withdrawNaka()
+        // .send({
+        //   from: _address
+        // })
+        .then((response: any) => {
+          // setIsLoading(false)
+          resolve(response)
+        })
+        .catch((error: Error) => {
+          // setIsLoading(false)
+          reject(error)
+        })
+    })
 
   return {
-    // getOptionPeriod,
     handleAPR,
     getBasicStakingData,
-    getUserStakedInfo
+    getUserStakedInfo,
+    claimReward,
+    withdrawNaka
     // stakeNaka,
-    // claimReward,
-    // withdrawNaka,
-    // getPoolStakeLimit,
-    // getPoolReward,
-    // getPoolStakeTotal,
-    // getUserStakeLimit,
-    // getUserStakeAmount,
-    // getUserClaimedAmount,
-    // getUserUnclaimedAmount,
-    // startStakeTime,
-    // endStakeTime,
-    // getOnceDuration,
-    // getOnceAPR
-    // isLoading
   }
 }
 

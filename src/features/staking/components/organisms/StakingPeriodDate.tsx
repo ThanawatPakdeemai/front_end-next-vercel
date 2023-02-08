@@ -7,41 +7,34 @@ import PeriodLabel from "../molecules/PeriodLabel"
 export interface IStakingDate {
   days?: number
   type: TStaking
-  lockedStatus?: TStakingStatus
-  date: string
-  time: string
+  datetime: string
   className?: string
   link?: string
-  onClick?: () => void
+  lockStatus: TStakingStatus
 }
 
 const StakingPeriodDate = ({
   days,
   type,
-  date,
-  time,
+  datetime,
   className,
   link,
-  lockedStatus,
-  onClick
+  lockStatus
 }: IStakingDate) => {
   const stakeContent = () => (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`relative grid w-full grid-cols-[140px_calc(100%-140px)] items-center rounded-[13px] bg-neutral-800 p-3 uppercase ${className}`}
+    <div
+      className={`relative grid w-full grid-cols-[140px_calc(100%-140px)] items-center rounded-[13px] bg-neutral-800 p-3 font-neue-machina-semi text-[10px] uppercase ${className}`}
     >
       <PeriodLabel
         days={days}
         type={type}
       />
       <PeriodDate
-        date={date}
-        time={time}
+        datetime={datetime}
         className="ml-3"
-        lockedStatus={lockedStatus}
+        lockStatus={lockStatus}
       />
-    </button>
+    </div>
   )
 
   return link ? <Link href={link}>{stakeContent()}</Link> : stakeContent()

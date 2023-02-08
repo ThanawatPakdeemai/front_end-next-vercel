@@ -7,8 +7,8 @@ export interface IStakingTitle {
 
 const StakingTitle = ({ title, className }: IStakingTitle) => (
   <div className={`${className}`}>
-    <div className="mb-10 flex items-center justify-between uppercase ">
-      <p className="min-w-[250px] font-neue-machina-bold text-lg text-neutral-400">
+    <div className="mb-10 flex items-center justify-between">
+      <p className="min-w-[250px] font-neue-machina-bold text-neutral-400">
         {title}
       </p>
       <div className="h-[10px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')]" />

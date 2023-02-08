@@ -11,28 +11,33 @@ import ActionBar from "../molecules/ActionBar"
 export interface IStakingDetails {
   dataStaking: IStakingAll
   className?: string
+  handleOpen?: () => void
 }
 
-const StakingDetails = ({ dataStaking, className = "" }: IStakingDetails) => {
+const StakingDetails = ({
+  dataStaking,
+  className = "",
+  handleOpen
+}: IStakingDetails) => {
   const { fetchStakingInfo, basicStakeInfo, userStakedInfo, onRefresh } =
     useGlobalStaking()
-
   const { handleClaimWithdraw } = useGlobalStaking()
 
   /**
    * @description Get staking locked data by wallet address
    * @returns
    */
-
   useEffect(() => {
     fetchStakingInfo(dataStaking.contract_address, dataStaking.type)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [userStakedInfo, basicStakeInfo])
 
   return (
-    <div className={`${className}`}>
+    <div
+      className={`${className} font-neue-machina-semi text-[10px] uppercase`}
+    >
       {basicStakeInfo ? (
-        <div className="grid grid-flow-row-dense grid-cols-4 gap-3 rounded-[13px] bg-neutral-800 p-3 uppercase">
+        <div className="grid grid-flow-row-dense grid-cols-4 gap-3 rounded-[13px] bg-neutral-800 p-3">
           <div className="row-span-2 rounded-lg shadow-xl">
             <PeriodLabel
               days={basicStakeInfo?.period || 0}
@@ -77,15 +82,16 @@ const StakingDetails = ({ dataStaking, className = "" }: IStakingDetails) => {
       <ActionBar
         className="flex w-full justify-end"
         status="locked"
-        label="Open until"
-        redeemDatetime={basicStakeInfo?.startDate || "00:00:00"}
         type={dataStaking.type}
-        onClickRedeem={() => handleClaimWithdraw(userStakedInfo)}
+        onClickRedeem={() =>
+          handleClaimWithdraw(basicStakeInfo, userStakedInfo)
+        }
         onRefresh={() =>
           onRefresh(dataStaking.contract_address, dataStaking.type)
         }
         basicStakeInfo={basicStakeInfo}
         userStakedInfo={userStakedInfo}
+        handleOpen={handleOpen}
       />
     </div>
   )

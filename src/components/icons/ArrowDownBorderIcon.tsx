@@ -3,7 +3,7 @@ import React from "react"
 function IconArrowDownBorder({
   width = 24,
   height = 24,
-  stroke = "E1E2E2",
+  stroke = "#E1E2E2",
   className
 }: React.SVGProps<SVGSVGElement>) {
   return (

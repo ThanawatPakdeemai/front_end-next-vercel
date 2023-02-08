@@ -1,3 +1,5 @@
+import { BigNumber } from "ethers"
+
 export type TStaking = "fixed" | "flexible"
 export type TStakingStatus = "locked" | "available"
 
@@ -17,6 +19,8 @@ export interface IStakingBasicData {
 export interface IUserStakedInfo {
   comInterest: number
   stakeAmount: number
+  stakeAmountBN: BigNumber
+  comInterestBN: BigNumber
 }
 
 export interface IStakingOption {

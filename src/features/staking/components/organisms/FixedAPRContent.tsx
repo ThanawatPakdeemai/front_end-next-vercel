@@ -50,14 +50,18 @@ const FixedAPRContent = () => {
               <StakingPeriodDate
                 days={item.period}
                 type={item.type}
-                date={dayjs(item.start_stake_time).format("DD MMM YYYY")}
-                time={dayjs(item.start_stake_time).format("h:mm A")}
+                datetime={stakingData.datetime}
                 className="mb-4"
-                onClick={handleOpen}
+                lockStatus={
+                  dayjs().unix() > dayjs(stakingData.datetime).unix()
+                    ? "locked"
+                    : "available"
+                }
               />
               <StakingDetails
                 dataStaking={item}
                 className="mb-10"
+                handleOpen={handleOpen}
               />
             </div>
           ))}

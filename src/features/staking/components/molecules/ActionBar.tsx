@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import { Button, SxProps } from "@mui/material"
 import ReloadIcon from "@components/icons/ReloadIcon"
 import LockIcon from "@components/icons/LockIcon"
 import IconArrowDownBorder from "@components/icons/ArrowDownBorderIcon"
@@ -12,13 +11,12 @@ import {
 import dayjs from "dayjs"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import { iconmotion } from "@components/organisms/Footer"
+import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import { useTranslation } from "react-i18next"
 
 export interface IStakingDate {
-  label: string
-  redeemDatetime: string
   buttonLabelOne?: string
   buttonLabelTwo?: string
-  onClickStake?: () => void
   onClickRedeem?: () => void
   onRefresh?: () => void
   className?: string
@@ -26,99 +24,157 @@ export interface IStakingDate {
   status: TStakingStatus
   userStakedInfo?: IUserStakedInfo
   basicStakeInfo?: IStakingBasicData
-}
-
-const ButtonStyle: SxProps = {
-  "&.Mui-disabled": {
-    backgroundColor: "#18181C!important",
-    border: "1px solid #232329;"
-  }
+  handleOpen?: () => void
 }
 
 const ActionBar = ({
-  label,
-  redeemDatetime,
-  onClickStake = () => {},
   onClickRedeem = () => {},
   onRefresh = () => {},
   className,
   type,
   status,
   userStakedInfo,
-  basicStakeInfo
+  basicStakeInfo,
+  handleOpen
 }: IStakingDate) => {
-  const [disabledClaimWithdraw, setDisabledClaimWithdraw] =
-    useState<boolean>(true)
+  // const { hydrated } = useGlobal()
+  const { t } = useTranslation()
+
+  const [disabledClaim, setDisabledClaim] = useState<boolean>(true)
+  const [disabledWithdraw, setDisabledWithdraw] = useState<boolean>(true)
   const [disabledStake, setDisabledStake] = useState<boolean>(true)
 
+  const startIconButton =
+    status === "locked" ? (
+      <LockIcon stroke={`${disabledStake ? "#F1F4F4" : "#4E5057"}`} />
+    ) : (
+      <IconArrowDownBorder
+        stroke={`${disabledStake ? "#F1F4F4" : "#4E5057"}`}
+      />
+    )
+
+  const stakeEnded = dayjs() > dayjs(basicStakeInfo && basicStakeInfo.endDate)
+  const interestEqualToZero = userStakedInfo && userStakedInfo.comInterest === 0
+  const stakeAmountGreaterThanZero =
+    userStakedInfo && userStakedInfo.stakeAmount > 0
+  const stakeStarted =
+    dayjs() > dayjs(basicStakeInfo && basicStakeInfo.startDate)
+  const interestGreaterThanZero =
+    userStakedInfo && userStakedInfo.comInterest > 0
+
+  const buttonStake = () => {
+    if (stakeEnded && interestEqualToZero && stakeAmountGreaterThanZero) {
+      return (
+        <ButtonToggleIcon
+          startIcon={startIconButton}
+          text="Withdraw"
+          type="button"
+          className="ml-3 h-[40px] w-[134px] bg-green-card p-0 font-neue-machina-semi text-sm text-neutral-200 disabled:bg-neutral-800 disabled:text-neutral-600"
+          handleClick={onClickRedeem}
+          disabled={disabledWithdraw}
+        />
+      )
+    }
+    if (stakeStarted && interestGreaterThanZero) {
+      return (
+        <ButtonToggleIcon
+          startIcon={startIconButton}
+          text="Claim"
+          type="button"
+          className={`h-[40px] w-[134px] p-0 text-sm text-neutral-200 disabled:bg-neutral-800 disabled:text-neutral-600 ${
+            type === "fixed" ? "bg-red-card" : "bg-secondary-main"
+          } ml-3 w-full font-neue-machina-semi`}
+          handleClick={onClickRedeem}
+          disabled={disabledClaim}
+        />
+      )
+    }
+    return null
+  }
+
+  const messageLabel = () => {
+    if (
+      dayjs() > dayjs(basicStakeInfo && basicStakeInfo.startDate) &&
+      userStakedInfo &&
+      userStakedInfo.comInterest !== 0 &&
+      userStakedInfo.stakeAmount !== 0
+    ) {
+      return t("stake_ended_please_redeem")
+    }
+    if (
+      userStakedInfo &&
+      userStakedInfo.comInterest === 0 &&
+      userStakedInfo.stakeAmount > 0
+    ) {
+      return t("stake_ended_please_redeem")
+    }
+    if (
+      userStakedInfo &&
+      userStakedInfo.comInterest > 0 &&
+      userStakedInfo.stakeAmount > 0
+    ) {
+      return t("stake_ended_please_redeem")
+    }
+    if (dayjs() < dayjs(basicStakeInfo && basicStakeInfo.startDate)) {
+      return (
+        <div className="flex items-center">
+          {t("open_until")}
+          <span className="ml-3 text-neutral-300">
+            {basicStakeInfo && basicStakeInfo.startDate}
+          </span>
+        </div>
+      )
+    }
+    return t("stake_ended")
+  }
+
   useEffect(() => {
-    if (userStakedInfo) {
-      setDisabledClaimWithdraw(true)
+    // มีเงินต้นให้รับ
+    if (
+      userStakedInfo &&
+      userStakedInfo.comInterest === 0 &&
+      userStakedInfo.stakeAmount > 0
+    ) {
+      setDisabledWithdraw(false)
+    }
+    // มีดอกเบี้ยและเงินต้นให้รับ
+    if (
+      dayjs() > dayjs(basicStakeInfo && basicStakeInfo.startDate) &&
+      userStakedInfo &&
+      userStakedInfo.comInterest > 0 &&
+      userStakedInfo.stakeAmount > 0
+    ) {
+      setDisabledClaim(false)
+      // Mock
       setDisabledStake(true)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [userStakedInfo, basicStakeInfo])
 
   return (
     <div className={`${className}`}>
       <div className="flex w-fit flex-row items-center py-6 uppercase">
-        <p
+        <div
           className={`${
-            type === "fixed" ? "text-secondary-main" : "text-red-card"
+            type === "fixed" ? "text-red-card" : "text-secondary-main"
           }`}
         >
-          {label}
-          {redeemDatetime && (
-            <span className="ml-3 text-neutral-300">{redeemDatetime}</span>
-          )}
-        </p>
+          {messageLabel()}
+        </div>
 
         <div className="mr-3 ml-5 flex items-center">
-          <Button
-            color="error"
-            className={`${
-              type === "fixed"
-                ? "!bg-neutral-800 !text-neutral-600"
-                : "bg-secondary-main !text-neutral-200"
-            } text-md ml-3 w-full font-neue-machina-semi `}
-            variant="contained"
-            size="large"
-            type="submit"
-            disabled={disabledStake}
-            onClick={onClickStake}
-            sx={ButtonStyle}
-          >
-            {status === "locked" ? (
-              <LockIcon stroke="#4E5057" />
-            ) : (
-              <IconArrowDownBorder />
-            )}
-            <p className="ml-5">Stake</p>
-          </Button>
-          <Button
-            color="secondary"
-            className="text-md ml-3 w-full font-neue-machina-semi"
-            variant="contained"
-            size="large"
-            type="submit"
-            onClick={onClickRedeem}
-            disabled={disabledClaimWithdraw}
-            sx={ButtonStyle}
-          >
-            {status === "locked" ? (
-              <LockIcon stroke="#4E5057" />
-            ) : (
-              <IconArrowDownBorder />
-            )}
-            <div className="ml-5">
-              {userStakedInfo &&
-              basicStakeInfo &&
-              userStakedInfo.comInterest === 0 &&
-              dayjs(basicStakeInfo.endDate).isBefore(dayjs())
-                ? "Withdraw"
-                : "Claim"}
-            </div>
-          </Button>
+          {dayjs() < dayjs(basicStakeInfo && basicStakeInfo.startDate) && (
+            <ButtonToggleIcon
+              startIcon={startIconButton}
+              text="Stake"
+              type="button"
+              className={`h-[40px] w-[134px] p-0 text-sm text-neutral-200 disabled:bg-neutral-800 disabled:text-neutral-600 ${
+                type === "fixed" ? "bg-red-card" : "bg-secondary-main"
+              } ml-3 w-full font-neue-machina-semi`}
+              handleClick={handleOpen}
+              disabled={disabledStake}
+            />
+          )}
+          {buttonStake()}
         </div>
 
         <ButtonIcon

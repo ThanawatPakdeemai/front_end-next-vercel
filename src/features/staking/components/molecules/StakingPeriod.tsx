@@ -20,7 +20,7 @@ const StakingPeriod = ({
   className
 }: IStakingPeriod) => (
   <div
-    className={`flex h-full items-center justify-between rounded-[10px] bg-neutral-900 p-5 text-[13px] ${className}`}
+    className={`flex h-full items-center justify-between rounded-[10px] bg-neutral-900 p-5 ${className}`}
   >
     <p className="flex items-center text-neutral-600">
       Period &nbsp;
@@ -42,7 +42,7 @@ const StakingPeriod = ({
     <p className="flex items-center text-neutral-600">
       {type === "fixed" ? "Fixed APR." : "Est APR."}
       {est !== -1 ? (
-        <span className="ml-3 text-[15px] text-varidian-default">
+        <span className="ml-3 text-sm text-varidian-default">
           {est ? numberWithCommas(est) : est}%
         </span>
       ) : (

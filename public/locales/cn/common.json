@@ -266,5 +266,7 @@
   "whats_new": "最新消息",
   "ntf_game": "NFT游戏",
   "your_naka_staked": "你的NAKA质押",
-  "your_naka_unclaimed": "你的NAKA未认领"
+  "your_naka_unclaimed": "你的NAKA未认领",
+  "stake_ended_please_redeem": "质押结束，请赎回",
+  "stake_ended": "质押结束"
 }

@@ -1,3 +1,7 @@
+import {
+  DEFAULT_STAKING_BASIC_DATA,
+  DEFAULT_USER_STAKED_INFO
+} from "@constants/staking"
 import useContractStaking from "@feature/contract/containers/hooks/useContractStaking"
 import {
   IStakingAll,
@@ -10,10 +14,6 @@ import useProfileStore from "@stores/profileStore"
 import { useQuery } from "@tanstack/react-query"
 import dayjs from "dayjs"
 import { useCallback, useMemo, useState } from "react"
-import {
-  DEFAULT_STAKING_BASIC_DATA,
-  DEFAULT_USER_STAKED_INFO
-} from "../constants/Staking"
 import { getStakingAll } from "../services/staking.service"
 
 const useGlobalStaking = () => {

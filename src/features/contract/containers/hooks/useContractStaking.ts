@@ -12,7 +12,7 @@ import StakingAbi from "@configs/abi/Staking.json"
 import {
   DEFAULT_STAKING_BASIC_DATA,
   DEFAULT_USER_STAKED_INFO
-} from "@feature/staking/containers/constants/Staking"
+} from "@constants/staking"
 import { ITransactionResponse } from "@interfaces/ITransaction"
 // import { ErrorDescription } from "@ethersproject/abi/lib/interface"
 // import {

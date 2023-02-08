@@ -83,6 +83,11 @@ export const MENU = [
         link: "/nft-games",
         icon: MapOutlinedIcon
       }
+      // {
+      //   name: "NFT Pass",
+      //   link: "/nft-pass",
+      //   icon: MapOutlinedIcon
+      // }
     ]
   },
   {

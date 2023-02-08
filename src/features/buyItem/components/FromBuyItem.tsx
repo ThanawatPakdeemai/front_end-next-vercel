@@ -16,7 +16,9 @@ import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 import { useToast } from "@feature/toast/containers"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { useTranslation } from "next-i18next"
-// import Helper from "@utils/helper"
+import Helper from "@utils/helper"
+import useGetBalanceVault from "@feature/inventory/containers/hooks/useGetBalanceVault"
+import useWalletStore from "@stores/wallet"
 import useBuyGameItems from "../containers/hooks/useBuyGameItems"
 
 const iconmotion = {
@@ -36,9 +38,8 @@ const FromBuyItem = () => {
   const { t } = useTranslation()
   const game = useGameStore((state) => state.data)
   const profile = useProfileStore((state) => state.profile.data)
-  const { errorToast } = useToast()
-
-  const { gameItemList } = useGamesByGameId({
+  const { errorToast, successToast } = useToast()
+  const { gameItemList, refetch } = useGamesByGameId({
     _playerId: profile ? profile.id : "",
     _gameId: game ? game._id : ""
   })
@@ -56,34 +57,59 @@ const FromBuyItem = () => {
       currency_id: "",
       qty: 1,
       item: {},
-      currency: {}
+      currency: {},
+      nakaPerItem: 0
     }
   })
 
   const { mutateBuyItems } = useBuyGameItems()
+  const { balanceVaultNaka } = useGetBalanceVault(profile?.address ?? "")
+  const { setVaultBalance } = useWalletStore()
+
   const onSubmit = (_data) => {
-    // console.log(_data)
     mutateBuyItems({
       _player_id: _data.player_id,
       _item_id: _data.item_id,
       _qty: Number(_data.qty)
     })
-    // .then((res) => {
-    // console.log(res)
-    // })
+      .then((res) => {
+        if (res && balanceVaultNaka && balanceVaultNaka.data) {
+          refetch()
+          setVaultBalance(Number(balanceVaultNaka.data))
+          successToast("Buy Items Success")
+        }
+      })
+      .catch((error) => {
+        errorToast(error.message)
+      })
   }
 
   const onError = (_data) => {
     errorToast("error")
   }
 
+  const updatePricePerItem = () => {
+    Helper.calculateItemPerPrice(
+      (watch("item") as IGameItemListData).price
+    ).then((res) => {
+      if (res) {
+        setValue("nakaPerItem", Number(res))
+      } else {
+        setValue("nakaPerItem", 0)
+      }
+    })
+  }
+
   const onQtyUp = () => {
-    setValue("qty", watch("qty") >= 99 ? 99 : watch("qty") + 1)
+    setValue("qty", watch("qty") >= 99 ? 99 : Number(watch("qty")) + 1)
+    updatePricePerItem()
   }
 
   const onQtyDown = () => {
-    setValue("qty", watch("qty") < 1 ? 1 : watch("qty") - 1)
+    setValue("qty", watch("qty") <= 1 ? 1 : Number(watch("qty")) - 1)
+    updatePricePerItem()
   }
+
   return (
     <>
       {game && (
@@ -127,8 +153,9 @@ const FromBuyItem = () => {
                     list={gameItemList}
                     className="w-[410px]"
                     onChangeSelect={(_item) => {
-                      setValue("item", _item)
+                      setValue("item", _item as IGameItemListData)
                       setValue("item_id", _item._id)
+                      updatePricePerItem()
                     }}
                   />
                 )}
@@ -161,7 +188,7 @@ const FromBuyItem = () => {
             )}
           </Box>
           <p className="uppercase text-purple-primary">
-            Skull {} = 13.8389 NAKA
+            Assets / 1 Item = {watch("nakaPerItem")} NAKA
           </p>
 
           <div className="my-4  grid grid-cols-6  content-center gap-4">
@@ -222,7 +249,9 @@ const FromBuyItem = () => {
             </div>
             <div className="flex items-baseline text-secondary-main">
               <p className="pr-2">
-                {/* {Helper.calculateItemPerPrice(watch("item"))} */}
+                {Helper.formatNumber(watch("nakaPerItem") * watch("qty") ?? 0, {
+                  maximumFractionDigits: 4
+                })}
               </p>
               <Image
                 src="/images/logo/Logo-Master2.png"
@@ -233,7 +262,13 @@ const FromBuyItem = () => {
             </div>
           </div>
           <div className="w-full text-end">
-            <p className="text-sm text-black-default">= $0.00</p>
+            <p className="text-sm text-black-default">
+              = $
+              {Helper.formatNumber(
+                watch("qty") *
+                  Number((watch("item") as IGameItemListData)?.price) ?? 0
+              )}
+            </p>
           </div>
           <ButtonGroup className="mt-10 flex flex-col  gap-3">
             <ButtonLink

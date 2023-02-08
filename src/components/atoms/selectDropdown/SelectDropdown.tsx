@@ -8,46 +8,66 @@ import {
   IGameItem
 } from "@feature/dropdown/interfaces/IDropdownService"
 import { IMenuBase } from "@interfaces/IMenu"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+import { ICURRENCY } from "@interfaces/ICurrency"
 
-interface IProp {
+interface IOnchange {
+  onChange?: (
+    _item:
+      | IGameItemListData
+      | ICURRENCY
+      | IGameCategory
+      | IGameItem
+      | IDevice
+      | number
+  ) => void
+}
+interface IProp extends IOnchange {
   className?: string
-  details: IGameCategory[] | IGameItem[] | IDevice[] | IMenuBase[] | any
-  setOnTitle?: (_value: IGameCategory | IGameItem | IDevice) => void
+  details: IMenuBase[] // <= send data format this format IMenuBase
   setExpanded?: (_value: boolean) => void
-  title?: string
-  onChange?: (_onchange: any) => void
 }
 
 const SelectDropdown = ({
   className,
   details,
-  setOnTitle,
-  setExpanded
+  setExpanded,
+  onChange
 }: IProp) => (
   <MenuList
     className={`${className} mx-[6px] mt-[6px] mb-[6px] rounded-[13px] bg-neutral-700 px-[6px] py-[3px]`}
   >
-    {details.map((item: any, index: number) => (
-      <Box
-        key={Number(index)}
-        className="my-1"
-        onClick={() => {
-          if (setOnTitle && setExpanded) {
-            setOnTitle(item)
-            setExpanded(false)
-          }
-        }}
-      >
-        <MenuItemCustom
-          label={item.name}
-          icon=""
-          href={item.href}
-          id=""
-          external={false}
-          active={item.active}
-        />
-      </Box>
-    ))}
+    {details &&
+      details.map((item: IMenuBase, index: number) => (
+        <Box
+          key={Number(index)}
+          className="my-1"
+          onClick={() => {
+            if (onChange && item && item.data) {
+              onChange(
+                item.data as
+                  | IGameItemListData
+                  | ICURRENCY
+                  | IGameCategory
+                  | IGameItem
+                  | IDevice
+              )
+            }
+            if (setExpanded) {
+              setExpanded(false)
+            }
+          }}
+        >
+          <MenuItemCustom
+            label={item.label}
+            icon={item.icon}
+            href={item.href}
+            id=""
+            external={false}
+            active={item.active}
+          />
+        </Box>
+      ))}
   </MenuList>
 )
 

@@ -33,7 +33,7 @@ const useFilterStore = create<ISearch>()(
         set(() => ({ device: _device }), false, "FilterStore/SetDevice")
       }
     }),
-    configZustandDevTools("Count-Store")
+    configZustandDevTools("Search-Store")
   )
 )
 

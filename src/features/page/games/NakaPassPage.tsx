@@ -18,14 +18,16 @@ const NakaPassPage = () => {
     _limit: 10,
     _page: page
   })
+
   return (
     <>
       <NakaPassStoryMode />
+
       <Tagline
-        bgColor="bg-neutral-700"
-        textColor="text-neutral-500  font-bold"
         text="Continue playing story mode to earn rewards."
-        icon={<ShapeIcon className="text-neutral-500" />}
+        bgColor="bg-neutral-800"
+        icon={<ShapeIcon fill="#4E5057" />}
+        textColor="font-bold text-sm text-neutral-600"
       />
       <div className="my-20  h-full w-full max-w-[1158px]">
         <div>

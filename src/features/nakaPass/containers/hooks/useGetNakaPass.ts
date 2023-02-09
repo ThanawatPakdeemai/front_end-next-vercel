@@ -4,7 +4,7 @@ import { getNakaPass } from "../services/nakaPass.service"
 
 const useGetNakaPass = ({ player_id, game_id }: IGetPropNakaPass) => {
   const {
-    data: balanceofItem,
+    data: nakaPassData,
     isLoading,
     isFetching,
     isPreviousData,
@@ -23,7 +23,7 @@ const useGetNakaPass = ({ player_id, game_id }: IGetPropNakaPass) => {
   })
 
   return {
-    balanceofItem,
+    nakaPassData,
     isLoading,
     isFetching,
     isPreviousData,

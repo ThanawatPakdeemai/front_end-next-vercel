@@ -13,7 +13,7 @@ import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import SkeletonNotification from "@components/atoms/skeleton/SkeletonNotification"
 import Header from "../molecules/NotificationHeader"
-import NotificationTable from "./TableNotification"
+import NotificationTable from "./NotificationTable"
 
 const NotificationList = () => {
   const profile = useProfileStore((state) => state.profile.data)

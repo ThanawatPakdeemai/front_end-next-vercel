@@ -14,8 +14,8 @@ function VectorTop({
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M5.35352 2.35539L4.64641 3.0625L2.99996 1.41605L1.35352 3.0625L0.646409 2.35539L2.99996 0.00183984L5.35352 2.35539Z"
         fill={color}
       />

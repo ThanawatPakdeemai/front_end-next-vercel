@@ -1,7 +1,7 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import NotificationList from "@feature/notification/components/templates/notificationList/notificationList"
-import GamePageLayout from "@components/template/GamePageLayout"
+import ProfileLayout from "@components/template/ProfileLayout"
 
 export default function PartnerGames() {
   return (
@@ -14,7 +14,7 @@ export default function PartnerGames() {
 }
 
 PartnerGames.getLayout = function getLayout(page: ReactElement) {
-  return <GamePageLayout>{page}</GamePageLayout>
+  return <ProfileLayout>{page}</ProfileLayout>
 }
 
 export async function getStaticProps({ locale }) {

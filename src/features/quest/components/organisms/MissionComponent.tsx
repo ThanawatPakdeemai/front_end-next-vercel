@@ -13,7 +13,6 @@ import MissionDetails from "./MissionDetails"
 
 interface IProp {
   open: boolean
-  handle: () => void
 }
 
 const useStyles = makeStyles({
@@ -27,9 +26,9 @@ const useStyles = makeStyles({
   }
 })
 
-const MissionComponent = ({ open, handle }: IProp) => {
+const MissionComponent = ({ open }: IProp) => {
   const [value, setValue] = React.useState<string>("main")
-  const { data: questStore } = useQuestStore()
+  const { data: questStore, setClose } = useQuestStore()
   const { profile } = useProfileStore()
   const { warnToast } = useToast()
 
@@ -85,7 +84,7 @@ const MissionComponent = ({ open, handle }: IProp) => {
               mission to the mars
             </Typography>
           </div>
-          <ButtonClose onClick={handle} />
+          <ButtonClose onClick={setClose} />
         </div>
         {/* tap */}
         {renderElement()}

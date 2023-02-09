@@ -4,6 +4,11 @@ import {
   IGameItemListData
 } from "@feature/gameItem/interfaces/IGameItemService"
 import React, { ReactNode } from "react"
+import { ICURRENCY } from "@interfaces/ICurrency"
+import {
+  IDevice,
+  IGameCategory
+} from "@feature/dropdown/interfaces/IDropdownService"
 
 interface ILink {
   href: string
@@ -11,10 +16,19 @@ interface ILink {
 interface IActiveMunu {
   active?: boolean
 }
-export interface IMenuBaseItem extends IActiveMunu {
-  data?: IGameItem | IGame | IGameItemListData
+
+export interface IMenuBaseItem {
+  data?:
+    | IGameItem
+    | IGame
+    | IGameItemListData
+    | ICURRENCY
+    | IGameItem
+    | IGameCategory
+    | IDevice
+    | Number
 }
-export interface IMenuBase extends ILink, IMenuBaseItem {
+export interface IMenuBase extends ILink, IMenuBaseItem, IActiveMunu {
   label: string | React.ReactElement
   icon: string | React.ReactElement | ReactNode
 }
@@ -51,11 +65,6 @@ export interface IMenuIcon extends ILink {
   title: string
   src: string
   alt: string
-}
-export interface ICURENCY {
-  id: string
-  name: string
-  image_icon: string | React.ReactNode
 }
 
 export interface ICrumb extends ILink {

@@ -1,7 +1,8 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { IStakingAll } from "@src/types/staking"
 import useGlobalStaking from "@feature/staking/containers/hook/useGlobalStaking"
 import SkeletonStake from "@components/atoms/skeleton/SkeletonStake"
+import { useTranslation } from "react-i18next"
 import PeriodLabel from "../molecules/PeriodLabel"
 import TotalStaked from "../molecules/TotalStaked"
 import StakingPeriod from "../molecules/StakingPeriod"
@@ -22,15 +23,9 @@ const StakingDetails = ({
   const { fetchStakingInfo, basicStakeInfo, userStakedInfo, onRefresh } =
     useGlobalStaking()
   const { handleClaimWithdraw } = useGlobalStaking()
+  const { t } = useTranslation()
 
-  /**
-   * @description Get staking locked data by wallet address
-   * @returns
-   */
-  useEffect(() => {
-    fetchStakingInfo(dataStaking.contract_address, dataStaking.type)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userStakedInfo, basicStakeInfo])
+  fetchStakingInfo(dataStaking.contract_address, dataStaking.type)
 
   return (
     <div
@@ -62,14 +57,14 @@ const StakingDetails = ({
           </div>
           <div className="col-span-2 shadow-xl">
             <NumberBadge
-              title="Your NAKA Staked"
+              title={t("your_naka_staked")}
               color="red"
               value={userStakedInfo?.stakeAmount ?? 0}
             />
           </div>
           <div className="col-span-2 shadow-xl">
             <NumberBadge
-              title="Your rewards Unclaimed"
+              title={t("your_naka_unclaimed")}
               color="purple"
               value={userStakedInfo?.comInterest ?? 0}
             />

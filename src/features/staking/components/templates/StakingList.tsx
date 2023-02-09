@@ -2,7 +2,6 @@ import { IStakingGroup } from "@src/types/staking"
 import dayjs from "dayjs"
 import React from "react"
 import { v4 as uuid } from "uuid"
-import RedBanner from "../organisms/RedBanner"
 import StakingPeriodDate from "../organisms/StakingPeriodDate"
 
 interface IFixedAPR {
@@ -10,11 +9,7 @@ interface IFixedAPR {
 }
 
 const StakingList = ({ stakeGroupByDatetime }: IFixedAPR) => (
-  <section className="relative w-full overflow-hidden">
-    <RedBanner
-      message="Fixed staking earn up to 12,916.02% APR"
-      className="mb-12"
-    />
+  <>
     {stakeGroupByDatetime.map((item) => (
       <StakingPeriodDate
         key={uuid()}
@@ -31,6 +26,6 @@ const StakingList = ({ stakeGroupByDatetime }: IFixedAPR) => (
           .toLocaleLowerCase()}`}
       />
     ))}
-  </section>
+  </>
 )
 export default StakingList

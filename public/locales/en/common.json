@@ -272,5 +272,8 @@
   "your_naka_staked": "Your NAKA Staked",
   "your_naka_unclaimed": "Your rewards Unclaimed",
   "stake_ended_please_redeem": "Stake ended please redeem",
-  "stake_ended": "Stake ended, please wait to stake next time"
+  "stake_ended": "Stake ended, please wait to stake next time",
+  "staking_earn_up_to": "staking earn up to",
+  "staking_start": "Staking Start",
+  "period": "Period"
 }

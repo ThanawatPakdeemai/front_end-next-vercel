@@ -13,6 +13,10 @@ import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import { iconmotion } from "@components/organisms/Footer"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { useTranslation } from "react-i18next"
+import useProfileStore from "@stores/profileStore"
+import { useWeb3Provider } from "@providers/Web3Provider"
+import ButtonLink from "@components/atoms/button/ButtonLink"
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet"
 
 export interface IStakingDate {
   buttonLabelOne?: string
@@ -39,6 +43,8 @@ const ActionBar = ({
 }: IStakingDate) => {
   // const { hydrated } = useGlobal()
   const { t } = useTranslation()
+  const profile = useProfileStore((state) => state.profile.data)
+  const { address, handleConnectWithMetamask } = useWeb3Provider()
 
   const [disabledClaim, setDisabledClaim] = useState<boolean>(true)
   const [disabledWithdraw, setDisabledWithdraw] = useState<boolean>(true)
@@ -53,7 +59,7 @@ const ActionBar = ({
       />
     )
 
-  const stakeEnded = dayjs() > dayjs(basicStakeInfo && basicStakeInfo.endDate)
+  const stakeEnded = dayjs() > dayjs(basicStakeInfo && basicStakeInfo.startDate)
   const interestEqualToZero = userStakedInfo && userStakedInfo.comInterest === 0
   const stakeAmountGreaterThanZero =
     userStakedInfo && userStakedInfo.stakeAmount > 0
@@ -63,29 +69,43 @@ const ActionBar = ({
     userStakedInfo && userStakedInfo.comInterest > 0
 
   const buttonStake = () => {
-    if (stakeEnded && interestEqualToZero && stakeAmountGreaterThanZero) {
+    if (profile && profile.address === address) {
+      if (stakeEnded && interestEqualToZero && stakeAmountGreaterThanZero) {
+        return (
+          <ButtonToggleIcon
+            startIcon={startIconButton}
+            text={t("withdraw")}
+            type="button"
+            className="ml-3 h-[40px] w-[134px] bg-green-card p-0 font-neue-machina-semi text-sm text-neutral-200 disabled:bg-neutral-800 disabled:text-neutral-600"
+            handleClick={onClickRedeem}
+            disabled={disabledWithdraw}
+          />
+        )
+      }
+      if (stakeStarted && interestGreaterThanZero) {
+        return (
+          <ButtonToggleIcon
+            startIcon={startIconButton}
+            text={t("claim")}
+            type="button"
+            className={`h-[40px] w-[134px] p-0 text-sm text-neutral-200 disabled:bg-neutral-800 disabled:text-neutral-600 ${
+              type === "fixed" ? "bg-red-card" : "bg-secondary-main"
+            } ml-3 w-full font-neue-machina-semi`}
+            handleClick={onClickRedeem}
+            disabled={disabledClaim}
+          />
+        )
+      }
+    } else {
       return (
-        <ButtonToggleIcon
-          startIcon={startIconButton}
-          text="Withdraw"
-          type="button"
-          className="ml-3 h-[40px] w-[134px] bg-green-card p-0 font-neue-machina-semi text-sm text-neutral-200 disabled:bg-neutral-800 disabled:text-neutral-600"
-          handleClick={onClickRedeem}
-          disabled={disabledWithdraw}
-        />
-      )
-    }
-    if (stakeStarted && interestGreaterThanZero) {
-      return (
-        <ButtonToggleIcon
-          startIcon={startIconButton}
-          text="Claim"
-          type="button"
-          className={`h-[40px] w-[134px] p-0 text-sm text-neutral-200 disabled:bg-neutral-800 disabled:text-neutral-600 ${
-            type === "fixed" ? "bg-red-card" : "bg-secondary-main"
-          } ml-3 w-full font-neue-machina-semi`}
-          handleClick={onClickRedeem}
-          disabled={disabledClaim}
+        <ButtonLink
+          onClick={handleConnectWithMetamask}
+          text={t("Connect Wallet")}
+          icon={<AccountBalanceWalletIcon />}
+          size="medium"
+          color="secondary"
+          variant="contained"
+          className="w-full"
         />
       )
     }
@@ -145,10 +165,13 @@ const ActionBar = ({
       userStakedInfo.stakeAmount > 0
     ) {
       setDisabledClaim(false)
-      // Mock
-      setDisabledStake(true)
     }
+    if (dayjs() < dayjs(basicStakeInfo && basicStakeInfo.startDate)) {
+      setDisabledStake(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userStakedInfo, basicStakeInfo])
+  // userStakedInfo, basicStakeInfo
 
   return (
     <div className={`${className}`}>
@@ -165,7 +188,7 @@ const ActionBar = ({
           {dayjs() < dayjs(basicStakeInfo && basicStakeInfo.startDate) && (
             <ButtonToggleIcon
               startIcon={startIconButton}
-              text="Stake"
+              text={t("stake")}
               type="button"
               className={`h-[40px] w-[134px] p-0 text-sm text-neutral-200 disabled:bg-neutral-800 disabled:text-neutral-600 ${
                 type === "fixed" ? "bg-red-card" : "bg-secondary-main"

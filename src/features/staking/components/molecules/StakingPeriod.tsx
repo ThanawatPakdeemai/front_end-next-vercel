@@ -2,6 +2,7 @@ import IconArrowRight from "@components/icons/arrowRightIcon"
 import { Skeleton } from "@mui/material"
 import { numberWithCommas } from "@src/helpers/addComma"
 import { TStaking } from "@src/types/staking"
+import { t } from "i18next"
 import React from "react"
 
 interface IStakingPeriod {
@@ -23,7 +24,7 @@ const StakingPeriod = ({
     className={`flex h-full items-center justify-between rounded-[10px] bg-neutral-900 p-5 ${className}`}
   >
     <p className="flex items-center text-neutral-600">
-      Period &nbsp;
+      {t("period")} &nbsp;
       {startDatetime !== "00:00:00" ? (
         <span className="text-neutral-300">{startDatetime}</span>
       ) : (

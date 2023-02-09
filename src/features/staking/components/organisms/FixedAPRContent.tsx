@@ -1,18 +1,23 @@
 import useGlobalStaking from "@feature/staking/containers/hook/useGlobalStaking"
+import useGlobal from "@hooks/useGlobal"
 import { Box } from "@mui/material"
 import dayjs from "dayjs"
 import { useRouter } from "next/router"
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import { v4 as uuid } from "uuid"
 import StakingTitle from "../atoms/StakingTitle"
+import RedBanner from "./RedBanner"
 import StakingDetails from "./StakingDetails"
 import StakingModal from "./StakingModal"
-import StakingPeriodDate from "./StakingPeriodDate"
+// import StakingPeriodDate from "./StakingPeriodDate"
 
 const FixedAPRContent = () => {
   const router = useRouter()
   const { slug } = router.query
   const { fixedStaking, flexibleStaking } = useGlobalStaking()
+  const { t } = useTranslation()
+  const { hydrated } = useGlobal()
 
   // State
   const [open, setOpen] = useState<boolean>(false)
@@ -41,13 +46,20 @@ const FixedAPRContent = () => {
     )
 
   return (
-    <>
+    <section className="relative w-full overflow-hidden">
+      {hydrated && (
+        <RedBanner
+          message={`Fixed ${t("staking_earn_up_to")} 25% APR`}
+          className="mb-12"
+        />
+      )}
+
       {stakingData && (
         <Box component="section">
           {stakingData.dataAPI.map((item) => (
             <div key={uuid()}>
               <StakingTitle title={`${item.title}`} />
-              <StakingPeriodDate
+              {/* <StakingPeriodDate
                 days={item.period}
                 type={item.type}
                 datetime={stakingData.datetime}
@@ -57,7 +69,7 @@ const FixedAPRContent = () => {
                     ? "locked"
                     : "available"
                 }
-              />
+              /> */}
               <StakingDetails
                 dataStaking={item}
                 className="mb-10"
@@ -71,7 +83,7 @@ const FixedAPRContent = () => {
         open={open}
         handleClose={handleClose}
       />
-    </>
+    </section>
   )
 }
 

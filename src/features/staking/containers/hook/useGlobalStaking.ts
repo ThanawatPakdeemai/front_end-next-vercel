@@ -1,8 +1,11 @@
+import { MESSAGES } from "@constants/messages"
 import {
   DEFAULT_STAKING_BASIC_DATA,
   DEFAULT_USER_STAKED_INFO
 } from "@constants/staking"
 import useContractStaking from "@feature/contract/containers/hooks/useContractStaking"
+import { useToast } from "@feature/toast/containers"
+import { useWeb3Provider } from "@providers/Web3Provider"
 import {
   IStakingAll,
   IStakingBasicData,
@@ -21,6 +24,8 @@ const useGlobalStaking = () => {
   const _skip = 1
 
   const profile = useProfileStore((state) => state.profile.data)
+  const { address } = useWeb3Provider()
+  const { errorToast, successToast } = useToast()
 
   // Hooks
   const { getBasicStakingData, getUserStakedInfo, claimReward, withdrawNaka } =
@@ -119,57 +124,6 @@ const useGlobalStaking = () => {
   }
 
   /**
-   * @description Withdraw staked NAKA
-   */
-  const onWithdraw = async (
-    _basicStakeInfo?: IStakingBasicData,
-    _userStakedInfo?: IUserStakedInfo
-  ) => {
-    if (profile && profile.address && _basicStakeInfo && _userStakedInfo) {
-      // console.log("account", account)
-      await withdrawNaka(
-        _basicStakeInfo.addressContract,
-        _basicStakeInfo.stakeType
-      )
-      // console.log("resultBasic", resultBasic)
-    }
-  }
-
-  /**
-   * @description Claim staked NAKA
-   */
-  const onClaim = async (
-    _basicStakeInfo?: IStakingBasicData,
-    _userStakedInfo?: IUserStakedInfo
-  ) => {
-    if (profile && profile.address && _basicStakeInfo && _userStakedInfo) {
-      // console.log("account", account)
-      await claimReward(
-        _userStakedInfo.comInterestBN.toString(),
-        _basicStakeInfo.addressContract,
-        _basicStakeInfo.stakeType
-      )
-      // console.log("resultBasic", resultBasic)
-    }
-  }
-
-  /**
-   * @description Handle claim/withdraw events button
-   */
-  const handleClaimWithdraw = (
-    _basicStakeInfo?: IStakingBasicData,
-    _userStakedInfo?: IUserStakedInfo
-  ) => {
-    if (_userStakedInfo && _userStakedInfo.comInterest === 0) {
-      onWithdraw(_basicStakeInfo, _userStakedInfo)
-    } else {
-      onClaim(_basicStakeInfo, _userStakedInfo)
-    }
-  }
-
-  const handleStake = () => {}
-
-  /**
    * @description Fetch staking info
    */
   const fetchStakingInfo = useCallback(
@@ -189,8 +143,7 @@ const useGlobalStaking = () => {
         setUserStakedInfo(resultStakedInfo || {})
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [profile, getBasicStakingData, getUserStakedInfo]
   )
 
   /**
@@ -203,6 +156,77 @@ const useGlobalStaking = () => {
     setUserStakedInfo(DEFAULT_USER_STAKED_INFO)
     fetchStakingInfo(_contractAddress, _stakingTypes)
   }
+
+  /**
+   * @description Withdraw staked NAKA
+   */
+  const onWithdraw = async (
+    _basicStakeInfo?: IStakingBasicData,
+    _userStakedInfo?: IUserStakedInfo
+  ) => {
+    if (
+      profile &&
+      profile.address === address &&
+      _basicStakeInfo &&
+      _userStakedInfo
+    ) {
+      const result = await withdrawNaka(
+        _basicStakeInfo.addressContract,
+        _basicStakeInfo.stakeType
+      )
+      if (result) {
+        successToast(MESSAGES.withdraw_success)
+        onRefresh(_basicStakeInfo.addressContract, _basicStakeInfo.stakeType)
+      } else {
+        errorToast(MESSAGES.withdraw_error)
+      }
+    }
+  }
+
+  /**
+   * @description Claim staked NAKA
+   */
+  const onClaim = async (
+    _basicStakeInfo?: IStakingBasicData,
+    _userStakedInfo?: IUserStakedInfo
+  ) => {
+    if (
+      profile &&
+      profile.address === address &&
+      _basicStakeInfo &&
+      _userStakedInfo
+    ) {
+      // console.log("account", account)
+      const result = await claimReward(
+        _userStakedInfo.comInterestBN.toString(),
+        _basicStakeInfo.addressContract,
+        _basicStakeInfo.stakeType
+      )
+      if (result) {
+        successToast(MESSAGES.claim_success)
+        onRefresh(_basicStakeInfo.addressContract, _basicStakeInfo.stakeType)
+      } else {
+        errorToast(MESSAGES.claim_error)
+      }
+      // console.log("resultBasic", resultBasic)
+    }
+  }
+
+  /**
+   * @description Handle claim/withdraw events button
+   */
+  const handleClaimWithdraw = (
+    _basicStakeInfo?: IStakingBasicData,
+    _userStakedInfo?: IUserStakedInfo
+  ) => {
+    if (_userStakedInfo && _userStakedInfo.comInterest === 0) {
+      onWithdraw(_basicStakeInfo, _userStakedInfo)
+    } else {
+      onClaim(_basicStakeInfo, _userStakedInfo)
+    }
+  }
+
+  const handleStake = () => {}
 
   /**
    * @description Handle group staking by date
@@ -230,10 +254,6 @@ const useGlobalStaking = () => {
       }
     }
   }, [stakingAll])
-
-  // useMemo(() => {
-  //   console.log("address", address)
-  // }, [handleConnectWithMetamask])
 
   return {
     flexibleStaking,

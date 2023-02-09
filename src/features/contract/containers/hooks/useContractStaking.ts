@@ -13,24 +13,23 @@ import {
   DEFAULT_STAKING_BASIC_DATA,
   DEFAULT_USER_STAKED_INFO
 } from "@constants/staking"
-import { ITransactionResponse } from "@interfaces/ITransaction"
-// import { ErrorDescription } from "@ethersproject/abi/lib/interface"
-// import {
-//   getFlexibleStakingContract,
-//   getStakingContract
-// } from "../contractHelpers"
-import { UserRejectedRequestError } from "@web3-react/injected-connector"
+import { useWeb3Provider } from "@providers/Web3Provider"
+import { TransactionResponse } from "@ethersproject/providers"
+import {
+  getFlexibleStakingContract,
+  getStakingContract
+} from "../contractHelpers"
 
 const useContractStaking = () => {
-  // const { signer } = useWeb3Provider()
+  const { signer } = useWeb3Provider()
 
-  // const getContractProvider = (
-  //   _contractAddress: string,
-  //   _stakingTypes: TStaking
-  // ) =>
-  //   _stakingTypes === "flexible"
-  //     ? getFlexibleStakingContract(_contractAddress, signer)
-  //     : getStakingContract(_contractAddress, signer)
+  const getContractProvider = (
+    _contractAddress: string,
+    _stakingTypes: TStaking
+  ) =>
+    _stakingTypes === "flexible"
+      ? getFlexibleStakingContract(_contractAddress, signer)
+      : getStakingContract(_contractAddress, signer)
 
   const handleAPR = (period: number) => {
     switch (period) {
@@ -147,50 +146,43 @@ const useContractStaking = () => {
     _contractAddress: string,
     _stakingTypes: TStaking
   ) =>
-    new Promise<ITransactionResponse | UserRejectedRequestError>(
-      (resolve, reject) => {
-        const { ethereum }: any = window
-        const provider = new ethers.providers.Web3Provider(ethereum)
-        const signer = provider.getSigner()
-        const contract = new ethers.Contract(
-          _contractAddress,
-          _stakingTypes === "fixed" ? StakingAbi.abi : FlexibleStakingAbi.abi,
-          signer
-        )
-        contract
-          .claimReward(_claimAmount)
-          .then((response: ITransactionResponse) => {
-            resolve(response)
-          })
-          .catch((error: Error) => {
-            reject(error)
-          })
-      }
-    )
-
-  const withdrawNaka = (_contractAddress: string, _stakingTypes: TStaking) =>
-    new Promise<ITransactionResponse>((resolve, reject) => {
-      // setIsLoading(true)
-      // const stake = getContractProvider(_contractAddress, _stakingTypes)
-      const { ethereum }: any = window
-      const provider = new ethers.providers.Web3Provider(ethereum)
-      const signer = provider.getSigner()
-      const contract = new ethers.Contract(
-        _contractAddress,
-        _stakingTypes === "fixed" ? StakingAbi.abi : FlexibleStakingAbi.abi,
-        signer
-      )
+    new Promise<TransactionResponse>((resolve, reject) => {
+      const contract = getContractProvider(_contractAddress, _stakingTypes)
+      // const { ethereum }: any = window
+      // const provider = new ethers.providers.Web3Provider(ethereum)
+      // const signer = provider.getSigner()
+      // const contract = new ethers.Contract(
+      //   _contractAddress,
+      //   _stakingTypes === "fixed" ? StakingAbi.abi : FlexibleStakingAbi.abi,
+      //   signer
+      // )
       contract
-        .withdrawNaka()
-        // .send({
-        //   from: _address
-        // })
-        .then((response: any) => {
-          // setIsLoading(false)
+        .claimReward(_claimAmount)
+        .then((response: TransactionResponse) => {
           resolve(response)
         })
         .catch((error: Error) => {
-          // setIsLoading(false)
+          reject(error)
+        })
+    })
+
+  const withdrawNaka = (_contractAddress: string, _stakingTypes: TStaking) =>
+    new Promise<TransactionResponse>((resolve, reject) => {
+      const contract = getContractProvider(_contractAddress, _stakingTypes)
+      // const { ethereum }: any = window
+      // const provider = new ethers.providers.Web3Provider(ethereum)
+      // const signer = provider.getSigner()
+      // const contract = new ethers.Contract(
+      //   _contractAddress,
+      //   _stakingTypes === "fixed" ? StakingAbi.abi : FlexibleStakingAbi.abi,
+      //   signer
+      // )
+      contract
+        .withdrawNaka()
+        .then((response: TransactionResponse) => {
+          resolve(response)
+        })
+        .catch((error: any) => {
           reject(error)
         })
     })

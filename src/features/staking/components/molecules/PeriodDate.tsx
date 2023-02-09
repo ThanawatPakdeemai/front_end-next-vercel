@@ -2,6 +2,7 @@ import LockIcon from "@components/icons/LockIcon"
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined"
 import { TStakingStatus } from "@src/types/staking"
 import dayjs from "dayjs"
+import { t } from "i18next"
 import React from "react"
 
 interface IPeriodDate {
@@ -13,8 +14,8 @@ interface IPeriodDate {
 const PeriodDate = ({ datetime, className, lockStatus }: IPeriodDate) => (
   <div className={`${className} h-full whitespace-nowrap`}>
     <div className="flex h-full min-h-[68px] w-full items-center justify-between rounded-[10px] bg-primary-main pl-10 pr-8 font-neue-machina-semi">
-      <div className="flex items-center">
-        <p className="text-red-card">Staking started</p>
+      <div className="flex items-center text-lg">
+        <p className="text-red-card">{t("staking_start")}</p>
         <p className="mx-3 text-neutral-300">
           {dayjs(datetime).format("DD MMM YYYY")}
         </p>

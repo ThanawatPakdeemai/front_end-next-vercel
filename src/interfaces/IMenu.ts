@@ -1,5 +1,14 @@
-// import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
-import React from "react"
+import { IGame } from "@feature/game/interfaces/IGameService"
+import {
+  IGameItem,
+  IGameItemListData
+} from "@feature/gameItem/interfaces/IGameItemService"
+import React, { ReactNode } from "react"
+import { ICURRENCY } from "@interfaces/ICurrency"
+import {
+  IDevice,
+  IGameCategory
+} from "@feature/dropdown/interfaces/IDropdownService"
 
 interface ILink {
   href: string
@@ -7,15 +16,25 @@ interface ILink {
 interface IActiveMunu {
   active?: boolean
 }
-export interface IMenuBaseItem extends IActiveMunu {
-  data?: any
+
+export interface IMenuBaseItem {
+  data?:
+    | IGameItem
+    | IGame
+    | IGameItemListData
+    | ICURRENCY
+    | IGameItem
+    | IGameCategory
+    | IDevice
+    | Number
 }
-export interface IMenuBase extends ILink, IMenuBaseItem {
+export interface IMenuBase extends ILink, IMenuBaseItem, IActiveMunu {
   label: string | React.ReactElement
-  icon: string | React.ReactElement
+  icon: string | React.ReactElement | ReactNode
 }
 
 export interface IDropdown {
+  // title: ReactI18NextChild | Iterable<ReactI18NextChild>
   icon: React.ReactNode
   title: string
   className: string
@@ -46,11 +65,6 @@ export interface IMenuIcon extends ILink {
   title: string
   src: string
   alt: string
-}
-export interface ICURENCY {
-  id: string
-  name: string
-  image_icon: string | React.ReactNode
 }
 
 export interface ICrumb extends ILink {

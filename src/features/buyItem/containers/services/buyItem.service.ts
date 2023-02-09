@@ -4,14 +4,14 @@ import {
   IBuyItemTransactionResponse
 } from "@feature/buyItem/interfaces/IBuyItemService"
 
-const buyItems = ({ player_id, item_id, qty }: IBuyItems) =>
+const buyItems = ({ _player_id, _item_id, _qty }: IBuyItems) =>
   new Promise<IBuyItemTransactionResponse>((resolve, reject) => {
-    if (player_id) {
+    if (_player_id) {
       services
         .put("/inventory/buy-item-smartcontract", {
-          player_id,
-          item_id,
-          qty
+          player_id: _player_id,
+          item_id: _item_id,
+          qty: _qty
         })
         .then((res) => {
           resolve(res.data)

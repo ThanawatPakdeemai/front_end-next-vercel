@@ -14,6 +14,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
 import MoneyOffIcon from "@mui/icons-material/MoneyOff"
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined"
 import DiamondIcon from "@mui/icons-material/Diamond"
+import Diamond from "@components/icons/Diamond"
 import { IMAGES } from "@constants/images"
 import AboutUsIcon from "@components/icons/BlogIcon/AboutUsIcon"
 import Campfire from "@components/icons/Campfire"
@@ -21,7 +22,6 @@ import MarketPlaceIcon from "@components/icons/BlogIcon/MarketPlaceIcon"
 import NakaverseIcon from "@components/icons/BlogIcon/NakaverseIcon"
 import NakapunksIcon from "@components/icons/BlogIcon/NakapunksIcon"
 import NewIcon from "@components/icons/BlogIcon/NewIcon"
-import Discusion from "@components/icons/BlogIcon/Discusion"
 import FireOutLineIcon from "@components/icons/BlogIcon/FireOutLineIcon"
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined"
 import AccessTimeIcon from "@mui/icons-material/AccessTime"
@@ -29,6 +29,9 @@ import Inventory from "@components/icons/Inventory"
 import ItemReward from "@components/icons/ItemReward"
 import Support from "@components/icons/Support"
 import Profile from "@components/icons/Profile"
+import GlobalIcon from "@components/icons/GlobalIcon"
+import BoltIcon from "@mui/icons-material/Bolt"
+import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined"
 
 export const MENU = [
   {
@@ -67,11 +70,36 @@ export const MENU = [
       },
       {
         name: "Story Mode",
-        link: "/story",
+        link: "/story-mode-games",
         icon: MapOutlinedIcon,
         textRight: "Free"
       },
-      { name: "Tournament", link: "/tournament", icon: DiamondIcon }
+      {
+        name: "Tournament",
+        link: "/tournament",
+        icon: "/assets/icons/menu/Iconcrown.svg"
+      } /**
+       @description name svgIcon in forder menu in public (if icon is string) */,
+      {
+        name: "Partner Games",
+        link: "/partner-games",
+        icon: LanguageOutlinedIcon
+      },
+      {
+        name: "NFT Games",
+        link: "/nft-games",
+        icon: DiamondIcon
+      },
+      {
+        name: "NAKA Pass",
+        icon: BoltIcon,
+        link: "/naka-pass"
+      }
+      // {
+      //   name: "NFT Pass",
+      //   link: "/nft-pass",
+      //   icon: MapOutlinedIcon
+      // }
     ]
   },
   {
@@ -164,6 +192,27 @@ export const MENU_GUEST: IMenu[] = [
     icon: <TournamentIcon className="stroke-neutral-300" />,
     href: "/tournament/636e5091feb7364211af6858/naka-runner-tournament-hosted-by-slayer",
     external: false
+  },
+  {
+    id: "partner-games",
+    label: "Partner Games",
+    icon: <GlobalIcon className="stroke-neutral-300" />,
+    href: "/partner-games",
+    external: false
+  },
+  {
+    id: "nft-games",
+    label: "NFT Games",
+    icon: <Diamond stroke="#E1E2E2" />,
+    href: "/nft-games",
+    external: false
+  },
+  {
+    id: "naka-pass",
+    label: "NAKA Pass",
+    icon: <BoltIcon stroke="#E1E2E2" />,
+    href: "/naka-pass",
+    external: true
   }
 ]
 
@@ -356,30 +405,34 @@ export const MENU_BLOG: IMenu[] = [
 ]
 
 export const MENU_BLOG_HEADER = [
-  {
-    name: "All",
-    link: "",
-    isChide: false,
-    icon: null
-  },
+  // {
+  //   name: "All",
+  //   link: "date_released",
+  //   isChide: false,
+  //   icon: null
+  // },
   {
     name: "New",
-    link: "",
+    link: "date_released",
     isChide: true,
     left: "120px !important",
-    icon: <NewIcon className="mr-2" />
+    icon: (
+      <NewIcon className="mr-2 stroke-black-600  group-hover:!fill-white-default group-hover:!stroke-white-default" />
+    )
   },
   {
     name: "Hot",
-    link: "",
+    link: "info.like",
     isChide: true,
-    icon: <FireOutLineIcon className="mr-2 stroke-black-600" />
-  },
-  {
-    name: "Discusion",
-    link: "",
-    isChide: true,
-    left: "-180px !important",
-    icon: <Discusion className="mr-2" />
+    icon: (
+      <FireOutLineIcon className="mr-2  stroke-black-600 group-hover:!stroke-white-default" />
+    )
   }
+  // {
+  //   name: "Discusion",
+  //   link: "",
+  //   isChide: true,
+  //   left: "-180px !important",
+  //   icon: <Discusion className="mr-2" />
+  // }
 ]

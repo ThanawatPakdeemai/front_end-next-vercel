@@ -2,7 +2,7 @@ import React, { memo, useState } from "react"
 import { Box, Stack } from "@mui/material"
 import { ModalCustom } from "../../../../components/molecules/Modal/ModalCustom"
 import ButtonBuyItem from "../../atoms/ButtonBuyItem"
-import FromButItem from "./FromButItem"
+import FromBuyItem from "../../../buyItem/components/FromBuyItem"
 import ModalHeader from "../../../../components/molecules/Modal/ModalHeader"
 
 const RightMenuBuyItem = () => {
@@ -33,7 +33,7 @@ const RightMenuBuyItem = () => {
             />
           </div>
           <Box className="hide-scroll h-[480px] w-full overflow-y-scroll ">
-            <FromButItem />
+            <FromBuyItem handleClose={handleClose} />
           </Box>
         </Stack>
       </ModalCustom>

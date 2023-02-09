@@ -17,7 +17,7 @@ import { useState } from "react"
 import TextLink from "@components/atoms/TextLink"
 import { ShakeIcon } from "@components/atoms/LigthShake"
 
-const arrowMotion = {
+export const arrowMotion = {
   rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
   hover: {
     opacity: 1,
@@ -30,7 +30,7 @@ const arrowMotion = {
   }
 }
 
-const textMotion = {
+export const textMotion = {
   visible: {
     scale: 0.8,
     transition: { delay: 0.4 }

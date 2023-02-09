@@ -8,6 +8,7 @@ import Link from "next/link"
 import { IMAGES } from "@constants/images"
 import { useRouter } from "next/router"
 import { MENU } from "@configs/menu"
+import { ImageCustom } from "@components/atoms/image/Image"
 
 export const styleIcon = {
   fontSize: "20px !important"
@@ -72,7 +73,11 @@ const HeadMenu = () => {
                   link: ele.link,
                   icon:
                     typeof ele.icon === "string" ? (
-                      ele.icon
+                      <ImageCustom
+                        src={ele.icon}
+                        alt={ele.name}
+                        width="20"
+                      />
                     ) : (
                       <ele.icon className="!hover:text-neutral-300" />
                     )
@@ -85,11 +90,14 @@ const HeadMenu = () => {
                 <Button
                   sx={styleButton}
                   className={`button-select-naka xs:mb-1 !hover:bg-error-main  !hover:text-white-primary mb-1 px-2 !text-black-default md:mb-0 ${
-                    router.pathname ===
-                    item.chide?.find((ele) => ele.link === router.pathname)
-                      ?.link
+                    item.isChide &&
+                    item.chide &&
+                    (router.pathname ===
+                    [...item.chide]
+                      // ?.filter((ele) => typeof ele.icon === "string")
+                      .find((ele) => ele.link === router.pathname)?.link
                       ? "!bg-primary-main"
-                      : "!bg-neutral-800"
+                      : "!bg-neutral-800")
                   }`}
                   variant="contained"
                   size="large"

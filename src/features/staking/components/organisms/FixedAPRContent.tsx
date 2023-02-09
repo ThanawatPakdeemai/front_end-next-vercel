@@ -1,4 +1,4 @@
-import useGlobalStaking from "@feature/staking/containers/hook/useGlobalStaking"
+import useGlobalStaking from "@feature/staking/containers/hook/useStakingController"
 import useGlobal from "@hooks/useGlobal"
 import { Box } from "@mui/material"
 import dayjs from "dayjs"

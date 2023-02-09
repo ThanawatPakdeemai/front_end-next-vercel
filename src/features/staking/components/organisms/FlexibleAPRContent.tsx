@@ -1,4 +1,4 @@
-import useGlobalStaking from "@feature/staking/containers/hook/useGlobalStaking"
+import useGlobalStaking from "@feature/staking/containers/hook/useStakingController"
 import React from "react"
 import { v4 as uuid } from "uuid"
 import { Box } from "@mui/material"

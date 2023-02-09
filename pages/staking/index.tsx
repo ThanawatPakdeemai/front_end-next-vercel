@@ -1,7 +1,7 @@
 import ServicesPageLayout from "@components/template/ServicesPageLayout"
 import FlexibleAPRContent from "@feature/staking/components/organisms/FlexibleAPRContent"
 import StakingList from "@feature/staking/components/templates/StakingList"
-import useGlobalStaking from "@feature/staking/containers/hook/useGlobalStaking"
+import useGlobalStaking from "@feature/staking/containers/hook/useStakingController"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
 import useTabContext from "@feature/tab/contexts/useTabContext"
 // import { useWeb3Provider } from "@providers/Web3Provider"

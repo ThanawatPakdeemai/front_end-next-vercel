@@ -1,6 +1,6 @@
 import React, { useMemo } from "react"
 import { IStakingAll } from "@src/types/staking"
-import useGlobalStaking from "@feature/staking/containers/hook/useGlobalStaking"
+import useGlobalStaking from "@feature/staking/containers/hook/useStakingController"
 import SkeletonStake from "@components/atoms/skeleton/SkeletonStake"
 import { useTranslation } from "react-i18next"
 import PeriodLabel from "../molecules/PeriodLabel"

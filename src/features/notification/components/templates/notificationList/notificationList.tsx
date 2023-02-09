@@ -26,7 +26,7 @@ const NotificationList = () => {
   const router = useRouter()
   const { errorToast } = useToast()
   const playerId = profile?.id || ""
-  const { data: dataNoti } = useGetNotification({
+  const { data: dataNoti, isLoading } = useGetNotification({
     player_id: playerId
   })
 
@@ -147,7 +147,7 @@ const NotificationList = () => {
         unread={unread}
         onHandleClick={() => onHandleClick()}
       />
-      {data[0] && data ? (
+      {data[0] && data && !isLoading ? (
         <NoticficationTable
           data={data}
           page={page}
@@ -157,7 +157,10 @@ const NotificationList = () => {
           onHandleSortBy={onHandleSortBy}
         />
       ) : (
-        <Nodata />
+        <Nodata
+          data={data}
+          isLoading={isLoading}
+        />
       )}
       <div className="flex justify-between">
         <PaginationNaka

@@ -2,16 +2,15 @@ import React, { memo } from "react"
 import { Button, TableRow, TableCell, Chip } from "@mui/material"
 import dayjs from "dayjs"
 import { useTranslation } from "next-i18next"
-import Issue from "../atoms/issue"
-
-import { INotification } from "../../interfaces/INotificationService"
+import { INotification } from "@feature/notification/interfaces/INotificationService"
+import Issue from "../atoms/Issue"
 
 interface IProps {
   data: INotification
   onHandleView: (_data: INotification) => void
 }
 
-const NotiItem = ({ data, onHandleView }: IProps) => {
+const NotificationItem = ({ data, onHandleView }: IProps) => {
   const { t } = useTranslation()
 
   return (
@@ -75,4 +74,4 @@ const NotiItem = ({ data, onHandleView }: IProps) => {
     </TableRow>
   )
 }
-export default memo(NotiItem)
+export default memo(NotificationItem)

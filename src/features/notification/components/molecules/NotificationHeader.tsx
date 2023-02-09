@@ -2,7 +2,7 @@ import React, { memo } from "react"
 import { Chip } from "@mui/material"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { useTranslation } from "next-i18next"
-import CheckMarkIcon from "../atoms/icon/checkMarkIcon"
+import CheckMarkIcon from "@components/icons/CheckMarkIcon"
 
 interface IProps {
   unread: number
@@ -12,7 +12,9 @@ const Header = ({ unread, onHandleClick }: IProps) => {
   const { t } = useTranslation()
   return (
     <div className="mb-6 flex justify-between">
-      <h1 className="py-2 text-2xl uppercase">{t("noticfications")}</h1>
+      <h1 className="py-2 text-2xl uppercase text-neutral-400">
+        {t("notifications")}
+      </h1>
       <div className="flex gap-4">
         <Chip
           label={`${t("unread")} ${unread}`}

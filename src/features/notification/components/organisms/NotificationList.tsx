@@ -11,9 +11,9 @@ import {
 import { useRouter } from "next/router"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
-import NoticficationTable from "../../organisms/notificationTable"
-import Nodata from "../../organisms/no_data"
-import Header from "../../organisms/header"
+import SkeletonNotification from "../../../../components/atoms/skeleton/SkeletonNotification"
+import Header from "../molecules/NotificationHeader"
+import NotificationTable from "./NotificationTable"
 
 const NotificationList = () => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -148,7 +148,7 @@ const NotificationList = () => {
         onHandleClick={() => onHandleClick()}
       />
       {data[0] && data && !isLoading ? (
-        <NoticficationTable
+        <NotificationTable
           data={data}
           page={page}
           limit={limit}
@@ -157,7 +157,7 @@ const NotificationList = () => {
           onHandleSortBy={onHandleSortBy}
         />
       ) : (
-        <Nodata
+        <SkeletonNotification
           data={data}
           isLoading={isLoading}
         />

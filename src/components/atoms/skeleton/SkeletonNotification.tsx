@@ -1,13 +1,13 @@
 import React, { memo } from "react"
 import { Skeleton } from "@mui/material"
-import { INotification } from "../../interfaces/INotificationService"
+import { INotification } from "../../../features/notification/interfaces/INotificationService"
 
 interface IProps {
   isLoading: boolean
   data: INotification[]
 }
 
-const Nodata = ({ data, isLoading }: IProps) => (
+const SkeletonNotification = ({ data, isLoading }: IProps) => (
   <div>
     {data[0] && data && !isLoading ? (
       <div className="mb-10 bg-neutral-800 p-2">
@@ -72,4 +72,4 @@ const Nodata = ({ data, isLoading }: IProps) => (
   </div>
 )
 
-export default memo(Nodata)
+export default memo(SkeletonNotification)

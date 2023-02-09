@@ -1,15 +1,17 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import NotificationList from "@feature/notification/components/templates/notificationList/notificationList"
+import NotificationList from "@feature/notification/components/organisms/NotificationList"
 import ProfileLayout from "@components/template/ProfileLayout"
+import { Box } from "@mui/material"
 
 export default function PartnerGames() {
   return (
-    <>
-      <article className="h-full w-full">
-        <NotificationList />
-      </article>
-    </>
+    <Box
+      component="article"
+      className="h-full w-full"
+    >
+      <NotificationList />
+    </Box>
   )
 }
 

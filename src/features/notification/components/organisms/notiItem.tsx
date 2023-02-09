@@ -6,7 +6,7 @@ import { INotification } from "../../interfaces/INotificationService"
 
 interface IProps {
   data: INotification
-  onHandleView: () => void
+  onHandleView: (data) => void
 }
 
 const NotiItem = ({ data, onHandleView }: IProps) => (

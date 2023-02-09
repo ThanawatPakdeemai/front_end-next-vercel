@@ -19,7 +19,7 @@ interface IProps {
   data: INotification[]
   sortBy: string
   onHandleSortBy: (_text: string) => void
-  onHandleView: () => void
+  onHandleView: (data: INotification) => void
 }
 const NotificationsTable = ({
   page,

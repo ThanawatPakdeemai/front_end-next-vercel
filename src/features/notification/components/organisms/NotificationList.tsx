@@ -11,9 +11,9 @@ import {
 import { useRouter } from "next/router"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
-import SkeletonNotification from "../../../../components/atoms/skeleton/SkeletonNotification"
+import SkeletonNotification from "@components/atoms/skeleton/SkeletonNotification"
 import Header from "../molecules/NotificationHeader"
-import NotificationTable from "./NotificationTable"
+import NotificationTable from "./TableNotification"
 
 const NotificationList = () => {
   const profile = useProfileStore((state) => state.profile.data)

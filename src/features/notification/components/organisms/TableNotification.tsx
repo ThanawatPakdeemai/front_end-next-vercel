@@ -1,6 +1,4 @@
 import React, { memo, useEffect, useState } from "react"
-import VectorTop from "@feature/notification/components/atoms/icon/VectorTop"
-import VectorBottom from "@feature/notification/components/atoms/icon/VectorBottom"
 import {
   IconButton,
   Table,
@@ -10,8 +8,10 @@ import {
   TableCell
 } from "@mui/material"
 import { useTranslation } from "next-i18next"
-import NoticItem from "./NotificationItem"
 import { INotification } from "../../interfaces/INotificationService"
+import NotificationItem from "./NotificationItem"
+import VectorTop from "../atoms/icon/VectorTop"
+import VectorBottom from "../atoms/icon/VectorBottom"
 
 interface IProps {
   page: number
@@ -21,7 +21,7 @@ interface IProps {
   onHandleSortBy: (_text: string) => void
   onHandleView: (_data: INotification) => void
 }
-const NotificationTable = ({
+const NotificationsTable = ({
   page,
   limit,
   data,
@@ -176,7 +176,7 @@ const NotificationTable = ({
         <div className="divide-y divide-neutral-800 rounded-lg bg-neutral-900 px-3">
           {data &&
             data.slice(start, end).map((el) => (
-              <NoticItem
+              <NotificationItem
                 key={el._id}
                 data={el}
                 onHandleView={onHandleView}
@@ -188,4 +188,4 @@ const NotificationTable = ({
   )
 }
 
-export default memo(NotificationTable)
+export default memo(NotificationsTable)

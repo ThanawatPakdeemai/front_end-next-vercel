@@ -19,7 +19,7 @@ interface IProps {
   data: INotification[]
   sortBy: string
   onHandleSortBy: (_text: string) => void
-  onHandleView: (data: INotification) => void
+  onHandleView: (_data: INotification) => void
 }
 const NotificationsTable = ({
   page,
@@ -160,7 +160,7 @@ const NotificationsTable = ({
               }}
               className="flex w-44 flex-initial pt-3 font-neue-machina"
             >
-              {t("deatils")}
+              {t("details")}
             </TableCell>
             <TableCell
               sx={{

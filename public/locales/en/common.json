@@ -259,8 +259,10 @@
   "required": "Required",
   "out-room": "Out Room",
   "no-player":"No Player",
-  "deatil":"Details",
+  "details":"Details",
   "issue":"Issue",
-  "time": "Time"
+  "time": "Time",
+  "noticfications": "Noticfications",
+  "unread": "Unread"
   
 }

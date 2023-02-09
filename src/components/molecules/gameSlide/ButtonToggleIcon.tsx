@@ -10,6 +10,7 @@ interface IProps {
   text: string | ReactNode
   handleClick?: () => void
   className?: string
+  textClassName?: string
   style?: React.CSSProperties
   type?: TTypeButton
   disabled?: boolean
@@ -21,6 +22,7 @@ const ButtonToggleIcon = ({
   text,
   handleClick,
   className,
+  textClassName,
   style,
   type = "button",
   disabled
@@ -89,7 +91,7 @@ const ButtonToggleIcon = ({
         {startIcon}
       </motion.span>
       <motion.p
-        className="mx-1 min-w-[40%] font-neue-machina text-sm"
+        className={`${textClassName} mx-1 min-w-[40%] font-neue-machina text-sm`}
         variants={textBtn}
       >
         {text}

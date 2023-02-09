@@ -217,7 +217,7 @@ export const MENU_LOGGEDIN: IMenu[] = [
   {
     id: "your-mission",
     label: "Your Mission",
-    href: "/mission",
+    href: "/",
     icon: <YourMissionIcon />,
     external: false
   },

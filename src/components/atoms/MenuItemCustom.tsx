@@ -6,13 +6,14 @@ import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
 interface IProp extends IMenu {
   active?: boolean
   endIcon?: boolean
+  onClick?: () => void
 }
 
 /**
  * @description In case use more type please add type in array prop
  */
 
-const MenuItemCustom = ({ active, endIcon, ...props }: IProp) => (
+const MenuItemCustom = ({ active, endIcon, onClick, ...props }: IProp) => (
   // const router = useRouter()
   <MenuItem
     key={props.id}
@@ -20,6 +21,7 @@ const MenuItemCustom = ({ active, endIcon, ...props }: IProp) => (
     // onClick={() => {
     //   if (props.href && props.href !== "") router.push(props.href)
     // }}
+    onClick={onClick}
     sx={{
       color: active ? "#E1E2E2" : null,
       backgroundColor: active ? "#010101" : null

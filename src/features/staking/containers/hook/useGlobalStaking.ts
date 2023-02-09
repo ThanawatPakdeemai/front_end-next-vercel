@@ -143,7 +143,8 @@ const useGlobalStaking = () => {
         setUserStakedInfo(resultStakedInfo || {})
       }
     },
-    [profile, getBasicStakingData, getUserStakedInfo]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   )
 
   /**

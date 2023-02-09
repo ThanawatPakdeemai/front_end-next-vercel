@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 import { IStakingAll } from "@src/types/staking"
 import useGlobalStaking from "@feature/staking/containers/hook/useGlobalStaking"
 import SkeletonStake from "@components/atoms/skeleton/SkeletonStake"
@@ -25,7 +25,10 @@ const StakingDetails = ({
   const { handleClaimWithdraw } = useGlobalStaking()
   const { t } = useTranslation()
 
-  fetchStakingInfo(dataStaking.contract_address, dataStaking.type)
+  useMemo(() => {
+    fetchStakingInfo(dataStaking.contract_address, dataStaking.type)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div

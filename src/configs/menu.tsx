@@ -432,7 +432,7 @@ export const MENU_SERVICES = [
         stroke="#E1E2E2"
       />
     ),
-    href: "/P2P DEX",
+    href: "/p2p-dex",
     external: false
   },
   {

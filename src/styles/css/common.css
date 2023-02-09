@@ -478,7 +478,7 @@ body {
   }
 }
 .text-shadow-red {
-  text-shadow: 0px -13px 330px rgba(255, 0, 0, 0.9),
+  text-shadow: 0px 0px 5px rgba(255, 0, 0, 0.9),
     0px -5.43109px 137.866px rgba(255, 0, 0, 0.646969),
     0px -2.90372px 73.7098px rgba(255, 0, 0, 0.536497),
     0px -1.6278px 41.3211px rgba(255, 0, 0, 0.45),
@@ -497,196 +497,23 @@ body {
     inset 0px 1px 1px rgba(255, 255, 255, 0.05),
     inset 0px -1px 1px rgba(0, 0, 0, 0.25);
 }
-.glitch {
-  color: #f42728;
-  position: relative;
-  width: 100%;
-  margin: 0 auto;
-}
-@keyframes noise-anim {
-  0% {
-    clip: rect(84px, 9999px, 32px, 0);
-  }
-  5% {
-    clip: rect(80px, 9999px, 90px, 0);
-  }
-  10% {
-    clip: rect(24px, 9999px, 15px, 0);
-  }
-  15% {
-    clip: rect(62px, 9999px, 21px, 0);
-  }
-  20% {
-    clip: rect(88px, 9999px, 16px, 0);
-  }
-  25% {
-    clip: rect(83px, 9999px, 29px, 0);
-  }
-  30% {
-    clip: rect(78px, 9999px, 41px, 0);
-  }
-  35% {
-    clip: rect(53px, 9999px, 47px, 0);
-  }
-  40% {
-    clip: rect(94px, 9999px, 48px, 0);
-  }
-  45% {
-    clip: rect(23px, 9999px, 36px, 0);
-  }
-  50% {
-    clip: rect(95px, 9999px, 53px, 0);
-  }
-  55% {
-    clip: rect(44px, 9999px, 50px, 0);
-  }
-  60% {
-    clip: rect(99px, 9999px, 28px, 0);
-  }
-  65% {
-    clip: rect(67px, 9999px, 88px, 0);
-  }
-  70% {
-    clip: rect(13px, 9999px, 27px, 0);
-  }
-  75% {
-    clip: rect(55px, 9999px, 27px, 0);
-  }
-  80% {
-    clip: rect(87px, 9999px, 23px, 0);
-  }
-  85% {
-    clip: rect(55px, 9999px, 88px, 0);
-  }
-  90% {
-    clip: rect(29px, 9999px, 98px, 0);
-  }
-  95% {
-    clip: rect(16px, 9999px, 51px, 0);
-  }
-  100% {
-    clip: rect(7px, 9999px, 47px, 0);
-  }
-}
-.glitch:after {
-  content: attr(data-text);
-  position: absolute;
-  left: 2px;
-  text-shadow: -1px 0 red;
-  top: 0;
-  color: #f42728;
-  background: transparent;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  overflow: hidden;
-  clip: rect(0, 900px, 0, 0);
-  animation: noise-anim 2s infinite linear alternate-reverse;
-}
-@keyframes noise-anim-2 {
-  0% {
-    clip: rect(45px, 9999px, 27px, 0);
-  }
-  5% {
-    clip: rect(50px, 9999px, 46px, 0);
-  }
-  10% {
-    clip: rect(5px, 9999px, 73px, 0);
-  }
-  15% {
-    clip: rect(21px, 9999px, 62px, 0);
-  }
-  20% {
-    clip: rect(1px, 9999px, 16px, 0);
-  }
-  25% {
-    clip: rect(93px, 9999px, 82px, 0);
-  }
-  30% {
-    clip: rect(98px, 9999px, 65px, 0);
-  }
-  35% {
-    clip: rect(49px, 9999px, 45px, 0);
-  }
-  40% {
-    clip: rect(100px, 9999px, 97px, 0);
-  }
-  45% {
-    clip: rect(65px, 9999px, 53px, 0);
-  }
-  50% {
-    clip: rect(83px, 9999px, 25px, 0);
-  }
-  55% {
-    clip: rect(49px, 9999px, 75px, 0);
-  }
-  60% {
-    clip: rect(100px, 9999px, 1px, 0);
-  }
-  65% {
-    clip: rect(79px, 9999px, 99px, 0);
-  }
-  70% {
-    clip: rect(61px, 9999px, 16px, 0);
-  }
-  75% {
-    clip: rect(92px, 9999px, 14px, 0);
-  }
-  80% {
-    clip: rect(82px, 9999px, 16px, 0);
-  }
-  85% {
-    clip: rect(25px, 9999px, 43px, 0);
-  }
-  90% {
-    clip: rect(41px, 9999px, 43px, 0);
-  }
-  95% {
-    clip: rect(45px, 9999px, 63px, 0);
-  }
-  100% {
-    clip: rect(78px, 9999px, 67px, 0);
-  }
-}
-.glitch:before {
-  content: attr(data-text);
-  position: absolute;
-  left: -2px;
-  text-shadow: 1px 0 red;
-  top: 0;
-  color: #f42728;
-  background: transparent;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  overflow: hidden;
-  clip: rect(0, 900px, 0, 0);
-  animation: noise-anim-2 3s infinite linear alternate-reverse;
+
+.bg-line-linear-gradient {
+  background-color: #010101;
+  background-image: repeating-linear-gradient(
+    hsla(54deg, 0%, 88%, 0.05) 0px,
+    hsla(54deg, 0%, 88%, 0.05) 2px,
+    rgba(1, 1, 1, 0.2) 2px,
+    rgba(1, 1, 1, 0.2) 4px
+  );
+  backdrop-filter: blur(2.5px);
 }
 
-.progress-wrapper {
-  /* border: 3px solid blue; */
-  margin: 0.5rem;
-}
-
-.progress-container {
-  background-color: #18181c;
-  padding: 0.25rem;
-}
-
-.progress-barCompleted {
-  background-color: #101013;
-  width: 55%;
-}
-
-.progress-label {
-  font-family: theme("fontFamily.neue-machina-bold");
-  font-size: 10px;
-  color: #e1e2e2;
+.svg-shadow-red {
+  filter: drop-shadow(0px 0px 80px rgba(240, 3, 37, 0.42))
+    drop-shadow(0px 0px 33.4221px rgba(240, 3, 37, 0.301919))
+    drop-shadow(0px 0px 17.869px rgba(240, 3, 37, 0.250365))
+    drop-shadow(0px 0px 10.0172px rgba(240, 3, 37, 0.21))
+    drop-shadow(0px 0px 5.32008px rgba(240, 3, 37, 0.169635))
+    drop-shadow(0px 0px 2.21381px rgba(240, 3, 37, 0.118081));
 }

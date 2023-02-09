@@ -33,5 +33,4 @@ const MenuItemCustom = ({ active, endIcon, ...props }: IProp) => {
     </MenuItem>
   )
 }
-
 export default MenuItemCustom

@@ -1,8 +1,8 @@
 import { IMenu } from "@interfaces/IMenu"
 import { ListItemIcon, ListItemText, MenuItem } from "@mui/material"
-import { useRouter } from "next/router"
 import React from "react"
 import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
+import { useRouter } from "next/router"
 
 interface IProp extends IMenu {
   active?: boolean
@@ -15,7 +15,6 @@ interface IProp extends IMenu {
 
 const MenuItemCustom = ({ active, endIcon, ...props }: IProp) => {
   const router = useRouter()
-
   return (
     <MenuItem
       key={props.id}
@@ -34,5 +33,4 @@ const MenuItemCustom = ({ active, endIcon, ...props }: IProp) => {
     </MenuItem>
   )
 }
-
 export default MenuItemCustom

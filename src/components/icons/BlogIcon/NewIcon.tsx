@@ -22,7 +22,7 @@ function NewIcon({
       />
       <path
         d="M2 18.5H22M12 17V12M12 12L11 13H13L12 12Z"
-        stroke="#70727B"
+        fill="#70727B"
         strokeWidth="1.2"
       />
     </svg>

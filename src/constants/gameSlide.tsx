@@ -8,6 +8,7 @@ import { IGameDownloadSlide } from "@feature/slider/interfaces/ISlides"
 import IconNakaWorld from "@components/icons/nakaWorldIcon"
 import IconDollar from "@components/icons/dollarIcon"
 import IconFree from "@components/icons/freeIcon"
+import MapOutlinedIcon from "@mui/icons-material/MapOutlined"
 
 export const GAME_BANNER_SLIDES = [
   {
@@ -237,6 +238,16 @@ export const F2PHeaderMenu: IHeaderSlide = {
   theme: "secondary",
   stickerRotate: -15
 }
+
+export const HeaderMenuSeasonPass: IHeaderSlide = {
+  sticker: <></>,
+  icon: <MapOutlinedIcon className="" />,
+  title: "story mode",
+  menuList: [],
+  theme: "info",
+  stickerRotate: 0
+}
+
 export const GAME_DOWNLOAD: IGameDownloadSlide[] = [
   {
     name: "Escape",

@@ -7,24 +7,41 @@ import { useRouter } from "next/router"
 import useSocketWaitingRoom from "@feature/game/containers/hooks/useSocketWaitingRoom"
 import helper from "@utils/helper"
 import { IGameRoomListSocket } from "@feature/game/interfaces/IGameService"
-import { Box } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 import SocketProvider from "@providers/SocketProviderWaiting"
 import SeatPlayersMulti from "@feature/game/components/organisms/SeatPlayersMulti"
 import { useToast } from "@feature/toast/containers"
 import Chat from "@feature/chat/components/organisms/Chat"
 import { IChat } from "@feature/chat/interface/IChat"
 import { MESSAGES } from "@constants/messages"
+import CardButItem from "@feature/gameItem/components/molecules/CardBuyItem"
+import ButtonLink from "@components/atoms/button/ButtonLink"
+import { useTranslation } from "next-i18next"
 import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
 const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const gameData = useGameStore((state) => state.data)
+  const { data: gameData, itemSelected } = useGameStore()
   const router = useRouter()
+  const { t } = useTranslation()
   const { errorToast } = useToast()
   const [dataPlayers, setDataPlayers] = useState<
     IGameRoomListSocket | undefined
   >()
-  const { chat, setChat } = useChatContext()
+  const { setChat } = useChatContext()
+
+  const item_id = useMemo(() => {
+    if (gameData) {
+      if (gameData.play_to_earn || gameData.tournament) {
+        return gameData.item[0]._id
+      }
+      if (itemSelected) {
+        return itemSelected._id
+      }
+    } else {
+      return ""
+    }
+  }, [gameData, itemSelected])
 
   const propsSocketWaitingRoom = useMemo(
     () => ({
@@ -32,16 +49,13 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
       room_id: _roomId,
       player_id: profile?.id ?? "",
       game_id: gameData?._id ?? "",
-      item_id: gameData?.play_to_earn
-        ? gameData.item[0]._id
-        : "61976479dffe844091ab8df1" // TODO YUI 1$ mock
+      item_id
     }),
     [
       _roomId,
       gameData?._id,
-      gameData?.item,
-      gameData?.play_to_earn,
       gameData?.socket_info?.url_room,
+      item_id,
       profile?.id
     ]
   )
@@ -53,7 +67,14 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     kickRoom,
     getChat,
     onSendMessage,
-    cancelReady
+    cancelReadyPlayer,
+    onReadyPlayerBurnItem,
+    onOwnerBurnItem,
+    getPlayersCheckItemOfPlayerListen,
+    getPlayersCheckRoomRollbackListen,
+    room_id,
+    waitingRoomPlay,
+    startGame
   } = useSocketWaitingRoom({ ...propsSocketWaitingRoom })
 
   useEffect(() => {
@@ -72,15 +93,15 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     }
   }, [onSetConnectedSocket, profile, socketWaitingRoom])
 
-  useMemo(async () => {
-    if (isConnected) {
-      const _dataPlayers = await getPlayersMulti()
+  const mapPlayer = useCallback(
+    (_dataPlayers: IGameRoomListSocket) => {
       if (_dataPlayers) {
         const _play = _dataPlayers as IGameRoomListSocket
         if ("current_player" in _play) {
           const uniquePlayerIn = _play.current_player.filter(
             (thing, index, self) =>
-              index === self.findIndex((t) => t?.player_id === thing?.player_id)
+              index ===
+              self.findIndex((_self) => _self?.player_id === thing?.player_id)
           )
           const data = _dataPlayers as IGameRoomListSocket
 
@@ -105,18 +126,31 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
           errorToast(MESSAGES["no-player"])
         }
       }
+    },
+    [errorToast]
+  )
+
+  useEffect(() => {
+    if (isConnected) {
+      getPlayersMulti().then((res) => {
+        if (res) {
+          const data = res as IGameRoomListSocket
+          mapPlayer(data)
+        }
+      })
     }
-  }, [errorToast, getPlayersMulti, isConnected])
+  }, [getPlayersMulti, isConnected, mapPlayer])
 
   const outRoom = useCallback(() => {
     if (gameData) router.push(`/${gameData.path}/roomlist`)
   }, [gameData, router])
 
+  /**
+   *@description Will run when leaving the current page; on back/forward actions out room this game
+   */
   useEffect(() => {
     router.beforePopState(({ as }) => {
       if (as !== router.asPath) {
-        // Will run when leaving the current page; on back/forward actions
-        // out room this game
         outRoom()
       }
       return true
@@ -136,7 +170,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
       setChat((oldData) => [_dataChat as IChat, ...oldData])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chat])
+  }, [getChat])
 
   useEffect(() => {
     if (isConnected) {
@@ -144,35 +178,119 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     }
   }, [isConnected, onChat])
 
+  useEffect(() => {
+    if (isConnected) {
+      getPlayersCheckItemOfPlayerListen().then((res) => {
+        if (res) {
+          const data = res as IGameRoomListSocket
+          mapPlayer(data)
+        }
+      })
+    }
+  }, [
+    getPlayersCheckItemOfPlayerListen,
+    isConnected,
+    mapPlayer,
+    onReadyPlayerBurnItem,
+    onOwnerBurnItem
+  ])
+
+  useEffect(() => {
+    if (isConnected) {
+      getPlayersCheckRoomRollbackListen().then((res) => {
+        if (res) {
+          const data = res as IGameRoomListSocket
+          mapPlayer(data)
+        }
+      })
+    }
+  }, [
+    getPlayersCheckRoomRollbackListen,
+    isConnected,
+    mapPlayer,
+    onReadyPlayerBurnItem,
+    onOwnerBurnItem
+  ])
+
   return (
     <>
-      <SocketProvider propsSocket={{ kickRoom, cancelReady, onSendMessage }}>
-        <Box className=" gap-3 md:flex">
-          <Box className="w-full shrink  rounded-3xl border border-neutral-800">
-            {dataPlayers && gameData && (
-              <HeaderWaitingRoom
-                roomTag={dataPlayers.create_room_detail.no_room}
-                roomName="#ROOM NAME"
-                timer={{
-                  time: new Date(dataPlayers.end_time)
-                }}
-                player={{
-                  currentPlayer: dataPlayers.amount_current_player,
-                  maxPlayer: dataPlayers.max_players
-                }}
-                onOutRoom={() => {
-                  outRoom()
-                }}
-              />
-            )}
+      <SocketProvider
+        propsSocket={{
+          kickRoom,
+          cancelReadyPlayer,
+          onSendMessage,
+          onReadyPlayerBurnItem,
+          room_id,
+          onOwnerBurnItem,
+          dataPlayers,
+          waitingRoomPlay,
+          startGame
+        }}
+      >
+        <Box className="block gap-3 lg:flex ">
+          {/* <Box className=" block gap-3 lg:grid lg:grid-flow-col"> */}
+          {/* <Box className=" block gap-3 lg:grid lg:grid-flow-col"> */}
+          <Box className="w-full gap-3 md:flex">
+            <Box className="w-full shrink rounded-3xl border border-neutral-800">
+              {dataPlayers && gameData && (
+                <HeaderWaitingRoom
+                  roomTag={dataPlayers.create_room_detail.no_room}
+                  roomName="#ROOM NAME"
+                  timer={{
+                    time: new Date(dataPlayers.end_time)
+                  }}
+                  player={{
+                    currentPlayer: dataPlayers.amount_current_player,
+                    maxPlayer: dataPlayers.max_players
+                  }}
+                  onOutRoom={() => {
+                    outRoom()
+                  }}
+                />
+              )}
 
-            {dataPlayers && dataPlayers.current_player && (
-              <SeatPlayersMulti players={dataPlayers?.current_player} />
-            )}
+              {dataPlayers && dataPlayers.current_player ? (
+                <SeatPlayersMulti players={dataPlayers?.current_player} />
+              ) : (
+                <>
+                  <HeaderWaitingRoom
+                    roomTag="0000"
+                    roomName="#ROOM NAME"
+                    timer={{
+                      time: new Date()
+                    }}
+                    player={{
+                      currentPlayer: 0,
+                      maxPlayer: 0
+                    }}
+                    onOutRoom={() => {
+                      outRoom()
+                    }}
+                  />
+                  <Typography className="my-5 text-center">
+                    {t("no-player")}
+                  </Typography>
+                  {gameData && (
+                    <ButtonLink
+                      href={`/${gameData?.path}/roomlist`}
+                      text={t("out-room")}
+                      icon=""
+                      size="medium"
+                      className="m-auto"
+                      color="secondary"
+                      variant="contained"
+                    />
+                  )}
+                </>
+              )}
+            </Box>
           </Box>
-          <Box className="w-[333px] flex-none">
-            <Chat />
-          </Box>
+          {gameData && (!gameData?.play_to_earn || !gameData.tournament) && (
+            <Box className=" w-[333px] flex-none gap-2">
+              <CardButItem />
+              <Chat />
+            </Box>
+          )}
         </Box>
       </SocketProvider>
     </>

@@ -3,17 +3,12 @@ import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { P2EHeaderMenu } from "@constants/gameSlide"
 import { getGameByTypes } from "@feature/game/containers/services/game.service"
 import { useQueryClient } from "@tanstack/react-query"
-import { useRouter } from "next/router"
 import React, { memo, useEffect, useRef, useState } from "react"
 import { v4 as uuid } from "uuid"
 import useGameStore from "@stores/game/index"
-import { IGame } from "@feature/game/interfaces/IGameService"
-import useProfileStore from "@stores/profileStore"
-import { IProfile } from "@feature/profile/interfaces/IProfileService"
-import { MESSAGES } from "@constants/messages"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
-import { useToast } from "@feature/toast/containers"
 import GameCard from "@feature/game/containers/components/molecules/GameCard"
+import useGlobal from "@hooks/useGlobal"
 
 const PlayToEarnGamesPage = () => {
   const type = "play-to-earn"
@@ -22,14 +17,8 @@ const PlayToEarnGamesPage = () => {
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
-  const router = useRouter()
-  const { onSetGameData, clearGameData } = useGameStore()
-  const profile = useProfileStore((state) => state.profile.data)
-  const [stateProfile, setStateProfile] = useState<IProfile | null>()
-  const { errorToast } = useToast()
-  useEffect(() => {
-    setStateProfile(profile)
-  }, [profile])
+  const { onHandleClick } = useGlobal()
+  const { clearGameData } = useGameStore()
 
   const {
     isLoading,
@@ -60,15 +49,6 @@ const PlayToEarnGamesPage = () => {
     clearGameData()
   }, [clearGameData, gameData, isPreviousData, page, queryClient])
 
-  const onHandleClick = async (_gameUrl: string, _gameData: IGame) => {
-    if (stateProfile) {
-      await onSetGameData(_gameData)
-      await router.push(`/${_gameUrl}`)
-    } else {
-      errorToast(MESSAGES.please_login)
-    }
-  }
-
   return (
     <div className="flex flex-col">
       <div className="mb-6 grid grid-cols-5 gap-y-4 gap-x-2">
@@ -81,7 +61,9 @@ const PlayToEarnGamesPage = () => {
                 key={game.id}
                 menu={P2EHeaderMenu}
                 data={game}
-                onHandleClick={() => onHandleClick(game.path, game)}
+                onHandleClick={() =>
+                  onHandleClick("play-to-earn", game.path, game)
+                }
               />
             ))
           : null}

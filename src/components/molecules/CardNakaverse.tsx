@@ -42,6 +42,8 @@ const CardNakaverse = ({
         height={IMAGES.nakaVerse.height}
         alt={IMAGES.nakaBand.alt}
         className="absolute h-full w-full"
+        loading="eager"
+        priority
       />
 
       <CardContent className="py-[30px] pr-0 pl-[45px] max-[480px]:p-[30px]">

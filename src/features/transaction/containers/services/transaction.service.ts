@@ -33,14 +33,16 @@ export const getTransWallet = ({
   _playerId,
   _type, // null<˜all>, DepositNaka, WithdrawNaka //! case-sensitive
   _limit,
-  _page
+  _page,
+  _sort
 }: IGetTransWallet) =>
   new Promise<ITransWalletService>((resolve, reject) => {
     const data = {
       player_id: _playerId,
       type: _type,
       limit: _limit,
-      skip: _page
+      skip: _page,
+      sort: _sort
     }
     services
       .post<ITransWalletService>(`/inventory/transaction/history`, {

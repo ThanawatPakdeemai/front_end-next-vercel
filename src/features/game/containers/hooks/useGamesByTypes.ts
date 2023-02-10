@@ -1,13 +1,9 @@
 import { getGameByTypes } from "@feature/game/containers/services/game.service"
+import { IGetType } from "@feature/game/interfaces/IGameService"
 import { useQuery } from "@tanstack/react-query"
 
 interface IProps {
-  _type:
-    | "play-to-earn"
-    | "free-to-play"
-    | "story-mode"
-    | "must-try"
-    | "hot-game"
+  _type: IGetType
   _limit: number
   _page: number
 }

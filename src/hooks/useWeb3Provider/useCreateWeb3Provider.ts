@@ -13,6 +13,8 @@ const useCreateWeb3Provider = () => {
   const [provider, setProvider] = useState<Web3Provider | undefined>(undefined)
   const [chainId, setChainId] = useState<string | undefined>(undefined)
   const [accounts, setAccounts] = useState<string[] | undefined>(undefined)
+  const [hasMetamask, setHasMetamask] = useState<boolean>(false)
+
   const [hasChangeAccountMetamask, setHasChangeAccountMetamask] =
     useState(false)
 
@@ -137,55 +139,56 @@ const useCreateWeb3Provider = () => {
     []
   )
 
-  useEffect(() => {
-    ;(async () => {
-      if (!chainIdIsSupported()) {
-        resetChainId()
+  const checkChain = useCallback(async () => {
+    if (!chainIdIsSupported()) {
+      resetChainId()
+    }
+    if (window.ethereum === undefined) {
+      return
+    }
+    const walletConnector = Helper.getLocalStorage(ELocalKey.walletConnector)
+    if (walletConnector === WALLET_CONNECTOR_TYPES.injected) {
+      const account = await Helper.getWalletAccount()
+      const _provider = new providers.Web3Provider(window.ethereum)
+      if (_provider) {
+        const _signer = _provider.getSigner()
+        setSigner(_signer)
+        setProvider(_provider)
       }
-      if (window.ethereum === undefined) {
-        return
-      }
-      const walletConnector = Helper.getLocalStorage(ELocalKey.walletConnector)
-      if (walletConnector === WALLET_CONNECTOR_TYPES.injected) {
-        const account = await Helper.getWalletAccount()
-        const _provider = new providers.Web3Provider(window.ethereum)
-        if (_provider) {
-          const _signer = _provider.getSigner()
-          setSigner(_signer)
-          setProvider(_provider)
+      setAccounts(account)
+      onSetAddress(account[0])
+
+      window.ethereum.on("accountsChanged", async () => {
+        await handleDisconnectWallet()
+        await setHasChangeAccountMetamask(true)
+      })
+
+      // Subscribe to chainId change
+      window.ethereum.on("chainChanged", (_chainId: string) => {
+        if (_chainId === undefined) {
+          setChainId(undefined)
+          return
         }
-        setAccounts(account)
-        onSetAddress(account[0])
+        setChainId(_chainId)
+        handleDisconnectWallet()
+      })
 
-        window.ethereum.on("accountsChanged", async () => {
-          await handleDisconnectWallet()
-          await setHasChangeAccountMetamask(true)
-        })
-
-        // Subscribe to chainId change
-        window.ethereum.on("chainChanged", (_chainId: string) => {
-          if (_chainId === undefined) {
-            setChainId(undefined)
-            return
+      // Subscribe to session disconnection
+      if (window.ethereum && window.ethereum.on) {
+        window.ethereum.on(
+          "disconnect",
+          (/* code: number, reason: string */) => {
+            setProvider(undefined)
+            setAddress(undefined)
           }
-          setChainId(_chainId)
-          handleDisconnectWallet()
-        })
-
-        // Subscribe to session disconnection
-        if (window.ethereum && window.ethereum.on) {
-          window.ethereum.on(
-            "disconnect",
-            (/* code: number, reason: string */) => {
-              setProvider(undefined)
-              setAddress(undefined)
-            }
-          )
-        }
+        )
       }
-    })()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainId])
+    }
+  }, [handleDisconnectWallet])
+
+  useEffect(() => {
+    checkChain()
+  }, [chainId, checkChain])
 
   useEffect(() => {
     const getWalletAccount = async () => {
@@ -206,6 +209,14 @@ const useCreateWeb3Provider = () => {
     setSigner(_signer)
   }, [address, provider])
 
+  useEffect(() => {
+    const checkHasMetamask: boolean = typeof window.ethereum !== "undefined"
+    setHasMetamask(checkHasMetamask)
+    return () => {
+      setHasMetamask(false)
+    }
+  }, [])
+
   return {
     accounts,
     address,
@@ -218,7 +229,8 @@ const useCreateWeb3Provider = () => {
     handleSetAccount: setAccounts,
     handleSetAddress: setAddress,
     signer,
-    handleDisconnectWallet
+    handleDisconnectWallet,
+    hasMetamask
   }
 }
 

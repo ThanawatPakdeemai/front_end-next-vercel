@@ -8,7 +8,8 @@ const useCreateRoom = () => {
     isLoading,
     isError,
     error,
-    isSuccess
+    isSuccess,
+    failureReason
   } = useMutation(createRoom, {
     mutationKey: ["createRoom"],
     retry: false
@@ -20,7 +21,8 @@ const useCreateRoom = () => {
     isLoading,
     isError,
     error,
-    isSuccess
+    isSuccess,
+    failureReason
   }
 }
 

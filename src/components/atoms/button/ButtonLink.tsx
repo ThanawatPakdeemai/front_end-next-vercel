@@ -5,7 +5,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 
 export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   text?: string | ReactNode
-  href: string
+  href?: string
   icon?: React.ReactNode
   variant?: "text" | "outlined" | "contained"
   color?: "primary" | "secondary" | "success" | "error" | "info" | "warning"
@@ -61,7 +61,11 @@ const ButtonLink = ({
           )
         }
       >
-        <span className={`animation-button-text ${textColor}`}>{text}</span>
+        <span
+          className={`animation-button-text flex items-center ${textColor}`}
+        >
+          {text}
+        </span>
       </Button>
     ),
     [
@@ -85,7 +89,7 @@ const ButtonLink = ({
     <>
       {!onClick ? (
         <Link
-          href={href}
+          href={href || "/"}
           className="w-auto"
         >
           {ButtonSelf}

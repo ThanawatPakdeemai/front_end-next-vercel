@@ -1,7 +1,7 @@
 import { IMenu } from "@interfaces/IMenu"
 import { MenuItem } from "@mui/material"
 import React from "react"
-import Image from "next/image"
+import ImageCustom from "@components/atoms/image/Image"
 
 interface RootObject {
   _id: string
@@ -35,7 +35,7 @@ const MenuItemList = ({ data, ...props }: IProp | undefined | any) => (
     }}
   >
     <div className="px-2">
-      <Image
+      <ImageCustom
         src={data.image_icon}
         alt=""
         width="20"
@@ -47,14 +47,14 @@ const MenuItemList = ({ data, ...props }: IProp | undefined | any) => (
       <>
         <p className="px-2">{data.name}</p>
         <div className="flex w-full items-center justify-between">
-          <span className="px-2 text-[#ffffff]">XL {data.price} USD</span>
+          <span className="px-2  text-white-default ">XL {data.price} USD</span>
           {data.qty && <span className="px-2">{data.qty} item</span>}
         </div>
       </>
     ) : (
       <>
         <p className="px-2">CURENCY</p>
-        <p className="px-2 text-[#ffffff]">{data.name}</p>
+        <p className="px-2  text-white-default ">{data.name}</p>
       </>
     )}
   </MenuItem>

@@ -25,6 +25,7 @@ const useProfileStore = create<IUseProfileStore>()(
   devtools(
     persist(
       (set, get) => ({
+        wallet: false,
         address: undefined,
         isLogin: false,
         profile: {

@@ -1,6 +1,6 @@
 import { CardMedia } from "@mui/material"
 import React from "react"
-import Image from "next/image"
+import ImageCustom from "@components/atoms/image/Image"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { motion } from "framer-motion"
 
@@ -28,7 +28,7 @@ export default function CardGameSlide({
   gotoPrev
 }: ICardNextSlide) {
   return (
-    <div className=" rounded-3xl border-[1px] border-[#18181C] ">
+    <div className=" rounded-3xl border-[1px] border-neutral-800 ">
       <div className="relative flex justify-between px-4">
         <CardMedia
           component="img"
@@ -38,7 +38,7 @@ export default function CardGameSlide({
           alt={slideNext?.name}
         />
         <div className="absolute bottom-0 m-4 flex w-72 justify-between">
-          <div className="rounded-2xl bg-[#18181C33] px-3 py-2">
+          <div className="rounded-2xl bg-black-500 px-3 py-2">
             <button
               onClick={gotoPrev}
               type="button"
@@ -49,7 +49,7 @@ export default function CardGameSlide({
                   variants={iconmotion}
                   transition={{ type: "spring", stiffness: 400, damping: 4 }}
                 >
-                  <Image
+                  <ImageCustom
                     src="/images/gamePage/btnPrev.png"
                     alt="Picture of the author"
                     width={16}
@@ -59,7 +59,7 @@ export default function CardGameSlide({
               </motion.div>
             </button>
           </div>
-          <div className="rounded-2xl bg-[#18181C33] px-3 py-2">
+          <div className="rounded-2xl bg-black-500 px-3 py-2">
             <button
               type="button"
               aria-label="btnreset"
@@ -69,7 +69,7 @@ export default function CardGameSlide({
                   variants={iconmotion}
                   transition={{ type: "spring", stiffness: 400, damping: 4 }}
                 >
-                  <Image
+                  <ImageCustom
                     src="/images/gamePage/btnreset.png"
                     alt="Picture of the author"
                     width={16}
@@ -79,7 +79,7 @@ export default function CardGameSlide({
               </motion.div>
             </button>
           </div>
-          <div className="rounded-2xl bg-[#18181C33] px-3 py-2">
+          <div className="rounded-2xl bg-black-500 px-3 py-2">
             <button
               onClick={gotoNext}
               type="button"
@@ -90,7 +90,7 @@ export default function CardGameSlide({
                   variants={iconmotion}
                   transition={{ type: "spring", stiffness: 400, damping: 4 }}
                 >
-                  <Image
+                  <ImageCustom
                     src="/images/gamePage/btnNext.png"
                     alt="Picture of the author"
                     width={16}

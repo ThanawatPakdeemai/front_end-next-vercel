@@ -7,12 +7,14 @@ type TTypeButton = "submit" | "reset" | "button" | undefined
 interface IProps {
   startIcon: ReactNode
   endIcon?: ReactNode
-  text: string
+  text: string | ReactNode
   handleClick?: () => void
   className?: string
+  textClassName?: string
   style?: React.CSSProperties
   type?: TTypeButton
   disabled?: boolean
+  dropColor?: boolean
 }
 
 const ButtonToggleIcon = ({
@@ -21,9 +23,11 @@ const ButtonToggleIcon = ({
   text,
   handleClick,
   className,
+  textClassName,
   style,
   type = "button",
-  disabled
+  disabled,
+  dropColor
 }: IProps) => {
   const stiffValue = 300
 
@@ -89,10 +93,24 @@ const ButtonToggleIcon = ({
         {startIcon}
       </motion.span>
       <motion.p
-        className="mx-1 min-w-[40%] font-neue-machina text-sm"
+        className={`${textClassName} mx-1 min-w-[40%] font-neue-machina text-sm`}
         variants={textBtn}
       >
-        {text}
+        {dropColor ? (
+          <motion.div
+            initial={{ color: "#4E5057" }}
+            animate={{
+              color: "#ffff",
+              transition: { delay: 0.1, duration: 0.2 }
+            }}
+            exit={{ x: "-100vw", transition: { ease: "easeInOut" } }}
+          >
+            {text}
+          </motion.div>
+        ) : (
+          text
+        )}
+        {/* {text} */}
       </motion.p>
       <motion.span variants={iconEnd}>{endIcon}</motion.span>
     </motion.button>

@@ -51,6 +51,17 @@ module.exports = {
         780: "#101013",
         800: "#18181C",
         900: "#010101"
+      },
+      black: {
+        100: "#000000",
+        200: "#2f2f2f",
+        300: "#01010133",
+        400: "#010101D9",
+        500: "#18181cff",
+        600: "#6F727B",
+        700: "#111111",
+        800: "#0101015e",
+        900: "#24242498"
       }
     },
     fontFamily: {
@@ -157,12 +168,17 @@ module.exports = {
         "right-to-left": {
           "0%": { left: "100%", transform: `translate-x-0` },
           "100%": { left: "-50%", transform: `translate-x-full` }
+        },
+        "expand-right": {
+          "0%": { width: "210px" },
+          "100%": { width: "225px" }
         }
       },
       animation: {
         "time-progress": "time-progress 5s linear forwards",
         "rotating": "rotating 7s linear infinite",
-        "right-to-left": "right-to-left 100s linear infinite"
+        "right-to-left": "right-to-left 100s linear infinite",
+        "expand-right": "expand-right 0.5s "
       }
     }
   },

@@ -2,7 +2,7 @@ import React, { memo, useState } from "react"
 import { Box, Stack } from "@mui/material"
 import { ModalCustom } from "../../../../components/molecules/Modal/ModalCustom"
 import ButtonBuyItem from "../../atoms/ButtonBuyItem"
-import FromButItem from "./FromButItem"
+import FromBuyItem from "../../../buyItem/components/FromBuyItem"
 import ModalHeader from "../../../../components/molecules/Modal/ModalHeader"
 
 const RightMenuBuyItem = () => {
@@ -26,14 +26,14 @@ const RightMenuBuyItem = () => {
           spacing={3}
           className="md:p-5"
         >
-          <div className="rounded-2xl border-[1px] border-[#232329] bg-[#18181c] p-2">
+          <div className="rounded-2xl border-[1px] border-neutral-700 bg-neutral-800 p-2">
             <ModalHeader
               handleClose={handleClose}
               title="Buy Assets"
             />
           </div>
           <Box className="hide-scroll h-[480px] w-full overflow-y-scroll ">
-            <FromButItem />
+            <FromBuyItem handleClose={handleClose} />
           </Box>
         </Stack>
       </ModalCustom>

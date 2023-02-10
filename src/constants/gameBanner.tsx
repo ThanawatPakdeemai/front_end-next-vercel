@@ -43,3 +43,17 @@ export const GAME_BLOG_BANNER = [
     type: "blinkIcon"
   }
 ]
+
+export const COUPON_BANNER = [
+  {
+    link: "/",
+    text: "Coupon",
+    type: "text"
+  },
+  {
+    link: "/",
+    icon: <NakamotoWarIcon className="absolute z-10" />,
+    table: true,
+    type: "CouponIcon"
+  }
+]

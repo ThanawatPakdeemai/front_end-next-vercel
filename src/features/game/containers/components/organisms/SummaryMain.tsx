@@ -5,7 +5,7 @@ import Tagline from "@components/molecules/tagline/Tagline"
 import { SOCIAL_SHARE_SUMMARY } from "@configs/socialShare"
 import { Link, Typography } from "@mui/material"
 import React from "react"
-import Image from "next/image"
+import ImageCustom from "@components/atoms/image/Image"
 import LogoIcon from "@components/icons/LogoIcon"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import ArrowDownIcon from "@components/icons/ArrowDownIcon"
@@ -90,7 +90,7 @@ const SummaryMain = ({ summaryData }: IProp) => {
       </div>
       <div className="flex gap-[10px] p-[10px]">
         <div className="flex items-center rounded border border-neutral-800 px-[14px]">
-          <Image
+          <ImageCustom
             width={264}
             height={288}
             src={

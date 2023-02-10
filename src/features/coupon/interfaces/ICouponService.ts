@@ -9,5 +9,5 @@ export interface IResponseCouponData {
 export interface IResponseCoupon {
   status: boolean
   data: IResponseCouponData[]
-  message?: string
+  message: string
 }

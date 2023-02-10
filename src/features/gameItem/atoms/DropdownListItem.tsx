@@ -1,16 +1,14 @@
 import * as React from "react"
 import { useState } from "react"
 import { Popover } from "@mui/material"
-// import DropdownIcon from "@components/icons/DropdownIcon"
-import Image from "next/image"
+import ImageCustom from "@components/atoms/image/Image"
+
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import { useTranslation } from "next-i18next"
 import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
 import useGameStore from "@stores/game"
-// import { useToast } from "@feature/toast/containers"
-// import { MESSAGES } from "@constants/messages"
 import ButtonDropdown from "./ButtonDropdown"
 
 interface IProp {
@@ -64,7 +62,7 @@ const DropdownListItem = ({
                       <>
                         <div className="flex items-start">
                           {defaultItem?.image_icon && (
-                            <Image
+                            <ImageCustom
                               src={
                                 defaultItem?.image_icon && gameData
                                   ? gameData?.item[0].image_icon
@@ -78,7 +76,7 @@ const DropdownListItem = ({
                           <p className="px-2">{defaultItem?.name}</p>
                         </div>
 
-                        <p className="px-2 text-[#ffffff]">
+                        <p className="px-2 text-white-default">
                           {defaultItem?.price
                             ? `XL ${defaultItem?.price ?? 0} USD`
                             : t(`please-select-item`)}
@@ -118,21 +116,22 @@ const DropdownListItem = ({
                             <p>{`${ele.qty ?? 0} ${t("item")}`}</p>
                           </div>
                         ),
-                        icon: (
-                          <Image
-                            src={ele.image_icon ?? ""}
-                            alt={ele.name}
-                            width="20"
-                            height="20"
-                          />
-                        ),
+                        icon:
+                          (
+                            <ImageCustom
+                              src={ele.image_icon ?? ""}
+                              alt={ele.name}
+                              width="20"
+                              height="20"
+                            />
+                          ) ?? "",
                         data: ele,
                         href: ""
                       }))
                     }
-                    onChange={(item: IGameItemListData) => {
+                    onChange={(_item) => {
                       popupState.close()
-                      onChangeItem(item)
+                      onChangeItem(_item as IGameItemListData)
                     }}
                   />
                 </Popover>

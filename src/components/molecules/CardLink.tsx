@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { motion } from "framer-motion"
-import Image from "next/image"
+import ImageCustom from "@components/atoms/image/Image"
 import { IMAGES } from "@constants/images"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import IBookReading from "@components/icons/BookReading"
@@ -67,7 +67,7 @@ const CardLink = ({
           }}
           style={styleSecond || { backgroundColor: `${bgMain}` }}
         >
-          <Image
+          <ImageCustom
             src={srcMain}
             alt={altMain}
             width={123}
@@ -76,8 +76,10 @@ const CardLink = ({
               isHover && "top-[-20px] scale-[1.35]"
             } ${imageClassNameMain}`}
             style={imageStyleMain || { transition: "all 0.2s ease-in" }}
+            loading="eager"
+            priority
           />
-          <Image
+          <ImageCustom
             src={srcSecond}
             alt={altSecond}
             width={123}
@@ -86,6 +88,8 @@ const CardLink = ({
               isHover ? "top-[-15px] scale-50" : "top-[35px]"
             } ${imageClassNameSecond}`}
             style={imageStyleSecond || { transition: "0.2s" }}
+            loading="eager"
+            priority
           />
         </motion.div>
         <ButtonLink
@@ -93,7 +97,7 @@ const CardLink = ({
           text={textBtn}
           icon={iconBtn}
           size="medium"
-          className="button-global button-transparent absolute left-2.5 right-2.5 bottom-2.5 border border-solid border-[#01010133] text-primary-main"
+          className="button-global button-transparent absolute left-2.5 right-2.5 bottom-2.5 border border-solid border-black-300 text-primary-main"
         />
       </motion.div>
     </>

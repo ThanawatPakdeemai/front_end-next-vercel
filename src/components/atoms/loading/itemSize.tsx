@@ -9,7 +9,7 @@ interface IProp {
 }
 
 const ItemSize = ({ image_icon, name, price }: IProp) => (
-  <div className="txet-[#70727B] flex min-w-[140px] items-center">
+  <div className="txet-neutral-500 flex min-w-[140px] items-center">
     <Image
       className="m-2 w-6"
       src={image_icon}

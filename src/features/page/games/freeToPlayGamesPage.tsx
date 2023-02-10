@@ -1,17 +1,12 @@
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { F2PHeaderMenu } from "@constants/gameSlide"
-import { MESSAGES } from "@constants/messages"
 import GameCard from "@feature/game/components/molecules/GameCard"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import { getGameByTypes } from "@feature/game/containers/services/game.service"
-import { IGame } from "@feature/game/interfaces/IGameService"
-import { IProfile } from "@feature/profile/interfaces/IProfileService"
-import { useToast } from "@feature/toast/containers"
+import useGlobal from "@hooks/useGlobal"
 import useGameStore from "@stores/game"
-import useProfileStore from "@stores/profileStore"
 import { useQueryClient } from "@tanstack/react-query"
-import { useRouter } from "next/router"
 import { memo, useEffect, useRef, useState } from "react"
 import { v4 as uuid } from "uuid"
 
@@ -24,11 +19,8 @@ const FreeToPlayGamesPage = () => {
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
-  const router = useRouter()
-  const { onSetGameData, clearGameData } = useGameStore()
-  const profile = useProfileStore((state) => state.profile.data)
-  const [stateProfile, setStateProfile] = useState<IProfile | null>()
-  const { errorToast } = useToast()
+  const { onHandleClick } = useGlobal()
+  const { clearGameData } = useGameStore()
 
   const {
     isLoading,
@@ -39,10 +31,6 @@ const FreeToPlayGamesPage = () => {
     _limit: limit,
     _page: page
   })
-
-  useEffect(() => {
-    setStateProfile(profile)
-  }, [profile])
 
   useEffect(() => {
     // totalCount
@@ -63,15 +51,6 @@ const FreeToPlayGamesPage = () => {
     }
   }, [gameData, isPreviousData, page, queryClient])
 
-  const onHandleClick = (_gameUrl: string, _gameData: IGame) => {
-    if (stateProfile) {
-      router.push(`/${_gameUrl}`)
-      onSetGameData(_gameData)
-    } else {
-      errorToast(MESSAGES.please_login)
-    }
-  }
-
   return (
     <div className="flex flex-col">
       <div className="mb-6 grid grid-cols-5 gap-y-4 gap-x-2">
@@ -88,7 +67,9 @@ const FreeToPlayGamesPage = () => {
                 staminaRecovery={staminaRecovery}
                 cooldown={cooldown}
                 setCooldown={setCooldown}
-                onHandleClick={() => onHandleClick(game.game_url, game)}
+                onHandleClick={() =>
+                  onHandleClick("free-to-play", game.game_url, game)
+                }
               />
             ))
           : null}

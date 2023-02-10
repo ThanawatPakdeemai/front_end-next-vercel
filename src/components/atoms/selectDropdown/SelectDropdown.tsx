@@ -25,6 +25,7 @@ interface IProp {
   setExpanded?: (_value: boolean) => void
   title?: string
   icon?: string | React.ReactElement
+  onChange?: any
 }
 
 const SelectDropdown = ({

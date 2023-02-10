@@ -1,5 +1,5 @@
 import { memo } from "react"
-import Image from "next/image"
+import ImageCustom from "@components/atoms/image/Image"
 
 interface IProp {
   handleButton: () => void
@@ -14,7 +14,7 @@ const ButtonWallet = ({ handleButton, title }: IProp) => (
       }`}
       onClick={() => handleButton()}
     >
-      <Image
+      <ImageCustom
         src={`${
           title === "withdraw"
             ? "/images/Profile/Wallet/icon-withdeaw.png"

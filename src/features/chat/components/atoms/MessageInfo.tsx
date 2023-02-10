@@ -1,5 +1,5 @@
 import React from "react"
-import Image from "next/image"
+import ImageCustom from "@components/atoms/image/Image"
 
 interface IMessageInfoProps {
   avatar: string
@@ -14,7 +14,7 @@ const MessageInfo = ({ avatar, username, time, isMe }: IMessageInfoProps) => (
       isMe ? "flex-row-reverse text-right" : ""
     }`}
   >
-    <Image
+    <ImageCustom
       src={avatar}
       alt="avatar"
       width={30}

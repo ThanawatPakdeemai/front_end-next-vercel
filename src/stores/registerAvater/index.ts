@@ -3,16 +3,16 @@ import configZustandDevTools from "@src/utils/configDevtools"
 import { devtools } from "zustand/middleware"
 
 interface IZustandRegister {
-  submitSuccess: boolean
-  setRegisterSubmit: () => void
+  onSubmitClickRegister: boolean
+  setOnSubmitClickRegister: (_toggle: boolean) => void
 }
 
 const useRegisterAvatarStore = create<IZustandRegister>()(
   devtools(
     (set) => ({
-      submitSuccess: false,
-      setRegisterSubmit: () => {
-        set(() => ({ submitSuccess: true }))
+      onSubmitClickRegister: false,
+      setOnSubmitClickRegister: (_toggle: boolean) => {
+        set(() => ({ onSubmitClickRegister: _toggle }))
       }
     }),
     configZustandDevTools("RegisterAvatar-Store")

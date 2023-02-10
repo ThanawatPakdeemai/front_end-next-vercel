@@ -1,6 +1,6 @@
 import * as React from "react"
 import MenuList from "@mui/material/MenuList"
-import MenuItemCustom from "@components/atoms/MenuItemCustom"
+
 import { Box } from "@mui/material"
 import {
   IDevice,
@@ -11,6 +11,7 @@ import {
 import { IMenuBase } from "@interfaces/IMenu"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { ICURRENCY } from "@interfaces/ICurrency"
+import MenuItemCustom from "../MenuItemCustom"
 
 interface IProp {
   className?: string

@@ -19,7 +19,7 @@ const EarnRewardPage = () => {
   const { mutateClaimReward } = useClaimReward()
   const { earnRewardData, refetchRewardData, isLoading } =
     useGetP2ERewardByPlayerId(profile.data ? profile.data.id : "")
-  const { successToast, errorToast } = useToast()
+  const { successToast, errorToast, warnToast } = useToast()
 
   const countUnClaim = rewardList ? rewardList.length : 0
 
@@ -43,7 +43,7 @@ const EarnRewardPage = () => {
     }
   }
 
-  const onClaimAll = () => {}
+  const onClaimAll = () => warnToast("Claim all is not available yet")
 
   useEffect(() => {
     if (earnRewardData && allGameData && earnRewardData.data.length > 0) {

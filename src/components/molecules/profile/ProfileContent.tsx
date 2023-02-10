@@ -113,7 +113,8 @@ const ProfileContent = () => {
 
             <ImageCustom
               src={getProfileInfo.data.avatar}
-              fill
+              width={150}
+              height={150}
               alt="profile-avatar"
               className="absolute rounded-3xl"
             />

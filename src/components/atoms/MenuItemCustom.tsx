@@ -14,14 +14,18 @@ interface IProp extends IMenu {
  * @description In case use more type please add type in array prop
  */
 
-const MenuItemCustom = ({ active, endIcon, ...props }: IProp) => {
+const MenuItemCustom = ({ active, endIcon, onClick, ...props }: IProp) => {
   const router = useRouter()
   return (
     <MenuItem
       key={props.id}
       aria-label={props.id}
       onClick={() => {
-        if (props.href && props.href !== "") router.push(props.href)
+        if (props.href && props.href !== "") {
+          router.push(props.href)
+        } else if (onClick) {
+          onClick()
+        }
       }}
       sx={{
         color: active ? "#E1E2E2" : null,

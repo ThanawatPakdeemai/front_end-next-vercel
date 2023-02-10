@@ -8,9 +8,10 @@ import IconArrowTop from "@components/icons/arrowTopIcon"
 import { v4 as uuid } from "uuid"
 import { ITransactionWalletData } from "@feature/transaction/interfaces/ITransaction"
 import DropdownLimit from "@feature/transaction/components/atoms/DropdownLimit"
-import TableHeader from "@feature/transaction/components/atoms/TableHeader"
+
 import TablePopover from "@feature/transaction/components/atoms/TablePopover"
-import TableRowData from "@feature/transaction/components/atoms/TableRowData"
+import TableHeader from "@feature/table/components/atoms/TableHeader"
+import TableRowData from "@feature/table/components/atoms/TableRowData"
 
 export interface ITableHeader {
   title: string

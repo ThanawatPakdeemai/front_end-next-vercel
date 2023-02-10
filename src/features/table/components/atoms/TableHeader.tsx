@@ -1,8 +1,8 @@
+import { ITableHeader } from "@feature/transaction/components/molecules/TransactionTable"
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material"
 import { styled, TableCell, TableHead, TableRow } from "@mui/material"
 import React, { memo } from "react"
 import { v4 as uuidv4 } from "uuid"
-import { ITableHeader } from "../molecules/TransactionTable"
 
 const TableRowStyle = styled(TableRow)({
   "&.MuiTableRow-root": {

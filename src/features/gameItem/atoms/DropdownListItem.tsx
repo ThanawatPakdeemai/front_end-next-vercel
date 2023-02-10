@@ -1,16 +1,14 @@
 import * as React from "react"
 import { useState } from "react"
 import { Popover } from "@mui/material"
-// import DropdownIcon from "@components/icons/DropdownIcon"
 import ImageCustom from "@components/atoms/image/Image"
+
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import { useTranslation } from "next-i18next"
 import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
 import useGameStore from "@stores/game"
-// import { useToast } from "@feature/toast/containers"
-// import { MESSAGES } from "@constants/messages"
 import ButtonDropdown from "./ButtonDropdown"
 
 interface IProp {
@@ -101,7 +99,7 @@ const DropdownListItem = ({ list, className }: IProp) => {
                     icon={
                       <ImageCustom
                         src={list && list[0].image_icon}
-                        alt=""
+                        alt={list && list[0].name}
                         width="20"
                         height="20"
                       />

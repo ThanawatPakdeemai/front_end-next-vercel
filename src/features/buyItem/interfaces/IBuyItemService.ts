@@ -1,7 +1,7 @@
 export interface IBuyItems {
-  player_id: string
-  item_id: string
-  qty: number
+  _player_id: string
+  _item_id: string
+  _qty: number
 }
 
 interface IBuyItem {

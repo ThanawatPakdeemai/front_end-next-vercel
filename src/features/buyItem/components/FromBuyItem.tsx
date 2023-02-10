@@ -1,5 +1,5 @@
 import React, { memo } from "react"
-import { Box, ButtonGroup } from "@mui/material"
+import { Box, ButtonGroup, CircularProgress } from "@mui/material"
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
@@ -16,7 +16,10 @@ import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 import { useToast } from "@feature/toast/containers"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { useTranslation } from "next-i18next"
-// import { registTournament } from "@feature/tournament/containers/services/tournament.service"
+import Helper from "@utils/helper"
+import useGetBalanceVault from "@feature/inventory/containers/hooks/useGetBalanceVault"
+import useWalletStore from "@stores/wallet"
+import useBuyGameItems from "../containers/hooks/useBuyGameItems"
 
 const iconmotion = {
   hover: {
@@ -30,14 +33,16 @@ const iconmotion = {
     }
   }
 }
+interface IProp {
+  handleClose?: () => void
+}
 
-const FromButItem = () => {
+const FromBuyItem = ({ handleClose }: IProp) => {
   const { t } = useTranslation()
   const game = useGameStore((state) => state.data)
   const profile = useProfileStore((state) => state.profile.data)
-  const { errorToast } = useToast()
-
-  const { gameItemList } = useGamesByGameId({
+  const { errorToast, successToast } = useToast()
+  const { gameItemList, refetch } = useGamesByGameId({
     _playerId: profile ? profile.id : "",
     _gameId: game ? game._id : ""
   })
@@ -55,16 +60,60 @@ const FromButItem = () => {
       currency_id: "",
       qty: 1,
       item: {},
-      currency: {}
+      currency: {},
+      nakaPerItem: 0
     }
   })
+
+  const { mutateBuyItems, isLoading } = useBuyGameItems()
+  const { balanceVaultNaka } = useGetBalanceVault(profile?.address ?? "")
+  const { setVaultBalance } = useWalletStore()
+
   const onSubmit = (_data) => {
-    // console.log(data)
+    mutateBuyItems({
+      _player_id: _data.player_id,
+      _item_id: _data.item_id,
+      _qty: Number(_data.qty)
+    })
+      .then((res) => {
+        if (res && balanceVaultNaka && balanceVaultNaka.data) {
+          refetch()
+          setVaultBalance(Number(balanceVaultNaka.data))
+          successToast("Buy Items Success")
+          if (handleClose) handleClose()
+        }
+      })
+      .catch((error) => {
+        errorToast(error.message)
+      })
   }
 
   const onError = (_data) => {
     errorToast("error")
   }
+
+  const updatePricePerItem = () => {
+    Helper.calculateItemPerPrice(
+      (watch("item") as IGameItemListData).price
+    ).then((res) => {
+      if (res) {
+        setValue("nakaPerItem", Number(res))
+      } else {
+        setValue("nakaPerItem", 0)
+      }
+    })
+  }
+
+  const onQtyUp = () => {
+    setValue("qty", watch("qty") >= 99 ? 99 : Number(watch("qty")) + 1)
+    updatePricePerItem()
+  }
+
+  const onQtyDown = () => {
+    setValue("qty", watch("qty") <= 1 ? 1 : Number(watch("qty")) - 1)
+    updatePricePerItem()
+  }
+
   return (
     <>
       {game && (
@@ -108,8 +157,9 @@ const FromButItem = () => {
                     list={gameItemList}
                     className="w-[410px]"
                     onChangeSelect={(_item) => {
-                      setValue("item", _item)
+                      setValue("item", _item as IGameItemListData)
                       setValue("item_id", _item._id)
+                      updatePricePerItem()
                     }}
                   />
                 )}
@@ -124,7 +174,7 @@ const FromButItem = () => {
             <Controller
               name="currency_id"
               control={control}
-              rules={{ required: true }}
+              // rules={{ required: true }}
               render={({ field }) => (
                 <DropdownListCurrency
                   {...field}
@@ -142,15 +192,13 @@ const FromButItem = () => {
             )}
           </Box>
           <p className="uppercase text-purple-primary">
-            Skull {} = 13.8389 NAKA
+            Assets / 1 Item = {watch("nakaPerItem")} NAKA
           </p>
 
           <div className="my-4  grid grid-cols-6  content-center gap-4">
             <div className="btn">
               <ButtonIcon
-                onClick={() =>
-                  setValue("qty", watch("qty") <= 1 ? 1 : watch("qty") - 1)
-                }
+                onClick={onQtyDown}
                 variants={iconmotion}
                 whileHover="hover"
                 transition={{ type: "spring", stiffness: 400, damping: 4 }}
@@ -166,6 +214,7 @@ const FromButItem = () => {
                   <input
                     {...register("qty", { required: true })}
                     onChange={(event: any) => {
+                      event.preventDefault()
                       const qty = Number(event.target.value)
                       if (qty <= 1) {
                         setValue("qty", 1)
@@ -175,7 +224,7 @@ const FromButItem = () => {
                         setValue("qty", qty)
                       }
                     }}
-                    className="h-full w-[220px] bg-neutral-700 pt-2 text-center text-neutral-500 focus-visible:outline-0"
+                    className="h-full w-[220px] bg-neutral-700 pt-2 text-center text-neutral-500 focus-visible:bg-neutral-700 focus-visible:outline-0"
                     value={watch("qty")}
                   />
                 </div>
@@ -187,9 +236,7 @@ const FromButItem = () => {
             </div>
             <div className="btn">
               <ButtonIcon
-                onClick={() =>
-                  setValue("qty", watch("qty") >= 99 ? 99 : watch("qty") + 1)
-                }
+                onClick={onQtyUp}
                 variants={iconmotion}
                 whileHover="hover"
                 transition={{ type: "spring", stiffness: 400, damping: 4 }}
@@ -205,7 +252,11 @@ const FromButItem = () => {
               <p>TOTAL PRICE:</p>
             </div>
             <div className="flex items-baseline text-secondary-main">
-              <p className="pr-2">0.00</p>
+              <p className="pr-2">
+                {Helper.formatNumber(watch("nakaPerItem") * watch("qty") ?? 0, {
+                  maximumFractionDigits: 4
+                })}
+              </p>
               <Image
                 src="/images/logo/Logo-Master2.png"
                 alt="Master2"
@@ -215,14 +266,33 @@ const FromButItem = () => {
             </div>
           </div>
           <div className="w-full text-end">
-            <p className="text-sm text-black-default">= $0.00</p>
+            <p className="text-sm text-black-default">
+              = $
+              {Helper.formatNumber(
+                watch("qty") ??
+                  0 * Number((watch("item") as IGameItemListData)?.price) ??
+                  0
+              )}
+            </p>
           </div>
           <ButtonGroup className="mt-10 flex flex-col  gap-3">
             <ButtonLink
               href=""
               size="medium"
+              disabled={isLoading}
               className="h-[40px] w-full text-sm "
-              text={t("buy-now")}
+              text={
+                <>
+                  {isLoading ? (
+                    <CircularProgress
+                      color="primary"
+                      size={15}
+                    />
+                  ) : (
+                    t("buy-now")
+                  )}
+                </>
+              }
               onClick={() => {}}
               type="submit"
               color="secondary"
@@ -244,4 +314,4 @@ const FromButItem = () => {
     </>
   )
 }
-export default memo(FromButItem)
+export default memo(FromBuyItem)

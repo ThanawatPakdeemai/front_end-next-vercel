@@ -8,8 +8,9 @@ import {
   IGameCategory,
   IGameItem
 } from "@feature/dropdown/interfaces/IDropdownService"
-import { ICURENCY, IMenuBase } from "@interfaces/IMenu"
+import { IMenuBase } from "@interfaces/IMenu"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+import { ICURRENCY } from "@interfaces/ICurrency"
 
 interface IProp {
   className?: string
@@ -19,7 +20,7 @@ interface IProp {
     | IDevice[]
     | IMenuBase[]
     | IGameItemListData[]
-    | ICURENCY[]
+    | ICURRENCY[]
   setOnTitle?: (_value: IDropdownAll) => void
   setExpanded?: (_value: boolean) => void
   title?: string

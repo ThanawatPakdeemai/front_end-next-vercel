@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import * as React from "react"
 import { useState } from "react"
 import { Popover } from "@mui/material"
@@ -5,19 +6,20 @@ import ImageCustom from "@components/atoms/image/Image"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import { useTranslation } from "next-i18next"
+import INaka from "@components/icons/Naka"
+import { ICURRENCY } from "@interfaces/ICurrency"
 import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
-import { ICURENCY } from "@interfaces/ICurrency"
 import ButtonDropdown from "./ButtonDropdown"
 
 interface IProp {
   icon?: React.ReactNode
-  list: ICURENCY[]
+  list: ICURRENCY[]
   className: string
 }
 
 const DropdownListCurrency = ({ list, className }: IProp) => {
   const { t } = useTranslation()
-  const [defaultItem, setDefaultItem] = useState<ICURENCY>()
+  const [defaultItem, setDefaultItem] = useState<ICURRENCY>()
 
   return (
     <>
@@ -35,13 +37,14 @@ const DropdownListCurrency = ({ list, className }: IProp) => {
                     isOpen={popupState.isOpen}
                     leftContent={
                       <>
-                        <div className="flex">
-                          <ImageCustom
-                            src="/images/logo/Logo-Master1.png"
+                        <div className="flex items-center">
+                          <INaka color="#fff" />
+                          {/* <Image
+                            src="/images/home/logoNakaMaster.svg"
                             alt=""
                             width="30"
                             height="30"
-                          />
+                          /> */}
                           <p className="px-2">{t("currency")}</p>
                           <p className="px-2 text-white-default">
                             {defaultItem?.name}

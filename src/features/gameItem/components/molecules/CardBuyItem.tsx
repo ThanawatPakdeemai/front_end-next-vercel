@@ -32,13 +32,43 @@ export default function CardButItem() {
     _gameId: gameObject ? gameObject._id : ""
   })
 
+  const itemSelect = useMemo(() => {
+    if (itemSelected) {
+      if (gameItemList) {
+        const item = gameItemList.find((ele) => ele._id === itemSelected._id)
+        return item
+      }
+      return itemSelected
+    }
+  }, [gameItemList, itemSelected])
+
+  const qtyItemSelected = useMemo(() => {
+    if (itemSelect) {
+      return itemSelect.qty
+    }
+    if (itemSelected) {
+      return itemSelected.qty
+    }
+    return 0
+  }, [itemSelect, itemSelected])
+
+  const priceItemSelected = useMemo(() => {
+    if (itemSelect) {
+      return itemSelect.price
+    }
+    if (itemSelected) {
+      return itemSelected.price
+    }
+    return 0
+  }, [itemSelect, itemSelected])
+
   const getTotalPriceItemSelectProfile = useCallback(async () => {
     if (itemSelected) {
       const priceUsd = await Helper.getPriceNakaCurrent()
-      if (priceUsd) {
+      if (priceUsd && qtyItemSelected) {
         setTotalPrice(
           Number(
-            Helper.formatNumber(itemSelected.qty * itemSelected.price, {
+            Helper.formatNumber(qtyItemSelected * priceItemSelected, {
               maximumFractionDigits: 4
             })
           )
@@ -56,7 +86,7 @@ export default function CardButItem() {
         // )
       }
     }
-  }, [itemSelected])
+  }, [itemSelected, priceItemSelected, qtyItemSelected])
 
   useEffect(() => {
     if (data) setGameObject(data)
@@ -73,16 +103,15 @@ export default function CardButItem() {
       errorToast(MESSAGES["you-don't-have-item"])
     }
   }
-
-  const qtyItemSelected = useMemo(() => {
-    if (itemSelected) {
-      if (gameItemList) {
-        const item = gameItemList.find((ele) => ele._id === itemSelected._id)
-        return item ? item.qty : itemSelected.qty
+  useEffect(() => {
+    if (data) {
+      const item_name = data.item && 0 in data.item ? data.item[0].name : 0
+      const item_selected = itemSelect ? itemSelect?.name : 1
+      if (item_name !== item_selected) {
+        onSetGameItemSelectd(null)
       }
-      return itemSelected.qty
     }
-  }, [gameItemList, itemSelected])
+  }, [data, itemSelect, onSetGameItemSelectd])
 
   const buttonInToGame = useMemo(() => {
     if (qtyItemSelected) {

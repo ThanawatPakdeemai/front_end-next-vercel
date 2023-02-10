@@ -1,6 +1,6 @@
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
-import { ICURENCY } from "@interfaces/ICurrency"
+import { ICURRENCY } from "@interfaces/ICurrency"
 
 export interface IDetailUsedItems {
   name: string
@@ -77,4 +77,4 @@ export interface IDropdownAll
     IGameItem,
     IDevice,
     IGameItemListData,
-    ICURENCY {}
+    ICURRENCY {}

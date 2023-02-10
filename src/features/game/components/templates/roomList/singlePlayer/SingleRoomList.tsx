@@ -12,8 +12,8 @@ import { unstable_batchedUpdates } from "react-dom"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
-import CONFIGS from "@configs/index"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
+import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 
 /**
  *
@@ -26,6 +26,11 @@ const GameRoomList = () => {
   const router = useRouter()
   const { errorToast } = useToast()
   const [gameData, setGameData] = useState<IGame>()
+
+  const { balanceofItem } = useGetBalanceOf({
+    _address: profile?.address ?? "",
+    _item_id: itemSelected?.item_id_smartcontract ?? 0
+  })
 
   const item = useMemo(() => {
     if (data) {
@@ -45,7 +50,6 @@ const GameRoomList = () => {
     _email: profile ? profile.email : "",
     _itemId: item ?? ""
   })
-
   const handleJoinRoom = (_dataRoom: IGameRoomDetail) => {
     const data_player_me = _dataRoom.current_player.find((ele) => {
       if (profile) {
@@ -54,16 +58,23 @@ const GameRoomList = () => {
       return undefined
     })
     const _roomId = _dataRoom._id
-
     if (profile) {
-      if (data_player_me && data_player_me.status === "played" && data) {
-        router.push(
-          `${CONFIGS.BASE_URL.FRONTEND}/${data.path}/summary/${_roomId}`
-        )
+      if (
+        itemSelected &&
+        itemSelected.qty > 0 &&
+        balanceofItem &&
+        balanceofItem?.data > 0
+      ) {
+        router.push(`${router.asPath}/${_roomId}`)
       } else if (data && (data.play_to_earn || data.tournament)) {
         router.push(`${router.asPath}/${_roomId}`)
-      } else if (itemSelected && itemSelected.qty > 0) {
-        router.push(`${router.asPath}/${_roomId}`)
+      } else if (data && data_player_me && data_player_me.status === "played") {
+        router.push(`/${data.path}/summary/${_roomId}`)
+      } else if (
+        (balanceofItem && balanceofItem?.data < 1) ||
+        balanceofItem === undefined
+      ) {
+        errorToast(MESSAGES["you-don't-have-item"])
       } else {
         errorToast(MESSAGES["please_item"])
       }

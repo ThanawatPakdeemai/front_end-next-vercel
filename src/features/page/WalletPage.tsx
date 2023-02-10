@@ -268,7 +268,7 @@ export default function WalletPage() {
           />
         </div>
       </div>
-      <TransactionTable />
+      <TransactionTable profile={profile.data} />
     </>
   )
 }

@@ -11,7 +11,14 @@ import DropdownLimit from "@feature/transaction/components/atoms/DropdownLimit"
 import TableHeader from "@feature/transaction/components/atoms/TableHeader"
 import TablePopover from "@feature/transaction/components/atoms/TablePopover"
 import TableRowData from "@feature/transaction/components/atoms/TableRowData"
+import { useTranslation } from "react-i18next"
+import useGlobal from "@hooks/useGlobal"
+import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
+import { IProfile } from "@src/types/profile"
 
+interface IProp {
+  profile?: IProfile
+}
 export interface ITableHeader {
   title: string
   keyUp?: boolean
@@ -25,8 +32,10 @@ export interface ITableHeader {
   child?: ReactNode
 }
 
-export default function TransactionTable() {
-  const playerId = "61a72d7e970fbe264d627bf5"
+export default function TransactionTable({ profile }: IProp) {
+  const { hydrated } = useGlobal()
+  const { t } = useTranslation()
+
   const [limit, setLimit] = useState<number>(12)
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
@@ -38,12 +47,12 @@ export default function TransactionTable() {
   const [typeCheck, setTypeCheck] = useState<Array<string>>(allTypes)
   const [txHistory, setTxHistory] = useState<ITransactionWalletData[]>([])
 
-  const { getTransHistory } = useGetTransWallet()
+  const { getTransHistory, isLoading } = useGetTransWallet()
 
   useEffect(() => {
     const fetchHistory = async () => {
       await getTransHistory({
-        _playerId: playerId,
+        _playerId: profile && profile.id ? profile.id : "",
         _type: typeCheck,
         _limit: limit,
         _page: page,
@@ -88,7 +97,7 @@ export default function TransactionTable() {
   const tHeader: Array<ITableHeader> = useMemo(
     () => [
       {
-        title: "time",
+        title: t("time"),
         arrowIcon: true,
         keyUp: sortTime === 1,
         keyDown: sortTime === -1,
@@ -101,11 +110,11 @@ export default function TransactionTable() {
           })
       },
       {
-        title: "type",
+        title: t("type"),
         filterIcon: true,
         child: (
           <TablePopover
-            icon={<FilterIcon />}
+            icon={<FilterIcon className="text-neutral-600" />}
             checkboxList={["DepositNaka", "WithdrawNaka"]}
             check={typeCheck}
             setCheck={onTypeCheck}
@@ -113,7 +122,7 @@ export default function TransactionTable() {
         )
       },
       {
-        title: "amount",
+        title: t("amount").concat(" (NAKA)"),
         arrowIcon: true,
         keyUp: sortAmount === 1,
         keyDown: sortAmount === -1,
@@ -125,94 +134,105 @@ export default function TransactionTable() {
             return -1
           })
       },
-      { title: "fee" }
+      { title: t("fee").concat(" (MATIC)") }
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [sortTime, sortAmount]
   )
 
   return (
-    <div>
-      <p className="my-5 font-neue-machina-bold text-default uppercase">
-        Naka Storage Transactions
-      </p>
-      <TableContainer className="w-[580px] rounded-[14px] border border-neutral-800 bg-neutral-780 px-1.5 pb-1.5 pt-4">
-        <Table aria-label="simple table">
-          <TableHeader thead={tHeader} />
-          <TableBody
-            sx={{
-              display: "block",
-              borderRadius: "9px",
-              overflow: "hidden",
-              "tr:last-of-type td": { borderBottom: 0 }
-            }}
-          >
-            {txHistory &&
-              txHistory.map((item) => (
-                <TableRowData
-                  key={uuid()}
-                  child={[
-                    <>
-                      <span className="rounded-less border p-[5px]">
-                        {dayjs(item.current_time).format("DD MMM YYYY")}
-                      </span>
-                      <span className="px-3">
-                        {dayjs(item.current_time).format("hh:mm A")}
-                      </span>
-                    </>,
-                    <>
-                      <Chip
-                        label={item.type}
-                        size="small"
-                        className={`font-neue-machina-bold uppercase !text-neutral-900 ${
-                          item.type && item.type === "DepositNaka"
-                            ? "!bg-varidian-default"
-                            : "!bg-red-card"
-                        }`}
+    <>
+      {hydrated && (
+        <div>
+          <p className="my-5 font-neue-machina-bold text-default uppercase">
+            {t("NAKA_storage_transactions")}
+          </p>
+          <TableContainer className="w-[580px] rounded-[14px] border border-neutral-800 bg-neutral-780 px-1.5 pb-1.5 pt-4">
+            {isLoading ? (
+              [...Array(limit)].map(() => <SkeletonTableWallet key={uuid()} />)
+            ) : (
+              <Table aria-label="simple table">
+                <TableHeader thead={tHeader} />
+                <TableBody
+                  sx={{
+                    display: "block",
+                    borderRadius: "9px",
+                    overflow: "hidden",
+                    "tr:last-of-type td": { borderBottom: 0 }
+                  }}
+                  className="bg-neutral-900 px-3.5"
+                >
+                  {txHistory &&
+                    txHistory.map((item) => (
+                      <TableRowData
+                        key={uuid()}
+                        child={[
+                          <>
+                            <span className="rounded-less border border-neutral-700 p-[5px] font-neue-machina-bold text-xs uppercase text-neutral-400">
+                              {dayjs(item.current_time).format("DD MMM YYYY")}
+                            </span>
+                            <span className="px-3 font-neue-machina-bold text-xs text-neutral-600">
+                              {dayjs(item.current_time).format("hh:mm A")}
+                            </span>
+                          </>,
+                          <>
+                            <Chip
+                              label={item.type}
+                              size="small"
+                              className={`font-neue-machina-bold uppercase !text-neutral-900 ${
+                                item.type && item.type === "DepositNaka"
+                                  ? "!bg-varidian-default"
+                                  : "!bg-red-card"
+                              }`}
+                            />
+                          </>,
+                          <>
+                            <div
+                              className={`flex items-center font-neue-machina-bold text-sm ${
+                                item.type && item.type === "DepositNaka"
+                                  ? "text-varidian-default"
+                                  : "text-red-card"
+                              }`}
+                            >
+                              <div className="flex flex-row">
+                                <div className="pr-[8.35px]">
+                                  {item.type && item.type === "DepositNaka" ? (
+                                    <IconArrowTop className="rotate-180" />
+                                  ) : (
+                                    <IconArrowTop />
+                                  )}
+                                </div>
+                                {item.amount.toFixed(2)}
+                              </div>
+                            </div>
+                          </>,
+                          <>
+                            <span className="font-neue-machina-bold text-sm text-neutral-600">
+                              - {item.fee.toFixed(4)}
+                            </span>
+                          </>
+                        ]}
                       />
-                    </>,
-                    <>
-                      <div
-                        className={`flex items-center font-neue-machina-bold text-sm ${
-                          item.type && item.type === "DepositNaka"
-                            ? "text-varidian-default"
-                            : "text-red-card"
-                        }`}
-                      >
-                        <div className="flex flex-row">
-                          <div className="pr-[8.35px]">
-                            {item.type && item.type === "DepositNaka" ? (
-                              <IconArrowTop className="rotate-180" />
-                            ) : (
-                              <IconArrowTop />
-                            )}
-                          </div>
-                          {item.amount.toFixed(2)}
-                        </div>
-                      </div>
-                    </>,
-                    <>
-                      <span> - {item.fee.toFixed(4)}</span>
-                    </>
-                  ]}
-                />
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <div className="my-5 flex w-[580px] justify-between">
-        <PaginationNaka
-          totalCount={totalCount}
-          limit={limit}
-          page={page}
-          setPage={setPage}
-        />
-        <DropdownLimit
-          defaultValue={12}
-          list={[6, 12, 24, 48, 64]}
-          onChangeSelect={setLimit}
-        />
-      </div>
-    </div>
+                    ))}
+                </TableBody>
+              </Table>
+            )}
+          </TableContainer>
+          <div className="my-5 flex w-[580px] justify-between">
+            <PaginationNaka
+              totalCount={totalCount}
+              limit={limit}
+              page={page}
+              setPage={setPage}
+            />
+            <DropdownLimit
+              defaultValue={12}
+              list={[6, 12, 24, 48, 64]}
+              onChangeSelect={setLimit}
+            />
+          </div>
+        </div>
+      )}
+    </>
   )
 }

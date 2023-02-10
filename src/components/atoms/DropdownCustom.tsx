@@ -10,6 +10,7 @@ import { useToast } from "@feature/toast/containers"
 import AllCategoriesIcon from "@components/icons/AllCategoriesIcon"
 import {
   IDevice,
+  IDropdownAll,
   IGameCategory,
   IGameItem
 } from "@feature/dropdown/interfaces/IDropdownService"
@@ -27,13 +28,14 @@ const Dropdown = ({ title, className }: IProp) => {
   const [gameData, setGameData] = useState<
     IGameItem[] | IGameCategory[] | IDevice[]
   >([])
-  const [onTitle, setOnTitle] = useState<IGameCategory | IGameItem | IDevice>()
+  const [onTitle, setOnTitle] = useState<IDropdownAll>()
   const { errorToast } = useToast()
   const {
     setCategory: setCategoryDropdown,
     setGameItem: setGameItemDropdown,
     setDevice: setDeviceDropdown
   } = useFilterStore()
+
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
   }
@@ -123,7 +125,7 @@ const Dropdown = ({ title, className }: IProp) => {
   }, [])
 
   useEffect(() => {
-    if (onTitle) {
+    if (onTitle?._id) {
       if (title === "All Categories") {
         setCategoryDropdown(onTitle._id)
       } else if (title === "All Game Assets") {

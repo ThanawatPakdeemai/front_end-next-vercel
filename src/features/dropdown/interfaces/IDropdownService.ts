@@ -1,4 +1,6 @@
 import { IGame } from "@feature/game/interfaces/IGameService"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+import { ICURENCY } from "@interfaces/ICurrency"
 
 export interface IDetailUsedItems {
   name: string
@@ -69,3 +71,10 @@ export interface IDevice {
   name: string
   supported: boolean
 }
+
+export interface IDropdownAll
+  extends IGameCategory,
+    IGameItem,
+    IDevice,
+    IGameItemListData,
+    ICURENCY {}

@@ -21,28 +21,11 @@ interface IProp {
   onChangeSelect?: (_item: IGameItemListData) => void
 }
 
-const DropdownListItem = ({
-  list,
-  className,
-  onChangeSelect,
-  isCheck = false
-}: IProp) => {
+const DropdownListItem = ({ list, className }: IProp) => {
   const { t } = useTranslation()
-  const { data: gameData, itemSelected } = useGameStore()
-  // const { errorToast } = useToast()
+  const { data: gameData } = useGameStore()
+  const [defaultItem, setDefaultItem] = useState<IGameItemListData>()
 
-  const [defaultItem, setDefaultItem] = useState<IGameItemListData | null>(
-    itemSelected ?? null
-  )
-
-  const onChangeItem = (_item: IGameItemListData) => {
-    if (isCheck) {
-      if (_item.qty > 0) setDefaultItem(_item)
-    } else {
-      setDefaultItem(_item)
-    }
-    if (_item && onChangeSelect) onChangeSelect(_item)
-  }
   return (
     <>
       {list && (
@@ -67,7 +50,7 @@ const DropdownListItem = ({
                             <ImageCustom
                               src={
                                 defaultItem?.image_icon && gameData
-                                  ? gameData?.item[0].image_icon
+                                  ? gameData.item[0].image_icon
                                   : ""
                               }
                               alt=""
@@ -107,33 +90,22 @@ const DropdownListItem = ({
                 >
                   <SelectDropdown
                     className={className}
-                    details={
-                      list &&
-                      list.map((ele) => ({
-                        label: (
-                          <div className="flex items-center justify-between">
-                            <p>
-                              {ele.name} <span>[ {ele.item_size} ]</span>
-                            </p>
-                            <p>{`${ele.qty ?? 0} ${t("item")}`}</p>
-                          </div>
-                        ),
-                        icon: (
-                          <ImageCustom
-                            src={ele.image_icon ?? ""}
-                            alt={ele.name}
-                            width="20"
-                            height="20"
-                          />
-                        ),
-                        data: ele,
-                        href: ""
-                      }))
+                    details={list}
+                    // onChange={(item: IGameItemListData) => {
+                    //   popupState.close()
+                    //   onChangeItem(item)
+                    // }}
+                    // setExpanded={popupState.isOpen}
+                    setOnTitle={setDefaultItem}
+                    title="GameItem"
+                    icon={
+                      <ImageCustom
+                        src={list && list[0].image_icon}
+                        alt=""
+                        width="20"
+                        height="20"
+                      />
                     }
-                    onChange={(item: IGameItemListData) => {
-                      popupState.close()
-                      onChangeItem(item)
-                    }}
                   />
                 </Popover>
               </>

@@ -27,12 +27,7 @@ const useStyles = makeStyles({
 })
 
 const MissionComponent = ({ open }: IProp) => {
-  const {
-    data: questStore,
-    setClose,
-    missionType,
-    setMissionType
-  } = useQuestStore()
+  const { data: questStore, setClose, missionType } = useQuestStore()
   const { profile } = useProfileStore()
   const { warnToast } = useToast()
 

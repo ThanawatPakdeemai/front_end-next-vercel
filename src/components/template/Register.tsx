@@ -1,5 +1,5 @@
-/* eslint-disable no-console */
 import React, { useEffect, useState } from "react"
+import _ from "lodash"
 import { useForm } from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -16,6 +16,7 @@ import {
   Grid,
   IconButton,
   InputAdornment,
+  Link,
   styled,
   TextField,
   Typography
@@ -26,10 +27,8 @@ import ButtonClose from "@components/atoms/button/ButtonClose"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined"
-import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlineBlankOutlined"
 import Beenhere from "@components/icons/Beenhere"
 import ILock from "@components/icons/Lock"
-import ICheckMark from "@components/icons/CheckMark"
 import IEdit from "@components/icons/Edit"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import Tagline from "@components/molecules/tagline/Tagline"
@@ -39,23 +38,25 @@ import { MESSAGES } from "@constants/messages"
 import { useToast } from "@feature/toast/containers"
 import useVerifyCode from "@feature/authentication/containers/hooks/useVerifyCode"
 import useSignUp from "@feature/authentication/containers/hooks/useSignUp"
-import useUserAction from "@hooks/useProfile"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import GoogleIcon from "@components/icons/SocialIcon/GoogleIcon"
 import MetaMarkIcon from "@components/icons/SocialIcon/Metamask"
+import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlineBlankOutlined"
+import ICheckMark from "@components/icons/CheckMark"
 import {
-  FacebookAuthProvider,
   TwitterAuthProvider,
   GoogleAuthProvider,
   getAuth,
-  signInWithPopup,
-  Auth
+  signInWithPopup
+  // Auth
 } from "firebase/auth"
-import { initializeApp } from "@firebase/app"
-import { IError } from "@src/types/contract"
+import { initializeApp, getApps } from "@firebase/app"
 import { useRouter } from "next/router"
+import useLoginProvider from "@feature/authentication/containers/hooks/useLoginProvider"
+import CreateProfile from "@feature/profile/components/createProfile/CreateProfile"
+import useRegisterAvatarStore from "@stores/registerAvater"
 
 const KeyFramesClockwise = styled("div")({
   "@keyframes rotation": {
@@ -90,7 +91,7 @@ interface TFormData {
   referralId: string | string[]
 }
 
-const SignupSchema = yup
+const SignUpSchema = yup
   .object({
     email: yup.string().required(),
     password: yup.string().required(),
@@ -111,7 +112,7 @@ const RegisterLayout = () => {
     watch,
     formState: { errors }
   } = useForm<TFormData>({
-    resolver: yupResolver(SignupSchema),
+    resolver: yupResolver(SignUpSchema),
     defaultValues: {
       referralId: referral || ""
     }
@@ -124,10 +125,10 @@ const RegisterLayout = () => {
   const { executeRecaptcha } = useGoogleReCaptcha()
   const { mutateVerifyCode } = useVerifyCode()
   const { mutateSignUp } = useSignUp()
+  const { mutateLoginProvider } = useLoginProvider()
   const { errorToast, successToast } = useToast()
-  const userActions = useUserAction()
 
-  const config = {
+  const firebaseConfig = {
     apiKey: "AIzaSyAszETPfcbQt0gd2Ifpep83_C05zOt_k1c",
     authDomain: "able-study-326414.firebaseapp.com",
     projectId: "able-study-326414",
@@ -137,8 +138,13 @@ const RegisterLayout = () => {
     measurementId: "G-4NN0JPG9X4"
   }
 
-  const app = initializeApp(config)
-  const auth: Auth = getAuth(app)
+  if (!getApps().length) {
+    initializeApp(firebaseConfig)
+  }
+
+  const auth = getAuth()
+
+  const { setRegisterSubmit: SubmitSuccess } = useRegisterAvatarStore()
 
   const [verifiCode, setVerifiCode] = useState("")
   const [showPassword, setShowPassword] = useState(false)
@@ -148,6 +154,7 @@ const RegisterLayout = () => {
   const [characterPasswordLength, setCharacterPasswordLength] = useState(true)
   const [characterUppercase, setCharacterUppercase] = useState(true)
   const [formSubmitErrors, setFormSubmitErrors] = useState(false)
+  const [onSubmitClickRegister, setOnSubmitClickRegister] = useState(false)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
   const handleMouseDownPassword = (
@@ -225,38 +232,7 @@ const RegisterLayout = () => {
     })()
   }
 
-  const facebookLogin = async () => {
-    const provider = new FacebookAuthProvider()
-    provider.addScope("email")
-    await signInWithPopup(auth, provider)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .then((result) => {
-        console.log("test-facebookLogin-then", result)
-
-        // const _user = result.user
-        // const { _tokenResponse } = result
-        // const _userObject: IUserObject = { ..._user, ..._tokenResponse }
-        // if (referral) {
-        //   userActions.loginProvider({
-        //     email: _userObject.email,
-        //     provider: "facebook",
-        //     providerUUID: _userObject.uid,
-        //     referral
-        //   })
-        // } else {
-        //   userActions.loginProvider({
-        //     email: _userObject.email,
-        //     provider: "facebook",
-        //     providerUUID: _userObject.uid
-        //   })
-        // }
-      })
-      .catch(async (error: IError) => {
-        if (error.code) {
-          errorToast(MESSAGES.auth_popup_closed_by_user)
-        }
-      })
-  }
+  const facebookLogin = async () => {}
 
   const twitterLogin = async () => {
     const provider = new TwitterAuthProvider()
@@ -289,47 +265,39 @@ const RegisterLayout = () => {
     //   })
   }
 
-  const googleRegister = async () => {
+  const googleRegister = async (referralId: string | string[]) => {
     const provider = new GoogleAuthProvider()
     provider.addScope("email")
-    console.log("test-googleRegister", provider)
-
     await signInWithPopup(auth, provider)
-      // eslint-disable-next-line no-undef
       .then((result) => {
-        console.log("test-googleRegister-result", result)
-
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result)
-        const token = credential?.accessToken
-        // The signed-in user info.
         const { user } = result
-
-        console.log("test-credential", credential)
-        console.log("test-token", token)
-        console.log("test-user", user)
-        console.log("test-user-2", user.providerData[0])
-
-        // const _user: auth.UserCredential = result.user
-        // const { _tokenResponse } = result
-        // const _userObject: IUserObject = { ..._user, ..._tokenResponse }
-
-        if (referral) {
-          userActions.loginProvider({
-            email: user.providerData[0].email,
-            provider: "google",
-            providerUUID: user.uid,
-            referral
+        if (
+          user.providerData[0].email !== null &&
+          user.providerData[0].email !== undefined &&
+          result.providerId !== null &&
+          result.providerId !== undefined
+        ) {
+          mutateLoginProvider({
+            _email: user.providerData[0].email,
+            _provider: "google",
+            _prevPath: "/",
+            _providerUUID: user.uid,
+            _referral: referralId
           })
+            .then((_res) => {
+              if (_res) {
+                successToast(MESSAGES.create_successful_user)
+                SubmitSuccess()
+              }
+            })
+            .catch((_error) => {
+              errorToast(MESSAGES.create_not_successful_user)
+            })
         } else {
-          userActions.loginProvider({
-            email: user.providerData[0].email,
-            provider: "google",
-            providerUUID: user.uid
-          })
+          errorToast(MESSAGES.create_not_successful_user)
         }
       })
-      .catch(async (error: IError) => {
+      .catch((error) => {
         if (error.code) {
           errorToast(MESSAGES.auth_popup_closed_by_user)
         }
@@ -338,9 +306,6 @@ const RegisterLayout = () => {
 
   const onSubmitRegister = (values: TFormData) => {
     const { email, code, password, subscription, referralId } = values
-
-    console.log("test-values", values, referral)
-
     if (emailCorrect && characterPasswordLength && characterUppercase) {
       setFormSubmitErrors(false)
       mutateSignUp({
@@ -375,7 +340,11 @@ const RegisterLayout = () => {
           item
           container
           component="div"
-          className="h-screen rounded-3xl border border-solid border-neutral-800 p-2.5"
+          className={`rounded-3xl border border-solid border-neutral-800 p-2.5 ${
+            !_.isEmpty({ errors }.errors) && onSubmitClickRegister
+              ? "h-[135vh]"
+              : "h-[95vh]"
+          }`}
         >
           <Grid
             item
@@ -464,7 +433,9 @@ const RegisterLayout = () => {
                             Register
                           </Typography>
                         </div>
-                        <ButtonClose onClick={() => {}} />
+                        <Link href="/">
+                          <ButtonClose onClick={() => {}} />
+                        </Link>
                       </Box>
                       <Divider className="mx-0 mt-5 mb-8" />
                       {formSubmitErrors && (
@@ -876,7 +847,7 @@ const RegisterLayout = () => {
                       </Grid>
                       <Grid item>
                         <ButtonToggleIcon
-                          handleClick={() => {}}
+                          handleClick={() => setOnSubmitClickRegister(true)}
                           type="submit"
                           startIcon={<IEdit />}
                           text="Regiter"
@@ -895,7 +866,7 @@ const RegisterLayout = () => {
                         <p className="text-xs uppercase">OR join us with</p>
                       </Grid>
                       <Grid item>
-                        <Divider className="w-[208px]" />
+                        <hr className="w-[208px] border border-solid border-neutral-800" />
                       </Grid>
                     </Grid>
                     <Grid
@@ -932,7 +903,7 @@ const RegisterLayout = () => {
                             stiffness: 400,
                             damping: 4
                           }}
-                          onClick={googleRegister}
+                          onClick={() => googleRegister(watch("referralId"))}
                           icon={<GoogleIcon />}
                           className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                         />
@@ -957,7 +928,7 @@ const RegisterLayout = () => {
                 container
                 justifyContent="center"
                 alignItems="center"
-                className="absolute bottom-0.5"
+                className="absolute bottom-4"
               >
                 <Typography className="text-sm uppercase text-neutral-700">
                   Copyright 2022 © Nakamoto Games
@@ -967,6 +938,7 @@ const RegisterLayout = () => {
           </Grid>
         </Grid>
       </Box>
+      <CreateProfile />
     </Box>
   )
 }

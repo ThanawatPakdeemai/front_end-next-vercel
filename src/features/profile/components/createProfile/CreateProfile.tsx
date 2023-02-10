@@ -1,12 +1,12 @@
+import React, { memo, useState, useEffect } from "react"
 import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import { Stack } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
-import React, { memo, useState, useEffect } from "react"
 import FormCreateProfile from "./FormCreateProfile"
 
 const CreateProfile = () => {
-  const [open, setOpen] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(true)
   const profile = useProfileStore((state) => state.profile.data)
 
   const handleOpen = () => setOpen(true)
@@ -18,6 +18,10 @@ const CreateProfile = () => {
     if (profile && !profile.avatar && !profile.username) {
       if (load) {
         handleOpen()
+      }
+    } else if (profile && profile.avatar && profile.username) {
+      if (load) {
+        handleClose()
       }
     }
 

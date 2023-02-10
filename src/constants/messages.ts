@@ -31,5 +31,7 @@ export const MESSAGES = {
   "withdraw_success": "Withdraw success",
   "claim_success": "Claim success",
   "withdraw_error": "Withdraw error",
-  "claim_error": "Claim error"
+  "claim_error": "Claim error",
+  "create_successful_user": "Create a successful user",
+  "create_not_successful_user": "Create a not successful user"
 }

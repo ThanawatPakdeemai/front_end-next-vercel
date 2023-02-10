@@ -16,6 +16,7 @@ import {
   ISignIn,
   ISignUp
 } from "@feature/authentication/interfaces/IAuthService"
+import { ILoginProvider, IProfileRegister } from "@src/types/profile"
 
 export const signIn = ({ _email, _password }: ISignIn) =>
   new Promise<IProfile>((resolve, reject) => {
@@ -175,3 +176,38 @@ export const refreshToken = async () =>
       })
       // return error;
     )
+
+export const loginProvider = ({
+  _email,
+  _provider,
+  _prevPath,
+  _providerUUID,
+  _referral
+}: ILoginProvider) =>
+  new Promise((resolve, reject) => {
+    const data = {
+      email: _email,
+      provider: _provider,
+      prevPath: _prevPath,
+      providerUUID: _providerUUID,
+      referral: _referral
+    }
+    const dataNoReferral = {
+      email: _email,
+      provider: _provider,
+      providerUUID: _providerUUID
+    }
+    services
+      .post<IProfileRegister>(
+        "/auth/signin/with_provider",
+        _referral === null || _referral === "" || _referral === undefined
+          ? { ...dataNoReferral }
+          : { ...data }
+      )
+      .then((response) => {
+        resolve(response.data)
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })

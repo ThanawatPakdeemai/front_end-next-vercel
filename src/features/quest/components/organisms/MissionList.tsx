@@ -10,7 +10,6 @@ import TabControl from "../moleclues/TabControl"
 
 interface IProp {
   value: string
-  setValue: React.Dispatch<React.SetStateAction<string>>
   mainCount?: number
   dailyCount?: number
   dataAllQuest?: IQuestService
@@ -20,7 +19,6 @@ interface IProp {
 const MissionList = ({
   dataAllQuest,
   value,
-  setValue,
   mainCount,
   dailyCount,
   handleClaimAll
@@ -28,7 +26,6 @@ const MissionList = ({
   <>
     <TabControl
       value={value}
-      setValue={setValue}
       mainMissionCount={mainCount || 0}
       dailyMissionCount={dailyCount || 0}
     />
@@ -48,10 +45,12 @@ const MissionList = ({
           dataAllQuest.data
             .filter((filter) => filter.type === "daily")
             .map((item) => (
-              <MissionItem
-                key={uuidv4()}
-                data={item as IQuestData}
-              />
+              <>
+                <MissionItem
+                  key={uuidv4()}
+                  data={item as IQuestData}
+                />
+              </>
             ))}
     </div>
     <ClaimAllComponent

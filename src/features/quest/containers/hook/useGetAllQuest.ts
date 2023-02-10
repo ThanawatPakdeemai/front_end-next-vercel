@@ -12,7 +12,8 @@ const useGetAllQuest = (_playerId: string) => {
     queryKey: ["getAllQuest", _playerId],
     queryFn: () => getAllQuest(_playerId).then((res) => res),
     enabled: _playerId !== undefined && _playerId !== null && _playerId !== "",
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    keepPreviousData: false
   })
 
   return {

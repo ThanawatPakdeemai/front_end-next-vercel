@@ -1,9 +1,8 @@
 import NoticeIcon from "@components/icons/NoticeBar"
-import useClaimQuestById from "@feature/quest/containers/hook/useClaimQuestById"
 import { IQuestData } from "@feature/quest/interfaces/IQuestService"
-import { useToast } from "@feature/toast/containers"
 import useQuestStore from "@stores/quest"
 import React from "react"
+import ButtonClaim from "../atoms/ButtonClaim"
 import CountWithProgressBar from "./CountWithProgressBar"
 
 interface IProps {
@@ -12,17 +11,9 @@ interface IProps {
 
 const MissionItem = ({ data }: IProps) => {
   const { setQuestStore } = useQuestStore()
-  const { mutateClaimQuestById } = useClaimQuestById()
-  const { successToast, errorToast } = useToast()
 
   const countTotal = data.task_list.length
   const countReward = data.rewards.length
-
-  const handleClaim = (_questId: string) => {
-    mutateClaimQuestById(_questId)
-      .then((res) => successToast(res.message))
-      .catch((error) => errorToast(error.message))
-  }
 
   return (
     <div className="flex w-full flex-row items-center">
@@ -78,25 +69,7 @@ const MissionItem = ({ data }: IProps) => {
               View Details
             </button>
             {/* check is claim */}
-            {data.claim_reward_progress === "none" ? (
-              <button
-                type="button"
-                className="w-[108px] rounded-2xl border border-neutral-800 py-[8px] px-5 text-xs text-neutral-600"
-                disabled
-              >
-                X&nbsp;&nbsp;&nbsp;&nbsp;Claim
-              </button>
-            ) : (
-              data.claim_reward_progress !== "claimed" && (
-                <button
-                  type="button"
-                  className="w-[108px] rounded-2xl border border-neutral-800 bg-varidian-default py-[8px] px-5 text-xs text-neutral-900"
-                  onClick={() => handleClaim(data.id)}
-                >
-                  Claim
-                </button>
-              )
-            )}
+            <ButtonClaim data={data} />
           </div>
         </div>
       </div>

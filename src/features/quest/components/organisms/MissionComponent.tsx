@@ -27,8 +27,12 @@ const useStyles = makeStyles({
 })
 
 const MissionComponent = ({ open }: IProp) => {
-  const [value, setValue] = React.useState<string>("main")
-  const { data: questStore, setClose } = useQuestStore()
+  const {
+    data: questStore,
+    setClose,
+    missionType,
+    setMissionType
+  } = useQuestStore()
   const { profile } = useProfileStore()
   const { warnToast } = useToast()
 
@@ -56,8 +60,7 @@ const MissionComponent = ({ open }: IProp) => {
   const renderElement = () =>
     !questStore ? (
       <MissionList
-        value={value}
-        setValue={setValue}
+        value={missionType}
         mainCount={mainCount}
         dailyCount={dailyCount}
         dataAllQuest={dataAllQuest}

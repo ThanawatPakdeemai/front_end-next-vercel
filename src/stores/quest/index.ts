@@ -6,9 +6,11 @@ import { IQuestData } from "@feature/quest/interfaces/IQuestService"
 interface IQuestStore {
   data: IQuestData | null
   open: boolean
+  missionType: string
+  setMissionType: (_missionType: string) => void
   setOpen: () => void
   setClose: () => void
-  getQuestStore: () => void
+  getQuestStore: () => IQuestData | null
   setQuestStore: (_quest: IQuestData) => void
   clearQuestStore: () => void
 }
@@ -17,6 +19,14 @@ const useQuestStore = create<IQuestStore>()(
     (set, get) => ({
       data: null,
       open: false,
+      missionType: "main",
+      setMissionType: (_missionType: string) => {
+        set(
+          () => ({ missionType: _missionType }),
+          false,
+          "QuestStore/SetMissionType"
+        )
+      },
       getQuestStore: () => get().data,
       setOpen: () => {
         set(() => ({ open: true }), false, "QuestStore/setFalse")

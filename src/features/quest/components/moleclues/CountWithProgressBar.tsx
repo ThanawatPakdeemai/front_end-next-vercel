@@ -82,8 +82,8 @@ const CountWithProgressBar = ({
           value={percentageBar}
           sx={{
             ".MuiLinearProgress-bar1Determinate": {
-              backgroundColor,
-              background: `linear-gradient(90deg, rgba(1,1,1,1) 50%, ${backgroundColor} 50%);`,
+              backgroundColor: backgroundColor(),
+              background: `linear-gradient(90deg, rgba(1,1,1,1) 50%, ${backgroundColor()} 50%);`,
               backgroundRepeat: "repeat-x",
               backgroundSize: "2%"
             }

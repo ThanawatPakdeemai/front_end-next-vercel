@@ -19,7 +19,6 @@ const useGlobal = () => {
 
   // States
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
-  const [tabValue, setTabValue] = useState("1")
   const [hydrated, setHydrated] = useState(false)
 
   /**
@@ -85,14 +84,6 @@ const useGlobal = () => {
     }
   }
 
-  /**
-   * @description Handle change tab
-   * @param newValue
-   */
-  const handleChangeTab = (newValue: string) => {
-    setTabValue(newValue)
-  }
-
   return {
     onHandleClick,
     gamePartnerData,
@@ -103,9 +94,6 @@ const useGlobal = () => {
     totalCount,
     setTotalCount,
     stateProfile,
-    tabValue,
-    setTabValue,
-    handleChangeTab,
     hydrated
   }
 }

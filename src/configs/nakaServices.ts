@@ -1,18 +1,18 @@
 export const NAKA_SERVICES = [
   {
     label: "P2P DEX",
-    path: "/"
+    path: "/p2p-dex"
   },
   {
     label: "Staking",
-    path: "/"
+    path: "/staking"
   },
   {
     label: "Referral Program",
-    path: "/"
+    path: "/referral"
   },
   {
     label: "Coupon",
-    path: "/"
+    path: "/coupon"
   }
 ]

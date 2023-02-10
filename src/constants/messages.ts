@@ -24,5 +24,9 @@ export const MESSAGES = {
   "you-played": "you played game this room!",
   "you-not-enough": "Your item not enough for play this room",
   "create-room-success": "Create room success",
-  "please-ready": "Please Press Ready!"
+  "please-ready": "Please Press Ready!",
+  "withdraw_success": "Withdraw success",
+  "claim_success": "Claim success",
+  "withdraw_error": "Withdraw error",
+  "claim_error": "Claim error"
 }

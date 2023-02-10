@@ -264,5 +264,12 @@
   "review_title": "评论",
   "no_review": "没有评论",
   "whats_new": "最新消息",
-  "ntf_game": "NFT游戏"
+  "ntf_game": "NFT游戏",
+  "your_naka_staked": "你的NAKA质押",
+  "your_naka_unclaimed": "你的NAKA未认领",
+  "stake_ended_please_redeem": "质押结束，请赎回",
+  "stake_ended": "质押结束",
+  "staking_earn_up_to": "质押赚取最高",
+  "staking_start": "质押开始",
+  "period": "期"
 }

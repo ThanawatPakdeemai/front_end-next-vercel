@@ -22,7 +22,6 @@ interface IProp {
   title: string
   className: string
 }
-
 const DropdownCustom = ({ title, className }: IProp) => {
   const [expanded, setExpanded] = useState<boolean>(false)
   const [gameData, setGameData] = useState<

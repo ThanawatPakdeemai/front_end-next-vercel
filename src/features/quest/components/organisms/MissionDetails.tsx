@@ -4,6 +4,7 @@ import { Chip } from "@mui/material"
 import useQuestStore from "@stores/quest"
 import { v4 as uuidv4 } from "uuid"
 import React, { useState } from "react"
+import { motion } from "framer-motion"
 import ClaimOnDetail from "../moleclues/ClaimOnDetail"
 import CountWithProgressBar from "../moleclues/CountWithProgressBar"
 import TaskList from "../moleclues/TaskList"
@@ -80,7 +81,16 @@ const MissionDetails = () => {
               for past or present life and prepare for human settlement.
             </span>
           </div>
-          <div className="flex h-fit w-full flex-col rounded-[8px] border border-solid border-neutral-700 p-4">
+          <motion.div
+            initial={{ y: -80 }}
+            animate={{ y: 0 }}
+            transition={{
+              stiffness: 120,
+              type: "spring",
+              damping: 8
+            }}
+            className="flex h-fit w-full flex-col rounded-[8px] border border-solid border-neutral-700 p-4"
+          >
             {dataQuestDetails.task_list.map((data, index) => (
               <TaskList
                 key={uuidv4()}
@@ -88,10 +98,19 @@ const MissionDetails = () => {
                 isLast={index === dataQuestDetails.task_list.length - 1}
               />
             ))}
-          </div>
+          </motion.div>
         </>
       ) : (
-        <div className="w-full rounded-[8px] border border-solid border-neutral-700 px-4">
+        <motion.div
+          initial={{ y: 80 }}
+          animate={{ y: 0 }}
+          transition={{
+            stiffness: 100,
+            type: "spring",
+            damping: 8
+          }}
+          className="w-full rounded-[8px] border border-solid border-neutral-700 px-4"
+        >
           {dataQuestDetails &&
             dataQuestDetails.rewards.map((reward, index) => (
               <RewardList
@@ -100,7 +119,7 @@ const MissionDetails = () => {
                 isLast={index === dataQuestDetails.rewards.length - 1}
               />
             ))}
-        </div>
+        </motion.div>
       )}
 
       {/* NOTE: footer area */}

@@ -2,6 +2,7 @@ import { ImageCustom } from "@components/atoms/image/Image"
 import { IQuestReward } from "@feature/quest/interfaces/IQuestService"
 import { Typography } from "@mui/material"
 import React from "react"
+import { motion } from "framer-motion"
 
 interface IProp {
   reward: IQuestReward
@@ -18,7 +19,17 @@ const RewardList = ({ reward, isLast }: IProp) => {
   const height = reward.image ? 55 : 45
 
   return (
-    <div className={`flex ${!isLast && " border-b border-neutral-800"} py-3`}>
+    <motion.div
+      initial={{ y: 15 }}
+      animate={{ y: 0 }}
+      transition={{
+        delay: 0.2,
+        stiffness: 120,
+        type: "spring",
+        damping: 4
+      }}
+      className={`flex ${!isLast && " border-b border-neutral-800"} py-3`}
+    >
       <div className="flex h-[75px] w-[75px] items-center justify-center rounded-[8px] border border-solid border-neutral-700">
         <ImageCustom
           src={src}
@@ -42,7 +53,7 @@ const RewardList = ({ reward, isLast }: IProp) => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 

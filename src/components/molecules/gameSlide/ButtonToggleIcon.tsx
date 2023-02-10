@@ -14,6 +14,7 @@ interface IProps {
   style?: React.CSSProperties
   type?: TTypeButton
   disabled?: boolean
+  dropColor?: boolean
 }
 
 const ButtonToggleIcon = ({
@@ -25,7 +26,8 @@ const ButtonToggleIcon = ({
   textClassName,
   style,
   type = "button",
-  disabled
+  disabled,
+  dropColor
 }: IProps) => {
   const stiffValue = 300
 
@@ -94,7 +96,21 @@ const ButtonToggleIcon = ({
         className={`${textClassName} mx-1 min-w-[40%] font-neue-machina text-sm`}
         variants={textBtn}
       >
-        {text}
+        {dropColor ? (
+          <motion.div
+            initial={{ color: "#4E5057" }}
+            animate={{
+              color: "#ffff",
+              transition: { delay: 0.1, duration: 0.2 }
+            }}
+            exit={{ x: "-100vw", transition: { ease: "easeInOut" } }}
+          >
+            {text}
+          </motion.div>
+        ) : (
+          text
+        )}
+        {/* {text} */}
       </motion.p>
       <motion.span variants={iconEnd}>{endIcon}</motion.span>
     </motion.button>

@@ -29,6 +29,10 @@ import Inventory from "@components/icons/Inventory"
 import ItemReward from "@components/icons/ItemReward"
 import Support from "@components/icons/Support"
 import Profile from "@components/icons/Profile"
+import ICoupon from "@components/icons/Coupon"
+import IReferrals from "@components/icons/Referrals"
+import IStacking from "@components/icons/Stacking"
+import IconSwap from "@components/icons/SwapIcon"
 import GlobalIcon from "@components/icons/GlobalIcon"
 import BoltIcon from "@mui/icons-material/Bolt"
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined"
@@ -435,4 +439,56 @@ export const MENU_BLOG_HEADER = [
   //   left: "-180px !important",
   //   icon: <Discusion className="mr-2" />
   // }
+]
+
+export const MENU_SERVICES = [
+  {
+    id: "p2p-dex",
+    label: "P2P DEX",
+    icon: (
+      <IconSwap
+        className="stroke-neutral-300"
+        stroke="#E1E2E2"
+      />
+    ),
+    href: "/p2p-dex",
+    external: false
+  },
+  {
+    id: "staking",
+    label: "Staking",
+    icon: (
+      <IStacking
+        className="stroke-neutral-300"
+        stroke="#E1E2E2"
+      />
+    ),
+    href: "/staking",
+    external: false
+  },
+
+  {
+    id: "referral-program",
+    label: "Referral Program",
+    icon: (
+      <IReferrals
+        className="stroke-neutral-300"
+        stroke="#E1E2E2"
+      />
+    ),
+    href: "/referral",
+    external: false
+  },
+  {
+    id: "coupon",
+    label: "Coupon",
+    icon: (
+      <ICoupon
+        className="stroke-neutral-300"
+        stroke="#E1E2E2"
+      />
+    ),
+    href: "/coupon",
+    external: false
+  }
 ]

@@ -28,6 +28,8 @@ export interface IHistory {
   game_name: string
   path: string
   detail_used_items: IDetailUsedItems
+  game_type: string
+  game_mode: string
 }
 
 export interface IHistoryInfo {

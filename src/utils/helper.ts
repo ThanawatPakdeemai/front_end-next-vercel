@@ -232,10 +232,10 @@ const Helper = {
   },
   shortenString(text: string, number?: number | null, disableHash?: boolean) {
     const cLength = number || 6
-    return `${text.substring(
+    return `${text?.substring(
       disableHash ? 2 : 0,
       disableHash ? cLength + 2 : cLength
-    )}...${text.substring(text.length - cLength)}`
+    )}...${text?.substring(text.length - cLength)}`
   },
   percentageCalc(amount: number, total: number) {
     return (amount / total) * 100

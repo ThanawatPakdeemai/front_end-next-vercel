@@ -6,7 +6,7 @@ import useProfileStore from "@stores/profileStore"
 import FormCreateProfile from "./FormCreateProfile"
 
 const CreateProfile = () => {
-  const [open, setOpen] = useState<boolean>(true)
+  const [open, setOpen] = useState<boolean>(false)
   const profile = useProfileStore((state) => state.profile.data)
 
   const handleOpen = () => setOpen(true)

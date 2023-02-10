@@ -3,10 +3,7 @@ import { IRefreshToken, IRevorkToken } from "@interfaces/IAuth"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
 import services from "@configs/axiosGlobalConfig"
-import {
-  IProfile,
-  IProfileResponse
-} from "@feature/profile/interfaces/IProfileService"
+import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import { ELocalKey } from "@interfaces/ILocal"
 import {
   ICreateNewPassword,
@@ -41,18 +38,18 @@ export const signUp = ({
   _referral,
   _subscription
 }: ISignUp) =>
-  new Promise<IProfileResponse>((resolve, reject) => {
+  new Promise<IProfile>((resolve, reject) => {
     const data = {
       data: {
         email: _email,
         password: _password,
-        verifycode: _verifycode,
+        verifycode: _verifycode.toString(),
         referral: _referral,
         subscription: _subscription
       }
     }
     services
-      .post<IProfileResponse>("/profile/create", { ...data })
+      .post<IProfile>("/profile/create", { ...data })
       .then((response) => {
         resolve(response.data)
       })

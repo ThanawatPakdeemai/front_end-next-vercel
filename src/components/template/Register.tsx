@@ -56,7 +56,6 @@ import { initializeApp, getApps } from "@firebase/app"
 import { useRouter } from "next/router"
 import useLoginProvider from "@feature/authentication/containers/hooks/useLoginProvider"
 import CreateProfile from "@feature/profile/components/createProfile/CreateProfile"
-import useRegisterAvatarStore from "@stores/registerAvater"
 
 const KeyFramesClockwise = styled("div")({
   "@keyframes rotation": {
@@ -144,8 +143,6 @@ const RegisterLayout = () => {
 
   const auth = getAuth()
 
-  const { setRegisterSubmit: SubmitSuccess } = useRegisterAvatarStore()
-
   const [verifiCode, setVerifiCode] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -232,37 +229,49 @@ const RegisterLayout = () => {
     })()
   }
 
-  const facebookLogin = async () => {}
+  const facebookLogin = async () => {
+    errorToast("This feature is unavailable.")
+  }
+  const metaMarkLogin = async () => {
+    errorToast("This feature is unavailable.")
+  }
 
-  const twitterLogin = async () => {
+  const twitterLogin = async (referralId: string | string[]) => {
     const provider = new TwitterAuthProvider()
     provider.addScope("email")
-    // await signInWithPopup(auth, provider)
-    //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    //   .then((result: any) => {
-    //     const _user = result.user
-    //     const _tokenResponse = result._tokenResponse
-    //     const _userObject: IUserObject = { ..._user, ..._tokenResponse }
-    //     if (referral) {
-    //       userActions.loginProvider({
-    //         email: _userObject.email,
-    //         provider: "twitter",
-    //         providerUUID: _userObject.uid,
-    //         referral: referral
-    //       })
-    //     } else {
-    //       userActions.loginProvider({
-    //         email: _userObject.email,
-    //         provider: "twitter",
-    //         providerUUID: _userObject.uid
-    //       })
-    //     }
-    //   })
-    //   .catch(async (error: IError) => {
-    //     if (error.code) {
-    //       //("Something went wrong");
-    //     }
-    //   })
+    await signInWithPopup(auth, provider)
+      .then((result) => {
+        const { user } = result
+        if (
+          user.providerData[0].email !== null &&
+          user.providerData[0].email !== undefined &&
+          result.providerId !== null &&
+          result.providerId !== undefined
+        ) {
+          mutateLoginProvider({
+            _email: user.providerData[0].email,
+            _provider: "twitter",
+            _prevPath: "/",
+            _providerUUID: user.uid,
+            _referral: referralId
+          })
+            .then((_res) => {
+              if (_res) {
+                successToast(MESSAGES.create_successful_user)
+              }
+            })
+            .catch((_error) => {
+              errorToast(MESSAGES.create_not_successful_user)
+            })
+        } else {
+          errorToast(MESSAGES.create_not_successful_user)
+        }
+      })
+      .catch((error) => {
+        if (error.code) {
+          errorToast(MESSAGES.auth_popup_closed_by_user)
+        }
+      })
   }
 
   const googleRegister = async (referralId: string | string[]) => {
@@ -287,7 +296,6 @@ const RegisterLayout = () => {
             .then((_res) => {
               if (_res) {
                 successToast(MESSAGES.create_successful_user)
-                SubmitSuccess()
               }
             })
             .catch((_error) => {
@@ -317,7 +325,7 @@ const RegisterLayout = () => {
       })
         .then((_res) => {
           if (_res) {
-            successToast(MESSAGES.sign_in_success)
+            successToast(MESSAGES.create_successful_user)
           }
         })
         .catch(() => {
@@ -470,12 +478,6 @@ const RegisterLayout = () => {
                             fontSize: 14,
                             fontWight: 700,
                             fontFamily: "neueMachina"
-                            // input: {
-                            //   "&:-webkit-autofill": {
-                            //     WebkitBoxShadow: "0 0 0 100px #7B5BE6 inset",
-                            //     WebkitTextFillColor: "#232329"
-                            //   }
-                            // }
                           },
                           "& .MuiInputLabel-root": {
                             color: "#70727B",
@@ -892,7 +894,7 @@ const RegisterLayout = () => {
                             stiffness: 400,
                             damping: 4
                           }}
-                          onClick={twitterLogin}
+                          onClick={() => twitterLogin(watch("referralId"))}
                           icon={<TwitterIcon />}
                           className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                         />
@@ -914,7 +916,7 @@ const RegisterLayout = () => {
                             stiffness: 400,
                             damping: 4
                           }}
-                          onClick={facebookLogin}
+                          onClick={metaMarkLogin}
                           icon={<MetaMarkIcon />}
                           className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                         />

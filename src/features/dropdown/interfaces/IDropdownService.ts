@@ -1,7 +1,6 @@
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { ICURRENCY } from "@interfaces/ICurrency"
-import { ReactNode } from "react"
 
 export interface IDetailUsedItems {
   name: string
@@ -9,7 +8,7 @@ export interface IDetailUsedItems {
   detail: string
   price: number
   image: string
-  image_icon: string | ReactNode
+  image_icon: string
   image_icon_color: string
   min_item: number
   model_id: number
@@ -26,7 +25,7 @@ export interface IGameItem {
   image: string
   item_id_smartcontract: number
   min_item: number
-  image_icon: string | ReactNode
+  image_icon: string
   image_icon_color: string
   max_item?: number
   current_time: string | Date

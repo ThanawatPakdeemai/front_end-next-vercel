@@ -1,7 +1,5 @@
-import {
-  IStakingAll,
-  IStakingResponse
-} from "@feature/staking/interfaces/IStakingService"
+import { IStakingResponse } from "@feature/staking/interfaces/IStakingService"
+import { IStakingAll } from "@src/types/staking"
 
 interface IStakingBase {
   option_title: string

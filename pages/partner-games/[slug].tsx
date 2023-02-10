@@ -9,6 +9,7 @@ import PartnerGameLobby from "@feature/game/components/templates/lobby/PartnerGa
 import RightSidebarContent from "@components/template/RightSidebarContent"
 import PartnerGameContent from "@feature/game/partnerGames/components/organisms/PartnerGameContent"
 import PartnerGameReviews from "@feature/game/partnerGames/components/molecules/PartnerGameReviews"
+import { TabProvider } from "@feature/tab/contexts/TabProvider"
 
 export default function GamePartnerDetails() {
   const { gamePartnerData } = useGlobal()
@@ -36,7 +37,11 @@ GamePartnerDetails.getLayout = function getLayout() {
       }
       component2={
         <RightSidebarContent
-          content={<PartnerGameContent />}
+          content={
+            <TabProvider>
+              <PartnerGameContent />
+            </TabProvider>
+          }
           aside={<PartnerGameReviews />}
         />
       }

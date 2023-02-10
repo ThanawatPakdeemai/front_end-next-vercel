@@ -12,9 +12,10 @@ import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
 import ButtonDropdown from "./ButtonDropdown"
 
 interface IProp {
-  icon?: React.ReactNode
+  icon?: React.ReactElement | string
   list: ICURRENCY[]
   className: string
+  onChangeSelect: any
 }
 
 const DropdownListCurrency = ({ list, className }: IProp) => {

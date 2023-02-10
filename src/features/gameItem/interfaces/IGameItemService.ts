@@ -1,4 +1,5 @@
 import { IFormatService } from "@interfaces/IHelper"
+import { ReactNode } from "react"
 
 export interface IGameItem {
   name: string
@@ -7,7 +8,7 @@ export interface IGameItem {
   image: string
   item_id_smartcontract: number
   min_item: number
-  image_icon: string
+  image_icon: string | ReactNode
   image_icon_color: string
   item_size: string
 }

@@ -33,8 +33,6 @@ const ClaimAllComponent = ({ count, handleClaimAll }: IProp) => (
         total mission complete
       </motion.span>
       <motion.span
-        // initial={{ y: 15, scaleY: 0 }}
-        // animate={{ y: 0, scaleY: 1 }}
         initial={{ scale: 0, top: 100 }}
         animate={{ scale: 1, top: 30 }}
         transition={{ stiffness: 120 }}

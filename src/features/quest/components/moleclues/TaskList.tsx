@@ -2,6 +2,7 @@ import CheckList from "@components/icons/CheckListIcon"
 import { IQuestTaskList } from "@feature/quest/interfaces/IQuestService"
 import { Chip } from "@mui/material"
 import React from "react"
+import { motion } from "framer-motion"
 
 interface IProp {
   dataQuestTask: IQuestTaskList
@@ -9,7 +10,15 @@ interface IProp {
 }
 
 const TaskList = ({ dataQuestTask, isLast }: IProp) => (
-  <div
+  <motion.div
+    initial={{ y: 15 }}
+    animate={{ y: 0 }}
+    transition={{
+      delay: 0.2,
+      stiffness: 120,
+      type: "spring",
+      damping: 4
+    }}
     className={`flex w-full items-center justify-start gap-[6px] py-3 ${
       !isLast && "border-b border-neutral-800"
     }`}
@@ -51,7 +60,7 @@ const TaskList = ({ dataQuestTask, isLast }: IProp) => (
         />
       </>
     )}
-  </div>
+  </motion.div>
 )
 
 export default TaskList

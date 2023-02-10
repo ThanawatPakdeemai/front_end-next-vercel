@@ -2,11 +2,21 @@ import { IQuestData } from "@feature/quest/interfaces/IQuestService"
 import { LinearProgress } from "@mui/material"
 import Helper from "@utils/helper"
 import React from "react"
+import { motion } from "framer-motion"
 
 interface IProp {
   data: IQuestData
   withText?: boolean
   className?: string
+}
+
+const linearProgressmotion = {
+  initial: {
+    width: 20
+  },
+  animate: {
+    width: 125
+  }
 }
 
 const CountWithProgressBar = ({
@@ -76,19 +86,33 @@ const CountWithProgressBar = ({
         )}
       </div>
       <div className="rounded-[2px] border border-neutral-800 bg-neutral-780 p-[2px]">
-        <LinearProgress
-          variant="determinate"
-          className="progress-bar-mission w-full rotate-180"
-          value={percentageBar}
-          sx={{
-            ".MuiLinearProgress-bar1Determinate": {
-              backgroundColor: backgroundColor(),
-              background: `linear-gradient(90deg, rgba(1,1,1,1) 50%, ${backgroundColor()} 50%);`,
-              backgroundRepeat: "repeat-x",
-              backgroundSize: "2%"
-            }
-          }}
-        />
+        <div className="bg-neutral-780">
+          <motion.div
+            variants={linearProgressmotion}
+            initial="initial"
+            animate="animate"
+            transition={{
+              stiffness: 320,
+              type: "spring",
+              damping: 20
+            }}
+            className="full"
+          >
+            <LinearProgress
+              variant="determinate"
+              className="progress-bar-mission w-full rotate-180"
+              value={percentageBar}
+              sx={{
+                ".MuiLinearProgress-bar1Determinate": {
+                  backgroundColor: backgroundColor(),
+                  background: `linear-gradient(90deg, rgba(1,1,1,1) 50%, ${backgroundColor()} 50%);`,
+                  backgroundRepeat: "repeat-x",
+                  backgroundSize: "2%"
+                }
+              }}
+            />
+          </motion.div>
+        </div>
       </div>
     </div>
   )

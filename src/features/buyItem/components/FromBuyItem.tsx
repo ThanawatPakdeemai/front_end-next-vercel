@@ -1,5 +1,5 @@
 import React, { memo } from "react"
-import { Box, ButtonGroup } from "@mui/material"
+import { Box, ButtonGroup, CircularProgress } from "@mui/material"
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
@@ -33,8 +33,11 @@ const iconmotion = {
     }
   }
 }
+interface IProp {
+  handleClose?: () => void
+}
 
-const FromBuyItem = () => {
+const FromBuyItem = ({ handleClose }: IProp) => {
   const { t } = useTranslation()
   const game = useGameStore((state) => state.data)
   const profile = useProfileStore((state) => state.profile.data)
@@ -62,7 +65,7 @@ const FromBuyItem = () => {
     }
   })
 
-  const { mutateBuyItems } = useBuyGameItems()
+  const { mutateBuyItems, isLoading } = useBuyGameItems()
   const { balanceVaultNaka } = useGetBalanceVault(profile?.address ?? "")
   const { setVaultBalance } = useWalletStore()
 
@@ -77,6 +80,7 @@ const FromBuyItem = () => {
           refetch()
           setVaultBalance(Number(balanceVaultNaka.data))
           successToast("Buy Items Success")
+          if (handleClose) handleClose()
         }
       })
       .catch((error) => {
@@ -265,8 +269,9 @@ const FromBuyItem = () => {
             <p className="text-sm text-black-default">
               = $
               {Helper.formatNumber(
-                watch("qty") *
-                  Number((watch("item") as IGameItemListData)?.price) ?? 0
+                watch("qty") ??
+                  0 * Number((watch("item") as IGameItemListData)?.price) ??
+                  0
               )}
             </p>
           </div>
@@ -274,8 +279,20 @@ const FromBuyItem = () => {
             <ButtonLink
               href=""
               size="medium"
+              disabled={isLoading}
               className="h-[40px] w-full text-sm "
-              text={t("buy-now")}
+              text={
+                <>
+                  {isLoading ? (
+                    <CircularProgress
+                      color="primary"
+                      size={15}
+                    />
+                  ) : (
+                    t("buy-now")
+                  )}
+                </>
+              }
               onClick={() => {}}
               type="submit"
               color="secondary"

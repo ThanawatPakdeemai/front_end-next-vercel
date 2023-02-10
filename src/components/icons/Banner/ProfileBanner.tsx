@@ -14,7 +14,7 @@ function ProfileBanner({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_4051_31948)">
+      <g clipPath="url(#clip0_4051_31948)">
         <path
           d="M0.5 8C0.5 3.85786 3.85786 0.5 8 0.5H900C904.142 0.5 907.5 3.85786 907.5 8V116C907.5 120.142 904.142 123.5 900 123.5H8.00001C3.85787 123.5 0.5 120.142 0.5 116V8Z"
           fill="#18181C"

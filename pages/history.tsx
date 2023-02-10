@@ -1,6 +1,5 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-// import GamePageLayout from "@components/template/GamePageLayout"
 import ProfileLayout from "@components/template/ProfileLayout"
 import HistoryTable from "@feature/history/components/organisms/HistoryTable"
 

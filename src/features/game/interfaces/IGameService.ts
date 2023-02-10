@@ -29,6 +29,13 @@ export type IGetType =
   | "partner-game"
   | "nft-game"
 
+export type TRoomStatus =
+  | "playing"
+  | "online"
+  | "send_noti"
+  | "running"
+  | "ready_play"
+
 export interface IGetGameByTypesProps {
   _type: IGetType
   _limit: number
@@ -323,7 +330,7 @@ export interface IGameRoomService extends IGameRoom {
 }
 
 export interface IGameRoomDetail extends IGameRoom {
-  room_status: string
+  room_status: TRoomStatus
   mutiplayer: boolean
   tournament: boolean
   user_create: boolean
@@ -360,7 +367,7 @@ export interface IGameSummary extends IGameBase {
   end_time: Date
   room_number: number
   wallet_address: string
-  room_status: string
+  room_status: TRoomStatus
   detail_used_items: IGameUsedItemsDetail
 }
 
@@ -448,7 +455,7 @@ export interface IGameRoomListSocket {
   create_room_detail: ICreateRoomDetail
   start_time: Date
   end_time: Date
-  room_status: string
+  room_status: TRoomStatus
   amount_current_player: number
   amount_send_reward: number
   mutiplayer: boolean

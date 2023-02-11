@@ -1,6 +1,6 @@
 import { IGameAllState } from "@src/features/game/interfaces/IGameService"
 import configZustandDevTools from "@src/utils/configDevtools"
-import create from "zustand"
+import { create } from "zustand"
 import { devtools } from "zustand/middleware"
 
 export interface IUesGameAllStore {

@@ -18,7 +18,7 @@ import MediumIcon from "@components/icons/SocialIcon/MediumIcon"
 import TelegramIcon from "@components/icons/SocialIcon/TelegramIcon"
 import TiktokIcon from "@components/icons/SocialIcon/TiktokIcon"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
-import AsideLayout from "@components/template/AsideLayout"
+import AsideLayout from "@components/templates/contents/AsideLayout"
 import { useTranslation } from "react-i18next"
 import useGlobal from "@hooks/useGlobal"
 

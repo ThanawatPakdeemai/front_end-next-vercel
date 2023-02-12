@@ -10,7 +10,7 @@ interface IProp
   _breadcrumb?: ICrumb[]
 }
 
-const NakaPassLayout = ({ children }: IProp) => (
+const GamePageWithBreadcrumb = ({ children }: IProp) => (
   <div className="main-container mx-auto">
     <Header />
     <div className="mb-10 flex">
@@ -24,4 +24,4 @@ const NakaPassLayout = ({ children }: IProp) => (
   </div>
 )
 
-export default NakaPassLayout
+export default GamePageWithBreadcrumb

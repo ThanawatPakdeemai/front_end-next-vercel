@@ -1,5 +1,5 @@
 import HeadStaking from "@components/molecules/HeadStaking"
-import ServicesPageLayout from "@components/template/ServicesPageLayout"
+import ServicesPageLayout from "@components/templates/ServicesPageLayout"
 import FlexibleAPRContent from "@feature/staking/components/organisms/FlexibleAPRContent"
 import StakingList from "@feature/staking/components/templates/StakingList"
 import useGlobalStaking from "@feature/staking/containers/hook/useStakingController"

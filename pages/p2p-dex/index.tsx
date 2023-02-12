@@ -1,4 +1,4 @@
-import ServicesPageLayout from "@components/template/ServicesPageLayout"
+import ServicesPageLayout from "@components/templates/ServicesPageLayout"
 import { P2PDEX_BANNER } from "@constants/servicesBanner"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
 import useTabContext from "@feature/tab/contexts/useTabContext"

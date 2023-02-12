@@ -1,24 +1,25 @@
 import Banner from "@components/molecules/Banner"
-import HeadStaking from "@components/molecules/HeadStaking"
 import SidebarServices from "@components/molecules/SidebarServices"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
-import { STAKING_BANNER } from "@constants/servicesBanner"
+import { IBanner, STAKING_BANNER } from "@constants/servicesBanner"
 import React from "react"
 
-const StakingPageLayout = ({
-  children
-}: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) => (
+interface IProp
+  extends React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">> {
+  banner?: IBanner[]
+}
+
+const ServicesPageLayout = ({ banner = STAKING_BANNER, children }: IProp) => (
   <div className="main-container mx-auto">
     <Header />
-
-    <Banner data={STAKING_BANNER} />
+    <Banner data={banner} />
     <div className="flex flex-row gap-3">
       <SidebarServices />
-      <HeadStaking>{children}</HeadStaking>
+      {children}
     </div>
     <Footer />
   </div>
 )
 
-export default StakingPageLayout
+export default ServicesPageLayout

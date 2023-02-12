@@ -79,8 +79,11 @@ const OverviewGamePartners = () => {
     gameData.genres.length > 0 &&
     gameData.genres.map((category) =>
       gameTags.push({
+        id: category._id,
         name: category.name,
-        link: `category/${category.slug}`
+        link: `categories/${
+          category.slug ? category.slug : category.name.toLocaleLowerCase()
+        }?id=${category._id}`
       })
     )
 

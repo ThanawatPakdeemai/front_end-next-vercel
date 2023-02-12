@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
 
 export interface ITableHeader {
-  title: string
+  title?: string
   keyUp?: boolean
   keyDown?: boolean
   onClick?: () => void

@@ -47,24 +47,28 @@ const TableHeader = ({
             className={CellStyled}
             onClick={h.onClick}
           >
-            <div className={h.className ? h.className : "flex items-center"}>
-              {h.title} {/* title => string <div className="flex"></div> */}
-              {h.arrowIcon ? (
-                <div className="ml-1 flex flex-col gap-1">
-                  <KeyboardArrowUp
-                    className={`!text-sm" h-4 w-4 ${
-                      h.keyUp ? "text-neutral-400" : null
-                    }`}
-                  />
-                  <KeyboardArrowDown
-                    className={`h-4 w-4 !text-sm  ${
-                      h.keyDown ? "text-neutral-400" : null
-                    }`}
-                  />
-                </div>
-              ) : null}
-              {h.filterIcon ? h.child : null}
-            </div>
+            {h.title ? (
+              <div className={h.className ? h.className : "flex items-center"}>
+                {h.title} {/* title => string <div className="flex"></div> */}
+                {h.arrowIcon ? (
+                  <div className="ml-1 flex flex-col gap-1">
+                    <KeyboardArrowUp
+                      className={`!text-sm" h-4 w-4 ${
+                        h.keyUp ? "text-neutral-400" : null
+                      }`}
+                    />
+                    <KeyboardArrowDown
+                      className={`h-4 w-4 !text-sm  ${
+                        h.keyDown ? "text-neutral-400" : null
+                      }`}
+                    />
+                  </div>
+                ) : null}
+                {h.filterIcon ? h.child : null}
+              </div>
+            ) : (
+              h.child
+            )}
           </TableCellStyle>
         ))}
       </TableRowStyle>

@@ -1,12 +1,14 @@
 import React from "react"
+import FormCreate from "../organisms/FormCreate"
 // import { v4 as uuid } from "uuid"
 
 // interface IFixedAPR {
 //   stakeGroupByDatetime: IStakingGroup[]
 // }
 
-const P2PDexList = () => (
-  <>
+const P2PDexCreateContent = () => (
+  <div className="p2p-dex-content--create">
+    <FormCreate />
     {/* {stakeGroupByDatetime.map((item) => (
       <StakingPeriodDate
         key={uuid()}
@@ -23,6 +25,6 @@ const P2PDexList = () => (
           .toLocaleLowerCase()}`}
       />
     ))} */}
-  </>
+  </div>
 )
-export default P2PDexList
+export default P2PDexCreateContent

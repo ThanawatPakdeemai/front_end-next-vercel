@@ -17,7 +17,7 @@ const PlayToEarnGamesPage = () => {
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
-  const { onHandleClick } = useGlobal()
+  const { onHandleClick } = useGlobal(limit)
   const { clearGameData } = useGameStore()
 
   const {

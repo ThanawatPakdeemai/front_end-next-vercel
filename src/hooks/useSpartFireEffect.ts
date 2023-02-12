@@ -14,14 +14,26 @@ interface ITweenProps {
   opacityMin?: number
   opacityMax?: number
 }
-
-const useTweenEffect = () => {
-  const density: number = 70
+/**
+ * @description Spark fire effect be albe to setting width, height, density, yMin
+ * @param _width is window width
+ * @param _height is window height
+ * @param _density is number of particles
+ * @param _yMin is yMin of particles
+ * @returns
+ */
+const useTweenEffect = (
+  _width?: number,
+  _height?: number,
+  _density?: number,
+  _yMin?: number
+) => {
+  const density: number = _density || 70
   const speed: number = 2
-  const winWidth: number = 900
-  const winHeight: number = 600
+  const winWidth: number = _width || 600
+  const winHeight: number = _height || 900
   const start: ITweenProps = {
-    yMin: -10,
+    yMin: _yMin || -10,
     yMax: winHeight,
     xMin: winWidth / 2 + 10,
     xMax: winWidth / 2 + 40,

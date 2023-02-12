@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useEffect, useLayoutEffect, useState } from "react"
 import LogoIcon from "@components/icons/LogoIcon"
 import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
 import ShapeIcon from "@components/icons/ShapeIcon"
@@ -29,6 +29,8 @@ import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { v4 as uuid } from "uuid"
+import useTweenEffect from "@hooks/useSpartFireEffect"
+import gsap from "gsap"
 
 const Home = () => {
   const limit = 10
@@ -69,6 +71,17 @@ const Home = () => {
     }
   }, [p2eCurType, hotGameData, p2eGameData])
 
+  /**
+   * @description: Spark fire effect
+   */
+  const { createParticle } = useTweenEffect(600, 300, 50, -500)
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      createParticle()
+    })
+    return () => ctx.revert()
+  }, [createParticle])
+
   return (
     <>
       <BannerSlide />
@@ -80,7 +93,7 @@ const Home = () => {
           text="Secue. fun. simple. earn $naka AND enjoy "
           icon={<LogoIcon />}
         />
-        <div className="absolute top-[-50%] right-[-10%] z-[5] flex flex-col items-center justify-center">
+        <div className="fixed right-4 bottom-5 z-10 flex flex-col items-center justify-center">
           <ButtonSticky icon={<SupportIcon />} />
           <ButtonSticky
             multi
@@ -127,10 +140,14 @@ const Home = () => {
             />
           </div>
         </Box>
-        <CarouselSlide
-          slideGames={GAME_DOWNLOAD}
-          isLoading={false}
-        />
+        <div className="relative overflow-hidden">
+          <div id="spark-fire">
+            <CarouselSlide
+              slideGames={GAME_DOWNLOAD}
+              isLoading={false}
+            />
+          </div>
+        </div>
       </div>
 
       <div className="my-20 h-full w-full">
@@ -182,15 +199,16 @@ const Home = () => {
       <Box className="xs:flex-col mt-4 mb-10 gap-3 lg:flex">
         <Box className="xs:grid-cols-1 mb-3 grid gap-3 sm:grid-cols-2 lg:mb-0 lg:grid-cols-3">
           <CardLink
-            textBtn="View All"
-            href="/"
+            classNameSecond="bg-warning-dark"
+            textBtn="Blog"
+            href="/blog"
           />
 
           <CardLink
             classNameSecond="bg-secondary-light"
             iconBtn={<ICoupon />}
             textBtn="Coupon"
-            href="/"
+            href="/coupon"
             srcMain={IMAGES.frontCouponBand.src}
             altMain={IMAGES.frontCouponBand.alt}
             srcSecond={IMAGES.backCouponBand.src}
@@ -201,7 +219,7 @@ const Home = () => {
             classNameSecond="bg-info-light"
             iconBtn={<IDiamond />}
             textBtn="NAKA NFT"
-            href="/"
+            href="/nft-games"
             srcMain={IMAGES.frontNakaBand.src}
             altMain={IMAGES.frontNakaBand.alt}
             srcSecond={IMAGES.backNakaBand.src}

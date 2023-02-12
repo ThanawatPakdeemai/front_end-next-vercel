@@ -1,6 +1,8 @@
 import services from "@configs/axiosGlobalConfig"
 import CONFIGS from "@configs/index"
 import {
+  IFilterGamesByCategory,
+  IGameAllResponse,
   IGameCategory,
   IGameItem
 } from "@feature/dropdown/interfaces/IDropdownService"
@@ -46,4 +48,19 @@ const getGameAlls = () =>
       })
   })
 
-export { getGameAssets, getCategories, getGameAlls }
+const getGamesByCategoryId = (data: IFilterGamesByCategory) =>
+  new Promise<IGameAllResponse>((resolve, reject) => {
+    services
+      .post<IGameAllResponse>(
+        `${CONFIGS.BASE_URL.API}/game/filter/game-all`,
+        data
+      )
+      .then((res) => {
+        resolve(res.data)
+      })
+      .catch((error: Error) => {
+        reject(error)
+      })
+  })
+
+export { getGameAssets, getCategories, getGameAlls, getGamesByCategoryId }

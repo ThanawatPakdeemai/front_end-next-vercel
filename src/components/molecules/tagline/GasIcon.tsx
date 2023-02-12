@@ -1,6 +1,6 @@
 import React from "react"
 
-function GasIcon({ width = 24, height = 24 }: React.SVGProps<SVGSVGElement>) {
+function GasIcon({ width = 17, height = 19 }: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       width={width}

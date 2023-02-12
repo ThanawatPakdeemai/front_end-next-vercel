@@ -6,7 +6,11 @@ import BodyCategories from "@components/molecules/BodyCategories"
 import ButtonSticky from "@components/molecules/ButtonSticky"
 import GameCarousel from "@components/molecules/gameSlide/GameCarousel"
 import Tagline from "@components/molecules/tagline/Tagline"
-import { F2PHeaderMenu, P2EHeaderMenu } from "@constants/gameSlide"
+import {
+  F2PHeaderMenu,
+  GAME_DOWNLOAD,
+  P2EHeaderMenu
+} from "@constants/gameSlide"
 import DeveloperPart from "@feature/home/components/template/DeveloperPart"
 import BannerSlide from "@feature/slider/components/templates/BannerSlide"
 import CarouselSlide from "@feature/slider/components/templates/CarouselSlide"
@@ -89,7 +93,7 @@ const Home = () => {
           <CardMarketplace />
           <div className="mt-4 grid grid-cols-3 gap-6">
             <CardLink
-              classNameSecond="bg-red-card"
+              classNameSecond="!bg-red-card"
               imageClassNameSecond="scale-[1.35]"
               iconBtn={<INakaSwap />}
               textBtn="NAKA Swap"
@@ -100,11 +104,11 @@ const Home = () => {
               altSecond={IMAGES.backNakaSwap.alt}
             />
             <CardLink
-              classNameSecond="bg-warning-dark"
+              classNameSecond="!bg-warning-dark"
               imageClassNameSecond="scale-[1.35]"
               iconBtn={<IStacking />}
               textBtn="Staking"
-              href="/"
+              href="/staking"
               srcMain={IMAGES.frontStaking.src}
               altMain={IMAGES.frontStaking.alt}
               srcSecond={IMAGES.backStaking.src}
@@ -115,7 +119,7 @@ const Home = () => {
               imageClassNameSecond="scale-[1.35]"
               iconBtn={<IReferrals />}
               textBtn="Referrals"
-              href="/"
+              href="/referrals"
               srcMain={IMAGES.frontReferrals.src}
               altMain={IMAGES.frontReferrals.alt}
               srcSecond={IMAGES.backReferrals.src}
@@ -123,7 +127,10 @@ const Home = () => {
             />
           </div>
         </Box>
-        <CarouselSlide />
+        <CarouselSlide
+          slideGames={GAME_DOWNLOAD}
+          isLoading={false}
+        />
       </div>
 
       <div className="my-20 h-full w-full">

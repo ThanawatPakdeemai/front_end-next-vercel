@@ -34,7 +34,7 @@ const CardContentSlide = ({ slide }: ICardContentSlide) => {
     }
   )
   return (
-    <div className="slide-item--content my-4 flex flex-col rounded-2xl bg-neutral-800 p-6 md:my-0 md:h-full md:rounded-3xl md:p-8">
+    <div className="slide-item--content my-4 flex flex-col rounded-2xl bg-neutral-800 p-6 text-sm md:my-0 md:h-full md:rounded-3xl md:p-8">
       <GameTags gameTags={gameTags} />
       <CardBody
         title={slide.name}

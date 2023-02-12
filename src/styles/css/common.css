@@ -17,7 +17,6 @@ strong {
 
 body {
   color: theme("colors.grey.default");
-  background: url("/images/common/bg.png") theme("colors.neutral.700");
 }
 
 .text {
@@ -518,8 +517,9 @@ body {
   background-color: #de4a00;
   visibility: hidden;
   position: absolute;
-  width: 8px;
-  height: 8px;
-  border-radius: 8px;
+  width: 4px;
+  height: 4px;
+  border-radius: 4px;
   box-shadow: 0 0 10px #f42728;
+  backdrop-filter: blur(10px);
 }

@@ -11,7 +11,7 @@ import IGMDesignerGame from "@components/icons/GMDesignerGame"
 import IStickerSolid from "@components/icons/StickerSolid"
 import ILogoMaster from "@components/icons/LogoMaster"
 import IMetaMask from "@components/icons/MetaMask"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { styled } from "@mui/material"
 import MetamaskWallet from "@components/molecules/balance/MetamaskWallet"
 import useProfileStore from "@stores/profileStore"
@@ -20,6 +20,11 @@ import useProfileStore from "@stores/profileStore"
 import { IMAGES } from "@constants/images"
 import TransactionTable from "@feature/transaction/components/molecules/TransactionTable"
 import { useWeb3Provider } from "@providers/index"
+import Helper from "@utils/helper"
+import useGetNakaBalanceVault from "@feature/contract/containers/hooks/useQuery/useGetNakaBalacneVault"
+import useGetNakaBalance from "@feature/contract/containers/hooks/useQuery/useGetNakaBalance"
+import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
+import useGetBalanceVault from "@feature/inventory/containers/hooks/useGetBalanceVault"
 
 const KeyFramesRotate = styled("div")({
   "@keyframes rotation": {
@@ -34,37 +39,66 @@ const KeyFramesRotate = styled("div")({
 })
 
 export default function WalletPage() {
-  const { profile } = useProfileStore()
   const [type, setType] = useState<string>("NAKA")
-  const { address, handleConnectWithMetamask, handleDisconnectWallet } =
-    useWeb3Provider()
-  // const [isConnected, setIsConnected] = useState<boolean>(false)
-
-  // const [haveMetamask, sethaveMetamask] = useState(true)
-
+  const [nakaBalanceVault, SetNakaBalanceVault] = useState<string>("N/A")
+  const [nakaBalance, SetNakaBalance] = useState<string>("N/A")
+  const [isConnected, setIsConnected] = useState<boolean>(false)
+  const [haveMetamask, sethaveMetamask] = useState(true)
   // const [client, setclient] = useState<any>({
   //   isConnected: false
   // })
-  // const checkConnection = async () => {
-  //   const { ethereum }: any = window
-  //   if (ethereum) {
-  //     sethaveMetamask(haveMetamask)
-  //     const accounts = await ethereum.request({ method: "eth_accounts" })
-  //     if (accounts.length > 0) {
-  //       setIsConnected(true)
-  //       setclient({
-  //         isConnected: true,
-  //         address: accounts[0]
-  //       })
-  //     } else {
-  //       setclient({
-  //         isConnected: false
-  //       })
-  //     }
-  //   } else {
-  //     sethaveMetamask(false)
-  //   }
-  // }
+
+  const { profile } = useProfileStore()
+  const { address, handleConnectWithMetamask, handleDisconnectWallet } =
+    useWeb3Provider()
+  const { balanceVaultNaka: balanceVault } = useGetBalanceVault(
+    address || "",
+    isConnected
+  )
+  const { balance } = useGetNakaBalance(address || "", isConnected)
+
+  const { WeiToNumber, formatNumber } = Helper
+
+  useEffect(() => {
+    if (balanceVault && address) {
+      const tempData = WeiToNumber(balanceVault.data)
+      SetNakaBalanceVault(formatNumber(tempData, { maximumFractionDigits: 1 }))
+    } else {
+      SetNakaBalanceVault("N/A")
+    }
+  }, [WeiToNumber, address, balanceVault, formatNumber])
+
+  useEffect(() => {
+    if (balance && address) {
+      const tempData = WeiToNumber(balance.data)
+      SetNakaBalance(formatNumber(tempData, { maximumFractionDigits: 1 }))
+    } else {
+      SetNakaBalance("N/A")
+    }
+  }, [WeiToNumber, address, balance, formatNumber])
+
+  useEffect(() => {
+    const checkConnection = async () => {
+      const { ethereum }: any = window
+      if (ethereum) {
+        sethaveMetamask(haveMetamask)
+        if (address && address.length > 0) {
+          setIsConnected(true)
+          // setclient({
+          //   isConnected: true,
+          //   address
+          // })
+        } else {
+          // setclient({
+          //   isConnected: false
+          // })
+        }
+      } else {
+        sethaveMetamask(false)
+      }
+    }
+    checkConnection()
+  }, [address, haveMetamask])
 
   useEffect(() => {
     handleConnectWithMetamask
@@ -154,7 +188,9 @@ export default function WalletPage() {
                     }
                   `}
                   >
-                    340,395.8 {type}
+                    {type === "NAKA"
+                      ? `${nakaBalanceVault} ${type}`
+                      : `${"Coming soon..."}`}
                   </p>
                 </div>
                 <IVector
@@ -162,11 +198,9 @@ export default function WalletPage() {
                   height="6"
                   className="mb-2"
                 />
-                <IGMDesignerGame
-                  width="225"
-                  height="24"
-                />
-
+                <span className="text-xl uppercase text-neutral-600">
+                  {profile.data ? profile.data.username : ""}
+                </span>
                 <div className="absolute top-2 right-2">
                   <KeyFramesRotate>
                     <IStickerSolid
@@ -264,7 +298,8 @@ export default function WalletPage() {
             isConnected={!!address}
             handleConnectWallet={handleConnectWithMetamask}
             handleOnDisconnectWallet={handleDisconnectWallet}
-            profile={profile.data}
+            address={address}
+            balance={nakaBalance}
           />
         </div>
       </div>

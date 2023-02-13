@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { getNaka } from "../services/inventory.service"
 
-const useGetBalanceVault = (_address: string) => {
+const useGetBalanceVault = (_address: string, isConnected: boolean) => {
   const {
     data: balanceVaultNaka,
     isLoading,
@@ -14,7 +14,7 @@ const useGetBalanceVault = (_address: string) => {
     queryFn: () => getNaka(_address),
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: _address !== "" && _address !== undefined
+    enabled: _address !== "" && _address !== undefined && isConnected
   })
 
   return {

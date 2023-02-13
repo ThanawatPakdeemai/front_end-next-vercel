@@ -36,7 +36,7 @@ type IPropSort = {
 
 export default function TransactionTable() {
   const { profile } = useProfileStore()
-  const playerId = "61a72d7e970fbe264d627bf5"
+  const [playerId, setPlayerId] = useState<string>("")
   const [limit, setLimit] = useState<number>(12)
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
@@ -65,6 +65,12 @@ export default function TransactionTable() {
     _page: page,
     _sort: sortBy
   })
+
+  useEffect(() => {
+    if (profile && profile.data) {
+      setPlayerId(profile.data.id)
+    }
+  }, [profile])
 
   useEffect(() => {
     if (TransData) {
@@ -105,6 +111,7 @@ export default function TransactionTable() {
       isPreviousData,
       limit,
       page,
+      playerId,
       profile,
       queryClient,
       sortBy,

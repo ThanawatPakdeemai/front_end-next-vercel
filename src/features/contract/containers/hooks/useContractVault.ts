@@ -110,11 +110,31 @@ const useContractVault = () => {
       }
     })
 
+  /* balanceValut */
   const getNakaBalanceOf = (_userAddress: string) =>
     new Promise((resolve) => {
       setIsLoading(true)
       balanceVaultContract
         .getBalance(_userAddress)
+        .then((response: BigNumber) => {
+          setIsLoading(false)
+          resolve({
+            status: true,
+            data: response
+          })
+        })
+        .catch((_error: Error) => {
+          setIsLoading(false)
+          resolve({ status: false, data: 0 })
+        })
+    })
+
+  /* balance (in metamask) */
+  const getNakaBalance = (_userAddress: string) =>
+    new Promise((resolve) => {
+      setIsLoading(true)
+      erc20Contract
+        .balanceOf(_userAddress)
         .then((response: BigNumber) => {
           setIsLoading(false)
           resolve({
@@ -135,6 +155,7 @@ const useContractVault = () => {
     withdrawNaka,
     checkSufficient,
     getNakaBalanceOf,
+    getNakaBalance,
     isLoading
   }
 }

@@ -176,7 +176,7 @@ const Helper = {
   BNToNumber(_bn: string) {
     return Number(BigNumber.from(_bn).toString())
   },
-  WeiToNumber(_wei: string) {
+  WeiToNumber(_wei: BigNumberish) {
     return Number(ethers.utils.formatEther(_wei))
   },
   toWei(_ether: string): BigNumber {

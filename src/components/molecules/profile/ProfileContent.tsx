@@ -12,7 +12,7 @@ import { CHAR_SET_JP } from "@constants/characterSet"
 import dayjs from "dayjs"
 import useGetProfileInfo from "@feature/profile/containers/hook/getProfileInfo"
 import Lavel from "@components/icons/Lavel"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 import EditProfileModal from "./EditProfileModal"
 import TotalCardContent from "./TotalCardContent"
 import SliderBadges from "./SliderBadges"
@@ -111,7 +111,7 @@ const ProfileContent = () => {
               </div>
             </div>
 
-            <ImageCustom
+            <Image
               src={getProfileInfo.data.avatar}
               width={150}
               height={150}

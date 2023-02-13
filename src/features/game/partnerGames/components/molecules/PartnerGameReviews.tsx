@@ -4,7 +4,7 @@ import ReviewForm from "@feature/review/components/organisms/ReviewForm"
 import Review from "@feature/review/components/templates/Review"
 import useGlobal from "@hooks/useGlobal"
 import { Chip, Rating, styled, Typography } from "@mui/material"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import useGamePartners from "../../containers/hook/useGamePartners"
@@ -58,7 +58,7 @@ const PartnerGameReviews = () => {
                 className="review--item mb-3 grid min-h-[68px] grid-flow-col justify-between gap-2 rounded-2xl border border-neutral-800 bg-neutral-900 p-2"
               >
                 <div className="review--item__avatar animation-image row-span-2 flex h-[58px] w-[58px] items-center">
-                  <ImageCustom
+                  <Image
                     src={_item.user.avatar}
                     width="200"
                     height="200"

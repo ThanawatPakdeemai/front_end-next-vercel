@@ -5,7 +5,7 @@ import NumberRank from "@feature/ranking/components/atoms/NumberRank"
 import { Chip } from "@mui/material"
 import { motion } from "framer-motion"
 import React, { memo, useEffect, useState } from "react"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 import IconHourglass from "@components/icons/hourglassIcon"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import TimerStamina from "@components/atoms/timer/TimerStamina"
@@ -116,7 +116,7 @@ const GameCard = ({
             className="slick-card-number absolute top-2 right-1 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
           />
         ) : null}
-        <ImageCustom
+        <Image
           src={imageSrc}
           alt="home-slide"
           width={218}

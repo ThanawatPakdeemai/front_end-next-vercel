@@ -2,7 +2,7 @@ import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { GameAllId, IGame } from "@src/features/game/interfaces/IGameService"
 import configZustandDevTools from "@src/utils/configDevtools"
-import create from "zustand"
+import { create } from "zustand"
 import { devtools, persist } from "zustand/middleware"
 
 export interface IUseGameItemStore {

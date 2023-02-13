@@ -1,7 +1,7 @@
 import * as React from "react"
 import { useState } from "react"
 import { Popover } from "@mui/material"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -62,7 +62,7 @@ const DropdownListItem = ({
                       <>
                         <div className="flex items-start">
                           {defaultItem?.image_icon && (
-                            <ImageCustom
+                            <Image
                               src={
                                 defaultItem?.image_icon && gameData
                                   ? gameData?.item[0].image_icon
@@ -118,7 +118,7 @@ const DropdownListItem = ({
                         ),
                         icon:
                           (
-                            <ImageCustom
+                            <Image
                               src={ele.image_icon ?? ""}
                               alt={ele.name}
                               width="20"

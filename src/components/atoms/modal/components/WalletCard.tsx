@@ -3,7 +3,7 @@ import React, { memo } from "react"
 import styled from "styled-components"
 import { connectorLocalStorageKey } from "@constants/wallets"
 import { Login, Config } from "@src/types/wallet"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 
 interface Props {
   walletConfig: Config
@@ -28,7 +28,7 @@ const WalletCard: React.FC<Props> = ({ login, walletConfig, onDismiss }) => {
         }}
       >
         {icon ? (
-          <ImageCustom
+          <Image
             src={`/assets/images/icons/wallets/${icon}`}
             alt={title}
           />
@@ -36,7 +36,7 @@ const WalletCard: React.FC<Props> = ({ login, walletConfig, onDismiss }) => {
           ""
         )}
         {title}
-        <ImageCustom
+        <Image
           className="set-icon"
           src="/assets/images/icons/point-left.svg"
           alt=""

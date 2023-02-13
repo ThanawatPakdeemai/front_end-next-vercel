@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { motion } from "framer-motion"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 import { IMAGES } from "@constants/images"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import IBookReading from "@components/icons/BookReading"
@@ -155,7 +155,7 @@ const CardLink = ({
             style={styleSecond || { backgroundColor: `${bgMain}` }}
             variants={zoomInMotion}
           >
-            <ImageCustom
+            <Image
               src={srcMain}
               alt={altMain}
               width={123}
@@ -171,7 +171,7 @@ const CardLink = ({
             style={styleSecond || { backgroundColor: `${bgMain}` }}
             variants={zoomOutMotion}
           >
-            <ImageCustom
+            <Image
               src={srcSecond}
               alt={altSecond}
               width={123}

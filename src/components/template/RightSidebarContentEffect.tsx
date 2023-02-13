@@ -1,6 +1,6 @@
 import useTweenEffect from "@hooks/useSpartFireEffect"
 import { IContentTemplateProps } from "@interfaces/IContentTemplate"
-import React, { useLayoutEffect } from "react"
+import React, { useEffect } from "react"
 import { gsap } from "gsap"
 
 const RightSidebarContentEffect = ({
@@ -9,12 +9,13 @@ const RightSidebarContentEffect = ({
   className
 }: IContentTemplateProps) => {
   const { createParticle } = useTweenEffect()
-  useLayoutEffect(() => {
+  useEffect(() => {
     const ctx = gsap.context(() => {
       createParticle()
     })
     return () => ctx.revert()
-  }, [createParticle])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className={`flex-row gap-3 md:flex ${className?.toString()}`}>

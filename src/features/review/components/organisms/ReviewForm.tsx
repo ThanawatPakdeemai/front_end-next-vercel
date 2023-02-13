@@ -1,8 +1,9 @@
 import React from "react"
 import ImageCustom from "@components/atoms/image/Image"
-import { ReviewRatingStyle } from "@feature/game/partnerGames/components/molecules/PartnerGameReviews"
 import useReview from "@feature/review/containers/hook/useReview"
 import Loading from "@components/atoms/Loading"
+import { Rating } from "@mui/material"
+import useReviewContext from "@feature/review/containers/contexts/useReviewContext"
 import MessageFooter from "../templates/MessageFooter"
 
 interface IReviewFormProps {
@@ -12,11 +13,9 @@ interface IReviewFormProps {
 
 const ReviewForm = ({ avatar, username }: IReviewFormProps) => {
   const { onSubmitComment, loading } = useReview()
+  const { message, setRate, rate } = useReviewContext()
 
   return (
-    /**
-     * TODO: Implement review comment function
-     */
     <div className="review-form mb-3 grid min-h-[68px] grid-flow-col items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900 p-2">
       <div className="review--item__avatar animation-image row-span-2 flex h-[58px] w-[58px] items-center">
         <ImageCustom
@@ -29,15 +28,28 @@ const ReviewForm = ({ avatar, username }: IReviewFormProps) => {
       </div>
       <div className="review--item__content__header mb-2 flex min-w-[300px] items-center justify-between">
         <div className="review--item__content-username">{username}</div>
-        <div className="review--item__content-rating">
-          <ReviewRatingStyle
-            size="small"
-            max={5}
-            precision={0.5}
+        <div className="review--item__content-rating flex-row">
+          <Rating
+            className="mx-2"
+            name="no-value"
+            value={rate}
+            sx={{
+              "& .MuiSvgIcon-root": {
+                color: "#70727B",
+                width: "20px"
+              }
+            }}
+            onChange={(newValue) => {
+              setRate(Number(newValue))
+            }}
           />
         </div>
       </div>
-      {loading ? <Loading /> : <MessageFooter onSubmit={onSubmitComment} />}
+      {loading ? (
+        <Loading />
+      ) : (
+        <MessageFooter onSubmit={() => onSubmitComment(message, rate)} />
+      )}
     </div>
   )
 }

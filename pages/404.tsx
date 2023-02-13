@@ -1,6 +1,6 @@
-import { ImageCustom } from "@components/atoms/image/Image"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import { Image } from "@components/atoms/image/index"
 import { Typography } from "@mui/material"
 import Meta from "@src/meta"
 import { useRouter } from "next/router"
@@ -16,7 +16,7 @@ const CustomPage404 = () => {
       <div className="mx-auto grid-cols-2 items-center px-4 md:container md:grid md:px-0">
         <div className="xs:p-0 flex flex-col items-center sm:pl-36 md:items-start">
           <div className="inline-block">
-            <ImageCustom
+            <Image
               src="/images/logo_404.svg"
               width={170}
               height={45}
@@ -55,7 +55,7 @@ const CustomPage404 = () => {
           />
         </div>
         <div className="mx-auto mt-10 max-w-md md:mx-0 md:max-w-none">
-          <ImageCustom
+          <Image
             src="/images/not_found.webp"
             alt="404 Not Found"
             width={600}

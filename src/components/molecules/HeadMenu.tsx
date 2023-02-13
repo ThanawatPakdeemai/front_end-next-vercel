@@ -7,8 +7,9 @@ import { useTranslation } from "next-i18next"
 import Link from "next/link"
 import { IMAGES } from "@constants/images"
 import { useRouter } from "next/router"
-import { MENU } from "@configs/menu"
 import { ImageCustom } from "@components/atoms/image/Image"
+import { MENU } from "@configs/menu"
+import tailwindResolver from "tailwindResolver"
 
 export const styleIcon = {
   fontSize: "20px !important"
@@ -26,7 +27,7 @@ const HeadMenu = () => {
       className="xs:table xs:my-5 m-auto my-5 w-max items-center justify-center gap-1 rounded-default bg-neutral-700 p-1 md:flex lg:my-0"
     >
       {MENU.map((item) => {
-        if (!item.isChide) {
+        if (!item.isChide && item.chide === undefined) {
           return (
             <Link
               href={item.link}
@@ -79,7 +80,17 @@ const HeadMenu = () => {
                         width="20"
                       />
                     ) : (
-                      <ele.icon className="!hover:text-neutral-300" />
+                      <ele.icon
+                        className="!hover:text-neutral-300 !text-primary-contrastText"
+                        stroke={
+                          tailwindResolver
+                            ? tailwindResolver?.theme?.colors?.primary[
+                                "contrastText"
+                              ]
+                            : "#E1E2E2"
+                        }
+                        strokeWidth="0.1"
+                      />
                     )
                 })) ?? [{ label: "", value: "", link: "/" }]
               }

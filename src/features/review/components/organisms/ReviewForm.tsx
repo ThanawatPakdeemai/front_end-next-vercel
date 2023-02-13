@@ -1,5 +1,5 @@
 import React from "react"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 import { ReviewRatingStyle } from "@feature/game/partnerGames/components/molecules/PartnerGameReviews"
 import useReview from "@feature/review/containers/hook/useReview"
 import Loading from "@components/atoms/Loading"
@@ -19,7 +19,7 @@ const ReviewForm = ({ avatar, username }: IReviewFormProps) => {
      */
     <div className="review-form mb-3 grid min-h-[68px] grid-flow-col items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900 p-2">
       <div className="review--item__avatar animation-image row-span-2 flex h-[58px] w-[58px] items-center">
-        <ImageCustom
+        <Image
           src={avatar}
           width="200"
           height="200"

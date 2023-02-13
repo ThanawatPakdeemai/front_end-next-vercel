@@ -2,7 +2,7 @@
 import * as React from "react"
 import { useState } from "react"
 import { Popover } from "@mui/material"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import { useTranslation } from "next-i18next"
@@ -77,7 +77,7 @@ const DropdownListCurrency = ({ list, className }: IProp) => {
                     details={list}
                     setOnTitle={setDefaultItem}
                     icon={
-                      <ImageCustom
+                      <Image
                         src={list && list[0].image_icon}
                         alt={list && list[0].name}
                         width="20"

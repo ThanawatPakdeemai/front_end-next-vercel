@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { memo, useEffect, useState } from "react"
 import {
   Box,
@@ -39,6 +40,7 @@ import GoogleIcon from "@components/icons/SocialIcon/GoogleIcon"
 import MetaMarkIcon from "@components/icons/SocialIcon/Metamask"
 import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlineBlankOutlined"
 import ICheckMark from "@components/icons/CheckMark"
+import FacebookLogin from "react-facebook-login"
 import {
   TwitterAuthProvider,
   GoogleAuthProvider,
@@ -201,11 +203,26 @@ const FromRegister = () => {
     })()
   }
 
-  const facebookLogin = async () => {
-    errorToast("This feature is unavailable.")
-  }
-  const metaMarkLogin = async () => {
-    errorToast("This feature is unavailable.")
+  const facebookLogin = async (response, referralId: string | string[]) => {
+    console.log("test-response-1", response)
+    console.log("test-referralId-2", referralId)
+    mutateLoginProvider({
+      _email: response.email,
+      _provider: "facebook",
+      _prevPath: "/",
+      _providerUUID: response.uid,
+      _referral: referralId
+    })
+      .then((_res) => {
+        console.log("test-facebook-_res", _res)
+        if (_res) {
+          successToast(MESSAGES.create_successful_user)
+        }
+      })
+      .catch((_error) => {
+        console.log("test-facebook-_error", _error)
+        errorToast(MESSAGES.create_not_successful_user)
+      })
   }
 
   const twitterLogin = async (referralId: string | string[]) => {
@@ -282,6 +299,10 @@ const FromRegister = () => {
           errorToast(MESSAGES.auth_popup_closed_by_user)
         }
       })
+  }
+
+  const metaMarkLogin = async () => {
+    errorToast("This feature is unavailable.")
   }
 
   const onSubmitRegister = (values: TFormData) => {
@@ -775,9 +796,19 @@ const FromRegister = () => {
                     stiffness: 400,
                     damping: 4
                   }}
-                  onClick={facebookLogin}
-                  icon={<FacebookIcon />}
-                  className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                  icon={
+                    <FacebookLogin
+                      appId="881314849742513"
+                      autoLoad
+                      fields="name,email,picture"
+                      // onClick={componentClicked}
+                      callback={(e) => facebookLogin(e, watch("referralId"))}
+                      cssClass="my-facebook-button-class"
+                      textButton={null}
+                      icon={<FacebookIcon />}
+                    />
+                  }
+                  className="m-1 flex h-[40px] w-[75px] items-end justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                 />
                 <ButtonIcon
                   whileHover="hover"

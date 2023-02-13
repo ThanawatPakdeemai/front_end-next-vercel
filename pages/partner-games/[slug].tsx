@@ -10,6 +10,7 @@ import RightSidebarContent from "@components/template/RightSidebarContent"
 import PartnerGameContent from "@feature/game/partnerGames/components/organisms/PartnerGameContent"
 import PartnerGameReviews from "@feature/game/partnerGames/components/molecules/PartnerGameReviews"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
+import RightSidebarContentEffect from "@components/template/RightSidebarContentEffect"
 
 export default function GamePartnerDetails() {
   const { gamePartnerData } = useGlobal()
@@ -29,7 +30,7 @@ GamePartnerDetails.getLayout = function getLayout() {
   return (
     <GamePageDefault
       component={
-        <RightSidebarContent
+        <RightSidebarContentEffect
           className="mb-24"
           content={<PartnerGameLobby />}
           aside={<OverviewGamePartners />}

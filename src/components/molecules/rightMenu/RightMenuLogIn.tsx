@@ -47,7 +47,7 @@ const RightMenuLogIn = () => {
         <>
           <TooltipsCustom
             title={
-              <p className=" text-primary-main">
+              <p className="text-primary-main">
                 Please approve your wallet first.
               </p>
             }

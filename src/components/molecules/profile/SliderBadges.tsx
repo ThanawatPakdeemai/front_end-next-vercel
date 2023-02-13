@@ -5,7 +5,7 @@ import IconArrowLeft from "@components/icons/arrowLeftIcon"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import useGetBadge from "@feature/badge/containers/hook/useGetBadge"
 import { Divider } from "@mui/material"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 import React, { useMemo, useRef, useState } from "react"
 import Slider, { Settings } from "react-slick"
 import { v4 as uuid } from "uuid"
@@ -152,7 +152,7 @@ const SliderBadges = ({ _playerId }: IProp) => {
                         title={badge.name}
                         color="warning"
                       >
-                        <ImageCustom
+                        <Image
                           src={badge.image}
                           alt={badge.name}
                           fill

@@ -8,6 +8,7 @@ import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
+import { Box } from "@mui/material"
 
 interface IContentFooterBannerSlide {
   gameData: IGame
@@ -34,7 +35,15 @@ const CardFooterSlide = ({
 
   return (
     <footer className="slide-item--footer relative mt-4 flex items-center justify-between md:mt-auto">
-      <div className="w-[calc(100%-80px)]">
+      <Box
+        sx={{
+          "button": {
+            maxHeight: "50px",
+            fontFamily: "neueMachina,Helvetica,Arial,sans-serif"
+          }
+        }}
+        className="w-[calc(100%-80px)]"
+      >
         <ButtonLink
           text={text}
           href={gameData.path}
@@ -45,7 +54,7 @@ const CardFooterSlide = ({
           className="w-full"
           onClick={() => onHandleClick(gameData.path, gameData)}
         />
-      </div>
+      </Box>
       <ButtonFavourite className="absolute right-0 top-0" />
     </footer>
   )

@@ -1,4 +1,4 @@
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 import RightMenuWallet from "@components/molecules/rightMenu/RightMenuWallet"
 import Gas from "@components/molecules/Gas"
 import INaka from "@components/icons/Naka"
@@ -213,7 +213,7 @@ export default function WalletPage() {
                         height="25"
                       />
                     ) : (
-                      <ImageCustom
+                      <Image
                         src={IMAGES.MetaMaskds.src}
                         alt=""
                         width={35}
@@ -225,7 +225,7 @@ export default function WalletPage() {
               </div>
             </div>
             <div className="col-span-2 m-2 flex">
-              <ImageCustom
+              <Image
                 src={IMAGES.Frame.src}
                 alt=""
                 width={120}
@@ -239,14 +239,14 @@ export default function WalletPage() {
               </div>
             </div>
             <div className="absolute top-[75px] left-[-16px]">
-              <ImageCustom
+              <Image
                 src={IMAGES.RectangleRed.src}
                 alt=""
                 width={10}
                 height={10}
                 className="mb-2"
               />
-              <ImageCustom
+              <Image
                 src={IMAGES.RectangleBlack.src}
                 alt=""
                 width={10}

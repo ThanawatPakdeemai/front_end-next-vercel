@@ -1,12 +1,12 @@
 import React, { memo } from "react"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 
 const Sidebar: React.FC = () => {
   const imgSrc = "/images/mocks/sidebar.png"
 
   return (
     <aside className="sidebar">
-      <ImageCustom
+      <Image
         src={imgSrc}
         alt="mock"
         fill

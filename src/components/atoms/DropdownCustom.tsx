@@ -10,6 +10,7 @@ import { useToast } from "@feature/toast/containers"
 import AllCategoriesIcon from "@components/icons/AllCategoriesIcon"
 import {
   IDevice,
+  IDropdownAll,
   IGameCategory,
   IGameItem
 } from "@feature/dropdown/interfaces/IDropdownService"
@@ -21,19 +22,19 @@ interface IProp {
   title: string
   className: string
 }
-
 const DropdownCustom = ({ title, className }: IProp) => {
   const [expanded, setExpanded] = useState<boolean>(false)
   const [gameData, setGameData] = useState<
     IGameItem[] | IGameCategory[] | IDevice[]
   >([])
-  const [onTitle, setOnTitle] = useState<IGameCategory | IGameItem | IDevice>()
+  const [onTitle, setOnTitle] = useState<IDropdownAll>()
   const { errorToast } = useToast()
   const {
     setCategory: setCategoryDropdown,
     setGameItem: setGameItemDropdown,
     setDevice: setDeviceDropdown
   } = useFilterStore()
+
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
   }
@@ -139,7 +140,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
   }, [])
 
   useEffect(() => {
-    if (onTitle) {
+    if (onTitle?._id) {
       if (title === "All Categories") {
         setCategoryDropdown(onTitle._id)
       } else if (title === "All Game Assets") {
@@ -188,9 +189,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
             <SelectDropdown
               className={className}
               details={dataDetail}
-              onChange={(_item) =>
-                setOnTitle(_item as IGameCategory | IGameItem | IDevice)
-              }
+              setOnTitle={setOnTitle}
               setExpanded={setExpanded}
             />
           </Collapse>

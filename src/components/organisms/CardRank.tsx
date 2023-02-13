@@ -1,6 +1,6 @@
 import LogoIcon from "@components/icons/LogoIcon"
 import { Divider } from "@mui/material"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 import React from "react"
 import { motion } from "framer-motion"
 import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
@@ -64,7 +64,7 @@ const CardRank = ({ topPlayerGameId }: IProp) => (
             <div className="ml-4 flex w-full">
               <div className="w-4/5 self-center">
                 <div className="flex items-center">
-                  <ImageCustom
+                  <Image
                     className="rounded-lg"
                     src={data.avatar}
                     alt="profile"

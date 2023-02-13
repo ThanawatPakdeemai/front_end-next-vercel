@@ -8,9 +8,30 @@ import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import { MESSAGES } from "@constants/messages"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import useGamesById from "@feature/game/containers/hooks/useGamesById"
+import { IFilterGamesByCategory } from "@feature/dropdown/interfaces/IDropdownService"
 
-const useGlobal = () => {
+const useGlobal = (
+  _limit?: number,
+  _skip?: number,
+  _sort?: string,
+  _search?: string,
+  _item?: string | string[],
+  _device?: string,
+  _gameType?: string,
+  _tournament?: boolean
+) => {
   const router = useRouter()
+
+  const defaultBody: IFilterGamesByCategory = {
+    "limit": _limit || 20,
+    "skip": _skip || 1,
+    "sort": _sort || "_id",
+    "search": _search || "",
+    "item": _item || "all",
+    "device": _device || "all",
+    "game_type": _gameType || "all",
+    "tournament": _tournament || false
+  }
 
   // hook
   const { onSetGameData, onSetGamePartnersData } = useGameStore()
@@ -38,7 +59,7 @@ const useGlobal = () => {
   /**
    * @description Pagination
    */
-  const limit = 10
+  const limit = _limit || 20
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
 
@@ -94,7 +115,8 @@ const useGlobal = () => {
     totalCount,
     setTotalCount,
     stateProfile,
-    hydrated
+    hydrated,
+    defaultBody
   }
 }
 

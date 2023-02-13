@@ -275,5 +275,6 @@
   "stake_ended": "Stake ended, please wait to stake next time",
   "staking_earn_up_to": "staking earn up to",
   "staking_start": "Staking Start",
-  "period": "Period"
+  "period": "Period",
+  "naka_contract": "NAKA Contract"
 }

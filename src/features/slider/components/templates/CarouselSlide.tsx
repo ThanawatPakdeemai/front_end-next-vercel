@@ -1,15 +1,17 @@
-import useGetGames from "@feature/home/containers/hook/useGetGames"
+import { IGameDownloadSlide } from "@feature/slider/interfaces/ISlides"
 import { Skeleton } from "@mui/material"
 import React from "react"
 import Slider, { Settings } from "react-slick"
 import CarouselCardSlide from "../organisms/CarouselCardSlide"
 
-const CarouselSlide = () => {
-  /**
-   * @description get slide games
-   */
-  const { slideGames, isLoading } = useGetGames()
+interface ICarouselSlideProps {
+  slideGames: IGameDownloadSlide[]
+  isLoading: boolean
+}
+
+const CarouselSlide = ({ slideGames, isLoading }: ICarouselSlideProps) => {
   const [activeIndex, setActiveIndex] = React.useState(0)
+
   /**
    * @description Slider settings
    */
@@ -47,10 +49,10 @@ const CarouselSlide = () => {
             <CarouselCardSlide
               // video={index === 1}
               // src={index === 1 ? "" : item.image_home_banner}
-              src={item.image_home_banner}
+              src={item.image}
               name={item.name}
-              description={item.banner_description}
-              link={item.game_url}
+              description={item.description}
+              link={item.download_link}
               index={index}
               activeIndex={activeIndex}
             />

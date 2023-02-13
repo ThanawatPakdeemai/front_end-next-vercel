@@ -250,21 +250,11 @@ export const HeaderMenuSeasonPass: IHeaderSlide = {
 
 export const GAME_DOWNLOAD: IGameDownloadSlide[] = [
   {
+    id: "1",
     name: "Escape",
-    image: "/assets/images/games/coming_soon/escape.png",
-    description: "Escape from the prison",
-    link: "https://play.google.com/store/apps/details?id=com.nakama.escape"
-  },
-  {
-    name: "Duck Hunter",
-    image: "/assets/images/games/coming_soon/duckhunter.png",
-    description: "An exciting twist on a favorite retro game",
-    link: "https://play.google.com/store/apps/details?id=com.nakama.duckhunter"
-  },
-  {
-    name: "NAKA Runner",
-    image: "/assets/images/games/coming_soon/nakarunner.png",
-    description: "Move without stopping. You can do it!",
-    link: "https://play.google.com/store/apps/details?id=com.nakama.nakarunner"
+    image: "/images/home/escape.png",
+    description:
+      "Your new adventure begins now! Our first 3D multiplayer game with high-end graphics launched on the Nakamoto Games Platform. Join and push yourself to the limits!",
+    download_link: "https://files.naka.im/games/escape_win_x64_installation.zip"
   }
 ]

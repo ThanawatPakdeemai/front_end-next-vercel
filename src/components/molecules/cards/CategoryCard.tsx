@@ -1,8 +1,7 @@
 import React from "react"
-import { Image } from "@components/atoms/image/index"
 import { motion } from "framer-motion"
-import ImageCustom from "@components/atoms/image/Image"
 import { Grid } from "@mui/material"
+import { Image } from "@components/atoms/image/index"
 import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 
 export interface ICategoryCard {
@@ -55,7 +54,7 @@ const CategoryCard = ({ img, text, icon, onHandleClick }: ICategoryCard) => {
           className="group relative flex h-[324px] w-full"
           variants={cardImg}
         >
-          <ImageCustom
+          <Image
             src={img}
             alt="home-slide"
             width={264}

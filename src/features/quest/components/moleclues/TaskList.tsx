@@ -12,12 +12,9 @@ interface IProp {
 const TaskList = ({ dataQuestTask, isLast }: IProp) => (
   <motion.div
     initial={{ y: 15 }}
-    animate={{ y: 0 }}
-    transition={{
-      delay: 0.2,
-      stiffness: 120,
-      type: "spring",
-      damping: 4
+    animate={{
+      y: 0,
+      transition: { delay: 0.2, stiffness: 120, type: "spring", damping: 4 }
     }}
     className={`flex w-full items-center justify-start gap-[6px] py-3 ${
       !isLast && "border-b border-neutral-800"

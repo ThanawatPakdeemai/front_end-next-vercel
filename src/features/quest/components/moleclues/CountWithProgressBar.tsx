@@ -15,7 +15,12 @@ const linearProgressmotion = {
     width: 20
   },
   animate: {
-    width: 125
+    width: 125,
+    transition: {
+      stiffness: 320,
+      type: "spring",
+      damping: 20
+    }
   }
 }
 
@@ -91,11 +96,6 @@ const CountWithProgressBar = ({
             variants={linearProgressmotion}
             initial="initial"
             animate="animate"
-            transition={{
-              stiffness: 320,
-              type: "spring",
-              damping: 20
-            }}
             className="full"
           >
             <LinearProgress

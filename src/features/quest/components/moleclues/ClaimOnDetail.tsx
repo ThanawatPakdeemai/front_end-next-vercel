@@ -18,6 +18,14 @@ const textDamping = {
   }
 }
 
+const buttonClaim = {
+  initial: { width: 168 },
+  animate: {
+    width: 144,
+    transition: { stiffness: 220, type: "spring", damping: 8 }
+  }
+}
+
 const ClaimOnDetail = ({ data }: IProp) => (
   <div className="absolute bottom-0 flex h-[54px] w-full flex-row items-center justify-between gap-2 rounded-lg border border-neutral-700 bg-neutral-780 p-1">
     <div className="flex h-[41px] w-full justify-center rounded-[1px] border border-neutral-800 bg-neutral-900 px-5 py-[14px] uppercase">
@@ -51,7 +59,12 @@ const ClaimOnDetail = ({ data }: IProp) => (
         </motion.span>
       )}
     </div>
-    <ButtonClaim data={data} />
+    <ButtonClaim
+      data={data}
+      variants={buttonClaim}
+      initial="initial"
+      animate="animate"
+    />
   </div>
 )
 

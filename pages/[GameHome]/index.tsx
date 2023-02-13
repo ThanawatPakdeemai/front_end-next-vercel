@@ -8,7 +8,7 @@ import useGamesById from "@feature/game/containers/hooks/useGamesById"
 import StoryLobby from "@feature/game/components/templates/lobby/StoryLobby"
 import GamePageDefault from "@components/template/GamePageDefault"
 import OverViewGameStoryMode from "@components/organisms/OverviewGameStoryMode"
-import RightSidebarContent from "@components/template/RightSidebarContent"
+import RightSidebarContentEffect from "@components/template/RightSidebarContentEffect"
 
 export default function GameLobby() {
   const [gameData, setGameData] = useState<IGame>()
@@ -24,7 +24,7 @@ export default function GameLobby() {
       switch (gameData.game_type) {
         case "storymode":
           return (
-            <RightSidebarContent
+            <RightSidebarContentEffect
               content={<StoryLobby />}
               aside={<OverViewGameStoryMode />}
             />

@@ -47,7 +47,7 @@ const RightMenuLogIn = () => {
         <>
           <TooltipsCustom
             title={
-              <p className=" text-primary-main">
+              <p className="text-primary-main">
                 Please approve your wallet first.
               </p>
             }
@@ -89,15 +89,17 @@ const RightMenuLogIn = () => {
                   <Typography className="text-sm font-bold">
                     {profile?.username}
                   </Typography>
-                  <Typography
-                    paragraph
-                    component="span"
-                    variant="body1"
-                    onClick={() => Helper.copyClipboard(profile?.address)}
-                    className="cursor-pointer text-xs font-bold text-secondary-main"
-                  >
-                    {Helper.shortenString(profile?.address)}
-                  </Typography>
+                  {profile?.address && (
+                    <Typography
+                      paragraph
+                      component="span"
+                      variant="body1"
+                      onClick={() => Helper.copyClipboard(profile?.address)}
+                      className="cursor-pointer text-xs font-bold text-secondary-main"
+                    >
+                      {Helper.shortenString(profile?.address)}
+                    </Typography>
+                  )}
                 </div>
                 <Link href={`/profile/${profile.id}`}>
                   <Image

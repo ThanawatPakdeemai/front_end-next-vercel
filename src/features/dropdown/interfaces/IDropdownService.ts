@@ -78,3 +78,15 @@ export interface IDropdownAll
     IDevice,
     IGameItemListData,
     ICURRENCY {}
+
+export interface IFilterGamesByCategory {
+  limit?: number
+  skip?: number
+  sort?: string
+  search?: string
+  category?: string | string[]
+  item?: string | string[]
+  device?: string
+  game_type?: string
+  tournament?: boolean
+}

@@ -98,10 +98,11 @@ export interface ILogin {
 
 // Type for provider Login user
 export interface ILoginProvider {
-  email: string
-  provider: string
-  providerUUID: string
-  referral?: string
+  _email: string
+  _provider: string
+  _prevPath?: string
+  _providerUUID: string
+  _referral?: string | string[]
 }
 
 // Type for ResetPassword
@@ -313,4 +314,32 @@ export interface IPlayerInfoData {
   total_reward: number
   total_win_rate: string
   game_data: IPlayerInfoGameData[]
+}
+
+export interface IProfileRegister {
+  email: string
+  exp: number
+  stamina_point: number
+  nonce: number
+  status: number
+  friend: any[]
+  role: string
+  banned: any[]
+  is_active: boolean
+  id: string
+  subscription: boolean
+  ranks: any[]
+  level: number
+  max_exp: number
+  game_status: any[]
+  jwtToken: string
+  createdAt: string
+  updatedAt: string
+  private_user: boolean
+  discord_reward_claimed: boolean
+  sent_email_discord: boolean
+  game_favorite: any[]
+  _id: string
+  badges: any[]
+  current_time: string
 }

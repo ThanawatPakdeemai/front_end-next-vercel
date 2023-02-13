@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useLayoutEffect, useState } from "react"
+import React, { memo, useEffect, useState } from "react"
 import LogoIcon from "@components/icons/LogoIcon"
 import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
 import ShapeIcon from "@components/icons/ShapeIcon"
@@ -75,12 +75,13 @@ const Home = () => {
    * @description: Spark fire effect
    */
   const { createParticle } = useTweenEffect(600, 300, 50, -500)
-  useLayoutEffect(() => {
+  useEffect(() => {
     const ctx = gsap.context(() => {
       createParticle()
     })
     return () => ctx.revert()
-  }, [createParticle])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>

@@ -1,4 +1,4 @@
-import GamePageLayout from "@components/template/GamePageLayout"
+import ServicesPageLayout from "@components/template/ServicesPageLayout"
 import CouponPage from "@feature/page/CouponPage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"
@@ -14,7 +14,7 @@ export default function Coupon() {
 }
 
 Coupon.getLayout = function getLayout(page: ReactElement) {
-  return <GamePageLayout>{page}</GamePageLayout>
+  return <ServicesPageLayout>{page}</ServicesPageLayout>
 }
 
 export async function getStaticProps({ locale }) {

@@ -14,7 +14,7 @@ const HistoryTable = () => {
   const profile = useProfileStore((state) => state.profile.data)
 
   // Hooks
-  const { HistoryTableHead } = useHistoryController()
+  const { HistoryTableHead, onHandleView } = useHistoryController()
   const { limit } = useTable()
 
   // States
@@ -43,8 +43,6 @@ const HistoryTable = () => {
       setTotalCount(historyData.info.totalCount)
     }
   }, [historyData])
-
-  // const onHandleView = (row: string, _id: string, path: any) => {}
 
   return (
     <div className="mx-auto max-w-[678px]">
@@ -134,8 +132,11 @@ const HistoryTable = () => {
                         <button
                           type="button"
                           className="h-6 flex-none justify-self-end rounded-sm font-neue-machina text-[10px] uppercase text-grey-neutral04"
-                          onClick={() => {}}
+                          onClick={() => {
+                            onHandleView
+                          }}
                         >
+                          view
                           <Chip
                             label="View Summary"
                             size="small"

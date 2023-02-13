@@ -1,7 +1,11 @@
+import { IHistory } from "@feature/history/interfaces/IHistoryService"
 import { ITableHeader } from "@feature/table/interface/ITable"
+import { useRouter } from "next/router"
+
 import { useMemo } from "react"
 
 const useHistoryController = () => {
+  const router = useRouter()
   const HistoryTableHead: Array<ITableHeader> = useMemo(
     () => [
       {
@@ -23,8 +27,13 @@ const useHistoryController = () => {
     []
   )
 
+  const onHandleView = (e: IHistory) => {
+    router.push(`/${e.path}/summary/${e.room_id}`)
+  }
+
   return {
-    HistoryTableHead
+    HistoryTableHead,
+    onHandleView
   }
 }
 

@@ -5,6 +5,7 @@ import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import ButtonDropdown from "@feature/gameItem/atoms/ButtonDropdown"
+import { useTranslation } from "react-i18next"
 
 interface IProp {
   defaultValue: number
@@ -20,6 +21,8 @@ const DropdownLimit = ({
   className,
   onChangeSelect
 }: IProp) => {
+  const { t } = useTranslation()
+
   const [selectLimit, setSelectLimit] = useState<Number>(defaultValue)
   const onChangeItem = (_item: number) => {
     if (_item && onChangeSelect) {
@@ -48,7 +51,7 @@ const DropdownLimit = ({
                       <div className="flex items-center">
                         <div className="flex items-center">
                           <VisibilityOutlinedIcon />
-                          <p className="px-2 uppercase">Show</p>
+                          <p className="px-2 uppercase">{t("show")}</p>
                         </div>
                         <p className="px-2 text-[#ffffff]">{`${selectLimit}`}</p>
                       </div>

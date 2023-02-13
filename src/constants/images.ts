@@ -119,8 +119,8 @@ export const IMAGES = {
     alt: "naka-referrals"
   },
   marketPlace: {
-    src: "/images/home/marketplace.svg",
-    blurDataURL: "/images/home/marketplace.svg",
+    src: "/images/home/marketplace.png",
+    blurDataURL: "/images/home/marketplace_blur.png",
     width: 678,
     height: 218,
     alt: "marketPlace"

@@ -17,15 +17,18 @@ import { IGeoProfile } from "@feature/profile/interfaces/IProfileService"
 import SlideAvatar from "@feature/avatar/components/molecules/SlideAvatar"
 import useGetAvatar from "@feature/avatar/containers/hook/useGetAvatar"
 import { MESSAGES } from "@constants/messages"
+import { useRouter } from "next/router"
 
 const FormCreateProfile = () => {
   const profile = useProfileStore((state) => state.profile.data)
+  const { onSetProfileData } = useProfileStore()
 
   const [defaultAvatar, setDefaultAvatar] = useState<string>(
     profile ? profile?.avatar : ""
   )
   const { errorToast } = useToast()
   const { avatar } = useGetAvatar()
+  const router = useRouter()
 
   const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
@@ -51,6 +54,9 @@ const FormCreateProfile = () => {
               _subscription: data._subscription,
               _country: geo.country,
               _user_ip_address: geo.ip
+            }).then(async (_res) => {
+              await onSetProfileData({ ...profile, ..._res })
+              await router.push("/")
             })
           }
         })
@@ -68,7 +74,9 @@ const FormCreateProfile = () => {
     }
   }
 
-  const slideTo = () => {}
+  const slideTo = () => {
+    setValue("_avatar", defaultAvatar)
+  }
 
   return (
     <Box className="w-[350px]">
@@ -97,7 +105,7 @@ const FormCreateProfile = () => {
             />
             <input
               hidden
-              value={profile?.avatar}
+              value={defaultAvatar || profile?.avatar}
               {...register("_avatar")}
             />
             <input
@@ -148,6 +156,7 @@ const FormCreateProfile = () => {
                   onClick={() => {
                     slideTo()
                     setDefaultAvatar(item.value)
+                    setValue("_avatar", item.value)
                   }}
                 >
                   <AvatarProfile
@@ -156,8 +165,11 @@ const FormCreateProfile = () => {
                         ? "border-error-main"
                         : "border-neutral-600"
                     }
-                    border={{ width: "!w-[52px]", height: "!h-[52px]" }}
-                    image={{ width: "!w-[48px]", height: "!h-[48px]" }}
+                    // border={{ width: "!w-[52px]", height: "!h-auto" }}
+                    // image={{ width: "!w-[48px]", height: "!h-auto" }}
+                    border={{ width: "!w-[85px]", height: "!h-[85px]" }}
+                    image={{ width: "!w-[80px]", height: "!h-[80px]" }}
+                    height="h-auto"
                     src={item.value}
                   />
                 </Box>

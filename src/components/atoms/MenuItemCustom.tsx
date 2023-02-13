@@ -7,6 +7,7 @@ import { useRouter } from "next/router"
 interface IProp extends IMenu {
   active?: boolean
   endIcon?: boolean
+  onClick?: () => void
 }
 
 /**
@@ -33,4 +34,5 @@ const MenuItemCustom = ({ active, endIcon, ...props }: IProp) => {
     </MenuItem>
   )
 }
+
 export default MenuItemCustom

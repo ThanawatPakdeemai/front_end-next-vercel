@@ -27,7 +27,7 @@ export interface ISignIn {
 
 export interface ISignUp extends ISignIn {
   _verifycode: number | string
-  _referral?: string
+  _referral: string | string[]
   _subscription: boolean
 }
 

@@ -1,10 +1,11 @@
 import { TMediaType } from "@feature/game/interfaces/IPartnerGame"
 
 export interface IGameDownloadSlide {
+  id: string
   image: string
   name: string
   description: string
-  link: string
+  download_link: string
 }
 
 export interface IVerticalThumbSlide {

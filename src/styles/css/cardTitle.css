@@ -31,6 +31,29 @@
   @apply bg-neutral-700;
 }
 
+.custom-scroll-line-green {
+  /* Track */
+}
+.custom-scroll-line-green::-webkit-scrollbar {
+  width: auto;
+  height: 10px;
+}
+.custom-scroll-line-green::-webkit-scrollbar-track {
+  @apply border-neutral-700 bg-primary-main;
+  border: 2px solid #18181c;
+  backdrop-filter: blur(15px);
+  border-radius: 2px;
+}
+.custom-scroll-line-green::-webkit-scrollbar-thumb {
+  scrollbar-width: thin;
+  border-radius: 2px;
+  background: #232329 !important;
+  background: linear-gradient(90deg, #3dcd95 50%, #232329 50%) !important;
+  background-repeat: repeat-x !important;
+  background-size: 0.5% !important;
+  border: 3.5px solid #18181c;
+}
+
 .top-player .animation-box {
   width: 58px;
   height: 58px;

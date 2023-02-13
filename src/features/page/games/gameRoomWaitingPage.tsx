@@ -27,9 +27,9 @@ const GameRoomWaitingPage = ({ _roomId }: IProp) => {
     if (gameData) {
       switch (gameData.game_type) {
         case "singleplayer":
-          if (gameData.type_code === "survival_01") {
-            return <>survival_01</>
-          }
+          // if (gameData.type_code === "survival_01") {
+          //   return <>survival_01</>
+          // }
           return <SingleWaiting _roomId={_roomId} />
         case "multiplayer":
           return (

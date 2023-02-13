@@ -11,10 +11,12 @@ import MenuProfile from "@components/molecules/menuProfile/MenuProfile"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import useProfileStore from "@stores/profileStore"
 import Link from "next/link"
+import TooltipsCustom from "@components/atoms/TooltipsCustom"
+import { useWeb3Provider } from "@providers/Web3Provider"
 
 const RightMenuLogIn = () => {
   const profile = useProfileStore((state) => state.profile.data)
-
+  const { address } = useWeb3Provider()
   const [expanded, setExpanded] = useState<boolean>(false)
   const [hoverExpand, setHoverExpand] = useState<boolean>(false)
 
@@ -43,91 +45,103 @@ const RightMenuLogIn = () => {
     <div>
       {profile && (
         <>
-          <Card
-            className={`${
-              expanded ? "rounded-t-[13px] rounded-b-none" : "rounded-[13px]"
-            } m-auto flex items-center justify-center`}
-            sx={{
-              maxWidth: 277,
-              width: 277,
-              height: 62,
-              backgroundColor: "#010101D9",
-              backgroundImage: "none"
-            }}
+          <TooltipsCustom
+            title={
+              <p className="text-primary-main">
+                Please approve your wallet first.
+              </p>
+            }
+            color="warning"
+            open={!address && !expanded}
           >
-            <CardActions
-              className="flex justify-between rounded-[13px] border-2  border-neutral-700 bg-black-500 px-0"
-              sx={{ maxWidth: 265, width: 265, height: 50 }}
-              disableSpacing
+            <Card
+              className={`${
+                expanded ? "rounded-t-[13px] rounded-b-none" : "rounded-[13px]"
+              } m-auto flex items-center justify-center`}
+              sx={{
+                maxWidth: 277,
+                width: 277,
+                height: 62,
+                backgroundColor: "#010101D9",
+                backgroundImage: "none"
+              }}
             >
-              {/* notification */}
-
-              <ButtonIcon
-                onClick={handleOnNotiClick}
-                variants={iconmotion}
-                whileHover="hover"
-                transition={{ type: "spring", stiffness: 400, damping: 4 }}
-                icon={
-                  <NotificationsOutlinedIcon className="text-white-primary" />
-                }
-                className="ml-1 mr-5 flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-lg border border-neutral-700 bg-transparent"
-                aria-label="notification-button"
-              />
-
-              <div className="flex-1 flex-col items-center">
-                <Typography className="text-sm font-bold">
-                  {profile?.username}
-                </Typography>
-                <Typography
-                  paragraph
-                  component="span"
-                  variant="body1"
-                  onClick={() => Helper.copyClipboard(profile?.address)}
-                  className="cursor-pointer text-xs font-bold text-secondary-main"
-                >
-                  {Helper.shortenString(profile?.address)}
-                </Typography>
-              </div>
-              <Link href={`/profile/${profile.id}`}>
-                <Image
-                  src={profile?.avatar}
-                  alt="avatar"
-                  width={40}
-                  height={40}
-                  className="mr-[5px] rounded-lg"
-                />
-              </Link>
-              {/* expand button */}
-              <IconButtonCustom
-                expand={expanded.toString()}
-                onClick={handleOnExpandClick}
-                aria-expanded={Boolean(expanded)}
-                aria-label="expanded-menu-profile"
-                className={`mr-[2px] h-10 w-10 rounded-[13px] border-[2px] border-neutral-700 duration-100 ease-bounce  ${
-                  !expanded
-                    ? "bg-secondary-main hover:scale-[85%]"
-                    : "bg-error-main"
-                }
-            ${!expanded ? "rotate-0" : "rotate-180"} ${
-                  expanded && !hoverExpand
-                    ? "rotate-[-45deg] scale-[75%]"
-                    : "scale-1 rotate-0"
-                }
-            ${!expanded ? "hover:bg-secondary-main" : "hover:bg-error-main"}`}
-                onMouseOver={() => {
-                  setHoverExpand(true)
-                }}
-                onMouseOut={() => {
-                  setHoverExpand(false)
-                }}
+              <CardActions
+                className="flex justify-between rounded-[13px] border-2  border-neutral-700 bg-black-500 px-0"
+                sx={{ maxWidth: 265, width: 265, height: 50 }}
+                disableSpacing
               >
-                <StateIcon
-                  expanded={expanded}
-                  hover={hoverExpand}
+                {/* notification */}
+
+                <ButtonIcon
+                  onClick={handleOnNotiClick}
+                  variants={iconmotion}
+                  whileHover="hover"
+                  transition={{ type: "spring", stiffness: 400, damping: 4 }}
+                  icon={
+                    <NotificationsOutlinedIcon className="text-white-primary" />
+                  }
+                  className="ml-1 mr-5 flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-lg border border-neutral-700 bg-transparent"
+                  aria-label="notification-button"
                 />
-              </IconButtonCustom>
-            </CardActions>
-          </Card>
+
+                <div className="flex-1 flex-col items-center">
+                  <Typography className="text-sm font-bold">
+                    {profile?.username}
+                  </Typography>
+                  {profile?.address && (
+                    <Typography
+                      paragraph
+                      component="span"
+                      variant="body1"
+                      onClick={() => Helper.copyClipboard(profile?.address)}
+                      className="cursor-pointer text-xs font-bold text-secondary-main"
+                    >
+                      {Helper.shortenString(profile?.address)}
+                    </Typography>
+                  )}
+                </div>
+                <Link href={`/profile/${profile.id}`}>
+                  <Image
+                    src={profile?.avatar}
+                    alt="avatar"
+                    width={40}
+                    height={40}
+                    className="mr-[5px] rounded-lg"
+                  />
+                </Link>
+                {/* expand button */}
+                <IconButtonCustom
+                  expand={expanded.toString()}
+                  onClick={handleOnExpandClick}
+                  aria-expanded={Boolean(expanded)}
+                  aria-label="expanded-menu-profile"
+                  className={`mr-[2px] h-10 w-10 rounded-[13px] border-[2px] border-neutral-700 duration-100 ease-bounce  ${
+                    !expanded
+                      ? "bg-secondary-main hover:scale-[85%]"
+                      : "bg-error-main"
+                  }
+            ${!expanded ? "rotate-0" : "rotate-180"} ${
+                    expanded && !hoverExpand
+                      ? "rotate-[-45deg] scale-[75%]"
+                      : "scale-1 rotate-0"
+                  }
+            ${!expanded ? "hover:bg-secondary-main" : "hover:bg-error-main"}`}
+                  onMouseOver={() => {
+                    setHoverExpand(true)
+                  }}
+                  onMouseOut={() => {
+                    setHoverExpand(false)
+                  }}
+                >
+                  <StateIcon
+                    expanded={expanded}
+                    hover={hoverExpand}
+                  />
+                </IconButtonCustom>
+              </CardActions>
+            </Card>
+          </TooltipsCustom>
 
           <Collapse
             in={expanded}

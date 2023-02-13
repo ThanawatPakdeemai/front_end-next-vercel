@@ -15,6 +15,7 @@ import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf
 import { MESSAGES } from "@constants/messages"
 import { useWeb3Provider } from "@providers/Web3Provider"
 
+import { IResGetIp } from "@interfaces/IGetIP"
 import ButtonGame from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 
@@ -33,6 +34,17 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   const router = useRouter()
   const { address } = useWeb3Provider()
   const [gameUrl, setGameUrl] = useState<string>("")
+  const [ip, setIp] = useState("")
+
+  useEffect(() => {
+    if (data && data.type_code === "survival_01")
+      Helper.getIP().then((res) => {
+        setIp((res as IResGetIp).ip)
+      })
+    return () => {
+      setIp("")
+    }
+  }, [data])
 
   const item_id = useMemo(() => {
     if (data) {
@@ -148,29 +160,53 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
       data.game_type === "singleplayer"
     ) {
       const frontendUrl = `${baseUrlFront}/${data.path}/summary/${room_id}`
-      const url_data = `${room_id}:|:${profile.id}:|:${item_id}:|:${
-        profile.email
-      }:|:${Helper.getLocalStorage(
-        "token"
-      )}:|:${frontendUrl}:|:${baseUrlApi}:|:${gameRoomById.rank_name}:|:${
-        gameRoomById.room_number
-      }:|:${new Date(gameRoomById.start_time).getTime()}${
-        gameRoomById.stage_id !== undefined
-          ? `:|:${gameRoomById.stage_id}`
-          : ":|:0"
-      }:|:${profile.username}:|:${
-        data.play_to_earn === true ? "free" : "not_free"
-      }`
-      // console.log(`${baseUrlGame}/${data.id}/?${Helper.makeID(8)}/${url_data}}`)
-      const gameURL = `${baseUrlGame}/${data.id}/?${Helper.makeID(8)}${btoa(
-        url_data
-      )}`
-      setGameUrl(gameURL)
+
+      if (data.type_code === "survival_01") {
+        if (ip) {
+          const data_game = `${room_id}:|:${profile.id}:|:${
+            itemSelected?._id
+          }:|:${profile.email}:|:${Helper.getLocalStorage(
+            "token"
+          )}:|:${frontendUrl}:|:${CONFIGS.BASE_URL.API}:|:${
+            gameRoomById.rank_name
+          }:|:${gameRoomById.room_number}:|:${new Date(
+            gameRoomById.start_time
+          ).getTime()}:|:${profile.username}:|:${gameRoomById.max_players}:|:${
+            gameRoomById.stage_id
+          }:|:${ip}:|:${data.play_to_earn === true ? "free" : "not_free"}:|:${
+            profile.country
+          }`
+          const gameURL = `${CONFIGS.BASE_URL.GAME}/${
+            data.id
+          }/?query=${Helper.makeID(8)}${btoa(data_game)}`
+          setGameUrl(gameURL)
+          // console.log(`${CONFIGS.BASE_URL.GAME}/${data.id}/?query=${data_game}`)
+        }
+      } else {
+        const url_data = `${room_id}:|:${profile.id}:|:${item_id}:|:${
+          profile.email
+        }:|:${Helper.getLocalStorage(
+          "token"
+        )}:|:${frontendUrl}:|:${baseUrlApi}:|:${gameRoomById.rank_name}:|:${
+          gameRoomById.room_number
+        }:|:${new Date(gameRoomById.start_time).getTime()}${
+          gameRoomById.stage_id !== undefined
+            ? `:|:${gameRoomById.stage_id}`
+            : ":|:0"
+        }:|:${profile.username}:|:${
+          data.play_to_earn === true ? "free" : "not_free"
+        }`
+        // console.log(`${baseUrlGame}/${data.id}/?${Helper.makeID(8)}/${url_data}}`)
+        const gameURL = `${baseUrlGame}/${data.id}/?${Helper.makeID(8)}${btoa(
+          url_data
+        )}`
+        setGameUrl(gameURL)
+      }
     }
     return () => {
       setGameUrl("")
     }
-  }, [data, gameRoomById, item_id, profile, room_id])
+  }, [data, gameRoomById, ip, itemSelected?._id, item_id, profile, room_id])
 
   const onPlayGame = () => {
     if (

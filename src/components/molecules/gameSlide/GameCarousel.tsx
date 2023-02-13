@@ -18,6 +18,7 @@ interface IProps {
   checkTimer?: boolean
   curType: IGetType
   setCurType: (_type: IGetType) => void
+  showSlideCurrent?: number
 }
 
 export type TColor =
@@ -35,10 +36,11 @@ const GameCarousel = ({
   showNo = false,
   checkTimer = false,
   curType,
-  setCurType
+  setCurType,
+  showSlideCurrent
 }: IProps) => {
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
-  const showSlide = 6
+  const showSlide = showSlideCurrent ?? 6
   const settings: Settings = {
     dots: false,
     infinite: true,

@@ -1,7 +1,7 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import NakaPassPage from "@feature/page/games/NakaPassPage"
-import NakaPassLayout from "@components/template/NakaPassLayout"
+import GamePageWithBreadcrumb from "@components/templates/GamePageWithBreadcrumb"
 
 export default function NakaPass() {
   return (
@@ -14,7 +14,7 @@ export default function NakaPass() {
 }
 
 NakaPass.getLayout = function getLayout(page: ReactElement) {
-  return <NakaPassLayout>{page}</NakaPassLayout>
+  return <GamePageWithBreadcrumb>{page}</GamePageWithBreadcrumb>
 }
 
 export async function getStaticProps({ locale }) {

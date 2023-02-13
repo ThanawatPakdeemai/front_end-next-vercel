@@ -25,13 +25,15 @@ const StoryLobby = () => {
   if (gameData && gameData.category_list && gameData.category_list.length > 0) {
     gameData.category_list.map((category) =>
       gameTags.push({
+        id: category.id,
         name: category.name,
-        link: `category/${category.id}`
+        link: `categories/${category.slug}?id=${category.id}`
       })
     )
   } else if (gameData && gameData.category) {
     const _categorySlug = gameData.category.name.split(" ")
     gameTags.push({
+      id: gameData.category.id,
       name: gameData.category.name,
       link: `category/${_categorySlug[1].toLocaleLowerCase()}`
     })

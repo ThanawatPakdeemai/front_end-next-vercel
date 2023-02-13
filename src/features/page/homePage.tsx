@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useLayoutEffect, useState } from "react"
+import React, { memo, useEffect, useState } from "react"
 import LogoIcon from "@components/icons/LogoIcon"
 import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
 import ShapeIcon from "@components/icons/ShapeIcon"
@@ -30,7 +30,6 @@ import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { v4 as uuid } from "uuid"
 import useTweenEffect from "@hooks/useSpartFireEffect"
-import gsap from "gsap"
 
 const Home = () => {
   const limit = 10
@@ -75,12 +74,10 @@ const Home = () => {
    * @description: Spark fire effect
    */
   const { createParticle } = useTweenEffect(600, 300, 50, -500)
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      createParticle()
-    })
-    return () => ctx.revert()
-  }, [createParticle])
+  useEffect(() => {
+    createParticle()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>

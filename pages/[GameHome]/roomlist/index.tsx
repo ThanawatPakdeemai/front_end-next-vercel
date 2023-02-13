@@ -1,6 +1,6 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import GameRoomLayout from "@components/template/GameRoomLayout"
+import GameRoomLayout from "@components/templates/GameRoomLayout"
 import GameRoomListPage from "@feature/page/games/gameRoomListPage"
 
 export default function GameRoomList() {

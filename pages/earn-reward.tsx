@@ -1,4 +1,4 @@
-import ProfileLayout from "@components/template/ProfileLayout"
+import ProfileLayout from "@components/templates/ProfileLayout"
 import { ITEM_REWARD_CRUMB } from "@configs/crumb"
 import EarnRewardPage from "@feature/page/EarnRewardPage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"

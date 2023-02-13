@@ -91,7 +91,7 @@ export const MENU = [
       },
       {
         name: "NFT Games",
-        link: "/nft-games",
+        link: "/arcade-emporium",
         icon: DiamondIcon
       },
       {
@@ -208,7 +208,7 @@ export const MENU_GUEST: IMenu[] = [
     id: "nft-games",
     label: "NFT Games",
     icon: <Diamond stroke="#E1E2E2" />,
-    href: "/nft-games",
+    href: "/arcade-emporium",
     external: false
   },
   {

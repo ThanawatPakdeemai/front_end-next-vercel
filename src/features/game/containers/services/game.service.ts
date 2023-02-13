@@ -1,4 +1,6 @@
 import services from "@configs/axiosGlobalConfig"
+import CONFIGS from "@configs/index"
+import { IGameAllResponse } from "@feature/dropdown/interfaces/IDropdownService"
 import {
   IGameClaimEarnedRewardService,
   IGamePlayToEarnService,
@@ -13,7 +15,8 @@ import {
   IGetPlayerInRoom,
   IClaimEarnedRewardByPlayerId,
   IGetGameByTypesProps,
-  IGetGameByTypes
+  IGetGameByTypes,
+  IFilterGamesByKey
 } from "@feature/game/interfaces/IGameService"
 
 export const getAllGames = () =>
@@ -185,4 +188,19 @@ export const getGameByTypes = ({
       .post<IGetGameByTypes>(`/game/${_type}`, { ...data })
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
+  })
+
+export const getGamesByKey = (data: IFilterGamesByKey) =>
+  new Promise<IGameAllResponse>((resolve, reject) => {
+    services
+      .post<IGameAllResponse>(
+        `${CONFIGS.BASE_URL.API}/game/filter/game-all`,
+        data
+      )
+      .then((res) => {
+        resolve(res.data)
+      })
+      .catch((error: Error) => {
+        reject(error)
+      })
   })

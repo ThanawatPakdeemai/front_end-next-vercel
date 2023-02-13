@@ -4,11 +4,14 @@ import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
+import {
+  IFilterGamesByKey,
+  IGame,
+  IGetType
+} from "@feature/game/interfaces/IGameService"
 import { MESSAGES } from "@constants/messages"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import useGamesById from "@feature/game/containers/hooks/useGamesById"
-import { IFilterGamesByCategory } from "@feature/dropdown/interfaces/IDropdownService"
 
 const useGlobal = (
   _limit?: number,
@@ -18,19 +21,23 @@ const useGlobal = (
   _item?: string | string[],
   _device?: string,
   _gameType?: string,
-  _tournament?: boolean
+  _tournament?: boolean,
+  _category?: string,
+  _nftgame?: boolean
 ) => {
   const router = useRouter()
 
-  const defaultBody: IFilterGamesByCategory = {
-    "limit": _limit || 20,
-    "skip": _skip || 1,
-    "sort": _sort || "_id",
-    "search": _search || "",
-    "item": _item || "all",
-    "device": _device || "all",
-    "game_type": _gameType || "all",
-    "tournament": _tournament || false
+  const defaultBody: IFilterGamesByKey = {
+    limit: _limit ?? 20,
+    skip: _skip ?? 1,
+    sort: _sort ?? "_id",
+    search: _search ?? "",
+    item: _item ?? "all",
+    device: _device ?? "all",
+    game_type: _gameType ?? "all",
+    tournament: _tournament ?? false,
+    category: _category ?? "all",
+    nftgame: _nftgame ?? false
   }
 
   // hook
@@ -95,11 +102,15 @@ const useGlobal = (
           onSetGamePartnersData(_gameData as IPartnerGameData)
           break
 
+        case "arcade-emporium":
+          await router.push(`/${_type}/${_gameUrl}`)
+          break
+
         default:
           onSetGameData(_gameData as IGame)
+          await router.push(`/${_gameUrl}`)
           break
       }
-      await router.push(`/${_gameUrl}`)
     } else {
       errorToast(MESSAGES.please_login)
     }

@@ -27,7 +27,7 @@ export type IGetType =
   | "must-try"
   | "hot-game"
   | "partner-game"
-  | "nft-game"
+  | "arcade-emporium"
 
 export interface IGetGameByTypesProps {
   _type: IGetType
@@ -487,4 +487,17 @@ export interface IResSocketRoomList {
 
 export interface IError {
   message: string
+}
+
+export interface IFilterGamesByKey {
+  limit?: number
+  skip?: number
+  sort?: string
+  search?: string
+  category?: string | string[]
+  item?: string | string[]
+  device?: string
+  game_type?: string
+  tournament?: boolean
+  nftgame?: boolean
 }

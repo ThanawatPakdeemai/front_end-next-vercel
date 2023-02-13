@@ -8,12 +8,11 @@ import IconArrowTop from "@components/icons/arrowTopIcon"
 import { v4 as uuid } from "uuid"
 import { ITransactionWalletData } from "@feature/transaction/interfaces/ITransaction"
 import DropdownLimit from "@feature/transaction/components/atoms/DropdownLimit"
-import TableHeader from "@feature/transaction/components/atoms/TableHeader"
-import TablePopover from "@feature/transaction/components/atoms/TablePopover"
-import TableRowData from "@feature/transaction/components/atoms/TableRowData"
+import TablePopover from "@feature/table/components/atoms/TablePopover"
+import TableHeader from "@feature/table/components/molecules/TableHeader"
+import TableRowData from "@feature/table/components/molecules/TableRowData"
 import { useTranslation } from "react-i18next"
 import useGlobal from "@hooks/useGlobal"
-import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
 import { IProfile } from "@src/types/profile"
 
 interface IProp {
@@ -47,7 +46,7 @@ export default function TransactionTable({ profile }: IProp) {
   const [typeCheck, setTypeCheck] = useState<Array<string>>(allTypes)
   const [txHistory, setTxHistory] = useState<ITransactionWalletData[]>([])
 
-  const { getTransHistory, isLoading } = useGetTransWallet()
+  const { getTransHistory } = useGetTransWallet()
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -134,7 +133,10 @@ export default function TransactionTable({ profile }: IProp) {
             return -1
           })
       },
-      { title: t("fee").concat(" (MATIC)") }
+      {
+        title: t("fee").concat(" (MATIC)"),
+        className: "flex justify-end w-full"
+      }
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [sortTime, sortAmount]
@@ -148,75 +150,73 @@ export default function TransactionTable({ profile }: IProp) {
             {t("NAKA_storage_transactions")}
           </p>
           <TableContainer className="w-[580px] rounded-[14px] border border-neutral-800 bg-neutral-780 px-1.5 pb-1.5 pt-4">
-            {isLoading ? (
-              [...Array(limit)].map(() => <SkeletonTableWallet key={uuid()} />)
-            ) : (
-              <Table aria-label="simple table">
-                <TableHeader thead={tHeader} />
-                <TableBody
-                  sx={{
-                    display: "block",
-                    borderRadius: "9px",
-                    overflow: "hidden",
-                    "tr:last-of-type td": { borderBottom: 0 }
-                  }}
-                  className="bg-neutral-900 px-3.5"
-                >
-                  {txHistory &&
-                    txHistory.map((item) => (
-                      <TableRowData
-                        key={uuid()}
-                        child={[
-                          <>
-                            <span className="rounded-less border border-neutral-700 p-[5px] font-neue-machina-bold text-xs uppercase text-neutral-400">
-                              {dayjs(item.current_time).format("DD MMM YYYY")}
-                            </span>
-                            <span className="px-3 font-neue-machina-bold text-xs text-neutral-600">
-                              {dayjs(item.current_time).format("hh:mm A")}
-                            </span>
-                          </>,
-                          <>
-                            <Chip
-                              label={item.type}
-                              size="small"
-                              className={`font-neue-machina-bold uppercase !text-neutral-900 ${
-                                item.type && item.type === "DepositNaka"
-                                  ? "!bg-varidian-default"
-                                  : "!bg-red-card"
-                              }`}
-                            />
-                          </>,
-                          <>
-                            <div
-                              className={`flex items-center font-neue-machina-bold text-sm ${
-                                item.type && item.type === "DepositNaka"
-                                  ? "text-varidian-default"
-                                  : "text-red-card"
-                              }`}
-                            >
-                              <div className="flex flex-row">
-                                <div className="pr-[8.35px]">
-                                  {item.type && item.type === "DepositNaka" ? (
-                                    <IconArrowTop className="rotate-180" />
-                                  ) : (
-                                    <IconArrowTop />
-                                  )}
-                                </div>
-                                {item.amount.toFixed(2)}
+            <Table aria-label="simple table">
+              <TableHeader thead={tHeader} />
+              <TableBody
+                sx={{
+                  display: "block",
+                  borderRadius: "9px",
+                  overflow: "hidden",
+                  "tr:last-of-type td": { borderBottom: 0 }
+                }}
+              >
+                {txHistory &&
+                  txHistory.map((item) => (
+                    <TableRowData
+                      key={uuid()}
+                      child={[
+                        <div key={item.id}>
+                          <span className="rounded-less border border-neutral-700 p-[5px] font-neue-machina-bold text-xs uppercase text-neutral-400">
+                            {dayjs(item.current_time).format("DD MMM YYYY")}
+                          </span>
+                          <span className="px-3 font-neue-machina-bold text-xs text-neutral-600">
+                            {dayjs(item.current_time).format("hh:mm A")}
+                          </span>
+                        </div>,
+                        <div key={item.id}>
+                          <Chip
+                            label={item.type}
+                            size="small"
+                            className={`font-neue-machina-bold uppercase !text-neutral-900 ${
+                              item.type && item.type === "DepositNaka"
+                                ? "!bg-varidian-default"
+                                : "!bg-red-card"
+                            }`}
+                          />
+                        </div>,
+                        <div key={item.id}>
+                          <div
+                            className={`flex items-center font-neue-machina-bold text-sm ${
+                              item.type && item.type === "DepositNaka"
+                                ? "text-varidian-default"
+                                : "text-red-card"
+                            }`}
+                          >
+                            <div className="flex flex-row">
+                              <div className="pr-[8.35px]">
+                                {item.type && item.type === "DepositNaka" ? (
+                                  <IconArrowTop className="rotate-180" />
+                                ) : (
+                                  <IconArrowTop />
+                                )}
                               </div>
+                              {item.amount.toFixed(2)}
                             </div>
-                          </>,
-                          <>
-                            <span className="font-neue-machina-bold text-sm text-neutral-600">
-                              - {item.fee.toFixed(4)}
-                            </span>
-                          </>
-                        ]}
-                      />
-                    ))}
-                </TableBody>
-              </Table>
-            )}
+                          </div>
+                        </div>,
+                        <div
+                          key={item.id}
+                          className="flex w-full justify-end"
+                        >
+                          <span className="font-neue-machina-bold text-sm text-neutral-600">
+                            - {item.fee.toFixed(4)}
+                          </span>
+                        </div>
+                      ]}
+                    />
+                  ))}
+              </TableBody>
+            </Table>
           </TableContainer>
           <div className="my-5 flex w-[580px] justify-between">
             <PaginationNaka

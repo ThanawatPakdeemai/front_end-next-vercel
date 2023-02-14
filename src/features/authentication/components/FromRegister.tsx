@@ -204,8 +204,6 @@ const FromRegister = () => {
   }
 
   const facebookLogin = async (response, referralId: string | string[]) => {
-    console.log("test-response-1", response)
-    console.log("test-referralId-2", referralId)
     mutateLoginProvider({
       _email: response.email,
       _provider: "facebook",
@@ -214,13 +212,11 @@ const FromRegister = () => {
       _referral: referralId
     })
       .then((_res) => {
-        console.log("test-facebook-_res", _res)
         if (_res) {
           successToast(MESSAGES.create_successful_user)
         }
       })
       .catch((_error) => {
-        console.log("test-facebook-_error", _error)
         errorToast(MESSAGES.create_not_successful_user)
       })
   }
@@ -798,10 +794,9 @@ const FromRegister = () => {
                   }}
                   icon={
                     <FacebookLogin
-                      appId="881314849742513"
+                      appId={`${process.env.NEXT_PUBLIC_FACEBOOK_APPID}`}
                       autoLoad
                       fields="name,email,picture"
-                      // onClick={componentClicked}
                       callback={(e) => facebookLogin(e, watch("referralId"))}
                       cssClass="my-facebook-button-class"
                       textButton={null}

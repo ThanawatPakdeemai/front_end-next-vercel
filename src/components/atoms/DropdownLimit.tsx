@@ -82,7 +82,7 @@ const DropdownLimit = ({
                       list &&
                       list.map((ele: Number) => ({
                         label: (
-                          <div className="flex items-center justify-end pr-7">
+                          <div className="flex items-center justify-center">
                             <p>{`${ele}`}</p>
                           </div>
                         ),

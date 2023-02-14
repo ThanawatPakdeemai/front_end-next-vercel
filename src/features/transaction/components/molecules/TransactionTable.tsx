@@ -7,7 +7,7 @@ import { Chip, TableBody, Table, TableContainer } from "@mui/material"
 import IconArrowTop from "@components/icons/arrowTopIcon"
 import { v4 as uuid } from "uuid"
 import { ITransactionWalletData } from "@feature/transaction/interfaces/ITransaction"
-import DropdownLimit from "@feature/transaction/components/atoms/DropdownLimit"
+import DropdownLimit from "@components/atoms/DropdownLimit"
 import TableHeader from "@feature/table/components/molecules/TableHeader"
 import TableRowData from "@feature/table/components/molecules/TableRowData"
 import { useTranslation } from "react-i18next"
@@ -20,7 +20,7 @@ interface IProp {
 }
 
 export default function TransactionTable({ profile }: IProp) {
-  const { hydrated } = useGlobal()
+  const { hydrated, pager } = useGlobal()
   const { t } = useTranslation()
   const { getTransHistory } = useGetTransWallet()
   const { sortTime, sortAmount, typeCheck, TransactionTableHeader } =
@@ -33,7 +33,7 @@ export default function TransactionTable({ profile }: IProp) {
 
   useEffect(() => {
     const fetchHistory = async () => {
-      if (profile)
+      if (profile) {
         await getTransHistory({
           _playerId: profile && profile.id ? profile.id : "",
           _type: typeCheck,
@@ -52,6 +52,7 @@ export default function TransactionTable({ profile }: IProp) {
             setTotalCount(res.info.totalCount)
           }
         })
+      }
       // .catch((err) => console.log(err))
     }
     if (fetchRef.current) {
@@ -150,7 +151,7 @@ export default function TransactionTable({ profile }: IProp) {
               />
               <DropdownLimit
                 defaultValue={12}
-                list={[6, 12, 24, 48, 64]}
+                list={pager}
                 onChangeSelect={setLimit}
               />
             </div>

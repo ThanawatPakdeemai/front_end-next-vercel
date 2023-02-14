@@ -11,6 +11,7 @@ import DropdownLimit from "@feature/transaction/components/atoms/DropdownLimit"
 import TableHeader from "@feature/transaction/components/atoms/TableHeader"
 import TablePopover from "@feature/transaction/components/atoms/TablePopover"
 import TableRowData from "@feature/transaction/components/atoms/TableRowData"
+import useProfileStore from "@stores/profileStore"
 
 export interface ITableHeader {
   title: string
@@ -26,7 +27,7 @@ export interface ITableHeader {
 }
 
 export default function TransactionTable() {
-  const playerId = "61a72d7e970fbe264d627bf5"
+  const profile = useProfileStore((state) => state.profile.data)
   const [limit, setLimit] = useState<number>(12)
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
@@ -43,7 +44,7 @@ export default function TransactionTable() {
   useEffect(() => {
     const fetchHistory = async () => {
       await getTransHistory({
-        _playerId: playerId,
+        _playerId: profile?.id ?? "",
         _type: typeCheck,
         _limit: limit,
         _page: page,

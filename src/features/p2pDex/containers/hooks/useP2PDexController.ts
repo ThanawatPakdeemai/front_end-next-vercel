@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query"
 
 const useP2PDexController = ({ _type, _limit, _page }: IGetP2PDexOrderList) => {
   const {
-    data: P2PDexOrderList,
+    data,
     error,
     isLoading,
     isError,
@@ -15,15 +15,15 @@ const useP2PDexController = ({ _type, _limit, _page }: IGetP2PDexOrderList) => {
     isFetching,
     refetch
   } = useQuery<IMultiOrderListServ>({
-    queryKey: ["getP2PDexOrderList"],
+    queryKey: ["getP2PDexOrderList", _type, _limit, _page],
     queryFn: () => getP2PDexOrderList({ _type, _limit, _page }),
     staleTime: Infinity,
-    keepPreviousData: true
-    // enabled: _type !== "" || _page < 1 || _limit < 1
+    keepPreviousData: true,
+    enabled: _type !== "" || _page < 1 || _limit < 1
   })
 
   return {
-    P2PDexOrderList,
+    data,
     error,
     isLoading,
     isError,

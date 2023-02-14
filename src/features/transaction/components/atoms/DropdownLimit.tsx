@@ -5,6 +5,7 @@ import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import ButtonDropdown from "@feature/gameItem/atoms/ButtonDropdown"
+import { IMenuBase } from "@interfaces/IMenu"
 
 interface IProp {
   defaultValue: number
@@ -21,10 +22,10 @@ const DropdownLimit = ({
   onChangeSelect
 }: IProp) => {
   const [selectLimit, setSelectLimit] = useState<Number>(defaultValue)
-  const onChangeItem = (_item: number) => {
+  const onChangeItem = (_item) => {
     if (_item && onChangeSelect) {
-      setSelectLimit(_item)
-      onChangeSelect(_item)
+      setSelectLimit(Number((_item as IMenuBase).data))
+      onChangeSelect(Number((_item as IMenuBase).data))
     }
   }
   return (
@@ -91,7 +92,7 @@ const DropdownLimit = ({
                     }
                     onChange={(_item) => {
                       popupState.close()
-                      onChangeItem(_item as number)
+                      onChangeItem(_item)
                     }}
                   />
                 </Popover>

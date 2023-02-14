@@ -38,27 +38,27 @@ const TableHeader = ({
       sx={{
         display: "block"
       }}
-      className="px-3.5"
+      className=" px-3.5"
     >
-      <TableRowStyle>
+      <TableRowStyle className="">
         {thead.map((h) => (
           <TableCellStyle
             key={uuidv4()}
-            className={CellStyled}
+            className={`${CellStyled} bg-neutral-780`}
             onClick={h.onClick}
           >
             {h.title ? (
               <div className={h.className ? h.className : "flex items-center"}>
                 {h.title} {/* title => string <div className="flex"></div> */}
                 {h.arrowIcon ? (
-                  <div className="ml-1 flex flex-col gap-1">
+                  <div className="ml-1 flex flex-col">
                     <KeyboardArrowUp
-                      className={`!text-sm" h-4 w-4 ${
+                      className={`h-4 w-4 !text-sm ${
                         h.keyUp ? "text-neutral-400" : null
                       }`}
                     />
                     <KeyboardArrowDown
-                      className={`h-4 w-4 !text-sm  ${
+                      className={`h-4  w-4 !text-sm ${
                         h.keyDown ? "text-neutral-400" : null
                       }`}
                     />

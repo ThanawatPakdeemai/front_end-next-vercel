@@ -27,9 +27,9 @@ echo "🤓 Formating code ... "
 yarn format:prettier
 
 # Check Prettier standards
-# yarn check:prettier ||
-# (
-#   echo '🤢🤮🤢🤮 Its FOKING RAW - Your styling looks disgusting. 🤢🤮🤢🤮
-#     Prettier Check Failed. Run [yarn format], add changes and try commit again.';
-#   false;
-# )
+yarn check:prettier ||
+(
+  echo '🤢🤮🤢🤮 Its FOKING RAW - Your styling looks disgusting. 🤢🤮🤢🤮
+    Prettier Check Failed. Run [yarn format], add changes and try commit again.';
+  false;
+)

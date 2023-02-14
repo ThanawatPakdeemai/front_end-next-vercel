@@ -4,6 +4,7 @@ import PageHeader from "@feature/table/components/molecules/PageHeader"
 import React from "react"
 import { useRouter } from "next/router"
 import P2PDexListContent from "@feature/p2pDex/components/templates/P2PDexListContent"
+import HeaderP2P from "@feature/table/components/atoms/HeaderP2P"
 
 const P2PDexListPage = () => {
   const router = useRouter()
@@ -29,6 +30,7 @@ const P2PDexListPage = () => {
           />
         }
       />
+      <HeaderP2P />
       <P2PDexListContent />
     </div>
   )

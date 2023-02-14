@@ -10,18 +10,26 @@ const useP2PDexController = ({ _type, _limit, _page }: IGetP2PDexOrderList) => {
     data: P2PDexOrderList,
     error,
     isLoading,
-    isError
+    isError,
+    isPreviousData,
+    isFetching,
+    refetch
   } = useQuery<IMultiOrderListServ>({
     queryKey: ["getP2PDexOrderList"],
     queryFn: () => getP2PDexOrderList({ _type, _limit, _page }),
-    staleTime: Infinity
+    staleTime: Infinity,
+    keepPreviousData: true
+    // enabled: _type !== "" || _page < 1 || _limit < 1
   })
 
   return {
     P2PDexOrderList,
     error,
     isLoading,
-    isError
+    isError,
+    isPreviousData,
+    isFetching,
+    refetch
   }
 }
 

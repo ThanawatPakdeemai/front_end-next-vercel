@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { TableBody, Table, TableContainer, Box } from "@mui/material"
 import TableHeader from "@feature/table/components/molecules/TableHeader"
 import TableRowData from "@feature/table/components/molecules/TableRowData"
@@ -7,6 +7,10 @@ import ButtonLink from "@components/atoms/button/ButtonLink"
 import Helper from "@utils/helper"
 import CopyTextIcon from "@components/icons/CopyTextIcon"
 import VerifiedIcon from "@components/icons/VerifiedIcon"
+import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
+import DropdownLimit from "@feature/transaction/components/atoms/DropdownLimit"
+import { getP2PDexOrderList } from "@feature/multichain/containers/services/multichain.service"
+import { useQueryClient } from "@tanstack/react-query"
 
 const OrderList = () => {
   const title = [
@@ -17,15 +21,35 @@ const OrderList = () => {
     { title: "buy", arrowIcon: false }
   ]
   const [type] = useState<"sell" | "buy">("buy")
-  const [limit] = useState<number>(10)
-  const [page] = useState<number>(1)
-  const { P2PDexOrderList } = useP2PDexController({
+  const [limit, setLimit] = useState<number>(12)
+  const [page, setPage] = useState<number>(1)
+  const [totalCount, setTotalCount] = useState<number>(12)
+  const queryClient = useQueryClient()
+  const fetchRef = useRef(false)
+  const { P2PDexOrderList, isPreviousData, isLoading } = useP2PDexController({
     _type: type,
     _limit: limit,
     _page: page
   })
   // eslint-disable-next-line no-console
-  console.log(P2PDexOrderList)
+
+  useEffect(() => {
+    if (!fetchRef.current && P2PDexOrderList) {
+      fetchRef.current = true
+      setTotalCount(Number(P2PDexOrderList?.info.totalCount) ?? 12)
+    }
+  }, [P2PDexOrderList])
+
+  useEffect(() => {
+    // if (!isPreviousData) {
+
+    queryClient.fetchQuery({
+      queryKey: ["fetchP2P", type, page, limit],
+      queryFn: () =>
+        getP2PDexOrderList({ _type: type, _limit: limit, _page: page })
+    })
+    // }
+  }, [P2PDexOrderList, isPreviousData, limit, page, queryClient, type])
 
   return (
     <>
@@ -43,7 +67,8 @@ const OrderList = () => {
               "tr:last-of-type td": { borderBottom: 0 }
             }}
           >
-            {P2PDexOrderList &&
+            {!isLoading ? (
+              P2PDexOrderList &&
               P2PDexOrderList.data &&
               P2PDexOrderList.data.map((order, index) => (
                 <TableRowData
@@ -100,10 +125,26 @@ const OrderList = () => {
                   ]}
                   gridTemplateColumns="190px 200px 190px 190px 1fr"
                 />
-              ))}
+              ))
+            ) : (
+              <>loading</>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
+      <div className="my-5 flex w-full justify-between">
+        <PaginationNaka
+          totalCount={totalCount}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+        <DropdownLimit
+          defaultValue={limit}
+          list={[6, 12, 24, 48, 64]}
+          onChangeSelect={setLimit}
+        />
+      </div>
     </>
   )
 }

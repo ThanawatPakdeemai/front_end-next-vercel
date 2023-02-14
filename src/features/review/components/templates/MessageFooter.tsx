@@ -1,6 +1,7 @@
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import SendIcon from "@components/icons/SendIcon"
 import { iconmotion } from "@components/organisms/Footer"
+import useReviewContext from "@feature/review/containers/contexts/useReviewContext"
 import useReview from "@feature/review/containers/hook/useReview"
 import { Box, TextField } from "@mui/material"
 
@@ -9,7 +10,8 @@ interface IMessageFooter {
 }
 
 const MessageFooter = ({ onSubmit }: IMessageFooter) => {
-  const { message, setMessage, handleInputMessage } = useReview()
+  const { handleInputMessage } = useReview()
+  const { message, setMessage } = useReviewContext()
 
   return (
     <Box className="message-input relative flex items-center">

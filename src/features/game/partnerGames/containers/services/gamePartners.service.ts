@@ -117,3 +117,19 @@ export const getAllVersion = async (
       })
       .catch((error) => reject(error))
   })
+
+// export const  = async (
+//   user_id: string,
+//   review_comment: string,
+//   review_rate: number,
+//   game_content_id: string
+// ) => {
+//   return axios
+//     .post<IResComment>(`${baseUrl.api}/`, )
+//     .then((res) => {
+//       return res
+//     })
+//     .catch((error) => {
+//       return error
+//     })
+// }

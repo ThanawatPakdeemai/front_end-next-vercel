@@ -3,7 +3,7 @@ import {
   IGameItem,
   IGameItemListData
 } from "@feature/gameItem/interfaces/IGameItemService"
-import React, { ReactNode } from "react"
+import React from "react"
 import { ICURRENCY } from "@interfaces/ICurrency"
 import {
   IDevice,
@@ -30,7 +30,7 @@ export interface IMenuBaseItem {
 }
 export interface IMenuBase extends ILink, IMenuBaseItem, IActiveMunu {
   label: string | React.ReactElement
-  icon: string | React.ReactElement | ReactNode
+  icon: string | React.ReactElement
 }
 
 export interface IDropdown {

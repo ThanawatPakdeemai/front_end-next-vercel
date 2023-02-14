@@ -1,13 +1,14 @@
 import * as React from "react"
 import MenuList from "@mui/material/MenuList"
 import PlugIcon from "@components/icons/MenunIcon/PlugIcon"
-import MenuItemCustom from "@components/atoms/MenuItemCustom"
+
 import { MENU_LOGGEDIN } from "@configs/menu"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
 import { IProfile } from "@src/types/profile"
 import useQuestStore from "@stores/quest"
 import MissionComponent from "@feature/quest/components/organisms/MissionComponent"
+import MenuItemCustom from "@components/atoms/MenuItemCustom"
 import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 
 const MenuProfile = () => {

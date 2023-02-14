@@ -12,6 +12,7 @@ import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
 import useTable from "@feature/table/containers/hooks/useTable"
 import TableNodata from "@feature/transaction/components/atoms/TableNodata"
+import { IHistory } from "@feature/history/interfaces/IHistoryService"
 
 const HistoryTable = () => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -20,16 +21,13 @@ const HistoryTable = () => {
   const { pager, hydrated } = useGlobal()
   const { HistoryTableHead, onHandleView } = useHistoryController()
   const { limit, setLimit } = useTable()
+  const { getHistoryData } = useHistory()
 
   // States
   const [skip, setSkip] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
   const fetchRef = useRef(false)
-  const { historyData } = useHistory({
-    player_id: profile && profile.id ? profile.id : "",
-    limit,
-    skip
-  })
+  const [hxHistory, setHxHistory] = useState<IHistory[]>([])
 
   const roomStatus = (status: string) => {
     if (status === "send_noti") {
@@ -42,11 +40,30 @@ const HistoryTable = () => {
   }
 
   useEffect(() => {
-    if (!fetchRef.current && historyData) {
-      fetchRef.current = true
-      setTotalCount(historyData.info.totalCount)
+    const fetchHistory = async () => {
+      if (profile) {
+        await getHistoryData({
+          player_id: profile && profile.id ? profile.id : "",
+          limit,
+          skip
+        }).then((res) => {
+          // res.status === 200 -> ok
+          if (res.data) {
+            setHxHistory(res.data)
+          }
+          if (res.info) {
+            setTotalCount(res.info.totalCount)
+          }
+        })
+      }
+      // .catch((err) => console.log(err))
     }
-  }, [historyData])
+    if (fetchRef.current) {
+      fetchHistory()
+    }
+    fetchRef.current = true
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [limit, skip])
 
   return (
     <>
@@ -75,8 +92,8 @@ const HistoryTable = () => {
                 }}
                 className="uppercase"
               >
-                {historyData && historyData.data.length > 0 ? (
-                  historyData.data.map((row) => (
+                {hxHistory && hxHistory.length > 0 ? (
+                  hxHistory.map((row) => (
                     <TableRowData
                       key={row._id}
                       gridTemplateColumns="180px 130px 130px 90px 1fr"

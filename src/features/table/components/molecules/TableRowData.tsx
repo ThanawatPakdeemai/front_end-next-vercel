@@ -23,7 +23,9 @@ const RefactorTableBody = ({
     },
     "&.MuiTableRow-root": {
       display: "grid",
-      gridTemplateColumns
+      gridTemplateColumns,
+      background: "black",
+      marginBottom: "5px"
     }
   })
 
@@ -40,7 +42,7 @@ const RefactorTableBody = ({
     <TableRowStyle>
       {child.map((c) => (
         <TableCellStyle
-          className="border-b-neutral-800"
+          className="flex items-center border-b-neutral-800"
           key={uuidv4()}
         >
           {c}

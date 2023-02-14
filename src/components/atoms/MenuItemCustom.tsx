@@ -7,6 +7,7 @@ import { useRouter } from "next/router"
 interface IProp extends IMenu {
   active?: boolean
   endIcon?: boolean
+  icon: string | React.ReactElement
   onClick?: () => void
 }
 
@@ -14,7 +15,7 @@ interface IProp extends IMenu {
  * @description In case use more type please add type in array prop
  */
 
-const MenuItemCustom = ({ active, endIcon, ...props }: IProp) => {
+const MenuItemCustom = ({ active, endIcon, icon, ...props }: IProp) => {
   const router = useRouter()
   return (
     <MenuItem
@@ -28,7 +29,7 @@ const MenuItemCustom = ({ active, endIcon, ...props }: IProp) => {
         backgroundColor: active ? "#010101" : null
       }}
     >
-      <ListItemIcon>{props.icon}</ListItemIcon>
+      <ListItemIcon>{icon}</ListItemIcon>
       <ListItemText>{props.label}</ListItemText>
       {endIcon && <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />}
     </MenuItem>

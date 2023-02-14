@@ -1,4 +1,4 @@
-import Image from "next/image"
+import { Image } from "@components/atoms/image"
 import RightMenuWallet from "@components/molecules/rightMenu/RightMenuWallet"
 import Gas from "@components/molecules/Gas"
 import INaka from "@components/icons/Naka"

@@ -30,6 +30,7 @@ import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { v4 as uuid } from "uuid"
 import useTweenEffect from "@hooks/useSpartFireEffect"
+import gsap from "gsap"
 
 const Home = () => {
   const limit = 10
@@ -75,7 +76,10 @@ const Home = () => {
    */
   const { createParticle } = useTweenEffect(600, 300, 50, -500)
   useEffect(() => {
-    createParticle()
+    const ctx = gsap.context(() => {
+      createParticle()
+    })
+    return () => ctx.revert()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

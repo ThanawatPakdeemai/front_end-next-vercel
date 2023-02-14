@@ -1,10 +1,8 @@
-import INaka from "@components/icons/Naka"
-
 export const CURRENCY = [
   {
     id: "1",
     name: "Naka",
-    image_icon: <INaka color="#fff" />
+    image_icon: "/images/logo/Logo-Master1.png"
   }
   // {
   //   id: "2",

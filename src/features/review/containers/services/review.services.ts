@@ -1,24 +1,31 @@
 import services from "@configs/axiosGlobalConfig"
+import { IGamePartnerReviewsReponse } from "@feature/game/partnerGames/interfaces/IGamePartners"
 
 /**
- * TODO: This function is not available yet
- * @description Add comment for game partner (Owner only)
+ * @description Add comment for game partner
  * @param _message
  * @param _partnerId
  * @param _userId
  * @returns
  */
-export const addReview = async (
-  _message: string,
-  _partnerId: string,
-  _userId: string
-) =>
-  new Promise((resolve, reject) => {
+export const addReview = async ({
+  user_id,
+  review_comment,
+  review_rate,
+  game_content_id
+}: {
+  user_id: string
+  review_comment: string
+  review_rate: number
+  game_content_id: string
+}) =>
+  new Promise<IGamePartnerReviewsReponse>((resolve, reject) => {
     services
-      .post(`/partner-game-content/add-review`, {
-        message: _message,
-        partner_id: _partnerId,
-        user_id: _userId
+      .post<IGamePartnerReviewsReponse>(`/partner-game-content/review/create`, {
+        user_id,
+        review_comment,
+        review_rate,
+        game_content_id
       })
       .then((reponse) => {
         resolve(reponse.data)

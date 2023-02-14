@@ -82,7 +82,7 @@ const TablePopover = ({ icon, checkboxList, check, setCheck }: IProps) => {
             text={c}
             value={!!dummyCheck.find((v) => v.value === c && v.checked)}
             onHandle={(e) => onHandleChanged(c, e?.target.checked)}
-            className="flex cursor-pointer items-center"
+            className="flex cursor-pointer items-center bg-neutral-800 px-2.5 py-1"
           />
         ))}
       </Popover>

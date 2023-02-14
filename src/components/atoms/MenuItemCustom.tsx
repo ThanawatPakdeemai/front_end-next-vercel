@@ -28,7 +28,7 @@ const MenuItemCustom = ({ active, endIcon, ...props }: IProp) => {
         backgroundColor: active ? "#010101" : null
       }}
     >
-      <ListItemIcon>{props.icon}</ListItemIcon>
+      {props.icon && <ListItemIcon>{props.icon}</ListItemIcon>}
       <ListItemText>{props.label}</ListItemText>
       {endIcon && <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />}
     </MenuItem>

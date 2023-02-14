@@ -33,24 +33,25 @@ export default function TransactionTable({ profile }: IProp) {
 
   useEffect(() => {
     const fetchHistory = async () => {
-      await getTransHistory({
-        _playerId: profile && profile.id ? profile.id : "",
-        _type: typeCheck,
-        _limit: limit,
-        _page: page,
-        _sort:
-          sortTime || sortAmount
-            ? { "current_time": sortTime, "amount": sortAmount }
-            : undefined // sort: {}
-      }).then((res) => {
-        // res.status === 200 -> ok
-        if (res.data) {
-          setTxHistory(res.data)
-        }
-        if (res.info) {
-          setTotalCount(res.info.totalCount)
-        }
-      })
+      if (profile)
+        await getTransHistory({
+          _playerId: profile && profile.id ? profile.id : "",
+          _type: typeCheck,
+          _limit: limit,
+          _page: page,
+          _sort:
+            sortTime || sortAmount
+              ? { "current_time": sortTime, "amount": sortAmount }
+              : undefined // sort: {}
+        }).then((res) => {
+          // res.status === 200 -> ok
+          if (res.data) {
+            setTxHistory(res.data)
+          }
+          if (res.info) {
+            setTotalCount(res.info.totalCount)
+          }
+        })
       // .catch((err) => console.log(err))
     }
     if (fetchRef.current) {

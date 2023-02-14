@@ -5,7 +5,7 @@ import ProfileLayout from "@components/template/ProfileLayout"
 
 export default function Wallet() {
   return (
-    <article className="h-full w-full">
+    <article className="h-full w-full md:pl-[10%]">
       <WalletPage />
     </article>
   )

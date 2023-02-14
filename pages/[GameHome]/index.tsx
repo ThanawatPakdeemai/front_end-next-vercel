@@ -6,9 +6,9 @@ import SkeletonBanner from "@components/atoms/skeleton/SkeletonBanner"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import useGamesById from "@feature/game/containers/hooks/useGamesById"
 import StoryLobby from "@feature/game/components/templates/lobby/StoryLobby"
-import GamePageDefault from "@components/template/GamePageDefault"
+import GamePageDefault from "@components/templates/GamePageDefault"
 import OverViewGameStoryMode from "@components/organisms/OverviewGameStoryMode"
-import RightSidebarContentEffect from "@components/template/RightSidebarContentEffect"
+import RightSidebarContentEffect from "@components/templates/contents/RightSidebarContentEffect"
 
 export default function GameLobby() {
   const [gameData, setGameData] = useState<IGame>()

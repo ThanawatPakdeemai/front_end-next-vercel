@@ -1,4 +1,5 @@
-import ServicesPageLayout from "@components/template/ServicesPageLayout"
+import HeadStaking from "@components/molecules/HeadStaking"
+import ServicesPageLayout from "@components/templates/ServicesPageLayout"
 import FlexibleAPRContent from "@feature/staking/components/organisms/FlexibleAPRContent"
 import StakingList from "@feature/staking/components/templates/StakingList"
 import useGlobalStaking from "@feature/staking/containers/hook/useStakingController"
@@ -25,7 +26,9 @@ export default function StakingPage() {
 StakingPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <TabProvider>
-      <ServicesPageLayout>{page}</ServicesPageLayout>
+      <ServicesPageLayout>
+        <HeadStaking>{page}</HeadStaking>
+      </ServicesPageLayout>
     </TabProvider>
   )
 }

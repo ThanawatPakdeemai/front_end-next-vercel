@@ -18,7 +18,7 @@ import MediumIcon from "@components/icons/SocialIcon/MediumIcon"
 import TelegramIcon from "@components/icons/SocialIcon/TelegramIcon"
 import TiktokIcon from "@components/icons/SocialIcon/TiktokIcon"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
-import AsideLayout from "@components/template/AsideLayout"
+import AsideLayout from "@components/templates/contents/AsideLayout"
 import { useTranslation } from "react-i18next"
 import useGlobal from "@hooks/useGlobal"
 
@@ -79,8 +79,11 @@ const OverviewGamePartners = () => {
     gameData.genres.length > 0 &&
     gameData.genres.map((category) =>
       gameTags.push({
+        id: category._id,
         name: category.name,
-        link: `category/${category.slug}`
+        link: `categories/${
+          category.slug ? category.slug : category.name.toLocaleLowerCase()
+        }?id=${category._id}`
       })
     )
 

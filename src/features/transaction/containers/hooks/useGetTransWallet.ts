@@ -1,37 +1,25 @@
-import { IGetTransWallet } from "@feature/transaction/interfaces/ITransaction"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 import { getTransWallet } from "../services/transaction.service"
 
-const useGetTransWallet = ({
-  _playerId,
-  _type,
-  _limit,
-  _page,
-  _sort
-}: IGetTransWallet) => {
+const useGetTransWallet = () => {
   const {
-    data,
+    mutateAsync: getTransHistory,
+    data: transHistoryData,
     error,
     isLoading,
-    isPreviousData,
     isError,
-    isFetching,
-    refetch
-  } = useQuery({
-    queryKey: ["getTransWallet", { _playerId, _type, _limit, _page, _sort }],
-    queryFn: () => getTransWallet({ _playerId, _type, _limit, _page, _sort }),
-    keepPreviousData: true,
-    staleTime: Infinity,
-    enabled: _playerId !== "" || _playerId !== undefined
+    isSuccess
+  } = useMutation(getTransWallet, {
+    mutationKey: ["getTransWallet"],
+    retry: false
   })
   return {
-    data,
-    isLoading,
-    isFetching,
-    isPreviousData,
-    isError,
+    getTransHistory,
+    transHistoryData,
     error,
-    refetch
+    isLoading,
+    isError,
+    isSuccess
   }
 }
 

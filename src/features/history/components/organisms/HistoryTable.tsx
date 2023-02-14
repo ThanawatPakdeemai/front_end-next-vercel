@@ -51,7 +51,7 @@ const HistoryTable = () => {
         subtitle="Wallet manager for nakamoto.games world"
       />
       <TableContainer
-        className="w-[678px] overflow-hidden rounded-2xl bg-transparent p-2 pt-0"
+        className="w-[678px] overflow-hidden rounded-2xl bg-transparent px-1.5 pt-4 pb-1.5"
         component={Paper}
       >
         {historyIsLoading ? (
@@ -60,7 +60,7 @@ const HistoryTable = () => {
           <Table className="whitespace-nowrap rounded-2xl border-black-500 bg-neutral-780 p-5 py-1.5 text-neutral-600">
             <TableHeader
               thead={HistoryTableHead}
-              gridTemplateColumns="180px 100px 130px 100px 1fr"
+              gridTemplateColumns="180px 130px 130px 100px 1fr"
             />
             <TableBody
               sx={{
@@ -76,7 +76,7 @@ const HistoryTable = () => {
                 historyData.data.map((row) => (
                   <TableRowData
                     key={row._id}
-                    gridTemplateColumns="180px 100px 130px 100px 1fr"
+                    gridTemplateColumns="180px 130px 130px 100px 1fr"
                     child={[
                       <div
                         key={row._id}
@@ -95,7 +95,7 @@ const HistoryTable = () => {
                       </div>,
                       <div
                         key={row._id}
-                        className="history--gameName"
+                        className="history--gameName truncate"
                       >
                         {row.game_name}
                       </div>,
@@ -127,53 +127,23 @@ const HistoryTable = () => {
                       </div>,
                       <div
                         key={row._id}
-                        className="history--viewMore flex justify-end"
+                        className="history--viewMore flex w-full justify-end"
                       >
-                        <button
-                          type="button"
-                          className="h-6 flex-none justify-self-end rounded-sm font-neue-machina text-[10px] uppercase text-grey-neutral04"
+                        <Chip
+                          label="View Summary"
+                          size="small"
+                          color="default"
+                          variant="outlined"
+                          className="font-bold"
                           onClick={() => {
-                            onHandleView
+                            onHandleView(row.path, row.room_id)
                           }}
-                        >
-                          view
-                          <Chip
-                            label="View Summary"
-                            size="small"
-                            color="default"
-                            variant="outlined"
-                            className="font-bold"
-                          />
-                        </button>
+                        />
                       </div>
                     ]}
                   />
                 ))}
             </TableBody>
-            {/* <TableBody
-              sx={{
-                display: "block",
-                borderRadius: "5px",
-                overflow: "hidden",
-                "tr:last-of-type td": { borderBottom: 0 }
-              }}
-            >
-              {historyData &&
-                historyData.data.length > 0 &&
-                historyData.data.map((row) => (
-                  <TableRowStyle
-                    className="bg-neutral-900 px-2"
-                    key={row._id}
-                  >
-                    <TableCell
-                      className="border-b-neutral-800 text-success-main"
-                      align="right"
-                    >
-                      
-                    </TableCell>
-                  </TableRowStyle>
-                ))}
-            </TableBody> */}
           </Table>
         )}
       </TableContainer>

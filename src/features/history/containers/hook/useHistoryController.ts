@@ -1,4 +1,3 @@
-import { IHistory } from "@feature/history/interfaces/IHistoryService"
 import { ITableHeader } from "@feature/table/interface/ITable"
 import { useRouter } from "next/router"
 
@@ -10,15 +9,15 @@ const useHistoryController = () => {
     () => [
       {
         title: "time",
-        arrowIcon: true
+        arrowIcon: false
       },
       {
         title: "GAME",
-        filterIcon: true
+        filterIcon: false
       },
       {
         title: "TYPE",
-        arrowIcon: true
+        arrowIcon: false
       },
       { title: "STATUS" },
       { title: "VIEW", className: "justify-end flex w-full" }
@@ -27,8 +26,8 @@ const useHistoryController = () => {
     []
   )
 
-  const onHandleView = (e: IHistory) => {
-    router.push(`/${e.path}/summary/${e.room_id}`)
+  const onHandleView = (path: string, room_id: string) => {
+    router.push(`/${path}/summary/${room_id}`)
   }
 
   return {

@@ -10,7 +10,7 @@ interface IProp
   _breadcrumb?: ICrumb[]
 }
 
-const GamePageWithBreadcrumb = ({ _breadcrumb, children }: IProp) => (
+const GamePageWithBreadcrumb = ({ children }: IProp) => (
   <div className="main-container mx-auto">
     <Header />
     <div className="mb-10 flex">
@@ -18,7 +18,6 @@ const GamePageWithBreadcrumb = ({ _breadcrumb, children }: IProp) => (
     </div>
     <div className="flex flex-row gap-3">
       <SidebarGames />
-      {/* <HeadGames>{children}</HeadGames> */}
       {children}
     </div>
     <Footer />

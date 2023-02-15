@@ -1,4 +1,4 @@
-import GamePageWithBreadcrumb from "@components/template/GamePageWithBreadcrumb"
+import GamePageWithBreadcrumb from "@components/templates/GamePageWithBreadcrumb"
 import CatogoriesListPage from "@feature/page/CatogoriesListPage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import React, { ReactElement } from "react"

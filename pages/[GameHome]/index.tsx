@@ -7,10 +7,10 @@ import { IGame } from "@feature/game/interfaces/IGameService"
 import useGamesById from "@feature/game/containers/hooks/useGamesById"
 import StoryLobby from "@feature/game/components/templates/lobby/StoryLobby"
 import OverViewGameStoryMode from "@components/organisms/OverviewGameStoryMode"
-import RightSidebarContentEffect from "@components/template/RightSidebarContentEffect"
-import { useRouter } from "next/router"
 import useGetAllGames from "@feature/game/containers/hooks/useGetAllGame"
-import GamePageDefault from "@components/template/GamePageDefault"
+import GamePageDefault from "@components/templates/GamePageDefault"
+import RightSidebarContentEffect from "@components/templates/contents/RightSidebarContentEffect"
+import { useRouter } from "next/router"
 
 export default function GameLobby() {
   const [gameData, setGameData] = useState<IGame>()

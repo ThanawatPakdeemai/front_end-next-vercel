@@ -1,6 +1,6 @@
 import { Badge, Box, Button, Typography } from "@mui/material"
 import { memo } from "react"
-import { Image } from "@components/atoms/image/index"
+import { Image } from "@components/atoms/image"
 import SelectNaka from "@components/atoms/select/SelectNaka"
 import DragHandleIcon from "@mui/icons-material/DragHandle"
 import { useTranslation } from "next-i18next"
@@ -8,7 +8,7 @@ import Link from "next/link"
 import { IMAGES } from "@constants/images"
 import { useRouter } from "next/router"
 import { MENU } from "@configs/menu"
-import { ImageCustom } from "@components/atoms/image/Image"
+import tailwindResolver from "tailwindResolver"
 
 export const styleIcon = {
   fontSize: "20px !important"
@@ -23,10 +23,10 @@ const HeadMenu = () => {
   return (
     <Box
       component="div"
-      className="xs:table xs:my-5 m-auto my-5 w-max items-center justify-center gap-1 rounded-default bg-neutral-700 p-1 md:flex lg:my-0"
+      className="xs:table xs:my-5 m-auto my-5 !h-[50px] w-max items-center justify-center gap-1 rounded-[8px] bg-neutral-700 p-1 md:flex lg:my-0"
     >
       {MENU.map((item) => {
-        if (!item.isChide) {
+        if (!item.isChide && item.chide === undefined) {
           return (
             <Link
               href={item.link}
@@ -35,7 +35,7 @@ const HeadMenu = () => {
             >
               <Button
                 sx={styleButton}
-                className={`button-select-naka xs:mb-1 !hover:bg-error-main !hover:text-white-primary mb-1 !text-black-default ${
+                className={`button-select-naka xs:mb-1 !hover:bg-error-main !hover:text-white-primary mb-1 !rounded-[8px] !py-[12px] !px-[23px] !text-black-default ${
                   router.pathname === item.link
                     ? "!bg-primary-main"
                     : "!bg-neutral-800"
@@ -73,13 +73,23 @@ const HeadMenu = () => {
                   link: ele.link,
                   icon:
                     typeof ele.icon === "string" ? (
-                      <ImageCustom
+                      <Image
                         src={ele.icon}
                         alt={ele.name}
                         width="20"
                       />
                     ) : (
-                      <ele.icon className="!hover:text-neutral-300" />
+                      <ele.icon
+                        className="!hover:text-neutral-300 !text-primary-contrastText"
+                        stroke={
+                          tailwindResolver
+                            ? tailwindResolver?.theme?.colors?.primary[
+                                "contrastText"
+                              ]
+                            : "#E1E2E2"
+                        }
+                        strokeWidth="0.1"
+                      />
                     )
                 })) ?? [{ label: "", value: "", link: "/" }]
               }
@@ -89,7 +99,7 @@ const HeadMenu = () => {
               button={
                 <Button
                   sx={styleButton}
-                  className={`button-select-naka xs:mb-1 !hover:bg-error-main  !hover:text-white-primary mb-1 px-2 !text-black-default md:mb-0 ${
+                  className={`button-select-naka xs:mb-1 !hover:bg-error-main  !hover:text-white-primary !px-[23px]md:mb-0 mb-1 !rounded-[8px]  px-2 !py-[12px] !text-black-default ${
                     item.isChide &&
                     item.chide &&
                     (router.pathname ===

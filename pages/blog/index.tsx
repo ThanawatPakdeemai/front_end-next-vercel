@@ -1,6 +1,6 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import BlogLayout from "@components/template/BlogLayout"
+import BlogLayout from "@components/templates/BlogLayout"
 import BlogListPage from "@feature/page/BlogListPage"
 
 export default function BlogPage() {

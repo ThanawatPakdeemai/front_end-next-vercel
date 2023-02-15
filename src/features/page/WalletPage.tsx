@@ -1,4 +1,4 @@
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 import RightMenuWallet from "@components/molecules/rightMenu/RightMenuWallet"
 import Gas from "@components/molecules/Gas"
 import INaka from "@components/icons/Naka"
@@ -17,7 +17,6 @@ import useProfileStore from "@stores/profileStore"
 // import { ethers } from "ethers"
 // import getWeb3NoAccount from "@src/utils/web3"
 import { IMAGES } from "@constants/images"
-import TransactionTable from "@feature/transaction/components/molecules/TransactionTable"
 import { useWeb3Provider } from "@providers/index"
 import Helper from "@utils/helper"
 import useGetNakaBalance from "@feature/contract/containers/hooks/useQuery/useGetNakaBalance"
@@ -25,6 +24,7 @@ import useGetBalanceVault from "@feature/inventory/containers/hooks/useGetBalanc
 import { useToast } from "@feature/toast/containers"
 import useContractVault from "@feature/contract/containers/hooks/useContractVault"
 import CONFIGS from "@configs/index"
+import TransactionTable from "@feature/transaction/components/molecules/TransactionTable"
 
 const KeyFramesRotate = styled("div")({
   "@keyframes rotation": {
@@ -331,7 +331,7 @@ export default function WalletPage() {
                         height="25"
                       />
                     ) : (
-                      <ImageCustom
+                      <Image
                         src={IMAGES.MetaMaskds.src}
                         alt=""
                         width={35}
@@ -343,7 +343,7 @@ export default function WalletPage() {
               </div>
             </div>
             <div className="col-span-2 m-2 flex">
-              <ImageCustom
+              <Image
                 src={IMAGES.Frame.src}
                 alt=""
                 width={120}
@@ -357,14 +357,14 @@ export default function WalletPage() {
               </div>
             </div>
             <div className="absolute top-[75px] left-[-16px]">
-              <ImageCustom
+              <Image
                 src={IMAGES.RectangleRed.src}
                 alt=""
                 width={10}
                 height={10}
                 className="mb-2"
               />
-              <ImageCustom
+              <Image
                 src={IMAGES.RectangleBlack.src}
                 alt=""
                 width={10}
@@ -387,7 +387,7 @@ export default function WalletPage() {
           />
         </div>
       </div>
-      <TransactionTable />
+      <TransactionTable profile={profile.data} />
     </>
   )
 }

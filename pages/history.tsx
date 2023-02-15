@@ -1,17 +1,15 @@
-import React, { ReactElement } from "react"
+import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import WalletPage from "@feature/page/WalletPage"
 import ProfileLayout from "@components/template/ProfileLayout"
+import HistoryTable from "@feature/history/components/organisms/HistoryTable"
 
-export default function Wallet() {
-  return (
-    <article className="h-full w-full md:pl-[10%]">
-      <WalletPage />
-    </article>
-  )
-}
+const HistoryPage = () => (
+  <article className="h-full w-full">
+    <HistoryTable />
+  </article>
+)
 
-Wallet.getLayout = function getLayout(page: ReactElement) {
+HistoryPage.getLayout = function getLayout(page: ReactElement) {
   return <ProfileLayout>{page}</ProfileLayout>
 }
 
@@ -22,3 +20,4 @@ export async function getServerSideProps({ locale }: { locale: string }) {
     }
   }
 }
+export default HistoryPage

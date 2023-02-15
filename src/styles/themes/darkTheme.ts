@@ -11,6 +11,7 @@ import { MuiFab as _muiFab } from "./partial/components/muiFab"
 import { MuiList as _muiList } from "./partial/components/muiList"
 import { MuiMenuItem as _muiMenuItem } from "./partial/components/muiMenuItem"
 import { MuiTable as _muiTable } from "./partial/components/muiTable"
+import { MuiTableCell as _muiTableCell } from "./partial/components/muiTableCell"
 import { PaletteCustom } from "./partial/pattern"
 import { TypographyCustom } from "./partial/typography"
 import { MuiTypography as _muiTypography } from "./partial/components/muiTypography"
@@ -42,6 +43,7 @@ export const theme: ThemeOptions = {
     MuiList: _muiList,
     MuiMenuItem: _muiMenuItem,
     MuiTable: _muiTable,
+    MuiTableCell: _muiTableCell,
     MuiBackdrop: _muiBackdrop,
     MuiButtonGroup: _muiButtonGroup,
     MuiCheckbox: _muiCheckbox,

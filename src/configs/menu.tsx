@@ -36,6 +36,7 @@ import IconSwap from "@components/icons/SwapIcon"
 import GlobalIcon from "@components/icons/GlobalIcon"
 import BoltIcon from "@mui/icons-material/Bolt"
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined"
+import WalletIcon from "@components/icons/MenunIcon/WalletIcon"
 
 export const MENU = [
   {
@@ -226,6 +227,13 @@ export const MENU_LOGGEDIN: IMenu[] = [
     label: "Edit Profile",
     href: "/profile",
     icon: <EditProfileIcon />,
+    external: false
+  },
+  {
+    id: "wallet",
+    label: "Wallet",
+    href: "/wallet",
+    icon: <WalletIcon />,
     external: false
   },
   {

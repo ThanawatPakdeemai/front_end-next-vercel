@@ -93,20 +93,16 @@ const useGlobal = (
     _gameUrl: string,
     _gameData?: IGame | IPartnerGameData
   ) => {
-    if (stateProfile) {
-      switch (_type) {
-        case "partner-game":
-          onSetGamePartnersData(_gameData as IPartnerGameData)
-          break
+    switch (_type) {
+      case "partner-game":
+        onSetGamePartnersData(_gameData as IPartnerGameData)
+        break
 
-        default:
-          onSetGameData(_gameData as IGame)
-          break
-      }
-      await router.push(`/${_gameUrl}`)
-    } else {
-      errorToast(MESSAGES.please_login)
+      default:
+        onSetGameData(_gameData as IGame)
+        break
     }
+    await router.push(`/${_gameUrl}`)
   }
 
   return {

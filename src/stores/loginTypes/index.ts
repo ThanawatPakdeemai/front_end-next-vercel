@@ -8,6 +8,8 @@ interface ILoginTypesStore {
   }
   getLoginTypes: () => string | null
   setLoginTypes: (_type: string) => void
+  getClickLoginFacebook: boolean
+  setClickLoginFacebook: (_toggle: boolean) => void
 }
 
 const useLoginTypeStore = create<ILoginTypesStore>()(
@@ -21,6 +23,10 @@ const useLoginTypeStore = create<ILoginTypesStore>()(
           false,
           "LoginTypes/setLoginTypes"
         )
+      },
+      getClickLoginFacebook: false,
+      setClickLoginFacebook: (_toggle: boolean) => {
+        set(() => ({ getClickLoginFacebook: _toggle }))
       }
     }),
     configZustandDevTools("LoginTypes-Store")

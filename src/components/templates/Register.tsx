@@ -71,7 +71,8 @@ const RegisterLayout = () => {
     }
   })
 
-  const { onSubmitClickRegister: submitRegisterForm } = useRegisterAvatarStore()
+  const { getSubmitClickRegister: submitRegisterForm } =
+    useRegisterAvatarStore()
 
   return (
     <Box>

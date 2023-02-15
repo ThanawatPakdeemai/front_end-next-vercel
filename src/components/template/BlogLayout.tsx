@@ -1,4 +1,3 @@
-import MenuItemCustom from "@components/atoms/MenuItemCustom"
 import ShapeIcon from "@components/icons/ShapeIcon"
 import Banner from "@components/molecules/Banner"
 import Tagline from "@components/molecules/tagline/Tagline"
@@ -10,6 +9,7 @@ import { MenuList, Typography } from "@mui/material"
 import React from "react"
 import HeadBlog from "@components/molecules/HeadBlog"
 import BlogIcon from "@components/icons/BlogIcon/BlogIcon"
+import MenuItemCustom from "@components/atoms/MenuItemCustom"
 
 const BlogLayout = ({
   children

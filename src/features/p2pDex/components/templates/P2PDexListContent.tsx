@@ -23,7 +23,10 @@ const P2PDexList = () => {
     <>
       <HeaderP2P
         type={type}
-        setType={(value) => setType(value)}
+        setType={(value) => {
+          setType(value)
+          setPage(1)
+        }}
       />
 
       <div className="p2p-dex-content--pageList">

@@ -27,7 +27,12 @@ const useStyles = makeStyles({
 })
 
 const MissionComponent = ({ open }: IProp) => {
-  const { data: questStore, setClose, missionType } = useQuestStore()
+  const {
+    data: questStore,
+    setClose,
+    missionType,
+    setHasCompleted
+  } = useQuestStore()
   const { profile } = useProfileStore()
   const { warnToast } = useToast()
 
@@ -51,6 +56,18 @@ const MissionComponent = ({ open }: IProp) => {
   ).length
 
   const handleClaimAll = () => warnToast("Claim all is not available yet")
+
+  useEffect(() => {
+    const checkIfHasClaimableQuest = dataAllQuest?.data.filter(
+      (filter) =>
+        filter.status === "done" &&
+        filter.claim_reward_status === false &&
+        filter.claim_reward_progress !== "claimed"
+    )
+    if (checkIfHasClaimableQuest && checkIfHasClaimableQuest.length > 0) {
+      setHasCompleted(true)
+    }
+  }, [dataAllQuest?.data, setHasCompleted])
 
   const renderElement = () =>
     !questStore ? (

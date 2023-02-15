@@ -18,6 +18,7 @@ const TableHeader = ({
     ":root": {
       color: "red"
     },
+    marginTop: "15px",
     "&.MuiTableRow-root": {
       display: "grid",
       gridTemplateColumns
@@ -38,16 +39,18 @@ const TableHeader = ({
       sx={{
         display: "block"
       }}
-      className="px-3.5"
+      className=" px-3.5"
     >
-      <TableRowStyle>
+      <TableRowStyle className="">
         {thead.map((h) => (
           <TableCellStyle
             key={uuidv4()}
-            className={CellStyled}
+            className={`${CellStyled} bg-neutral-780`}
             onClick={h.onClick}
           >
-            <div className={h.className ? h.className : "flex items-center"}>
+            <div
+              className={h.className ? h.className : "flex w-full items-center"}
+            >
               {h.title} {/* title => string <div className="flex"></div> */}
               {h.arrowIcon ? (
                 <div className="ml-1 flex flex-col gap-1">

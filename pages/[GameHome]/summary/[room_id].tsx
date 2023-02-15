@@ -1,4 +1,4 @@
-import GameRoomLayout from "@components/template/GameRoomLayout"
+import GameRoomLayout from "@components/templates/GameRoomLayout"
 import GameSummaryPage from "@feature/page/games/gameSummaryPage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useRouter } from "next/router"

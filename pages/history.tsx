@@ -1,6 +1,6 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import ProfileLayout from "@components/template/ProfileLayout"
+import ProfileLayout from "@components/templates/ProfileLayout"
 import HistoryTable from "@feature/history/components/organisms/HistoryTable"
 
 const HistoryPage = () => (

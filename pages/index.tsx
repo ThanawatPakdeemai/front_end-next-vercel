@@ -1,4 +1,4 @@
-import { Layout } from "@components/template"
+import { Layout } from "@components/templates"
 import { ReactElement } from "react"
 import HomePage from "@feature/page/homePage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"

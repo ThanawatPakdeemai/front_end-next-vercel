@@ -31,9 +31,20 @@ import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { v4 as uuid } from "uuid"
 import useTweenEffect from "@hooks/useSpartFireEffect"
 import gsap from "gsap"
+import useProfileStore from "@stores/profileStore"
+import useQuestStore from "@stores/quest"
+import { MenuLists } from "@configs/social"
 
 const Home = () => {
   const limit = 10
+  const { profile } = useProfileStore()
+  const { clearQuestStore, setOpen, hasCompleted } = useQuestStore()
+
+  const handleModalMission = () => {
+    setOpen()
+    clearQuestStore()
+  }
+
   const [f2pGame, setF2PGame] = useState<IGame[]>()
   const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-play")
 
@@ -94,13 +105,22 @@ const Home = () => {
           text="Secue. fun. simple. earn $naka AND enjoy "
           icon={<LogoIcon />}
         />
-        <div className="fixed right-4 bottom-5 z-10 flex flex-col items-center justify-center">
-          <ButtonSticky icon={<SupportIcon />} />
-          <ButtonSticky
-            multi
-            notify
-          />
-        </div>
+        {/* notification */}
+        {profile && profile.data && (
+          <div className="fixed right-4 bottom-5 z-10 flex flex-col items-center justify-center">
+            <ButtonSticky
+              icon={<SupportIcon />}
+              onClick={() => {
+                window.open(MenuLists[0].href, "_blank")
+              }}
+            />
+            <ButtonSticky
+              multi
+              notify={hasCompleted}
+              onClick={handleModalMission}
+            />
+          </div>
+        )}
       </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Box>

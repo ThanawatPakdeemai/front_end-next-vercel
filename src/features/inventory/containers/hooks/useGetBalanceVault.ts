@@ -8,7 +8,8 @@ const useGetBalanceVault = (_address: string, isConnected: boolean) => {
     isFetching,
     isPreviousData,
     isError,
-    error
+    error,
+    refetch: refetchBalanceVaultNaka
   } = useQuery({
     queryKey: ["useGetBalanceVault", _address],
     queryFn: () => getNaka(_address),
@@ -23,7 +24,8 @@ const useGetBalanceVault = (_address: string, isConnected: boolean) => {
     isFetching,
     isPreviousData,
     isError,
-    error
+    error,
+    refetchBalanceVaultNaka
   }
 }
 

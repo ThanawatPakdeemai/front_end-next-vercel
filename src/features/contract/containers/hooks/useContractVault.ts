@@ -20,7 +20,7 @@ const useContractVault = () => {
   const checkAllowNaka = (_address: string) =>
     new Promise((resolve, reject) => {
       setIsLoading(true)
-      erc20Contract.methods
+      erc20Contract
         .allowance(account, _address)
         .then((_response: string) => {
           setIsLoading(false)
@@ -38,7 +38,7 @@ const useContractVault = () => {
         setIsLoading(true)
         erc20Contract
           .approve(CONFIGS.CONTRACT_ADDRESS.ERC20, ethers.constants.MaxUint256)
-          .then(() => {
+          .then((_res) => {
             setIsLoading(false)
             resolve("Contract Approved!")
           })
@@ -51,14 +51,14 @@ const useContractVault = () => {
       } else reject()
     })
 
-  const depositNaka = async (_address: string, _nakaAmount: string) =>
+  const depositNaka = async (
+    _address: string,
+    _nakaAmount: string | BigNumber
+  ) =>
     new Promise<ITransactionResponse>((resolve, reject) => {
       setIsLoading(true)
-      balanceVaultContract.methods
+      balanceVaultContract
         .depositNaka(_nakaAmount)
-        .send({
-          from: _address
-        })
         .then((response: ITransactionResponse) => {
           setIsLoading(false)
           resolve(response)
@@ -69,14 +69,14 @@ const useContractVault = () => {
         })
     })
 
-  const withdrawNaka = async (_address: string, _nakaAmount: string) =>
+  const withdrawNaka = async (
+    _address: string,
+    _nakaAmount: string | BigNumber
+  ) =>
     new Promise<ITransactionResponse>((resolve, reject) => {
       setIsLoading(true)
-      balanceVaultContract.methods
+      balanceVaultContract
         .withdrawNaka(_nakaAmount)
-        .send({
-          from: _address
-        })
         .then((response: ITransactionResponse) => {
           setIsLoading(false)
           resolve(response)

@@ -180,7 +180,7 @@ const Helper = {
     return Number(ethers.utils.formatEther(_wei))
   },
   toWei(_ether: string): BigNumber {
-    return this.parseUnits(_ether, 18)
+    return ethers.utils.parseUnits(_ether, 18)
   },
   async calItemToNaka(_qty: number, _bulletPerUSD: number) {
     const response = await getCurrentNaka()

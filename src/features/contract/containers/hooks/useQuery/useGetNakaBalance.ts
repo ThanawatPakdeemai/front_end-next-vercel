@@ -10,7 +10,7 @@ interface INakaBalance {
 const useGetNakaBalance = (_address: string, isConnectedWallet: boolean) => {
   const { getNakaBalance } = useContractVault()
 
-  const { data: balance } = useQuery({
+  const { data: balance, refetch: refetchBalance } = useQuery({
     queryKey: ["naka_balance", _address],
     queryFn: () => getNakaBalance(_address),
     enabled: _address !== "" && isConnectedWallet,
@@ -18,7 +18,8 @@ const useGetNakaBalance = (_address: string, isConnectedWallet: boolean) => {
   })
 
   return {
-    balance: balance as INakaBalance
+    balance: balance as INakaBalance,
+    refetchBalance
   }
 }
 

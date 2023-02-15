@@ -22,6 +22,9 @@ import { useWeb3Provider } from "@providers/index"
 import Helper from "@utils/helper"
 import useGetNakaBalance from "@feature/contract/containers/hooks/useQuery/useGetNakaBalance"
 import useGetBalanceVault from "@feature/inventory/containers/hooks/useGetBalanceVault"
+import { useToast } from "@feature/toast/containers"
+import useContractVault from "@feature/contract/containers/hooks/useContractVault"
+import CONFIGS from "@configs/index"
 
 const KeyFramesRotate = styled("div")({
   "@keyframes rotation": {
@@ -35,27 +38,99 @@ const KeyFramesRotate = styled("div")({
   animation: "rotation 10s infinite linear"
 })
 
+type Method = "deposit" | "withdraw"
+
 export default function WalletPage() {
+  // state
   const [type, setType] = useState<string>("NAKA")
   const [nakaBalanceVault, SetNakaBalanceVault] = useState<string>("N/A")
   const [nakaBalance, SetNakaBalance] = useState<string>("N/A")
   const [isConnected, setIsConnected] = useState<boolean>(false)
+  const [openWithDraw, setOpenWithDraw] = useState<boolean>(false)
+  const [openDeposit, setOpenDeposit] = useState<boolean>(false)
   const [haveMetamask, sethaveMetamask] = useState(true)
-  // const [client, setclient] = useState<any>({
-  //   isConnected: false
-  // })
+  const [value, setValue] = useState<number>(0)
+  const { warnToast, successToast, errorToast } = useToast()
 
+  // hook
   const { profile } = useProfileStore()
   const { address, handleConnectWithMetamask, handleDisconnectWallet } =
     useWeb3Provider()
-  const { balanceVaultNaka: balanceVault } = useGetBalanceVault(
+  const { checkAllowNaka, allowNaka, depositNaka, withdrawNaka } =
+    useContractVault()
+  const { balanceVaultNaka: balanceVault, refetchBalanceVaultNaka } =
+    useGetBalanceVault(address || "", isConnected)
+  const { balance, refetchBalance } = useGetNakaBalance(
     address || "",
     isConnected
   )
-  const { balance } = useGetNakaBalance(address || "", isConnected)
+  const { WeiToNumber, formatNumber, BNToNumber, toWei } = Helper
 
-  const { WeiToNumber, formatNumber } = Helper
+  // function
+  const handleOpen = (_method: Method) => {
+    if (address && profile) {
+      if (_method === "deposit") setOpenDeposit(true)
+      else if (_method === "withdraw") setOpenWithDraw(true)
+    } else {
+      errorToast("Please connect wallet")
+    }
+  }
+  const handleClose = (_method: Method) => {
+    if (_method === "deposit") setOpenDeposit(false)
+    else if (_method === "withdraw") setOpenWithDraw(false)
+    setValue(0)
+    refetchBalanceVaultNaka()
+    refetchBalance()
+  }
 
+  const handleConnectWallet = () => {
+    if (profile.data && handleConnectWithMetamask) {
+      handleConnectWithMetamask()
+    } else {
+      errorToast("Please login first")
+    }
+  }
+
+  const handleWalletProcess = async (_method: Method) => {
+    if (!address) return
+    try {
+      /* Sample loading wait for loading popup design */
+      warnToast("Transaction is loading, please wait...")
+      const res =
+        _method === "deposit"
+          ? await depositNaka(address, toWei(value.toString()))
+          : await withdrawNaka(address, toWei(value.toString()))
+
+      /* Wait for transaction data */
+      const resData = await res.wait()
+      if (resData) {
+        successToast("Transaction success")
+        handleClose(_method)
+      }
+    } catch (error) {
+      errorToast("Transaction failed")
+    }
+  }
+
+  const handleContract = async (_method: Method) => {
+    try {
+      if (!address) {
+        return
+      }
+      const allowance = await checkAllowNaka(
+        CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
+      )
+      if (BNToNumber(allowance as string) === 0) {
+        const allowResult = await allowNaka()
+        successToast(allowResult as string)
+      }
+      handleWalletProcess(_method)
+    } catch (error) {
+      errorToast(error as string)
+    }
+  }
+
+  // balanceVault
   useEffect(() => {
     if (balanceVault && address) {
       const tempData = WeiToNumber(balanceVault.data)
@@ -65,6 +140,7 @@ export default function WalletPage() {
     }
   }, [WeiToNumber, address, balanceVault, formatNumber])
 
+  // balance
   useEffect(() => {
     if (balance && address) {
       const tempData = WeiToNumber(balance.data)
@@ -74,6 +150,7 @@ export default function WalletPage() {
     }
   }, [WeiToNumber, address, balance, formatNumber])
 
+  // check connection
   useEffect(() => {
     const checkConnection = async () => {
       const { ethereum }: any = window
@@ -81,14 +158,6 @@ export default function WalletPage() {
         sethaveMetamask(haveMetamask)
         if (address && address.length > 0) {
           setIsConnected(true)
-          // setclient({
-          //   isConnected: true,
-          //   address
-          // })
-        } else {
-          // setclient({
-          //   isConnected: false
-          // })
         }
       } else {
         sethaveMetamask(false)
@@ -96,10 +165,6 @@ export default function WalletPage() {
     }
     checkConnection()
   }, [address, haveMetamask])
-
-  useEffect(() => {
-    handleConnectWithMetamask
-  }, [handleConnectWithMetamask])
 
   return (
     <>
@@ -208,8 +273,30 @@ export default function WalletPage() {
                 </div>
               </div>
               <div className="mb-4 flex w-full justify-end">
-                <RightMenuWallet title="withdraw" />
-                <RightMenuWallet title="Deposit" />
+                <RightMenuWallet
+                  title="withdraw"
+                  titleHeader="Withdraw to metamask"
+                  subtTitle="your naka storage"
+                  open={openWithDraw}
+                  value={value}
+                  balance={balanceVault ? WeiToNumber(balanceVault.data) : 0}
+                  setValue={setValue}
+                  handleOpen={() => handleOpen("withdraw")}
+                  handleClose={() => handleClose("withdraw")}
+                  handleContract={() => handleContract("withdraw")}
+                />
+                <RightMenuWallet
+                  title="Deposit"
+                  titleHeader="diposit from metamask"
+                  subtTitle="your naka in matamask"
+                  open={openDeposit}
+                  value={value}
+                  balance={balance ? WeiToNumber(balance.data) : 0}
+                  setValue={setValue}
+                  handleOpen={() => handleOpen("deposit")}
+                  handleClose={() => handleClose("deposit")}
+                  handleContract={() => handleContract("deposit")}
+                />
               </div>
               <div className="mt-6 grid w-full grid-cols-12 gap-2">
                 <div className="col-span-7 rounded-xl border-2 border-black-800 text-center ">
@@ -293,7 +380,7 @@ export default function WalletPage() {
         <div className="col-span-4 h-full w-full items-center justify-center gap-1">
           <MetamaskWallet
             isConnected={!!address}
-            handleConnectWallet={handleConnectWithMetamask}
+            handleConnectWallet={handleConnectWallet}
             handleOnDisconnectWallet={handleDisconnectWallet}
             address={address}
             balance={nakaBalance}

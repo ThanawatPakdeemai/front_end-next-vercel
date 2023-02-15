@@ -43,10 +43,10 @@ const RefactorTableBody = ({
     }
   })
   return (
-    <TableRowStyle className="bg-neutral-900 px-3.5">
+    <TableRowStyle className="rounded-less bg-neutral-900 px-3.5">
       {child.map((c) => (
         <TableCellStyle
-          className="border-b-neutral-800 px-0"
+          className="border-b-0 px-0"
           key={uuidv4()}
         >
           {c}

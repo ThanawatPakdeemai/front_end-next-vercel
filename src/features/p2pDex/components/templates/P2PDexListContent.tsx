@@ -2,8 +2,8 @@
 import React, { useState } from "react"
 import useP2PDexController from "@feature/p2pDex/containers/hooks/useP2PDexController"
 import { PaginationNaka } from "@components/atoms/pagination"
-import DropdownLimit from "@feature/transaction/components/atoms/DropdownLimit"
 import HeaderP2P from "@feature/table/components/atoms/HeaderP2P"
+import DropdownLimit from "@components/atoms/DropdownLimit"
 import OrderList from "../organisms/OrderList"
 
 const P2PDexList = () => {

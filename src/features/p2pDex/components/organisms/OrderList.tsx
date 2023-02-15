@@ -27,16 +27,19 @@ const OrderList = ({ ...props }: IProp) => {
       keyDown: false
     },
     { title: "available", arrowIcon: true, keyUp: true, keyDown: false },
-    { title: type, arrowIcon: false }
+    {
+      title: <div className="flex w-full items-center justify-end">{type}</div>,
+      arrowIcon: false
+    }
   ]
 
   return (
     <>
-      <TableContainer className="custom-scroll w-auto rounded-[14px] border border-neutral-800 bg-neutral-780 px-1.5 pb-1.5 pt-4">
+      <TableContainer className="custom-scroll w-auto rounded-[14px] border border-neutral-800 bg-neutral-780 px-1.5 pb-1.5">
         <Table aria-label="sticky table ">
           <TableHeader
             thead={title}
-            gridTemplateColumns="176px 200px 190px 190px 1fr"
+            gridTemplateColumns="175px 200px 190px 190px 1fr"
           />
           <TableBody
             className={`custom-scroll block ${
@@ -105,19 +108,21 @@ const OrderList = ({ ...props }: IProp) => {
                       </div>
                     </>,
                     <>
-                      <ButtonLink
-                        href="href"
-                        text={type}
-                        size="medium"
-                        className={` h-[30px] !min-w-[60px] max-w-[60px] font-neue-machina-bold   text-xs capitalize text-neutral-800  ${
-                          type === "sell"
-                            ? " bg-error-main hover:bg-error-main"
-                            : " bg-varidian-default hover:bg-varidian-default"
-                        }`}
-                      />
+                      <div className="flex w-full justify-end">
+                        <ButtonLink
+                          href="href"
+                          text={type}
+                          size="medium"
+                          className={`h-[30px] !min-w-[60px] max-w-[60px]  font-neue-machina-bold   text-xs capitalize text-neutral-800  ${
+                            type === "sell"
+                              ? " bg-error-main hover:bg-error-main"
+                              : " bg-varidian-default hover:bg-varidian-default"
+                          }`}
+                        />
+                      </div>
                     </>
                   ]}
-                  gridTemplateColumns="190px 200px 190px 190px 1fr"
+                  gridTemplateColumns="175px 200px 190px 190px 1fr"
                 />
               ))
             ) : (

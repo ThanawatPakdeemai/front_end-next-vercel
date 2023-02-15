@@ -18,6 +18,7 @@ const TableHeader = ({
     ":root": {
       color: "red"
     },
+    marginTop: "15px",
     "&.MuiTableRow-root": {
       display: "grid",
       gridTemplateColumns
@@ -47,7 +48,9 @@ const TableHeader = ({
             className={`${CellStyled} bg-neutral-780`}
             onClick={h.onClick}
           >
-            <div className={h.className ? h.className : "flex items-center"}>
+            <div
+              className={h.className ? h.className : "flex w-full items-center"}
+            >
               {h.title} {/* title => string <div className="flex"></div> */}
               {h.arrowIcon ? (
                 <div className="ml-1 flex flex-col gap-1">

@@ -3,17 +3,16 @@ import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import PageHeader from "@feature/table/components/molecules/PageHeader"
 import React from "react"
 import { useRouter } from "next/router"
-import P2PDexListContent from "@feature/p2pDex/components/templates/P2PDexListContent"
-import ReorderIcon from "@mui/icons-material/Reorder"
+import P2PDexListMyOrderContent from "@feature/p2pDex/components/templates/P2PDexListMyOrderContent"
 
-const P2PDexListPage = () => {
+const P2PDexMyOrderList = () => {
   const router = useRouter()
 
   /**
    * @description Handle click button
    */
   const onClickButton = () => {
-    router.push("/p2p-dex/create")
+    router.push("/p2p-dex")
   }
 
   return (
@@ -24,24 +23,17 @@ const P2PDexListPage = () => {
           <div className="">
             <ButtonToggleIcon
               startIcon={<AddIcon />}
-              text="Create Order"
+              text="Back"
               handleClick={onClickButton}
-              className="mb-2 flex h-[40px] w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
-              type="button"
-            />
-            <ButtonToggleIcon
-              startIcon={<ReorderIcon />}
-              text="My Order"
-              handleClick={() => router.push("/p2p-dex/my-order")}
               className="flex h-[40px] w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
               type="button"
             />
           </div>
         }
       />
-      <P2PDexListContent />
+      <P2PDexListMyOrderContent />
     </div>
   )
 }
 
-export default P2PDexListPage
+export default P2PDexMyOrderList

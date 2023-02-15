@@ -1,23 +1,24 @@
-// import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
 import React, { useState } from "react"
-import useP2PDexController from "@feature/p2pDex/containers/hooks/useP2PDexController"
 import { PaginationNaka } from "@components/atoms/pagination"
 import HeaderP2P from "@feature/p2pDex/components/atoms/HeaderP2P"
 import DropdownLimit from "@components/atoms/DropdownLimit"
-import OrderList from "../organisms/OrderList"
+import { useWeb3Provider } from "@providers/Web3Provider"
+import useP2PDexMyOrder from "@feature/p2pDex/containers/hooks/useP2PDexMyOrder"
+import MyOrderList from "@feature/p2pDex/components/organisms/MyOrderList"
 
-const P2PDexList = () => {
+const P2PDexListMyOrder = () => {
   const [type, setType] = useState<"sell" | "buy">("buy")
   const [limit, setLimit] = useState<number>(12)
   const [page, setPage] = useState<number>(1)
+  const { address } = useWeb3Provider()
 
-  const dataP2p = useP2PDexController({
-    _type: type === "sell" ? "buy" : "sell",
+  const dataP2p = useP2PDexMyOrder({
+    _address: address ?? "",
     _limit: limit,
     _page: page
   })
 
-  const { data: P2PDexOrderList } = dataP2p
+  const { data: P2PDexMyOrder } = dataP2p
 
   return (
     <>
@@ -30,13 +31,13 @@ const P2PDexList = () => {
       />
 
       <div className="p2p-dex-content--pageList">
-        <OrderList
+        <MyOrderList
           {...dataP2p}
           type={type}
         />
         <div className="my-5 flex w-full justify-between">
           <PaginationNaka
-            totalCount={P2PDexOrderList ? P2PDexOrderList.info.totalCount : 12}
+            totalCount={P2PDexMyOrder ? P2PDexMyOrder.info.totalCount : 12}
             limit={limit}
             page={page}
             setPage={setPage}
@@ -51,4 +52,4 @@ const P2PDexList = () => {
     </>
   )
 }
-export default P2PDexList
+export default P2PDexListMyOrder

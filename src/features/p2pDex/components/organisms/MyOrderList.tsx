@@ -6,16 +6,16 @@ import TableRowData from "@feature/table/components/molecules/TableRowData"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import Helper from "@utils/helper"
 import CopyTextIcon from "@components/icons/CopyTextIcon"
-import VerifiedIcon from "@components/icons/VerifiedIcon"
-import { IMultiOrderListServ } from "@feature/multichain/interfaces/IMultichain"
+// import VerifiedIcon from "@components/icons/VerifiedIcon"
+import { IMultiOrderListDataServ } from "@feature/multichain/interfaces/IMultichain"
 
 interface IProp {
-  data: IMultiOrderListServ | undefined
+  data: IMultiOrderListDataServ | undefined
   isLoading: boolean
   isFetching: boolean
   type: "buy" | "sell"
 }
-const OrderList = ({ ...props }: IProp) => {
+const MyOrderList = ({ ...props }: IProp) => {
   const { data, isLoading, isFetching, type } = props
   const title = [
     { title: "order id", arrowIcon: true, keyUp: true, keyDown: false },
@@ -70,11 +70,11 @@ const OrderList = ({ ...props }: IProp) => {
                       </Box>
                     </>,
                     <>
-                      {order.trusted_order ? (
+                      {/* {order.trusted_order ? (
                         <VerifiedIcon />
                       ) : (
-                        <div className="mr-10" />
-                      )}
+                        <div className="mr-4" />
+                      )} */}
                       <div className="ml-2 mr-2 rounded border border-neutral-700 px-2.5 py-1 uppercase text-neutral-400">
                         {Helper.shortenString(order.wallet_address)}
                       </div>
@@ -90,11 +90,11 @@ const OrderList = ({ ...props }: IProp) => {
                     <>
                       <div className="flex w-full items-center">
                         {Helper.formatNumber(
-                          type === "sell" ? order.busd_price : order.naka_price,
+                          type === "buy" ? order.busd_price : order.naka_price,
                           { maximumFractionDigits: 4 }
                         )}
                         <div className="ml-2 mr-2 rounded border border-neutral-700 px-2.5 py-1 uppercase text-neutral-400">
-                          {type === "sell" ? "BUSD" : "NAKA"}
+                          {type === "buy" ? "BUSD" : "NAKA"}
                         </div>
                       </div>
                     </>,
@@ -103,18 +103,18 @@ const OrderList = ({ ...props }: IProp) => {
                         <div className="mr-2">AVAILABLE</div>
                         {Helper.formatNumber(order.naka_amount)}
                         <div className="ml-2  rounded border border-neutral-700 px-2.5 py-1 uppercase text-neutral-400">
-                          {type === "buy" ? "BUSD" : "NAKA"}
+                          {type === "sell" ? "BUSD" : "NAKA"}
                         </div>
                       </div>
                     </>,
                     <>
                       <div className="flex w-full justify-end">
                         <ButtonLink
-                          href="href"
-                          text={type}
+                          href=""
+                          text="Edit"
                           size="medium"
-                          className={`h-[30px] !min-w-[60px] max-w-[60px]  font-neue-machina-bold   text-xs capitalize text-neutral-800  ${
-                            type === "sell"
+                          className={`h-[30px] !min-w-[60px] max-w-[60px]  font-neue-machina-bold text-xs capitalize text-neutral-800  ${
+                            order.order_type === "sell"
                               ? " bg-error-main hover:bg-error-main"
                               : " bg-varidian-default hover:bg-varidian-default"
                           }`}
@@ -134,4 +134,4 @@ const OrderList = ({ ...props }: IProp) => {
     </>
   )
 }
-export default OrderList
+export default MyOrderList

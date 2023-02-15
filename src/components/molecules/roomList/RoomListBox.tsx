@@ -51,7 +51,7 @@ const RoomListBox = ({
 
   return type === "timer" ? (
     <div
-      className={`flex w-[131px] items-center justify-center gap-3 rounded-lg border ${
+      className={`flex h-[40px] w-fit items-center justify-center gap-3 rounded-lg border px-3 ${
         borderColor ?? "border-neutral-700"
       } bg-neutral-900 py-2 align-baseline`}
     >
@@ -73,7 +73,7 @@ const RoomListBox = ({
       )}
     </div>
   ) : (
-    <div className="flex w-fit items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900 p-2 align-baseline">
+    <div className="flex h-[40px] w-fit items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900 p-2 px-3 align-baseline">
       <button
         type="button"
         onClick={onClick}

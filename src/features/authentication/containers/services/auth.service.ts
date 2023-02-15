@@ -157,23 +157,6 @@ export const revokeToken = async () => {
   )
 }
 
-export const refreshToken = async () =>
-  axios
-    .post<IRefreshToken>(`/auth/refresh-token`)
-    .then((res) => ({
-      address: res.data.address,
-      jwtToken: res.data.jwtToken,
-      id: res.data.id
-    }))
-    .catch(
-      () => ({
-        address: "",
-        jwtToken: "",
-        id: ""
-      })
-      // return error;
-    )
-
 export const loginProvider = ({
   _email,
   _provider,

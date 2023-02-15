@@ -1,3 +1,4 @@
+import PleaseLogin from "@components/atoms/PleaseLogin"
 import { ChatProvider } from "@feature/chat/containers/contexts/ChatProvider"
 import MultiWaiting from "@feature/game/components/templates/waitingRoom/multiPlayer/MultiWaiting"
 import SingleWaiting from "@feature/game/components/templates/waitingRoom/singlePlayer/SingleWaiting"
@@ -27,9 +28,6 @@ const GameRoomWaitingPage = ({ _roomId }: IProp) => {
     if (gameData) {
       switch (gameData.game_type) {
         case "singleplayer":
-          // if (gameData.type_code === "survival_01") {
-          //   return <>survival_01</>
-          // }
           return <SingleWaiting _roomId={_roomId} />
         case "multiplayer":
           return (
@@ -44,7 +42,7 @@ const GameRoomWaitingPage = ({ _roomId }: IProp) => {
       }
     }
   }
-  return <>{profile && getTemplateGame()}</>
+  return <>{profile ? getTemplateGame() : <PleaseLogin />}</>
 }
 
 export default GameRoomWaitingPage

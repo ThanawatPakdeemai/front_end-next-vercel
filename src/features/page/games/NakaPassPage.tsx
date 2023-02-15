@@ -8,10 +8,13 @@ import React, { memo, useState } from "react"
 import ShapeIcon from "@components/icons/ShapeIcon"
 import Tagline from "@components/molecules/tagline/Tagline"
 import NakaPassStoryMode from "@feature/nakaPass/components/NakaPassStoryMode"
+import useProfileStore from "@stores/profileStore"
+import PleaseLogin from "@components/atoms/PleaseLogin"
 
 const NakaPassPage = () => {
   const [f2pCurType, setF2PCurType] = useState<IGetType>("story-mode")
   const [page] = useState<number>(1)
+  const profile = useProfileStore((state) => state.profile.data)
 
   const { data: storyGame, isFetching } = useGamesByTypes({
     _type: f2pCurType,
@@ -21,8 +24,7 @@ const NakaPassPage = () => {
 
   return (
     <>
-      <NakaPassStoryMode />
-
+      {profile ? <NakaPassStoryMode /> : <PleaseLogin />}
       <Tagline
         text="Continue playing story mode to earn rewards."
         bgColor="bg-neutral-800"

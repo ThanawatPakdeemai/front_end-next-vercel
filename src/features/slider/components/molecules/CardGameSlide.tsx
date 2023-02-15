@@ -1,6 +1,6 @@
 import { CardMedia } from "@mui/material"
 import React from "react"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { motion } from "framer-motion"
 
@@ -49,7 +49,7 @@ export default function CardGameSlide({
                   variants={iconmotion}
                   transition={{ type: "spring", stiffness: 400, damping: 4 }}
                 >
-                  <ImageCustom
+                  <Image
                     src="/images/gamePage/btnPrev.png"
                     alt="Picture of the author"
                     width={16}
@@ -69,7 +69,7 @@ export default function CardGameSlide({
                   variants={iconmotion}
                   transition={{ type: "spring", stiffness: 400, damping: 4 }}
                 >
-                  <ImageCustom
+                  <Image
                     src="/images/gamePage/btnreset.png"
                     alt="Picture of the author"
                     width={16}
@@ -90,7 +90,7 @@ export default function CardGameSlide({
                   variants={iconmotion}
                   transition={{ type: "spring", stiffness: 400, damping: 4 }}
                 >
-                  <ImageCustom
+                  <Image
                     src="/images/gamePage/btnNext.png"
                     alt="Picture of the author"
                     width={16}

@@ -57,7 +57,7 @@ const VerticalThumbSlide = ({ items }: IVerticalThumbSlideProps) => {
   }
 
   return (
-    <div className="my-4 flex w-full items-center justify-between">
+    <div className="my-4 flex w-full items-center justify-between gap-4">
       <Box
         sx={SlickMainSlideCSS}
         className="flex h-[390px] w-full max-w-[592px] flex-col justify-center overflow-hidden rounded-2xl"

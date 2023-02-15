@@ -271,5 +271,6 @@
   "stake_ended": "质押结束",
   "staking_earn_up_to": "质押赚取最高",
   "staking_start": "质押开始",
-  "period": "期"
+  "period": "期",
+  "naka_contract": "NAKA合约"
 }

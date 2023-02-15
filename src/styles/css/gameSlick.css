@@ -43,6 +43,12 @@
   max-width: 218px;
   height: 286px;
 }
+.slick-slide .slick-card-container-cate {
+  width: 100%;
+  height: 100%;
+  max-width: 264px;
+  height: 324px;
+}
 .slick-card-container .slick-card-desc {
   @apply text-black-default;
 }

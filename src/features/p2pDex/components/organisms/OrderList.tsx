@@ -40,7 +40,7 @@ const OrderList = ({ ...props }: IProp) => {
           />
           <TableBody
             className={`custom-scroll block ${
-              data && data?.info.currentCount > 12 ? "h-[800px]" : "h-auto"
+              data && data?.info.currentCount > 12 ? "h-[815px]" : "h-auto"
             } overflow-y-auto rounded-[9px]`}
             sx={{
               "tr:last-of-type td": { borderBottom: 0 }

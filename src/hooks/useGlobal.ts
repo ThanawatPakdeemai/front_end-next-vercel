@@ -1,11 +1,9 @@
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
-import { useToast } from "@feature/toast/containers"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
-import { MESSAGES } from "@constants/messages"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import useGamesById from "@feature/game/containers/hooks/useGamesById"
 import { IFilterGamesByCategory } from "@feature/dropdown/interfaces/IDropdownService"
@@ -39,7 +37,7 @@ const useGlobal = (
   // hook
   const { onSetGameData, onSetGamePartnersData } = useGameStore()
   const profile = useProfileStore((state) => state.profile.data)
-  const { errorToast } = useToast()
+  // const { errorToast } = useToast()
 
   // States
   const [stateProfile, setStateProfile] = useState<IProfile | null>()

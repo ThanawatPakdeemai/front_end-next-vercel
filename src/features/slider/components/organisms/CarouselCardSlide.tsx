@@ -1,16 +1,16 @@
-import ShortDetailsCTA, {
-  IShortDetailsCTA
-} from "@components/molecules/ShortDetailsCTA"
+import ShortDetailsCTA from "@components/molecules/ShortDetailsCTA"
 import React from "react"
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined"
 import { CardMedia } from "@mui/material"
 
-export interface CarouselCardSlideProps extends IShortDetailsCTA {
+export interface CarouselCardSlideProps {
   video?: boolean
   src: string
   name: string
   index: number
   activeIndex: number
+  description: string
+  link: string
 }
 const CarouselCardSlide = ({
   video = false,
@@ -18,7 +18,8 @@ const CarouselCardSlide = ({
   name,
   index,
   activeIndex,
-  ...props
+  description,
+  link
 }: CarouselCardSlideProps) => {
   const isActive = index === activeIndex
   return (
@@ -39,8 +40,8 @@ const CarouselCardSlide = ({
         />
       </div>
       <ShortDetailsCTA
-        description={props.description}
-        link={props.link}
+        description={description}
+        link={link}
         startIcon={
           <LanguageOutlinedIcon
             color="error"

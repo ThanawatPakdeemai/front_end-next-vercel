@@ -10,8 +10,8 @@ import {
 import { useTranslation } from "next-i18next"
 import { INotification } from "../../interfaces/INotificationService"
 import NotificationItem from "./NotificationItem"
-import VectorTop from "../atoms/icon/VectorTop"
-import VectorBottom from "../atoms/icon/VectorBottom"
+import VectorTop from "../atoms/icons/VectorTop"
+import VectorBottom from "../atoms/icons/VectorBottom"
 
 interface IProps {
   page: number

@@ -3,6 +3,8 @@ export const MESSAGES = {
   "getdata-success": "Get Data Success",
   "please_login": "Please Login",
   "sign_in_success": "Sign in successfully",
+  "success_get_code": "Success get code",
+  "code_number_not_expired": "Code number not expired",
   "edit_profile_success": "Edit Profile successfully",
   "please_fill": "Please fill completely",
   "cant_update_data": "Cannot Update Data",
@@ -17,6 +19,7 @@ export const MESSAGES = {
   "you-were-kicked": "You were kicked out of the room.",
   "please_item": "Please select Item.",
   "room-id-not-found": "Room Id not found",
+  "auth_popup_closed_by_user": "auth/popup-closed-by-user",
   "transaction-error": "Transaction error. please try again!!",
   "you-out-room": "You out room success",
   "you-cancel-ready": "You cancel playing game",
@@ -24,5 +27,11 @@ export const MESSAGES = {
   "you-played": "you played game this room!",
   "you-not-enough": "Your item not enough for play this room",
   "create-room-success": "Create room success",
-  "please-ready": "Please Press Ready!"
+  "please-ready": "Please Press Ready!",
+  "withdraw_success": "Withdraw success",
+  "claim_success": "Claim success",
+  "withdraw_error": "Withdraw error",
+  "claim_error": "Claim error",
+  "create_successful_user": "Create a successful user",
+  "create_not_successful_user": "Create a not successful user"
 }

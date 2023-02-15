@@ -29,7 +29,7 @@ export interface IMultiOrder extends IMultiOrderPrice {
   wallet_address: string
 }
 
-interface IMultiTrustOrder extends IMultiOrder {
+export interface IMultiTrustOrder extends IMultiOrder {
   trusted_order: boolean
 }
 

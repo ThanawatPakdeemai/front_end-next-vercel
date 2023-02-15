@@ -1,4 +1,4 @@
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 import RightMenuWallet from "@components/molecules/rightMenu/RightMenuWallet"
 import Gas from "@components/molecules/Gas"
 import INaka from "@components/icons/Naka"
@@ -38,33 +38,6 @@ export default function WalletPage() {
   const [type, setType] = useState<string>("NAKA")
   const { address, handleConnectWithMetamask, handleDisconnectWallet } =
     useWeb3Provider()
-  // const [isConnected, setIsConnected] = useState<boolean>(false)
-
-  // const [haveMetamask, sethaveMetamask] = useState(true)
-
-  // const [client, setclient] = useState<any>({
-  //   isConnected: false
-  // })
-  // const checkConnection = async () => {
-  //   const { ethereum }: any = window
-  //   if (ethereum) {
-  //     sethaveMetamask(haveMetamask)
-  //     const accounts = await ethereum.request({ method: "eth_accounts" })
-  //     if (accounts.length > 0) {
-  //       setIsConnected(true)
-  //       setclient({
-  //         isConnected: true,
-  //         address: accounts[0]
-  //       })
-  //     } else {
-  //       setclient({
-  //         isConnected: false
-  //       })
-  //     }
-  //   } else {
-  //     sethaveMetamask(false)
-  //   }
-  // }
 
   useEffect(() => {
     handleConnectWithMetamask
@@ -213,7 +186,7 @@ export default function WalletPage() {
                         height="25"
                       />
                     ) : (
-                      <ImageCustom
+                      <Image
                         src={IMAGES.MetaMaskds.src}
                         alt=""
                         width={35}
@@ -225,7 +198,7 @@ export default function WalletPage() {
               </div>
             </div>
             <div className="col-span-2 m-2 flex">
-              <ImageCustom
+              <Image
                 src={IMAGES.Frame.src}
                 alt=""
                 width={120}
@@ -239,14 +212,14 @@ export default function WalletPage() {
               </div>
             </div>
             <div className="absolute top-[75px] left-[-16px]">
-              <ImageCustom
+              <Image
                 src={IMAGES.RectangleRed.src}
                 alt=""
                 width={10}
                 height={10}
                 className="mb-2"
               />
-              <ImageCustom
+              <Image
                 src={IMAGES.RectangleBlack.src}
                 alt=""
                 width={10}
@@ -268,7 +241,7 @@ export default function WalletPage() {
           />
         </div>
       </div>
-      <TransactionTable />
+      <TransactionTable profile={profile.data} />
     </>
   )
 }

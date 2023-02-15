@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 import React from "react"
 
 interface IProp {
@@ -28,7 +28,7 @@ const TotalCardContent = ({
             </Typography>
           </div>
           <div className="grid content-center	justify-center	">
-            <ImageCustom
+            <Image
               src={`/images/gamePage/rank/${icon}.svg`}
               alt=""
               width={50}

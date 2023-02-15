@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import { IconClose } from "@components/icons/Icons"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 import React from "react"
 import styled from "styled-components"
 
@@ -35,7 +35,7 @@ const ModalBox: React.FC<Props> = ({
         {title === "Buy NAKA" ? (
           <ModalTitle className="flex items-center">
             {title}{" "}
-            <ImageCustom
+            <Image
               src="/assets/images/icons/icon-naka.svg"
               alt="Paris"
               className="iconnaka"

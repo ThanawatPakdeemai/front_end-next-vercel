@@ -6,7 +6,11 @@ import BodyCategories from "@components/molecules/BodyCategories"
 import ButtonSticky from "@components/molecules/ButtonSticky"
 import GameCarousel from "@components/molecules/gameSlide/GameCarousel"
 import Tagline from "@components/molecules/tagline/Tagline"
-import { F2PHeaderMenu, P2EHeaderMenu } from "@constants/gameSlide"
+import {
+  F2PHeaderMenu,
+  GAME_DOWNLOAD,
+  P2EHeaderMenu
+} from "@constants/gameSlide"
 import DeveloperPart from "@feature/home/components/template/DeveloperPart"
 import BannerSlide from "@feature/slider/components/templates/BannerSlide"
 import CarouselSlide from "@feature/slider/components/templates/CarouselSlide"
@@ -25,6 +29,8 @@ import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { v4 as uuid } from "uuid"
+import useTweenEffect from "@hooks/useSpartFireEffect"
+import gsap from "gsap"
 
 const Home = () => {
   const limit = 10
@@ -65,6 +71,18 @@ const Home = () => {
     }
   }, [p2eCurType, hotGameData, p2eGameData])
 
+  /**
+   * @description: Spark fire effect
+   */
+  const { createParticle } = useTweenEffect(600, 300, 50, -500)
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      createParticle()
+    })
+    return () => ctx.revert()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <>
       <BannerSlide />
@@ -76,7 +94,7 @@ const Home = () => {
           text="Secue. fun. simple. earn $naka AND enjoy "
           icon={<LogoIcon />}
         />
-        <div className="absolute top-[-50%] right-[-10%] z-[5] flex flex-col items-center justify-center">
+        <div className="fixed right-4 bottom-5 z-10 flex flex-col items-center justify-center">
           <ButtonSticky icon={<SupportIcon />} />
           <ButtonSticky
             multi
@@ -89,7 +107,7 @@ const Home = () => {
           <CardMarketplace />
           <div className="mt-4 grid grid-cols-3 gap-6">
             <CardLink
-              classNameSecond="bg-red-card"
+              classNameSecond="!bg-red-card"
               imageClassNameSecond="scale-[1.35]"
               iconBtn={<INakaSwap />}
               textBtn="NAKA Swap"
@@ -100,11 +118,11 @@ const Home = () => {
               altSecond={IMAGES.backNakaSwap.alt}
             />
             <CardLink
-              classNameSecond="bg-warning-dark"
+              classNameSecond="!bg-warning-dark"
               imageClassNameSecond="scale-[1.35]"
               iconBtn={<IStacking />}
               textBtn="Staking"
-              href="/"
+              href="/staking"
               srcMain={IMAGES.frontStaking.src}
               altMain={IMAGES.frontStaking.alt}
               srcSecond={IMAGES.backStaking.src}
@@ -115,7 +133,7 @@ const Home = () => {
               imageClassNameSecond="scale-[1.35]"
               iconBtn={<IReferrals />}
               textBtn="Referrals"
-              href="/"
+              href="/referrals"
               srcMain={IMAGES.frontReferrals.src}
               altMain={IMAGES.frontReferrals.alt}
               srcSecond={IMAGES.backReferrals.src}
@@ -123,7 +141,14 @@ const Home = () => {
             />
           </div>
         </Box>
-        <CarouselSlide />
+        <div className="relative overflow-hidden">
+          <div id="spark-fire">
+            <CarouselSlide
+              slideGames={GAME_DOWNLOAD}
+              isLoading={false}
+            />
+          </div>
+        </div>
       </div>
 
       <div className="my-20 h-full w-full">
@@ -175,15 +200,16 @@ const Home = () => {
       <Box className="xs:flex-col mt-4 mb-10 gap-3 lg:flex">
         <Box className="xs:grid-cols-1 mb-3 grid gap-3 sm:grid-cols-2 lg:mb-0 lg:grid-cols-3">
           <CardLink
-            textBtn="View All"
-            href="/"
+            classNameSecond="bg-warning-dark"
+            textBtn="Blog"
+            href="/blog"
           />
 
           <CardLink
             classNameSecond="bg-secondary-light"
             iconBtn={<ICoupon />}
             textBtn="Coupon"
-            href="/"
+            href="/coupon"
             srcMain={IMAGES.frontCouponBand.src}
             altMain={IMAGES.frontCouponBand.alt}
             srcSecond={IMAGES.backCouponBand.src}
@@ -194,7 +220,7 @@ const Home = () => {
             classNameSecond="bg-info-light"
             iconBtn={<IDiamond />}
             textBtn="NAKA NFT"
-            href="/"
+            href="/nft-games"
             srcMain={IMAGES.frontNakaBand.src}
             altMain={IMAGES.frontNakaBand.alt}
             srcSecond={IMAGES.backNakaBand.src}

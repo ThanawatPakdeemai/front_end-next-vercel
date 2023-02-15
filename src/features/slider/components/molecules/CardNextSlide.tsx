@@ -28,7 +28,12 @@ export default function CardNextSlide({ slideNext, gotoNext }: ICardNextSlide) {
       </div>
       <div className="slide-next--content relative w-3/4">
         <NextButtonSlide />
-        <Typography variant="h3">{slideNext?.name}</Typography>
+        <Typography
+          variant="h3"
+          className="text-sm"
+        >
+          {slideNext?.name}
+        </Typography>
         <ProgressBarSlide />
       </div>
     </button>

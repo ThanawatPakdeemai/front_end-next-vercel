@@ -1,10 +1,10 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import NotificationList from "@feature/notification/components/organisms/NotificationList"
-import ProfileLayout from "@components/template/ProfileLayout"
 import { Box } from "@mui/material"
+import ProfileLayout from "@components/templates/ProfileLayout"
 
-export default function PartnerGames() {
+export default function Notification() {
   return (
     <Box
       component="article"
@@ -15,7 +15,7 @@ export default function PartnerGames() {
   )
 }
 
-PartnerGames.getLayout = function getLayout(page: ReactElement) {
+Notification.getLayout = function getLayout(page: ReactElement) {
   return <ProfileLayout>{page}</ProfileLayout>
 }
 

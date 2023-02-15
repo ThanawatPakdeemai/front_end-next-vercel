@@ -1,3 +1,5 @@
+import { IGetType, TRoomStatus } from "@feature/game/interfaces/IGameService"
+
 export interface IGetHistory {
   player_id: string
   limit: number
@@ -20,7 +22,7 @@ export interface IHistory {
   _id: string
   room_id: string
   detail: string
-  room_status: string
+  room_status: TRoomStatus
   is_active: boolean
   player_id: string
   createdAt: string
@@ -28,6 +30,8 @@ export interface IHistory {
   game_name: string
   path: string
   detail_used_items: IDetailUsedItems
+  game_type: string
+  game_mode: IGetType
 }
 
 export interface IHistoryInfo {

@@ -2,29 +2,26 @@
 import * as React from "react"
 import { useState } from "react"
 import { Popover } from "@mui/material"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
+// eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import { useTranslation } from "next-i18next"
-import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
 import INaka from "@components/icons/Naka"
 import { ICURRENCY } from "@interfaces/ICurrency"
+import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
 import ButtonDropdown from "./ButtonDropdown"
 
 interface IProp {
-  icon?: React.ReactNode
+  icon?: React.ReactElement | string
   list: ICURRENCY[]
   className: string
-  onChangeSelect?: (_item: ICURRENCY) => void
+  onChangeSelect: any
 }
 
-const DropdownListCurrency = ({ list, className, onChangeSelect }: IProp) => {
+const DropdownListCurrency = ({ list, className }: IProp) => {
   const { t } = useTranslation()
   const [defaultItem, setDefaultItem] = useState<ICURRENCY>()
 
-  const onChangeItem = (_item: ICURRENCY) => {
-    setDefaultItem(_item)
-    if (_item && onChangeSelect) onChangeSelect(_item)
-  }
   return (
     <>
       {list && (
@@ -77,35 +74,16 @@ const DropdownListCurrency = ({ list, className, onChangeSelect }: IProp) => {
                 >
                   <SelectDropdown
                     className={className}
-                    details={
-                      list &&
-                      list.map((ele) => ({
-                        label: (
-                          <div className="flex items-center justify-between">
-                            <p>
-                              <span> {ele.name} </span>
-                            </p>
-                          </div>
-                        ),
-                        icon:
-                          typeof ele.image_icon === "string" ? (
-                            <ImageCustom
-                              src={ele.image_icon ?? ""}
-                              alt={ele.name}
-                              width="20"
-                              height="20"
-                            />
-                          ) : (
-                            ""
-                          ),
-                        data: ele,
-                        href: ""
-                      }))
+                    details={list}
+                    setOnTitle={setDefaultItem}
+                    icon={
+                      <Image
+                        src={list && list[0].image_icon}
+                        alt={list && list[0].name}
+                        width="20"
+                        height="20"
+                      />
                     }
-                    onChange={(item) => {
-                      onChangeItem(item as ICURRENCY)
-                      popupState.close()
-                    }}
                   />
                 </Popover>
               </div>

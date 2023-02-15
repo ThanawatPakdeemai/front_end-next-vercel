@@ -8,9 +8,33 @@ import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import { MESSAGES } from "@constants/messages"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import useGamesById from "@feature/game/containers/hooks/useGamesById"
+import { IFilterGamesByCategory } from "@feature/dropdown/interfaces/IDropdownService"
 
-const useGlobal = () => {
+const useGlobal = (
+  _limit?: number,
+  _skip?: number,
+  _sort?: string,
+  _search?: string,
+  _item?: string | string[],
+  _device?: string,
+  _gameType?: string,
+  _tournament?: boolean
+) => {
   const router = useRouter()
+
+  /**
+   * @description Default body for game filter
+   */
+  const defaultBody: IFilterGamesByCategory = {
+    "limit": _limit || 20,
+    "skip": _skip || 1,
+    "sort": _sort || "_id",
+    "search": _search || "",
+    "item": _item || "all",
+    "device": _device || "all",
+    "game_type": _gameType || "all",
+    "tournament": _tournament || false
+  }
 
   // hook
   const { onSetGameData, onSetGamePartnersData } = useGameStore()
@@ -19,7 +43,6 @@ const useGlobal = () => {
 
   // States
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
-  const [tabValue, setTabValue] = useState("1")
   const [hydrated, setHydrated] = useState(false)
 
   /**
@@ -37,11 +60,12 @@ const useGlobal = () => {
   }, [])
 
   /**
-   * @description Pagination
+   * @description Global values for pagination
    */
-  const limit = 10
+  const limit = _limit || 20
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
+  const pager: number[] = [6, 12, 24, 48, 64]
 
   /**
    * @description Get game partner data
@@ -85,14 +109,6 @@ const useGlobal = () => {
     }
   }
 
-  /**
-   * @description Handle change tab
-   * @param newValue
-   */
-  const handleChangeTab = (newValue: string) => {
-    setTabValue(newValue)
-  }
-
   return {
     onHandleClick,
     gamePartnerData,
@@ -103,10 +119,9 @@ const useGlobal = () => {
     totalCount,
     setTotalCount,
     stateProfile,
-    tabValue,
-    setTabValue,
-    handleChangeTab,
-    hydrated
+    hydrated,
+    defaultBody,
+    pager
   }
 }
 

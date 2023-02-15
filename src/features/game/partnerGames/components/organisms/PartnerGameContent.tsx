@@ -6,18 +6,21 @@ import { useTranslation } from "react-i18next"
 import WhatsNewIcon from "@components/icons/WhatsNewIcon"
 import HowToPlayIcon from "@components/icons/HowToPlayIcon/HowToPlayIcon"
 import IDiamond from "@components/icons/Diamond"
+import useTabContext from "@feature/tab/contexts/useTabContext"
+import useTab from "@feature/tab/hook/useTab"
 import PartnerGameWhatsNew from "../molecules/PartnerGameWhatsNew"
 import PartnerGameHowToPlay from "../molecules/PartnerGameHowToPlay"
 import PartnerGameItems from "../molecules/PartnerGameItems"
 
-const TabStyle = {
+export const TabStyle = {
   padding: "0!important"
 }
 
 const PartnerGameContent = () => {
   const { hydrated } = useGlobal()
   const { t } = useTranslation()
-  const { handleChangeTab, tabValue } = useGlobal()
+  const { handleChangeTab } = useTab()
+  const { tabValue } = useTabContext()
 
   /**
    * @description Tab Content Partner Game

@@ -1,16 +1,11 @@
 import React, { memo, useEffect, useState } from "react"
 import useGetNotification from "@feature/notification/containers/hooks/useGetNotification"
+import useNotificationController from "@feature/notification/containers/hooks/useNotificationController"
 import { PaginationNaka } from "@components/atoms/pagination"
 import useProfileStore from "src/stores/profileStore"
 import { INotification } from "src/features/notification/interfaces/INotificationService"
-import DropdownLimit from "src/features/transaction/components/atoms/DropdownLimit"
-import {
-  updateNotiStatusById,
-  updateAllNotiStatus
-} from "@feature/notification/containers/services/notification.service"
-import { useRouter } from "next/router"
-import { useToast } from "@feature/toast/containers"
-import { MESSAGES } from "@constants/messages"
+import DropdownLimit from "@components/atoms/DropdownLimit"
+import { updateAllNotiStatus } from "@feature/notification/containers/services/notification.service"
 import SkeletonNotification from "@components/atoms/skeleton/SkeletonNotification"
 import Header from "../molecules/NotificationHeader"
 import NotificationTable from "./NotificationTable"
@@ -23,8 +18,7 @@ const NotificationList = () => {
   const [sortBy, setSortBy] = useState<string>("dateDESC")
   const [data, setData] = useState<INotification[]>([])
   const [limit, setLimit] = useState<number>(12)
-  const router = useRouter()
-  const { errorToast } = useToast()
+  const { onHandleView } = useNotificationController()
   const playerId = profile?.id || ""
   const { data: dataNoti, isLoading } = useGetNotification({
     player_id: playerId
@@ -111,34 +105,8 @@ const NotificationList = () => {
   const onHandleSortBy = (_sort: string) => {
     setSortBy(_sort)
   }
-  const onHandleView = (element: INotification) => {
-    if (profile) {
-      updateNotiStatusById(element._id)
-        .then(() => {
-          if (element.type.toLowerCase() === "reward") {
-            router.push(`/${element.path}/reward/${element._id}`)
-          } else if (element.type.toLowerCase() === "tournament") {
-            router.push(
-              `/${element.path}/summary/${element.room_id}/${element._id}`
-            )
-          } else if (element.type.toLowerCase() === "reward_weekly") {
-            router.push(`/${element.path}/reward/${element._id}`)
-          } else if (element.type.toLowerCase() === "reward_game_pool") {
-            router.push(`/${element.path}/reward/${element._id}`)
-          } else if (element.type.toLowerCase() === "game_free") {
-            router.push(
-              `/${element.path}/summary/${element.room_id}/${element._id}`
-            )
-          } else {
-            router.push(`/${element.path}/reward/${element._id}`)
-          }
-        })
-        .catch(() => {
-          errorToast(MESSAGES.cant_update_data)
-        })
-    } else {
-      errorToast(MESSAGES.please_login)
-    }
+  const _onHandleView = (element: INotification) => {
+    onHandleView(element, playerId)
   }
 
   return (
@@ -153,7 +121,7 @@ const NotificationList = () => {
           page={page}
           limit={limit}
           sortBy={sortBy}
-          onHandleView={onHandleView}
+          onHandleView={_onHandleView}
           onHandleSortBy={onHandleSortBy}
         />
       ) : (

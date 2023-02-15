@@ -10,6 +10,8 @@ import dayjs from "dayjs"
 import CircleNakaIcon from "@components/icons/CircleNakaIcon"
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import { BUY_NAKA_MENU } from "@configs/buynaka"
+import Link from "next/link"
+import CONFIGS from "@configs/index"
 import { ModalCustom } from "./Modal/ModalCustom"
 import TabMenu from "./TabMenu"
 
@@ -62,15 +64,20 @@ const HeadPrice = ({
           <div className="flex flex-row items-center">
             <span className="mr-1 text-purple-primary">Polygon : </span>
             {siteInfo.contract && (
-              <Typography
-                paragraph
-                component="span"
-                variant="body1"
-                onClick={() => Helper.copyClipboard(siteInfo.contract)}
-                className="mt-4 cursor-pointer font-neue-machina text-sm uppercase text-purple-primary"
+              <Link
+                href={`${CONFIGS.CHAIN.POLYGON_SCAN}/address/${siteInfo.contract}`}
+                target="_blank"
               >
-                {Helper.textWithDots(siteInfo.contract, 8)}
-              </Typography>
+                <Typography
+                  paragraph
+                  component="span"
+                  variant="body1"
+                  onClick={() => Helper.copyClipboard(siteInfo.contract)}
+                  className="mt-4 cursor-pointer font-neue-machina text-sm uppercase text-purple-primary"
+                >
+                  {Helper.textWithDots(siteInfo.contract, 8)}
+                </Typography>
+              </Link>
             )}
           </div>
         </Box>

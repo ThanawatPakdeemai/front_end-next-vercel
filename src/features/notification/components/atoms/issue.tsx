@@ -5,7 +5,7 @@ interface IProps {
   data: INotification
 }
 
-const issue = ({ data }: IProps) => (
+const Issue = ({ data }: IProps) => (
   <>
     <div
       className={`mt-1 h-[20px] w-fit rounded ${
@@ -17,4 +17,4 @@ const issue = ({ data }: IProps) => (
   </>
 )
 
-export default memo(issue)
+export default memo(Issue)

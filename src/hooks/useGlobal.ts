@@ -22,6 +22,9 @@ const useGlobal = (
 ) => {
   const router = useRouter()
 
+  /**
+   * @description Default body for game filter
+   */
   const defaultBody: IFilterGamesByCategory = {
     "limit": _limit || 20,
     "skip": _skip || 1,
@@ -57,11 +60,12 @@ const useGlobal = (
   }, [])
 
   /**
-   * @description Pagination
+   * @description Global values for pagination
    */
   const limit = _limit || 20
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
+  const pager: number[] = [6, 12, 24, 48, 64]
 
   /**
    * @description Get game partner data
@@ -116,7 +120,8 @@ const useGlobal = (
     setTotalCount,
     stateProfile,
     hydrated,
-    defaultBody
+    defaultBody,
+    pager
   }
 }
 

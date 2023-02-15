@@ -38,33 +38,6 @@ export default function WalletPage() {
   const [type, setType] = useState<string>("NAKA")
   const { address, handleConnectWithMetamask, handleDisconnectWallet } =
     useWeb3Provider()
-  // const [isConnected, setIsConnected] = useState<boolean>(false)
-
-  // const [haveMetamask, sethaveMetamask] = useState(true)
-
-  // const [client, setclient] = useState<any>({
-  //   isConnected: false
-  // })
-  // const checkConnection = async () => {
-  //   const { ethereum }: any = window
-  //   if (ethereum) {
-  //     sethaveMetamask(haveMetamask)
-  //     const accounts = await ethereum.request({ method: "eth_accounts" })
-  //     if (accounts.length > 0) {
-  //       setIsConnected(true)
-  //       setclient({
-  //         isConnected: true,
-  //         address: accounts[0]
-  //       })
-  //     } else {
-  //       setclient({
-  //         isConnected: false
-  //       })
-  //     }
-  //   } else {
-  //     sethaveMetamask(false)
-  //   }
-  // }
 
   useEffect(() => {
     handleConnectWithMetamask
@@ -268,7 +241,7 @@ export default function WalletPage() {
           />
         </div>
       </div>
-      <TransactionTable />
+      <TransactionTable profile={profile.data} />
     </>
   )
 }

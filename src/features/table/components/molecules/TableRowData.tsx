@@ -12,7 +12,7 @@ interface ITableRowDataProps {
 
 const RefactorTableBody = ({
   child,
-  gridTemplateColumns = "180px 130px 130px 1fr"
+  gridTemplateColumns = "180px 140px 130px 1fr"
 }: ITableRowDataProps) => {
   /**
    * @description This is the table row style
@@ -36,13 +36,17 @@ const RefactorTableBody = ({
       cursor: "pointer",
       textOverflow: "ellipsis",
       text: "uppercase"
+    },
+    "&.MuiTableCell-root": {
+      display: "flex",
+      alignItems: "center"
     }
   })
   return (
-    <TableRowStyle>
+    <TableRowStyle className="bg-neutral-900 px-3.5">
       {child.map((c) => (
         <TableCellStyle
-          className="flex items-center border-b-neutral-800"
+          className="border-b-neutral-800 px-0"
           key={uuidv4()}
         >
           {c}

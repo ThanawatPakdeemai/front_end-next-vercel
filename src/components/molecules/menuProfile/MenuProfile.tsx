@@ -51,7 +51,7 @@ const MenuProfile = () => {
             id={ele.id}
             label={ele.label}
             icon={ele.icon}
-            href={ele.href}
+            href={ele.href === "/mission" ? "" : ele.href}
             external={ele.external}
             onClick={
               ele.id === "your-mission" ? () => handleModalMission() : undefined

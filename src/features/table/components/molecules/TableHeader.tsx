@@ -12,7 +12,7 @@ interface IProps {
 
 const TableHeader = ({
   thead,
-  gridTemplateColumns = "180px 130px 130px 1fr"
+  gridTemplateColumns = "180px 140px 130px 1fr"
 }: IProps) => {
   const TableRowStyle = styled(TableRow)({
     ":root": {
@@ -31,7 +31,7 @@ const TableHeader = ({
   })
 
   const CellStyled =
-    "flex border-b-0 pt-0 pb-1 text-start font-neue-machina-bold text-xs uppercase cursor-pointer"
+    "flex border-b-0 pt-0 pb-1 px-0 text-neutral-600 text-start font-neue-machina-bold text-xs uppercase cursor-pointer"
 
   return (
     <TableHead
@@ -47,28 +47,24 @@ const TableHeader = ({
             className={`${CellStyled} bg-neutral-780`}
             onClick={h.onClick}
           >
-            {h.title ? (
-              <div className={h.className ? h.className : "flex items-center"}>
-                {h.title} {/* title => string <div className="flex"></div> */}
-                {h.arrowIcon ? (
-                  <div className="ml-1 flex flex-col">
-                    <KeyboardArrowUp
-                      className={`h-4 w-4 !text-sm ${
-                        h.keyUp ? "text-neutral-400" : null
-                      }`}
-                    />
-                    <KeyboardArrowDown
-                      className={`h-4  w-4 !text-sm ${
-                        h.keyDown ? "text-neutral-400" : null
-                      }`}
-                    />
-                  </div>
-                ) : null}
-                {h.filterIcon ? h.child : null}
-              </div>
-            ) : (
-              h.child
-            )}
+            <div className={h.className ? h.className : "flex items-center"}>
+              {h.title} {/* title => string <div className="flex"></div> */}
+              {h.arrowIcon ? (
+                <div className="ml-1 flex flex-col gap-1">
+                  <KeyboardArrowUp
+                    className={`mb-[-9px] h-3 w-3 ${
+                      h.keyUp ? "text-neutral-400" : null
+                    }`}
+                  />
+                  <KeyboardArrowDown
+                    className={`h-3 w-3 ${
+                      h.keyDown ? "text-neutral-400" : null
+                    }`}
+                  />
+                </div>
+              ) : null}
+              {h.filterIcon ? h.child : null}
+            </div>
           </TableCellStyle>
         ))}
       </TableRowStyle>

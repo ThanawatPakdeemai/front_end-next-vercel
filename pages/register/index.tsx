@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
-import ProfileRegister from "@components/template/Register"
+import ProfileRegister from "@components/templates/Register"
 
 const RegisterPage = () => (
   <GoogleReCaptchaProvider

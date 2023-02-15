@@ -36,6 +36,10 @@ import IconSwap from "@components/icons/SwapIcon"
 import GlobalIcon from "@components/icons/GlobalIcon"
 import BoltIcon from "@mui/icons-material/Bolt"
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined"
+import SwapCallsIcon from "@mui/icons-material/SwapCalls"
+import LocalActivityOutlinedIcon from "@mui/icons-material/LocalActivityOutlined"
+import BlogIcon from "@components/icons/BlogIcon/BlogIcon"
+import WalletIcon from "@components/icons/MenunIcon/WalletIcon"
 
 export const MENU = [
   {
@@ -81,7 +85,7 @@ export const MENU = [
       {
         name: "Tournament",
         link: "/tournament",
-        icon: "/assets/icons/menu/Iconcrown.svg"
+        icon: TournamentIcon
       } /**
        @description name svgIcon in forder menu in public (if icon is string) */,
       {
@@ -120,19 +124,19 @@ export const MENU = [
       {
         name: "P2P DEX",
         link: "/p2p-dex",
-        icon: AttachMoneyIcon
+        icon: SwapCallsIcon
       },
       {
         name: "Staking",
         link: "/staking",
-        icon: MoneyOffIcon
+        icon: IStacking
       },
       {
         name: "Referral Program",
         link: "/referral",
-        icon: MapOutlinedIcon
+        icon: IReferrals
       },
-      { name: "Coupon", link: "/coupon", icon: DiamondIcon }
+      { name: "Coupon", link: "/coupon", icon: LocalActivityOutlinedIcon }
     ]
   },
   {
@@ -150,20 +154,20 @@ export const MENU = [
       {
         name: "Blog",
         link: "/blog",
-        icon: AttachMoneyIcon
+        icon: BlogIcon
       },
       {
         name: "About Us",
         link: "/abount-us",
-        icon: MoneyOffIcon
+        icon: AboutUsIcon
       },
       {
         name: "Marketplace",
         link: "/marketplace",
-        icon: MapOutlinedIcon
+        icon: MarketPlaceIcon
       },
-      { name: "Nakaverse", link: "/nakaverse", icon: DiamondIcon },
-      { name: "Nakapunks", link: "/nakapunks", icon: DiamondIcon }
+      { name: "Nakaverse", link: "/nakaverse", icon: NakaverseIcon },
+      { name: "Nakapunks", link: "/nakapunks", icon: NakapunksIcon }
     ]
   }
 ]
@@ -226,6 +230,13 @@ export const MENU_LOGGEDIN: IMenu[] = [
     label: "Edit Profile",
     href: "/profile",
     icon: <EditProfileIcon />,
+    external: false
+  },
+  {
+    id: "wallet",
+    label: "Wallet",
+    href: "/wallet",
+    icon: <WalletIcon />,
     external: false
   },
   {

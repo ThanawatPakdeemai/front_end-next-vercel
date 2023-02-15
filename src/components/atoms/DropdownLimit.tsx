@@ -5,6 +5,8 @@ import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import ButtonDropdown from "@feature/gameItem/atoms/ButtonDropdown"
+import { IMenuBase } from "@interfaces/IMenu"
+import { useTranslation } from "react-i18next"
 
 interface IProp {
   defaultValue: number
@@ -20,11 +22,13 @@ const DropdownLimit = ({
   className,
   onChangeSelect
 }: IProp) => {
+  const { t } = useTranslation()
+
   const [selectLimit, setSelectLimit] = useState<Number>(defaultValue)
-  const onChangeItem = (_item: number) => {
+  const onChangeItem = (_item) => {
     if (_item && onChangeSelect) {
-      setSelectLimit(_item)
-      onChangeSelect(_item)
+      setSelectLimit(Number((_item as IMenuBase).data))
+      onChangeSelect(Number((_item as IMenuBase).data))
     }
   }
   return (
@@ -48,7 +52,7 @@ const DropdownLimit = ({
                       <div className="flex items-center">
                         <div className="flex items-center">
                           <VisibilityOutlinedIcon />
-                          <p className="px-2 uppercase">Show</p>
+                          <p className="px-2 uppercase">{t("show")}</p>
                         </div>
                         <p className="px-2 text-[#ffffff]">{`${selectLimit}`}</p>
                       </div>
@@ -79,7 +83,7 @@ const DropdownLimit = ({
                       list &&
                       list.map((ele: Number) => ({
                         label: (
-                          <div className="flex items-center justify-end pr-7">
+                          <div className="flex items-center justify-center">
                             <p>{`${ele}`}</p>
                           </div>
                         ),
@@ -91,7 +95,7 @@ const DropdownLimit = ({
                     }
                     onChange={(_item) => {
                       popupState.close()
-                      onChangeItem(_item as number)
+                      onChangeItem(_item)
                     }}
                   />
                 </Popover>

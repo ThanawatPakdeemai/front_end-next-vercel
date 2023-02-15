@@ -3,7 +3,7 @@ import { Button, TableRow, TableCell, Chip } from "@mui/material"
 import dayjs from "dayjs"
 import { useTranslation } from "next-i18next"
 import { INotification } from "@feature/notification/interfaces/INotificationService"
-import Issue from "../atoms/Issue"
+import ChipIssue from "../atoms/ChipIssue"
 
 interface IProps {
   data: INotification
@@ -37,7 +37,7 @@ const NotificationItem = ({ data, onHandleView }: IProps) => {
         }}
         className="w-32 flex-initial font-neue-machina text-[10px]"
       >
-        <Issue data={data} />
+        <ChipIssue data={data} />
       </TableCell>
       <TableCell
         sx={{

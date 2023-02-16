@@ -6,14 +6,31 @@ import SkeletonBanner from "@components/atoms/skeleton/SkeletonBanner"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import useGamesById from "@feature/game/containers/hooks/useGamesById"
 import StoryLobby from "@feature/game/components/templates/lobby/StoryLobby"
-import GamePageDefault from "@components/templates/GamePageDefault"
 import OverViewGameStoryMode from "@components/organisms/OverviewGameStoryMode"
+import useGetAllGames from "@feature/game/containers/hooks/useGetAllGame"
+import GamePageDefault from "@components/templates/GamePageDefault"
 import RightSidebarContentEffect from "@components/templates/contents/RightSidebarContentEffect"
+import { useRouter } from "next/router"
 
 export default function GameLobby() {
   const [gameData, setGameData] = useState<IGame>()
   const { data } = useGameStore()
   const { dataGame, isLoading } = useGamesById({ _gameId: data ? data.id : "" })
+  const router = useRouter()
+  const { allGameData } = useGetAllGames()
+  const { GameHome } = router.query
+
+  useEffect(() => {
+    if (
+      allGameData &&
+      allGameData.data &&
+      allGameData.data.find(
+        (value) => value.game_url === (GameHome as string)
+      ) === undefined
+    ) {
+      router.push("/404")
+    }
+  }, [GameHome, allGameData, router])
 
   useEffect(() => {
     if (!isLoading && dataGame) setGameData(dataGame.data[0])

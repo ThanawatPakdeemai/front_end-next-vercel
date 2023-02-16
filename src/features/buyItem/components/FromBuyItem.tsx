@@ -66,7 +66,10 @@ const FromBuyItem = ({ handleClose }: IProp) => {
   })
 
   const { mutateBuyItems, isLoading } = useBuyGameItems()
-  const { balanceVaultNaka } = useGetBalanceVault(profile?.address ?? "")
+  const { balanceVaultNaka } = useGetBalanceVault(
+    profile?.address ?? "",
+    !!profile
+  )
   const { setVaultBalance } = useWalletStore()
 
   const onSubmit = (_data) => {

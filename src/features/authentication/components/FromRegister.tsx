@@ -210,7 +210,7 @@ const FromRegister = () => {
     referralId: string | string[]
   ) => {
     // eslint-disable-next-line no-console
-    console.log("test-facebook-login-response", response)
+    console.log("test-facebook-register-response", response)
     if (
       response.email !== null &&
       response.email !== undefined &&

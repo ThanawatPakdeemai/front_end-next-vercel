@@ -1,23 +1,28 @@
-import { ReactElement, useEffect, useState } from "react"
+import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import useGameStore from "@stores/game"
 import GameSlide from "@feature/slider/components/templates/GameSlide"
 import SkeletonBanner from "@components/atoms/skeleton/SkeletonBanner"
-import { IGame } from "@feature/game/interfaces/IGameService"
-import useGamesById from "@feature/game/containers/hooks/useGamesById"
+import useGamesById from "@feature/game/containers/hooks/useFindGameById"
 import StoryLobby from "@feature/game/components/templates/lobby/StoryLobby"
 import GamePageDefault from "@components/template/GamePageDefault"
 import OverViewGameStoryMode from "@components/organisms/OverviewGameStoryMode"
 import RightSidebarContentEffect from "@components/template/RightSidebarContentEffect"
+import { useRouter } from "next/router"
 
 export default function GameLobby() {
-  const [gameData, setGameData] = useState<IGame>()
-  const { data } = useGameStore()
-  const { dataGame, isLoading } = useGamesById({ _gameId: data ? data.id : "" })
+  const router = useRouter()
+  const { id } = router.query
+  const { gameData } = useGamesById(id ? id.toString() : "", "story-mode")
 
-  useEffect(() => {
-    if (!isLoading && dataGame) setGameData(dataGame.data[0])
-  }, [dataGame, isLoading])
+  // TODO: Change to useGetGameByPath
+  // const { gameDataByPath } = useGetGameByPath(id ? id.toString() : "")
+
+  // TODO: Add game to store
+  // const { data } = useGameStore()
+  // const [gameStory, setGameStory] = useState<IGame>()
+  // useEffect(() => {
+  //   if (!isLoadingGameData && gameData) setGameStory(gameData)
+  // }, [isLoadingGameData, gameData])
 
   const getTemplateLobby = () => {
     if (gameData) {
@@ -26,7 +31,12 @@ export default function GameLobby() {
           return (
             <RightSidebarContentEffect
               content={<StoryLobby />}
-              aside={<OverViewGameStoryMode />}
+              aside={
+                <OverViewGameStoryMode
+                  gameId={id ? id.toString() : ""}
+                  gameType="story-mode"
+                />
+              }
             />
           )
         default:

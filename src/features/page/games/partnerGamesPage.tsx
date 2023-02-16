@@ -68,7 +68,7 @@ const PartnerGames = () => {
               onHandleClick={() =>
                 onHandleClick(
                   "partner-game",
-                  `partner-games/${game.slug}`,
+                  `partner-games/${game.slug}?id=${game.id}`,
                   game
                 )
               }

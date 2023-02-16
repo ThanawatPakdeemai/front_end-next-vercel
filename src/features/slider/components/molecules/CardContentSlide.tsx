@@ -18,7 +18,7 @@ const CardContentSlide = ({ slide }: ICardContentSlide) => {
   gameTags.push(
     {
       name: slide.category.name,
-      link: `category/${slide.category.id}`
+      link: `categories/${slide.category.slug}`
     },
     {
       name: slide.game_type,

@@ -99,6 +99,7 @@ export interface IGameCategory {
 }
 
 export interface IGame {
+  NFT_Owner: string
   _id: string
   howto: IGameHowTo
   socket_info?: IGameSocketInfo

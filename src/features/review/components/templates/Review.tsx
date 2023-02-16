@@ -4,6 +4,7 @@ import MedalIcon from "@components/icons/MedalIcon"
 import { useTranslation } from "react-i18next"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import AddIcon from "@mui/icons-material/Add"
+import PanelContent from "@components/molecules/PanelContent"
 
 interface IReviewProps {
   children: React.ReactNode
@@ -29,9 +30,11 @@ const Review = ({ children, average }: IReviewProps) => {
           />
         }
       >
-        <div className="pt-3 text-start text-sm text-neutral-500">
-          {children}
-        </div>
+        <PanelContent height="h-[400px]">
+          <div className="pt-3 text-start text-sm text-neutral-500">
+            {children}
+          </div>
+        </PanelContent>
       </AsideLayout>
     </div>
   )

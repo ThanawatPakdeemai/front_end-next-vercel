@@ -35,6 +35,14 @@ export const getGameById = (_gameId: string) =>
       .catch((error) => reject(error))
   })
 
+export const getGameByPath = (_gamePath: string) =>
+  new Promise<IGameService>((resolve, reject) => {
+    services
+      .get<IGameService>(`/game/data-by-path${_gamePath}`)
+      .then((reponse) => resolve(reponse.data))
+      .catch((error) => reject(error))
+  })
+
 export const getAllGameRooms = ({
   _gameId,
   _email,

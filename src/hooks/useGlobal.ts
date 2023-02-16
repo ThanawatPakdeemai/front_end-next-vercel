@@ -1,5 +1,4 @@
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
-import { useToast } from "@feature/toast/containers"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
@@ -9,9 +8,7 @@ import {
   IGame,
   IGetType
 } from "@feature/game/interfaces/IGameService"
-import { MESSAGES } from "@constants/messages"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
-import useGamesById from "@feature/game/containers/hooks/useGamesById"
 
 const useGlobal = (
   _limit?: number,
@@ -43,7 +40,6 @@ const useGlobal = (
   // hook
   const { onSetGameData, onSetGamePartnersData } = useGameStore()
   const profile = useProfileStore((state) => state.profile.data)
-  const { errorToast } = useToast()
 
   // States
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
@@ -71,55 +67,33 @@ const useGlobal = (
   const [totalCount, setTotalCount] = useState<number>(0)
 
   /**
-   * @description Get game partner data
-   */
-  const [gamePartnerData, setGamePartnerData] = useState<IPartnerGameData>()
-  const { dataGamePartner } = useGameStore()
-  const { dataGame, isLoading } = useGamesById({
-    _gameId: dataGamePartner ? dataGamePartner.id : "",
-    _type: "partner-game"
-  })
-
-  useEffect(() => {
-    if (!isLoading && dataGame && dataGame.data) {
-      setGamePartnerData(dataGame.data as IPartnerGameData)
-    }
-  }, [dataGame, isLoading])
-
-  /**
    * @description Handle click on game card
-   * @param _gameUrl
-   * @param _gameData
+   * @param _gameUrl - Game url to redirect
+   * @param _gameData - Game data to set to store
    */
   const onHandleClick = async (
     _type: IGetType,
     _gameUrl: string,
-    _gameData?: IGame | IPartnerGameData
+    _gameData: IGame | IPartnerGameData
   ) => {
-    if (stateProfile) {
-      switch (_type) {
-        case "partner-game":
-          onSetGamePartnersData(_gameData as IPartnerGameData)
-          break
+    switch (_type) {
+      case "partner-game":
+        onSetGamePartnersData(_gameData as IPartnerGameData)
+        break
 
-        case "arcade-emporium":
-          await router.push(`/${_type}/${_gameUrl}`)
-          break
+      case "arcade-emporium":
+        onSetGameData(_gameData as IGame)
+        break
 
-        default:
-          onSetGameData(_gameData as IGame)
-          await router.push(`/${_gameUrl}`)
-          break
-      }
-    } else {
-      errorToast(MESSAGES.please_login)
+      default:
+        onSetGameData(_gameData as IGame)
+        break
     }
+    await router.push(`/${_gameUrl}`)
   }
 
   return {
     onHandleClick,
-    gamePartnerData,
-    dataGame,
     limit,
     page,
     setPage,

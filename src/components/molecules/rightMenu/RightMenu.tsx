@@ -5,20 +5,30 @@ import CreateProfile from "@feature/profile/components/createProfile/CreateProfi
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
 
 import useGetProfileByEmail from "@feature/profile/containers/hook/getProfileByEmail"
+
 import RightMenuLogIn from "./RightMenuLogIn"
 import RightMenuNotLogIn from "./RightMenuNotLogIn"
 
 const RightMenu = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
-  const { profile: profileData } = useGetProfileByEmail(profile?.email ?? "")
+  const [getProfile, setGetProfile] = useState<IProfile | null>()
+
   useEffect(() => {
     setStateProfile(profile)
   }, [profile])
 
+  const { profile: profileData } = useGetProfileByEmail(
+    stateProfile?.email ?? ""
+  )
+
+  useEffect(() => {
+    setGetProfile(profileData)
+  }, [profileData])
+
   return (
     <Box>
-      {stateProfile && profileData ? (
+      {stateProfile && getProfile ? (
         <>
           <CreateProfile />
           <RightMenuLogIn />

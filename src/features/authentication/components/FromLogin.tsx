@@ -14,11 +14,11 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined"
 import { useForm } from "react-hook-form"
 import ButtonLink from "@components/atoms/button/ButtonLink"
-import Link from "next/link"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import { ISignIn } from "../interfaces/IAuthService"
 import useSignIn from "../containers/hooks/useSignIn"
+import FromForgotPassword from "./FromForgotPassword"
 
 const FormLogin = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -154,11 +154,8 @@ const FormLogin = () => {
           />
         </ButtonGroup>
       </form>
-      <Link href="/forget-password">
-        <Typography className="cursor-pointer text-right text-sm text-neutral-500">
-          Forget Password?
-        </Typography>
-      </Link>
+
+      <FromForgotPassword />
     </>
   )
 }

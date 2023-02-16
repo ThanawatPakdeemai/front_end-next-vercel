@@ -8,24 +8,33 @@ import HowToPlayIcon from "@components/icons/HowToPlayIcon/HowToPlayIcon"
 import IDiamond from "@components/icons/Diamond"
 import useTabContext from "@feature/tab/contexts/useTabContext"
 import useTab from "@feature/tab/hook/useTab"
-import PartnerGameWhatsNew from "../molecules/PartnerGameWhatsNew"
-import PartnerGameHowToPlay from "../molecules/PartnerGameHowToPlay"
-import PartnerGameItems from "../molecules/PartnerGameItems"
+import { IGetType } from "@feature/game/interfaces/IGameService"
+import useGameWhatsNew from "@feature/game/containers/hooks/useGameWhatsNew"
+import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
+import WhatsNewBody from "../../molecules/WhatsNewBody"
+import HowToPlayBody from "../../molecules/HowToPlayBody"
+import GameItemsBody from "../../molecules/GameItemsBody"
 
-export const TabStyle = {
-  padding: "0!important"
+interface IProps {
+  gameType: IGetType
+  gameId: string
 }
-
-const PartnerGameContent = () => {
+const GameTabs = ({ gameType, gameId }: IProps) => {
   const { hydrated } = useGlobal()
   const { t } = useTranslation()
   const { handleChangeTab } = useTab()
   const { tabValue } = useTabContext()
 
+  const { newVersionData } = useGameWhatsNew(gameType, gameId)
+  const { singleVersion, gameHowToPlay, gameItems } = useGameOverview(
+    gameId,
+    gameType
+  )
+
   /**
    * @description Tab Content Partner Game
    */
-  const PARTNER_GAME_TAB_CONTENT: {
+  const GAME_TAB_CONTENT: {
     id: string
     label: string
     icon: React.ReactNode
@@ -35,19 +44,24 @@ const PartnerGameContent = () => {
       id: "1",
       label: t("whats_new"),
       icon: <WhatsNewIcon color="#70727B" />,
-      component: <PartnerGameWhatsNew />
+      component: (
+        <WhatsNewBody
+          title={newVersionData ? newVersionData.version : singleVersion || ""}
+          description={newVersionData ? newVersionData.content : ""}
+        />
+      )
     },
     {
       id: "2",
       label: t("how_to_play"),
       icon: <HowToPlayIcon stroke="#70727B" />,
-      component: <PartnerGameHowToPlay />
+      component: <HowToPlayBody text={gameHowToPlay} />
     },
     {
       id: "3",
       label: t("ntf_game"),
       icon: <IDiamond stroke="#70727B" />,
-      component: <PartnerGameItems />
+      component: <GameItemsBody gameItems={gameItems} />
     }
   ]
 
@@ -55,9 +69,11 @@ const PartnerGameContent = () => {
     <Box className="relative h-full">
       <div className="absolute top-[-80px] left-[-20px] flex">
         <div className="flex items-center justify-between gap-2 rounded-xl bg-neutral-700 bg-opacity-40 px-1 capitalize">
-          {PARTNER_GAME_TAB_CONTENT.map((item) => (
+          {GAME_TAB_CONTENT.map((item) => (
             <Tab
-              sx={TabStyle}
+              sx={{
+                padding: "0!important"
+              }}
               onClick={() => handleChangeTab(item.id)}
               label={
                 <Chip
@@ -76,9 +92,9 @@ const PartnerGameContent = () => {
           ))}
         </div>
       </div>
-      <PanelContent>
+      <PanelContent height="h-[500px]">
         <div className="p-4">
-          {PARTNER_GAME_TAB_CONTENT.map(
+          {GAME_TAB_CONTENT.map(
             (item) =>
               item.id === tabValue && (
                 <Box
@@ -97,4 +113,4 @@ const PartnerGameContent = () => {
   )
 }
 
-export default PartnerGameContent
+export default GameTabs

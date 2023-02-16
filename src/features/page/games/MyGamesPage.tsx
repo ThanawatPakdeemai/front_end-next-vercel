@@ -56,6 +56,7 @@ const MyGamesPage = () => {
       })
     }
     clearGameData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clearGameData, myGamesData, myGamesIsPreviousData, page, queryClient])
 
   return (

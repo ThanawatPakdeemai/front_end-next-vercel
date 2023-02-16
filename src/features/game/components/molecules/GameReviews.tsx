@@ -8,14 +8,19 @@ import { Image } from "@components/atoms/image/index"
 import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { ReviewProvider } from "@feature/review/containers/contexts/ReviewProvider"
-import useGamePartners from "../../containers/hook/useGamePartners"
-import { IGamePartnerReviewsData } from "../../interfaces/IGamePartners"
+import { IGamePartnerReviewsData } from "@feature/game/partnerGames/interfaces/IGamePartners"
+import useGameWhatsNew from "@feature/game/containers/hooks/useGameWhatsNew"
+import { IGetType } from "@feature/game/interfaces/IGameService"
 
-const PartnerGameReviews = () => {
+interface IGameReviewProps {
+  gameType: IGetType
+  gameId: string
+}
+const GameReviews = ({ gameType, gameId }: IGameReviewProps) => {
   const { t } = useTranslation()
   const { page, setPage, totalCount, setTotalCount, stateProfile, hydrated } =
     useGlobal()
-  const { allReviewsData, limit } = useGamePartners()
+  const { allReviewsData, limit } = useGameWhatsNew(gameType, gameId)
   const [review, setReview] = useState<IGamePartnerReviewsData[]>([])
   const [average, setAverage] = useState<number>(0)
 
@@ -126,4 +131,4 @@ const PartnerGameReviews = () => {
   )
 }
 
-export default PartnerGameReviews
+export default GameReviews

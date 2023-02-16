@@ -240,7 +240,7 @@ const Home = () => {
             classNameSecond="bg-info-light"
             iconBtn={<IDiamond />}
             textBtn="NAKA NFT"
-            href="/nft-games"
+            href="/arcade-emporium"
             srcMain={IMAGES.frontNakaBand.src}
             altMain={IMAGES.frontNakaBand.alt}
             srcSecond={IMAGES.backNakaBand.src}

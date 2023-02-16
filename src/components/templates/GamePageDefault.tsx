@@ -6,7 +6,6 @@ import Header from "@components/organisms/Header"
 import { GAME_DETAILS_BANNER } from "@constants/gameBanner"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
-import useGlobal from "@hooks/useGlobal"
 import useGameStore from "@stores/game"
 import React, { useEffect, useState } from "react"
 
@@ -23,7 +22,7 @@ const GamePageDefault = ({
   component3
 }: IGamePageDefaultProps) => {
   const data = useGameStore((state) => state.data)
-  const { gamePartnerData } = useGlobal()
+  const gamePartnerData = useGameStore((state) => state.dataGamePartner)
   const [gameData, setGameData] = useState<IGame | IPartnerGameData>()
 
   useEffect(() => {

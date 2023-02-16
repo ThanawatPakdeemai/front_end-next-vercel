@@ -94,8 +94,8 @@ export const MENU = [
         icon: LanguageOutlinedIcon
       },
       {
-        name: "NFT Games",
-        link: "/nft-games",
+        name: "Arcade Emporium",
+        link: "/arcade-emporium",
         icon: DiamondIcon
       },
       {
@@ -209,10 +209,10 @@ export const MENU_GUEST: IMenu[] = [
     external: false
   },
   {
-    id: "nft-games",
-    label: "NFT Games",
+    id: "arcade-emporium",
+    label: "Arcade Emporium",
     icon: <Diamond stroke="#E1E2E2" />,
-    href: "/nft-games",
+    href: "/arcade-emporium",
     external: false
   },
   {

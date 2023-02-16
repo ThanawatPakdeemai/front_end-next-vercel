@@ -3,10 +3,12 @@ import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
+import {
+  IFilterGamesByKey,
+  IGame,
+  IGetType
+} from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
-import useGamesById from "@feature/game/containers/hooks/useGamesById"
-import { IFilterGamesByCategory } from "@feature/dropdown/interfaces/IDropdownService"
 
 const useGlobal = (
   _limit?: number,
@@ -16,28 +18,28 @@ const useGlobal = (
   _item?: string | string[],
   _device?: string,
   _gameType?: string,
-  _tournament?: boolean
+  _tournament?: boolean,
+  _category?: string,
+  _nftgame?: boolean
 ) => {
   const router = useRouter()
 
-  /**
-   * @description Default body for game filter
-   */
-  const defaultBody: IFilterGamesByCategory = {
-    "limit": _limit || 20,
-    "skip": _skip || 1,
-    "sort": _sort || "_id",
-    "search": _search || "",
-    "item": _item || "all",
-    "device": _device || "all",
-    "game_type": _gameType || "all",
-    "tournament": _tournament || false
+  const defaultBody: IFilterGamesByKey = {
+    limit: _limit ?? 20,
+    skip: _skip ?? 1,
+    sort: _sort ?? "_id",
+    search: _search ?? "",
+    item: _item ?? "all",
+    device: _device ?? "all",
+    game_type: _gameType ?? "all",
+    tournament: _tournament ?? false,
+    category: _category ?? "all",
+    nftgame: _nftgame ?? false
   }
 
   // hook
   const { onSetGameData, onSetGamePartnersData } = useGameStore()
   const profile = useProfileStore((state) => state.profile.data)
-  // const { errorToast } = useToast()
 
   // States
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
@@ -66,38 +68,29 @@ const useGlobal = (
   const pager: number[] = [6, 12, 24, 48, 64]
 
   /**
-   * @description Get game partner data
-   */
-  const [gamePartnerData, setGamePartnerData] = useState<IPartnerGameData>()
-  const { dataGamePartner } = useGameStore()
-  const { dataGame, isLoading } = useGamesById({
-    _gameId: dataGamePartner ? dataGamePartner.id : "",
-    _type: "partner-game"
-  })
-
-  useEffect(() => {
-    if (!isLoading && dataGame && dataGame.data) {
-      setGamePartnerData(dataGame.data as IPartnerGameData)
-    }
-  }, [dataGame, isLoading])
-
-  /**
    * @description Handle click on game card
-   * @param _gameUrl
-   * @param _gameData
+   * @param _gameUrl - Game url to redirect
+   * @param _gameData - Game data to set to store
    */
   const onHandleClick = async (
     _type: IGetType,
     _gameUrl: string,
-    _gameData?: IGame | IPartnerGameData
+    _gameData: IGame | IPartnerGameData
   ) => {
     switch (_type) {
       case "partner-game":
         onSetGamePartnersData(_gameData as IPartnerGameData)
+        await router.push(`/partner-games/${_gameUrl}?id=${_gameData.id}`)
+        break
+
+      case "arcade-emporium":
+        onSetGameData(_gameData as IGame)
+        await router.push(`/arcade-emporium/${_gameUrl}?id=${_gameData.id}`)
         break
 
       default:
         onSetGameData(_gameData as IGame)
+        await router.push(`/${_gameUrl}`)
         break
     }
     await router.push(`/${_gameUrl}`)
@@ -105,8 +98,6 @@ const useGlobal = (
 
   return {
     onHandleClick,
-    gamePartnerData,
-    dataGame,
     limit,
     page,
     setPage,

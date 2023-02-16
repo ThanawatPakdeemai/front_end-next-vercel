@@ -1,20 +1,21 @@
-import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { TabProvider } from "@feature/tab/contexts/TabProvider"
 import { useRouter } from "next/router"
-import OverviewContent from "@components/organisms/OverviewContent"
-import GameContent from "@feature/game/components/templates/lobby/GameContent"
 import GameTabs from "@feature/game/components/templates/lobby/GameTabs"
 import GameReviews from "@feature/game/components/molecules/GameReviews"
+import GameContent from "@feature/game/components/templates/lobby/GameContent"
+import OverviewContent from "@components/organisms/OverviewContent"
+import { ReactElement } from "react"
 import GamePageDefault from "@components/templates/GamePageDefault"
 import RightSidebarContentEffect from "@components/templates/contents/RightSidebarContentEffect"
 import RightSidebarContent from "@components/templates/contents/RightSidebarContent"
-import { TabProvider } from "@feature/tab/contexts/TabProvider"
 
-export default function GamePartnerDetails() {
+export default function ArcadeEmporiumGameDetails() {
   const router = useRouter()
   const { id } = router.query
   const gameId = id ? id.toString() : ""
-
+  // const { gameData } = useGlobal()
+  // return <>{!gameData && <SkeletonGamePartner />}</>
   return (
     <GamePageDefault
       component={
@@ -23,13 +24,13 @@ export default function GamePartnerDetails() {
           content={
             <GameContent
               gameId={gameId}
-              gameType="partner-game"
+              gameType="arcade-emporium"
             />
           }
           aside={
             <OverviewContent
               gameId={gameId}
-              gameType="partner-game"
+              gameType="arcade-emporium"
             />
           }
         />
@@ -40,13 +41,13 @@ export default function GamePartnerDetails() {
             <TabProvider>
               <GameTabs
                 gameId={gameId}
-                gameType="partner-game"
+                gameType="arcade-emporium"
               />
             </TabProvider>
           }
           aside={
             <GameReviews
-              gameType="partner-game"
+              gameType="arcade-emporium"
               gameId={gameId}
             />
           }
@@ -56,7 +57,7 @@ export default function GamePartnerDetails() {
   )
 }
 
-GamePartnerDetails.getLayout = function getLayout(page: ReactElement) {
+ArcadeEmporiumGameDetails.getLayout = function getLayout(page: ReactElement) {
   return page
 }
 

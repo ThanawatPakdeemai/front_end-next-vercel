@@ -29,7 +29,7 @@ const TagSingular = ({
     </Typography>
     {link ? (
       <Link href={link}>
-        {icon && (
+        {icon && icon !== "-" && icon !== "" && (
           <ImageCustom
             src={icon}
             alt={title}
@@ -46,7 +46,7 @@ const TagSingular = ({
       </Link>
     ) : (
       <>
-        {icon && (
+        {icon && icon !== "-" && icon !== "" && (
           <ImageCustom
             src={icon}
             alt={title}

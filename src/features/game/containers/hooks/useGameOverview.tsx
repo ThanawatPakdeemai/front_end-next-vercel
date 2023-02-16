@@ -57,6 +57,8 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
 
       default:
         gameData &&
+          gameData.category_list &&
+          gameData.category_list.length > 0 &&
           gameData.category_list.map((category) =>
             gameTags.push({
               name: category.name,

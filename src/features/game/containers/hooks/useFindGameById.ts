@@ -13,7 +13,7 @@ import { useQuery } from "@tanstack/react-query"
  * @param gameType - game type
  * @returns gameDataById: IGameService | undefined
  */
-const useFindGameById = (gameId: string, gameType: IGetType) => {
+const useFindGameById = (gameId: string, gameType?: IGetType) => {
   const {
     data: gamePartner,
     isLoading: isLoadingPartner,

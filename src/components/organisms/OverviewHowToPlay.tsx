@@ -8,11 +8,18 @@ import { useTranslation } from "react-i18next"
 interface IOverviewGameProps {
   gameId: string
   gameType: IGetType
+  hight?: string
+  title?: string
 }
 
-const OverViewGameStoryMode = ({ gameId, gameType }: IOverviewGameProps) => {
+const OverviewHowToPlay = ({
+  gameId,
+  gameType,
+  hight = "h-[400px]",
+  title
+}: IOverviewGameProps) => {
   const { t } = useTranslation()
-  const { gameDescription } = useGameOverview(gameId, gameType)
+  const { gameHowToPlay } = useGameOverview(gameId, gameType)
 
   // const { hydrated } = useGlobal()
   // const { data } = useGameStore()
@@ -22,16 +29,16 @@ const OverViewGameStoryMode = ({ gameId, gameType }: IOverviewGameProps) => {
   // }, [data])
 
   return (
-    <div className="flex flex-col">
+    <div className="relative flex flex-col overflow-hidden rounded-2xl bg-neutral-780 p-2">
       <AsideLayout
         icon={<OverviewIcon />}
-        title={`${t("game_overview")}`}
+        title={title ? `${t(title)}` : `${t("game_overview")}`}
       >
-        <PanelContent height="h-[400px]">
+        <PanelContent height={hight.toString()}>
           <p
             className="px-6 py-2 text-start text-sm text-neutral-500"
             dangerouslySetInnerHTML={{
-              __html: gameDescription
+              __html: gameHowToPlay
             }}
           />
         </PanelContent>
@@ -40,4 +47,4 @@ const OverViewGameStoryMode = ({ gameId, gameType }: IOverviewGameProps) => {
   )
 }
 
-export default OverViewGameStoryMode
+export default OverviewHowToPlay

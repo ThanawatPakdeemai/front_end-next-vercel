@@ -38,7 +38,7 @@ export const getGameById = (_gameId: string) =>
 export const getGameByPath = (_gamePath: string) =>
   new Promise<IGameService>((resolve, reject) => {
     services
-      .get<IGameService>(`/game/data-by-path${_gamePath}`)
+      .get<IGameService>(`/game/data-by-path/${_gamePath}`)
       .then((reponse) => resolve(reponse.data))
       .catch((error) => reject(error))
   })

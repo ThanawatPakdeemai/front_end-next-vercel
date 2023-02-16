@@ -11,11 +11,13 @@ const useGetGameByPath = (_gamePath: string) => {
     queryKey: ["getGameByPath", { _gamePath }],
     queryFn: () => getGameByPath(_gamePath),
     retry: false,
+    keepPreviousData: true,
+    staleTime: Infinity,
     enabled: _gamePath !== "" || _gamePath !== undefined
   })
 
   return {
-    gameDataByPath: gameDataByPath || undefined,
+    gameData: (gameDataByPath && gameDataByPath.data[0]) || undefined,
     error,
     isLoading,
     isError

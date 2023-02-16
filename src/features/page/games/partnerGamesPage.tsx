@@ -66,11 +66,7 @@ const PartnerGames = () => {
               partnerdata={game}
               imgPartner={game.image_thumbnail}
               onHandleClick={() =>
-                onHandleClick(
-                  "partner-game",
-                  `partner-games/${game.slug}?id=${game.id}`,
-                  game
-                )
+                onHandleClick("partner-game", game.slug, game)
               }
             />
           ))}

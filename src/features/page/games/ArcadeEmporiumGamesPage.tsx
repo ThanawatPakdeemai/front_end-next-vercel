@@ -40,11 +40,7 @@ const ArcadeEmporiumGamesPage = () => {
                 menu={F2PHeaderMenu}
                 data={game}
                 onHandleClick={() =>
-                  onHandleClick(
-                    "arcade-emporium",
-                    `/arcade-emporium/${game.path}?id=${game.id}`,
-                    game
-                  )
+                  onHandleClick("arcade-emporium", game.path, game)
                 }
               />
             ))

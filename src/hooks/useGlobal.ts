@@ -79,17 +79,19 @@ const useGlobal = (
     switch (_type) {
       case "partner-game":
         onSetGamePartnersData(_gameData as IPartnerGameData)
+        await router.push(`/partner-games/${_gameUrl}?id=${_gameData.id}`)
         break
 
       case "arcade-emporium":
         onSetGameData(_gameData as IGame)
+        await router.push(`/arcade-emporium/${_gameUrl}?id=${_gameData.id}`)
         break
 
       default:
         onSetGameData(_gameData as IGame)
+        await router.push(`/${_gameUrl}`)
         break
     }
-    await router.push(`/${_gameUrl}`)
   }
 
   return {

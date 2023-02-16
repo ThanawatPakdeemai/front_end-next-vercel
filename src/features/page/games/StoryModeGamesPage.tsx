@@ -65,11 +65,7 @@ const StoryModeGamesPage = () => {
                 cooldown={cooldown}
                 setCooldown={setCooldown}
                 onHandleClick={() =>
-                  onHandleClick(
-                    "story-mode",
-                    `/${game.path}?id=${game.id}`,
-                    game
-                  )
+                  onHandleClick("story-mode", game.path, game)
                 }
               />
             ))

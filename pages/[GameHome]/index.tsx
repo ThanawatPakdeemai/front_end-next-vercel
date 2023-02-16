@@ -1,28 +1,26 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import GameSlide from "@feature/slider/components/templates/GameSlide"
 import SkeletonBanner from "@components/atoms/skeleton/SkeletonBanner"
-import useGamesById from "@feature/game/containers/hooks/useFindGameById"
 import StoryLobby from "@feature/game/components/templates/lobby/StoryLobby"
 import GamePageDefault from "@components/template/GamePageDefault"
-import OverViewGameStoryMode from "@components/organisms/OverviewGameStoryMode"
+import OverviewHowToPlay from "@components/organisms/OverviewHowToPlay"
 import RightSidebarContentEffect from "@components/template/RightSidebarContentEffect"
 import { useRouter } from "next/router"
+import useGetGameByPath from "@feature/game/containers/hooks/useFindGameByPath"
+import DefaultLobby from "@feature/game/components/templates/lobby/DefaultLobby"
 
 export default function GameLobby() {
   const router = useRouter()
-  const { id } = router.query
-  const { gameData } = useGamesById(id ? id.toString() : "", "story-mode")
-
-  // TODO: Change to useGetGameByPath
-  // const { gameDataByPath } = useGetGameByPath(id ? id.toString() : "")
+  const { GameHome } = router.query
+  // const { gameData } = useFindGameById(id ? id.toString() : "")
+  const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
 
   // TODO: Add game to store
   // const { data } = useGameStore()
-  // const [gameStory, setGameStory] = useState<IGame>()
+  // const [gameData, setGameData] = useState<IGame>()
   // useEffect(() => {
-  //   if (!isLoadingGameData && gameData) setGameStory(gameData)
-  // }, [isLoadingGameData, gameData])
+  //   if (data) setGameData(gameData)
+  // }, [data])
 
   const getTemplateLobby = () => {
     if (gameData) {
@@ -32,15 +30,16 @@ export default function GameLobby() {
             <RightSidebarContentEffect
               content={<StoryLobby />}
               aside={
-                <OverViewGameStoryMode
-                  gameId={id ? id.toString() : ""}
+                <OverviewHowToPlay
+                  gameId={gameData._id}
                   gameType="story-mode"
+                  title="how_to_play"
                 />
               }
             />
           )
         default:
-          return <GameSlide />
+          return <DefaultLobby gameData={gameData} />
       }
     }
   }

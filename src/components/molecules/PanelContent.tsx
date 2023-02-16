@@ -11,8 +11,8 @@ interface IPanelContentProps {
  * @returns
  */
 const PanelContent = ({ children, height }: IPanelContentProps) => (
-  <div className="panel-content relative h-full">
-    <div className={`custom-scroll overflow-y-scroll pr-4 ${height}`}>
+  <div className={`panel-content ${height} relative`}>
+    <div className="custom-scroll h-[90%] overflow-y-scroll pr-4">
       {children}
     </div>
     <div className="absolute bottom-0 left-0 h-20 w-full bg-gradient-to-b from-neutral-780/0 to-neutral-780" />

@@ -1,6 +1,6 @@
 import OverviewIcon from "@components/icons/OverviewIcon"
 import PanelContent from "@components/molecules/PanelContent"
-import AsideLayout from "@components/template/AsideLayout"
+import AsideLayout from "@components/templates/contents/AsideLayout"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
 import { IGetType } from "@feature/game/interfaces/IGameService"
 import { useTranslation } from "react-i18next"

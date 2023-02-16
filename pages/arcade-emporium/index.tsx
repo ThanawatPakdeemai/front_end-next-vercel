@@ -1,7 +1,7 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import GamePageLayout from "@components/template/GamePageLayout"
 import ArcadeEmporiumGamesPage from "@feature/page/games/ArcadeEmporiumGamesPage"
+import GamePageLayout from "@components/templates/GamePageLayout"
 
 export default function NFTGames() {
   return (

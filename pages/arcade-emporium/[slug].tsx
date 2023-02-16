@@ -1,6 +1,4 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import GamePageDefault from "@components/template/GamePageDefault"
-import RightSidebarContent from "@components/template/RightSidebarContent"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
 import { useRouter } from "next/router"
 import GameTabs from "@feature/game/components/templates/lobby/GameTabs"
@@ -8,7 +6,9 @@ import GameReviews from "@feature/game/components/molecules/GameReviews"
 import GameContent from "@feature/game/components/templates/lobby/GameContent"
 import OverviewContent from "@components/organisms/OverviewContent"
 import { ReactElement } from "react"
-import RightSidebarContentEffect from "@components/template/RightSidebarContentEffect"
+import GamePageDefault from "@components/templates/GamePageDefault"
+import RightSidebarContentEffect from "@components/templates/contents/RightSidebarContentEffect"
+import RightSidebarContent from "@components/templates/contents/RightSidebarContent"
 
 export default function ArcadeEmporiumGameDetails() {
   const router = useRouter()

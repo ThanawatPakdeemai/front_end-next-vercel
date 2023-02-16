@@ -5,12 +5,12 @@ import { Divider, Typography } from "@mui/material"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import { iconmotion } from "@components/organisms/Footer"
 import Link from "next/link"
-import AsideLayout from "@components/template/AsideLayout"
 import { useTranslation } from "react-i18next"
 import useGlobal from "@hooks/useGlobal"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
 import { IGetType } from "@feature/game/interfaces/IGameService"
 import PanelContent from "@components/molecules/PanelContent"
+import AsideLayout from "@components/templates/contents/AsideLayout"
 
 interface IOverviewGameProps {
   gameId: string

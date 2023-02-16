@@ -45,7 +45,7 @@ const CategoryCard = ({ img, text, icon, onHandleClick }: ICategoryCard) => {
       xs={3}
     >
       <motion.div
-        className="slick-card-container"
+        className="slick-card-container-cate"
         initial="init"
         whileHover="onHover"
         animate="animate"

@@ -124,14 +124,14 @@ const DropdownListItem = ({
                               width="20"
                               height="20"
                             />
-                          ) ?? "",
+                          ) ?? "sss",
                         data: ele,
                         href: ""
                       }))
                     }
                     onChange={(_item) => {
                       popupState.close()
-                      onChangeItem(_item as IGameItemListData)
+                      onChangeItem(_item.data as IGameItemListData)
                     }}
                   />
                 </Popover>

@@ -60,7 +60,7 @@ const SelectDropdown = ({
         {title === "GameItem" ? (
           <MenuItemCustom
             label={item.price}
-            icon={icon || ""}
+            icon={item.icon || icon}
             href={item.href}
             id=""
             external={false}
@@ -69,7 +69,7 @@ const SelectDropdown = ({
         ) : (
           <MenuItemCustom
             label={"name" in item ? item.name : item.label}
-            icon={icon || ""}
+            icon={item.icon || icon}
             href={item.href}
             id=""
             external={false}

@@ -1,20 +1,23 @@
 import { ITableHeader } from "@feature/table/interface/ITable"
+import { useRouter } from "next/router"
+
 import { useMemo } from "react"
 
 const useHistoryController = () => {
+  const router = useRouter()
   const HistoryTableHead: Array<ITableHeader> = useMemo(
     () => [
       {
         title: "time",
-        arrowIcon: true
+        arrowIcon: false
       },
       {
         title: "GAME",
-        filterIcon: true
+        filterIcon: false
       },
       {
         title: "TYPE",
-        arrowIcon: true
+        arrowIcon: false
       },
       { title: "STATUS" },
       { title: "VIEW", className: "justify-end flex w-full" }
@@ -23,8 +26,13 @@ const useHistoryController = () => {
     []
   )
 
+  const onHandleView = (path: string, room_id: string) => {
+    router.push(`/${path}/summary/${room_id}`)
+  }
+
   return {
-    HistoryTableHead
+    HistoryTableHead,
+    onHandleView
   }
 }
 

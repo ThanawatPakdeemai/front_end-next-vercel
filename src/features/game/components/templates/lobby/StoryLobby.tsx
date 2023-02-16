@@ -27,7 +27,9 @@ const StoryLobby = () => {
       gameTags.push({
         id: category.id,
         name: category.name,
-        link: `categories/${category.slug}?id=${category.id}`
+        link: `/categories/${
+          category.slug ? category.slug : category.name.toLocaleLowerCase()
+        }`
       })
     )
   } else if (gameData && gameData.category) {
@@ -35,7 +37,7 @@ const StoryLobby = () => {
     gameTags.push({
       id: gameData.category.id,
       name: gameData.category.name,
-      link: `category/${_categorySlug[1].toLocaleLowerCase()}`
+      link: `categories/${_categorySlug[1].toLocaleLowerCase()}`
     })
   }
 

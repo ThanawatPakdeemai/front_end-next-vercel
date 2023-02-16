@@ -45,6 +45,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
         partnerGames &&
           partnerGames.genres.map((category) =>
             gameTags.push({
+              id: category._id,
               name: category.name,
               link: `/categories/${
                 category.slug
@@ -61,6 +62,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
           gameData.category_list.length > 0 &&
           gameData.category_list.map((category) =>
             gameTags.push({
+              id: category.id,
               name: category.name,
               link: `/categories/${
                 category.slug

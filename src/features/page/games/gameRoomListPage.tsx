@@ -5,6 +5,7 @@ import useGameStore from "@stores/game"
 
 import SingleRoomList from "@feature/game/components/templates/roomList/singlePlayer/SingleRoomList"
 import MultiRoomList from "@feature/game/components/templates/roomList/multiPlayer/MultiRoomList"
+import PleaseLogin from "@components/atoms/PleaseLogin"
 
 /**
  *
@@ -27,7 +28,7 @@ const GameRoomListPage = () => {
       }
     }
   }
-  return <>{profile && getTemplateGame()}</>
+  return <>{profile ? getTemplateGame() : <PleaseLogin />}</>
 }
 
 export default GameRoomListPage

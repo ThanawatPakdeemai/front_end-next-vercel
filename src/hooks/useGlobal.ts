@@ -93,6 +93,7 @@ const useGlobal = (
         await router.push(`/${_gameUrl}`)
         break
     }
+    await router.push(`/${_gameUrl}`)
   }
 
   return {

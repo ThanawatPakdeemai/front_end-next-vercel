@@ -80,6 +80,7 @@ interface ITransactionResponseBase {
 export interface ITransactionResponse
   extends IWithdrawBase,
     ITransactionResponseBase {
+  wait: () => Promise<ITransactionResponse>
   events: IEvents
 }
 

@@ -1,14 +1,14 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import GamePageDefault from "@components/template/GamePageDefault"
-import RightSidebarContent from "@components/template/RightSidebarContent"
-import { TabProvider } from "@feature/tab/contexts/TabProvider"
-import RightSidebarContentEffect from "@components/template/RightSidebarContentEffect"
 import { useRouter } from "next/router"
 import OverviewContent from "@components/organisms/OverviewContent"
 import GameContent from "@feature/game/components/templates/lobby/GameContent"
 import GameTabs from "@feature/game/components/templates/lobby/GameTabs"
 import GameReviews from "@feature/game/components/molecules/GameReviews"
+import GamePageDefault from "@components/templates/GamePageDefault"
+import RightSidebarContentEffect from "@components/templates/contents/RightSidebarContentEffect"
+import RightSidebarContent from "@components/templates/contents/RightSidebarContent"
+import { TabProvider } from "@feature/tab/contexts/TabProvider"
 
 export default function GamePartnerDetails() {
   const router = useRouter()

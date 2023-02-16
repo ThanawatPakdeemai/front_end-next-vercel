@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import SyncAltIcon from "@mui/icons-material/SyncAlt"
 import { Card, CardContent, SxProps, Theme } from "@mui/material"
 import INaka from "@components/icons/Naka"
@@ -10,6 +10,9 @@ import ButtonLink from "@components/atoms/button/ButtonLink"
 import { useTranslation } from "react-i18next"
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet"
 import { useWeb3Provider } from "@providers/index"
+import useGetBalanceVault from "@feature/inventory/containers/hooks/useGetBalanceVault"
+import { useRouter } from "next/router"
+import Helper from "@utils/helper"
 
 interface IProps {
   token?: string | undefined
@@ -34,9 +37,14 @@ const iconmotion = {
 
 const Balance = ({ className, sx }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
+  const [nakaBalanceVault, SetNakaBalanceVault] = useState<string>("N/A")
   const { address, handleConnectWithMetamask, hasMetamask } = useWeb3Provider()
-
+  const router = useRouter()
   const { t } = useTranslation()
+  const { balanceVaultNaka } = useGetBalanceVault(
+    profile?.address ?? "",
+    !!profile
+  )
   // const { weiToNaka, getFeeGas, getEventLog, calFloat } = TransactionHelper()
   // const {
   //   checkAllowNaka,
@@ -52,8 +60,18 @@ const Balance = ({ className, sx }: IProps) => {
   //   disconnectWallet
   // )
 
+  const { WeiToNumber, formatNumber } = Helper
+
+  useEffect(() => {
+    if (balanceVaultNaka && address) {
+      const tempData = WeiToNumber(balanceVaultNaka.data)
+      SetNakaBalanceVault(formatNumber(tempData, { maximumFractionDigits: 1 }))
+    } else {
+      SetNakaBalanceVault("N/A")
+    }
+  }, [WeiToNumber, address, balanceVaultNaka, formatNumber])
+
   // Mock up data
-  const Naka = 294345
   const Busd = 294345
 
   // const [haveMetamask, sethaveMetamask] = useState(true)
@@ -121,7 +139,7 @@ const Balance = ({ className, sx }: IProps) => {
               <div className="flex h-full flex-1 items-center rounded-lg bg-neutral-900 py-[11px] px-[10px]">
                 <INaka />
                 <p className="ml-6 text-sm font-bold text-white-primary">
-                  {Naka}
+                  {nakaBalanceVault}
                 </p>
                 {/* <BalanceVault
                   variant={variant}
@@ -136,6 +154,9 @@ const Balance = ({ className, sx }: IProps) => {
                   <SyncAltIcon className="h-[20px] w-[20px] rotate-90 text-white-primary" />
                 }
                 className="ml-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900"
+                onClick={() => {
+                  router.push("/wallet")
+                }}
               />
             </div>
             <div className="mb-2 flex items-center justify-between">
@@ -157,6 +178,9 @@ const Balance = ({ className, sx }: IProps) => {
                   <SyncAltIcon className="h-[20px] w-[20px] rotate-90 text-white-primary" />
                 }
                 className="ml-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900"
+                onClick={() => {
+                  router.push("/wallet")
+                }}
               />
             </div>
           </Card>

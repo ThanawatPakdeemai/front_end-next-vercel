@@ -7,9 +7,11 @@ interface IQuestStore {
   data: IQuestData | null
   open: boolean
   missionType: string
+  hasCompleted: boolean
   setMissionType: (_missionType: string) => void
   setOpen: () => void
   setClose: () => void
+  setHasCompleted: (_has: boolean) => void
   getQuestStore: () => IQuestData | null
   setQuestStore: (_quest: IQuestData) => void
   clearQuestStore: () => void
@@ -20,6 +22,7 @@ const useQuestStore = create<IQuestStore>()(
       data: null,
       open: false,
       missionType: "main",
+      hasCompleted: false,
       setMissionType: (_missionType: string) => {
         set(
           () => ({ missionType: _missionType }),
@@ -33,6 +36,9 @@ const useQuestStore = create<IQuestStore>()(
       },
       setClose: () => {
         set(() => ({ open: false }), false, "QuestStore/setClose")
+      },
+      setHasCompleted: (_has) => {
+        set(() => ({ hasCompleted: _has }), false, "QuestStore/setHasCompleted")
       },
       setQuestStore: (_quest) => {
         set(() => ({ data: _quest }), false, "QuestStore/setQuestStore")

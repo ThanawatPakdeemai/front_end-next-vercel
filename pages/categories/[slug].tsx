@@ -1,6 +1,6 @@
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import GamePageWithBreadcrumb from "@components/template/GamePageWithBreadcrumb"
+import GamePageWithBreadcrumb from "@components/templates/GamePageWithBreadcrumb"
 import { P2EHeaderMenu } from "@constants/gameSlide"
 import GameCard from "@feature/game/components/molecules/GameCard"
 import { IGame } from "@feature/game/interfaces/IGameService"

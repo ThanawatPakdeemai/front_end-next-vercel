@@ -1,5 +1,5 @@
 import { PaginationNaka } from "@components/atoms/pagination"
-import NoAuth from "@components/template/NoAuth"
+import NoAuth from "@components/templates/NoAuth"
 import ReviewForm from "@feature/review/components/organisms/ReviewForm"
 import Review from "@feature/review/components/templates/Review"
 import useGlobal from "@hooks/useGlobal"

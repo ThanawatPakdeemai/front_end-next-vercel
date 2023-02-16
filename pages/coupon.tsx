@@ -1,4 +1,4 @@
-import GamePageLayout from "@components/template/GamePageLayout"
+import GamePageLayout from "@components/templates/GamePageLayout"
 import CouponPage from "@feature/page/CouponPage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"

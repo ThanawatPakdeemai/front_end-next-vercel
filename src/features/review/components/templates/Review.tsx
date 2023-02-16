@@ -1,10 +1,10 @@
 import React from "react"
-import AsideLayout from "@components/template/AsideLayout"
 import MedalIcon from "@components/icons/MedalIcon"
 import { useTranslation } from "react-i18next"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import AddIcon from "@mui/icons-material/Add"
 import PanelContent from "@components/molecules/PanelContent"
+import AsideLayout from "@components/templates/contents/AsideLayout"
 
 interface IReviewProps {
   children: React.ReactNode

@@ -17,6 +17,7 @@ import CameraIcon from "@components/icons/CameraIcon"
 import RepeatIcon from "@components/icons/RepeatIcon"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
+import useLoadingStore from "@stores/loading"
 import useUpdateProfile from "../containers/hook/getUpdateProfile"
 import { IGeoProfile } from "../interfaces/IProfileService"
 import { getGeoInfo } from "../containers/services/profile.service"
@@ -41,6 +42,7 @@ const FormEditProfile = ({
   const [defaultAvatar, setDefaultAvatar] = useState<string>(
     userImage || (profile ? profile.avatar : "")
   )
+  const { setOpen, setClose } = useLoadingStore()
 
   const { errorToast, successToast } = useToast()
   const { mutateUpdateProfile } = useUpdateProfile()
@@ -61,6 +63,7 @@ const FormEditProfile = ({
       getGeoInfo()
         .then((res: unknown) => {
           const geo = res as unknown as IGeoProfile
+          setOpen()
           if (res) {
             mutateUpdateProfile({
               _email: data._email,
@@ -75,15 +78,18 @@ const FormEditProfile = ({
                   successToast(MESSAGES.edit_profile_success)
                   onRefetchProfile()
                   onCloseModal()
+                  setClose()
                 }
               })
               .catch(() => {
                 errorToast(MESSAGES.please_fill)
+                setClose()
               })
           }
         })
         .catch(() => {
           errorToast(MESSAGES.cant_update_data)
+          setClose()
         })
     }
   }

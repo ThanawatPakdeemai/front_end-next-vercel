@@ -63,9 +63,15 @@ const GameRoomList = () => {
         itemSelected &&
         itemSelected.qty > 0 &&
         balanceofItem &&
-        balanceofItem?.data > 0
+        balanceofItem?.data > 0 &&
+        new Date() <= new Date(_dataRoom.end_time) &&
+        _dataRoom.amount_current_player < _dataRoom.max_players
       ) {
         router.push(`${router.asPath}/${_roomId}`)
+      } else if (new Date() > new Date(_dataRoom.end_time)) {
+        errorToast(MESSAGES["room-timeout"])
+      } else if (_dataRoom.amount_current_player >= _dataRoom.max_players) {
+        errorToast(MESSAGES["room-full"])
       } else if (data && (data.play_to_earn || data.tournament)) {
         router.push(`${router.asPath}/${_roomId}`)
       } else if (data && data_player_me && data_player_me.status === "played") {
@@ -76,7 +82,7 @@ const GameRoomList = () => {
       ) {
         errorToast(MESSAGES["you-don't-have-item"])
       } else {
-        errorToast(MESSAGES["please_item"])
+        errorToast(MESSAGES["error-something"])
       }
     } else {
       errorToast(MESSAGES["please_login"])

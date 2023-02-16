@@ -36,3 +36,31 @@ export const P2PDEX_BANNER: IBanner[] = [
     type: "blinkIcon"
   }
 ]
+
+export const COUPON_BANNER: IBanner[] = [
+  {
+    link: "/coupon",
+    text: "Coupon",
+    type: "text"
+  },
+  {
+    link: "/coupon",
+    icon: <StakingIconBanner className="absolute z-10" />,
+    table: true,
+    type: "blinkIcon"
+  }
+]
+
+export const REFERRAL_BANNER: IBanner[] = [
+  {
+    link: "/referral",
+    text: "Referral",
+    type: "text"
+  },
+  {
+    link: "/referral",
+    icon: <StakingIconBanner className="absolute z-10" />,
+    table: true,
+    type: "blinkIcon"
+  }
+]

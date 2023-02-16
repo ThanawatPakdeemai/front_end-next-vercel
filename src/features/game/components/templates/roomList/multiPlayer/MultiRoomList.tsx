@@ -113,8 +113,10 @@ const MultiRoomList = () => {
         errorToast(MESSAGES["you-don't-have-item"])
       } else if (player_me && player_me.status === "played") {
         errorToast(MESSAGES["you-played"])
-      } else {
+      } else if (_data.amount_current_player >= _data.max_players) {
         errorToast(MESSAGES["room-full"])
+      } else {
+        errorToast(MESSAGES["error-something"])
       }
     } else {
       errorToast(MESSAGES["please_login"])

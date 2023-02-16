@@ -1,9 +1,9 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Image } from "@components/atoms/image/index"
 import useReview from "@feature/review/containers/hook/useReview"
-import Loading from "@components/atoms/Loading"
 import { Rating } from "@mui/material"
 import useReviewContext from "@feature/review/containers/contexts/useReviewContext"
+import useLoadingStore from "@stores/loading"
 import MessageFooter from "../templates/MessageFooter"
 
 interface IReviewFormProps {
@@ -14,6 +14,15 @@ interface IReviewFormProps {
 const ReviewForm = ({ avatar, username }: IReviewFormProps) => {
   const { onSubmitComment, loading } = useReview()
   const { message, setRate, rate } = useReviewContext()
+  const { setOpen, setClose } = useLoadingStore()
+
+  useEffect(() => {
+    if (loading) {
+      setOpen()
+    } else {
+      setClose()
+    }
+  }, [loading, setClose, setOpen])
 
   return (
     <div className="review-form mb-3 grid min-h-[68px] grid-flow-col items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900 p-2">
@@ -45,9 +54,7 @@ const ReviewForm = ({ avatar, username }: IReviewFormProps) => {
           />
         </div>
       </div>
-      {loading ? (
-        <Loading />
-      ) : (
+      {loading && (
         <MessageFooter onSubmit={() => onSubmitComment(message, rate)} />
       )}
     </div>

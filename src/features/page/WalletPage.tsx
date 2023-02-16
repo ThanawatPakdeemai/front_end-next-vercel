@@ -25,6 +25,7 @@ import { useToast } from "@feature/toast/containers"
 import useContractVault from "@feature/contract/containers/hooks/useContractVault"
 import CONFIGS from "@configs/index"
 import TransactionTable from "@feature/transaction/components/molecules/TransactionTable"
+import useLoadingStore from "@stores/loading"
 
 const KeyFramesRotate = styled("div")({
   "@keyframes rotation": {
@@ -50,10 +51,11 @@ export default function WalletPage() {
   const [openDeposit, setOpenDeposit] = useState<boolean>(false)
   const [haveMetamask, sethaveMetamask] = useState(true)
   const [value, setValue] = useState<number>(0)
-  const { warnToast, successToast, errorToast } = useToast()
+  const { successToast, errorToast } = useToast()
 
   // hook
   const { profile } = useProfileStore()
+  const { setOpen, setClose } = useLoadingStore()
   const { address, handleConnectWithMetamask, handleDisconnectWallet } =
     useWeb3Provider()
   const { checkAllowNaka, allowNaka, depositNaka, withdrawNaka } =
@@ -95,7 +97,7 @@ export default function WalletPage() {
     if (!address) return
     try {
       /* Sample loading wait for loading popup design */
-      warnToast("Transaction is loading, please wait...")
+      setOpen("Blockchain transaction in progress...")
       const res =
         _method === "deposit"
           ? await depositNaka(address, toWei(value.toString()))
@@ -104,10 +106,12 @@ export default function WalletPage() {
       /* Wait for transaction data */
       const resData = await res.wait()
       if (resData) {
+        setClose()
         successToast("Transaction success")
         handleClose(_method)
       }
     } catch (error) {
+      setClose()
       errorToast("Transaction failed")
     }
   }

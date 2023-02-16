@@ -25,7 +25,7 @@ function VerifiedIcon({
       <path
         d="M5.5 8.5L8 11L12.5 6.5"
         stroke="#010101"
-        stroke-width="1.8"
+        strokeWidth="1.8"
       />
       <defs>
         <filter

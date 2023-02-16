@@ -1,8 +1,9 @@
 import EarthIcon from "@components/icons/EarthIcon"
 import MaskBlogIcon from "@components/icons/MaskBlogIcon"
 import NakamotoWarIcon from "@components/icons/NakamotoWarIcon"
+import { IBanner } from "./servicesBanner"
 
-export const GAME_BANNER = [
+export const GAME_BANNER: IBanner[] = [
   {
     link: "/",
     text: "NAKAMOTO GAMES",
@@ -55,5 +56,19 @@ export const COUPON_BANNER = [
     icon: <NakamotoWarIcon className="absolute z-10" />,
     table: true,
     type: "CouponIcon"
+  }
+]
+
+export const GAME_DEVELOPER_BANNER: IBanner[] = [
+  {
+    link: "/publishers",
+    text: "Game Publishers",
+    type: "text"
+  },
+  {
+    link: "/publishers",
+    icon: <NakamotoWarIcon className="absolute z-10" />,
+    table: true,
+    type: "blinkIcon"
   }
 ]

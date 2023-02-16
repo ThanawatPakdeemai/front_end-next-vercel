@@ -13,6 +13,7 @@ import { useWeb3Provider } from "@providers/index"
 import useGetBalanceVault from "@feature/inventory/containers/hooks/useGetBalanceVault"
 import { useRouter } from "next/router"
 import Helper from "@utils/helper"
+import useGlobal from "@hooks/useGlobal"
 
 interface IProps {
   token?: string | undefined
@@ -45,6 +46,7 @@ const Balance = ({ className, sx }: IProps) => {
     profile?.address ?? "",
     !!profile
   )
+  const { hydrated } = useGlobal()
   // const { weiToNaka, getFeeGas, getEventLog, calFloat } = TransactionHelper()
   // const {
   //   checkAllowNaka,
@@ -121,7 +123,7 @@ const Balance = ({ className, sx }: IProps) => {
   //   }
   // }
 
-  return (
+  return hydrated ? (
     <div>
       {address && profile ? (
         <>
@@ -201,6 +203,8 @@ const Balance = ({ className, sx }: IProps) => {
         </div>
       )}
     </div>
+  ) : (
+    <></>
   )
 }
 

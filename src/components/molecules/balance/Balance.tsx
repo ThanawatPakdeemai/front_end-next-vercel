@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next"
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet"
 import { useWeb3Provider } from "@providers/index"
 import useGetBalanceVault from "@feature/inventory/containers/hooks/useGetBalanceVault"
-import { useRouter } from "next/router"
 import Helper from "@utils/helper"
 import AmountBalance from "./AmountBalance"
 

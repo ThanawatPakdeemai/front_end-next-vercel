@@ -11,6 +11,7 @@ import { ReviewProvider } from "@feature/review/containers/contexts/ReviewProvid
 import { IGamePartnerReviewsData } from "@feature/game/partnerGames/interfaces/IGamePartners"
 import useGameWhatsNew from "@feature/game/containers/hooks/useGameWhatsNew"
 import { IGetType } from "@feature/game/interfaces/IGameService"
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
 
 interface IGameReviewProps {
   gameType: IGetType
@@ -116,10 +117,20 @@ const GameReviews = ({ gameType, gameId }: IGameReviewProps) => {
             </div>
             <div className="relative z-10 mt-5 mb-7">
               {stateProfile ? (
-                <ReviewForm
-                  avatar={stateProfile.avatar}
-                  username={stateProfile.username}
-                />
+                <GoogleReCaptchaProvider
+                  reCaptchaKey={`${process.env.NEXT_PUBLIC_KEY_RECAPTCHA}`}
+                  scriptProps={{
+                    async: true,
+                    defer: false,
+                    appendTo: "head",
+                    nonce: undefined
+                  }}
+                >
+                  <ReviewForm
+                    avatar={stateProfile.avatar}
+                    username={stateProfile.username}
+                  />
+                </GoogleReCaptchaProvider>
               ) : (
                 <NoAuth />
               )}

@@ -7,7 +7,7 @@ import useAddReview from "./useAddReview"
 
 const useReview = () => {
   const [loading, setLoading] = useState<boolean>(false)
-  const { setRate, setMessage } = useReviewContext()
+  const { setRate, setMessage, message, rate } = useReviewContext()
   const { mutateAddReview } = useAddReview()
   const { errorToast, successToast } = useToast()
   const { dataGamePartner } = useGameStore()
@@ -38,6 +38,7 @@ const useReview = () => {
       })
       .catch((error) => {
         errorToast(error.message)
+        setLoading(false)
       })
   }
 
@@ -45,8 +46,8 @@ const useReview = () => {
    * @description Handle input text
    */
   const handleInputMessage = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter") {
-      // onSubmitComment(message, rate)
+    if (e.key === "Enter" && message.length >= 10) {
+      onSubmitComment(message, rate)
     }
   }
 

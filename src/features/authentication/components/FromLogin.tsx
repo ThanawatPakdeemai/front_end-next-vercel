@@ -34,7 +34,7 @@ import {
 import { getApps, initializeApp } from "@firebase/app"
 import { IError } from "@src/types/contract"
 import { IProfileFaceBook } from "@src/types/profile"
-// import Web3 from "web3"
+import Web3 from "web3"
 import useLoginTypeStore from "@stores/loginTypes"
 import useSignIn from "../containers/hooks/useSignIn"
 import { ISignIn } from "../interfaces/IAuthService"
@@ -43,7 +43,7 @@ import useLoginProvider from "../containers/hooks/useLoginProvider"
 const FormLogin = () => {
   const { mutateLoginProvider } = useLoginProvider()
 
-  // const web3 = new Web3(Web3.givenProvider)
+  const web3 = new Web3(Web3.givenProvider)
 
   const firebaseConfig = {
     apiKey: "AIzaSyAszETPfcbQt0gd2Ifpep83_C05zOt_k1c",
@@ -92,6 +92,8 @@ const FormLogin = () => {
   }
 
   const facebookLogin = async (response: IProfileFaceBook) => {
+    console.log("test-facebook-response", response)
+
     if (
       response.email !== null &&
       response.email !== undefined &&
@@ -191,7 +193,15 @@ const FormLogin = () => {
   }
 
   const metaMarkLogin = async () => {
-    errorToast("not ready")
+    let accounts: Array<string> = []
+    try {
+      await web3?.givenProvider?.request({ method: "eth_requestAccounts" })
+      accounts = await web3.eth.getAccounts()
+      console.log("test-metmask-accounts", accounts)
+    } catch (error) {
+      console.error("test-metmask error", error)
+    }
+    console.log("test-metaMarkLogin", accounts)
   }
 
   return (

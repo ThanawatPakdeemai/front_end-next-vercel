@@ -1,6 +1,6 @@
 import React, { memo } from "react"
 import { Skeleton } from "@mui/material"
-import { INotification } from "../../../features/notification/interfaces/INotificationService"
+import { INotification } from "@feature/notification/interfaces/INotificationService"
 
 interface IProps {
   isLoading: boolean

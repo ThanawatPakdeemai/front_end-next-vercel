@@ -121,73 +121,71 @@ const Balance = ({ className, sx }: IProps) => {
   //   }
   // }
 
-  useEffect(() => {
-    handleConnectWithMetamask
-  }, [handleConnectWithMetamask])
-
   return (
     <div>
       {address && profile ? (
-        <CardContent
-          className={`my-2 min-w-[200px] items-center justify-center p-0 ${className}`}
-        >
-          <Card
-            className=" m-auto gap-[5px] rounded-[13px] bg-neutral-800  px-[5px] pt-[5px] "
-            sx={sx}
+        <>
+          <CardContent
+            className={`my-2 min-w-[200px] items-center justify-center p-0 ${className}`}
           >
-            <div className="mb-2 flex items-center justify-between">
-              <div className="flex h-full flex-1 items-center rounded-lg bg-neutral-900 py-[11px] px-[10px]">
-                <INaka />
-                <p className="ml-6 text-sm font-bold text-white-primary">
-                  {nakaBalanceVault}
-                </p>
-                {/* <BalanceVault
+            <Card
+              className=" m-auto gap-[5px] rounded-[13px] bg-neutral-800  px-[5px] py-[5px] "
+              sx={sx}
+            >
+              <div className="mb-1 flex items-center justify-between">
+                <div className="flex h-full flex-1 items-center rounded-lg bg-neutral-900 py-[11px] px-[10px]">
+                  <INaka />
+                  <p className="ml-6 text-sm font-bold text-white-primary">
+                    {nakaBalanceVault}
+                  </p>
+                  {/* <BalanceVault
                   variant={variant}
                   className="ml-6 text-sm font-bold text-white-primary"
                 /> */}
+                </div>
+                <ButtonIcon
+                  variants={iconmotion}
+                  whileHover="hover"
+                  transition={{ type: "spring", stiffness: 400, damping: 4 }}
+                  icon={
+                    <SyncAltIcon className="h-[20px] w-[20px] rotate-90 text-white-primary" />
+                  }
+                  className="ml-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900"
+                  onClick={() => {
+                    router.push("/wallet")
+                  }}
+                />
               </div>
-              <ButtonIcon
-                variants={iconmotion}
-                whileHover="hover"
-                transition={{ type: "spring", stiffness: 400, damping: 4 }}
-                icon={
-                  <SyncAltIcon className="h-[20px] w-[20px] rotate-90 text-white-primary" />
-                }
-                className="ml-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900"
-                onClick={() => {
-                  router.push("/wallet")
-                }}
-              />
-            </div>
-            <div className="mb-2 flex items-center justify-between">
-              <div className="flex h-full flex-1 items-center rounded-lg bg-neutral-900 py-[11px] px-[10px]">
-                <IBusd />
-                <p className="ml-6 text-sm font-bold text-white-primary">
-                  {Busd}
-                </p>
-                {/* <BalanceVault
+              <div className=" flex items-center justify-between">
+                <div className="flex h-full flex-1 items-center rounded-lg bg-neutral-900 py-[5px] px-[10px]">
+                  <IBusd width={21} />
+                  <p className="ml-6 text-sm font-bold text-white-primary">
+                    {Busd}
+                  </p>
+                  {/* <BalanceVault
                   variant={variant}
                   className="ml-6 text-sm font-bold text-white-primary"
                 /> */}
+                </div>
+                <ButtonIcon
+                  variants={iconmotion}
+                  whileHover="hover"
+                  transition={{ type: "spring", stiffness: 400, damping: 4 }}
+                  icon={
+                    <SyncAltIcon className="h-[20px] w-[20px] rotate-90 text-white-primary" />
+                  }
+                  className="ml-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900"
+                  onClick={() => {
+                    router.push("/wallet")
+                  }}
+                />
               </div>
-              <ButtonIcon
-                variants={iconmotion}
-                whileHover="hover"
-                transition={{ type: "spring", stiffness: 400, damping: 4 }}
-                icon={
-                  <SyncAltIcon className="h-[20px] w-[20px] rotate-90 text-white-primary" />
-                }
-                className="ml-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900"
-                onClick={() => {
-                  router.push("/wallet")
-                }}
-              />
-            </div>
-          </Card>
-        </CardContent>
+            </Card>
+          </CardContent>
+        </>
       ) : (
         <div className="my-4">
-          {hasMetamask ? (
+          {hasMetamask && profile && (
             <ButtonLink
               onClick={handleConnectWithMetamask}
               text={t("Connect Wallet")}
@@ -197,9 +195,9 @@ const Balance = ({ className, sx }: IProps) => {
               variant="contained"
               className="w-full"
             />
-          ) : (
-            <Metamask />
           )}
+
+          {!hasMetamask && profile && <Metamask />}
         </div>
       )}
     </div>

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
-import { INotification } from "src/features/notification/interfaces/INotificationService"
+import { INotification } from "@feature/notification/interfaces/INotificationService"
 import {
   updateNotiStatusById
   // updateAllNotiStatus

@@ -5,7 +5,7 @@ const PleaseLogin = () => (
   <>
     <div className=" flex w-full items-center justify-center">
       <div>
-        <p className="py-5 text-center">Wait design. Login Please</p>
+        <p className="py-5 text-center">Login Please</p>
         <RightMenuNotLogIn />
       </div>
     </div>

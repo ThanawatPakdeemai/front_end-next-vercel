@@ -17,6 +17,20 @@ export const GAME_BANNER: IBanner[] = [
   }
 ]
 
+export const MY_GAME_BANNER: IBanner[] = [
+  {
+    link: "/",
+    text: "MY GAMES",
+    type: "text"
+  },
+  {
+    link: "/",
+    icon: <EarthIcon className="naka-banner-icon absolute z-10" />,
+    table: true,
+    type: "blinkIcon"
+  }
+]
+
 export const GAME_DETAILS_BANNER = [
   {
     link: "/",

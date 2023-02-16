@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import SyncAltIcon from "@mui/icons-material/SyncAlt"
 import { Card, CardContent, SxProps, Theme } from "@mui/material"
 import INaka from "@components/icons/Naka"
@@ -102,10 +101,6 @@ const Balance = ({ className, sx }: IProps) => {
   //     console.log("Error connecting to metamask", error)
   //   }
   // }
-
-  useEffect(() => {
-    handleConnectWithMetamask
-  }, [handleConnectWithMetamask])
 
   return (
     <div>

@@ -2,6 +2,7 @@ import useClaimQuestById from "@feature/quest/containers/hook/useClaimQuestById"
 import useGetAllQuest from "@feature/quest/containers/hook/useGetAllQuest"
 import { IQuestData } from "@feature/quest/interfaces/IQuestService"
 import { useToast } from "@feature/toast/containers"
+import useLoadingStore from "@stores/loading"
 import useProfileStore from "@stores/profileStore"
 import useQuestStore from "@stores/quest"
 import { motion, Variants } from "framer-motion"
@@ -22,17 +23,23 @@ const ButtonClaim = ({ data, variants, initial, animate }: IProp) => {
     profile && profile.data ? profile.data.id : ""
   )
   const { clearQuestStore } = useQuestStore()
+  const { setOpen, setClose } = useLoadingStore()
 
   const handleClaim = (_questId: string) => {
+    setOpen("Claim is processing...")
     mutateClaimQuestById(_questId)
       .then((res) => {
         successToast(res.message)
         setTimeout(() => {
+          setClose()
           refetchAllQuest()
           clearQuestStore()
         }, 1000)
       })
-      .catch((error) => errorToast(error.message))
+      .catch((error) => {
+        setClose()
+        errorToast(error.message)
+      })
   }
 
   if (

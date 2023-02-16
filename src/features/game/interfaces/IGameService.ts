@@ -98,8 +98,14 @@ export interface IGameCategory {
   slug: string
 }
 
-export interface IGame {
+export interface IGameArcadeEmporium {
+  is_NFT: boolean
   NFT_Owner: string
+  image_nft_arcade_game: string
+  animation_nft_arcade_game: string
+}
+
+export interface IGame extends IGameArcadeEmporium {
   _id: string
   howto: IGameHowTo
   socket_info?: IGameSocketInfo
@@ -124,7 +130,6 @@ export interface IGame {
   number_of_played?: number
   event_number?: number
   min_player: number
-  meta_data_list?: IGameMetaData[]
   map?: IGameMap[]
   name: string
   story: string
@@ -153,6 +158,10 @@ export interface IGame {
   game_free_url?: string
   image_free_to_earn_icon?: string
   play_total_count?: number
+  meta_data_list: IGameMetaData[]
+
+  must_try_no: number
+  must_try_status: boolean
 }
 
 interface IGameHowto {

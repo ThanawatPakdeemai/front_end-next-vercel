@@ -113,13 +113,6 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
             )) ||
           "-"
         )
-      case "arcade-emporium":
-        return (
-          (gameData &&
-            "release_date" in gameData &&
-            dayjs(gameData.release_date as string).format("DD MMM YYYY")) ||
-          "-"
-        )
       default:
         return "-"
     }
@@ -226,14 +219,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
         }
         break
       case "arcade-emporium":
-        if (
-          gameData &&
-          "animation_nft_arcade_game" in gameData &&
-          "image_nft_arcade_game" in gameData &&
-          "image_background" in gameData &&
-          "image_category_list" in gameData &&
-          "image_banner" in gameData
-        ) {
+        if (gameData) {
           gameDataMedia.push(
             {
               id: "1",
@@ -243,39 +229,44 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
             {
               id: "2",
               type: "video",
-              src: gameData
-                ? (gameData.animation_nft_arcade_game as string)
-                : ""
+              src: gameData ? gameData.animation_nft_arcade_game : ""
             },
             {
               id: "3",
               type: "image",
-              src: gameData ? (gameData.image_nft_arcade_game as string) : ""
+              src: gameData ? gameData.image_nft_arcade_game : ""
             },
             {
               id: "4",
               type: "image",
-              src: gameData ? (gameData.image_background as string) : ""
+              src: gameData ? gameData.image_background : ""
             },
             {
               id: "5",
               type: "image",
-              src: gameData ? (gameData.image_category_list as string) : ""
+              src: gameData ? gameData.image_category_list : ""
             },
             {
               id: "6",
               type: "image",
-              src: gameData ? (gameData.image_background as string) : ""
+              src: gameData ? gameData.image_background : ""
             }
           )
         }
         break
       default:
-        gameDataMedia.push({
-          id: "1",
-          type: "image",
-          src: gameData ? gameData.image_banner : ""
-        })
+        gameDataMedia.push(
+          {
+            id: "1",
+            type: "image",
+            src: gameData ? gameData.image_banner : ""
+          },
+          {
+            id: "2",
+            type: "image",
+            src: gameData ? gameData.image_list : ""
+          }
+        )
         break
     }
     return gameDataMedia

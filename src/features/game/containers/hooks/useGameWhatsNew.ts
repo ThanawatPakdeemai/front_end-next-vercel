@@ -1,21 +1,16 @@
 import { IGetType } from "@feature/game/interfaces/IGameService"
-import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import {
   getGamePartnerAllReview,
   getGamePartnerNewVersion
 } from "@feature/game/partnerGames/containers/services/gamePartners.service"
 import useGlobal from "@hooks/useGlobal"
-import useGameStore from "@stores/game"
 import { useQuery } from "@tanstack/react-query"
-import { useEffect, useState } from "react"
 
-const useGameWhatsNew = (gameType: IGetType) => {
+const useGameWhatsNew = (_gameType: IGetType, _gameId: string) => {
   const limit = 5
   const { page } = useGlobal()
-  const { dataGamePartner } = useGameStore()
-  const [gameData, setGameData] = useState<IPartnerGameData>()
 
-  const handleQueryFunction = (_gameType: IGetType, _gameId: string) => {
+  const handleQueryFunction = () => {
     switch (_gameType) {
       case "partner-game":
         return getGamePartnerAllReview(limit, page, _gameId)
@@ -35,12 +30,11 @@ const useGameWhatsNew = (gameType: IGetType) => {
     isError: allReviewsDataError,
     error: allReviewsDataErrorData
   } = useQuery({
-    queryKey: ["gameAllReviews", limit, page, gameData?.id || ""],
-    queryFn: () =>
-      gameData ? handleQueryFunction(gameType, gameData.id) : null,
+    queryKey: ["gameAllReviews", limit, page, _gameId || ""],
+    queryFn: () => handleQueryFunction(),
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: gameData?.id !== "" && gameData?.id !== undefined
+    enabled: _gameId !== "" && _gameId !== undefined
   })
 
   /**
@@ -54,24 +48,13 @@ const useGameWhatsNew = (gameType: IGetType) => {
     isError: newVersionDataError,
     error: newVersionDataErrorData
   } = useQuery({
-    queryKey: ["gameNewVersion", gameData?.id || ""],
+    queryKey: ["gameNewVersion", _gameId || ""],
     queryFn: () =>
-      gameType === "partner-game"
-        ? gameData && getGamePartnerNewVersion(gameData.id)
-        : null,
+      _gameType === "partner-game" ? getGamePartnerNewVersion(_gameId) : null,
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: gameData?.id !== "" && gameData?.id !== undefined
+    enabled: _gameId !== "" && _gameId !== undefined
   })
-
-  /**
-   * @description Set game data
-   */
-  useEffect(() => {
-    if (dataGamePartner) {
-      setGameData(dataGamePartner)
-    }
-  }, [dataGamePartner])
 
   return {
     limit,

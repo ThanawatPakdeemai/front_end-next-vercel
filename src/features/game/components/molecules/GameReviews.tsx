@@ -10,12 +10,17 @@ import { useTranslation } from "react-i18next"
 import { ReviewProvider } from "@feature/review/containers/contexts/ReviewProvider"
 import { IGamePartnerReviewsData } from "@feature/game/partnerGames/interfaces/IGamePartners"
 import useGameWhatsNew from "@feature/game/containers/hooks/useGameWhatsNew"
+import { IGetType } from "@feature/game/interfaces/IGameService"
 
-const GameReviews = () => {
+interface IGameReviewProps {
+  gameType: IGetType
+  gameId: string
+}
+const GameReviews = ({ gameType, gameId }: IGameReviewProps) => {
   const { t } = useTranslation()
   const { page, setPage, totalCount, setTotalCount, stateProfile, hydrated } =
     useGlobal()
-  const { allReviewsData, limit } = useGameWhatsNew()
+  const { allReviewsData, limit } = useGameWhatsNew(gameType, gameId)
   const [review, setReview] = useState<IGamePartnerReviewsData[]>([])
   const [average, setAverage] = useState<number>(0)
 

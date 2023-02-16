@@ -25,7 +25,7 @@ const GameTabs = ({ gameType, gameId }: IProps) => {
   const { handleChangeTab } = useTab()
   const { tabValue } = useTabContext()
 
-  const { newVersionData } = useGameWhatsNew(gameType)
+  const { newVersionData } = useGameWhatsNew(gameType, gameId)
   const { singleVersion, gameHowToPlay, gameItems } = useGameOverview(
     gameId,
     gameType

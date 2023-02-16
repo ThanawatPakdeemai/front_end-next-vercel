@@ -13,6 +13,7 @@ import RightSidebarContentEffect from "@components/template/RightSidebarContentE
 export default function ArcadeEmporiumGameDetails() {
   const router = useRouter()
   const { id } = router.query
+  const gameId = id ? id.toString() : ""
   // const { gameData } = useGlobal()
   // return <>{!gameData && <SkeletonGamePartner />}</>
   return (
@@ -22,13 +23,13 @@ export default function ArcadeEmporiumGameDetails() {
           className="mb-24"
           content={
             <GameContent
-              gameId={id ? id.toString() : ""}
+              gameId={gameId}
               gameType="arcade-emporium"
             />
           }
           aside={
             <OverviewContent
-              gameId={id ? id.toString() : ""}
+              gameId={gameId}
               gameType="arcade-emporium"
             />
           }
@@ -39,12 +40,17 @@ export default function ArcadeEmporiumGameDetails() {
           content={
             <TabProvider>
               <GameTabs
-                gameId={id ? id.toString() : ""}
+                gameId={gameId}
                 gameType="arcade-emporium"
               />
             </TabProvider>
           }
-          aside={<GameReviews />}
+          aside={
+            <GameReviews
+              gameType="arcade-emporium"
+              gameId={gameId}
+            />
+          }
         />
       }
     />

@@ -554,3 +554,28 @@ body {
   box-shadow: 0 0 10px #f42728;
   backdrop-filter: blur(10px);
 }
+
+.radar {
+  position: absolute;
+  width: 138.91px;
+  height: 138.91px;
+  border-radius: 100%;
+
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    rgba(123, 91, 230, 0.9) 0deg,
+    rgba(123, 91, 230, 0) 76.88deg,
+    rgba(123, 91, 230, 0) 360deg
+  );
+  transform: rotate(0deg);
+  animation: rotationRadar 4s infinite linear;
+}
+
+@keyframes rotationRadar {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-359deg);
+  }
+}

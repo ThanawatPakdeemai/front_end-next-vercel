@@ -119,3 +119,9 @@ export const PROVIDER_CONFIG = {
     }
   ]
 }
+
+// polygonscan url
+export const baseExplorer: string =
+  process.env.NEXT_PUBLIC_MODE === "production"
+    ? "https://polygonscan.com"
+    : "https://mumbai.polygonscan.com"

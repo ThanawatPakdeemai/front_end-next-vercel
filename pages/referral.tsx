@@ -1,19 +1,19 @@
 import ServicesPageLayout from "@components/templates/ServicesPageLayout"
-import CouponPage from "@feature/page/CouponPage"
+import ReferralProgramPage from "@feature/page/ReferralProgramPage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"
 
-export default function Coupon() {
+export default function ReferralProgram() {
   return (
     <>
       <article className="h-full w-full">
-        <CouponPage />
+        <ReferralProgramPage />
       </article>
     </>
   )
 }
 
-Coupon.getLayout = function getLayout(page: ReactElement) {
+ReferralProgram.getLayout = function getLayout(page: ReactElement) {
   return <ServicesPageLayout>{page}</ServicesPageLayout>
 }
 

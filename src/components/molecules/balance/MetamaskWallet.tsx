@@ -5,23 +5,24 @@ import CircleIcon from "@mui/icons-material/Circle"
 import ChainPolygonIcon from "@components/icons/NetworkIcon/ChainPolygonIcon"
 import TextLink from "@components/atoms/TextLink"
 import CloseIcon from "@mui/icons-material/Close"
-import { IProfile } from "@src/types/profile"
 import CopyAddress from "@components/atoms/CopyAddress"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import MetamaskLogo from "@components/icons/MetamaskLogo"
 
 interface IProp {
   isConnected?: boolean
-  profile?: IProfile
+  address?: string
   handleConnectWallet?: () => void
   handleOnDisconnectWallet?: () => void
+  balance: string
 }
 
 const MetamaskWallet = ({
   isConnected,
-  profile,
+  address,
   handleConnectWallet,
-  handleOnDisconnectWallet
+  handleOnDisconnectWallet,
+  balance
 }: IProp) => (
   <div className="flex h-full flex-col rounded-default bg-neutral-700 p-2">
     <div className="relative mb-[10px] flex h-full flex-col items-center justify-center rounded-t-default bg-neutral-900">
@@ -44,14 +45,14 @@ const MetamaskWallet = ({
             ? "connected with metamask"
             : "not connected with metamask"}
         </span>
-        {isConnected && profile && (
+        {isConnected && address && (
           <div>
             <span className="text-xs text-neutral-500">
-              {Helper.shortenString(profile.address, 5)}
+              {Helper.shortenString(address, 5)}
             </span>
             <CopyAddress
               title="copy address"
-              value={profile.address}
+              value={address}
               className="ml-2 cursor-pointer text-xs text-secondary-main"
             />
           </div>
@@ -90,7 +91,7 @@ const MetamaskWallet = ({
               naka in{"\n"}metamask
             </span>
             <span className="font-digital-7 text-[26px] text-neutral-600">
-              {Helper.formatNumber(294345)} NAKA
+              {balance} NAKA
             </span>
           </div>
         </div>

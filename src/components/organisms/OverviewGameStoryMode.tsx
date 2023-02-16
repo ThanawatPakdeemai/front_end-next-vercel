@@ -1,5 +1,5 @@
 import OverviewIcon from "@components/icons/OverviewIcon"
-import AsideLayout from "@components/template/AsideLayout"
+import AsideLayout from "@components/templates/contents/AsideLayout"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import useGameStore from "@stores/game"
 import { useEffect, useState } from "react"

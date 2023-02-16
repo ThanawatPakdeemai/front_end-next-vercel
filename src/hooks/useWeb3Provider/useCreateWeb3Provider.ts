@@ -67,13 +67,13 @@ const useCreateWeb3Provider = () => {
   const chainIdIsSupported = () =>
     window.ethereum?.chainId === CONFIGS.CHAIN.CHAIN_ID_HEX
 
-  const { onReset } = useProfileStore()
+  // const { onReset } = useProfileStore()
   const handleDisconnectWallet = useCallback(async () => {
-    onReset()
-    Helper.resetLocalStorage()
+    // onReset()
+    // Helper.resetLocalStorage()
     setProvider(undefined)
     setAddress(undefined)
-  }, [onReset])
+  }, [])
 
   const onSetAddress = (_address: string | undefined) => {
     setAddress(_address)

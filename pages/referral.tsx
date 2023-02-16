@@ -1,4 +1,4 @@
-import ServicesPageLayout from "@components/template/ServicesPageLayout"
+import ServicesPageLayout from "@components/templates/ServicesPageLayout"
 import ReferralProgramPage from "@feature/page/ReferralProgramPage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"

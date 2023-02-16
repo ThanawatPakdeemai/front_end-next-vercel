@@ -1,3 +1,5 @@
+import { TRoomStatus } from "@feature/game/interfaces/IGameService"
+
 // Game all response
 export interface IGameAllResponse {
   status: boolean
@@ -172,7 +174,7 @@ export interface DevicesTypes {
 export interface IGameRoom {
   start_time: string
   end_time: string
-  room_status: string
+  room_status: TRoomStatus
   amount_current_player: number
   amount_send_reward: number
   mutiplayer: boolean
@@ -277,7 +279,7 @@ export interface IGameSummary {
   end_time: Date
   room_number: number
   wallet_address: string
-  room_status: string
+  room_status: TRoomStatus
   naka_for_player: number
   id_room: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,4 +1,4 @@
-import ServicesPageLayout from "@components/template/ServicesPageLayout"
+import ServicesPageLayout from "@components/templates/ServicesPageLayout"
 import CouponPage from "@feature/page/CouponPage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"

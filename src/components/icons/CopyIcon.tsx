@@ -1,8 +1,8 @@
 import React from "react"
 
 function CopyIcon({
-  width = 24,
-  height = 24,
+  width = 18,
+  height = 19,
   className
 }: React.SVGProps<SVGSVGElement>) {
   return (

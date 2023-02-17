@@ -40,6 +40,8 @@ import SwapCallsIcon from "@mui/icons-material/SwapCalls"
 import LocalActivityOutlinedIcon from "@mui/icons-material/LocalActivityOutlined"
 import BlogIcon from "@components/icons/BlogIcon/BlogIcon"
 import WalletIcon from "@components/icons/MenunIcon/WalletIcon"
+import LaunchIcon from "@components/icons/MenunIcon/LaunchIcon"
+import TransactionIcon from "@components/icons/MenunIcon/TransactionIcon"
 
 export const MENU = [
   {
@@ -240,10 +242,24 @@ export const MENU_LOGGEDIN: IMenu[] = [
     external: false
   },
   {
+    id: "my-games",
+    label: "My Games",
+    href: "/my-games",
+    icon: <LaunchIcon />,
+    external: false
+  },
+  {
     id: "wishlist",
     label: "Wishlist",
     href: "/favourite-games",
     icon: <WishlistIcon />,
+    external: false
+  },
+  {
+    id: "transactions",
+    label: "All Transactions",
+    href: "/transactions",
+    icon: <TransactionIcon />,
     external: false
   },
   {

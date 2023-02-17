@@ -1,8 +1,9 @@
 import React from "react"
 
-function CheckMarkIcon({
+function FriendsActivitiesIcon({
   width = 24,
-  height = 24
+  height = 24,
+  className
 }: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -11,20 +12,14 @@ function CheckMarkIcon({
       viewBox={`0 0 ${width} ${height}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
-      <circle
-        cx="12"
-        cy="12"
-        r="9.4"
-        stroke="#E1E2E2"
-        strokeWidth="1.2"
-      />
       <path
-        d="M7 12L10.4375 15L17 8.5"
+        d="M4 15L8 11L12 15L20 7M4 15V20H21M4 15V4M20 7H16M20 7V11"
         stroke="#E1E2E2"
-        strokeWidth="1.2"
+        stroke-width="1.2"
       />
     </svg>
   )
 }
-export default CheckMarkIcon
+export default FriendsActivitiesIcon

@@ -48,26 +48,40 @@ const SliderBadges = ({ _playerId }: IProp) => {
   }
 
   const [slideArray, setSlideArray] = useState<IBadge[] | React.ReactElement[]>(
-    new Array(5).fill(
-      <TooltipsCustom
-        className="uppercase"
-        placement="top"
-        title="emblem info"
-        color="error"
+    Array.from(Array(5), (_) => (
+      <motion.div
+        key={uuid()}
+        className="!grid !h-[250px] !content-center !justify-center"
+        whileHover={{ rotate: 15 }}
+        transition={{
+          type: "spring",
+          stiffness: 100,
+          damping: 4
+        }}
       >
-        <motion.div
-          // className="!grid !h-[250px] !content-center"
-          whileHover={{ rotate: 15 }}
-          transition={{
-            type: "spring",
-            stiffness: 100,
-            damping: 4
-          }}
-        >
-          <BadgesPlacrhoder key={uuid()} />
-        </motion.div>
-      </TooltipsCustom>
-    )
+        <BadgesPlacrhoder key={uuid()} />
+      </motion.div>
+    ))
+    // new Array(5).fill(
+    //   <TooltipsCustom
+    //     className="uppercase"
+    //     placement="top"
+    //     title="emblem info"
+    //     color="error"
+    //   >
+    //     <motion.div
+    //       // className="!grid !h-[250px] !content-center"
+    //       whileHover={{ rotate: 15 }}
+    //       transition={{
+    //         type: "spring",
+    //         stiffness: 100,
+    //         damping: 4
+    //       }}
+    //     >
+    //       <BadgesPlacrhoder key={uuid()} />
+    //     </motion.div>
+    //   </TooltipsCustom>
+    // )
   )
 
   useMemo(() => {
@@ -135,36 +149,38 @@ const SliderBadges = ({ _playerId }: IProp) => {
                 {...settings}
                 className="!w-full"
               >
-                {getBadgeData &&
-                  getBadgeData.badges.map((badge) => (
-                    <motion.div
-                      whileHover={{ rotate: 15 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 100,
-                        damping: 4
-                      }}
-                      key={uuid()}
-                      className="!grid !h-[260px] !content-center !justify-center	"
-                    >
-                      <TooltipsCustom
-                        placement="top"
-                        title={badge.name}
-                        color="error"
-                      >
-                        <Image
-                          src={badge.image}
-                          alt={badge.name}
-                          width={120}
-                          height={150}
-                        />
-                      </TooltipsCustom>
-                    </motion.div>
-                  ))}
-                {/* <BadgesPlacrhoder />
-                <BadgesPlacrhoder />
-                <BadgesPlacrhoder />
-                <BadgesPlacrhoder /> */}
+                {slideArray &&
+                  slideArray.map((badge) => {
+                    if ("name" in badge) {
+                      return (
+                        <motion.div
+                          className="!grid !h-[250px] !content-center !justify-center"
+                          key={uuid()}
+                          whileHover={{ rotate: 15 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 100,
+                            damping: 4
+                          }}
+                        >
+                          <TooltipsCustom
+                            placement="top"
+                            title={badge.name}
+                            color="error"
+                            key={uuid()}
+                          >
+                            <Image
+                              src={badge.image}
+                              alt={badge.name}
+                              width={120}
+                              height={150}
+                            />
+                          </TooltipsCustom>
+                        </motion.div>
+                      )
+                    }
+                    return badge as React.ReactElement
+                  })}
               </Slider>
             )}
           </div>

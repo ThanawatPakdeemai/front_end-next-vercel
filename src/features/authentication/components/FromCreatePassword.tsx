@@ -185,9 +185,8 @@ const FromCreatePassword = () => {
               }}
             >
               <form className="h-full">
-                <Box className="h-[600px] w-[333px]">
+                <Box className="flex h-[600px] w-[333px] items-center">
                   <Grid
-                    className="item-center flex justify-center"
                     container
                     spacing={2.25}
                   >
@@ -452,7 +451,7 @@ const FromCreatePassword = () => {
                 container
                 justifyContent="center"
                 alignItems="center"
-                className="absolute bottom-4"
+                className="absolute bottom-32"
               >
                 <Typography className="text-sm uppercase text-neutral-700">
                   Copyright 2022 © Nakamoto Games

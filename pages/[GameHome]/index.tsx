@@ -26,9 +26,8 @@ export default function GameLobby() {
     if (
       allGameData &&
       allGameData.data &&
-      allGameData.data.find(
-        (value) => value.game_url === (GameHome as string)
-      ) === undefined
+      allGameData.data.find((value) => value.path === (GameHome as string)) ===
+        undefined
     ) {
       router.push("/404")
     }

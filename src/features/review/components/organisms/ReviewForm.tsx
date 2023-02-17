@@ -40,7 +40,7 @@ const ReviewForm = ({ avatar, username }: IReviewFormProps) => {
         <div className="review--item__content-rating flex-row">
           <Rating
             className="mx-2"
-            name="no-value"
+            name="simple-controlled"
             value={rate}
             sx={{
               "& .MuiSvgIcon-root": {
@@ -48,8 +48,9 @@ const ReviewForm = ({ avatar, username }: IReviewFormProps) => {
                 width: "20px"
               }
             }}
-            onChange={(newValue) => {
-              setRate(Number(newValue))
+            onChange={(_event, _newValue) => {
+              const rating = 6 - Number(_newValue)
+              setRate(rating)
             }}
           />
         </div>

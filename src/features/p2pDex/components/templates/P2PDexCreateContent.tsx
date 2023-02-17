@@ -9,7 +9,6 @@ import HeaderP2P from "../atoms/HeaderP2P"
 
 const P2PDexCreateContent = () => {
   const [type, setType] = useState<"buy" | "sell">("buy")
-
   return (
     <div className="p2p-dex-content--create">
       <HeaderP2P

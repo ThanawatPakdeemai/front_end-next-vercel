@@ -1,7 +1,9 @@
+/* eslint-disable no-nested-ternary */
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import React, { memo } from "react"
 import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined"
 import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined"
+import _ from "lodash"
 
 export interface ITypeP2p {
   type: "buy" | "sell"
@@ -22,7 +24,7 @@ const HeaderP2P = ({ type = "buy", setType, dataButton }: IProp) => (
           type === "sell" ? " text-error-main" : " text-varidian-default"
         }`}
       >
-        {type} naka
+        {_.find(dataButton, { type })?.title} naka
       </p>
       <div className="flex items-center gap-2">
         {dataButton &&
@@ -33,7 +35,7 @@ const HeaderP2P = ({ type = "buy", setType, dataButton }: IProp) => (
               onClick={() => setType && setType(ele.type)}
               text={ele.title}
               icon={
-                type === "buy" ? (
+                ele.type === "buy" ? (
                   <ArrowDownwardOutlinedIcon />
                 ) : (
                   <ArrowUpwardOutlinedIcon />
@@ -42,42 +44,15 @@ const HeaderP2P = ({ type = "buy", setType, dataButton }: IProp) => (
               size="small"
               color="primary"
               variant="contained"
-              className={`!rounded-sm !bg-primary-main !text-neutral-500 ${
-                ele.type === "buy"
-                  ? "!bg-varidian-default !text-neutral-800"
-                  : "  !bg-error-main !text-neutral-800"
+              className={`!rounded-sm  ${
+                type === ele.type
+                  ? type === "buy"
+                    ? "!bg-varidian-default !text-neutral-800 "
+                    : "!bg-error-main !text-neutral-800 "
+                  : "!bg-primary-main !text-neutral-500"
               }  `}
             />
           ))}
-        {/* <ButtonLink
-          href=""
-          onClick={() => setType && setType("buy")}
-          text={title1}
-          icon={<ArrowDownwardOutlinedIcon />}
-          size="small"
-          color="primary"
-          variant="contained"
-          className={` !rounded-sm ${
-            type === "buy"
-              ? "!bg-varidian-default !text-neutral-800"
-              : "  !bg-primary-main !text-neutral-500"
-          }  `}
-        />
-        <ButtonLink
-          href=""
-          onClick={() => setType && setType("sell")}
-          text={title2}
-          icon={<ArrowUpwardOutlinedIcon />}
-          size="small"
-          color="primary"
-          className={` !rounded-sm  !text-neutral-700
-          ${
-            type === "sell"
-              ? "!bg-error-main !text-neutral-800"
-              : "  !bg-primary-main !text-neutral-500"
-          }  `}
-          variant="contained"
-        /> */}
       </div>
     </div>
   </>

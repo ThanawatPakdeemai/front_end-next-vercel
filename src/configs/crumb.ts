@@ -34,3 +34,41 @@ export const ITEM_REWARD_CRUMB = () => {
     }
   ] as ICrumb[]
 }
+
+export const ALL_TRANSACTIONS = () => {
+  const { profile } = useProfileStore()
+
+  return [
+    {
+      title: "Home",
+      href: "/"
+    },
+    {
+      title: "My Account",
+      href: `/profile/${profile.data?.id}`
+    },
+    {
+      title: "All Transactions",
+      href: "/transactions"
+    }
+  ] as ICrumb[]
+}
+
+export const GAME_PLAY_HISTORY = () => {
+  const { profile } = useProfileStore()
+
+  return [
+    {
+      title: "Home",
+      href: "/"
+    },
+    {
+      title: "My Account",
+      href: `/profile/${profile.data?.id}`
+    },
+    {
+      title: "Play History",
+      href: "/history"
+    }
+  ] as ICrumb[]
+}

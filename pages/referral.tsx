@@ -1,20 +1,20 @@
 import ServicesPageLayout from "@components/templates/ServicesPageLayout"
-import ReferralProgramPage from "@feature/page/ReferralProgramPage"
+import { REFERRAL_BANNER } from "@constants/servicesBanner"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"
 
-export default function ReferralProgram() {
+export default function Referral() {
   return (
     <>
-      <article className="h-full w-full">
-        <ReferralProgramPage />
-      </article>
+      <article className="h-full w-full">COMMING SOON</article>
     </>
   )
 }
 
-ReferralProgram.getLayout = function getLayout(page: ReactElement) {
-  return <ServicesPageLayout>{page}</ServicesPageLayout>
+Referral.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <ServicesPageLayout banner={REFERRAL_BANNER}>{page}</ServicesPageLayout>
+  )
 }
 
 export async function getStaticProps({ locale }) {

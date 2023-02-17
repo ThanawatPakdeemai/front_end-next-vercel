@@ -17,7 +17,7 @@ const useGlobal = (
   _search?: string,
   _item?: string | string[],
   _device?: string,
-  _gameType?: string,
+  _gameType?: IGetType,
   _tournament?: boolean,
   _category?: string,
   _nftgame?: boolean
@@ -93,7 +93,8 @@ const useGlobal = (
         await router.push(`/${_gameUrl}`)
         break
     }
-    await router.push(`/${_gameUrl}`)
+    // NOTE: No need this code
+    // await router.push(`/${_gameUrl}`)
   }
 
   return {

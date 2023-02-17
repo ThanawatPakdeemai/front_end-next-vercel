@@ -26,23 +26,25 @@ export default function CatogoriesPageDetails() {
     defaultBody
   } = useGlobal()
 
-  const body = {
-    "limit": limit,
-    "skip": page,
-    "sort": "_id",
-    "search": "",
-    "category": pathId || "",
-    "item": "all",
-    "device": "all",
-    "game_type": "all",
-    "tournament": false
-  }
+  // const body: IFilterGamesByKey = {
+  //   "limit": limit,
+  //   "skip": page,
+  //   "sort": "_id",
+  //   "search": "",
+  //   "item": "all",
+  //   "device": "all",
+  //   "game_type": "all",
+  //   "tournament": false
+  // }
   const {
     getGamesFilterByCategoryId,
     isFetchingGamesFilterByCategoryId,
     isLoadingGamesFilterByCategoryId,
     isPreviousGamesFilterByCategoryId
-  } = useCategories(defaultBody)
+  } = useCategories({
+    ...defaultBody,
+    "category": pathId || ""
+  })
 
   useEffect(() => {
     if (!isFetchingGamesFilterByCategoryId && getGamesFilterByCategoryId) {

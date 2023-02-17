@@ -16,8 +16,15 @@ export default function CatogoriesPageDetails() {
   const pathId = router.query.id
 
   const [gameData, setGameData] = useState<IGame[]>([])
-  const { onHandleClick, setPage, page, setTotalCount, totalCount, limit } =
-    useGlobal()
+  const {
+    onHandleClick,
+    setPage,
+    page,
+    setTotalCount,
+    totalCount,
+    limit,
+    defaultBody
+  } = useGlobal()
 
   const body = {
     "limit": limit,
@@ -35,7 +42,7 @@ export default function CatogoriesPageDetails() {
     isFetchingGamesFilterByCategoryId,
     isLoadingGamesFilterByCategoryId,
     isPreviousGamesFilterByCategoryId
-  } = useCategories(body)
+  } = useCategories(defaultBody)
 
   useEffect(() => {
     if (!isFetchingGamesFilterByCategoryId && getGamesFilterByCategoryId) {

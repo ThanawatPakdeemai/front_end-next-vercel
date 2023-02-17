@@ -160,7 +160,7 @@ export const MENU = [
       },
       {
         name: "About Us",
-        link: "/abount-us",
+        link: "https://main.nakamoto.games",
         icon: AboutUsIcon
       },
       {

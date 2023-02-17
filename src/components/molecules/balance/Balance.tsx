@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Card, CardContent, SxProps, Theme } from "@mui/material"
+import { CardContent, SxProps, Theme } from "@mui/material"
 import INaka from "@components/icons/Naka"
 import IBusd from "@components/icons/Busd"
 import useProfileStore from "@stores/profileStore"
@@ -114,19 +114,13 @@ const Balance = ({ className, sx }: IProps) => {
           <CardContent
             className={`my-2 min-w-[200px] items-center justify-center p-0 ${className}`}
           >
-            <Card
-              className=" m-auto flex-row gap-y-3  rounded-[13px] bg-neutral-800  px-[5px] pt-[5px] "
+            <AmountBalance
               sx={sx}
-            >
-              <AmountBalance
-                balance={nakaBalanceVault}
-                icon={<INaka />}
-              />
-              <AmountBalance
-                balance={Busd}
-                icon={<IBusd width={21} />}
-              />
-            </Card>
+              dataBalance={[
+                { icon: <INaka />, balance: nakaBalanceVault },
+                { icon: <IBusd width={21} />, balance: Busd }
+              ]}
+            />
           </CardContent>
         </>
       ) : (

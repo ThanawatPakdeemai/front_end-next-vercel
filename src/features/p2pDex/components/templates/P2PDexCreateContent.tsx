@@ -22,7 +22,7 @@ const P2PDexCreateContent = () => {
         }}
       />
 
-      <FormCreate />
+      <FormCreate type={type} />
       {/* {stakeGroupByDatetime.map((item) => (
       <StakingPeriodDate
         key={uuid()}

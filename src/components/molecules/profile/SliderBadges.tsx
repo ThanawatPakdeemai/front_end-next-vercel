@@ -155,7 +155,9 @@ const SliderBadges = ({ _playerId }: IProp) => {
                         <Image
                           src={badge.image}
                           alt={badge.name}
-                          fill
+                          // fill
+                          width={150}
+                          height={150}
                         />
                       </TooltipsCustom>
                     </motion.div>

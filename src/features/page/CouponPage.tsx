@@ -21,15 +21,6 @@ const CouponPage = () => {
         })
     }
     setCoupon(event.target.value)
-
-    // if (event) {
-    //   redeemCode(coupon)
-    //   setCoupon(event.target.value)
-    // }
-    // null
-    // useGetRedeemCode(coupon)
-    // refetch()
-    // event.preventDefault()
   }
   return (
     <div className="grid w-3/4 grid-cols-2 rounded-lg border border-neutral-700 bg-neutral-800">

@@ -8,6 +8,7 @@ import CloseIcon from "@mui/icons-material/Close"
 import CopyAddress from "@components/atoms/CopyAddress"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import MetamaskLogo from "@components/icons/MetamaskLogo"
+import { baseExplorer } from "@configs/sites"
 
 interface IProp {
   isConnected?: boolean
@@ -62,6 +63,9 @@ const MetamaskWallet = ({
             <TextLink
               name="Polygon Scan"
               className="!pb-0 capitalize"
+              onClick={() =>
+                window.open(`${baseExplorer}/address/${address}`, "_blank")
+              }
             />
             <span className="text-neutral-700">|</span>
             <TextLink

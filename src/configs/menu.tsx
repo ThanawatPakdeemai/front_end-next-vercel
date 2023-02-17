@@ -36,6 +36,12 @@ import IconSwap from "@components/icons/SwapIcon"
 import GlobalIcon from "@components/icons/GlobalIcon"
 import BoltIcon from "@mui/icons-material/Bolt"
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined"
+import SwapCallsIcon from "@mui/icons-material/SwapCalls"
+import LocalActivityOutlinedIcon from "@mui/icons-material/LocalActivityOutlined"
+import BlogIcon from "@components/icons/BlogIcon/BlogIcon"
+import WalletIcon from "@components/icons/MenunIcon/WalletIcon"
+import LaunchIcon from "@components/icons/MenunIcon/LaunchIcon"
+import TransactionIcon from "@components/icons/MenunIcon/TransactionIcon"
 
 export const MENU = [
   {
@@ -81,7 +87,7 @@ export const MENU = [
       {
         name: "Tournament",
         link: "/tournament",
-        icon: "/assets/icons/menu/Iconcrown.svg"
+        icon: TournamentIcon
       } /**
        @description name svgIcon in forder menu in public (if icon is string) */,
       {
@@ -90,8 +96,8 @@ export const MENU = [
         icon: LanguageOutlinedIcon
       },
       {
-        name: "NFT Games",
-        link: "/nft-games",
+        name: "Arcade Emporium",
+        link: "/arcade-emporium",
         icon: DiamondIcon
       },
       {
@@ -120,19 +126,19 @@ export const MENU = [
       {
         name: "P2P DEX",
         link: "/p2p-dex",
-        icon: AttachMoneyIcon
+        icon: SwapCallsIcon
       },
       {
         name: "Staking",
         link: "/staking",
-        icon: MoneyOffIcon
+        icon: IStacking
       },
       {
         name: "Referral Program",
         link: "/referral",
-        icon: MapOutlinedIcon
+        icon: IReferrals
       },
-      { name: "Coupon", link: "/coupon", icon: DiamondIcon }
+      { name: "Coupon", link: "/coupon", icon: LocalActivityOutlinedIcon }
     ]
   },
   {
@@ -150,20 +156,20 @@ export const MENU = [
       {
         name: "Blog",
         link: "/blog",
-        icon: AttachMoneyIcon
+        icon: BlogIcon
       },
       {
         name: "About Us",
-        link: "/abount-us",
-        icon: MoneyOffIcon
+        link: "https://main.nakamoto.games",
+        icon: AboutUsIcon
       },
       {
         name: "Marketplace",
         link: "/marketplace",
-        icon: MapOutlinedIcon
+        icon: MarketPlaceIcon
       },
-      { name: "Nakaverse", link: "/nakaverse", icon: DiamondIcon },
-      { name: "Nakapunks", link: "/nakapunks", icon: DiamondIcon }
+      { name: "Nakaverse", link: "/nakaverse", icon: NakaverseIcon },
+      { name: "Nakapunks", link: "/nakapunks", icon: NakapunksIcon }
     ]
   }
 ]
@@ -205,10 +211,10 @@ export const MENU_GUEST: IMenu[] = [
     external: false
   },
   {
-    id: "nft-games",
-    label: "NFT Games",
+    id: "arcade-emporium",
+    label: "Arcade Emporium",
     icon: <Diamond stroke="#E1E2E2" />,
-    href: "/nft-games",
+    href: "/arcade-emporium",
     external: false
   },
   {
@@ -229,10 +235,31 @@ export const MENU_LOGGEDIN: IMenu[] = [
     external: false
   },
   {
+    id: "wallet",
+    label: "Wallet",
+    href: "/wallet",
+    icon: <WalletIcon />,
+    external: false
+  },
+  {
+    id: "my-games",
+    label: "My Games",
+    href: "/my-games",
+    icon: <LaunchIcon />,
+    external: false
+  },
+  {
     id: "wishlist",
     label: "Wishlist",
     href: "/favourite-games",
     icon: <WishlistIcon />,
+    external: false
+  },
+  {
+    id: "transactions",
+    label: "All Transactions",
+    href: "/transactions",
+    icon: <TransactionIcon />,
     external: false
   },
   {

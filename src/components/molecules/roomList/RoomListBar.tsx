@@ -64,7 +64,7 @@ const RoomListBar = ({
         </span>
       </div>
     </div>
-    <div className="flex gap-2">
+    <div className="flex items-center gap-2">
       <RoomListBox
         type="timer"
         timer={timer}
@@ -83,7 +83,7 @@ const RoomListBar = ({
         startIcon={<></>}
         endIcon={<IconArrowRight stroke="#010101" />}
         text={btnText || "Join"}
-        className="btn-green-rainbow z-[2] h-[50px] w-[95px] bg-green-lemon font-bold capitalize text-neutral-900"
+        className="btn-green-rainbow z-[2] h-[40px] !w-[95px] bg-green-lemon font-bold capitalize text-neutral-900"
         type="button"
       />
     </div>

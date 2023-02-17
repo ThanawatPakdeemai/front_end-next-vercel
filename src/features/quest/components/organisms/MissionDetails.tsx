@@ -83,11 +83,9 @@ const MissionDetails = () => {
           </div>
           <motion.div
             initial={{ y: -80 }}
-            animate={{ y: 0 }}
-            transition={{
-              stiffness: 120,
-              type: "spring",
-              damping: 8
+            animate={{
+              y: 0,
+              transition: { stiffness: 120, type: "spring", damping: 8 }
             }}
             className="flex h-fit w-full flex-col rounded-[8px] border border-solid border-neutral-700 p-4"
           >
@@ -103,11 +101,9 @@ const MissionDetails = () => {
       ) : (
         <motion.div
           initial={{ y: 80 }}
-          animate={{ y: 0 }}
-          transition={{
-            stiffness: 100,
-            type: "spring",
-            damping: 8
+          animate={{
+            y: 0,
+            transition: { stiffness: 100, type: "spring", damping: 8 }
           }}
           className="w-full rounded-[8px] border border-solid border-neutral-700 px-4"
         >

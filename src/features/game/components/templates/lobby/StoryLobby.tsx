@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 import useGameStore from "@stores/game"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { Chip, Typography } from "@mui/material"
@@ -25,15 +25,19 @@ const StoryLobby = () => {
   if (gameData && gameData.category_list && gameData.category_list.length > 0) {
     gameData.category_list.map((category) =>
       gameTags.push({
+        id: category.id,
         name: category.name,
-        link: `category/${category.id}`
+        link: `/categories/${
+          category.slug ? category.slug : category.name.toLocaleLowerCase()
+        }`
       })
     )
   } else if (gameData && gameData.category) {
     const _categorySlug = gameData.category.name.split(" ")
     gameTags.push({
+      id: gameData.category.id,
       name: gameData.category.name,
-      link: `category/${_categorySlug[1].toLocaleLowerCase()}`
+      link: `categories/${_categorySlug[1].toLocaleLowerCase()}`
     })
   }
 
@@ -42,7 +46,7 @@ const StoryLobby = () => {
       <div className="mx-auto w-[578px]">
         <div className="mb-4 flex gap-4">
           <div className="h-[230px] w-full justify-center overflow-hidden rounded-3xl border-[1px] border-neutral-700 border-opacity-80 sm:w-[230px] md:justify-start">
-            <ImageCustom
+            <Image
               src={
                 gameData
                   ? gameData.image_category_list

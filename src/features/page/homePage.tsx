@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useLayoutEffect, useState } from "react"
+import React, { memo, useEffect, useState } from "react"
 import LogoIcon from "@components/icons/LogoIcon"
 import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
 import ShapeIcon from "@components/icons/ShapeIcon"
@@ -30,10 +30,31 @@ import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { v4 as uuid } from "uuid"
 import useTweenEffect from "@hooks/useSpartFireEffect"
-import gsap from "gsap"
+import useProfileStore from "@stores/profileStore"
+import useQuestStore from "@stores/quest"
+import { MenuLists } from "@configs/social"
+import useGlobal from "@hooks/useGlobal"
 
 const Home = () => {
   const limit = 10
+  const { profile } = useProfileStore()
+  const { clearQuestStore, setOpen, hasCompleted } = useQuestStore()
+  const { hydrated } = useGlobal()
+
+  /**
+   * @description: Spark fire effect
+   */
+  const { createParticle } = useTweenEffect(600, 300, 50, -500)
+  useEffect(() => {
+    if (hydrated) createParticle()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [createParticle])
+
+  const handleModalMission = () => {
+    setOpen()
+    clearQuestStore()
+  }
+
   const [f2pGame, setF2PGame] = useState<IGame[]>()
   const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-play")
 
@@ -71,18 +92,7 @@ const Home = () => {
     }
   }, [p2eCurType, hotGameData, p2eGameData])
 
-  /**
-   * @description: Spark fire effect
-   */
-  const { createParticle } = useTweenEffect(600, 300, 50, -500)
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      createParticle()
-    })
-    return () => ctx.revert()
-  }, [createParticle])
-
-  return (
+  return hydrated ? (
     <>
       <BannerSlide />
       {/* Testing display a CarouselSlide component, waiting to merge with team */}
@@ -93,13 +103,22 @@ const Home = () => {
           text="Secue. fun. simple. earn $naka AND enjoy "
           icon={<LogoIcon />}
         />
-        <div className="fixed right-4 bottom-5 z-10 flex flex-col items-center justify-center">
-          <ButtonSticky icon={<SupportIcon />} />
-          <ButtonSticky
-            multi
-            notify
-          />
-        </div>
+        {/* notification */}
+        {profile && profile.data && (
+          <div className="fixed right-4 bottom-5 z-10 flex flex-col items-center justify-center">
+            <ButtonSticky
+              icon={<SupportIcon />}
+              onClick={() => {
+                window.open(MenuLists[0].href, "_blank")
+              }}
+            />
+            <ButtonSticky
+              multi
+              notify={hasCompleted}
+              onClick={handleModalMission}
+            />
+          </div>
+        )}
       </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Box>
@@ -219,7 +238,7 @@ const Home = () => {
             classNameSecond="bg-info-light"
             iconBtn={<IDiamond />}
             textBtn="NAKA NFT"
-            href="/nft-games"
+            href="/arcade-emporium"
             srcMain={IMAGES.frontNakaBand.src}
             altMain={IMAGES.frontNakaBand.alt}
             srcSecond={IMAGES.backNakaBand.src}
@@ -230,6 +249,8 @@ const Home = () => {
         <CardNakaverse href="/" />
       </Box>
     </>
+  ) : (
+    <> </>
   )
 }
 export default memo(Home)

@@ -70,22 +70,25 @@ export const refreshProfileToken = async (
   callBeckWhenError?: () => void
 ): Promise<any | undefined> => {
   try {
-    const response = await axios.post<IRefreshToken>(
-      `/auth/refresh-token`,
-      {},
-      {
-        withCredentials: true
-      }
-    )
-    Helper.setLocalStorage({
-      key: ELocalKey.token,
-      value: response.data.jwtToken
-    })
-    axios.defaults.headers.common = {
-      Authorization: `Bearer ${response.data.jwtToken}`
-    }
+    services
+      .post<IRefreshToken>(
+        `/auth/refresh-token`,
+        {},
+        {
+          withCredentials: true
+        }
+      )
+      .then((_response) => {
+        Helper.setLocalStorage({
+          key: ELocalKey.token,
+          value: _response.data.jwtToken
+        })
+        axios.defaults.headers.common = {
+          Authorization: `Bearer ${_response.data.jwtToken}`
+        }
 
-    return response.data.jwtToken
+        return _response.data.jwtToken
+      })
   } catch (error) {
     useProfileStore.getState().onReset()
     Helper.resetLocalStorage()
@@ -156,23 +159,6 @@ export const revokeToken = async () => {
       .catch((error: Error) => error)
   )
 }
-
-export const refreshToken = async () =>
-  axios
-    .post<IRefreshToken>(`/auth/refresh-token`)
-    .then((res) => ({
-      address: res.data.address,
-      jwtToken: res.data.jwtToken,
-      id: res.data.id
-    }))
-    .catch(
-      () => ({
-        address: "",
-        jwtToken: "",
-        id: ""
-      })
-      // return error;
-    )
 
 export const loginProvider = ({
   _email,

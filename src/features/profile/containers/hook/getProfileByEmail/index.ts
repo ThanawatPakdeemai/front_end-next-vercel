@@ -8,7 +8,7 @@ const useGetProfileByEmail = (_email: string) => {
     isLoading,
     isError
   } = useQuery(["profile"], () => getProfileByEmail(_email), {
-    enabled: _email !== "" || _email !== undefined
+    enabled: _email !== "" && _email !== undefined
   })
 
   return {

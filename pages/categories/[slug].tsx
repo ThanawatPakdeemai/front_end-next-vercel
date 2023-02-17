@@ -1,6 +1,6 @@
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import GamePageWithBreadcrumb from "@components/template/GamePageWithBreadcrumb"
+import GamePageWithBreadcrumb from "@components/templates/GamePageWithBreadcrumb"
 import { P2EHeaderMenu } from "@constants/gameSlide"
 import GameCard from "@feature/game/components/molecules/GameCard"
 import { IGame } from "@feature/game/interfaces/IGameService"
@@ -16,26 +16,35 @@ export default function CatogoriesPageDetails() {
   const pathId = router.query.id
 
   const [gameData, setGameData] = useState<IGame[]>([])
-  const { onHandleClick, setPage, page, setTotalCount, totalCount, limit } =
-    useGlobal()
+  const {
+    onHandleClick,
+    setPage,
+    page,
+    setTotalCount,
+    totalCount,
+    limit,
+    defaultBody
+  } = useGlobal()
 
-  const body = {
-    "limit": limit,
-    "skip": page,
-    "sort": "_id",
-    "search": "",
-    "category": pathId || "",
-    "item": "all",
-    "device": "all",
-    "game_type": "all",
-    "tournament": false
-  }
+  // const body: IFilterGamesByKey = {
+  //   "limit": limit,
+  //   "skip": page,
+  //   "sort": "_id",
+  //   "search": "",
+  //   "item": "all",
+  //   "device": "all",
+  //   "game_type": "all",
+  //   "tournament": false
+  // }
   const {
     getGamesFilterByCategoryId,
     isFetchingGamesFilterByCategoryId,
     isLoadingGamesFilterByCategoryId,
     isPreviousGamesFilterByCategoryId
-  } = useCategories(body)
+  } = useCategories({
+    ...defaultBody,
+    "category": pathId || ""
+  })
 
   useEffect(() => {
     if (!isFetchingGamesFilterByCategoryId && getGamesFilterByCategoryId) {

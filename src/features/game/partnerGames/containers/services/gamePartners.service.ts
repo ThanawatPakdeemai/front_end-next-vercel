@@ -1,8 +1,5 @@
 import services from "@configs/axiosGlobalConfig"
-import {
-  IGamePartnerService,
-  IGameService
-} from "@feature/game/interfaces/IGameService"
+import { IGamePartnerService } from "@feature/game/interfaces/IGameService"
 import { IGetPartnerGameService } from "@feature/game/interfaces/IPartnerGame"
 import {
   IGamePartnerNewVersionReponse,
@@ -42,11 +39,9 @@ export const getAllPartnerGames = ({
  * @returns IGamePartnerService
  */
 export const getGamePartnerById = (_gameId: string) =>
-  new Promise<IGameService | IGamePartnerService>((resolve, reject) => {
+  new Promise<IGamePartnerService>((resolve, reject) => {
     services
-      .get<IGameService | IGamePartnerService>(
-        `/partner-game-content/${_gameId}`
-      )
+      .get<IGamePartnerService>(`/partner-game-content/${_gameId}`)
       .then((reponse) => resolve(reponse.data))
       .catch((error) => reject(error))
   })
@@ -117,3 +112,19 @@ export const getAllVersion = async (
       })
       .catch((error) => reject(error))
   })
+
+// export const  = async (
+//   user_id: string,
+//   review_comment: string,
+//   review_rate: number,
+//   game_content_id: string
+// ) => {
+//   return axios
+//     .post<IResComment>(`${baseUrl.api}/`, )
+//     .then((res) => {
+//       return res
+//     })
+//     .catch((error) => {
+//       return error
+//     })
+// }

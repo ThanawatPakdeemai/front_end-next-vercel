@@ -40,7 +40,6 @@ const SelectNaka = ({
 }: IProp) => {
   const { t } = useTranslation()
   const router = useRouter()
-
   return (
     <>
       <PopupState

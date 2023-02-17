@@ -1,4 +1,4 @@
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 import RightMenuWallet from "@components/molecules/rightMenu/RightMenuWallet"
 import Gas from "@components/molecules/Gas"
 import INaka from "@components/icons/Naka"
@@ -7,7 +7,6 @@ import ISubtract from "@components/icons/Subtract"
 import IBattery from "@components/icons/Battery"
 import IVector from "@components/icons/Vector"
 import ISignalTube from "@components/icons/SignalTube"
-import IGMDesignerGame from "@components/icons/GMDesignerGame"
 import IStickerSolid from "@components/icons/StickerSolid"
 import ILogoMaster from "@components/icons/LogoMaster"
 import IMetaMask from "@components/icons/MetaMask"
@@ -18,8 +17,15 @@ import useProfileStore from "@stores/profileStore"
 // import { ethers } from "ethers"
 // import getWeb3NoAccount from "@src/utils/web3"
 import { IMAGES } from "@constants/images"
-import TransactionTable from "@feature/transaction/components/molecules/TransactionTable"
 import { useWeb3Provider } from "@providers/index"
+import Helper from "@utils/helper"
+import useGetNakaBalance from "@feature/contract/containers/hooks/useQuery/useGetNakaBalance"
+import useGetBalanceVault from "@feature/inventory/containers/hooks/useGetBalanceVault"
+import { useToast } from "@feature/toast/containers"
+import useContractVault from "@feature/contract/containers/hooks/useContractVault"
+import CONFIGS from "@configs/index"
+import TransactionTable from "@feature/transaction/components/molecules/TransactionTable"
+import useLoadingStore from "@stores/loading"
 
 const KeyFramesRotate = styled("div")({
   "@keyframes rotation": {
@@ -33,42 +39,136 @@ const KeyFramesRotate = styled("div")({
   animation: "rotation 10s infinite linear"
 })
 
+type Method = "deposit" | "withdraw"
+
 export default function WalletPage() {
-  const { profile } = useProfileStore()
+  // state
   const [type, setType] = useState<string>("NAKA")
+  const [nakaBalanceVault, SetNakaBalanceVault] = useState<string>("N/A")
+  const [nakaBalance, SetNakaBalance] = useState<string>("N/A")
+  const [isConnected, setIsConnected] = useState<boolean>(false)
+  const [openWithDraw, setOpenWithDraw] = useState<boolean>(false)
+  const [openDeposit, setOpenDeposit] = useState<boolean>(false)
+  const [haveMetamask, sethaveMetamask] = useState(true)
+  const [value, setValue] = useState<number>(0)
+  const { successToast, errorToast } = useToast()
+
+  // hook
+  const { profile } = useProfileStore()
+  const { setOpen, setClose } = useLoadingStore()
   const { address, handleConnectWithMetamask, handleDisconnectWallet } =
     useWeb3Provider()
-  // const [isConnected, setIsConnected] = useState<boolean>(false)
+  const { checkAllowNaka, allowNaka, depositNaka, withdrawNaka } =
+    useContractVault()
+  const { balanceVaultNaka: balanceVault, refetchBalanceVaultNaka } =
+    useGetBalanceVault(address || "", isConnected)
+  const { balance, refetchBalance } = useGetNakaBalance(
+    address || "",
+    isConnected
+  )
+  const { WeiToNumber, formatNumber, BNToNumber, toWei } = Helper
 
-  // const [haveMetamask, sethaveMetamask] = useState(true)
+  // function
+  const handleOpen = (_method: Method) => {
+    if (address && profile) {
+      if (_method === "deposit") setOpenDeposit(true)
+      else if (_method === "withdraw") setOpenWithDraw(true)
+    } else {
+      errorToast("Please connect wallet")
+    }
+  }
+  const handleClose = (_method: Method) => {
+    if (_method === "deposit") setOpenDeposit(false)
+    else if (_method === "withdraw") setOpenWithDraw(false)
+    setValue(0)
+    refetchBalanceVaultNaka()
+    refetchBalance()
+  }
 
-  // const [client, setclient] = useState<any>({
-  //   isConnected: false
-  // })
-  // const checkConnection = async () => {
-  //   const { ethereum }: any = window
-  //   if (ethereum) {
-  //     sethaveMetamask(haveMetamask)
-  //     const accounts = await ethereum.request({ method: "eth_accounts" })
-  //     if (accounts.length > 0) {
-  //       setIsConnected(true)
-  //       setclient({
-  //         isConnected: true,
-  //         address: accounts[0]
-  //       })
-  //     } else {
-  //       setclient({
-  //         isConnected: false
-  //       })
-  //     }
-  //   } else {
-  //     sethaveMetamask(false)
-  //   }
-  // }
+  const handleConnectWallet = () => {
+    if (profile.data && handleConnectWithMetamask) {
+      handleConnectWithMetamask()
+    } else {
+      errorToast("Please login first")
+    }
+  }
 
+  const handleWalletProcess = async (_method: Method) => {
+    if (!address) return
+    try {
+      /* Sample loading wait for loading popup design */
+      setOpen("Blockchain transaction in progress...")
+      const res =
+        _method === "deposit"
+          ? await depositNaka(address, toWei(value.toString()))
+          : await withdrawNaka(address, toWei(value.toString()))
+
+      /* Wait for transaction data */
+      const resData = await res.wait()
+      if (resData) {
+        setClose()
+        successToast("Transaction success")
+        handleClose(_method)
+      }
+    } catch (error) {
+      setClose()
+      errorToast("Transaction failed")
+    }
+  }
+
+  const handleContract = async (_method: Method) => {
+    try {
+      if (!address) {
+        return
+      }
+      const allowance = await checkAllowNaka(
+        CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
+      )
+      if (BNToNumber(allowance as string) === 0) {
+        const allowResult = await allowNaka()
+        successToast(allowResult as string)
+      }
+      handleWalletProcess(_method)
+    } catch (error) {
+      errorToast(error as string)
+    }
+  }
+
+  // balanceVault
   useEffect(() => {
-    handleConnectWithMetamask
-  }, [handleConnectWithMetamask])
+    if (balanceVault && address) {
+      const tempData = WeiToNumber(balanceVault.data)
+      SetNakaBalanceVault(formatNumber(tempData, { maximumFractionDigits: 1 }))
+    } else {
+      SetNakaBalanceVault("N/A")
+    }
+  }, [WeiToNumber, address, balanceVault, formatNumber])
+
+  // balance
+  useEffect(() => {
+    if (balance && address) {
+      const tempData = WeiToNumber(balance.data)
+      SetNakaBalance(formatNumber(tempData, { maximumFractionDigits: 1 }))
+    } else {
+      SetNakaBalance("N/A")
+    }
+  }, [WeiToNumber, address, balance, formatNumber])
+
+  // check connection
+  useEffect(() => {
+    const checkConnection = async () => {
+      const { ethereum }: any = window
+      if (ethereum) {
+        sethaveMetamask(haveMetamask)
+        if (address && address.length > 0) {
+          setIsConnected(true)
+        }
+      } else {
+        sethaveMetamask(false)
+      }
+    }
+    checkConnection()
+  }, [address, haveMetamask])
 
   return (
     <>
@@ -154,7 +254,9 @@ export default function WalletPage() {
                     }
                   `}
                   >
-                    340,395.8 {type}
+                    {type === "NAKA"
+                      ? `${nakaBalanceVault} ${type}`
+                      : `${"Coming soon..."}`}
                   </p>
                 </div>
                 <IVector
@@ -162,11 +264,9 @@ export default function WalletPage() {
                   height="6"
                   className="mb-2"
                 />
-                <IGMDesignerGame
-                  width="225"
-                  height="24"
-                />
-
+                <span className="text-xl uppercase text-neutral-600">
+                  {profile.data ? profile.data.username : ""}
+                </span>
                 <div className="absolute top-2 right-2">
                   <KeyFramesRotate>
                     <IStickerSolid
@@ -177,8 +277,30 @@ export default function WalletPage() {
                 </div>
               </div>
               <div className="mb-4 flex w-full justify-end">
-                <RightMenuWallet title="withdraw" />
-                <RightMenuWallet title="Deposit" />
+                <RightMenuWallet
+                  title="withdraw"
+                  titleHeader="Withdraw to metamask"
+                  subtTitle="your naka storage"
+                  open={openWithDraw}
+                  value={value}
+                  balance={balanceVault ? WeiToNumber(balanceVault.data) : 0}
+                  setValue={setValue}
+                  handleOpen={() => handleOpen("withdraw")}
+                  handleClose={() => handleClose("withdraw")}
+                  handleContract={() => handleContract("withdraw")}
+                />
+                <RightMenuWallet
+                  title="Deposit"
+                  titleHeader="diposit from metamask"
+                  subtTitle="your naka in matamask"
+                  open={openDeposit}
+                  value={value}
+                  balance={balance ? WeiToNumber(balance.data) : 0}
+                  setValue={setValue}
+                  handleOpen={() => handleOpen("deposit")}
+                  handleClose={() => handleClose("deposit")}
+                  handleContract={() => handleContract("deposit")}
+                />
               </div>
               <div className="mt-6 grid w-full grid-cols-12 gap-2">
                 <div className="col-span-7 rounded-xl border-2 border-black-800 text-center ">
@@ -213,7 +335,7 @@ export default function WalletPage() {
                         height="25"
                       />
                     ) : (
-                      <ImageCustom
+                      <Image
                         src={IMAGES.MetaMaskds.src}
                         alt=""
                         width={35}
@@ -225,7 +347,7 @@ export default function WalletPage() {
               </div>
             </div>
             <div className="col-span-2 m-2 flex">
-              <ImageCustom
+              <Image
                 src={IMAGES.Frame.src}
                 alt=""
                 width={120}
@@ -239,14 +361,14 @@ export default function WalletPage() {
               </div>
             </div>
             <div className="absolute top-[75px] left-[-16px]">
-              <ImageCustom
+              <Image
                 src={IMAGES.RectangleRed.src}
                 alt=""
                 width={10}
                 height={10}
                 className="mb-2"
               />
-              <ImageCustom
+              <Image
                 src={IMAGES.RectangleBlack.src}
                 alt=""
                 width={10}
@@ -262,13 +384,14 @@ export default function WalletPage() {
         <div className="col-span-4 h-full w-full items-center justify-center gap-1">
           <MetamaskWallet
             isConnected={!!address}
-            handleConnectWallet={handleConnectWithMetamask}
+            handleConnectWallet={handleConnectWallet}
             handleOnDisconnectWallet={handleDisconnectWallet}
-            profile={profile.data}
+            address={address}
+            balance={nakaBalance}
           />
         </div>
       </div>
-      <TransactionTable />
+      <TransactionTable profile={profile.data} />
     </>
   )
 }

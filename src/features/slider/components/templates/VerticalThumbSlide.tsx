@@ -9,24 +9,24 @@ interface IVerticalThumbSlideProps {
   items: IVerticalThumbSlide[]
 }
 
-const SlickMainSlideCSS: SxProps = {
-  ".slick-slider, .slick-list, .slick-track": {
-    height: "100%"
-  }
-}
-
-const SlickThumbnailSlideCSS: SxProps = {
-  ".slick-vertical .slick-current .card-media": {
-    borderColor: "#A0ED61"
-  },
-  ".slick-vertical .slick-cloned": {
-    display: "none"
-  }
-}
-
 const VerticalThumbSlide = ({ items }: IVerticalThumbSlideProps) => {
   const [nav1, setNav1] = useState<Slider | undefined | null>()
   const [nav2, setNav2] = useState<Slider | undefined | null>()
+
+  const SlickMainSlideCSS: SxProps = {
+    ".slick-slider, .slick-list, .slick-track": {
+      height: "100%"
+    }
+  }
+
+  const SlickThumbnailSlideCSS: SxProps = {
+    ".slick-vertical .slick-current .card-media": {
+      borderColor: "#A0ED61"
+    },
+    ".slick-vertical .slick-cloned": {
+      display: `${items && items.length > 5 ? "block" : "none"}`
+    }
+  }
 
   /**
    * @description Slider settings
@@ -57,7 +57,7 @@ const VerticalThumbSlide = ({ items }: IVerticalThumbSlideProps) => {
   }
 
   return (
-    <div className="my-4 flex w-full items-center justify-between">
+    <div className="my-4 flex w-full items-center justify-between gap-4 md:min-w-[688px]">
       <Box
         sx={SlickMainSlideCSS}
         className="flex h-[390px] w-full max-w-[592px] flex-col justify-center overflow-hidden rounded-2xl"

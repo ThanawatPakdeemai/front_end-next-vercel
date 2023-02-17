@@ -10,10 +10,12 @@ import { useToast } from "@feature/toast/containers"
 import AllCategoriesIcon from "@components/icons/AllCategoriesIcon"
 import {
   IDevice,
+  IDropdownAll,
   IGameCategory,
   IGameItem
 } from "@feature/dropdown/interfaces/IDropdownService"
 import useFilterStore from "@stores/blogFilter"
+import { IMenuBase } from "@interfaces/IMenu"
 import SelectDropdown from "./selectDropdown/SelectDropdown"
 
 interface IProp {
@@ -21,19 +23,19 @@ interface IProp {
   title: string
   className: string
 }
-
 const DropdownCustom = ({ title, className }: IProp) => {
   const [expanded, setExpanded] = useState<boolean>(false)
   const [gameData, setGameData] = useState<
     IGameItem[] | IGameCategory[] | IDevice[]
   >([])
-  const [onTitle, setOnTitle] = useState<IGameCategory | IGameItem | IDevice>()
+  const [onTitle, setOnTitle] = useState<IDropdownAll | IMenuBase>()
   const { errorToast } = useToast()
   const {
     setCategory: setCategoryDropdown,
     setGameItem: setGameItemDropdown,
     setDevice: setDeviceDropdown
   } = useFilterStore()
+
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
   }
@@ -42,8 +44,8 @@ const DropdownCustom = ({ title, className }: IProp) => {
     if (gameData) {
       return gameData.map((element) => ({
         label: element.name ?? "",
-        icon: element._id ?? "",
         data: element,
+        icon: "",
         href: ""
       }))
     }
@@ -139,13 +141,13 @@ const DropdownCustom = ({ title, className }: IProp) => {
   }, [])
 
   useEffect(() => {
-    if (onTitle) {
+    if (onTitle && (onTitle as IDropdownAll)._id) {
       if (title === "All Categories") {
-        setCategoryDropdown(onTitle._id)
+        setCategoryDropdown((onTitle as IDropdownAll)._id)
       } else if (title === "All Game Assets") {
-        setGameItemDropdown(onTitle._id)
+        setGameItemDropdown((onTitle as IDropdownAll)._id)
       } else if (title === "All Devices") {
-        setDeviceDropdown(onTitle._id)
+        setDeviceDropdown((onTitle as IDropdownAll)._id)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -160,9 +162,9 @@ const DropdownCustom = ({ title, className }: IProp) => {
             onClick={handleOnExpandClick}
             className={`${className} mb-1 flex h-[40px] w-[218px] flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary`}
           >
-            {onTitle ? "" : <AllCategoriesIcon />}
+            <AllCategoriesIcon />
             <span className="">
-              {onTitle === undefined ? title : onTitle.name}
+              {onTitle === undefined ? title : (onTitle as IMenuBase).label}
             </span>
             <div
               className={`${
@@ -188,9 +190,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
             <SelectDropdown
               className={className}
               details={dataDetail}
-              onChange={(_item) =>
-                setOnTitle(_item as IGameCategory | IGameItem | IDevice)
-              }
+              setOnTitle={setOnTitle}
               setExpanded={setExpanded}
             />
           </Collapse>

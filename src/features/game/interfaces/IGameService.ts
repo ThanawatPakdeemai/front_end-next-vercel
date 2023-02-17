@@ -22,12 +22,21 @@ export type TTypeCode =
 
 export type IGetType =
   | "play-to-earn"
+  | "play-to-earn-games"
   | "free-to-play"
   | "story-mode"
   | "must-try"
   | "hot-game"
   | "partner-game"
-  | "nft-game"
+  | "arcade-emporium"
+  | "all"
+
+export type TRoomStatus =
+  | "playing"
+  | "online"
+  | "send_noti"
+  | "running"
+  | "ready_play"
 
 export interface IGetGameByTypesProps {
   _type: IGetType
@@ -37,6 +46,18 @@ export interface IGetGameByTypesProps {
   _deviceSup?: string
   _itemId?: string
   _search?: string
+}
+
+export interface IGamePayload {
+  limit?: number
+  skip?: number
+  sort?: string
+  search?: string
+  category?: string
+  item?: string
+  device?: string
+  nftgame?: string
+  game_type: IGetType
 }
 
 export interface IGameHowTo {
@@ -98,7 +119,14 @@ export interface IGameCategory {
   slug: string
 }
 
-export interface IGame {
+export interface IGameArcadeEmporium {
+  is_NFT: boolean
+  NFT_Owner: string
+  image_nft_arcade_game: string
+  animation_nft_arcade_game: string
+}
+
+export interface IGame extends IGameArcadeEmporium {
   _id: string
   howto: IGameHowTo
   socket_info?: IGameSocketInfo
@@ -123,7 +151,6 @@ export interface IGame {
   number_of_played?: number
   event_number?: number
   min_player: number
-  meta_data_list?: IGameMetaData[]
   map?: IGameMap[]
   name: string
   story: string
@@ -152,6 +179,10 @@ export interface IGame {
   game_free_url?: string
   image_free_to_earn_icon?: string
   play_total_count?: number
+  meta_data_list: IGameMetaData[]
+
+  must_try_no: number
+  must_try_status: boolean
 }
 
 interface IGameHowto {
@@ -323,7 +354,7 @@ export interface IGameRoomService extends IGameRoom {
 }
 
 export interface IGameRoomDetail extends IGameRoom {
-  room_status: string
+  room_status: TRoomStatus
   mutiplayer: boolean
   tournament: boolean
   user_create: boolean
@@ -360,7 +391,7 @@ export interface IGameSummary extends IGameBase {
   end_time: Date
   room_number: number
   wallet_address: string
-  room_status: string
+  room_status: TRoomStatus
   detail_used_items: IGameUsedItemsDetail
 }
 
@@ -448,7 +479,7 @@ export interface IGameRoomListSocket {
   create_room_detail: ICreateRoomDetail
   start_time: Date
   end_time: Date
-  room_status: string
+  room_status: TRoomStatus
   amount_current_player: number
   amount_send_reward: number
   mutiplayer: boolean
@@ -487,4 +518,17 @@ export interface IResSocketRoomList {
 
 export interface IError {
   message: string
+}
+
+export interface IFilterGamesByKey {
+  limit?: number
+  skip?: number
+  sort?: string
+  search?: string
+  category?: string | string[]
+  item?: string | string[]
+  device?: string
+  game_type?: IGetType
+  tournament?: boolean
+  nftgame?: boolean
 }

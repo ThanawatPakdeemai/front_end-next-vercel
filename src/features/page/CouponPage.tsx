@@ -1,7 +1,7 @@
 import { Button, InputAdornment, TextField, Typography } from "@mui/material"
 import React, { useState } from "react"
 import CouponIcon from "@components/icons/CouponIcon"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 import useGetCoupon from "@feature/coupon/containers/hook/useGetCoupon"
 import { useToast } from "@feature/toast/containers"
 
@@ -21,15 +21,6 @@ const CouponPage = () => {
         })
     }
     setCoupon(event.target.value)
-
-    // if (event) {
-    //   redeemCode(coupon)
-    //   setCoupon(event.target.value)
-    // }
-    // null
-    // useGetRedeemCode(coupon)
-    // refetch()
-    // event.preventDefault()
   }
   return (
     <div className="grid w-3/4 grid-cols-2 rounded-lg border border-neutral-700 bg-neutral-800">
@@ -84,7 +75,7 @@ const CouponPage = () => {
         </Button>
       </div>
       <div className="flex justify-center">
-        <ImageCustom
+        <Image
           src="/images/coupon.svg"
           alt="coupon"
           width={220}

@@ -1,4 +1,6 @@
 import { IGame } from "@feature/game/interfaces/IGameService"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+import { ICURRENCY } from "@interfaces/ICurrency"
 
 export interface IDetailUsedItems {
   name: string
@@ -70,14 +72,9 @@ export interface IDevice {
   supported: boolean
 }
 
-export interface IFilterGamesByCategory {
-  limit?: number
-  skip?: number
-  sort?: string
-  search?: string
-  category?: string | string[]
-  item?: string | string[]
-  device?: string
-  game_type?: string
-  tournament?: boolean
-}
+export interface IDropdownAll
+  extends IGameCategory,
+    IGameItem,
+    IDevice,
+    IGameItemListData,
+    ICURRENCY {}

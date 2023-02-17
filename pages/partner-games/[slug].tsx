@@ -1,53 +1,63 @@
-import { useEffect } from "react"
+import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import useGameStore from "@stores/game"
-import GamePageDefault from "@components/template/GamePageDefault"
-import SkeletonGamePartner from "@components/atoms/skeleton/SkeletonGamePartner"
-import useGlobal from "@hooks/useGlobal"
-import OverviewGamePartners from "@components/organisms/OverviewGamePartners"
-import PartnerGameLobby from "@feature/game/components/templates/lobby/PartnerGameLobby"
-import RightSidebarContent from "@components/template/RightSidebarContent"
-import PartnerGameContent from "@feature/game/partnerGames/components/organisms/PartnerGameContent"
-import PartnerGameReviews from "@feature/game/partnerGames/components/molecules/PartnerGameReviews"
+import { useRouter } from "next/router"
+import OverviewContent from "@components/organisms/OverviewContent"
+import GameContent from "@feature/game/components/templates/lobby/GameContent"
+import GameTabs from "@feature/game/components/templates/lobby/GameTabs"
+import GameReviews from "@feature/game/components/molecules/GameReviews"
+import GamePageDefault from "@components/templates/GamePageDefault"
+import RightSidebarContentEffect from "@components/templates/contents/RightSidebarContentEffect"
+import RightSidebarContent from "@components/templates/contents/RightSidebarContent"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
-import RightSidebarContentEffect from "@components/template/RightSidebarContentEffect"
 
 export default function GamePartnerDetails() {
-  const { gamePartnerData } = useGlobal()
-  const { onSetGamePartnersData } = useGameStore()
+  const router = useRouter()
+  const { id } = router.query
+  const gameId = id ? id.toString() : ""
 
-  useEffect(() => {
-    if (gamePartnerData) {
-      onSetGamePartnersData(gamePartnerData)
-    }
-  }, [gamePartnerData, onSetGamePartnersData])
-
-  return <>{!gamePartnerData && <SkeletonGamePartner />}</>
-}
-
-GamePartnerDetails.getLayout = function getLayout() {
-  // page: ReactElement
   return (
     <GamePageDefault
       component={
         <RightSidebarContentEffect
           className="mb-24"
-          content={<PartnerGameLobby />}
-          aside={<OverviewGamePartners />}
+          content={
+            <GameContent
+              gameId={gameId}
+              gameType="partner-game"
+            />
+          }
+          aside={
+            <OverviewContent
+              gameId={gameId}
+              gameType="partner-game"
+            />
+          }
         />
       }
       component2={
         <RightSidebarContent
           content={
             <TabProvider>
-              <PartnerGameContent />
+              <GameTabs
+                gameId={gameId}
+                gameType="partner-game"
+              />
             </TabProvider>
           }
-          aside={<PartnerGameReviews />}
+          aside={
+            <GameReviews
+              gameType="partner-game"
+              gameId={gameId}
+            />
+          }
         />
       }
     />
   )
+}
+
+GamePartnerDetails.getLayout = function getLayout(page: ReactElement) {
+  return page
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {

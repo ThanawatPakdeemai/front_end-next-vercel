@@ -1,15 +1,13 @@
-import { Layout } from "@components/template"
+import { Layout } from "@components/templates"
 import { ReactElement } from "react"
 import HomePage from "@feature/page/homePage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 
 export default function Home() {
   return (
-    <>
-      <article className="h-full w-full">
-        <HomePage />
-      </article>
-    </>
+    <article className="h-full w-full">
+      <HomePage />
+    </article>
   )
 }
 

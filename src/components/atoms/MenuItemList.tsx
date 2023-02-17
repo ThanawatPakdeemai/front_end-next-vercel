@@ -1,7 +1,7 @@
 import { IMenu } from "@interfaces/IMenu"
 import { MenuItem } from "@mui/material"
 import React from "react"
-import ImageCustom from "@components/atoms/image/Image"
+import { Image } from "@components/atoms/image"
 
 interface RootObject {
   _id: string
@@ -35,7 +35,7 @@ const MenuItemList = ({ data, ...props }: IProp | undefined | any) => (
     }}
   >
     <div className="px-2">
-      <ImageCustom
+      <Image
         src={data.image_icon}
         alt=""
         width="20"

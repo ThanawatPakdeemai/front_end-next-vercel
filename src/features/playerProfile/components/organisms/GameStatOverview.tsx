@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from "react"
-import { Card, InputAdornment, TextField } from "@mui/material"
+import { Card, Chip, InputAdornment, TextField } from "@mui/material"
 import NumberRank from "@feature/ranking/components/atoms/NumberRank"
 import { Image } from "@components/atoms/image"
 import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
@@ -126,7 +126,7 @@ const GameStatOverview = () => {
                 >
                   <div className="py-10 px-10">
                     <NumberRank
-                      className="m-0 h-6 w-8 rounded-[5px]"
+                      className="m-0 h-6 w-8 !rounded-[4px]"
                       index={index}
                     />
                     <h1 className="py-5 text-neutral-300">{item.name}</h1>
@@ -135,7 +135,7 @@ const GameStatOverview = () => {
                         className="truncate hover:text-clip"
                         placement="bottom"
                         title={item.story}
-                        color="warning"
+                        color="error"
                       >
                         <div>{item.story}</div>
                       </TooltipsCustom>
@@ -157,39 +157,39 @@ const GameStatOverview = () => {
                   <div className="my-7 mx-10 grid grid-cols-2 grid-rows-2 gap-5">
                     <div>
                       <p className="text-xs text-neutral-600">RANK</p>
-                      <button
-                        type="button"
-                        className="mt-2 rounded-[5px] border-2 border-neutral-700 py-1 px-3 text-xs text-neutral-400"
-                      >
-                        {item.rank}
-                      </button>
+                      <Chip
+                        label={item.rank}
+                        variant="outlined"
+                        size="small"
+                        className="mt-2 cursor-pointer uppercase"
+                      />
                     </div>
                     <div>
                       <p className="text-xs text-neutral-600">RANK SCORE</p>
-                      <button
-                        type="button"
-                        className="mt-2 rounded-[5px] border-2 border-neutral-700  py-1 px-3 text-xs text-neutral-400"
-                      >
-                        {Helper.formatNumber(item.rankScore)}
-                      </button>
+                      <Chip
+                        label={Helper.formatNumber(item.rankScore)}
+                        variant="outlined"
+                        size="small"
+                        className="mt-2 cursor-pointer uppercase"
+                      />
                     </div>
                     <div>
                       <p className="text-xs text-neutral-600">PLAYED</p>
-                      <button
-                        type="button"
-                        className="mt-2 rounded-[5px] border-2 border-neutral-700 py-1 px-3 text-xs text-neutral-400"
-                      >
-                        {Helper.formatNumber(item.played)}
-                      </button>
+                      <Chip
+                        label={Helper.formatNumber(item.played)}
+                        variant="outlined"
+                        size="small"
+                        className="mt-2 cursor-pointer uppercase"
+                      />
                     </div>
                     <div>
                       <p className="text-xs text-neutral-600">WINRATE</p>
-                      <button
-                        type="button"
-                        className="mt-2 rounded-[5px] border-2 border-neutral-700  py-1 px-3 text-xs text-neutral-400"
-                      >
-                        {item.winrate}
-                      </button>
+                      <Chip
+                        label={item.winrate}
+                        variant="outlined"
+                        size="small"
+                        className="mt-2 cursor-pointer uppercase"
+                      />
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
@@ -200,7 +200,7 @@ const GameStatOverview = () => {
                       width={160}
                       height={160}
                     />
-                    <div className="flex h-40 w-40 items-center justify-center rounded-[10px] border-2 border-neutral-700 ">
+                    <div className="flex h-40 w-40 items-center justify-center rounded-[10px] border-[1px] border-solid border-neutral-700 ">
                       <motion.div
                         whileHover={{ rotate: 15 }}
                         transition={{

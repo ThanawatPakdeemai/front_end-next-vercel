@@ -53,9 +53,10 @@ const SliderBadges = ({ _playerId }: IProp) => {
         className="uppercase"
         placement="top"
         title="emblem info"
-        color="warning"
+        color="error"
       >
         <motion.div
+          // className="!grid !h-[250px] !content-center"
           whileHover={{ rotate: 15 }}
           transition={{
             type: "spring",
@@ -125,7 +126,7 @@ const SliderBadges = ({ _playerId }: IProp) => {
 
       {openBadges ? null : (
         <>
-          <div className="mt-[30px] flex h-[216px] items-center rounded-lg border border-neutral-700 bg-neutral-800">
+          <div className="mt-[30px] flex h-[216px] !max-w-[1050px] items-center rounded-lg border border-neutral-700 bg-neutral-800">
             {isLoading ? (
               "loading"
             ) : (
@@ -142,30 +143,28 @@ const SliderBadges = ({ _playerId }: IProp) => {
                         type: "spring",
                         stiffness: 100,
                         damping: 4
-                        // ease: "easeIn"
                       }}
                       key={uuid()}
-                      className="h-[170px]"
+                      className="!grid !h-[260px] !content-center !justify-center	"
                     >
                       <TooltipsCustom
                         placement="top"
                         title={badge.name}
-                        color="warning"
+                        color="error"
                       >
                         <Image
                           src={badge.image}
                           alt={badge.name}
-                          // fill
-                          width={150}
+                          width={120}
                           height={150}
                         />
                       </TooltipsCustom>
                     </motion.div>
                   ))}
+                {/* <BadgesPlacrhoder />
                 <BadgesPlacrhoder />
                 <BadgesPlacrhoder />
-                <BadgesPlacrhoder />
-                <BadgesPlacrhoder />
+                <BadgesPlacrhoder /> */}
               </Slider>
             )}
           </div>

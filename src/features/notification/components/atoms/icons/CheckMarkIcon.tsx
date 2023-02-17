@@ -17,12 +17,12 @@ function CheckMarkIcon({
         cy="12"
         r="9.4"
         stroke="#E1E2E2"
-        stroke-width="1.2"
+        strokeWidth="1.2"
       />
       <path
         d="M7 12L10.4375 15L17 8.5"
         stroke="#E1E2E2"
-        stroke-width="1.2"
+        strokeWidth="1.2"
       />
     </svg>
   )

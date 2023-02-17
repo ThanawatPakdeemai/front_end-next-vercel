@@ -1,17 +1,17 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import ProfileLayout from "@components/templates/ProfileLayout"
-import HistoryTable from "@feature/history/components/organisms/HistoryTable"
-import { GAME_PLAY_HISTORY } from "@configs/crumb"
+import AllTransactions from "@feature/transaction/components/templates/AllTransactions"
+import { ALL_TRANSACTIONS } from "@configs/crumb"
 
-const HistoryPage = () => (
+const AllTransactionsPage = () => (
   <article className="h-full w-full">
-    <HistoryTable />
+    <AllTransactions />
   </article>
 )
 
-HistoryPage.getLayout = function getLayout(page: ReactElement) {
-  return <ProfileLayout _breadcrumb={GAME_PLAY_HISTORY()}>{page}</ProfileLayout>
+AllTransactionsPage.getLayout = function getLayout(page: ReactElement) {
+  return <ProfileLayout _breadcrumb={ALL_TRANSACTIONS()}>{page}</ProfileLayout>
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {
@@ -21,4 +21,4 @@ export async function getServerSideProps({ locale }: { locale: string }) {
     }
   }
 }
-export default HistoryPage
+export default AllTransactionsPage

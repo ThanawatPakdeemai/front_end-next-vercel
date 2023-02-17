@@ -22,12 +22,14 @@ export type TTypeCode =
 
 export type IGetType =
   | "play-to-earn"
+  | "play-to-earn-games"
   | "free-to-play"
   | "story-mode"
   | "must-try"
   | "hot-game"
   | "partner-game"
   | "arcade-emporium"
+  | "all"
 
 export type TRoomStatus =
   | "playing"
@@ -44,6 +46,18 @@ export interface IGetGameByTypesProps {
   _deviceSup?: string
   _itemId?: string
   _search?: string
+}
+
+export interface IGamePayload {
+  limit?: number
+  skip?: number
+  sort?: string
+  search?: string
+  category?: string
+  item?: string
+  device?: string
+  nftgame?: string
+  game_type: IGetType
 }
 
 export interface IGameHowTo {
@@ -514,7 +528,7 @@ export interface IFilterGamesByKey {
   category?: string | string[]
   item?: string | string[]
   device?: string
-  game_type?: string
+  game_type?: IGetType
   tournament?: boolean
   nftgame?: boolean
 }

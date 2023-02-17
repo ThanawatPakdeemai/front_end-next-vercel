@@ -10,6 +10,7 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet"
 import { useWeb3Provider } from "@providers/index"
 import useGetBalanceVault from "@feature/inventory/containers/hooks/useGetBalanceVault"
 import Helper from "@utils/helper"
+import useGlobal from "@hooks/useGlobal"
 import AmountBalance from "./AmountBalance"
 
 interface IProps {
@@ -29,6 +30,7 @@ const Balance = ({ className, sx }: IProps) => {
     profile?.address ?? "",
     !!profile
   )
+  const { hydrated } = useGlobal()
   // const { weiToNaka, getFeeGas, getEventLog, calFloat } = TransactionHelper()
   // const {
   //   checkAllowNaka,
@@ -105,7 +107,7 @@ const Balance = ({ className, sx }: IProps) => {
   //   }
   // }
 
-  return (
+  return hydrated ? (
     <div>
       {address && profile ? (
         <>
@@ -145,6 +147,8 @@ const Balance = ({ className, sx }: IProps) => {
         </div>
       )}
     </div>
+  ) : (
+    <></>
   )
 }
 

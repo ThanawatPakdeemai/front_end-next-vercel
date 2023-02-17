@@ -3,11 +3,18 @@ import React, { memo } from "react"
 import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined"
 import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined"
 
+export interface ITypeP2p {
+  type: "buy" | "sell"
+}
+interface IDataButton extends ITypeP2p {
+  title: string
+}
 interface IProp {
   type?: "buy" | "sell"
   setType?: (_value: "buy" | "sell") => void
+  dataButton?: IDataButton[]
 }
-const HeaderP2P = ({ type = "buy", setType }: IProp) => (
+const HeaderP2P = ({ type = "buy", setType, dataButton }: IProp) => (
   <>
     <div className=" my-2 flex items-center justify-between rounded-lg border border-neutral-700 bg-neutral-780 p-2">
       <p
@@ -18,10 +25,34 @@ const HeaderP2P = ({ type = "buy", setType }: IProp) => (
         {type} naka
       </p>
       <div className="flex items-center gap-2">
-        <ButtonLink
+        {dataButton &&
+          dataButton.map((ele, index) => (
+            <ButtonLink
+              key={Number(index)}
+              href=""
+              onClick={() => setType && setType(ele.type)}
+              text={ele.title}
+              icon={
+                type === "buy" ? (
+                  <ArrowDownwardOutlinedIcon />
+                ) : (
+                  <ArrowUpwardOutlinedIcon />
+                )
+              }
+              size="small"
+              color="primary"
+              variant="contained"
+              className={`!rounded-sm !bg-primary-main !text-neutral-500 ${
+                ele.type === "buy"
+                  ? "!bg-varidian-default !text-neutral-800"
+                  : "  !bg-error-main !text-neutral-800"
+              }  `}
+            />
+          ))}
+        {/* <ButtonLink
           href=""
           onClick={() => setType && setType("buy")}
-          text="Buy"
+          text={title1}
           icon={<ArrowDownwardOutlinedIcon />}
           size="small"
           color="primary"
@@ -35,7 +66,7 @@ const HeaderP2P = ({ type = "buy", setType }: IProp) => (
         <ButtonLink
           href=""
           onClick={() => setType && setType("sell")}
-          text="Sell"
+          text={title2}
           icon={<ArrowUpwardOutlinedIcon />}
           size="small"
           color="primary"
@@ -46,7 +77,7 @@ const HeaderP2P = ({ type = "buy", setType }: IProp) => (
               : "  !bg-primary-main !text-neutral-500"
           }  `}
           variant="contained"
-        />
+        /> */}
       </div>
     </div>
   </>

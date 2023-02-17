@@ -1,15 +1,30 @@
-import React from "react"
+import React, { useState } from "react"
 import FormCreate from "../organisms/FormCreate"
+import HeaderP2P from "../atoms/HeaderP2P"
 // import { v4 as uuid } from "uuid"
 
 // interface IFixedAPR {
 //   stakeGroupByDatetime: IStakingGroup[]
 // }
 
-const P2PDexCreateContent = () => (
-  <div className="p2p-dex-content--create">
-    <FormCreate />
-    {/* {stakeGroupByDatetime.map((item) => (
+const P2PDexCreateContent = () => {
+  const [type, setType] = useState<"buy" | "sell">("buy")
+
+  return (
+    <div className="p2p-dex-content--create">
+      <HeaderP2P
+        type={type}
+        dataButton={[
+          { title: "Create Buy", type: "buy" },
+          { title: "Create Sell", type: "sell" }
+        ]}
+        setType={(value) => {
+          setType(value)
+        }}
+      />
+
+      <FormCreate />
+      {/* {stakeGroupByDatetime.map((item) => (
       <StakingPeriodDate
         key={uuid()}
         type={item.type}
@@ -25,6 +40,7 @@ const P2PDexCreateContent = () => (
           .toLocaleLowerCase()}`}
       />
     ))} */}
-  </div>
-)
+    </div>
+  )
+}
 export default P2PDexCreateContent

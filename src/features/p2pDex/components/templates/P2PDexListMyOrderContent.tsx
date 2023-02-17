@@ -28,6 +28,10 @@ const P2PDexListMyOrder = () => {
           setType(value)
           setPage(1)
         }}
+        dataButton={[
+          { title: "Buy", type: "buy" },
+          { title: "Sell", type: "sell" }
+        ]}
       />
 
       <div className="p2p-dex-content--pageList">

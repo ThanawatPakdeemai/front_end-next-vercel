@@ -1,5 +1,5 @@
 import configZustandDevTools from "@utils/configDevtools"
-import { create } from "zustand"
+import create from "zustand"
 import { devtools } from "zustand/middleware"
 
 interface ILoadingStore {

@@ -83,7 +83,7 @@ const HeadMenu = () => {
                         className="!hover:text-neutral-300 !text-primary-contrastText"
                         stroke={
                           tailwindResolver
-                            ? tailwindResolver?.theme?.colors?.primary[
+                            ? tailwindResolver?.theme?.colors?.["primary"][
                                 "contrastText"
                               ]
                             : "#E1E2E2"

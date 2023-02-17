@@ -180,24 +180,28 @@ export default function CardButItem() {
               router.pathname === "/[GameHome]" ? "w-full" : " w-fit"
             } grid-cols-2 gap-4 `}
           >
-            <div className="rounded-xl border-[1px] border-primary-main bg-primary-main ">
-              <CardMedia
-                className="m-auto block w-[124px]"
-                component="img"
-                height={124}
-                image="/images/gamePage/Silver_Skull.png"
-                alt=""
-              />
+            <div className="flex items-center justify-center rounded-xl border-[1px] border-primary-main bg-primary-main">
+              {data && (
+                <CardMedia
+                  className="m-auto block w-[124px]"
+                  component="img"
+                  height={124}
+                  image={data.item[0].image}
+                  alt={data.item[0].name}
+                />
+              )}
             </div>
             <div className="flex w-full flex-col justify-center">
-              <div className="mb-2 flex w-full justify-between rounded-xl bg-[#E1E2E2]  p-2 text-center text-[#111111]">
+              <div className="mb-2 flex w-full items-center justify-between rounded-xl bg-[#E1E2E2]  p-2 text-center text-[#111111]">
                 <p>{qtyItemSelected ?? 0}</p>
-                <Image
-                  src="/images/gamePage/skull.png"
-                  alt="skull"
-                  width="30"
-                  height="30"
-                />
+                {data && (
+                  <Image
+                    src={data.item[0].image_icon_color}
+                    alt={data.item[0].name}
+                    width="30"
+                    height="30"
+                  />
+                )}
               </div>
               <div className="mb-2 flex w-full justify-between rounded-xl bg-[#111111] p-2 text-center text-black-default">
                 <p>= {totalPrice}</p>

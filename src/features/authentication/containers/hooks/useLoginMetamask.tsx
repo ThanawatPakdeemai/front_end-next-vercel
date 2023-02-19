@@ -3,11 +3,13 @@ import { useMutation } from "@tanstack/react-query"
 import useWalletStore from "@stores/wallet"
 import { getNaka } from "@feature/inventory/containers/services/inventory.service"
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
+import { useWeb3Provider } from "@providers/Web3Provider"
 import { loginMetamask } from "../services/auth.service"
 
 const useLoginMetamask = () => {
   const { onSetProfileData, onSetProfileAddress, onSetProfileJWT } =
     useProfileStore()
+  const { handleConnectWithMetamask } = useWeb3Provider()
   const { setVaultBalance } = useWalletStore()
   const {
     data: _profile,
@@ -27,6 +29,7 @@ const useLoginMetamask = () => {
           setVaultBalance(Number(_res.data))
         }
       })
+      handleConnectWithMetamask
     }
   })
 

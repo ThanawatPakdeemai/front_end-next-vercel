@@ -221,7 +221,7 @@ export const loginMetamask = ({
       signature: _valueSigner
     }
     services
-      .put<IProfile>("/auth/signin/with_wallet", { ...data })
+      .post<IProfile>("/auth/signin/with_wallet", { ...data })
       .then((response) => {
         resolve(response.data)
       })

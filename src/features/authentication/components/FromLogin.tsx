@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { memo, useState } from "react"
 import {
   Box,
@@ -202,8 +201,12 @@ const FormLogin = () => {
     } catch (_error) {
       errorToast(MESSAGES["please-connect-wallet"])
     }
-    if (account || accounts[0]) {
-      const valueSigner = await getSignature(account || accounts[0])
+    const valueSigner = await getSignature(account || accounts[0])
+    if (
+      ((typeof valueSigner === "string" || valueSigner instanceof String) &&
+        account) ||
+      accounts[0]
+    ) {
       mutateLoginMetamask({
         _account: account,
         _accounts: accounts[0],
@@ -217,13 +220,6 @@ const FormLogin = () => {
         .catch((_error: IError) => {
           errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
         })
-      if (
-        ((typeof valueSigner === "string" || valueSigner instanceof String) &&
-          account) ||
-        accounts[0]
-      ) {
-        console.log()
-      }
     } else {
       errorToast(MESSAGES["please-connect-wallet"])
     }

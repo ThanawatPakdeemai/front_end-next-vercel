@@ -227,10 +227,6 @@ const useCreateWeb3Provider = () => {
           return
         }
         setChainId(_chainId)
-        // refetchBalanceVaultBSC()
-        // refetchBalanceWalletBSC()
-        // refetchNakaBalanceVault()
-        // refetchNakaBalanceWallet()
         handleDisconnectWallet()
       })
 
@@ -246,11 +242,12 @@ const useCreateWeb3Provider = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [handleDisconnectWallet, checkNetwork])
+  }, [handleDisconnectWallet])
 
   useEffect(() => {
     checkChain()
-  }, [chainId, checkChain])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chainId])
 
   useEffect(() => {
     const getWalletAccount = async () => {

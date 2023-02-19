@@ -168,6 +168,7 @@ export default function WalletPage() {
               </div>
               <WalletFooter address={address as string} />
             </div>
+
             <WalletLightAnimation />
           </div>
         </div>

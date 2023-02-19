@@ -10,6 +10,11 @@ export interface IBalanceDisplay {
   text: string | "N/A"
 }
 
+export const defaultVaule: IBalanceDisplay = {
+  digit: 0,
+  text: "N/A"
+}
+
 const useAllBalances = () => {
   const { address, chainId } = useWeb3Provider()
   const { getTokenAddress } = useGlobal()
@@ -29,11 +34,6 @@ const useAllBalances = () => {
     isConnected
   )
   const { WeiToNumber } = Helper
-
-  const defaultVaule: IBalanceDisplay = {
-    digit: 0,
-    text: "N/A"
-  }
 
   /**
    * @description Get wallet balance
@@ -73,8 +73,8 @@ const useAllBalances = () => {
   }
 
   const handleBalanceVaults = (_tokenAddress: string) => {
-    switch (chainId) {
-      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
+    switch (_tokenAddress) {
+      case CONFIGS.CONTRACT_ADDRESS.BEP20:
         if (
           balanceVaultBSC &&
           balanceVaultBSC.data &&
@@ -111,12 +111,8 @@ const useAllBalances = () => {
     handleBalanceWallet,
     handleBalanceVaults,
     walletBalance: handleBalanceWallet() as IBalanceDisplay,
-    busdVaultBalance: handleBalanceVaults(
-      getTokenAddress(CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string) as string
-    ),
-    nakaVaultBalance: handleBalanceVaults(
-      getTokenAddress(CONFIGS.CHAIN.CHAIN_ID_HEX as string) as string
-    )
+    busdVaultBalance: handleBalanceVaults(CONFIGS.CONTRACT_ADDRESS.BEP20),
+    nakaVaultBalance: handleBalanceVaults(CONFIGS.CONTRACT_ADDRESS.ERC20)
   }
 }
 

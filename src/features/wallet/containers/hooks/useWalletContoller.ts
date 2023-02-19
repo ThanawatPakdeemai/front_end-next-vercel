@@ -90,14 +90,19 @@ const useWalletContoller = () => {
    * @param _address
    * @returns
    */
-  const handleDepisitByChainId = (_chainId: string, _tokenAddress: string) => {
-    switch (_chainId) {
-      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
-        return depositToken(_tokenAddress, toWei(value.toString()))
-
-      default:
-        return depositNaka(toWei(value.toString()))
+  const handleDepisitByChainId = async (
+    _chainId: string,
+    _tokenAddress: string
+  ) => {
+    if (_chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+      const resultDepositToken = await depositToken(
+        _tokenAddress,
+        toWei(value.toString())
+      )
+      return resultDepositToken
     }
+    const resultDepositNaka = await depositNaka(toWei(value.toString()))
+    return resultDepositNaka
   }
 
   /**
@@ -106,14 +111,19 @@ const useWalletContoller = () => {
    * @param _tokenAddress
    * @returns
    */
-  const handleWithdrawByChainId = (_chainId: string, _tokenAddress: string) => {
-    switch (_chainId) {
-      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
-        return withdrawByToken(_tokenAddress, toWei(value.toString()))
-
-      default:
-        return withdrawNaka(toWei(value.toString()))
+  const handleWithdrawByChainId = async (
+    _chainId: string,
+    _tokenAddress: string
+  ) => {
+    if (_chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+      const resultWithdrawByToken = await withdrawByToken(
+        _tokenAddress,
+        toWei(value.toString())
+      )
+      return resultWithdrawByToken
     }
+    const resultWithdrawNaka = await withdrawNaka(toWei(value.toString()))
+    return resultWithdrawNaka
   }
 
   /**
@@ -159,28 +169,23 @@ const useWalletContoller = () => {
         return
       }
       const tokenSupply = getTokenSupply(chainId as string)
-      const allowanceToken = await checkAllowToken(_tokenAddress)
-      const allowance = await checkAllowNaka(_tokenAddress)
-
-      switch (chainId) {
-        case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
-          if ((allowanceToken as string).toString() === "0") {
-            const allowResult = await allowToken(_tokenAddress, tokenSupply)
-            successToast(allowResult as string)
-          }
-          handleWalletProcess(
-            _method,
-            getTokenAddress(chainId as string) as string
-          )
-          break
-
-        default:
-          if (BNToNumber(allowance as string) === 0) {
-            const allowResult = await allowNaka()
-            successToast(allowResult as string)
-          }
-          handleWalletProcess(_method, tokenSupply)
-          break
+      if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+        const allowanceToken = await checkAllowToken(_tokenAddress)
+        if ((allowanceToken as string).toString() === "0") {
+          const allowResult = await allowToken(_tokenAddress, tokenSupply)
+          successToast(allowResult as string)
+        }
+        handleWalletProcess(
+          _method,
+          getTokenAddress(chainId as string) as string
+        )
+      } else {
+        const allowance = await checkAllowNaka(_tokenAddress)
+        if (BNToNumber(allowance as string) === 0) {
+          const allowResult = await allowNaka()
+          successToast(allowResult as string)
+        }
+        handleWalletProcess(_method, tokenSupply)
       }
     } catch (error) {
       errorToast(error as string)

@@ -19,6 +19,7 @@ import { useTranslation } from "next-i18next"
 import Helper from "@utils/helper"
 import useGetBalanceVault from "@feature/inventory/containers/hooks/useGetBalanceVault"
 import useWalletStore from "@stores/wallet"
+import useLoadingStore from "@stores/loading"
 import useBuyGameItems from "../containers/hooks/useBuyGameItems"
 
 const iconmotion = {
@@ -66,10 +67,15 @@ const FromBuyItem = ({ handleClose }: IProp) => {
   })
 
   const { mutateBuyItems, isLoading } = useBuyGameItems()
-  const { balanceVaultNaka } = useGetBalanceVault(profile?.address ?? "")
+  const { balanceVaultNaka } = useGetBalanceVault(
+    profile?.address ?? "",
+    !!profile
+  )
   const { setVaultBalance } = useWalletStore()
+  const { setOpen, setClose } = useLoadingStore()
 
   const onSubmit = (_data) => {
+    setOpen("Blockchain transaction in progress...")
     mutateBuyItems({
       _player_id: _data.player_id,
       _item_id: _data.item_id,
@@ -80,16 +86,19 @@ const FromBuyItem = ({ handleClose }: IProp) => {
           refetch()
           setVaultBalance(Number(balanceVaultNaka.data))
           successToast("Buy Items Success")
+          setClose()
           if (handleClose) handleClose()
         }
       })
       .catch((error) => {
         errorToast(error.message)
+        setClose()
       })
   }
 
-  const onError = (_data) => {
-    errorToast("error")
+  const onError = () => {
+    errorToast("Please fill in the required fields")
+    setClose()
   }
 
   const updatePricePerItem = () => {
@@ -122,25 +131,18 @@ const FromBuyItem = ({ handleClose }: IProp) => {
             <div className=" grid grid-cols-2 justify-center gap-4">
               <div className="flex justify-center rounded-2xl border-[1px] border-neutral-700">
                 <Image
-                  src={
-                    (watch("item") as IGameItemListData).image_icon ??
-                    "/images/gamePage/Silver_Skull.png"
-                  }
-                  alt="Silver_Skull"
+                  src={game.item[0].image}
+                  alt={game.item[0].name}
                   width={100}
                   height={100}
                   className="w-full p-4"
                 />
               </div>
-              <div className="">
+              <div className="custom-scroll overflow-y-scroll">
                 <p className="text-white-default">Asset</p>
-                <p className="text-black-default">
-                  {(watch("item") as IGameItemListData).name}
-                </p>
+                <p className="text-black-default">{game.item[0].name}</p>
                 <p className="text-white-default">Descriptions</p>
-                <div className=" text-black-default line-clamp-4 ">
-                  {(watch("item") as IGameItemListData).detail}
-                </div>
+                <div className="text-black-default">{game.item[0].detail}</div>
               </div>
             </div>
           </Box>

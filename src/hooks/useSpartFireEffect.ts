@@ -157,9 +157,8 @@ const useTweenEffect = (
     const targetElement: HTMLElement = document.getElementById(
       "spark-fire"
     ) as HTMLElement
-
     for (let i = 0; i < density; i += 1) {
-      const particleSpark: HTMLElement = document.createElement("div")
+      const particleSpark = document.createElement("div")
       particleSpark.classList.add("spark")
       targetElement.appendChild(particleSpark)
       spawn(particleSpark)

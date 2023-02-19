@@ -6,11 +6,15 @@ import Tagline from "@components/molecules/tagline/Tagline"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
 import { GAME_BANNER } from "@constants/gameBanner"
+import { IBanner } from "@constants/servicesBanner"
 import React from "react"
 
-const GamePageLayout = ({
-  children
-}: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) => (
+interface IProp
+  extends React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">> {
+  banner?: IBanner[]
+}
+
+const GamePageLayout = ({ banner = GAME_BANNER, children }: IProp) => (
   <div className="main-container mx-auto">
     <Header />
     <Tagline
@@ -19,7 +23,7 @@ const GamePageLayout = ({
       text="This Christmas, you’re the best gift I could ask for."
       icon={<ShapeIcon fill="#4E5057" />}
     />
-    <Banner data={GAME_BANNER} />
+    <Banner data={banner} />
     <div className="flex flex-row gap-3">
       <SidebarGames />
       <HeadGames>{children}</HeadGames>

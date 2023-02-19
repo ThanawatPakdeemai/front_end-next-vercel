@@ -16,7 +16,7 @@ import StakingStartEnd from "./StakingStartEnd"
 
 interface IProp {
   userName?: string
-  onCloseModal: () => void
+  onCloseModal?: () => void
 }
 
 const FormStaking = ({ userName, onCloseModal }: IProp) => {

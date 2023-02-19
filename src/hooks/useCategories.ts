@@ -1,13 +1,11 @@
-import {
-  getCategories,
-  getGamesByCategoryId
-} from "@feature/dropdown/containers/services/dropdown.service"
-import { IFilterGamesByCategory } from "@feature/dropdown/interfaces/IDropdownService"
+import { getCategories } from "@feature/dropdown/containers/services/dropdown.service"
+import { getGamesByKey } from "@feature/game/containers/services/game.service"
+import { IFilterGamesByKey } from "@feature/game/interfaces/IGameService"
 import { useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/router"
 import useGlobal from "./useGlobal"
 
-const useCategories = (_body?: IFilterGamesByCategory | undefined) => {
+const useCategories = (_body?: IFilterGamesByKey | undefined) => {
   const router = useRouter()
   const { defaultBody } = useGlobal()
 
@@ -41,8 +39,8 @@ const useCategories = (_body?: IFilterGamesByCategory | undefined) => {
     isError: isErrorGamesFilterByCategoryId,
     isFetching: isFetchingGamesFilterByCategoryId
   } = useQuery({
-    queryKey: ["getGamesByCategoryId", _body],
-    queryFn: () => getGamesByCategoryId(_body || defaultBody),
+    queryKey: ["getGamesByKey", _body],
+    queryFn: () => getGamesByKey(_body || defaultBody),
     keepPreviousData: true,
     staleTime: Infinity
   })

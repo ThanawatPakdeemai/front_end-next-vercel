@@ -1,5 +1,5 @@
 import { useToast } from "@feature/toast/containers"
-import useGlobal from "@hooks/useGlobal"
+import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import React, { useState } from "react"
 import useReviewContext from "../contexts/useReviewContext"
@@ -7,11 +7,10 @@ import useAddReview from "./useAddReview"
 
 const useReview = () => {
   const [loading, setLoading] = useState<boolean>(false)
-  const { setRate, setMessage } = useReviewContext()
-  const { gamePartnerData } = useGlobal()
+  const { setRate, setMessage, message, rate } = useReviewContext()
   const { mutateAddReview } = useAddReview()
   const { errorToast, successToast } = useToast()
-
+  const { dataGamePartner } = useGameStore()
   const profile = useProfileStore((state) => state.profile.data)
 
   /**
@@ -25,7 +24,7 @@ const useReview = () => {
       review_comment: _message,
       review_rate: _rating,
       game_content_id:
-        gamePartnerData && gamePartnerData.id ? gamePartnerData.id : ""
+        dataGamePartner && dataGamePartner.id ? dataGamePartner.id : ""
     })
       .then((res) => {
         if (res) {
@@ -39,6 +38,7 @@ const useReview = () => {
       })
       .catch((error) => {
         errorToast(error.message)
+        setLoading(false)
       })
   }
 
@@ -46,8 +46,8 @@ const useReview = () => {
    * @description Handle input text
    */
   const handleInputMessage = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter") {
-      // onSubmitComment(message, rate)
+    if (e.key === "Enter" && message.length >= 10) {
+      onSubmitComment(message, rate)
     }
   }
 

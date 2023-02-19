@@ -21,75 +21,68 @@ const CouponPage = () => {
         })
     }
     setCoupon(event.target.value)
-
-    // if (event) {
-    //   redeemCode(coupon)
-    //   setCoupon(event.target.value)
-    // }
-    // null
-    // useGetRedeemCode(coupon)
-    // refetch()
-    // event.preventDefault()
   }
   return (
-    <div className="grid w-3/4 grid-cols-2 rounded-lg border border-neutral-700 bg-neutral-800">
-      <div className="p-14">
-        <Typography className="text-sm">
-          REDEEM AND START HAVING FUN!
-        </Typography>
-        <Typography className="mt-[20px] mb-[10px] font-neue-machina text-xs uppercase text-neutral-500">
-          enter coupon code
-        </Typography>
-        <TextField
-          className="mb-5 w-full"
-          required
-          type="text"
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              width: "100%"
-            }
-          }}
-          value={coupon}
-          onChange={(event) => {
-            let { value } = event.target
-            value = value.replace(/[^A-Za-z0-9]/gi, "")
-            setCoupon(value)
-          }}
-          id="username-create"
-          placeholder="Ex. naka12345"
-          size="medium"
-          InputProps={{
-            style: {
-              fontFamily: "neueMachina",
-              backgroundColor: "#232329",
-              borderColor: "#18181C"
-            },
-            startAdornment: (
-              <InputAdornment position="start">
-                <CouponIcon />
-              </InputAdornment>
-            )
-          }}
-        />
-        <Button
-          sx={{ fontFamily: "neueMachina" }}
-          color="secondary"
-          className="btn-rainbow-theme mt-[20px] w-full text-sm"
-          variant="contained"
-          size="large"
-          type="submit"
-          onClick={handleClick}
-        >
-          Redeem
-        </Button>
-      </div>
-      <div className="flex justify-center">
-        <Image
-          src="/images/coupon.svg"
-          alt="coupon"
-          width={220}
-          height={220}
-        />
+    <div className="relative z-10 w-[calc(100%)] px-[10%]">
+      <div className="grid w-3/4 grid-cols-2 rounded-lg border border-neutral-800 bg-neutral-780">
+        <div className="p-14">
+          <Typography className="text-sm">
+            REDEEM AND START HAVING FUN!
+          </Typography>
+          <Typography className="mt-[20px] mb-[10px] font-neue-machina text-xs uppercase text-neutral-500">
+            enter coupon code
+          </Typography>
+          <TextField
+            className="mb-5 w-full"
+            required
+            type="text"
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                width: "100%"
+              }
+            }}
+            value={coupon}
+            onChange={(event) => {
+              let { value } = event.target
+              value = value.replace(/[^A-Za-z0-9]/gi, "")
+              setCoupon(value)
+            }}
+            id="username-create"
+            placeholder="Ex. naka12345"
+            size="medium"
+            InputProps={{
+              style: {
+                fontFamily: "neueMachina",
+                backgroundColor: "#232329",
+                borderColor: "#18181C"
+              },
+              startAdornment: (
+                <InputAdornment position="start">
+                  <CouponIcon />
+                </InputAdornment>
+              )
+            }}
+          />
+          <Button
+            sx={{ fontFamily: "neueMachina" }}
+            color="secondary"
+            className="btn-rainbow-theme mt-[20px] w-full text-sm"
+            variant="contained"
+            size="large"
+            type="submit"
+            onClick={handleClick}
+          >
+            Redeem
+          </Button>
+        </div>
+        <div className="flex justify-center">
+          <Image
+            src="/images/coupon.svg"
+            alt="coupon"
+            width={220}
+            height={220}
+          />
+        </div>
       </div>
     </div>
   )

@@ -22,7 +22,7 @@ const MessageFooter = ({ onSubmit }: IMessageFooter) => {
         sx={{
           "& .MuiOutlinedInput-root": {
             width: "100%",
-            padding: "9px 15px"
+            padding: "9px 40px 9px 14px"
           }
         }}
         id="message-input"
@@ -38,9 +38,11 @@ const MessageFooter = ({ onSubmit }: IMessageFooter) => {
         whileHover="hover"
         transition={{ type: "spring", stiffness: 400, damping: 4 }}
         icon={<SendIcon />}
-        className="absolute right-4 flex h-[18px] w-[18px] cursor-pointer items-center justify-center rounded-lg bg-transparent"
+        className={`absolute right-4 flex h-[18px] w-[18px] cursor-pointer items-center justify-center rounded-lg bg-transparent ${
+          message.length > 10 ? "opacity-100" : "cursor-not-allowed opacity-20"
+        }`}
         aria-label="send-button"
-        onClick={onSubmit}
+        onClick={message.length > 10 ? onSubmit : () => {}}
       />
     </Box>
   )

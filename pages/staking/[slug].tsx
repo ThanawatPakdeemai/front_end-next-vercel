@@ -1,3 +1,4 @@
+import HeadStaking from "@components/molecules/HeadStaking"
 import ServicesPageLayout from "@components/templates/ServicesPageLayout"
 import FixedAPRContent from "@feature/staking/components/organisms/FixedAPRContent"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
@@ -11,7 +12,9 @@ export default function FixedStakingPageDetails() {
 FixedStakingPageDetails.getLayout = function getLayout(page: ReactElement) {
   return (
     <TabProvider>
-      <ServicesPageLayout>{page}</ServicesPageLayout>
+      <ServicesPageLayout>
+        <HeadStaking>{page}</HeadStaking>
+      </ServicesPageLayout>
     </TabProvider>
   )
 }

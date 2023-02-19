@@ -1,7 +1,6 @@
 import PanelHeader, {
   IPanelHeaderProps
 } from "@components/molecules/PanelHeader"
-import PanelContent from "@components/molecules/PanelContent"
 import React from "react"
 
 interface IOverviewProps extends IPanelHeaderProps {
@@ -16,7 +15,7 @@ const AsideLayout = ({ children, ...props }: IOverviewProps) => (
       adornmentButton={props.adornmentButton}
       average={props.average}
     />
-    <PanelContent height="h-[432px]">{children}</PanelContent>
+    {children}
   </div>
 )
 

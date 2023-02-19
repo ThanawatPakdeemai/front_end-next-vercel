@@ -245,6 +245,7 @@ const FormLogin = () => {
             id="email-login"
             placeholder="Email"
             size="medium"
+            autoComplete="email"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -273,6 +274,7 @@ const FormLogin = () => {
             placeholder="Password"
             helperText="A number or symbol, atleast 6 characters"
             required
+            autoComplete="current-password"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

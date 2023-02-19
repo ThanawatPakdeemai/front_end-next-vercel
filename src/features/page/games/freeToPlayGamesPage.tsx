@@ -68,7 +68,7 @@ const FreeToPlayGamesPage = () => {
                 cooldown={cooldown}
                 setCooldown={setCooldown}
                 onHandleClick={() =>
-                  onHandleClick("free-to-play", game.game_url, game)
+                  onHandleClick("free-to-play", game.path, game)
                 }
               />
             ))

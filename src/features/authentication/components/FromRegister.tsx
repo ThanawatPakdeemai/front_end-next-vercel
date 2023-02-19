@@ -209,8 +209,6 @@ const FromRegister = () => {
     response: IProfileFaceBook,
     referralId: string | string[]
   ) => {
-    // eslint-disable-next-line no-console
-    console.log("test-facebook-register-response", response)
     if (
       response.email !== null &&
       response.email !== undefined &&
@@ -232,8 +230,6 @@ const FromRegister = () => {
         .catch((_error) => {
           errorToast(MESSAGES.create_not_successful_user)
         })
-    } else {
-      errorToast(MESSAGES.create_not_successful_user)
     }
   }
 

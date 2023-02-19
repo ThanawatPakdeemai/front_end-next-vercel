@@ -10,6 +10,7 @@ import {
   ICreateNewPasswordResponse,
   IForgetPasswordResponse,
   IGetVerifyCode,
+  ILoginWithMetamask,
   ISignIn,
   ISignUp
 } from "@feature/authentication/interfaces/IAuthService"
@@ -207,4 +208,22 @@ export const loginProvider = ({
       .catch((error) => {
         reject(error)
       })
+  })
+
+export const loginMetamask = ({
+  _account,
+  _accounts,
+  _valueSigner
+}: ILoginWithMetamask) =>
+  new Promise<IProfile>((resolve, reject) => {
+    const data = {
+      wallet_address: _account || _accounts,
+      signature: _valueSigner
+    }
+    services
+      .put<IProfile>("/auth/signin/with_wallet", { ...data })
+      .then((response) => {
+        resolve(response.data)
+      })
+      .catch((error) => reject(error))
   })

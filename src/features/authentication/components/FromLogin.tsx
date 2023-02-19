@@ -36,14 +36,20 @@ import { IError } from "@src/types/contract"
 import { IProfileFaceBook } from "@src/types/profile"
 import Web3 from "web3"
 import useLoginTypeStore from "@stores/loginTypes"
+import { useWeb3React } from "@web3-react/core"
+import useConnectMetamaskAction from "@utils/useConnectMetamesk"
 import useSignIn from "../containers/hooks/useSignIn"
 import { ISignIn } from "../interfaces/IAuthService"
 import useLoginProvider from "../containers/hooks/useLoginProvider"
+import useLoginMetamask from "../containers/hooks/useLoginMetamask"
 
 const FormLogin = () => {
   const { mutateLoginProvider } = useLoginProvider()
+  const { mutateLoginMetamask } = useLoginMetamask()
 
   const web3 = new Web3(Web3.givenProvider)
+  const { account } = useWeb3React()
+  const { getSignature } = useConnectMetamaskAction()
 
   const firebaseConfig = {
     apiKey: "AIzaSyAszETPfcbQt0gd2Ifpep83_C05zOt_k1c",
@@ -76,8 +82,8 @@ const FormLogin = () => {
   })
   const { mutateSignIn, isLoading } = useSignIn()
 
-  const onSubmit = (data: ISignIn) => {
-    mutateSignIn({ _email: data._email, _password: data._password })
+  const onSubmit = (_data: ISignIn) => {
+    mutateSignIn({ _email: _data._email, _password: _data._password })
       .then((_profile) => {
         if (_profile) {
           successToast(MESSAGES.sign_in_success)
@@ -92,8 +98,6 @@ const FormLogin = () => {
   }
 
   const facebookLogin = async (response: IProfileFaceBook) => {
-    console.log("test-facebook-response", response)
-
     if (
       response.email !== null &&
       response.email !== undefined &&
@@ -109,14 +113,12 @@ const FormLogin = () => {
       })
         .then((_res) => {
           if (_res) {
-            successToast(MESSAGES.create_successful_user)
+            successToast(MESSAGES.logged_in_successfully)
           }
         })
-        .catch((_error) => {
-          errorToast(MESSAGES.create_not_successful_user)
+        .catch((_error: IError) => {
+          errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
         })
-    } else {
-      errorToast(MESSAGES.create_not_successful_user)
     }
   }
 
@@ -144,15 +146,15 @@ const FormLogin = () => {
                 successToast(MESSAGES.logged_in_successfully)
               }
             })
-            .catch((error: IError) => {
-              errorToast(MESSAGES.logged_in_unsuccessfully || error.message)
+            .catch((_error: IError) => {
+              errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
             })
         } else {
           errorToast(MESSAGES.logged_in_unsuccessfully)
         }
       })
-      .catch((error: IError) => {
-        errorToast(MESSAGES.logged_in_unsuccessfully || error.message)
+      .catch((_error: IError) => {
+        errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
       })
   }
 
@@ -180,15 +182,15 @@ const FormLogin = () => {
                 successToast(MESSAGES.logged_in_successfully)
               }
             })
-            .catch((error: IError) => {
-              errorToast(MESSAGES.logged_in_unsuccessfully || error.message)
+            .catch((_error: IError) => {
+              errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
             })
         } else {
           errorToast(MESSAGES.logged_in_unsuccessfully)
         }
       })
-      .catch((error: IError) => {
-        errorToast(MESSAGES.logged_in_unsuccessfully || error.message)
+      .catch((_error: IError) => {
+        errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
       })
   }
 
@@ -197,11 +199,34 @@ const FormLogin = () => {
     try {
       await web3?.givenProvider?.request({ method: "eth_requestAccounts" })
       accounts = await web3.eth.getAccounts()
-      console.log("test-metmask-accounts", accounts)
-    } catch (error) {
-      console.error("test-metmask error", error)
+    } catch (_error) {
+      errorToast(MESSAGES["please-connect-wallet"])
     }
-    console.log("test-metaMarkLogin", accounts)
+    if (account || accounts[0]) {
+      const valueSigner = await getSignature(account || accounts[0])
+      mutateLoginMetamask({
+        _account: account,
+        _accounts: accounts[0],
+        _valueSigner: valueSigner
+      })
+        .then((_res) => {
+          if (_res) {
+            successToast(MESSAGES.logged_in_successfully)
+          }
+        })
+        .catch((_error: IError) => {
+          errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
+        })
+      if (
+        ((typeof valueSigner === "string" || valueSigner instanceof String) &&
+          account) ||
+        accounts[0]
+      ) {
+        console.log()
+      }
+    } else {
+      errorToast(MESSAGES["please-connect-wallet"])
+    }
   }
 
   return (

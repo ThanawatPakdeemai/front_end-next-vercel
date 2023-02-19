@@ -315,7 +315,6 @@ export interface IPlayerInfoData {
   total_win_rate: string
   game_data: IPlayerInfoGameData[]
 }
-
 export interface IProfileRegister {
   email: string
   exp: number

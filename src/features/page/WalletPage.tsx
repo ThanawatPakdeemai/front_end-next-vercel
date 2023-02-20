@@ -94,10 +94,9 @@ export default function WalletPage() {
   }
 
   const handleWalletProcess = async (_method: Method) => {
+    setOpen("Blockchain transaction in progress...")
     if (!address) return
     try {
-      /* Sample loading wait for loading popup design */
-      setOpen("Blockchain transaction in progress...")
       const res =
         _method === "deposit"
           ? await depositNaka(address, toWei(value.toString()))
@@ -125,11 +124,19 @@ export default function WalletPage() {
         CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
       )
       if (BNToNumber(allowance as string) === 0) {
-        const allowResult = await allowNaka()
-        successToast(allowResult as string)
+        allowNaka(CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT)
+          .then((_res) => {
+            successToast(_res as string)
+            handleWalletProcess(_method)
+          })
+          .catch((err) => {
+            errorToast(err)
+          })
+        return
       }
       handleWalletProcess(_method)
     } catch (error) {
+      setClose()
       errorToast(error as string)
     }
   }

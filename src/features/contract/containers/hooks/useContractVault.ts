@@ -32,12 +32,13 @@ const useContractVault = () => {
         })
     })
 
-  const allowNaka = () =>
+  /** @param _spender is contract you want to approve */
+  const allowNaka = (_spender: string) =>
     new Promise((resolve, reject) => {
       if (signer && account) {
         setIsLoading(true)
         erc20Contract
-          .approve(CONFIGS.CONTRACT_ADDRESS.ERC20, ethers.constants.MaxUint256)
+          .approve(_spender, ethers.constants.MaxUint256)
           .then((_res) => {
             setIsLoading(false)
             resolve("Contract Approved!")

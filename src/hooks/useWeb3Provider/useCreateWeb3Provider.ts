@@ -76,53 +76,49 @@ const useCreateWeb3Provider = () => {
   }
 
   const handleConnectWithMetamask = async () => {
-    if (window.ethereum === undefined) return
-    if (!chainIdIsSupported()) {
-      resetChainId()
-    }
-    Helper.setLocalStorage({
-      key: ELocalKey.walletConnector,
-      value: WALLET_CONNECTOR_TYPES.injected
-    })
-    const _provider = new providers.Web3Provider(window.ethereum)
-    _provider.send("eth_requestAccounts", []).then(() => {
-      setProvider(_provider)
-    })
-    const walletAccounts = await _provider?.listAccounts()
-    if (walletAccounts === undefined) setAccounts(undefined)
-    if (walletAccounts) {
-      onSetAddress(walletAccounts[0])
-    }
-
-    const _signer = _provider.getSigner()
-    setSigner(_signer)
-
-    // Subscribe to accounts change
-    window.ethereum.on("accountsChanged", async () => {
-      await handleDisconnectWallet()
-      setHasChangeAccountMetamask(true)
-    })
-
-    // Subscribe to chainId change
-    window.ethereum.on("chainChanged", (_chainId: string) => {
-      if (_chainId === undefined) {
-        setChainId(undefined)
-        return
-      }
-      setChainId(_chainId)
-      handleDisconnectWallet()
-      if (!chainIdIsSupported()) {
-        resetChainId()
-      }
-    })
-
-    // Subscribe to session disconnection
-    if (window.ethereum && window.ethereum.on) {
-      window.ethereum.on("disconnect", (/* code: number, reason: string */) => {
-        setProvider(undefined)
-        setAddress(undefined)
-      })
-    }
+    // if (window.ethereum === undefined) return
+    // if (!chainIdIsSupported()) {
+    //   resetChainId()
+    // }
+    // Helper.setLocalStorage({
+    //   key: ELocalKey.walletConnector,
+    //   value: WALLET_CONNECTOR_TYPES.injected
+    // })
+    // const _provider = new providers.Web3Provider(window.ethereum)
+    // _provider.send("eth_requestAccounts", []).then(() => {
+    //   setProvider(_provider)
+    // })
+    // const walletAccounts = await _provider?.listAccounts()
+    // if (walletAccounts === undefined) setAccounts(undefined)
+    // if (walletAccounts) {
+    //   onSetAddress(walletAccounts[0])
+    // }
+    // const _signer = _provider.getSigner()
+    // setSigner(_signer)
+    // // Subscribe to accounts change
+    // window.ethereum.on("accountsChanged", async () => {
+    //   await handleDisconnectWallet()
+    //   setHasChangeAccountMetamask(true)
+    // })
+    // // Subscribe to chainId change
+    // window.ethereum.on("chainChanged", (_chainId: string) => {
+    //   if (_chainId === undefined) {
+    //     setChainId(undefined)
+    //     return
+    //   }
+    //   setChainId(_chainId)
+    //   handleDisconnectWallet()
+    //   if (!chainIdIsSupported()) {
+    //     resetChainId()
+    //   }
+    // })
+    // // Subscribe to session disconnection
+    // if (window.ethereum && window.ethereum.on) {
+    //   window.ethereum.on("disconnect", (/* code: number, reason: string */) => {
+    //     setProvider(undefined)
+    //     setAddress(undefined)
+    //   })
+    // }
   }
 
   const handleSignMessage = useCallback(

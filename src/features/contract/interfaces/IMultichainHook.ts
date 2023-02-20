@@ -13,3 +13,8 @@ export interface IMultichain {
   is_active?: boolean
   chain_name?: string
 }
+
+export interface IResponseGetFee {
+  status: boolean
+  data: any
+}

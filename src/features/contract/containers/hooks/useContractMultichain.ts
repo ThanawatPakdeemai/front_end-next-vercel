@@ -134,13 +134,33 @@ const useContractMultichain = () => {
         })
     })
 
+  const getFee = () =>
+    new Promise((resolve) => {
+      setIsLoading(true)
+      signer && signer?._provider?._network?.name.includes("bnb")
+        ? p2pBinanceContract
+        : p2pPolygonContract
+            .fee()
+            .then((_response) => {
+              setIsLoading(false)
+              resolve({ status: true, data: _response.toString() })
+            })
+            .catch((_error: Error) => {
+              setIsLoading(false)
+              resolve({ status: false, data: 0 })
+            })
+    })
+
   return {
     allowBinance,
     checkAllowNaka,
     createOrderSellNaka,
     createOrderBuyNaka,
     sendRequestBuyNaka,
-    isLoading
+    isLoading,
+    getFee,
+    p2pPolygonContract,
+    p2pBinanceContract
   }
 }
 

@@ -18,14 +18,11 @@ const RightMenu = () => {
     if (profileData) {
       setStateProfile(profileData)
     }
-    // else if (profile) {
-    //   setStateProfile(profile)
-    // }
   }, [profileData, profile, profile?.email])
 
   return (
     <Box>
-      {stateProfile ? (
+      {stateProfile && profile ? (
         <>
           <CreateProfile />
           <RightMenuLogIn />

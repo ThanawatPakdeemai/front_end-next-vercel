@@ -24,6 +24,8 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_POLYGON_RPC_URL: string
     readonly NEXT_PUBLIC_TOKEN_NAME: string
     readonly NEXT_PUBLIC_TOKEN_SYMBOL: string
+    readonly NEXT_PUBLIC_TOKEN_NAME_BUSD: string
+    readonly NEXT_PUBLIC_TOKEN_SYMBOL_BNB: string
     readonly NEXT_PUBLIC_CHAIN_ID: string
     readonly NEXT_PUBLIC_CHAIN_ID_HEX: string
     readonly NEXT_PUBLIC_CHAIN_NAME: string
@@ -34,6 +36,7 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_CONTRACT_ERC20: string
     readonly NEXT_PUBLIC_OWNER: string
     readonly NEXT_PUBLIC_CONTRACT_BALANCE_VAULT: string
+    readonly NEXT_PUBLIC_CONTRACT_BALANCE_VAULT_BINANCE: string
     readonly NEXT_PUBLIC_CONTRACT_ITEM_VAULT: string
     readonly NEXT_PUBLIC_CONTRACT_SHOP: string
     readonly NEXT_PUBLIC_CONTRACT_MARKETPLACE: string

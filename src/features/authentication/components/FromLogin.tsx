@@ -51,13 +51,13 @@ const FormLogin = () => {
   const { getSignature } = useConnectMetamaskAction()
 
   const firebaseConfig = {
-    apiKey: process.env.NEXT_PUBLIC_APIKEY,
-    authDomain: process.env.NEXT_PUBLIC_AUTHDOMAIN,
-    projectId: process.env.NEXT_PUBLIC_PROJECT_Id,
-    storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
-    messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SEND_ID,
-    appId: process.env.NEXT_PUBLIC_APPID,
-    measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID
+    apiKey: "AIzaSyAszETPfcbQt0gd2Ifpep83_C05zOt_k1c",
+    authDomain: "able-study-326414.firebaseapp.com",
+    projectId: "able-study-326414",
+    storageBucket: "able-study-326414.appspot.com",
+    messagingSenderId: "104862138123",
+    appId: "1:104862138123:web:2e7578e0d8a80277052c0e",
+    measurementId: "G-4NN0JPG9X4"
   }
 
   if (!getApps().length) {

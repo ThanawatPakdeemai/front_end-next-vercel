@@ -3,14 +3,17 @@ import { useMutation } from "@tanstack/react-query"
 import useWalletStore from "@stores/wallet"
 import { getNaka } from "@feature/inventory/containers/services/inventory.service"
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
-// import handleConnectWithMetamask from "@hooks/useWeb3Provider/useCreateWeb3Provider"
-
 import useLoadingStore from "@stores/loading"
+import { useWeb3Provider } from "@providers/index"
+import { useToast } from "@feature/toast/containers"
+import { MESSAGES } from "@constants/messages"
 import { loginMetamask } from "../services/auth.service"
 
 const useLoginMetamask = () => {
   const { onSetProfileData, onSetProfileAddress, onSetProfileJWT } =
     useProfileStore()
+  const { errorToast } = useToast()
+  const { handleConnectWithMetamask } = useWeb3Provider()
   const { setVaultBalance } = useWalletStore()
   const { setOpen, setClose } = useLoadingStore()
   const {
@@ -35,8 +38,14 @@ const useLoginMetamask = () => {
           setVaultBalance(Number(_res.data))
         }
       })
-      // TODO Boy Fix Bug auto connect wallet
-      //  handleConnectWithMetamask
+      const handleConnectWallet = () => {
+        if (res && handleConnectWithMetamask) {
+          handleConnectWithMetamask()
+        } else {
+          errorToast(MESSAGES.please_connect_wallet)
+        }
+      }
+      handleConnectWallet()
     }
   })
 

@@ -40,3 +40,11 @@ export interface ICreateNewPassword extends ISignIn {
   _token: string
   _confirmPassword: string
 }
+
+export interface ILoginWithMetamask {
+  _account: string | null | undefined
+  _accounts: string
+  _valueSigner:
+    | string
+    | { status: boolean; addressContract: string; err: unknown }
+}

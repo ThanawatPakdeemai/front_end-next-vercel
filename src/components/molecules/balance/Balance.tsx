@@ -7,8 +7,9 @@ import ButtonLink from "@components/atoms/button/ButtonLink"
 import { useTranslation } from "react-i18next"
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet"
 import { useWeb3Provider } from "@providers/index"
-import useGlobal from "@hooks/useGlobal"
 import useAllBalances from "@hooks/useAllBalances"
+
+import useGlobal from "@hooks/useGlobal"
 import AmountBalance from "./AmountBalance"
 
 interface IProps {
@@ -21,6 +22,7 @@ interface IProps {
 
 const Balance = ({ className, sx }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
+  // const [nakaBalanceVault, SetNakaBalanceVault] = useState<string>("N/A")
   const { address, handleConnectWithMetamask, hasMetamask } = useWeb3Provider()
   const { t } = useTranslation()
   const { busdVaultBalance, nakaVaultBalance } = useAllBalances()

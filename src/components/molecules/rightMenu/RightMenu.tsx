@@ -17,14 +17,11 @@ const RightMenu = () => {
   useEffect(() => {
     if (profileData) {
       setStateProfile(profileData)
-    } else {
-      setStateProfile(profile)
     }
   }, [profileData, profile, profile?.email])
-
   return (
     <Box>
-      {stateProfile ? (
+      {stateProfile && profile ? (
         <>
           <CreateProfile />
           <RightMenuLogIn />

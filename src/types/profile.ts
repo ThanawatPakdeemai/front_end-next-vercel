@@ -315,7 +315,6 @@ export interface IPlayerInfoData {
   total_win_rate: string
   game_data: IPlayerInfoGameData[]
 }
-
 export interface IProfileRegister {
   email: string
   exp: number
@@ -342,4 +341,26 @@ export interface IProfileRegister {
   _id: string
   badges: any[]
   current_time: string
+}
+
+export interface IDataFaceBook {
+  height: number
+  is_silhouette: boolean
+  url: string
+  width: number
+}
+export interface IPictureFaceBook {
+  data: IDataFaceBook
+}
+export interface IProfileFaceBook {
+  name: string
+  email: string
+  picture: IPictureFaceBook
+  id: string
+  accessToken: string
+  userID: string
+  expiresIn: number
+  signedRequest: string
+  graphDomain: string
+  data_access_expiration_time: number
 }

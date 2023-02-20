@@ -9,6 +9,7 @@ import {
   IGetType
 } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
+import CONFIGS from "@configs/index"
 
 const useGlobal = (
   _limit?: number,
@@ -90,8 +91,70 @@ const useGlobal = (
 
       default:
         onSetGameData(_gameData as IGame)
-        await router.push(`/${_gameUrl}`)
+        await router.push(`/${_type}-games/${_gameUrl}`)
         break
+    }
+    // NOTE: No need this code
+    // await router.push(`/${_gameUrl}`)
+  }
+
+  /**
+   * @description Handle network setting for metamask
+   * @param _chainId
+   * @returns
+   */
+  const getNetwork = (_chainId: string) => {
+    switch (_chainId) {
+      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
+        return {
+          chainId: `0x${Number(CONFIGS.CHAIN.BNB_CHAIN_ID).toString(16)}`,
+          chainName: `${CONFIGS.CHAIN.BNB_CHAIN_NAME}`,
+          rpcUrls: [`${CONFIGS.CHAIN.BNB_RPC_URL}/`],
+          blockExplorerUrls: [`${CONFIGS.CHAIN.BNB_SCAN}/`],
+          nativeCurrency: {
+            name: CONFIGS.CHAIN.TOKEN_NAME_BUSD,
+            symbol: CONFIGS.CHAIN.TOKEN_SYMBOL_BNB,
+            decimals: 18
+          }
+        }
+
+      default:
+        return {
+          chainId: `0x${Number(CONFIGS.CHAIN.CHAIN_ID).toString(16)}`,
+          chainName: `${CONFIGS.CHAIN.CHAIN_NAME}`,
+          rpcUrls: [`${CONFIGS.CHAIN.POLYGON_RPC_URL}/`],
+          blockExplorerUrls: [`${CONFIGS.CHAIN.POLYGON_SCAN}/`],
+          nativeCurrency: {
+            name: CONFIGS.CHAIN.TOKEN_NAME,
+            symbol: CONFIGS.CHAIN.TOKEN_SYMBOL,
+            decimals: 18
+          }
+        }
+    }
+  }
+
+  const getTokenAddress = (_chainId: string) => {
+    switch (_chainId) {
+      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
+        return CONFIGS.CONTRACT_ADDRESS.BEP20
+
+      default:
+        CONFIGS.CONTRACT_ADDRESS.ERC20
+    }
+  }
+
+  /**
+   * @description Get tokens amount
+   * @param _chainId
+   * @returns {string}
+   */
+  const getTokenSupply = (_chainId: string): string => {
+    switch (_chainId) {
+      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
+        return "31000000000000000000000000"
+
+      default:
+        return "179999996000000000000000008"
     }
     // NOTE: No need this code
     // await router.push(`/${_gameUrl}`)
@@ -107,7 +170,10 @@ const useGlobal = (
     stateProfile,
     hydrated,
     defaultBody,
-    pager
+    pager,
+    getNetwork,
+    getTokenAddress,
+    getTokenSupply
   }
 }
 

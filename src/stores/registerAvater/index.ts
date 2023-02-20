@@ -1,4 +1,4 @@
-import { create } from "zustand"
+import create from "zustand"
 import configZustandDevTools from "@src/utils/configDevtools"
 import { devtools } from "zustand/middleware"
 

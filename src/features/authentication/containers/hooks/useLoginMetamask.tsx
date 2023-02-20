@@ -4,6 +4,7 @@ import useWalletStore from "@stores/wallet"
 import { getNaka } from "@feature/inventory/containers/services/inventory.service"
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
 // import handleConnectWithMetamask from "@hooks/useWeb3Provider/useCreateWeb3Provider"
+
 import useLoadingStore from "@stores/loading"
 import { loginMetamask } from "../services/auth.service"
 
@@ -34,7 +35,7 @@ const useLoginMetamask = () => {
           setVaultBalance(Number(_res.data))
         }
       })
-      // TODO NongBoyRanarak Fix Bug auto connect wallet
+      // TODO Boy Fix Bug auto connect wallet
       //  handleConnectWithMetamask
     }
   })

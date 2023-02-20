@@ -1,7 +1,7 @@
 import simpleRpcProvider from "@utils/web3"
 import { ethers, ContractInterface } from "ethers"
-// ABI
 import BalanceVaultAbi from "@configs/abi/BalanceVault.json"
+import BinanceBalanceVaultAbi from "@configs/abi/BinanceBalanceVault.json"
 import BEP20Abi from "@configs/abi/BEP20.json"
 import ERC20Abi from "@configs/abi/ERC20.json"
 import FlexibleStakingAbi from "@configs/abi/FlexibleStaking.json"
@@ -22,7 +22,6 @@ export const getContract = (
   _provider?: Web3Provider | ethers.providers.JsonRpcProvider
 ) => {
   const _web3 = _provider ?? simpleRpcProvider
-
   return new ethers.Contract(address, abi, _web3)
 }
 
@@ -30,6 +29,11 @@ export const getBalanceVaultContract = (
   address: string,
   web3?: Web3Provider | ethers.providers.JsonRpcProvider
 ) => getContract(BalanceVaultAbi.abi, address, web3)
+
+export const getBalanceVaultBinanceContract = (
+  address: string,
+  web3?: Web3Provider | ethers.providers.JsonRpcProvider
+) => getContract(BinanceBalanceVaultAbi.abi, address, web3)
 
 export const getBEP20Contract = (
   address: string,

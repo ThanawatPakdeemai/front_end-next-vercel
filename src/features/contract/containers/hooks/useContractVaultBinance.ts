@@ -1,27 +1,28 @@
 import CONFIGS from "@configs/index"
 import { ethers, BigNumber } from "ethers"
 import {
-  useERC20,
-  useBalanceVault
+  useBalanceVaultBinance,
+  useBEP20
 } from "@feature/contract/containers/hooks/useContract"
 import { useState } from "react"
 import { useWeb3Provider } from "@providers/index"
 import { ITransactionResponse } from "@interfaces/ITransaction"
+import { IBalance } from "@interfaces/IHelper"
 
-const useContractVault = () => {
+const useContractVaultBinance = () => {
   const { signer, address: account } = useWeb3Provider()
   const [isLoading, setIsLoading] = useState(false)
-  const erc20Contract = useERC20(signer, CONFIGS.CONTRACT_ADDRESS.ERC20)
-  const balanceVaultContract = useBalanceVault(
+  const bep20Contract = useBEP20(signer, CONFIGS.CONTRACT_ADDRESS.BEP20)
+  const balanceVaultContract = useBalanceVaultBinance(
     signer,
-    CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
+    CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
   )
 
-  const checkAllowNaka = (_address: string) =>
+  const checkAllowToken = (_tokenAddress: string) =>
     new Promise((resolve, reject) => {
       setIsLoading(true)
-      erc20Contract
-        .allowance(account, _address)
+      bep20Contract
+        .allowance(account, _tokenAddress)
         .then((_response: string) => {
           setIsLoading(false)
           resolve(_response)
@@ -32,12 +33,12 @@ const useContractVault = () => {
         })
     })
 
-  const allowNaka = () =>
+  const allowToken = (_spender: string, _amount: string) =>
     new Promise((resolve, reject) => {
       if (signer && account) {
         setIsLoading(true)
-        erc20Contract
-          .approve(CONFIGS.CONTRACT_ADDRESS.ERC20, ethers.constants.MaxUint256)
+        bep20Contract
+          .approve(_spender, _amount)
           .then((_res) => {
             setIsLoading(false)
             resolve("Contract Approved!")
@@ -51,11 +52,14 @@ const useContractVault = () => {
       } else reject()
     })
 
-  const depositNaka = async (_nakaAmount: string | BigNumber) =>
+  const depositToken = async (
+    _tokenAddress: string,
+    _amount: string | BigNumber
+  ) =>
     new Promise<ITransactionResponse>((resolve, reject) => {
       setIsLoading(true)
       balanceVaultContract
-        .depositNaka(_nakaAmount)
+        .depositToken(_tokenAddress, _amount)
         .then((response: ITransactionResponse) => {
           setIsLoading(false)
           resolve(response)
@@ -66,11 +70,14 @@ const useContractVault = () => {
         })
     })
 
-  const withdrawNaka = async (_nakaAmount: string | BigNumber) =>
+  const withdrawByToken = async (
+    _tokenAddress: string,
+    _amount: string | BigNumber
+  ) =>
     new Promise<ITransactionResponse>((resolve, reject) => {
       setIsLoading(true)
       balanceVaultContract
-        .withdrawNaka(_nakaAmount)
+        .withdrawByToken(_tokenAddress, _amount)
         .then((response: ITransactionResponse) => {
           setIsLoading(false)
           resolve(response)
@@ -85,8 +92,8 @@ const useContractVault = () => {
     new Promise<Boolean>((resolve, reject) => {
       try {
         setIsLoading(true)
-        erc20Contract
-          .allowance(account, CONFIGS.CONTRACT_ADDRESS.ERC20)
+        bep20Contract
+          .allowance(account, CONFIGS.CONTRACT_ADDRESS.BEP20)
           .then((response: string) => {
             const currentAllowance = BigNumber.from(response)
             const valueBetString = BigNumber.from(_bet).toString()
@@ -105,11 +112,11 @@ const useContractVault = () => {
     })
 
   /* balanceValut */
-  const getNakaBalanceVault = (_userAddress: string) =>
-    new Promise((resolve) => {
+  const getBalanceVaultBSC = (_userAddress: string, _tokenAddress: string) =>
+    new Promise<IBalance>((resolve) => {
       setIsLoading(true)
       balanceVaultContract
-        .getBalance(_userAddress)
+        .getBalanceOf(_userAddress, _tokenAddress)
         .then((response: BigNumber) => {
           setIsLoading(false)
           resolve({
@@ -119,15 +126,15 @@ const useContractVault = () => {
         })
         .catch((_error: Error) => {
           setIsLoading(false)
-          resolve({ status: false, data: 0 })
+          resolve({ status: false, data: ethers.BigNumber.from(0) })
         })
     })
 
   /* balance (in metamask) */
-  const getNakaBalanceWallet = (_userAddress: string) =>
-    new Promise((resolve) => {
+  const getBalanceWalletBSC = (_userAddress: string) =>
+    new Promise<IBalance>((resolve) => {
       setIsLoading(true)
-      erc20Contract
+      bep20Contract
         .balanceOf(_userAddress)
         .then((response: BigNumber) => {
           setIsLoading(false)
@@ -138,20 +145,20 @@ const useContractVault = () => {
         })
         .catch((_error: Error) => {
           setIsLoading(false)
-          resolve({ status: false, data: 0 })
+          resolve({ status: false, data: ethers.BigNumber.from(0) })
         })
     })
 
   return {
-    checkAllowNaka,
-    allowNaka,
-    depositNaka,
-    withdrawNaka,
+    checkAllowToken,
+    allowToken,
+    depositToken,
+    withdrawByToken,
     checkSufficient,
-    getNakaBalanceVault,
-    getNakaBalanceWallet,
+    getBalanceVaultBSC,
+    getBalanceWalletBSC,
     isLoading
   }
 }
 
-export default useContractVault
+export default useContractVaultBinance

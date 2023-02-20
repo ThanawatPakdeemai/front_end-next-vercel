@@ -46,7 +46,7 @@ const ReferralProgramPage = () => {
   }
 
   return (
-    <>
+    <div className="relative z-10 w-[calc(100%)] px-[10%]">
       <div className="flex">
         <div className="h-fit w-[630px] rounded-3xl border border-solid border-neutral-700 bg-neutral-800 p-2">
           <div className="my-[30px] mr-8 ml-2 grid grid-cols-3">
@@ -199,7 +199,7 @@ const ReferralProgramPage = () => {
           </Table>
         </TableContainer>
       </CardContent>
-    </>
+    </div>
   )
 }
 

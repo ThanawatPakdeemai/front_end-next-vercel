@@ -1,6 +1,6 @@
 import { Image } from "@components/atoms/image"
 import { BANNER_DATA } from "@constants/banner"
-import { useRouter } from "next/dist/client/router"
+import { useRouter } from "next/router"
 import React from "react"
 
 /**

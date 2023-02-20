@@ -2,6 +2,8 @@ export interface IBuyItems {
   _player_id: string
   _item_id: string
   _qty: number
+  _tokenAddress?: string
+  _symbol?: string
 }
 
 interface IBuyItem {

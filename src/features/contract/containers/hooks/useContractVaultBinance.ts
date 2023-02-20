@@ -149,6 +149,21 @@ const useContractVaultBinance = () => {
         })
     })
 
+  const getAllTokenAddressInContract = () =>
+    new Promise<string[]>((resolve) => {
+      setIsLoading(true)
+      bep20Contract
+        .getAllTokenAddressInContract()
+        .then((response: string[]) => {
+          setIsLoading(false)
+          resolve(response)
+        })
+        .catch((_error: Error) => {
+          setIsLoading(false)
+          resolve([])
+        })
+    })
+
   return {
     checkAllowToken,
     allowToken,
@@ -157,7 +172,8 @@ const useContractVaultBinance = () => {
     checkSufficient,
     getBalanceVaultBSC,
     getBalanceWalletBSC,
-    isLoading
+    isLoading,
+    getAllTokenAddressInContract
   }
 }
 

@@ -1,5 +1,8 @@
 import { GetServerSideProps } from "next"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import React from "react"
+
+const index = () => <></>
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const validTypeGames = [
@@ -22,3 +25,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
 }
+
+export default index

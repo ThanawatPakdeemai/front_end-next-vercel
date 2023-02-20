@@ -1,3 +1,5 @@
+import { BigNumber } from "ethers"
+
 export interface IPropsFormatNumberOption {
   notation?: "standard" | "scientific" | "engineering" | "compact"
   compactDisplay?: "short" | "long"
@@ -19,4 +21,9 @@ export interface IFormatService {
 export interface IFormatMessageService {
   status: boolean
   message: string
+}
+
+export interface IBalance {
+  status: boolean
+  data: BigNumber
 }

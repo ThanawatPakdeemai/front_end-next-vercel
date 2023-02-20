@@ -6,7 +6,7 @@ export const CURRENCY = [
   }
   // {
   //   id: "2",
-  //   name: "UPO",
+  //   name: "BUSD",
   //   image_icon: "/images/logo/Logo-Master1.png"
   // }
 ]

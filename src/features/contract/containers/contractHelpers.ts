@@ -19,7 +19,10 @@ import { Web3Provider } from "@ethersproject/providers"
 export const getContract = (
   abi: ContractInterface,
   address: string,
-  _provider?: Web3Provider | ethers.providers.JsonRpcProvider
+  _provider?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
 ) => {
   const _web3 = _provider ?? simpleRpcProvider
   return new ethers.Contract(address, abi, _web3)
@@ -32,12 +35,15 @@ export const getBalanceVaultContract = (
 
 export const getBalanceVaultBinanceContract = (
   address: string,
-  web3?: Web3Provider | ethers.providers.JsonRpcProvider
+  web3?: Web3Provider | ethers.providers.JsonRpcSigner
 ) => getContract(BinanceBalanceVaultAbi.abi, address, web3)
 
 export const getBEP20Contract = (
   address: string,
-  web3?: Web3Provider | ethers.providers.JsonRpcProvider
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
 ) => getContract(BEP20Abi.abi, address, web3)
 
 export const getERC20Contract = (

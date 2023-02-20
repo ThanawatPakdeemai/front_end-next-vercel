@@ -212,7 +212,7 @@ const FormLogin = () => {
         _accounts: accounts[0],
         _valueSigner: valueSigner
       })
-        .then((_res) => {
+        .then(async (_res) => {
           if (_res) {
             successToast(MESSAGES.logged_in_successfully)
           }

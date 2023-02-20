@@ -230,7 +230,8 @@ const useCreateWeb3Provider = () => {
     handleSetAddress: setAddress,
     signer,
     handleDisconnectWallet,
-    hasMetamask
+    hasMetamask,
+    onSetAddress
   }
 }
 

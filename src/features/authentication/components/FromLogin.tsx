@@ -35,8 +35,8 @@ import { IError } from "@src/types/contract"
 import { IProfileFaceBook } from "@src/types/profile"
 import Web3 from "web3"
 import useLoginTypeStore from "@stores/loginTypes"
-import { useWeb3React } from "@web3-react/core"
 import useConnectMetamaskAction from "@utils/useConnectMetamesk"
+import { useWeb3Provider } from "@providers/Web3Provider"
 import useSignIn from "../containers/hooks/useSignIn"
 import { ISignIn } from "../interfaces/IAuthService"
 import useLoginProvider from "../containers/hooks/useLoginProvider"
@@ -47,17 +47,17 @@ const FormLogin = () => {
   const { mutateLoginMetamask } = useLoginMetamask()
 
   const web3 = new Web3(Web3.givenProvider)
-  const { account } = useWeb3React()
+  const { address: account } = useWeb3Provider()
   const { getSignature } = useConnectMetamaskAction()
 
   const firebaseConfig = {
-    apiKey: "AIzaSyAszETPfcbQt0gd2Ifpep83_C05zOt_k1c",
-    authDomain: "able-study-326414.firebaseapp.com",
-    projectId: "able-study-326414",
-    storageBucket: "able-study-326414.appspot.com",
-    messagingSenderId: "104862138123",
-    appId: "1:104862138123:web:2e7578e0d8a80277052c0e",
-    measurementId: "G-4NN0JPG9X4"
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_Id,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SEND_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APPID,
+    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
   }
 
   if (!getApps().length) {

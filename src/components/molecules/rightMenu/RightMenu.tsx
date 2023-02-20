@@ -17,9 +17,10 @@ const RightMenu = () => {
   useEffect(() => {
     if (profileData) {
       setStateProfile(profileData)
-    } else {
-      setStateProfile(profile)
     }
+    // else if (profile) {
+    //   setStateProfile(profile)
+    // }
   }, [profileData, profile, profile?.email])
 
   return (

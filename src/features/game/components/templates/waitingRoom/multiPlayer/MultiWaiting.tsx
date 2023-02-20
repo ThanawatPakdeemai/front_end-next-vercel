@@ -142,7 +142,8 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   }, [getPlayersMulti, isConnected, mapPlayer])
 
   const outRoom = useCallback(() => {
-    if (gameData) router.push(`/${gameData.path}/roomlist`)
+    if (gameData)
+      router.push(`/${router.query.typeGame}/${gameData.path}/roomlist`)
   }, [gameData, router])
 
   /**

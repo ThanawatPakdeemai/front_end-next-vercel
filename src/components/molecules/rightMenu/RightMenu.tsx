@@ -19,7 +19,6 @@ const RightMenu = () => {
       setStateProfile(profileData)
     }
   }, [profileData, profile, profile?.email])
-
   return (
     <Box>
       {stateProfile && profile ? (

@@ -17,6 +17,8 @@ import WalletFooter from "@feature/wallet/components/molecules/WalletFooter"
 import WalletLightAnimation from "@feature/wallet/components/molecules/WalletLightAnimation"
 import CONFIGS from "@configs/index"
 
+// type Method = "deposit" | "withdraw"
+
 export default function WalletPage() {
   const { hydrated } = useGlobal()
   const {

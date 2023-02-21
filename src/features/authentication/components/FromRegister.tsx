@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { memo, useEffect, useState } from "react"
 import {
   Box,
@@ -51,6 +50,7 @@ import { initializeApp, getApps } from "@firebase/app"
 import { useRouter } from "next/router"
 import useLoginProvider from "@feature/authentication/containers/hooks/useLoginProvider"
 import useRegisterAvatarStore from "@stores/registerAvater"
+import { IProfileFaceBook } from "@src/types/profile"
 
 interface TFormData {
   email: string
@@ -114,8 +114,11 @@ const FromRegister = () => {
   }
 
   const auth = getAuth()
-  const { setOnSubmitClickRegister: onSubmitRegisterForm } =
-    useRegisterAvatarStore()
+  const {
+    setSubmitClickRegister: onSubmitRegisterForm,
+    getClickRegisterFacebook: toggleFacebookRegister,
+    setClickRegisterFacebook: setToggleFacebookRegister
+  } = useRegisterAvatarStore()
 
   const [verifiCode, setVerifiCode] = useState("")
   const [showPassword, setShowPassword] = useState(false)
@@ -125,7 +128,6 @@ const FromRegister = () => {
   const [characterPasswordLength, setCharacterPasswordLength] = useState(true)
   const [characterUppercase, setCharacterUppercase] = useState(true)
   const [formSubmitErrors, setFormSubmitErrors] = useState(false)
-  // const [onSubmitClickRegister, setOnSubmitClickRegister] = useState(false)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
   const handleMouseDownPassword = (
@@ -203,22 +205,32 @@ const FromRegister = () => {
     })()
   }
 
-  const facebookLogin = async (response, referralId: string | string[]) => {
-    mutateLoginProvider({
-      _email: response.email,
-      _provider: "facebook",
-      _prevPath: "/",
-      _providerUUID: response.uid,
-      _referral: referralId
-    })
-      .then((_res) => {
-        if (_res) {
-          successToast(MESSAGES.create_successful_user)
-        }
+  const facebookLogin = async (
+    response: IProfileFaceBook,
+    referralId: string | string[]
+  ) => {
+    if (
+      response.email !== null &&
+      response.email !== undefined &&
+      response.userID !== null &&
+      response.userID !== undefined
+    ) {
+      mutateLoginProvider({
+        _email: response.email,
+        _provider: "facebook",
+        _prevPath: "/",
+        _providerUUID: response.userID,
+        _referral: referralId
       })
-      .catch((_error) => {
-        errorToast(MESSAGES.create_not_successful_user)
-      })
+        .then((_res) => {
+          if (_res) {
+            successToast(MESSAGES.create_successful_user)
+          }
+        })
+        .catch((_error) => {
+          errorToast(MESSAGES.create_not_successful_user)
+        })
+    }
   }
 
   const twitterLogin = async (referralId: string | string[]) => {
@@ -792,18 +804,25 @@ const FromRegister = () => {
                     stiffness: 400,
                     damping: 4
                   }}
+                  onClick={() => setToggleFacebookRegister(true)}
                   icon={
-                    <FacebookLogin
-                      appId={`${process.env.NEXT_PUBLIC_FACEBOOK_APPID}`}
-                      autoLoad
-                      fields="name,email,picture"
-                      callback={(e) => facebookLogin(e, watch("referralId"))}
-                      cssClass="my-facebook-button-class"
-                      textButton={null}
-                      icon={<FacebookIcon />}
-                    />
+                    toggleFacebookRegister ? (
+                      <FacebookLogin
+                        appId={`${process.env.NEXT_PUBLIC_FACEBOOK_APPID}`}
+                        autoLoad
+                        fields="name,email,picture"
+                        callback={(e) => facebookLogin(e, watch("referralId"))}
+                        cssClass="my-facebook-button-class"
+                        textButton={null}
+                        icon={<FacebookIcon />}
+                      />
+                    ) : (
+                      <FacebookIcon />
+                    )
                   }
-                  className="m-1 flex h-[40px] w-[75px] items-end justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                  className={`m-1 flex h-[40px] w-[75px] justify-center rounded-lg border border-neutral-700 bg-neutral-800 ${
+                    toggleFacebookRegister ? "items-end" : "items-center"
+                  }`}
                 />
                 <ButtonIcon
                   whileHover="hover"

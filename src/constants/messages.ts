@@ -2,6 +2,7 @@ export const MESSAGES = {
   "error-socket": "Socket can't connectd",
   "getdata-success": "Get Data Success",
   "please_login": "Please Login",
+  "please_connect_wallet": "Please Connect Wallet",
   "logged_in_successfully": "Logged in successfully",
   "logged_in_unsuccessfully": "Logged in unsuccessfully",
   "sign_in_success": "Sign in successfully",

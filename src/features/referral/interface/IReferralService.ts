@@ -16,6 +16,7 @@ export interface IReferralsInfo {
 export interface IGetReferrals {
   player_id: string
   skip: number
+  limit: number
 }
 
 // export interface AxiosResponse<T = IReferralsData> {

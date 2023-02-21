@@ -4,11 +4,11 @@ import {
   IReferralsPlayload
 } from "@feature/referral/interface/IReferralService"
 
-export const getReferrals = async ({ player_id, skip }: IGetReferrals) =>
+export const getReferrals = async ({ player_id, skip, limit }: IGetReferrals) =>
   new Promise<IReferralsPlayload>((resolve, reject) => {
     const data = {
       player_id,
-      limit: 10,
+      limit,
       skip
     }
     services

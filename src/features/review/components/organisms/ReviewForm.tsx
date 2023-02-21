@@ -1,9 +1,9 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Image } from "@components/atoms/image/index"
 import useReview from "@feature/review/containers/hook/useReview"
-import Loading from "@components/atoms/Loading"
-import { Rating } from "@mui/material"
+import { Rating, Stack } from "@mui/material"
 import useReviewContext from "@feature/review/containers/contexts/useReviewContext"
+import useLoadingStore from "@stores/loading"
 import MessageFooter from "../templates/MessageFooter"
 
 interface IReviewFormProps {
@@ -14,6 +14,15 @@ interface IReviewFormProps {
 const ReviewForm = ({ avatar, username }: IReviewFormProps) => {
   const { onSubmitComment, loading } = useReview()
   const { message, setRate, rate } = useReviewContext()
+  const { setOpen, setClose } = useLoadingStore()
+
+  useEffect(() => {
+    if (loading) {
+      setOpen()
+    } else {
+      setClose()
+    }
+  }, [loading, setClose, setOpen])
 
   return (
     <div className="review-form mb-3 grid min-h-[68px] grid-flow-col items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900 p-2">
@@ -29,27 +38,33 @@ const ReviewForm = ({ avatar, username }: IReviewFormProps) => {
       <div className="review--item__content__header mb-2 flex min-w-[300px] items-center justify-between">
         <div className="review--item__content-username">{username}</div>
         <div className="review--item__content-rating flex-row">
-          <Rating
-            className="mx-2"
-            name="no-value"
-            value={rate}
-            sx={{
-              "& .MuiSvgIcon-root": {
-                color: "#70727B",
-                width: "20px"
-              }
-            }}
-            onChange={(newValue) => {
-              setRate(Number(newValue))
-            }}
-          />
+          <Stack spacing={1}>
+            <Rating
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  width: "20px"
+                },
+                "& .MuiRating-iconFilled": {
+                  color: "#70727B"
+                },
+                justifyContent: "flex-start",
+                justifyItems: "flex-start"
+              }}
+              name="half-rating"
+              className="mx-2"
+              defaultValue={0}
+              precision={0.5}
+              value={rate}
+              onChange={(newValue) => {
+                setRate(Number(newValue))
+              }}
+            />
+          </Stack>
         </div>
       </div>
-      {loading ? (
-        <Loading />
-      ) : (
-        <MessageFooter onSubmit={() => onSubmitComment(message, rate)} />
-      )}
+      <MessageFooter onSubmit={() => onSubmitComment(message, rate)} />
+      {/* {loading && (
+      )} */}
     </div>
   )
 }

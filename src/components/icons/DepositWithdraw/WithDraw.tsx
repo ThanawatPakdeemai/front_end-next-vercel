@@ -17,7 +17,7 @@ function Withdraw({
       <path
         d="M12 21V7M12 7L17 12M12 7L7 12M20 5H4"
         stroke="#E1E2E2"
-        stroke-width="1.2"
+        strokeWidth="1.2"
       />
     </svg>
   )

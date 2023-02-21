@@ -1,6 +1,9 @@
+import { useState } from "react"
+
 const useTable = () => {
-  const limit = 12
+  const [limit, setLimit] = useState<number>(12)
   return {
+    setLimit,
     limit
   }
 }

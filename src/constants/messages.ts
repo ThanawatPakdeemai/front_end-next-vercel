@@ -2,6 +2,9 @@ export const MESSAGES = {
   "error-socket": "Socket can't connectd",
   "getdata-success": "Get Data Success",
   "please_login": "Please Login",
+  "please_connect_wallet": "Please Connect Wallet",
+  "logged_in_successfully": "Logged in successfully",
+  "logged_in_unsuccessfully": "Logged in unsuccessfully",
   "sign_in_success": "Sign in successfully",
   "success_get_code": "Success get code",
   "code_number_not_expired": "Code number not expired",
@@ -33,5 +36,7 @@ export const MESSAGES = {
   "withdraw_error": "Withdraw error",
   "claim_error": "Claim error",
   "create_successful_user": "Create a successful user",
-  "create_not_successful_user": "Create a not successful user"
+  "create_not_successful_user": "Create a not successful user",
+  "room-timeout": "Room timeout",
+  "error-something": "Error something went wrong"
 }

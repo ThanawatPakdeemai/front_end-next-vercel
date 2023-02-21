@@ -51,7 +51,7 @@ const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
               <TagSingular
                 title="developer"
                 label={gameDeveloper}
-                link={`/developers/${gameDeveloper.toLocaleLowerCase()}`}
+                link={`/publishers/${gameDeveloper.toLocaleLowerCase()}`}
               />
 
               {gamePublisher !== "-" && (

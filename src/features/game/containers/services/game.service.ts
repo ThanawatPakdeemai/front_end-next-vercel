@@ -212,3 +212,13 @@ export const getGamesByKey = (data: IFilterGamesByKey) =>
         reject(error)
       })
   })
+
+export const getMyGameNFT = (data: IFilterGamesByKey) =>
+  new Promise<IGameService>((resolve, reject) => {
+    services
+      .post<IGameService>(`${CONFIGS.BASE_URL.API}/game/NFT/my-game`, {
+        ...data
+      })
+      .then((response) => resolve(response.data))
+      .catch((error) => reject(error))
+  })

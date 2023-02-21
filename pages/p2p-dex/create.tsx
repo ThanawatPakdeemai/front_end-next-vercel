@@ -1,6 +1,5 @@
 import FixedWidthContent from "@components/templates/contents/FixedWidthContent"
 import ServicesPageLayout from "@components/templates/ServicesPageLayout"
-import { P2PDEX_BANNER } from "@constants/servicesBanner"
 import P2PDexCreatePage from "@feature/page/p2pDex/P2PDexCreatePage"
 // import { TabProvider } from "@feature/tab/contexts/TabProvider"
 // import useTabContext from "@feature/tab/contexts/useTabContext"
@@ -28,7 +27,7 @@ export default function P2PDexCreate() {
 P2PDexCreate.getLayout = function getLayout(page: ReactElement) {
   return (
     // <TabProvider></TabProvider>
-    <ServicesPageLayout banner={P2PDEX_BANNER}>{page}</ServicesPageLayout>
+    <ServicesPageLayout>{page}</ServicesPageLayout>
   )
 }
 

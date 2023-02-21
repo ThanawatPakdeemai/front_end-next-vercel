@@ -24,8 +24,8 @@ const CouponPage = () => {
   }
   return (
     <div className="relative z-10 w-[calc(100%)] px-[10%]">
-      <div className="grid w-3/4 grid-cols-2 rounded-lg border border-neutral-800 bg-neutral-780">
-        <div className="p-14">
+      <div className="grid max-w-[678px] rounded-lg border border-neutral-800 bg-neutral-780 md:grid-cols-2 lg:grid-cols-2">
+        <div className="p-14 sm:p-11 lg:p-11">
           <Typography className="text-sm">
             REDEEM AND START HAVING FUN!
           </Typography>
@@ -75,7 +75,7 @@ const CouponPage = () => {
             Redeem
           </Button>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center sm:p-8">
           <Image
             src="/images/coupon.svg"
             alt="coupon"

@@ -47,8 +47,8 @@ const ReferralProgramPage = () => {
 
   return (
     <div className="relative z-10 w-[calc(100%)] px-[10%]">
-      <div className="flex">
-        <div className="h-fit w-[630px] rounded-3xl border border-solid border-neutral-700 bg-neutral-800 p-2">
+      <div className="sm:grid md:flex lg:flex">
+        <div className="h-fit max-w-[630px] rounded-3xl border border-solid border-neutral-700 bg-neutral-800 p-2">
           <div className="my-[30px] mr-8 ml-2 grid grid-cols-3">
             <div className="uppercase text-neutral-300">
               <div className="flex">
@@ -98,14 +98,14 @@ const ReferralProgramPage = () => {
           </CardContent>
         )}
       </div>
-      <div className="mt-8 grid w-[630px] grid-cols-3 gap-4">
+      <div className="mt-8 grid max-w-[630px] grid-cols-3 gap-4">
         {getReferralsData && (
           <CardContent
             className="col-span-2"
             title="Your earnings"
             icon={<IReferrals stroke="#E1E2E2" />}
           >
-            <div className="flex gap-2 uppercase">
+            <div className="gap-2 uppercase sm:grid md:flex lg:flex">
               <BoxContent
                 textColor="text-secondary-main"
                 title="total friends"
@@ -120,12 +120,12 @@ const ReferralProgramPage = () => {
           </CardContent>
         )}
 
-        <div className="flex justify-center self-center">
+        <div className="visible collapse flex justify-center self-center sm:collapse md:visible lg:visible">
           <RadarAnimateIcon />
         </div>
       </div>
       <CardContent
-        className="mt-8 w-[630px]"
+        className="mt-8 max-w-[630px]"
         title="friends Activities"
         icon={<FriendsActivitiesIcon />}
       >

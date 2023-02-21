@@ -91,7 +91,7 @@ const useGlobal = (
 
       default:
         onSetGameData(_gameData as IGame)
-        await router.push(`/${_gameUrl}`)
+        await router.push(`/${_type}-games/${_gameUrl}`)
         break
     }
     // NOTE: No need this code
@@ -156,6 +156,8 @@ const useGlobal = (
       default:
         return "179999996000000000000000008"
     }
+    // NOTE: No need this code
+    // await router.push(`/${_gameUrl}`)
   }
 
   return {

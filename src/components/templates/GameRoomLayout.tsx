@@ -1,9 +1,7 @@
 import ShineIcon from "@components/icons/ShineIcon"
-import Banner from "@components/molecules/Banner"
 import LikeNoLobby from "@components/molecules/LikeNoLobby"
 import StatisticGameDetail from "@components/molecules/statistic/StatisticGameDetail"
 import Tagline from "@components/molecules/tagline/Tagline"
-import { GAME_DETAILS_BANNER } from "@constants/gameBanner"
 import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import React, { useEffect, useState } from "react"
 import useTopPlayerByGameId from "@feature/ranking/containers/hook/useTopPlayerByGameId"
@@ -14,6 +12,7 @@ import useGameStore from "@stores/game"
 import { unstable_batchedUpdates } from "react-dom"
 import Howto from "@components/molecules/HowToPlay"
 import { IGame } from "@feature/game/interfaces/IGameService"
+import Banners from "@components/molecules/Banners"
 // import { useRouter } from "next/router"
 // import { baseUrl } from "@constants/sites"
 
@@ -62,7 +61,7 @@ const GameRoomLayout = ({
   return (
     <div className="main-container mx-auto">
       <Header />
-      <Banner data={GAME_DETAILS_BANNER} />
+      <Banners />
       {gameData && <Howto data={gameData} />}
       {children}
       <Tagline

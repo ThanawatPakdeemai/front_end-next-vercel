@@ -1,15 +1,14 @@
 import ShapeIcon from "@components/icons/ShapeIcon"
-import Banner from "@components/molecules/Banner"
 import Tagline from "@components/molecules/tagline/Tagline"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
 import { MENU_BLOG } from "@configs/menu"
-import { GAME_BLOG_BANNER } from "@constants/gameBanner"
 import { MenuList, Typography } from "@mui/material"
 import React from "react"
 import HeadBlog from "@components/molecules/HeadBlog"
 import BlogIcon from "@components/icons/BlogIcon/BlogIcon"
 import MenuItemCustom from "@components/atoms/MenuItemCustom"
+import Banners from "@components/molecules/Banners"
 
 const BlogLayout = ({
   children
@@ -22,7 +21,7 @@ const BlogLayout = ({
       text="This Christmas, you’re the best gift I could ask for."
       icon={<ShapeIcon fill="#4E5057" />}
     />
-    <Banner data={GAME_BLOG_BANNER} />
+    <Banners />
     <div className="flex flex-row gap-3">
       <MenuList className="h-fit w-[200px] rounded-[13px] bg-neutral-800 p-[6px]">
         <div>

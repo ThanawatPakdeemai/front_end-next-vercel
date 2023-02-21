@@ -4,14 +4,20 @@ import {
 } from "@feature/contract/containers/hooks/useContract"
 import { ethers } from "ethers"
 import { BigNumberish } from "@ethersproject/bignumber"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useWeb3Provider } from "@providers/index"
 import CONFIGS from "@configs/index"
 import Helper from "@utils/helper"
+import { ICurrentNakaData } from "@feature/inventory/interfaces/IInventoryService"
+import useLoadingStore from "@stores/loading"
 
 const useContractMultichain = () => {
   const { signer, address: account } = useWeb3Provider()
+  const { setOpen, setClose } = useLoadingStore()
+
   const [isLoading, setIsLoading] = useState(false)
+  const [nakaCurrentPrice, setNakaCurrentPrice] = useState<ICurrentNakaData>()
+
   const p2pBinanceContract = useP2PBinance(
     signer,
     CONFIGS.CONTRACT_ADDRESS.P2P_BINANCE
@@ -64,33 +70,51 @@ const useContractMultichain = () => {
         })
     })
 
+  // const getTransantionFromHash = async (provider: ethers.Contract, res) => {
+  //   const logs = await provider.getLogs({
+  //     address: res.to,
+  //     topics: res.data
+  //   })
+  //   console.log(logs)
+  // }
+
   const createOrderSellNaka = (busdPrice: number, busdAmount: number) =>
     new Promise((resolve) => {
       setIsLoading(true)
-      const busdPriceWei = Helper.toWei(busdPrice.toString())
-      const busdAmountWei = Helper.toWei(busdAmount.toString())
+      setOpen("Transection Processing Order")
+      const nakaPriceWei = Helper.toWei(busdPrice.toString())
+      const nakaAmountWei = Helper.toWei(busdAmount.toString())
       p2pPolygonContract
-        .createOrderSellNaka(busdPriceWei, busdAmountWei)
+        .createOrderSellNaka(nakaPriceWei, nakaAmountWei)
+        .getLogs()
+
         .then((_response) => {
           setIsLoading(false)
+
           resolve({
             status: true,
             data: _response
           })
+
+          setClose()
+          // console.log(">>")
+          // getTransantionFromHash(p2pPolygonContract, _response)
+          // console.log(">><<<")
         })
         .catch((_error) => {
           setIsLoading(false)
           resolve({ status: false, data: 0 })
+          setClose()
         })
     })
 
   const createOrderBuyNaka = (nakaPrice: number, nakaAmount: number) =>
     new Promise((resolve) => {
       setIsLoading(true)
-      const nakaPriceWei = Helper.toWei(nakaPrice.toString())
-      const nakaAmountWei = Helper.toWei(nakaAmount.toString())
+      const busdPriceWei = Helper.toWei(nakaPrice.toString())
+      const busdAmountWei = Helper.toWei(nakaAmount.toString())
       p2pBinanceContract
-        .createOrderBuyNaka(nakaPriceWei, nakaAmountWei)
+        .createOrderBuyNaka(busdPriceWei, busdAmountWei)
         .then((_response) => {
           setIsLoading(false)
           resolve({
@@ -151,6 +175,19 @@ const useContractMultichain = () => {
             })
     })
 
+  const priceCurrentNaka = () => {
+    Helper.getPriceNakaCurrent().then((_response) => {
+      setNakaCurrentPrice(_response)
+    })
+  }
+
+  useEffect(() => {
+    priceCurrentNaka()
+    return () => {
+      setNakaCurrentPrice(undefined)
+    }
+  }, [])
+
   return {
     allowBinance,
     checkAllowNaka,
@@ -160,7 +197,8 @@ const useContractMultichain = () => {
     isLoading,
     getFee,
     p2pPolygonContract,
-    p2pBinanceContract
+    p2pBinanceContract,
+    nakaCurrentPrice
   }
 }
 

@@ -1,11 +1,13 @@
 import { createP2PDexOrder } from "@feature/multichain/containers/services/multichain.service"
 import { useToast } from "@feature/toast/containers"
+import useLoadingStore from "@stores/loading"
 
 import { useMutation } from "@tanstack/react-query"
 
 const useP2PDexCreateOrder = () => {
-  const { errorToast } = useToast()
-
+  const { errorToast, successToast } = useToast()
+  const { setClose, setOpen } = useLoadingStore()
+  setOpen("Processing Save data...")
   const {
     data: _profile,
     error,
@@ -16,11 +18,12 @@ const useP2PDexCreateOrder = () => {
     mutationKey: ["createP2PDexOrder"],
     retry: false,
     onSuccess: (_response) => {
-      // console.log("onSuccess", _response)
+      successToast(_response.message)
+      setClose()
     },
     onError: (_response) => {
-      // console.log("error_response", _response)
-      errorToast("erroe")
+      errorToast("error")
+      setClose()
     }
   })
 

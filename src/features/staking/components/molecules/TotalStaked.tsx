@@ -1,6 +1,6 @@
 import { Box, LinearProgress, Skeleton, Typography } from "@mui/material"
 import { TStaking } from "@src/types/staking"
-import { numberWithCommas } from "@utils/helpers"
+import Helper from "@utils/helper"
 import React from "react"
 
 interface ITotalStaked {
@@ -16,6 +16,7 @@ const TotalStaked = ({
   className,
   type
 }: ITotalStaked) => {
+  const { formatNumber } = Helper
   /**
    * @description Calculate total naka staked
    */
@@ -91,11 +92,11 @@ const TotalStaked = ({
         {totalPoolStake !== -1 && poolLimit !== -1 ? (
           <>
             <span className="text-neutral-300">
-              {numberWithCommas(totalPoolStake)}
+              {formatNumber(totalPoolStake, { maximumFractionDigits: 4 })}
             </span>
             &nbsp;/&nbsp;
             <span className="text-neutral-300">
-              {numberWithCommas(poolLimit)}
+              {formatNumber(poolLimit, { maximumFractionDigits: 4 })}
             </span>
           </>
         ) : (

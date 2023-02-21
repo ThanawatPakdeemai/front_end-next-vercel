@@ -16,6 +16,7 @@ const useContractMultichain = () => {
   const { setOpen, setClose } = useLoadingStore()
 
   const [isLoading, setIsLoading] = useState(false)
+  // eslint-disable-next-line no-unused-vars
   const [nakaCurrentPrice, setNakaCurrentPrice] = useState<ICurrentNakaData>()
 
   const p2pBinanceContract = useP2PBinance(

@@ -1,7 +1,6 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import GamePageLayout from "@components/templates/GamePageLayout"
-import { GAME_DEVELOPER_BANNER } from "@constants/gameBanner"
 import useGlobal from "@hooks/useGlobal"
 import SkeletonPublisherCard from "@components/atoms/skeleton/SkeletonPublisherCard"
 import { v4 as uuid } from "uuid"
@@ -76,7 +75,7 @@ export default function PublisherDetails() {
 }
 
 PublisherDetails.getLayout = function getLayout(page: ReactElement) {
-  return <GamePageLayout banner={GAME_DEVELOPER_BANNER}>{page}</GamePageLayout>
+  return <GamePageLayout>{page}</GamePageLayout>
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {

@@ -1,4 +1,4 @@
-import create from "zustand"
+import { create } from "zustand"
 import { devtools } from "zustand/middleware"
 import configZustandDevTools from "@utils/configDevtools"
 import { IQuestData } from "@feature/quest/interfaces/IQuestService"

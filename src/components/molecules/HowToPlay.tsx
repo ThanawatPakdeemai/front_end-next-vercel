@@ -46,13 +46,16 @@ const Howto = ({ data }: IProp) => {
   const getData = async () => {
     if (profile && data) {
       await getFavoriteGameByUser(
-        profile.id,
         10000,
         1,
         "",
         "",
         "",
-        data.name
+        "",
+        "",
+        "",
+        false,
+        ""
       ).then((res) => {
         const { status } = res
         if (status) {

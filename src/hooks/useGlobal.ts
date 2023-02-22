@@ -2,7 +2,7 @@ import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import {
   IFilterGamesByKey,
   IGame,
@@ -10,6 +10,13 @@ import {
 } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import CONFIGS from "@configs/index"
+import useContractVaultBinance, {
+  ITokenContract
+} from "@feature/contract/containers/hooks/useContractVaultBinance"
+
+import { Contract, ethers } from "ethers"
+import BEP20Abi from "@configs/abi/BEP20.json"
+import useChainSupport from "@stores/chainSupport"
 
 const useGlobal = (
   _limit?: number,
@@ -40,8 +47,12 @@ const useGlobal = (
 
   // hook
   const { onSetGameData, onSetGamePartnersData } = useGameStore()
-  const profile = useProfileStore((state) => state.profile.data)
+  const { getAllTokenAddressInContract, getBNBContract } =
+    useContractVaultBinance()
+  const { getAllTokenInfoByContractAddress } = useContractVaultBinance()
+  const { setChainSupport, setContractBNB } = useChainSupport()
 
+  const profile = useProfileStore((state) => state.profile.data)
   // States
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
   const [hydrated, setHydrated] = useState(false)
@@ -158,6 +169,70 @@ const useGlobal = (
     }
   }
 
+  /**
+   * @description Get all token supported
+   */
+  const fetchAllTokenSupported = useCallback(async () => {
+    const allContract: Contract[] = []
+    const allTokenSupported: ITokenContract[] = []
+    const tokens = await getAllTokenAddressInContract()
+    for (let index = 0; index < tokens.length; index += 1) {
+      const { ethereum }: any = window
+      const _web3 = new ethers.providers.Web3Provider(ethereum)
+      const contract = new ethers.Contract(tokens[index], BEP20Abi.abi, _web3)
+      allContract.push(contract)
+      // if (tokens[index] !== CONFIGS.CONTRACT_ADDRESS.BNB_CONTRACT) {
+      //   const contract = new ethers.Contract(tokens[index], BEP20Abi.abi, _web3)
+      //   allContract.push(contract)
+      // }
+    }
+    await Promise.all(
+      allContract.map(async (contract) => {
+        const result = await getAllTokenInfoByContractAddress(
+          contract,
+          contract.address,
+          profile ? profile.address : ""
+        )
+        allTokenSupported.push(result)
+      })
+    )
+    const allTokenSupportedSorted = allTokenSupported.sort((a, b) => {
+      if (a.symbol < b.symbol) {
+        return -1
+      }
+      if (a.symbol > b.symbol) {
+        return 1
+      }
+      return 0
+    })
+    setChainSupport(allTokenSupportedSorted)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  /**
+   * @description Fetch all token supported
+   */
+  useMemo(() => {
+    fetchAllTokenSupported()
+  }, [fetchAllTokenSupported])
+
+  /**
+   * @description Fetch BNB token address from Smart Contract
+   */
+  const fetchContractBNB = useCallback(async () => {
+    const result = await getBNBContract()
+    if (result) {
+      setContractBNB(result)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getBNBContract])
+  /**
+   * @description Fetch BNB token address
+   */
+  useMemo(() => {
+    fetchContractBNB()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return {
     onHandleClick,
     limit,
@@ -171,7 +246,8 @@ const useGlobal = (
     pager,
     getNetwork,
     getTokenAddress,
-    getTokenSupply
+    getTokenSupply,
+    fetchAllTokenSupported
   }
 }
 

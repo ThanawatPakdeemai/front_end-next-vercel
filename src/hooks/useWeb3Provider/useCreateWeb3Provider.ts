@@ -1,23 +1,29 @@
 import { useCallback, useEffect, useState } from "react"
-import { Web3Provider } from "@ethersproject/providers"
+import {
+  FeeData,
+  JsonRpcSigner,
+  Network,
+  Web3Provider
+} from "@ethersproject/providers"
 import CONFIGS from "@configs/index"
 import { WALLET_CONNECTOR_TYPES } from "@configs/walletConnect"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
-import { BigNumber, providers } from "ethers"
+import { BigNumber, providers, utils } from "ethers"
 import { ELocalKey } from "@interfaces/ILocal"
 import useGlobal from "@hooks/useGlobal"
 
 const useCreateWeb3Provider = () => {
-  const [signer, setSigner] = useState<any>(undefined)
+  const [signer, setSigner] = useState<JsonRpcSigner | undefined>(undefined)
   const [address, setAddress] = useState<string | undefined>(undefined)
   const [provider, setProvider] = useState<Web3Provider | undefined>(undefined)
   const [chainId, setChainId] = useState<string | undefined>(undefined)
   const [accounts, setAccounts] = useState<string[] | undefined>(undefined)
   const [hasMetamask, setHasMetamask] = useState<boolean>(false)
-  const [currentGasPrice, setCurrentGasPrice] = useState<BigNumber>(
-    BigNumber.from(0)
-  )
+  const [network, setNetwork] = useState<Network>({} as Network)
+  const [balanceETH, setBalance] = useState<BigNumber>(BigNumber.from(0))
+  const [bestGasPrice, setBestGasPrice] = useState<string>("")
+  const [feeData, setFeeData] = useState<FeeData>({} as FeeData)
 
   const [hasChangeAccountMetamask, setHasChangeAccountMetamask] =
     useState(false)
@@ -207,10 +213,16 @@ const useCreateWeb3Provider = () => {
       const _provider = new providers.Web3Provider(window.ethereum)
       if (_provider) {
         const _signer = _provider.getSigner()
-        const _currentGasPrice = await _provider.getGasPrice()
+        const _gasPrice = await _provider.getGasPrice()
+        const _network = await _provider.getNetwork()
+        const _balance = await _provider.getBalance(account[0])
+        const _feeData = await _provider.getFeeData()
+        const _gasPriceInGwei = utils.formatUnits(_gasPrice, "gwei")
         setSigner(_signer)
-        setProvider(_provider)
-        setCurrentGasPrice(_currentGasPrice)
+        setBestGasPrice(_gasPriceInGwei)
+        setNetwork(_network)
+        setBalance(_balance)
+        setFeeData(_feeData)
       }
       setAccounts(account)
       onSetAddress(account[0])
@@ -293,7 +305,10 @@ const useCreateWeb3Provider = () => {
     signer,
     handleDisconnectWallet,
     hasMetamask,
-    currentGasPrice
+    bestGasPrice,
+    network,
+    balanceETH,
+    feeData
   }
 }
 

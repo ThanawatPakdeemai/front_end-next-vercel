@@ -2,8 +2,7 @@ import RightMenuWallet from "@components/molecules/rightMenu/RightMenuWallet"
 import Gas from "@components/molecules/Gas"
 import INaka from "@components/icons/Naka"
 import IBusd from "@components/icons/Busd"
-import ISubtract from "@components/icons/Subtract"
-import React from "react"
+import React, { useEffect } from "react"
 import MetamaskWallet from "@components/molecules/balance/MetamaskWallet"
 import useProfileStore from "@stores/profileStore"
 import { useWeb3Provider } from "@providers/index"
@@ -16,9 +15,14 @@ import useAllBalances, { IBalanceDisplay } from "@hooks/useAllBalances"
 import WalletFooter from "@feature/wallet/components/molecules/WalletFooter"
 import WalletLightAnimation from "@feature/wallet/components/molecules/WalletLightAnimation"
 import CONFIGS from "@configs/index"
+import { useRouter } from "next/router"
+import useChainSupport from "@stores/chainSupport"
+import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
+import SwitchChain from "@components/atoms/SwitchChain"
+// import SwitchChain from "@components/atoms/SwitchChain"
 
 export default function WalletPage() {
-  const { hydrated } = useGlobal()
+  const { hydrated, getNetwork } = useGlobal()
   const {
     type,
     value,
@@ -28,39 +32,23 @@ export default function WalletPage() {
     setDisabled,
     setType,
     setValue,
-    getNetwork,
     handleOpen,
     handleClose,
     onSubmit,
     onClickMaxValue,
-    handleConnectWallet
+    handleConnectWallet,
+    currentChainSelected
   } = useWalletContoller()
-  const { address, handleDisconnectWallet, chainId } = useWeb3Provider()
+  const router = useRouter()
+  const { token } = router.query
+  const { address, chainId, handleDisconnectWallet } = useWeb3Provider()
   const { walletBalance, busdVaultBalance, nakaVaultBalance } = useAllBalances()
   const { profile } = useProfileStore()
+  const { chainSupport } = useChainSupport()
 
-  /**
-   * @description get token symbol
-   */
-  const getTokenSymbol = () =>
-    type === "NAKA" ? (
-      <ISubtract
-        width="40"
-        height="40"
-      />
-    ) : (
-      <IBusd
-        width="35"
-        height="40"
-        className="mr-2"
-      />
-    )
-
-  /**
-   * @description get token name
-   * @returns {string}
-   */
-  const getTokenName = (): string => (type === "NAKA" ? "NAKA" : "BUSD")
+  const handleSwitchNetwork = async (_chainId: string) => {
+    // handleDisconnectWallet?.()
+  }
 
   /**
    * @description get token balance
@@ -73,10 +61,111 @@ export default function WalletPage() {
    * @description get token contract
    * @returns {string}
    */
-  const getContractAddress = (): string =>
-    type === "NAKA"
-      ? CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
-      : CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
+  // const getContractSpender = (): string =>
+  //   type === "NAKA"
+  //     ? CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
+  //     : CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
+
+  /**
+   * @description check disabled button
+   * @returns {boolean}
+   */
+  const isDisabledButton = (): boolean => {
+    if (value === 0) return true
+    if (value <= walletBalance.digit) return false
+    return true
+  }
+
+  const renderWallets = () => {
+    if (getVaultBalance().digit === 0) {
+      return (
+        <div className="col-span-5 m-2 flex flex-col items-center justify-center">
+          <SwitchChain
+            chainName={type === "NAKA" ? "Polygon" : "Binance Smart Chain"}
+            handleClick={
+              type === "NAKA"
+                ? () =>
+                    handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX as string)
+                : () =>
+                    handleSwitchNetwork(
+                      CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string
+                    )
+            }
+            variant="full"
+          />
+        </div>
+      )
+    }
+
+    if (!chainSupport || chainSupport.length === 0) {
+      return <></>
+    }
+
+    return chainSupport.map((chain) => (
+      <div
+        key={chain.address}
+        className="col-span-5 m-2"
+      >
+        <WalletHeader tokenName={chain.symbol} />
+        <WalletBody
+          tokenSymbol={chain.symbol}
+          className={type === "NAKA" ? " text-NAKA " : "text-BUSD"}
+          balance={chain.balanceVault}
+        />
+        <div className="mb-4 flex w-full justify-end">
+          <RightMenuWallet
+            title="withdraw"
+            titleHeader="Withdraw to metamask"
+            open={openWithDraw}
+            value={value}
+            setValue={setValue}
+            handleOpen={() => handleOpen("withdraw", chain)}
+            handleClose={() => handleClose("withdraw")}
+            onSubmit={() => onSubmit("withdraw")}
+            onClickMaxValue={onClickMaxValue}
+            disabled={disabled}
+            setDisabled={setDisabled}
+            currentChainSelected={currentChainSelected as ITokenContract}
+          />
+          <RightMenuWallet
+            title="Deposit"
+            titleHeader="diposit from metamask"
+            open={openDeposit}
+            value={value}
+            setValue={setValue}
+            setDisabled={setDisabled}
+            handleOpen={() => handleOpen("deposit", chain)}
+            handleClose={() => handleClose("deposit")}
+            onSubmit={() => onSubmit("deposit")}
+            onClickMaxValue={onClickMaxValue}
+            disabled={disabled}
+            currentChainSelected={currentChainSelected as ITokenContract}
+          />
+        </div>
+        <WalletFooter address={chain.address} />
+      </div>
+    ))
+  }
+
+  /**
+   * @description set disabled button
+   */
+  useEffect(() => {
+    setDisabled(isDisabledButton())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, type])
+
+  /**
+   * @description Set type tab by router.query
+   */
+  useEffect(() => {
+    if (token === "NAKA") {
+      setType("NAKA")
+    } else if (token === "BNB") {
+      setType("BNB")
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token])
 
   return hydrated ? (
     <>
@@ -107,11 +196,11 @@ export default function WalletPage() {
             <button
               type="button"
               className={`ml-2 flex h-[50px] w-[130px] items-center rounded-sm ${
-                type === "BUSD"
+                type === "BNB"
                   ? "bg-black-100 text-white-default"
                   : "bg-neutral-800 text-neutral-500"
               } p-4`}
-              onClick={() => setType("BUSD")}
+              onClick={() => setType("BNB")}
             >
               <div className=" pr-2">
                 <IBusd />
@@ -122,70 +211,24 @@ export default function WalletPage() {
         </div>
         <div className="col-span-6 h-full w-full items-center justify-center gap-1 rounded-default bg-neutral-800">
           <div className="relative mx-2 grid w-full grid-cols-7 gap-1">
-            <div className="col-span-5 m-2">
-              <WalletHeader tokenName={getTokenName()} />
-              <WalletBody
-                tokenName={getTokenName()}
-                tokenSymbol={getTokenSymbol()}
-                className={type === "NAKA" ? " text-NAKA " : "text-BUSD"}
-                balance={getVaultBalance()}
-              />
-              <div className="mb-4 flex w-full justify-end">
-                <RightMenuWallet
-                  title="withdraw"
-                  titleHeader="Withdraw to metamask"
-                  subtTitle={`your ${getTokenName()} storage`}
-                  open={openWithDraw}
-                  value={value}
-                  balance={getVaultBalance()}
-                  tokenName={getTokenName()}
-                  setValue={setValue}
-                  handleOpen={() => handleOpen("withdraw")}
-                  handleClose={() => handleClose("withdraw")}
-                  onSubmit={() => onSubmit("withdraw", getContractAddress())}
-                  onClickMaxValue={onClickMaxValue}
-                  disabled={disabled || value === 0}
-                  setDisabled={setDisabled}
-                />
-                <RightMenuWallet
-                  title="Deposit"
-                  titleHeader="diposit from metamask"
-                  subtTitle={`your ${
-                    getNetwork(chainId as string).nativeCurrency.name
-                  } in matamask`}
-                  open={openDeposit}
-                  value={value}
-                  balance={walletBalance}
-                  tokenName={getTokenName()}
-                  setValue={setValue}
-                  setDisabled={setDisabled}
-                  handleOpen={() => handleOpen("deposit")}
-                  handleClose={() => handleClose("deposit")}
-                  onSubmit={() => onSubmit("deposit", getContractAddress())}
-                  onClickMaxValue={onClickMaxValue}
-                  disabled={disabled || value === 0}
-                />
-              </div>
-              <WalletFooter address={address as string} />
-            </div>
-
+            {renderWallets()}
             <WalletLightAnimation />
           </div>
         </div>
         <div className="col-span-2 h-full w-full items-center justify-center gap-1 rounded-default bg-neutral-800">
           <Gas />
         </div>
-        <div className="col-span-4 h-full w-full items-center justify-center gap-1">
+        <div className="col-span-4 h-full max-h-[400px] w-full items-center justify-center gap-1">
           <MetamaskWallet
             isConnected={!!address}
             handleConnectWallet={handleConnectWallet}
             handleOnDisconnectWallet={handleDisconnectWallet}
             address={address}
             balance={walletBalance} // nakaBalance
-            tokenName={getNetwork(chainId as string).nativeCurrency.name}
-            chainName={getNetwork(chainId as string).chainName}
+            tokenName={getNetwork?.(chainId as string).nativeCurrency.name}
+            chainName={getNetwork?.(chainId as string).chainName}
             blockExplorerURL={
-              getNetwork(chainId as string).blockExplorerUrls[0]
+              getNetwork?.(chainId as string).blockExplorerUrls[0]
             }
           />
         </div>

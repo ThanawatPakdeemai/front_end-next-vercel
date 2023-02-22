@@ -1,6 +1,6 @@
+import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
-import { ICURRENCY } from "@interfaces/ICurrency"
 
 export interface IDetailUsedItems {
   name: string
@@ -77,4 +77,4 @@ export interface IDropdownAll
     IGameItem,
     IDevice,
     IGameItemListData,
-    ICURRENCY {}
+    ITokenContract {}

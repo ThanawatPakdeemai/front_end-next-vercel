@@ -40,10 +40,12 @@ const Balance = ({ className, sx }: IProps) => {
               <AmountBalance
                 balance={nakaVaultBalance.text}
                 icon={<INaka />}
+                link="NAKA"
               />
               <AmountBalance
                 balance={busdVaultBalance.text}
                 icon={<IBusd width={21} />}
+                link="BNB"
               />
             </Card>
           </CardContent>

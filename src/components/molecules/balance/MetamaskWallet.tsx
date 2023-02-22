@@ -16,9 +16,9 @@ interface IProp {
   handleConnectWallet?: () => void
   handleOnDisconnectWallet?: () => void
   balance: IBalanceDisplay
-  tokenName: string
-  chainName: string
-  blockExplorerURL: string
+  tokenName: string | undefined
+  chainName: string | undefined
+  blockExplorerURL: string | undefined
 }
 
 const MetamaskWallet = ({

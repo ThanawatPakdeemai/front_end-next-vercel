@@ -6,7 +6,6 @@ import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined"
 import useGameStore from "@stores/game"
-import { CURRENCY } from "@configs/currency"
 import { Image } from "@components/atoms/image"
 import { Controller, useForm } from "react-hook-form"
 import useProfileStore from "@stores/profileStore"
@@ -20,6 +19,13 @@ import Helper from "@utils/helper"
 import useGetBalanceVault from "@feature/inventory/containers/hooks/useGetBalanceVault"
 import useWalletStore from "@stores/wallet"
 import useLoadingStore from "@stores/loading"
+import useChainSupport from "@stores/chainSupport"
+
+import CONFIGS from "@configs/index"
+import { DEFAULT_CURRENCY_BNB, DEFAULT_CURRENCY_NAKA } from "@configs/currency"
+import { BaseToastComponent } from "@feature/toast/components"
+import useAllBalances from "@hooks/useAllBalances"
+import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import useBuyGameItems from "../containers/hooks/useBuyGameItems"
 
 const iconmotion = {
@@ -36,9 +42,19 @@ const iconmotion = {
 }
 interface IProp {
   handleClose?: () => void
+  chainId: string
 }
 
-const FromBuyItem = ({ handleClose }: IProp) => {
+interface IFormData {
+  player_id: string
+  item_id: string
+  qty: number
+  currency: ITokenContract
+  nakaPerItem: number
+  item: IGameItemListData
+}
+
+const FromBuyItem = ({ handleClose, chainId }: IProp) => {
   const { t } = useTranslation()
   const game = useGameStore((state) => state.data)
   const profile = useProfileStore((state) => state.profile.data)
@@ -47,6 +63,7 @@ const FromBuyItem = ({ handleClose }: IProp) => {
     _playerId: profile ? profile.id : "",
     _gameId: game ? game._id : ""
   })
+
   const {
     handleSubmit,
     watch,
@@ -58,7 +75,6 @@ const FromBuyItem = ({ handleClose }: IProp) => {
     defaultValues: {
       player_id: profile ? profile?.id : "",
       item_id: "",
-      currency_id: "",
       qty: 1,
       item: {},
       currency: {},
@@ -66,34 +82,64 @@ const FromBuyItem = ({ handleClose }: IProp) => {
     }
   })
 
-  const { mutateBuyItems, isLoading } = useBuyGameItems()
+  const { mutateBuyItems, isLoading, mutateBuyItemsBSC } = useBuyGameItems()
   const { balanceVaultNaka } = useGetBalanceVault(
     profile?.address ?? "",
     !!profile
   )
+  const { busdVaultBalance } = useAllBalances()
   const { setVaultBalance } = useWalletStore()
+  const { chainSupport } = useChainSupport()
   const { setOpen, setClose } = useLoadingStore()
 
-  const onSubmit = (_data) => {
+  const onSubmit = (_data: IFormData | any) => {
     setOpen("Blockchain transaction in progress...")
-    mutateBuyItems({
-      _player_id: _data.player_id,
-      _item_id: _data.item_id,
-      _qty: Number(_data.qty)
-    })
-      .then((res) => {
-        if (res && balanceVaultNaka && balanceVaultNaka.data) {
-          refetch()
-          setVaultBalance(Number(balanceVaultNaka.data))
-          successToast("Buy Items Success")
-          setClose()
-          if (handleClose) handleClose()
-        }
-      })
-      .catch((error) => {
-        errorToast(error.message)
-        setClose()
-      })
+    switch (chainId) {
+      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
+        mutateBuyItemsBSC({
+          _player_id: _data.player_id,
+          _item_id: _data.item_id,
+          _qty: Number(_data.qty),
+          _tokenAddress: _data.currency.address,
+          _symbol: _data.currency.symbol
+        })
+          .then((res) => {
+            // TODO: check balance vault dynamic
+            if (res && busdVaultBalance && busdVaultBalance.digit) {
+              refetch()
+              // setVaultBalance(Number(busdVaultBalance))
+              successToast("Buy Items Success")
+              setClose()
+              if (handleClose) handleClose()
+            }
+          })
+          .catch((error) => {
+            errorToast(error.message)
+            setClose()
+          })
+        break
+
+      default:
+        mutateBuyItems({
+          _player_id: _data.player_id,
+          _item_id: _data.item_id,
+          _qty: Number(_data.qty)
+        })
+          .then((res) => {
+            if (res && balanceVaultNaka && balanceVaultNaka.data) {
+              refetch()
+              setVaultBalance(Number(balanceVaultNaka.data))
+              successToast("Buy Items Success")
+              setClose()
+              if (handleClose) handleClose()
+            }
+          })
+          .catch((error) => {
+            errorToast(error.message)
+            setClose()
+          })
+        break
+    }
   }
 
   const onError = () => {
@@ -121,6 +167,22 @@ const FromBuyItem = ({ handleClose }: IProp) => {
   const onQtyDown = () => {
     setValue("qty", watch("qty") <= 1 ? 1 : Number(watch("qty")) - 1)
     updatePricePerItem()
+  }
+
+  const MessageAlert = (): string => {
+    if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+      return "You can switch your Metamask to Polygon network \n  to using your NAKA token to buy items"
+    }
+    return "You can switch your Metamask to BSC network \n to using another token to buy items"
+  }
+
+  const getDefaultCoin = () => {
+    switch (chainId) {
+      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
+        return DEFAULT_CURRENCY_BNB
+      default:
+        return DEFAULT_CURRENCY_NAKA
+    }
   }
 
   return (
@@ -174,22 +236,25 @@ const FromBuyItem = ({ handleClose }: IProp) => {
           <Box className="my-4 w-full pr-4">
             <p className="py-2 uppercase text-black-default">Currency</p>
             <Controller
-              name="currency_id"
+              name="currency"
               control={control}
-              // rules={{ required: true }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <DropdownListCurrency
                   {...field}
-                  list={CURRENCY}
+                  list={
+                    chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB
+                      ? chainSupport
+                      : getDefaultCoin()
+                  }
                   className="w-[410px]"
                   onChangeSelect={(_item) => {
-                    setValue("currency", _item)
-                    setValue("currency_id", _item.id)
+                    setValue("currency", _item as ITokenContract)
                   }}
                 />
               )}
             />
-            {"currency_id" in errors && (
+            {"currency" in errors && (
               <p className="text-sm text-error-main">{t("required")}</p>
             )}
           </Box>
@@ -311,6 +376,28 @@ const FromBuyItem = ({ handleClose }: IProp) => {
               />
             </div>
           </ButtonGroup>
+
+          <Box
+            sx={{
+              ".MuiTypography-root": {
+                fontSize: "90%"
+              },
+              ".MuiAlert-action": {
+                display: "none"
+              },
+              ".switch-chain--subtitle": {
+                fontSize: "80%"
+              }
+            }}
+          >
+            <BaseToastComponent
+              text={MessageAlert()}
+              status="info"
+              onClose={() => {}}
+              className="mt-10 w-full"
+            />
+            {/* <SwitchChain variant={"simple"} /> */}
+          </Box>
         </form>
       )}
     </>

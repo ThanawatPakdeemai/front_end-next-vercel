@@ -1,15 +1,18 @@
 import React, { memo, useState } from "react"
 import { Box, Stack } from "@mui/material"
-import { ModalCustom } from "../../../../components/molecules/Modal/ModalCustom"
-import ButtonBuyItem from "../../atoms/ButtonBuyItem"
-import FromBuyItem from "../../../buyItem/components/FromBuyItem"
-import ModalHeader from "../../../../components/molecules/Modal/ModalHeader"
+import { useCreateWeb3Provider } from "@hooks/useWeb3Provider"
+import ButtonBuyItem from "@feature/gameItem/atoms/ButtonBuyItem"
+import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
+import ModalHeader from "@components/molecules/Modal/ModalHeader"
+import FromBuyItem from "@feature/buyItem/components/FromBuyItem"
 
 const RightMenuBuyItem = () => {
   const [open, setOpen] = useState<boolean>(false)
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+
+  const { chainId } = useCreateWeb3Provider()
 
   return (
     <>
@@ -33,7 +36,10 @@ const RightMenuBuyItem = () => {
             />
           </div>
           <Box className="hide-scroll h-[480px] w-full overflow-y-scroll ">
-            <FromBuyItem handleClose={handleClose} />
+            <FromBuyItem
+              handleClose={handleClose}
+              chainId={chainId as string}
+            />
           </Box>
         </Stack>
       </ModalCustom>

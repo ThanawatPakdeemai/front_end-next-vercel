@@ -30,7 +30,10 @@ export const getContract = (
 
 export const getBalanceVaultContract = (
   address: string,
-  web3?: Web3Provider | ethers.providers.JsonRpcProvider
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
 ) => getContract(BalanceVaultAbi.abi, address, web3)
 
 export const getBalanceVaultBinanceContract = (
@@ -48,55 +51,88 @@ export const getBEP20Contract = (
 
 export const getERC20Contract = (
   address: string,
-  web3?: Web3Provider | ethers.providers.JsonRpcProvider
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
 ) => getContract(ERC20Abi, address, web3)
 
 export const getFlexibleStakingContract = (
   address: string,
-  web3?: Web3Provider | ethers.providers.JsonRpcProvider
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
 ) => getContract(FlexibleStakingAbi.abi, address, web3)
 
 export const getInventoryVaultContract = (
   address: string,
-  web3?: Web3Provider | ethers.providers.JsonRpcProvider
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
 ) => getContract(InventoryVaultAbi.abi, address, web3)
 
 export const getItemVaultContract = (
   address: string,
-  web3?: Web3Provider | ethers.providers.JsonRpcProvider
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
 ) => getContract(ItemVaultAbi.abi, address, web3)
 
 export const getP2PBinanceContract = (
   address: string,
-  web3?: Web3Provider | ethers.providers.JsonRpcProvider
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
 ) => getContract(P2PBinanceAbi.abi, address, web3)
 
 export const getP2PBinanceMumbaiContract = (
   address: string,
-  web3?: Web3Provider | ethers.providers.JsonRpcProvider
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
 ) => getContract(P2PBinanceMumbaiAbi.abi, address, web3)
 
 export const getP2PPolygonContract = (
   address: string,
-  web3?: Web3Provider | ethers.providers.JsonRpcProvider
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
 ) => getContract(P2PPolygonAbi.abi, address, web3)
 
 export const getP2PPolygonMumbaiContract = (
   address: string,
-  web3?: Web3Provider | ethers.providers.JsonRpcProvider
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
 ) => getContract(P2PPolygonMumbaiAbi.abi, address, web3)
 
 export const getShopContract = (
   address: string,
-  web3?: Web3Provider | ethers.providers.JsonRpcProvider
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
 ) => getContract(ShopAbi.abi, address, web3)
 
 export const getStakingContract = (
   address: string,
-  web3?: Web3Provider | ethers.providers.JsonRpcProvider
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
 ) => getContract(StakingAbi.abi, address, web3)
 
 export const getUserGameItemsContract = (
   address: string,
-  web3?: Web3Provider | ethers.providers.JsonRpcProvider
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
 ) => getContract(UserGameItemsAbi.abi, address, web3)

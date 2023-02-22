@@ -1,6 +1,7 @@
 import { useRouter } from "next/router"
 import React, { ReactNode } from "react"
 import SyncAltIcon from "@mui/icons-material/SyncAlt"
+import { TokenSupport } from "@feature/wallet/containers/hooks/useWalletContoller"
 import ButtonIcon from "../../atoms/button/ButtonIcon"
 
 const iconmotion = {
@@ -17,9 +18,10 @@ const iconmotion = {
 }
 interface IProps {
   icon: ReactNode
-  balance: string | number
+  balance: string | number | ReactNode
+  link?: TokenSupport
 }
-const AmountBalance = ({ icon, balance }: IProps) => {
+const AmountBalance = ({ icon, balance, link }: IProps) => {
   const router = useRouter()
   return (
     <>
@@ -37,7 +39,7 @@ const AmountBalance = ({ icon, balance }: IProps) => {
           }
           className="ml-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900"
           onClick={() => {
-            router.push("/wallet")
+            router.push(link ? `/wallet?token=${link}` : "/wallet?token=NAKA")
           }}
         />
       </div>

@@ -15,7 +15,7 @@ interface Iprop {
   background?: "purple" | "red" | "neutral"
   subtitle?: boolean
   elevation?: number
-  sumTotal: number
+  sumTotal?: number
 }
 const CardTitle = ({
   width,
@@ -50,9 +50,10 @@ const CardTitle = ({
                 <h1 className="col-span-2 text-[14px]">
                   weekly prize pool :{" "}
                   <span className="text-info-main">
-                    {Helper.formatNumber(sumTotal, {
-                      maximumFractionDigits: 2
-                    })}{" "}
+                    {sumTotal &&
+                      Helper.formatNumber(sumTotal, {
+                        maximumFractionDigits: 2
+                      })}{" "}
                     naka
                   </span>
                 </h1>
@@ -90,7 +91,10 @@ const CardTitle = ({
             <h1 className="col-span-2">
               Total naka :{" "}
               <span className="text-info-main">
-                {Helper.formatNumber(sumTotal, { maximumFractionDigits: 2 })}
+                {sumTotal &&
+                  Helper.formatNumber(sumTotal, {
+                    maximumFractionDigits: 2
+                  })}
               </span>
             </h1>
           </div>

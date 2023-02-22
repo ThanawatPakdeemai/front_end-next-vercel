@@ -57,15 +57,13 @@ const FormCreate = ({ type = "buy" }: IProp) => {
   })
 
   const onSubmit = (_data) => {
+    setOpen("Processing Transaction")
+
     if (type === "buy") {
       createOrderBuyNaka(_data.price, _data.amount)
     } else {
-      setOpen("Processing Transaction")
-
       createOrderSellNaka(_data.price, _data.amount)
         .then((_receipt) => {
-          // console.log("_receipt>>___", _receipt)
-
           const receipt = (_receipt as IResponseGetFee).data
           if (
             _receipt &&
@@ -93,11 +91,9 @@ const FormCreate = ({ type = "buy" }: IProp) => {
                 _address
               })
                 .then((_res) => {
-                  // console.log(_res)
                   setClose()
                 })
                 .catch((_err) => {
-                  // console.log(_err)
                   setClose()
                 })
             }
@@ -106,7 +102,6 @@ const FormCreate = ({ type = "buy" }: IProp) => {
           }
         })
         .catch(() => {
-          // console.log("err......", err)
           setClose()
         })
     }
@@ -232,19 +227,21 @@ const FormCreate = ({ type = "buy" }: IProp) => {
               {disableButton && (
                 <Alert severity="error">
                   <Typography className="  text-center font-neue-machina text-sm text-error-main">
-                    {!profile && `${MESSAGES.please_login}, `}
-                    {address?.toLowerCase() !==
-                      profile?.address.toLowerCase() &&
-                      `${MESSAGES["please-connect-wallet"]}, `}
-                    {(balance === "N/A" ||
-                      Helper.removeComma(balance) <
-                        Number(watch("price")) * Number(watch("amount"))) &&
-                      `${MESSAGES.balance_not_enough}, `}
-                    {(watch("amount") === "" ||
-                      watch("price") === "" ||
-                      Number(watch("amount")) < 1 ||
-                      Number(watch("price")) < 1) &&
-                      `${MESSAGES.please_fill}`}
+                    {!profile ? `${MESSAGES["please_login"]}, ` : ""}
+                    {address?.toLowerCase() !== profile?.address.toLowerCase()
+                      ? `${MESSAGES["please-connect-wallet"]}, `
+                      : ""}
+                    {balance === "N/A" ||
+                    Helper.removeComma(balance) <
+                      Number(watch("price")) * Number(watch("amount"))
+                      ? `${MESSAGES["balance_not_enough"]}, `
+                      : ""}
+                    {watch("amount") === "" ||
+                    watch("price") === "" ||
+                    Number(watch("amount")) < 1 ||
+                    Number(watch("price")) < 1
+                      ? `${MESSAGES["please_fill"]}`
+                      : ""}
                   </Typography>
                 </Alert>
               )}

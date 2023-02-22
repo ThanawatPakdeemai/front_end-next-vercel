@@ -10,13 +10,13 @@ import CONFIGS from "@configs/index"
 import Helper from "@utils/helper"
 import { ICurrentNakaData } from "@feature/inventory/interfaces/IInventoryService"
 import useLoadingStore from "@stores/loading"
+import { useContractFunction } from "@usedapp/core"
 
 const useContractMultichain = () => {
   const { signer, address: account } = useWeb3Provider()
   const { setOpen, setClose } = useLoadingStore()
 
   const [isLoading, setIsLoading] = useState(false)
-  // eslint-disable-next-line no-unused-vars
   const [nakaCurrentPrice, setNakaCurrentPrice] = useState<ICurrentNakaData>()
 
   const p2pBinanceContract = useP2PBinance(
@@ -27,6 +27,15 @@ const useContractMultichain = () => {
     signer,
     CONFIGS.CONTRACT_ADDRESS.P2P_POLYGON
   )
+
+  const {
+    // state: stateCreateOrderSellNaka,
+    send: sendCreateOrderSellNaka
+    // events: eventsCreateOrderSellNaka
+  } = useContractFunction(p2pPolygonContract, "createOrderSellNaka", {
+    chainId: Number(CONFIGS.CHAIN.CHAIN_ID),
+    privateKey: ""
+  })
 
   const allowBinance = (_address: string) =>
     new Promise((resolve, reject) => {
@@ -71,40 +80,22 @@ const useContractMultichain = () => {
         })
     })
 
-  // const getTransantionFromHash = async (provider: ethers.Contract, res) => {
-  //   const logs = await provider.getLogs({
-  //     address: res.to,
-  //     topics: res.data
-  //   })
-  //   console.log(logs)
-  // }
-
-  const createOrderSellNaka = (busdPrice: number, busdAmount: number) =>
+  const createOrderSellNaka = async (busdPrice: number, busdAmount: number) =>
     new Promise((resolve) => {
       setIsLoading(true)
       setOpen("Transection Processing Order")
       const nakaPriceWei = Helper.toWei(busdPrice.toString())
       const nakaAmountWei = Helper.toWei(busdAmount.toString())
-      p2pPolygonContract
-        .createOrderSellNaka(nakaPriceWei, nakaAmountWei)
-        .getLogs()
-
-        .then((_response) => {
-          setIsLoading(false)
-
-          resolve({
-            status: true,
-            data: _response
-          })
-
+      sendCreateOrderSellNaka(nakaPriceWei, nakaAmountWei)
+        .then((_res) => {
+          if (_res) {
+            resolve({ status: true, data: _res })
+            setClose()
+          }
           setClose()
-          // console.log(">>")
-          // getTransantionFromHash(p2pPolygonContract, _response)
-          // console.log(">><<<")
         })
-        .catch((_error) => {
-          setIsLoading(false)
-          resolve({ status: false, data: 0 })
+        .catch(() => {
+          resolve({ status: true, data: "" })
           setClose()
         })
     })
@@ -176,6 +167,20 @@ const useContractMultichain = () => {
             })
     })
 
+  const cancelOrderSellNaka = (_orderId) =>
+    new Promise((resolve) => {
+      p2pPolygonContract
+        .cancelOrderSellNaka(_orderId)
+        .then((_response) => {
+          if (_response) {
+            resolve({ status: true, data: _response })
+          }
+        })
+        .catch((err) => {
+          resolve({ status: false, data: err })
+        })
+    })
+
   const priceCurrentNaka = () => {
     Helper.getPriceNakaCurrent().then((_response) => {
       setNakaCurrentPrice(_response)
@@ -199,7 +204,8 @@ const useContractMultichain = () => {
     getFee,
     p2pPolygonContract,
     p2pBinanceContract,
-    nakaCurrentPrice
+    nakaCurrentPrice,
+    cancelOrderSellNaka
   }
 }
 

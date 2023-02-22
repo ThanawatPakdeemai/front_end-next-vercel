@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from "react"
 import { TableBody, Table, TableContainer, Box } from "@mui/material"
 import TableHeader from "@feature/table/components/molecules/TableHeader"
@@ -8,15 +10,21 @@ import Helper from "@utils/helper"
 import CopyTextIcon from "@components/icons/CopyTextIcon"
 // import VerifiedIcon from "@components/icons/VerifiedIcon"
 import { IMultiOrderListDataServ } from "@feature/multichain/interfaces/IMultichain"
+import useContractMultichain from "@feature/contract/containers/hooks/useContractMultichain"
+import useP2PDexCancelSellNaka from "@feature/p2pDex/containers/hooks/useP2PDexCancelSellNaka"
+import { IResponseGetFee } from "@feature/contract/interfaces/IMultichainHook"
 
 interface IProp {
   data: IMultiOrderListDataServ | undefined
   isLoading: boolean
   isFetching: boolean
+  refetch: () => void
   type: "buy" | "sell"
 }
 const MyOrderList = ({ ...props }: IProp) => {
-  const { data, isLoading, isFetching, type } = props
+  const { cancelOrderSellNaka } = useContractMultichain()
+  const { mutateCancelP2PDexOrder } = useP2PDexCancelSellNaka()
+  const { data, isLoading, isFetching, type, refetch } = props
   const title = [
     { title: "order id", arrowIcon: true, keyUp: true, keyDown: false },
     { title: "seller address", arrowIcon: true, keyUp: true, keyDown: false },
@@ -33,6 +41,19 @@ const MyOrderList = ({ ...props }: IProp) => {
     }
   ]
 
+  // const onClickAll = () => {
+  //   if (data && data.data) {
+  //     data.data.forEach((_res: IMultiData) => {
+  //       cancelOrderSellNaka(_res.order_id).then((_resp) => {
+  //         if (_resp) {
+  //           mutateCancelP2PDexOrder(_res.order_id).then((_data) => {
+  //             // refetch()
+  //           })
+  //         }
+  //       })
+  //     })
+  //   }
+  // }
   return (
     <>
       <TableContainer className="custom-scroll w-auto rounded-[14px] border border-neutral-800 bg-neutral-780 px-1.5 pb-1.5">
@@ -119,6 +140,25 @@ const MyOrderList = ({ ...props }: IProp) => {
                               : " bg-varidian-default hover:bg-varidian-default"
                           }`}
                         />
+                        <div
+                          className=" cursor-pointer"
+                          onClick={() => {
+                            cancelOrderSellNaka(order.order_id).then(
+                              (_resp) => {
+                                if ((_resp as IResponseGetFee).status) {
+                                  mutateCancelP2PDexOrder(order.order_id).then(
+                                    (_data) => {
+                                      refetch()
+                                    }
+                                  )
+                                }
+                              }
+                            )
+                            // onClickAll()
+                          }}
+                        >
+                          cancle
+                        </div>
                       </div>
                     </>
                   ]}

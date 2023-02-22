@@ -1,6 +1,6 @@
 import { IFormatMessageService, IFormatService } from "@src/interfaces/IHelper"
 
-interface IMessage {
+export interface IMessage {
   message: string
 }
 
@@ -80,3 +80,9 @@ export interface IExecP2PDexOrder extends ICreateP2PDexOrder {
 export interface IUpdateP2PDexOrder extends ICreateP2PDexOrder {
   _txHash: string
 }
+
+export interface IStatus {
+  status: boolean
+}
+
+export interface IResExecutive extends IMessage {}

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React from "react"
+import React, { useState } from "react"
 import { TableBody, Table, TableContainer, Box } from "@mui/material"
 import TableHeader from "@feature/table/components/molecules/TableHeader"
 import TableRowData from "@feature/table/components/molecules/TableRowData"
@@ -9,10 +9,17 @@ import ButtonLink from "@components/atoms/button/ButtonLink"
 import Helper from "@utils/helper"
 import CopyTextIcon from "@components/icons/CopyTextIcon"
 // import VerifiedIcon from "@components/icons/VerifiedIcon"
-import { IMultiOrderListDataServ } from "@feature/multichain/interfaces/IMultichain"
+import {
+  IMultiData,
+  IMultiOrderListDataServ
+} from "@feature/multichain/interfaces/IMultichain"
 import useContractMultichain from "@feature/contract/containers/hooks/useContractMultichain"
 import useP2PDexCancelSellNaka from "@feature/p2pDex/containers/hooks/useP2PDexCancelSellNaka"
 import { IResponseGetFee } from "@feature/contract/interfaces/IMultichainHook"
+import { useToast } from "@feature/toast/containers"
+import { MESSAGES } from "@constants/messages"
+import useLoadingStore from "@stores/loading"
+import FormEdit from "./FormEdit"
 
 interface IProp {
   data: IMultiOrderListDataServ | undefined
@@ -22,8 +29,13 @@ interface IProp {
   type: "buy" | "sell"
 }
 const MyOrderList = ({ ...props }: IProp) => {
-  const { cancelOrderSellNaka } = useContractMultichain()
   const { mutateCancelP2PDexOrder } = useP2PDexCancelSellNaka()
+  const { errorToast } = useToast()
+  const { cancelOrderSellNaka } = useContractMultichain()
+  const { setClose, setOpen } = useLoadingStore()
+  const [openModal, setOpenModal] = useState<boolean>(false)
+  const [dataEdit, setDataEdit] = useState<IMultiData>()
+
   const { data, isLoading, isFetching, type, refetch } = props
   const title = [
     { title: "order id", arrowIcon: true, keyUp: true, keyDown: false },
@@ -41,19 +53,23 @@ const MyOrderList = ({ ...props }: IProp) => {
     }
   ]
 
-  // const onClickAll = () => {
-  //   if (data && data.data) {
-  //     data.data.forEach((_res: IMultiData) => {
-  //       cancelOrderSellNaka(_res.order_id).then((_resp) => {
-  //         if (_resp) {
-  //           mutateCancelP2PDexOrder(_res.order_id).then((_data) => {
-  //             // refetch()
-  //           })
-  //         }
-  //       })
-  //     })
-  //   }
-  // }
+  const cancelOrder = () => {
+    if (dataEdit) {
+      if (type === "sell") {
+        setOpen(MESSAGES.transaction_processing_order)
+        cancelOrderSellNaka(dataEdit.order_id).then((_resp) => {
+          if ((_resp as IResponseGetFee).status) {
+            mutateCancelP2PDexOrder(dataEdit.order_id).then((_data) => {
+              refetch()
+            })
+          }
+        })
+        setClose()
+      }
+    } else {
+      errorToast(MESSAGES.order_not_found)
+    }
+  }
   return (
     <>
       <TableContainer className="custom-scroll w-auto rounded-[14px] border border-neutral-800 bg-neutral-780 px-1.5 pb-1.5">
@@ -134,31 +150,16 @@ const MyOrderList = ({ ...props }: IProp) => {
                           href=""
                           text="Edit"
                           size="medium"
+                          onClick={() => {
+                            setDataEdit(order)
+                            setOpenModal(true)
+                          }}
                           className={`h-[30px] !min-w-[60px] max-w-[60px]  font-neue-machina-bold text-xs capitalize text-neutral-800  ${
                             order.order_type === "sell"
                               ? " bg-error-main hover:bg-error-main"
                               : " bg-varidian-default hover:bg-varidian-default"
                           }`}
                         />
-                        <div
-                          className=" cursor-pointer"
-                          onClick={() => {
-                            cancelOrderSellNaka(order.order_id).then(
-                              (_resp) => {
-                                if ((_resp as IResponseGetFee).status) {
-                                  mutateCancelP2PDexOrder(order.order_id).then(
-                                    (_data) => {
-                                      refetch()
-                                    }
-                                  )
-                                }
-                              }
-                            )
-                            // onClickAll()
-                          }}
-                        >
-                          cancle
-                        </div>
                       </div>
                     </>
                   ]}
@@ -171,6 +172,14 @@ const MyOrderList = ({ ...props }: IProp) => {
           </TableBody>
         </Table>
       </TableContainer>
+      <FormEdit
+        type={type}
+        open={openModal}
+        handleModal={() => setOpenModal(!openModal)}
+        dataEdit={dataEdit}
+        edit
+        cancelOrder={cancelOrder}
+      />
     </>
   )
 }

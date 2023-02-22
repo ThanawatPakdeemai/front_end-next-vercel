@@ -6,7 +6,8 @@ import {
   IGetP2PDexOrderList,
   ICreateP2PDexOrder,
   IExecP2PDexOrder,
-  IUpdateP2PDexOrder
+  IUpdateP2PDexOrder,
+  IResExecutive
 } from "@feature/multichain/interfaces/IMultichain"
 import services from "@src/configs/axiosGlobalConfig"
 
@@ -68,7 +69,7 @@ export const execP2PDexOrder = ({
   _totalPrice,
   _address
 }: IExecP2PDexOrder) =>
-  new Promise((resolve, reject) => {
+  new Promise<IResExecutive>((resolve, reject) => {
     const data = {
       request_id: _requestId,
       order_id: _orderId,

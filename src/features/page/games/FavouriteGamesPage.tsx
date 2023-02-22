@@ -38,16 +38,18 @@ const FavouriteGamesPage = () => {
   const getData = async () => {
     if (profile) {
       await getFavoriteGameByUser(
-        profile.id,
         pageSize,
         currentPage,
-        categoryDropdown.toLocaleLowerCase(),
-        deviceDropdown.toLocaleLowerCase(),
-        gameItemDropdown.toLocaleLowerCase(),
-        searchDropdown.toLocaleLowerCase()
+        "",
+        searchDropdown,
+        categoryDropdown,
+        gameItemDropdown,
+        deviceDropdown,
+        "all",
+        false,
+        "all"
       ).then((res) => {
         const { data, info } = res
-
         if (data && info) {
           setGameFavourite(data)
           setTotalCount(info.totalCount)

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useState } from "react"
 import { Collapse } from "@mui/material"
 import DropdownIcon from "@components/icons/DropdownIcon"
 import {
@@ -39,28 +39,28 @@ const DropdownCustom = ({ title, className }: IProp) => {
     setExpanded(!expanded)
   }
 
-  const dataDetail = useMemo(() => {
-    if (gameData) {
-      return gameData.map((element) => ({
-        label: element.name ?? "",
-        icon: element._id ?? "",
-        data: element,
-        href: ""
-      }))
-    }
-    return Array(1).map(() => ({
-      label: "",
-      icon: "",
-      href: ""
-    }))
-  }, [gameData])
+  // const dataDetail = useMemo(() => {
+  //   if (gameData) {
+  //     return gameData.map((element) => ({
+  //       label: element.name ?? "",
+  //       icon: element._id ?? "",
+  //       data: element,
+  //       href: ""
+  //     }))
+  //   }
+  //   return Array(1).map(() => ({
+  //     label: "",
+  //     icon: "",
+  //     href: ""
+  //   }))
+  // }, [gameData])
 
   const onGameAssets = () => {
     getGameAssets()
       .then((res) => {
         res.splice(0, 0, {
           crate_date: "",
-          _id: "",
+          _id: "all",
           current_time: "",
           name: "All Game Assets",
           detail: "",
@@ -101,7 +101,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
           image_list: "",
           image_banner: "",
           is_active: true,
-          _id: ""
+          _id: "all"
         })
         setGameData(res)
       })
@@ -112,7 +112,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
 
   const device = [
     {
-      _id: "",
+      _id: "all",
       name: "All Devices",
       supported: true
     },
@@ -140,11 +140,15 @@ const DropdownCustom = ({ title, className }: IProp) => {
   }, [])
 
   useEffect(() => {
-    if (onTitle?._id) {
+    if (onTitle) {
       if (title === "All Categories") {
         setCategoryDropdown(onTitle._id)
       } else if (title === "All Game Assets") {
-        setGameItemDropdown(onTitle._id)
+        if (onTitle.name === "All Game Assets") {
+          setGameItemDropdown("all")
+        } else {
+          setGameItemDropdown(onTitle.name)
+        }
       } else if (title === "All Devices") {
         setDeviceDropdown(onTitle._id)
       }
@@ -188,7 +192,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
           >
             <SelectDropdown
               className={className}
-              details={dataDetail}
+              details={gameData}
               setOnTitle={setOnTitle}
               setExpanded={setExpanded}
             />

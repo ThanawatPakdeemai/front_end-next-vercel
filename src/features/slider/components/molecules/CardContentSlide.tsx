@@ -21,8 +21,8 @@ const CardContentSlide = ({ slide }: ICardContentSlide) => {
   gameTags.push(
     {
       id: "1",
-      name: slide.game_type,
-      link: `/play-to-earn-games`
+      name: slide.category.name,
+      link: `categories/${slide.category.slug}`
     },
     {
       id: "2",

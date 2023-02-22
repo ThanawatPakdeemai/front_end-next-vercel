@@ -6,16 +6,17 @@ interface IProp {
 }
 
 const PlayersAmount = ({ currentPlayer, maxPlayer }: IProp) => (
-  <span className="relative top-[2px] font-normal text-neutral-300">
-    <span
+  <div className="relative top-[2px] flex items-center gap-3 font-normal text-neutral-300">
+    <p
       className={
         currentPlayer !== maxPlayer ? "text-neutral-500" : "text-neutral-300"
       }
     >
       {currentPlayer}
-    </span>
-    {` |`} {maxPlayer || 8}
-  </span>
+    </p>
+    <p>{` |`}</p>
+    <p>{maxPlayer || 8}</p>
+  </div>
 )
 
 export default PlayersAmount

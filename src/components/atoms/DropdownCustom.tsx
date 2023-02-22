@@ -165,7 +165,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
             onClick={handleOnExpandClick}
             className={`${className} mb-1 flex h-[40px] w-[218px] flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary`}
           >
-            {onTitle ? "" : <AllCategoriesIcon />}
+            <AllCategoriesIcon />
             <span className="">
               {onTitle === undefined ? title : onTitle.name}
             </span>

@@ -40,6 +40,8 @@ import SwapCallsIcon from "@mui/icons-material/SwapCalls"
 import LocalActivityOutlinedIcon from "@mui/icons-material/LocalActivityOutlined"
 import BlogIcon from "@components/icons/BlogIcon/BlogIcon"
 import WalletIcon from "@components/icons/MenunIcon/WalletIcon"
+import LaunchIcon from "@components/icons/MenunIcon/LaunchIcon"
+import TransactionIcon from "@components/icons/MenunIcon/TransactionIcon"
 
 export const MENU = [
   {
@@ -94,8 +96,8 @@ export const MENU = [
         icon: LanguageOutlinedIcon
       },
       {
-        name: "NFT Games",
-        link: "/nft-games",
+        name: "Arcade Emporium",
+        link: "/arcade-emporium",
         icon: DiamondIcon
       },
       {
@@ -158,7 +160,7 @@ export const MENU = [
       },
       {
         name: "About Us",
-        link: "/abount-us",
+        link: "https://main.nakamoto.games",
         icon: AboutUsIcon
       },
       {
@@ -209,10 +211,10 @@ export const MENU_GUEST: IMenu[] = [
     external: false
   },
   {
-    id: "nft-games",
-    label: "NFT Games",
+    id: "arcade-emporium",
+    label: "Arcade Emporium",
     icon: <Diamond stroke="#E1E2E2" />,
-    href: "/nft-games",
+    href: "/arcade-emporium",
     external: false
   },
   {
@@ -240,10 +242,24 @@ export const MENU_LOGGEDIN: IMenu[] = [
     external: false
   },
   {
+    id: "my-games",
+    label: "My Games",
+    href: "/my-games",
+    icon: <LaunchIcon />,
+    external: false
+  },
+  {
     id: "wishlist",
     label: "Wishlist",
     href: "/favourite-games",
     icon: <WishlistIcon />,
+    external: false
+  },
+  {
+    id: "transactions",
+    label: "All Transactions",
+    href: "/transactions",
+    icon: <TransactionIcon />,
     external: false
   },
   {

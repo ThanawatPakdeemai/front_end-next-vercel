@@ -32,12 +32,13 @@ const useContractVault = () => {
         })
     })
 
-  const allowNaka = () =>
+  /** @param _spender is contract you want to approve */
+  const allowNaka = (_spender: string) =>
     new Promise((resolve, reject) => {
       if (signer && account) {
         setIsLoading(true)
         erc20Contract
-          .approve(CONFIGS.CONTRACT_ADDRESS.ERC20, ethers.constants.MaxUint256)
+          .approve(_spender, ethers.constants.MaxUint256)
           .then((_res) => {
             setIsLoading(false)
             resolve("Contract Approved!")
@@ -51,10 +52,7 @@ const useContractVault = () => {
       } else reject()
     })
 
-  const depositNaka = async (
-    _address: string,
-    _nakaAmount: string | BigNumber
-  ) =>
+  const depositNaka = async (_nakaAmount: string | BigNumber) =>
     new Promise<ITransactionResponse>((resolve, reject) => {
       setIsLoading(true)
       balanceVaultContract
@@ -69,10 +67,7 @@ const useContractVault = () => {
         })
     })
 
-  const withdrawNaka = async (
-    _address: string,
-    _nakaAmount: string | BigNumber
-  ) =>
+  const withdrawNaka = async (_nakaAmount: string | BigNumber) =>
     new Promise<ITransactionResponse>((resolve, reject) => {
       setIsLoading(true)
       balanceVaultContract
@@ -111,7 +106,7 @@ const useContractVault = () => {
     })
 
   /* balanceValut */
-  const getNakaBalanceOf = (_userAddress: string) =>
+  const getNakaBalanceVault = (_userAddress: string) =>
     new Promise((resolve) => {
       setIsLoading(true)
       balanceVaultContract
@@ -130,7 +125,7 @@ const useContractVault = () => {
     })
 
   /* balance (in metamask) */
-  const getNakaBalance = (_userAddress: string) =>
+  const getNakaBalanceWallet = (_userAddress: string) =>
     new Promise((resolve) => {
       setIsLoading(true)
       erc20Contract
@@ -154,8 +149,8 @@ const useContractVault = () => {
     depositNaka,
     withdrawNaka,
     checkSufficient,
-    getNakaBalanceOf,
-    getNakaBalance,
+    getNakaBalanceVault,
+    getNakaBalanceWallet,
     isLoading
   }
 }

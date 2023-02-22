@@ -8,13 +8,17 @@ import CloseIcon from "@mui/icons-material/Close"
 import CopyAddress from "@components/atoms/CopyAddress"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import MetamaskLogo from "@components/icons/MetamaskLogo"
+import { IBalanceDisplay } from "@hooks/useAllBalances"
 
 interface IProp {
   isConnected?: boolean
   address?: string
   handleConnectWallet?: () => void
   handleOnDisconnectWallet?: () => void
-  balance: string
+  balance: IBalanceDisplay
+  tokenName: string
+  chainName: string
+  blockExplorerURL: string
 }
 
 const MetamaskWallet = ({
@@ -22,7 +26,10 @@ const MetamaskWallet = ({
   address,
   handleConnectWallet,
   handleOnDisconnectWallet,
-  balance
+  balance,
+  tokenName,
+  chainName,
+  blockExplorerURL
 }: IProp) => (
   <div className="flex h-full flex-col rounded-default bg-neutral-700 p-2">
     <div className="relative mb-[10px] flex h-full flex-col items-center justify-center rounded-t-default bg-neutral-900">
@@ -60,8 +67,11 @@ const MetamaskWallet = ({
         {isConnected ? (
           <div className="flex gap-2">
             <TextLink
-              name="Polygon Scan"
+              name={`${chainName} Scan`}
               className="!pb-0 capitalize"
+              onClick={() =>
+                window.open(`${blockExplorerURL}address/${address}`, "_blank")
+              }
             />
             <span className="text-neutral-700">|</span>
             <TextLink
@@ -86,12 +96,12 @@ const MetamaskWallet = ({
           <div className="flex h-full items-center rounded bg-neutral-800 p-1">
             <LogoIcon fill="#4E5057" />
           </div>
-          <div className="ml-3 flex items-center">
-            <span className="mr-11 whitespace-pre-wrap text-sm uppercase text-neutral-600">
-              naka in{"\n"}metamask
+          <div className="ml-3 flex w-full flex-wrap items-center justify-between">
+            <span className="whitespace-pre-wrap text-xs uppercase text-neutral-600">
+              {tokenName} in{"\n"}metamask
             </span>
-            <span className="font-digital-7 text-[26px] text-neutral-600">
-              {balance} NAKA
+            <span className="whitespace-nowrap font-digital-7 text-[26px] leading-3 text-neutral-600">
+              {balance.text} {tokenName}
             </span>
           </div>
         </div>

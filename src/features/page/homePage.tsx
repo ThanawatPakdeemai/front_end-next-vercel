@@ -30,15 +30,25 @@ import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { v4 as uuid } from "uuid"
 import useTweenEffect from "@hooks/useSpartFireEffect"
-import gsap from "gsap"
 import useProfileStore from "@stores/profileStore"
 import useQuestStore from "@stores/quest"
 import { MenuLists } from "@configs/social"
+import useGlobal from "@hooks/useGlobal"
 
 const Home = () => {
   const limit = 10
   const { profile } = useProfileStore()
   const { clearQuestStore, setOpen, hasCompleted } = useQuestStore()
+  const { hydrated } = useGlobal()
+
+  /**
+   * @description: Spark fire effect
+   */
+  const { createParticle } = useTweenEffect(600, 300, 50, -500)
+  useEffect(() => {
+    if (hydrated) createParticle()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [createParticle])
 
   const handleModalMission = () => {
     setOpen()
@@ -82,19 +92,7 @@ const Home = () => {
     }
   }, [p2eCurType, hotGameData, p2eGameData])
 
-  /**
-   * @description: Spark fire effect
-   */
-  const { createParticle } = useTweenEffect(600, 300, 50, -500)
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      createParticle()
-    })
-    return () => ctx.revert()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  return (
+  return hydrated ? (
     <>
       <BannerSlide />
       {/* Testing display a CarouselSlide component, waiting to merge with team */}
@@ -240,7 +238,7 @@ const Home = () => {
             classNameSecond="bg-info-light"
             iconBtn={<IDiamond />}
             textBtn="NAKA NFT"
-            href="/nft-games"
+            href="/arcade-emporium"
             srcMain={IMAGES.frontNakaBand.src}
             altMain={IMAGES.frontNakaBand.alt}
             srcSecond={IMAGES.backNakaBand.src}
@@ -251,6 +249,8 @@ const Home = () => {
         <CardNakaverse href="/" />
       </Box>
     </>
+  ) : (
+    <> </>
   )
 }
 export default memo(Home)

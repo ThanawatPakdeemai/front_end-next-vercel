@@ -119,7 +119,7 @@ const DropdownListItem = ({
                     }
                     onChange={(_item) => {
                       popupState.close()
-                      onChangeItem(_item as IGameItemListData)
+                      onChangeItem(_item.data as IGameItemListData)
                     }}
                   />
                 </Popover>

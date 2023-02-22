@@ -83,7 +83,7 @@ const GameCarousel = ({
 
   const onHandleClick = (_gameUrl: string, _gameData: IGame) => {
     if (profile) {
-      router.push(`/${_gameUrl}`)
+      router.push(`/${curType}-games/${_gameUrl}`)
       onSetGameData(_gameData)
     } else {
       errorToast(MESSAGES.please_login)

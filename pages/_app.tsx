@@ -18,6 +18,7 @@ import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material"
 import { theme } from "@styles/themes/darkTheme"
 import createEmotionCache from "@utils/createEmotionCache"
 import { CacheProvider, EmotionCache } from "@emotion/react"
+import Loading from "@components/molecules/Loading"
 
 dayjs.extend(rt)
 
@@ -123,6 +124,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
           </Head>
         ) : null
       )}
+      <Loading />
       <QueryClientProvider client={queryClient}>
         <Web3Provider>
           <CacheProvider value={emotionCache}>

@@ -1,7 +1,7 @@
 import services from "@configs/axiosGlobalConfig"
 import CONFIGS from "@configs/index"
 import {
-  IFilterGamesByCategory,
+  IFilterGames,
   IGameAllResponse,
   IGameCategory,
   IGameItem
@@ -48,7 +48,7 @@ const getGameAlls = () =>
       })
   })
 
-const getGamesByCategoryId = (data: IFilterGamesByCategory) =>
+const getGamesByCategoryId = (data: IFilterGames) =>
   new Promise<IGameAllResponse>((resolve, reject) => {
     services
       .post<IGameAllResponse>(

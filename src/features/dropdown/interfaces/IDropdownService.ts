@@ -56,6 +56,19 @@ export interface IGameCategory {
   id: string
 }
 
+export interface IFilterGames {
+  limit: number
+  skip: number
+  sort: string
+  search: string
+  category: string
+  item: string
+  device: string
+  game_type: string
+  tournament: boolean
+  nftgame: string
+}
+
 export interface IGameAllResponse {
   status: boolean
   data: IGame[]
@@ -78,15 +91,3 @@ export interface IDropdownAll
     IDevice,
     IGameItemListData,
     ICURRENCY {}
-
-export interface IFilterGamesByCategory {
-  limit?: number
-  skip?: number
-  sort?: string
-  search?: string
-  category?: string | string[]
-  item?: string | string[]
-  device?: string
-  game_type?: string
-  tournament?: boolean
-}

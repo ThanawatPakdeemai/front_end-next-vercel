@@ -17,6 +17,13 @@ export interface IGetReferrals {
   player_id: string
   skip: number
   limit: number
+  sort: string | undefined
+  sort_value: number | undefined
+}
+
+export interface ISortReferrals {
+  sort?: string | undefined
+  sort_value?: number | undefined
 }
 
 // export interface AxiosResponse<T = IReferralsData> {

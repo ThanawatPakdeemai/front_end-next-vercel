@@ -5,25 +5,46 @@ import dynamic from "next/dynamic"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
 
 const OverviewContent = dynamic(
-  () => import("@components/organisms/OverviewContent")
+  () => import("@components/organisms/OverviewContent"),
+  {
+    suspense: true
+  }
 )
 const GameContent = dynamic(
-  () => import("@feature/game/components/templates/lobby/GameContent")
+  () => import("@feature/game/components/templates/lobby/GameContent"),
+  {
+    suspense: true
+  }
 )
 const GameTabs = dynamic(
-  () => import("@feature/game/components/templates/lobby/GameTabs")
+  () => import("@feature/game/components/templates/lobby/GameTabs"),
+  {
+    suspense: true
+  }
 )
 const GameReviews = dynamic(
-  () => import("@feature/game/components/molecules/GameReviews")
+  () => import("@feature/game/components/molecules/GameReviews"),
+  {
+    suspense: true
+  }
 )
 const GamePageDefault = dynamic(
-  () => import("@components/templates/GamePageDefault")
+  () => import("@components/templates/GamePageDefault"),
+  {
+    suspense: true
+  }
 )
 const RightSidebarContentEffect = dynamic(
-  () => import("@components/templates/contents/RightSidebarContentEffect")
+  () => import("@components/templates/contents/RightSidebarContentEffect"),
+  {
+    suspense: true
+  }
 )
 const RightSidebarContent = dynamic(
-  () => import("@components/templates/contents/RightSidebarContent")
+  () => import("@components/templates/contents/RightSidebarContent"),
+  {
+    suspense: true
+  }
 )
 
 export default function GamePartnerDetails() {

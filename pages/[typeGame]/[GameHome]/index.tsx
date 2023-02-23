@@ -7,22 +7,40 @@ import { getGameByPath } from "@feature/game/containers/services/game.service"
 import useGetGameByPath from "@feature/game/containers/hooks/useFindGameByPath"
 
 const SkeletonBanner = dynamic(
-  () => import("@components/atoms/skeleton/SkeletonBanner")
+  () => import("@components/atoms/skeleton/SkeletonBanner"),
+  {
+    suspense: true
+  }
 )
 const StoryLobby = dynamic(
-  () => import("@feature/game/components/templates/lobby/StoryLobby")
+  () => import("@feature/game/components/templates/lobby/StoryLobby"),
+  {
+    suspense: true
+  }
 )
 const GamePageDefault = dynamic(
-  () => import("@components/templates/GamePageDefault")
+  () => import("@components/templates/GamePageDefault"),
+  {
+    suspense: true
+  }
 )
 const RightSidebarContentEffect = dynamic(
-  () => import("@components/templates/contents/RightSidebarContentEffect")
+  () => import("@components/templates/contents/RightSidebarContentEffect"),
+  {
+    suspense: true
+  }
 )
 const OverviewHowToPlay = dynamic(
-  () => import("@components/organisms/OverviewHowToPlay")
+  () => import("@components/organisms/OverviewHowToPlay"),
+  {
+    suspense: true
+  }
 )
 const DefaultLobby = dynamic(
-  () => import("@feature/game/components/templates/lobby/DefaultLobby")
+  () => import("@feature/game/components/templates/lobby/DefaultLobby"),
+  {
+    suspense: true
+  }
 )
 
 export default function GameLobby() {

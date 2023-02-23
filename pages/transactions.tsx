@@ -4,10 +4,16 @@ import { ALL_TRANSACTIONS } from "@configs/crumb"
 import dynamic from "next/dynamic"
 
 const ProfileLayout = dynamic(
-  () => import("@components/templates/ProfileLayout")
+  () => import("@components/templates/ProfileLayout"),
+  {
+    suspense: true
+  }
 )
 const AllTransactions = dynamic(
-  () => import("@feature/transaction/components/templates/AllTransactions")
+  () => import("@feature/transaction/components/templates/AllTransactions"),
+  {
+    suspense: true
+  }
 )
 
 const AllTransactionsPage = () => (

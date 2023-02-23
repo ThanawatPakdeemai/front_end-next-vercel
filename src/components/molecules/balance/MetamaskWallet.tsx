@@ -7,10 +7,9 @@ import CloseIcon from "@mui/icons-material/Close"
 import CopyAddress from "@components/atoms/CopyAddress"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import MetamaskLogo from "@components/icons/MetamaskLogo"
-import { IBalanceDisplay } from "@hooks/useAllBalances"
 import CONFIGS from "@configs/index"
-import useChainSupport from "@stores/chainSupport"
 import { numberWithCommas } from "@utils/helpers"
+import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import BalanceWallet from "./BalanceWallet"
 
 interface IProp {
@@ -18,11 +17,10 @@ interface IProp {
   address?: string
   handleConnectWallet?: () => void
   handleOnDisconnectWallet?: () => void
-  balance: IBalanceDisplay
-  tokenName: string | undefined
-  chainName: string | undefined
   blockExplorerURL: string | undefined
   chainId: string
+  chainSupport: ITokenContract[]
+  chainName: string
 }
 
 const MetamaskWallet = ({
@@ -30,24 +28,22 @@ const MetamaskWallet = ({
   address,
   handleConnectWallet,
   handleOnDisconnectWallet,
-  balance,
-  tokenName,
-  chainName,
   blockExplorerURL,
-  chainId
+  chainId,
+  chainSupport,
+  chainName
 }: IProp) => {
-  const { chainSupport } = useChainSupport()
-
   /**
    * @description Handle display balances from wallet
    */
   const handleDisplayBalance = () => {
     if (chainId === CONFIGS.CHAIN.CHAIN_ID) {
       return (
-        <BalanceWallet
-          balance={balance.text ?? "N/A"}
-          tokenName={tokenName}
-        />
+        <></>
+        // <BalanceWallet
+        //   balance={balance.text ?? "N/A"}
+        //   tokenName={tokenName}
+        // />
       )
     }
     return (

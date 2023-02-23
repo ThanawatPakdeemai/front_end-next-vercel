@@ -16,7 +16,10 @@ import useContractVaultBinance, {
 
 import { Contract, ethers } from "ethers"
 import BEP20Abi from "@configs/abi/BEP20.json"
+import ERC20Abi from "@configs/abi/ERC20.json"
 import useChainSupport from "@stores/chainSupport"
+import useContractVault from "@feature/contract/containers/hooks/useContractVault"
+import useSwitchNetwork from "./useSwitchNetwork"
 
 const useGlobal = (
   _limit?: number,
@@ -51,6 +54,8 @@ const useGlobal = (
     useContractVaultBinance()
   const { getAllTokenInfoByContractAddress } = useContractVaultBinance()
   const { setChainSupport, setContractBNB } = useChainSupport()
+  const { getNAKATokenInfo } = useContractVault()
+  const { chainId, signer, accounts } = useSwitchNetwork()
 
   const profile = useProfileStore((state) => state.profile.data)
   // States
@@ -172,6 +177,24 @@ const useGlobal = (
   }
 
   /**
+   * @description Fetch BNB token address from Smart Contract
+   */
+  const fetchContractBNB = useCallback(async () => {
+    const result = await getBNBContract()
+    if (result) {
+      setContractBNB(result)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getBNBContract])
+  /**
+   * @description Fetch BNB token address
+   */
+  useMemo(() => {
+    fetchContractBNB()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  /**
    * @description Get all token supported
    */
   const fetchAllTokenSupported = useCallback(async () => {
@@ -210,30 +233,52 @@ const useGlobal = (
     setChainSupport(allTokenSupportedSorted)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const fetchNAKAToken = useCallback(async () => {
+    const allContract: Contract[] = []
+    const allTokenSupported: ITokenContract[] = []
+    const tokens = [CONFIGS.CONTRACT_ADDRESS.ERC20]
+    for (let index = 0; index < tokens.length; index += 1) {
+      const { ethereum }: any = window
+      const _web3 = new ethers.providers.Web3Provider(ethereum)
+      const contract = new ethers.Contract(tokens[index], ERC20Abi, _web3)
+      allContract.push(contract)
+    }
+    await Promise.all(
+      allContract.map(async (contract) => {
+        const result = await getNAKATokenInfo(
+          contract,
+          contract.address,
+          profile ? profile.address : ""
+        )
+        allTokenSupported.push(result)
+      })
+    )
+    const allTokenSupportedSorted = allTokenSupported.sort((a, b) => {
+      if (a.symbol < b.symbol) {
+        return -1
+      }
+      if (a.symbol > b.symbol) {
+        return 1
+      }
+      return 0
+    })
+    setChainSupport(allTokenSupportedSorted)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   /**
    * @description Fetch all token supported
    */
-  useMemo(() => {
-    fetchAllTokenSupported()
-  }, [fetchAllTokenSupported])
-
-  /**
-   * @description Fetch BNB token address from Smart Contract
-   */
-  const fetchContractBNB = useCallback(async () => {
-    const result = await getBNBContract()
-    if (result) {
-      setContractBNB(result)
+  useEffect(() => {
+    if (signer && accounts) {
+      if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+        fetchAllTokenSupported()
+      } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
+        fetchNAKAToken()
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getBNBContract])
-  /**
-   * @description Fetch BNB token address
-   */
-  useMemo(() => {
-    fetchContractBNB()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [chainId, signer, accounts, fetchAllTokenSupported, fetchNAKAToken])
 
   return {
     onHandleClick,

@@ -24,6 +24,7 @@ const useCreateWeb3Provider = () => {
   const [balanceETH, setBalance] = useState<BigNumber>(BigNumber.from(0))
   const [bestGasPrice, setBestGasPrice] = useState<string>("")
   const [feeData, setFeeData] = useState<FeeData>({} as FeeData)
+  const [loading, setLoading] = useState<boolean>(false)
 
   const [hasChangeAccountMetamask, setHasChangeAccountMetamask] =
     useState(false)
@@ -147,10 +148,19 @@ const useCreateWeb3Provider = () => {
     }
     if (_provider && _provider.request) {
       try {
-        await _provider.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId: _chainId }] // [handleNetworkSettings(_chainId)]
-        })
+        setLoading(true)
+        await _provider
+          .request({
+            method: "wallet_switchEthereumChain",
+            params: [{ chainId: _chainId }] // [handleNetworkSettings(_chainId)]
+          })
+          .then(() => {
+            setLoading(false)
+          })
+          .catch(() => {
+            setLoading(false)
+          })
+
         return {
           responseStatus: true,
           errorMsg: "",
@@ -308,7 +318,10 @@ const useCreateWeb3Provider = () => {
     bestGasPrice,
     network,
     balanceETH,
-    feeData
+    feeData,
+    loading,
+    switchNetwork,
+    checkNetwork
   }
 }
 

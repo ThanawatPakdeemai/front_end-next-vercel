@@ -4,7 +4,7 @@ import { IBalanceDisplay } from "@hooks/useAllBalances"
 import { styled } from "@mui/material"
 import { ReactNode } from "react"
 
-const KeyFramesRotate = styled("div")({
+export const KeyFramesRotate = styled("div")({
   "@keyframes rotation": {
     from: {
       transform: "rotate(359deg)"

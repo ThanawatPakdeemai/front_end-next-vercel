@@ -5,13 +5,12 @@ import IBusd from "@components/icons/Busd"
 import React, { useEffect } from "react"
 import MetamaskWallet from "@components/molecules/balance/MetamaskWallet"
 import useProfileStore from "@stores/profileStore"
-import { useWeb3Provider } from "@providers/index"
 import TransactionTable from "@feature/transaction/components/molecules/TransactionTable"
 import useGlobal from "@hooks/useGlobal"
 import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContoller"
 import WalletHeader from "@feature/wallet/components/molecules/WalletHeader"
 import WalletBody from "@feature/wallet/components/molecules/WalletBody"
-import useAllBalances, { IBalanceDisplay } from "@hooks/useAllBalances"
+import useAllBalances from "@hooks/useAllBalances"
 import WalletFooter from "@feature/wallet/components/molecules/WalletFooter"
 import WalletLightAnimation from "@feature/wallet/components/molecules/WalletLightAnimation"
 import CONFIGS from "@configs/index"
@@ -19,9 +18,8 @@ import { useRouter } from "next/router"
 import useChainSupport from "@stores/chainSupport"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import SwitchChain from "@components/atoms/SwitchChain"
-// import SwitchChain from "@components/atoms/SwitchChain"
-
-// type Method = "deposit" | "withdraw"
+import useSwitchNetwork from "@hooks/useSwitchNetwork"
+import SkeletionWallet from "@components/atoms/skeleton/SkeletonWallet"
 
 export default function WalletPage() {
   const { hydrated, getNetwork } = useGlobal()
@@ -43,30 +41,18 @@ export default function WalletPage() {
   } = useWalletContoller()
   const router = useRouter()
   const { token } = router.query
-  const { address, chainId, handleDisconnectWallet } = useWeb3Provider()
-  const { walletBalance, busdVaultBalance, nakaVaultBalance } = useAllBalances()
+  const { walletBalance } = useAllBalances()
   const { profile } = useProfileStore()
   const { chainSupport } = useChainSupport()
-
-  const handleSwitchNetwork = async (_chainId: string) => {
-    // handleDisconnectWallet?.()
-  }
-
-  /**
-   * @description get token balance
-   * @returns {IBalanceDisplay}
-   */
-  const getVaultBalance = (): IBalanceDisplay =>
-    type === "NAKA" ? nakaVaultBalance : busdVaultBalance
-
-  /**
-   * @description get token contract
-   * @returns {string}
-   */
-  // const getContractSpender = (): string =>
-  //   type === "NAKA"
-  //     ? CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
-  //     : CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
+  const {
+    handleSwitchNetwork,
+    address,
+    chainId,
+    handleDisconnectWallet,
+    loading,
+    setIsWrongNetwork,
+    isWrongNetwork
+  } = useSwitchNetwork()
 
   /**
    * @description check disabled button
@@ -79,26 +65,6 @@ export default function WalletPage() {
   }
 
   const renderWallets = () => {
-    if (getVaultBalance().digit === 0) {
-      return (
-        <div className="col-span-5 m-2 flex flex-col items-center justify-center">
-          <SwitchChain
-            chainName={type === "NAKA" ? "Polygon" : "Binance Smart Chain"}
-            handleClick={
-              type === "NAKA"
-                ? () =>
-                    handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX as string)
-                : () =>
-                    handleSwitchNetwork(
-                      CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string
-                    )
-            }
-            variant="full"
-          />
-        </div>
-      )
-    }
-
     if (!chainSupport || chainSupport.length === 0) {
       return <></>
     }
@@ -163,8 +129,10 @@ export default function WalletPage() {
   useEffect(() => {
     if (token === "NAKA") {
       setType("NAKA")
+      router.push("/wallet?token=NAKA")
     } else if (token === "BNB") {
       setType("BNB")
+      router.push("/wallet?token=BNB")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token])
@@ -188,7 +156,11 @@ export default function WalletPage() {
                   ? "bg-black-100 text-white-default"
                   : "bg-neutral-800 text-black-default"
               } p-4`}
-              onClick={() => setType("NAKA")}
+              onClick={() => {
+                setType("NAKA")
+                router.push("/wallet?token=NAKA")
+                setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX)
+              }}
             >
               <div className="pr-2">
                 <INaka />
@@ -202,7 +174,11 @@ export default function WalletPage() {
                   ? "bg-black-100 text-white-default"
                   : "bg-neutral-800 text-neutral-500"
               } p-4`}
-              onClick={() => setType("BNB")}
+              onClick={() => {
+                setType("BNB")
+                router.push("/wallet?token=BNB")
+                setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX_BNB)
+              }}
             >
               <div className=" pr-2">
                 <IBusd />
@@ -212,10 +188,36 @@ export default function WalletPage() {
           </div>
         </div>
         <div className="col-span-6 h-full w-full items-center justify-center gap-1 rounded-default bg-neutral-800">
-          <div className="relative mx-2 grid w-full grid-cols-7 gap-1">
-            {renderWallets()}
-            <WalletLightAnimation />
-          </div>
+          {loading ? (
+            <SkeletionWallet />
+          ) : (
+            <div className="relative mx-2 grid w-full grid-cols-7 gap-1">
+              {isWrongNetwork ? (
+                <div className="col-span-5 m-2 flex flex-col items-center justify-center">
+                  <SwitchChain
+                    chainName={
+                      type === "NAKA" ? "Polygon" : "Binance Smart Chain"
+                    }
+                    handleClick={
+                      type === "NAKA"
+                        ? () =>
+                            handleSwitchNetwork(
+                              CONFIGS.CHAIN.CHAIN_ID_HEX as string
+                            )
+                        : () =>
+                            handleSwitchNetwork(
+                              CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string
+                            )
+                    }
+                    variant="full"
+                  />
+                </div>
+              ) : (
+                renderWallets()
+              )}
+              <WalletLightAnimation />
+            </div>
+          )}
         </div>
         <div className="col-span-2 h-full w-full items-center justify-center gap-1 rounded-default bg-neutral-800">
           <Gas />
@@ -226,13 +228,11 @@ export default function WalletPage() {
               isConnected={!!address}
               handleConnectWallet={handleConnectWallet}
               handleOnDisconnectWallet={handleDisconnectWallet}
-              address={address}
-              balance={walletBalance} // nakaBalance
-              tokenName={getNetwork?.(chainId as string).nativeCurrency.name}
-              chainName={getNetwork?.(chainId as string).chainName}
               blockExplorerURL={
                 getNetwork?.(chainId as string).blockExplorerUrls[0]
               }
+              chainName={getNetwork?.(chainId as string).chainName}
+              chainSupport={chainSupport}
               chainId={chainId as string}
             />
           </div>

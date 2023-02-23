@@ -1,12 +1,21 @@
+import dynamic from "next/dynamic"
 import { ReactElement } from "react"
-import FromCreatePassword from "@feature/authentication/components/FromCreatePassword"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useRouter } from "next/router"
 
+const FromCreatePassword = dynamic(
+  () => import("@feature/authentication/components/FromCreatePassword")
+)
 export default function CreatePassword() {
+  const router = useRouter()
+  const { email, token } = router.query
   return (
     <>
       <article className="h-full w-full">
-        <FromCreatePassword />
+        <FromCreatePassword
+          email={email as string}
+          token={token as string}
+        />
       </article>
     </>
   )

@@ -13,10 +13,11 @@ import dayjs from "dayjs"
 import useGetProfileInfo from "@feature/profile/containers/hook/getProfileInfo"
 import Lavel from "@components/icons/Lavel"
 import { Image } from "@components/atoms/image"
+import Helper from "@utils/helper"
 import EditProfileModal from "./EditProfileModal"
-import TotalCardContent from "./TotalCardContent"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
+import TotalCardContent from "./TotalCardContent"
 
 const ProfileContent = () => {
   const profile = useProfileStore((state) => state.profile)
@@ -159,7 +160,9 @@ const ProfileContent = () => {
               />
               <TotalCardContent
                 text="Total rewards (naka)"
-                totalNumber={getProfileInfo.data.total_reward}
+                totalNumber={Helper.number4digit(
+                  getProfileInfo.data.total_reward
+                )}
                 rank={false}
               />
               <TotalCardContent

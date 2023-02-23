@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import IBusd from "@components/icons/Busd"
@@ -31,6 +32,7 @@ import {
 import { useToast } from "@feature/toast/containers"
 import CopyTextIcon from "@components/icons/CopyTextIcon"
 import useP2PDexExOrder from "@feature/p2pDex/containers/hooks/useP2PDexExOrder "
+import CONFIGS from "@configs/index"
 import Input from "../atoms/Input"
 
 interface IPropContent {
@@ -56,7 +58,7 @@ const FormEx = ({
   refetchData
 }: IProp) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { address } = useWeb3Provider()
+  const { address, signer } = useWeb3Provider()
   const { busdVaultBalance, nakaVaultBalance } = useAllBalances()
   const { setClose, setOpen } = useLoadingStore()
   const {
@@ -64,7 +66,11 @@ const FormEx = ({
     sendRequestSellNaka,
     p2pPolygonContract,
     allowNaka,
-    sendAllowNaka
+    sendAllowNaka,
+    // eslint-disable-next-line no-unused-vars
+    sendRequestBuyNaka,
+    allowBinance,
+    sendAllowBinance
   } = useContractMultichain()
   const { mutateExOrder } = useP2PDexExOrder()
 
@@ -98,6 +104,8 @@ const FormEx = ({
     // formState: { errors }
   } = formData
 
+  const chainRequired = signer ? signer?.provider?._network?.chainId : 0
+
   // !defaultvalue
   useEffect(() => {
     const price =
@@ -126,7 +134,7 @@ const FormEx = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch("amount")])
 
-  const sendData = async (_data) => {
+  const sendDataSellNaka = async (_data) => {
     await setOpen(MESSAGES.transaction_processing_order)
     if (dataEdit) {
       await sendRequestSellNaka(
@@ -192,25 +200,52 @@ const FormEx = ({
     }
   }
 
+  const sendDataBuyNaka = async (_data) => {
+    // eslint-disable-next-line no-console
+    console.log("sendDataBuyNaka")
+  }
+
   const onSubmit = async (_data) => {
-    const allow = await allowNaka
-    if (allow && allow.toString() > 0) {
-      sendData(_data)
+    if (type === "sell") {
+      const allowPolygon = await allowNaka
+      if (allowPolygon && allowPolygon.toString() > 0) {
+        sendDataSellNaka(_data)
+      } else {
+        setOpen(MESSAGES.approve_processing)
+        sendAllowNaka()
+          .then((_res) => {
+            if (_res) {
+              setClose()
+              sendDataSellNaka(_data)
+            } else {
+              setClose()
+              errorToast(MESSAGES.approve_error)
+            }
+          })
+          .catch(() => {
+            setClose()
+          })
+      }
     } else {
-      setOpen(MESSAGES.approve_processing)
-      sendAllowNaka()
-        .then((_res) => {
-          if (_res) {
+      const allowBnb = await allowBinance
+      if (allowBnb && allowBnb.toString() > 0) {
+        sendDataBuyNaka(_data)
+      } else {
+        setOpen(MESSAGES.approve_processing)
+        sendAllowBinance()
+          .then((_res) => {
+            if (_res) {
+              setClose()
+              sendDataBuyNaka(_data)
+            } else {
+              setClose()
+              errorToast(MESSAGES.approve_error)
+            }
+          })
+          .catch(() => {
             setClose()
-            sendData(_data)
-          } else {
-            setClose()
-            errorToast(MESSAGES.approve_error)
-          }
-        })
-        .catch(() => {
-          setClose()
-        })
+          })
+      }
     }
   }
 
@@ -220,13 +255,15 @@ const FormEx = ({
       address &&
       balance &&
       balance !== "N/A" &&
-      address?.toLowerCase() === profile.address.toLowerCase() &&
-      Helper.removeComma(balance) >=
-        Number(watch("price")) * Number(watch("amount")) &&
+      // Helper.removeComma(balance) >=
+      //   Number(watch("price")) * Number(watch("amount")) &&
       Number(watch("amount")) > 0 &&
       Number(watch("price")) > 0 &&
       Number(watch("amount")) <= amountDefault
     ) {
+      if (edit && address?.toLowerCase() === profile.address.toLowerCase()) {
+        return false
+      }
       return false
     }
     return true
@@ -293,6 +330,50 @@ const FormEx = ({
       value: dataEdit ? `${dataEdit.naka_amount} NAKA` : ""
     }
   ]
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const buttonSubmit = () => (
+    <ButtonToggleIcon
+      startIcon=""
+      endIcon=""
+      disabled={disableButton}
+      text={`${edit ? "edit" : ""} ${type} NAKA`}
+      handleClick={() => {}}
+      className={`leading-2 mt-5 mb-5 flex h-[50px] w-full items-center  justify-center rounded-md ${
+        type === "buy" ? " bg-varidian-default " : " bg-error-main"
+      } !fill-primary-main font-neue-machina text-sm font-bold capitalize !text-primary-main`}
+      type="submit"
+    />
+  )
+
+  const buttonSwitched = () => (
+    <Typography className=" py-3 text-center uppercase">
+      switch network
+    </Typography>
+  )
+
+  const buttonData = useMemo(() => {
+    if (edit) {
+      if (type === "buy") {
+        if (Number(chainRequired) === Number(CONFIGS.CHAIN.CHAIN_ID)) {
+          return buttonSubmit()
+        }
+      }
+      if (Number(chainRequired) === Number(CONFIGS.CHAIN.BNB_CHAIN_ID)) {
+        return buttonSubmit()
+      }
+    }
+    if (type === "buy") {
+      if (Number(chainRequired) === Number(CONFIGS.CHAIN.BNB_CHAIN_ID)) {
+        return buttonSubmit()
+      }
+    }
+    if (Number(chainRequired) === Number(CONFIGS.CHAIN.CHAIN_ID)) {
+      return buttonSubmit()
+    }
+    return buttonSwitched()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chainRequired])
 
   return (
     <>
@@ -412,7 +493,7 @@ const FormEx = ({
 
                     <Input
                       name="price"
-                      endIcon={type === "buy" ? <IBusd /> : <INaka />}
+                      endIcon={<IBusd />}
                       placeholder="Enter price"
                       disabled={!edit}
                       {...formData}
@@ -432,19 +513,7 @@ const FormEx = ({
                       </Typography>
                     )}
 
-                    <ButtonToggleIcon
-                      startIcon=""
-                      endIcon=""
-                      disabled={disableButton}
-                      text={`${edit ? "edit" : ""} ${type} NAKA`}
-                      handleClick={() => {}}
-                      className={`leading-2 mt-5 mb-5 flex h-[50px] w-full items-center  justify-center rounded-md ${
-                        type === "buy"
-                          ? " bg-varidian-default "
-                          : " bg-error-main"
-                      } !fill-primary-main font-neue-machina text-sm font-bold capitalize !text-primary-main`}
-                      type="submit"
-                    />
+                    {buttonData}
                     {edit && (
                       <Typography className="my-2 text-center font-neue-machina text-sm uppercase text-neutral-500">
                         fee {fee ? formatEther(fee) : 0} busd

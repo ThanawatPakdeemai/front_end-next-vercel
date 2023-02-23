@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import IBusd from "@components/icons/Busd"
 import INaka from "@components/icons/Naka"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
@@ -51,8 +52,9 @@ const FormEdit = ({
   const { busdVaultBalance, nakaVaultBalance } = useAllBalances()
   const { setClose, setOpen } = useLoadingStore()
   const { mutateEditOrder } = useP2PDexEditOrder()
-  const { editOrderSellNaka, p2pPolygonContract } = useContractMultichain()
-  const { successToast } = useToast()
+  const { editOrderSellNaka, p2pPolygonContract, allowNaka, sendAllowNaka } =
+    useContractMultichain()
+  const { successToast, errorToast } = useToast()
 
   const { shortenString, copyClipboard } = Helper
 
@@ -62,19 +64,21 @@ const FormEdit = ({
 
   const formData = useForm({
     defaultValues: {
-      price: type === "buy" ? priceNaka : priceBusd,
+      price: type === "sell" ? priceNaka : priceBusd,
       amount
     }
   })
 
   const {
-    setValue
+    setValue,
+    watch
     // formState: { errors }
   } = formData
 
+  // !default value
   useEffect(() => {
     let price = 0
-    if (type === "sell") {
+    if (type === "buy") {
       price = Number(priceNaka)
     } else {
       price = Number(priceBusd)
@@ -87,9 +91,9 @@ const FormEdit = ({
       setValue("price", 0)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataEdit])
+  }, [dataEdit, watch("amount")])
 
-  const onSubmit = (_data) => {
+  const sendData = (_data) => {
     if (dataEdit) {
       editOrderSellNaka(_data.price, _data.amount, dataEdit?.order_id).then(
         async (_receipt) => {
@@ -115,12 +119,12 @@ const FormEdit = ({
                   ? events.args.orderBuyId
                   : events.args.orderSellId
               const busd_price =
-                type === "buy" ? events.args.busdPrice.toString() : "0" // Only binace
+                type === "buy" ? events.args.busdPrice?.toString() : "0" // Only binace
               const naka_price =
-                type === "buy" ? "0" : events.args.nakaPrice.toString()
-              const naka_amount = events.args.amount.toString()
+                type === "buy" ? "0" : events.args.nakaPrice?.toString()
+              const naka_amount = events.args.amount?.toString()
               const total_price =
-                type === "buy" ? events.args.totalPriceInOrder.toString() : "0" // Only polygon
+                type === "buy" ? events.args.totalPriceInOrder?.toString() : "0" // Only polygon
               const { wallet_address } = dataEdit
               mutateEditOrder({
                 _orderId: order_id,
@@ -145,6 +149,27 @@ const FormEdit = ({
           setClose()
         }
       )
+    }
+  }
+  const onSubmit = async (_data) => {
+    const allow = await allowNaka
+    if (allow && allow.toString() > 0) {
+      sendData(_data)
+    } else {
+      setOpen(MESSAGES.approve_processing)
+      sendAllowNaka()
+        .then((_res) => {
+          if (_res) {
+            setClose()
+            sendData(_data)
+          } else {
+            setClose()
+            errorToast(MESSAGES.approve_error)
+          }
+        })
+        .catch(() => {
+          setClose()
+        })
     }
   }
 
@@ -198,7 +223,9 @@ const FormEdit = ({
     {
       title: `price per ${type === "sell" ? "busd" : "naka"}`,
       value: `${
-        type === "buy" ? dataEdit?.busd_price ?? "" : dataEdit?.naka_price ?? ""
+        type === "sell"
+          ? dataEdit?.busd_price ?? ""
+          : dataEdit?.naka_price ?? ""
       } ${type === "sell" ? "busd" : "naka"}`
     },
     {
@@ -263,11 +290,24 @@ const FormEdit = ({
                     <AmountBalance
                       dataBalance={[
                         {
-                          icon: type === "sell" ? <INaka /> : <IBusd />,
-                          balance:
-                            type === "sell"
+                          icon: !edit ? (
+                            type === "sell" ? (
+                              <INaka />
+                            ) : (
+                              <IBusd />
+                            )
+                          ) : type === "sell" ? (
+                            <IBusd />
+                          ) : (
+                            <INaka />
+                          ),
+                          balance: !edit
+                            ? type === "sell"
                               ? nakaVaultBalance.text
                               : busdVaultBalance.text
+                            : type === "sell"
+                            ? busdVaultBalance.text
+                            : nakaVaultBalance.text
                         }
                       ]}
                     />

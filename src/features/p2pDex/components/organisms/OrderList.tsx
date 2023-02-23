@@ -29,7 +29,8 @@ interface IProp {
 }
 const OrderList = ({ ...props }: IProp) => {
   const { mutateCancelP2PDexOrder } = useP2PDexCancelSellNaka()
-  const { cancelOrderSellNaka } = useContractMultichain()
+  const { cancelOrderSellNaka, sendAllowNaka, allowNaka } =
+    useContractMultichain()
   const { address } = useWeb3Provider()
   const { setClose, setOpen } = useLoadingStore()
   const { errorToast } = useToast()
@@ -51,7 +52,8 @@ const OrderList = ({ ...props }: IProp) => {
       arrowIcon: false
     }
   ]
-  const cancelOrder = () => {
+
+  const sendData = () => {
     setOpen(`${MESSAGES.transaction_processing_order}`)
     if (dataEdit) {
       if (type === "sell") {
@@ -66,6 +68,27 @@ const OrderList = ({ ...props }: IProp) => {
       }
     } else {
       errorToast(MESSAGES.order_not_found)
+    }
+  }
+  const cancelOrder = async () => {
+    const allow = await allowNaka
+    if (allow && allow.toString() > 0) {
+      sendData()
+    } else {
+      setOpen(MESSAGES.approve_processing)
+      sendAllowNaka()
+        .then((_res) => {
+          if (_res) {
+            setClose()
+            sendData()
+          } else {
+            setClose()
+            errorToast(MESSAGES.approve_error)
+          }
+        })
+        .catch(() => {
+          setClose()
+        })
     }
   }
 
@@ -152,24 +175,26 @@ const OrderList = ({ ...props }: IProp) => {
                             setDataEdit(order)
                           }}
                           text={
-                            address &&
                             order.wallet_address.toLowerCase() ===
-                              address.toLowerCase()
+                            (address && address.toLowerCase())
                               ? "edit"
                               : type
                           }
                           size="medium"
-                          className={`h-[30px] !min-w-[60px] max-w-[60px]  font-neue-machina-bold   text-xs capitalize text-neutral-800  ${
-                            address &&
-                            order.wallet_address.toLowerCase() ===
-                              address.toLowerCase() &&
-                            " bg-secondary-main hover:bg-secondary-main"
-                          } ${
+                          className={`h-[30px] !min-w-[60px] max-w-[60px]  font-neue-machina-bold   text-xs capitalize text-neutral-800   ${
+                            order.wallet_address.toLowerCase() !==
+                              (address && address.toLowerCase()) &&
                             type === "sell" &&
                             " bg-error-main hover:bg-error-main"
                           } ${
+                            order.wallet_address.toLowerCase() !==
+                              (address && address.toLowerCase()) &&
                             type === "buy" &&
                             " bg-varidian-default hover:bg-varidian-default"
+                          } ${
+                            order.wallet_address.toLowerCase() ===
+                              (address && address.toLowerCase()) &&
+                            " bg-secondary-main hover:bg-secondary-main"
                           }`}
                         />
                       </div>

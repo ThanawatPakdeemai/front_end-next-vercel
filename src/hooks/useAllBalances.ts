@@ -3,6 +3,7 @@ import CONFIGS from "@configs/index"
 import Helper from "@utils/helper"
 import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContoller"
 import useGetBalanceVault from "@feature/contract/containers/hooks/useQuery/useQueryBalanceVault"
+import { useEffect } from "react"
 import useGlobal from "./useGlobal"
 
 export interface IBalanceDisplay {
@@ -106,6 +107,12 @@ const useAllBalances = () => {
         return defaultVaule
     }
   }
+
+  useEffect(() => {
+    handleBalanceVaults(CONFIGS.CONTRACT_ADDRESS.BEP20)
+    handleBalanceVaults(CONFIGS.CONTRACT_ADDRESS.ERC20)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chainId])
 
   return {
     handleBalanceWallet,

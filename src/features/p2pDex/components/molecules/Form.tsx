@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react-hooks/exhaustive-deps */
 import HrLine from "@components/icons/HrLine"
 import { Alert, Typography } from "@mui/material"
@@ -13,6 +14,8 @@ import useAllBalances from "@hooks/useAllBalances"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import useContractMultichain from "@feature/contract/containers/hooks/useContractMultichain"
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward"
+import CONFIGS from "@configs/index"
+import { chainIdConfig } from "@configs/sites"
 import Input from "../atoms/Input"
 
 interface IProp {
@@ -23,11 +26,20 @@ interface IProp {
 
 const Form = ({ type = "buy", edit = false, onSubmit, ...dataForm }: IProp) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { address } = useWeb3Provider()
+  const { address, signer } = useWeb3Provider()
   const { busdVaultBalance, nakaVaultBalance } = useAllBalances()
   const { nakaCurrentPrice, fee } = useContractMultichain()
   const { formatNumber, removeComma } = Helper
-  const balance = type === "buy" ? busdVaultBalance.text : nakaVaultBalance.text
+
+  const chainRequired = signer?.provider?._network?.chainId ?? 0
+
+  const balance = !edit
+    ? type === "buy"
+      ? busdVaultBalance.text
+      : nakaVaultBalance.text
+    : type === "buy"
+    ? nakaVaultBalance.text
+    : busdVaultBalance.text
 
   const disableButton = useMemo(() => {
     if (
@@ -53,6 +65,45 @@ const Form = ({ type = "buy", edit = false, onSubmit, ...dataForm }: IProp) => {
     dataForm["watch"]("price"),
     dataForm["watch"]("amount")
   ])
+
+  const buttonSubmit = () => (
+    <ButtonToggleIcon
+      startIcon=""
+      endIcon=""
+      disabled={disableButton}
+      text={`${edit ? "edit" : "create"} ${type} NAKA`}
+      handleClick={() => {}}
+      className={`leading-2 mt-5 mb-5 flex h-[50px] w-full items-center  justify-center rounded-md ${
+        type === "buy" ? " bg-varidian-default " : " bg-error-main"
+      } !fill-primary-main font-neue-machina text-sm font-bold capitalize !text-primary-main`}
+      type="submit"
+    />
+  )
+
+  const buttonSwitched = () => (
+    <Typography className=" py-3 text-center uppercase">
+      switch network
+    </Typography>
+  )
+
+  const buttonData = useMemo(() => {
+    if (edit) {
+      if (type === "buy") {
+        if (Number(chainRequired) === Number(CONFIGS.CHAIN.CHAIN_ID)) {
+          return buttonSubmit()
+        }
+      }
+    }
+    if (type === "buy") {
+      if (Number(chainRequired) === Number(chainIdConfig.binance)) {
+        return buttonSubmit()
+      }
+    }
+    if (Number(chainRequired) === Number(CONFIGS.CHAIN.CHAIN_ID)) {
+      return buttonSubmit()
+    }
+    return buttonSwitched()
+  }, [CONFIGS.CHAIN.CHAIN_ID, chainIdConfig])
 
   return (
     <form onSubmit={dataForm["handleSubmit"](onSubmit)}>
@@ -82,7 +133,13 @@ const Form = ({ type = "buy", edit = false, onSubmit, ...dataForm }: IProp) => {
                       maximumFractionDigits: 4
                     })
                   : 0}
-                {type === "buy" ? " busd" : " naka"}
+                {edit
+                  ? type === "sell"
+                    ? " busd"
+                    : " naka"
+                  : type === "sell"
+                  ? " naka"
+                  : " busd"}
               </span>
             </Typography>
             <div className="flex justify-center">
@@ -113,17 +170,7 @@ const Form = ({ type = "buy", edit = false, onSubmit, ...dataForm }: IProp) => {
                 busd
               </span>
             </Typography>
-            <ButtonToggleIcon
-              startIcon=""
-              endIcon=""
-              disabled={disableButton}
-              text={`${edit ? "edit" : "create"} ${type} NAKA`}
-              handleClick={() => {}}
-              className={`leading-2 mt-5 mb-5 flex h-[50px] w-full items-center  justify-center rounded-md ${
-                type === "buy" ? " bg-varidian-default " : " bg-error-main"
-              } !fill-primary-main font-neue-machina text-sm font-bold capitalize !text-primary-main`}
-              type="submit"
-            />
+            {buttonData}
             <Typography className="my-2 text-center font-neue-machina text-sm uppercase text-neutral-500">
               fee {formatEther(fee)} busd
             </Typography>

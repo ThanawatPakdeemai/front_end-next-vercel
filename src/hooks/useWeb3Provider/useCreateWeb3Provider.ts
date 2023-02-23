@@ -24,6 +24,23 @@ const useCreateWeb3Provider = () => {
 
   const { getNetwork } = useGlobal()
 
+  const getCurrentChainId = () => {
+    const _provider = window.ethereum
+    if (_provider === undefined || _provider.request === undefined) {
+      return
+    }
+    try {
+      if (_provider)
+        return _provider
+          .request({
+            method: "eth_chainId"
+          })
+          .then((_chainId) => _chainId)
+    } catch {
+      return undefined
+    }
+  }
+
   const resetChainId = async () => {
     const _provider = window.ethereum
     if (_provider === undefined || _provider.request === undefined) {
@@ -165,11 +182,9 @@ const useCreateWeb3Provider = () => {
     if (_provider === undefined || _provider.request === undefined) {
       return
     }
-    if (_provider && _provider.request) {
+    if (_provider) {
       try {
-        const currentChainId = await _provider.request({
-          method: "eth_chainId"
-        })
+        const currentChainId = await getCurrentChainId()
         setChainId(currentChainId)
         switchNetwork(currentChainId)
         return {
@@ -238,7 +253,7 @@ const useCreateWeb3Provider = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [handleDisconnectWallet])
+  }, [handleDisconnectWallet, provider])
 
   useEffect(() => {
     checkChain()
@@ -272,8 +287,11 @@ const useCreateWeb3Provider = () => {
     }
   }, [])
 
-  // useEffect(() => {
-  // }, [provider])
+  useEffect(() => {
+    getCurrentChainId()?.then((_chainId) => {
+      setChainId(_chainId)
+    })
+  }, [provider])
 
   return {
     accounts,

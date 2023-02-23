@@ -1,9 +1,10 @@
 import {
   useP2PBinance,
   useP2PPolygon,
-  useERC20
+  useERC20,
+  useBEP20
 } from "@feature/contract/containers/hooks/useContract"
-import { ethers, utils } from "ethers"
+import { utils } from "ethers"
 import { BigNumberish } from "@ethersproject/bignumber"
 import { useEffect, useState } from "react"
 import { useWeb3Provider } from "@providers/index"
@@ -42,72 +43,26 @@ const useContractMultichain = () => {
     CONFIGS.CONTRACT_ADDRESS.P2P_POLYGON
   )
 
-  const tokenBinanceContract = useERC20(signer, CONFIGS.CONTRACT_ADDRESS.BEP20)
+  const tokenBinanceContract = useBEP20(signer, CONFIGS.CONTRACT_ADDRESS.BEP20)
 
   const tokenPlygonContract = useERC20(signer, CONFIGS.CONTRACT_ADDRESS.ERC20)
 
   const [isLoading, setIsLoading] = useState(false)
   const [nakaCurrentPrice, setNakaCurrentPrice] = useState<ICurrentNakaData>()
   const [fee, setFee] = useState("00000000000000000")
-  // const [allowNaka, setAllowNaka] = useState(false)
-  const [allowBinance, setAllowBinance] = useState(false)
 
-  const allowNaka = tokenPlygonContract.allowance(
-    account,
-    CONFIGS.CONTRACT_ADDRESS.P2P_POLYGON
-  )
-  // const getAllowanceNaka = () =>
-  //   new Promise((resolve, reject) => {
-  //     if (signer && account) {
-  //       tokenPlygonContract
-  //         // .allowance(
-  //         //   "0x1BFa565383EBb149E6889F99013d1C88da190915",
-  //         //   "0xE913c7C2D9bBBd3afA77e45fcB0dA064c96DB6A4"
-  //         // )
-  //         .allowance(account, CONFIGS.CONTRACT_ADDRESS.P2P_POLYGON)
-  //         .then((_token) => {
-  //           if (_token && _token.toString() > 0) {
-  //             setAllowNaka(true)
-  //             resolve(true)
-  //           } else {
-  //             setAllowNaka(false)
-  //             resolve(false)
-  //           }
-  //         })
-  //         .catch(() => {
-  //           setAllowNaka(false)
-  //         })
-  //     } else reject()
-  //   })
+  const allowNaka =
+    (signer && Number(signer?.provider?._network?.chainId)) ===
+      Number(CONFIGS.CHAIN.CHAIN_ID) &&
+    tokenPlygonContract.allowance(account, CONFIGS.CONTRACT_ADDRESS.P2P_POLYGON)
 
-  // eslint-disable-next-line no-unused-vars
-  const getAllowanceBinance = () =>
-    new Promise((resolve, reject) => {
-      if (signer && account) {
-        tokenBinanceContract
-          .allowance(account, CONFIGS.CONTRACT_ADDRESS.P2P_BINANCE)
-          .then((_token) => {
-            if (_token && _token.toString() > 0) {
-              setAllowBinance(true)
-              resolve(true)
-            } else {
-              setAllowBinance(false)
-              resolve(false)
-            }
-          })
-          .catch(() => {
-            setAllowBinance(false)
-          })
-      } else reject()
-    })
-
-  // useEffect(() => {
-  //   getAllowanceBinance()
-  //   return () => {
-  //     setAllowBinance(false)
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [account, tokenPlygonContract, tokenBinanceContract])
+  const allowBinance =
+    (signer && Number(signer?.provider?._network?.chainId)) ===
+      Number(CONFIGS.CHAIN.BNB_CHAIN_ID) &&
+    tokenBinanceContract.allowance(
+      account,
+      CONFIGS.CONTRACT_ADDRESS.P2P_BINANCE
+    )
 
   const {
     // state: stateCreateOrderSellNaka,
@@ -131,31 +86,25 @@ const useContractMultichain = () => {
     dataOptions
   )
 
-  const sendAllowBinance = (_address: string) =>
+  const sendAllowBinance = () =>
     new Promise((resolve, reject) => {
       if (signer && account) {
         setIsLoading(true)
         tokenBinanceContract
           .approve(
             CONFIGS.CONTRACT_ADDRESS.P2P_BINANCE,
-            ethers.constants.MaxUint256
+            parseUnits("31000000", 18).toString()
           )
-          .send({
-            from: _address
-          })
           .then((_response) => {
             setIsLoading(false)
-            if (_response && Number(_response.toString()) > 0) {
-              setAllowBinance(true)
+            if (_response && _response.hash) {
               resolve(true)
             } else {
-              setAllowBinance(false)
               resolve(false)
             }
           })
           .catch(() => {
             setIsLoading(false)
-            setAllowBinance(false)
             resolve(false)
             const errMsg =
               "Please try again, Confirm the transaction and make sure you are paying enough gas!"

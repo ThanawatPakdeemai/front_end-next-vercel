@@ -25,7 +25,7 @@ const RightSidebarContentEffect = ({
         {content}
       </div>
 
-      <div className="mb-3 rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 md:w-2/6">
+      <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 md:w-2/6">
         {aside}
       </div>
     </div>

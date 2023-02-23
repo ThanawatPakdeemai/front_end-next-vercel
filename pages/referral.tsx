@@ -1,11 +1,14 @@
 import ServicesPageLayout from "@components/templates/ServicesPageLayout"
+import ReferralProgramPage from "@feature/page/ReferralProgramPage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"
 
 export default function Referral() {
   return (
     <>
-      <article className="h-full w-full">COMMING SOON</article>
+      <article className="h-full w-full">
+        <ReferralProgramPage />
+      </article>
     </>
   )
 }

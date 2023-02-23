@@ -12,7 +12,7 @@ const P2PDexList = () => {
   const [page, setPage] = useState<number>(1)
 
   const dataP2p = useP2PDexController({
-    _type: type,
+    _type: type === "buy" ? "sell" : "buy",
     _limit: limit,
     _page: page
   })

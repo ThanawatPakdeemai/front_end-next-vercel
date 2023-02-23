@@ -43,5 +43,7 @@ export const MESSAGES = {
   "order_not_found": "Order not found",
   "copy_text_success": "Copy text success",
   "transaction_processing_order": "Transaction processing order...",
-  "amount_many": "Amount too many"
+  "amount_many": "Amount too many",
+  "approve_error": "Error approve",
+  "approve_processing": "Approve processing"
 }

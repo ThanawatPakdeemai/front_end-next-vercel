@@ -126,7 +126,7 @@ const OrderList = ({ ...props }: IProp) => {
                     <>
                       <div className="flex w-full items-center">
                         {Helper.formatNumber(
-                          type === "buy" ? order.busd_price : order.naka_price,
+                          type === "sell" ? order.busd_price : order.naka_price,
                           { maximumFractionDigits: 4 }
                         )}
                         <div className="ml-2 mr-2 rounded border border-neutral-700 px-2.5 py-1 uppercase text-neutral-400">

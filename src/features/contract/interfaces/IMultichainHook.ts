@@ -18,3 +18,32 @@ export interface IResponseGetFee {
   status: boolean
   data: any
 }
+
+export interface IGasLimit {
+  type: string
+  hex: string
+}
+
+export interface IResponseTransaction {
+  hash: string
+  type: number
+  accessList: null
+  blockHash: null
+  blockNumber: null
+  transactionIndex: null
+  confirmations: number
+  from: string
+  gasPrice: IGasLimit
+  maxPriorityFeePerGas: IGasLimit
+  maxFeePerGas: IGasLimit
+  gasLimit: IGasLimit
+  to: string
+  value: IGasLimit
+  nonce: number
+  data: string
+  r: string
+  s: string
+  v: number
+  creates: null
+  chainId: number
+}

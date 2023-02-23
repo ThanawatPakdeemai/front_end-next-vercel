@@ -11,6 +11,8 @@ import useContractMultichain from "@feature/contract/containers/hooks/useContrac
 import { IResponseGetFee } from "@feature/contract/interfaces/IMultichainHook"
 import useP2PDexCreateOrder from "@feature/p2pDex/containers/hooks/useP2PDexCreateOrder"
 import useLoadingStore from "@stores/loading"
+import { MESSAGES } from "@constants/messages"
+import { useToast } from "@feature/toast/containers"
 import Form from "../molecules/Form"
 
 interface IProp {
@@ -19,15 +21,20 @@ interface IProp {
 const FormCreate = ({ type = "buy" }: IProp) => {
   const { busdVaultBalance, nakaVaultBalance } = useAllBalances()
   const { setClose, setOpen } = useLoadingStore()
-  const { createOrderBuyNaka, createOrderSellNaka, p2pPolygonContract } =
-    useContractMultichain()
+  const {
+    createOrderBuyNaka,
+    createOrderSellNaka,
+    p2pPolygonContract,
+    sendAllowNaka,
+    allowNaka
+  } = useContractMultichain()
   const { mutateCreateOrder } = useP2PDexCreateOrder()
-
+  const { errorToast } = useToast()
   const formData = useForm({
     defaultValues: { price: "", amount: "" }
   })
 
-  const onSubmit = (_data) => {
+  const sendData = (_data) => {
     setOpen("Processing Transaction")
     if (type === "buy") {
       createOrderBuyNaka(_data.price, _data.amount)
@@ -70,6 +77,28 @@ const FormCreate = ({ type = "buy" }: IProp) => {
             }
           } else {
             setClose()
+          }
+        })
+        .catch(() => {
+          setClose()
+        })
+    }
+  }
+
+  const onSubmit = async (_data) => {
+    const allow = await allowNaka
+    if (allow && allow.toString() > 0) {
+      sendData(_data)
+    } else {
+      setOpen(MESSAGES.approve_processing)
+      sendAllowNaka()
+        .then((_res) => {
+          if (_res) {
+            setClose()
+            sendData(_data)
+          } else {
+            setClose()
+            errorToast(MESSAGES.approve_error)
           }
         })
         .catch(() => {

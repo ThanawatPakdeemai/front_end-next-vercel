@@ -59,11 +59,16 @@ const FormEx = ({
   const { address } = useWeb3Provider()
   const { busdVaultBalance, nakaVaultBalance } = useAllBalances()
   const { setClose, setOpen } = useLoadingStore()
-  const { fee, sendRequestSellNaka, p2pPolygonContract } =
-    useContractMultichain()
+  const {
+    fee,
+    sendRequestSellNaka,
+    p2pPolygonContract,
+    allowNaka,
+    sendAllowNaka
+  } = useContractMultichain()
   const { mutateExOrder } = useP2PDexExOrder()
 
-  const { successToast } = useToast()
+  const { successToast, errorToast } = useToast()
 
   const { shortenString, copyClipboard, formatNumber } = Helper
 
@@ -96,7 +101,7 @@ const FormEx = ({
   // !defaultvalue
   useEffect(() => {
     const price =
-      type === "sell"
+      type === "buy"
         ? Number(priceNakaDefault) * Number(amountDefault)
         : Number(priceBusdDefault) * Number(amountDefault)
 
@@ -113,7 +118,7 @@ const FormEx = ({
   // !setValue amount
   useEffect(() => {
     const price =
-      type === "sell"
+      type === "buy"
         ? Number(priceNakaDefault) * Number(watch("amount"))
         : Number(priceBusdDefault) * Number(watch("amount"))
     setValue("price", Number(formatNumber(price, { maximumFractionDigits: 4 })))
@@ -121,16 +126,16 @@ const FormEx = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch("amount")])
 
-  const onSubmit = (_data) => {
-    setOpen(MESSAGES.transaction_processing_order)
+  const sendData = async (_data) => {
+    await setOpen(MESSAGES.transaction_processing_order)
     if (dataEdit) {
-      sendRequestSellNaka(
+      await sendRequestSellNaka(
         dataEdit.order_id,
         dataEdit.wallet_address,
         _data.price,
         _data.amount,
         amountDefault
-      ).then((receipt) => {
+      ).then(async (receipt) => {
         if ((receipt as IResponseGetFee).data) {
           const _receipt = (receipt as IResponseGetFee).data
           if (_receipt && _receipt.logs) {
@@ -160,7 +165,7 @@ const FormEx = ({
               const buyer_address = events.args.buyer
               const seller_address = events.args.seller
 
-              mutateExOrder({
+              await mutateExOrder({
                 _requestId: request_id,
                 _orderId: order_id,
                 _type: type,
@@ -172,10 +177,10 @@ const FormEx = ({
                 _totalPrice: amountDefault.toString(),
                 _address: dataEdit.wallet_address
               })
-                .then((_res) => {
-                  if (refetchData) refetchData()
-                  handleModal()
-                  setClose()
+                .then(async (_res) => {
+                  if (refetchData) await refetchData()
+                  await handleModal()
+                  await setClose()
                 })
                 .catch((_err) => {
                   setClose()
@@ -184,6 +189,28 @@ const FormEx = ({
           }
         }
       })
+    }
+  }
+
+  const onSubmit = async (_data) => {
+    const allow = await allowNaka
+    if (allow && allow.toString() > 0) {
+      sendData(_data)
+    } else {
+      setOpen(MESSAGES.approve_processing)
+      sendAllowNaka()
+        .then((_res) => {
+          if (_res) {
+            setClose()
+            sendData(_data)
+          } else {
+            setClose()
+            errorToast(MESSAGES.approve_error)
+          }
+        })
+        .catch(() => {
+          setClose()
+        })
     }
   }
 
@@ -256,7 +283,9 @@ const FormEx = ({
     {
       title: `price per ${type === "sell" ? "busd" : "naka"}`,
       value: `${
-        type === "buy" ? dataEdit?.busd_price ?? "" : dataEdit?.naka_price ?? ""
+        type === "sell"
+          ? dataEdit?.busd_price ?? ""
+          : dataEdit?.naka_price ?? ""
       } ${type === "sell" ? "busd" : "naka"}`
     },
     {

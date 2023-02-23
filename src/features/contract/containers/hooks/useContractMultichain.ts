@@ -1,6 +1,7 @@
 import {
   useP2PBinance,
-  useP2PPolygon
+  useP2PPolygon,
+  useERC20
 } from "@feature/contract/containers/hooks/useContract"
 import { ethers, utils } from "ethers"
 import { BigNumberish } from "@ethersproject/bignumber"
@@ -11,8 +12,12 @@ import Helper from "@utils/helper"
 import { ICurrentNakaData } from "@feature/inventory/interfaces/IInventoryService"
 import useLoadingStore from "@stores/loading"
 import { useContractFunction } from "@usedapp/core"
-import { IResponseGetFee } from "@feature/contract/interfaces/IMultichainHook"
+import {
+  IResponseGetFee,
+  IResponseTransaction
+} from "@feature/contract/interfaces/IMultichainHook"
 import { MESSAGES } from "@constants/messages"
+import { parseUnits } from "ethers/lib/utils"
 
 export interface IDataOptions {
   transactionName: string
@@ -36,10 +41,73 @@ const useContractMultichain = () => {
     signer,
     CONFIGS.CONTRACT_ADDRESS.P2P_POLYGON
   )
+
+  const tokenBinanceContract = useERC20(signer, CONFIGS.CONTRACT_ADDRESS.BEP20)
+
+  const tokenPlygonContract = useERC20(signer, CONFIGS.CONTRACT_ADDRESS.ERC20)
+
   const [isLoading, setIsLoading] = useState(false)
   const [nakaCurrentPrice, setNakaCurrentPrice] = useState<ICurrentNakaData>()
   const [fee, setFee] = useState("00000000000000000")
-  const [allowNaka, setAllowNaka] = useState(false)
+  // const [allowNaka, setAllowNaka] = useState(false)
+  const [allowBinance, setAllowBinance] = useState(false)
+
+  const allowNaka = tokenPlygonContract.allowance(
+    account,
+    CONFIGS.CONTRACT_ADDRESS.P2P_POLYGON
+  )
+  // const getAllowanceNaka = () =>
+  //   new Promise((resolve, reject) => {
+  //     if (signer && account) {
+  //       tokenPlygonContract
+  //         // .allowance(
+  //         //   "0x1BFa565383EBb149E6889F99013d1C88da190915",
+  //         //   "0xE913c7C2D9bBBd3afA77e45fcB0dA064c96DB6A4"
+  //         // )
+  //         .allowance(account, CONFIGS.CONTRACT_ADDRESS.P2P_POLYGON)
+  //         .then((_token) => {
+  //           if (_token && _token.toString() > 0) {
+  //             setAllowNaka(true)
+  //             resolve(true)
+  //           } else {
+  //             setAllowNaka(false)
+  //             resolve(false)
+  //           }
+  //         })
+  //         .catch(() => {
+  //           setAllowNaka(false)
+  //         })
+  //     } else reject()
+  //   })
+
+  // eslint-disable-next-line no-unused-vars
+  const getAllowanceBinance = () =>
+    new Promise((resolve, reject) => {
+      if (signer && account) {
+        tokenBinanceContract
+          .allowance(account, CONFIGS.CONTRACT_ADDRESS.P2P_BINANCE)
+          .then((_token) => {
+            if (_token && _token.toString() > 0) {
+              setAllowBinance(true)
+              resolve(true)
+            } else {
+              setAllowBinance(false)
+              resolve(false)
+            }
+          })
+          .catch(() => {
+            setAllowBinance(false)
+          })
+      } else reject()
+    })
+
+  // useEffect(() => {
+  //   getAllowanceBinance()
+  //   return () => {
+  //     setAllowBinance(false)
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [account, tokenPlygonContract, tokenBinanceContract])
 
   const {
     // state: stateCreateOrderSellNaka,
@@ -63,11 +131,11 @@ const useContractMultichain = () => {
     dataOptions
   )
 
-  const allowBinance = (_address: string) =>
+  const sendAllowBinance = (_address: string) =>
     new Promise((resolve, reject) => {
       if (signer && account) {
         setIsLoading(true)
-        p2pBinanceContract
+        tokenBinanceContract
           .approve(
             CONFIGS.CONTRACT_ADDRESS.P2P_BINANCE,
             ethers.constants.MaxUint256
@@ -75,12 +143,20 @@ const useContractMultichain = () => {
           .send({
             from: _address
           })
-          .then(() => {
+          .then((_response) => {
             setIsLoading(false)
-            resolve("Contract Approved!")
+            if (_response && Number(_response.toString()) > 0) {
+              setAllowBinance(true)
+              resolve(true)
+            } else {
+              setAllowBinance(false)
+              resolve(false)
+            }
           })
           .catch(() => {
             setIsLoading(false)
+            setAllowBinance(false)
+            resolve(false)
             const errMsg =
               "Please try again, Confirm the transaction and make sure you are paying enough gas!"
             reject(errMsg)
@@ -88,25 +164,26 @@ const useContractMultichain = () => {
       } else reject()
     })
 
-  const checkAllowNaka = () =>
+  const sendAllowNaka = () =>
     new Promise((resolve) => {
       setIsLoading(true)
-      p2pPolygonContract
-        .approve(account, CONFIGS.CONTRACT_ADDRESS.P2P_POLYGON, {
-          transactionName: "Wrap",
-          chainId: CONFIGS.CHAIN.CHAIN_ID,
-          privateKey: ""
-        })
-        .then((_response: string) => {
+      tokenPlygonContract
+        .approve(
+          CONFIGS.CONTRACT_ADDRESS.P2P_POLYGON,
+          parseUnits("180000000", 18).toString()
+        )
+        .then((_response: IResponseTransaction) => {
           setIsLoading(false)
-          resolve({
-            status: true,
-            data: Helper.WeiToNumber(_response.toString())
-          })
+
+          if (_response && _response.hash) {
+            resolve(true)
+          } else {
+            resolve(false)
+          }
         })
         .catch((_error: Error) => {
           setIsLoading(false)
-          resolve({ status: false, data: 0 })
+          resolve(false)
         })
     })
 
@@ -272,34 +349,32 @@ const useContractMultichain = () => {
   }
 
   const getFeeData = () => {
+    // p2pPolygonContract
+    //   .connect(signer)
+    //   .fee()
+    //   .then(async (_fee) => {
+    //     setFee(await fee.toString())
+    //   })
     getFee().then((_response) => {
       if (_response) setFee((_response as IResponseGetFee).data)
     })
   }
 
-  // eslint-disable-next-line no-unused-vars
-  const getAllowNaka = () => {
-    checkAllowNaka().then((_response) => {
-      if (_response) {
-        setAllowNaka((_response as IResponseGetFee).data as boolean)
-      }
-    })
-  }
   useEffect(() => {
     priceCurrentNaka()
     getFeeData()
-    // getAllowNaka()
     return () => {
       setNakaCurrentPrice(undefined)
       setFee("00000000000000000")
-      setAllowNaka(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signer])
 
   return {
     allowBinance,
-    checkAllowNaka,
+    allowNaka,
+    sendAllowNaka,
+    sendAllowBinance,
     createOrderSellNaka,
     createOrderBuyNaka,
     sendRequestBuyNaka,
@@ -310,7 +385,6 @@ const useContractMultichain = () => {
     nakaCurrentPrice,
     cancelOrderSellNaka,
     fee,
-    allowNaka,
     editOrderSellNaka,
     sendRequestSellNaka
   }

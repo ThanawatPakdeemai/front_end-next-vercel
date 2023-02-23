@@ -1,3 +1,16 @@
+import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+
+export interface IFormData {
+  player_id: string
+  qty: number
+  currency_id: string
+  currency: ITokenContract
+  nakaPerItem: number
+  item: IGameItemListData
+  item_id: string
+}
+
 export interface IBuyItems {
   _player_id: string
   _item_id: string

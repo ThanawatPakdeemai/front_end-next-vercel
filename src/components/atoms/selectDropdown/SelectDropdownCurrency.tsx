@@ -1,6 +1,6 @@
 import * as React from "react"
 import MenuList from "@mui/material/MenuList"
-import { Box, ListItemText, MenuItem } from "@mui/material"
+import { Box, ListItemIcon, ListItemText, MenuItem } from "@mui/material"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 
 interface IProp {
@@ -26,7 +26,7 @@ const SelectDropdownCurrency = ({
     {details.map((item, index: number) => (
       <Box
         key={Number(index)}
-        className="my-1"
+        className="my-1 uppercase"
         onClick={() => {
           if (onChange) {
             onChange(item)
@@ -42,12 +42,15 @@ const SelectDropdownCurrency = ({
         <MenuItem
           key={item.address}
           aria-label={item.address}
-          // sx={{
-          //   color: active ? "#E1E2E2" : null,
-          //   backgroundColor: active ? "#010101" : null
-          // }}
+          sx={
+            {
+              // color: active ? "#E1E2E2" : null,
+              // backgroundColor: active ? "#010101" : null
+            }
+          }
         >
-          <ListItemText>{item.symbol}</ListItemText>
+          <ListItemIcon className="text-center">{item.symbol}</ListItemIcon>
+          <ListItemText className="ml-2">{item.tokenName}</ListItemText>
         </MenuItem>
       </Box>
     ))}

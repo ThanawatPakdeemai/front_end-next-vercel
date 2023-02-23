@@ -40,7 +40,7 @@ const DropdownListItem = ({ list, className, onChangeSelect }: IProp) => {
                   className={` ${className}`} // m-auto block
                 >
                   <ButtonDropdown
-                    className={`${className} `}
+                    className={`${className} uppercase`}
                     isOpen={popupState.isOpen}
                     leftContent={
                       <>

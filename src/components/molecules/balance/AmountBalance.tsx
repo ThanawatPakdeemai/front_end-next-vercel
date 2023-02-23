@@ -2,6 +2,7 @@ import { useRouter } from "next/router"
 import React, { ReactNode } from "react"
 import SyncAltIcon from "@mui/icons-material/SyncAlt"
 import { TokenSupport } from "@feature/wallet/containers/hooks/useWalletContoller"
+import { IBalanceDisplay } from "@hooks/useAllBalances"
 import ButtonIcon from "../../atoms/button/ButtonIcon"
 
 const iconmotion = {
@@ -18,7 +19,7 @@ const iconmotion = {
 }
 interface IProps {
   icon: ReactNode
-  balance: string | number | ReactNode
+  balance: string | number | ReactNode | IBalanceDisplay
   link?: TokenSupport
 }
 const AmountBalance = ({ icon, balance, link }: IProps) => {
@@ -28,7 +29,9 @@ const AmountBalance = ({ icon, balance, link }: IProps) => {
       <div className="mb-[5px] flex items-center  justify-between">
         <div className="flex h-[40px] flex-1 items-center rounded-lg bg-neutral-900 px-3">
           {icon}
-          <p className="ml-6 text-sm font-bold text-white-primary">{balance}</p>
+          <p className="ml-6 text-sm font-bold text-white-primary">
+            {(balance as IBalanceDisplay).text || "N/A"}
+          </p>
         </div>
         <ButtonIcon
           variants={iconmotion}

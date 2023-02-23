@@ -4,10 +4,16 @@ import { GAME_PLAY_HISTORY } from "@configs/crumb"
 import dynamic from "next/dynamic"
 
 const ProfileLayout = dynamic(
-  () => import("@components/templates/ProfileLayout")
+  () => import("@components/templates/ProfileLayout"),
+  {
+    suspense: true
+  }
 )
 const HistoryTable = dynamic(
-  () => import("@feature/history/components/organisms/HistoryTable")
+  () => import("@feature/history/components/organisms/HistoryTable"),
+  {
+    suspense: true
+  }
 )
 
 const HistoryPage = () => (

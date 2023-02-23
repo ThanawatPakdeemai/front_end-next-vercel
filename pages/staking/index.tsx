@@ -6,15 +6,26 @@ import dynamic from "next/dynamic"
 import useGlobalStaking from "@feature/staking/containers/hook/useStakingController"
 import useTabContext from "@feature/tab/contexts/useTabContext"
 
-const HeadStaking = dynamic(() => import("@components/molecules/HeadStaking"))
+const HeadStaking = dynamic(() => import("@components/molecules/HeadStaking"), {
+  suspense: true
+})
 const ServicesPageLayout = dynamic(
-  () => import("@components/templates/ServicesPageLayout")
+  () => import("@components/templates/ServicesPageLayout"),
+  {
+    suspense: true
+  }
 )
 const FlexibleAPRContent = dynamic(
-  () => import("@feature/staking/components/organisms/FlexibleAPRContent")
+  () => import("@feature/staking/components/organisms/FlexibleAPRContent"),
+  {
+    suspense: true
+  }
 )
 const StakingList = dynamic(
-  () => import("@feature/staking/components/templates/StakingList")
+  () => import("@feature/staking/components/templates/StakingList"),
+  {
+    suspense: true
+  }
 )
 
 export default function StakingPage() {

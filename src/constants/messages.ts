@@ -45,5 +45,7 @@ export const MESSAGES = {
   "transaction_processing_order": "Transaction processing order...",
   "amount_many": "Amount too many",
   "approve_error": "Error approve",
-  "approve_processing": "Approve processing"
+  "approve_processing": "Approve processing",
+  "copy": "Copied to clipboard",
+  "success": "Success"
 }

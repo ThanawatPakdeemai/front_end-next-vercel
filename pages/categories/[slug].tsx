@@ -10,13 +10,22 @@ import useCategories from "@hooks/useCategories"
 import useGlobal from "@hooks/useGlobal"
 
 const SkeletonCard = dynamic(
-  () => import("@components/atoms/skeleton/SkeletonCard")
+  () => import("@components/atoms/skeleton/SkeletonCard"),
+  {
+    suspense: true
+  }
 )
 const GamePageWithBreadcrumb = dynamic(
-  () => import("@components/templates/GamePageWithBreadcrumb")
+  () => import("@components/templates/GamePageWithBreadcrumb"),
+  {
+    suspense: true
+  }
 )
 const GameCard = dynamic(
-  () => import("@feature/game/components/molecules/GameCard")
+  () => import("@feature/game/components/molecules/GameCard"),
+  {
+    suspense: true
+  }
 )
 
 export default function CatogoriesPageDetails() {

@@ -3,7 +3,9 @@ import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 
-const HomePage = dynamic(() => import("@feature/page/homePage"))
+const HomePage = dynamic(() => import("@feature/page/homePage"), {
+  suspense: true
+})
 
 export default function Home() {
   return (

@@ -4,10 +4,16 @@ import { Box } from "@mui/material"
 import dynamic from "next/dynamic"
 
 const NotificationList = dynamic(
-  () => import("@feature/notification/components/organisms/NotificationList")
+  () => import("@feature/notification/components/organisms/NotificationList"),
+  {
+    suspense: true
+  }
 )
 const ProfileLayout = dynamic(
-  () => import("@components/templates/ProfileLayout")
+  () => import("@components/templates/ProfileLayout"),
+  {
+    suspense: true
+  }
 )
 
 export default function Notification() {

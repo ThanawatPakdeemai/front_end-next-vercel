@@ -5,9 +5,17 @@ import Meta from "@src/meta"
 import React from "react"
 import dynamic from "next/dynamic"
 
-const IconArrowRight = dynamic(() => import("@components/icons/arrowRightIcon"))
+const IconArrowRight = dynamic(
+  () => import("@components/icons/arrowRightIcon"),
+  {
+    suspense: true
+  }
+)
 const ButtonToggleIcon = dynamic(
-  () => import("@components/molecules/gameSlide/ButtonToggleIcon")
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true
+  }
 )
 
 const CustomPage404 = () => {

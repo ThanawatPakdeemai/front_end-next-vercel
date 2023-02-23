@@ -3,13 +3,22 @@ import { ReactElement } from "react"
 import dynamic from "next/dynamic"
 
 const FixedWidthContent = dynamic(
-  () => import("@components/templates/contents/FixedWidthContent")
+  () => import("@components/templates/contents/FixedWidthContent"),
+  {
+    suspense: true
+  }
 )
 const ServicesPageLayout = dynamic(
-  () => import("@components/templates/ServicesPageLayout")
+  () => import("@components/templates/ServicesPageLayout"),
+  {
+    suspense: true
+  }
 )
 const P2PDexListPage = dynamic(
-  () => import("@feature/page/p2pDex/P2PDexListPage")
+  () => import("@feature/page/p2pDex/P2PDexListPage"),
+  {
+    suspense: true
+  }
 )
 
 export default function P2PDex() {

@@ -5,10 +5,16 @@ import dynamic from "next/dynamic"
 import useGlobal from "@hooks/useGlobal"
 
 const GamePageLayout = dynamic(
-  () => import("@components/templates/GamePageLayout")
+  () => import("@components/templates/GamePageLayout"),
+  {
+    suspense: true
+  }
 )
 const SkeletonPublisherCard = dynamic(
-  () => import("@components/atoms/skeleton/SkeletonPublisherCard")
+  () => import("@components/atoms/skeleton/SkeletonPublisherCard"),
+  {
+    suspense: true
+  }
 )
 
 export default function PublisherDetails() {

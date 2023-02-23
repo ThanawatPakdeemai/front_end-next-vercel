@@ -280,7 +280,6 @@ const ReferralProgramPage = () => {
                         </div>
                       </div>
                     </TableCell>
-                    block
                   </TableRow>
                 </TableHead>
                 <TableBody sx={{ display: "" }}>

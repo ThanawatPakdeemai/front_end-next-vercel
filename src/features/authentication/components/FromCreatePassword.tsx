@@ -52,11 +52,22 @@ const KeyFramesAnticlockwise = styled("div")({
   animation: "rotation 10s infinite linear"
 })
 
-const FromCreatePassword = () => {
+interface IProp {
+  email: string
+  token: string
+  // handleClose?: () => void
+}
+
+const FromCreatePassword = ({ email, token }: IProp) => {
   const [showPassword, setShowPassword] = useState(false)
   const [characterUppercase, setCharacterUppercase] = useState(true)
   const [characterPasswordLength, setCharacterPasswordLength] = useState(true)
-  const { register, watch } = useForm({
+  const {
+    watch,
+    register,
+    formState: { errors },
+    handleSubmit
+  } = useForm({
     defaultValues: {
       confirmPassword: "",
       password: ""
@@ -65,6 +76,9 @@ const FromCreatePassword = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [passwordCorrect, setPasswordCorrect] = useState(false)
   const patternPasswordUppercase = /[A-Z]/
+  const [formSubmitErrors, setFormSubmitErrors] = useState(false)
+  const [createPassword, setCreatePassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
   const handleMouseDownPassword = (
@@ -94,6 +108,11 @@ const FromCreatePassword = () => {
     }
   }
 
+  const onSubmitConfirm = () => {
+    setFormSubmitErrors(true)
+    // console.log("Hollo", createPassword, confirmPassword)
+  }
+
   const isConfirmPassword = (_password: string, _confirmPassword: string) => {
     if (_password === _confirmPassword) {
       setPasswordCorrect(true)
@@ -109,6 +128,9 @@ const FromCreatePassword = () => {
 
   return (
     <Box>
+      <div>
+        {createPassword},{confirmPassword},{email},{token}
+      </div>
       <Box className="py-5">
         <Grid
           item
@@ -184,7 +206,10 @@ const FromCreatePassword = () => {
                 alignItems: "center"
               }}
             >
-              <form className="h-full">
+              <form
+                className="h-full"
+                onSubmit={handleSubmit(onSubmitConfirm)}
+              >
                 <Box className="flex h-[600px] w-[333px] items-center">
                   <Grid
                     container
@@ -209,22 +234,22 @@ const FromCreatePassword = () => {
                       </Box>
                       <Divider className="mx-0 mt-5 mb-8" />
                       <>
-                        {/* {formSubmitErrors && (
-                      <motion.div
-                        animate={{
-                          opacity: 1,
-                          marginTop: -20,
-                          marginBottom: 2
-                        }}
-                      >
-                        <Alert
-                          severity="error"
-                          className="rounded-lg"
-                        >
-                          The form is filled with incorrect information.
-                        </Alert>
-                      </motion.div>
-                    )} */}
+                        {formSubmitErrors && (
+                          <motion.div
+                            animate={{
+                              opacity: 1,
+                              marginTop: -20,
+                              marginBottom: 2
+                            }}
+                          >
+                            <Alert
+                              severity="error"
+                              className="rounded-lg"
+                            >
+                              The form is filled with incorrect information.
+                            </Alert>
+                          </motion.div>
+                        )}
                       </>
                       <TextField
                         className="w-full pt-3.5"
@@ -235,6 +260,8 @@ const FromCreatePassword = () => {
                         onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                           e.target.value = e.target.value.slice(0, 128)
                           isCharacters(e.target.value)
+                          // console.log("value", e.target.value)
+                          setCreatePassword(e.target.value)
                         }}
                         {...register("password")}
                         sx={{
@@ -277,7 +304,7 @@ const FromCreatePassword = () => {
                           )
                         }}
                       />
-                      {/* {errors.password && (
+                      {errors.password && (
                         <motion.div
                           initial={{ opacity: 0, marginBottom: 0 }}
                           animate={{
@@ -292,7 +319,7 @@ const FromCreatePassword = () => {
                             Password is a required field
                           </Alert>
                         </motion.div>
-                      )} */}
+                      )}
                       {characterPasswordLength === false && (
                         <motion.div
                           initial={{ opacity: 0, marginBottom: 0 }}
@@ -335,6 +362,8 @@ const FromCreatePassword = () => {
                         onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                           e.target.value = e.target.value.slice(0, 128)
                           isCharacters(e.target.value)
+                          // console.log("value", e.target.value)
+                          setConfirmPassword(e.target.value)
                         }}
                         {...register("confirmPassword")}
                         sx={{
@@ -380,7 +409,7 @@ const FromCreatePassword = () => {
                           )
                         }}
                       />
-                      {/* {errors.confirmPassword && (
+                      {errors.confirmPassword && (
                         <motion.div
                           initial={{ opacity: 0, marginBottom: 0 }}
                           animate={{
@@ -395,7 +424,7 @@ const FromCreatePassword = () => {
                             ConfirmPassword is a required field
                           </Alert>
                         </motion.div>
-                      )} */}
+                      )}
                       {!passwordCorrect && (
                         <motion.div
                           initial={{ opacity: 0, marginBottom: 0 }}

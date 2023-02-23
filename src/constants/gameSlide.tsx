@@ -216,13 +216,14 @@ const f2pMenu: ISlideList[] = [
     label: "story mode",
     type: "story-mode",
     className: "w-[166px]"
-  },
-  {
-    id: "15",
-    label: "must try",
-    type: "must-try",
-    className: "w-[166px]"
   }
+  // unnessesary use
+  // {
+  //   id: "15",
+  //   label: "must try",
+  //   type: "must-try",
+  //   className: "w-[166px]"
+  // }
 ]
 
 export const F2PHeaderMenu: IHeaderSlide = {

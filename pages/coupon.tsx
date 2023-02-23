@@ -1,7 +1,16 @@
-import ServicesPageLayout from "@components/templates/ServicesPageLayout"
-import CouponPage from "@feature/page/CouponPage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"
+import dynamic from "next/dynamic"
+
+const ServicesPageLayout = dynamic(
+  () => import("@components/templates/ServicesPageLayout"),
+  {
+    suspense: true
+  }
+)
+const CouponPage = dynamic(() => import("@feature/page/CouponPage"), {
+  suspense: true
+})
 
 export default function Coupon() {
   return (

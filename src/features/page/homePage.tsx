@@ -150,8 +150,8 @@ const Home = () => {
               classNameSecond="bg-info-light"
               imageClassNameSecond="scale-[1.35]"
               iconBtn={<IReferrals />}
-              textBtn="Referrals"
-              href="/referrals"
+              textBtn="Referral"
+              href="/referral"
               srcMain={IMAGES.frontReferrals.src}
               altMain={IMAGES.frontReferrals.alt}
               srcSecond={IMAGES.backReferrals.src}

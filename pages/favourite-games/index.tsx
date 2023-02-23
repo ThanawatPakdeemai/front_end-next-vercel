@@ -1,7 +1,19 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import GamePageLayout from "@components/templates/GamePageLayout"
-import FavouriteGamesPage from "@feature/page/games/FavouriteGamesPage"
+import dynamic from "next/dynamic"
+
+const GamePageLayout = dynamic(
+  () => import("@components/templates/GamePageLayout"),
+  {
+    suspense: true
+  }
+)
+const FavouriteGamesPage = dynamic(
+  () => import("@feature/page/games/FavouriteGamesPage"),
+  {
+    suspense: true
+  }
+)
 
 export default function FavouriteGames() {
   return (

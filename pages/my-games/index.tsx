@@ -3,9 +3,14 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 
 const GamePageLayout = dynamic(
-  () => import("@components/templates/GamePageLayout")
+  () => import("@components/templates/GamePageLayout"),
+  {
+    suspense: true
+  }
 )
-const MyGamesPage = dynamic(() => import("@feature/page/games/MyGamesPage"))
+const MyGamesPage = dynamic(() => import("@feature/page/games/MyGamesPage"), {
+  suspense: true
+})
 
 export default function MyGames() {
   return (

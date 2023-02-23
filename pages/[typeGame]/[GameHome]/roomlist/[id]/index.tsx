@@ -4,10 +4,16 @@ import { useRouter } from "next/router"
 import dynamic from "next/dynamic"
 
 const GameRoomLayout = dynamic(
-  () => import("@components/templates/GameRoomLayout")
+  () => import("@components/templates/GameRoomLayout"),
+  {
+    suspense: true
+  }
 )
 const GameRoomWaitingPage = dynamic(
-  () => import("@feature/page/games/gameRoomWaitingPage")
+  () => import("@feature/page/games/gameRoomWaitingPage"),
+  {
+    suspense: true
+  }
 )
 
 export default function GameRoomList() {

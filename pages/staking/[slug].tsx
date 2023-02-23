@@ -3,12 +3,20 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"
 import dynamic from "next/dynamic"
 
-const HeadStaking = dynamic(() => import("@components/molecules/HeadStaking"))
+const HeadStaking = dynamic(() => import("@components/molecules/HeadStaking"), {
+  suspense: true
+})
 const ServicesPageLayout = dynamic(
-  () => import("@components/templates/ServicesPageLayout")
+  () => import("@components/templates/ServicesPageLayout"),
+  {
+    suspense: true
+  }
 )
 const FixedAPRContent = dynamic(
-  () => import("@feature/staking/components/organisms/FixedAPRContent")
+  () => import("@feature/staking/components/organisms/FixedAPRContent"),
+  {
+    suspense: true
+  }
 )
 
 export default function FixedStakingPageDetails() {

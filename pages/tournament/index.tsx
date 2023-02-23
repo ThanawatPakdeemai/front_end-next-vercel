@@ -3,7 +3,10 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 
 const TournamentLayout = dynamic(
-  () => import("@components/templates/TournamentLayout")
+  () => import("@components/templates/TournamentLayout"),
+  {
+    suspense: true
+  }
 )
 
 export default function Tournament() {

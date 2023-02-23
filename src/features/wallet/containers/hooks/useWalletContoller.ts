@@ -215,7 +215,7 @@ const useWalletContoller = () => {
         // FOR NAKA
         const allowance = await checkAllowNaka(currentChainSelected.address)
         if (BNToNumber(allowance as string) === 0) {
-          const allowResult = await allowNaka(_tokenAddress)
+          const allowResult = await allowNaka(currentChainSelected.address)
           successToast(allowResult as string)
         }
         handleWalletProcess(_method, currentChainSelected.address)

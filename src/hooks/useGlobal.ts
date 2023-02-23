@@ -150,7 +150,7 @@ const useGlobal = (
         return CONFIGS.CONTRACT_ADDRESS.BEP20
 
       default:
-        CONFIGS.CONTRACT_ADDRESS.ERC20
+        return CONFIGS.CONTRACT_ADDRESS.ERC20
     }
   }
 

@@ -1,15 +1,23 @@
+import dynamic from "next/dynamic"
 import { PaginationNaka } from "@components/atoms/pagination"
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import GamePageWithBreadcrumb from "@components/templates/GamePageWithBreadcrumb"
 import { P2EHeaderMenu } from "@constants/gameSlide"
-import GameCard from "@feature/game/components/molecules/GameCard"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import useCategories from "@hooks/useCategories"
-import useGlobal from "@hooks/useGlobal"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useRouter } from "next/router"
 import { ReactElement, useEffect, useState } from "react"
 import { v4 as uuid } from "uuid"
+import useCategories from "@hooks/useCategories"
+import useGlobal from "@hooks/useGlobal"
+
+const SkeletonCard = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCard")
+)
+const GamePageWithBreadcrumb = dynamic(
+  () => import("@components/templates/GamePageWithBreadcrumb")
+)
+const GameCard = dynamic(
+  () => import("@feature/game/components/molecules/GameCard")
+)
 
 export default function CatogoriesPageDetails() {
   const router = useRouter()

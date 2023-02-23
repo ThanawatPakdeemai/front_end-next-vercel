@@ -10,13 +10,11 @@ import HrLine from "@components/icons/HrLine"
 import useAllBalances from "@hooks/useAllBalances"
 import { useForm } from "react-hook-form"
 import useContractMultichain from "@feature/contract/containers/hooks/useContractMultichain"
-import { IResponseGetFee } from "@feature/contract/interfaces/IMultichainHook"
 
 import Helper from "@utils/helper"
 import useLoadingStore from "@stores/loading"
 import { MESSAGES } from "@constants/messages"
 import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import useP2PDexEditOrder from "@feature/p2pDex/containers/hooks/useP2PDexEditOrder"
 import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import {
   IMultiData,
@@ -51,8 +49,7 @@ const FormEdit = ({
 }: IProp) => {
   const { busdVaultBalance, nakaVaultBalance } = useAllBalances()
   const { setClose, setOpen } = useLoadingStore()
-  const { mutateEditOrder } = useP2PDexEditOrder()
-  const { editOrderSellNaka, p2pPolygonContract, allowNaka, sendAllowNaka } =
+  const { allowNaka, sendAllowNaka, submitDataEditSellNaka } =
     useContractMultichain()
   const { successToast, errorToast } = useToast()
 
@@ -70,8 +67,7 @@ const FormEdit = ({
   })
 
   const {
-    setValue,
-    watch
+    setValue
     // formState: { errors }
   } = formData
 
@@ -91,66 +87,22 @@ const FormEdit = ({
       setValue("price", 0)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataEdit, watch("amount")])
+  }, [dataEdit])
 
   const sendData = (_data) => {
-    if (dataEdit) {
-      editOrderSellNaka(_data.price, _data.amount, dataEdit?.order_id).then(
-        async (_receipt) => {
-          setOpen(MESSAGES.transaction_processing_order)
-          const receipt = (_receipt as IResponseGetFee).data
-          if (
-            _receipt &&
-            (_receipt as IResponseGetFee).status &&
-            receipt.logs
-          ) {
-            const tx_hash = receipt.transactionHash
-            const _events = receipt.logs.find(
-              (log) =>
-                log.address.toLowerCase() ===
-                p2pPolygonContract.address.toLowerCase()
-            )
-
-            const events = p2pPolygonContract.interface.parseLog(_events)
-
-            if (events) {
-              const order_id =
-                type === "buy"
-                  ? events.args.orderBuyId
-                  : events.args.orderSellId
-              const busd_price =
-                type === "buy" ? events.args.busdPrice?.toString() : "0" // Only binace
-              const naka_price =
-                type === "buy" ? "0" : events.args.nakaPrice?.toString()
-              const naka_amount = events.args.amount?.toString()
-              const total_price =
-                type === "buy" ? events.args.totalPriceInOrder?.toString() : "0" // Only polygon
-              const { wallet_address } = dataEdit
-              mutateEditOrder({
-                _orderId: order_id,
-                _type: type,
-                _busdPrice: busd_price,
-                _nakaPrice: naka_price,
-                _nakaAmount: naka_amount,
-                _totalPrice: total_price,
-                _address: wallet_address,
-                _txHash: tx_hash
-              })
-                .then((_res) => {
-                  if (refetchData) refetchData()
-                  setClose()
-                  handleModal()
-                })
-                .catch((_err) => {
-                  setClose()
-                })
-            }
-          }
+    if (dataEdit && type === "buy") {
+      submitDataEditSellNaka(_data, type, dataEdit)
+        .then((_res) => {
+          if (refetchData) refetchData()
           setClose()
-        }
-      )
+          handleModal()
+        })
+        .catch((_err) => {
+          setClose()
+        })
     }
   }
+
   const onSubmit = async (_data) => {
     const allow = await allowNaka
     if (allow && allow.toString() > 0) {

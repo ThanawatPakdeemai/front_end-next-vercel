@@ -27,6 +27,10 @@ interface IProp {
   isFetching: boolean
   refetch: () => void
   type: "buy" | "sell"
+  sort?: number
+  setSort: (_data) => void
+  sortName: string
+  setSortName: (_data) => void
 }
 const MyOrderList = ({ ...props }: IProp) => {
   const { mutateCancelP2PDexOrder } = useP2PDexCancelSellNaka()
@@ -36,17 +40,44 @@ const MyOrderList = ({ ...props }: IProp) => {
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [dataEdit, setDataEdit] = useState<IMultiData>()
 
-  const { data, isLoading, isFetching, type, refetch } = props
+  const {
+    data,
+    isLoading,
+    isFetching,
+    type,
+    refetch,
+    sort,
+    setSort,
+    setSortName
+  } = props
   const title = [
     { title: "order id", arrowIcon: true, keyUp: true, keyDown: false },
     { title: "seller address", arrowIcon: true, keyUp: true, keyDown: false },
     {
       title: `price per ${type === "sell" ? "naka" : "busd"}`,
       arrowIcon: true,
-      keyUp: true,
-      keyDown: false
+      keyUp: type === "buy" ? sort === 1 : sort === 1,
+      keyDown: type === "buy" ? sort === 1 : sort === -1,
+      onClick: () => {
+        if (type === "sell") {
+          setSortName("naka_price")
+          setSort(sort === 1 ? -1 : 1)
+        } else {
+          setSortName("busd_price")
+          setSort(sort === 1 ? -1 : 1)
+        }
+      }
     },
-    { title: "available", arrowIcon: true, keyUp: true, keyDown: false },
+    {
+      title: "available",
+      arrowIcon: true,
+      keyUp: sort === 1,
+      keyDown: sort === -1,
+      onClick: () => {
+        setSortName("naka_amount")
+        setSort(sort === 1 ? -1 : 1)
+      }
+    },
     {
       title: <div className="flex w-full items-center justify-end">{type}</div>,
       arrowIcon: false

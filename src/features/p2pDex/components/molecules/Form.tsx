@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import HrLine from "@components/icons/HrLine"
 import { Alert, Typography } from "@mui/material"
-import { memo, useMemo } from "react"
+import { memo, useCallback, useMemo } from "react"
 import INaka from "@components/icons/Naka"
 import Helper from "@utils/helper"
 import { MESSAGES } from "@constants/messages"
@@ -66,18 +66,21 @@ const Form = ({ type = "buy", edit = false, onSubmit, ...dataForm }: IProp) => {
     dataForm["watch"]("amount")
   ])
 
-  const buttonSubmit = () => (
-    <ButtonToggleIcon
-      startIcon=""
-      endIcon=""
-      disabled={disableButton}
-      text={`${edit ? "edit" : "create"} ${type} NAKA`}
-      handleClick={() => {}}
-      className={`leading-2 mt-5 mb-5 flex h-[50px] w-full items-center  justify-center rounded-md ${
-        type === "buy" ? " bg-varidian-default " : " bg-error-main"
-      } !fill-primary-main font-neue-machina text-sm font-bold capitalize !text-primary-main`}
-      type="submit"
-    />
+  const buttonSubmit = useCallback(
+    () => (
+      <ButtonToggleIcon
+        startIcon=""
+        endIcon=""
+        disabled={disableButton}
+        text={`${edit ? "edit" : "create"} ${type} NAKA`}
+        handleClick={() => {}}
+        className={`leading-2 mt-5 mb-5 flex h-[50px] w-full items-center  justify-center rounded-md ${
+          type === "buy" ? " bg-varidian-default " : " bg-error-main"
+        } !fill-primary-main font-neue-machina text-sm font-bold capitalize !text-primary-main`}
+        type="submit"
+      />
+    ),
+    [type, disableButton]
   )
 
   const buttonSwitched = () => (
@@ -92,18 +95,20 @@ const Form = ({ type = "buy", edit = false, onSubmit, ...dataForm }: IProp) => {
         if (Number(chainRequired) === Number(CONFIGS.CHAIN.CHAIN_ID)) {
           return buttonSubmit()
         }
+        return buttonSwitched()
       }
     }
     if (type === "buy") {
       if (Number(chainRequired) === Number(chainIdConfig.binance)) {
         return buttonSubmit()
       }
+      return buttonSwitched()
     }
     if (Number(chainRequired) === Number(CONFIGS.CHAIN.CHAIN_ID)) {
       return buttonSubmit()
     }
     return buttonSwitched()
-  }, [CONFIGS.CHAIN.CHAIN_ID, chainIdConfig])
+  }, [CONFIGS.CHAIN.CHAIN_ID, chainIdConfig, type, edit])
 
   return (
     <form onSubmit={dataForm["handleSubmit"](onSubmit)}>

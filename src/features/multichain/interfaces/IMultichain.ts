@@ -52,13 +52,19 @@ export interface IMultiOrderListDataServ extends IFormatService, IMessage {
 export interface IMultiOrderListServ extends IFormatService, IMessage {
   data: IMultiTrustOrder[]
 }
-
-export interface IGetP2PDexOrderByAddr extends ILimitPage {
-  _address: string
+export interface ISort {
+  _sort: string
+  _sort_value: number
 }
 
-export interface IGetP2PDexOrderList extends ILimitPage {
+export interface IGetP2PDexOrderList extends ILimitPage, ISort {
   _type: string
+}
+export interface IGetP2PDexOrderByAddr
+  extends ILimitPage,
+    ISort,
+    IGetP2PDexOrderList {
+  _address: string
 }
 
 export interface ICreateP2PDexOrder {

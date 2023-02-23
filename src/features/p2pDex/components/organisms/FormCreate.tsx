@@ -8,8 +8,7 @@ import HrLine from "@components/icons/HrLine"
 import useAllBalances from "@hooks/useAllBalances"
 import { useForm } from "react-hook-form"
 import useContractMultichain from "@feature/contract/containers/hooks/useContractMultichain"
-import { IResponseGetFee } from "@feature/contract/interfaces/IMultichainHook"
-import useP2PDexCreateOrder from "@feature/p2pDex/containers/hooks/useP2PDexCreateOrder"
+
 import useLoadingStore from "@stores/loading"
 import { MESSAGES } from "@constants/messages"
 import { useToast } from "@feature/toast/containers"
@@ -21,68 +20,14 @@ interface IProp {
 const FormCreate = ({ type = "buy" }: IProp) => {
   const { busdVaultBalance, nakaVaultBalance } = useAllBalances()
   const { setClose, setOpen } = useLoadingStore()
-  const {
-    createOrderBuyNaka,
-    createOrderSellNaka,
-    p2pPolygonContract,
-    sendAllowNaka,
-    allowNaka
-  } = useContractMultichain()
-  const { mutateCreateOrder } = useP2PDexCreateOrder()
+  const { sendAllowNaka, allowNaka, createOrder } = useContractMultichain()
   const { errorToast } = useToast()
   const formData = useForm({
     defaultValues: { price: "", amount: "" }
   })
 
   const sendData = (_data) => {
-    setOpen("Processing Transaction")
-    if (type === "buy") {
-      createOrderBuyNaka(_data.price, _data.amount)
-    } else {
-      createOrderSellNaka(_data.price, _data.amount)
-        .then((_receipt) => {
-          const receipt = (_receipt as IResponseGetFee).data
-          if (
-            _receipt &&
-            (_receipt as IResponseGetFee).status &&
-            receipt.logs
-          ) {
-            const log = receipt.logs.find(
-              (_log) => _log.address === p2pPolygonContract.address
-            )
-            const events = p2pPolygonContract.interface.parseLog(log)
-            if (events) {
-              const _orderId = events.args.orderSellId
-              const _busdPrice = "0" // Only binance
-              const _nakaPrice = events.args.nakaPrice.toString()
-              const _nakaAmount = events.args.amount.toString()
-              const _totalPrice = "0" // Only polygon
-              const _address = events.args.seller
-              const _type = events.args.orderSellId ? "sell" : "buy"
-              mutateCreateOrder({
-                _orderId,
-                _type,
-                _busdPrice,
-                _nakaPrice,
-                _nakaAmount,
-                _totalPrice,
-                _address
-              })
-                .then((_res) => {
-                  setClose()
-                })
-                .catch((_err) => {
-                  setClose()
-                })
-            }
-          } else {
-            setClose()
-          }
-        })
-        .catch(() => {
-          setClose()
-        })
-    }
+    createOrder(_data, type)
   }
 
   const onSubmit = async (_data) => {

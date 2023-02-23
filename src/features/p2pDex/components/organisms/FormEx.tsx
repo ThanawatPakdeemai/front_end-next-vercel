@@ -1,19 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import IBusd from "@components/icons/Busd"
 import INaka from "@components/icons/Naka"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import { Alert, Box, Typography } from "@mui/material"
-import React, { ReactNode, useEffect, useMemo } from "react"
+import { Alert, Typography } from "@mui/material"
+import React, { useEffect, useMemo } from "react"
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward"
-import AmountBalance from "@components/molecules/balance/AmountBalance"
 
-import HrLine from "@components/icons/HrLine"
 import useAllBalances from "@hooks/useAllBalances"
 import { useForm } from "react-hook-form"
 import useContractMultichain from "@feature/contract/containers/hooks/useContractMultichain"
-import { IResponseGetFee } from "@feature/contract/interfaces/IMultichainHook"
 import { formatEther } from "ethers/lib/utils"
 import { useWeb3Provider } from "@providers/Web3Provider"
 
@@ -30,15 +28,10 @@ import {
 } from "@feature/multichain/interfaces/IMultichain"
 
 import { useToast } from "@feature/toast/containers"
-import CopyTextIcon from "@components/icons/CopyTextIcon"
-import useP2PDexExOrder from "@feature/p2pDex/containers/hooks/useP2PDexExOrder "
 import CONFIGS from "@configs/index"
 import Input from "../atoms/Input"
+import HeaderFormEx from "../atoms/HeaderFormEx"
 
-interface IPropContent {
-  title: string | ReactNode
-  value: string | ReactNode
-}
 interface IProp {
   type?: string
   edit?: boolean
@@ -63,20 +56,18 @@ const FormEx = ({
   const { setClose, setOpen } = useLoadingStore()
   const {
     fee,
-    sendRequestSellNaka,
-    p2pPolygonContract,
     allowNaka,
     sendAllowNaka,
     // eslint-disable-next-line no-unused-vars
     sendRequestBuyNaka,
     allowBinance,
-    sendAllowBinance
+    sendAllowBinance,
+    saveRequestSellNaka
   } = useContractMultichain()
-  const { mutateExOrder } = useP2PDexExOrder()
 
-  const { successToast, errorToast } = useToast()
+  const { errorToast } = useToast()
 
-  const { shortenString, copyClipboard, formatNumber } = Helper
+  const { formatNumber } = Helper
 
   const balance = type === "buy" ? busdVaultBalance.text : nakaVaultBalance.text
 
@@ -135,69 +126,15 @@ const FormEx = ({
   }, [watch("amount")])
 
   const sendDataSellNaka = async (_data) => {
-    await setOpen(MESSAGES.transaction_processing_order)
-    if (dataEdit) {
-      await sendRequestSellNaka(
-        dataEdit.order_id,
-        dataEdit.wallet_address,
-        _data.price,
-        _data.amount,
-        amountDefault
-      ).then(async (receipt) => {
-        if ((receipt as IResponseGetFee).data) {
-          const _receipt = (receipt as IResponseGetFee).data
-          if (_receipt && _receipt.logs) {
-            const event = _receipt.logs.find(
-              (log) => log.address === p2pPolygonContract.address
-            )
-
-            const events = p2pPolygonContract.interface.parseLog(event)
-
-            if (events) {
-              const request_id =
-                type === "buy"
-                  ? events.args.requestBuyNakaId
-                  : events.args.requestSellNakaId
-              const order_id =
-                type === "buy"
-                  ? events.args.polygonOrderSellId
-                  : events.args.binanceOrderBuyId
-              const busd_price =
-                type === "buy" ? "0" : events.args.busdPrice.toString()
-              const naka_price =
-                type === "buy" ? events.args.nakaPrice.toString() : "0"
-              const naka_amount =
-                type === "buy"
-                  ? events.args.buyAmount.toString()
-                  : events.args.sellAmount.toString()
-              const buyer_address = events.args.buyer
-              const seller_address = events.args.seller
-
-              await mutateExOrder({
-                _requestId: request_id,
-                _orderId: order_id,
-                _type: type,
-                _busdPrice: busd_price,
-                _nakaPrice: naka_price,
-                _nakaAmount: naka_amount,
-                _buyerAddress: buyer_address,
-                _sellerAddress: seller_address,
-                _totalPrice: amountDefault.toString(),
-                _address: dataEdit.wallet_address
-              })
-                .then(async (_res) => {
-                  if (refetchData) await refetchData()
-                  await handleModal()
-                  await setClose()
-                })
-                .catch((_err) => {
-                  setClose()
-                })
-            }
-          }
-        }
+    saveRequestSellNaka(_data, dataEdit, type)
+      .then(async (_res) => {
+        if (refetchData) await refetchData()
+        await handleModal()
+        await setClose()
       })
-    }
+      .catch((_err) => {
+        setClose()
+      })
   }
 
   const sendDataBuyNaka = async (_data) => {
@@ -255,81 +192,30 @@ const FormEx = ({
       address &&
       balance &&
       balance !== "N/A" &&
-      // Helper.removeComma(balance) >=
-      //   Number(watch("price")) * Number(watch("amount")) &&
+      Helper.removeComma(balance) >=
+        Number(watch("price")) * Number(watch("amount")) &&
       Number(watch("amount")) > 0 &&
       Number(watch("price")) > 0 &&
       Number(watch("amount")) <= amountDefault
     ) {
-      if (edit && address?.toLowerCase() === profile.address.toLowerCase()) {
-        return false
+      if (edit) {
+        if (address?.toLowerCase() === profile.address.toLowerCase()) {
+          return false
+        }
+        return true
       }
       return false
     }
     return true
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address, balance, profile, watch("price"), watch("amount")])
-
-  const dataInfo: IPropContent[] = [
-    {
-      title: "SELLER ADDRESS",
-      value: (
-        <>
-          {dataEdit && (
-            <div className="flex items-center gap-2">
-              <div className="ml-2 mr-2 rounded border border-neutral-700 px-2.5 py-1 uppercase text-neutral-400">
-                {shortenString(dataEdit.wallet_address)}
-              </div>
-              <Box
-                className=" cursor-pointer rounded border border-neutral-800 bg-neutral-780 px-1 py-1"
-                onClick={() => {
-                  copyClipboard(dataEdit.wallet_address)
-                  successToast(MESSAGES.copy_text_success)
-                }}
-              >
-                <CopyTextIcon />
-              </Box>
-            </div>
-          )}
-        </>
-      )
-    },
-    {
-      title: "Order ID ",
-      value: (
-        <>
-          {dataEdit && (
-            <div className="flex items-center gap-2">
-              <div className="ml-2 mr-2 rounded border border-neutral-700 px-2.5 py-1 uppercase text-neutral-400">
-                {shortenString(dataEdit?.order_id)}
-              </div>
-              <Box
-                className=" cursor-pointer rounded border border-neutral-800 bg-neutral-780 px-1 py-1"
-                onClick={() => {
-                  copyClipboard(dataEdit?.order_id)
-                  successToast(MESSAGES.copy_text_success)
-                }}
-              >
-                <CopyTextIcon />
-              </Box>
-            </div>
-          )}
-        </>
-      )
-    },
-    {
-      title: `price per ${type === "sell" ? "busd" : "naka"}`,
-      value: `${
-        type === "sell"
-          ? dataEdit?.busd_price ?? ""
-          : dataEdit?.naka_price ?? ""
-      } ${type === "sell" ? "busd" : "naka"}`
-    },
-    {
-      title: "Available",
-      value: dataEdit ? `${dataEdit.naka_amount} NAKA` : ""
-    }
-  ]
+  }, [
+    address,
+    balance,
+    profile,
+    amountDefault,
+    watch("price"),
+    watch("amount")
+  ])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const buttonSubmit = () => (
@@ -358,6 +244,7 @@ const FormEx = ({
         if (Number(chainRequired) === Number(CONFIGS.CHAIN.CHAIN_ID)) {
           return buttonSubmit()
         }
+        return buttonSwitched()
       }
       if (Number(chainRequired) === Number(CONFIGS.CHAIN.BNB_CHAIN_ID)) {
         return buttonSubmit()
@@ -367,13 +254,14 @@ const FormEx = ({
       if (Number(chainRequired) === Number(CONFIGS.CHAIN.BNB_CHAIN_ID)) {
         return buttonSubmit()
       }
+      return buttonSwitched()
     }
     if (Number(chainRequired) === Number(CONFIGS.CHAIN.CHAIN_ID)) {
       return buttonSubmit()
     }
     return buttonSwitched()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainRequired])
+  }, [chainRequired, disableButton, type])
 
   return (
     <>
@@ -404,55 +292,12 @@ const FormEx = ({
             }
           />
           <div className="xs:block xs:mb-5 custom-scroll h-[545px] items-center  justify-between  gap-3 overflow-y-auto lg:mb-0 lg:flex">
-            <div className="flex   items-center justify-between ">
-              <div className="mt-3 h-[528px] w-[454px] flex-col items-center  justify-center rounded-lg border-2 border-neutral-780 bg-primary-main p-10">
-                {dataInfo.map((ele, index) => (
-                  <div
-                    className="flex items-center justify-between border-b-2 border-neutral-700 py-5"
-                    key={Number(index)}
-                  >
-                    <Typography className=" font-neue-machina-bold text-sm uppercase text-neutral-500">
-                      {ele.title}
-                    </Typography>
-                    <Typography className=" font-neue-machina-bold text-sm uppercase text-neutral-300">
-                      {ele.value}
-                    </Typography>
-                  </div>
-                ))}
-
-                <div className="flex w-full items-center justify-center">
-                  <div className=" m-auto w-full flex-row  gap-y-3 rounded-[13px]  px-[5px] py-[5px]">
-                    <div className="my-5 flex items-center">
-                      <Typography className="mr-3 whitespace-nowrap font-neue-machina text-sm uppercase text-neutral-500">
-                        your wallet balance
-                      </Typography>
-                      <HrLine className="" />
-                    </div>
-                    <AmountBalance
-                      dataBalance={[
-                        {
-                          icon: type === "sell" ? <INaka /> : <IBusd />,
-                          balance:
-                            type === "sell"
-                              ? nakaVaultBalance.text
-                              : busdVaultBalance.text
-                        }
-                      ]}
-                    />
-                  </div>
-                </div>
-                {edit && (
-                  <ButtonToggleIcon
-                    startIcon=""
-                    endIcon=""
-                    text="cancel order"
-                    handleClick={cancelOrder}
-                    className={`leading-2 mt-5 mb-5 flex h-[50px] w-full items-center  justify-center rounded-md ${" bg-secondary-main"} !fill-primary-main font-neue-machina text-sm font-bold capitalize !text-primary-main`}
-                    type="button"
-                  />
-                )}
-              </div>
-            </div>
+            <HeaderFormEx
+              dataInfo={dataEdit}
+              type={type}
+              edit={edit}
+              cancelOrder={cancelOrder}
+            />
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mt-3 flex items-center justify-center ">
                 <div className=" flex h-[528px] w-[454px] items-center justify-center rounded-lg border-2 border-neutral-780 bg-neutral-780 p-5 py-8">

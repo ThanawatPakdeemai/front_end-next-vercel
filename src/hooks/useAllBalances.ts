@@ -17,7 +17,7 @@ export const defaultVaule: IBalanceDisplay = {
 }
 
 const useAllBalances = () => {
-  const { address, chainId } = useWeb3Provider()
+  const { address, chainId, signer } = useWeb3Provider()
   const { getTokenAddress } = useGlobal()
   const { isConnected } = useWalletContoller()
   const {
@@ -112,7 +112,7 @@ const useAllBalances = () => {
     handleBalanceVaults(CONFIGS.CONTRACT_ADDRESS.BEP20)
     handleBalanceVaults(CONFIGS.CONTRACT_ADDRESS.ERC20)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainId])
+  }, [signer])
 
   return {
     handleBalanceWallet,

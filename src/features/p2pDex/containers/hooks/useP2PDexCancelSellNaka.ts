@@ -1,4 +1,5 @@
 import { cancelP2PDexOrder } from "@feature/multichain/containers/services/multichain.service"
+import { IMessage } from "@feature/multichain/interfaces/IMultichain"
 import { useToast } from "@feature/toast/containers"
 import { useMutation } from "@tanstack/react-query"
 
@@ -17,7 +18,7 @@ const useP2PDexCancelSellNaka = () => {
       successToast(_response.message)
     },
     onError: (_response) => {
-      errorToast("error")
+      errorToast((_response as IMessage)?.message ?? "error")
     }
   })
 

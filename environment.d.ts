@@ -55,6 +55,14 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_CONTRACT_P2P_BINANCE: string
     readonly NEXT_PUBLIC_CONTRACT_P2P_POLYGON: string
     readonly NEXT_PUBLIC_CONTRACT_ESCAPE_URL: string
+    readonly NEXT_PUBLIC_FACEBOOK_APPID: string
+    readonly NEXT_PUBLIC_FIREBASE_APIKEY: string
+    readonly NEXT_PUBLIC_FIREBASE_AUTHDOMAIN: string
+    readonly NEXT_PUBLIC_FIREBASE_PROJECT_Id: string
+    readonly NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: string
+    readonly NEXT_PUBLIC_FIREBASE_MESSAGING_SEND_ID: string
+    readonly NEXT_PUBLIC_FIREBASE_APPID: string
+    readonly NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: string
   }
 }
 

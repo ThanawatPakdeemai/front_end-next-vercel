@@ -510,6 +510,15 @@ body {
     0px -0.359743px 9.13195px rgba(255, 0, 0, 0.253031);
 }
 
+.text-shadow-purple {
+  text-shadow: 0px 0px 80px rgba(0, 27, 255, 0.42),
+    0px 0px 33.4221px rgba(0, 27, 255, 0.301919),
+    0px 0px 17.869px rgba(0, 27, 255, 0.250365),
+    0px 0px 10.0172px rgba(0, 27, 255, 0.21),
+    0px 0px 5.32008px rgba(0, 27, 255, 0.169635),
+    0px 0px 2.21381px rgba(0, 27, 255, 0.118081);
+}
+
 .hidden-arrow-number {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {

@@ -21,6 +21,8 @@ import { ITokenContract } from "@feature/contract/containers/hooks/useContractVa
 import SwitchChain from "@components/atoms/SwitchChain"
 // import SwitchChain from "@components/atoms/SwitchChain"
 
+// type Method = "deposit" | "withdraw"
+
 export default function WalletPage() {
   const { hydrated, getNetwork } = useGlobal()
   const {

@@ -167,6 +167,8 @@ const useGlobal = (
       default:
         return "179999996000000000000000008"
     }
+    // NOTE: No need this code
+    // await router.push(`/${_gameUrl}`)
   }
 
   /**

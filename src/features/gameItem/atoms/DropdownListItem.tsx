@@ -41,6 +41,7 @@ const DropdownListItem = ({
     }
     if (_item && onChangeSelect) onChangeSelect(_item)
   }
+
   return (
     <>
       {list && (
@@ -105,29 +106,16 @@ const DropdownListItem = ({
                 >
                   <SelectDropdown
                     className={className}
-                    details={
-                      list &&
-                      list.map((ele) => ({
-                        label: (
-                          <div className="flex items-center justify-between">
-                            <p>
-                              {ele.name} <span>[ {ele.item_size} ]</span>
-                            </p>
-                            <p>{`${ele.qty ?? 0} ${t("item")}`}</p>
-                          </div>
-                        ),
-                        icon:
-                          (
-                            <Image
-                              src={ele.image_icon ?? ""}
-                              alt={ele.name}
-                              width="20"
-                              height="20"
-                            />
-                          ) ?? "sss",
-                        data: ele,
-                        href: ""
-                      }))
+                    details={list}
+                    setOnTitle={setDefaultItem}
+                    title="GameItem"
+                    icon={
+                      <Image
+                        src={list && list[0].image_icon}
+                        alt={list && list[0].name}
+                        width="20"
+                        height="20"
+                      />
                     }
                     onChange={(_item) => {
                       popupState.close()

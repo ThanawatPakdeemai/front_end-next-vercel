@@ -124,7 +124,7 @@ const useContractVaultBinance = () => {
     new Promise<ITransactionResponse>((resolve, reject) => {
       setIsLoading(true)
       balanceVaultContract
-        .withdrawByToken(_tokenAddress, _amount)
+        .withdraw(_tokenAddress, _amount)
         .then((response: ITransactionResponse) => {
           setIsLoading(false)
           resolve(response)

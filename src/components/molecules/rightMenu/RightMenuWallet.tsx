@@ -12,12 +12,14 @@ import Deposit from "@components/icons/DepositWithdraw/Deposit"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import Withdraw from "@components/icons/DepositWithdraw/WithDraw"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
+import { Method } from "@feature/wallet/containers/hooks/useWalletContoller"
 import { ModalCustom } from "../Modal/ModalCustom"
 import ButtonWallet from "./ButtonWallet"
 import ModalHeader from "../Modal/ModalHeader"
 import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 
 interface IProp {
+  method: Method
   title: string
   titleHeader: string
   open: boolean
@@ -33,6 +35,7 @@ interface IProp {
 }
 
 const RightMenuWallet = ({
+  method,
   title,
   titleHeader,
   open,
@@ -94,12 +97,19 @@ const RightMenuWallet = ({
             onChange={(e) => {
               const inputValue = e.target.value
               if (
-                Number(inputValue) <= currentChainSelected.balanceWallet.digit
+                Number(inputValue) <=
+                (method === "deposit"
+                  ? currentChainSelected.balanceWallet.digit
+                  : currentChainSelected.balanceVault.digit)
               ) {
                 setValue(Number(inputValue))
                 setDisabled(false)
               } else {
-                onClickMaxValue(currentChainSelected.balanceWallet.digit)
+                onClickMaxValue(
+                  method === "deposit"
+                    ? currentChainSelected.balanceWallet.digit
+                    : currentChainSelected.balanceVault.digit
+                )
               }
             }}
             InputProps={{
@@ -119,7 +129,11 @@ const RightMenuWallet = ({
                   position="end"
                   className="cursor-pointer"
                   onClick={() =>
-                    onClickMaxValue(currentChainSelected.balanceWallet.digit)
+                    onClickMaxValue(
+                      method === "deposit"
+                        ? currentChainSelected.balanceWallet.digit
+                        : currentChainSelected.balanceVault.digit
+                    )
                   }
                 >
                   <AllIcon />
@@ -131,7 +145,9 @@ const RightMenuWallet = ({
             {`your ${currentChainSelected.symbol} storage`} :
             <span className="text-secondary-main">
               {" "}
-              {currentChainSelected.balanceWallet.text}{" "}
+              {method === "deposit"
+                ? currentChainSelected.balanceWallet.text
+                : currentChainSelected.balanceVault.text}{" "}
               {currentChainSelected.symbol}
             </span>
           </Typography>

@@ -294,7 +294,8 @@ const useGlobal = (
     getNetwork,
     getTokenAddress,
     getTokenSupply,
-    fetchAllTokenSupported
+    fetchAllTokenSupported,
+    fetchNAKAToken
   }
 }
 

@@ -94,6 +94,7 @@ export default function WalletPage() {
             disabled={disabled}
             setDisabled={setDisabled}
             currentChainSelected={currentChainSelected as ITokenContract}
+            method="withdraw"
           />
           <RightMenuWallet
             title="Deposit"
@@ -108,6 +109,7 @@ export default function WalletPage() {
             onClickMaxValue={onClickMaxValue}
             disabled={disabled}
             currentChainSelected={currentChainSelected as ITokenContract}
+            method="deposit"
           />
         </div>
         <WalletFooter address={chain.address} />

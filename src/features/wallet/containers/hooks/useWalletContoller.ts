@@ -37,7 +37,8 @@ const useWalletContoller = () => {
   const { setOpen, setClose } = useLoadingStore()
   const { profile } = useProfileStore()
   const { successToast, errorToast } = useToast()
-  const { getTokenAddress, fetchAllTokenSupported } = useGlobal()
+  const { getTokenAddress, fetchAllTokenSupported, fetchNAKAToken } =
+    useGlobal()
   const { address, handleConnectWithMetamask, chainId, signer } =
     useWeb3Provider()
 
@@ -167,7 +168,11 @@ const useWalletContoller = () => {
         setClose()
         successToast("Transaction success")
         handleClose(_method)
-        fetchAllTokenSupported()
+        if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+          fetchAllTokenSupported()
+        } else {
+          fetchNAKAToken()
+        }
       }
     } catch (error) {
       setClose()

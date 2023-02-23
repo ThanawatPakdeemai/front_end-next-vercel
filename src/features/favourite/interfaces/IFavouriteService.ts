@@ -1,4 +1,4 @@
-import { IGame } from "@src/types/games"
+import { IGame } from "@feature/game/interfaces/IGameService"
 
 export interface IInfo {
   pages: number

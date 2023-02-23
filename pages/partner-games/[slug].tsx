@@ -1,14 +1,30 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useRouter } from "next/router"
-import OverviewContent from "@components/organisms/OverviewContent"
-import GameContent from "@feature/game/components/templates/lobby/GameContent"
-import GameTabs from "@feature/game/components/templates/lobby/GameTabs"
-import GameReviews from "@feature/game/components/molecules/GameReviews"
-import GamePageDefault from "@components/templates/GamePageDefault"
-import RightSidebarContentEffect from "@components/templates/contents/RightSidebarContentEffect"
-import RightSidebarContent from "@components/templates/contents/RightSidebarContent"
+import dynamic from "next/dynamic"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
+
+const OverviewContent = dynamic(
+  () => import("@components/organisms/OverviewContent")
+)
+const GameContent = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameContent")
+)
+const GameTabs = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameTabs")
+)
+const GameReviews = dynamic(
+  () => import("@feature/game/components/molecules/GameReviews")
+)
+const GamePageDefault = dynamic(
+  () => import("@components/templates/GamePageDefault")
+)
+const RightSidebarContentEffect = dynamic(
+  () => import("@components/templates/contents/RightSidebarContentEffect")
+)
+const RightSidebarContent = dynamic(
+  () => import("@components/templates/contents/RightSidebarContent")
+)
 
 export default function GamePartnerDetails() {
   const router = useRouter()

@@ -1,8 +1,14 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import ProfileLayout from "@components/templates/ProfileLayout"
-import AllTransactions from "@feature/transaction/components/templates/AllTransactions"
 import { ALL_TRANSACTIONS } from "@configs/crumb"
+import dynamic from "next/dynamic"
+
+const ProfileLayout = dynamic(
+  () => import("@components/templates/ProfileLayout")
+)
+const AllTransactions = dynamic(
+  () => import("@feature/transaction/components/templates/AllTransactions")
+)
 
 const AllTransactionsPage = () => (
   <article className="h-full w-full">

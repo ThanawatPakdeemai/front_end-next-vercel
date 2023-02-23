@@ -1,13 +1,21 @@
-import HeadStaking from "@components/molecules/HeadStaking"
-import ServicesPageLayout from "@components/templates/ServicesPageLayout"
-import FlexibleAPRContent from "@feature/staking/components/organisms/FlexibleAPRContent"
-import StakingList from "@feature/staking/components/templates/StakingList"
-import useGlobalStaking from "@feature/staking/containers/hook/useStakingController"
+import { ReactElement } from "react"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
-import useTabContext from "@feature/tab/contexts/useTabContext"
 // import { useWeb3Provider } from "@providers/Web3Provider"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { ReactElement } from "react"
+import dynamic from "next/dynamic"
+import useGlobalStaking from "@feature/staking/containers/hook/useStakingController"
+import useTabContext from "@feature/tab/contexts/useTabContext"
+
+const HeadStaking = dynamic(() => import("@components/molecules/HeadStaking"))
+const ServicesPageLayout = dynamic(
+  () => import("@components/templates/ServicesPageLayout")
+)
+const FlexibleAPRContent = dynamic(
+  () => import("@feature/staking/components/organisms/FlexibleAPRContent")
+)
+const StakingList = dynamic(
+  () => import("@feature/staking/components/templates/StakingList")
+)
 
 export default function StakingPage() {
   const { fixedStaking } = useGlobalStaking()

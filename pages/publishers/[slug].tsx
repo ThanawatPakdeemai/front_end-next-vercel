@@ -1,9 +1,15 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import GamePageLayout from "@components/templates/GamePageLayout"
-import useGlobal from "@hooks/useGlobal"
-import SkeletonPublisherCard from "@components/atoms/skeleton/SkeletonPublisherCard"
 import { v4 as uuid } from "uuid"
+import dynamic from "next/dynamic"
+import useGlobal from "@hooks/useGlobal"
+
+const GamePageLayout = dynamic(
+  () => import("@components/templates/GamePageLayout")
+)
+const SkeletonPublisherCard = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonPublisherCard")
+)
 
 export default function PublisherDetails() {
   const { limit } = useGlobal()

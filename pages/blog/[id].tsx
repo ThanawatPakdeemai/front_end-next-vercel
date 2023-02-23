@@ -1,6 +1,6 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { Layout } from "@components/template"
+import { Layout } from "@components/templates"
 import { useRouter } from "next/router"
 import BlogPageDetails from "@feature/page/blogs/BlogDetails"
 

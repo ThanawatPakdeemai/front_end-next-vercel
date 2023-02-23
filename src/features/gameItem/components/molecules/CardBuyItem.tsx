@@ -147,7 +147,7 @@ export default function CardButItem() {
     <>
       <div
         className={`h-fit ${
-          router.pathname === "/[GameHome]" ? "w-full" : "mb-3 w-fit"
+          router.pathname === "/[GameHome]" ? "w-full" : "w-fit"
         } rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 `}
       >
         <div className="p-4 ">

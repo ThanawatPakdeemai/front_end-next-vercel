@@ -57,6 +57,7 @@ const FavouriteGamesPage = () => {
           setCurrentPage(info.pages)
           setLoading(false)
         }
+        setLoading(false)
       })
     }
   }
@@ -141,16 +142,18 @@ const FavouriteGamesPage = () => {
         {loading
           ? [...Array(pageSize)].map(() => <SkeletonCard key={uuid()} />)
           : null}
-        {gameFavourite
-          ? gameFavourite.map((game) => (
-              <GameCard
-                key={game.id}
-                menu={P2EHeaderMenu}
-                onHandleClick={() => onHandleClick(game.path, game)}
-                data={game}
-              />
-            ))
-          : null}
+        {gameFavourite ? (
+          gameFavourite.map((game) => (
+            <GameCard
+              key={game.id}
+              menu={P2EHeaderMenu}
+              onHandleClick={() => onHandleClick(game.path, game)}
+              data={game}
+            />
+          ))
+        ) : (
+          <>No Data</>
+        )}
       </div>
       <PaginationNaka
         totalCount={totalCount}

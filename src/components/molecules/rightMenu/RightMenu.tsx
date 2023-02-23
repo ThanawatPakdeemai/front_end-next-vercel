@@ -20,7 +20,7 @@ const RightMenu = () => {
     }
   }, [profileData, profile, profile?.email])
   return (
-    <Box>
+    <Box className="flex w-[360px] justify-end">
       {stateProfile && profile ? (
         <>
           <CreateProfile />

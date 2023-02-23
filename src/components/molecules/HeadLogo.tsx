@@ -33,7 +33,7 @@ const HeadLogo = () => {
     <>
       <Box
         component="div"
-        className={`head-logo flex items-center justify-center ${
+        className={`head-logo flex w-[360px] items-center justify-start ${
           scrollPage < 100 ? "mr-0" : "mr-[19rem]"
         }`}
       >

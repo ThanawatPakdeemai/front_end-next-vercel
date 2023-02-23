@@ -6,6 +6,10 @@ export interface Blog {
   sort: string
 }
 
+export interface Tag {
+  tags_id: string
+}
+
 interface IInfo {
   currentCount: number
   limit: number
@@ -42,6 +46,7 @@ interface IBlog {
   slug: string
   title: string
   _id: string
+  tags: Tag[]
 }
 
 export interface IBlogData extends IBlog {

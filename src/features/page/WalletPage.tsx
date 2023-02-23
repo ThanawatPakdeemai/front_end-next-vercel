@@ -220,19 +220,22 @@ export default function WalletPage() {
         <div className="col-span-2 h-full w-full items-center justify-center gap-1 rounded-default bg-neutral-800">
           <Gas />
         </div>
-        <div className="col-span-4 h-full max-h-[400px] w-full items-center justify-center gap-1">
-          <MetamaskWallet
-            isConnected={!!address}
-            handleConnectWallet={handleConnectWallet}
-            handleOnDisconnectWallet={handleDisconnectWallet}
-            address={address}
-            balance={walletBalance} // nakaBalance
-            tokenName={getNetwork?.(chainId as string).nativeCurrency.name}
-            chainName={getNetwork?.(chainId as string).chainName}
-            blockExplorerURL={
-              getNetwork?.(chainId as string).blockExplorerUrls[0]
-            }
-          />
+        <div className="col-span-4 w-full gap-1">
+          <div className="w-full">
+            <MetamaskWallet
+              isConnected={!!address}
+              handleConnectWallet={handleConnectWallet}
+              handleOnDisconnectWallet={handleDisconnectWallet}
+              address={address}
+              balance={walletBalance} // nakaBalance
+              tokenName={getNetwork?.(chainId as string).nativeCurrency.name}
+              chainName={getNetwork?.(chainId as string).chainName}
+              blockExplorerURL={
+                getNetwork?.(chainId as string).blockExplorerUrls[0]
+              }
+              chainId={chainId as string}
+            />
+          </div>
         </div>
       </div>
       <TransactionTable profile={profile.data} />

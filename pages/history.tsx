@@ -1,8 +1,14 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import ProfileLayout from "@components/templates/ProfileLayout"
-import HistoryTable from "@feature/history/components/organisms/HistoryTable"
 import { GAME_PLAY_HISTORY } from "@configs/crumb"
+import dynamic from "next/dynamic"
+
+const ProfileLayout = dynamic(
+  () => import("@components/templates/ProfileLayout")
+)
+const HistoryTable = dynamic(
+  () => import("@feature/history/components/organisms/HistoryTable")
+)
 
 const HistoryPage = () => (
   <article className="h-full w-full">

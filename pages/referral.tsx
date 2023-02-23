@@ -1,7 +1,13 @@
-import ServicesPageLayout from "@components/templates/ServicesPageLayout"
-import ReferralProgramPage from "@feature/page/ReferralProgramPage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"
+import dynamic from "next/dynamic"
+
+const ReferralProgramPage = dynamic(
+  () => import("@feature/page/ReferralProgramPage")
+)
+const ServicesPageLayout = dynamic(
+  () => import("@components/templates/ServicesPageLayout")
+)
 
 export default function Referral() {
   return (

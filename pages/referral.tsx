@@ -3,7 +3,10 @@ import { ReactElement } from "react"
 import dynamic from "next/dynamic"
 
 const ReferralProgramPage = dynamic(
-  () => import("@feature/page/ReferralProgramPage")
+  () => import("@feature/page/ReferralProgramPage"),
+  {
+    suspense: true
+  }
 )
 const ServicesPageLayout = dynamic(
   () => import("@components/templates/ServicesPageLayout"),

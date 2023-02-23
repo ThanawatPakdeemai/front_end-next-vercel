@@ -1,15 +1,40 @@
+import { IGame } from "@feature/game/interfaces/IGameService"
+import {
+  IGameItem,
+  IGameItemListData
+} from "@feature/gameItem/interfaces/IGameItemService"
 import React from "react"
+import { ICURRENCY } from "@interfaces/ICurrency"
+import {
+  IDevice,
+  IGameCategory
+} from "@feature/dropdown/interfaces/IDropdownService"
 
 interface ILink {
   href: string
 }
+interface IActiveMunu {
+  active?: boolean
+}
 
-export interface IMenuBase extends ILink {
-  label: string
+export interface IMenuBaseItem {
+  data?:
+    | IGameItem
+    | IGame
+    | IGameItemListData
+    | ICURRENCY
+    | IGameItem
+    | IGameCategory
+    | IDevice
+    | Number
+}
+export interface IMenuBase extends ILink, IMenuBaseItem, IActiveMunu {
+  label: string | React.ReactElement
   icon: string | React.ReactElement
 }
 
 export interface IDropdown {
+  // title: ReactI18NextChild | Iterable<ReactI18NextChild>
   icon: React.ReactNode
   title: string
   className: string
@@ -40,4 +65,9 @@ export interface IMenuIcon extends ILink {
   title: string
   src: string
   alt: string
+}
+
+export interface ICrumb extends ILink {
+  title: string
+  onClick?: () => void
 }

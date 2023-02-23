@@ -10,7 +10,7 @@ import {
   Typography,
   Box
 } from "@mui/material"
-import { useTranslation } from "react-i18next"
+import { useTranslation } from "next-i18next"
 import { useRouter } from "next/router"
 import ButtonClose from "../button/ButtonClose"
 
@@ -40,7 +40,6 @@ const SelectNaka = ({
 }: IProp) => {
   const { t } = useTranslation()
   const router = useRouter()
-
   return (
     <>
       <PopupState

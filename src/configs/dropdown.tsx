@@ -23,7 +23,7 @@ export const DROPDOWN: IDropdown[] = [
         href: "/",
         icon: <EditProfileIcon />
       },
-      { label: "Wishlist", href: "/", icon: <WishlistIcon /> },
+      { label: "Wishlist", href: "/favourite-games", icon: <WishlistIcon /> },
       {
         label: "Play History",
         href: "/",
@@ -46,7 +46,7 @@ export const DROPDOWN: IDropdown[] = [
         href: "/",
         icon: <EditProfileIcon />
       },
-      { label: "Wishlist", href: "/", icon: <WishlistIcon /> }
+      { label: "Wishlist", href: "/favourite-games", icon: <WishlistIcon /> }
     ]
   },
   {
@@ -60,7 +60,7 @@ export const DROPDOWN: IDropdown[] = [
         href: "/",
         icon: <EditProfileIcon />
       },
-      { label: "Wishlist", href: "/", icon: <WishlistIcon /> },
+      { label: "Wishlist", href: "/favourite-games", icon: <WishlistIcon /> },
       {
         label: "Play History",
         href: "/",
@@ -81,7 +81,21 @@ export const DROPDOWN: IDropdown[] = [
         href: "/",
         icon: <EditProfileIcon />
       },
-      { label: "Wishlist", href: "/", icon: <WishlistIcon /> }
+      { label: "Wishlist", href: "/favourite-games", icon: <WishlistIcon /> }
+    ]
+  },
+  {
+    title: "Item Game",
+    icon: null,
+    className: "w-full",
+    text: "string",
+    details: [
+      {
+        label: "1 Item",
+        href: "/",
+        icon: <EditProfileIcon />
+      },
+      { label: "1 Item", href: "/", icon: <WishlistIcon /> }
     ]
   }
 ]

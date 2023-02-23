@@ -1,10 +1,10 @@
 export interface IExp {
-  level: number
-  expAmount: number
-  maxExp: number
+  level: number | undefined
+  expAmount: number | undefined
+  maxExp: number | undefined
 }
 
 export interface IEnergy {
-  staminaPoint: number
-  totalStamina: number
+  staminaPoint: number | undefined
+  totalStamina: number | undefined
 }

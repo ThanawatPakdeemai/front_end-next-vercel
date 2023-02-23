@@ -1,57 +1,76 @@
-import * as React from "react"
-import SyncAltIcon from "@mui/icons-material/SyncAlt"
 import { Card, CardContent, SxProps, Theme } from "@mui/material"
-import BalanceVault from "@components/atoms/balanceValut/BalanceVault"
-import LogoIcon from "@components/icons/LogoIcon"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
+import INaka from "@components/icons/Naka"
+import IBusd from "@components/icons/Busd"
+import useProfileStore from "@stores/profileStore"
+import Metamask from "@components/atoms/metamask"
+import ButtonLink from "@components/atoms/button/ButtonLink"
+import { useTranslation } from "react-i18next"
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet"
+import { useWeb3Provider } from "@providers/index"
+import useAllBalances from "@hooks/useAllBalances"
+
+import useGlobal from "@hooks/useGlobal"
+import AmountBalance from "./AmountBalance"
 
 interface IProps {
-  token: string
-  variant: "naka" | "busd" | "vault"
-  className?: string
+  token?: string | undefined
+  variant?: "naka" | "busd" | "vault" | string | undefined
+  tokenUnit?: "naka" | "busd" | "vault" | string | undefined
+  className?: string | undefined
   sx?: SxProps<Theme> | undefined
 }
 
-const iconmotion = {
-  hover: {
-    scale: 1.2,
-    rotate: 17,
-    ease: "easeIn",
-    transition: {
-      duration: 0.4,
-      stiffness: 500,
-      type: "spring"
-    }
-  }
-}
+const Balance = ({ className, sx }: IProps) => {
+  const profile = useProfileStore((state) => state.profile.data)
+  // const [nakaBalanceVault, SetNakaBalanceVault] = useState<string>("N/A")
+  const { address, handleConnectWithMetamask, hasMetamask } = useWeb3Provider()
+  const { t } = useTranslation()
+  const { busdVaultBalance, nakaVaultBalance } = useAllBalances()
+  const { hydrated } = useGlobal()
 
-const Balance = ({ variant, className, sx }: IProps) => (
-  <CardContent
-    className={`flex items-center justify-center py-1 px-3 ${className}`}
-    // sx={{ maxWidth: 277, width: 277, height: 62 }}
-  >
-    <Card
-      className="flex items-center justify-between rounded-[13px] bg-neutral-800 p-[5px]"
-      sx={sx}
-    >
-      <div className="flex h-full flex-1 items-center rounded-lg bg-neutral-900 py-[11px] px-[10px]">
-        <LogoIcon />
-        <BalanceVault
-          variant={variant}
-          className="ml-6 text-sm font-bold text-white-primary"
-        />
-      </div>
-      <ButtonIcon
-        variants={iconmotion}
-        whileHover="hover"
-        transition={{ type: "spring", stiffness: 400, damping: 4 }}
-        icon={
-          <SyncAltIcon className="h-[20px] w-[20px] rotate-90 text-white-primary" />
-        }
-        className="ml-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg border border-neutral-700 bg-secondary-main"
-      />
-    </Card>
-  </CardContent>
-)
+  return hydrated ? (
+    <div>
+      {address && profile ? (
+        <>
+          <CardContent
+            className={`my-2 min-w-[200px] items-center justify-center p-0 ${className}`}
+          >
+            <Card
+              className=" m-auto flex-row gap-y-3  rounded-[13px] bg-neutral-800  px-[5px] pt-[5px] "
+              sx={sx}
+            >
+              <AmountBalance
+                balance={nakaVaultBalance.text}
+                icon={<INaka />}
+              />
+              <AmountBalance
+                balance={busdVaultBalance.text}
+                icon={<IBusd width={21} />}
+              />
+            </Card>
+          </CardContent>
+        </>
+      ) : (
+        <div className="my-4">
+          {hasMetamask && profile && (
+            <ButtonLink
+              onClick={handleConnectWithMetamask}
+              text={t("Connect Wallet")}
+              icon={<AccountBalanceWalletIcon />}
+              size="medium"
+              color="secondary"
+              variant="contained"
+              className="w-full"
+            />
+          )}
+
+          {!hasMetamask && profile && <Metamask />}
+        </div>
+      )}
+    </div>
+  ) : (
+    <></>
+  )
+}
 
 export default Balance

@@ -1,5 +1,5 @@
 import ButtonLike from "@components/atoms/button/ButtonLike"
-import Image from "next/dist/client/image"
+import { Image } from "@components/atoms/image/index"
 import React from "react"
 import GaugeStats from "./GaugeStats"
 

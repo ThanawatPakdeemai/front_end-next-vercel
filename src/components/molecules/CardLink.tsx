@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { motion } from "framer-motion"
-import Image from "next/image"
+import { Image } from "@components/atoms/image"
 import { IMAGES } from "@constants/images"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import IBookReading from "@components/icons/BookReading"
@@ -49,6 +49,86 @@ const CardLink = ({
     setIsHover(!isHover)
   }
 
+  const cardLinkMotion = {
+    rest: {
+      // scale: 0.5,
+      transition: {
+        type: "spring",
+        damping: 10,
+        stiffness: 150
+      }
+    },
+    hover: {
+      // scale: 1.1,
+      ease: "easeIn",
+      transition: {
+        type: "spring",
+        damping: 10,
+        stiffness: 150
+      }
+    }
+  }
+
+  const slideBottomMotion = {
+    rest: {
+      y: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        duration: 0.4
+      }
+    },
+    hover: {
+      y: 40,
+      scale: 1,
+      ease: "easeIn",
+      transition: {
+        type: "spring",
+        duration: 0.4
+      }
+    }
+  }
+
+  const zoomInMotion = {
+    rest: {
+      scale: 1,
+      transition: {
+        type: "spring",
+        duration: 0.4,
+        stiffness: 400,
+        damping: 5
+      }
+    },
+    hover: {
+      scale: 1.2,
+      ease: "easeIn",
+      transition: {
+        type: "spring",
+        duration: 0.4,
+        stiffness: 400,
+        damping: 5
+      }
+    }
+  }
+
+  const zoomOutMotion = {
+    rest: {
+      scale: 1,
+      transition: {
+        type: "spring",
+        duration: 0.4
+      }
+    },
+    hover: {
+      scale: 0.5,
+      ease: "easeIn",
+      transition: {
+        type: "spring",
+        duration: 0.4
+      }
+    }
+  }
+
   return (
     <>
       <motion.div
@@ -58,43 +138,58 @@ const CardLink = ({
         onHoverEnd={onHoverCard}
       >
         <motion.div
-          className={`absolute h-[218px] w-[218px] rounded-3xl bg-warning-light ${classNameSecond}`}
-          whileHover={{ marginTop: "18%" }}
-          transition={{
-            type: "spring",
-            damping: 10,
-            stiffness: 150
-          }}
+          className="absolute flex h-[218px] w-[218px] flex-col items-center justify-center rounded-3xl"
           style={styleSecond || { backgroundColor: `${bgMain}` }}
+          whileHover="hover"
+          variants={cardLinkMotion}
+          initial="rest"
+          animate="rest"
         >
-          <Image
-            src={srcMain}
-            alt={altMain}
-            width={123}
-            height={123}
-            className={`absolute left-[50px] top-[35px] z-[1] ${
-              isHover && "top-[-20px] scale-[1.35]"
-            } ${imageClassNameMain}`}
-            style={imageStyleMain || { transition: "all 0.2s ease-in" }}
+          <motion.div
+            className={`image--bg absolute h-full w-full rounded-3xl ${classNameSecond}`}
+            style={styleSecond || { backgroundColor: `${bgMain}` }}
+            variants={slideBottomMotion}
           />
-          <Image
-            src={srcSecond}
-            alt={altSecond}
-            width={123}
-            height={123}
-            className={`absolute left-[50px] my-auto mx-0 ${
-              isHover ? "top-[-15px] scale-50" : "top-[35px]"
-            } ${imageClassNameSecond}`}
-            style={imageStyleSecond || { transition: "0.2s" }}
+          <motion.div
+            className="image--object absolute flex h-full w-full flex-col items-center justify-center pb-[48px]"
+            style={styleSecond || { backgroundColor: `${bgMain}` }}
+            variants={zoomInMotion}
+          >
+            <Image
+              src={srcMain}
+              alt={altMain}
+              width={123}
+              height={123}
+              className={`absolute left-[50px] z-[1] ${imageClassNameMain}`}
+              style={imageStyleMain || { transition: "all 0.2s ease-in" }}
+              loading="eager"
+              priority
+            />
+          </motion.div>
+          <motion.div
+            className="image--objectBg absolute flex h-full w-full flex-col items-center justify-center pb-[48px]"
+            style={styleSecond || { backgroundColor: `${bgMain}` }}
+            variants={zoomOutMotion}
+          >
+            <Image
+              src={srcSecond}
+              alt={altSecond}
+              width={123}
+              height={123}
+              className={`absolute left-[50px] my-auto mx-0 ${imageClassNameSecond}`}
+              style={imageStyleSecond || { transition: "0.2s" }}
+              loading="eager"
+              priority
+            />
+          </motion.div>
+          <ButtonLink
+            href={href}
+            text={textBtn}
+            icon={iconBtn}
+            size="medium"
+            className="button-global button-transparent absolute left-2.5 right-2.5 bottom-2.5 border border-solid border-black-300 text-primary-main"
           />
         </motion.div>
-        <ButtonLink
-          href={href}
-          text={textBtn}
-          icon={iconBtn}
-          size="medium"
-          className="button-global button-transparent absolute left-2.5 right-2.5 bottom-2.5 border border-solid border-[#01010133] text-primary-main"
-        />
       </motion.div>
     </>
   )

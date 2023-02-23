@@ -1,7 +1,7 @@
 import React from "react"
 import { IMAGES } from "@constants/images"
 import ButtonLink from "@components/atoms/button/ButtonLink"
-import { Card, CardMedia } from "@mui/material"
+import { Box, Card, CardMedia } from "@mui/material"
 import IShoppingCart from "@components/icons/ShoppingCart"
 
 interface ICardMarketplace {
@@ -23,7 +23,14 @@ const CardMarketplace = ({
 }: ICardMarketplace) => (
   <>
     <Card sx={{ width: { width } }}>
-      <div className="absolute flex flex-col items-start justify-between py-10 pr-6 pl-10">
+      <Box
+        sx={{
+          "button": {
+            maxHeight: "40px"
+          }
+        }}
+        className="absolute flex flex-col items-start justify-between py-10 pr-6 pl-10"
+      >
         <h6 className="leading-7leading-7 text-[22px] font-bold uppercase text-neutral-300">
           {title}
         </h6>
@@ -38,12 +45,14 @@ const CardMarketplace = ({
           color="secondary"
           variant="contained"
         />
+      </Box>
+      <div className="overflow-hidden pl-[50%]">
+        <CardMedia
+          sx={{ height: { height } }}
+          image={bgImage}
+          title="green iguana"
+        />
       </div>
-      <CardMedia
-        sx={{ height: { height } }}
-        image={bgImage}
-        title="green iguana"
-      />
     </Card>
   </>
 )

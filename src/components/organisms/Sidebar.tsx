@@ -1,5 +1,5 @@
 import React, { memo } from "react"
-import Image from "next/image"
+import { Image } from "@components/atoms/image"
 
 const Sidebar: React.FC = () => {
   const imgSrc = "/images/mocks/sidebar.png"

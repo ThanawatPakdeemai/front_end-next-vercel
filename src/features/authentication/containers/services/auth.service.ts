@@ -1,21 +1,20 @@
 import axios from "axios"
-import { IRefreshToken } from "@interfaces/IAuth"
+import { IRefreshToken, IRevorkToken } from "@interfaces/IAuth"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
 import services from "@configs/axiosGlobalConfig"
-import {
-  IProfile,
-  IProfileResponse
-} from "@feature/profile/interfaces/IProfileService"
+import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import { ELocalKey } from "@interfaces/ILocal"
 import {
   ICreateNewPassword,
   ICreateNewPasswordResponse,
   IForgetPasswordResponse,
   IGetVerifyCode,
+  ILoginWithMetamask,
   ISignIn,
   ISignUp
 } from "@feature/authentication/interfaces/IAuthService"
+import { ILoginProvider, IProfileRegister } from "@src/types/profile"
 
 export const signIn = ({ _email, _password }: ISignIn) =>
   new Promise<IProfile>((resolve, reject) => {
@@ -40,16 +39,18 @@ export const signUp = ({
   _referral,
   _subscription
 }: ISignUp) =>
-  new Promise<IProfileResponse>((resolve, reject) => {
+  new Promise<IProfile>((resolve, reject) => {
     const data = {
-      email: _email,
-      password: _password,
-      verifycode: _verifycode,
-      referral: _referral,
-      subscription: _subscription
+      data: {
+        email: _email,
+        password: _password,
+        verifycode: _verifycode.toString(),
+        referral: _referral,
+        subscription: _subscription
+      }
     }
     services
-      .post<IProfileResponse>("/profile/create", { ...data })
+      .post<IProfile>("/profile/create", { ...data })
       .then((response) => {
         resolve(response.data)
       })
@@ -70,22 +71,25 @@ export const refreshProfileToken = async (
   callBeckWhenError?: () => void
 ): Promise<any | undefined> => {
   try {
-    const response = await axios.post<IRefreshToken>(
-      `/auth/refresh-token`,
-      {},
-      {
-        withCredentials: true
-      }
-    )
-    Helper.setLocalStorage({
-      key: ELocalKey.token,
-      value: response.data.jwtToken
-    })
-    axios.defaults.headers.common = {
-      Authorization: `Bearer ${response.data.jwtToken}`
-    }
+    services
+      .post<IRefreshToken>(
+        `/auth/refresh-token`,
+        {},
+        {
+          withCredentials: true
+        }
+      )
+      .then((_response) => {
+        Helper.setLocalStorage({
+          key: ELocalKey.token,
+          value: _response.data.jwtToken
+        })
+        axios.defaults.headers.common = {
+          Authorization: `Bearer ${_response.data.jwtToken}`
+        }
 
-    return response.data.jwtToken
+        return _response.data.jwtToken
+      })
   } catch (error) {
     useProfileStore.getState().onReset()
     Helper.resetLocalStorage()
@@ -140,4 +144,74 @@ export const createNewPassword = ({
         resolve(response.data)
       })
       .catch((error) => reject(error))
+  })
+
+export const revokeToken = async () => {
+  const token = localStorage.getItem("token")
+  return (
+    axios
+      // สั่งให้ token รอบต่อไป จะหมดอายุ เพื่อไม่ให้ refresh อีก
+      .post<IRevorkToken>(`/auth/revoke-token`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((res) => res.data)
+      .catch((error: Error) => error)
+  )
+}
+
+export const loginProvider = ({
+  _email,
+  _provider,
+  _prevPath,
+  _providerUUID,
+  _referral
+}: ILoginProvider) =>
+  new Promise((resolve, reject) => {
+    const data = {
+      email: _email,
+      provider: _provider,
+      prevPath: _prevPath,
+      providerUUID: _providerUUID,
+      referral: _referral
+    }
+    const dataNoReferral = {
+      email: _email,
+      provider: _provider,
+      providerUUID: _providerUUID
+    }
+    services
+      .post<IProfileRegister>(
+        "/auth/signin/with_provider",
+        _referral === null || _referral === "" || _referral === undefined
+          ? { ...dataNoReferral }
+          : { ...data }
+      )
+      .then((response) => {
+        resolve(response.data)
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
+
+export const loginMetamask = ({
+  _account,
+  _accounts,
+  _valueSigner
+}: ILoginWithMetamask) =>
+  new Promise<IProfile>((resolve, reject) => {
+    const data = {
+      wallet_address: _account || _accounts,
+      signature: _valueSigner
+    }
+    services
+      .post<IProfile>("/auth/signin/with_wallet", { ...data })
+      .then((response) => {
+        resolve(response.data)
+      })
+      .catch((error) => {
+        reject(error)
+      })
   })

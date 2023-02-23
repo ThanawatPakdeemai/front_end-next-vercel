@@ -1,6 +1,6 @@
 import LogoIcon from "@components/icons/LogoIcon"
 import { Divider } from "@mui/material"
-import Image from "next/image"
+import { Image } from "@components/atoms/image"
 import React from "react"
 import { motion } from "framer-motion"
 import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"

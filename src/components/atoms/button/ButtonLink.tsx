@@ -1,11 +1,11 @@
 import { Button } from "@mui/material"
 import Link from "next/link"
-import React, { useMemo } from "react"
+import React, { ReactNode, useMemo } from "react"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 
 export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
-  text?: string
-  href: string
+  text?: string | ReactNode
+  href?: string
   icon?: React.ReactNode
   variant?: "text" | "outlined" | "contained"
   color?: "primary" | "secondary" | "success" | "error" | "info" | "warning"
@@ -15,6 +15,9 @@ export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   arrowColor?: string
   onClick?: () => void
   type?: "submit" | "button"
+  disabled?: boolean
+  disabledStartIcon?: boolean
+  disabledEndIcon?: boolean
 }
 
 const ButtonLink = ({
@@ -28,31 +31,50 @@ const ButtonLink = ({
   textColor,
   arrowColor,
   onClick,
-  type
+  type,
+  disabled = false,
+  disabledStartIcon = false,
+  disabledEndIcon = false
 }: IButtonLink) => {
   const ButtonSelf = useMemo(
     () => (
       <Button
+        disabled={disabled}
         variant={variant}
         type={type ?? "button"}
         color={color}
         size={size}
-        startIcon={<div className="button-icon animation-arrow">{icon}</div>}
+        startIcon={
+          !disabledStartIcon && (
+            <div className={`button-icon animation-arrow ${textColor}`}>
+              {icon}
+            </div>
+          )
+        }
         className={`${className} button-global`}
         onClick={onClick}
         endIcon={
-          <div className="button-arrow animation-arrow">
-            <ArrowForwardIcon className={arrowColor} />
-          </div>
+          !disabledEndIcon && (
+            <div className="button-arrow animation-arrow">
+              <ArrowForwardIcon className={arrowColor} />
+            </div>
+          )
         }
       >
-        <span className={`animation-button-text ${textColor}`}>{text}</span>
+        <span
+          className={`animation-button-text flex items-center ${textColor}`}
+        >
+          {text}
+        </span>
       </Button>
     ),
     [
       arrowColor,
       className,
       color,
+      disabled,
+      disabledEndIcon,
+      disabledStartIcon,
       icon,
       onClick,
       size,
@@ -67,7 +89,7 @@ const ButtonLink = ({
     <>
       {!onClick ? (
         <Link
-          href={href}
+          href={href || "/"}
           className="w-auto"
         >
           {ButtonSelf}

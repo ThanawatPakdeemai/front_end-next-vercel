@@ -14,15 +14,34 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
 import MoneyOffIcon from "@mui/icons-material/MoneyOff"
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined"
 import DiamondIcon from "@mui/icons-material/Diamond"
+import Diamond from "@components/icons/Diamond"
 import { IMAGES } from "@constants/images"
-import BlogIcon from "@components/icons/BlogIcon/BlogIcon"
 import AboutUsIcon from "@components/icons/BlogIcon/AboutUsIcon"
+import Campfire from "@components/icons/Campfire"
 import MarketPlaceIcon from "@components/icons/BlogIcon/MarketPlaceIcon"
 import NakaverseIcon from "@components/icons/BlogIcon/NakaverseIcon"
 import NakapunksIcon from "@components/icons/BlogIcon/NakapunksIcon"
 import NewIcon from "@components/icons/BlogIcon/NewIcon"
-import Discusion from "@components/icons/BlogIcon/Discusion"
 import FireOutLineIcon from "@components/icons/BlogIcon/FireOutLineIcon"
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined"
+import AccessTimeIcon from "@mui/icons-material/AccessTime"
+import Inventory from "@components/icons/Inventory"
+import ItemReward from "@components/icons/ItemReward"
+import Support from "@components/icons/Support"
+import Profile from "@components/icons/Profile"
+import ICoupon from "@components/icons/Coupon"
+import IReferrals from "@components/icons/Referrals"
+import IStacking from "@components/icons/Stacking"
+import IconSwap from "@components/icons/SwapIcon"
+import GlobalIcon from "@components/icons/GlobalIcon"
+import BoltIcon from "@mui/icons-material/Bolt"
+import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined"
+import SwapCallsIcon from "@mui/icons-material/SwapCalls"
+import LocalActivityOutlinedIcon from "@mui/icons-material/LocalActivityOutlined"
+import BlogIcon from "@components/icons/BlogIcon/BlogIcon"
+import WalletIcon from "@components/icons/MenunIcon/WalletIcon"
+import LaunchIcon from "@components/icons/MenunIcon/LaunchIcon"
+import TransactionIcon from "@components/icons/MenunIcon/TransactionIcon"
 
 export const MENU = [
   {
@@ -61,11 +80,36 @@ export const MENU = [
       },
       {
         name: "Story Mode",
-        link: "/story",
+        link: "/story-mode-games",
         icon: MapOutlinedIcon,
         textRight: "Free"
       },
-      { name: "Tournament", link: "/tournament", icon: DiamondIcon }
+      {
+        name: "Tournament",
+        link: "/tournament",
+        icon: TournamentIcon
+      } /**
+       @description name svgIcon in forder menu in public (if icon is string) */,
+      {
+        name: "Partner Games",
+        link: "/partner-games",
+        icon: LanguageOutlinedIcon
+      },
+      {
+        name: "Arcade Emporium",
+        link: "/arcade-emporium",
+        icon: DiamondIcon
+      },
+      {
+        name: "NAKA Pass",
+        icon: BoltIcon,
+        link: "/naka-pass"
+      }
+      // {
+      //   name: "NFT Pass",
+      //   link: "/nft-pass",
+      //   icon: MapOutlinedIcon
+      // }
     ]
   },
   {
@@ -82,19 +126,19 @@ export const MENU = [
       {
         name: "P2P DEX",
         link: "/p2p-dex",
-        icon: AttachMoneyIcon
+        icon: SwapCallsIcon
       },
       {
         name: "Staking",
         link: "/staking",
-        icon: MoneyOffIcon
+        icon: IStacking
       },
       {
         name: "Referral Program",
         link: "/referral",
-        icon: MapOutlinedIcon
+        icon: IReferrals
       },
-      { name: "Coupon", link: "/coupon", icon: DiamondIcon }
+      { name: "Coupon", link: "/coupon", icon: LocalActivityOutlinedIcon }
     ]
   },
   {
@@ -112,20 +156,20 @@ export const MENU = [
       {
         name: "Blog",
         link: "/blog",
-        icon: AttachMoneyIcon
+        icon: BlogIcon
       },
       {
         name: "About Us",
-        link: "/abount-us",
-        icon: MoneyOffIcon
+        link: "https://main.nakamoto.games",
+        icon: AboutUsIcon
       },
       {
         name: "Marketplace",
         link: "/marketplace",
-        icon: MapOutlinedIcon
+        icon: MarketPlaceIcon
       },
-      { name: "Nakaverse", link: "/nakaverse", icon: DiamondIcon },
-      { name: "Nakapunks", link: "/nakapunks", icon: DiamondIcon }
+      { name: "Nakaverse", link: "/nakaverse", icon: NakaverseIcon },
+      { name: "Nakapunks", link: "/nakapunks", icon: NakapunksIcon }
     ]
   }
 ]
@@ -158,6 +202,27 @@ export const MENU_GUEST: IMenu[] = [
     icon: <TournamentIcon className="stroke-neutral-300" />,
     href: "/tournament/636e5091feb7364211af6858/naka-runner-tournament-hosted-by-slayer",
     external: false
+  },
+  {
+    id: "partner-games",
+    label: "Partner Games",
+    icon: <GlobalIcon className="stroke-neutral-300" />,
+    href: "/partner-games",
+    external: false
+  },
+  {
+    id: "arcade-emporium",
+    label: "Arcade Emporium",
+    icon: <Diamond stroke="#E1E2E2" />,
+    href: "/arcade-emporium",
+    external: false
+  },
+  {
+    id: "naka-pass",
+    label: "NAKA Pass",
+    icon: <BoltIcon stroke="#E1E2E2" />,
+    href: "/naka-pass",
+    external: true
   }
 ]
 
@@ -165,15 +230,36 @@ export const MENU_LOGGEDIN: IMenu[] = [
   {
     id: "edit-profile",
     label: "Edit Profile",
-    href: "/",
+    href: "/profile",
     icon: <EditProfileIcon />,
+    external: false
+  },
+  {
+    id: "wallet",
+    label: "Wallet",
+    href: "/wallet",
+    icon: <WalletIcon />,
+    external: false
+  },
+  {
+    id: "my-games",
+    label: "My Games",
+    href: "/my-games",
+    icon: <LaunchIcon />,
     external: false
   },
   {
     id: "wishlist",
     label: "Wishlist",
-    href: "/",
+    href: "/favourite-games",
     icon: <WishlistIcon />,
+    external: false
+  },
+  {
+    id: "transactions",
+    label: "All Transactions",
+    href: "/transactions",
+    icon: <TransactionIcon />,
     external: false
   },
   {
@@ -186,7 +272,7 @@ export const MENU_LOGGEDIN: IMenu[] = [
   {
     id: "your-mission",
     label: "Your Mission",
-    href: "/",
+    href: "/mission",
     icon: <YourMissionIcon />,
     external: false
   },
@@ -252,7 +338,57 @@ export const MENU_PROFILE = [
     external: false
   }
 ]
-
+export const MENU_PROFILE_Datell: IMenu[] = [
+  {
+    id: "my profile",
+    label: "My Profile",
+    icon: <Profile className="stroke-neutral-300" />,
+    href: "/",
+    external: false
+  },
+  {
+    id: "wishlist",
+    label: "Wishlist",
+    icon: <FavoriteBorderOutlinedIcon className="stroke-neutral-300" />,
+    href: "/",
+    external: false
+  },
+  {
+    id: "play history",
+    label: "Play History",
+    icon: <AccessTimeIcon className="stroke-neutral-300" />,
+    href: "/history",
+    external: false
+  },
+  {
+    id: "your mission",
+    label: "Your Mission",
+    icon: <Campfire />,
+    href: "/mission",
+    external: false
+  },
+  {
+    id: "inventory",
+    label: "Inventory",
+    icon: <Inventory className="stroke-neutral-300" />,
+    href: "/inventory",
+    external: false
+  },
+  {
+    id: "item reward",
+    label: "Item Reward",
+    icon: <ItemReward className="stroke-neutral-300" />,
+    href: "/item-reward",
+    external: false
+  },
+  {
+    id: "support",
+    label: "Support",
+    icon: <Support className="stroke-neutral-300" />,
+    href: "/profile",
+    external: false
+  }
+]
 export const MENU_MAIN_PC: IMenuIcon[] = [
   {
     title: "P2P Trading",
@@ -300,30 +436,86 @@ export const MENU_BLOG: IMenu[] = [
 ]
 
 export const MENU_BLOG_HEADER = [
-  {
-    name: "All",
-    link: "",
-    isChide: false,
-    icon: null
-  },
+  // {
+  //   name: "All",
+  //   link: "date_released",
+  //   isChide: false,
+  //   icon: null
+  // },
   {
     name: "New",
-    link: "",
+    link: "date_released",
     isChide: true,
     left: "120px !important",
-    icon: <NewIcon className="mr-2" />
+    icon: (
+      <NewIcon className="mr-2 stroke-black-600  group-hover:!fill-white-default group-hover:!stroke-white-default" />
+    )
   },
   {
     name: "Hot",
-    link: "",
+    link: "info.like",
     isChide: true,
-    icon: <FireOutLineIcon className="mr-2 stroke-[#6F727B]" />
+    icon: (
+      <FireOutLineIcon className="mr-2  stroke-black-600 group-hover:!stroke-white-default" />
+    )
+  }
+  // {
+  //   name: "Discusion",
+  //   link: "",
+  //   isChide: true,
+  //   left: "-180px !important",
+  //   icon: <Discusion className="mr-2" />
+  // }
+]
+
+export const MENU_SERVICES = [
+  {
+    id: "p2p-dex",
+    label: "P2P DEX",
+    icon: (
+      <IconSwap
+        className="stroke-neutral-300"
+        stroke="#E1E2E2"
+      />
+    ),
+    href: "/p2p-dex",
+    external: false
   },
   {
-    name: "Discusion",
-    link: "",
-    isChide: true,
-    left: "-180px !important",
-    icon: <Discusion className="mr-2" />
+    id: "staking",
+    label: "Staking",
+    icon: (
+      <IStacking
+        className="stroke-neutral-300"
+        stroke="#E1E2E2"
+      />
+    ),
+    href: "/staking",
+    external: false
+  },
+
+  {
+    id: "referral-program",
+    label: "Referral Program",
+    icon: (
+      <IReferrals
+        className="stroke-neutral-300"
+        stroke="#E1E2E2"
+      />
+    ),
+    href: "/referral",
+    external: false
+  },
+  {
+    id: "coupon",
+    label: "Coupon",
+    icon: (
+      <ICoupon
+        className="stroke-neutral-300"
+        stroke="#E1E2E2"
+      />
+    ),
+    href: "/coupon",
+    external: false
   }
 ]

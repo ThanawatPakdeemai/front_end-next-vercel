@@ -3,13 +3,13 @@ import Slider, { Settings } from "react-slick"
 import GameCarouselHeader, {
   IHeaderSlide
 } from "@components/molecules/gameSlide/GameCarouselHeader"
-import GameCard from "@feature/game/containers/components/molecules/GameCard"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
 import { MESSAGES } from "@constants/messages"
 import { useToast } from "@feature/toast/containers"
+import GameCard from "@feature/game/components/molecules/GameCard"
 
 interface IProps {
   menu: IHeaderSlide
@@ -18,6 +18,7 @@ interface IProps {
   checkTimer?: boolean
   curType: IGetType
   setCurType: (_type: IGetType) => void
+  showSlideCurrent?: number
 }
 
 export type TColor =
@@ -35,10 +36,11 @@ const GameCarousel = ({
   showNo = false,
   checkTimer = false,
   curType,
-  setCurType
+  setCurType,
+  showSlideCurrent
 }: IProps) => {
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
-  const showSlide = 6
+  const showSlide = showSlideCurrent ?? 6
   const settings: Settings = {
     dots: false,
     infinite: true,
@@ -81,7 +83,7 @@ const GameCarousel = ({
 
   const onHandleClick = (_gameUrl: string, _gameData: IGame) => {
     if (profile) {
-      router.push(`/${_gameUrl}`)
+      router.push(`/${curType}-games/${_gameUrl}`)
       onSetGameData(_gameData)
     } else {
       errorToast(MESSAGES.please_login)

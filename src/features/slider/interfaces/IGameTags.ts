@@ -1,4 +1,5 @@
 export interface IGameTag {
-  name: string
-  link: string | null
+  id: string
+  name: string | number | undefined
+  link: string | "" | null
 }

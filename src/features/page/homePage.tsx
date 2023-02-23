@@ -6,7 +6,11 @@ import BodyCategories from "@components/molecules/BodyCategories"
 import ButtonSticky from "@components/molecules/ButtonSticky"
 import GameCarousel from "@components/molecules/gameSlide/GameCarousel"
 import Tagline from "@components/molecules/tagline/Tagline"
-import { F2PHeaderMenu, P2EHeaderMenu } from "@constants/gameSlide"
+import {
+  F2PHeaderMenu,
+  GAME_DOWNLOAD,
+  P2EHeaderMenu
+} from "@constants/gameSlide"
 import DeveloperPart from "@feature/home/components/template/DeveloperPart"
 import BannerSlide from "@feature/slider/components/templates/BannerSlide"
 import CarouselSlide from "@feature/slider/components/templates/CarouselSlide"
@@ -25,9 +29,32 @@ import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { v4 as uuid } from "uuid"
+import useTweenEffect from "@hooks/useSpartFireEffect"
+import useProfileStore from "@stores/profileStore"
+import useQuestStore from "@stores/quest"
+import { MenuLists } from "@configs/social"
+import useGlobal from "@hooks/useGlobal"
 
 const Home = () => {
   const limit = 10
+  const { profile } = useProfileStore()
+  const { clearQuestStore, setOpen, hasCompleted } = useQuestStore()
+  const { hydrated } = useGlobal()
+
+  /**
+   * @description: Spark fire effect
+   */
+  const { createParticle } = useTweenEffect(600, 300, 50, -500)
+  useEffect(() => {
+    if (hydrated) createParticle()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [createParticle])
+
+  const handleModalMission = () => {
+    setOpen()
+    clearQuestStore()
+  }
+
   const [f2pGame, setF2PGame] = useState<IGame[]>()
   const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-play")
 
@@ -35,13 +62,13 @@ const Home = () => {
   const [p2eCurType, setP2ECurType] = useState<IGetType>("hot-game")
 
   const { hotGameData } = useGetHotGames()
-  const { data: p2eGameData } = useGamesByTypes({
+  const { data: p2eGameData, isFetching: p2eLoading } = useGamesByTypes({
     _type: p2eCurType,
     _limit: limit,
     _page: 1
   })
 
-  const { data: f2pGameData } = useGamesByTypes({
+  const { data: f2pGameData, isFetching: f2pLoading } = useGamesByTypes({
     _type: f2pCurType,
     _limit: limit,
     _page: 1
@@ -65,7 +92,7 @@ const Home = () => {
     }
   }, [p2eCurType, hotGameData, p2eGameData])
 
-  return (
+  return hydrated ? (
     <>
       <BannerSlide />
       {/* Testing display a CarouselSlide component, waiting to merge with team */}
@@ -76,20 +103,29 @@ const Home = () => {
           text="Secue. fun. simple. earn $naka AND enjoy "
           icon={<LogoIcon />}
         />
-        <div className="absolute top-[-50%] right-[-10%] z-[5] flex flex-col items-center justify-center">
-          <ButtonSticky icon={<SupportIcon />} />
-          <ButtonSticky
-            multi
-            notify
-          />
-        </div>
+        {/* notification */}
+        {profile && profile.data && (
+          <div className="fixed right-4 bottom-5 z-10 flex flex-col items-center justify-center">
+            <ButtonSticky
+              icon={<SupportIcon />}
+              onClick={() => {
+                window.open(MenuLists[0].href, "_blank")
+              }}
+            />
+            <ButtonSticky
+              multi
+              notify={hasCompleted}
+              onClick={handleModalMission}
+            />
+          </div>
+        )}
       </div>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Box>
           <CardMarketplace />
           <div className="mt-4 grid grid-cols-3 gap-6">
             <CardLink
-              classNameSecond="bg-red-card"
+              classNameSecond="!bg-red-card"
               imageClassNameSecond="scale-[1.35]"
               iconBtn={<INakaSwap />}
               textBtn="NAKA Swap"
@@ -100,11 +136,11 @@ const Home = () => {
               altSecond={IMAGES.backNakaSwap.alt}
             />
             <CardLink
-              classNameSecond="bg-warning-dark"
+              classNameSecond="!bg-warning-dark"
               imageClassNameSecond="scale-[1.35]"
               iconBtn={<IStacking />}
               textBtn="Staking"
-              href="/"
+              href="/staking"
               srcMain={IMAGES.frontStaking.src}
               altMain={IMAGES.frontStaking.alt}
               srcSecond={IMAGES.backStaking.src}
@@ -114,8 +150,8 @@ const Home = () => {
               classNameSecond="bg-info-light"
               imageClassNameSecond="scale-[1.35]"
               iconBtn={<IReferrals />}
-              textBtn="Referrals"
-              href="/"
+              textBtn="Referral"
+              href="/referral"
               srcMain={IMAGES.frontReferrals.src}
               altMain={IMAGES.frontReferrals.alt}
               srcSecond={IMAGES.backReferrals.src}
@@ -123,11 +159,18 @@ const Home = () => {
             />
           </div>
         </Box>
-        <CarouselSlide />
+        <div className="relative overflow-hidden">
+          <div id="spark-fire">
+            <CarouselSlide
+              slideGames={GAME_DOWNLOAD}
+              isLoading={false}
+            />
+          </div>
+        </div>
       </div>
 
       <div className="my-20 h-full w-full">
-        {f2pGame ? (
+        {f2pGame && !f2pLoading ? (
           <GameCarousel
             menu={F2PHeaderMenu}
             list={f2pGame}
@@ -145,7 +188,7 @@ const Home = () => {
       </div>
 
       <div className="my-20 h-full w-full">
-        {p2eGame ? (
+        {p2eGame && !p2eLoading ? (
           <GameCarousel
             menu={P2EHeaderMenu}
             list={p2eGame}
@@ -175,15 +218,16 @@ const Home = () => {
       <Box className="xs:flex-col mt-4 mb-10 gap-3 lg:flex">
         <Box className="xs:grid-cols-1 mb-3 grid gap-3 sm:grid-cols-2 lg:mb-0 lg:grid-cols-3">
           <CardLink
-            textBtn="View All"
-            href="/"
+            classNameSecond="bg-warning-dark"
+            textBtn="Blog"
+            href="/blog"
           />
 
           <CardLink
             classNameSecond="bg-secondary-light"
             iconBtn={<ICoupon />}
             textBtn="Coupon"
-            href="/"
+            href="/coupon"
             srcMain={IMAGES.frontCouponBand.src}
             altMain={IMAGES.frontCouponBand.alt}
             srcSecond={IMAGES.backCouponBand.src}
@@ -194,7 +238,7 @@ const Home = () => {
             classNameSecond="bg-info-light"
             iconBtn={<IDiamond />}
             textBtn="NAKA NFT"
-            href="/"
+            href="/arcade-emporium"
             srcMain={IMAGES.frontNakaBand.src}
             altMain={IMAGES.frontNakaBand.alt}
             srcSecond={IMAGES.backNakaBand.src}
@@ -205,6 +249,8 @@ const Home = () => {
         <CardNakaverse href="/" />
       </Box>
     </>
+  ) : (
+    <> </>
   )
 }
 export default memo(Home)

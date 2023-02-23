@@ -1,14 +1,20 @@
+import React, { ReactNode } from "react"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import { motion } from "framer-motion"
-import React, { ReactNode } from "react"
 
+type TTypeButton = "submit" | "reset" | "button" | undefined
 interface IProps {
   startIcon: ReactNode
   endIcon?: ReactNode
-  text: string
+  text: string | ReactNode
   handleClick?: () => void
   className?: string
+  textClassName?: string
+  style?: React.CSSProperties
+  type?: TTypeButton
+  disabled?: boolean
+  dropColor?: boolean
 }
 
 const ButtonToggleIcon = ({
@@ -16,7 +22,12 @@ const ButtonToggleIcon = ({
   endIcon = <IconArrowRight />,
   text,
   handleClick,
-  className
+  className,
+  textClassName,
+  style,
+  type = "button",
+  disabled,
+  dropColor
 }: IProps) => {
   const stiffValue = 300
 
@@ -68,10 +79,12 @@ const ButtonToggleIcon = ({
   return (
     <motion.button
       className={`btn-icon-container flex h-10 w-full items-center justify-center rounded-md ${className}`}
+      style={style}
       initial="rest"
       whileHover="hover"
-      type="button"
+      type={type}
       onClick={handleClick}
+      disabled={disabled}
     >
       <motion.span
         variants={iconStart}
@@ -80,10 +93,24 @@ const ButtonToggleIcon = ({
         {startIcon}
       </motion.span>
       <motion.p
-        className="mx-1 min-w-[40%] font-neue-machina text-sm"
+        className={`${textClassName} mx-1 min-w-[40%] font-neue-machina text-sm`}
         variants={textBtn}
       >
-        {text}
+        {dropColor ? (
+          <motion.div
+            initial={{ color: "#4E5057" }}
+            animate={{
+              color: "#ffff",
+              transition: { delay: 0.1, duration: 0.2 }
+            }}
+            exit={{ x: "-100vw", transition: { ease: "easeInOut" } }}
+          >
+            {text}
+          </motion.div>
+        ) : (
+          text
+        )}
+        {/* {text} */}
       </motion.p>
       <motion.span variants={iconEnd}>{endIcon}</motion.span>
     </motion.button>

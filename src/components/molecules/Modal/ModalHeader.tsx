@@ -10,9 +10,17 @@ const ModalHeader = ({ handleClose, title }: IProp) => (
   <>
     <Box className="flex items-center justify-between">
       <Typography className="text-lg text-neutral-300">{title}</Typography>
-      <ButtonClose onClick={() => handleClose()} />
+      <div
+        className={`${
+          title === "Buy Assets"
+            ? "rounded-xl border border-neutral-700 py-2 "
+            : ""
+        }`}
+      >
+        <ButtonClose onClick={() => handleClose()} />
+      </div>
     </Box>
-    <Divider />
+    {title === "Buy Assets" ? <></> : <Divider />}
   </>
 )
 export default memo(ModalHeader)

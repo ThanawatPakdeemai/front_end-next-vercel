@@ -6,6 +6,13 @@ export const IMAGES = {
     height: 37,
     alt: "naka-logo"
   },
+  nakaBannerHover: {
+    src: "/images/home/naka-band-hover.svg",
+    blurDataURL: "/images/home/naka-band-hover.svg",
+    width: 225,
+    height: 37,
+    alt: "naka-logo-hover"
+  },
   tableCom: {
     src: "/images/home/table-com.svg",
     blurDataURL: "/images/home/table-com.svg",
@@ -112,8 +119,8 @@ export const IMAGES = {
     alt: "naka-referrals"
   },
   marketPlace: {
-    src: "/images/home/marketplace.svg",
-    blurDataURL: "/images/home/marketplace.svg",
+    src: "/images/home/marketplace.png",
+    blurDataURL: "/images/home/marketplace_blur.png",
     width: 678,
     height: 218,
     alt: "marketPlace"
@@ -173,5 +180,61 @@ export const IMAGES = {
     width: 35,
     height: 35,
     alt: "metamask-icon"
+  },
+  ro: {
+    src: "/images/home/ro.svg",
+    blurDataURL: "/images/home/ro.svg",
+    width: 60.75,
+    height: 60.75,
+    alt: "ro-icon"
+  },
+  vectorWorld: {
+    src: "/images/home/vectorWorld.svg",
+    blurDataURL: "/images/home/vectorWorld.svg",
+    width: 50,
+    height: 50,
+    alt: "vectorWorld"
+  },
+  rectagle: {
+    src: "/images/home/rectagle.svg",
+    blurDataURL: "/images/home/rectagle.svg",
+    width: 764,
+    height: 840,
+    alt: "vectorWorld"
+  },
+  no_image: {
+    src: "/images/common/no_image.png",
+    blurDataURL: "/images/common/no_image.png",
+    width: 218,
+    height: 218,
+    alt: "no_image"
+  },
+  MetaMaskds: {
+    src: "/images/Profile/Wallet/MetaMaskds.svg",
+    blurDataURL: "/images/Profile/Wallet/MetaMaskds.svg",
+    width: 35,
+    height: 35,
+    alt: "meta_maskds"
+  },
+  Frame: {
+    src: "/images/Profile/Wallet/Frame.png",
+    blurDataURL: "/images/Profile/Wallet/Frame.png",
+    width: 120,
+    height: 80,
+    alt: "frame"
+  },
+  RectangleRed: {
+    src: "/images/Profile/Wallet/Rectangle-red.svg",
+    blurDataURL: "/images/Profile/Wallet/Rectangle-red.svg",
+    width: 10,
+    height: 10,
+    alt: "rectangle-red"
+  },
+  RectangleBlack: {
+    src: "/images/Profile/Wallet/Rectangle-black.svg",
+    blurDataURL: "/images/Profile/Wallet/Rectangle-black.svg",
+    width: 10,
+    height: 10,
+    alt: "rectangle-black"
   }
 }

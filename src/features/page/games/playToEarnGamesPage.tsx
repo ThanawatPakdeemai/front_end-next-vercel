@@ -1,36 +1,34 @@
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { P2EHeaderMenu } from "@constants/gameSlide"
-import GameCard from "@feature/game/containers/components/molecules/GameCard"
 import { getGameByTypes } from "@feature/game/containers/services/game.service"
 import { useQueryClient } from "@tanstack/react-query"
-import { useRouter } from "next/router"
 import React, { memo, useEffect, useRef, useState } from "react"
 import { v4 as uuid } from "uuid"
 import useGameStore from "@stores/game/index"
-import { IGame } from "@feature/game/interfaces/IGameService"
-import useProfileStore from "@stores/profileStore"
-import { IProfile } from "@feature/profile/interfaces/IProfileService"
-import { MESSAGES } from "@constants/messages"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
-import { useToast } from "@feature/toast/containers"
+import GameCard from "@feature/game/containers/components/molecules/GameCard"
+import useGlobal from "@hooks/useGlobal"
+import useFilterStore from "@stores/blogFilter"
+import { IGame } from "@feature/game/interfaces/IGameService"
+import { getGamesByCategoryId } from "@feature/dropdown/containers/services/dropdown.service"
 
 const PlayToEarnGamesPage = () => {
   const type = "play-to-earn"
-  const limit = 10
+  const limit = 20
   const [page, setPage] = useState<number>(1)
+  const [gameFilter, setGameFilter] = useState<IGame[]>()
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
-  const router = useRouter()
-  const { onSetGameData, clearGameData } = useGameStore()
-  const profile = useProfileStore((state) => state.profile.data)
-  const [stateProfile, setStateProfile] = useState<IProfile | null>()
-  const { errorToast } = useToast()
-
-  useEffect(() => {
-    setStateProfile(profile)
-  }, [profile])
+  const { onHandleClick } = useGlobal(limit)
+  const { clearGameData } = useGameStore()
+  const {
+    category: categoryDropdown,
+    gameItem: gameItemDropdown,
+    device: deviceDropdown,
+    search: searchDropdown
+  } = useFilterStore()
 
   const {
     isLoading,
@@ -57,18 +55,39 @@ const PlayToEarnGamesPage = () => {
         queryFn: () =>
           getGameByTypes({ _type: type, _limit: limit, _page: page + 1 })
       })
+      setGameFilter(gameData.data)
     }
     clearGameData()
   }, [clearGameData, gameData, isPreviousData, page, queryClient])
 
-  const onHandleClick = (_gameUrl: string, _gameData: IGame) => {
-    if (stateProfile) {
-      router.push(`/${_gameUrl}`)
-      onSetGameData(_gameData)
-    } else {
-      errorToast(MESSAGES.please_login)
+  useEffect(() => {
+    const filterData = {
+      limit,
+      skip: page,
+      sort: "name",
+      search: searchDropdown,
+      category: categoryDropdown,
+      item: gameItemDropdown,
+      device: deviceDropdown,
+      game_type: "play-to-earn-games",
+      tournament: false,
+      nftgame: "all"
     }
-  }
+    getGamesByCategoryId(filterData).then((res) => {
+      if (res) {
+        const { data, info } = res
+        setGameFilter(data)
+        setTotalCount(info ? info.totalCount : 1)
+      }
+    })
+  }, [
+    categoryDropdown,
+    gameItemDropdown,
+    deviceDropdown,
+    searchDropdown,
+    page,
+    limit
+  ])
 
   return (
     <div className="flex flex-col">
@@ -76,13 +95,15 @@ const PlayToEarnGamesPage = () => {
         {isLoading
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
           : null}
-        {gameData
-          ? gameData.data.map((game) => (
+        {gameFilter
+          ? gameFilter.map((game) => (
               <GameCard
                 key={game.id}
                 menu={P2EHeaderMenu}
                 data={game}
-                onHandleClick={() => onHandleClick(game.path, game)}
+                onHandleClick={() =>
+                  onHandleClick("play-to-earn", game.path, game)
+                }
               />
             ))
           : null}

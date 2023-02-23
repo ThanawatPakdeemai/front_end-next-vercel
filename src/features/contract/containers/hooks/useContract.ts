@@ -1,5 +1,6 @@
 import { useMemo } from "react"
 import {
+  getBalanceVaultBinanceContract,
   getBalanceVaultContract,
   getBEP20Contract,
   getERC20Contract,
@@ -23,6 +24,15 @@ export const useBalanceVault = (
 ) =>
   useMemo(
     () => getBalanceVaultContract(_address, _provider),
+    [_address, _provider]
+  )
+
+export const useBalanceVaultBinance = (
+  _provider: Web3Provider | undefined,
+  _address: string
+) =>
+  useMemo(
+    () => getBalanceVaultBinanceContract(_address, _provider),
     [_address, _provider]
   )
 

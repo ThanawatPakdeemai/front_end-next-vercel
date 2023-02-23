@@ -26,16 +26,25 @@ export interface ISignIn {
 }
 
 export interface ISignUp extends ISignIn {
-  _verifycode: string
-  _referral: string
-  _subscription: string
+  _verifycode: number | string
+  _referral: string | string[]
+  _subscription: boolean
 }
 
-export interface IGetVerifyCode extends ISignIn {
+export interface IGetVerifyCode {
+  _email: string
   _recaptcha: string
 }
 
 export interface ICreateNewPassword extends ISignIn {
   _token: string
   _confirmPassword: string
+}
+
+export interface ILoginWithMetamask {
+  _account: string | null | undefined
+  _accounts: string
+  _valueSigner:
+    | string
+    | { status: boolean; addressContract: string; err: unknown }
 }

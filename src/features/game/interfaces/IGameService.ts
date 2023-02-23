@@ -2,22 +2,41 @@ import {
   IGameItem,
   IGameItemList
 } from "@feature/gameItem/interfaces/IGameItemService"
-import { IFormatService } from "@interfaces/IHelper"
+import {
+  IFormatMessageService,
+  IFormatService,
+  IInfo
+} from "@interfaces/IHelper"
+import { IPlayToEarnRewardData } from "@src/types/games"
+import { IPartnerGameData } from "./IPartnerGame"
 
 export type TGameType = "singleplayer" | "multiplayer" | "storymode"
+
 export type TTypeCode =
   | "single_01"
   | "single_02"
   | "multi_01"
   | "multi_02"
   | "story_01"
+  | "survival_01"
 
 export type IGetType =
   | "play-to-earn"
+  | "play-to-earn-games"
   | "free-to-play"
   | "story-mode"
   | "must-try"
   | "hot-game"
+  | "partner-game"
+  | "arcade-emporium"
+  | "all"
+
+export type TRoomStatus =
+  | "playing"
+  | "online"
+  | "send_noti"
+  | "running"
+  | "ready_play"
 
 export interface IGetGameByTypesProps {
   _type: IGetType
@@ -27,6 +46,18 @@ export interface IGetGameByTypesProps {
   _deviceSup?: string
   _itemId?: string
   _search?: string
+}
+
+export interface IGamePayload {
+  limit?: number
+  skip?: number
+  sort?: string
+  search?: string
+  category?: string
+  item?: string
+  device?: string
+  nftgame?: string
+  game_type: IGetType
 }
 
 export interface IGameHowTo {
@@ -78,7 +109,7 @@ export interface IGameMetaData {
 
 export interface IGameMap {
   _id: string
-  map_id: number
+  map_id: string
   map_name: string
 }
 
@@ -88,7 +119,14 @@ export interface IGameCategory {
   slug: string
 }
 
-export interface IGame {
+export interface IGameArcadeEmporium {
+  is_NFT: boolean
+  NFT_Owner: string
+  image_nft_arcade_game: string
+  animation_nft_arcade_game: string
+}
+
+export interface IGame extends IGameArcadeEmporium {
   _id: string
   howto: IGameHowTo
   socket_info?: IGameSocketInfo
@@ -113,7 +151,6 @@ export interface IGame {
   number_of_played?: number
   event_number?: number
   min_player: number
-  meta_data_list?: IGameMetaData[]
   map?: IGameMap[]
   name: string
   story: string
@@ -123,6 +160,7 @@ export interface IGame {
   version: string
   developer: string
   category: IGameCategory
+  category_list: IGameCategory[]
   game_type: TGameType
   type_code: TTypeCode
   game_url: string
@@ -140,6 +178,106 @@ export interface IGame {
   image_home_banner: string
   game_free_url?: string
   image_free_to_earn_icon?: string
+  play_total_count?: number
+  meta_data_list: IGameMetaData[]
+
+  must_try_no: number
+  must_try_status: boolean
+}
+
+interface IGameHowto {
+  title: string
+  details: string
+}
+
+interface ICategory {
+  name: string
+  id: string
+}
+
+interface IGameDevice {
+  key: string
+  name: string
+  supported: boolean
+}
+
+interface IGameBrowser {
+  key: string
+  name: string
+  supported: boolean
+}
+
+interface IRewardPaymentRate {
+  item_reward_amount: number
+  no: number
+}
+
+interface IGameStoryModeData {
+  item_key: string
+  item_name: string
+  type: string
+  image: string
+  mini_image: string
+  active_display: boolean
+  default_value: number
+  max_value: number
+}
+
+export interface IGameFav {
+  number_of_played: number
+  date_start_event: string | Date
+  date_end_event: string | Date
+  play_to_earn_status: string
+  play_to_earn: boolean
+  howto: IGameHowto
+  item: IGameItem[]
+  name: string
+  story: string
+  tournament: boolean
+  is_active: boolean
+  max_players: number
+  play_time: number
+  hot_game_status: boolean
+  hot_game_no: number
+  banner_status: boolean
+  banner_no: number
+  version: string
+  developer: string
+  category: ICategory
+  game_type: string
+  type_code: string
+  game_url: string
+  path: string
+  image_waiting: string
+  image_sum: string
+  image_room: string
+  image_banner: string
+  image_reward: string
+  image_main: string
+  image_background: string
+  banner_description: string
+  game_free_status: boolean
+  game_free_url: string
+  image_category_list: string
+  image_free_to_earn_icon: string
+  image_home_banner: string
+  image_list: string
+  min_player: number
+  map: IGameMap[]
+  socket_info: {
+    url_room: string
+    url_lobby: string
+  }
+  id: string
+  device_support: IGameDevice[]
+  browser_support: IGameBrowser[]
+  num: number
+  title: string
+  image: string
+  _id: string
+  reward_payment_rate: IRewardPaymentRate[]
+  meta_data_list: IGameStoryModeData[]
+  play_total_count?: number
 }
 
 export interface IGameRewardByPlayer extends IGameBase {
@@ -160,14 +298,22 @@ export interface IGameService extends IFormatService {
   data: IGame[]
 }
 
+export interface IGamePartnerService extends IFormatService {
+  data: IPartnerGameData
+}
+
 export interface IGameCurrentPlayer extends IGameBase {
-  status: string
+  status: string // "inroom" | "ready" | "played" | "playing"
   item_burn: boolean
   transaction_status: boolean
   avatar: string
   username: string
   timestamp: Date
   rank: string
+}
+
+export interface IGameCurrentPlayerMulti extends IGameCurrentPlayer {
+  owner?: boolean
 }
 
 export interface IGameHistoryUserPlay extends IGameBase {
@@ -208,7 +354,7 @@ export interface IGameRoomService extends IGameRoom {
 }
 
 export interface IGameRoomDetail extends IGameRoom {
-  room_status: string
+  room_status: TRoomStatus
   mutiplayer: boolean
   tournament: boolean
   user_create: boolean
@@ -245,7 +391,7 @@ export interface IGameSummary extends IGameBase {
   end_time: Date
   room_number: number
   wallet_address: string
-  room_status: string
+  room_status: TRoomStatus
   detail_used_items: IGameUsedItemsDetail
 }
 
@@ -281,10 +427,10 @@ export interface IGameReportService extends IFormatService {
 }
 
 export interface IGamePlayToEarnService extends IFormatService {
-  data: IGameRewardByPlayer
+  data: IPlayToEarnRewardData[]
 }
 
-export interface IGameClaimEarnedRewardService extends IFormatService {
+export interface IGameClaimEarnedRewardService extends IFormatMessageService {
   data: string
 }
 
@@ -301,7 +447,7 @@ export interface IGetAllGameRooms {
 export interface IGetPlayerInRoom {
   _roomId: string
   _playerId: string
-  _type: string
+  _type: "in" | "out"
 }
 
 export interface IClaimEarnedRewardByPlayerId {
@@ -311,4 +457,78 @@ export interface IClaimEarnedRewardByPlayerId {
 
 export interface IGetGameByTypes extends IFormatService, IGameAllState {
   message: string
+}
+
+export interface ICreateRoomDetail {
+  no_room: string
+  number_of_item: number
+  public_room: boolean
+  player_create: string
+}
+
+interface IMultiPlayer {
+  owner?: boolean
+  kick?: boolean
+}
+export interface CurrentPlayer extends IGameCurrentPlayer, IMultiPlayer {
+  _id: string //
+  player_id: string //
+  socket_id: string //
+}
+export interface IGameRoomListSocket {
+  create_room_detail: ICreateRoomDetail
+  start_time: Date
+  end_time: Date
+  room_status: TRoomStatus
+  amount_current_player: number
+  amount_send_reward: number
+  mutiplayer: boolean
+  tournament: boolean
+  user_create: boolean
+  createdAt: Date
+  updatedAt: Date
+  no_limit_time: boolean
+  room_lock: boolean
+  _id: string
+  current_player: CurrentPlayer[]
+  current_player_item_status: any[]
+  history_user_play: any[]
+  rewards: any[]
+  current_time: Date
+  game_id: string
+  max_players: number
+  rank_id: null
+  amount_played: number
+  is_active: boolean
+  status: string
+  map_id: number
+  room_number: number
+  item_id: string
+  id: string
+}
+
+export interface IDataRoomListSocket {
+  gameRoomDetail: IGameRoomListSocket[]
+  game_item_id: string
+}
+export interface IResSocketRoomList {
+  info: IInfo
+  data: IDataRoomListSocket
+}
+
+export interface IError {
+  message: string
+}
+
+export interface IFilterGamesByKey {
+  limit?: number
+  skip?: number
+  sort?: string
+  search?: string
+  category?: string | string[]
+  item?: string | string[]
+  device?: string
+  game_type?: IGetType
+  tournament?: boolean
+  nftgame?: boolean
 }

@@ -9,7 +9,7 @@ declare namespace NodeJS {
   }
 
   interface ProcessEnv {
-    readonly NODE_ENV: "development" | "uat" | "production"
+    readonly NEXT_PUBLIC_MODE: "development" | "uat" | "production"
     readonly NEXT_PUBLIC_APP_NAME: string
     readonly NEXT_PUBLIC_API_URL: string
     readonly NEXT_PUBLIC_GAME_URL: string
@@ -24,6 +24,8 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_POLYGON_RPC_URL: string
     readonly NEXT_PUBLIC_TOKEN_NAME: string
     readonly NEXT_PUBLIC_TOKEN_SYMBOL: string
+    readonly NEXT_PUBLIC_TOKEN_NAME_BUSD: string
+    readonly NEXT_PUBLIC_TOKEN_SYMBOL_BNB: string
     readonly NEXT_PUBLIC_CHAIN_ID: string
     readonly NEXT_PUBLIC_CHAIN_ID_HEX: string
     readonly NEXT_PUBLIC_CHAIN_NAME: string
@@ -34,6 +36,7 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_CONTRACT_ERC20: string
     readonly NEXT_PUBLIC_OWNER: string
     readonly NEXT_PUBLIC_CONTRACT_BALANCE_VAULT: string
+    readonly NEXT_PUBLIC_CONTRACT_BALANCE_VAULT_BINANCE: string
     readonly NEXT_PUBLIC_CONTRACT_ITEM_VAULT: string
     readonly NEXT_PUBLIC_CONTRACT_SHOP: string
     readonly NEXT_PUBLIC_CONTRACT_MARKETPLACE: string
@@ -52,6 +55,14 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_CONTRACT_P2P_BINANCE: string
     readonly NEXT_PUBLIC_CONTRACT_P2P_POLYGON: string
     readonly NEXT_PUBLIC_CONTRACT_ESCAPE_URL: string
+    readonly NEXT_PUBLIC_FACEBOOK_APPID: string
+    readonly NEXT_PUBLIC_FIREBASE_APIKEY: string
+    readonly NEXT_PUBLIC_FIREBASE_AUTHDOMAIN: string
+    readonly NEXT_PUBLIC_FIREBASE_PROJECT_Id: string
+    readonly NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: string
+    readonly NEXT_PUBLIC_FIREBASE_MESSAGING_SEND_ID: string
+    readonly NEXT_PUBLIC_FIREBASE_APPID: string
+    readonly NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: string
   }
 }
 

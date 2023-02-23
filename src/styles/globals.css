@@ -25,3 +25,159 @@ h5,
 h6 {
   font-family: neueMachina, Helvetica, Arial, sans-serif;
 }
+.css-1i21kyg-MuiDivider-root {
+  display: none;
+}
+
+.css-46bh2p-MuiCardContent-root:last-child {
+  padding-bottom: 0px;
+}
+
+.css-1qdnvlu-MuiPaper-root-MuiCard-root {
+  background-color: rgb(24 24 28 / var(--tw-bg-opacity));
+}
+
+.loader {
+  height: 350px;
+  margin: 0 auto;
+  border-radius: 10px;
+  border: 4px solid transparent;
+  position: relative;
+  padding: 1px;
+}
+.loader:before {
+  content: "";
+  width: 2px;
+  background-color: #ff0000;
+  box-shadow: 0px 0px 15px 2px rgb(255, 0, 0);
+  /* 5c0505 */
+  border-radius: 10px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+.loader .loaderBar {
+  position: absolute;
+  border-radius: 10px;
+  width: 2px;
+  top: 100%;
+  right: 0;
+  bottom: 0;
+  left: 0px;
+  background: rgb(236, 4, 4);
+  box-shadow: 0px 0px 15px 5px rgb(255, 0, 0);
+  height: 0;
+  animation: borealisBar 2s linear infinite;
+}
+
+@keyframes borealisBar {
+  0% {
+    top: 0%;
+    bottom: 100%;
+    height: 0%;
+  }
+  10% {
+    top: 0%;
+    bottom: 75%;
+    height: 25%;
+  }
+  90% {
+    bottom: 0%;
+    top: 75%;
+    height: 25%;
+  }
+  100% {
+    top: 100%;
+    bottom: 0%;
+    height: 0%;
+  }
+}
+
+.wavy-line {
+  width: 80px;
+  height: 10px;
+  margin-top: 10px;
+  overflow: hidden;
+  margin: 0 auto 0 auto;
+}
+.wavy-line:before {
+  content: attr(data-text);
+  position: relative;
+  top: -20px;
+  color: rgba(0, 0, 0, 0);
+  width: calc(100% + 27px);
+  font-size: 20px;
+  text-decoration-style: wavy;
+  text-decoration-color: #25173a;
+  text-decoration-line: underline;
+  animation: animate 0.9s linear infinite;
+  -webkit-animation: animate 0.9s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    left: -0px;
+  }
+  100% {
+    left: -30px;
+  }
+}
+@-webkit-keyframes animate {
+  0% {
+    left: -0px;
+  }
+  100% {
+    left: -30px;
+  }
+}
+
+.wavy-line-green:before {
+  color: black;
+  text-decoration-color: #3dcd95;
+  text-shadow: #3dcd95 1px 0 3px;
+}
+
+.wavy-line-DS {
+  width: 80px;
+  height: 10px;
+  margin-top: 10px;
+  overflow: hidden;
+  margin: 0 auto 0 auto;
+}
+.wavy-line-DS:before {
+  content: attr(data-text);
+  position: relative;
+  top: -20px;
+  color: rgba(0, 0, 0, 0);
+  width: calc(100% + 27px);
+  font-size: 20px;
+  text-decoration-style: wavy;
+  text-decoration-color: #25173a;
+  text-decoration-line: underline;
+}
+
+.wavy-line-DS:before {
+  color: black;
+  text-decoration-color: #212121;
+}
+
+.text-NAKA {
+  color: #f42728;
+  text-shadow: #ff0000 1px 0 5px;
+}
+
+.text-BUSD {
+  color: #f0b90c;
+  text-shadow: #ffc400 1px 0 5px;
+}
+
+.GasCard {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.Cardtext {
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+}

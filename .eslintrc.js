@@ -61,7 +61,7 @@ module.exports = {
     "react/state-in-constructor": "off",
     "react/prop-types": "off",
     "react/no-access-state-in-setstate": "error",
-    "react/no-danger": "error",
+    "react/no-danger": "off",
     "react/no-did-mount-set-state": "error",
     "react/no-did-update-set-state": "error",
     "react/no-will-update-set-state": "error",
@@ -128,5 +128,12 @@ module.exports = {
     ],
     camelcase: "off",
     "react/no-unused-prop-types": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   }
 }

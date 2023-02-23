@@ -1,7 +1,6 @@
-import { Divider, Typography } from "@mui/material"
+import { Divider, Link, Typography } from "@mui/material"
 import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
 import { SOCIAL } from "@configs/socialShare"
-import Link from "next/link"
 import { NAKA_GAME } from "@configs/nakaGame"
 import { NAKA_SERVICES } from "@configs/nakaServices"
 import { NAKA_ECOSYSTEMSS } from "@configs/nakaEcosystems"
@@ -18,7 +17,7 @@ import { useState } from "react"
 import TextLink from "@components/atoms/TextLink"
 import { ShakeIcon } from "@components/atoms/LigthShake"
 
-const arrowMotion = {
+export const arrowMotion = {
   rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
   hover: {
     opacity: 1,
@@ -31,7 +30,7 @@ const arrowMotion = {
   }
 }
 
-const textMotion = {
+export const textMotion = {
   visible: {
     scale: 0.8,
     transition: { delay: 0.4 }
@@ -76,7 +75,9 @@ const iconArrow = {
 }
 
 const Footer = () => {
-  const onHandleClick = () => {}
+  const openInNewTab = (url: string) => {
+    window.open(url, "_blank", "noreferrer")
+  }
   const [isHover, setIsHover] = useState<boolean>(false)
   const handleMouseEnter = () => {
     setIsHover(true)
@@ -107,15 +108,19 @@ const Footer = () => {
                     key={`game-${item.label}-${game.name}`}
                     className="flex"
                   >
-                    <TextLink
-                      key={item.label}
-                      name={game.name}
-                      initial="rest"
-                      whileHover="hover"
-                      animate="rest"
-                      variantsArrow={arrowMotion}
-                      variantsText={textMotion}
-                    />
+                    <Link
+                      key={game.name}
+                      href={game.path}
+                    >
+                      <TextLink
+                        name={game.name}
+                        initial="rest"
+                        whileHover="hover"
+                        animate="rest"
+                        variantsArrow={arrowMotion}
+                        variantsText={textMotion}
+                      />
+                    </Link>
                   </div>
                 ))}
               </div>
@@ -124,15 +129,19 @@ const Footer = () => {
           <div className="w-48">
             <div className="mb-4 uppercase text-white-primary">services</div>
             {NAKA_SERVICES?.map((item) => (
-              <TextLink
+              <Link
                 key={item.label}
-                name={item.label}
-                initial="rest"
-                whileHover="hover"
-                animate="rest"
-                variantsArrow={arrowMotion}
-                variantsText={textMotion}
-              />
+                href={item.path}
+              >
+                <TextLink
+                  name={item.label}
+                  initial="rest"
+                  whileHover="hover"
+                  animate="rest"
+                  variantsArrow={arrowMotion}
+                  variantsText={textMotion}
+                />
+              </Link>
             ))}
           </div>
           <div className="w-48">
@@ -140,20 +149,24 @@ const Footer = () => {
               NAKA ecosystemss
             </div>
             {NAKA_ECOSYSTEMSS?.map((item) => (
-              <TextLink
+              <Link
+                href={item.path}
                 key={item.label}
-                name={item.label}
-                initial="rest"
-                whileHover="hover"
-                animate="rest"
-                variantsArrow={arrowMotion}
-                variantsText={textMotion}
-                icon={
-                  item.icon ? (
-                    <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />
-                  ) : null
-                }
-              />
+              >
+                <TextLink
+                  name={item.label}
+                  initial="rest"
+                  whileHover="hover"
+                  animate="rest"
+                  variantsArrow={arrowMotion}
+                  variantsText={textMotion}
+                  icon={
+                    item.icon ? (
+                      <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />
+                    ) : null
+                  }
+                />
+              </Link>
             ))}
           </div>
         </div>
@@ -166,16 +179,17 @@ const Footer = () => {
             and explore the many benefits it has to offer.
             <div className="my-8">
               <ButtonToggleIcon
-                handleClick={onHandleClick}
+                handleClick={() => openInNewTab("https://t.me/NakamotoGames")}
                 startIcon={<WineIcon />}
                 text="join The Revolutions"
-                className="btn-rainbow-theme b h-[50px] w-[220px] bg-secondary-main font-bold capitalize text-white-default"
+                className="btn-rainbow-theme b h-[50px] !w-[260px] bg-secondary-main font-bold capitalize text-white-default"
+                type="button"
               />
             </div>
             <div className="flex flex-wrap">
-              {SOCIAL?.map((item) => (
+              {SOCIAL?.map((item, index) => (
                 <Link
-                  key={item.label}
+                  key={Number(index)}
                   href={item.href}
                   target="_blank"
                 >
@@ -201,10 +215,13 @@ const Footer = () => {
           <div className="md:flex">
             <div className="flex items-center text-white-primary md:w-2/4 md:pr-[20px]">
               <ButtonToggleIcon
-                handleClick={onHandleClick}
+                handleClick={() =>
+                  openInNewTab("https://main.nakamoto.games/joinus/")
+                }
                 startIcon={<DesktopIcon />}
                 text="Become a Naka Devs"
-                className="z-[2] h-[50px] w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
+                className="z-[2] h-[50px] !w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
+                type="button"
               />
               <h3 className="pl-[30px] text-grey-neutral04 md:w-[280px]">
                 Join the industry&apos;s first comprehensive Play to Earn
@@ -213,10 +230,11 @@ const Footer = () => {
             </div>
             <div className="mt-[20px] flex items-center md:mt-0 md:w-3/4">
               <ButtonToggleIcon
-                handleClick={onHandleClick}
+                handleClick={() => openInNewTab("https://main.nakamoto.games/")}
                 startIcon={<DollarPaperIcon />}
                 text="Become a Partner"
-                className="z-[2] h-[50px] w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
+                className="z-[2] h-[50px] !w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
+                type="button"
               />
               <h3 className="pl-[30px] text-grey-neutral04 md:w-[300px]">
                 Earn some serious cash promoting Nakamoto.Games
@@ -227,6 +245,9 @@ const Footer = () => {
         <div className="flex justify-center pt-2 lg:pt-0">
           <div className="flex h-[82px] w-[90px] items-center justify-center self-center rounded-[20px] bg-neutral-800 lg:ml-[10px] lg:h-full">
             <ButtonIcon
+              onClick={() => {
+                window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+              }}
               variants={iconArrow}
               whileHover="hover"
               transition={{

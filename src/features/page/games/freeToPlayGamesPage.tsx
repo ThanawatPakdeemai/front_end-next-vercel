@@ -1,22 +1,36 @@
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { F2PHeaderMenu } from "@constants/gameSlide"
-import GameCard from "@feature/game/containers/components/molecules/GameCard"
+import { getGamesByCategoryId } from "@feature/dropdown/containers/services/dropdown.service"
+import GameCard from "@feature/game/components/molecules/GameCard"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import { getGameByTypes } from "@feature/game/containers/services/game.service"
+import { IGame } from "@feature/game/interfaces/IGameService"
+import useGlobal from "@hooks/useGlobal"
+import useFilterStore from "@stores/blogFilter"
+import useGameStore from "@stores/game"
 import { useQueryClient } from "@tanstack/react-query"
 import { memo, useEffect, useRef, useState } from "react"
 import { v4 as uuid } from "uuid"
 
 const FreeToPlayGamesPage = () => {
   const type = "free-to-play"
-  const limit = 30
+  const limit = 20
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
+  const [gameFilter, setGameFilter] = useState<IGame[]>()
   const [page, setPage] = useState<number>(1)
   const [cooldown, setCooldown] = useState<boolean>(true)
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
+  const { onHandleClick } = useGlobal()
+  const { clearGameData } = useGameStore()
+  const {
+    category: categoryDropdown,
+    gameItem: gameItemDropdown,
+    device: deviceDropdown,
+    search: searchDropdown
+  } = useFilterStore()
 
   const {
     isLoading,
@@ -34,7 +48,8 @@ const FreeToPlayGamesPage = () => {
       fetchRef.current = true
       setTotalCount(gameData.info.totalCount)
     }
-  }, [gameData])
+    clearGameData()
+  }, [clearGameData, gameData])
 
   useEffect(() => {
     if (!isPreviousData && gameData) {
@@ -43,10 +58,38 @@ const FreeToPlayGamesPage = () => {
         queryFn: () =>
           getGameByTypes({ _type: type, _limit: limit, _page: page + 1 })
       })
+      setGameFilter(gameData.data)
     }
   }, [gameData, isPreviousData, page, queryClient])
 
-  const onHandleClick = () => {}
+  useEffect(() => {
+    const filterData = {
+      limit,
+      skip: page,
+      sort: "name",
+      search: searchDropdown,
+      category: categoryDropdown,
+      item: gameItemDropdown,
+      device: deviceDropdown,
+      game_type: "free-to-play-games",
+      tournament: false,
+      nftgame: "all"
+    }
+    getGamesByCategoryId(filterData).then((res) => {
+      if (res) {
+        const { data, info } = res
+        setGameFilter(data)
+        setTotalCount(info ? info.totalCount : 1)
+      }
+    })
+  }, [
+    categoryDropdown,
+    gameItemDropdown,
+    deviceDropdown,
+    searchDropdown,
+    page,
+    limit
+  ])
 
   return (
     <div className="flex flex-col">
@@ -54,8 +97,8 @@ const FreeToPlayGamesPage = () => {
         {isLoading
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
           : null}
-        {gameData
-          ? gameData.data.map((game) => (
+        {gameFilter
+          ? gameFilter.map((game) => (
               <GameCard
                 key={game.id}
                 menu={F2PHeaderMenu}
@@ -64,7 +107,9 @@ const FreeToPlayGamesPage = () => {
                 staminaRecovery={staminaRecovery}
                 cooldown={cooldown}
                 setCooldown={setCooldown}
-                onHandleClick={onHandleClick}
+                onHandleClick={() =>
+                  onHandleClick("free-to-play", game.path, game)
+                }
               />
             ))
           : null}

@@ -1,0 +1,40 @@
+.not-found {
+  background-color: #14161e;
+  color: #979fb6;
+  font-family: neueMachina;
+}
+
+.not-found h1 {
+  font-family: "neueMachina";
+}
+
+@media screen and (max-width: 767px) {
+  .not-found h1 {
+    font-size: 4rem;
+  }
+}
+
+.not-found h3,
+.not-found h4 {
+  font-family: "neueMachina";
+}
+
+@media screen and (max-width: 767px) {
+  .not-found h3,
+  .not-found h4 {
+    font-size: 1rem;
+  }
+}
+
+.not-found button {
+  font-family: "neueMachina";
+  font-size: 14px;
+  background: #ec2f2f;
+  box-shadow: 0 0 20px #ec2f2f, inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.not-found button:hover {
+  box-shadow: none;
+}
+
+/*# sourceMappingURL=404.module.css.map */

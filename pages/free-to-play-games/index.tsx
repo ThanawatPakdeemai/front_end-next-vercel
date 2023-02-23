@@ -1,7 +1,19 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import GamePageLayout from "@components/template/GamePageLayout"
-import FreeToPlayGamesPage from "@feature/page/games/freeToPlayGamesPage"
+import dynamic from "next/dynamic"
+
+const GamePageLayout = dynamic(
+  () => import("@components/templates/GamePageLayout"),
+  {
+    suspense: true
+  }
+)
+const FreeToPlayGamesPage = dynamic(
+  () => import("@feature/page/games/freeToPlayGamesPage"),
+  {
+    suspense: true
+  }
+)
 
 export default function FreeToPlayGames() {
   return (

@@ -11,8 +11,8 @@
     <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
       <use xlink:href="#image0_14_392" transform="scale(0.000496771)"/>
     </pattern>
-    <filter id="filter0_i_14_392" x="142.082" y="78.3584" width="13.5098" height="13.8369" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+    <filter id="filter0_i_14_392" x="142.082" y="78.3584" width="13.5098" height="13.8369" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+      <feFlood floodOpacity="0" result="BackgroundImageFix"/>
       <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
       <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
       <feOffset dy="1"/>

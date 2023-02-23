@@ -110,7 +110,6 @@ const Helper = {
   copyClipboard(_val: string) {
     // Copy the text inside the text field
     navigator.clipboard.writeText(_val)
-    // toast.success("Copied!")
   },
   makeID(_length: number) {
     let result = ""

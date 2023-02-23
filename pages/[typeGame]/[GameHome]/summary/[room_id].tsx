@@ -1,8 +1,14 @@
-import GameRoomLayout from "@components/templates/GameRoomLayout"
-import GameSummaryPage from "@feature/page/games/gameSummaryPage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useRouter } from "next/router"
+import dynamic from "next/dynamic"
 import React, { ReactElement } from "react"
+
+const GameRoomLayout = dynamic(
+  () => import("@components/templates/GameRoomLayout")
+)
+const GameSummaryPage = dynamic(
+  () => import("@feature/page/games/gameSummaryPage")
+)
 
 export default function Notification_id() {
   const router = useRouter()

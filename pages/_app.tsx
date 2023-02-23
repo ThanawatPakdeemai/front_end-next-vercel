@@ -8,17 +8,19 @@ import { appWithTranslation } from "next-i18next"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import type { AppProps } from "next/app"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import dayjs from "dayjs"
-import rt from "dayjs/plugin/relativeTime"
 import { useRouter } from "next/router"
-import Head from "next/head"
 import { DATA_META_TAG } from "@configs/metaTagData"
 import { ProviderApp, Web3Provider } from "@providers/index"
 import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material"
 import { theme } from "@styles/themes/darkTheme"
-import createEmotionCache from "@utils/createEmotionCache"
 import { CacheProvider, EmotionCache } from "@emotion/react"
-import Loading from "@components/molecules/Loading"
+import Head from "next/head"
+import dynamic from "next/dynamic"
+import dayjs from "dayjs"
+import rt from "dayjs/plugin/relativeTime"
+import createEmotionCache from "@utils/createEmotionCache"
+
+const Loading = dynamic(() => import("@components/molecules/Loading"))
 
 dayjs.extend(rt)
 

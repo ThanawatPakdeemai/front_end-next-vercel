@@ -1,7 +1,11 @@
 import React, { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import WalletPage from "@feature/page/WalletPage"
-import ProfileLayout from "@components/templates/ProfileLayout"
+import dynamic from "next/dynamic"
+
+const WalletPage = dynamic(() => import("@feature/page/WalletPage"))
+const ProfileLayout = dynamic(
+  () => import("@components/templates/ProfileLayout")
+)
 
 export default function Wallet() {
   return (

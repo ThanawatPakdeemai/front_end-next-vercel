@@ -1,6 +1,10 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import TournamentLayout from "@components/templates/TournamentLayout"
+import dynamic from "next/dynamic"
+
+const TournamentLayout = dynamic(
+  () => import("@components/templates/TournamentLayout")
+)
 
 export default function Tournament() {
   return (

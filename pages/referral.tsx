@@ -1,6 +1,10 @@
-import ServicesPageLayout from "@components/templates/ServicesPageLayout"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"
+import dynamic from "next/dynamic"
+
+const ServicesPageLayout = dynamic(
+  () => import("@components/templates/ServicesPageLayout")
+)
 
 export default function Referral() {
   return (

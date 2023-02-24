@@ -36,8 +36,19 @@ const ProfileContent = () => {
     _limit: 20,
     _playerId: idPlayer,
     _page: 1,
-    _sort: "id"
+    _sort: "",
+    _cheat: "All",
+    _rewards_send_status: "All"
   })
+
+  // const { response: getProfileInfo } = useGetProfileInfo({
+  //   _limit: 20,
+  //   _playerId: idPlayer,
+  //   _page: 1,
+  //   _sort: "",
+  //   _cheat: "All",
+  //   _rewards_send_status: "All"
+  // })
 
   const handleOnExpandClick = () => {
     setOpenEdit(!openEdit)
@@ -117,7 +128,7 @@ const ProfileContent = () => {
               width={150}
               height={150}
               alt="profile-avatar"
-              className="absolute rounded-3xl"
+              className="absolute !h-full rounded-3xl"
             />
           </div>
         </div>

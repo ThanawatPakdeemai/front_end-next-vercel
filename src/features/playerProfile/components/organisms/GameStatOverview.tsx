@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useEffect, useRef, useState } from "react"
 import { Card, Chip, InputAdornment, TextField } from "@mui/material"
 import NumberRank from "@feature/ranking/components/atoms/NumberRank"
 import { Image } from "@components/atoms/image"
@@ -12,6 +12,8 @@ import Helper from "@utils/helper"
 import TooltipsCustom from "@components/atoms/TooltipsCustom"
 import useLoadingStore from "@stores/loading"
 import { motion } from "framer-motion"
+import { getPlayerInfoByPlayerId } from "@feature/profile/containers/services/profile.service"
+import { useQueryClient } from "@tanstack/react-query"
 import RankIcon from "../atoms/RankIcon"
 import SliderGameStat from "./SliderGameStat"
 
@@ -20,67 +22,52 @@ const GameStatOverview = () => {
   const [totalCount, setTotalCount] = useState<number>(0)
   const limit = 20
   const profile = useProfileStore((state) => state.profile)
-  // const rankingMock = [
-  //   {
-  //     rank: 0,
-  //     name: "NAKAMOTOWARS",
-  //     detail: "THERE ARE PLENTY OF UNKNOWNS IN",
-  //     rankName: "PLATINUM",
-  //     rankScore: 2345,
-  //     played: 1234,
-  //     winrate: 99.45,
-  //     image: "/images/gameDetails/nakamoto-wars.webp",
-  //     imageRank: "/images/gamePage/rank/platinum.svg"
-  //   },
-  //   {
-  //     rank: 1,
-  //     name: "NAKAMOTOWARS",
-  //     detail: "THERE ARE PLENTY OF UNKNOWNS IN",
-  //     rankName: "PLATINUM",
-  //     rankScore: 2345,
-  //     played: 1234,
-  //     winrate: 99.45,
-  //     image: "/images/mocks/play2earnGames/duninutss_game.png",
-  //     imageRank: "/images/gamePage/rank/platinum.svg"
-  //   },
-  //   {
-  //     rank: 2,
-  //     name: "NAKAMOTOWARS",
-  //     detail: "THERE ARE PLENTY OF UNKNOWNS IN",
-  //     rankName: "PLATINUM",
-  //     rankScore: 2345,
-  //     played: 1234,
-  //     winrate: 99.45,
-  //     image: "/images/gameDetails/nakamoto-wars.webp",
-  //     imageRank: "/images/gamePage/rank/platinum.svg"
-  //   },
-  //   {
-  //     rank: 3,
-  //     name: "NAKAMOTOWARS",
-  //     detail: "THERE ARE PLENTY OF UNKNOWNS IN",
-  //     rankName: "PLATINUM",
-  //     rankScore: 2345,
-  //     played: 1234,
-  //     winrate: 99.45,
-  //     image: "/images/gameDetails/nakamoto-wars.webp",
-  //     imageRank: "/images/gamePage/rank/platinum.svg"
-  //   }
-  // ]
-
+  // const [dataInfo, setDatainfo] = useState<IPlayerInfoResponse>()
   const [idPlayer, setIdPlayer] = useState<string>("")
   const { setOpen, setClose } = useLoadingStore()
-  const { getProfileInfo, isLoading } = useGetProfileInfo({
-    _limit: 20,
-    _playerId: idPlayer,
-    _page: page,
-    _sort: "id"
-  })
+  const queryClient = useQueryClient()
+  const fetchRef = useRef(false)
+
+  // const { response, isLoading, mutateGetPlayerInfo } = useGetProfileInfo()
+
+  // const { getProfileInfo, isLoading, isPreviousData, refetchGetProfile } =
+  //   useGetProfileInfo({
+  //     _limit: 20,
+  //     _playerId: idPlayer,
+  //     _page: page,
+  //     _sort: "",
+  //     _cheat: "All",
+  //     _rewards_send_status: "All"
+  //   })
 
   const [openBadges, setOpenBadges] = useState<boolean>(false)
 
   const handleOnExpandClick = () => {
     setOpenBadges(!openBadges)
   }
+
+  useEffect(() => {
+    if (profile && profile.data) {
+      setIdPlayer(profile.data.id as string)
+    }
+  }, [profile])
+
+  // useQuery
+  const { getProfileInfo, isLoading, isPreviousData, refetchGetProfile } =
+    useGetProfileInfo({
+      _limit: limit,
+      _playerId: idPlayer,
+      _page: page,
+      _sort: "",
+      _cheat: "All",
+      _rewards_send_status: "All"
+    })
+  useEffect(() => {
+    if (!fetchRef.current && getProfileInfo) {
+      fetchRef.current = true
+      setTotalCount(getProfileInfo.data.info.totalCount)
+    }
+  }, [getProfileInfo])
 
   useEffect(() => {
     if (isLoading) {
@@ -91,23 +78,50 @@ const GameStatOverview = () => {
   }, [isLoading, setClose, setOpen])
 
   useEffect(() => {
-    if (profile && profile.data) {
-      setIdPlayer(profile.data.id as string)
+    if (!isPreviousData && getProfileInfo) {
+      queryClient.prefetchQuery({
+        queryKey: ["PlayerInfoByPlayerId", page],
+        queryFn: () =>
+          getPlayerInfoByPlayerId({
+            _limit: limit,
+            _playerId: idPlayer,
+            _page: page,
+            _sort: "",
+            _cheat: "All",
+            _rewards_send_status: "All"
+          })
+      })
+      refetchGetProfile()
     }
-  }, [profile])
+  }, [
+    getProfileInfo,
+    isPreviousData,
+    page,
+    queryClient,
+    idPlayer,
+    refetchGetProfile
+  ])
+  // useQuery
 
+  // useMutation
   // useEffect(() => {
-  //   if (profile && profile.length > 0) {
-  //     setTotalCount(data.length)
+  //   if (!response && profile) {
+  //     mutateGetPlayerInfo({
+  //       _limit: limit,
+  //       _playerId: idPlayer,
+  //       _page: page,
+  //       _sort: "",
+  //       _cheat: "All",
+  //       _rewards_send_status: "All"
+  //     }).then((_res) => {
+  //       setTotalCount(_res.data.info.totalCount)
+  //       setDatainfo(_res)
+  //     })
   //   }
-  // }, [profile])
+  // }, [idPlayer, mutateGetPlayerInfo, page, response, profile])
 
-  useEffect(() => {
-    if (getProfileInfo) {
-      setTotalCount(getProfileInfo.data.game_data.length)
-    }
-  }, [getProfileInfo])
-
+  // console.log("page", page)
+  // console.log("response", page, response)
   return (
     <div className="w-[90%]">
       <SliderGameStat

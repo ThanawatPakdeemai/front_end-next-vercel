@@ -4,7 +4,13 @@ import StateIcon from "@components/atoms/stateIcon/StateIcon"
 import IconButtonCustom from "@components/atoms/IconButtonCustom/IconButtonCustom"
 import Balance from "@components/molecules/balance/Balance"
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined"
-import { Typography, Collapse, CardActions, Card } from "@mui/material"
+import {
+  Typography,
+  Collapse,
+  CardActions,
+  Card,
+  ClickAwayListener
+} from "@mui/material"
 import Helper from "@utils/helper"
 import StatProfile from "@components/molecules/statProfile/StatProfile"
 import MenuProfile from "@components/molecules/menuProfile/MenuProfile"
@@ -34,7 +40,7 @@ const RightMenuLogIn = () => {
   }
 
   const handleOnExpandClick = () => {
-    setExpanded(!expanded)
+    setExpanded((prev) => !prev)
   }
 
   const handleOnNotiClick = () => {
@@ -143,48 +149,54 @@ const RightMenuLogIn = () => {
             </Card>
           </TooltipsCustom>
 
-          <Collapse
-            in={expanded}
-            timeout="auto"
-            className="rounded-b-[19px] pt-[10px]"
-            sx={{
-              position: "absolute",
-              backgroundColor: "#010101D9",
-              maxWidth: 277,
-              width: 277,
-              zIndex: 99999
-            }}
+          <ClickAwayListener
+            mouseEvent="onMouseDown"
+            touchEvent="onTouchStart"
+            onClickAway={() => setExpanded(false)}
           >
-            <Balance
-              variant="naka"
-              token="NAKA"
-              tokenUnit="NAKA"
+            <Collapse
+              in={expanded}
+              timeout="auto"
+              className="rounded-b-[19px] pt-[10px]"
               sx={{
-                maxWidth: 265,
-                minWidth: 265,
-                height: "auto"
+                position: "absolute",
+                backgroundColor: "#010101D9",
+                maxWidth: 277,
+                width: 277,
+                zIndex: 99999
               }}
-            />
+            >
+              <Balance
+                variant="naka"
+                token="NAKA"
+                tokenUnit="NAKA"
+                sx={{
+                  maxWidth: 265,
+                  minWidth: 265,
+                  height: "auto"
+                }}
+              />
 
-            <StatProfile
-              exp={{
-                level: profile?.level,
-                expAmount: profile?.exp,
-                maxExp: profile?.max_exp
-              }}
-              energy={{
-                staminaPoint: profile?.stamina_point,
-                totalStamina: profile?.total_stamina
-              }}
-              sx={{
-                maxWidth: 265,
-                minWidth: 265,
-                height: 70
-              }}
-              type="row"
-            />
-            <MenuProfile />
-          </Collapse>
+              <StatProfile
+                exp={{
+                  level: profile?.level,
+                  expAmount: profile?.exp,
+                  maxExp: profile?.max_exp
+                }}
+                energy={{
+                  staminaPoint: profile?.stamina_point,
+                  totalStamina: profile?.total_stamina
+                }}
+                sx={{
+                  maxWidth: 265,
+                  minWidth: 265,
+                  height: 70
+                }}
+                type="row"
+              />
+              <MenuProfile />
+            </Collapse>
+          </ClickAwayListener>
         </>
       )}
     </div>

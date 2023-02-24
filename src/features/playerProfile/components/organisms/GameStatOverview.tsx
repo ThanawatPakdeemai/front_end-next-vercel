@@ -5,28 +5,30 @@ import { Image } from "@components/atoms/image"
 import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import { v4 as uuidv4 } from "uuid"
 import SearchIcon from "@components/icons/SearchIcon"
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import useGetProfileInfo from "@feature/profile/containers/hook/getProfileInfo"
 import useProfileStore from "@stores/profileStore"
+import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import Helper from "@utils/helper"
 import TooltipsCustom from "@components/atoms/TooltipsCustom"
-import useLoadingStore from "@stores/loading"
 import { motion } from "framer-motion"
 import { getPlayerInfoByPlayerId } from "@feature/profile/containers/services/profile.service"
 import { useQueryClient } from "@tanstack/react-query"
+import DropdownLimit from "@components/atoms/DropdownLimit"
+import useGlobal from "@hooks/useGlobal"
 import RankIcon from "../atoms/RankIcon"
 import SliderGameStat from "./SliderGameStat"
 
 const GameStatOverview = () => {
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
-  const limit = 20
+  // const limit = 20
+  const [limit, setLimit] = useState<number>(20)
   const profile = useProfileStore((state) => state.profile)
   // const [dataInfo, setDatainfo] = useState<IPlayerInfoResponse>()
   const [idPlayer, setIdPlayer] = useState<string>("")
-  const { setOpen, setClose } = useLoadingStore()
   const queryClient = useQueryClient()
   const fetchRef = useRef(false)
+  const { hydrated, pager } = useGlobal()
 
   // const { response, isLoading, mutateGetPlayerInfo } = useGetProfileInfo()
 
@@ -70,14 +72,6 @@ const GameStatOverview = () => {
   }, [getProfileInfo])
 
   useEffect(() => {
-    if (isLoading) {
-      setOpen()
-    } else {
-      setClose()
-    }
-  }, [isLoading, setClose, setOpen])
-
-  useEffect(() => {
     if (!isPreviousData && getProfileInfo) {
       queryClient.prefetchQuery({
         queryKey: ["PlayerInfoByPlayerId", page],
@@ -99,7 +93,8 @@ const GameStatOverview = () => {
     page,
     queryClient,
     idPlayer,
-    refetchGetProfile
+    refetchGetProfile,
+    limit
   ])
   // useQuery
 
@@ -134,6 +129,9 @@ const GameStatOverview = () => {
             key={uuidv4()}
             className="mb-10 flex w-full flex-col gap-2 rounded-[26px] bg-neutral-800 p-2"
           >
+            {isLoading
+              ? [...Array(limit)].map(() => <SkeletonCard key={uuidv4()} />)
+              : null}
             {getProfileInfo &&
               getProfileInfo.data.game_data.map((item, index) => (
                 <Card
@@ -248,7 +246,7 @@ const GameStatOverview = () => {
               page={page}
               setPage={setPage}
             />
-            <div>
+            <div className="flex">
               <TextField
                 // label="Search Game..."
                 sx={{
@@ -268,21 +266,14 @@ const GameStatOverview = () => {
                   )
                 }}
               />
-
-              <TextField
-                // label="Show 6"
-                className="ml-3"
-                select
-                placeholder="Show 6"
-                // value={0}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <VisibilityOutlinedIcon />
-                    </InputAdornment>
-                  )
-                }}
-              />
+              {hydrated && (
+                <DropdownLimit
+                  className="ml-2"
+                  defaultValue={limit ?? 20}
+                  list={pager}
+                  onChangeSelect={setLimit}
+                />
+              )}
             </div>
 
             {/* {gameData && gameData.type_code === "multi_02" && (

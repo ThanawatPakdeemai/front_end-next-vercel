@@ -1,6 +1,6 @@
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import { F2PHeaderMenu } from "@constants/gameSlide"
+import { NFTHeaderMenu } from "@constants/gameSlide"
 import GameCard from "@feature/game/components/molecules/GameCard"
 import useArcadeEmporiumGames from "@feature/game/containers/hooks/useArcadeEmporiumGames"
 import { IGame } from "@feature/game/interfaces/IGameService"
@@ -37,7 +37,7 @@ const ArcadeEmporiumGamesPage = () => {
           ? gameData.map((game) => (
               <GameCard
                 key={game.id}
-                menu={F2PHeaderMenu}
+                menu={NFTHeaderMenu}
                 data={game}
                 onHandleClick={() =>
                   onHandleClick("arcade-emporium", game.path, game)

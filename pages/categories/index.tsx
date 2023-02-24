@@ -3,10 +3,16 @@ import React, { ReactElement } from "react"
 import dynamic from "next/dynamic"
 
 const GamePageWithBreadcrumb = dynamic(
-  () => import("@components/templates/GamePageWithBreadcrumb")
+  () => import("@components/templates/GamePageWithBreadcrumb"),
+  {
+    suspense: true
+  }
 )
 const CatogoriesListPage = dynamic(
-  () => import("@feature/page/CatogoriesListPage")
+  () => import("@feature/page/CatogoriesListPage"),
+  {
+    suspense: true
+  }
 )
 
 export default function Categories() {

@@ -3,10 +3,16 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 
 const GamePageLayout = dynamic(
-  () => import("@components/templates/GamePageLayout")
+  () => import("@components/templates/GamePageLayout"),
+  {
+    suspense: true
+  }
 )
 const FreeToPlayGamesPage = dynamic(
-  () => import("@feature/page/games/freeToPlayGamesPage")
+  () => import("@feature/page/games/freeToPlayGamesPage"),
+  {
+    suspense: true
+  }
 )
 
 export default function FreeToPlayGames() {

@@ -4,10 +4,16 @@ import dynamic from "next/dynamic"
 import React, { ReactElement } from "react"
 
 const GameRoomLayout = dynamic(
-  () => import("@components/templates/GameRoomLayout")
+  () => import("@components/templates/GameRoomLayout"),
+  {
+    suspense: true
+  }
 )
 const GameSummaryPage = dynamic(
-  () => import("@feature/page/games/gameSummaryPage")
+  () => import("@feature/page/games/gameSummaryPage"),
+  {
+    suspense: true
+  }
 )
 
 export default function Notification_id() {

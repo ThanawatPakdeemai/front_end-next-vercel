@@ -5,7 +5,7 @@ import IMetaMask from "@components/icons/MetaMask"
 import { IMAGES } from "@constants/images"
 
 interface IWalletFooterProps {
-  address: string
+  address?: string
 }
 const WalletFooter = ({ address }: IWalletFooterProps) => (
   <div className="mt-6 grid w-full grid-cols-12 gap-2">

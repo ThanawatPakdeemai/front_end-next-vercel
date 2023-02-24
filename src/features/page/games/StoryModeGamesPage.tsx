@@ -1,6 +1,6 @@
 import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import { F2PHeaderMenu } from "@constants/gameSlide"
+import { StoryModeHeaderMenu } from "@constants/gameSlide"
 import GameCard from "@feature/game/components/molecules/GameCard"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import { getGameByTypes } from "@feature/game/containers/services/game.service"
@@ -98,7 +98,7 @@ const StoryModeGamesPage = () => {
           ? gameFilter.map((game) => (
               <GameCard
                 key={game.id}
-                menu={F2PHeaderMenu}
+                menu={StoryModeHeaderMenu}
                 data={game}
                 checkTimer
                 staminaRecovery={staminaRecovery}

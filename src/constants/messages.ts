@@ -39,5 +39,7 @@ export const MESSAGES = {
   "create_not_successful_user": "Create a not successful user",
   "reset_password_success": "Reset password success",
   "room-timeout": "Room timeout",
-  "error-something": "Error something went wrong"
+  "error-something": "Error something went wrong",
+  "copy": "Copied to clipboard",
+  "success": "Success"
 }

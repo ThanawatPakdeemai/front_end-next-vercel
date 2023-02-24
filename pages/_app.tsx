@@ -20,7 +20,9 @@ import dayjs from "dayjs"
 import rt from "dayjs/plugin/relativeTime"
 import createEmotionCache from "@utils/createEmotionCache"
 
-const Loading = dynamic(() => import("@components/molecules/Loading"))
+const Loading = dynamic(() => import("@components/molecules/Loading"), {
+  suspense: true
+})
 
 dayjs.extend(rt)
 

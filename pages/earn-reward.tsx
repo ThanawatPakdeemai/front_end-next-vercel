@@ -4,9 +4,14 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 
 const ProfileLayout = dynamic(
-  () => import("@components/templates/ProfileLayout")
+  () => import("@components/templates/ProfileLayout"),
+  {
+    suspense: true
+  }
 )
-const EarnRewardPage = dynamic(() => import("@feature/page/EarnRewardPage"))
+const EarnRewardPage = dynamic(() => import("@feature/page/EarnRewardPage"), {
+  suspense: true
+})
 
 export default function EarnReward() {
   return (

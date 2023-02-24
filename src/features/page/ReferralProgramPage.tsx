@@ -33,9 +33,17 @@ import { useQueryClient } from "@tanstack/react-query"
 import { PaginationNaka } from "@components/atoms/pagination"
 import { getReferrals } from "@feature/referral/containers/services/referral.service"
 import { ISortReferrals } from "@feature/referral/interface/IReferralService"
+import TableNodata from "@feature/transaction/components/atoms/TableNodata"
 
 const ReferralProgramPage = () => {
-  const testId = ""
+  const testId = "61bc302f7f8867700b66dd4b"
+  const mockupData = [
+    { _id: "1", username: "A", referral_earn: 1.457851, date: "2021-10-10" },
+    { _id: "2", username: "B", referral_earn: 2.12345, date: "2021-10-10" },
+    { _id: "3", username: "C", referral_earn: 3.7848451, date: "2021-10-10" },
+    { _id: "4", username: "D", referral_earn: 4.123456, date: "2021-10-10" },
+    { _id: "5", username: "E", referral_earn: 5.123456, date: "2021-10-10" }
+  ]
   const { hydrated, pager, page, setPage } = useGlobal()
   const queryClient = useQueryClient()
   const [limitPage, setlimitPage] = useState(12)
@@ -61,6 +69,11 @@ const ReferralProgramPage = () => {
     navigator.clipboard.writeText(
       `${url}/register?referral=${profile && profile.id}`
     )
+    successToast(MESSAGES.success_get_code)
+  }
+
+  const copyFriendCode = (friendCode: string) => {
+    navigator.clipboard.writeText(friendCode)
     successToast(MESSAGES.success_get_code)
   }
 
@@ -189,11 +202,11 @@ const ReferralProgramPage = () => {
           </div>
           <CardContent
             className="mt-8 w-[630px]"
-            title="friends Activities"
+            title="Friends activities"
             icon={<FriendsActivitiesIcon />}
           >
             <TableContainer className="mt-4">
-              <Table aria-label="simple table">
+              <Table>
                 <TableHead>
                   <TableRow>
                     <TableCell
@@ -282,76 +295,84 @@ const ReferralProgramPage = () => {
                     </TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody sx={{ display: "" }}>
+                <TableBody>
                   {getReferralsData &&
                   getReferralsData.data.data.data_activities.length > 0 ? (
-                    getReferralsData.data.data.data_activities.map(
-                      (referrer) => (
-                        <TableRow
-                          key={uuid()}
-                          className="mb-100   "
-                        >
-                          <TableCell className="w-[300px] rounded-l-2xl border-b-0 bg-primary-main p-1 text-end font-neue-machina-bold text-xs uppercase">
-                            <div className="flex items-center">
-                              <div className="flex h-[50px] w-[50px] items-center rounded-xl bg-error-main">
-                                <div className="w-[50px] text-center font-neue-machina-bold text-2xl text-neutral-100">
-                                  {referrer.username.charAt(0)}
-                                </div>
+                    mockupData.map((referrer) => (
+                      <TableRow key={uuid()}>
+                        <TableCell className="w-[300px] rounded-l-2xl border-b-0 bg-primary-main p-1 text-end font-neue-machina-bold text-xs uppercase">
+                          <div className="flex items-center">
+                            <div className="flex h-[50px] w-[50px] items-center rounded-xl bg-error-main">
+                              <div className="w-[50px] text-center font-neue-machina-bold text-2xl text-neutral-100">
+                                {referrer.username.charAt(0)}
                               </div>
-                              <div className="ml-1 flex h-[50px] items-center rounded-xl border border-solid border-neutral-680 bg-neutral-800 px-2">
-                                <div className="w-[100px]">
-                                  {referrer.username}
-                                </div>
-                                <Chip
-                                  label={referrer._id}
-                                  variant="outlined"
-                                  size="small"
-                                  className="mx-2 w-[89px] cursor-pointer uppercase"
-                                />
-                                <div className="flex h-[25px] w-[25px] items-center justify-center rounded-[4px] border border-solid border-neutral-700">
+                            </div>
+                            <div className="ml-1 flex h-[50px] items-center rounded-xl border border-solid border-neutral-680 bg-neutral-800 px-2">
+                              <div className="w-[100px]">
+                                {referrer.username}
+                              </div>
+
+                              <Chip
+                                label={referrer._id}
+                                variant="outlined"
+                                size="small"
+                                className="mx-2 w-[89px] cursor-pointer uppercase"
+                                onClick={() => {
+                                  copyFriendCode(referrer._id)
+                                }}
+                              />
+                              <div className="flex h-[25px] w-[25px] cursor-pointer items-center justify-center rounded-[4px] border border-solid border-neutral-700">
+                                <button
+                                  type="button"
+                                  className="focus:outline-none"
+                                  onClick={() => {
+                                    copyFriendCode(referrer._id)
+                                  }}
+                                >
                                   <CopyMiniIcon />
-                                </div>
+                                </button>
                               </div>
                             </div>
-                          </TableCell>
-                          <TableCell className=" border-b-0 bg-primary-main text-end font-neue-machina-bold text-xs uppercase">
-                            <div className="text-start text-varidian-default">
-                              + {referrer.referral_earn}
-                            </div>
-                          </TableCell>
-                          <TableCell className="rounded-r-2xl border-b-0 bg-primary-main text-end font-neue-machina-bold text-xs uppercase">
-                            <Chip
-                              label={dayjs(referrer.date).format("DD MMM YYYY")}
-                              variant="outlined"
-                              size="small"
-                              className="cursor-pointer uppercase"
-                            />
-                          </TableCell>
-                        </TableRow>
-                      )
-                    )
+                          </div>
+                        </TableCell>
+                        <TableCell className=" border-b-0 bg-primary-main text-end font-neue-machina-bold text-xs uppercase">
+                          <div className="text-start text-varidian-default">
+                            + {referrer.referral_earn}
+                          </div>
+                        </TableCell>
+                        <TableCell className="rounded-r-2xl border-b-0 bg-primary-main text-end font-neue-machina-bold text-xs uppercase">
+                          <Chip
+                            label={dayjs(referrer.date).format("DD MMM YYYY")}
+                            variant="outlined"
+                            size="small"
+                            className="cursor-pointer uppercase"
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))
                   ) : (
-                    <div className="font-neutral-100 w-full text-center font-neue-machina-bold">
-                      No Data
-                    </div>
+                    <TableNodata />
                   )}
                 </TableBody>
               </Table>
             </TableContainer>
           </CardContent>
-          <div className="my-5 flex w-[630px] justify-between">
-            <PaginationNaka
-              totalCount={totalCount}
-              limit={limitPage}
-              page={page}
-              setPage={setPage}
-            />
-            <DropdownLimit
-              defaultValue={12}
-              list={pager}
-              onChangeSelect={setlimitPage}
-            />
-          </div>
+          {getReferralsData &&
+            getReferralsData.data.data.data_activities.length > 0 && (
+              <div className="my-5 flex w-[630px] justify-between">
+                <PaginationNaka
+                  totalCount={totalCount}
+                  limit={limitPage}
+                  page={page}
+                  setPage={setPage}
+                />
+                <DropdownLimit
+                  defaultValue={12}
+                  list={pager}
+                  onChangeSelect={setlimitPage}
+                />
+              </div>
+            )}
         </div>
       )}
     </>

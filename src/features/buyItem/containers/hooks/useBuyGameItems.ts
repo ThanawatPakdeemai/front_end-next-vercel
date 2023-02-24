@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
 // import useWalletStore from "@stores/wallet"
-import { buyItems } from "../services/buyItem.service"
+import { buyItems, buyItemsBSC } from "../services/buyItem.service"
 
 const useBuyGameItems = () => {
   // const { setNakaBalance } = useWalletStore()
@@ -13,16 +13,31 @@ const useBuyGameItems = () => {
   } = useMutation(buyItems, {
     mutationKey: ["buyItems"],
     retry: false
-    // onSuccess(res) {
-    // console.log(`result: ${res}`)
-    // setNakaBalance(res.)
-    // onSetProfileData(res)
-    // onSetProfileAddress(res.address)
-    // onSetProfileJWT(res.jwtToken)
-    // }
   })
 
-  return { data, isLoading, mutateBuyItems, error, isError }
+  const {
+    data: dataBSC,
+    error: errorBSC,
+    isLoading: isLoadingBSC,
+    isError: isErrorBSC,
+    mutateAsync: mutateBuyItemsBSC
+  } = useMutation(buyItemsBSC, {
+    mutationKey: ["buyItemsBSC"],
+    retry: false
+  })
+
+  return {
+    data,
+    isLoading,
+    mutateBuyItems,
+    error,
+    isError,
+    dataBSC,
+    isLoadingBSC,
+    mutateBuyItemsBSC,
+    errorBSC,
+    isErrorBSC
+  }
 }
 
 export default useBuyGameItems

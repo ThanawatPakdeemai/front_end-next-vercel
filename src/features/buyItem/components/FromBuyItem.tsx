@@ -1,26 +1,22 @@
-import React, { memo } from "react"
+import React, { memo, useEffect } from "react"
 import { Box, ButtonGroup, CircularProgress } from "@mui/material"
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined"
-import useGameStore from "@stores/game"
-import { CURRENCY } from "@configs/currency"
 import { Image } from "@components/atoms/image"
-import { Controller, useForm } from "react-hook-form"
-import useProfileStore from "@stores/profileStore"
-import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
+import { Controller } from "react-hook-form"
 import DropdownListCurrency from "@feature/gameItem/atoms/DropdownListCurrency"
 import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
-import { useToast } from "@feature/toast/containers"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { useTranslation } from "next-i18next"
 import Helper from "@utils/helper"
-import useGetBalanceVault from "@feature/inventory/containers/hooks/useGetBalanceVault"
-import useWalletStore from "@stores/wallet"
-import useLoadingStore from "@stores/loading"
-import useBuyGameItems from "../containers/hooks/useBuyGameItems"
+import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
+import CONFIGS from "@configs/index"
+import { BaseToastComponent } from "@feature/toast/components"
+import Balance from "@components/molecules/balance/Balance"
+import useBuyGameItemController from "../containers/hooks/useBuyGameItemController"
 
 const iconmotion = {
   hover: {
@@ -36,92 +32,38 @@ const iconmotion = {
 }
 interface IProp {
   handleClose?: () => void
+  chainId: string
+  chainSupport: ITokenContract[]
 }
 
-const FromBuyItem = ({ handleClose }: IProp) => {
+const FromBuyItem = ({ handleClose, chainId, chainSupport }: IProp) => {
   const { t } = useTranslation()
-  const game = useGameStore((state) => state.data)
-  const profile = useProfileStore((state) => state.profile.data)
-  const { errorToast, successToast } = useToast()
-  const { gameItemList, refetch } = useGamesByGameId({
-    _playerId: profile ? profile.id : "",
-    _gameId: game ? game._id : ""
-  })
   const {
+    MessageAlert,
     handleSubmit,
     watch,
     setValue,
     register,
     control,
-    formState: { errors }
-  } = useForm({
-    defaultValues: {
-      player_id: profile ? profile?.id : "",
-      item_id: "",
-      currency_id: "",
-      qty: 1,
-      item: {},
-      currency: {},
-      nakaPerItem: 0
-    }
-  })
+    gameItemList,
+    // refetch,
+    fetchTargetCoin,
+    dataBNBPrice,
+    game,
+    onSubmit,
+    onError,
+    errors,
+    isLoading,
+    getDefaultCoin,
+    getPriceByChainSelected,
+    updatePricePerItem,
+    onQtyUp,
+    onQtyDown
+  } = useBuyGameItemController({ chainId, handleClose })
 
-  const { mutateBuyItems, isLoading } = useBuyGameItems()
-  const { balanceVaultNaka } = useGetBalanceVault(
-    profile?.address ?? "",
-    !!profile
-  )
-  const { setVaultBalance } = useWalletStore()
-  const { setOpen, setClose } = useLoadingStore()
-
-  const onSubmit = (_data) => {
-    setOpen("Blockchain transaction in progress...")
-    mutateBuyItems({
-      _player_id: _data.player_id,
-      _item_id: _data.item_id,
-      _qty: Number(_data.qty)
-    })
-      .then((res) => {
-        if (res && balanceVaultNaka && balanceVaultNaka.data) {
-          refetch()
-          setVaultBalance(Number(balanceVaultNaka.data))
-          successToast("Buy Items Success")
-          setClose()
-          if (handleClose) handleClose()
-        }
-      })
-      .catch((error) => {
-        errorToast(error.message)
-        setClose()
-      })
-  }
-
-  const onError = () => {
-    errorToast("Please fill in the required fields")
-    setClose()
-  }
-
-  const updatePricePerItem = () => {
-    Helper.calculateItemPerPrice(
-      (watch("item") as IGameItemListData).price
-    ).then((res) => {
-      if (res) {
-        setValue("nakaPerItem", Number(res))
-      } else {
-        setValue("nakaPerItem", 0)
-      }
-    })
-  }
-
-  const onQtyUp = () => {
-    setValue("qty", watch("qty") >= 99 ? 99 : Number(watch("qty")) + 1)
-    updatePricePerItem()
-  }
-
-  const onQtyDown = () => {
-    setValue("qty", watch("qty") <= 1 ? 1 : Number(watch("qty")) - 1)
-    updatePricePerItem()
-  }
+  useEffect(() => {
+    fetchTargetCoin("BNB")
+  }, [dataBNBPrice, fetchTargetCoin])
 
   return (
     <>
@@ -148,25 +90,29 @@ const FromBuyItem = ({ handleClose }: IProp) => {
           </Box>
           <Box className="my-4 w-full pr-4">
             <p className="py-2 uppercase text-black-default">Tier assets</p>
-            {gameItemList && (
-              <Controller
-                name="item_id"
-                control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <DropdownListItem
-                    {...field}
-                    list={gameItemList}
-                    className="w-[410px]"
-                    onChangeSelect={(_item) => {
-                      setValue("item", _item as IGameItemListData)
-                      setValue("item_id", _item._id)
-                      updatePricePerItem()
-                    }}
-                  />
-                )}
-              />
-            )}
+            {gameItemList &&
+              gameItemList.length > 0 &&
+              (gameItemList as IGameItemListData[]).sort(
+                (a, b) => a.price - b.price
+              ) && (
+                <Controller
+                  name="item_id"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <DropdownListItem
+                      {...field}
+                      list={gameItemList as IGameItemListData[]}
+                      className="w-[410px]"
+                      onChangeSelect={(_item) => {
+                        setValue("item", _item)
+                        setValue("item_id", _item.id)
+                        updatePricePerItem()
+                      }}
+                    />
+                  )}
+                />
+              )}
             {"item_id" in errors && (
               <p className="text-sm text-error-main">{t("required")}</p>
             )}
@@ -176,15 +122,20 @@ const FromBuyItem = ({ handleClose }: IProp) => {
             <Controller
               name="currency_id"
               control={control}
-              // rules={{ required: true }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <DropdownListCurrency
                   {...field}
-                  list={CURRENCY}
+                  list={
+                    chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB
+                      ? chainSupport
+                      : getDefaultCoin()
+                  }
                   className="w-[410px]"
                   onChangeSelect={(_item) => {
                     setValue("currency", _item)
-                    setValue("currency_id", _item.id)
+                    setValue("currency_id", _item.address)
+                    fetchTargetCoin(_item.symbol)
                   }}
                 />
               )}
@@ -194,7 +145,8 @@ const FromBuyItem = ({ handleClose }: IProp) => {
             )}
           </Box>
           <p className="uppercase text-purple-primary">
-            Assets / 1 Item = {watch("nakaPerItem")} NAKA
+            {/* //TODO: Needed to create function calculate price/item */}
+            Assets / 1 Item = {`${getPriceByChainSelected()}`}
           </p>
 
           <div className="my-4  grid grid-cols-6  content-center gap-4">
@@ -249,6 +201,10 @@ const FromBuyItem = ({ handleClose }: IProp) => {
               />
             </div>
           </div>
+          <Box className="my-4 w-full">
+            <p className="py-2 uppercase text-black-default">Your Balance</p>
+            <Balance buyItemCoinSeleced={watch("currency")} />
+          </Box>
           <div className="my-2 flex w-full justify-between rounded-xl border border-neutral-700 p-4">
             <div className="">
               <p>TOTAL PRICE:</p>
@@ -311,6 +267,27 @@ const FromBuyItem = ({ handleClose }: IProp) => {
               />
             </div>
           </ButtonGroup>
+          <Box
+            sx={{
+              ".MuiTypography-root": {
+                fontSize: "90%"
+              },
+              ".MuiAlert-action": {
+                display: "none"
+              },
+              ".switch-chain--subtitle": {
+                fontSize: "80%"
+              }
+            }}
+          >
+            <BaseToastComponent
+              text={MessageAlert()}
+              status="info"
+              onClose={() => {}}
+              className="mt-10 w-full"
+            />
+            {/* <SwitchChain variant={"simple"} /> */}
+          </Box>
         </form>
       )}
     </>

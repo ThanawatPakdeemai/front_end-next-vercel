@@ -203,7 +203,7 @@ export default function CardButItem() {
                   />
                 )}
               </div>
-              <div className="mb-2 flex w-full justify-between rounded-xl bg-[#111111] p-2 text-center text-black-default">
+              <div className="mb-2 flex w-full justify-between rounded-xl bg-neutral-700 p-2 text-center text-black-default">
                 <p>= {totalPrice}</p>
                 {/* <Input
                   defaultValue=" 0.00"
@@ -227,7 +227,7 @@ export default function CardButItem() {
                   icon={<LogoutIcon />}
                   size="medium"
                   color="secondary"
-                  className="w-full"
+                  className="w-full whitespace-nowrap"
                 />
               )}
             </div>

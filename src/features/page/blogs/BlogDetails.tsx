@@ -1,5 +1,5 @@
 import useGetBlogDetails from "@feature/blog/containers/hook/useGetBlogDetails"
-import React from "react"
+import React, { useEffect } from "react"
 import Sticker from "@components/icons/BlogIcon/Sticker"
 import { iconmotion } from "@components/organisms/Footer"
 import BlogCard from "@components/molecules/cards/BlogCard"
@@ -12,8 +12,17 @@ import { motion } from "framer-motion"
 import useGetBlogTags from "@feature/blog/containers/hook/useGetBlogTags"
 import useGetPopularTags from "@feature/blog/containers/hook/useGetPopularTags"
 import { Chip, Typography } from "@mui/material"
-import { SOCIAL_BLOG_SHARE } from "@configs/socialShare"
+// import { SOCIAL_BLOG_SHARE } from "@configs/socialShare"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
+import useLoadingStore from "@stores/loading"
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  TelegramShareButton
+} from "react-share"
+import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
+import TelegramIcon from "@components/icons/SocialIcon/TelegramIcon"
+import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 
 interface IProp {
   _blogId: string
@@ -43,7 +52,9 @@ const imgMotion = {
 }
 
 const BlogPageDetails = ({ _blogId }: IProp) => {
-  const { getBlogDetails } = useGetBlogDetails(_blogId)
+  const { getBlogDetails, isLoading } = useGetBlogDetails(_blogId)
+  const { setOpen, setClose } = useLoadingStore()
+  const url = window.location.href
   const { getBlogTagData } = useGetBlogTags({
     limit: 10,
     skip: 1,
@@ -52,6 +63,14 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
     tags_id: "63e9efcf2c7a9542bb8a67dc"
   })
   const { getPopularTagsData } = useGetPopularTags()
+
+  useEffect(() => {
+    if (isLoading) {
+      setOpen()
+    } else {
+      setClose()
+    }
+  }, [isLoading, setOpen, setClose])
 
   return (
     <div>
@@ -167,19 +186,63 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
                         Shere :
                       </Typography>
                       <div className="flex text-sm">
-                        {SOCIAL_BLOG_SHARE.map((icon) => (
-                          <ButtonIcon
+                        {getBlogDetails && (
+                          <TwitterShareButton
+                            url={url}
+                            title={getBlogDetails.data?.title}
+                            hashtags={["nakamoto"]}
                             key={uuid()}
-                            whileHover="hover"
-                            transition={{
-                              type: "spring",
-                              stiffness: 400,
-                              damping: 4
-                            }}
-                            icon={icon.icon}
-                            className="flex h-[40px] w-[40px] items-center justify-center !fill-white-default"
-                          />
-                        ))}
+                          >
+                            <ButtonIcon
+                              whileHover="hover"
+                              transition={{
+                                type: "spring",
+                                stiffness: 400,
+                                damping: 4
+                              }}
+                              icon={<TwitterIcon fill="#ffffff" />}
+                              className="flex h-[40px] w-[40px] items-center justify-center !fill-white-default"
+                            />
+                          </TwitterShareButton>
+                        )}
+
+                        {getBlogDetails && (
+                          <FacebookShareButton
+                            url={url}
+                            quote={getBlogDetails.data?.title}
+                            hashtag="#nakamoto"
+                            key={uuid()}
+                          >
+                            <ButtonIcon
+                              whileHover="hover"
+                              transition={{
+                                type: "spring",
+                                stiffness: 400,
+                                damping: 4
+                              }}
+                              icon={<FacebookIcon fill="#ffffff" />}
+                              className="flex h-[40px] w-[40px] items-center justify-center !fill-white-default"
+                            />
+                          </FacebookShareButton>
+                        )}
+                        {getBlogDetails && (
+                          <TelegramShareButton
+                            url={url}
+                            title={getBlogDetails.data?.title}
+                            key={uuid()}
+                          >
+                            <ButtonIcon
+                              whileHover="hover"
+                              transition={{
+                                type: "spring",
+                                stiffness: 400,
+                                damping: 4
+                              }}
+                              icon={<TelegramIcon fill="#ffffff" />}
+                              className="flex h-[40px] w-[40px] items-center justify-center !fill-white-default"
+                            />
+                          </TelegramShareButton>
+                        )}
                       </div>
                     </div>
                   </div>

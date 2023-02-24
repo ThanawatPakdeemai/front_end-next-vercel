@@ -141,7 +141,7 @@ const GameStatOverview = () => {
                   <div className="py-10 px-10">
                     <NumberRank
                       className="m-0 h-6 w-8 !rounded-[4px]"
-                      index={index}
+                      index={index + limit * (page - 1)}
                     />
                     <h1 className="py-5 text-neutral-300">{item.name}</h1>
                     <p className=" text-xs text-neutral-500">

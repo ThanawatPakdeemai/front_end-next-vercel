@@ -11,6 +11,9 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import useGetBlogTags from "@feature/blog/containers/hook/useGetBlogTags"
 import useGetPopularTags from "@feature/blog/containers/hook/useGetPopularTags"
+import { Chip, Typography } from "@mui/material"
+import { SOCIAL_BLOG_SHARE } from "@configs/socialShare"
+import ButtonIcon from "@components/atoms/button/ButtonIcon"
 
 interface IProp {
   _blogId: string
@@ -40,7 +43,7 @@ const imgMotion = {
 }
 
 const BlogPageDetails = ({ _blogId }: IProp) => {
-  const { getBlogDetails } = useGetBlogDetails("633d591c536eb346ab32942a")
+  const { getBlogDetails } = useGetBlogDetails(_blogId)
   const { getBlogTagData } = useGetBlogTags({
     limit: 10,
     skip: 1,
@@ -57,7 +60,7 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
         <div>
           <Breadcrumb />
           <div className="mt-12 flex h-48">
-            <p className="w-8/12 font-neue-machina-bold text-5xl text-neutral-400">
+            <p className="w-8/12 font-mondwest text-5xl text-neutral-400">
               {getBlogDetails.data?.title}
             </p>
             <div className="my-12 grid w-4/12 justify-items-end">
@@ -76,8 +79,8 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
           </div>
           <div className="container mx-auto mt-1">
             <div className=" flex ">
-              <div className="h-32 w-4/12 border-t-2 border-l-2 border-neutral-700 ">
-                <div className="px-6 pt-4 font-neue-machina text-base text-white-default">
+              <div className="h-32 w-4/12 border-t-2 border-l-2 border-neutral-780 ">
+                <div className="px-6 pt-4 font-neue-machina text-sm text-white-default">
                   TAGS
                 </div>
                 <div className="px-6 pt-4 pb-2">
@@ -85,77 +88,105 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
                     getBlogTagData.data.map((item) => (
                       <div key={uuid()}>
                         {item.tags.map((tags) => (
-                          <span
-                            className=" mr-2 rounded-lg bg-neutral-600 py-2 px-4 text-sm  text-neutral-900"
+                          <Chip
                             key={uuid()}
-                          >
-                            {tags.name}
-                          </span>
+                            label={tags.name}
+                            variant="filled"
+                            color="success"
+                            size="small"
+                            className="mr-2 !bg-neutral-600 uppercase"
+                          />
                         ))}
                       </div>
                     ))}
                 </div>
               </div>
-              <div className=" max-h-32 w-2/12  border-t-2 border-neutral-700">
-                <div className="px-6 pt-4 font-neue-machina text-base text-white-default">
+              <div className=" max-h-32 w-2/12  border-t-2 border-neutral-780">
+                <div className="px-6 pt-4 font-neue-machina text-sm text-white-default">
                   WRITER
                 </div>
                 <div className="px-6 pt-4 pb-2">
-                  <div className="text-neutral-500">NAKAMOTO TEAM</div>
+                  <div className="text-default text-neutral-500">
+                    NAKAMOTO TEAM
+                  </div>
                 </div>
               </div>
-              <div className=" max-h-32 w-2/12 border-t-2 border-neutral-700">
-                <div className=" px-6 pt-4 font-neue-machina text-base text-white-default">
+              <div className=" max-h-32 w-2/12 border-t-2 border-neutral-780">
+                <div className=" px-6 pt-4 font-neue-machina text-sm text-white-default">
                   DATE
                 </div>
-                <div className="border-l-2 border-neutral-700 px-6 pt-4 pb-2">
-                  <span className="text-neutral-500">
+                <div className="border-l-2 border-neutral-780 px-6 pt-4 pb-2">
+                  <span className="text-default text-neutral-500">
                     {dayjs(getBlogDetails.data?.date_released).format(
                       "DD MMM YYYY"
                     )}
                   </span>
                 </div>
               </div>
-              <div className="content-relate max-h-32 w-4/12 bg-neutral-700">
-                <div className="px-6 pt-12 text-center font-neue-machina text-base uppercase text-white-default">
+              <div className="content-relate max-h-32 w-4/12 bg-neutral-780">
+                <div className="px-6 pt-12 text-center font-neue-machina text-sm uppercase text-white-default">
                   Relate Blog
                 </div>
               </div>
             </div>
             <div className="flex">
-              <div className="h-auto w-8/12 bg-neutral-700 ">
-                <div className="my-16 mx-32 h-auto justify-center">
-                  {getBlogDetails.data?.image_list && (
-                    <Image
-                      src={getBlogDetails.data?.image_list}
-                      alt=""
-                      width={678}
-                      height={422}
-                      className="rounded-2xl"
-                    />
-                  )}
+              <div className="relative h-auto w-8/12 bg-neutral-780 ">
+                <div className="mx-32 mt-[100px]">
+                  <div className="h-auto justify-center">
+                    {getBlogDetails.data?.image_list && (
+                      <Image
+                        src={getBlogDetails.data?.image_list}
+                        alt=""
+                        width={678}
+                        height={422}
+                        className="rounded-2xl"
+                      />
+                    )}
+                  </div>
+                  <div className="my-[40px] text-left font-neue-machina text-default uppercase text-white-primary text-grey-neutral04">
+                    {getBlogDetails.data?.description}
+                  </div>
+                  <div
+                    className="content-blog text-left font-neue-machina text-default text-black-default text-grey-neutral04"
+                    // eslint-disable-next-line react/no-danger
+                    dangerouslySetInnerHTML={{
+                      __html: getBlogDetails.data?.content || ""
+                    }}
+                  />
                 </div>
-                <div className="my-4 mx-32 text-left  font-neue-machina text-base text-grey-neutral04">
-                  {getBlogDetails.data?.description}
-                </div>
-                <div
-                  className="content-blog my-16 mx-32 text-left  font-neue-machina text-base text-grey-neutral04"
-                  // eslint-disable-next-line react/no-danger
-                  dangerouslySetInnerHTML={{
-                    __html: getBlogDetails.data?.content || ""
-                  }}
-                />
-                <div className="flex h-auto border-2 border-neutral-700 bg-primary-main ">
-                  <div className="mx-14 my-8 flex gap-3">
-                    <ViewIcon />
-                    <div className="mt-1 text-sm">
-                      {getBlogDetails.data?.info.view}
+                <div className="absolute bottom-0 flex h-auto w-full border-2 border-neutral-780 bg-primary-main">
+                  <div className="mx-32 flex grid h-[70px] w-full grid-cols-2 items-center gap-4">
+                    <div className="flex items-center gap-3">
+                      <ViewIcon />
+                      <div className=" text-sm text-neutral-100">
+                        {getBlogDetails.data?.info.view}
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <Typography className="font-neue-machina text-default text-neutral-100">
+                        Shere :
+                      </Typography>
+                      <div className="flex text-sm">
+                        {SOCIAL_BLOG_SHARE.map((icon) => (
+                          <ButtonIcon
+                            key={uuid()}
+                            whileHover="hover"
+                            transition={{
+                              type: "spring",
+                              stiffness: 400,
+                              damping: 4
+                            }}
+                            icon={icon.icon}
+                            className="flex h-[40px] w-[40px] items-center justify-center !fill-white-default"
+                          />
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="h-auto w-4/12 border-r-2 border-b-2  border-neutral-700 bg-primary-main">
-                <div className="static mx-24 my-16 space-y-4">
+              <div className="h-auto w-4/12 border-r-2 border-b-2  border-neutral-780 bg-primary-main">
+                <div className="my-[78px] grid w-full justify-center">
                   {getBlogDetails.data?.related.map((item) => (
                     <BlogCard
                       key={uuid()}
@@ -166,22 +197,28 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
                       iconmotion={iconmotion}
                       arrowMotion={arrowMotion}
                       imgMotion={imgMotion}
+                      blog_id={item._id}
+                      className="mt-6"
                     />
                   ))}
                 </div>
-                <div className=" border-t-2 border-neutral-700">
-                  <div className="mx-32 my-16 justify-center uppercase text-white-default ">
-                    Popular Tags
-                  </div>
-                  <div className="mx-16 my-4 grid w-max grid-cols-4 gap-2">
-                    {getPopularTagsData?.data.map((popularItem) => (
-                      <span
-                        className=" rounded-lg bg-neutral-600 py-2 px-4  text-sm text-neutral-900"
-                        key={uuid()}
-                      >
-                        {popularItem.name}
-                      </span>
-                    ))}
+                <div className=" border-t-2 border-neutral-780">
+                  <div className="grid w-full justify-center">
+                    <div className="my-[68px] w-[272px]">
+                      <Typography className="mb-6 text-sm uppercase text-white-default">
+                        Popular Tags
+                      </Typography>
+                      {getPopularTagsData?.data.map((popularItem) => (
+                        <Chip
+                          key={uuid()}
+                          label={popularItem.name}
+                          variant="filled"
+                          color="success"
+                          size="small"
+                          className="mr-2 !bg-neutral-600 uppercase"
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>

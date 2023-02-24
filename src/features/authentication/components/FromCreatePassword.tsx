@@ -126,6 +126,19 @@ const FromCreatePassword = ({ email, token }: IProp) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch("password"), watch("confirmPassword")])
 
+  // useEffect(() => {
+  //   if (!response) {
+  //     if (response) {
+  //     }
+  //     mutateCreateNewPassword({
+  //       _email: email,
+  //       _password: password,
+  //       _confirmPassword: confirmPassword,
+  //       _token: token
+  //     }).then((_res) => {})
+  //   }
+  // }, [response, mutateCreateNewPassword])
+
   return (
     <Box>
       <div>
@@ -480,7 +493,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                 container
                 justifyContent="center"
                 alignItems="center"
-                className="absolute bottom-32"
+                className="absolute bottom-4"
               >
                 <Typography className="text-sm uppercase text-neutral-700">
                   Copyright 2022 © Nakamoto Games

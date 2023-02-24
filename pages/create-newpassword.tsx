@@ -1,7 +1,14 @@
 import React, { ReactElement } from "react"
+import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
-import FromCreatePassword from "@feature/authentication/components/FromCreatePassword"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+
+const FromCreatePassword = dynamic(
+  () => import("@feature/authentication/components/FromCreatePassword"),
+  {
+    suspense: true
+  }
+)
 
 export default function CreatePassword() {
   const router = useRouter()

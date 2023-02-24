@@ -155,6 +155,8 @@ const useCreateWeb3Provider = () => {
             params: [{ chainId: _chainId }] // [handleNetworkSettings(_chainId)]
           })
           .then(() => {
+            handleConnectWithMetamask()
+            setChainId(_chainId)
             setLoading(false)
           })
           .catch(() => {
@@ -191,7 +193,7 @@ const useCreateWeb3Provider = () => {
           method: "eth_chainId"
         })
         setChainId(currentChainId)
-        switchNetwork(currentChainId)
+        // switchNetwork(currentChainId)
         return {
           responseStatus: true,
           errorMsg: "",
@@ -248,6 +250,7 @@ const useCreateWeb3Provider = () => {
           setChainId(undefined)
           return
         }
+        switchNetwork(_chainId)
         setChainId(_chainId)
         handleDisconnectWallet()
       })
@@ -321,7 +324,8 @@ const useCreateWeb3Provider = () => {
     feeData,
     loading,
     switchNetwork,
-    checkNetwork
+    checkNetwork,
+    setChainId
   }
 }
 

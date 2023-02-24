@@ -6,5 +6,5 @@ export interface ICURRENCY {
 
 export interface ICurrencyResponse {
   symbol: string
-  price: string | number
+  price: number
 }

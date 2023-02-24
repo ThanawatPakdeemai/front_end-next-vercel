@@ -33,7 +33,7 @@ const useWalletContoller = () => {
     useContractVault()
   const { checkAllowToken, allowToken, depositToken, withdrawByToken } =
     useContractVaultBinance()
-  const { BNToNumber, toWei } = Helper
+  const { toWei } = Helper
   const { setOpen, setClose } = useLoadingStore()
   const { profile } = useProfileStore()
   const { successToast, errorToast } = useToast()
@@ -209,18 +209,22 @@ const useWalletContoller = () => {
           if ((allowanceToken as string).toString() === "0") {
             const allowResult = await allowToken(
               bep20Contract,
-              currentChainSelected.address, // spender
+              // currentChainSelected.address, // spender
               currentChainSelected.totolSupply as string
             )
             successToast(allowResult as string)
           }
         }
         handleWalletProcess(_method, currentChainSelected.address)
-      } else {
+      } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
         // FOR NAKA
-        const allowance = await checkAllowNaka(currentChainSelected.address)
-        if (BNToNumber(allowance as string) === 0) {
-          const allowResult = await allowNaka(currentChainSelected.address)
+        const allowanceToken = await checkAllowNaka(
+          CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
+        )
+        if ((allowanceToken as string).toString() === "0") {
+          const allowResult = await allowNaka(
+            currentChainSelected.totolSupply as string
+          )
           successToast(allowResult as string)
         }
         handleWalletProcess(_method, currentChainSelected.address)

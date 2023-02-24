@@ -17,20 +17,22 @@ interface IProp {
   className?: string
   isCheck?: boolean
   onChangeSelect?: (_item: IGameItemListData) => void
+  defaultValue?: IGameItemListData
 }
 
 const DropdownListItem = ({
   list,
   className,
   onChangeSelect,
-  isCheck = false
+  isCheck = false,
+  defaultValue
 }: IProp) => {
   const { t } = useTranslation()
   const { data: gameData, itemSelected } = useGameStore()
   // const { errorToast } = useToast()
 
   const [defaultItem, setDefaultItem] = useState<IGameItemListData>(
-    itemSelected as IGameItemListData
+    itemSelected || (defaultValue as IGameItemListData)
   )
 
   const onChangeItem = (_item: IGameItemListData) => {
@@ -57,7 +59,7 @@ const DropdownListItem = ({
                   className={` ${className}`} // m-auto block
                 >
                   <ButtonDropdown
-                    className={`${className} uppercase`}
+                    className={`${className} `}
                     isOpen={popupState.isOpen}
                     leftContent={
                       <>
@@ -100,8 +102,7 @@ const DropdownListItem = ({
                   sx={{
                     "& .MuiPaper-root": {
                       background: "#010101",
-                      borderRadius: "15px ",
-                      textTransform: "capitalize"
+                      borderRadius: "15px "
                     }
                   }}
                 >
@@ -118,7 +119,7 @@ const DropdownListItem = ({
                         height="20"
                       />
                     }
-                    onChange={(_item: IGameItemListData) => {
+                    onChange={(_item) => {
                       popupState.close()
                       onChangeItem(_item)
                     }}

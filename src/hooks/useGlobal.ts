@@ -19,6 +19,7 @@ import BEP20Abi from "@configs/abi/BEP20.json"
 import ERC20Abi from "@configs/abi/ERC20.json"
 import useChainSupport from "@stores/chainSupport"
 import useContractVault from "@feature/contract/containers/hooks/useContractVault"
+import { DEFAULT_CURRENCY_BNB, DEFAULT_CURRENCY_NAKA } from "@configs/currency"
 import useSwitchNetwork from "./useSwitchNetwork"
 
 const useGlobal = (
@@ -280,6 +281,19 @@ const useGlobal = (
     }
   }, [chainId, signer, accounts, fetchAllTokenSupported, fetchNAKAToken])
 
+  /**
+   * @description Get default currency
+   * @returns {ITokenContract[]}
+   */
+  const getDefaultCoin = (): ITokenContract[] => {
+    switch (chainId) {
+      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
+        return DEFAULT_CURRENCY_BNB
+      default:
+        return DEFAULT_CURRENCY_NAKA
+    }
+  }
+
   return {
     onHandleClick,
     limit,
@@ -295,7 +309,8 @@ const useGlobal = (
     getTokenAddress,
     getTokenSupply,
     fetchAllTokenSupported,
-    fetchNAKAToken
+    fetchNAKAToken,
+    getDefaultCoin
   }
 }
 

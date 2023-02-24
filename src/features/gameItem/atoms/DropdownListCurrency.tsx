@@ -3,8 +3,6 @@ import { useState } from "react"
 import { Popover } from "@mui/material"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
-
-import { DEFAULT_CURRENCY_BNB } from "@configs/currency"
 import SelectDropdownCurrency from "@components/atoms/selectDropdown/SelectDropdownCurrency"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import ButtonDropdown from "./ButtonDropdown"
@@ -14,12 +12,16 @@ interface IProp {
   list: ITokenContract[]
   className?: string
   onChangeSelect?: (_item: ITokenContract) => void
+  defaultValue: ITokenContract
 }
 
-const DropdownListItem = ({ list, className, onChangeSelect }: IProp) => {
-  const [defaultItem, setDefaultItem] = useState<ITokenContract>(
-    DEFAULT_CURRENCY_BNB[0]
-  )
+const DropdownListItem = ({
+  list,
+  className,
+  onChangeSelect,
+  defaultValue
+}: IProp) => {
+  const [defaultItem, setDefaultItem] = useState<ITokenContract>(defaultValue)
 
   const onChangeItem = (_item: ITokenContract) => {
     setDefaultItem(_item)
@@ -49,7 +51,7 @@ const DropdownListItem = ({ list, className, onChangeSelect }: IProp) => {
                         </div>
 
                         <p className="px-2 text-white-default">
-                          {defaultItem?.tokenName}
+                          {defaultItem.tokenName}
                         </p>
                       </>
                     }

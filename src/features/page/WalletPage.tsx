@@ -10,7 +10,6 @@ import useGlobal from "@hooks/useGlobal"
 import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContoller"
 import WalletHeader from "@feature/wallet/components/molecules/WalletHeader"
 import WalletBody from "@feature/wallet/components/molecules/WalletBody"
-import useAllBalances from "@hooks/useAllBalances"
 import WalletFooter from "@feature/wallet/components/molecules/WalletFooter"
 import WalletLightAnimation from "@feature/wallet/components/molecules/WalletLightAnimation"
 import CONFIGS from "@configs/index"
@@ -41,7 +40,6 @@ export default function WalletPage() {
   } = useWalletContoller()
   const router = useRouter()
   const { token } = router.query
-  const { walletBalance } = useAllBalances()
   const { profile } = useProfileStore()
   const { chainSupport } = useChainSupport()
   const {
@@ -58,11 +56,11 @@ export default function WalletPage() {
    * @description check disabled button
    * @returns {boolean}
    */
-  const isDisabledButton = (): boolean => {
-    if (value === 0) return true
-    if (value <= walletBalance.digit) return false
-    return true
-  }
+  // const isDisabledButton = (): boolean => {
+  //   if (value === 0) return true
+  //   if (value <= chainSupport[0].balanceWallet.digit) return false
+  //   return true
+  // }
 
   const renderWallets = () => {
     if (!chainSupport || chainSupport.length === 0) {
@@ -120,10 +118,10 @@ export default function WalletPage() {
   /**
    * @description set disabled button
    */
-  useEffect(() => {
-    setDisabled(isDisabledButton())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value, type])
+  // useEffect(() => {
+  //   setDisabled(isDisabledButton())
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [value, type])
 
   /**
    * @description Set type tab by router.query

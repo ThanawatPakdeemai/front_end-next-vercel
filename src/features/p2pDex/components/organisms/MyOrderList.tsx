@@ -156,7 +156,7 @@ const MyOrderList = ({ ...props }: IProp) => {
                       </Box>
                     </>,
                     <>
-                      <div className="flex w-full items-center">
+                      <div className="flex w-[130px] items-center justify-between">
                         {Helper.formatNumber(
                           type === "buy" ? order.busd_price : order.naka_price,
                           { maximumFractionDigits: 4 }

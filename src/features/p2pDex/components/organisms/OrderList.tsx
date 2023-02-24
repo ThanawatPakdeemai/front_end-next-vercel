@@ -156,7 +156,7 @@ const OrderList = ({ ...props }: IProp) => {
                       {order.trusted_order ? (
                         <VerifiedIcon />
                       ) : (
-                        <div className="mr-10" />
+                        <div className="mr-[23px]" />
                       )}
                       <div className="ml-2 mr-2 rounded border border-neutral-700 px-2.5 py-1 uppercase text-neutral-400">
                         {Helper.shortenString(order.wallet_address)}
@@ -171,7 +171,7 @@ const OrderList = ({ ...props }: IProp) => {
                       </Box>
                     </>,
                     <>
-                      <div className="flex w-full items-center">
+                      <div className="flex w-[130px] items-center justify-between ">
                         {Helper.formatNumber(
                           type === "sell" ? order.busd_price : order.naka_price,
                           { maximumFractionDigits: 4 }

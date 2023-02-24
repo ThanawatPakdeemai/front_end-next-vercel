@@ -7,7 +7,7 @@ import Balance from "./balance/Balance"
 const SidebarStaking = () => {
   const router: NextRouter = useRouter()
   return (
-    <div className="flex hidden w-[200px] flex-col gap-5">
+    <div className="hidden w-[200px] flex-col gap-5 lg:flex">
       <MenuList className="rounded-[13px] bg-neutral-700 p-[6px]">
         {MENU_SERVICES &&
           MENU_SERVICES.map((ele) => {

@@ -236,7 +236,7 @@ const Footer = () => {
                 className="z-[2] h-[50px] !w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
                 type="button"
               />
-              <h3 className="pl-[30px] text-grey-neutral04 md:w-[300px]">
+              <h3 className="pl-[30px] text-grey-neutral04 md:max-w-[300px]">
                 Earn some serious cash promoting Nakamoto.Games
               </h3>
             </div>

@@ -90,6 +90,7 @@ const BlogListPage = () => {
                 iconmotion={iconmotion}
                 arrowMotion={arrowMotion}
                 imgMotion={imgMotion}
+                blog_id={item._id as string}
               />
             ))
           : [...Array(limitPage)].map(() => <SkeletonCard key={uuid()} />)}

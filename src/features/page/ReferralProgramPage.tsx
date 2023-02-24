@@ -33,17 +33,8 @@ import { useQueryClient } from "@tanstack/react-query"
 import { PaginationNaka } from "@components/atoms/pagination"
 import { getReferrals } from "@feature/referral/containers/services/referral.service"
 import { ISortReferrals } from "@feature/referral/interface/IReferralService"
-import TableNodata from "@feature/transaction/components/atoms/TableNodata"
 
 const ReferralProgramPage = () => {
-  const testId = "61bc302f7f8867700b66dd4b"
-  const mockupData = [
-    { _id: "1", username: "A", referral_earn: 1.457851, date: "2021-10-10" },
-    { _id: "2", username: "B", referral_earn: 2.12345, date: "2021-10-10" },
-    { _id: "3", username: "C", referral_earn: 3.7848451, date: "2021-10-10" },
-    { _id: "4", username: "D", referral_earn: 4.123456, date: "2021-10-10" },
-    { _id: "5", username: "E", referral_earn: 5.123456, date: "2021-10-10" }
-  ]
   const { hydrated, pager, page, setPage } = useGlobal()
   const queryClient = useQueryClient()
   const [limitPage, setlimitPage] = useState(12)
@@ -56,7 +47,7 @@ const ReferralProgramPage = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { successToast } = useToast()
   const { getReferralsData, isPreviousData } = useGetReferral({
-    player_id: testId,
+    player_id: profile && profile.id ? profile.id : "",
     skip: page,
     limit: limitPage,
     sort: undefined,
@@ -98,10 +89,10 @@ const ReferralProgramPage = () => {
   useEffect(() => {
     if (!isPreviousData && getReferralsData) {
       queryClient.prefetchQuery({
-        queryKey: ["getReferralsData", testId],
+        queryKey: ["getReferralsData", profile && profile.id ? profile.id : ""],
         queryFn: () =>
           getReferrals({
-            player_id: testId,
+            player_id: profile && profile.id ? profile.id : "",
             skip: page,
             limit: limitPage,
             sort: sortType.sort,
@@ -116,7 +107,8 @@ const ReferralProgramPage = () => {
     getReferralsData,
     queryClient,
     sortType.sort,
-    sortType.sort_value
+    sortType.sort_value,
+    profile
   ])
 
   return (
@@ -298,60 +290,67 @@ const ReferralProgramPage = () => {
                 <TableBody>
                   {getReferralsData &&
                   getReferralsData.data.data.data_activities.length > 0 ? (
-                    mockupData.map((referrer) => (
-                      <TableRow key={uuid()}>
-                        <TableCell className="w-[300px] rounded-l-2xl border-b-0 bg-primary-main p-1 text-end font-neue-machina-bold text-xs uppercase">
-                          <div className="flex items-center">
-                            <div className="flex h-[50px] w-[50px] items-center rounded-xl bg-error-main">
-                              <div className="w-[50px] text-center font-neue-machina-bold text-2xl text-neutral-100">
-                                {referrer.username.charAt(0)}
+                    getReferralsData.data.data.data_activities.map(
+                      (referrer) => (
+                        <TableRow
+                          key={uuid()}
+                          className="bg-primary-main"
+                        >
+                          <TableCell className="w-[300px] rounded-l-2xl border-b-4 border-neutral-800 p-1 text-end font-neue-machina-bold text-xs uppercase">
+                            <div className="flex items-center">
+                              <div className="flex h-[50px] w-[50px] items-center rounded-xl bg-error-main">
+                                <div className="w-[50px] text-center font-neue-machina-bold text-2xl text-neutral-100">
+                                  {referrer.username.charAt(0)}
+                                </div>
                               </div>
-                            </div>
-                            <div className="ml-1 flex h-[50px] items-center rounded-xl border border-solid border-neutral-680 bg-neutral-800 px-2">
-                              <div className="w-[100px]">
-                                {referrer.username}
-                              </div>
+                              <div className="ml-1 flex h-[50px] items-center rounded-xl border border-solid border-neutral-680 bg-neutral-800 px-2">
+                                <div className="w-[100px]">
+                                  {referrer.username}
+                                </div>
 
-                              <Chip
-                                label={referrer._id}
-                                variant="outlined"
-                                size="small"
-                                className="mx-2 w-[89px] cursor-pointer uppercase"
-                                onClick={() => {
-                                  copyFriendCode(referrer._id)
-                                }}
-                              />
-                              <div className="flex h-[25px] w-[25px] cursor-pointer items-center justify-center rounded-[4px] border border-solid border-neutral-700">
-                                <button
-                                  type="button"
-                                  className="focus:outline-none"
+                                <Chip
+                                  label={referrer._id}
+                                  variant="outlined"
+                                  size="small"
+                                  className="mx-2 w-[89px] cursor-pointer uppercase"
                                   onClick={() => {
                                     copyFriendCode(referrer._id)
                                   }}
-                                >
-                                  <CopyMiniIcon />
-                                </button>
+                                />
+                                <div className="flex h-[25px] w-[25px] cursor-pointer items-center justify-center rounded-[4px] border border-solid border-neutral-700">
+                                  <button
+                                    type="button"
+                                    className="focus:outline-none"
+                                    onClick={() => {
+                                      copyFriendCode(referrer._id)
+                                    }}
+                                  >
+                                    <CopyMiniIcon />
+                                  </button>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </TableCell>
-                        <TableCell className=" border-b-0 bg-primary-main text-end font-neue-machina-bold text-xs uppercase">
-                          <div className="text-start text-varidian-default">
-                            + {referrer.referral_earn}
-                          </div>
-                        </TableCell>
-                        <TableCell className="rounded-r-2xl border-b-0 bg-primary-main text-end font-neue-machina-bold text-xs uppercase">
-                          <Chip
-                            label={dayjs(referrer.date).format("DD MMM YYYY")}
-                            variant="outlined"
-                            size="small"
-                            className="cursor-pointer uppercase"
-                          />
-                        </TableCell>
-                      </TableRow>
-                    ))
+                          </TableCell>
+                          <TableCell className="border-b-4 border-neutral-800 text-end font-neue-machina-bold text-xs uppercase">
+                            <div className="text-start text-varidian-default">
+                              + {referrer.referral_earn}
+                            </div>
+                          </TableCell>
+                          <TableCell className="rounded-r-2xl border-b-4 border-neutral-800 text-end font-neue-machina-bold text-xs uppercase">
+                            <Chip
+                              label={dayjs(referrer.date).format("DD MMM YYYY")}
+                              variant="outlined"
+                              size="small"
+                              className="cursor-pointer uppercase"
+                            />
+                          </TableCell>
+                        </TableRow>
+                      )
+                    )
                   ) : (
-                    <TableNodata />
+                    <div className="flex w-full justify-center rounded-lg border border-neutral-800 bg-neutral-700 py-3 text-center">
+                      No data
+                    </div>
                   )}
                 </TableBody>
               </Table>

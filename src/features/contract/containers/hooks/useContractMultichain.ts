@@ -269,7 +269,7 @@ const useContractMultichain = () => {
   const getFee = () =>
     new Promise((resolve) => {
       setIsLoading(true)
-      signer && signer?._provider?._network?.name.includes("bnb")
+      signer && signer?.provider?._network?.name.includes("bnb")
         ? p2pBinanceContract
         : p2pPolygonContract
             .fee()

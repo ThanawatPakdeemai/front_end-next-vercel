@@ -56,7 +56,6 @@ const HistoryTable = () => {
           }
         })
       }
-      // .catch((err) => console.log(err))
     }
     if (fetchRef.current) {
       fetchHistory()

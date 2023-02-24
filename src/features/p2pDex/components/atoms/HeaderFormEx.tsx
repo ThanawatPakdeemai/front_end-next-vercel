@@ -115,15 +115,10 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder }: IProp) => {
               <HrLine className="" />
             </div>
             <AmountBalance
-              dataBalance={[
-                {
-                  icon: type === "sell" ? <INaka /> : <IBusd />,
-                  balance:
-                    type === "sell"
-                      ? nakaVaultBalance.text
-                      : busdVaultBalance.text
-                }
-              ]}
+              icon={type === "sell" ? <INaka /> : <IBusd />}
+              balance={
+                type === "sell" ? nakaVaultBalance.text : busdVaultBalance.text
+              }
             />
           </div>
         </div>

@@ -240,28 +240,28 @@ const FormEdit = ({
                       <HrLine className="" />
                     </div>
                     <AmountBalance
-                      dataBalance={[
-                        {
-                          icon: !edit ? (
-                            type === "sell" ? (
-                              <INaka />
-                            ) : (
-                              <IBusd />
-                            )
-                          ) : type === "sell" ? (
-                            <IBusd />
-                          ) : (
+                      icon={
+                        edit ? (
+                          type === "sell" ? (
                             <INaka />
-                          ),
-                          balance: !edit
-                            ? type === "sell"
-                              ? nakaVaultBalance.text
-                              : busdVaultBalance.text
-                            : type === "sell"
-                            ? busdVaultBalance.text
-                            : nakaVaultBalance.text
-                        }
-                      ]}
+                          ) : (
+                            <IBusd />
+                          )
+                        ) : type === "sell" ? (
+                          <IBusd />
+                        ) : (
+                          <INaka />
+                        )
+                      }
+                      balance={
+                        !edit
+                          ? type === "sell"
+                            ? nakaVaultBalance.text
+                            : busdVaultBalance.text
+                          : type === "sell"
+                          ? busdVaultBalance.text
+                          : nakaVaultBalance.text
+                      }
                     />
                   </div>
                 </div>

@@ -47,21 +47,6 @@ export default function GameLobby() {
   const router = useRouter()
   const { GameHome } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
-  // const [gameData, setGameData] = useState<IGame>()
-  // const { data } = useGameStore()
-  // const { dataGame, isLoading } = useGamesById({ _gameId: data ? data.id : "" })
-
-  // const { data } = useGameStore()
-  // const [gameData, setGameData] = useState<IGame>()
-  // useEffect(() => {
-  //   if (gameData === undefined) {
-  // router.push("/404")
-  //   }
-  // }, [GameHome, gameData, router])
-
-  // useEffect(() => {
-  //   if (gameData) onSetGameData(gameData)
-  // }, [gameData, onSetGameData])
 
   const getTemplateLobby = () => {
     if (gameData) {
@@ -88,19 +73,19 @@ export default function GameLobby() {
   return <>{gameData ? getTemplateLobby() : <SkeletonBanner />}</>
 }
 
-GameLobby.getLayout = function getLayout(page: ReactElement) {
-  return <GamePageDefault component={page} />
-}
-
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const gameData = await getGameByPath((ctx.params?.GameHome as string) || "")
-
+  const _gameData = await getGameByPath((ctx.params?.GameHome as string) || "")
+  const _redirect = _gameData
+    ? false
+    : { destination: "/404", permanent: false }
   return {
     props: {
       ...(await serverSideTranslations(ctx.locale!, ["common"]))
     },
-    redirect: {
-      destination: !(gameData.data.length > 0) ? "/404" : ""
-    }
+    redirect: _redirect
   }
+}
+
+GameLobby.getLayout = function getLayout(page: ReactElement) {
+  return <GamePageDefault component={page} />
 }

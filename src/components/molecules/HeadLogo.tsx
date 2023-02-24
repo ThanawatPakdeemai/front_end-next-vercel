@@ -16,7 +16,6 @@ const HeadLogo = () => {
 
   const onScroll = useCallback(() => {
     const { pageYOffset } = window // scrollY
-    // console.log("yOffset", pageYOffset, "scrollY", scrollY)
     setScrollY(pageYOffset)
   }, [])
 

@@ -34,8 +34,13 @@ interface IProp {
 
 const OrderList = ({ ...props }: IProp) => {
   const { mutateCancelP2PDexOrder } = useP2PDexCancelSellNaka()
-  const { cancelOrderSellNaka, sendAllowNaka, allowNaka } =
-    useContractMultichain()
+  const {
+    cancelOrderSellNaka,
+    sendAllowNaka,
+    allowNaka,
+    allowBinance,
+    sendAllowBinance
+  } = useContractMultichain()
   const { address } = useWeb3Provider()
   const { setClose, setOpen } = useLoadingStore()
   const { errorToast } = useToast()
@@ -80,39 +85,71 @@ const OrderList = ({ ...props }: IProp) => {
   const sendData = () => {
     setOpen(`${MESSAGES.transaction_processing_order}`)
     if (dataEdit) {
-      if (type === "sell") {
-        cancelOrderSellNaka(dataEdit.order_id).then((_resp) => {
+      cancelOrderSellNaka(dataEdit.order_id)
+        .then((_resp) => {
           if ((_resp as IResponseGetFee).status) {
             mutateCancelP2PDexOrder(dataEdit.order_id).then((_data) => {
               props["refetch"]()
               setClose()
+              setOpenModal(false)
             })
           }
-        })
-      }
-    } else {
-      errorToast(MESSAGES.order_not_found)
-    }
-  }
-  const cancelOrder = async () => {
-    const allow = await allowNaka
-    if (allow && allow.toString() > 0) {
-      sendData()
-    } else {
-      setOpen(MESSAGES.approve_processing)
-      sendAllowNaka()
-        .then((_res) => {
-          if (_res) {
-            setClose()
-            sendData()
-          } else {
-            setClose()
-            errorToast(MESSAGES.approve_error)
-          }
+          setClose()
         })
         .catch(() => {
           setClose()
         })
+    } else {
+      setClose()
+      errorToast(MESSAGES.order_not_found)
+    }
+  }
+
+  const sendDataCancelBinance = () => {
+    // console.log("cancelling")
+  }
+
+  const cancelOrder = async () => {
+    if (type === "buy") {
+      const allow = await allowNaka
+      if (allow && allow.toString() > 0) {
+        await sendData()
+      } else {
+        await setOpen(MESSAGES.approve_processing)
+        await sendAllowNaka()
+          .then((_res) => {
+            if (_res) {
+              setClose()
+              sendData()
+            } else {
+              setClose()
+              errorToast(MESSAGES.approve_error)
+            }
+          })
+          .catch(() => {
+            setClose()
+          })
+      }
+    } else if (type === "sell") {
+      const allowBi = await allowBinance
+      if (allowBi && allowBi.toString() > 0) {
+        sendDataCancelBinance()
+      } else {
+        setOpen(MESSAGES.approve_processing)
+        sendAllowBinance()
+          .then((_res) => {
+            if (_res) {
+              setClose()
+              sendDataCancelBinance()
+            } else {
+              setClose()
+              errorToast(MESSAGES.approve_error)
+            }
+          })
+          .catch(() => {
+            setClose()
+          })
+      }
     }
   }
 
@@ -244,7 +281,9 @@ const OrderList = ({ ...props }: IProp) => {
             dataEdit?.wallet_address.toLowerCase() ===
             (address && address.toLowerCase())
           }
-          cancelOrder={cancelOrder}
+          cancelOrder={() => {
+            cancelOrder()
+          }}
           refetchData={props["refetch"]}
         />
       ) : (

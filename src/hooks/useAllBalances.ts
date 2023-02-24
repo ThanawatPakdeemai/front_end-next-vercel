@@ -112,7 +112,7 @@ const useAllBalances = () => {
     handleBalanceVaults(CONFIGS.CONTRACT_ADDRESS.BEP20)
     handleBalanceVaults(CONFIGS.CONTRACT_ADDRESS.ERC20)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [signer])
+  }, [signer, address])
 
   return {
     handleBalanceWallet,

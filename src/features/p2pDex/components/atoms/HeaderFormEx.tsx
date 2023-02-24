@@ -116,9 +116,7 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder }: IProp) => {
             </div>
             <AmountBalance
               icon={type === "sell" ? <INaka /> : <IBusd />}
-              balance={
-                type === "sell" ? nakaVaultBalance.text : busdVaultBalance.text
-              }
+              balance={type === "sell" ? nakaVaultBalance : busdVaultBalance}
             />
           </div>
         </div>

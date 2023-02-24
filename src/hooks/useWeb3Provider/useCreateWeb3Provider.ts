@@ -167,10 +167,10 @@ const useCreateWeb3Provider = () => {
             method: "wallet_switchEthereumChain",
             params: [{ chainId: _chainId }] // [handleNetworkSettings(_chainId)]
           })
-          .then(() => {
+          .then((_res) => {
             setLoading(false)
           })
-          .catch(() => {
+          .catch((_err) => {
             setLoading(false)
           })
 

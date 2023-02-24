@@ -20,7 +20,7 @@ import {
 import { MESSAGES } from "@constants/messages"
 import { parseUnits } from "ethers/lib/utils"
 import useP2PDexEditOrder from "@feature/p2pDex/containers/hooks/useP2PDexEditOrder"
-import useP2PDexCreateOrder from "@feature/p2pDex/containers/hooks/useP2PDexCreateOrder"
+// import useP2PDexCreateOrder from "@feature/p2pDex/containers/hooks/useP2PDexCreateOrder"
 import useP2PDexExOrder from "@feature/p2pDex/containers/hooks/useP2PDexExOrder "
 
 export interface IDataOptions {
@@ -37,7 +37,7 @@ const useContractMultichain = () => {
   const { signer, address: account } = useWeb3Provider()
   const { setOpen, setClose } = useLoadingStore()
   const { mutateEditOrder } = useP2PDexEditOrder()
-  const { mutateCreateOrder } = useP2PDexCreateOrder()
+  // const { mutateCreateOrder } = useP2PDexCreateOrder()
   const { mutateExOrder } = useP2PDexExOrder()
 
   const p2pBinanceContract = useP2PBinance(
@@ -70,11 +70,7 @@ const useContractMultichain = () => {
       CONFIGS.CONTRACT_ADDRESS.P2P_BINANCE
     )
 
-  const {
-    // state: stateCreateOrderSellNaka,
-    send: sendCreateOrderSellNaka
-    // events: eventsCreateOrderSellNaka
-  } = useContractFunction(
+  const { send: sendCreateOrderSellNaka } = useContractFunction(
     p2pPolygonContract,
     "createOrderSellNaka",
     dataOptions
@@ -86,9 +82,27 @@ const useContractMultichain = () => {
     dataOptions
   )
 
+  const { send: sendEditOrderBuyNaka } = useContractFunction(
+    p2pBinanceContract,
+    "editOrderBuy",
+    dataOptions
+  )
+
   const { send: sendRequestSellNakaP2p } = useContractFunction(
     p2pPolygonContract,
     "requestSellNaka",
+    dataOptions
+  )
+
+  const { send: sendRequestBuyNakaP2p } = useContractFunction(
+    p2pBinanceContract,
+    "requestBuyNaka",
+    dataOptions
+  )
+
+  const { send: sendCreateOrderBuyNaka } = useContractFunction(
+    p2pBinanceContract,
+    "createOrderBuyNaka",
     dataOptions
   )
 
@@ -165,24 +179,40 @@ const useContractMultichain = () => {
   const editOrderSellNaka = async (
     busdPrice: number,
     busdAmount: number,
-    orderId: string
+    orderId: string,
+    _type: string
   ) =>
     new Promise((resolve) => {
       const nakaPriceWei = Helper.toWei(busdPrice.toString())
       const nakaAmountWei = Helper.toWei(busdAmount.toString())
-      setOpen(MESSAGES.transaction_processing_order)
-      sendEditOrderSellNaka(orderId, nakaPriceWei, nakaAmountWei)
-        .then((_res) => {
-          if (_res) {
-            resolve({ status: true, data: _res })
+
+      if (_type === "buy") {
+        sendEditOrderSellNaka(orderId, nakaPriceWei, nakaAmountWei)
+          .then((_res) => {
+            if (_res) {
+              resolve({ status: true, data: _res })
+              setClose()
+            }
             setClose()
-          }
-          setClose()
-        })
-        .catch(() => {
-          resolve({ status: true, data: "" })
-          setClose()
-        })
+          })
+          .catch(() => {
+            resolve({ status: true, data: "" })
+            setClose()
+          })
+      } else {
+        sendEditOrderBuyNaka(orderId, nakaPriceWei, nakaAmountWei)
+          .then((_res) => {
+            if (_res) {
+              resolve({ status: true, data: _res })
+              setClose()
+            }
+            setClose()
+          })
+          .catch(() => {
+            resolve({ status: true, data: "" })
+            setClose()
+          })
+      }
     })
 
   const createOrderBuyNaka = (nakaPrice: number, nakaAmount: number) =>
@@ -190,8 +220,9 @@ const useContractMultichain = () => {
       setIsLoading(true)
       const busdPriceWei = Helper.toWei(nakaPrice.toString())
       const busdAmountWei = Helper.toWei(nakaAmount.toString())
-      p2pBinanceContract
-        .createOrderBuyNaka(busdPriceWei, busdAmountWei)
+      sendCreateOrderBuyNaka(busdPriceWei, busdAmountWei)
+        // p2pBinanceContract
+        // .createOrderBuyNaka(busdPriceWei, busdAmountWei)
         .then((_response) => {
           setIsLoading(false)
           resolve({
@@ -239,31 +270,53 @@ const useContractMultichain = () => {
     _seller: string,
     _busdPrice: number,
     _sellAmount: number,
-    _totalAmount: number
+    _totalAmount: number,
+    _type: string
   ) =>
     new Promise((resolve) => {
       setOpen(MESSAGES.transaction_processing_order)
       const sellAmount = utils.parseEther(_sellAmount.toString()).toString()
       const totalAmount = utils.parseEther(_totalAmount.toString()).toString()
       const price = utils.parseEther(_busdPrice.toString()).toString()
-      sendRequestSellNakaP2p(
-        _polygonOrderSellId,
-        _seller,
-        price,
-        totalAmount,
-        sellAmount
-      )
-        .then((_res) => {
-          if (_res) {
-            resolve({ status: true, data: _res })
+      if (_type === "sell") {
+        sendRequestSellNakaP2p(
+          _polygonOrderSellId,
+          _seller,
+          price,
+          sellAmount,
+          totalAmount
+        )
+          .then((_res) => {
+            if (_res) {
+              resolve({ status: true, data: _res })
+              setClose()
+            }
             setClose()
-          }
-          setClose()
-        })
-        .catch(() => {
-          resolve({ status: true, data: "" })
-          setClose()
-        })
+          })
+          .catch(() => {
+            resolve({ status: true, data: "" })
+            setClose()
+          })
+      } else {
+        sendRequestBuyNakaP2p(
+          _polygonOrderSellId,
+          _seller,
+          price,
+          sellAmount,
+          totalAmount
+        )
+          .then((_res) => {
+            if (_res) {
+              resolve({ status: true, data: _res })
+              setClose()
+            }
+            setClose()
+          })
+          .catch(() => {
+            resolve({ status: true, data: "" })
+            setClose()
+          })
+      }
     })
 
   const getFee = () =>
@@ -290,9 +343,11 @@ const useContractMultichain = () => {
         .then((_response) => {
           if (_response) {
             resolve({ status: true, data: _response })
+            setClose()
           }
         })
         .catch((err) => {
+          setClose()
           resolve({ status: false, data: err })
         })
     })
@@ -325,22 +380,31 @@ const useContractMultichain = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signer])
 
-  const submitDataEditSellNaka = (_data, type, dataEdit) => {
+  const submitDataEditSellNaka = async (_data, type, dataEdit) => {
     const { wallet_address, order_id } = dataEdit
-    return editOrderSellNaka(_data.price, _data.amount, order_id ?? "").then(
-      async (_receipt) => {
+    setOpen(MESSAGES.transaction_processing_order)
+
+    return editOrderSellNaka(_data.price, _data.amount, order_id ?? "", type)
+      .then(async (_receipt) => {
         setOpen(MESSAGES.transaction_processing_order)
         const receipt = (_receipt as IResponseGetFee).data
         if (_receipt && (_receipt as IResponseGetFee).status && receipt.logs) {
           const tx_hash = receipt.transactionHash
-          const _events = receipt.logs.find(
-            (log) =>
-              log.address.toLowerCase() ===
-              p2pPolygonContract.address.toLowerCase()
-          )
 
-          const events = p2pPolygonContract.interface.parseLog(_events)
+          const _events = receipt.logs.find((log: any) => {
+            if (type === "sell") {
+              return log.address === p2pBinanceContract.address
+            }
+            return log.address === p2pPolygonContract.address
+          })
+          let events
 
+          if (type === "sell") {
+            events = p2pBinanceContract.interface.parseLog(_events)
+          } else {
+            events = p2pPolygonContract.interface.parseLog(_events)
+          }
+          // TODO YUI chain binance can't sane DB
           if (events) {
             const orderId =
               type === "sell" ? events.args.orderBuyId : events.args.orderSellId
@@ -351,7 +415,6 @@ const useContractMultichain = () => {
             const naka_amount = events.args.amount?.toString()
             const total_price =
               type === "sell" ? events.args.totalPriceInOrder?.toString() : "0" // Only polygon
-
             mutateEditOrder({
               _orderId: orderId,
               _type: type,
@@ -363,16 +426,61 @@ const useContractMultichain = () => {
               _txHash: tx_hash
             })
           }
+          setClose()
         }
         setClose()
-      }
-    )
+      })
+      .catch(() => {
+        setClose()
+      })
+  }
+
+  const createOrderBuy = (_price, _amount) => {
+    createOrderBuyNaka(_price, _amount)
+      .then((_receipt) => {
+        const receipt = (_receipt as IResponseGetFee).data
+        if (_receipt && (_receipt as IResponseGetFee).status && receipt.logs) {
+          const log = receipt.logs.find(
+            (_log) => _log.address === p2pBinanceContract.address
+          )
+          const events = p2pBinanceContract.interface.parseLog(log)
+          if (events) {
+            // const _orderId = events.args.orderBuyId
+            // const _busdPrice = events.args.busdPrice.toString()
+            // const _nakaPrice = "0"
+            // const _nakaAmount = events.args.amount.toString()
+            // const _totalPrice = events.args.totalPrice.toString() // polygon
+            // const _address = events.args.buyer
+            // const _type = events.args.orderSellId ? "sell" : "buy"
+            // mutateCreateOrder({
+            //   _orderId,
+            //   _type,
+            //   _busdPrice,
+            //   _nakaPrice,
+            //   _nakaAmount,
+            //   _totalPrice,
+            //   _address
+            // })
+            //   .then((_res) => {
+            //     setClose()
+            //   })
+            //   .catch((_err) => {
+            //     setClose()
+            //   })
+          }
+        } else {
+          setClose()
+        }
+      })
+      .catch(() => {
+        setClose()
+      })
   }
 
   const createOrder = (_data, type) => {
     setOpen("Processing Transaction")
     if (type === "buy") {
-      createOrderBuyNaka(_data.price, _data.amount)
+      createOrderBuy(_data.price, _data.amount)
     } else {
       createOrderSellNaka(_data.price, _data.amount)
         .then((_receipt) => {
@@ -387,28 +495,28 @@ const useContractMultichain = () => {
             )
             const events = p2pPolygonContract.interface.parseLog(log)
             if (events) {
-              const _orderId = events.args.orderSellId
-              const _busdPrice = "0" // Only binance
-              const _nakaPrice = events.args.nakaPrice.toString()
-              const _nakaAmount = events.args.amount.toString()
-              const _totalPrice = "0" // Only polygon
-              const _address = events.args.seller
-              const _type = events.args.orderSellId ? "sell" : "buy"
-              mutateCreateOrder({
-                _orderId,
-                _type,
-                _busdPrice,
-                _nakaPrice,
-                _nakaAmount,
-                _totalPrice,
-                _address
-              })
-                .then((_res) => {
-                  setClose()
-                })
-                .catch((_err) => {
-                  setClose()
-                })
+              // const _orderId = events.args.orderSellId
+              // const _busdPrice = "0" // Only binance
+              // const _nakaPrice = events.args.nakaPrice.toString()
+              // const _nakaAmount = events.args.amount.toString()
+              // const _totalPrice = "0" // Only polygon
+              // const _address = events.args.seller
+              // const _type = events.args.orderSellId ? "sell" : "buy"
+              // mutateCreateOrder({
+              //   _orderId,
+              //   _type,
+              //   _busdPrice,
+              //   _nakaPrice,
+              //   _nakaAmount,
+              //   _totalPrice,
+              //   _address
+              // })
+              //   .then((_res) => {
+              //     setClose()
+              //   })
+              //   .catch((_err) => {
+              //     setClose()
+              //   })
             }
           } else {
             setClose()
@@ -428,16 +536,28 @@ const useContractMultichain = () => {
         dataEdit.wallet_address,
         _data.price,
         _data.amount,
-        dataEdit.naka_amount
+        dataEdit.naka_amount,
+        type
       ).then(async (receipt) => {
         if ((receipt as IResponseGetFee).data) {
+          // console.log(receipt)
+
           const _receipt = (receipt as IResponseGetFee).data
           if (_receipt && _receipt.logs) {
-            const event = _receipt.logs.find(
-              (log) => log.address === p2pPolygonContract.address
-            )
+            const event = _receipt.logs.find((log) => {
+              if (type === "sell") {
+                return log.address === p2pPolygonContract.address
+              }
+              return log.address === p2pBinanceContract.address
+            })
+            // console.log(event)
 
-            const events = p2pPolygonContract.interface.parseLog(event)
+            let events
+            if (type === "sell") {
+              events = p2pPolygonContract.interface.parseLog(event)
+            }
+            events = p2pBinanceContract.interface.parseLog(event)
+            // console.log(events)
 
             if (events) {
               const request_id =

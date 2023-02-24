@@ -16,6 +16,8 @@ import useContractMultichain from "@feature/contract/containers/hooks/useContrac
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward"
 import CONFIGS from "@configs/index"
 import { chainIdConfig } from "@configs/sites"
+import SwitchChain from "@components/atoms/SwitchChain"
+import useSwitchNetwork from "@hooks/useSwitchNetwork"
 import Input from "../atoms/Input"
 
 interface IProp {
@@ -29,39 +31,46 @@ const Form = ({ type = "buy", edit = false, onSubmit, ...dataForm }: IProp) => {
   const { address, signer } = useWeb3Provider()
   const { busdVaultBalance, nakaVaultBalance } = useAllBalances()
   const { nakaCurrentPrice, fee } = useContractMultichain()
-  const { formatNumber, removeComma } = Helper
+  const { handleSwitchNetwork } = useSwitchNetwork()
+  const { formatNumber } = Helper
 
   const chainRequired = signer?.provider?._network?.chainId ?? 0
 
   const balance = !edit
     ? type === "buy"
-      ? busdVaultBalance.text
-      : nakaVaultBalance.text
+      ? busdVaultBalance.digit
+      : nakaVaultBalance.digit
     : type === "buy"
-    ? nakaVaultBalance.text
-    : busdVaultBalance.text
+    ? nakaVaultBalance.digit
+    : busdVaultBalance.digit
+
+  const total = useMemo(
+    () =>
+      Number(dataForm["watch"]("price")) * Number(dataForm["watch"]("amount")),
+    [dataForm, dataForm["watch"]("price"), dataForm["watch"]("amount")]
+  )
 
   const disableButton = useMemo(() => {
     if (
       profile &&
       address &&
       balance &&
-      balance !== "N/A" &&
-      address?.toLowerCase() === profile.address.toLowerCase() &&
-      Helper.removeComma(balance) >=
-        Number(dataForm["watch"]("price")) *
-          Number(dataForm["watch"]("amount")) &&
+      address?.toLowerCase() === profile?.address?.toLowerCase() &&
+      Number(balance) >= total &&
       Number(dataForm["watch"]("amount")) > 0 &&
       Number(dataForm["watch"]("price")) > 0
     ) {
       return false
+      // eslint-disable-next-line prettier/prettier, no-else-return
+    } else {
+      return true
     }
-    return true
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     address,
     balance,
-    profile,
+    profile?.address,
+    dataForm,
     dataForm["watch"]("price"),
     dataForm["watch"]("amount")
   ])
@@ -80,23 +89,45 @@ const Form = ({ type = "buy", edit = false, onSubmit, ...dataForm }: IProp) => {
         type="submit"
       />
     ),
-    [type, disableButton]
+    [
+      type,
+      disableButton,
+      address,
+      balance,
+      profile?.address,
+      dataForm["watch"]("price"),
+      dataForm["watch"]("amount")
+    ]
   )
 
   const buttonSwitched = () => (
-    <Typography className=" py-3 text-center uppercase">
-      switch network
-    </Typography>
+    <SwitchChain
+      variant="full"
+      handleClick={
+        edit
+          ? type === "buy"
+            ? () => handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX as string)
+            : () =>
+                handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string)
+          : type === "buy"
+          ? () => handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string)
+          : () => handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX as string)
+      }
+    />
   )
 
   const buttonData = useMemo(() => {
     if (edit) {
       if (type === "buy") {
-        if (Number(chainRequired) === Number(CONFIGS.CHAIN.CHAIN_ID)) {
+        if (Number(chainRequired) === Number(chainIdConfig.polygon)) {
           return buttonSubmit()
         }
         return buttonSwitched()
       }
+      if (Number(chainRequired) === Number(chainIdConfig.binance)) {
+        return buttonSubmit()
+      }
+      return buttonSwitched()
     }
     if (type === "buy") {
       if (Number(chainRequired) === Number(chainIdConfig.binance)) {
@@ -104,11 +135,18 @@ const Form = ({ type = "buy", edit = false, onSubmit, ...dataForm }: IProp) => {
       }
       return buttonSwitched()
     }
-    if (Number(chainRequired) === Number(CONFIGS.CHAIN.CHAIN_ID)) {
+    if (Number(chainRequired) === Number(chainIdConfig.polygon)) {
       return buttonSubmit()
     }
     return buttonSwitched()
-  }, [CONFIGS.CHAIN.CHAIN_ID, chainIdConfig, type, edit])
+  }, [
+    chainRequired,
+    CONFIGS.CHAIN.CHAIN_ID,
+    chainIdConfig,
+    type,
+    edit,
+    dataForm
+  ])
 
   return (
     <form onSubmit={dataForm["handleSubmit"](onSubmit)}>
@@ -165,20 +203,18 @@ const Form = ({ type = "buy", edit = false, onSubmit, ...dataForm }: IProp) => {
             <Typography className="font-neue-machina text-sm uppercase text-neutral-600">
               you will {type === "buy" ? "pay" : "recieve"}
               <span className="ml-2 text-neutral-300">
-                {formatNumber(
-                  Number(dataForm["watch"]("price")) *
-                    Number(dataForm["watch"]("amount")),
-                  {
-                    maximumFractionDigits: 4
-                  }
-                )}{" "}
+                {formatNumber(total, {
+                  maximumFractionDigits: 4
+                })}{" "}
                 busd
               </span>
             </Typography>
             {buttonData}
-            <Typography className="my-2 text-center font-neue-machina text-sm uppercase text-neutral-500">
-              fee {formatEther(fee)} busd
-            </Typography>
+            {!edit && (
+              <Typography className="my-2 text-center font-neue-machina text-sm uppercase text-neutral-500">
+                fee {formatEther(fee)} busd
+              </Typography>
+            )}
             {disableButton && (
               <Alert severity="error">
                 <Typography className="  text-center font-neue-machina text-sm text-error-main">
@@ -186,10 +222,9 @@ const Form = ({ type = "buy", edit = false, onSubmit, ...dataForm }: IProp) => {
                   {address?.toLowerCase() !== profile?.address.toLowerCase()
                     ? `${MESSAGES["please-connect-wallet"]}, `
                     : ""}
-                  {balance === "N/A" ||
-                  removeComma(balance) <
-                    Number(dataForm["watch"]("price")) *
-                      Number(dataForm["watch"]("amount"))
+                  {balance <
+                  Number(dataForm["watch"]("price")) *
+                    Number(dataForm["watch"]("amount"))
                     ? `${MESSAGES["balance_not_enough"]}, `
                     : ""}
                   {dataForm["watch"]("amount") === "" ||

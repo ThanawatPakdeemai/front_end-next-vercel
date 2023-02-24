@@ -1,54 +1,86 @@
-import IBusd from "@components/icons/Busd"
-import INaka from "@components/icons/Naka"
 import { Typography } from "@mui/material"
 import React from "react"
-import AmountBalance from "@components/molecules/balance/AmountBalance"
 
 import HrLine from "@components/icons/HrLine"
-import useAllBalances from "@hooks/useAllBalances"
 import { useForm } from "react-hook-form"
 import useContractMultichain from "@feature/contract/containers/hooks/useContractMultichain"
 
 import useLoadingStore from "@stores/loading"
 import { MESSAGES } from "@constants/messages"
 import { useToast } from "@feature/toast/containers"
+import Balance from "@components/molecules/balance/Balance"
 import Form from "../molecules/Form"
 
 interface IProp {
   type?: string
 }
 const FormCreate = ({ type = "buy" }: IProp) => {
-  const { busdVaultBalance, nakaVaultBalance } = useAllBalances()
   const { setClose, setOpen } = useLoadingStore()
-  const { sendAllowNaka, allowNaka, createOrder } = useContractMultichain()
+  const {
+    sendAllowNaka,
+    allowNaka,
+    createOrder,
+    allowBinance,
+    sendAllowBinance
+  } = useContractMultichain()
   const { errorToast } = useToast()
   const formData = useForm({
     defaultValues: { price: "", amount: "" }
   })
 
+  // useEffect(() => {
+  //   nakaVaultBalance
+  //   busdVaultBalance
+  // }, [busdVaultBalance, nakaVaultBalance])
+
   const sendData = (_data) => {
+    createOrder(_data, type)
+  }
+  const sendDataBinance = (_data) => {
     createOrder(_data, type)
   }
 
   const onSubmit = async (_data) => {
-    const allow = await allowNaka
-    if (allow && allow.toString() > 0) {
-      sendData(_data)
-    } else {
-      setOpen(MESSAGES.approve_processing)
-      sendAllowNaka()
-        .then((_res) => {
-          if (_res) {
+    if (type === "sell") {
+      const allow = await allowNaka
+      if (allow && allow.toString() > 0) {
+        sendData(_data)
+      } else {
+        setOpen(MESSAGES.approve_processing)
+        sendAllowNaka()
+          .then((_res) => {
+            if (_res) {
+              setClose()
+              sendData(_data)
+            } else {
+              setClose()
+              errorToast(MESSAGES.approve_error)
+            }
+          })
+          .catch(() => {
             setClose()
-            sendData(_data)
-          } else {
+          })
+      }
+    } else if (type === "buy") {
+      const allowBi = await allowBinance
+      if (allowBi && allowBi.toString() > 0) {
+        sendDataBinance(_data)
+      } else {
+        setOpen(MESSAGES.approve_processing)
+        sendAllowBinance()
+          .then((_res) => {
+            if (_res) {
+              setClose()
+              sendDataBinance(_data)
+            } else {
+              setClose()
+              errorToast(MESSAGES.approve_error)
+            }
+          })
+          .catch(() => {
             setClose()
-            errorToast(MESSAGES.approve_error)
-          }
-        })
-        .catch(() => {
-          setClose()
-        })
+          })
+      }
     }
   }
 
@@ -71,14 +103,11 @@ const FormCreate = ({ type = "buy" }: IProp) => {
                 </Typography>
                 <HrLine className="" />
               </div>
-              <AmountBalance
+              <Balance />
+              {/* <AmountBalance
                 icon={type === "sell" ? <INaka /> : <IBusd />}
-                balance={
-                  type === "sell"
-                    ? nakaVaultBalance.text
-                    : busdVaultBalance.text
-                }
-              />
+                balance={type === "sell" ? nakaVaultBalance : busdVaultBalance}
+              /> */}
             </div>
           </div>
         </div>

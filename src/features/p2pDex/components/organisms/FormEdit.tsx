@@ -23,6 +23,9 @@ import {
 
 import { useToast } from "@feature/toast/containers"
 import CopyTextIcon from "@components/icons/CopyTextIcon"
+import Balance from "@components/molecules/balance/Balance"
+import CONFIGS from "@configs/index"
+import { useWeb3Provider } from "@providers/Web3Provider"
 import Form from "../molecules/Form"
 
 interface IPropContent {
@@ -49,11 +52,18 @@ const FormEdit = ({
 }: IProp) => {
   const { busdVaultBalance, nakaVaultBalance } = useAllBalances()
   const { setClose, setOpen } = useLoadingStore()
-  const { allowNaka, sendAllowNaka, submitDataEditSellNaka } =
-    useContractMultichain()
+  const { signer } = useWeb3Provider()
+  const {
+    allowNaka,
+    sendAllowNaka,
+    submitDataEditSellNaka,
+    allowBinance,
+    sendAllowBinance
+  } = useContractMultichain()
   const { successToast, errorToast } = useToast()
-
   const { shortenString, copyClipboard } = Helper
+
+  const chainRequired = signer?.provider?._network?.chainId ?? 0
 
   const priceBusd = useMemo(() => dataEdit?.busd_price, [dataEdit])
   const priceNaka = useMemo(() => dataEdit?.naka_price, [dataEdit])
@@ -90,7 +100,7 @@ const FormEdit = ({
   }, [dataEdit])
 
   const sendData = (_data) => {
-    if (dataEdit && type === "buy") {
+    if (dataEdit) {
       submitDataEditSellNaka(_data, type, dataEdit)
         .then((_res) => {
           if (refetchData) refetchData()
@@ -104,24 +114,46 @@ const FormEdit = ({
   }
 
   const onSubmit = async (_data) => {
-    const allow = await allowNaka
-    if (allow && allow.toString() > 0) {
-      sendData(_data)
-    } else {
-      setOpen(MESSAGES.approve_processing)
-      sendAllowNaka()
-        .then((_res) => {
-          if (_res) {
+    if (type === "buy") {
+      const allow = await allowNaka
+      if (allow && allow.toString() > 0) {
+        sendData(_data)
+      } else {
+        setOpen(MESSAGES.approve_processing)
+        sendAllowNaka()
+          .then((_res) => {
+            if (_res) {
+              setClose()
+              sendData(_data)
+            } else {
+              setClose()
+              errorToast(MESSAGES.approve_error)
+            }
+          })
+          .catch(() => {
             setClose()
-            sendData(_data)
-          } else {
+          })
+      }
+    } else if (type === "sell") {
+      const allowBi = await allowBinance
+      if (allowBi && allowBi.toString() > 0) {
+        sendData(_data)
+      } else {
+        setOpen(MESSAGES.approve_processing)
+        sendAllowBinance()
+          .then((_res) => {
+            if (_res) {
+              setClose()
+              sendData(_data)
+            } else {
+              setClose()
+              errorToast(MESSAGES.approve_error)
+            }
+          })
+          .catch(() => {
             setClose()
-            errorToast(MESSAGES.approve_error)
-          }
-        })
-        .catch(() => {
-          setClose()
-        })
+          })
+      }
     }
   }
 
@@ -186,6 +218,22 @@ const FormEdit = ({
     }
   ]
 
+  const dataBalace = useMemo(() => {
+    if (type === "buy") {
+      if (Number(chainRequired) === Number(CONFIGS.CHAIN.CHAIN_ID)) {
+        return <Balance />
+      }
+    } else if (Number(chainRequired) === Number(CONFIGS.CHAIN.BNB_CHAIN_ID)) {
+      return <Balance />
+    }
+    return (
+      <AmountBalance
+        icon={type === "buy" ? <INaka /> : <IBusd />}
+        balance={type === "buy" ? nakaVaultBalance : busdVaultBalance}
+      />
+    )
+  }, [busdVaultBalance, chainRequired, nakaVaultBalance, type])
+
   return (
     <>
       <ModalCustom
@@ -239,10 +287,11 @@ const FormEdit = ({
                       </Typography>
                       <HrLine className="" />
                     </div>
-                    <AmountBalance
+                    {dataBalace}
+                    {/* <AmountBalance
                       icon={
                         edit ? (
-                          type === "sell" ? (
+                          type === "buy" ? (
                             <INaka />
                           ) : (
                             <IBusd />
@@ -254,15 +303,15 @@ const FormEdit = ({
                         )
                       }
                       balance={
-                        !edit
-                          ? type === "sell"
-                            ? nakaVaultBalance.text
-                            : busdVaultBalance.text
+                        edit
+                          ? type === "buy"
+                            ? nakaVaultBalance
+                            : busdVaultBalance
                           : type === "sell"
-                          ? busdVaultBalance.text
-                          : nakaVaultBalance.text
+                          ? busdVaultBalance
+                          : nakaVaultBalance
                       }
-                    />
+                    /> */}
                   </div>
                 </div>
                 {edit && (
@@ -273,7 +322,7 @@ const FormEdit = ({
                     handleClick={() => {
                       if (cancelOrder) {
                         cancelOrder()
-                        setOpen(MESSAGES.transaction_processing_order)
+                        // setOpen(MESSAGES.transaction_processing_order)
                       }
                     }}
                     className={`leading-2 mt-5 mb-5 flex h-[50px] w-full items-center  justify-center rounded-md ${" bg-secondary-main"} !fill-primary-main font-neue-machina text-sm font-bold capitalize !text-primary-main`}

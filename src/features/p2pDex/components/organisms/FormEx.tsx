@@ -29,6 +29,8 @@ import {
 
 import { useToast } from "@feature/toast/containers"
 import CONFIGS from "@configs/index"
+import useSwitchNetwork from "@hooks/useSwitchNetwork"
+import SwitchChain from "@components/atoms/SwitchChain"
 import Input from "../atoms/Input"
 import HeaderFormEx from "../atoms/HeaderFormEx"
 
@@ -54,6 +56,8 @@ const FormEx = ({
   const { address, signer } = useWeb3Provider()
   const { busdVaultBalance, nakaVaultBalance } = useAllBalances()
   const { setClose, setOpen } = useLoadingStore()
+  const { handleSwitchNetwork } = useSwitchNetwork()
+
   const {
     fee,
     allowNaka,
@@ -137,11 +141,6 @@ const FormEx = ({
       })
   }
 
-  const sendDataBuyNaka = async (_data) => {
-    // eslint-disable-next-line no-console
-    console.log("sendDataBuyNaka")
-  }
-
   const onSubmit = async (_data) => {
     if (type === "sell") {
       const allowPolygon = await allowNaka
@@ -166,14 +165,14 @@ const FormEx = ({
     } else {
       const allowBnb = await allowBinance
       if (allowBnb && allowBnb.toString() > 0) {
-        sendDataBuyNaka(_data)
+        sendDataSellNaka(_data)
       } else {
         setOpen(MESSAGES.approve_processing)
         sendAllowBinance()
           .then((_res) => {
             if (_res) {
               setClose()
-              sendDataBuyNaka(_data)
+              sendDataSellNaka(_data)
             } else {
               setClose()
               errorToast(MESSAGES.approve_error)
@@ -233,9 +232,14 @@ const FormEx = ({
   )
 
   const buttonSwitched = () => (
-    <Typography className=" py-3 text-center uppercase">
-      switch network
-    </Typography>
+    <SwitchChain
+      variant="full"
+      handleClick={
+        type === "sell"
+          ? () => handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX as string)
+          : () => handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string)
+      }
+    />
   )
 
   const buttonData = useMemo(() => {

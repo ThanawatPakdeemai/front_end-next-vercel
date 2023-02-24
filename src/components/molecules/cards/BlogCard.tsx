@@ -6,6 +6,7 @@ import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import FireIcon from "@components/icons/BlogIcon/FireIcon"
 import { CardMedia, Typography } from "@mui/material"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
+import Link from "next/link"
 
 export interface IBlogCard {
   iconmotion?: Variants
@@ -15,6 +16,8 @@ export interface IBlogCard {
   title: any
   description: any
   date_released: any
+  blog_id: string
+  className?: string
 }
 
 const BlogCard = ({
@@ -24,14 +27,16 @@ const BlogCard = ({
   image,
   title,
   description,
-  date_released
+  date_released,
+  blog_id,
+  className
 }: IBlogCard) => (
   <div>
     <motion.div
       whileHover="hover"
       initial="rest"
       key={uuid()}
-      className="w-[272px] cursor-pointer"
+      className={`w-[272px] cursor-pointer ${className}`}
     >
       <div className="relative">
         <ButtonIcon
@@ -53,19 +58,22 @@ const BlogCard = ({
       <Typography className="mt-4 text-default uppercase">{title}</Typography>
       <Typography className="mt-4 text-sm">{description}</Typography>
       <motion.div className="mt-[20px] flex justify-center gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 py-[10px] px-[30px]">
+        {/* {blog_id} */}
         <Typography className="self-center text-sm">
           {dayjs(date_released).format("DD MMM YYYY")}
         </Typography>
         <div className="border-r border-neutral-700 border-opacity-80" />
-        <div className="flex items-center">
-          <Typography className="text-sm">Blockchain</Typography>
-          <motion.div
-            variants={arrowMotion}
-            className="opacity-1 absolute ml-16"
-          >
-            <ArrowForwardIcon sx={{ height: 14, displayBlock: "none" }} />
-          </motion.div>
-        </div>
+        <Link href={`/blog/${blog_id}`}>
+          <div className="flex items-center">
+            <Typography className="text-sm">Blockchain</Typography>
+            <motion.div
+              variants={arrowMotion}
+              className="opacity-1 absolute ml-16"
+            >
+              <ArrowForwardIcon sx={{ height: 14, displayBlock: "none" }} />
+            </motion.div>
+          </div>
+        </Link>
       </motion.div>
     </motion.div>
   </div>

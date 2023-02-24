@@ -20,9 +20,11 @@ export const ModalCustom = ({ ...props }: IProps) => {
           transform: "translate(-50%, -50%)",
           bgcolor: bgcolor || "#01010133"
         }}
-        className={`${className} rounded-md p-[10px] `}
+        className={`${className} rounded-md p-[10px] focus:border-none focus:outline-none focus-visible:outline-none`}
       >
-        <Box className="rounded-md bg-neutral-900 p-4">{children}</Box>
+        <Box className="rounded-md bg-neutral-900 p-4 focus:border-none focus:outline-none focus-visible:outline-none">
+          {children}
+        </Box>
       </Box>
     </Modal>
   )

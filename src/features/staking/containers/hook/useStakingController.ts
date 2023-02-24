@@ -74,9 +74,6 @@ const useGlobalStaking = () => {
   })
 
   const handleGroupStakeByDate = async (_staking: IStakingAll[]) => {
-    // const dataBasic = await fecthDataBasicStake(_staking)
-    // console.log("dataBasic", dataBasic)
-
     /**
      * @description Group staking by start_stake_time
      */
@@ -197,7 +194,6 @@ const useGlobalStaking = () => {
       _basicStakeInfo &&
       _userStakedInfo
     ) {
-      // console.log("account", account)
       const result = await claimReward(
         _userStakedInfo.comInterestBN.toString(),
         _basicStakeInfo.addressContract,
@@ -209,7 +205,6 @@ const useGlobalStaking = () => {
       } else {
         errorToast(MESSAGES.claim_error)
       }
-      // console.log("resultBasic", resultBasic)
     }
   }
 

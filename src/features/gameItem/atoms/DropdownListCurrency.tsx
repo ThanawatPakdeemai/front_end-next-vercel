@@ -1,60 +1,61 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import * as React from "react"
 import { useState } from "react"
 import { Popover } from "@mui/material"
-import { Image } from "@components/atoms/image"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
-import { useTranslation } from "next-i18next"
-import INaka from "@components/icons/Naka"
-import { ICURRENCY } from "@interfaces/ICurrency"
-import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
+
+import { DEFAULT_CURRENCY_BNB } from "@configs/currency"
+import SelectDropdownCurrency from "@components/atoms/selectDropdown/SelectDropdownCurrency"
+import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import ButtonDropdown from "./ButtonDropdown"
 
 interface IProp {
-  icon?: React.ReactElement | string
-  list: ICURRENCY[]
-  className: string
-  onChangeSelect: any
+  icon?: React.ReactNode
+  list: ITokenContract[]
+  className?: string
+  onChangeSelect?: (_item: ITokenContract) => void
 }
 
-const DropdownListCurrency = ({ list, className }: IProp) => {
-  const { t } = useTranslation()
-  const [defaultItem, setDefaultItem] = useState<ICURRENCY>()
+const DropdownListItem = ({ list, className, onChangeSelect }: IProp) => {
+  const [defaultItem, setDefaultItem] = useState<ITokenContract>(
+    DEFAULT_CURRENCY_BNB[0]
+  )
 
+  const onChangeItem = (_item: ITokenContract) => {
+    setDefaultItem(_item)
+    if (_item && onChangeSelect) onChangeSelect(_item)
+  }
   return (
     <>
       {list && (
-        <div>
+        <>
           <PopupState
             variant="popover"
             popupId="demo-popup-popover"
           >
             {(popupState) => (
-              <div>
-                <div {...bindTrigger(popupState)}>
+              <>
+                <div
+                  {...bindTrigger(popupState)}
+                  className={` ${className}`} // m-auto block
+                >
                   <ButtonDropdown
-                    className={className}
+                    className={`${className} uppercase`}
                     isOpen={popupState.isOpen}
                     leftContent={
                       <>
-                        <div className="flex items-center">
-                          <INaka color="#fff" />
-                          {/* <Image
-                            src="/images/home/logoNakaMaster.svg"
-                            alt=""
-                            width="30"
-                            height="30"
-                          /> */}
-                          <p className="px-2">{t("currency")}</p>
-                          <p className="px-2 text-white-default">
-                            {defaultItem?.name}
-                          </p>
+                        <div className="flex items-start">
+                          <p className="px-2">{defaultItem.symbol}</p>
                         </div>
+
+                        <p className="px-2 text-white-default">
+                          {defaultItem?.tokenName}
+                        </p>
                       </>
                     }
                   />
                 </div>
+
                 <Popover
                   {...bindPopover(popupState)}
                   anchorOrigin={{
@@ -72,26 +73,21 @@ const DropdownListCurrency = ({ list, className }: IProp) => {
                     }
                   }}
                 >
-                  <SelectDropdown
+                  <SelectDropdownCurrency
                     className={className}
-                    details={list}
-                    setOnTitle={setDefaultItem}
-                    icon={
-                      <Image
-                        src={list && list[0].image_icon}
-                        alt={list && list[0].name}
-                        width="20"
-                        height="20"
-                      />
-                    }
+                    details={list && list.map((ele: ITokenContract) => ele)}
+                    onChange={(_item) => {
+                      popupState.close()
+                      onChangeItem(_item as ITokenContract)
+                    }}
                   />
                 </Popover>
-              </div>
+              </>
             )}
           </PopupState>
-        </div>
+        </>
       )}
     </>
   )
 }
-export default DropdownListCurrency
+export default DropdownListItem

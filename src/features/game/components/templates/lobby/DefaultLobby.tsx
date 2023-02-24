@@ -8,7 +8,7 @@ interface IDefaultLobby {
   gameData: IGame
 }
 const DefaultLobby = ({ gameData }: IDefaultLobby) => (
-  <div className="slide-item relative gap-4 align-middle text-white-default md:flex">
+  <div className="slide-item relative h-full gap-4 align-middle text-white-default md:flex">
     <div className="slide-item--image flex w-full flex-col items-center justify-center overflow-hidden rounded-2xl md:w-3/5 xl:w-3/4">
       {gameData && (
         <>
@@ -30,7 +30,7 @@ const DefaultLobby = ({ gameData }: IDefaultLobby) => (
         </>
       )}
     </div>
-    <div className="w-full justify-between md:flex md:w-3/5 md:flex-col md:gap-4 xl:w-1/4">
+    <div className="h-full w-full justify-between md:flex md:w-3/5 md:flex-col md:gap-4 xl:w-1/4">
       <OverviewHowToPlay
         gameId={gameData ? gameData.id : ""}
         gameType="play-to-earn"

@@ -45,6 +45,7 @@ body {
     animation: mymove-button-text 0.5s;
     animation-timing-function: linear;
     animation-duration: 0.5s;
+    white-space: nowrap;
   }
   &:hover {
     .button-icon {

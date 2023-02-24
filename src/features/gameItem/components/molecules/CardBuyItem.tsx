@@ -147,7 +147,7 @@ export default function CardButItem() {
     <>
       <div
         className={`h-fit ${
-          router.pathname === "/[GameHome]" ? "w-full" : "mb-3 w-fit"
+          router.pathname === "/[GameHome]" ? "w-full" : "w-fit"
         } rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 `}
       >
         <div className="p-4 ">
@@ -203,7 +203,7 @@ export default function CardButItem() {
                   />
                 )}
               </div>
-              <div className="mb-2 flex w-full justify-between rounded-xl bg-[#111111] p-2 text-center text-black-default">
+              <div className="mb-2 flex w-full justify-between rounded-xl bg-neutral-700 p-2 text-center text-black-default">
                 <p>= {totalPrice}</p>
                 {/* <Input
                   defaultValue=" 0.00"
@@ -227,7 +227,7 @@ export default function CardButItem() {
                   icon={<LogoutIcon />}
                   size="medium"
                   color="secondary"
-                  className="w-full"
+                  className="w-full whitespace-nowrap"
                 />
               )}
             </div>

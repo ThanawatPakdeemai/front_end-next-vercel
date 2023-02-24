@@ -1,10 +1,15 @@
 import services from "@configs/axiosGlobalConfig"
+import { PopularTags } from "@feature/blog/interfaces/IBlogPopularTags"
 import {
   Blog,
   IBlogDetailResponse,
   IBlogResponse,
   ICategoryResponse
 } from "@feature/blog/interfaces/IBlogService"
+import {
+  BlogTags,
+  BlogTagsPayload
+} from "@feature/blog/interfaces/IBlogTagsService"
 
 const getBlogAll = ({
   limit = 10,
@@ -58,4 +63,37 @@ const getCategoryBlogAll = ({ limit, skip, search, sort }: Blog) =>
       .catch((error) => reject(error))
   })
 
-export { getBlogDetail, getBlogAll, getCategoryBlogAll }
+const getBlogTags = ({ limit, skip, sort, search, tags_id }: BlogTagsPayload) =>
+  new Promise<BlogTags>((resolve, reject) => {
+    const data = {
+      limit,
+      skip,
+      sort,
+      search,
+      tags_id
+    }
+    services
+      .post<BlogTags>(`/blog/list-tag`, { ...data })
+      .then((res) => {
+        resolve(res.data)
+      })
+      .catch((error) => reject(error))
+  })
+
+const getPopularTags = () =>
+  new Promise<PopularTags>((resolve, reject) => {
+    services
+      .post<PopularTags>(`/blog/popular`)
+      .then((res) => {
+        resolve(res.data)
+      })
+      .catch((error) => reject(error))
+  })
+
+export {
+  getBlogDetail,
+  getBlogAll,
+  getCategoryBlogAll,
+  getBlogTags,
+  getPopularTags
+}

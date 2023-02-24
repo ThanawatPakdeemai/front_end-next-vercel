@@ -29,8 +29,8 @@ const DropdownListItem = ({
   const { data: gameData, itemSelected } = useGameStore()
   // const { errorToast } = useToast()
 
-  const [defaultItem, setDefaultItem] = useState<IGameItemListData | null>(
-    itemSelected ?? null
+  const [defaultItem, setDefaultItem] = useState<IGameItemListData>(
+    itemSelected as IGameItemListData
   )
 
   const onChangeItem = (_item: IGameItemListData) => {
@@ -41,6 +41,7 @@ const DropdownListItem = ({
     }
     if (_item && onChangeSelect) onChangeSelect(_item)
   }
+
   return (
     <>
       {list && (
@@ -56,7 +57,7 @@ const DropdownListItem = ({
                   className={` ${className}`} // m-auto block
                 >
                   <ButtonDropdown
-                    className={`${className} `}
+                    className={`${className} uppercase`}
                     isOpen={popupState.isOpen}
                     leftContent={
                       <>
@@ -99,39 +100,27 @@ const DropdownListItem = ({
                   sx={{
                     "& .MuiPaper-root": {
                       background: "#010101",
-                      borderRadius: "15px "
+                      borderRadius: "15px ",
+                      textTransform: "capitalize"
                     }
                   }}
                 >
                   <SelectDropdown
                     className={className}
-                    details={
-                      list &&
-                      list.map((ele) => ({
-                        label: (
-                          <div className="flex items-center justify-between">
-                            <p>
-                              {ele.name} <span>[ {ele.item_size} ]</span>
-                            </p>
-                            <p>{`${ele.qty ?? 0} ${t("item")}`}</p>
-                          </div>
-                        ),
-                        icon:
-                          (
-                            <Image
-                              src={ele.image_icon ?? ""}
-                              alt={ele.name}
-                              width="20"
-                              height="20"
-                            />
-                          ) ?? "sss",
-                        data: ele,
-                        href: ""
-                      }))
+                    details={list}
+                    setOnTitle={setDefaultItem}
+                    title="GameItem"
+                    icon={
+                      <Image
+                        src={list && list[0].image_icon}
+                        alt={list && list[0].name}
+                        width="20"
+                        height="20"
+                      />
                     }
-                    onChange={(_item) => {
+                    onChange={(_item: IGameItemListData) => {
                       popupState.close()
-                      onChangeItem(_item.data as IGameItemListData)
+                      onChangeItem(_item)
                     }}
                   />
                 </Popover>

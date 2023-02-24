@@ -281,5 +281,10 @@
   "staking_earn_up_to": "质押赚取最高",
   "staking_start": "质押开始",
   "period": "期",
-  "naka_contract": "NAKA合约"
+  "naka_contract": "NAKA合约",
+  "please_switch_network": "请切换网络",
+  "please_swap_coin": "请交换币",
+  "swap": "交换",
+  "buyItem_alert_bsc": "您可以将 Metamask 切换到 Polygon 网络以使用您的 NAKA 代币购买物品",
+  "buyItem_alert_polygon": "您可以将 Metamask 切换到 BSC 网络以使用另一个代币购买物品"
 }

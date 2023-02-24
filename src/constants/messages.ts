@@ -38,5 +38,7 @@ export const MESSAGES = {
   "create_successful_user": "Create a successful user",
   "create_not_successful_user": "Create a not successful user",
   "room-timeout": "Room timeout",
-  "error-something": "Error something went wrong"
+  "error-something": "Error something went wrong",
+  "copy": "Copied to clipboard",
+  "success": "Success"
 }

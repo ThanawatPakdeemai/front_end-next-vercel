@@ -5,13 +5,16 @@ import useContractVault from "@feature/contract/containers/hooks/useContractVaul
 import CONFIGS from "@configs/index"
 import useLoadingStore from "@stores/loading"
 import useGlobal from "@hooks/useGlobal"
-import useContractVaultBinance from "@feature/contract/containers/hooks/useContractVaultBinance"
+import useContractVaultBinance, {
+  ITokenContract
+} from "@feature/contract/containers/hooks/useContractVaultBinance"
 import useProfileStore from "@stores/profileStore"
 import { useEffect, useState } from "react"
 import useQueryBalanceVault from "@feature/contract/containers/hooks/useQuery/useQueryBalanceVault"
+import { getBEP20Contract } from "@feature/contract/containers/contractHelpers"
 
 export type Method = "deposit" | "withdraw"
-export type TokenSupport = "NAKA" | "BUSD"
+export type TokenSupport = "NAKA" | "BNB"
 
 const useWalletContoller = () => {
   // state
@@ -22,6 +25,8 @@ const useWalletContoller = () => {
   const [haveMetamask, sethaveMetamask] = useState(true)
   const [value, setValue] = useState<number>(0)
   const [disabled, setDisabled] = useState<boolean>(true)
+  const [currentChainSelected, setCurrentChainSelected] =
+    useState<ITokenContract>()
 
   // Hooks
   const { checkAllowNaka, allowNaka, depositNaka, withdrawNaka } =
@@ -32,8 +37,10 @@ const useWalletContoller = () => {
   const { setOpen, setClose } = useLoadingStore()
   const { profile } = useProfileStore()
   const { successToast, errorToast } = useToast()
-  const { getNetwork, getTokenSupply, getTokenAddress } = useGlobal()
-  const { address, handleConnectWithMetamask, chainId } = useWeb3Provider()
+  const { getTokenAddress, fetchAllTokenSupported, fetchNAKAToken } =
+    useGlobal()
+  const { address, handleConnectWithMetamask, chainId, signer } =
+    useWeb3Provider()
 
   const {
     refetchBalanceVaultBSC,
@@ -50,13 +57,24 @@ const useWalletContoller = () => {
    * @description Check metamask
    * @param _method
    */
-  const handleOpen = (_method: Method) => {
+  const handleOpen = (_method: Method, _chain: ITokenContract) => {
     if (address && profile) {
       if (_method === "deposit") setOpenDeposit(true)
       else if (_method === "withdraw") setOpenWithDraw(true)
     } else {
       errorToast("Please connect wallet")
     }
+    setCurrentChainSelected(_chain)
+  }
+
+  /**
+   * @description Reset all balances
+   */
+  const onResetBalance = () => {
+    refetchBalanceVaultBSC()
+    refetchBalanceWalletBSC()
+    refetchNakaBalanceVault()
+    refetchNakaBalanceWallet()
   }
 
   /**
@@ -66,11 +84,9 @@ const useWalletContoller = () => {
   const handleClose = (_method: Method) => {
     if (_method === "deposit") setOpenDeposit(false)
     else if (_method === "withdraw") setOpenWithDraw(false)
+    setCurrentChainSelected({} as ITokenContract)
     setValue(0)
-    refetchBalanceVaultBSC()
-    refetchBalanceWalletBSC()
-    refetchNakaBalanceVault()
-    refetchNakaBalanceWallet()
+    onResetBalance()
   }
 
   /**
@@ -97,7 +113,8 @@ const useWalletContoller = () => {
     if (_chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
       const resultDepositToken = await depositToken(
         _tokenAddress,
-        toWei(value.toString())
+        toWei(value.toString()),
+        value.toString() // Ex.0.0001
       )
       return resultDepositToken
     }
@@ -151,6 +168,11 @@ const useWalletContoller = () => {
         setClose()
         successToast("Transaction success")
         handleClose(_method)
+        if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+          fetchAllTokenSupported()
+        } else {
+          fetchNAKAToken()
+        }
       }
     } catch (error) {
       setClose()
@@ -163,29 +185,45 @@ const useWalletContoller = () => {
    * @param _method
    * @returns
    */
-  const onSubmit = async (_method: Method, _tokenAddress: string) => {
+  const onSubmit = async (_method: Method) => {
     try {
       if (!address) {
         return
       }
-      const tokenSupply = getTokenSupply(chainId as string)
+      if (!currentChainSelected) {
+        return
+      }
       if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
-        const allowanceToken = await checkAllowToken(_tokenAddress)
-        if ((allowanceToken as string).toString() === "0") {
-          const allowResult = await allowToken(_tokenAddress, tokenSupply)
-          successToast(allowResult as string)
-        }
-        handleWalletProcess(
-          _method,
-          getTokenAddress(chainId as string) as string
+        // FOR BSC
+        const bep20Contract = getBEP20Contract(
+          currentChainSelected.address,
+          signer
         )
+        if (
+          currentChainSelected.address !== CONFIGS.CONTRACT_ADDRESS.BNB_CONTRACT
+        ) {
+          const allowanceToken = await checkAllowToken(
+            bep20Contract,
+            CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
+          )
+          if ((allowanceToken as string).toString() === "0") {
+            const allowResult = await allowToken(
+              bep20Contract,
+              currentChainSelected.address, // spender
+              currentChainSelected.totolSupply as string
+            )
+            successToast(allowResult as string)
+          }
+        }
+        handleWalletProcess(_method, currentChainSelected.address)
       } else {
-        const allowance = await checkAllowNaka(_tokenAddress)
+        // FOR NAKA
+        const allowance = await checkAllowNaka(currentChainSelected.address)
         if (BNToNumber(allowance as string) === 0) {
-          const allowResult = await allowNaka(_tokenAddress)
+          const allowResult = await allowNaka(currentChainSelected.address)
           successToast(allowResult as string)
         }
-        handleWalletProcess(_method, tokenSupply)
+        handleWalletProcess(_method, currentChainSelected.address)
       }
     } catch (error) {
       errorToast(error as string)
@@ -223,7 +261,7 @@ const useWalletContoller = () => {
    */
   useEffect(() => {
     if (chainId && chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
-      setType("BUSD")
+      setType("BNB")
     } else {
       setType("NAKA")
     }
@@ -235,16 +273,18 @@ const useWalletContoller = () => {
     openWithDraw,
     openDeposit,
     disabled,
+    currentChainSelected,
     setDisabled,
     setType,
     setValue,
-    getNetwork,
+    setCurrentChainSelected,
     handleOpen,
     handleClose,
     onSubmit,
     handleConnectWallet,
     isConnected,
-    onClickMaxValue
+    onClickMaxValue,
+    onResetBalance
   }
 }
 

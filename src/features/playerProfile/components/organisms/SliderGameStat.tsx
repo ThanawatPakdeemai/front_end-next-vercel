@@ -13,7 +13,7 @@ const SliderGameStat = ({ openBadges, handleOnExpandClick }: IPorp) => (
     <div className="flex">
       <CrumbCustom
         text="My Game Stats Overview"
-        background="text-neutral-400 border border-solid border-neutral-700 p-[20px] mr-4"
+        className="mr-4 cursor-default border border-solid border-neutral-700 p-[20px] text-neutral-400"
       />
     </div>
     <Divider className="w-[40%]" />
@@ -27,7 +27,7 @@ const SliderGameStat = ({ openBadges, handleOnExpandClick }: IPorp) => (
       />
       <CrumbCustom
         text="View Rank Info"
-        background="bg-purple-primary"
+        className="cursor-default bg-purple-primary"
       />
     </div>
   </div>

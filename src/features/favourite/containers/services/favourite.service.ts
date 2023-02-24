@@ -19,33 +19,37 @@ const saveFavoriteGame = (player_id: string, game_id: string) =>
   })
 
 const getFavoriteGameByUser = (
-  player_id: string,
   limit: number,
   skip: number,
-  category_id: string,
-  device_support: string,
-  item_id: string,
-  search: string
+  sort: string,
+  search: string,
+  category: string,
+  item: string,
+  device: string,
+  game_type: string,
+  tournament: boolean,
+  nftgame: string
 ) =>
   new Promise<IResponseFavoriteGame>((resolve, reject) => {
-    if (player_id) {
-      services
-        .post(`/profile/get_game_favorite`, {
-          player_id,
-          limit,
-          skip,
-          category_id,
-          device_support,
-          item_id,
-          search
-        })
-        .then((res) => {
-          resolve(res.data)
-        })
-        .catch((err) => {
-          reject(err)
-        })
-    }
+    services
+      .post(`/profile/get_game_favorite`, {
+        limit,
+        skip,
+        sort,
+        search,
+        category,
+        item,
+        device,
+        game_type,
+        tournament,
+        nftgame
+      })
+      .then((res) => {
+        resolve(res.data)
+      })
+      .catch((err) => {
+        reject(err)
+      })
   })
 
 export { saveFavoriteGame, getFavoriteGameByUser }

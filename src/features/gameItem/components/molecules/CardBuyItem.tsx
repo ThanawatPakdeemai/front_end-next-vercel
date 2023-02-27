@@ -4,7 +4,6 @@ import LogoutIcon from "@mui/icons-material/Logout"
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
 import { CardMedia } from "@mui/material"
 import useProfileStore from "@stores/profileStore/index"
-import useGameStore from "@stores/game"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import RightMenuBuyItem from "@feature/gameItem/components/molecules/RightMenuBuyItem"
@@ -16,10 +15,12 @@ import Helper from "@utils/helper"
 import { useTranslation } from "next-i18next"
 import { useToast } from "@feature/toast/containers"
 import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 
 export default function CardBuyItem() {
   const { t } = useTranslation()
-  const { data, onSetGameItemSelectd, itemSelected } = useGameStore()
+  const { itemSelected, gameStore, onSetGameItemSelectd } =
+    useBuyGameItemController()
   const [gameObject, setGameObject] = useState<IGame | undefined>()
   const [totalPrice, setTotalPrice] = useState<number>(0)
   const { errorToast } = useToast()
@@ -89,12 +90,12 @@ export default function CardBuyItem() {
   }, [itemSelected, priceItemSelected, qtyItemSelected])
 
   useEffect(() => {
-    if (data) setGameObject(data)
+    if (gameStore) setGameObject(gameStore)
     if (itemSelected) getTotalPriceItemSelectProfile()
     return () => {
       setGameObject(undefined)
     }
-  }, [data, getTotalPriceItemSelectProfile, itemSelected])
+  }, [gameStore, getTotalPriceItemSelectProfile, itemSelected])
 
   const onChangeSelectItem = (_item: IGameItemListData) => {
     if (_item.qty > 0) {
@@ -104,14 +105,15 @@ export default function CardBuyItem() {
     }
   }
   useEffect(() => {
-    if (data) {
-      const item_name = data.item && 0 in data.item ? data.item[0].name : 0
+    if (gameStore) {
+      const item_name =
+        gameStore.item && 0 in gameStore.item ? gameStore.item[0].name : 0
       const item_selected = itemSelect ? itemSelect?.name : 1
       if (item_name !== item_selected) {
         onSetGameItemSelectd(null)
       }
     }
-  }, [data, itemSelect, onSetGameItemSelectd])
+  }, [gameStore, itemSelect, onSetGameItemSelectd])
 
   const buttonInToGame = useMemo(() => {
     if (qtyItemSelected) {
@@ -156,7 +158,7 @@ export default function CardBuyItem() {
               <DropdownListItem
                 isCheck
                 list={gameItemList}
-                className={`  w-[300px]`}
+                className="w-[300px]"
                 onChangeSelect={onChangeSelectItem}
               />
             </>
@@ -181,23 +183,23 @@ export default function CardBuyItem() {
             } grid-cols-2 gap-4 `}
           >
             <div className="flex items-center justify-center rounded-xl border-[1px] border-primary-main bg-primary-main">
-              {data && (
+              {gameObject && (
                 <CardMedia
                   className="m-auto block w-[124px]"
                   component="img"
                   height={124}
-                  image={data.item[0].image}
-                  alt={data.item[0].name}
+                  image={gameObject.item[0].image}
+                  alt={gameObject.item[0].name}
                 />
               )}
             </div>
             <div className="flex w-full flex-col justify-center">
               <div className="mb-2 flex w-full items-center justify-between rounded-xl bg-[#E1E2E2]  p-2 text-center text-[#111111]">
                 <p>{qtyItemSelected ?? 0}</p>
-                {data && (
+                {gameObject && (
                   <Image
-                    src={data.item[0].image_icon_color}
-                    alt={data.item[0].name}
+                    src={gameObject.item[0].image_icon_color}
+                    alt={gameObject.item[0].name}
                     width="30"
                     height="30"
                   />

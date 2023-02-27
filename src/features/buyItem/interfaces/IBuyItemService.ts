@@ -48,3 +48,5 @@ export interface IBuyItemTransactionResponse extends IBuyItem {
   type: string
   responseBalanceOf: number
 }
+
+export type ErrorType = "required" | "min" | "max" | "pattern" | "validate"

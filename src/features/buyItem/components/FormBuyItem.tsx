@@ -14,6 +14,9 @@ import { useTranslation } from "next-i18next"
 import Helper from "@utils/helper"
 import { BaseToastComponent } from "@feature/toast/components"
 import Balance from "@components/molecules/balance/Balance"
+import SwitchChain from "@components/atoms/SwitchChain"
+import useSwitchNetwork from "@hooks/useSwitchNetwork"
+import CONFIGS from "@configs/index"
 import useBuyGameItemController from "../containers/hooks/useBuyGameItemController"
 
 const iconmotion = {
@@ -49,7 +52,11 @@ const FormBuyItem = () => {
     onQtyDown,
     chainSupport,
     isDisabled
+    // chainId,
+    // accounts,
+    // signer
   } = useBuyGameItemController()
+  const { handleSwitchNetwork } = useSwitchNetwork()
 
   // console.log(
   //   "chainSupport",
@@ -287,7 +294,7 @@ const FormBuyItem = () => {
               onClose={() => {}}
               className="mt-10 w-full"
             />
-            {/* <div className="col-span-5 m-2 flex flex-col items-center justify-center">
+            <div className="col-span-5 m-2 flex flex-col items-center justify-center">
               <SwitchChain
                 variant="simple"
                 chainName={watch("currency").tokenName}
@@ -303,7 +310,7 @@ const FormBuyItem = () => {
                         )
                 }
               />
-            </div> */}
+            </div>
           </Box>
         </form>
       )}

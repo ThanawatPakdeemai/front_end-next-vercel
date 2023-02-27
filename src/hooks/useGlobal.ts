@@ -56,7 +56,7 @@ const useGlobal = (
   const { getAllTokenInfoByContractAddress } = useContractVaultBinance()
   const { setChainSupport, setContractBNB } = useChainSupport()
   const { getNAKATokenInfo } = useContractVault()
-  const { chainId, signer, accounts, provider } = useSwitchNetwork()
+  const { chainId, signer, accounts } = useSwitchNetwork()
 
   const profile = useProfileStore((state) => state.profile.data)
   // States
@@ -249,14 +249,7 @@ const useGlobal = (
       console.log("signer or accounts is undefined", signer, accounts, provider)
     } */
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    chainId,
-    signer,
-    accounts,
-    provider,
-    fetchAllTokenSupported,
-    fetchNAKAToken
-  ])
+  }, [chainId, signer, fetchAllTokenSupported, fetchNAKAToken])
 
   /**
    * @description Get default currency

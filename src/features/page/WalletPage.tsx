@@ -54,7 +54,7 @@ export default function WalletPage() {
     getNetwork
   } = useSwitchNetwork()
 
-  // console.log("signer", signer, address, chainId, isWrongNetwork)
+  // console.log("signer", signer, address, chainId, isWrongNetwork, chainSupport)
 
   /**
    * @description check disabled button
@@ -129,13 +129,15 @@ export default function WalletPage() {
   useEffect(() => {
     if (token === "NAKA") {
       setType("NAKA")
+      setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX)
       router.push("/wallet?token=NAKA")
     } else if (token === "BNB") {
       setType("BNB")
+      setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX_BNB)
       router.push("/wallet?token=BNB")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token])
+  }, [token, chainId])
 
   return hydrated ? (
     <>

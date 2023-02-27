@@ -19,14 +19,13 @@ import { useForm } from "react-hook-form"
 import useBuyGameItems from "./useBuyGameItems"
 
 const useBuyGameItemController = () => {
-  const { handleSwitchNetwork } = useSwitchNetwork()
   const profile = useProfileStore((state) => state.profile.data)
   const { mutateBuyItems, mutateBuyItemsBSC, isLoading } = useBuyGameItems()
   const { onResetBalance } = useWalletContoller()
   const { setOpen, setClose } = useLoadingStore()
   const { errorToast, successToast } = useToast()
   const { data, onSetGameItemSelectd, itemSelected } = useGameStore()
-  const { chainId, accounts, signer, checkNetwork } = useSwitchNetwork()
+  const { chainId, accounts, signer } = useSwitchNetwork()
   const { chainSupport } = useChainSupport()
 
   // State
@@ -154,7 +153,7 @@ const useBuyGameItemController = () => {
   }
 
   const resetForm = useCallback(() => {
-    if (checkNetwork) checkNetwork()
+    // if (checkNetwork) checkNetwork()
     reset(DEFAULT_VALUES)
     if (watch("nakaPerItem") === 0) {
       updatePricePerItem()
@@ -270,7 +269,6 @@ const useBuyGameItemController = () => {
     updatePricePerItem,
     onQtyUp,
     onQtyDown,
-    handleSwitchNetwork,
     itemSelected,
     onSetGameItemSelectd,
     gameStore: data,

@@ -1,5 +1,5 @@
 import { useWeb3Provider } from "@providers/Web3Provider"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 
 const useSwitchNetwork = () => {
   const {
@@ -11,7 +11,6 @@ const useSwitchNetwork = () => {
     provider,
     signer,
     accounts,
-    checkNetwork,
     getNetwork
   } = useWeb3Provider()
 
@@ -33,10 +32,11 @@ const useSwitchNetwork = () => {
     [switchNetwork]
   )
 
-  useEffect(() => {
-    if (chainId === undefined) return
-    handleSwitchNetwork(chainId)
-  }, [chainId, handleSwitchNetwork])
+  // useEffect(() => {
+  //   console.log("signer", signer, address, chainId, isWrongNetwork)
+  //   if (chainId === undefined) return
+  //   handleSwitchNetwork(chainId)
+  // }, [chainId])
 
   return {
     handleSwitchNetwork,
@@ -49,7 +49,6 @@ const useSwitchNetwork = () => {
     provider,
     signer,
     accounts,
-    checkNetwork,
     getNetwork
   }
 }

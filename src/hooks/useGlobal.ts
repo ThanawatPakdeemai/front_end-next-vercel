@@ -56,7 +56,7 @@ const useGlobal = (
   const { getAllTokenInfoByContractAddress } = useContractVaultBinance()
   const { setChainSupport, setContractBNB } = useChainSupport()
   const { getNAKATokenInfo } = useContractVault()
-  const { chainId, signer, accounts } = useSwitchNetwork()
+  const { chainId, signer, accounts, provider } = useSwitchNetwork()
 
   const profile = useProfileStore((state) => state.profile.data)
   // States
@@ -191,6 +191,8 @@ const useGlobal = (
    * @description Fetch BNB token address
    */
   useMemo(() => {
+    if (signer === undefined || accounts === undefined) return
+
     fetchContractBNB()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -278,8 +280,18 @@ const useGlobal = (
       } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
         fetchNAKAToken()
       }
-    }
-  }, [chainId, signer, accounts, fetchAllTokenSupported, fetchNAKAToken])
+    } /* else {
+      console.log("signer or accounts is undefined", signer, accounts, provider)
+    } */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    chainId,
+    signer,
+    accounts,
+    provider,
+    fetchAllTokenSupported,
+    fetchNAKAToken
+  ])
 
   /**
    * @description Get default currency

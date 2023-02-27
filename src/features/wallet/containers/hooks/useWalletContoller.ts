@@ -9,7 +9,7 @@ import useContractVaultBinance, {
   ITokenContract
 } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import useProfileStore from "@stores/profileStore"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import useQueryBalanceVault from "@feature/contract/containers/hooks/useQuery/useQueryBalanceVault"
 import { getBEP20Contract } from "@feature/contract/containers/contractHelpers"
 
@@ -242,23 +242,26 @@ const useWalletContoller = () => {
     setValue(_balance - 0.00001)
   }
 
+  const checkConnection = useCallback(async () => {
+    const { ethereum }: any = window
+    if (ethereum) {
+      sethaveMetamask(haveMetamask)
+      if (address && address.length > 0) {
+        setIsConnected(true)
+      }
+    } else {
+      sethaveMetamask(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   /**
    * @description Check metamask
    */
   useEffect(() => {
-    const checkConnection = async () => {
-      const { ethereum }: any = window
-      if (ethereum) {
-        sethaveMetamask(haveMetamask)
-        if (address && address.length > 0) {
-          setIsConnected(true)
-        }
-      } else {
-        sethaveMetamask(false)
-      }
-    }
+    if (signer === undefined || address === undefined) return
     checkConnection()
-  }, [address, haveMetamask])
+  }, [address, haveMetamask, checkConnection, signer])
 
   /**
    * @description Check Tab type
@@ -288,7 +291,8 @@ const useWalletContoller = () => {
     handleConnectWallet,
     isConnected,
     onClickMaxValue,
-    onResetBalance
+    onResetBalance,
+    checkConnection
   }
 }
 

@@ -26,7 +26,7 @@ const useBuyGameItemController = () => {
   const { setOpen, setClose } = useLoadingStore()
   const { errorToast, successToast } = useToast()
   const { data, onSetGameItemSelectd, itemSelected } = useGameStore()
-  const { chainId } = useSwitchNetwork()
+  const { chainId, accounts, signer, checkNetwork } = useSwitchNetwork()
   const { chainSupport } = useChainSupport()
 
   // State
@@ -64,7 +64,10 @@ const useBuyGameItemController = () => {
       Object.keys(watch("currency")).length !== 0 &&
       Object.keys(watch("item")).length !== 0 &&
       watch("qty") > 0 &&
-      totalPrice <= watch("currency").balanceVault.digit
+      totalPrice <= watch("currency").balanceVault.digit &&
+      totalPrice > 0 &&
+      accounts &&
+      signer
     ) {
       return false
     }
@@ -151,11 +154,13 @@ const useBuyGameItemController = () => {
   }
 
   const resetForm = useCallback(() => {
+    if (checkNetwork) checkNetwork()
+    reset(DEFAULT_VALUES)
     if (watch("nakaPerItem") === 0) {
       updatePricePerItem()
     }
     if (
-      Object.keys(watch("currency")).length === 0 &&
+      // Object.keys(watch("currency")).length === 0 &&
       chainSupport &&
       chainSupport.length > 0
     ) {
@@ -163,14 +168,23 @@ const useBuyGameItemController = () => {
     }
 
     if (
-      Object.keys(watch("item")).length === 0 &&
+      // Object.keys(watch("item")).length === 0 &&
       gameItemList &&
       gameItemList.length > 0
     ) {
       setValue("item", gameItemList[0] as IGameItemListData)
       setValue("item_id", gameItemList[0].id as string)
     }
-  }, [watch, setValue, chainSupport, gameItemList, updatePricePerItem])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    chainSupport,
+    checkNetwork,
+    gameItemList,
+    reset,
+    setValue,
+    updatePricePerItem,
+    watch
+  ])
 
   const handleClose = () => {
     setOpenForm(false)
@@ -244,7 +258,7 @@ const useBuyGameItemController = () => {
   useEffect(() => {
     resetForm()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [chainId, resetForm, watch("nakaPerItem")])
 
   return {
     MessageAlert,
@@ -277,7 +291,10 @@ const useBuyGameItemController = () => {
     getErrorMessages,
     resetForm: reset,
     chainSupport,
-    isDisabled
+    isDisabled,
+    chainId,
+    accounts,
+    signer
   }
 }
 

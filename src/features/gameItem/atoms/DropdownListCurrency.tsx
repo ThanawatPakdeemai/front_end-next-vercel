@@ -5,6 +5,7 @@ import { Popover } from "@mui/material"
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import SelectDropdownCurrency from "@components/atoms/selectDropdown/SelectDropdownCurrency"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
+import useGlobal from "@hooks/useGlobal"
 import ButtonDropdown from "./ButtonDropdown"
 
 interface IProp {
@@ -12,21 +13,31 @@ interface IProp {
   list: ITokenContract[]
   className?: string
   onChangeSelect?: (_item: ITokenContract) => void
-  defaultValue: ITokenContract
+  // defaultValue: ITokenContract
 }
 
 const DropdownListItem = ({
   list,
   className,
-  onChangeSelect,
-  defaultValue
-}: IProp) => {
-  const [defaultItem, setDefaultItem] = useState<ITokenContract>(defaultValue)
+  onChangeSelect
+}: // defaultValue
+IProp) => {
+  const { getDefaultCoin } = useGlobal()
+  const [defaultItem, setDefaultItem] = useState<ITokenContract>(
+    getDefaultCoin()[0]
+  )
 
   const onChangeItem = (_item: ITokenContract) => {
     setDefaultItem(_item)
     if (_item && onChangeSelect) onChangeSelect(_item)
   }
+
+  React.useEffect(() => {
+    if (list && list.length > 0) {
+      setDefaultItem(list[0])
+    }
+  }, [list, setDefaultItem])
+
   return (
     <>
       {list && (

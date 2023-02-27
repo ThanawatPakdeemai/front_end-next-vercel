@@ -141,7 +141,7 @@ const useCreateWeb3Provider = () => {
     []
   )
 
-  const switchNetwork = async (_chainId: string) => {
+  const switchNetwork = useCallback(async (_chainId: string) => {
     const _provider = window.ethereum
     if (_provider === undefined || _provider.request === undefined) {
       return
@@ -176,13 +176,14 @@ const useCreateWeb3Provider = () => {
         }
       }
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   /**
    * @description Check if current chain matches with the one we need
    * @returns
    */
-  const checkNetwork = async () => {
+  const checkNetwork = useCallback(async () => {
     const _provider = window.ethereum
     if (_provider === undefined || _provider.request === undefined) {
       return
@@ -207,7 +208,7 @@ const useCreateWeb3Provider = () => {
         }
       }
     }
-  }
+  }, [])
 
   const checkChain = useCallback(async () => {
     if (!chainIdIsSupported()) {
@@ -270,6 +271,7 @@ const useCreateWeb3Provider = () => {
   }, [handleDisconnectWallet])
 
   useEffect(() => {
+    if (signer === undefined) return
     checkChain()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId])

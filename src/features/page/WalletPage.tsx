@@ -49,7 +49,8 @@ export default function WalletPage() {
     handleDisconnectWallet,
     loading,
     setIsWrongNetwork,
-    isWrongNetwork
+    isWrongNetwork,
+    signer
   } = useSwitchNetwork()
 
   /**
@@ -192,7 +193,7 @@ export default function WalletPage() {
             <SkeletionWallet />
           ) : (
             <div className="relative mx-2 grid w-full grid-cols-7 gap-1">
-              {isWrongNetwork ? (
+              {isWrongNetwork || signer === undefined ? (
                 <div className="col-span-5 m-2 flex flex-col items-center justify-center">
                   <SwitchChain
                     chainName={

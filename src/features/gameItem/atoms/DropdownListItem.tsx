@@ -17,22 +17,20 @@ interface IProp {
   className?: string
   isCheck?: boolean
   onChangeSelect?: (_item: IGameItemListData) => void
-  defaultValue?: IGameItemListData
 }
 
 const DropdownListItem = ({
   list,
   className,
   onChangeSelect,
-  isCheck = false,
-  defaultValue
+  isCheck = false
 }: IProp) => {
   const { t } = useTranslation()
   const { data: gameData, itemSelected } = useGameStore()
   // const { errorToast } = useToast()
 
-  const [defaultItem, setDefaultItem] = useState<IGameItemListData>(
-    itemSelected || (defaultValue as IGameItemListData)
+  const [defaultItem, setDefaultItem] = useState<IGameItemListData | null>(
+    itemSelected ?? null
   )
 
   const onChangeItem = (_item: IGameItemListData) => {
@@ -43,6 +41,12 @@ const DropdownListItem = ({
     }
     if (_item && onChangeSelect) onChangeSelect(_item)
   }
+
+  React.useEffect(() => {
+    if (itemSelected) {
+      setDefaultItem(itemSelected)
+    }
+  }, [itemSelected, setDefaultItem])
 
   return (
     <>

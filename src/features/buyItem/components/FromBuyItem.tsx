@@ -14,7 +14,6 @@ import { useTranslation } from "next-i18next"
 import Helper from "@utils/helper"
 import { BaseToastComponent } from "@feature/toast/components"
 import Balance from "@components/molecules/balance/Balance"
-import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import useBuyGameItemController from "../containers/hooks/useBuyGameItemController"
 
 const iconmotion = {
@@ -51,6 +50,17 @@ const FromBuyItem = () => {
     chainSupport,
     isDisabled
   } = useBuyGameItemController()
+
+  // console.log(
+  //   "chainSupport",
+  //   chainSupport,
+  //   chainId,
+  //   accounts,
+  //   signer,
+  //   watch("currency"),
+  //   watch("item"),
+  //   isDisabled()
+  // )
 
   return (
     <>
@@ -96,10 +106,10 @@ const FromBuyItem = () => {
                         setValue("item_id", _item.id)
                         updatePricePerItem()
                       }}
-                      defaultValue={
-                        (gameItemList[0] as IGameItemListData) ||
-                        ({} as IGameItemListData)
-                      }
+                      // defaultValue={
+                      //   (gameItemList[0] as IGameItemListData) ||
+                      //   ({} as IGameItemListData)
+                      // }
                     />
                   )}
                 />
@@ -125,10 +135,10 @@ const FromBuyItem = () => {
                     setValue("currency_id", _item.address)
                     updatePricePerItem()
                   }}
-                  defaultValue={
-                    (chainSupport[0] as ITokenContract) ||
-                    ({} as ITokenContract)
-                  }
+                  // defaultValue={
+                  //   (chainSupport[0] as ITokenContract) ||
+                  //   ({} as ITokenContract)
+                  // }
                 />
               )}
             />

@@ -205,6 +205,7 @@ const MyOrderList = ({ ...props }: IProp) => {
       </TableContainer>
       <FormEdit
         type={type}
+        chain={type === "buy" ? "binance" : "polygon"}
         open={openModal}
         handleModal={() => setOpenModal(!openModal)}
         dataEdit={dataEdit}

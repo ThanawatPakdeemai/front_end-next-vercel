@@ -10,10 +10,11 @@ import {
   IMultiTrustOrder
 } from "@feature/multichain/interfaces/IMultichain"
 import { useToast } from "@feature/toast/containers"
+
 import useAllBalances from "@hooks/useAllBalances"
 import { Box, Typography } from "@mui/material"
 import Helper from "@utils/helper"
-import { ReactNode } from "react"
+import { ReactNode, useMemo } from "react"
 
 interface IPropContent {
   title: string | ReactNode
@@ -24,11 +25,20 @@ interface IProp {
   type: string
   edit: boolean
   cancelOrder?: () => void
+  chain?: string
 }
-const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder }: IProp) => {
-  const { busdVaultBalance, nakaVaultBalance } = useAllBalances()
+const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
   const { successToast } = useToast()
+  const { nakaVaultBalance, busdVaultBalance } = useAllBalances()
   const { shortenString, copyClipboard } = Helper
+
+  const price = useMemo(() => {
+    if (edit) {
+      return chain === "binance" ? dataInfo?.busd_price : dataInfo?.naka_price
+    }
+    return chain === "binance" ? dataInfo?.busd_price : dataInfo?.naka_price
+  }, [chain, dataInfo?.busd_price, dataInfo?.naka_price, edit])
+
   const dataTable: IPropContent[] = [
     {
       title: "SELLER ADDRESS",
@@ -79,9 +89,10 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder }: IProp) => {
     {
       title: `price per ${type === "sell" ? "busd" : "naka"}`,
       value: `${
-        type === "sell"
-          ? dataInfo?.busd_price ?? ""
-          : dataInfo?.naka_price ?? ""
+        price
+        // type === "sell"
+        //   ? dataInfo?.busd_price ?? ""
+        //   : dataInfo?.naka_price ?? ""
       } ${type === "sell" ? "busd" : "naka"}`
     },
     {
@@ -114,9 +125,13 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder }: IProp) => {
               </Typography>
               <HrLine className="" />
             </div>
+
+            {/* <Balance /> */}
             <AmountBalance
-              icon={type === "sell" ? <INaka /> : <IBusd />}
-              balance={type === "sell" ? nakaVaultBalance : busdVaultBalance}
+              icon={chain === "polygon" ? <INaka /> : <IBusd />}
+              balance={
+                chain === "polygon" ? nakaVaultBalance : busdVaultBalance
+              }
             />
           </div>
         </div>

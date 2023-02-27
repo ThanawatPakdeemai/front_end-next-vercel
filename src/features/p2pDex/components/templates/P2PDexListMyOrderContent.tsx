@@ -21,7 +21,7 @@ const P2PDexListMyOrder = () => {
     setSortName
   }
   const dataP2p = useP2PDexMyOrder({
-    _type: "buy",
+    _type: type,
     _address: address ?? "",
     _limit: limit,
     _page: page,

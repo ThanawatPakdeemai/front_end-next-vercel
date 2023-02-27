@@ -32,7 +32,7 @@ import CONFIGS from "@configs/index"
 import useSwitchNetwork from "@hooks/useSwitchNetwork"
 import SwitchChain from "@components/atoms/SwitchChain"
 import Input from "../atoms/Input"
-import HeaderFormEx from "../atoms/HeaderFormEx"
+import LeftContentForm from "../molecules/LeftContentForm"
 
 interface IProp {
   type?: string
@@ -42,6 +42,7 @@ interface IProp {
   dataEdit: IMultiData | IMultiTrustOrder | undefined
   cancelOrder?: () => void
   refetchData?: () => void
+  chain?: string
 }
 const FormEx = ({
   type = "buy",
@@ -50,7 +51,8 @@ const FormEx = ({
   handleModal,
   dataEdit,
   cancelOrder,
-  refetchData
+  refetchData,
+  chain
 }: IProp) => {
   const profile = useProfileStore((state) => state.profile.data)
   const { address, signer } = useWeb3Provider()
@@ -296,10 +298,11 @@ const FormEx = ({
             }
           />
           <div className="xs:block xs:mb-5 custom-scroll h-[545px] items-center  justify-between  gap-3 overflow-y-auto lg:mb-0 lg:flex">
-            <HeaderFormEx
+            <LeftContentForm
               dataInfo={dataEdit}
               type={type}
               edit={edit}
+              chain={chain}
               cancelOrder={cancelOrder}
             />
             <form onSubmit={handleSubmit(onSubmit)}>

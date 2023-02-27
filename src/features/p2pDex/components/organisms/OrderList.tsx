@@ -277,6 +277,7 @@ const OrderList = ({ ...props }: IProp) => {
           open={openModal}
           handleModal={() => setOpenModal(!openModal)}
           dataEdit={dataEdit}
+          chain={type === "sell" ? "binance" : "polygon"}
           edit={
             dataEdit?.wallet_address.toLowerCase() ===
             (address && address.toLowerCase())
@@ -289,6 +290,7 @@ const OrderList = ({ ...props }: IProp) => {
       ) : (
         <FormEx
           type={type}
+          chain={type === "buy" ? "binance" : "polygon"}
           open={openModal}
           handleModal={() => setOpenModal(!openModal)}
           dataEdit={dataEdit}

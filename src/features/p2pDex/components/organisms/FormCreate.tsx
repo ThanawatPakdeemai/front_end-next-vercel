@@ -91,6 +91,7 @@ const FormCreate = ({ type = "buy" }: IProp) => {
           type={type}
           onSubmit={onSubmit}
           {...formData}
+          chain={type === "buy" ? "binance" : "polygon"}
         />
       </div>
       <div className="flex   justify-center">

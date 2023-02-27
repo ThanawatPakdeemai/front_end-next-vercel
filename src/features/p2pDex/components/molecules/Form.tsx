@@ -24,9 +24,16 @@ interface IProp {
   type: string
   onSubmit: (_data) => void
   edit?: boolean
+  chain?: string
 }
 
-const Form = ({ type = "buy", edit = false, onSubmit, ...dataForm }: IProp) => {
+const Form = ({
+  type = "buy",
+  edit = false,
+  onSubmit,
+  chain,
+  ...dataForm
+}: IProp) => {
   const profile = useProfileStore((state) => state.profile.data)
   const { address, signer } = useWeb3Provider()
   const { busdVaultBalance, nakaVaultBalance } = useAllBalances()
@@ -36,13 +43,8 @@ const Form = ({ type = "buy", edit = false, onSubmit, ...dataForm }: IProp) => {
 
   const chainRequired = signer?.provider?._network?.chainId ?? 0
 
-  const balance = !edit
-    ? type === "buy"
-      ? busdVaultBalance.digit
-      : nakaVaultBalance.digit
-    : type === "buy"
-    ? nakaVaultBalance.digit
-    : busdVaultBalance.digit
+  const balance =
+    chain === "polygon" ? nakaVaultBalance.digit : busdVaultBalance.digit
 
   const total = useMemo(
     () =>
@@ -54,18 +56,14 @@ const Form = ({ type = "buy", edit = false, onSubmit, ...dataForm }: IProp) => {
     if (
       profile &&
       address &&
-      balance &&
       address?.toLowerCase() === profile?.address?.toLowerCase() &&
       Number(balance) >= total &&
-      Number(dataForm["watch"]("amount")) > 0 &&
-      Number(dataForm["watch"]("price")) > 0
+      dataForm["watch"]("amount") !== "" &&
+      dataForm["watch"]("price") !== ""
     ) {
       return false
-      // eslint-disable-next-line prettier/prettier, no-else-return
-    } else {
-      return true
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return true
   }, [
     address,
     balance,
@@ -117,8 +115,18 @@ const Form = ({ type = "buy", edit = false, onSubmit, ...dataForm }: IProp) => {
   )
 
   const buttonData = useMemo(() => {
+    if (chain) {
+      if (chain === "polygon") {
+        return Number(chainRequired) === Number(chainIdConfig.polygon)
+          ? buttonSubmit()
+          : buttonSwitched()
+      }
+      return Number(chainRequired) === Number(chainIdConfig.binance)
+        ? buttonSubmit()
+        : buttonSwitched()
+    }
     if (edit) {
-      if (type === "buy") {
+      if (type === "sell") {
         if (Number(chainRequired) === Number(chainIdConfig.polygon)) {
           return buttonSubmit()
         }
@@ -129,7 +137,7 @@ const Form = ({ type = "buy", edit = false, onSubmit, ...dataForm }: IProp) => {
       }
       return buttonSwitched()
     }
-    if (type === "buy") {
+    if (type === "sell") {
       if (Number(chainRequired) === Number(chainIdConfig.binance)) {
         return buttonSubmit()
       }

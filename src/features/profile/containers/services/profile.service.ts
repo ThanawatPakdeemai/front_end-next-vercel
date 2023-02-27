@@ -104,14 +104,18 @@ export const getPlayerInfoByPlayerId = ({
   _playerId,
   _limit,
   _page,
-  _sort
+  _sort,
+  _cheat,
+  _rewards_send_status
 }: IGetPlayerInfoByPlayerId) =>
   new Promise<IPlayerInfoResponse>((resolve, reject) => {
     const data = {
       player_id: _playerId,
       limit: _limit,
       skip: _page,
-      sort: _sort
+      sort: _sort,
+      cheat: _cheat,
+      rewards_send_status: _rewards_send_status
     }
     services
       .post<IPlayerInfoResponse>(`/profile/player-info`, { ...data })

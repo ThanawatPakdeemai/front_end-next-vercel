@@ -49,7 +49,7 @@
 }
 
 .slick-card-container {
-  @apply relative cursor-pointer font-neue-machina text-xs text-grey-default;
+  @apply relative font-neue-machina text-xs text-grey-default;
   .slick-slide & {
     width: 100%;
     height: 100%;

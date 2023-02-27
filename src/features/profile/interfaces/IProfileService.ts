@@ -214,7 +214,7 @@ export interface IPlayerPageInfo {
   pages?: number
   limit?: number
   currentCount?: number
-  totalCount?: number
+  totalCount: number
 }
 
 export interface IPlayerInfoUserDetail {
@@ -282,6 +282,7 @@ export interface IPlayerInfoData {
   total_reward: number
   total_win_rate: string
   game_data: IPlayerInfoGameData[]
+  info: IPlayerPageInfo
 }
 
 export interface IPlayerInfoResponse {
@@ -315,6 +316,8 @@ export interface IGetPlayerInfoByPlayerId {
   _limit: number
   _page: number
   _sort: string
+  _cheat: string
+  _rewards_send_status: string
 }
 
 export interface IGetDataPlayerInfo extends IGetPlayerInfoByPlayerId {

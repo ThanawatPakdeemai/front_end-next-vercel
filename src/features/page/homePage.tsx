@@ -48,7 +48,7 @@ const Home = () => {
   useEffect(() => {
     if (hydrated) createParticle()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [createParticle])
+  }, [hydrated])
 
   const handleModalMission = () => {
     setOpen()

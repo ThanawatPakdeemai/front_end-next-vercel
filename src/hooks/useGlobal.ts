@@ -56,7 +56,7 @@ const useGlobal = (
   const { getAllTokenInfoByContractAddress } = useContractVaultBinance()
   const { setChainSupport, setContractBNB } = useChainSupport()
   const { getNAKATokenInfo } = useContractVault()
-  const { chainId, signer, accounts, provider } = useSwitchNetwork()
+  const { chainId, signer, accounts } = useSwitchNetwork()
 
   const profile = useProfileStore((state) => state.profile.data)
   // States
@@ -113,41 +113,6 @@ const useGlobal = (
     }
     // NOTE: No need this code
     // await router.push(`/${_gameUrl}`)
-  }
-
-  /**
-   * @description Handle network setting for metamask
-   * @param _chainId
-   * @returns
-   */
-  const getNetwork = (_chainId: string) => {
-    switch (_chainId) {
-      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
-        return {
-          chainId: `0x${Number(CONFIGS.CHAIN.BNB_CHAIN_ID).toString(16)}`,
-          chainName: `${CONFIGS.CHAIN.BNB_CHAIN_NAME}`,
-          rpcUrls: [`${CONFIGS.CHAIN.BNB_RPC_URL}/`],
-          blockExplorerUrls: [`${CONFIGS.CHAIN.BNB_SCAN}/`],
-          nativeCurrency: {
-            name: CONFIGS.CHAIN.TOKEN_NAME_BUSD,
-            symbol: CONFIGS.CHAIN.TOKEN_SYMBOL_BNB,
-            decimals: 18
-          }
-        }
-
-      default:
-        return {
-          chainId: `0x${Number(CONFIGS.CHAIN.CHAIN_ID).toString(16)}`,
-          chainName: `${CONFIGS.CHAIN.CHAIN_NAME}`,
-          rpcUrls: [`${CONFIGS.CHAIN.POLYGON_RPC_URL}/`],
-          blockExplorerUrls: [`${CONFIGS.CHAIN.POLYGON_SCAN}/`],
-          nativeCurrency: {
-            name: CONFIGS.CHAIN.TOKEN_NAME,
-            symbol: CONFIGS.CHAIN.TOKEN_SYMBOL,
-            decimals: 18
-          }
-        }
-    }
   }
 
   const getTokenAddress = (_chainId: string) => {
@@ -284,14 +249,7 @@ const useGlobal = (
       console.log("signer or accounts is undefined", signer, accounts, provider)
     } */
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    chainId,
-    signer,
-    accounts,
-    provider,
-    fetchAllTokenSupported,
-    fetchNAKAToken
-  ])
+  }, [chainId, signer, fetchAllTokenSupported, fetchNAKAToken])
 
   /**
    * @description Get default currency
@@ -317,7 +275,6 @@ const useGlobal = (
     hydrated,
     defaultBody,
     pager,
-    getNetwork,
     getTokenAddress,
     getTokenSupply,
     fetchAllTokenSupported,

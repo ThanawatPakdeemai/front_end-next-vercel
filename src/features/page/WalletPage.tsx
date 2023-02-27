@@ -21,7 +21,7 @@ import useSwitchNetwork from "@hooks/useSwitchNetwork"
 import SkeletionWallet from "@components/atoms/skeleton/SkeletonWallet"
 
 export default function WalletPage() {
-  const { hydrated, getNetwork } = useGlobal()
+  const { hydrated } = useGlobal()
   const {
     type,
     value,
@@ -50,8 +50,11 @@ export default function WalletPage() {
     loading,
     setIsWrongNetwork,
     isWrongNetwork,
-    signer
+    signer,
+    getNetwork
   } = useSwitchNetwork()
+
+  // console.log("signer", signer, address, chainId, isWrongNetwork, chainSupport)
 
   /**
    * @description check disabled button
@@ -64,12 +67,8 @@ export default function WalletPage() {
     return true
   }
 
-  const renderWallets = () => {
-    if (!chainSupport || chainSupport.length === 0) {
-      return <></>
-    }
-
-    return chainSupport.map((chain) => (
+  const renderWallets = () =>
+    chainSupport.map((chain) => (
       <div
         key={chain.address}
         className="col-span-5 m-2"
@@ -115,7 +114,6 @@ export default function WalletPage() {
         <WalletFooter address={chain.address} />
       </div>
     ))
-  }
 
   /**
    * @description set disabled button
@@ -131,13 +129,15 @@ export default function WalletPage() {
   useEffect(() => {
     if (token === "NAKA") {
       setType("NAKA")
+      setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX)
       router.push("/wallet?token=NAKA")
     } else if (token === "BNB") {
       setType("BNB")
+      setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX_BNB)
       router.push("/wallet?token=BNB")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token])
+  }, [token, chainId])
 
   return hydrated ? (
     <>
@@ -190,11 +190,14 @@ export default function WalletPage() {
           </div>
         </div>
         <div className="col-span-6 h-full w-full items-center justify-center gap-1 rounded-default bg-neutral-800">
-          {loading ? (
+          {loading ||
+          !chainSupport?.length ||
+          signer === undefined ||
+          address === undefined ? (
             <SkeletionWallet />
           ) : (
             <div className="relative mx-2 grid w-full grid-cols-7 gap-1">
-              {isWrongNetwork || signer === undefined ? (
+              {isWrongNetwork ? (
                 <div className="col-span-5 m-2 flex flex-col items-center justify-center">
                   <SwitchChain
                     chainName={
@@ -217,6 +220,7 @@ export default function WalletPage() {
               ) : (
                 renderWallets()
               )}
+              {/* {renderWallets()} */}
               <WalletLightAnimation />
             </div>
           )}
@@ -233,7 +237,7 @@ export default function WalletPage() {
               blockExplorerURL={
                 getNetwork?.(chainId as string).blockExplorerUrls[0]
               }
-              chainName={getNetwork?.(chainId as string).chainName}
+              chainName={getNetwork?.(chainId as string).chainName as string}
               chainSupport={chainSupport}
               chainId={chainId as string}
             />

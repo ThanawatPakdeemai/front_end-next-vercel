@@ -58,6 +58,7 @@ const Form = ({
       address &&
       address?.toLowerCase() === profile?.address?.toLowerCase() &&
       Number(balance) >= total &&
+      total > 0 &&
       dataForm["watch"]("amount") !== "" &&
       dataForm["watch"]("price") !== ""
     ) {

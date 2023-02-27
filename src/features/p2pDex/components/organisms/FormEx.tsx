@@ -75,17 +75,12 @@ const FormEx = ({
 
   const { formatNumber } = Helper
 
-  const balance = type === "buy" ? busdVaultBalance.text : nakaVaultBalance.text
+  const balance =
+    type === "buy" ? busdVaultBalance.digit : nakaVaultBalance.digit
 
-  const priceBusdDefault = useMemo(
-    () => Number(dataEdit?.busd_price),
-    [dataEdit]
-  )
-  const priceNakaDefault = useMemo(
-    () => Number(dataEdit?.naka_price),
-    [dataEdit]
-  )
-  const amountDefault = useMemo(() => Number(dataEdit?.naka_amount), [dataEdit])
+  const priceBusdDefault = useMemo(() => dataEdit?.busd_price, [dataEdit])
+  const priceNakaDefault = useMemo(() => dataEdit?.naka_price, [dataEdit])
+  const amountDefault = useMemo(() => dataEdit?.naka_amount, [dataEdit])
 
   const formData = useForm({
     defaultValues: {
@@ -192,12 +187,9 @@ const FormEx = ({
       profile &&
       address &&
       balance &&
-      balance !== "N/A" &&
-      Helper.removeComma(balance) >=
-        Number(watch("price")) * Number(watch("amount")) &&
-      Number(watch("amount")) > 0 &&
-      Number(watch("price")) > 0 &&
-      Number(watch("amount")) <= amountDefault
+      balance >= Number(watch("price")) * Number(watch("amount")) &&
+      Number(watch("price")) * Number(watch("amount")) > 0 &&
+      Number(watch("amount")) <= Number(amountDefault)
     ) {
       if (edit) {
         if (address?.toLowerCase() === profile.address.toLowerCase()) {
@@ -380,9 +372,8 @@ const FormEx = ({
                           profile?.address.toLowerCase()
                             ? `${MESSAGES["please-connect-wallet"]}, `
                             : ""}
-                          {balance === "N/A" ||
-                          Helper.removeComma(balance) <
-                            Number(watch("price")) * Number(watch("amount"))
+                          {balance <
+                          Number(watch("price")) * Number(watch("amount"))
                             ? `${MESSAGES["balance_not_enough"]}, `
                             : ""}
                           {Number(watch("amount")) < 1 ||
@@ -390,7 +381,7 @@ const FormEx = ({
                             ? `${MESSAGES["please_fill"]}`
                             : ""}
 
-                          {Number(watch("amount")) > amountDefault
+                          {Number(watch("amount")) > Number(amountDefault)
                             ? `${MESSAGES.amount_many}`
                             : ""}
                         </Typography>

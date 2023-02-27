@@ -72,7 +72,7 @@ const SignUpSchema = yup
   })
   .required()
 
-const FromRegister = () => {
+const FormRegister = () => {
   const router = useRouter()
   const { referral } = router.query
 
@@ -865,4 +865,4 @@ const FromRegister = () => {
     </>
   )
 }
-export default memo(FromRegister)
+export default memo(FormRegister)

@@ -79,6 +79,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
   const [formSubmitErrors, setFormSubmitErrors] = useState(false)
   const [createPassword, setCreatePassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+  // const { errorToast, successToast } = useToast()
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
   const handleMouseDownPassword = (
@@ -109,8 +110,14 @@ const FromCreatePassword = ({ email, token }: IProp) => {
   }
 
   const onSubmitConfirm = () => {
+    if (
+      characterUppercase &&
+      characterPasswordLength &&
+      createPassword === confirmPassword
+    ) {
+      // console.log("UserPassword", createPassword, confirmPassword)
+    }
     setFormSubmitErrors(true)
-    // console.log("Hollo", createPassword, confirmPassword)
   }
 
   const isConfirmPassword = (_password: string, _confirmPassword: string) => {
@@ -142,7 +149,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
   return (
     <Box>
       <div>
-        {createPassword},{confirmPassword},{email},{token}
+        {email},{token}
       </div>
       <Box className="py-5">
         <Grid
@@ -273,7 +280,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                         onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                           e.target.value = e.target.value.slice(0, 128)
                           isCharacters(e.target.value)
-                          // console.log("value", e.target.value)
+                          // console.log("valuePassword", e.target.value)
                           setCreatePassword(e.target.value)
                         }}
                         {...register("password")}
@@ -375,7 +382,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                         onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                           e.target.value = e.target.value.slice(0, 128)
                           isCharacters(e.target.value)
-                          // console.log("value", e.target.value)
+                          // console.log("valueConfirmpass", e.target.value)
                           setConfirmPassword(e.target.value)
                         }}
                         {...register("confirmPassword")}
@@ -493,7 +500,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                 container
                 justifyContent="center"
                 alignItems="center"
-                className="absolute bottom-4"
+                className="absolute bottom-32"
               >
                 <Typography className="text-sm uppercase text-neutral-700">
                   Copyright 2022 © Nakamoto Games

@@ -49,7 +49,7 @@ const CardMarketplace = ({
           variant="contained"
         />
       </Box>
-      <div className="overflow-hidden pl-[50%]">
+      <div className="overflow-hidden pl-[46%]">
         <CardMedia
           sx={{ height: { height } }}
           image={bgImage}

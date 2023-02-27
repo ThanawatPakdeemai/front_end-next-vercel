@@ -57,11 +57,12 @@ export default function WalletPage() {
    * @description check disabled button
    * @returns {boolean}
    */
-  // const isDisabledButton = (): boolean => {
-  //   if (value === 0) return true
-  //   if (value <= chainSupport[0].balanceWallet.digit) return false
-  //   return true
-  // }
+  const isDisabledButton = (): boolean => {
+    if (value === 0) return true
+    if (value <= (currentChainSelected as ITokenContract).balanceWallet.digit)
+      return false
+    return true
+  }
 
   const renderWallets = () => {
     if (!chainSupport || chainSupport.length === 0) {
@@ -119,10 +120,10 @@ export default function WalletPage() {
   /**
    * @description set disabled button
    */
-  // useEffect(() => {
-  //   setDisabled(isDisabledButton())
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [value, type])
+  useEffect(() => {
+    setDisabled(isDisabledButton())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, type])
 
   /**
    * @description Set type tab by router.query

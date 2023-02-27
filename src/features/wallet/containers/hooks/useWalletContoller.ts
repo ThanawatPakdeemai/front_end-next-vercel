@@ -11,7 +11,10 @@ import useContractVaultBinance, {
 import useProfileStore from "@stores/profileStore"
 import { useCallback, useEffect, useState } from "react"
 import useQueryBalanceVault from "@feature/contract/containers/hooks/useQuery/useQueryBalanceVault"
-import { getBEP20Contract } from "@feature/contract/containers/contractHelpers"
+import {
+  getBEP20Contract,
+  getERC20Contract
+} from "@feature/contract/containers/contractHelpers"
 
 export type Method = "deposit" | "withdraw"
 export type TokenSupport = "NAKA" | "BNB"
@@ -29,8 +32,8 @@ const useWalletContoller = () => {
     useState<ITokenContract>()
 
   // Hooks
-  const { checkAllowNaka, allowNaka, depositNaka, withdrawNaka } =
-    useContractVault()
+  // checkAllowNaka
+  const { allowNaka, depositNaka, withdrawNaka } = useContractVault()
   const { checkAllowToken, allowToken, depositToken, withdrawByToken } =
     useContractVaultBinance()
   const { toWei } = Helper
@@ -217,8 +220,13 @@ const useWalletContoller = () => {
         }
         handleWalletProcess(_method, currentChainSelected.address)
       } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
+        const erc20Contract = getERC20Contract(
+          currentChainSelected.address,
+          signer
+        )
         // FOR NAKA
-        const allowanceToken = await checkAllowNaka(
+        const allowanceToken = await checkAllowToken(
+          erc20Contract,
           CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
         )
         if ((allowanceToken as string).toString() === "0") {

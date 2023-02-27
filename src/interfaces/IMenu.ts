@@ -4,7 +4,6 @@ import {
   IGameItemListData
 } from "@feature/gameItem/interfaces/IGameItemService"
 import React from "react"
-import { ICURRENCY } from "@interfaces/ICurrency"
 import {
   IDevice,
   IGameCategory
@@ -22,7 +21,6 @@ export interface IMenuBaseItem {
     | IGameItem
     | IGame
     | IGameItemListData
-    | ICURRENCY
     | IGameItem
     | IGameCategory
     | IDevice

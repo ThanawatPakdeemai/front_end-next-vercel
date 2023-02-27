@@ -53,7 +53,6 @@ export default function TransactionTable({ profile }: IProp) {
           }
         })
       }
-      // .catch((err) => console.log(err))
     }
     if (fetchRef.current) {
       fetchHistory()

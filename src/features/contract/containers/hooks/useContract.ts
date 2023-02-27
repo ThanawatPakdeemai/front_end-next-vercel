@@ -1,5 +1,6 @@
 import { useMemo } from "react"
 import {
+  getBalanceVaultBinanceContract,
   getBalanceVaultContract,
   getBEP20Contract,
   getERC20Contract,
@@ -14,11 +15,11 @@ import {
   getStakingContract,
   getUserGameItemsContract
 } from "@feature/contract/containers/contractHelpers"
-import { Web3Provider } from "@ethersproject/providers"
+import { JsonRpcSigner, Web3Provider } from "@ethersproject/providers"
 import web3NoAccount from "@utils/web3"
 
 export const useBalanceVault = (
-  _provider: Web3Provider | undefined,
+  _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
 ) =>
   useMemo(
@@ -26,18 +27,27 @@ export const useBalanceVault = (
     [_address, _provider]
   )
 
+export const useBalanceVaultBinance = (
+  _provider: Web3Provider | JsonRpcSigner | undefined,
+  _address: string
+) =>
+  useMemo(
+    () => getBalanceVaultBinanceContract(_address, _provider),
+    [_address, _provider]
+  )
+
 export const useBEP20 = (
-  _provider: Web3Provider | undefined,
+  _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
 ) => useMemo(() => getBEP20Contract(_address, _provider), [_address, _provider])
 
 export const useERC20 = (
-  _provider: Web3Provider | undefined,
+  _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
 ) => useMemo(() => getERC20Contract(_address, _provider), [_address, _provider])
 
 export const useFlexibleStaking = (
-  _provider: Web3Provider | undefined,
+  _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
 ) =>
   useMemo(
@@ -49,7 +59,7 @@ export const useFlexibleStakingNoAccount = (_address: string) =>
   useMemo(() => getFlexibleStakingContract(_address, web3NoAccount), [_address])
 
 export const useInventoryVault = (
-  _provider: Web3Provider | undefined,
+  _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
 ) =>
   useMemo(
@@ -58,7 +68,7 @@ export const useInventoryVault = (
   )
 
 export const useItemVault = (
-  _provider: Web3Provider | undefined,
+  _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
 ) =>
   useMemo(
@@ -67,7 +77,7 @@ export const useItemVault = (
   )
 
 export const useP2PBinance = (
-  _provider: Web3Provider | undefined,
+  _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
 ) =>
   useMemo(
@@ -76,7 +86,7 @@ export const useP2PBinance = (
   )
 
 export const useP2PBinanceMumbai = (
-  _provider: Web3Provider | undefined,
+  _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
 ) =>
   useMemo(
@@ -85,7 +95,7 @@ export const useP2PBinanceMumbai = (
   )
 
 export const useP2PPolygon = (
-  _provider: Web3Provider | undefined,
+  _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
 ) =>
   useMemo(
@@ -94,7 +104,7 @@ export const useP2PPolygon = (
   )
 
 export const useP2PPolygonMumbai = (
-  _provider: Web3Provider | undefined,
+  _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
 ) =>
   useMemo(
@@ -103,12 +113,12 @@ export const useP2PPolygonMumbai = (
   )
 
 export const useShop = (
-  _provider: Web3Provider | undefined,
+  _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
 ) => useMemo(() => getShopContract(_address, _provider), [_address, _provider])
 
 export const useStaking = (
-  _provider: Web3Provider | undefined,
+  _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
 ) =>
   useMemo(() => getStakingContract(_address, _provider), [_address, _provider])
@@ -117,7 +127,7 @@ export const useStakingNoAccount = (_address: string) =>
   useMemo(() => getStakingContract(_address, web3NoAccount), [_address])
 
 export const useUserGameItems = (
-  _provider: Web3Provider | undefined,
+  _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
 ) =>
   useMemo(

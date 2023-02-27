@@ -44,14 +44,13 @@ const ReferralProgramPage = () => {
     )
     successToast(MESSAGES.success_get_code)
   }
-
   return (
-    <div className="relative z-10 w-[calc(100%)] px-[10%]">
-      <div className="flex">
-        <div className="h-fit w-[630px] rounded-3xl border border-solid border-neutral-700 bg-neutral-800 p-2">
-          <div className="my-[30px] mr-8 ml-2 grid grid-cols-3">
+    <div className="z-10 w-[calc(100%)] px-[10%]">
+      <div className="sm:grid md:grid lg:flex">
+        <div className="h-fit max-w-[630px] rounded-3xl border border-solid border-neutral-700 bg-neutral-800 p-2">
+          <div className="my-[30px] mr-8 ml-2 grid sm:grid md:grid-cols-3 lg:grid-cols-3">
             <div className="uppercase text-neutral-300">
-              <div className="flex">
+              <div className="flex pb-4 md:py-0 lg:py-0">
                 <ShareIcon className="mr-4" />
                 <div>Share 2 Earn</div>
               </div>
@@ -70,7 +69,7 @@ const ReferralProgramPage = () => {
                 size="small"
                 className="cursor-pointer uppercase"
               />
-              <div className="ml-[15px] uppercase text-neutral-600">
+              <div className="ml-[15px] truncate uppercase text-neutral-600">
                 {Helper.textWithDots(
                   `${url}/register?referral=${profile && profile.id}`,
                   20
@@ -86,7 +85,7 @@ const ReferralProgramPage = () => {
         </div>
         {getReferralsData && (
           <CardContent
-            className="ml-3 w-[264px]"
+            className="mt-4 max-w-[264px] lg:ml-3 lg:mt-0"
             title="Your earnings"
             icon={<DollarIcon />}
           >
@@ -98,14 +97,14 @@ const ReferralProgramPage = () => {
           </CardContent>
         )}
       </div>
-      <div className="mt-8 grid w-[630px] grid-cols-3 gap-4">
+      <div className="mt-8 grid max-w-[630px] grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3">
         {getReferralsData && (
           <CardContent
             className="col-span-2"
-            title="Your earnings"
+            title="My friends info"
             icon={<IReferrals stroke="#E1E2E2" />}
           >
-            <div className="flex gap-2 uppercase">
+            <div className="gap-2 uppercase sm:grid md:flex lg:flex">
               <BoxContent
                 textColor="text-secondary-main"
                 title="total friends"
@@ -120,12 +119,12 @@ const ReferralProgramPage = () => {
           </CardContent>
         )}
 
-        <div className="flex justify-center self-center">
+        <div className="flex hidden justify-center self-center sm:block md:block lg:block">
           <RadarAnimateIcon />
         </div>
       </div>
       <CardContent
-        className="mt-8 w-[630px]"
+        className="mt-8 max-w-[630px]"
         title="friends Activities"
         icon={<FriendsActivitiesIcon />}
       >

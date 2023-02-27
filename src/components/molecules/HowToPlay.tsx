@@ -3,6 +3,7 @@ import FavouriteColorIcon from "@components/icons/HowToPlayIcon/FavouriteColorIc
 import FavouriteIcon from "@components/icons/HowToPlayIcon/FavouriteIcon"
 import HowToPlayIcon from "@components/icons/HowToPlayIcon/HowToPlayIcon"
 import ShareIcon from "@components/icons/HowToPlayIcon/ShareIcon"
+import { MESSAGES } from "@constants/messages"
 import {
   getFavoriteGameByUser,
   saveFavoriteGame
@@ -46,13 +47,16 @@ const Howto = ({ data }: IProp) => {
   const getData = async () => {
     if (profile && data) {
       await getFavoriteGameByUser(
-        profile.id,
         10000,
         1,
         "",
         "",
         "",
-        data.name
+        "",
+        "",
+        "",
+        false,
+        ""
       ).then((res) => {
         const { status } = res
         if (status) {
@@ -70,14 +74,14 @@ const Howto = ({ data }: IProp) => {
           if (status) {
             // if (getFavoriteGame) saveFavoriteGame()
             setActive(!active)
-            successToast(`success`)
+            successToast(MESSAGES.success)
           }
         })
         .catch((error: { message: string }) => {
           errorToast(error.message)
         })
     } else {
-      errorToast("Please Login")
+      errorToast(MESSAGES.please_login)
     }
   }
 

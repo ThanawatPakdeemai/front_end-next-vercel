@@ -1,8 +1,19 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import GamePageLayout from "@components/templates/GamePageLayout"
-import PublisherPage from "@feature/page/games/PublisherPage"
-import { GAME_DEVELOPER_BANNER } from "@constants/gameBanner"
+import dynamic from "next/dynamic"
+
+const GamePageLayout = dynamic(
+  () => import("@components/templates/GamePageLayout"),
+  {
+    suspense: true
+  }
+)
+const PublisherPage = dynamic(
+  () => import("@feature/page/games/PublisherPage"),
+  {
+    suspense: true
+  }
+)
 
 export default function GameDevelopers() {
   return (
@@ -15,7 +26,7 @@ export default function GameDevelopers() {
 }
 
 GameDevelopers.getLayout = function getLayout(page: ReactElement) {
-  return <GamePageLayout banner={GAME_DEVELOPER_BANNER}>{page}</GamePageLayout>
+  return <GamePageLayout>{page}</GamePageLayout>
 }
 
 export async function getStaticProps({ locale }) {

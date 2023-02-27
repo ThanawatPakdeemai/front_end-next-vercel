@@ -11,6 +11,7 @@ const useGetNakaBalanceVault = (
   _address: string,
   isConnectedWallet: boolean
 ) => {
+  // @ts-ignore
   const { getNakaBalanceOf } = useContractVault()
 
   const { data: balanceVault } = useQuery({

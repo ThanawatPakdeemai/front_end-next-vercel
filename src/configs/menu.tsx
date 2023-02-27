@@ -295,7 +295,7 @@ export const MENU_LOGGEDIN: IMenu[] = [
     id: "support",
     label: "Support",
     icon: <SupportIcon />,
-    href: `${CONFIGS.BASE_URL.SUPPORT}`,
+    href: `https://t.me/NakamotoGames`,
     external: true,
     hasToken: true
   }

@@ -11,56 +11,61 @@ import AllIcon from "@components/icons/DepositWithdraw/AllIcon"
 import Deposit from "@components/icons/DepositWithdraw/Deposit"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import Withdraw from "@components/icons/DepositWithdraw/WithDraw"
-import Helper from "@utils/helper"
+import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
+import { Method } from "@feature/wallet/containers/hooks/useWalletContoller"
 import { ModalCustom } from "../Modal/ModalCustom"
 import ButtonWallet from "./ButtonWallet"
 import ModalHeader from "../Modal/ModalHeader"
 import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 
 interface IProp {
+  method: Method
   title: string
   titleHeader: string
-  subtTitle: string
   open: boolean
   value: number
-  balance: number
+  disabled: boolean
+  setDisabled: React.Dispatch<React.SetStateAction<boolean>>
   setValue: React.Dispatch<React.SetStateAction<number>>
-  handleOpen: () => void
+  handleOpen: (_chain: ITokenContract) => void
   handleClose: () => void
-  handleContract: (_method: "deposit" | "withdraw") => void
+  onSubmit: (_method: "deposit" | "withdraw") => void
+  onClickMaxValue: (_value: number) => void
+  currentChainSelected: ITokenContract
 }
 
 const RightMenuWallet = ({
+  method,
   title,
   titleHeader,
-  subtTitle,
   open,
   value,
-  balance,
+  disabled,
+  setDisabled,
   setValue,
   handleOpen,
   handleClose,
-  handleContract
-}: IProp) => {
-  const { formatNumber } = Helper
-  const handleMaxValue = () => {
-    setValue(balance - 0.00001)
-  }
+  onSubmit,
+  onClickMaxValue,
+  currentChainSelected
+}: IProp) => (
+  <>
+    <Box className="xs:flex-col items-center justify-between gap-1 lg:flex">
+      <ButtonWallet
+        title={title}
+        handleButton={() => handleOpen(currentChainSelected)}
+      />
+    </Box>
 
-  return (
-    <>
-      <Box className="xs:flex-col items-center justify-between gap-1 lg:flex">
-        <ButtonWallet
-          title={title}
-          handleButton={handleOpen}
-        />
-      </Box>
-      <ModalCustom
-        open={open}
-        onClose={handleClose}
-        className="min-w-[450px] gap-3 rounded-[34px] p-[10px]"
-        width={400}
-      >
+    <ModalCustom
+      open={open}
+      onClose={handleClose}
+      className="min-w-[450px] gap-3 rounded-[34px] p-[10px]"
+      width={400}
+    >
+      {currentChainSelected &&
+      currentChainSelected.balanceVault &&
+      currentChainSelected.balanceWallet ? (
         <Stack
           spacing={3}
           className="md:p-5"
@@ -74,10 +79,11 @@ const RightMenuWallet = ({
           <Typography className="text-xs uppercase text-black-default">
             I want to {title}
           </Typography>
+
           <TextField
             className="w-full"
             required
-            type="number"
+            type="text"
             sx={{
               "& .MuiOutlinedInput-root": {
                 width: "100%"
@@ -86,17 +92,28 @@ const RightMenuWallet = ({
             id="deposit-withdraw"
             placeholder="Enter amount"
             size="medium"
-            value={value.toString().replace(/^0+/, "")}
+            // .replace(/^0+/, "")
+            value={value}
             onChange={(e) => {
               const inputValue = e.target.value
-              if (Number(inputValue) <= balance) {
+              if (
+                Number(inputValue) <=
+                (method === "deposit"
+                  ? currentChainSelected.balanceWallet.digit
+                  : currentChainSelected.balanceVault.digit)
+              ) {
                 setValue(Number(inputValue))
+                setDisabled(false)
               } else {
-                handleMaxValue()
+                onClickMaxValue(
+                  method === "deposit"
+                    ? currentChainSelected.balanceWallet.digit
+                    : currentChainSelected.balanceVault.digit
+                )
               }
             }}
             InputProps={{
-              inputProps: { min: 0, max: balance },
+              inputProps: { min: 0, max: currentChainSelected.balanceWallet },
               style: {
                 fontSize: "14px",
                 fontFamily: "neueMachina",
@@ -111,7 +128,13 @@ const RightMenuWallet = ({
                 <InputAdornment
                   position="end"
                   className="cursor-pointer"
-                  onClick={handleMaxValue}
+                  onClick={() =>
+                    onClickMaxValue(
+                      method === "deposit"
+                        ? currentChainSelected.balanceWallet.digit
+                        : currentChainSelected.balanceVault.digit
+                    )
+                  }
                 >
                   <AllIcon />
                 </InputAdornment>
@@ -119,34 +142,41 @@ const RightMenuWallet = ({
             }}
           />
           <Typography className="text-xs uppercase text-neutral-600">
-            {subtTitle} :
+            {`your ${currentChainSelected.symbol} storage`} :
             <span className="text-secondary-main">
               {" "}
-              {formatNumber(balance, { maximumFractionDigits: 2 })} naka
+              {method === "deposit"
+                ? currentChainSelected.balanceWallet.text
+                : currentChainSelected.balanceVault.text}{" "}
+              {currentChainSelected.symbol}
             </span>
           </Typography>
           {title === "withdraw" ? (
             <ButtonToggleIcon
               startIcon={<Withdraw />}
               text={title}
-              handleClick={() => handleContract("withdraw")}
-              className="btn-rainbow-theme flex h-[50px] w-full items-center justify-center rounded-md bg-error-main font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
+              handleClick={() => onSubmit("withdraw")}
+              className="flex h-[50px] w-full items-center justify-center rounded-md bg-red-default font-neue-machina text-sm font-bold capitalize leading-3 text-neutral-900 disabled:bg-neutral-800 disabled:text-neutral-600"
               type="button"
+              disabled={disabled}
             />
           ) : (
             <ButtonToggleIcon
               startIcon={<Deposit />}
               endIcon={<IconArrowRight stroke="#010101" />}
               text={title}
-              handleClick={() => handleContract("deposit")}
-              className="flex h-[50px] w-full items-center justify-center rounded-md bg-varidian-default font-neue-machina text-sm font-bold capitalize leading-3 text-neutral-900"
+              handleClick={() => onSubmit("deposit")}
+              className="flex h-[50px] w-full items-center justify-center rounded-md bg-varidian-default font-neue-machina text-sm font-bold capitalize leading-3 text-neutral-900 disabled:bg-neutral-800 disabled:text-neutral-600"
               type="button"
+              disabled={disabled}
             />
           )}
         </Stack>
-      </ModalCustom>
-    </>
-  )
-}
+      ) : (
+        <></>
+      )}
+    </ModalCustom>
+  </>
+)
 
 export default memo(RightMenuWallet)

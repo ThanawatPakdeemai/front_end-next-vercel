@@ -1,9 +1,25 @@
-import FixedWidthContent from "@components/templates/contents/FixedWidthContent"
-import ServicesPageLayout from "@components/templates/ServicesPageLayout"
-import { P2PDEX_BANNER } from "@constants/servicesBanner"
-import P2PDexListPage from "@feature/page/p2pDex/P2PDexListPage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"
+import dynamic from "next/dynamic"
+
+const FixedWidthContent = dynamic(
+  () => import("@components/templates/contents/FixedWidthContent"),
+  {
+    suspense: true
+  }
+)
+const ServicesPageLayout = dynamic(
+  () => import("@components/templates/ServicesPageLayout"),
+  {
+    suspense: true
+  }
+)
+const P2PDexListPage = dynamic(
+  () => import("@feature/page/p2pDex/P2PDexListPage"),
+  {
+    suspense: true
+  }
+)
 
 export default function P2PDex() {
   return (
@@ -14,7 +30,7 @@ export default function P2PDex() {
 }
 
 P2PDex.getLayout = function getLayout(page: ReactElement) {
-  return <ServicesPageLayout banner={P2PDEX_BANNER}>{page}</ServicesPageLayout>
+  return <ServicesPageLayout>{page}</ServicesPageLayout>
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {

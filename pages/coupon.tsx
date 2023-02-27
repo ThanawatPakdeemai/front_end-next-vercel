@@ -1,8 +1,16 @@
-import ServicesPageLayout from "@components/templates/ServicesPageLayout"
-import { COUPON_BANNER } from "@constants/servicesBanner"
-import CouponPage from "@feature/page/CouponPage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"
+import dynamic from "next/dynamic"
+
+const ServicesPageLayout = dynamic(
+  () => import("@components/templates/ServicesPageLayout"),
+  {
+    suspense: true
+  }
+)
+const CouponPage = dynamic(() => import("@feature/page/CouponPage"), {
+  suspense: true
+})
 
 export default function Coupon() {
   return (
@@ -15,7 +23,7 @@ export default function Coupon() {
 }
 
 Coupon.getLayout = function getLayout(page: ReactElement) {
-  return <ServicesPageLayout banner={COUPON_BANNER}>{page}</ServicesPageLayout>
+  return <ServicesPageLayout>{page}</ServicesPageLayout>
 }
 
 export async function getStaticProps({ locale }) {

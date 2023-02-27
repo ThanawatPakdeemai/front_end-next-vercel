@@ -1,7 +1,13 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { TOURNAMENT_BANNER } from "@constants/servicesBanner"
-import TournamentLayout from "@components/templates/TournamentLayout"
+import dynamic from "next/dynamic"
+
+const TournamentLayout = dynamic(
+  () => import("@components/templates/TournamentLayout"),
+  {
+    suspense: true
+  }
+)
 
 export default function Tournament() {
   return (
@@ -12,7 +18,7 @@ export default function Tournament() {
 }
 
 Tournament.getLayout = function getLayout(page: ReactElement) {
-  return <TournamentLayout banner={TOURNAMENT_BANNER}>{page}</TournamentLayout>
+  return <TournamentLayout>{page}</TournamentLayout>
 }
 export async function getStaticProps({ locale }) {
   return {

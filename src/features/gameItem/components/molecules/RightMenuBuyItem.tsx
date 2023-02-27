@@ -1,16 +1,13 @@
-import React, { memo, useState } from "react"
+import React, { memo } from "react"
 import { Box, Stack } from "@mui/material"
 import ButtonBuyItem from "@feature/gameItem/atoms/ButtonBuyItem"
 import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import FromBuyItem from "@feature/buyItem/components/FromBuyItem"
-import useChainSupport from "@stores/chainSupport"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 
 const RightMenuBuyItem = () => {
-  const [open, setOpen] = useState<boolean>(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-  const { chainSupport } = useChainSupport()
+  const { handleClose, handleOpen, openForm } = useBuyGameItemController()
 
   return (
     <>
@@ -18,7 +15,7 @@ const RightMenuBuyItem = () => {
         <ButtonBuyItem handleButton={handleOpen} />
       </Box>
       <ModalCustom
-        open={open}
+        open={openForm}
         onClose={handleClose}
         className="min-w-[515px] gap-3 rounded-[34px] p-[10px]"
         width={400}
@@ -34,12 +31,7 @@ const RightMenuBuyItem = () => {
             />
           </div>
           <Box className="hide-scroll h-[480px] w-full overflow-y-scroll ">
-            <FromBuyItem
-              handleClose={handleClose}
-              // chainId as string
-              chainId="0x61"
-              chainSupport={chainSupport}
-            />
+            <FromBuyItem />
           </Box>
         </Stack>
       </ModalCustom>

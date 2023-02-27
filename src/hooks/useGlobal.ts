@@ -19,6 +19,7 @@ import BEP20Abi from "@configs/abi/BEP20.json"
 import ERC20Abi from "@configs/abi/ERC20.json"
 import useChainSupport from "@stores/chainSupport"
 import useContractVault from "@feature/contract/containers/hooks/useContractVault"
+import { DEFAULT_CURRENCY_BNB, DEFAULT_CURRENCY_NAKA } from "@configs/currency"
 import useSwitchNetwork from "./useSwitchNetwork"
 
 const useGlobal = (
@@ -55,7 +56,7 @@ const useGlobal = (
   const { getAllTokenInfoByContractAddress } = useContractVaultBinance()
   const { setChainSupport, setContractBNB } = useChainSupport()
   const { getNAKATokenInfo } = useContractVault()
-  const { chainId, signer, accounts } = useSwitchNetwork()
+  const { chainId, signer, accounts, provider } = useSwitchNetwork()
 
   const profile = useProfileStore((state) => state.profile.data)
   // States
@@ -190,6 +191,8 @@ const useGlobal = (
    * @description Fetch BNB token address
    */
   useMemo(() => {
+    if (signer === undefined || accounts === undefined) return
+
     fetchContractBNB()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -277,8 +280,31 @@ const useGlobal = (
       } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
         fetchNAKAToken()
       }
+    } /* else {
+      console.log("signer or accounts is undefined", signer, accounts, provider)
+    } */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    chainId,
+    signer,
+    accounts,
+    provider,
+    fetchAllTokenSupported,
+    fetchNAKAToken
+  ])
+
+  /**
+   * @description Get default currency
+   * @returns {ITokenContract[]}
+   */
+  const getDefaultCoin = (): ITokenContract[] => {
+    switch (chainId) {
+      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
+        return DEFAULT_CURRENCY_BNB
+      default:
+        return DEFAULT_CURRENCY_NAKA
     }
-  }, [chainId, signer, accounts, fetchAllTokenSupported, fetchNAKAToken])
+  }
 
   return {
     onHandleClick,
@@ -295,7 +321,8 @@ const useGlobal = (
     getTokenAddress,
     getTokenSupply,
     fetchAllTokenSupported,
-    fetchNAKAToken
+    fetchNAKAToken,
+    getDefaultCoin
   }
 }
 

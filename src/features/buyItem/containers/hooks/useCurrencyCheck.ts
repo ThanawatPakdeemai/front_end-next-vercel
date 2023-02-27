@@ -8,7 +8,7 @@ import {
   trickerPriceBNBExternal
 } from "../services/currency.services"
 
-const useCurrencyCheck = () => {
+const useCurrencyCheck = (_symbol: string) => {
   /* const {
     data: dataCurrencyBSC,
     isFetching: isFetchingCurrencyBSC,
@@ -68,9 +68,10 @@ const useCurrencyCheck = () => {
     isError: isErrorBNBPrice
   } = useQuery({
     queryKey: ["trickerPriceBNB"],
-    queryFn: () => trickerPriceBNBExternal(),
+    queryFn: () => trickerPriceBNBExternal(_symbol),
     keepPreviousData: true,
-    staleTime: Infinity
+    staleTime: Infinity,
+    enabled: _symbol !== undefined && _symbol !== ""
   })
 
   return {

@@ -10,7 +10,6 @@ import useGlobal from "@hooks/useGlobal"
 import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContoller"
 import WalletHeader from "@feature/wallet/components/molecules/WalletHeader"
 import WalletBody from "@feature/wallet/components/molecules/WalletBody"
-import useAllBalances from "@hooks/useAllBalances"
 import WalletFooter from "@feature/wallet/components/molecules/WalletFooter"
 import WalletLightAnimation from "@feature/wallet/components/molecules/WalletLightAnimation"
 import CONFIGS from "@configs/index"
@@ -41,7 +40,6 @@ export default function WalletPage() {
   } = useWalletContoller()
   const router = useRouter()
   const { token } = router.query
-  const { walletBalance } = useAllBalances()
   const { profile } = useProfileStore()
   const { chainSupport } = useChainSupport()
   const {
@@ -51,7 +49,8 @@ export default function WalletPage() {
     handleDisconnectWallet,
     loading,
     setIsWrongNetwork,
-    isWrongNetwork
+    isWrongNetwork,
+    signer
   } = useSwitchNetwork()
 
   /**
@@ -60,7 +59,8 @@ export default function WalletPage() {
    */
   const isDisabledButton = (): boolean => {
     if (value === 0) return true
-    if (value <= walletBalance.digit) return false
+    if (value <= (currentChainSelected as ITokenContract).balanceWallet.digit)
+      return false
     return true
   }
 
@@ -194,7 +194,7 @@ export default function WalletPage() {
             <SkeletionWallet />
           ) : (
             <div className="relative mx-2 grid w-full grid-cols-7 gap-1">
-              {isWrongNetwork ? (
+              {isWrongNetwork || signer === undefined ? (
                 <div className="col-span-5 m-2 flex flex-col items-center justify-center">
                   <SwitchChain
                     chainName={

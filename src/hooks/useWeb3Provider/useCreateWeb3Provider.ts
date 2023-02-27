@@ -141,7 +141,7 @@ const useCreateWeb3Provider = () => {
     []
   )
 
-  const switchNetwork = async (_chainId: string) => {
+  const switchNetwork = useCallback(async (_chainId: string) => {
     const _provider = window.ethereum
     if (_provider === undefined || _provider.request === undefined) {
       return
@@ -155,6 +155,8 @@ const useCreateWeb3Provider = () => {
             params: [{ chainId: _chainId }] // [handleNetworkSettings(_chainId)]
           })
           .then(() => {
+            handleConnectWithMetamask()
+            setChainId(_chainId)
             setLoading(false)
           })
           .catch(() => {
@@ -174,13 +176,14 @@ const useCreateWeb3Provider = () => {
         }
       }
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   /**
    * @description Check if current chain matches with the one we need
    * @returns
    */
-  const checkNetwork = async () => {
+  const checkNetwork = useCallback(async () => {
     const _provider = window.ethereum
     if (_provider === undefined || _provider.request === undefined) {
       return
@@ -191,7 +194,7 @@ const useCreateWeb3Provider = () => {
           method: "eth_chainId"
         })
         setChainId(currentChainId)
-        switchNetwork(currentChainId)
+        // switchNetwork(currentChainId)
         return {
           responseStatus: true,
           errorMsg: "",
@@ -205,7 +208,7 @@ const useCreateWeb3Provider = () => {
         }
       }
     }
-  }
+  }, [])
 
   const checkChain = useCallback(async () => {
     if (!chainIdIsSupported()) {
@@ -248,6 +251,7 @@ const useCreateWeb3Provider = () => {
           setChainId(undefined)
           return
         }
+        switchNetwork(_chainId)
         setChainId(_chainId)
         handleDisconnectWallet()
       })
@@ -267,6 +271,7 @@ const useCreateWeb3Provider = () => {
   }, [handleDisconnectWallet])
 
   useEffect(() => {
+    if (signer === undefined) return
     checkChain()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId])
@@ -321,7 +326,8 @@ const useCreateWeb3Provider = () => {
     feeData,
     loading,
     switchNetwork,
-    checkNetwork
+    checkNetwork,
+    setChainId
   }
 }
 

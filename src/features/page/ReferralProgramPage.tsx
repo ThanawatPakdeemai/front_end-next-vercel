@@ -198,7 +198,7 @@ const ReferralProgramPage = () => {
             icon={<FriendsActivitiesIcon />}
           >
             <TableContainer className="mt-4">
-              <Table>
+              <Table aria-label="simple table">
                 <TableHead>
                   <TableRow>
                     <TableCell
@@ -348,9 +348,14 @@ const ReferralProgramPage = () => {
                       )
                     )
                   ) : (
-                    <div className="flex w-full justify-center rounded-lg border border-neutral-800 bg-neutral-700 py-3 text-center">
-                      No data
-                    </div>
+                    <TableRow>
+                      <TableCell
+                        colSpan={3}
+                        className="justify-center rounded-lg border border-neutral-800 bg-neutral-700 py-3 text-center"
+                      >
+                        No Data
+                      </TableCell>
+                    </TableRow>
                   )}
                 </TableBody>
               </Table>

@@ -62,7 +62,7 @@ const useContractVaultBinance = () => {
         })
     })
 
-  const allowToken = (_contract: Contract, _spender: string, _amount: string) =>
+  const allowToken = (_contract: Contract, _amount: string) =>
     // eslint-disable-next-line no-async-promise-executor
     new Promise((resolve, reject) => {
       if (signer && account) {
@@ -189,7 +189,7 @@ const useContractVaultBinance = () => {
         const _signer = _provider.getSigner()
         const _network = await _provider.getNetwork()
         const _balance = await _signer.getBalance()
-        const _address = await _signer.getAddress()
+        // const _address = await _signer.getAddress()
         const _balanceVaultContract = new ethers.Contract(
           CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE,
           BinanceBalanceVaultAbi.abi,
@@ -201,7 +201,7 @@ const useContractVaultBinance = () => {
         )
         if (_tokenAddress === CONFIGS.CONTRACT_ADDRESS.BNB_CONTRACT) {
           resolve({
-            symbol: _network.name || "BNB",
+            symbol: _network.name.toLocaleUpperCase() || "BNB",
             tokenName: _network.name || "BNB",
             address: _tokenAddress,
             balanceWallet: {
@@ -234,7 +234,7 @@ const useContractVaultBinance = () => {
           ])
 
           resolve({
-            symbol: tokenSymbol.toString(),
+            symbol: tokenSymbol.toString().toLocaleUpperCase(),
             tokenName: tokenName.toString(),
             totolSupply: totalSupply,
             decimals: decimalsPromise,

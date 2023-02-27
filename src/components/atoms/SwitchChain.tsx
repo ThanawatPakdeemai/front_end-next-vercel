@@ -10,7 +10,7 @@ interface ISwitchChainProps {
   submitText?: string
   chainName?: string
   className?: string
-  handleClick?: () => void
+  handleClick: () => void
 }
 const SwitchChain = ({
   variant = "full",
@@ -51,15 +51,18 @@ const SwitchChain = ({
       case "simple":
         return (
           <div className="mt-6">
-            <Typography
-              variant="h3"
-              className="switch-chain--subtitle text-center"
-            >
-              You are in the
-              <span className="mx-2 inline-block rounded-sm bg-neutral-700 px-2 pt-2 pb-1">
-                {chainName}
-              </span>
-            </Typography>
+            {chainName && (
+              <Typography
+                variant="h3"
+                className="switch-chain--subtitle text-center"
+              >
+                You are in the
+                <span className="mx-2 inline-block rounded-sm bg-neutral-700 px-2 pt-2 pb-1">
+                  {chainName}
+                </span>
+              </Typography>
+            )}
+
             <ButtonToggleIcon
               startIcon={<IconArrowRight fill="#F1F4F4" />}
               text={submitText}

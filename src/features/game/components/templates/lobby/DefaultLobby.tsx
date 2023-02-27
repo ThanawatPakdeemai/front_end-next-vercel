@@ -8,7 +8,7 @@ interface IDefaultLobby {
   gameData: IGame
 }
 const DefaultLobby = ({ gameData }: IDefaultLobby) => (
-  <div className="slide-item relative h-full gap-4 align-middle text-white-default md:flex">
+  <div className="slide-item relative mx-auto h-full max-w-[980px] gap-4 align-middle text-white-default md:flex xl:max-w-[1370px]">
     <div className="slide-item--image flex w-full flex-col items-center justify-center overflow-hidden rounded-2xl md:w-3/5 xl:w-3/4">
       {gameData && (
         <>

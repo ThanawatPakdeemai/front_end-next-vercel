@@ -774,7 +774,7 @@ const FormRegister = () => {
                   type="submit"
                   startIcon={<IEdit />}
                   text="Regiter"
-                  className="btn-rainbow-theme h-[40px] w-[209px] bg-secondary-main font-bold capitalize text-white-default"
+                  className="btn-rainbow-theme h-[40px] !w-[209px] bg-secondary-main font-bold capitalize text-white-default"
                 />
               </Grid>
             </Grid>

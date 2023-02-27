@@ -22,7 +22,10 @@ const CardMarketplace = ({
   description = "The Crypto Economy Marketplace, Your Entrance Gate to web3"
 }: ICardMarketplace) => (
   <>
-    <Card sx={{ width: { width } }}>
+    <Card
+      sx={{ width: { width } }}
+      className="border border-solid border-neutral-700 bg-primary-main"
+    >
       <Box
         sx={{
           "button": {

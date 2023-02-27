@@ -29,7 +29,7 @@ const iconmotion = {
   }
 }
 
-const FromBuyItem = () => {
+const FormBuyItem = () => {
   const { t } = useTranslation()
   const {
     MessageAlert,
@@ -310,4 +310,4 @@ const FromBuyItem = () => {
     </>
   )
 }
-export default memo(FromBuyItem)
+export default memo(FormBuyItem)

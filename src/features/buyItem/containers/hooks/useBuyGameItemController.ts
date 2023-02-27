@@ -176,15 +176,7 @@ const useBuyGameItemController = () => {
       setValue("item_id", gameItemList[0].id as string)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    chainSupport,
-    checkNetwork,
-    gameItemList,
-    reset,
-    setValue,
-    updatePricePerItem,
-    watch
-  ])
+  }, [])
 
   const handleClose = () => {
     setOpenForm(false)
@@ -258,7 +250,7 @@ const useBuyGameItemController = () => {
   useEffect(() => {
     resetForm()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainId, resetForm, watch("nakaPerItem")])
+  }, [chainId])
 
   return {
     MessageAlert,

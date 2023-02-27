@@ -115,41 +115,6 @@ const useGlobal = (
     // await router.push(`/${_gameUrl}`)
   }
 
-  /**
-   * @description Handle network setting for metamask
-   * @param _chainId
-   * @returns
-   */
-  const getNetwork = (_chainId: string) => {
-    switch (_chainId) {
-      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
-        return {
-          chainId: `0x${Number(CONFIGS.CHAIN.BNB_CHAIN_ID).toString(16)}`,
-          chainName: `${CONFIGS.CHAIN.BNB_CHAIN_NAME}`,
-          rpcUrls: [`${CONFIGS.CHAIN.BNB_RPC_URL}/`],
-          blockExplorerUrls: [`${CONFIGS.CHAIN.BNB_SCAN}/`],
-          nativeCurrency: {
-            name: CONFIGS.CHAIN.TOKEN_NAME_BUSD,
-            symbol: CONFIGS.CHAIN.TOKEN_SYMBOL_BNB,
-            decimals: 18
-          }
-        }
-
-      default:
-        return {
-          chainId: `0x${Number(CONFIGS.CHAIN.CHAIN_ID).toString(16)}`,
-          chainName: `${CONFIGS.CHAIN.CHAIN_NAME}`,
-          rpcUrls: [`${CONFIGS.CHAIN.POLYGON_RPC_URL}/`],
-          blockExplorerUrls: [`${CONFIGS.CHAIN.POLYGON_SCAN}/`],
-          nativeCurrency: {
-            name: CONFIGS.CHAIN.TOKEN_NAME,
-            symbol: CONFIGS.CHAIN.TOKEN_SYMBOL,
-            decimals: 18
-          }
-        }
-    }
-  }
-
   const getTokenAddress = (_chainId: string) => {
     switch (_chainId) {
       case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
@@ -317,7 +282,6 @@ const useGlobal = (
     hydrated,
     defaultBody,
     pager,
-    getNetwork,
     getTokenAddress,
     getTokenSupply,
     fetchAllTokenSupported,

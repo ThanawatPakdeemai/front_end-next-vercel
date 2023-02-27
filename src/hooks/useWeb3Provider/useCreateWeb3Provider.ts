@@ -11,7 +11,6 @@ import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
 import { BigNumber, providers, utils } from "ethers"
 import { ELocalKey } from "@interfaces/ILocal"
-import useGlobal from "@hooks/useGlobal"
 
 const useCreateWeb3Provider = () => {
   const [signer, setSigner] = useState<JsonRpcSigner | undefined>(undefined)
@@ -29,7 +28,40 @@ const useCreateWeb3Provider = () => {
   const [hasChangeAccountMetamask, setHasChangeAccountMetamask] =
     useState(false)
 
-  const { getNetwork } = useGlobal()
+  /**
+   * @description Handle network setting for metamask
+   * @param _chainId
+   * @returns
+   */
+  const getNetwork = (_chainId: string) => {
+    switch (_chainId) {
+      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
+        return {
+          chainId: `0x${Number(CONFIGS.CHAIN.BNB_CHAIN_ID).toString(16)}`,
+          chainName: `${CONFIGS.CHAIN.BNB_CHAIN_NAME}`,
+          rpcUrls: [`${CONFIGS.CHAIN.BNB_RPC_URL}/`],
+          blockExplorerUrls: [`${CONFIGS.CHAIN.BNB_SCAN}/`],
+          nativeCurrency: {
+            name: CONFIGS.CHAIN.TOKEN_NAME_BUSD,
+            symbol: CONFIGS.CHAIN.TOKEN_SYMBOL_BNB,
+            decimals: 18
+          }
+        }
+
+      default:
+        return {
+          chainId: `0x${Number(CONFIGS.CHAIN.CHAIN_ID).toString(16)}`,
+          chainName: `${CONFIGS.CHAIN.CHAIN_NAME}`,
+          rpcUrls: [`${CONFIGS.CHAIN.POLYGON_RPC_URL}/`],
+          blockExplorerUrls: [`${CONFIGS.CHAIN.POLYGON_SCAN}/`],
+          nativeCurrency: {
+            name: CONFIGS.CHAIN.TOKEN_NAME,
+            symbol: CONFIGS.CHAIN.TOKEN_SYMBOL,
+            decimals: 18
+          }
+        }
+    }
+  }
 
   const resetChainId = async () => {
     const _provider = window.ethereum
@@ -75,6 +107,8 @@ const useCreateWeb3Provider = () => {
     // Helper.resetLocalStorage()
     setProvider(undefined)
     setAddress(undefined)
+    setChainId(undefined)
+    setNetwork({} as Network)
   }, [])
 
   const onSetAddress = (_address: string | undefined) => {
@@ -106,7 +140,8 @@ const useCreateWeb3Provider = () => {
 
     // Subscribe to accounts change
     window.ethereum.on("accountsChanged", async () => {
-      await handleDisconnectWallet()
+      // !Error - this code has problem when user change network on metamask
+      // await handleDisconnectWallet()
       setHasChangeAccountMetamask(true)
     })
 
@@ -117,7 +152,8 @@ const useCreateWeb3Provider = () => {
         return
       }
       setChainId(_chainId)
-      handleDisconnectWallet()
+      // !Error - this code has problem when user change network on metamask
+      // handleDisconnectWallet()
       if (!chainIdIsSupported()) {
         resetChainId()
       }
@@ -213,8 +249,6 @@ const useCreateWeb3Provider = () => {
   const checkChain = useCallback(async () => {
     if (!chainIdIsSupported()) {
       resetChainId()
-    } else {
-      checkNetwork()
     }
     if (window.ethereum === undefined) {
       return
@@ -241,7 +275,7 @@ const useCreateWeb3Provider = () => {
       onSetAddress(account[0])
 
       window.ethereum.on("accountsChanged", async () => {
-        await handleDisconnectWallet()
+        // await handleDisconnectWallet()
         await setHasChangeAccountMetamask(true)
       })
 
@@ -253,7 +287,7 @@ const useCreateWeb3Provider = () => {
         }
         switchNetwork(_chainId)
         setChainId(_chainId)
-        handleDisconnectWallet()
+        // handleDisconnectWallet()
       })
 
       // Subscribe to session disconnection
@@ -268,13 +302,19 @@ const useCreateWeb3Provider = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [handleDisconnectWallet])
+  }, [])
 
   useEffect(() => {
-    if (signer === undefined) return
+    if (signer === undefined || accounts === undefined) return
     checkChain()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId])
+
+  useEffect(() => {
+    if (signer === undefined || accounts === undefined) return
+    checkNetwork()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chainId, signer])
 
   useEffect(() => {
     const getWalletAccount = async () => {
@@ -327,7 +367,8 @@ const useCreateWeb3Provider = () => {
     loading,
     switchNetwork,
     checkNetwork,
-    setChainId
+    setChainId,
+    getNetwork
   }
 }
 

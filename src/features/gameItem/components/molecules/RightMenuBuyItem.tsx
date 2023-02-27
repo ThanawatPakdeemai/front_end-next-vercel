@@ -3,7 +3,7 @@ import { Box, Stack } from "@mui/material"
 import ButtonBuyItem from "@feature/gameItem/atoms/ButtonBuyItem"
 import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import ModalHeader from "@components/molecules/Modal/ModalHeader"
-import FromBuyItem from "@feature/buyItem/components/FromBuyItem"
+import FormBuyItem from "@feature/buyItem/components/FormBuyItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 
 const RightMenuBuyItem = () => {
@@ -31,7 +31,7 @@ const RightMenuBuyItem = () => {
             />
           </div>
           <Box className="hide-scroll h-[480px] w-full overflow-y-scroll ">
-            <FromBuyItem />
+            <FormBuyItem />
           </Box>
         </Stack>
       </ModalCustom>

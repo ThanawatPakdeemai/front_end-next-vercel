@@ -11,7 +11,8 @@ const useSwitchNetwork = () => {
     provider,
     signer,
     accounts,
-    checkNetwork
+    checkNetwork,
+    getNetwork
   } = useWeb3Provider()
 
   // States
@@ -27,8 +28,6 @@ const useSwitchNetwork = () => {
       const result = await switchNetwork?.(network)
       if (result) {
         setIsWrongNetwork(false)
-      } else {
-        setIsWrongNetwork(true)
       }
     },
     [switchNetwork]
@@ -50,7 +49,8 @@ const useSwitchNetwork = () => {
     provider,
     signer,
     accounts,
-    checkNetwork
+    checkNetwork,
+    getNetwork
   }
 }
 

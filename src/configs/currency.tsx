@@ -9,11 +9,11 @@ export const DEFAULT_CURRENCY_NAKA: ITokenContract[] = [
     address: "",
     balanceWallet: {
       digit: 0,
-      text: ""
+      text: "N/A"
     },
     balanceVault: {
       digit: 0,
-      text: ""
+      text: "N/A"
     }
   }
 ]
@@ -27,11 +27,11 @@ export const DEFAULT_CURRENCY_BNB: ITokenContract[] = [
     address: "",
     balanceWallet: {
       digit: 0,
-      text: ""
+      text: "N/A"
     },
     balanceVault: {
       digit: 0,
-      text: ""
+      text: "N/A"
     }
   }
 ]

@@ -149,20 +149,21 @@ export default function CardBuyItem() {
     <>
       <div
         className={`h-fit ${
-          router.pathname === "/[typeGame]/[GameHome]" ? "w-full" : "mb-3 w-fit"
+          router.pathname === "/[typeGame]/[GameHome]" ? "w-full" : "w-fit"
         } rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 `}
       >
         <div className="p-4 ">
-          {gameItemList && router.pathname !== "/[GameHome]/roomlist/[id]" && (
-            <>
-              <DropdownListItem
-                isCheck
-                list={gameItemList}
-                className="w-[300px]"
-                onChangeSelect={onChangeSelectItem}
-              />
-            </>
-          )}
+          {gameItemList &&
+            router.pathname !== "/[typeGame]/[GameHome]/roomlist/[id]" && (
+              <>
+                <DropdownListItem
+                  isCheck
+                  list={gameItemList}
+                  className="w-[300px]"
+                  onChangeSelect={onChangeSelectItem}
+                />
+              </>
+            )}
           <div
             className={`${
               router.pathname === "/[typeGame]/[GameHome]" ? "w-full" : "w-fit"

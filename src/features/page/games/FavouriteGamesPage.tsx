@@ -161,7 +161,7 @@ const FavouriteGamesPage = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:grid-cols-5">
+      <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-5">
         {loading
           ? [...Array(pageSize)].map(() => <SkeletonCard key={uuid()} />)
           : null}

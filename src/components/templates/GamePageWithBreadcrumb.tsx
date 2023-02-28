@@ -16,7 +16,7 @@ const GamePageWithBreadcrumb = ({ children }: IProp) => (
     <div className="mb-10 flex">
       <Breadcrumb />
     </div>
-    <div className="flex flex-row gap-3">
+    <div className="flex-row gap-3 md:flex">
       <SidebarGames />
       {children}
     </div>

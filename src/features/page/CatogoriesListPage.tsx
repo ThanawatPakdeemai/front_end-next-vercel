@@ -51,7 +51,7 @@ const CatogoriesListPage = () => {
 
   return (
     <>
-      <div className="mb-6 grid w-full grid-cols-4 gap-4">
+      <div className="mb-6 mt-6 grid w-full grid-cols-2 gap-4 md:mt-0 md:grid-cols-4">
         {getCategoriesAll
           ? getCategoriesAll.map((item) => (
               <CategoryCard

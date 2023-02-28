@@ -1,3 +1,5 @@
+/* eslint-disable no-else-return */
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react-hooks/exhaustive-deps */
 import HrLine from "@components/icons/HrLine"
@@ -63,8 +65,9 @@ const Form = ({
       dataForm["watch"]("price") !== ""
     ) {
       return false
+    } else {
+      return true
     }
-    return true
   }, [
     address,
     balance,
@@ -148,14 +151,7 @@ const Form = ({
       return buttonSubmit()
     }
     return buttonSwitched()
-  }, [
-    chainRequired,
-    CONFIGS.CHAIN.CHAIN_ID,
-    chainIdConfig,
-    type,
-    edit,
-    dataForm
-  ])
+  }, [chainRequired, chainIdConfig, type, edit])
 
   return (
     <form onSubmit={dataForm["handleSubmit"](onSubmit)}>

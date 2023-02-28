@@ -15,6 +15,11 @@ import ShopAbi from "@configs/abi/Shop.json"
 import StakingAbi from "@configs/abi/Staking.json"
 import UserGameItemsAbi from "@configs/abi/UserGameItems.json"
 import { Web3Provider } from "@ethersproject/providers"
+import CONFIGS from "@configs/index"
+
+export const providerBSC = new ethers.providers.JsonRpcProvider(
+  CONFIGS.CHAIN.BNB_RPC_URL
+) // RPC BSC URL
 
 export const getContract = (
   abi: ContractInterface,

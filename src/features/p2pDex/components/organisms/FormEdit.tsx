@@ -41,7 +41,7 @@ const FormEdit = ({
   const {
     allowNaka,
     sendAllowNaka,
-    submitDataEditSellNaka,
+    submitDataEditNaka,
     allowBinance,
     sendAllowBinance
   } = useContractMultichain()
@@ -88,11 +88,14 @@ const FormEdit = ({
 
   const sendData = (_data) => {
     if (dataEdit) {
-      submitDataEditSellNaka(_data, type, dataEdit)
-        .then((_res) => {
-          if (refetchData) refetchData()
+      submitDataEditNaka(_data, type, dataEdit)
+        .then((_response) => {
+          if (_response) {
+            if (refetchData) refetchData()
+            setClose()
+            handleModal()
+          }
           setClose()
-          handleModal()
         })
         .catch((_err) => {
           setClose()
@@ -123,6 +126,7 @@ const FormEdit = ({
       }
     } else if (type === "sell") {
       const allowBi = await allowBinance
+
       if (allowBi && allowBi.toString() > 0) {
         sendData(_data)
       } else {

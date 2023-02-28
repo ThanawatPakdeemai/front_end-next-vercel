@@ -4,6 +4,7 @@ import Helper from "@utils/helper"
 import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContoller"
 import useGetBalanceVault from "@feature/contract/containers/hooks/useQuery/useQueryBalanceVault"
 import { useEffect } from "react"
+import { chainIdConfig } from "@configs/sites"
 import useGlobal from "./useGlobal"
 
 export interface IBalanceDisplay {
@@ -109,10 +110,15 @@ const useAllBalances = () => {
   }
 
   useEffect(() => {
-    handleBalanceVaults(CONFIGS.CONTRACT_ADDRESS.BEP20)
-    handleBalanceVaults(CONFIGS.CONTRACT_ADDRESS.ERC20)
+    if (window.ethereum === undefined) return
+    if (signer?.provider?._network?.chainId === chainIdConfig.binance) {
+      handleBalanceVaults(CONFIGS.CONTRACT_ADDRESS.BEP20)
+    }
+    if (signer?.provider?._network?.chainId === chainIdConfig.polygon) {
+      handleBalanceVaults(CONFIGS.CONTRACT_ADDRESS.ERC20)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [signer, address])
+  }, [signer])
 
   return {
     handleBalanceWallet,

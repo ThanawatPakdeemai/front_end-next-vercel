@@ -149,23 +149,24 @@ export default function CardButItem() {
     <>
       <div
         className={`h-fit ${
-          router.pathname === "/[GameHome]" ? "w-full" : "w-fit"
+          router.pathname === "/[typeGame]/[GameHome]" ? "w-full" : "w-fit"
         } rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 `}
       >
         <div className="p-4 ">
-          {gameItemList && router.pathname !== "/[GameHome]/roomlist/[id]" && (
-            <>
-              <DropdownListItem
-                isCheck
-                list={gameItemList}
-                className="w-[300px]"
-                onChangeSelect={onChangeSelectItem}
-              />
-            </>
-          )}
+          {gameItemList &&
+            router.pathname !== "/[typeGame]/[GameHome]/roomlist/[id]" && (
+              <>
+                <DropdownListItem
+                  isCheck
+                  list={gameItemList}
+                  className="w-[300px]"
+                  onChangeSelect={onChangeSelectItem}
+                />
+              </>
+            )}
           <div
             className={`${
-              router.pathname === "/[GameHome]" ? "w-full" : "w-fit"
+              router.pathname === "/[typeGame]/[GameHome]" ? "w-full" : "w-fit"
             } mb-1 rounded-xl border-[1px] border-primary-main bg-primary-main p-2 first-letter:my-2`}
           >
             <p className="w-[285px] uppercase text-white-default">
@@ -179,7 +180,7 @@ export default function CardButItem() {
 
           <div
             className={`grid ${
-              router.pathname === "/[GameHome]" ? "w-full" : " w-fit"
+              router.pathname === "/[typeGame]/[GameHome]" ? "w-full" : " w-fit"
             } grid-cols-2 gap-4 `}
           >
             <div className="flex items-center justify-center rounded-xl border-[1px] border-primary-main bg-primary-main">
@@ -218,7 +219,7 @@ export default function CardButItem() {
               </div>
             </div>
           </div>
-          {router.pathname === "/[GameHome]" && (
+          {router.pathname === "/[typeGame]/[GameHome]" && (
             <div className="mt-4 w-full">
               {profile ? (
                 buttonInToGame

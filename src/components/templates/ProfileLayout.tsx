@@ -12,7 +12,7 @@ interface IProp
 }
 
 const ProfileLayout = ({ _breadcrumb, children }: IProp) => (
-  <div className="main-container mx-auto">
+  <div className="main-container mx-auto justify-between">
     <Header />
     <div className="mb-10 flex">
       <p />
@@ -21,7 +21,7 @@ const ProfileLayout = ({ _breadcrumb, children }: IProp) => (
         _breadcrumbs={_breadcrumb || PROFILE_CRUMB()}
       />
     </div>
-    <div className="flex flex-row gap-3">
+    <div className="flex-row gap-3 md:flex">
       <SidebarProfile />
       {children}
     </div>

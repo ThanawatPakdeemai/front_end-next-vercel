@@ -68,14 +68,14 @@ const HistoryTable = () => {
   return (
     <>
       {hydrated && (
-        <div className="mx-auto max-w-[678px]">
+        <div className="md-w-[678px] mx-auto">
           <PageHeader
             title="PLAY HISTORY"
             subtitle="Wallet manager for nakamoto.games world"
           />
 
           <TableContainer
-            className="w-[678px] overflow-hidden rounded-2xl bg-transparent px-1.5 pt-4 pb-1.5"
+            className="w-[380px] overflow-x-auto rounded-2xl bg-transparent px-1.5 pt-4 pb-1.5 md:w-[678px] "
             component={Paper}
           >
             <Table className="whitespace-nowrap rounded-2xl border-black-500 bg-neutral-780 p-5 py-1.5 text-neutral-600">
@@ -170,7 +170,7 @@ const HistoryTable = () => {
             </Table>
           </TableContainer>
 
-          <div className="my-5 flex w-[678px] justify-between">
+          <div className="my-5 w-[678px] justify-between lg:flex">
             <PaginationNaka
               totalCount={totalCount}
               limit={limit}
@@ -178,6 +178,7 @@ const HistoryTable = () => {
               setPage={setSkip}
             />
             <DropdownLimit
+              className="w-[160px] flex-row max-md:mt-2"
               defaultValue={12}
               list={pager}
               onChangeSelect={setLimit}

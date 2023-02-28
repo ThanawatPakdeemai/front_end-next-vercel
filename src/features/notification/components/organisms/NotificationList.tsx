@@ -130,7 +130,7 @@ const NotificationList = () => {
           isLoading={isLoading}
         />
       )}
-      <div className="flex justify-between">
+      <div className="justify-between md:flex">
         <PaginationNaka
           totalCount={totalCount}
           limit={limit}
@@ -138,6 +138,7 @@ const NotificationList = () => {
           setPage={setPage}
         />
         <DropdownLimit
+          className="w-[160px] flex-row max-md:mt-2"
           defaultValue={limit}
           list={[6, 12, 24, 48, 64]}
           onChangeSelect={handleLimit}

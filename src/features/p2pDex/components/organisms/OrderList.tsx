@@ -39,7 +39,8 @@ const OrderList = ({ ...props }: IProp) => {
     sendAllowNaka,
     allowNaka,
     allowBinance,
-    sendAllowBinance
+    sendAllowBinance,
+    cancelOrderBuyNaka
   } = useContractMultichain()
   const { address } = useWeb3Provider()
   const { setClose, setOpen } = useLoadingStore()
@@ -106,7 +107,26 @@ const OrderList = ({ ...props }: IProp) => {
   }
 
   const sendDataCancelBinance = () => {
-    // console.log("cancelling")
+    setOpen(`${MESSAGES.transaction_processing_order}`)
+    if (dataEdit) {
+      cancelOrderBuyNaka(dataEdit.order_id)
+        .then((_resp) => {
+          if ((_resp as IResponseGetFee).status) {
+            mutateCancelP2PDexOrder(dataEdit.order_id).then((_data) => {
+              props["refetch"]()
+              setClose()
+              setOpenModal(false)
+            })
+          }
+          setClose()
+        })
+        .catch(() => {
+          setClose()
+        })
+    } else {
+      setClose()
+      errorToast(MESSAGES.order_not_found)
+    }
   }
 
   const cancelOrder = async () => {

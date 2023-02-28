@@ -35,7 +35,7 @@ interface IProp {
 const MyOrderList = ({ ...props }: IProp) => {
   const { mutateCancelP2PDexOrder } = useP2PDexCancelSellNaka()
   const { errorToast } = useToast()
-  const { cancelOrderSellNaka } = useContractMultichain()
+  const { cancelOrderSellNaka, cancelOrderBuyNaka } = useContractMultichain()
   const { setClose, setOpen } = useLoadingStore()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [dataEdit, setDataEdit] = useState<IMultiData>()
@@ -87,11 +87,26 @@ const MyOrderList = ({ ...props }: IProp) => {
   const cancelOrder = () => {
     if (dataEdit) {
       if (type === "sell") {
-        setOpen(MESSAGES.transaction_processing_order)
         cancelOrderSellNaka(dataEdit.order_id).then((_resp) => {
+          setOpen(MESSAGES.transaction_processing_order)
+
           if ((_resp as IResponseGetFee).status) {
             mutateCancelP2PDexOrder(dataEdit.order_id).then((_data) => {
               refetch()
+              setOpenModal(false)
+              setClose()
+            })
+          }
+        })
+        setClose()
+      } else {
+        cancelOrderBuyNaka(dataEdit.order_id).then((_resp) => {
+          setOpen(MESSAGES.transaction_processing_order)
+          if ((_resp as IResponseGetFee).status) {
+            mutateCancelP2PDexOrder(dataEdit.order_id).then((_data) => {
+              refetch()
+              setOpenModal(false)
+              setClose()
             })
           }
         })

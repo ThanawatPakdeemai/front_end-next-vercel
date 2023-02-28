@@ -68,7 +68,7 @@ const FormEx = ({
     sendRequestBuyNaka,
     allowBinance,
     sendAllowBinance,
-    saveRequestSellNaka
+    saveRequestNaka
   } = useContractMultichain()
 
   const { errorToast } = useToast()
@@ -131,11 +131,15 @@ const FormEx = ({
   }, [watch("amount")])
 
   const sendDataSellNaka = async (_data) => {
-    saveRequestSellNaka(_data, dataEdit, type)
+    saveRequestNaka(_data, dataEdit, type)
       .then(async (_res) => {
-        if (refetchData) await refetchData()
-        await handleModal()
-        await setClose()
+        if (_res) {
+          if (refetchData) await refetchData()
+          await handleModal()
+          await setClose()
+        } else {
+          setClose()
+        }
       })
       .catch((_err) => {
         setClose()

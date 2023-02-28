@@ -4,6 +4,7 @@ import HrLine from "@components/icons/HrLine"
 import INaka from "@components/icons/Naka"
 import AmountBalance from "@components/molecules/balance/AmountBalance"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import { chainIdConfig } from "@configs/sites"
 import { MESSAGES } from "@constants/messages"
 import {
   IMultiData,
@@ -13,6 +14,7 @@ import { useToast } from "@feature/toast/containers"
 
 import useAllBalances from "@hooks/useAllBalances"
 import { Box, Typography } from "@mui/material"
+import { useWeb3Provider } from "@providers/Web3Provider"
 import Helper from "@utils/helper"
 import { ReactNode, useMemo } from "react"
 
@@ -29,8 +31,17 @@ interface IProp {
 }
 const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
   const { successToast } = useToast()
+  const { signer } = useWeb3Provider()
   const { balanceValutNaka, balanceValutBusd } = useAllBalances()
   const { shortenString, copyClipboard } = Helper
+  const chainRequired = signer ? signer?.provider?._network?.chainId : 0
+
+  const isSwitchChain = useMemo(() => {
+    if (chain === "polygon") {
+      return Number(chainRequired) === Number(chainIdConfig.polygon)
+    }
+    return Number(chainRequired) === Number(chainIdConfig.binance)
+  }, [chain, chainRequired])
 
   const balance = useMemo(() => {
     if (chain === "polygon") {
@@ -139,7 +150,7 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
             />
           </div>
         </div>
-        {edit && (
+        {edit && isSwitchChain && (
           <ButtonToggleIcon
             startIcon=""
             endIcon=""

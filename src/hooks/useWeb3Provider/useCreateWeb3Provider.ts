@@ -35,7 +35,7 @@ const useCreateWeb3Provider = () => {
    * @param _chainId
    * @returns
    */
-  const getNetwork = (_chainId: string) => {
+  const getNetwork = useCallback((_chainId: string) => {
     switch (_chainId) {
       case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
         return {
@@ -63,9 +63,9 @@ const useCreateWeb3Provider = () => {
           }
         }
     }
-  }
+  }, [])
 
-  const resetChainId = async () => {
+  const resetChainId = useCallback(async () => {
     const _provider = window.ethereum
     if (_provider === undefined || _provider.request === undefined) {
       return
@@ -97,7 +97,8 @@ const useCreateWeb3Provider = () => {
         type: "failed"
       }
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const chainIdIsSupported = () =>
     window.ethereum?.chainId === CONFIGS.CHAIN.CHAIN_ID_HEX ||
@@ -115,10 +116,10 @@ const useCreateWeb3Provider = () => {
     setChainSupport([])
   }, [setChainSupport])
 
-  const onSetAddress = (_address: string | undefined) => {
+  const onSetAddress = useCallback((_address: string | undefined) => {
     setAddress(_address)
     useProfileStore.getState().onSetProfileAddress(_address)
-  }
+  }, [])
 
   /**
    * @description Check if current chain matches with the one we need
@@ -135,7 +136,6 @@ const useCreateWeb3Provider = () => {
           method: "eth_chainId"
         })
         setChainId(currentChainId)
-        // switchNetwork(currentChainId)
         return {
           responseStatus: true,
           errorMsg: "",
@@ -151,7 +151,7 @@ const useCreateWeb3Provider = () => {
     }
   }, [])
 
-  const handleConnectWithMetamask = async () => {
+  const handleConnectWithMetamask = useCallback(async () => {
     if (window.ethereum === undefined) return
     if (!chainIdIsSupported()) {
       resetChainId()
@@ -172,7 +172,6 @@ const useCreateWeb3Provider = () => {
     }
     onSetAddress(account[0])
     setAccounts(account)
-
     checkNetwork()
 
     const walletAccounts = await _provider?.listAccounts()
@@ -212,7 +211,8 @@ const useCreateWeb3Provider = () => {
         setAddress(undefined)
       })
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleSignMessage = useCallback(
     async (
@@ -222,18 +222,6 @@ const useCreateWeb3Provider = () => {
     ): Promise<string> => _provider.getSigner(_address).signMessage(_message),
     []
   )
-
-  // const switchNetwork = useCallback(async (_chainId: string) => {
-  //   const provider = new ethers.providers.JsonRpcProvider(_chainId)
-  //   await provider.send("eth_requestAccounts", [])
-  //   if (window.ethereum === undefined) return
-  //   if (window.ethereum.request === undefined) return
-  //   await window.ethereum.request({
-  //     method: "wallet_switchEthereumChain",
-  //     params: [{ chainId: _chainId }]
-  //   })
-  //   return provider
-  // }, [])
 
   const switchNetwork = useCallback(async (_chainId: string) => {
     const _provider = window.ethereum
@@ -249,7 +237,8 @@ const useCreateWeb3Provider = () => {
             params: [{ chainId: _chainId }] // [handleNetworkSettings(_chainId)]
           })
           .then(() => {
-            handleConnectWithMetamask()
+            // handleConnectWithMetamask()
+            checkNetwork()
             setChainId(_chainId)
             setLoading(false)
           })
@@ -320,7 +309,7 @@ const useCreateWeb3Provider = () => {
           setChainId(undefined)
           return
         }
-        switchNetwork(_chainId)
+        // switchNetwork(_chainId)
         setChainId(_chainId)
         // handleDisconnectWallet()
       })
@@ -337,12 +326,9 @@ const useCreateWeb3Provider = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [signer, chainId])
+  }, [])
 
   useEffect(() => {
-    // console.log("checkChain", accounts, signer)
-    // accounts === undefined
-    if (signer === undefined) return
     checkChain()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -399,7 +385,8 @@ const useCreateWeb3Provider = () => {
     switchNetwork,
     // checkNetwork/
     setChainId,
-    getNetwork
+    getNetwork,
+    checkChain
   }
 }
 

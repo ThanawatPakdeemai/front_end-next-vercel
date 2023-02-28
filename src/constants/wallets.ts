@@ -1,5 +1,5 @@
+import { defaultvalue } from "@configs/sites"
 import { Config, EConnectorNames } from "../types/wallet"
-import { defaultvalue } from "./sites"
 
 const connectors: Config[] = [
   {

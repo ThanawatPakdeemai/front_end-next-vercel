@@ -17,17 +17,17 @@ const iconmotion = {
     }
   }
 }
-interface IProps {
+interface IDataBalance {
   icon: ReactNode
   balance: string | number | ReactNode | IBalanceDisplay
   link?: TokenSupport
 }
-const AmountBalance = ({ icon, balance, link }: IProps) => {
+const AmountBalance = ({ icon, balance, link }: IDataBalance) => {
   const router = useRouter()
   return (
     <>
-      <div className="mb-[5px] flex items-center  justify-between">
-        <div className="flex h-[40px] flex-1 items-center rounded-lg bg-neutral-900 px-3">
+      <div className="mb-[5px] flex items-center  justify-between rounded-sm bg-neutral-700 p-[3px]">
+        <div className="flex h-[40px] flex-1 items-center rounded-lg border border-neutral-700 bg-neutral-900 px-3">
           {icon}
           <p className="ml-6 text-sm font-bold text-white-primary">
             {(balance as IBalanceDisplay).text || "N/A"}

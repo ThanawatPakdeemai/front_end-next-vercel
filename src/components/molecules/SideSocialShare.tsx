@@ -1,7 +1,7 @@
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
+import CONFIGS from "@configs/index"
 import { SOCIAL_SHARE } from "@configs/socialShare"
 import { MESSAGES } from "@constants/messages"
-import { baseUrl } from "@constants/sites"
 import { useToast } from "@feature/toast/containers"
 import { Link, Typography } from "@mui/material"
 import Helper from "@utils/helper"
@@ -44,7 +44,9 @@ const SideSocialShare = () => {
                   onClick={
                     item.label === "link"
                       ? () => {
-                          Helper.copyClipboard(baseUrl.baseSite + router.asPath)
+                          Helper.copyClipboard(
+                            CONFIGS.BASE_URL.FRONTEND + router.asPath
+                          )
                           successToast(MESSAGES.copy)
                         }
                       : undefined

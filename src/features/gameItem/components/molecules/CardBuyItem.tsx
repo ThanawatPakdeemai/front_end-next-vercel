@@ -17,7 +17,7 @@ import { useToast } from "@feature/toast/containers"
 import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 
-export default function CardButItem() {
+export default function CardBuyItem() {
   const { t } = useTranslation()
   const { itemSelected, gameStore, onSetGameItemSelectd } =
     useBuyGameItemController()

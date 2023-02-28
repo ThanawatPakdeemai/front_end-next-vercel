@@ -1,14 +1,15 @@
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import { Box, Divider, Typography } from "@mui/material"
-import React, { memo } from "react"
+import React, { ReactNode, memo } from "react"
 
 interface IProp {
   handleClose: () => void
-  title: string
+  title: string | ReactNode
+  bg?: string
 }
-const ModalHeader = ({ handleClose, title }: IProp) => (
+const ModalHeader = ({ handleClose, title, bg }: IProp) => (
   <>
-    <Box className="flex items-center justify-between">
+    <Box className={`flex items-center justify-between ${bg}`}>
       <Typography className="text-lg text-neutral-300">{title}</Typography>
       <div
         className={`${

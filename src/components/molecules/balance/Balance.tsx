@@ -1,4 +1,4 @@
-import { Card, CardContent, SxProps, Theme } from "@mui/material"
+import { CardContent, SxProps, Theme } from "@mui/material"
 import INaka from "@components/icons/Naka"
 import IBusd from "@components/icons/Busd"
 import useProfileStore from "@stores/profileStore"
@@ -23,7 +23,7 @@ interface IProps {
   buyItemCoinSeleced?: ITokenContract
 }
 
-const Balance = ({ className, sx, buyItemCoinSeleced }: IProps) => {
+const Balance = ({ className, buyItemCoinSeleced }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
   const { address, handleConnectWithMetamask, hasMetamask } = useWeb3Provider()
   const { t } = useTranslation()
@@ -100,12 +100,7 @@ const Balance = ({ className, sx, buyItemCoinSeleced }: IProps) => {
           <CardContent
             className={`my-2 min-w-[200px] items-center justify-center p-0 ${className}`}
           >
-            <Card
-              className=" m-auto flex-row gap-y-3  rounded-[13px] bg-neutral-800  px-[5px] pt-[5px] "
-              sx={sx}
-            >
-              {handleDisplayBalance()}
-            </Card>
+            {handleDisplayBalance()}
           </CardContent>
         </>
       ) : (

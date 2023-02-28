@@ -294,12 +294,12 @@ const ReferralProgramPage = () => {
                       (referrer) => (
                         <TableRow
                           key={uuid()}
-                          className="bg-primary-main"
+                          className="border-b-[6px] border-neutral-800 bg-primary-main"
                         >
-                          <TableCell className="w-[300px] rounded-l-2xl border-b-4 border-neutral-800 p-1 text-end font-neue-machina-bold text-xs uppercase">
+                          <TableCell className="w-[300px] rounded-l-2xl p-1 text-end font-neue-machina-bold text-xs uppercase">
                             <div className="flex items-center">
                               <div className="flex h-[50px] w-[50px] items-center rounded-xl bg-error-main">
-                                <div className="w-[50px] text-center font-neue-machina-bold text-2xl text-neutral-100">
+                                <div className="w-[50px] text-center font-neue-machina-bold text-xl text-neutral-100">
                                   {referrer.username.charAt(0)}
                                 </div>
                               </div>
@@ -331,12 +331,12 @@ const ReferralProgramPage = () => {
                               </div>
                             </div>
                           </TableCell>
-                          <TableCell className="border-b-4 border-neutral-800 text-end font-neue-machina-bold text-xs uppercase">
+                          <TableCell className="text-end font-neue-machina-bold text-xs uppercase">
                             <div className="text-start text-varidian-default">
                               + {referrer.referral_earn}
                             </div>
                           </TableCell>
-                          <TableCell className="rounded-r-2xl border-b-4 border-neutral-800 text-end font-neue-machina-bold text-xs uppercase">
+                          <TableCell className="rounded-r-2xl text-end font-neue-machina-bold text-xs uppercase">
                             <Chip
                               label={dayjs(referrer.date).format("DD MMM YYYY")}
                               variant="outlined"

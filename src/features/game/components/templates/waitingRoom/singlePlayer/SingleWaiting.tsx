@@ -93,7 +93,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
         _playerId: profile.id,
         _type: "out"
       })
-      await router.push(`/${data.path}/roomlist`)
+      await router.push(`/${router.query.typeGame}/${data.path}/roomlist`)
     }
   }
 

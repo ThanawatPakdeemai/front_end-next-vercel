@@ -1,4 +1,5 @@
 import CONFIGS from "@configs/index"
+import { BUSD, Mumbai, Polygon, TestBUSD } from "@usedapp/core"
 
 // Base setting value and default value
 export const DEFAULT_VALUE = {
@@ -125,3 +126,21 @@ export const baseExplorer: string =
   process.env.NEXT_PUBLIC_MODE === "production"
     ? "https://polygonscan.com"
     : "https://mumbai.polygonscan.com"
+
+// Base setting value and default value
+export const defaultvalue = {
+  limit: 10,
+  chain_id: process.env.NEXT_PUBLIC_CHAIN_ID,
+  chain_name: process.env.NEXT_PUBLIC_CHAIN_NAME
+}
+
+export const chainIdConfig = {
+  binance:
+    process.env.NEXT_PUBLIC_MODE === "development"
+      ? TestBUSD.chainId
+      : BUSD.chainId,
+  polygon:
+    process.env.NEXT_PUBLIC_MODE === "development"
+      ? Mumbai.chainId
+      : Polygon.chainId
+}

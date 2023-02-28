@@ -9,9 +9,12 @@ import useContractVaultBinance, {
   ITokenContract
 } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import useProfileStore from "@stores/profileStore"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import useQueryBalanceVault from "@feature/contract/containers/hooks/useQuery/useQueryBalanceVault"
-import { getBEP20Contract } from "@feature/contract/containers/contractHelpers"
+import {
+  getBEP20Contract,
+  getERC20Contract
+} from "@feature/contract/containers/contractHelpers"
 
 export type Method = "deposit" | "withdraw"
 export type TokenSupport = "NAKA" | "BNB"
@@ -29,11 +32,11 @@ const useWalletContoller = () => {
     useState<ITokenContract>()
 
   // Hooks
-  const { checkAllowNaka, allowNaka, depositNaka, withdrawNaka } =
-    useContractVault()
+  // checkAllowNaka
+  const { allowNaka, depositNaka, withdrawNaka } = useContractVault()
   const { checkAllowToken, allowToken, depositToken, withdrawByToken } =
     useContractVaultBinance()
-  const { BNToNumber, toWei } = Helper
+  const { toWei } = Helper
   const { setOpen, setClose } = useLoadingStore()
   const { profile } = useProfileStore()
   const { successToast, errorToast } = useToast()
@@ -209,18 +212,27 @@ const useWalletContoller = () => {
           if ((allowanceToken as string).toString() === "0") {
             const allowResult = await allowToken(
               bep20Contract,
-              currentChainSelected.address, // spender
+              // currentChainSelected.address, // spender
               currentChainSelected.totolSupply as string
             )
             successToast(allowResult as string)
           }
         }
         handleWalletProcess(_method, currentChainSelected.address)
-      } else {
+      } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
+        const erc20Contract = getERC20Contract(
+          currentChainSelected.address,
+          signer
+        )
         // FOR NAKA
-        const allowance = await checkAllowNaka(currentChainSelected.address)
-        if (BNToNumber(allowance as string) === 0) {
-          const allowResult = await allowNaka(currentChainSelected.address)
+        const allowanceToken = await checkAllowToken(
+          erc20Contract,
+          CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
+        )
+        if ((allowanceToken as string).toString() === "0") {
+          const allowResult = await allowNaka(
+            currentChainSelected.totolSupply as string
+          )
           successToast(allowResult as string)
         }
         handleWalletProcess(_method, currentChainSelected.address)
@@ -238,23 +250,26 @@ const useWalletContoller = () => {
     setValue(_balance - 0.00001)
   }
 
+  const checkConnection = useCallback(async () => {
+    const { ethereum }: any = window
+    if (ethereum) {
+      sethaveMetamask(haveMetamask)
+      if (address && address.length > 0) {
+        setIsConnected(true)
+      }
+    } else {
+      sethaveMetamask(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   /**
    * @description Check metamask
    */
   useEffect(() => {
-    const checkConnection = async () => {
-      const { ethereum }: any = window
-      if (ethereum) {
-        sethaveMetamask(haveMetamask)
-        if (address && address.length > 0) {
-          setIsConnected(true)
-        }
-      } else {
-        sethaveMetamask(false)
-      }
-    }
+    if (signer === undefined || address === undefined) return
     checkConnection()
-  }, [address, haveMetamask])
+  }, [address, haveMetamask, checkConnection, signer])
 
   /**
    * @description Check Tab type
@@ -284,7 +299,8 @@ const useWalletContoller = () => {
     handleConnectWallet,
     isConnected,
     onClickMaxValue,
-    onResetBalance
+    onResetBalance,
+    checkConnection
   }
 }
 

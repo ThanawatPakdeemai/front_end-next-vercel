@@ -1,5 +1,5 @@
 import useGetBlogDetails from "@feature/blog/containers/hook/useGetBlogDetails"
-import React from "react"
+import React, { useEffect } from "react"
 import Sticker from "@components/icons/BlogIcon/Sticker"
 import { iconmotion } from "@components/organisms/Footer"
 import BlogCard from "@components/molecules/cards/BlogCard"
@@ -12,8 +12,18 @@ import { motion } from "framer-motion"
 import useGetBlogTags from "@feature/blog/containers/hook/useGetBlogTags"
 import useGetPopularTags from "@feature/blog/containers/hook/useGetPopularTags"
 import { Chip, Typography } from "@mui/material"
-import { SOCIAL_BLOG_SHARE } from "@configs/socialShare"
+// import { SOCIAL_BLOG_SHARE } from "@configs/socialShare"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
+import useLoadingStore from "@stores/loading"
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  TelegramShareButton
+} from "react-share"
+import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
+import TelegramIcon from "@components/icons/SocialIcon/TelegramIcon"
+import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 
 interface IProp {
   _blogId: string
@@ -43,7 +53,9 @@ const imgMotion = {
 }
 
 const BlogPageDetails = ({ _blogId }: IProp) => {
-  const { getBlogDetails } = useGetBlogDetails(_blogId)
+  const { getBlogDetails, isLoading } = useGetBlogDetails(_blogId)
+  const { setOpen, setClose } = useLoadingStore()
+  const url = window.location.href
   const { getBlogTagData } = useGetBlogTags({
     limit: 10,
     skip: 1,
@@ -52,6 +64,14 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
     tags_id: "63e9efcf2c7a9542bb8a67dc"
   })
   const { getPopularTagsData } = useGetPopularTags()
+
+  useEffect(() => {
+    if (isLoading) {
+      setOpen()
+    } else {
+      setClose()
+    }
+  }, [isLoading, setOpen, setClose])
 
   return (
     <div>
@@ -143,11 +163,11 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
                       />
                     )}
                   </div>
-                  <div className="my-[40px] text-left font-neue-machina text-default uppercase text-white-primary text-grey-neutral04">
+                  <div className="my-[40px] text-left font-neue-machina text-default uppercase text-white-primary ">
                     {getBlogDetails.data?.description}
                   </div>
                   <div
-                    className="content-blog text-left font-neue-machina text-default text-black-default text-grey-neutral04"
+                    className="content-blog text-left font-neue-machina text-default  text-grey-neutral04"
                     // eslint-disable-next-line react/no-danger
                     dangerouslySetInnerHTML={{
                       __html: getBlogDetails.data?.content || ""
@@ -155,7 +175,7 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
                   />
                 </div>
                 <div className="absolute bottom-0 flex h-auto w-full border-2 border-neutral-780 bg-primary-main">
-                  <div className="mx-32 flex grid h-[70px] w-full grid-cols-2 items-center gap-4">
+                  <div className="mx-32 grid h-[70px] w-full grid-cols-2 items-center gap-4">
                     <div className="flex items-center gap-3">
                       <ViewIcon />
                       <div className=" text-sm text-neutral-100">
@@ -167,19 +187,63 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
                         Shere :
                       </Typography>
                       <div className="flex text-sm">
-                        {SOCIAL_BLOG_SHARE.map((icon) => (
-                          <ButtonIcon
+                        {getBlogDetails && (
+                          <TwitterShareButton
+                            url={url}
+                            title={getBlogDetails.data?.title}
+                            hashtags={["nakamoto"]}
                             key={uuid()}
-                            whileHover="hover"
-                            transition={{
-                              type: "spring",
-                              stiffness: 400,
-                              damping: 4
-                            }}
-                            icon={icon.icon}
-                            className="flex h-[40px] w-[40px] items-center justify-center !fill-white-default"
-                          />
-                        ))}
+                          >
+                            <ButtonIcon
+                              whileHover="hover"
+                              transition={{
+                                type: "spring",
+                                stiffness: 400,
+                                damping: 4
+                              }}
+                              icon={<TwitterIcon fill="#ffffff" />}
+                              className="flex h-[40px] w-[40px] items-center justify-center !fill-white-default"
+                            />
+                          </TwitterShareButton>
+                        )}
+
+                        {getBlogDetails && (
+                          <FacebookShareButton
+                            url={url}
+                            quote={getBlogDetails.data?.title}
+                            hashtag="#nakamoto"
+                            key={uuid()}
+                          >
+                            <ButtonIcon
+                              whileHover="hover"
+                              transition={{
+                                type: "spring",
+                                stiffness: 400,
+                                damping: 4
+                              }}
+                              icon={<FacebookIcon fill="#ffffff" />}
+                              className="flex h-[40px] w-[40px] items-center justify-center !fill-white-default"
+                            />
+                          </FacebookShareButton>
+                        )}
+                        {getBlogDetails && (
+                          <TelegramShareButton
+                            url={url}
+                            title={getBlogDetails.data?.title}
+                            key={uuid()}
+                          >
+                            <ButtonIcon
+                              whileHover="hover"
+                              transition={{
+                                type: "spring",
+                                stiffness: 400,
+                                damping: 4
+                              }}
+                              icon={<TelegramIcon fill="#ffffff" />}
+                              className="flex h-[40px] w-[40px] items-center justify-center !fill-white-default"
+                            />
+                          </TelegramShareButton>
+                        )}
                       </div>
                     </div>
                   </div>

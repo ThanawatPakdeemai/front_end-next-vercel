@@ -11,6 +11,7 @@ import { IBalance } from "@interfaces/IHelper"
 import BinanceBalanceVaultAbi from "@configs/abi/BinanceBalanceVault.json"
 import Helper from "@utils/helper"
 import { IBalanceDisplay } from "@hooks/useAllBalances"
+import { useToast } from "@feature/toast/containers"
 import { getBalanceVaultBinanceContract } from "../contractHelpers"
 
 export interface ITokenContract {
@@ -40,6 +41,7 @@ export const DEFAULT_TOKEN_INFO: ITokenContract = {
 const useContractVaultBinance = () => {
   const { signer, address: account } = useWeb3Provider()
   const [isLoading, setIsLoading] = useState(false)
+  const { errorToast } = useToast()
   const bep20Contract = useBEP20(signer, CONFIGS.CONTRACT_ADDRESS.BEP20)
   const balanceVaultContract = useBalanceVaultBinance(
     signer,
@@ -62,7 +64,7 @@ const useContractVaultBinance = () => {
         })
     })
 
-  const allowToken = (_contract: Contract, _spender: string, _amount: string) =>
+  const allowToken = (_contract: Contract, _amount: string) =>
     // eslint-disable-next-line no-async-promise-executor
     new Promise((resolve, reject) => {
       if (signer && account) {
@@ -149,6 +151,7 @@ const useContractVaultBinance = () => {
           })
         })
         .catch((_error: Error) => {
+          errorToast(_error.message)
           setIsLoading(false)
           resolve({ status: false, data: ethers.BigNumber.from(0) })
         })
@@ -189,7 +192,7 @@ const useContractVaultBinance = () => {
         const _signer = _provider.getSigner()
         const _network = await _provider.getNetwork()
         const _balance = await _signer.getBalance()
-        const _address = await _signer.getAddress()
+        // const _address = await _signer.getAddress()
         const _balanceVaultContract = new ethers.Contract(
           CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE,
           BinanceBalanceVaultAbi.abi,
@@ -201,7 +204,7 @@ const useContractVaultBinance = () => {
         )
         if (_tokenAddress === CONFIGS.CONTRACT_ADDRESS.BNB_CONTRACT) {
           resolve({
-            symbol: _network.name || "BNB",
+            symbol: _network.name.toLocaleUpperCase() || "BNB",
             tokenName: _network.name || "BNB",
             address: _tokenAddress,
             balanceWallet: {
@@ -234,7 +237,7 @@ const useContractVaultBinance = () => {
           ])
 
           resolve({
-            symbol: tokenSymbol.toString(),
+            symbol: tokenSymbol.toString().toLocaleUpperCase(),
             tokenName: tokenName.toString(),
             totolSupply: totalSupply,
             decimals: decimalsPromise,

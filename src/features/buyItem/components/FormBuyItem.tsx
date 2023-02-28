@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from "react"
+import React, { memo } from "react"
 import { Box, ButtonGroup, CircularProgress } from "@mui/material"
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"
 import ButtonLink from "@components/atoms/button/ButtonLink"
@@ -12,10 +12,11 @@ import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { useTranslation } from "next-i18next"
 import Helper from "@utils/helper"
-import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
-import CONFIGS from "@configs/index"
 import { BaseToastComponent } from "@feature/toast/components"
 import Balance from "@components/molecules/balance/Balance"
+import SwitchChain from "@components/atoms/SwitchChain"
+import useSwitchNetwork from "@hooks/useSwitchNetwork"
+import CONFIGS from "@configs/index"
 import useBuyGameItemController from "../containers/hooks/useBuyGameItemController"
 
 const iconmotion = {
@@ -30,13 +31,8 @@ const iconmotion = {
     }
   }
 }
-interface IProp {
-  handleClose?: () => void
-  chainId: string
-  chainSupport: ITokenContract[]
-}
 
-const FromBuyItem = ({ handleClose, chainId, chainSupport }: IProp) => {
+const FormBuyItem = () => {
   const { t } = useTranslation()
   const {
     MessageAlert,
@@ -46,24 +42,32 @@ const FromBuyItem = ({ handleClose, chainId, chainSupport }: IProp) => {
     register,
     control,
     gameItemList,
-    // refetch,
-    fetchTargetCoin,
-    dataBNBPrice,
     game,
     onSubmit,
     onError,
     errors,
     isLoading,
-    getDefaultCoin,
-    getPriceByChainSelected,
     updatePricePerItem,
     onQtyUp,
-    onQtyDown
-  } = useBuyGameItemController({ chainId, handleClose })
+    onQtyDown,
+    chainSupport,
+    isDisabled
+    // chainId,
+    // accounts,
+    // signer
+  } = useBuyGameItemController()
+  const { handleSwitchNetwork } = useSwitchNetwork()
 
-  useEffect(() => {
-    fetchTargetCoin("BNB")
-  }, [dataBNBPrice, fetchTargetCoin])
+  // console.log(
+  //   "chainSupport",
+  //   chainSupport,
+  //   chainId,
+  //   accounts,
+  //   signer,
+  //   watch("currency"),
+  //   watch("item"),
+  //   isDisabled()
+  // )
 
   return (
     <>
@@ -99,7 +103,7 @@ const FromBuyItem = ({ handleClose, chainId, chainSupport }: IProp) => {
                   name="item_id"
                   control={control}
                   rules={{ required: true }}
-                  render={({ field }) => (
+                  render={({ field: { ...field } }) => (
                     <DropdownListItem
                       {...field}
                       list={gameItemList as IGameItemListData[]}
@@ -109,6 +113,10 @@ const FromBuyItem = ({ handleClose, chainId, chainSupport }: IProp) => {
                         setValue("item_id", _item.id)
                         updatePricePerItem()
                       }}
+                      // defaultValue={
+                      //   (gameItemList[0] as IGameItemListData) ||
+                      //   ({} as IGameItemListData)
+                      // }
                     />
                   )}
                 />
@@ -120,33 +128,33 @@ const FromBuyItem = ({ handleClose, chainId, chainSupport }: IProp) => {
           <Box className="my-4 w-full pr-4">
             <p className="py-2 uppercase text-black-default">Currency</p>
             <Controller
-              name="currency_id"
+              name="currency"
               control={control}
               rules={{ required: true }}
-              render={({ field }) => (
+              // defaultValue={watch("currency")[0]}
+              render={({ field: { ...field } }) => (
                 <DropdownListCurrency
                   {...field}
-                  list={
-                    chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB
-                      ? chainSupport
-                      : getDefaultCoin()
-                  }
+                  list={chainSupport}
                   className="w-[410px]"
                   onChangeSelect={(_item) => {
                     setValue("currency", _item)
                     setValue("currency_id", _item.address)
-                    fetchTargetCoin(_item.symbol)
+                    updatePricePerItem()
                   }}
+                  // defaultValue={
+                  //   (chainSupport[0] as ITokenContract) ||
+                  //   ({} as ITokenContract)
+                  // }
                 />
               )}
             />
-            {"currency_id" in errors && (
+            {"currency" in errors && (
               <p className="text-sm text-error-main">{t("required")}</p>
             )}
           </Box>
           <p className="uppercase text-purple-primary">
-            {/* //TODO: Needed to create function calculate price/item */}
-            Assets / 1 Item = {`${getPriceByChainSelected()}`}
+            Assets / 1 Item = {watch("nakaPerItem")}
           </p>
 
           <div className="my-4  grid grid-cols-6  content-center gap-4">
@@ -237,7 +245,7 @@ const FromBuyItem = ({ handleClose, chainId, chainSupport }: IProp) => {
             <ButtonLink
               href=""
               size="medium"
-              disabled={isLoading}
+              disabled={isDisabled()}
               className="h-[40px] w-full text-sm "
               text={
                 <>
@@ -286,11 +294,27 @@ const FromBuyItem = ({ handleClose, chainId, chainSupport }: IProp) => {
               onClose={() => {}}
               className="mt-10 w-full"
             />
-            {/* <SwitchChain variant={"simple"} /> */}
+            <div className="col-span-5 m-2 flex flex-col items-center justify-center">
+              <SwitchChain
+                variant="simple"
+                chainName={watch("currency").tokenName}
+                handleClick={
+                  watch("currency").symbol === "NAKA"
+                    ? () =>
+                        handleSwitchNetwork(
+                          CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string
+                        )
+                    : () =>
+                        handleSwitchNetwork(
+                          CONFIGS.CHAIN.CHAIN_ID_HEX as string
+                        )
+                }
+              />
+            </div>
           </Box>
         </form>
       )}
     </>
   )
 }
-export default memo(FromBuyItem)
+export default memo(FormBuyItem)

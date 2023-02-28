@@ -19,6 +19,7 @@ import BEP20Abi from "@configs/abi/BEP20.json"
 import ERC20Abi from "@configs/abi/ERC20.json"
 import useChainSupport from "@stores/chainSupport"
 import useContractVault from "@feature/contract/containers/hooks/useContractVault"
+import { DEFAULT_CURRENCY_BNB, DEFAULT_CURRENCY_NAKA } from "@configs/currency"
 import useSwitchNetwork from "./useSwitchNetwork"
 
 const useGlobal = (
@@ -114,41 +115,6 @@ const useGlobal = (
     // await router.push(`/${_gameUrl}`)
   }
 
-  /**
-   * @description Handle network setting for metamask
-   * @param _chainId
-   * @returns
-   */
-  const getNetwork = (_chainId: string) => {
-    switch (_chainId) {
-      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
-        return {
-          chainId: `0x${Number(CONFIGS.CHAIN.BNB_CHAIN_ID).toString(16)}`,
-          chainName: `${CONFIGS.CHAIN.BNB_CHAIN_NAME}`,
-          rpcUrls: [`${CONFIGS.CHAIN.BNB_RPC_URL}/`],
-          blockExplorerUrls: [`${CONFIGS.CHAIN.BNB_SCAN}/`],
-          nativeCurrency: {
-            name: CONFIGS.CHAIN.TOKEN_NAME_BUSD,
-            symbol: CONFIGS.CHAIN.TOKEN_SYMBOL_BNB,
-            decimals: 18
-          }
-        }
-
-      default:
-        return {
-          chainId: `0x${Number(CONFIGS.CHAIN.CHAIN_ID).toString(16)}`,
-          chainName: `${CONFIGS.CHAIN.CHAIN_NAME}`,
-          rpcUrls: [`${CONFIGS.CHAIN.POLYGON_RPC_URL}/`],
-          blockExplorerUrls: [`${CONFIGS.CHAIN.POLYGON_SCAN}/`],
-          nativeCurrency: {
-            name: CONFIGS.CHAIN.TOKEN_NAME,
-            symbol: CONFIGS.CHAIN.TOKEN_SYMBOL,
-            decimals: 18
-          }
-        }
-    }
-  }
-
   const getTokenAddress = (_chainId: string) => {
     switch (_chainId) {
       case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
@@ -190,6 +156,8 @@ const useGlobal = (
    * @description Fetch BNB token address
    */
   useMemo(() => {
+    if (signer === undefined || accounts === undefined) return
+
     fetchContractBNB()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -277,8 +245,24 @@ const useGlobal = (
       } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
         fetchNAKAToken()
       }
+    } /* else {
+      console.log("signer or accounts is undefined", signer, accounts, provider)
+    } */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chainId, signer, fetchAllTokenSupported, fetchNAKAToken])
+
+  /**
+   * @description Get default currency
+   * @returns {ITokenContract[]}
+   */
+  const getDefaultCoin = (): ITokenContract[] => {
+    switch (chainId) {
+      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
+        return DEFAULT_CURRENCY_BNB
+      default:
+        return DEFAULT_CURRENCY_NAKA
     }
-  }, [chainId, signer, accounts, fetchAllTokenSupported, fetchNAKAToken])
+  }
 
   return {
     onHandleClick,
@@ -291,11 +275,11 @@ const useGlobal = (
     hydrated,
     defaultBody,
     pager,
-    getNetwork,
     getTokenAddress,
     getTokenSupply,
     fetchAllTokenSupported,
-    fetchNAKAToken
+    fetchNAKAToken,
+    getDefaultCoin
   }
 }
 

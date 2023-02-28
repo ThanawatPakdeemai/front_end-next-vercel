@@ -1,6 +1,7 @@
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { Typography } from "@mui/material"
+import { useWeb3Provider } from "@providers/Web3Provider"
 import React from "react"
 import { useTranslation } from "react-i18next"
 
@@ -10,7 +11,7 @@ interface ISwitchChainProps {
   submitText?: string
   chainName?: string
   className?: string
-  handleClick?: () => void
+  handleClick: () => void
 }
 const SwitchChain = ({
   variant = "full",
@@ -19,7 +20,12 @@ const SwitchChain = ({
   className = "mt-3 h-[40px] bg-secondary-main text-sm",
   handleClick = () => {}
 }: ISwitchChainProps) => {
+  const { signer } = useWeb3Provider()
   const { t } = useTranslation()
+
+  const name = signer?.provider?._network?.name.includes("bnb")
+    ? "Binance"
+    : "Polygon"
   /**
    * @description switch chain content
    */
@@ -34,7 +40,7 @@ const SwitchChain = ({
             >
               You are in the
               <span className="mx-2 inline-block rounded-sm bg-neutral-700 px-2 pt-2 pb-1">
-                {chainName}
+                {name ?? chainName}
               </span>
               network, please switch network
             </Typography>
@@ -51,15 +57,18 @@ const SwitchChain = ({
       case "simple":
         return (
           <div className="mt-6">
-            <Typography
-              variant="h3"
-              className="switch-chain--subtitle text-center"
-            >
-              You are in the
-              <span className="mx-2 inline-block rounded-sm bg-neutral-700 px-2 pt-2 pb-1">
-                {chainName}
-              </span>
-            </Typography>
+            {chainName && (
+              <Typography
+                variant="h3"
+                className="switch-chain--subtitle text-center"
+              >
+                You are in the
+                <span className="mx-2 inline-block rounded-sm bg-neutral-700 px-2 pt-2 pb-1">
+                  {chainName}
+                </span>
+              </Typography>
+            )}
+
             <ButtonToggleIcon
               startIcon={<IconArrowRight fill="#F1F4F4" />}
               text={submitText}

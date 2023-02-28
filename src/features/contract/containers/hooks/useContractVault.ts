@@ -21,11 +21,11 @@ const useContractVault = () => {
     CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
   )
 
-  const checkAllowNaka = (_address: string) =>
+  const checkAllowNaka = (_tokenAddress: string) =>
     new Promise((resolve, reject) => {
       setIsLoading(true)
       erc20Contract
-        .allowance(account, _address)
+        .allowance(account, _tokenAddress)
         .then((_response: string) => {
           setIsLoading(false)
           resolve(_response)
@@ -37,12 +37,12 @@ const useContractVault = () => {
     })
 
   /** @param _spender is contract you want to approve */
-  const allowNaka = (_spender: string) =>
+  const allowNaka = (_amount: string) =>
     new Promise((resolve, reject) => {
       if (signer && account) {
         setIsLoading(true)
         erc20Contract
-          .approve(_spender, ethers.constants.MaxUint256)
+          .approve(CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT, _amount)
           .then((_res) => {
             setIsLoading(false)
             resolve("Contract Approved!")
@@ -202,6 +202,7 @@ const useContractVault = () => {
         resolve(DEFAULT_TOKEN_INFO)
       }
     })
+
   return {
     checkAllowNaka,
     allowNaka,

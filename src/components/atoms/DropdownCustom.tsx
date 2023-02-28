@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useState } from "react"
 import { Collapse } from "@mui/material"
 import DropdownIcon from "@components/icons/DropdownIcon"
 import {
@@ -15,7 +15,6 @@ import {
   IGameItem
 } from "@feature/dropdown/interfaces/IDropdownService"
 import useFilterStore from "@stores/blogFilter"
-import { IMenuBase } from "@interfaces/IMenu"
 import SelectDropdown from "./selectDropdown/SelectDropdown"
 
 interface IProp {
@@ -28,7 +27,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
   const [gameData, setGameData] = useState<
     IGameItem[] | IGameCategory[] | IDevice[]
   >([])
-  const [onTitle, setOnTitle] = useState<IDropdownAll | IMenuBase>()
+  const [onTitle, setOnTitle] = useState<IDropdownAll>()
   const { errorToast } = useToast()
   const {
     setCategory: setCategoryDropdown,
@@ -40,28 +39,28 @@ const DropdownCustom = ({ title, className }: IProp) => {
     setExpanded(!expanded)
   }
 
-  const dataDetail = useMemo(() => {
-    if (gameData) {
-      return gameData.map((element) => ({
-        label: element.name ?? "",
-        data: element,
-        icon: "",
-        href: ""
-      }))
-    }
-    return Array(1).map(() => ({
-      label: "",
-      icon: "",
-      href: ""
-    }))
-  }, [gameData])
+  // const dataDetail = useMemo(() => {
+  //   if (gameData) {
+  //     return gameData.map((element) => ({
+  //       label: element.name ?? "",
+  //       icon: element._id ?? "",
+  //       data: element,
+  //       href: ""
+  //     }))
+  //   }
+  //   return Array(1).map(() => ({
+  //     label: "",
+  //     icon: "",
+  //     href: ""
+  //   }))
+  // }, [gameData])
 
   const onGameAssets = () => {
     getGameAssets()
       .then((res) => {
         res.splice(0, 0, {
           crate_date: "",
-          _id: "",
+          _id: "all",
           current_time: "",
           name: "All Game Assets",
           detail: "",
@@ -102,7 +101,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
           image_list: "",
           image_banner: "",
           is_active: true,
-          _id: ""
+          _id: "all"
         })
         setGameData(res)
       })
@@ -113,7 +112,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
 
   const device = [
     {
-      _id: "",
+      _id: "all",
       name: "All Devices",
       supported: true
     },
@@ -141,13 +140,17 @@ const DropdownCustom = ({ title, className }: IProp) => {
   }, [])
 
   useEffect(() => {
-    if (onTitle && (onTitle as IDropdownAll)._id) {
+    if (onTitle) {
       if (title === "All Categories") {
-        setCategoryDropdown((onTitle as IDropdownAll)._id)
+        setCategoryDropdown(onTitle._id)
       } else if (title === "All Game Assets") {
-        setGameItemDropdown((onTitle as IDropdownAll)._id)
+        if (onTitle.name === "All Game Assets") {
+          setGameItemDropdown("all")
+        } else {
+          setGameItemDropdown(onTitle.name)
+        }
       } else if (title === "All Devices") {
-        setDeviceDropdown((onTitle as IDropdownAll)._id)
+        setDeviceDropdown(onTitle._id)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -164,7 +167,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
           >
             <AllCategoriesIcon />
             <span className="">
-              {onTitle === undefined ? title : (onTitle as IMenuBase).label}
+              {onTitle === undefined ? title : onTitle.name}
             </span>
             <div
               className={`${
@@ -188,7 +191,8 @@ const DropdownCustom = ({ title, className }: IProp) => {
             }}
           >
             <SelectDropdown
-              details={dataDetail}
+              // className={className}
+              details={gameData}
               setOnTitle={setOnTitle}
               setExpanded={setExpanded}
             />

@@ -1,7 +1,22 @@
+import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+
+export interface IFormData {
+  player_id: string
+  qty: number
+  currency_id: string
+  currency: ITokenContract
+  nakaPerItem: number
+  item: IGameItemListData
+  item_id: string
+}
+
 export interface IBuyItems {
   _player_id: string
   _item_id: string
   _qty: number
+  _tokenAddress?: string
+  _symbol?: string
 }
 
 interface IBuyItem {
@@ -33,3 +48,5 @@ export interface IBuyItemTransactionResponse extends IBuyItem {
   type: string
   responseBalanceOf: number
 }
+
+export type ErrorType = "required" | "min" | "max" | "pattern" | "validate"

@@ -3,3 +3,8 @@ export interface ICURRENCY {
   name: string
   image_icon: string
 }
+
+export interface ICurrencyResponse {
+  symbol: string
+  price: number
+}

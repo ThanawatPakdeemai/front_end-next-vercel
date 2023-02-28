@@ -1,8 +1,20 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import NotificationList from "@feature/notification/components/organisms/NotificationList"
 import { Box } from "@mui/material"
-import ProfileLayout from "@components/templates/ProfileLayout"
+import dynamic from "next/dynamic"
+
+const NotificationList = dynamic(
+  () => import("@feature/notification/components/organisms/NotificationList"),
+  {
+    suspense: true
+  }
+)
+const ProfileLayout = dynamic(
+  () => import("@components/templates/ProfileLayout"),
+  {
+    suspense: true
+  }
+)
 
 export default function Notification() {
   return (

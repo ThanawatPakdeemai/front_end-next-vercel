@@ -1,14 +1,51 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { TabProvider } from "@feature/tab/contexts/TabProvider"
-import { useRouter } from "next/router"
-import GameTabs from "@feature/game/components/templates/lobby/GameTabs"
-import GameReviews from "@feature/game/components/molecules/GameReviews"
-import GameContent from "@feature/game/components/templates/lobby/GameContent"
-import OverviewContent from "@components/organisms/OverviewContent"
 import { ReactElement } from "react"
-import GamePageDefault from "@components/templates/GamePageDefault"
-import RightSidebarContentEffect from "@components/templates/contents/RightSidebarContentEffect"
-import RightSidebarContent from "@components/templates/contents/RightSidebarContent"
+import { useRouter } from "next/router"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import dynamic from "next/dynamic"
+import { TabProvider } from "@feature/tab/contexts/TabProvider"
+
+const GameTabs = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameTabs"),
+  {
+    suspense: true
+  }
+)
+const GameReviews = dynamic(
+  () => import("@feature/game/components/molecules/GameReviews"),
+  {
+    suspense: true
+  }
+)
+const GameContent = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameContent"),
+  {
+    suspense: true
+  }
+)
+const OverviewContent = dynamic(
+  () => import("@components/organisms/OverviewContent"),
+  {
+    suspense: true
+  }
+)
+const GamePageDefault = dynamic(
+  () => import("@components/templates/GamePageDefault"),
+  {
+    suspense: true
+  }
+)
+const RightSidebarContentEffect = dynamic(
+  () => import("@components/templates/contents/RightSidebarContentEffect"),
+  {
+    suspense: true
+  }
+)
+const RightSidebarContent = dynamic(
+  () => import("@components/templates/contents/RightSidebarContent"),
+  {
+    suspense: true
+  }
+)
 
 export default function ArcadeEmporiumGameDetails() {
   const router = useRouter()

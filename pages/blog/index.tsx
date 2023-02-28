@@ -1,7 +1,13 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import BlogLayout from "@components/templates/BlogLayout"
-import BlogListPage from "@feature/page/BlogListPage"
+import dynamic from "next/dynamic"
+
+const BlogLayout = dynamic(() => import("@components/templates/BlogLayout"), {
+  suspense: true
+})
+const BlogListPage = dynamic(() => import("@feature/page/BlogListPage"), {
+  suspense: true
+})
 
 export default function BlogPage() {
   return (

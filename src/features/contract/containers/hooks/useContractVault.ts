@@ -1,5 +1,5 @@
 import CONFIGS from "@configs/index"
-import { ethers, BigNumber } from "ethers"
+import { ethers, BigNumber, Contract } from "ethers"
 import {
   useERC20,
   useBalanceVault
@@ -7,8 +7,12 @@ import {
 import { useState } from "react"
 import { useWeb3Provider } from "@providers/index"
 import { ITransactionResponse } from "@interfaces/ITransaction"
+import Helper from "@utils/helper"
+import BalanceVaultAbi from "@configs/abi/BalanceVault.json"
+import { DEFAULT_TOKEN_INFO, ITokenContract } from "./useContractVaultBinance"
 
 const useContractVault = () => {
+  const { WeiToNumber } = Helper
   const { signer, address: account } = useWeb3Provider()
   const [isLoading, setIsLoading] = useState(false)
   const erc20Contract = useERC20(signer, CONFIGS.CONTRACT_ADDRESS.ERC20)
@@ -17,11 +21,11 @@ const useContractVault = () => {
     CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
   )
 
-  const checkAllowNaka = (_address: string) =>
+  const checkAllowNaka = (_tokenAddress: string) =>
     new Promise((resolve, reject) => {
       setIsLoading(true)
       erc20Contract
-        .allowance(account, _address)
+        .allowance(account, _tokenAddress)
         .then((_response: string) => {
           setIsLoading(false)
           resolve(_response)
@@ -33,12 +37,12 @@ const useContractVault = () => {
     })
 
   /** @param _spender is contract you want to approve */
-  const allowNaka = (_spender: string) =>
+  const allowNaka = (_amount: string) =>
     new Promise((resolve, reject) => {
       if (signer && account) {
         setIsLoading(true)
         erc20Contract
-          .approve(_spender, ethers.constants.MaxUint256)
+          .approve(CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT, _amount)
           .then((_res) => {
             setIsLoading(false)
             resolve("Contract Approved!")
@@ -143,6 +147,62 @@ const useContractVault = () => {
         })
     })
 
+  const getNAKATokenInfo = async (
+    tokenContract: Contract,
+    _tokenAddress: string,
+    _userAddress: string
+  ) =>
+    // eslint-disable-next-line no-async-promise-executor
+    new Promise<ITokenContract>(async (resolve) => {
+      try {
+        const { ethereum }: any = window
+        const _provider = new ethers.providers.Web3Provider(ethereum)
+        const _signer = _provider.getSigner()
+        const _balanceVaultContract = new ethers.Contract(
+          CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT,
+          BalanceVaultAbi.abi,
+          _signer
+        )
+        const vaultBalancePromise = await _balanceVaultContract.getBalance(
+          _userAddress
+        )
+        const symbolPromise = await tokenContract.symbol()
+        const totalSupplyPromise = await tokenContract.totalSupply()
+        const namePromise = await tokenContract.name()
+        const decimalsPromise = await tokenContract.decimals()
+        const walletBalancePromise = await tokenContract.balanceOf(_userAddress)
+        const [tokenSymbol, totalSupply, tokenName] = await Promise.all([
+          symbolPromise,
+          totalSupplyPromise,
+          namePromise,
+          decimalsPromise,
+          walletBalancePromise
+        ])
+
+        resolve({
+          symbol: tokenSymbol.toString(),
+          tokenName: tokenName.toString(),
+          totolSupply: totalSupply,
+          decimals: decimalsPromise,
+          address: _tokenAddress,
+          balanceWallet: {
+            digit: Number(Helper.WeiToNumber(walletBalancePromise).toFixed(4)),
+            text: Helper.formatNumber(WeiToNumber(walletBalancePromise), {
+              maximumFractionDigits: 1
+            })
+          },
+          balanceVault: {
+            digit: Number(Helper.WeiToNumber(vaultBalancePromise).toFixed(4)),
+            text: Helper.formatNumber(WeiToNumber(vaultBalancePromise), {
+              maximumFractionDigits: 1
+            })
+          }
+        })
+      } catch (err) {
+        resolve(DEFAULT_TOKEN_INFO)
+      }
+    })
+
   return {
     checkAllowNaka,
     allowNaka,
@@ -151,7 +211,8 @@ const useContractVault = () => {
     checkSufficient,
     getNakaBalanceVault,
     getNakaBalanceWallet,
-    isLoading
+    isLoading,
+    getNAKATokenInfo
   }
 }
 

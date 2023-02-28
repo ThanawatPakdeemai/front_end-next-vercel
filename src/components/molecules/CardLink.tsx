@@ -187,7 +187,7 @@ const CardLink = ({
             text={textBtn}
             icon={iconBtn}
             size="medium"
-            className="button-global button-transparent absolute left-2.5 right-2.5 bottom-2.5 border border-solid border-black-300 text-primary-main"
+            className="button-global button-transparent absolute left-2.5 right-2.5 bottom-2.5 !h-[38px] border border-solid border-black-300 text-primary-main"
           />
         </motion.div>
       </motion.div>

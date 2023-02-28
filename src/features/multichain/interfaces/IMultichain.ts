@@ -1,6 +1,6 @@
 import { IFormatMessageService, IFormatService } from "@src/interfaces/IHelper"
 
-interface IMessage {
+export interface IMessage {
   message: string
 }
 
@@ -52,13 +52,19 @@ export interface IMultiOrderListDataServ extends IFormatService, IMessage {
 export interface IMultiOrderListServ extends IFormatService, IMessage {
   data: IMultiTrustOrder[]
 }
-
-export interface IGetP2PDexOrderByAddr extends ILimitPage {
-  _address: string
+export interface ISort {
+  _sort: string
+  _sort_value: number
 }
 
-export interface IGetP2PDexOrderList extends ILimitPage {
+export interface IGetP2PDexOrderList extends ILimitPage, ISort {
   _type: string
+}
+export interface IGetP2PDexOrderByAddr
+  extends ILimitPage,
+    ISort,
+    IGetP2PDexOrderList {
+  _address: string
 }
 
 export interface ICreateP2PDexOrder {
@@ -80,3 +86,9 @@ export interface IExecP2PDexOrder extends ICreateP2PDexOrder {
 export interface IUpdateP2PDexOrder extends ICreateP2PDexOrder {
   _txHash: string
 }
+
+export interface IStatus {
+  status: boolean
+}
+
+export interface IResExecutive extends IMessage {}

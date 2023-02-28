@@ -8,10 +8,10 @@ import {
 import CONFIGS from "@configs/index"
 import { WALLET_CONNECTOR_TYPES } from "@configs/walletConnect"
 import useProfileStore from "@stores/profileStore"
-import Helper from "@utils/helper"
 import { BigNumber, providers, utils } from "ethers"
 import { ELocalKey } from "@interfaces/ILocal"
 import useChainSupport from "@stores/chainSupport"
+import Helper from "@utils/helper"
 
 const useCreateWeb3Provider = () => {
   const [signer, setSigner] = useState<JsonRpcSigner | undefined>(undefined)
@@ -179,17 +179,14 @@ const useCreateWeb3Provider = () => {
     if (walletAccounts) {
       onSetAddress(walletAccounts[0])
     }
-
     const _signer = _provider.getSigner()
     setSigner(_signer)
-
     // Subscribe to accounts change
     window.ethereum.on("accountsChanged", async () => {
       // !Error - this code has problem when user change network on metamask
       // await handleDisconnectWallet()
       setHasChangeAccountMetamask(true)
     })
-
     // Subscribe to chainId change
     window.ethereum.on("chainChanged", (_chainId: string) => {
       if (_chainId === undefined) {
@@ -203,7 +200,6 @@ const useCreateWeb3Provider = () => {
         resetChainId()
       }
     })
-
     // Subscribe to session disconnection
     if (window.ethereum && window.ethereum.on) {
       window.ethereum.on("disconnect", (/* code: number, reason: string */) => {
@@ -230,6 +226,8 @@ const useCreateWeb3Provider = () => {
     }
     if (_provider && _provider.request) {
       try {
+        const _newProvider = new providers.Web3Provider(_provider)
+        const _signer = _newProvider.getSigner()
         setLoading(true)
         await _provider
           .request({
@@ -237,12 +235,13 @@ const useCreateWeb3Provider = () => {
             params: [{ chainId: _chainId }] // [handleNetworkSettings(_chainId)]
           })
           .then(() => {
-            // handleConnectWithMetamask()
             checkNetwork()
             setChainId(_chainId)
+            setSigner(_signer)
             setLoading(false)
+            handleConnectWithMetamask()
           })
-          .catch(() => {
+          .catch((_err) => {
             setLoading(false)
           })
 
@@ -359,9 +358,6 @@ const useCreateWeb3Provider = () => {
       setHasMetamask(false)
     }
   }, [])
-
-  // useEffect(() => {
-  // }, [provider])
 
   return {
     accounts,

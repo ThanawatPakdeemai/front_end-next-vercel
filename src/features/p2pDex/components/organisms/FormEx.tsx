@@ -30,6 +30,7 @@ import { useToast } from "@feature/toast/containers"
 import CONFIGS from "@configs/index"
 import useSwitchNetwork from "@hooks/useSwitchNetwork"
 import SwitchChain from "@components/atoms/SwitchChain"
+import { chainIdConfig } from "@configs/sites"
 import Input from "../atoms/Input"
 import LeftContentForm from "../molecules/LeftContentForm"
 
@@ -55,7 +56,7 @@ const FormEx = ({
 }: IProp) => {
   const profile = useProfileStore((state) => state.profile.data)
   const { address, signer } = useWeb3Provider()
-  const { busdVaultBalance, nakaVaultBalance } = useAllBalances()
+  const { balanceValutNaka, balanceValutBusd } = useAllBalances()
   const { setClose, setOpen } = useLoadingStore()
   const { handleSwitchNetwork } = useSwitchNetwork()
 
@@ -74,8 +75,12 @@ const FormEx = ({
 
   const { formatNumber } = Helper
 
-  const balance =
-    type === "buy" ? busdVaultBalance.digit : nakaVaultBalance.digit
+  const balance = useMemo(() => {
+    if (chain === "polygon") {
+      return Number(balanceValutNaka?.digit)
+    }
+    return Number(balanceValutBusd?.digit)
+  }, [balanceValutBusd, balanceValutNaka])
 
   const priceBusdDefault = useMemo(() => dataEdit?.busd_price, [dataEdit])
   const priceNakaDefault = useMemo(() => dataEdit?.naka_price, [dataEdit])
@@ -236,29 +241,39 @@ const FormEx = ({
   )
 
   const buttonData = useMemo(() => {
+    if (chain && !edit) {
+      if (chain === "polygon") {
+        return Number(chainRequired) === Number(chainIdConfig.polygon)
+          ? buttonSubmit()
+          : buttonSwitched()
+      }
+      return Number(chainRequired) === Number(chainIdConfig.binance)
+        ? buttonSubmit()
+        : buttonSwitched()
+    }
     if (edit) {
-      if (type === "buy") {
-        if (Number(chainRequired) === Number(CONFIGS.CHAIN.CHAIN_ID)) {
+      if (type === "sell") {
+        if (Number(chainRequired) === Number(chainIdConfig.polygon)) {
           return buttonSubmit()
         }
         return buttonSwitched()
       }
-      if (Number(chainRequired) === Number(CONFIGS.CHAIN.BNB_CHAIN_ID)) {
-        return buttonSubmit()
-      }
-    }
-    if (type === "buy") {
-      if (Number(chainRequired) === Number(CONFIGS.CHAIN.BNB_CHAIN_ID)) {
+      if (Number(chainRequired) === Number(chainIdConfig.binance)) {
         return buttonSubmit()
       }
       return buttonSwitched()
     }
-    if (Number(chainRequired) === Number(CONFIGS.CHAIN.CHAIN_ID)) {
+    if (type === "buy") {
+      if (Number(chainRequired) === Number(chainIdConfig.binance)) {
+        return buttonSubmit()
+      }
+      return buttonSwitched()
+    }
+    if (Number(chainRequired) === Number(chainIdConfig.polygon)) {
       return buttonSubmit()
     }
     return buttonSwitched()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainRequired, disableButton, type])
+  }, [chainRequired, chainIdConfig, type, signer, edit, balance])
 
   return (
     <>

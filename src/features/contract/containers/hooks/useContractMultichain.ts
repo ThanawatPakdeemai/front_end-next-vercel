@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 import {
   useP2PBinance,
   useP2PPolygon,
   useERC20,
-  useBEP20
+  useBEP20,
+  useP2PBinanceMumbai,
+  useP2PPolygonMumbai
 } from "@feature/contract/containers/hooks/useContract"
 import { utils } from "ethers"
 import { BigNumberish } from "@ethersproject/bignumber"
@@ -23,7 +26,7 @@ import useP2PDexEditOrder from "@feature/p2pDex/containers/hooks/useP2PDexEditOr
 import useP2PDexExOrder from "@feature/p2pDex/containers/hooks/useP2PDexExOrder "
 import useP2PDexCreateOrder from "@feature/p2pDex/containers/hooks/useP2PDexCreateOrder"
 import { useToast } from "@feature/toast/containers"
-// import { providerBSC } from "../contractHelpers"
+import { bnbRpcProvider } from "@utils/web3"
 
 export interface IDataOptions {
   transactionName: string
@@ -42,14 +45,36 @@ const useContractMultichain = () => {
   const { mutateCreateOrder } = useP2PDexCreateOrder()
   const { mutateExOrder } = useP2PDexExOrder()
   const { errorToast } = useToast()
+
   const p2pBinanceContract = useP2PBinance(
     signer,
     CONFIGS.CONTRACT_ADDRESS.P2P_BINANCE
   )
+
+  const p2pBinanceMumbaiContract = useP2PBinanceMumbai(
+    signer,
+    CONFIGS.CONTRACT_ADDRESS.P2P_BINANCE
+  )
+
   const p2pPolygonContract = useP2PPolygon(
     signer,
     CONFIGS.CONTRACT_ADDRESS.P2P_POLYGON
   )
+
+  const p2pPolygonMumbaiContract = useP2PPolygonMumbai(
+    signer,
+    CONFIGS.CONTRACT_ADDRESS.P2P_POLYGON
+  )
+
+  // const contractBinance =
+  //   process.env.NEXT_PUBLIC_MODE === "development"
+  //     ? p2pBinanceMumbaiContract
+  //     : p2pBinanceContract
+
+  // const contractPolygon =
+  //   process.env.NEXT_PUBLIC_MODE === "development"
+  //     ? p2pPolygonMumbaiContract
+  //     : p2pPolygonContract
 
   const tokenBinanceContract = useBEP20(signer, CONFIGS.CONTRACT_ADDRESS.BEP20)
 
@@ -415,8 +440,8 @@ const useContractMultichain = () => {
       setOpen(MESSAGES.transaction_processing_order)
       if (type === "sell") {
         // bnb
-        editOrderBuyNaka(_data.price, _data.amount, order_id).then(
-          (_receipt) => {
+        editOrderBuyNaka(_data.price, _data.amount, order_id)
+          .then(async (_receipt) => {
             const receipt = (_receipt as IResponseGetFee).data
             if (
               _receipt &&
@@ -432,19 +457,18 @@ const useContractMultichain = () => {
                   p2pBinanceContract.address?.toLowerCase()
               )
 
-              const events = p2pBinanceContract.interface.parseLog(log)
-              saveDbEditOrder(events, type, wallet_address, tx_hash)
-                .then((_response) => resolve(_response))
-                .catch((_err) => reject(_err))
+              if (log) {
+                const events = p2pBinanceContract.interface.parseLog(log)
+                saveDbEditOrder(events, type, wallet_address, tx_hash)
+                  .then((_response) => resolve(_response))
+                  .catch((_err) => reject(_err))
+              }
               setClose()
             }
-          }
-        )
-        //   setClose()
-        // })
-        // .catch(() => {
-        //   setClose()
-        // })
+          })
+          .catch(() => {
+            setClose()
+          })
       } else {
         // naka
         editOrderSellNaka(_data.price, _data.amount, order_id ?? "")

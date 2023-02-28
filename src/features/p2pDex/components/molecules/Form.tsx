@@ -38,15 +38,20 @@ const Form = ({
 }: IProp) => {
   const profile = useProfileStore((state) => state.profile.data)
   const { address, signer } = useWeb3Provider()
-  const { busdVaultBalance, nakaVaultBalance } = useAllBalances()
+  const { balanceValutBusd, balanceValutNaka } = useAllBalances()
   const { nakaCurrentPrice, fee } = useContractMultichain()
   const { handleSwitchNetwork } = useSwitchNetwork()
   const { formatNumber } = Helper
+  // const { chainSupport } = useChainSupport()
 
   const chainRequired = signer?.provider?._network?.chainId ?? 0
 
-  const balance =
-    chain === "polygon" ? nakaVaultBalance.digit : busdVaultBalance.digit
+  const balance = useMemo(() => {
+    if (chain === "polygon") {
+      return Number(balanceValutNaka?.digit)
+    }
+    return Number(balanceValutBusd?.digit)
+  }, [balanceValutNaka, balanceValutBusd, chain])
 
   const total = useMemo(
     () =>
@@ -105,21 +110,16 @@ const Form = ({
   const buttonSwitched = () => (
     <SwitchChain
       variant="full"
-      handleClick={
-        edit
-          ? type === "buy"
-            ? () => handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX as string)
-            : () =>
-                handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string)
-          : type === "buy"
-          ? () => handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string)
-          : () => handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX as string)
+      handleClick={() =>
+        chain === "polygon"
+          ? handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX as string)
+          : handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string)
       }
     />
   )
 
   const buttonData = useMemo(() => {
-    if (chain) {
+    if (chain && !edit) {
       if (chain === "polygon") {
         return Number(chainRequired) === Number(chainIdConfig.polygon)
           ? buttonSubmit()
@@ -130,7 +130,7 @@ const Form = ({
         : buttonSwitched()
     }
     if (edit) {
-      if (type === "sell") {
+      if (type === "buy") {
         if (Number(chainRequired) === Number(chainIdConfig.polygon)) {
           return buttonSubmit()
         }
@@ -141,7 +141,7 @@ const Form = ({
       }
       return buttonSwitched()
     }
-    if (type === "sell") {
+    if (type === "buy") {
       if (Number(chainRequired) === Number(chainIdConfig.binance)) {
         return buttonSubmit()
       }
@@ -151,7 +151,7 @@ const Form = ({
       return buttonSubmit()
     }
     return buttonSwitched()
-  }, [chainRequired, chainIdConfig, type, edit])
+  }, [chainRequired, chainIdConfig, type, signer, edit, balance])
 
   return (
     <form onSubmit={dataForm["handleSubmit"](onSubmit)}>

@@ -169,7 +169,9 @@ const MyOrderList = ({ ...props }: IProp) => {
                     <>
                       <div className="flex w-full items-center justify-between">
                         <div className="mr-2">AVAILABLE</div>
-                        {Helper.formatNumber(order.naka_amount)}
+                        {Helper.formatNumber(order.naka_amount, {
+                          maximumFractionDigits: 4
+                        })}
                         <div className="ml-2  rounded border border-neutral-700 px-2.5 py-1 uppercase text-neutral-400">
                           {type === "sell" ? "BUSD" : "NAKA"}
                         </div>

@@ -53,6 +53,8 @@ const useQueryBalanceVault = (
     queryFn: () => getBalanceVaultBSC(_address || "", _tokenAddress || ""),
     enabled:
       _address !== undefined ||
+      _address !== "" ||
+      _tokenAddress !== "" ||
       _tokenAddress !== undefined ||
       isConnectedWallet,
     staleTime: Infinity

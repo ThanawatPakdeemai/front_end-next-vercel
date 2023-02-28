@@ -29,14 +29,21 @@ interface IProp {
 }
 const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
   const { successToast } = useToast()
-  const { nakaVaultBalance, busdVaultBalance } = useAllBalances()
+  const { balanceValutNaka, balanceValutBusd } = useAllBalances()
   const { shortenString, copyClipboard } = Helper
+
+  const balance = useMemo(() => {
+    if (chain === "polygon") {
+      return balanceValutNaka
+    }
+    return balanceValutBusd
+  }, [balanceValutBusd, balanceValutNaka, chain])
 
   const price = useMemo(() => {
     if (edit) {
       return chain === "binance" ? dataInfo?.busd_price : dataInfo?.naka_price
     }
-    return chain === "binance" ? dataInfo?.busd_price : dataInfo?.naka_price
+    return chain === "polygon" ? dataInfo?.busd_price : dataInfo?.naka_price
   }, [chain, dataInfo?.busd_price, dataInfo?.naka_price, edit])
 
   const dataTable: IPropContent[] = [
@@ -126,12 +133,9 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
               <HrLine className="" />
             </div>
 
-            {/* <Balance /> */}
             <AmountBalance
               icon={chain === "polygon" ? <INaka /> : <IBusd />}
-              balance={
-                chain === "polygon" ? nakaVaultBalance : busdVaultBalance
-              }
+              balance={balance || { digit: 0, text: "N/A" }}
             />
           </div>
         </div>

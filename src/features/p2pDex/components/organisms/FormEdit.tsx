@@ -126,7 +126,6 @@ const FormEdit = ({
       }
     } else if (type === "sell") {
       const allowBi = await allowBinance
-
       if (allowBi && allowBi.toString() > 0) {
         sendData(_data)
       } else {

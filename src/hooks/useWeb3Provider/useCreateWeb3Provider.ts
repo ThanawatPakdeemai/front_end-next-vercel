@@ -226,6 +226,8 @@ const useCreateWeb3Provider = () => {
     }
     if (_provider && _provider.request) {
       try {
+        const _newProvider = new providers.Web3Provider(_provider)
+        const _signer = _newProvider.getSigner()
         setLoading(true)
         await _provider
           .request({
@@ -233,10 +235,11 @@ const useCreateWeb3Provider = () => {
             params: [{ chainId: _chainId }] // [handleNetworkSettings(_chainId)]
           })
           .then(() => {
-            // handleConnectWithMetamask()
             checkNetwork()
             setChainId(_chainId)
+            setSigner(_signer)
             setLoading(false)
+            handleConnectWithMetamask()
           })
           .catch((_err) => {
             setLoading(false)

@@ -146,97 +146,95 @@ export default function CardButItem() {
   }, [qtyItemSelected, router.asPath, t])
 
   return (
-    <>
-      <div
-        className={`h-fit ${
-          router.pathname === "/[typeGame]/[GameHome]" ? "w-full" : "w-fit"
-        } rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 `}
-      >
-        <div className="p-4 ">
-          {gameItemList &&
-            router.pathname !== "/[typeGame]/[GameHome]/roomlist/[id]" && (
-              <>
-                <DropdownListItem
-                  isCheck
-                  list={gameItemList}
-                  className="w-[300px]"
-                  onChangeSelect={onChangeSelectItem}
-                />
-              </>
-            )}
-          <div
-            className={`${
-              router.pathname === "/[typeGame]/[GameHome]" ? "w-full" : "w-fit"
-            } mb-1 rounded-xl border-[1px] border-primary-main bg-primary-main p-2 first-letter:my-2`}
-          >
-            <p className="w-[285px] uppercase text-white-default">
-              {t("my")}{" "}
-              <span className="text-purple-primary]">
-                {itemSelected?.name} {itemSelected?.item_size}
-              </span>{" "}
-              {t("bag")}
-            </p>
-          </div>
+    <div
+      className={`mt-2 flex h-full flex-[1_1_340px] justify-center lg:mt-0 lg:flex-none ${
+        router.pathname === "/[typeGame]/[GameHome]" ? "w-full" : "w-full"
+      } rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 `}
+    >
+      <div className="p-4">
+        {gameItemList &&
+          router.pathname !== "/[typeGame]/[GameHome]/roomlist/[id]" && (
+            <>
+              <DropdownListItem
+                isCheck
+                list={gameItemList}
+                className="w-[300px]"
+                onChangeSelect={onChangeSelectItem}
+              />
+            </>
+          )}
+        <div
+          className={`${
+            router.pathname === "/[typeGame]/[GameHome]" ? "w-full" : "w-fit"
+          } mb-1 rounded-xl border-[1px] border-primary-main bg-primary-main p-2 first-letter:my-2`}
+        >
+          <p className="w-[285px] uppercase text-white-default">
+            {t("my")}{" "}
+            <span className="text-purple-primary]">
+              {itemSelected?.name} {itemSelected?.item_size}
+            </span>{" "}
+            {t("bag")}
+          </p>
+        </div>
 
-          <div
-            className={`grid ${
-              router.pathname === "/[typeGame]/[GameHome]" ? "w-full" : " w-fit"
-            } grid-cols-2 gap-4 `}
-          >
-            <div className="flex items-center justify-center rounded-xl border-[1px] border-primary-main bg-primary-main">
+        <div
+          className={`grid ${
+            router.pathname === "/[typeGame]/[GameHome]" ? "w-full" : " w-fit"
+          } grid-cols-2 gap-4 `}
+        >
+          <div className="flex items-center justify-center rounded-xl border-[1px] border-primary-main bg-primary-main">
+            {gameObject && (
+              <CardMedia
+                className="m-auto block w-[124px]"
+                component="img"
+                height={124}
+                image={gameObject.item[0].image}
+                alt={gameObject.item[0].name}
+              />
+            )}
+          </div>
+          <div className="flex w-full flex-col justify-center">
+            <div className="mb-2 flex w-full items-center justify-between rounded-xl bg-[#E1E2E2]  p-2 text-center text-[#111111]">
+              <p>{qtyItemSelected ?? 0}</p>
               {gameObject && (
-                <CardMedia
-                  className="m-auto block w-[124px]"
-                  component="img"
-                  height={124}
-                  image={gameObject.item[0].image}
+                <Image
+                  src={gameObject.item[0].image_icon_color}
                   alt={gameObject.item[0].name}
+                  width="30"
+                  height="30"
                 />
               )}
             </div>
-            <div className="flex w-full flex-col justify-center">
-              <div className="mb-2 flex w-full items-center justify-between rounded-xl bg-[#E1E2E2]  p-2 text-center text-[#111111]">
-                <p>{qtyItemSelected ?? 0}</p>
-                {gameObject && (
-                  <Image
-                    src={gameObject.item[0].image_icon_color}
-                    alt={gameObject.item[0].name}
-                    width="30"
-                    height="30"
-                  />
-                )}
-              </div>
-              <div className="mb-2 flex w-full justify-between rounded-xl bg-neutral-700 p-2 text-center text-black-default">
-                <p>= {totalPrice}</p>
-                {/* <Input
+            <div className="mb-2 flex w-full justify-between rounded-xl bg-neutral-700 p-2 text-center text-black-default">
+              <p>= {totalPrice}</p>
+              {/* <Input
                   defaultValue=" 0.00"
                   inputProps={ariaLabel}
                 /> */}
-                <AttachMoneyIcon />
-              </div>
-              <div className="w-full">
-                <RightMenuBuyItem />
-              </div>
+              <AttachMoneyIcon />
+            </div>
+            <div className="w-full">
+              <RightMenuBuyItem />
             </div>
           </div>
-          {router.pathname === "/[typeGame]/[GameHome]" && (
-            <div className="mt-4 w-full">
-              {profile ? (
-                buttonInToGame
-              ) : (
-                <ButtonLink
-                  text={t("please_login")}
-                  href="/"
-                  icon={<LogoutIcon />}
-                  size="medium"
-                  color="secondary"
-                  className="w-full whitespace-nowrap"
-                />
-              )}
-            </div>
-          )}
         </div>
+        {router.pathname === "/[typeGame]/[GameHome]" && (
+          <div className="mt-4 w-full">
+            {profile ? (
+              buttonInToGame
+            ) : (
+              <ButtonLink
+                text={t("please_login")}
+                href="/"
+                icon={<LogoutIcon />}
+                size="medium"
+                color="secondary"
+                className="w-full whitespace-nowrap"
+              />
+            )}
+          </div>
+        )}
       </div>
-    </>
+    </div>
   )
 }

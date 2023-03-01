@@ -12,7 +12,7 @@ interface IProp
 }
 
 const ProfileLayout = ({ _breadcrumb, children }: IProp) => (
-  <div className="main-container mx-auto">
+  <div className="main-container mx-auto px-2 lg:px-0">
     <Header />
     <div className="mx-auto mb-2 flex max-w-xs md:mx-0 md:mb-10 md:justify-start">
       <p />

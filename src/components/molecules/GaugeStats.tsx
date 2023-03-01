@@ -7,7 +7,7 @@ interface IProp {
 }
 
 const GaugeStats = ({ value, maxValue }: IProp) => (
-  <div className="flex h-[70px] justify-center sm:justify-start">
+  <div className="flex h-[70px] justify-center lg:justify-start">
     <div className="mr-2 flex w-[70px] items-center justify-center rounded-lg border-[1px] border-neutral-700 border-opacity-80">
       <GaugeCustom
         value={value}

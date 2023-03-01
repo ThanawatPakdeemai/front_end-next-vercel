@@ -90,10 +90,13 @@ const Footer = () => {
   return (
     <>
       <div className="items-center sm:flex" />
-      <Divider sx={{ marginTop: 10, marginBottom: 10 }} />
+      <Divider
+        className="my-8 md:my-16"
+        sx={{ marginTop: 10, marginBottom: 10 }}
+      />
       <div className="justify-between text-[12px] lg:flex">
-        <div className="flex justify-center">
-          <div className="flex-auto md:w-48">
+        <div className="flex justify-center whitespace-nowrap">
+          <div className="flex-auto sm:flex-none md:w-48">
             <div className="mb-4 uppercase text-white-primary">game</div>
             {NAKA_GAME?.map((item) => (
               <div key={`game_${item.label}`}>
@@ -126,7 +129,7 @@ const Footer = () => {
               </div>
             ))}
           </div>
-          <div className="flex-auto md:w-48">
+          <div className="flex-auto sm:flex-none md:w-48">
             <div className="mb-4 uppercase text-white-primary">services</div>
             {NAKA_SERVICES?.map((item) => (
               <Link
@@ -144,8 +147,8 @@ const Footer = () => {
               </Link>
             ))}
           </div>
-          <div className="flex-auto md:w-48">
-            <div className="mb-4 uppercase text-white-primary">
+          <div className="flex-auto sm:flex-none md:w-48">
+            <div className="mb-4 whitespace-normal uppercase text-white-primary">
               NAKA ecosystemss
             </div>
             {NAKA_ECOSYSTEMSS?.map((item) => (

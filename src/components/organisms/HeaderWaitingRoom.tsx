@@ -39,9 +39,9 @@ const HeaderWaitingRoom = ({
 
   return (
     <div
-      className={`flex h-[72px] items-center gap-5 border-b  border-neutral-800 ${className}`}
+      className={`flex flex-wrap items-center gap-5 border-b border-neutral-800 p-2 lg:h-[72px] ${className}`}
     >
-      <div className="ml-4 flex flex-1 items-center  gap-5">
+      <div className="flex flex-auto items-center gap-2 md:flex-none md:gap-5 xl:ml-4">
         <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800">
           <ButtonClose
             onClick={() => {
@@ -95,7 +95,7 @@ const HeaderWaitingRoom = ({
       <ButtonIcon
         type="square"
         icon={<SettingIcon />}
-        className="mr-4 flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800"
+        className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800 xl:mr-4"
       />
     </div>
   )

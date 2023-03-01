@@ -23,7 +23,7 @@ const HeadMenu = () => {
   return (
     <Box
       component="div"
-      className="xs:my-5 m-auto my-2 grid flex-[1_1_100%] grid-cols-2 items-center justify-center gap-1 rounded-[8px] bg-neutral-700 p-1 md:flex md:!h-[50px] lg:my-0 lg:flex-none xl:order-1"
+      className="xs:my-5 m-auto my-2 grid max-w-[505px] flex-[1_1_100%] grid-cols-2 items-center justify-center gap-1 rounded-[8px] bg-neutral-700 p-1 md:flex md:!h-[50px] lg:my-0 lg:flex-none xl:order-1"
     >
       {MENU.map((item) => {
         if (!item.isChide && item.chide === undefined) {

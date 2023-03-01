@@ -42,7 +42,7 @@ const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
           title={t("game_overview")}
         >
           <PanelContent height="h-[500px]">
-            <div className="pl-6 pt-3 pr-3 text-start text-sm text-neutral-500">
+            <div className="text-start text-sm text-neutral-500 lg:pl-6 lg:pt-3 lg:pr-3">
               <TagMultiple
                 title={`${t("genre")}`}
                 tags={gameTags}
@@ -66,7 +66,7 @@ const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
               )}
 
               <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-              <div className="overview-row grid grid-cols-2">
+              <div className="overview-row grid gap-2 lg:grid-cols-2">
                 <div
                   id="overview-release-date"
                   className="overview-col"
@@ -80,7 +80,7 @@ const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
                 {chainName !== "-" && (
                   <div
                     id="overview-chain-id"
-                    className="overview-col border-l-[1px] border-neutral-700 pl-3"
+                    className="overview-col border-neutral-700 lg:border-l-[1px] lg:pl-3"
                   >
                     <TagSingular
                       title="Chain"
@@ -111,7 +111,7 @@ const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
               {gameOwner !== "-" && (
                 <>
                   <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-                  <div className="overview-row grid grid-cols-2">
+                  <div className="overview-row grid gap-2 lg:grid-cols-2">
                     <div
                       id="overview-game-owner"
                       className="overview-col whitespace-nowrap"
@@ -127,7 +127,7 @@ const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
               {singleVersion !== "-" && (
                 <>
                   <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-                  <div className="overview-row grid grid-cols-2">
+                  <div className="overview-row grid gap-2 lg:grid-cols-2">
                     <div
                       id="overview-game-version"
                       className="overview-col whitespace-nowrap"

@@ -51,7 +51,7 @@ const HeadLogo = () => {
           />
           <Box
             component="div"
-            className="flex items-center"
+            className="ms:ml-0 ml-auto flex items-center"
           >
             <LanguageIcon className="!text-error-main" />
             <SelectNaka

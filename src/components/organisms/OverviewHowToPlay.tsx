@@ -29,14 +29,14 @@ const OverviewHowToPlay = ({
   // }, [data])
 
   return (
-    <div className="relative flex flex-col overflow-hidden rounded-2xl bg-neutral-780 p-2">
+    <div className="relative my-2 flex flex-col overflow-hidden rounded-2xl bg-neutral-780 p-2 sm:m-0">
       <AsideLayout
         icon={<OverviewIcon />}
         title={title ? `${t(title)}` : `${t("game_overview")}`}
       >
         <PanelContent height={hight.toString()}>
           <p
-            className="px-6 py-2 text-start text-sm text-neutral-500"
+            className="py-2 text-start text-sm text-neutral-500 lg:px-6"
             dangerouslySetInnerHTML={{
               __html: gameHowToPlay
             }}

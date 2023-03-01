@@ -228,6 +228,7 @@ const MyOrderList = ({ ...props }: IProp) => {
           setOpen(MESSAGES.transaction_processing_order)
           cancelOrder()
         }}
+        refetchData={refetch}
       />
     </>
   )

@@ -88,7 +88,7 @@ const FormEdit = ({
 
   const sendData = (_data) => {
     if (dataEdit) {
-      submitDataEditNaka(_data, type, dataEdit)
+      submitDataEditNaka(_data, dataEdit, chain)
         .then((_response) => {
           if (_response) {
             if (refetchData) refetchData()

@@ -435,14 +435,14 @@ const useContractMultichain = () => {
   const saveDbEditOrder = (events, type, wallet_address, tx_hash) =>
     new Promise((resolve, reject) => {
       const orderId =
-        type === "sell" ? events.args.orderBuyId : events.args.orderSellId
+        type === "buy" ? events.args.orderBuyId : events.args.orderSellId
       const busd_price =
-        type === "sell" ? events.args.busdPrice?.toString() : "0" // Only binace
+        type === "buy" ? events.args.busdPrice?.toString() : "0" // Only binace
       const naka_price =
-        type === "sell" ? "0" : events.args.nakaPrice?.toString()
+        type === "buy" ? "0" : events.args.nakaPrice?.toString()
       const naka_amount = events.args.amount?.toString()
       const total_price =
-        type === "sell" ? events.args.totalPriceInOrder?.toString() : "0" // Only polygon
+        type === "buy" ? events.args.totalPriceInOrder?.toString() : "0" // Only polygon
       mutateEditOrder({
         _orderId: orderId,
         _type: type,
@@ -457,11 +457,12 @@ const useContractMultichain = () => {
         .catch((err) => reject(err))
     })
 
-  const submitDataEditNaka = (_data, type, dataEdit) =>
+  const submitDataEditNaka = (_data, dataEdit, chain) =>
     new Promise((resolve, reject) => {
+      const _type = chain === "polygon" ? "sell" : "buy"
       const { wallet_address, order_id } = dataEdit
       setOpen(MESSAGES.transaction_processing_order)
-      if (type === "sell") {
+      if (chain === "binance") {
         // bnb
         // TODO YUI order can't SAVE DB
         editOrderBuyNaka(_data.price, _data.amount, order_id)
@@ -482,9 +483,13 @@ const useContractMultichain = () => {
                   p2pBinanceContract.address?.toLowerCase()
               )
               const events = p2pBinanceContract.interface.parseLog(log)
-              saveDbEditOrder(events, type, wallet_address, tx_hash)
-                .then((_response) => resolve(_response))
-                .catch((_err) => reject(_err))
+              saveDbEditOrder(events, _type, wallet_address, tx_hash)
+                .then((_response) => {
+                  resolve(_response)
+                })
+                .catch((_err) => {
+                  reject(_err)
+                })
 
               setClose()
             }
@@ -511,7 +516,7 @@ const useContractMultichain = () => {
               )
 
               const events = p2pPolygonContract.interface.parseLog(log)
-              saveDbEditOrder(events, type, wallet_address, tx_hash)
+              saveDbEditOrder(events, _type, wallet_address, tx_hash)
                 .then((_response) => resolve(_response))
                 .catch((_err) => reject(_err))
               setClose()

@@ -288,7 +288,7 @@ const useWalletContoller = () => {
     } else {
       setType("NAKA")
     }
-  }, [chainId])
+  }, [chainId, statusWalletConnected])
 
   return {
     type,

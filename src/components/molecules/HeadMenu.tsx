@@ -23,19 +23,19 @@ const HeadMenu = () => {
   return (
     <Box
       component="div"
-      className="xs:table xs:my-5 m-auto my-5 !h-[50px] w-max items-center justify-center gap-1 rounded-[8px] bg-neutral-700 p-1 md:flex lg:my-0"
+      className="xs:my-5 m-auto my-2 grid flex-[1_1_100%] grid-cols-2 items-center justify-center gap-1 rounded-[8px] bg-neutral-700 p-1 md:flex md:!h-[50px] lg:my-0 lg:flex-none xl:order-1"
     >
       {MENU.map((item) => {
         if (!item.isChide && item.chide === undefined) {
           return (
             <Link
               href={item.link}
-              className="m-auto table"
+              className="m-auto table w-full md:w-auto"
               key={`${item.name}`}
             >
               <Button
                 sx={styleButton}
-                className={`button-select-naka xs:mb-1 !hover:bg-error-main !hover:text-white-primary mb-1 !rounded-[8px] !py-[12px] !px-[23px] !text-black-default ${
+                className={`button-select-naka xs:mb-1 !hover:bg-error-main !hover:text-white-primary w-full !rounded-[8px] !py-[12px] !px-[23px] !text-black-default ${
                   router.pathname === item.link
                     ? "!bg-primary-main"
                     : "!bg-neutral-800"
@@ -52,7 +52,7 @@ const HeadMenu = () => {
         }
         return (
           <div
-            className="m-auto table"
+            className="m-auto table w-full md:w-auto"
             key={`${item.name}`}
           >
             <SelectNaka
@@ -99,7 +99,7 @@ const HeadMenu = () => {
               button={
                 <Button
                   sx={styleButton}
-                  className={`button-select-naka xs:mb-1 !hover:bg-error-main  !hover:text-white-primary !px-[23px]md:mb-0 mb-1 !rounded-[8px]  px-2 !py-[12px] !text-black-default ${
+                  className={`button-select-naka xs:mb-1 !hover:bg-error-main  !hover:text-white-primary !px-[23px]md:mb-0 w-full  !rounded-[8px] px-2 !py-[12px] !text-black-default md:w-auto ${
                     item.isChide &&
                     item.chide &&
                     (router.pathname ===

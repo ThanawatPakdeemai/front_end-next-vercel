@@ -32,12 +32,12 @@ const HeadLogo = () => {
     <>
       <Box
         component="div"
-        className={`head-logo flex w-[360px] items-center justify-start transition-all duration-75 ${
+        className={`head-logo mt-2 flex w-full flex-1 items-center justify-center transition-all duration-75 sm:justify-start lg:mt-0 lg:w-[360px] lg:flex-none ${
           scrollPage < 100 ? "opacity-100" : "opacity-0"
         }`}
       >
         <div
-          className={`flex items-center justify-center  ${
+          className={`ml-2 flex w-full items-center md:w-auto md:justify-center lg:ml-0 ${
             scrollPage < 100 ? "block" : " hidden"
           } `}
         >
@@ -45,7 +45,7 @@ const HeadLogo = () => {
             <LogoNaka />
           </Link>
           <Divider
-            className="!mx-5 my-2 border-neutral-700"
+            className="my-2 hidden border-neutral-700 md:!mx-5 md:block"
             orientation="vertical"
             flexItem
           />

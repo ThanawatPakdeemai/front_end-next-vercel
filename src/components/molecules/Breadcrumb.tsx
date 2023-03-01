@@ -57,7 +57,7 @@ const Breadcrumb = ({ className, isCustom, _breadcrumbs }: IProp) => {
     >
       <Breadcrumbs
         separator=" "
-        className="uppercase"
+        className="my-2 uppercase md:my-0"
         aria-label="breadcrumb"
       >
         {isCustom

@@ -17,6 +17,7 @@ import Balance from "@components/molecules/balance/Balance"
 import SwitchChain from "@components/atoms/SwitchChain"
 import useSwitchNetwork from "@hooks/useSwitchNetwork"
 import CONFIGS from "@configs/index"
+import PleaseCheckWallet from "@components/atoms/PleaseCheckWallet"
 import useBuyGameItemController from "../containers/hooks/useBuyGameItemController"
 
 const iconmotion = {
@@ -56,7 +57,7 @@ const FormBuyItem = () => {
     // accounts,
     // signer
   } = useBuyGameItemController()
-  const { handleSwitchNetwork } = useSwitchNetwork()
+  const { handleSwitchNetwork, statusWalletConnected } = useSwitchNetwork()
 
   // console.log(
   //   "chainSupport",
@@ -242,28 +243,33 @@ const FormBuyItem = () => {
             </p>
           </div>
           <ButtonGroup className="mt-10 flex flex-col  gap-3">
-            <ButtonLink
-              href=""
-              size="medium"
-              disabled={isDisabled()}
-              className="h-[40px] w-full text-sm "
-              text={
-                <>
-                  {isLoading ? (
-                    <CircularProgress
-                      color="primary"
-                      size={15}
-                    />
-                  ) : (
-                    t("buy-now")
-                  )}
-                </>
-              }
-              onClick={() => {}}
-              type="submit"
-              color="secondary"
-              variant="contained"
-            />
+            {!statusWalletConnected.responseStatus ? (
+              <PleaseCheckWallet />
+            ) : (
+              <ButtonLink
+                href=""
+                size="medium"
+                disabled={isDisabled()}
+                className="h-[40px] w-full text-sm "
+                text={
+                  <>
+                    {isLoading ? (
+                      <CircularProgress
+                        color="primary"
+                        size={15}
+                      />
+                    ) : (
+                      t("buy-now")
+                    )}
+                  </>
+                }
+                onClick={() => {}}
+                type="submit"
+                color="secondary"
+                variant="contained"
+              />
+            )}
+
             <div className="flex w-full justify-center rounded-2xl  border border-black-200">
               <ButtonLink
                 className="h-[40px] w-full text-sm"

@@ -64,6 +64,11 @@ const useGlobal = (
   const [hydrated, setHydrated] = useState(false)
 
   /**
+   * @description check if url is in marketplace
+   */
+  const isMarketplace = router.asPath.includes("marketplace")
+
+  /**
    * @description Set profile
    */
   useEffect(() => {
@@ -279,7 +284,8 @@ const useGlobal = (
     getTokenSupply,
     fetchAllTokenSupported,
     fetchNAKAToken,
-    getDefaultCoin
+    getDefaultCoin,
+    isMarketplace
   }
 }
 

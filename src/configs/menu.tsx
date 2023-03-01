@@ -519,3 +519,89 @@ export const MENU_SERVICES = [
     external: false
   }
 ]
+
+export const MENU_MARKETPLACE = [
+  {
+    name: "NAKA Market",
+    link: "/marketplace",
+    isChilde: true,
+    left: "180px !important",
+    image: {
+      src: IMAGES.tableCom.src,
+      widthImg: 240,
+      height: 150,
+      alt: "image-game"
+    },
+    chide: [
+      {
+        name: "Land",
+        link: "/marketplace",
+        icon: MarketPlaceIcon
+      },
+      {
+        name: "Building",
+        link: "/marketplace/building",
+        icon: MarketPlaceIcon
+      },
+      {
+        name: "NAKA Punk",
+        link: "/marketplace/naka-punk",
+        icon: MarketPlaceIcon
+      }
+    ]
+  },
+  {
+    name: "P2P Market",
+    link: "/marketplace/p2p",
+    isChilde: true,
+    image: {
+      src: IMAGES.tableCom.src,
+      widthImg: 240,
+      height: 150,
+      alt: "image-game"
+    },
+    chide: [
+      {
+        name: "Game Item",
+        link: "/marketplace/p2p/game",
+        icon: MarketPlaceIcon
+      },
+      {
+        name: "Land",
+        link: "/marketplace/p2p/land",
+        icon: MarketPlaceIcon
+      },
+      {
+        name: "Building",
+        link: "/marketplace/p2p/building",
+        icon: MarketPlaceIcon
+      },
+      {
+        name: "Material",
+        link: "/marketplace/p2p/material",
+        icon: MarketPlaceIcon
+      },
+      {
+        name: "NAKA Punk",
+        link: "/marketplace/p2p/naka-punk",
+        icon: MarketPlaceIcon
+      }
+      // {
+      //   name: "NFT Game",
+      //   link: "/marketplace/p2p/nft",
+      //   icon: MarketPlaceIcon
+      // }
+    ]
+  },
+  {
+    name: "Nakaverse Map",
+    link: "/marketplace/map",
+    isChide: false,
+    image: {
+      src: IMAGES.tableCom.src,
+      widthImg: 240,
+      height: 150,
+      alt: "image-game"
+    }
+  }
+]

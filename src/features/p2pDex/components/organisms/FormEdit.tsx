@@ -104,7 +104,7 @@ const FormEdit = ({
   }
 
   const onSubmit = async (_data) => {
-    if (type === "buy") {
+    if (chain === "polygon") {
       const allow = await allowNaka
       if (allow && allow.toString() > 0) {
         sendData(_data)
@@ -124,7 +124,7 @@ const FormEdit = ({
             setClose()
           })
       }
-    } else if (type === "sell") {
+    } else if (chain === "binance") {
       const allowBi = await allowBinance
       if (allowBi && allowBi.toString() > 0) {
         sendData(_data)
@@ -181,7 +181,12 @@ const FormEdit = ({
               type={type}
               chain={chain}
               edit
-              cancelOrder={cancelOrder}
+              cancelOrder={() => {
+                if (cancelOrder) {
+                  setOpen(MESSAGES.transaction_processing_order)
+                  cancelOrder()
+                }
+              }}
             />
 
             <Form

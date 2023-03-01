@@ -294,7 +294,7 @@ const FormBuyItem = () => {
               onClose={() => {}}
               className="mt-10 w-full"
             />
-            <div className="col-span-5 m-2 flex flex-col items-center justify-center">
+            <div className="m-2 flex flex-col items-center justify-center md:col-span-5">
               <SwitchChain
                 variant="simple"
                 chainName={watch("currency").tokenName}

@@ -33,15 +33,15 @@ const SummaryMain = ({ summaryData }: IProp) => {
   )
 
   return playerSummary ? (
-    <div className="w-[605px] overflow-hidden rounded-[14px] bg-neutral-900">
+    <div className="flex-[1_1_100%] overflow-hidden rounded-[14px] bg-neutral-900 sm:flex-[1_1_50%] lg:w-[605px] lg:flex-none">
       <Tagline
         icon={null}
         bgColor="bg-error-main"
         textColor="text-error-contrastText font-bold text-[12px]"
         text="Thanks for playing Nanamoto.games with us. It was a lot of fun!"
-        className="left-[200px] top-10 !my-0 rotate-[30deg] overflow-hidden"
+        className="left-[200px] top-10 !my-0 hidden rotate-[30deg] overflow-hidden lg:block"
       />
-      <div className="m-[10px] mt-[-23px] flex flex-row">
+      <div className="m-[10px] flex flex-row lg:mt-[-23px]">
         <Typography
           className="relative flex h-[328px] rotate-180 items-center justify-between rounded border border-neutral-800 bg-transparent"
           sx={{
@@ -55,7 +55,7 @@ const SummaryMain = ({ summaryData }: IProp) => {
           <SaveIcon />
         </Typography>
         <div className="flex w-full flex-col items-center justify-center text-error-main">
-          <TableIcon className="absolute z-[1]" />
+          <TableIcon className="absolute z-[1] hidden sm:block" />
           <span className="mb-11 text-sm font-bold uppercase">
             YOUR SCORE IS
           </span>
@@ -88,8 +88,8 @@ const SummaryMain = ({ summaryData }: IProp) => {
           </div>
         </div>
       </div>
-      <div className="flex gap-[10px] p-[10px]">
-        <div className="flex items-center rounded border border-neutral-800 px-[14px]">
+      <div className="flex flex-wrap gap-[10px] p-[10px] lg:flex-nowrap">
+        <div className="flex w-full items-center justify-center rounded border border-neutral-800 p-2 px-[14px] sm:flex-[1_1_100%]">
           <Image
             width={264}
             height={288}
@@ -101,7 +101,7 @@ const SummaryMain = ({ summaryData }: IProp) => {
             alt="img-profile"
           />
         </div>
-        <div className="flex flex-col gap-[10px]">
+        <div className="flex flex-[1_1_100%] flex-col gap-[10px]">
           <div className="flex w-full flex-col items-center justify-center rounded border border-neutral-800 px-[26px] py-5 text-sm">
             <SummaryGameDetail
               title="game:"

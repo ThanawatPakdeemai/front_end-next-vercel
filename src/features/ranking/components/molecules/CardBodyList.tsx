@@ -12,7 +12,7 @@ interface IProp {
 }
 const CardBodyList = ({ width, players, className }: IProp) => (
   <div
-    className={`custom-scroll ${className} h-[375px] overflow-y-scroll pr-4`}
+    className={`custom-scroll h-[375px] overflow-y-scroll pr-4 ${className}`}
   >
     {players.map((item, index: number) => (
       <Card

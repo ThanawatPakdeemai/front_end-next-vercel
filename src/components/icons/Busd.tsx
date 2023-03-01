@@ -1,8 +1,8 @@
 import React from "react"
 
 function IBusd({
-  width = 30,
-  height = 30,
+  width = 21,
+  height = 21,
   className,
   color
 }: React.SVGProps<SVGSVGElement>) {

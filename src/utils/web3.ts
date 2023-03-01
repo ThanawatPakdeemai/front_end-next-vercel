@@ -28,5 +28,9 @@ export const ethHttpRpcProvider = new ethers.providers.JsonRpcProvider(
 const simpleRpcProvider = new providers.JsonRpcProvider(
   CONFIGS.CHAIN.POLYGON_RPC_URL
 )
+
+export const bnbRpcProvider = new providers.JsonRpcProvider(
+  CONFIGS.CHAIN.BNB_RPC_URL
+)
 export { getWeb3NoAccount, getWeb3WithArchivedNodeProvider, web3NoAccount }
 export default simpleRpcProvider

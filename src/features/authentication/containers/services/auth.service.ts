@@ -90,6 +90,15 @@ export const refreshProfileToken = async (
 
         return _response.data.jwtToken
       })
+      .catch((error) => {
+        useProfileStore.getState().onReset()
+        Helper.resetLocalStorage()
+        callBeckWhenError && callBeckWhenError()
+        if (error instanceof Error) {
+          // console.error("Error", error.message)
+          throw Error(`refreshToken : ${error}`)
+        }
+      })
   } catch (error) {
     useProfileStore.getState().onReset()
     Helper.resetLocalStorage()

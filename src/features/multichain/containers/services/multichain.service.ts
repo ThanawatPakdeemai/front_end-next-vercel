@@ -6,19 +6,26 @@ import {
   IGetP2PDexOrderList,
   ICreateP2PDexOrder,
   IExecP2PDexOrder,
-  IUpdateP2PDexOrder
+  IUpdateP2PDexOrder,
+  IResExecutive
 } from "@feature/multichain/interfaces/IMultichain"
 import services from "@src/configs/axiosGlobalConfig"
 
 export const getP2PDexOrderByAddr = ({
   _address,
   _limit,
-  _page
+  _page,
+  _sort,
+  _sort_value,
+  _type
 }: IGetP2PDexOrderByAddr) =>
   new Promise<IMultiOrderListDataServ>((resolve, reject) => {
     const data = {
+      type: _type,
       limit: _limit,
-      skip: _page
+      skip: _page,
+      sort: _sort, // busd_price,naka_price,naka_amount
+      sort_value: _sort_value // can be 1 = asc,-1 = desc
     }
     services
       .post<IMultiOrderListDataServ>(
@@ -68,7 +75,7 @@ export const execP2PDexOrder = ({
   _totalPrice,
   _address
 }: IExecP2PDexOrder) =>
-  new Promise((resolve, reject) => {
+  new Promise<IResExecutive>((resolve, reject) => {
     const data = {
       request_id: _requestId,
       order_id: _orderId,
@@ -116,13 +123,17 @@ export const updateP2PDexOrder = ({
 export const getP2PDexOrderList = ({
   _type,
   _limit,
-  _page
+  _page,
+  _sort,
+  _sort_value
 }: IGetP2PDexOrderList) =>
   new Promise<IMultiOrderListServ>((resolve, reject) => {
     const data = {
       type: _type, // sell, buy
       limit: _limit,
-      skip: _page
+      skip: _page,
+      sort: _sort, // busd_price,naka_price,naka_amount
+      sort_value: _sort_value // can be 1 = asc,-1 = desc
     }
 
     services

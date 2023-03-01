@@ -1,8 +1,6 @@
 import React, { memo, useEffect, useState } from "react"
 import { Image } from "@components/atoms/image"
-import { IPointCurrent } from "@feature/home/interfaces/IHomeService"
 import { Box, Typography } from "@mui/material"
-import { getPriceCurrent } from "src/features/home/containers/services/home.service"
 import { IMAGES } from "@constants/images"
 import { siteInfo } from "@configs/sites"
 import Helper from "@utils/helper"
@@ -12,6 +10,8 @@ import ButtonClose from "@components/atoms/button/ButtonClose"
 import { BUY_NAKA_MENU } from "@configs/buynaka"
 import Link from "next/link"
 import CONFIGS from "@configs/index"
+import { getCurrentNaka } from "@feature/inventory/containers/services/inventory.service"
+import { ICurrentNakaData } from "@feature/inventory/interfaces/IInventoryService"
 import { ModalCustom } from "./Modal/ModalCustom"
 import TabMenu from "./TabMenu"
 
@@ -31,14 +31,15 @@ const HeadPrice = ({
   showTime = true
 }: IProp) => {
   // const { t } = useTranslation()
-  const [price, setPrice] = useState<IPointCurrent>()
+
+  const [price, setPrice] = useState<ICurrentNakaData>()
   const [open, setOpen] = useState<boolean>(false)
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
   const getPrice = async () => {
-    const prices = await getPriceCurrent()
+    const prices = await getCurrentNaka()
     if (prices) {
       setPrice(prices.data)
     }

@@ -27,6 +27,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { useForm } from "react-hook-form"
 import IEdit from "@components/icons/Edit"
+import useCreateNewPassword from "../containers/hooks/useCreateNewPassword"
 
 const KeyFramesClockwise = styled("div")({
   "@keyframes rotation": {
@@ -79,7 +80,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
   const [formSubmitErrors, setFormSubmitErrors] = useState(false)
   const [createPassword, setCreatePassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
-  // const { errorToast, successToast } = useToast()
+  const { mutateCreateNewPassword } = useCreateNewPassword()
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
   const handleMouseDownPassword = (
@@ -115,7 +116,12 @@ const FromCreatePassword = ({ email, token }: IProp) => {
       characterPasswordLength &&
       createPassword === confirmPassword
     ) {
-      // console.log("UserPassword", createPassword, confirmPassword)
+      mutateCreateNewPassword({
+        _email: email,
+        _password: createPassword,
+        _confirmPassword: confirmPassword,
+        _token: token
+      })
     }
     setFormSubmitErrors(true)
   }
@@ -133,24 +139,8 @@ const FromCreatePassword = ({ email, token }: IProp) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch("password"), watch("confirmPassword")])
 
-  // useEffect(() => {
-  //   if (!response) {
-  //     if (response) {
-  //     }
-  //     mutateCreateNewPassword({
-  //       _email: email,
-  //       _password: password,
-  //       _confirmPassword: confirmPassword,
-  //       _token: token
-  //     }).then((_res) => {})
-  //   }
-  // }, [response, mutateCreateNewPassword])
-
   return (
     <Box>
-      <div>
-        {email},{token}
-      </div>
       <Box className="py-5">
         <Grid
           item

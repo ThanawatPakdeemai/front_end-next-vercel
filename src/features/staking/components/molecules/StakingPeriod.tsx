@@ -21,9 +21,9 @@ const StakingPeriod = ({
   className
 }: IStakingPeriod) => (
   <div
-    className={`flex h-full items-center justify-between rounded-[10px] bg-neutral-900 p-5 ${className}`}
+    className={`h-full items-center justify-between rounded-[10px] bg-neutral-900 p-5 sm:flex ${className}`}
   >
-    <p className="flex items-center text-neutral-600">
+    <p className="flex items-center text-neutral-600 max-sm:justify-center">
       {t("period")} &nbsp;
       {startDatetime !== "00:00:00" ? (
         <span className="text-neutral-300">{startDatetime}</span>
@@ -40,7 +40,7 @@ const StakingPeriod = ({
         <Skeleton className="h-[50px] w-[100px] rounded-sm" />
       )}
     </p>
-    <p className="flex items-center text-neutral-600">
+    <p className="flex items-center text-neutral-600 max-sm:justify-center">
       {type === "fixed" ? "Fixed APR." : "Est APR."}
       {est !== -1 ? (
         <span className="ml-3 text-sm text-varidian-default">

@@ -32,16 +32,16 @@ const HeadStaking = ({ children }: { children: React.ReactNode }) => {
   ]
 
   return (
-    <div className="relative z-10 w-[calc(100%)] px-[10%]">
+    <div className="relative z-10 w-[calc(100%)] px-[5%] lg:px-[10%]">
       <Grid
         container
         spacing={2}
-        className="mb-10 items-center"
+        className="mb-10 flex-col items-center md:flex-row"
       >
         <Grid
           item
           xs={6}
-          className="font-bold uppercase"
+          className="max-w-full font-bold uppercase"
         >
           Unlock the power of staking <br />
           and earn passive income
@@ -49,6 +49,7 @@ const HeadStaking = ({ children }: { children: React.ReactNode }) => {
         <Grid
           item
           xs={6}
+          className="max-w-full"
         >
           {path.length === 3 ? (
             <Link

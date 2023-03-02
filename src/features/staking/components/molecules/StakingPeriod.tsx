@@ -28,7 +28,9 @@ const StakingPeriod = ({
       <p className="flex items-center text-neutral-600 max-sm:justify-center">
         {t("period")} &nbsp;
         {startDatetime !== "00:00:00" ? (
-          <span className="text-neutral-300">{startDatetime}</span>
+          <span className="text-neutral-300 max-sm:text-end">
+            {startDatetime}
+          </span>
         ) : (
           <Skeleton className="h-[15px] w-[100px] rounded-sm sm:h-[50px]" />
         )}
@@ -42,7 +44,7 @@ const StakingPeriod = ({
           <Skeleton className="h-[18px] w-[100px] rounded-sm sm:h-[50px]" />
         )}
       </p>
-      <p className="flex items-center text-neutral-600 max-sm:justify-center">
+      <p className="flex items-center text-neutral-600 max-sm:mt-1 max-sm:justify-center">
         {type === "fixed" ? "Fixed APR." : "Est APR."}
         {est !== -1 ? (
           <span className="ml-3 text-sm text-varidian-default">

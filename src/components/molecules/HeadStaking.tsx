@@ -67,7 +67,7 @@ const HeadStaking = ({ children }: { children: React.ReactNode }) => {
                 <Button
                   key={item.id}
                   onClick={() => handleChangeTab(item.id)}
-                  className={`flex h-full items-center justify-center rounded-lg py-3 hover:bg-neutral-900 ${
+                  className={`flex h-full items-center justify-center rounded-lg py-3 hover:bg-neutral-900 max-sm:!min-w-0 ${
                     item.id === tabValue
                       ? "!bg-neutral-900 !text-white-default"
                       : "bg-neutral-800"

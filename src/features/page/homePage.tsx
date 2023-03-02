@@ -16,7 +16,7 @@ import BannerSlide from "@feature/slider/components/templates/BannerSlide"
 import CarouselSlide from "@feature/slider/components/templates/CarouselSlide"
 import CardMarketplace from "@components/molecules/CardMarketplace"
 import CardNakaverse from "@components/molecules/CardNakaverse"
-import { Box } from "@mui/material"
+import { Box, Grid } from "@mui/material"
 import ICoupon from "@components/icons/Coupon"
 import IDiamond from "@components/icons/Diamond"
 import { IMAGES } from "@constants/images"
@@ -34,6 +34,7 @@ import useProfileStore from "@stores/profileStore"
 import useQuestStore from "@stores/quest"
 import { MenuLists } from "@configs/social"
 import useGlobal from "@hooks/useGlobal"
+import CardLinkTemplate from "@components/templates/contents/CardLinkTemplate"
 
 const Home = () => {
   const limit = 10
@@ -48,7 +49,7 @@ const Home = () => {
   useEffect(() => {
     if (hydrated) createParticle()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [createParticle])
+  }, [hydrated])
 
   const handleModalMission = () => {
     setOpen()
@@ -120,56 +121,69 @@ const Home = () => {
           </div>
         )}
       </div>
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <Box>
+      <div className="flex grid-cols-1 flex-wrap gap-6 lg:grid lg:grid-cols-2">
+        <Box className="flex-[1_1_100%] sm:flex-[1_1_60%] xl:flex-none">
           <CardMarketplace />
-          <div className="mt-4 grid grid-cols-3 gap-6">
-            <CardLink
-              classNameSecond="!bg-red-card"
-              imageClassNameSecond="scale-[1.35]"
-              iconBtn={<INakaSwap />}
-              textBtn="NAKA Swap"
-              href="/"
-              srcMain={IMAGES.frontNakaSwap.src}
-              altMain={IMAGES.frontNakaSwap.alt}
-              srcSecond={IMAGES.backNakaSwap.src}
-              altSecond={IMAGES.backNakaSwap.alt}
-            />
-            <CardLink
-              classNameSecond="!bg-warning-dark"
-              imageClassNameSecond="scale-[1.35]"
-              iconBtn={<IStacking />}
-              textBtn="Staking"
-              href="/staking"
-              srcMain={IMAGES.frontStaking.src}
-              altMain={IMAGES.frontStaking.alt}
-              srcSecond={IMAGES.backStaking.src}
-              altSecond={IMAGES.backStaking.alt}
-            />
-            <CardLink
-              classNameSecond="bg-info-light"
-              imageClassNameSecond="scale-[1.35]"
-              iconBtn={<IReferrals />}
-              textBtn="Referral"
-              href="/referral"
-              srcMain={IMAGES.frontReferrals.src}
-              altMain={IMAGES.frontReferrals.alt}
-              srcSecond={IMAGES.backReferrals.src}
-              altSecond={IMAGES.backReferrals.alt}
-            />
+          <div className="mt-4">
+            <Grid
+              container
+              spacing={2}
+            >
+              <CardLinkTemplate>
+                <CardLink
+                  classNameSecond="!bg-red-card"
+                  imageClassNameSecond="scale-[1.35]"
+                  iconBtn={<INakaSwap />}
+                  textBtn="NAKA Swap"
+                  href="/"
+                  srcMain={IMAGES.frontNakaSwap.src}
+                  altMain={IMAGES.frontNakaSwap.alt}
+                  srcSecond={IMAGES.backNakaSwap.src}
+                  altSecond={IMAGES.backNakaSwap.alt}
+                />
+              </CardLinkTemplate>
+              <CardLinkTemplate>
+                <CardLink
+                  classNameSecond="!bg-warning-dark"
+                  imageClassNameSecond="scale-[1.35]"
+                  iconBtn={<IStacking />}
+                  textBtn="Staking"
+                  href="/staking"
+                  srcMain={IMAGES.frontStaking.src}
+                  altMain={IMAGES.frontStaking.alt}
+                  srcSecond={IMAGES.backStaking.src}
+                  altSecond={IMAGES.backStaking.alt}
+                />
+              </CardLinkTemplate>
+              <CardLinkTemplate>
+                <CardLink
+                  classNameSecond="bg-info-light"
+                  imageClassNameSecond="scale-[1.35]"
+                  iconBtn={<IReferrals />}
+                  textBtn="Referral"
+                  href="/referral"
+                  srcMain={IMAGES.frontReferrals.src}
+                  altMain={IMAGES.frontReferrals.alt}
+                  srcSecond={IMAGES.backReferrals.src}
+                  altSecond={IMAGES.backReferrals.alt}
+                />
+              </CardLinkTemplate>
+            </Grid>
           </div>
         </Box>
-        <div className="relative overflow-hidden">
-          <div id="spark-fire">
-            <CarouselSlide
-              slideGames={GAME_DOWNLOAD}
-              isLoading={false}
-            />
-          </div>
+        <div className="relative flex-[1_1_100%] overflow-hidden sm:flex-[1_1_60%] xl:flex-none">
+          <CarouselSlide
+            slideGames={GAME_DOWNLOAD}
+            isLoading={false}
+          />
+          <div
+            id="spark-fire"
+            className="absolute top-0 left-0 hidden h-full w-full xl:block"
+          />
         </div>
       </div>
 
-      <div className="my-20 h-full w-full">
+      <div className="my-2 h-full w-full lg:my-20">
         {f2pGame && !f2pLoading ? (
           <GameCarousel
             menu={F2PHeaderMenu}
@@ -187,7 +201,7 @@ const Home = () => {
         )}
       </div>
 
-      <div className="my-20 h-full w-full">
+      <div className="my-2 h-full w-full lg:my-20">
         {p2eGame && !p2eLoading ? (
           <GameCarousel
             menu={P2EHeaderMenu}
@@ -215,42 +229,53 @@ const Home = () => {
       <BodyCategories />
 
       <DeveloperPart />
-      <Box className="xs:flex-col mt-4 mb-10 gap-3 lg:flex">
-        <Box className="xs:grid-cols-1 mb-3 grid gap-3 sm:grid-cols-2 lg:mb-0 lg:grid-cols-3">
-          <CardLink
-            classNameSecond="bg-warning-dark"
-            textBtn="Blog"
-            href="/blog"
-          />
+      <Box className="xs:flex-col mt-4 mb-10 gap-4 lg:flex">
+        <Box className="flex-1 xl:flex-none">
+          <Grid
+            container
+            spacing={2}
+          >
+            <CardLinkTemplate>
+              <CardLink
+                classNameSecond="bg-warning-dark"
+                textBtn="Blog"
+                href="/blog"
+              />
+            </CardLinkTemplate>
+            <CardLinkTemplate>
+              <CardLink
+                classNameSecond="bg-secondary-light"
+                iconBtn={<ICoupon />}
+                textBtn="Coupon"
+                href="/coupon"
+                srcMain={IMAGES.frontCouponBand.src}
+                altMain={IMAGES.frontCouponBand.alt}
+                srcSecond={IMAGES.backCouponBand.src}
+                altSecond={IMAGES.backCouponBand.alt}
+              />
+            </CardLinkTemplate>
 
-          <CardLink
-            classNameSecond="bg-secondary-light"
-            iconBtn={<ICoupon />}
-            textBtn="Coupon"
-            href="/coupon"
-            srcMain={IMAGES.frontCouponBand.src}
-            altMain={IMAGES.frontCouponBand.alt}
-            srcSecond={IMAGES.backCouponBand.src}
-            altSecond={IMAGES.backCouponBand.alt}
-          />
-
-          <CardLink
-            classNameSecond="bg-info-light"
-            iconBtn={<IDiamond />}
-            textBtn="NAKA NFT"
-            href="/arcade-emporium"
-            srcMain={IMAGES.frontNakaBand.src}
-            altMain={IMAGES.frontNakaBand.alt}
-            srcSecond={IMAGES.backNakaBand.src}
-            altSecond={IMAGES.backNakaBand.alt}
-          />
+            <CardLinkTemplate>
+              <CardLink
+                classNameSecond="bg-info-light"
+                iconBtn={<IDiamond />}
+                textBtn="NAKA NFT"
+                href="/arcade-emporium"
+                srcMain={IMAGES.frontNakaBand.src}
+                altMain={IMAGES.frontNakaBand.alt}
+                srcSecond={IMAGES.backNakaBand.src}
+                altSecond={IMAGES.backNakaBand.alt}
+              />
+            </CardLinkTemplate>
+          </Grid>
         </Box>
-
-        <CardNakaverse href="/" />
+        <Box className="mt-2 flex-1 sm:mt-4 md:max-w-full lg:mt-0 lg:max-w-[33.33%] xl:flex-none">
+          <CardNakaverse href="/" />
+        </Box>
       </Box>
     </>
   ) : (
-    <> </>
+    <></>
   )
 }
 export default memo(Home)

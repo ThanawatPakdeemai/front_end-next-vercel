@@ -1,6 +1,6 @@
 import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import { F2PHeaderMenu } from "@constants/gameSlide"
+import { StoryModeHeaderMenu } from "@constants/gameSlide"
 import GameCard from "@feature/game/components/molecules/GameCard"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import { getGameByTypes } from "@feature/game/containers/services/game.service"
@@ -107,7 +107,7 @@ const StoryModeGamesPage = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="mb-6 grid grid-cols-5 gap-y-4 gap-x-2">
+      <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-5">
         {isLoading
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
           : null}
@@ -115,7 +115,7 @@ const StoryModeGamesPage = () => {
           ? gameFilter.map((game) => (
               <GameCard
                 key={game.id}
-                menu={F2PHeaderMenu}
+                menu={StoryModeHeaderMenu}
                 data={game}
                 checkTimer
                 staminaRecovery={staminaRecovery}

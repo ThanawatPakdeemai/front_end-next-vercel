@@ -30,7 +30,7 @@ const DropdownListItem = ({
   // const { errorToast } = useToast()
 
   const [defaultItem, setDefaultItem] = useState<IGameItemListData | null>(
-    itemSelected ?? null
+    itemSelected ?? list[0] ?? null
   )
 
   const onChangeItem = (_item: IGameItemListData) => {
@@ -41,6 +41,12 @@ const DropdownListItem = ({
     }
     if (_item && onChangeSelect) onChangeSelect(_item)
   }
+
+  React.useEffect(() => {
+    if (itemSelected) {
+      setDefaultItem(itemSelected)
+    }
+  }, [itemSelected, setDefaultItem])
 
   return (
     <>
@@ -119,7 +125,7 @@ const DropdownListItem = ({
                     }
                     onChange={(_item) => {
                       popupState.close()
-                      onChangeItem(_item.data as IGameItemListData)
+                      onChangeItem(_item)
                     }}
                   />
                 </Popover>

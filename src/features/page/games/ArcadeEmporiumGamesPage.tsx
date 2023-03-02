@@ -1,6 +1,6 @@
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import { F2PHeaderMenu } from "@constants/gameSlide"
+import { NFTHeaderMenu } from "@constants/gameSlide"
 import GameCard from "@feature/game/components/molecules/GameCard"
 import useArcadeEmporiumGames from "@feature/game/containers/hooks/useArcadeEmporiumGames"
 import { IGame } from "@feature/game/interfaces/IGameService"
@@ -29,7 +29,7 @@ const ArcadeEmporiumGamesPage = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="mb-6 grid grid-cols-5 gap-y-4 gap-x-2">
+      <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-5">
         {isLoadingGamesFilterByNftgame
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
           : null}
@@ -37,7 +37,7 @@ const ArcadeEmporiumGamesPage = () => {
           ? gameData.map((game) => (
               <GameCard
                 key={game.id}
-                menu={F2PHeaderMenu}
+                menu={NFTHeaderMenu}
                 data={game}
                 onHandleClick={() =>
                   onHandleClick("arcade-emporium", game.path, game)

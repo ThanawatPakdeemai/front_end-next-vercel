@@ -355,9 +355,10 @@ const FormLogin = () => {
       </Grid>
       <Grid
         item
+        className="w-full"
         container
       >
-        <div className="flex flex-wrap">
+        <div className="flex w-full flex-row flex-wrap justify-between">
           <ButtonIcon
             whileHover="hover"
             transition={{
@@ -381,7 +382,7 @@ const FormLogin = () => {
                 <FacebookIcon />
               )
             }
-            className={`m-1 flex h-[40px] w-[75px] justify-center rounded-lg border border-neutral-700 bg-neutral-800 ${
+            className={`flex h-[40px] w-[75px] justify-center rounded-lg border border-neutral-700 bg-neutral-800 ${
               toggleFacebookLogin ? "items-end" : "items-center"
             }`}
           />
@@ -394,7 +395,7 @@ const FormLogin = () => {
             }}
             onClick={twitterLogin}
             icon={<TwitterIcon />}
-            className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+            className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
           />
           <ButtonIcon
             whileHover="hover"
@@ -405,7 +406,7 @@ const FormLogin = () => {
             }}
             onClick={googleLogin}
             icon={<GoogleIcon />}
-            className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+            className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
           />
           <ButtonIcon
             whileHover="hover"
@@ -416,7 +417,7 @@ const FormLogin = () => {
             }}
             onClick={metaMarkLogin}
             icon={<MetaMarkIcon />}
-            className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+            className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
           />
         </div>
       </Grid>

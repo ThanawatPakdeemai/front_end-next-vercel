@@ -22,7 +22,9 @@ const CardContentSlide = ({ slide }: ICardContentSlide) => {
     {
       id: "1",
       name: slide.category.name,
-      link: `categories/${slide.category.slug}`
+      link: `categories/${
+        slide.category.slug || slide.category.name.toLocaleLowerCase()
+      }`
     },
     {
       id: "2",
@@ -49,7 +51,7 @@ const CardContentSlide = ({ slide }: ICardContentSlide) => {
     )
 
   return (
-    <div className="slide-item--content my-4 flex flex-col rounded-2xl bg-neutral-800 p-6 text-sm md:my-0 md:h-full md:rounded-3xl md:p-8">
+    <div className="slide-item--content my-4 flex h-full flex-col rounded-2xl bg-neutral-800 p-6 text-sm md:my-0 md:!h-[24.313rem] md:rounded-3xl md:p-8">
       <Box
         sx={{
           "&>div": {
@@ -57,7 +59,10 @@ const CardContentSlide = ({ slide }: ICardContentSlide) => {
           }
         }}
       >
-        <GameTags gameTags={gameCategories} />
+        {gameTags && gameTags.length < 0 && (
+          // This is the old category single
+          <GameTags gameTags={gameCategories} />
+        )}
         <GameTags gameTags={gameTags} />
       </Box>
       <CardBody

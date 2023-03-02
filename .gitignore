@@ -46,3 +46,4 @@ package-lock.json
 yarn.lock
 
 *src/styles/output.css
+makefile

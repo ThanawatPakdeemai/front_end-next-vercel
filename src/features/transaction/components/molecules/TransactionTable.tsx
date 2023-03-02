@@ -53,7 +53,6 @@ export default function TransactionTable({ profile }: IProp) {
           }
         })
       }
-      // .catch((err) => console.log(err))
     }
     if (fetchRef.current) {
       fetchHistory()
@@ -69,7 +68,7 @@ export default function TransactionTable({ profile }: IProp) {
           <p className="my-5 font-neue-machina-bold text-default uppercase">
             {t("NAKA_storage_transactions")}
           </p>
-          <TableContainer className="w-[580px] rounded-[14px] border border-neutral-800 bg-neutral-780 px-1.5 pb-1.5 pt-4">
+          <TableContainer className="w-full rounded-[14px] border border-neutral-800 bg-neutral-780 px-1.5 pb-1.5 pt-4 xl:w-[580px]">
             <Table aria-label="simple table">
               <TableHeader thead={TransactionTableHeader} />
               <TableBody
@@ -142,7 +141,7 @@ export default function TransactionTable({ profile }: IProp) {
             </Table>
           </TableContainer>
           {txHistory && txHistory.length !== 0 && (
-            <div className="my-5 flex w-[580px] justify-between">
+            <div className="justify-between md:my-5 md:flex xl:w-[580px]">
               <PaginationNaka
                 totalCount={totalCount}
                 limit={limit}

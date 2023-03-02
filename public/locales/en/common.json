@@ -275,7 +275,6 @@
   "whats_new": "What's new",
   "ntf_game": "NFT Items",
   "NAKA_storage_transactions": "NAKA Storage Transactions",
-  "time": "Time",
   "type": "Type",
   "show": "Show",
   "your_naka_staked": "Your NAKA Staked",
@@ -285,5 +284,10 @@
   "staking_earn_up_to": "staking earn up to",
   "staking_start": "Staking Start",
   "period": "Period",
-  "naka_contract": "NAKA Contract"
+  "naka_contract": "NAKA Contract",
+  "please_switch_network": "Please switch the network",
+  "please_swap_coin": "Please swap coin",
+  "swap": "Swap Coin",
+  "buyItem_alert_bsc": "You can switch your Metamask to Polygon network to using your NAKA token to buy items",
+  "buyItem_alert_polygon": "You can switch your Metamask to BSC network to using another token to buy items"
 }

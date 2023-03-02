@@ -193,7 +193,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
   return (
     <>
       {gameData && (
-        <div>
+        <div className="flex w-full justify-center">
           <button
             type="button"
             onClick={handleOnExpandClick}
@@ -216,7 +216,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
           <Collapse
             in={expanded}
             timeout="auto"
-            className="rounded-[19px]"
+            className={`${className} mt-10 rounded-[19px]`}
             sx={{
               backgroundColor: "#010101D9",
               zIndex: 99999,
@@ -225,7 +225,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
             }}
           >
             <SelectDropdown
-              className={className}
+              // className={className}
               details={gameData}
               setOnTitle={setOnTitle}
               setExpanded={setExpanded}

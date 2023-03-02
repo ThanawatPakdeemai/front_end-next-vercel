@@ -17,6 +17,7 @@ import { MESSAGES } from "@constants/messages"
 import CardButItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import { useTranslation } from "next-i18next"
+import BuyItemBody from "@components/templates/game/BuyItemBody"
 import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
 const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
@@ -142,7 +143,8 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   }, [getPlayersMulti, isConnected, mapPlayer])
 
   const outRoom = useCallback(() => {
-    if (gameData) router.push(`/${gameData.path}/roomlist`)
+    if (gameData)
+      router.push(`/${router.query.typeGame}/${gameData.path}/roomlist`)
   }, [gameData, router])
 
   /**
@@ -227,7 +229,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
           startGame
         }}
       >
-        <Box className="block gap-3 lg:flex ">
+        <Box className="block gap-3 xl:flex ">
           {/* <Box className=" block gap-3 lg:grid lg:grid-flow-col"> */}
           {/* <Box className=" block gap-3 lg:grid lg:grid-flow-col"> */}
           <Box className="w-full gap-3 md:flex">
@@ -286,10 +288,10 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
             </Box>
           </Box>
           {gameData && (!gameData?.play_to_earn || !gameData.tournament) && (
-            <Box className=" w-[333px] flex-none gap-2">
+            <BuyItemBody>
               <CardButItem />
               <Chat />
-            </Box>
+            </BuyItemBody>
           )}
         </Box>
       </SocketProvider>

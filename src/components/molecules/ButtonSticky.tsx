@@ -21,7 +21,7 @@ const ButtonSticky = ({
     <button
       type="button"
       onClick={onClick}
-      className={`${className} relative z-[5] flex h-[88px] w-[88px] items-center justify-center`}
+      className={`${className} absolute right-4 top-0 z-[5] flex h-[88px] w-[88px] items-center justify-center md:relative md:right-auto md:top-auto`}
     >
       {multi ? (
         <>

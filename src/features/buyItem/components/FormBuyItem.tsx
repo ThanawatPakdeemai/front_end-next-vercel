@@ -5,22 +5,20 @@ import ButtonLink from "@components/atoms/button/ButtonLink"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined"
-import useGameStore from "@stores/game"
-import { CURRENCY } from "@configs/currency"
 import { Image } from "@components/atoms/image"
-import { Controller, useForm } from "react-hook-form"
-import useProfileStore from "@stores/profileStore"
-import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
+import { Controller } from "react-hook-form"
 import DropdownListCurrency from "@feature/gameItem/atoms/DropdownListCurrency"
 import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
-import { useToast } from "@feature/toast/containers"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { useTranslation } from "next-i18next"
 import Helper from "@utils/helper"
-import useGetBalanceVault from "@feature/inventory/containers/hooks/useGetBalanceVault"
-import useWalletStore from "@stores/wallet"
-import useLoadingStore from "@stores/loading"
-import useBuyGameItems from "../containers/hooks/useBuyGameItems"
+import { BaseToastComponent } from "@feature/toast/components"
+import Balance from "@components/molecules/balance/Balance"
+import SwitchChain from "@components/atoms/SwitchChain"
+import useSwitchNetwork from "@hooks/useSwitchNetwork"
+import CONFIGS from "@configs/index"
+import PleaseCheckWallet from "@components/atoms/PleaseCheckWallet"
+import useBuyGameItemController from "../containers/hooks/useBuyGameItemController"
 
 const iconmotion = {
   hover: {
@@ -34,94 +32,43 @@ const iconmotion = {
     }
   }
 }
-interface IProp {
-  handleClose?: () => void
-}
 
-const FromBuyItem = ({ handleClose }: IProp) => {
+const FormBuyItem = () => {
   const { t } = useTranslation()
-  const game = useGameStore((state) => state.data)
-  const profile = useProfileStore((state) => state.profile.data)
-  const { errorToast, successToast } = useToast()
-  const { gameItemList, refetch } = useGamesByGameId({
-    _playerId: profile ? profile.id : "",
-    _gameId: game ? game._id : ""
-  })
   const {
+    MessageAlert,
     handleSubmit,
     watch,
     setValue,
     register,
     control,
-    formState: { errors }
-  } = useForm({
-    defaultValues: {
-      player_id: profile ? profile?.id : "",
-      item_id: "",
-      currency_id: "",
-      qty: 1,
-      item: {},
-      currency: {},
-      nakaPerItem: 0
-    }
-  })
+    gameItemList,
+    game,
+    onSubmit,
+    onError,
+    errors,
+    isLoading,
+    updatePricePerItem,
+    onQtyUp,
+    onQtyDown,
+    chainSupport,
+    isDisabled
+    // chainId,
+    // accounts,
+    // signer
+  } = useBuyGameItemController()
+  const { handleSwitchNetwork, statusWalletConnected } = useSwitchNetwork()
 
-  const { mutateBuyItems, isLoading } = useBuyGameItems()
-  const { balanceVaultNaka } = useGetBalanceVault(
-    profile?.address ?? "",
-    !!profile
-  )
-  const { setVaultBalance } = useWalletStore()
-  const { setOpen, setClose } = useLoadingStore()
-
-  const onSubmit = (_data) => {
-    setOpen("Blockchain transaction in progress...")
-    mutateBuyItems({
-      _player_id: _data.player_id,
-      _item_id: _data.item_id,
-      _qty: Number(_data.qty)
-    })
-      .then((res) => {
-        if (res && balanceVaultNaka && balanceVaultNaka.data) {
-          refetch()
-          setVaultBalance(Number(balanceVaultNaka.data))
-          successToast("Buy Items Success")
-          setClose()
-          if (handleClose) handleClose()
-        }
-      })
-      .catch((error) => {
-        errorToast(error.message)
-        setClose()
-      })
-  }
-
-  const onError = () => {
-    errorToast("Please fill in the required fields")
-    setClose()
-  }
-
-  const updatePricePerItem = () => {
-    Helper.calculateItemPerPrice(
-      (watch("item") as IGameItemListData).price
-    ).then((res) => {
-      if (res) {
-        setValue("nakaPerItem", Number(res))
-      } else {
-        setValue("nakaPerItem", 0)
-      }
-    })
-  }
-
-  const onQtyUp = () => {
-    setValue("qty", watch("qty") >= 99 ? 99 : Number(watch("qty")) + 1)
-    updatePricePerItem()
-  }
-
-  const onQtyDown = () => {
-    setValue("qty", watch("qty") <= 1 ? 1 : Number(watch("qty")) - 1)
-    updatePricePerItem()
-  }
+  // console.log(
+  //   "chainSupport",
+  //   chainSupport,
+  //   chainId,
+  //   accounts,
+  //   signer,
+  //   watch("currency"),
+  //   watch("item"),
+  //   isDisabled()
+  // )
 
   return (
     <>
@@ -148,25 +95,33 @@ const FromBuyItem = ({ handleClose }: IProp) => {
           </Box>
           <Box className="my-4 w-full pr-4">
             <p className="py-2 uppercase text-black-default">Tier assets</p>
-            {gameItemList && (
-              <Controller
-                name="item_id"
-                control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <DropdownListItem
-                    {...field}
-                    list={gameItemList}
-                    className="w-[410px]"
-                    onChangeSelect={(_item) => {
-                      setValue("item", _item as IGameItemListData)
-                      setValue("item_id", _item._id)
-                      updatePricePerItem()
-                    }}
-                  />
-                )}
-              />
-            )}
+            {gameItemList &&
+              gameItemList.length > 0 &&
+              (gameItemList as IGameItemListData[]).sort(
+                (a, b) => a.price - b.price
+              ) && (
+                <Controller
+                  name="item_id"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { ...field } }) => (
+                    <DropdownListItem
+                      {...field}
+                      list={gameItemList as IGameItemListData[]}
+                      className="w-[410px]"
+                      onChangeSelect={(_item) => {
+                        setValue("item", _item)
+                        setValue("item_id", _item.id)
+                        updatePricePerItem()
+                      }}
+                      // defaultValue={
+                      //   (gameItemList[0] as IGameItemListData) ||
+                      //   ({} as IGameItemListData)
+                      // }
+                    />
+                  )}
+                />
+              )}
             {"item_id" in errors && (
               <p className="text-sm text-error-main">{t("required")}</p>
             )}
@@ -174,27 +129,33 @@ const FromBuyItem = ({ handleClose }: IProp) => {
           <Box className="my-4 w-full pr-4">
             <p className="py-2 uppercase text-black-default">Currency</p>
             <Controller
-              name="currency_id"
+              name="currency"
               control={control}
-              // rules={{ required: true }}
-              render={({ field }) => (
+              rules={{ required: true }}
+              // defaultValue={watch("currency")[0]}
+              render={({ field: { ...field } }) => (
                 <DropdownListCurrency
                   {...field}
-                  list={CURRENCY}
+                  list={chainSupport}
                   className="w-[410px]"
                   onChangeSelect={(_item) => {
                     setValue("currency", _item)
-                    setValue("currency_id", _item.id)
+                    setValue("currency_id", _item.address)
+                    updatePricePerItem()
                   }}
+                  // defaultValue={
+                  //   (chainSupport[0] as ITokenContract) ||
+                  //   ({} as ITokenContract)
+                  // }
                 />
               )}
             />
-            {"currency_id" in errors && (
+            {"currency" in errors && (
               <p className="text-sm text-error-main">{t("required")}</p>
             )}
           </Box>
           <p className="uppercase text-purple-primary">
-            Assets / 1 Item = {watch("nakaPerItem")} NAKA
+            Assets / 1 Item = {watch("nakaPerItem")}
           </p>
 
           <div className="my-4  grid grid-cols-6  content-center gap-4">
@@ -249,6 +210,10 @@ const FromBuyItem = ({ handleClose }: IProp) => {
               />
             </div>
           </div>
+          <Box className="my-4 w-full">
+            <p className="py-2 uppercase text-black-default">Your Balance</p>
+            <Balance buyItemCoinSeleced={watch("currency")} />
+          </Box>
           <div className="my-2 flex w-full justify-between rounded-xl border border-neutral-700 p-4">
             <div className="">
               <p>TOTAL PRICE:</p>
@@ -278,28 +243,33 @@ const FromBuyItem = ({ handleClose }: IProp) => {
             </p>
           </div>
           <ButtonGroup className="mt-10 flex flex-col  gap-3">
-            <ButtonLink
-              href=""
-              size="medium"
-              disabled={isLoading}
-              className="h-[40px] w-full text-sm "
-              text={
-                <>
-                  {isLoading ? (
-                    <CircularProgress
-                      color="primary"
-                      size={15}
-                    />
-                  ) : (
-                    t("buy-now")
-                  )}
-                </>
-              }
-              onClick={() => {}}
-              type="submit"
-              color="secondary"
-              variant="contained"
-            />
+            {!statusWalletConnected.responseStatus ? (
+              <PleaseCheckWallet />
+            ) : (
+              <ButtonLink
+                href=""
+                size="medium"
+                disabled={isDisabled()}
+                className="h-[40px] w-full text-sm "
+                text={
+                  <>
+                    {isLoading ? (
+                      <CircularProgress
+                        color="primary"
+                        size={15}
+                      />
+                    ) : (
+                      t("buy-now")
+                    )}
+                  </>
+                }
+                onClick={() => {}}
+                type="submit"
+                color="secondary"
+                variant="contained"
+              />
+            )}
+
             <div className="flex w-full justify-center rounded-2xl  border border-black-200">
               <ButtonLink
                 className="h-[40px] w-full text-sm"
@@ -311,9 +281,46 @@ const FromBuyItem = ({ handleClose }: IProp) => {
               />
             </div>
           </ButtonGroup>
+          <Box
+            sx={{
+              ".MuiTypography-root": {
+                fontSize: "90%"
+              },
+              ".MuiAlert-action": {
+                display: "none"
+              },
+              ".switch-chain--subtitle": {
+                fontSize: "80%"
+              }
+            }}
+          >
+            <BaseToastComponent
+              text={MessageAlert()}
+              status="info"
+              onClose={() => {}}
+              className="mt-10 w-full"
+            />
+            <div className="m-2 flex flex-col items-center justify-center md:col-span-5">
+              <SwitchChain
+                variant="simple"
+                chainName={watch("currency").tokenName}
+                handleClick={
+                  watch("currency").symbol === "NAKA"
+                    ? () =>
+                        handleSwitchNetwork(
+                          CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string
+                        )
+                    : () =>
+                        handleSwitchNetwork(
+                          CONFIGS.CHAIN.CHAIN_ID_HEX as string
+                        )
+                }
+              />
+            </div>
+          </Box>
         </form>
       )}
     </>
   )
 }
-export default memo(FromBuyItem)
+export default memo(FormBuyItem)

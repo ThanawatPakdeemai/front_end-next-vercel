@@ -204,6 +204,34 @@ export const P2EHeaderMenu: IHeaderSlide = {
   icon: <IconDollar.Ori className="slick-header-error-icon" />
 }
 
+export const StoryModeHeaderMenu: IHeaderSlide = {
+  sticker: (
+    <IconNakaWorld
+      width={180}
+      height={125}
+    />
+  ),
+  title: "story mode",
+  menuList: p2eMenu,
+  theme: "success",
+  stickerRotate: 15,
+  icon: <IconDollar.Ori className="slick-header-error-icon" />
+}
+
+export const NFTHeaderMenu: IHeaderSlide = {
+  sticker: (
+    <IconNakaWorld
+      width={180}
+      height={125}
+    />
+  ),
+  title: "Arcade",
+  menuList: p2eMenu,
+  theme: "info",
+  stickerRotate: 15,
+  icon: <IconDollar.Ori className="slick-header-error-icon" />
+}
+
 const f2pMenu: ISlideList[] = [
   {
     id: "13",

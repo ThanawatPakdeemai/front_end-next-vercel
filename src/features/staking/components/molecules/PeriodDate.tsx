@@ -13,7 +13,7 @@ interface IPeriodDate {
 
 const PeriodDate = ({ datetime, className, lockStatus }: IPeriodDate) => (
   <div className={`${className} h-full whitespace-nowrap`}>
-    <div className="flex h-full min-h-[68px] w-full items-center justify-between rounded-[10px] bg-primary-main pl-10 pr-8 font-neue-machina-semi">
+    <div className="flex h-full min-h-[68px] w-full items-center justify-between rounded-[10px] bg-primary-main pr-3 font-neue-machina-semi sm:pr-8 sm:pl-10">
       <div className="flex items-center text-lg">
         <p className="text-red-card">{t("staking_start")}</p>
         <p className="mx-3 text-neutral-300">

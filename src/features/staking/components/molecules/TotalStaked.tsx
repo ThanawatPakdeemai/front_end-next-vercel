@@ -87,7 +87,7 @@ const TotalStaked = ({
         <Skeleton className="h-[50px] w-full rounded-sm" />
       )}
 
-      <div className="w-[calc(100%-200px)] items-center justify-end whitespace-nowrap pl-5 font-neue-machina-semi sm:flex">
+      <div className="flex items-center justify-center whitespace-nowrap font-neue-machina-semi sm:w-[calc(100%-200px)] sm:justify-end sm:pl-5">
         <span className="mr-2 text-neutral-600">total naka staked : </span>
         {totalPoolStake !== -1 && poolLimit !== -1 ? (
           <>
@@ -100,7 +100,7 @@ const TotalStaked = ({
             </span>
           </>
         ) : (
-          <Skeleton className="h-[50px] w-full rounded-sm" />
+          <Skeleton className="h-[15px] w-[150px] rounded-sm sm:h-[50px] sm:w-full" />
         )}
       </div>
     </div>

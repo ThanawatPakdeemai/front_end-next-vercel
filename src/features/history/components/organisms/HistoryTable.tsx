@@ -1,5 +1,12 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Table, TableBody, TableContainer, Paper, Chip } from "@mui/material"
+import {
+  Table,
+  TableBody,
+  TableContainer,
+  Paper,
+  Chip,
+  Box
+} from "@mui/material"
 import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import useHistory from "@feature/history/containers/hook/useHistory"
 import dayjs from "dayjs"
@@ -67,14 +74,14 @@ const HistoryTable = () => {
   return (
     <>
       {hydrated && (
-        <div className="mx-auto max-w-[678px]">
+        <div className="md-w-[678px] mx-auto">
           <PageHeader
             title="PLAY HISTORY"
             subtitle="Wallet manager for nakamoto.games world"
           />
-
+          {/* sm:w-[380px] */}
           <TableContainer
-            className="w-[678px] overflow-hidden rounded-2xl bg-transparent px-1.5 pt-4 pb-1.5"
+            className="w-full overflow-x-auto rounded-2xl bg-transparent px-1.5 pt-4 pb-1.5 md:w-[678px]"
             component={Paper}
           >
             <Table className="whitespace-nowrap rounded-2xl border-black-500 bg-neutral-780 p-5 py-1.5 text-neutral-600">
@@ -168,8 +175,14 @@ const HistoryTable = () => {
               </TableBody>
             </Table>
           </TableContainer>
-
-          <div className="my-5 flex w-[678px] justify-between">
+          <Box
+            className="my-2 flex justify-between md:my-5 md:w-[678px]"
+            sx={{
+              ".MuiPagination-ul": {
+                gap: "5px 0"
+              }
+            }}
+          >
             <PaginationNaka
               totalCount={totalCount}
               limit={limit}
@@ -177,11 +190,12 @@ const HistoryTable = () => {
               setPage={setSkip}
             />
             <DropdownLimit
+              className="m-0 w-[160px] flex-row"
               defaultValue={12}
               list={pager}
               onChangeSelect={setLimit}
             />
-          </div>
+          </Box>
         </div>
       )}
     </>

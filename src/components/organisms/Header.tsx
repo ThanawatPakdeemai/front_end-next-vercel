@@ -11,7 +11,7 @@ const Header = () => (
     <header className="header top-10 z-[999] lg:sticky">
       <Box
         component="div"
-        className="flex-wrap items-center justify-between sm:flex lg:my-10 xl:flex-nowrap"
+        className="flex flex-wrap items-center justify-between lg:my-10 xl:flex-nowrap"
       >
         <HeadLogo />
         <RightMenu />

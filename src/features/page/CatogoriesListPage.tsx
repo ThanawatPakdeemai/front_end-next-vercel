@@ -58,7 +58,12 @@ const CatogoriesListPage = () => {
                 key={uuid()}
                 img={item.image_list}
                 text={item.name}
-                onHandleClick={() => onHandleClickCatogory(item.slug, item.id)}
+                onHandleClick={() =>
+                  onHandleClickCatogory(
+                    item.slug || item.name.toLocaleLowerCase(),
+                    item.id
+                  )
+                }
               />
             ))
           : [...Array(limitPage)].map(() => (

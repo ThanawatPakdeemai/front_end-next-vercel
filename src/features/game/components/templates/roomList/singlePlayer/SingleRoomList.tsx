@@ -69,16 +69,18 @@ const GameRoomList = () => {
         _dataRoom.amount_current_player < _dataRoom.max_players
       ) {
         if (data && data_player_me && data_player_me.status === "played") {
-          router.push(`/${data.path}/summary/${_roomId}`)
+          router.push(
+            `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
+          )
         } else {
-          router.push(`${router.asPath}/${_roomId}`)
+          router.push(`/${router?.query?.typeGame}/${router.asPath}/${_roomId}`)
         }
       } else if (new Date() > new Date(_dataRoom.end_time)) {
         errorToast(MESSAGES["room-timeout"])
       } else if (_dataRoom.amount_current_player >= _dataRoom.max_players) {
         errorToast(MESSAGES["room-full"])
       } else if (data && (data.play_to_earn || data.tournament)) {
-        router.push(`${router.asPath}/${_roomId}`)
+        router.push(`/${router?.query?.typeGame}/${router.asPath}/${_roomId}`)
       } else if (
         (balanceofItem && balanceofItem?.data < 1) ||
         balanceofItem === undefined

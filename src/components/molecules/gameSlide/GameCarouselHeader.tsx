@@ -101,10 +101,10 @@ const GameCarouselHeader = ({
   }, [isHover])
 
   return (
-    <div className="slick-header-container relative mb-4 h-[50px] w-full">
+    <div className="slick-header-container relative mb-4 w-full md:h-[50px]">
       <motion.div
         key={`sticker_${menu.title}`}
-        className="absolute top-[-80px] left-[-80px]"
+        className="absolute top-[-80px] left-[-80px] hidden lg:block"
         initial={{ rotateZ: menu.stickerRotate }}
         animate={animateControls}
         whileHover={{ rotateZ: 0 }}
@@ -118,9 +118,9 @@ const GameCarouselHeader = ({
       >
         {menu.sticker}
       </motion.div>
-      <div className="flex h-full w-full items-center justify-between">
-        <div className="relative flex h-full w-fit items-center justify-between rounded-default border-2 border-neutral-800 bg-neutral-900 bg-opacity-40 px-1 text-[10px] capitalize backdrop-blur-[25px]">
-          <div className="flex items-center py-1 pl-4 font-bold ">
+      <div className="flex h-full w-full flex-wrap items-center justify-between gap-2 sm:flex-nowrap">
+        <div className="relative flex h-full w-fit max-w-[424px] flex-auto flex-wrap items-center justify-between rounded-lg border-2 border-neutral-800 bg-neutral-900 bg-opacity-40 px-1 text-[10px] capitalize backdrop-blur-[25px] sm:flex-nowrap lg:flex-none">
+          <div className="flex flex-auto items-center justify-center whitespace-nowrap py-1 pl-4 font-bold sm:justify-start md:flex-none">
             {menu.icon}
             <p
               className={`text-${menu.theme}-main h-[10px] pl-2 pr-2 font-neue-machina-bold font-bold uppercase`}
@@ -128,30 +128,33 @@ const GameCarouselHeader = ({
               {menu.title}
             </p>
           </div>
-          {menu.menuList.map((item) => (
-            <button
-              type="button"
-              key={item.id}
-              className={`${item.className} ml-1 !cursor-pointer`}
-              onClick={() => onChangeType(item.type as IGetType)}
-            >
-              <Chip
-                label={item.label}
-                size="medium"
-                color={curType === item.type ? menu.theme : undefined}
-                className={` h-full w-full cursor-pointer font-bold hover:bg-${
-                  menu.theme
-                }-main !hover:text-white-primary capitalize ${
-                  curType === item.type
-                    ? `!text-white-primary ${bgColor}`
-                    : "text-black-default hover:text-white-primary"
-                }`}
-                sx={{ background: "red" }}
-              />
-            </button>
-          ))}
+          <div className="flex flex-[1_1_100%] justify-center sm:flex-none sm:justify-start">
+            {" "}
+            {menu.menuList.map((item) => (
+              <button
+                type="button"
+                key={item.id}
+                className={`${item.className} ml-1 !cursor-pointer`}
+                onClick={() => onChangeType(item.type as IGetType)}
+              >
+                <Chip
+                  label={item.label}
+                  size="medium"
+                  color={curType === item.type ? menu.theme : undefined}
+                  className={` h-full w-full cursor-pointer font-bold hover:bg-${
+                    menu.theme
+                  }-main !hover:text-white-primary capitalize ${
+                    curType === item.type
+                      ? `!text-white-primary ${bgColor}`
+                      : "text-black-default hover:text-white-primary"
+                  }`}
+                  sx={{ background: "red" }}
+                />
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="flex h-10 w-fit items-center justify-between text-[8px]">
+        <div className="flex h-10 w-fit max-w-sm flex-auto items-center justify-between text-[8px] lg:flex-none">
           <ButtonToggleIcon
             startIcon={<AddIcon />}
             text="view all"

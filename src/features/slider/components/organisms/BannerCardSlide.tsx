@@ -24,12 +24,13 @@ const BannerCardSlide = ({ slide, ...props }: IBannerCardSlide) => (
           sm={12}
           md={9}
         >
-          <div className="slide-item--image w-full overflow-hidden rounded-2xl">
+          <div className="slide-item--image h-full w-full overflow-hidden rounded-2xl">
             <CardMedia
               component="img"
               height={1080}
               image={slide.image_home_banner}
               alt={slide.name}
+              className="h-full w-full object-cover"
             />
           </div>
         </Grid>

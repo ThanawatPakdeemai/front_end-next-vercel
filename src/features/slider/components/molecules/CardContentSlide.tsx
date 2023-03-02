@@ -22,7 +22,9 @@ const CardContentSlide = ({ slide }: ICardContentSlide) => {
     {
       id: "1",
       name: slide.category.name,
-      link: `categories/${slide.category.slug}`
+      link: `categories/${
+        slide.category.slug || slide.category.name.toLocaleLowerCase()
+      }`
     },
     {
       id: "2",
@@ -57,7 +59,10 @@ const CardContentSlide = ({ slide }: ICardContentSlide) => {
           }
         }}
       >
-        <GameTags gameTags={gameCategories} />
+        {gameTags && gameTags.length < 0 && (
+          // This is the old category single
+          <GameTags gameTags={gameCategories} />
+        )}
         <GameTags gameTags={gameTags} />
       </Box>
       <CardBody

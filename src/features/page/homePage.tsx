@@ -34,6 +34,7 @@ import useProfileStore from "@stores/profileStore"
 import useQuestStore from "@stores/quest"
 import { MenuLists } from "@configs/social"
 import useGlobal from "@hooks/useGlobal"
+import CardLinkTemplate from "@components/templates/contents/CardLinkTemplate"
 
 const Home = () => {
   const limit = 10
@@ -120,20 +121,15 @@ const Home = () => {
           </div>
         )}
       </div>
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <Box>
+      <div className="flex grid-cols-1 flex-wrap gap-6 lg:grid lg:grid-cols-2">
+        <Box className="flex-[1_1_100%] sm:flex-[1_1_60%] xl:flex-none">
           <CardMarketplace />
           <div className="mt-4">
             <Grid
               container
               spacing={2}
             >
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={4}
-              >
+              <CardLinkTemplate>
                 <CardLink
                   classNameSecond="!bg-red-card"
                   imageClassNameSecond="scale-[1.35]"
@@ -145,13 +141,8 @@ const Home = () => {
                   srcSecond={IMAGES.backNakaSwap.src}
                   altSecond={IMAGES.backNakaSwap.alt}
                 />
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={4}
-              >
+              </CardLinkTemplate>
+              <CardLinkTemplate>
                 <CardLink
                   classNameSecond="!bg-warning-dark"
                   imageClassNameSecond="scale-[1.35]"
@@ -163,13 +154,8 @@ const Home = () => {
                   srcSecond={IMAGES.backStaking.src}
                   altSecond={IMAGES.backStaking.alt}
                 />
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={4}
-              >
+              </CardLinkTemplate>
+              <CardLinkTemplate>
                 <CardLink
                   classNameSecond="bg-info-light"
                   imageClassNameSecond="scale-[1.35]"
@@ -181,21 +167,23 @@ const Home = () => {
                   srcSecond={IMAGES.backReferrals.src}
                   altSecond={IMAGES.backReferrals.alt}
                 />
-              </Grid>
+              </CardLinkTemplate>
             </Grid>
           </div>
         </Box>
-        <div className="relative overflow-hidden">
-          <div id="spark-fire">
-            <CarouselSlide
-              slideGames={GAME_DOWNLOAD}
-              isLoading={false}
-            />
-          </div>
+        <div className="relative flex-[1_1_100%] overflow-hidden sm:flex-[1_1_60%] xl:flex-none">
+          <CarouselSlide
+            slideGames={GAME_DOWNLOAD}
+            isLoading={false}
+          />
+          <div
+            id="spark-fire"
+            className="absolute top-0 left-0 hidden h-full w-full xl:block"
+          />
         </div>
       </div>
 
-      <div className="my-20 h-full w-full">
+      <div className="my-2 h-full w-full lg:my-20">
         {f2pGame && !f2pLoading ? (
           <GameCarousel
             menu={F2PHeaderMenu}
@@ -213,7 +201,7 @@ const Home = () => {
         )}
       </div>
 
-      <div className="my-20 h-full w-full">
+      <div className="my-2 h-full w-full lg:my-20">
         {p2eGame && !p2eLoading ? (
           <GameCarousel
             menu={P2EHeaderMenu}
@@ -242,29 +230,19 @@ const Home = () => {
 
       <DeveloperPart />
       <Box className="xs:flex-col mt-4 mb-10 gap-4 lg:flex">
-        <Box>
+        <Box className="flex-1 xl:flex-none">
           <Grid
             container
             spacing={2}
           >
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={4}
-            >
+            <CardLinkTemplate>
               <CardLink
                 classNameSecond="bg-warning-dark"
                 textBtn="Blog"
                 href="/blog"
               />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={4}
-            >
+            </CardLinkTemplate>
+            <CardLinkTemplate>
               <CardLink
                 classNameSecond="bg-secondary-light"
                 iconBtn={<ICoupon />}
@@ -275,13 +253,9 @@ const Home = () => {
                 srcSecond={IMAGES.backCouponBand.src}
                 altSecond={IMAGES.backCouponBand.alt}
               />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={4}
-            >
+            </CardLinkTemplate>
+
+            <CardLinkTemplate>
               <CardLink
                 classNameSecond="bg-info-light"
                 iconBtn={<IDiamond />}
@@ -292,16 +266,16 @@ const Home = () => {
                 srcSecond={IMAGES.backNakaBand.src}
                 altSecond={IMAGES.backNakaBand.alt}
               />
-            </Grid>
+            </CardLinkTemplate>
           </Grid>
         </Box>
-        <Box className="sm:mt-4 md:mt-0">
+        <Box className="mt-2 flex-1 sm:mt-4 md:max-w-full lg:mt-0 lg:max-w-[33.33%] xl:flex-none">
           <CardNakaverse href="/" />
         </Box>
       </Box>
     </>
   ) : (
-    <> </>
+    <></>
   )
 }
 export default memo(Home)

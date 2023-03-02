@@ -24,7 +24,7 @@ const CardMarketplace = ({
   <>
     <Card
       sx={{ width: { width } }}
-      className="w-auto border border-solid border-neutral-700 bg-primary-main"
+      className="flex w-auto border border-solid border-neutral-700 bg-primary-main"
     >
       <Box
         sx={{
@@ -32,7 +32,7 @@ const CardMarketplace = ({
             maxHeight: "40px"
           }
         }}
-        className="absolute flex flex-col items-start justify-between py-10 pr-6 pl-10"
+        className="flex flex-col items-start justify-between p-4 md:absolute md:py-10 md:pr-6 md:pl-10"
       >
         <h6 className="leading-7leading-7 text-[22px] font-bold uppercase text-neutral-300">
           {title}
@@ -49,7 +49,7 @@ const CardMarketplace = ({
           variant="contained"
         />
       </Box>
-      <div className="overflow-hidden pl-[46%]">
+      <div className="hidden flex-auto overflow-hidden sm:block md:pl-[46%]">
         <CardMedia
           sx={{ height: { height } }}
           image={bgImage}

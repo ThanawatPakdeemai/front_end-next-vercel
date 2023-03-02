@@ -14,8 +14,8 @@ const GameCardSlide = ({ slide, ...props }: IBannerCardSlide) => {
   // eslint-disable-next-line no-async-promise-executor
   const datagame = useGameStore((state) => state.data)
   return (
-    <div className="slide-item relative gap-4 align-middle text-white-default md:flex">
-      <div className="slide-item--image w-full overflow-hidden rounded-2xl md:w-3/5 xl:w-3/4">
+    <div className="slide-item relative h-full gap-4 align-middle text-white-default md:flex">
+      <div className="slide-item--image h-full w-full overflow-hidden rounded-2xl md:w-3/5 xl:w-3/4">
         {datagame && (
           <CardMedia
             component="img"

@@ -281,7 +281,7 @@ const ProfileContent = () => {
       {getProfileInfo.data.game_data.map((item, index) => (
         <Card
           key={uuidv4()}
-          className="grid grid-cols-3 grid-rows-1 rounded-[18px] "
+          className="grid grid-cols-3 grid-rows-1 rounded-[18px]"
           sx={{
             backgroundImage: "none",
             backgroundColor: "#010101"

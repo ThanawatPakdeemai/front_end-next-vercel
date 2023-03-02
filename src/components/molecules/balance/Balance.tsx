@@ -12,6 +12,7 @@ import useGlobal from "@hooks/useGlobal"
 import useChainSupport from "@stores/chainSupport"
 import CONFIGS from "@configs/index"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
+import PleaseCheckWallet from "@components/atoms/PleaseCheckWallet"
 import AmountBalance from "./AmountBalance"
 
 interface IProps {
@@ -25,7 +26,12 @@ interface IProps {
 
 const Balance = ({ className, buyItemCoinSeleced }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { address, handleConnectWithMetamask, hasMetamask } = useWeb3Provider()
+  const {
+    address,
+    handleConnectWithMetamask,
+    hasMetamask,
+    statusWalletConnected
+  } = useWeb3Provider()
   const { t } = useTranslation()
   const { chainSupport } = useChainSupport()
   const { hydrated } = useGlobal()
@@ -100,7 +106,11 @@ const Balance = ({ className, buyItemCoinSeleced }: IProps) => {
           <CardContent
             className={`my-2 min-w-[200px] items-center justify-center p-0 ${className}`}
           >
-            {handleDisplayBalance()}
+            {statusWalletConnected?.responseStatus ? (
+              handleDisplayBalance()
+            ) : (
+              <PleaseCheckWallet size="small" />
+            )}
           </CardContent>
         </>
       ) : (

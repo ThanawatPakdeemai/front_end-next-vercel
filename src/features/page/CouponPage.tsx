@@ -4,6 +4,7 @@ import CouponIcon from "@components/icons/CouponIcon"
 import { Image } from "@components/atoms/image"
 import useGetCoupon from "@feature/coupon/containers/hook/useGetCoupon"
 import { useToast } from "@feature/toast/containers"
+// import CardItemMarketPlace from "@components/molecules/cards/CardItemMarketPlace"
 
 const CouponPage = () => {
   const [coupon, setCoupon] = useState<string>("")
@@ -84,6 +85,7 @@ const CouponPage = () => {
           />
         </div>
       </div>
+      {/* <CardItemMarketPlace /> */}
     </div>
   )
 }

@@ -50,7 +50,7 @@ const HeadPrice = ({
   }, [])
 
   return (
-    <Box className="relative flex w-[100%] flex-row flex-wrap rounded-b-lg bg-neutral-800 lg:h-[30px] lg:flex-nowrap">
+    <Box className="relative mb-2 flex w-[100%] flex-row flex-wrap rounded-b-lg bg-neutral-800 sm:mb-0 lg:h-[30px] lg:flex-nowrap">
       <Typography className="text-black-01 flex max-w-[150px] flex-1 items-center justify-center whitespace-nowrap bg-secondary-main md:rounded-bl-lg lg:w-[15%] lg:flex-none">
         <span className="font-neue-machina text-sm uppercase text-primary-main">
           TOKENS INFO =
@@ -153,7 +153,7 @@ const HeadPrice = ({
           )}
           <button
             type="button"
-            className="sm:h-100% absolute top-0 right-0 z-[51] m-auto flex w-full max-w-[150px] flex-row items-center justify-center bg-error-main sm:w-[150px] lg:relative lg:right-auto lg:top-auto lg:justify-evenly lg:rounded-br-lg xl:m-0 xl:ml-4 xl:w-[15%]"
+            className="sm:h-100% absolute top-0 right-0 z-[51] m-auto flex w-full max-w-[150px] flex-row items-center justify-center bg-error-main sm:w-[150px] sm:rounded-br-lg lg:relative lg:right-auto lg:top-auto lg:h-[30px] lg:justify-evenly xl:m-0 xl:ml-4"
             onClick={handleOpen}
           >
             <div className="font-neue-machina text-sm uppercase text-white-primary">

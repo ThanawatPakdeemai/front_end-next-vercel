@@ -30,7 +30,7 @@ const CarouselCardSlide = ({
     >
       <div className="carousel-slide__item__image">
         <CardMedia
-          className="h-[472px]"
+          className="h-[30vh] md:h-[472px]"
           component={video ? "video" : "img"}
           alt={name}
           height={468}

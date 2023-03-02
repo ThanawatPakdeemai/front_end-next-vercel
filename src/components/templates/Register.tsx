@@ -12,7 +12,7 @@ import VectorIcon from "@components/icons/VectorIcon"
 import { useRouter } from "next/router"
 import CreateProfile from "@feature/profile/components/createProfile/CreateProfile"
 import useRegisterAvatarStore from "@stores/registerAvater"
-import FromRegister from "@feature/authentication/components/FromRegister"
+import FormRegister from "@feature/authentication/components/FormRegister"
 
 const KeyFramesClockwise = styled("div")({
   "@keyframes rotation": {
@@ -155,7 +155,7 @@ const RegisterLayout = () => {
                 alignItems: "center"
               }}
             >
-              <FromRegister />
+              <FormRegister />
               <Grid
                 item
                 container

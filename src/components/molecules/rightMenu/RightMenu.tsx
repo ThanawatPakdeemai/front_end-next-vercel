@@ -22,7 +22,7 @@ const RightMenu = () => {
     }
   }, [profileData, profile, profile?.email])
   return hydrated ? (
-    <Box className="mx-auto flex w-[360px] flex-1 justify-center md:justify-end xl:order-2 xl:mx-0 xl:flex-none">
+    <Box className="mx-auto flex w-[360px] flex-1 justify-end md:order-2 xl:mx-0 xl:flex-none">
       {!stateProfile && !profile ? (
         <RightMenuNotLogIn />
       ) : (

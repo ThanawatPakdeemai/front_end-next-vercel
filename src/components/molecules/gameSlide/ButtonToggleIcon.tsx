@@ -78,7 +78,7 @@ const ButtonToggleIcon = ({
 
   return (
     <motion.button
-      className={`btn-icon-container flex h-10 w-full items-center justify-center rounded-md ${className} ${
+      className={`btn-icon-container flex h-10 w-full flex-1 items-center justify-center rounded-md ${className} ${
         disabled && " !bg-neutral-680"
       }`}
       style={style}

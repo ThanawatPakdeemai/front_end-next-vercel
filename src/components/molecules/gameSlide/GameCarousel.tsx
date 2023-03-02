@@ -48,7 +48,33 @@ const GameCarousel = ({
     slidesToShow: showSlide,
     slidesToScroll: showSlide,
     arrows: false,
-    variableWidth: false
+    variableWidth: false,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          infinite: true,
+          dots: false
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2
+        }
+      }
+    ]
   }
   const profile = useProfileStore((state) => state.profile.data)
   const { onSetGameData } = useGameStore()
@@ -91,7 +117,7 @@ const GameCarousel = ({
   }
 
   return (
-    <div className="mb-10">
+    <div className="md:mb-10">
       <GameCarouselHeader
         menu={menu}
         curType={curType}
@@ -100,26 +126,28 @@ const GameCarousel = ({
         onPrev={onSlidePrev}
         setCurType={setCurType}
       />
-      <Slider
-        ref={sliderRef}
-        {...settings}
-      >
-        {list &&
-          list.map((item, index) => (
-            <GameCard
-              key={item.id}
-              menu={menu}
-              data={item}
-              showNo={showNo}
-              no={index + 1}
-              checkTimer={checkTimer}
-              cooldown={cooldown}
-              setCooldown={setCooldown}
-              staminaRecovery={staminaRecovery}
-              onHandleClick={() => onHandleClick(item.path, item)}
-            />
-          ))}
-      </Slider>
+      <div className="overflow-hidden">
+        <Slider
+          ref={sliderRef}
+          {...settings}
+        >
+          {list &&
+            list.map((item, index) => (
+              <GameCard
+                key={item.id}
+                menu={menu}
+                data={item}
+                showNo={showNo}
+                no={index + 1}
+                checkTimer={checkTimer}
+                cooldown={cooldown}
+                setCooldown={setCooldown}
+                staminaRecovery={staminaRecovery}
+                onHandleClick={() => onHandleClick(item.path, item)}
+              />
+            ))}
+        </Slider>
+      </div>
     </div>
   )
 }

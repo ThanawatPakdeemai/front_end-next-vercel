@@ -3,7 +3,7 @@ import React from "react"
 
 interface IProp {
   title: string
-  total: number
+  total: number | string
   textColor?: string
   padding?: string
 }

@@ -57,10 +57,10 @@ const VerticalThumbSlide = ({ items }: IVerticalThumbSlideProps) => {
   }
 
   return (
-    <div className="my-4 flex w-full items-center justify-between gap-4 md:min-w-[688px]">
+    <div className="my-4 flex w-full items-center justify-between gap-4 xl:min-w-[688px]">
       <Box
         sx={SlickMainSlideCSS}
-        className="flex h-[390px] w-full max-w-[592px] flex-col justify-center overflow-hidden rounded-2xl"
+        className="flex h-[60vw] w-full flex-col justify-center overflow-hidden rounded-2xl md:h-[390px] lg:max-w-[592px]"
       >
         <Slider
           asNavFor={nav2 as Slider}
@@ -80,7 +80,7 @@ const VerticalThumbSlide = ({ items }: IVerticalThumbSlideProps) => {
       </Box>
       <Box
         sx={SlickThumbnailSlideCSS}
-        className="relative flex h-[390px] w-[80px] flex-col overflow-hidden rounded-2xl border-[1px] border-neutral-700 border-opacity-80 p-1"
+        className="relative flex h-[60vw] w-[80px] flex-col overflow-hidden rounded-2xl border-[1px] border-neutral-700 border-opacity-80 p-1 md:h-[390px]"
       >
         <Slider
           asNavFor={nav1 as Slider}

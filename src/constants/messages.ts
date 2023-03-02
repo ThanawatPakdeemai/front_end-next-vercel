@@ -39,6 +39,13 @@ export const MESSAGES = {
   "create_not_successful_user": "Create a not successful user",
   "room-timeout": "Room timeout",
   "error-something": "Error something went wrong",
+  "balance_not_enough": "Balance not enough",
+  "order_not_found": "Order not found",
+  "copy_text_success": "Copy text success",
+  "transaction_processing_order": "Transaction processing order...",
+  "amount_many": "Amount too many",
+  "approve_error": "Error approve",
+  "approve_processing": "Approve processing",
   "copy": "Copied to clipboard",
   "success": "Success"
 }

@@ -11,11 +11,11 @@ const Header = () => (
     <header className="header top-10 z-[999] lg:sticky">
       <Box
         component="div"
-        className="my-10 items-center justify-between lg:flex"
+        className="flex flex-wrap items-center justify-between lg:my-10 xl:flex-nowrap"
       >
         <HeadLogo />
-        <HeadMenu />
         <RightMenu />
+        <HeadMenu />
       </Box>
     </header>
   </>

@@ -3,8 +3,8 @@ import {
   IGetNakaServices,
   IBurnItem,
   IBurnItemResponse,
-  ICurrentNakaData,
-  IGetBalanceOf
+  IGetBalanceOf,
+  ICurrentNakaResponse
 } from "@feature/inventory/interfaces/IInventoryService"
 
 export const getBalanceOf = ({ _address, _item_id }: IGetBalanceOf) =>
@@ -41,9 +41,9 @@ export const getNaka = (_address: string) =>
   })
 
 export const getCurrentNaka = () =>
-  new Promise<ICurrentNakaData>((resolve, reject) => {
+  new Promise<ICurrentNakaResponse>((resolve, reject) => {
     services
-      .get<ICurrentNakaData>(`/price/current`)
+      .get<ICurrentNakaResponse>(`/price/current`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

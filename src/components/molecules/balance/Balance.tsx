@@ -1,4 +1,4 @@
-import { Card, CardContent, SxProps, Theme } from "@mui/material"
+import { CardContent, SxProps, Theme } from "@mui/material"
 import INaka from "@components/icons/Naka"
 import IBusd from "@components/icons/Busd"
 import useProfileStore from "@stores/profileStore"
@@ -12,6 +12,7 @@ import useGlobal from "@hooks/useGlobal"
 import useChainSupport from "@stores/chainSupport"
 import CONFIGS from "@configs/index"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
+import PleaseCheckWallet from "@components/atoms/PleaseCheckWallet"
 import AmountBalance from "./AmountBalance"
 
 interface IProps {
@@ -23,9 +24,14 @@ interface IProps {
   buyItemCoinSeleced?: ITokenContract
 }
 
-const Balance = ({ className, sx, buyItemCoinSeleced }: IProps) => {
+const Balance = ({ className, buyItemCoinSeleced }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { address, handleConnectWithMetamask, hasMetamask } = useWeb3Provider()
+  const {
+    address,
+    handleConnectWithMetamask,
+    hasMetamask,
+    statusWalletConnected
+  } = useWeb3Provider()
   const { t } = useTranslation()
   const { chainSupport } = useChainSupport()
   const { hydrated } = useGlobal()
@@ -100,12 +106,11 @@ const Balance = ({ className, sx, buyItemCoinSeleced }: IProps) => {
           <CardContent
             className={`my-2 min-w-[200px] items-center justify-center p-0 ${className}`}
           >
-            <Card
-              className=" m-auto flex-row gap-y-3  rounded-[13px] bg-neutral-800  px-[5px] pt-[5px] "
-              sx={sx}
-            >
-              {handleDisplayBalance()}
-            </Card>
+            {statusWalletConnected?.responseStatus ? (
+              handleDisplayBalance()
+            ) : (
+              <PleaseCheckWallet size="small" />
+            )}
           </CardContent>
         </>
       ) : (

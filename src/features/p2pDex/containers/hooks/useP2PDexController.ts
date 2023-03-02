@@ -5,7 +5,13 @@ import {
 } from "@feature/multichain/interfaces/IMultichain"
 import { useQuery } from "@tanstack/react-query"
 
-const useP2PDexController = ({ _type, _limit, _page }: IGetP2PDexOrderList) => {
+const useP2PDexController = ({
+  _type,
+  _limit,
+  _page,
+  _sort,
+  _sort_value
+}: IGetP2PDexOrderList) => {
   const {
     data,
     error,
@@ -15,8 +21,9 @@ const useP2PDexController = ({ _type, _limit, _page }: IGetP2PDexOrderList) => {
     isFetching,
     refetch
   } = useQuery<IMultiOrderListServ>({
-    queryKey: ["getP2PDexOrderList", _type, _limit, _page],
-    queryFn: () => getP2PDexOrderList({ _type, _limit, _page }),
+    queryKey: ["getP2PDexOrderList", _type, _limit, _page, _sort, _sort_value],
+    queryFn: () =>
+      getP2PDexOrderList({ _type, _limit, _page, _sort, _sort_value }),
     staleTime: Infinity,
     keepPreviousData: true,
     enabled: _type !== "" || _page < 1 || _limit < 1

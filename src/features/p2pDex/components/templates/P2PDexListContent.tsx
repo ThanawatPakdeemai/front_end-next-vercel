@@ -10,11 +10,20 @@ const P2PDexList = () => {
   const [type, setType] = useState<"sell" | "buy">("buy")
   const [limit, setLimit] = useState<number>(12)
   const [page, setPage] = useState<number>(1)
-
+  const [sortName, setSortName] = useState<string>("naka_amount")
+  const [sort, setSort] = useState<number>(1)
+  const dataSort = {
+    sort,
+    setSort,
+    sortName,
+    setSortName
+  }
   const dataP2p = useP2PDexController({
-    _type: type === "sell" ? "buy" : "sell",
+    _type: type === "buy" ? "sell" : "buy",
     _limit: limit,
-    _page: page
+    _page: page,
+    _sort: sortName,
+    _sort_value: sort
   })
 
   const { data: P2PDexOrderList } = dataP2p
@@ -27,11 +36,16 @@ const P2PDexList = () => {
           setType(value)
           setPage(1)
         }}
+        dataButton={[
+          { title: "Buy", type: "buy" },
+          { title: "Sell", type: "sell" }
+        ]}
       />
 
       <div className="p2p-dex-content--pageList">
         <OrderList
           {...dataP2p}
+          {...dataSort}
           type={type}
         />
         <div className="my-5 flex w-full justify-between">

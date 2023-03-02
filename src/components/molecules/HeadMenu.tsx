@@ -7,8 +7,9 @@ import { useTranslation } from "next-i18next"
 import Link from "next/link"
 import { IMAGES } from "@constants/images"
 import { useRouter } from "next/router"
-import { MENU } from "@configs/menu"
+import { MENU, MENU_MARKETPLACE } from "@configs/menu"
 import tailwindResolver from "tailwindResolver"
+import useGlobal from "@hooks/useGlobal"
 
 export const styleIcon = {
   fontSize: "20px !important"
@@ -20,12 +21,14 @@ const HeadMenu = () => {
     minWidth: "10px !important",
     borderRadius: "15px !important"
   }
+  const { isMarketplace } = useGlobal()
+  const MENU_DATA = isMarketplace ? MENU_MARKETPLACE : MENU
   return (
     <Box
       component="div"
       className="xs:my-5 m-auto my-2 grid max-w-[505px] flex-[1_1_100%] grid-cols-2 items-center justify-center gap-1 overflow-hidden rounded-[8px] bg-neutral-700 p-1 md:flex md:!h-[50px] lg:my-0 lg:flex-none xl:order-1"
     >
-      {MENU.map((item) => {
+      {MENU_DATA.map((item) => {
         if (!item.isChide && item.chide === undefined) {
           return (
             <Link

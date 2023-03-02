@@ -19,12 +19,14 @@ import useProfileStore from "@stores/profileStore"
 import Link from "next/link"
 import TooltipsCustom from "@components/atoms/TooltipsCustom"
 import { useWeb3Provider } from "@providers/Web3Provider"
+import useGlobal from "@hooks/useGlobal"
 
 const RightMenuLogIn = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { address } = useWeb3Provider()
   const [expanded, setExpanded] = useState<boolean>(false)
   const [hoverExpand, setHoverExpand] = useState<boolean>(false)
+  const { isMarketplace } = useGlobal()
 
   const iconmotion = {
     hover: {
@@ -86,21 +88,23 @@ const RightMenuLogIn = () => {
               >
                 {/* notification */}
 
-                <ButtonIcon
-                  onClick={handleOnNotiClick}
-                  variants={iconmotion}
-                  whileHover="hover"
-                  transition={{
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 4
-                  }}
-                  icon={
-                    <NotificationsOutlinedIcon className="text-white-primary" />
-                  }
-                  className="ml-1 mr-5 flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-lg border border-neutral-700 bg-transparent"
-                  aria-label="notification-button"
-                />
+                {!isMarketplace && (
+                  <ButtonIcon
+                    onClick={handleOnNotiClick}
+                    variants={iconmotion}
+                    whileHover="hover"
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 4
+                    }}
+                    icon={
+                      <NotificationsOutlinedIcon className="text-white-primary" />
+                    }
+                    className="ml-1 mr-5 flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-lg border border-neutral-700 bg-transparent"
+                    aria-label="notification-button"
+                  />
+                )}
 
                 <div className="flex-1 flex-col items-center">
                   <Typography className="text-sm font-bold">

@@ -20,6 +20,7 @@ import CONFIGS from "@configs/index"
 import { chainIdConfig } from "@configs/sites"
 import SwitchChain from "@components/atoms/SwitchChain"
 import useSwitchNetwork from "@hooks/useSwitchNetwork"
+import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
 import Input from "../atoms/Input"
 
 interface IProp {
@@ -128,14 +129,16 @@ const Form = ({
   )
 
   const buttonData = useMemo(() => {
-    if (chain === "polygon") {
-      return Number(chainRequired) === Number(chainIdConfig.polygon)
+    if (profile && address) {
+      if (chain === "polygon") {
+        return Number(chainRequired) === Number(chainIdConfig.polygon)
+          ? buttonSubmit()
+          : buttonSwitched()
+      }
+      return Number(chainRequired) === Number(chainIdConfig.binance)
         ? buttonSubmit()
         : buttonSwitched()
     }
-    return Number(chainRequired) === Number(chainIdConfig.binance)
-      ? buttonSubmit()
-      : buttonSwitched()
   }, [
     chainRequired,
     chainIdConfig,
@@ -145,7 +148,8 @@ const Form = ({
     balance,
     balanceValutNaka,
     balanceValutBusd,
-    disableButton
+    disableButton,
+    profile
   ])
 
   return (
@@ -209,7 +213,13 @@ const Form = ({
                 busd
               </span>
             </Typography>
-            {buttonData}
+            {profile ? (
+              buttonData
+            ) : (
+              <div className="my-3 flex items-center justify-center">
+                <RightMenuNotLogIn />
+              </div>
+            )}
             {!edit && (
               <Typography className="my-2 text-center font-neue-machina text-sm uppercase text-neutral-500">
                 fee {formatEther(fee)} busd

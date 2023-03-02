@@ -26,7 +26,7 @@ const MessageFooter = () => {
   }
 
   return (
-    <Box className="message-input relative flex items-center">
+    <Box className="message-input relative flex w-full items-center">
       <TextField
         className="w-full"
         required

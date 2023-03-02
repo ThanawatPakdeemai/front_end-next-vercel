@@ -88,8 +88,6 @@ const MyOrderList = ({ ...props }: IProp) => {
     if (dataEdit) {
       if (type === "sell") {
         cancelOrderSellNaka(dataEdit.order_id).then((_resp) => {
-          setOpen(MESSAGES.transaction_processing_order)
-
           if ((_resp as IResponseGetFee).status) {
             mutateCancelP2PDexOrder(dataEdit.order_id).then((_data) => {
               refetch()
@@ -97,11 +95,10 @@ const MyOrderList = ({ ...props }: IProp) => {
               setClose()
             })
           }
+          setClose()
         })
-        setClose()
       } else {
         cancelOrderBuyNaka(dataEdit.order_id).then((_resp) => {
-          setOpen(MESSAGES.transaction_processing_order)
           if ((_resp as IResponseGetFee).status) {
             mutateCancelP2PDexOrder(dataEdit.order_id).then((_data) => {
               refetch()
@@ -109,8 +106,8 @@ const MyOrderList = ({ ...props }: IProp) => {
               setClose()
             })
           }
+          setClose()
         })
-        setClose()
       }
     } else {
       errorToast(MESSAGES.order_not_found)
@@ -227,7 +224,11 @@ const MyOrderList = ({ ...props }: IProp) => {
         handleModal={() => setOpenModal(!openModal)}
         dataEdit={dataEdit}
         edit
-        cancelOrder={cancelOrder}
+        cancelOrder={() => {
+          setOpen(MESSAGES.transaction_processing_order)
+          cancelOrder()
+        }}
+        refetchData={refetch}
       />
     </>
   )

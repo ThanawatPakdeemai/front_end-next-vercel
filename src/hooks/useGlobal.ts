@@ -56,7 +56,8 @@ const useGlobal = (
   const { getAllTokenInfoByContractAddress } = useContractVaultBinance()
   const { setChainSupport, setContractBNB } = useChainSupport()
   const { getNAKATokenInfo } = useContractVault()
-  const { chainId, signer, accounts } = useSwitchNetwork()
+  const { chainId, signer, accounts, statusWalletConnected } =
+    useSwitchNetwork()
 
   const profile = useProfileStore((state) => state.profile.data)
   // States
@@ -161,8 +162,8 @@ const useGlobal = (
    * @description Fetch BNB token address
    */
   useMemo(() => {
+    if (!statusWalletConnected.responseStatus) return
     if (signer === undefined || accounts === undefined) return
-
     fetchContractBNB()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

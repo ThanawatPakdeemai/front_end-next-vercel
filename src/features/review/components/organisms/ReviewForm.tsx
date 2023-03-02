@@ -25,8 +25,8 @@ const ReviewForm = ({ avatar, username }: IReviewFormProps) => {
   }, [loading, setClose, setOpen])
 
   return (
-    <div className="review-form mb-3 grid min-h-[68px] grid-flow-col items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900 p-2">
-      <div className="review--item__avatar animation-image row-span-2 flex h-[58px] w-[58px] items-center">
+    <div className="review-form mb-3 flex grid-flow-col flex-wrap items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900 p-2 lg:grid lg:min-h-[68px]">
+      <div className="review--item__avatar animation-image row-span-2 flex h-[58px] w-[58px] max-w-[58px] flex-auto items-center sm:mx-auto sm:flex-none lg:mx-0">
         <Image
           src={avatar}
           width="200"
@@ -35,7 +35,7 @@ const ReviewForm = ({ avatar, username }: IReviewFormProps) => {
           className="h-[58px] w-full rounded-sm object-fill object-center"
         />
       </div>
-      <div className="review--item__content__header mb-2 flex min-w-[300px] items-center justify-between">
+      <div className="review--item__content__header mb-2 flex w-full items-center justify-center lg:justify-between xl:min-w-[300px]">
         <div className="review--item__content-username">{username}</div>
         <div className="review--item__content-rating flex-row">
           <Stack spacing={1}>

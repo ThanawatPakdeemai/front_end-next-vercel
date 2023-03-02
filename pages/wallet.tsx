@@ -14,7 +14,7 @@ const ProfileLayout = dynamic(
 
 export default function Wallet() {
   return (
-    <article className="h-full w-full md:pl-[10%]">
+    <article className="h-full w-full px-2 md:w-[calc(100%-220px)] md:px-0 xl:pl-[10%]">
       <WalletPage />
     </article>
   )

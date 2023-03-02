@@ -13,7 +13,7 @@ const PageHeader = ({
   children,
   button
 }: IPageHeaderTableProps) => (
-  <div className="page-header mb-8 flex items-center justify-between">
+  <div className="page-header my-2 flex items-center justify-center md:my-0 md:mb-8 md:justify-between">
     <div className="page-header__title max-w-md">
       {title && (
         <h2 className="my-1 font-neue-machina text-default uppercase text-primary-contrastText">

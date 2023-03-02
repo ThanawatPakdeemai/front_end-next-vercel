@@ -19,7 +19,7 @@ const StatEstimatedProfit = ({ minValue, maxValue }: IProp) => (
       </Typography>
     </div>
     <div className="flex gap-2">
-      <div className="flex h-[87px] w-full flex-col justify-center rounded-lg border-[1px] border-varidian-default text-varidian-default md:w-[130px]">
+      <div className="flex h-[87px] w-full flex-auto flex-col justify-center rounded-lg border-[1px] border-varidian-default text-varidian-default md:w-[130px]">
         <Typography className="mb-[10px] text-center text-xs font-bold">
           min
         </Typography>
@@ -27,7 +27,7 @@ const StatEstimatedProfit = ({ minValue, maxValue }: IProp) => (
           {minValue}
         </Typography>
       </div>
-      <div className="flex h-[87px] w-full flex-col justify-center rounded-lg bg-varidian-default text-primary-main md:w-[130px]">
+      <div className="flex h-[87px] w-full flex-auto flex-col justify-center rounded-lg bg-varidian-default text-primary-main md:w-[130px]">
         <Typography className="mb-[10px] text-center text-xs font-bold">
           max
         </Typography>

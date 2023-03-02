@@ -11,11 +11,11 @@ interface IProps {
 const Header = ({ unread, onHandleClick }: IProps) => {
   const { t } = useTranslation()
   return (
-    <div className="mb-6 flex justify-between">
-      <h1 className="py-2 text-2xl uppercase text-neutral-400">
+    <div className="mb-6 mt-4 flex flex-wrap justify-between md:mt-0 md:flex">
+      <h1 className="flex-auto py-2 text-center text-2xl uppercase text-neutral-400 sm:mr-3 sm:flex-none sm:text-left">
         {t("notifications")}
       </h1>
-      <div className="flex gap-4">
+      <div className="flex flex-auto flex-row gap-4 sm:flex-none">
         <Chip
           label={`${t("unread")} ${unread}`}
           size="small"
@@ -26,7 +26,7 @@ const Header = ({ unread, onHandleClick }: IProps) => {
           startIcon={<CheckMarkIcon />}
           text={t("mark_all_as_read")}
           handleClick={onHandleClick}
-          className="border-sky-500 z-[2] w-[198px] rounded-full border border-solid capitalize"
+          className="border-sky-500 z-[2] rounded-full border border-solid text-[12px] capitalize md:w-[170px]"
           type="button"
         />
       </div>

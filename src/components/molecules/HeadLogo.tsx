@@ -7,12 +7,15 @@ import DragHandleIcon from "@mui/icons-material/DragHandle"
 import { useRouter } from "next/router"
 import { Image } from "@components/atoms/image/index"
 import { FLAGS } from "@constants/flags"
+import useGlobal from "@hooks/useGlobal"
 import Link from "next/link"
+import MarketplaceTextIcon from "@components/icons/marketplace/MarketplaceTextIcon"
 import { styleIcon } from "./HeadMenu"
 
 const HeadLogo = () => {
   const router = useRouter()
   const [scrollPage, setScrollY] = useState(0)
+  const { isMarketplace } = useGlobal()
 
   const onScroll = useCallback(() => {
     const { pageYOffset } = window // scrollY
@@ -32,9 +35,9 @@ const HeadLogo = () => {
     <>
       <Box
         component="div"
-        className={`head-logo mt-2 flex w-full flex-1 items-center justify-center transition-all duration-75 sm:justify-start lg:mt-0 lg:w-[360px] lg:flex-none ${
-          scrollPage < 100 ? "opacity-100" : "opacity-0"
-        }`}
+        className={`head-logo mt-2 flex w-full flex-1 items-center justify-center transition-all duration-75 sm:justify-start lg:mt-0 ${
+          isMarketplace ? "lg:w-[500px]" : "lg:w-[360px]"
+        } lg:flex-none ${scrollPage < 100 ? "opacity-100" : "opacity-0"}`}
       >
         <div
           className={`ml-2 flex w-full items-center md:w-auto md:justify-center lg:ml-0 ${
@@ -44,6 +47,11 @@ const HeadLogo = () => {
           <Link href="/">
             <LogoNaka />
           </Link>
+          {isMarketplace && (
+            <Link href="/marketplace">
+              <MarketplaceTextIcon className="ml-3" />
+            </Link>
+          )}
           <Divider
             className="my-2 hidden border-neutral-700 md:!mx-5 md:block"
             orientation="vertical"
@@ -53,7 +61,11 @@ const HeadLogo = () => {
             component="div"
             className="ms:ml-0 ml-auto flex items-center"
           >
-            <LanguageIcon className="!text-error-main" />
+            <LanguageIcon
+              className={
+                isMarketplace ? "!text-secondary-main" : "text-error-main"
+              }
+            />
             <SelectNaka
               imageSelectd={
                 <Image
@@ -91,7 +103,9 @@ const HeadLogo = () => {
               button={
                 <Button
                   sx={{ minWidth: "10px !important" }}
-                  className="!rounded-[8px] !text-error-main"
+                  className={`!rounded-[8px] ${
+                    isMarketplace ? "!text-secondary-main" : "text-error-main"
+                  }`}
                   variant="contained"
                 >
                   <Typography className="!font-neue-machina-semi !text-sm !uppercase">

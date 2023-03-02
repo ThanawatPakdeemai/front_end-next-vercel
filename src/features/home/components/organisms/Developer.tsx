@@ -19,6 +19,7 @@ const Developer = () => (
       item
       xs={12}
       md={6}
+      className="hidden lg:block"
     >
       <DeveloperContent />
     </Grid>

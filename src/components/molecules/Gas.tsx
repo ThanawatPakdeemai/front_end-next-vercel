@@ -6,7 +6,7 @@ import Card from "@mui/material/Card"
 import GasIcon from "./tagline/GasIcon"
 
 const Gas = () => (
-  <Box className="p-4">
+  <Box className="p-2 xl:p-4">
     <div className="grid h-full w-full gap-2 !rounded-[14px]">
       <Box className="flex justify-center">
         <Card className="Cardtext h-full w-full !rounded-lg bg-black-100">

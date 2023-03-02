@@ -11,14 +11,12 @@ import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContol
 import WalletHeader from "@feature/wallet/components/molecules/WalletHeader"
 import WalletBody from "@feature/wallet/components/molecules/WalletBody"
 import WalletFooter from "@feature/wallet/components/molecules/WalletFooter"
-import WalletLightAnimation from "@feature/wallet/components/molecules/WalletLightAnimation"
 import CONFIGS from "@configs/index"
 import { useRouter } from "next/router"
 import useChainSupport from "@stores/chainSupport"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
-import SwitchChain from "@components/atoms/SwitchChain"
 import useSwitchNetwork from "@hooks/useSwitchNetwork"
-import SkeletionWallet from "@components/atoms/skeleton/SkeletonWallet"
+import WalletContent from "@feature/wallet/components/organisms/WalletContent"
 
 export default function WalletPage() {
   const { hydrated } = useGlobal()
@@ -51,10 +49,10 @@ export default function WalletPage() {
     setIsWrongNetwork,
     isWrongNetwork,
     signer,
-    getNetwork
+    getNetwork,
+    handleConnectWithMetamask,
+    statusWalletConnected
   } = useSwitchNetwork()
-
-  // console.log("signer", signer, address, chainId, isWrongNetwork, chainSupport)
 
   /**
    * @description check disabled button
@@ -71,13 +69,14 @@ export default function WalletPage() {
     chainSupport.map((chain) => (
       <div
         key={chain.address}
-        className="col-span-5 m-2"
+        className="md:col-span-5 md:m-2"
       >
         <WalletHeader tokenName={chain.symbol} />
         <WalletBody
           tokenSymbol={chain.symbol}
           className={type === "NAKA" ? " text-NAKA " : "text-BUSD"}
           balance={chain.balanceVault}
+          contractAddress={chain.address}
         />
         <div className="mb-4 flex w-full justify-end">
           <RightMenuWallet
@@ -119,6 +118,7 @@ export default function WalletPage() {
    * @description set disabled button
    */
   useEffect(() => {
+    if (!statusWalletConnected.responseStatus) return
     setDisabled(isDisabledButton())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, type])
@@ -127,6 +127,7 @@ export default function WalletPage() {
    * @description Set type tab by router.query
    */
   useEffect(() => {
+    if (!statusWalletConnected.responseStatus) return
     if (token === "NAKA") {
       setType("NAKA")
       setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX)
@@ -141,15 +142,15 @@ export default function WalletPage() {
 
   return hydrated ? (
     <>
-      <div className="mx-2 grid w-full grid-cols-12 gap-4">
-        <div className="col-span-8 flex h-full w-full justify-between">
-          <div className="items-center uppercase">
+      <div className="flex w-full flex-wrap justify-center gap-4 md:justify-end lg:mx-2 xl:grid xl:grid-cols-12">
+        <div className="h-full w-full justify-center md:col-span-8 md:flex md:justify-between">
+          <div className="my-2 items-center text-center uppercase md:my-0 md:text-left">
             <p className="text-lg text-neutral-400">MY Wallet</p>
             <p className="text-xs text-neutral-600">
               Wallet manager for nakamoto.games world
             </p>
           </div>
-          <div className="flex rounded-sm bg-neutral-700 p-2">
+          <div className="flex justify-center rounded-sm bg-neutral-700 p-2">
             <button
               type="button"
               className={`flex h-[50px] w-[130px] items-center rounded-sm
@@ -189,43 +190,29 @@ export default function WalletPage() {
             </button>
           </div>
         </div>
-        <div className="col-span-6 h-full w-full items-center justify-center gap-1 rounded-default bg-neutral-800">
-          {loading ||
-          !chainSupport?.length ||
-          signer === undefined ||
-          address === undefined ? (
-            <SkeletionWallet />
-          ) : (
-            <div className="relative mx-2 grid w-full grid-cols-7 gap-1">
-              {isWrongNetwork ? (
-                <div className="col-span-5 m-2 flex flex-col items-center justify-center">
-                  <SwitchChain
-                    chainName={
-                      type === "NAKA" ? "Polygon" : "Binance Smart Chain"
-                    }
-                    handleClick={
-                      type === "NAKA"
-                        ? () =>
-                            handleSwitchNetwork(
-                              CONFIGS.CHAIN.CHAIN_ID_HEX as string
-                            )
-                        : () =>
-                            handleSwitchNetwork(
-                              CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string
-                            )
-                    }
-                    variant="full"
-                  />
-                </div>
-              ) : (
-                renderWallets()
-              )}
-              {/* {renderWallets()} */}
-              <WalletLightAnimation />
-            </div>
-          )}
+        <div className="my-2 h-full min-h-[360px] w-full max-w-full flex-[1_1_calc(100%-200px)] items-center justify-center rounded-default bg-neutral-800 p-2 md:col-span-6 md:my-0 md:max-w-md md:gap-1 md:p-0 lg:max-w-full">
+          <WalletContent
+            chainSupport={chainSupport}
+            loading={loading as boolean}
+            address={address as string}
+            signer={signer}
+            handleConnectWithMetamask={handleConnectWithMetamask}
+            isWrongNetwork={isWrongNetwork}
+            type={type}
+            handleSwitchNetwork={
+              type === "NAKA"
+                ? () =>
+                    handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX as string)
+                : () =>
+                    handleSwitchNetwork(
+                      CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string
+                    )
+            }
+            renderWallets={renderWallets}
+            statusWalletConnected={statusWalletConnected}
+          />
         </div>
-        <div className="col-span-2 h-full w-full items-center justify-center gap-1 rounded-default bg-neutral-800">
+        <div className="my-2 h-full w-full max-w-full flex-[1_1_100%] items-center justify-center gap-1 rounded-default bg-neutral-800 sm:max-w-[120px] sm:flex-[1_1_120px] md:col-span-2 md:my-0">
           <Gas />
         </div>
         <div className="col-span-4 w-full gap-1">

@@ -195,12 +195,12 @@ const FormEx = ({
       profile &&
       address &&
       balance &&
-      balance >= Number(watch("price")) * Number(watch("amount")) &&
+      Number(balance) >= Number(watch("price")) * Number(watch("amount")) &&
       Number(watch("price")) * Number(watch("amount")) > 0 &&
       Number(watch("amount")) <= Number(amountDefault)
     ) {
       if (edit) {
-        if (address?.toLowerCase() === profile.address.toLowerCase()) {
+        if (address?.toLowerCase() === profile?.address?.toLowerCase()) {
           return false
         }
         return true

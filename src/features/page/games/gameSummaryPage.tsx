@@ -43,9 +43,9 @@ const GameSummaryPage = ({ _roomId }: IProp) => {
         onOutRoom={() => router.push("/")}
         isSummaryPage
       />
-      <div className="flex items-center justify-center rounded-b-md bg-neutral-800 p-[10px]">
+      <div className="flex flex-wrap justify-center rounded-b-md bg-neutral-800 p-[10px]">
         <CardBodyList
-          className="mr-[42px] !h-[629px] w-[362px]"
+          className="w-full flex-[1_1_100%] sm:flex-[1_1_50%] lg:mr-[42px] lg:!h-[629px] lg:w-[362px] lg:flex-none"
           width="auto"
           players={playerReward}
         />

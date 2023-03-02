@@ -59,7 +59,7 @@ const GameRoomLayout = ({
   }, [gameData])
 
   return (
-    <div className="main-container mx-auto">
+    <div className="main-container mx-auto px-2 lg:px-0">
       <Header />
       <Banners />
       {gameData && <Howto data={gameData} />}
@@ -70,7 +70,7 @@ const GameRoomLayout = ({
         text="Don't miss the information analysis about this game"
         icon={<ShineIcon />}
       />
-      <div className="flex flex-col gap-3 md:flex-row">
+      <div className="flex flex-wrap gap-3 xl:flex-row xl:flex-nowrap">
         <LikeNoLobby value={78.34} />
         {statsGameById && <StatisticGameDetail statsGameById={statsGameById} />}
         <TopPlayer
@@ -79,7 +79,7 @@ const GameRoomLayout = ({
           background="neutral"
           note
           elevation={0}
-          className="!h-[424px] !w-[550px] border border-neutral-900 border-opacity-80 !bg-warning-contrastText"
+          className="lg:max-w-auto max-w-full border border-neutral-900 border-opacity-80 !bg-warning-contrastText lg:!h-[424px] xl:!w-[550px]"
           rank
           topPlayerGameId={topPlayerGameId && topPlayerGameId}
         />

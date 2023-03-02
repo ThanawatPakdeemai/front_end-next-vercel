@@ -16,7 +16,7 @@ import BannerSlide from "@feature/slider/components/templates/BannerSlide"
 import CarouselSlide from "@feature/slider/components/templates/CarouselSlide"
 import CardMarketplace from "@components/molecules/CardMarketplace"
 import CardNakaverse from "@components/molecules/CardNakaverse"
-import { Box } from "@mui/material"
+import { Box, Grid } from "@mui/material"
 import ICoupon from "@components/icons/Coupon"
 import IDiamond from "@components/icons/Diamond"
 import { IMAGES } from "@constants/images"
@@ -123,40 +123,66 @@ const Home = () => {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Box>
           <CardMarketplace />
-          <div className="mt-4 grid grid-cols-3 gap-6">
-            <CardLink
-              classNameSecond="!bg-red-card"
-              imageClassNameSecond="scale-[1.35]"
-              iconBtn={<INakaSwap />}
-              textBtn="NAKA Swap"
-              href="/"
-              srcMain={IMAGES.frontNakaSwap.src}
-              altMain={IMAGES.frontNakaSwap.alt}
-              srcSecond={IMAGES.backNakaSwap.src}
-              altSecond={IMAGES.backNakaSwap.alt}
-            />
-            <CardLink
-              classNameSecond="!bg-warning-dark"
-              imageClassNameSecond="scale-[1.35]"
-              iconBtn={<IStacking />}
-              textBtn="Staking"
-              href="/staking"
-              srcMain={IMAGES.frontStaking.src}
-              altMain={IMAGES.frontStaking.alt}
-              srcSecond={IMAGES.backStaking.src}
-              altSecond={IMAGES.backStaking.alt}
-            />
-            <CardLink
-              classNameSecond="bg-info-light"
-              imageClassNameSecond="scale-[1.35]"
-              iconBtn={<IReferrals />}
-              textBtn="Referral"
-              href="/referral"
-              srcMain={IMAGES.frontReferrals.src}
-              altMain={IMAGES.frontReferrals.alt}
-              srcSecond={IMAGES.backReferrals.src}
-              altSecond={IMAGES.backReferrals.alt}
-            />
+          <div className="mt-4">
+            <Grid
+              container
+              spacing={2}
+            >
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={4}
+              >
+                <CardLink
+                  classNameSecond="!bg-red-card"
+                  imageClassNameSecond="scale-[1.35]"
+                  iconBtn={<INakaSwap />}
+                  textBtn="NAKA Swap"
+                  href="/"
+                  srcMain={IMAGES.frontNakaSwap.src}
+                  altMain={IMAGES.frontNakaSwap.alt}
+                  srcSecond={IMAGES.backNakaSwap.src}
+                  altSecond={IMAGES.backNakaSwap.alt}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={4}
+              >
+                <CardLink
+                  classNameSecond="!bg-warning-dark"
+                  imageClassNameSecond="scale-[1.35]"
+                  iconBtn={<IStacking />}
+                  textBtn="Staking"
+                  href="/staking"
+                  srcMain={IMAGES.frontStaking.src}
+                  altMain={IMAGES.frontStaking.alt}
+                  srcSecond={IMAGES.backStaking.src}
+                  altSecond={IMAGES.backStaking.alt}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={4}
+              >
+                <CardLink
+                  classNameSecond="bg-info-light"
+                  imageClassNameSecond="scale-[1.35]"
+                  iconBtn={<IReferrals />}
+                  textBtn="Referral"
+                  href="/referral"
+                  srcMain={IMAGES.frontReferrals.src}
+                  altMain={IMAGES.frontReferrals.alt}
+                  srcSecond={IMAGES.backReferrals.src}
+                  altSecond={IMAGES.backReferrals.alt}
+                />
+              </Grid>
+            </Grid>
           </div>
         </Box>
         <div className="relative overflow-hidden">
@@ -215,38 +241,63 @@ const Home = () => {
       <BodyCategories />
 
       <DeveloperPart />
-      <Box className="xs:flex-col mt-4 mb-10 gap-3 lg:flex">
-        <Box className="xs:grid-cols-1 mb-3 grid gap-3 sm:grid-cols-2 lg:mb-0 lg:grid-cols-3">
-          <CardLink
-            classNameSecond="bg-warning-dark"
-            textBtn="Blog"
-            href="/blog"
-          />
-
-          <CardLink
-            classNameSecond="bg-secondary-light"
-            iconBtn={<ICoupon />}
-            textBtn="Coupon"
-            href="/coupon"
-            srcMain={IMAGES.frontCouponBand.src}
-            altMain={IMAGES.frontCouponBand.alt}
-            srcSecond={IMAGES.backCouponBand.src}
-            altSecond={IMAGES.backCouponBand.alt}
-          />
-
-          <CardLink
-            classNameSecond="bg-info-light"
-            iconBtn={<IDiamond />}
-            textBtn="NAKA NFT"
-            href="/arcade-emporium"
-            srcMain={IMAGES.frontNakaBand.src}
-            altMain={IMAGES.frontNakaBand.alt}
-            srcSecond={IMAGES.backNakaBand.src}
-            altSecond={IMAGES.backNakaBand.alt}
-          />
+      <Box className="xs:flex-col mt-4 mb-10 gap-4 lg:flex">
+        <Box>
+          <Grid
+            container
+            spacing={2}
+          >
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={4}
+            >
+              <CardLink
+                classNameSecond="bg-warning-dark"
+                textBtn="Blog"
+                href="/blog"
+              />
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={4}
+            >
+              <CardLink
+                classNameSecond="bg-secondary-light"
+                iconBtn={<ICoupon />}
+                textBtn="Coupon"
+                href="/coupon"
+                srcMain={IMAGES.frontCouponBand.src}
+                altMain={IMAGES.frontCouponBand.alt}
+                srcSecond={IMAGES.backCouponBand.src}
+                altSecond={IMAGES.backCouponBand.alt}
+              />
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={4}
+            >
+              <CardLink
+                classNameSecond="bg-info-light"
+                iconBtn={<IDiamond />}
+                textBtn="NAKA NFT"
+                href="/arcade-emporium"
+                srcMain={IMAGES.frontNakaBand.src}
+                altMain={IMAGES.frontNakaBand.alt}
+                srcSecond={IMAGES.backNakaBand.src}
+                altSecond={IMAGES.backNakaBand.alt}
+              />
+            </Grid>
+          </Grid>
         </Box>
-
-        <CardNakaverse href="/" />
+        <Box className="sm:mt-4 md:mt-0">
+          <CardNakaverse href="/" />
+        </Box>
       </Box>
     </>
   ) : (

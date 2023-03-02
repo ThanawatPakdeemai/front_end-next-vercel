@@ -24,7 +24,7 @@ const CardMarketplace = ({
   <>
     <Card
       sx={{ width: { width } }}
-      className="border border-solid border-neutral-700 bg-primary-main"
+      className="w-auto border border-solid border-neutral-700 bg-primary-main"
     >
       <Box
         sx={{

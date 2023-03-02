@@ -27,7 +27,7 @@ const SidebarProfile = () => {
   }, [profile])
 
   return (
-    <div className="flex w-[200px] flex-col gap-5">
+    <div className="mx-auto w-full max-w-xs gap-5 md:mx-0 md:flex md:w-[200px] md:flex-col">
       <MenuList className="rounded-[13px] bg-neutral-700 p-[6px]">
         {MENU_LOGGEDIN.map((ele) => {
           const active = router.asPath.includes(ele.href)

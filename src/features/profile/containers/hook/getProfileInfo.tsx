@@ -48,8 +48,8 @@ const useGetProfileInfo = ({
       }),
     staleTime: Infinity,
     enabled: _playerId !== "" && _playerId !== undefined,
-    keepPreviousData: true
-    // retry: false
+    keepPreviousData: true,
+    retry: false
   })
   return {
     getProfileInfo,

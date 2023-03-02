@@ -15,6 +15,7 @@ import {
   getBEP20Contract,
   getERC20Contract
 } from "@feature/contract/containers/contractHelpers"
+import { IErrorMessage } from "@interfaces/IErrorMessage"
 
 export type Method = "deposit" | "withdraw"
 export type TokenSupport = "NAKA" | "BNB"
@@ -42,8 +43,13 @@ const useWalletContoller = () => {
   const { successToast, errorToast } = useToast()
   const { getTokenAddress, fetchAllTokenSupported, fetchNAKAToken } =
     useGlobal()
-  const { address, handleConnectWithMetamask, chainId, signer } =
-    useWeb3Provider()
+  const {
+    address,
+    handleConnectWithMetamask,
+    chainId,
+    signer,
+    statusWalletConnected
+  } = useWeb3Provider()
 
   const {
     refetchBalanceVaultBSC,
@@ -267,20 +273,22 @@ const useWalletContoller = () => {
    * @description Check metamask
    */
   useEffect(() => {
+    if (!(statusWalletConnected as IErrorMessage).responseStatus) return
     if (signer === undefined || address === undefined) return
     checkConnection()
-  }, [address, haveMetamask, checkConnection, signer])
+  }, [address, haveMetamask, checkConnection, signer, statusWalletConnected])
 
   /**
    * @description Check Tab type
    */
   useEffect(() => {
+    if (!(statusWalletConnected as IErrorMessage).responseStatus) return
     if (chainId && chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
       setType("BNB")
     } else {
       setType("NAKA")
     }
-  }, [chainId])
+  }, [chainId, statusWalletConnected])
 
   return {
     type,

@@ -2,6 +2,7 @@ import ReloadIcon from "@components/icons/ReloadIcon"
 import ButtonSticky from "@components/molecules/ButtonSticky"
 import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
+import BuyItemBody from "@components/templates/game/BuyItemBody"
 import { MESSAGES } from "@constants/messages"
 import useSocketRoomList from "@feature/game/containers/hooks/useSocketRoomList"
 import {
@@ -127,11 +128,11 @@ const MultiRoomList = () => {
     <>
       <Box className=" block gap-3 lg:flex">
         <SocketProviderRoom propsSocket={{ getRoomListMultiPlayer, fetchRoom }}>
-          <Box className="w-full rounded-3xl border border-neutral-700">
+          <Box className="relative w-full rounded-3xl border border-neutral-700">
             {data && <HeaderRoomList lobby={data.name} />}
             <Divider />
 
-            <div className="custom-scroll flex h-[666px] flex-col items-center gap-[27px] overflow-y-scroll bg-room-list bg-contain p-[43px]">
+            <div className="custom-scroll md:0 m-4 flex h-96 flex-col gap-[27px] overflow-y-scroll bg-room-list bg-contain md:h-[666px] md:items-center lg:p-[43px]">
               {profile &&
                 dataRoom &&
                 dataRoom.length > 0 &&
@@ -170,9 +171,9 @@ const MultiRoomList = () => {
           </Box>
         </SocketProviderRoom>
         {data && (!data?.play_to_earn || !data.tournament) && (
-          <Box className=" w-[333px] flex-none gap-2">
+          <BuyItemBody>
             <CardBuyItem />
-          </Box>
+          </BuyItemBody>
         )}
       </Box>
     </>

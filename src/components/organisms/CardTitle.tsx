@@ -37,7 +37,7 @@ const CardTitle = ({
       <Card
         elevation={elevation}
         sx={{ maxWidth: width ?? "auto" }}
-        className={`card-title-page mb-3 ${
+        className={`card-title-page mb-3 w-full max-w-full sm:flex-[1_1_100%] lg:flex-none ${
           background === "purple" && "!bg-purple-primary"
         } ${background === "red" && "!bg-red-card"}
        ${background === "neutral" && "!bg-neutral-800"}
@@ -45,7 +45,7 @@ const CardTitle = ({
       >
         {subtitle ? (
           <>
-            <div className="flex justify-between rounded-2xl bg-neutral-800 p-4">
+            <div className="flex w-full justify-center rounded-2xl bg-neutral-800 p-4 lg:justify-between">
               <div className="uppercase">
                 <h1 className="col-span-2 text-[14px]">
                   weekly prize pool :{" "}
@@ -84,7 +84,7 @@ const CardTitle = ({
       </Card>
       {subtitle ? (
         <>
-          <div className="grid grid-cols-8 gap-1 p-4 text-[10px] uppercase">
+          <div className="grid w-full flex-[1_1_calc(100%-250px)] grid-cols-8 gap-1 p-4 text-[10px] uppercase lg:flex-none">
             <h1 className="col-span-1">Rank</h1>
             <h1 className="col-span-3">Player</h1>
             <h1 className="col-span-2">Prize pool EST. %</h1>

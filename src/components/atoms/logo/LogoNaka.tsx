@@ -10,14 +10,14 @@ const LogoNaka = () => (
       width={IMAGES.nakaBand.width}
       height={IMAGES.nakaBand.height}
       alt={IMAGES.nakaBand.alt}
-      className="logo-band transition hover:ease-linear group-hover:hidden"
+      className="logo-band transition duration-75 ease-linear hover:ease-linear group-hover:hidden"
     />
     <Image
       src={IMAGES.nakaBannerHover.src}
       width={IMAGES.nakaBannerHover.width}
       height={IMAGES.nakaBannerHover.height}
       alt={IMAGES.nakaBannerHover.alt}
-      className="logo-band-hover hidden animate-expand-right duration-75 ease-linear group-hover:block"
+      className="logo-band-hover hidden animate-expand-right transition duration-75 ease-linear group-hover:block"
     />
   </Box>
 )

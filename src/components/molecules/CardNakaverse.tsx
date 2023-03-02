@@ -57,6 +57,7 @@ const CardNakaverse = ({
           size="medium"
           color="secondary"
           variant="contained"
+          className="h-9"
         />
       </CardContent>
       <CardContent className="relative w-full max-[480px]:hidden">

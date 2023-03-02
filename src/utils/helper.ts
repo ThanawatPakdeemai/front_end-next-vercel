@@ -5,11 +5,13 @@ import CryptoJS from "crypto-js"
 import { IPropsFormatNumberOption } from "@interfaces/IHelper"
 import { IGetEventLog } from "@interfaces/ITransaction"
 import { ILocal, TLocalKey, ELocalKey } from "@interfaces/ILocal"
-import { ICurrentNakaResponse } from "@feature/inventory/interfaces/IInventoryService"
+import {
+  ICurrentNakaData,
+  ICurrentNakaResponse
+} from "@feature/inventory/interfaces/IInventoryService"
 import { getCurrentNaka } from "@feature/inventory/containers/services/inventory.service"
 import { IResGetIp } from "@interfaces/IGetIP"
-import { getPriceCurrent } from "@feature/home/containers/services/home.service"
-import { IPointCurrentResponse } from "@feature/home/interfaces/IHomeService"
+import { trickerPriceBNBExternal } from "@feature/buyItem/containers/services/currency.services"
 
 const names = ["wei", "kwei", "mwei", "gwei", "szabo", "finney", "ether"]
 
@@ -110,7 +112,6 @@ const Helper = {
   copyClipboard(_val: string) {
     // Copy the text inside the text field
     navigator.clipboard.writeText(_val)
-    // toast.success("Copied!")
   },
   makeID(_length: number) {
     let result = ""
@@ -203,6 +204,26 @@ const Helper = {
 
     return itemPerNaka
   },
+  /**
+   * @description Calculate price of item in BSC
+   * @param itemPerUSD
+   * @param currentPrice
+   * @returns {number}
+   */
+  async calPriceBinanceChain(itemPerUSD: number, symbol: string) {
+    const result = await trickerPriceBNBExternal(symbol)
+    const currentPrice = Number(result.price)
+    if (itemPerUSD && currentPrice) {
+      const pricePerUSD = currentPrice
+      const itemPrice = itemPerUSD / parseFloat(pricePerUSD.toString())
+      const itemToFixed = itemPrice.toFixed(5)
+      const itemPerUSDBSC = parseFloat(
+        itemToFixed.substring(0, itemToFixed.length - 1)
+      )
+      return itemPerUSDBSC
+    }
+    return 0
+  },
   getFeeGas(effectiveGasPrice: string, gasUsed: number) {
     return this.WeiToNumber(effectiveGasPrice) * gasUsed
   },
@@ -241,18 +262,26 @@ const Helper = {
     return (amount / total) * 100
   },
   async getPriceNakaCurrent() {
-    const currenr_price = await getPriceCurrent()
-    return currenr_price
+    const currenr_price = await getCurrentNaka()
+    return currenr_price.data
+  },
+  async getPriceBSCCurrent(_symbol: string) {
+    const currentPrice = await trickerPriceBNBExternal(_symbol)
+    return currentPrice
   },
   async getItemPriceUsd(_priceItem: number, _qty?: number) {
     const qty: number = _qty ?? 1
     const priceData = await this.getPriceNakaCurrent()
     if (priceData) {
-      const priceUsd = Number((priceData as IPointCurrentResponse).data.buy)
+      const priceUsd = Number((priceData as ICurrentNakaData).buy)
       const price = _priceItem * priceUsd * qty
       return this.number4digit(price)
     }
     return this.number4digit(0)
+  },
+  removeComma(text: string) {
+    // eslint-disable-next-line no-useless-escape
+    return Number(text.replace(/\,/g, ""))
   }
 }
 

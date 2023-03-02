@@ -33,7 +33,7 @@ const GamePageDefault = ({
   }, [data, gamePartnerData])
 
   return (
-    <div className="main-container mx-auto">
+    <div className="main-container mx-auto px-2 lg:px-0">
       <Header />
       {gameData && "image_banner" in gameData ? (
         <BannerSingle

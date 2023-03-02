@@ -17,9 +17,9 @@ const useFilterStore = create<ISearch>()(
   devtools(
     (set) => ({
       search: "",
-      category: "",
-      gameItem: "",
-      device: "",
+      category: "all",
+      gameItem: "all",
+      device: "all",
       setSearch: (_search: string) => {
         set(() => ({ search: _search }), false, "FilterStore/SetSearch")
       },

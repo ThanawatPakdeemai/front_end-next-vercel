@@ -1,8 +1,17 @@
-import ProfileLayout from "@components/templates/ProfileLayout"
-import { ITEM_REWARD_CRUMB } from "@configs/crumb"
-import EarnRewardPage from "@feature/page/EarnRewardPage"
-import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import React, { ReactElement } from "react"
+import { ITEM_REWARD_CRUMB } from "@configs/crumb"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import dynamic from "next/dynamic"
+
+const ProfileLayout = dynamic(
+  () => import("@components/templates/ProfileLayout"),
+  {
+    suspense: true
+  }
+)
+const EarnRewardPage = dynamic(() => import("@feature/page/EarnRewardPage"), {
+  suspense: true
+})
 
 export default function EarnReward() {
   return (

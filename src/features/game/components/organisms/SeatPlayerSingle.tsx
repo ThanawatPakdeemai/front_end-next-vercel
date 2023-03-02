@@ -180,7 +180,6 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
             data.id
           }/?query=${Helper.makeID(8)}${btoa(data_game)}`
           setGameUrl(gameURL)
-          // console.log(`${CONFIGS.BASE_URL.GAME}/${data.id}/?query=${data_game}`)
         }
       } else {
         const url_data = `${room_id}:|:${profile.id}:|:${item_id}:|:${
@@ -196,7 +195,6 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
         }:|:${profile.username}:|:${
           data.play_to_earn === true ? "free" : "not_free"
         }`
-        // console.log(`${baseUrlGame}/${data.id}/?${Helper.makeID(8)}/${url_data}}`)
         const gameURL = `${baseUrlGame}/${data.id}/?${Helper.makeID(8)}${btoa(
           url_data
         )}`
@@ -228,7 +226,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
       <Box>
         <PlayerCard players={players} />
         <Box className="mb-10  flex justify-center">
-          <Box className="w-fit items-center justify-center gap-3 rounded-[50px] border border-neutral-800 bg-primary-main p-3 md:flex">
+          <Box className="w-fit items-center justify-center gap-3 rounded-md border border-neutral-800 bg-primary-main p-3 md:flex md:rounded-[50px]">
             <Typography className=" mx-4 w-[200px] font-neue-machina text-sm ">
               {" It's time to play! Press the Start"}
             </Typography>

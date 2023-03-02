@@ -1,79 +1,46 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useEffect, useRef, useState } from "react"
 import { Card, Chip, InputAdornment, TextField } from "@mui/material"
 import NumberRank from "@feature/ranking/components/atoms/NumberRank"
 import { Image } from "@components/atoms/image"
 import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import { v4 as uuidv4 } from "uuid"
 import SearchIcon from "@components/icons/SearchIcon"
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import useGetProfileInfo from "@feature/profile/containers/hook/getProfileInfo"
 import useProfileStore from "@stores/profileStore"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import Helper from "@utils/helper"
 import TooltipsCustom from "@components/atoms/TooltipsCustom"
 import { motion } from "framer-motion"
+import { getPlayerInfoByPlayerId } from "@feature/profile/containers/services/profile.service"
+import { useQueryClient } from "@tanstack/react-query"
+import DropdownLimit from "@components/atoms/DropdownLimit"
+import useGlobal from "@hooks/useGlobal"
 import RankIcon from "../atoms/RankIcon"
 import SliderGameStat from "./SliderGameStat"
 
 const GameStatOverview = () => {
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
-  const limit = 20
+  // const limit = 20
+  const [limit, setLimit] = useState<number>(20)
   const profile = useProfileStore((state) => state.profile)
-  // const rankingMock = [
-  //   {
-  //     rank: 0,
-  //     name: "NAKAMOTOWARS",
-  //     detail: "THERE ARE PLENTY OF UNKNOWNS IN",
-  //     rankName: "PLATINUM",
-  //     rankScore: 2345,
-  //     played: 1234,
-  //     winrate: 99.45,
-  //     image: "/images/gameDetails/nakamoto-wars.webp",
-  //     imageRank: "/images/gamePage/rank/platinum.svg"
-  //   },
-  //   {
-  //     rank: 1,
-  //     name: "NAKAMOTOWARS",
-  //     detail: "THERE ARE PLENTY OF UNKNOWNS IN",
-  //     rankName: "PLATINUM",
-  //     rankScore: 2345,
-  //     played: 1234,
-  //     winrate: 99.45,
-  //     image: "/images/mocks/play2earnGames/duninutss_game.png",
-  //     imageRank: "/images/gamePage/rank/platinum.svg"
-  //   },
-  //   {
-  //     rank: 2,
-  //     name: "NAKAMOTOWARS",
-  //     detail: "THERE ARE PLENTY OF UNKNOWNS IN",
-  //     rankName: "PLATINUM",
-  //     rankScore: 2345,
-  //     played: 1234,
-  //     winrate: 99.45,
-  //     image: "/images/gameDetails/nakamoto-wars.webp",
-  //     imageRank: "/images/gamePage/rank/platinum.svg"
-  //   },
-  //   {
-  //     rank: 3,
-  //     name: "NAKAMOTOWARS",
-  //     detail: "THERE ARE PLENTY OF UNKNOWNS IN",
-  //     rankName: "PLATINUM",
-  //     rankScore: 2345,
-  //     played: 1234,
-  //     winrate: 99.45,
-  //     image: "/images/gameDetails/nakamoto-wars.webp",
-  //     imageRank: "/images/gamePage/rank/platinum.svg"
-  //   }
-  // ]
-
+  // const [dataInfo, setDatainfo] = useState<IPlayerInfoResponse>()
   const [idPlayer, setIdPlayer] = useState<string>("")
-  const { getProfileInfo, isLoading } = useGetProfileInfo({
-    _limit: 20,
-    _playerId: idPlayer,
-    _page: page,
-    _sort: "id"
-  })
+  const queryClient = useQueryClient()
+  const fetchRef = useRef(false)
+  const { hydrated, pager } = useGlobal()
+
+  // const { response, isLoading, mutateGetPlayerInfo } = useGetProfileInfo()
+
+  // const { getProfileInfo, isLoading, isPreviousData, refetchGetProfile } =
+  //   useGetProfileInfo({
+  //     _limit: 20,
+  //     _playerId: idPlayer,
+  //     _page: page,
+  //     _sort: "",
+  //     _cheat: "All",
+  //     _rewards_send_status: "All"
+  //   })
 
   const [openBadges, setOpenBadges] = useState<boolean>(false)
 
@@ -87,18 +54,69 @@ const GameStatOverview = () => {
     }
   }, [profile])
 
-  // useEffect(() => {
-  //   if (profile && profile.length > 0) {
-  //     setTotalCount(data.length)
-  //   }
-  // }, [profile])
-
+  // useQuery
+  const { getProfileInfo, isLoading, isPreviousData, refetchGetProfile } =
+    useGetProfileInfo({
+      _limit: limit,
+      _playerId: idPlayer,
+      _page: page,
+      _sort: "",
+      _cheat: "All",
+      _rewards_send_status: "All"
+    })
   useEffect(() => {
-    if (getProfileInfo) {
-      setTotalCount(getProfileInfo.data.game_data.length)
+    if (!fetchRef.current && getProfileInfo) {
+      fetchRef.current = true
+      setTotalCount(getProfileInfo.data.info.totalCount)
     }
   }, [getProfileInfo])
 
+  useEffect(() => {
+    if (!isPreviousData && getProfileInfo) {
+      queryClient.prefetchQuery({
+        queryKey: ["PlayerInfoByPlayerId", page],
+        queryFn: () =>
+          getPlayerInfoByPlayerId({
+            _limit: limit,
+            _playerId: idPlayer,
+            _page: page,
+            _sort: "",
+            _cheat: "All",
+            _rewards_send_status: "All"
+          })
+      })
+      refetchGetProfile()
+    }
+  }, [
+    getProfileInfo,
+    isPreviousData,
+    page,
+    queryClient,
+    idPlayer,
+    refetchGetProfile,
+    limit
+  ])
+  // useQuery
+
+  // useMutation
+  // useEffect(() => {
+  //   if (!response && profile) {
+  //     mutateGetPlayerInfo({
+  //       _limit: limit,
+  //       _playerId: idPlayer,
+  //       _page: page,
+  //       _sort: "",
+  //       _cheat: "All",
+  //       _rewards_send_status: "All"
+  //     }).then((_res) => {
+  //       setTotalCount(_res.data.info.totalCount)
+  //       setDatainfo(_res)
+  //     })
+  //   }
+  // }, [idPlayer, mutateGetPlayerInfo, page, response, profile])
+
+  // console.log("page", page)
+  // console.log("response", page, response)
   return (
     <div className="w-[90%]">
       <SliderGameStat
@@ -127,7 +145,7 @@ const GameStatOverview = () => {
                   <div className="py-10 px-10">
                     <NumberRank
                       className="m-0 h-6 w-8 !rounded-[4px]"
-                      index={index}
+                      index={index + limit * (page - 1)}
                     />
                     <h1 className="py-5 text-neutral-300">{item.name}</h1>
                     <p className=" text-xs text-neutral-500">
@@ -228,7 +246,7 @@ const GameStatOverview = () => {
               page={page}
               setPage={setPage}
             />
-            <div>
+            <div className="flex">
               <TextField
                 // label="Search Game..."
                 sx={{
@@ -248,21 +266,14 @@ const GameStatOverview = () => {
                   )
                 }}
               />
-
-              <TextField
-                // label="Show 6"
-                className="ml-3"
-                select
-                placeholder="Show 6"
-                // value={0}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <VisibilityOutlinedIcon />
-                    </InputAdornment>
-                  )
-                }}
-              />
+              {hydrated && (
+                <DropdownLimit
+                  className="ml-2"
+                  defaultValue={limit ?? 20}
+                  list={pager}
+                  onChangeSelect={setLimit}
+                />
+              )}
             </div>
 
             {/* {gameData && gameData.type_code === "multi_02" && (

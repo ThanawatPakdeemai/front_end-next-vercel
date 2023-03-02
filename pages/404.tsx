@@ -1,10 +1,22 @@
-import IconArrowRight from "@components/icons/arrowRightIcon"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { Image } from "@components/atoms/image/index"
 import { Typography } from "@mui/material"
-import Meta from "@src/meta"
 import { useRouter } from "next/router"
+import Meta from "@src/meta"
 import React from "react"
+import dynamic from "next/dynamic"
+
+const IconArrowRight = dynamic(
+  () => import("@components/icons/arrowRightIcon"),
+  {
+    suspense: true
+  }
+)
+const ButtonToggleIcon = dynamic(
+  () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
+  {
+    suspense: true
+  }
+)
 
 const CustomPage404 = () => {
   const router = useRouter()

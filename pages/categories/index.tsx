@@ -1,7 +1,19 @@
-import GamePageWithBreadcrumb from "@components/templates/GamePageWithBreadcrumb"
-import CatogoriesListPage from "@feature/page/CatogoriesListPage"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import React, { ReactElement } from "react"
+import dynamic from "next/dynamic"
+
+const GamePageWithBreadcrumb = dynamic(
+  () => import("@components/templates/GamePageWithBreadcrumb"),
+  {
+    suspense: true
+  }
+)
+const CatogoriesListPage = dynamic(
+  () => import("@feature/page/CatogoriesListPage"),
+  {
+    suspense: true
+  }
+)
 
 export default function Categories() {
   return (

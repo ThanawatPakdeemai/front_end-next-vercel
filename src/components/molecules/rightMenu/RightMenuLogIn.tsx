@@ -4,7 +4,13 @@ import StateIcon from "@components/atoms/stateIcon/StateIcon"
 import IconButtonCustom from "@components/atoms/IconButtonCustom/IconButtonCustom"
 import Balance from "@components/molecules/balance/Balance"
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined"
-import { Typography, Collapse, CardActions, Card } from "@mui/material"
+import {
+  Typography,
+  Collapse,
+  CardActions,
+  Card,
+  ClickAwayListener
+} from "@mui/material"
 import Helper from "@utils/helper"
 import StatProfile from "@components/molecules/statProfile/StatProfile"
 import MenuProfile from "@components/molecules/menuProfile/MenuProfile"
@@ -34,7 +40,11 @@ const RightMenuLogIn = () => {
   }
 
   const handleOnExpandClick = () => {
-    setExpanded(!expanded)
+    setExpanded((prev) => !prev)
+  }
+
+  const handleOnClickOutside = () => {
+    setExpanded(false)
   }
 
   const handleOnNotiClick = () => {
@@ -43,8 +53,11 @@ const RightMenuLogIn = () => {
 
   return (
     <div>
-      {profile && (
-        <>
+      <ClickAwayListener
+        mouseEvent="onMouseDown"
+        onClickAway={handleOnClickOutside}
+      >
+        <div>
           <TooltipsCustom
             title={
               <p className="text-primary-main">
@@ -57,7 +70,7 @@ const RightMenuLogIn = () => {
             <Card
               className={`${
                 expanded ? "rounded-t-[13px] rounded-b-none" : "rounded-[13px]"
-              } m-auto flex items-center justify-center`}
+              } relative m-auto flex items-center justify-center`}
               sx={{
                 maxWidth: 277,
                 width: 277,
@@ -77,7 +90,11 @@ const RightMenuLogIn = () => {
                   onClick={handleOnNotiClick}
                   variants={iconmotion}
                   whileHover="hover"
-                  transition={{ type: "spring", stiffness: 400, damping: 4 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 4
+                  }}
                   icon={
                     <NotificationsOutlinedIcon className="text-white-primary" />
                   }
@@ -101,9 +118,9 @@ const RightMenuLogIn = () => {
                     </Typography>
                   )}
                 </div>
-                <Link href={`/profile/${profile.id}`}>
+                <Link href={`/profile/${profile?.id}`}>
                   <Image
-                    src={profile?.avatar}
+                    src={profile?.avatar || "/images/avatar.png"}
                     alt="avatar"
                     width={40}
                     height={40}
@@ -142,7 +159,6 @@ const RightMenuLogIn = () => {
               </CardActions>
             </Card>
           </TooltipsCustom>
-
           <Collapse
             in={expanded}
             timeout="auto"
@@ -185,8 +201,13 @@ const RightMenuLogIn = () => {
             />
             <MenuProfile />
           </Collapse>
+        </div>
+      </ClickAwayListener>
+      {/* {profile && (
+        <>
+          
         </>
-      )}
+      )} */}
     </div>
   )
 }

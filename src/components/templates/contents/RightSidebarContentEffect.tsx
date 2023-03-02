@@ -21,11 +21,11 @@ const RightSidebarContentEffect = ({
         id="spark-fire"
         className="absolute bottom-0"
       />
-      <div className="min-h-[400px] w-full rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-primary-main p-4 md:w-4/6">
+      <div className="mb-2 min-h-[400px] w-full rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-primary-main p-4 sm:mb-0 md:w-4/6">
         {content}
       </div>
 
-      <div className="mb-3 rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 md:w-2/6">
+      <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 md:w-2/6">
         {aside}
       </div>
     </div>

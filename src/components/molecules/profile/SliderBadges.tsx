@@ -102,7 +102,7 @@ const SliderBadges = ({ _playerId }: IProp) => {
         <div className="flex">
           <CrumbCustom
             text="My emblems are more than just symbols"
-            background="text-neutral-400 border border-solid border-neutral-700 p-[20px] mr-4"
+            className="mr-4 cursor-default border border-solid border-neutral-700 p-[20px] text-neutral-400"
           />
           {getBadgeData && (
             <CrumbCustom
@@ -111,7 +111,7 @@ const SliderBadges = ({ _playerId }: IProp) => {
                   ? `${getBadgeData.badges.length} Badges`
                   : `${getBadgeData.badges.length} Badge`
               } `}
-              background=" bg-error-main"
+              className="cursor-default bg-error-main"
             />
           )}
         </div>
@@ -126,7 +126,7 @@ const SliderBadges = ({ _playerId }: IProp) => {
           />
           <CrumbCustom
             text="View Emblems info"
-            background="bg-purple-primary"
+            className="cursor-default bg-purple-primary"
           />
         </div>
         <div className="absolute top-[180%] right-[-24%] z-[5] flex flex-col items-center justify-center">
@@ -153,21 +153,21 @@ const SliderBadges = ({ _playerId }: IProp) => {
                   slideArray.map((badge) => {
                     if ("name" in badge) {
                       return (
-                        <motion.div
-                          className="!grid !h-[250px] !content-center !justify-center"
+                        <TooltipsCustom
+                          placement="top"
+                          title={badge.name}
+                          color="error"
                           key={uuid()}
-                          whileHover={{ rotate: 15 }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 100,
-                            damping: 4
-                          }}
                         >
-                          <TooltipsCustom
-                            placement="top"
-                            title={badge.name}
-                            color="error"
+                          <motion.div
+                            className="!grid !h-[250px] !content-center !justify-center"
                             key={uuid()}
+                            whileHover={{ rotate: 15 }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 100,
+                              damping: 4
+                            }}
                           >
                             <Image
                               src={badge.image}
@@ -175,8 +175,8 @@ const SliderBadges = ({ _playerId }: IProp) => {
                               width={120}
                               height={150}
                             />
-                          </TooltipsCustom>
-                        </motion.div>
+                          </motion.div>
+                        </TooltipsCustom>
                       )
                     }
                     return badge as React.ReactElement

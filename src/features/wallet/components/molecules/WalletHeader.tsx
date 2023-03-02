@@ -10,7 +10,7 @@ interface IWalletHeaderProps {
  * @description Display percentage of wallet balance
  */
 const WalletHeader = ({ tokenName = "NAKA", percent }: IWalletHeaderProps) => (
-  <div className="mb-2 flex w-full flex-row items-center justify-between gap-1 whitespace-nowrap rounded-default bg-black-100 py-4">
+  <div className="mb-2 flex w-full flex-col items-center justify-between gap-1 whitespace-nowrap rounded-default bg-black-100 py-4 lg:flex-row">
     <div className="ml-2 flex flex-row items-center text-red-card">
       <IBattery
         width={25}

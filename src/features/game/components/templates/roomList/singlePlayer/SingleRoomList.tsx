@@ -14,6 +14,7 @@ import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
+import BuyItemBody from "@components/templates/game/BuyItemBody"
 
 /**
  *
@@ -101,11 +102,11 @@ const GameRoomList = () => {
 
   return (
     <>
-      <Box className=" block w-full gap-3 lg:flex ">
-        <div className="w-full rounded-3xl border border-neutral-700">
+      <Box className="w-full gap-3 lg:flex">
+        <div className="relative w-full rounded-3xl border border-neutral-700">
           {gameData && <HeaderRoomList lobby={gameData.name} />}
           <Divider />
-          <div className="custom-scroll flex h-[666px] flex-col items-center gap-[27px] overflow-y-scroll bg-room-list bg-contain p-[43px]">
+          <div className="custom-scroll md:0 m-4 flex h-96 flex-col gap-[27px] overflow-y-scroll bg-room-list bg-contain md:h-[666px] md:items-center md:p-6 lg:p-[43px]">
             {profile &&
               allGameRooms &&
               allGameRooms.length > 0 &&
@@ -136,9 +137,9 @@ const GameRoomList = () => {
           </div>
         </div>
         {gameData && (!gameData?.play_to_earn || !gameData.tournament) && (
-          <Box className=" w-[333px] flex-none gap-2">
+          <BuyItemBody>
             <CardBuyItem />
-          </Box>
+          </BuyItemBody>
         )}
       </Box>
     </>

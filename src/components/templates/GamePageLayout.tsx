@@ -10,7 +10,7 @@ import React from "react"
 const GamePageLayout = ({
   children
 }: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) => (
-  <div className="main-container mx-auto">
+  <div className="main-container mx-auto px-2 lg:px-0">
     <Header />
     <Tagline
       bgColor="bg-neutral-800"

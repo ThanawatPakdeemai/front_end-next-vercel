@@ -4,7 +4,7 @@ import { IMAGES } from "@constants/images"
 
 const WalletLightAnimation = () => (
   <>
-    <div className="col-span-2 m-2 flex">
+    <div className="col-span-2 m-2 hidden md:flex">
       <Image
         src={IMAGES.Frame.src}
         alt=""

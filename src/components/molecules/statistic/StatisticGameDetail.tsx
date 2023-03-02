@@ -14,8 +14,8 @@ interface IProp {
 }
 
 const StatisticGameDetail = ({ statsGameById }: IProp) => (
-  <div className="flex h-[424px] flex-col gap-2 rounded-lg border-[1px] border-neutral-700 border-opacity-80 p-2 md:flex-row">
-    <div className="flex flex-col justify-between">
+  <div className="flex flex-[1_1_calc(100%-240px)] flex-col gap-2 rounded-lg border-[1px] border-neutral-700 border-opacity-80 p-2 md:flex-row lg:h-[424px] xl:flex-none">
+    <div className="xs:max-w-[300px] flex flex-auto flex-col justify-between gap-2 md:gap-0">
       <StatWithIcon
         icon={<PlayersIcon className="rotate-0" />}
         className="bg-error-main"
@@ -41,7 +41,7 @@ const StatisticGameDetail = ({ statsGameById }: IProp) => (
         unit="naka"
       />
     </div>
-    <div className="flex w-full flex-col justify-evenly gap-2 md:w-[269px]">
+    <div className="flex w-full flex-auto flex-col justify-evenly gap-2 md:w-[269px]">
       <div className="flex gap-2">
         <StatsDetail
           icon={<ControllerIcon />}

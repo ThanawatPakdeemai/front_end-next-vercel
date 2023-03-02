@@ -15,6 +15,7 @@ import {
   IGameItem
 } from "@feature/dropdown/interfaces/IDropdownService"
 import useFilterStore from "@stores/blogFilter"
+import { getGamePartner } from "@feature/partner/containers/services/dropdownPartner.service"
 import SelectDropdown from "./selectDropdown/SelectDropdown"
 
 interface IProp {
@@ -34,6 +35,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
     setGameItem: setGameItemDropdown,
     setDevice: setDeviceDropdown
   } = useFilterStore()
+  const [textTitle, setTextTitle] = useState<string>("")
 
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
@@ -54,6 +56,24 @@ const DropdownCustom = ({ title, className }: IProp) => {
   //     href: ""
   //   }))
   // }, [gameData])
+
+  const onGamePartner = () => {
+    getGamePartner()
+      .then((res) => {
+        res.data.data.splice(0, 0, {
+          created_at: "",
+          id: "",
+          is_active: true,
+          name: "All Categories",
+          slug: "",
+          updated_at: ""
+        })
+        setGameData(res.data.data)
+      })
+      .catch((error) => {
+        errorToast(error.message)
+      })
+  }
 
   const onGameAssets = () => {
     getGameAssets()
@@ -131,25 +151,39 @@ const DropdownCustom = ({ title, className }: IProp) => {
   useEffect(() => {
     if (title === "All Categories") {
       onCategories()
+      setTextTitle("All Categories")
     } else if (title === "All Game Assets") {
       onGameAssets()
+      setTextTitle("All Game Assets")
     } else if (title === "All Devices") {
       setGameData(device)
+      setTextTitle("All Devices")
+    } else if (title === "All Partner Categories") {
+      onGamePartner()
+      setTextTitle("All Categories")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    if (onTitle) {
-      if (title === "All Categories") {
-        setCategoryDropdown(onTitle._id)
-      } else if (title === "All Game Assets") {
+    if (onTitle && textTitle) {
+      if (textTitle === "All Categories") {
+        if (onTitle._id) {
+          setCategoryDropdown(onTitle._id)
+        } else if (title === "All Partner Categories") {
+          if (onTitle.name === "All Categories") {
+            setCategoryDropdown("")
+          } else {
+            setCategoryDropdown(onTitle.name.toLowerCase())
+          }
+        }
+      } else if (textTitle === "All Game Assets") {
         if (onTitle.name === "All Game Assets") {
           setGameItemDropdown("all")
         } else {
           setGameItemDropdown(onTitle.name)
         }
-      } else if (title === "All Devices") {
+      } else if (textTitle === "All Devices") {
         setDeviceDropdown(onTitle._id)
       }
     }
@@ -167,7 +201,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
           >
             <AllCategoriesIcon />
             <span className="">
-              {onTitle === undefined ? title : onTitle.name}
+              {onTitle === undefined ? textTitle : onTitle.name}
             </span>
             <div
               className={`${

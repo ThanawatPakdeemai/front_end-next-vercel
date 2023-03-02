@@ -46,10 +46,10 @@ const TopPlayer = ({
     topPlayerAllGame.reduce((_acc, curr) => _acc + curr.naka_earn, 0)
 
   return (
-    <div className="flex flex-col">
+    <div className="flex w-full flex-col">
       <Card
         sx={{ maxWidth: "550px" }}
-        className={`${className} rounded-md !p-2`}
+        className={`${className} flex h-full flex-wrap rounded-md !p-2 lg:h-auto`}
       >
         <CardTitle
           width="534px"
@@ -91,7 +91,7 @@ const TopPlayer = ({
             ))}
           </div>
         ) : (
-          <div>
+          <div className="ml-auto w-full sm:flex-[0_0_100%] lg:mt-auto lg:ml-0 lg:flex-none">
             {rank
               ? topPlayerGameId && (
                   <CardRank topPlayerGameId={topPlayerGameId} />
@@ -117,7 +117,7 @@ const TopPlayer = ({
       </Card>
       {note ? (
         <Note
-          className="flex w-[550px] pt-6 uppercase"
+          className="flex justify-center pt-6 uppercase xl:w-[550px] xl:justify-start"
           textTitle=" System will distribute these rewards every Sunday 0:00 UTC and reset
         Tier (Bronze, Silver, Gold, Platinum)"
           subTitle=" Rank 1st - 10th from totals score."

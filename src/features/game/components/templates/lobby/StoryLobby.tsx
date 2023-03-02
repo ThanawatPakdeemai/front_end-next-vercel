@@ -43,8 +43,8 @@ const StoryLobby = () => {
 
   return (
     <div className="flex h-full items-center justify-center">
-      <div className="mx-auto w-[578px]">
-        <div className="mb-4 flex gap-4">
+      <div className="mx-auto md:w-[578px]">
+        <div className="mb-4 flex flex-wrap gap-4 sm:flex-nowrap">
           <div className="h-[230px] w-full justify-center overflow-hidden rounded-3xl border-[1px] border-neutral-700 border-opacity-80 sm:w-[230px] md:justify-start">
             <Image
               src={

@@ -77,6 +77,9 @@ const Form = ({
     address,
     balance,
     total,
+    balanceValutNaka,
+    balanceValutBusd,
+    chain,
     profile?.address,
     dataForm,
     dataForm["watch"]("price"),
@@ -104,7 +107,12 @@ const Form = ({
       balance,
       profile?.address,
       dataForm["watch"]("price"),
-      dataForm["watch"]("amount")
+      dataForm["watch"]("amount"),
+      total,
+      balanceValutNaka,
+      balanceValutBusd,
+      chain,
+      dataForm
     ]
   )
 
@@ -120,7 +128,6 @@ const Form = ({
   )
 
   const buttonData = useMemo(() => {
-    // if (chain && !edit) {
     if (chain === "polygon") {
       return Number(chainRequired) === Number(chainIdConfig.polygon)
         ? buttonSubmit()
@@ -129,30 +136,17 @@ const Form = ({
     return Number(chainRequired) === Number(chainIdConfig.binance)
       ? buttonSubmit()
       : buttonSwitched()
-    // }
-    // if (edit) {
-    //   if (type === "buy") {
-    //     if (Number(chainRequired) === Number(chainIdConfig.polygon)) {
-    //       return buttonSubmit()
-    //     }
-    //     return buttonSwitched()
-    //   }
-    //   if (Number(chainRequired) === Number(chainIdConfig.binance)) {
-    //     return buttonSubmit()
-    //   }
-    //   return buttonSwitched()
-    // }
-    // if (type === "buy") {
-    //   if (Number(chainRequired) === Number(chainIdConfig.binance)) {
-    //     return buttonSubmit()
-    //   }
-    //   return buttonSwitched()
-    // }
-    // if (Number(chainRequired) === Number(chainIdConfig.polygon)) {
-    //   return buttonSubmit()
-    // }
-    // return buttonSwitched()
-  }, [chainRequired, chainIdConfig, type, signer, edit, balance])
+  }, [
+    chainRequired,
+    chainIdConfig,
+    type,
+    signer,
+    edit,
+    balance,
+    balanceValutNaka,
+    balanceValutBusd,
+    disableButton
+  ])
 
   return (
     <form onSubmit={dataForm["handleSubmit"](onSubmit)}>

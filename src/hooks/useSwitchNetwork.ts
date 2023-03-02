@@ -1,3 +1,4 @@
+import { IErrorMessage } from "@interfaces/IErrorMessage"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import { useCallback, useState } from "react"
 
@@ -11,7 +12,9 @@ const useSwitchNetwork = () => {
     provider,
     signer,
     accounts,
-    getNetwork
+    getNetwork,
+    handleConnectWithMetamask,
+    statusWalletConnected
   } = useWeb3Provider()
 
   // States
@@ -32,12 +35,6 @@ const useSwitchNetwork = () => {
     [switchNetwork]
   )
 
-  // useEffect(() => {
-  //   console.log("signer", signer, address, chainId, isWrongNetwork)
-  //   if (chainId === undefined) return
-  //   handleSwitchNetwork(chainId)
-  // }, [chainId])
-
   return {
     handleSwitchNetwork,
     address,
@@ -49,7 +46,9 @@ const useSwitchNetwork = () => {
     provider,
     signer,
     accounts,
-    getNetwork
+    getNetwork,
+    handleConnectWithMetamask,
+    statusWalletConnected: statusWalletConnected as IErrorMessage
   }
 }
 

@@ -60,7 +60,7 @@ const RightMenuWallet = ({
     <ModalCustom
       open={open}
       onClose={handleClose}
-      className="min-w-[450px] gap-3 rounded-[34px] p-[10px]"
+      className="gap-3 rounded-[34px] p-[10px] md:min-w-[450px]"
       width={400}
     >
       {currentChainSelected &&

@@ -26,10 +26,14 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
 
   return (
     <>
-      <div className="flex justify-between p-4">
-        <div className="flex gap-4">
+      <div className="flex flex-wrap justify-between p-4">
+        <div className="flex flex-[1_1_100%] flex-wrap gap-4 md:flex-none">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800">
-            <ButtonClose onClick={() => router.push(`/${gameData?.path}`)} />
+            <ButtonClose
+              onClick={() =>
+                router.push(`/${router?.query?.typeGame}/${gameData?.path}`)
+              }
+            />
           </div>
           <h1 className="text-white-defzault self-center uppercase">
             Lobby :{lobby}
@@ -44,13 +48,13 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
             )}
           </h1>
         </div>
-        <div className="flex">
+        <div className="flex flex-[1_1_100%] flex-wrap md:flex-none">
           <Dropdown
             title="All Categories"
             className="w-[174px] rounded-lg"
           />
           <TextField
-            className="px-2"
+            className="md:px-2"
             placeholder="Search Room"
             InputProps={{
               style: {

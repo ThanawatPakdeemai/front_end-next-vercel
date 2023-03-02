@@ -67,8 +67,8 @@ const GameTabs = ({ gameType, gameId }: IProps) => {
 
   return hydrated ? (
     <Box className="relative h-full">
-      <div className="absolute top-[-80px] left-[-20px] flex">
-        <div className="flex items-center justify-between gap-2 rounded-xl bg-neutral-700 bg-opacity-40 px-1 capitalize">
+      <div className="absolute top-[-80px] left-[-20px] flex w-full flex-wrap overflow-hidden sm:w-auto">
+        <div className="flex w-full items-center justify-between gap-2 rounded-xl bg-neutral-700 bg-opacity-40 px-1 capitalize sm:w-auto">
           {GAME_TAB_CONTENT.map((item) => (
             <Tab
               sx={{

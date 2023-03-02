@@ -56,7 +56,7 @@ export const BANNER_DATA: Banner[] = [
   /** marketplace */
   {
     title: "naka market",
-    imgSrc: "/images/banner/blog.webp",
+    imgSrc: "/images/banner/nakaMarket.webp",
     path: "/marketplace",
     textColor: "purple"
   }

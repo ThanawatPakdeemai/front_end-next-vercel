@@ -60,12 +60,12 @@ const ReferralProgramPage = () => {
     navigator.clipboard.writeText(
       `${url}/register?referral=${profile && profile.id}`
     )
-    successToast(MESSAGES.success_get_code)
+    successToast(MESSAGES.copy)
   }
 
   const copyFriendCode = (friendCode: string) => {
     navigator.clipboard.writeText(friendCode)
-    successToast(MESSAGES.success_get_code)
+    successToast(MESSAGES.copy)
   }
 
   const handleSort = (type: string) => {
@@ -146,6 +146,11 @@ const ReferralProgramPage = () => {
                   </div>
                   <ButtonIcon
                     onClick={copyClipboard}
+                    // onClick={() =>
+                    //   Helper.copyClipboard(
+                    //     `${url}/register?referral=${profile && profile.id}`
+                    //   )
+                    // }
                     className="absolute right-0 m-1 flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                     icon={<CopyIcon />}
                   />
@@ -161,7 +166,12 @@ const ReferralProgramPage = () => {
                 <BoxContent
                   padding="p-[14px]"
                   title="NAKA"
-                  total={getReferralsData.data.data.youEarn}
+                  total={Helper.formatNumber(
+                    getReferralsData.data.data.youEarn,
+                    {
+                      maximumFractionDigits: 4
+                    }
+                  )}
                 />
               </CardContent>
             )}
@@ -170,7 +180,7 @@ const ReferralProgramPage = () => {
             {getReferralsData && (
               <CardContent
                 className="col-span-2"
-                title="Your earnings"
+                title="My friends info"
                 icon={<IReferrals stroke="#E1E2E2" />}
               >
                 <div className="flex gap-2 uppercase">
@@ -298,24 +308,24 @@ const ReferralProgramPage = () => {
                         >
                           <TableCell className="w-[300px] rounded-l-2xl p-1 text-end font-neue-machina-bold text-xs uppercase">
                             <div className="flex items-center">
-                              <div className="flex h-[50px] w-[50px] items-center rounded-xl bg-error-main">
-                                <div className="w-[50px] text-center font-neue-machina-bold text-xl text-neutral-100">
+                              <div className="flex h-[50px] w-[50px] items-center rounded-xl bg-secondary-main">
+                                <div className="w-[50px] text-center font-neue-machina-bold text-[16px] text-white-primary">
                                   {referrer.username.charAt(0)}
                                 </div>
                               </div>
                               <div className="ml-1 flex h-[50px] items-center rounded-xl border border-solid border-neutral-680 bg-neutral-800 px-2">
-                                <div className="w-[100px]">
+                                <div className="w-[100px] text-white-primary">
                                   {referrer.username}
                                 </div>
-
                                 <Chip
                                   label={referrer._id}
                                   variant="outlined"
                                   size="small"
-                                  className="mx-2 w-[89px] cursor-pointer uppercase"
-                                  onClick={() => {
-                                    copyFriendCode(referrer._id)
-                                  }}
+                                  className="mx-2 w-[89px] uppercase"
+                                  // cursor-pointer
+                                  // onClick={() => {
+                                  //   copyFriendCode(referrer._id)
+                                  // }}
                                 />
                                 <div className="flex h-[25px] w-[25px] cursor-pointer items-center justify-center rounded-[4px] border border-solid border-neutral-700">
                                   <button
@@ -332,8 +342,11 @@ const ReferralProgramPage = () => {
                             </div>
                           </TableCell>
                           <TableCell className="text-end font-neue-machina-bold text-xs uppercase">
-                            <div className="text-start text-varidian-default">
-                              + {referrer.referral_earn}
+                            <div className="text-start text-[12px] text-varidian-default">
+                              +
+                              {Helper.formatNumber(referrer.referral_earn, {
+                                maximumFractionDigits: 4
+                              })}
                             </div>
                           </TableCell>
                           <TableCell className="rounded-r-2xl text-end font-neue-machina-bold text-xs uppercase">

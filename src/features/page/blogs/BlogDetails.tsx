@@ -12,10 +12,8 @@ import { motion } from "framer-motion"
 import useGetBlogTags from "@feature/blog/containers/hook/useGetBlogTags"
 import useGetPopularTags from "@feature/blog/containers/hook/useGetPopularTags"
 import { Chip, Typography } from "@mui/material"
-// import { SOCIAL_BLOG_SHARE } from "@configs/socialShare"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import useLoadingStore from "@stores/loading"
-// eslint-disable-next-line import/no-extraneous-dependencies
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -85,7 +83,7 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
             </p>
             <div className="my-12 grid w-4/12 justify-items-end">
               <motion.div
-                animate={{ rotate: [220, 135, 45] }}
+                animate={{ rotate: [0, -45, -90, -135, -180] }}
                 transition={{
                   duration: 5,
                   type: "spring",

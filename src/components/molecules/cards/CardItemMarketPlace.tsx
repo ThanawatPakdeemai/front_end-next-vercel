@@ -14,6 +14,7 @@ import Video from "@components/atoms/Video"
 interface IProp {
   cardType: "game" | "land" | "building" | "material"
   data: IMarketplaceInfoData
+  isP2p?: boolean
 }
 
 // motion
@@ -39,7 +40,7 @@ const imgMotion = {
 }
 
 const CardItemMarketPlace = (props: IProp) => {
-  const { cardType, data } = props
+  const { cardType, data, isP2p } = props
   const { copyClipboard } = Helper
   const { successToast } = useToast()
 
@@ -160,26 +161,37 @@ const CardItemMarketPlace = (props: IProp) => {
             data.land_data?.name ||
             data.building_data?.name}
         </Typography>
-        {data.item_data && (
-          <Chip
-            label={`${data.item_data && `Size ${data.item_data.item_size}`}`}
-            variant="filled"
-            size="small"
-            className="cursor-pointer uppercase"
-            color="error"
-          />
-        )}
-        {data.building_data && (
-          <Chip
-            label={`${
-              data.building_data && `level : ${data.building_data.level}`
-            }`}
-            variant="filled"
-            size="small"
-            className="cursor-pointer uppercase"
-            color="error"
-          />
-        )}
+        <div className="flex flex-col justify-end gap-2">
+          {data.item_data && (
+            <Chip
+              label={`${data.item_data && `Size ${data.item_data.item_size}`}`}
+              variant="filled"
+              size="small"
+              className="cursor-pointer uppercase"
+              color="error"
+            />
+          )}
+          {data.building_data && (
+            <Chip
+              label={`${
+                data.building_data && `level : ${data.building_data.level}`
+              }`}
+              variant="filled"
+              size="small"
+              className="cursor-pointer uppercase"
+              color="error"
+            />
+          )}
+          {"selling_type" in data && data.selling_type && isP2p && (
+            <Chip
+              label={data.selling_type}
+              variant="filled"
+              size="small"
+              className="cursor-pointer uppercase"
+              color="info"
+            />
+          )}
+        </div>
       </div>
       {/* <div className="" /> */}
       <div className="my-[10px] border-b border-neutral-700 border-opacity-80" />
@@ -195,7 +207,7 @@ const CardItemMarketPlace = (props: IProp) => {
           </Typography>
         </div>
         <Chip
-          label="= ... naka amount"
+          label="= ... busd"
           variant="outlined"
           size="small"
           className="cursor-pointer uppercase"

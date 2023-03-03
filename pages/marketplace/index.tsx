@@ -8,14 +8,14 @@ const MarketplaceLayoutWithFilter = dynamic(
     suspense: true
   }
 )
-const MarketplaceHomePage = dynamic(
-  () => import("@feature/page/marketplace/MarketplaceHomePage"),
+const MarketplaceCardList = dynamic(
+  () => import("@feature/page/marketplace/MarketplaceCardList"),
   {
     suspense: true
   }
 )
 
-const MarketplaceHome = () => <MarketplaceHomePage />
+const MarketplaceHome = () => <MarketplaceCardList />
 
 MarketplaceHome.getLayout = function getLayout(page: ReactElement) {
   return <MarketplaceLayoutWithFilter>{page}</MarketplaceLayoutWithFilter>

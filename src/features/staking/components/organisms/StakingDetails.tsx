@@ -35,7 +35,7 @@ const StakingDetails = ({
       className={`${className} font-neue-machina-semi text-[10px] uppercase`}
     >
       {basicStakeInfo ? (
-        <div className="grid grid-flow-row-dense grid-cols-4 gap-3 rounded-[13px] bg-neutral-800 p-3">
+        <div className="grid grid-flow-row-dense grid-cols-1 gap-3 rounded-[13px] bg-neutral-800 p-3 sm:grid-cols-4">
           <div className="row-span-2 rounded-lg shadow-xl">
             <PeriodLabel
               days={basicStakeInfo?.period || 0}
@@ -43,14 +43,14 @@ const StakingDetails = ({
               type={dataStaking.type}
             />
           </div>
-          <div className="col-span-3 shadow-xl">
+          <div className="sm-max:row-span-2 shadow-xl sm:col-span-3">
             <TotalStaked
               totalPoolStake={basicStakeInfo?.totalStake || 0}
               poolLimit={basicStakeInfo?.poolLimit || 0}
               type={dataStaking.type}
             />
           </div>
-          <div className="col-span-3 shadow-xl">
+          <div className="shadow-xl sm:col-span-3">
             <StakingPeriod
               startDatetime={basicStakeInfo?.startDate || "00:00:00"}
               endDatetime={basicStakeInfo?.endDate || "00:00:00"}
@@ -58,14 +58,14 @@ const StakingDetails = ({
               type={dataStaking.type}
             />
           </div>
-          <div className="col-span-2 shadow-xl">
+          <div className="shadow-xl sm:col-span-2">
             <NumberBadge
               title={t("your_naka_staked")}
               color="red"
               value={userStakedInfo?.stakeAmount ?? 0}
             />
           </div>
-          <div className="col-span-2 shadow-xl">
+          <div className="shadow-xl sm:col-span-2">
             <NumberBadge
               title={t("your_naka_unclaimed")}
               color="purple"
@@ -78,7 +78,7 @@ const StakingDetails = ({
       )}
 
       <ActionBar
-        className="flex w-full justify-end"
+        className="flex w-full justify-center sm:justify-end"
         status="locked"
         type={dataStaking.type}
         onClickRedeem={() =>

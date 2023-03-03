@@ -63,9 +63,9 @@ const MenuProfile = () => {
       <ButtonToggleIcon
         startIcon={<PlugIcon />}
         text="Logout"
-        handleClick={() => {
-          onReset()
-          router.push("/")
+        handleClick={async () => {
+          await onReset()
+          await router.push("/")
         }}
         className="btn-rainbow-theme my-4 bg-error-main px-14 text-sm text-white-default"
         type="button"

@@ -14,6 +14,7 @@ import {
 } from "@feature/multichain/interfaces/IMultichain"
 
 import { useToast } from "@feature/toast/containers"
+import useProfileStore from "@stores/profileStore"
 import Form from "../molecules/Form"
 import LeftContentForm from "../molecules/LeftContentForm"
 
@@ -46,7 +47,7 @@ const FormEdit = ({
     sendAllowBinance
   } = useContractMultichain()
   const { errorToast } = useToast()
-
+  const profile = useProfileStore((state) => state.profile.data)
   const priceBusd = useMemo(() => dataEdit?.busd_price, [dataEdit])
   const priceNaka = useMemo(() => dataEdit?.naka_price, [dataEdit])
   const amount = useMemo(() => dataEdit?.naka_amount, [dataEdit])
@@ -104,45 +105,47 @@ const FormEdit = ({
   }
 
   const onSubmit = async (_data) => {
-    if (chain === "polygon") {
-      const allow = await allowNaka
-      if (allow && allow.toString() > 0) {
-        sendData(_data)
-      } else {
-        setOpen(MESSAGES.approve_processing)
-        sendAllowNaka()
-          .then((_res) => {
-            if (_res) {
+    if (profile) {
+      if (chain === "polygon") {
+        const allow = await allowNaka
+        if (allow && allow.toString() > 0) {
+          sendData(_data)
+        } else {
+          setOpen(MESSAGES.approve_processing)
+          sendAllowNaka()
+            .then((_res) => {
+              if (_res) {
+                setClose()
+                sendData(_data)
+              } else {
+                setClose()
+                errorToast(MESSAGES.approve_error)
+              }
+            })
+            .catch(() => {
               setClose()
-              sendData(_data)
-            } else {
+            })
+        }
+      } else if (chain === "binance") {
+        const allowBi = await allowBinance
+        if (allowBi && allowBi.toString() > 0) {
+          sendData(_data)
+        } else {
+          setOpen(MESSAGES.approve_processing)
+          sendAllowBinance()
+            .then((_res) => {
+              if (_res) {
+                setClose()
+                sendData(_data)
+              } else {
+                setClose()
+                errorToast(MESSAGES.approve_error)
+              }
+            })
+            .catch(() => {
               setClose()
-              errorToast(MESSAGES.approve_error)
-            }
-          })
-          .catch(() => {
-            setClose()
-          })
-      }
-    } else if (chain === "binance") {
-      const allowBi = await allowBinance
-      if (allowBi && allowBi.toString() > 0) {
-        sendData(_data)
-      } else {
-        setOpen(MESSAGES.approve_processing)
-        sendAllowBinance()
-          .then((_res) => {
-            if (_res) {
-              setClose()
-              sendData(_data)
-            } else {
-              setClose()
-              errorToast(MESSAGES.approve_error)
-            }
-          })
-          .catch(() => {
-            setClose()
-          })
+            })
+        }
       }
     }
   }

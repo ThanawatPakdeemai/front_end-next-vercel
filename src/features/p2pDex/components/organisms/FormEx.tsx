@@ -31,6 +31,7 @@ import CONFIGS from "@configs/index"
 import useSwitchNetwork from "@hooks/useSwitchNetwork"
 import SwitchChain from "@components/atoms/SwitchChain"
 import { chainIdConfig } from "@configs/sites"
+import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
 import Input from "../atoms/Input"
 import LeftContentForm from "../molecules/LeftContentForm"
 
@@ -147,45 +148,47 @@ const FormEx = ({
   }
 
   const onSubmit = async (_data) => {
-    if (type === "sell") {
-      const allowPolygon = await allowNaka
-      if (allowPolygon && allowPolygon.toString() > 0) {
-        sendDataSellNaka(_data)
+    if (profile) {
+      if (type === "sell") {
+        const allowPolygon = await allowNaka
+        if (allowPolygon && allowPolygon.toString() > 0) {
+          sendDataSellNaka(_data)
+        } else {
+          setOpen(MESSAGES.approve_processing)
+          sendAllowNaka()
+            .then((_res) => {
+              if (_res) {
+                setClose()
+                sendDataSellNaka(_data)
+              } else {
+                setClose()
+                errorToast(MESSAGES.approve_error)
+              }
+            })
+            .catch(() => {
+              setClose()
+            })
+        }
       } else {
-        setOpen(MESSAGES.approve_processing)
-        sendAllowNaka()
-          .then((_res) => {
-            if (_res) {
+        const allowBnb = await allowBinance
+        if (allowBnb && allowBnb.toString() > 0) {
+          sendDataSellNaka(_data)
+        } else {
+          setOpen(MESSAGES.approve_processing)
+          sendAllowBinance()
+            .then((_res) => {
+              if (_res) {
+                setClose()
+                sendDataSellNaka(_data)
+              } else {
+                setClose()
+                errorToast(MESSAGES.approve_error)
+              }
+            })
+            .catch(() => {
               setClose()
-              sendDataSellNaka(_data)
-            } else {
-              setClose()
-              errorToast(MESSAGES.approve_error)
-            }
-          })
-          .catch(() => {
-            setClose()
-          })
-      }
-    } else {
-      const allowBnb = await allowBinance
-      if (allowBnb && allowBnb.toString() > 0) {
-        sendDataSellNaka(_data)
-      } else {
-        setOpen(MESSAGES.approve_processing)
-        sendAllowBinance()
-          .then((_res) => {
-            if (_res) {
-              setClose()
-              sendDataSellNaka(_data)
-            } else {
-              setClose()
-              errorToast(MESSAGES.approve_error)
-            }
-          })
-          .catch(() => {
-            setClose()
-          })
+            })
+        }
       }
     }
   }
@@ -245,39 +248,47 @@ const FormEx = ({
   )
 
   const buttonData = useMemo(() => {
-    if (chain && !edit) {
-      if (chain === "polygon") {
-        return Number(chainRequired) === Number(chainIdConfig.polygon)
+    if (profile) {
+      if (chain && !edit) {
+        if (chain === "polygon") {
+          return Number(chainRequired) === Number(chainIdConfig.polygon)
+            ? buttonSubmit()
+            : buttonSwitched()
+        }
+        return Number(chainRequired) === Number(chainIdConfig.binance)
           ? buttonSubmit()
           : buttonSwitched()
       }
-      return Number(chainRequired) === Number(chainIdConfig.binance)
-        ? buttonSubmit()
-        : buttonSwitched()
+    } else {
+      return (
+        <div className="my-3 flex items-center justify-center">
+          <RightMenuNotLogIn />
+        </div>
+      )
     }
-    if (edit) {
-      if (type === "sell") {
-        if (Number(chainRequired) === Number(chainIdConfig.polygon)) {
-          return buttonSubmit()
-        }
-        return buttonSwitched()
-      }
-      if (Number(chainRequired) === Number(chainIdConfig.binance)) {
-        return buttonSubmit()
-      }
-      return buttonSwitched()
-    }
-    if (type === "buy") {
-      if (Number(chainRequired) === Number(chainIdConfig.binance)) {
-        return buttonSubmit()
-      }
-      return buttonSwitched()
-    }
-    if (Number(chainRequired) === Number(chainIdConfig.polygon)) {
-      return buttonSubmit()
-    }
-    return buttonSwitched()
-  }, [chainRequired, chainIdConfig, type, signer, edit, balance])
+    // if (edit) {
+    //   if (type === "sell") {
+    //     if (Number(chainRequired) === Number(chainIdConfig.polygon)) {
+    //       return buttonSubmit()
+    //     }
+    //     return buttonSwitched()
+    //   }
+    //   if (Number(chainRequired) === Number(chainIdConfig.binance)) {
+    //     return buttonSubmit()
+    //   }
+    //   return buttonSwitched()
+    // }
+    // if (type === "buy") {
+    //   if (Number(chainRequired) === Number(chainIdConfig.binance)) {
+    //     return buttonSubmit()
+    //   }
+    //   return buttonSwitched()
+    // }
+    // if (Number(chainRequired) === Number(chainIdConfig.polygon)) {
+    //   return buttonSubmit()
+    // }
+    // return buttonSwitched()
+  }, [chainRequired, chainIdConfig, type, signer, edit, balance, profile])
 
   return (
     <>

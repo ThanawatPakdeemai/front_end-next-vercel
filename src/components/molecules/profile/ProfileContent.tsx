@@ -6,7 +6,7 @@ import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import Tagline from "@components/molecules/tagline/Tagline"
 import { Box, Typography } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
-import { IPlayerInfoResponse, IProfile } from "@src/types/profile"
+import { IPlayerInfoResponse } from "@src/types/profile"
 import { RandomReveal } from "react-random-reveal"
 import { CHAR_SET_JP } from "@constants/characterSet"
 import dayjs from "dayjs"
@@ -18,33 +18,28 @@ import { v4 as uuidv4 } from "uuid"
 import DropdownLimit from "@components/atoms/DropdownLimit"
 // import useGlobal from "@hooks/useGlobal"
 import { PaginationNaka } from "@components/atoms/pagination"
-// import { getPlayerInfoByPlayerId } from "@feature/profile/containers/services/profile.service"
-// import { useQueryClient } from "@tanstack/react-query"
 import useLoadingStore from "@stores/loading"
 import GameStatOverview from "@feature/playerProfile/components/organisms/GameStatOverview"
+import { useRouter } from "next/router"
+import useGetProfileByEmail from "@feature/profile/containers/hook/getProfileByEmail"
 import EditProfileModal from "./EditProfileModal"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
 import TotalCardContent from "./TotalCardContent"
 
 const ProfileContent = () => {
-  const profile = useProfileStore((state) => state.profile)
+  const { profile } = useProfileStore()
   const [openEdit, setOpenEdit] = useState<boolean>(false)
-  const [profileData, setProfileData] = useState<IProfile>()
   const [idPlayer, setIdPlayer] = useState<string>("")
+  const [emailPlayer, setEmailPlayer] = useState<string>("")
   const [limit, setLimit] = useState<number>(20)
   const [page, setPage] = useState<number>(1)
   const [getProfileInfo, setGetProfileInfo] = useState<IPlayerInfoResponse>()
   const [totalCount, setTotalCount] = useState<number>(0)
   const fetchRef = useRef(false)
   const { setOpen, setClose } = useLoadingStore()
-
-  useEffect(() => {
-    if (profile && profile.data) {
-      setProfileData(profile.data as IProfile)
-      setIdPlayer(profile.data.id as string)
-    }
-  }, [profile])
+  const router = useRouter()
+  const { player_id } = router.query
 
   const {
     getProfileInfo: profileDataFromQuery,
@@ -60,6 +55,8 @@ const ProfileContent = () => {
     _rewards_send_status: "All"
   })
 
+  const { profile: profileFetched } = useGetProfileByEmail(emailPlayer)
+
   useEffect(() => {
     if (!fetchRef.current && getProfileInfo && !isFetching) {
       fetchRef.current = true
@@ -70,51 +67,29 @@ const ProfileContent = () => {
   useEffect(() => {
     if (profileDataFromQuery) {
       setGetProfileInfo(profileDataFromQuery)
+      setEmailPlayer(profileDataFromQuery.data.email)
     }
   }, [profileDataFromQuery])
 
   useEffect(() => {
-    if (!isPreviousData) {
+    if (!isPreviousData && idPlayer) {
       setOpen()
       refetchGetProfile().then(() => setClose())
     }
-  }, [isPreviousData, page, refetchGetProfile, setClose, setOpen])
-  // useEffect(() => {
-  //   if (!isPreviousData && getProfileInfo) {
-  //     queryClient.prefetchQuery({
-  //       queryKey: ["PlayerInfoByPlayerId", page + 1],
-  //       queryFn: () =>
-  //         getPlayerInfoByPlayerId({
-  //           _limit: limit,
-  //           _playerId: idPlayer,
-  //           _page: page,
-  //           _sort: "",
-  //           _cheat: "All",
-  //           _rewards_send_status: "All"
-  //         }).then((res) => {
-  //           setGetProfileInfo(res)
-  //         })
-  //     })
-  //     // refetchGetProfile()
-  //   }
-  // }, [
-  //   getProfileInfo,
-  //   isPreviousData,
-  //   page,
-  //   queryClient,
-  //   idPlayer,
-  //   refetchGetProfile,
-  //   limit
-  // ])
+  }, [idPlayer, isPreviousData, page, refetchGetProfile, setClose, setOpen])
 
-  // const { response: getProfileInfo } = useGetProfileInfo({
-  //   _limit: 20,
-  //   _playerId: idPlayer,
-  //   _page: 1,
-  //   _sort: "",
-  //   _cheat: "All",
-  //   _rewards_send_status: "All"
-  // })
+  useEffect(() => {
+    if (player_id) {
+      setIdPlayer(player_id as string)
+    }
+  }, [player_id])
+
+  // useEffect(() => {
+  //   if (!profile.status) {
+  //     router.push("/")
+  //     errorToast(MESSAGES.please_login)
+  //   }
+  // }, [errorToast, profile.status, router])
 
   const handleOnExpandClick = () => {
     setOpenEdit(!openEdit)
@@ -126,12 +101,11 @@ const ProfileContent = () => {
       getProfileInfo.data.game_data.filter((data) => data.rank === rank)
         .length) ||
     0
-
   const bronzeCount = getRankCount("bronze")
   const silverCount = getRankCount("silver")
   const platinumCount = getRankCount("platinum")
 
-  return profileData && getProfileInfo && !isFetching ? (
+  return profileFetched && getProfileInfo && !isFetching ? (
     <div className="w-[90%]">
       <SideSocialShare />
       <div className="relative">
@@ -144,24 +118,30 @@ const ProfileContent = () => {
           alt="The house from the offer."
           src="/images/common/profile_banner.svg"
         />
-        <div className="absolute top-0 right-0 m-4">
-          <ButtonToggleIcon
-            handleClick={handleOnExpandClick}
-            startIcon={<SettingIcon />}
-            text="Edit Profile"
-            className="z-[2] h-[50px] w-[148px] bg-neutral-900 font-bold capitalize text-white-default"
-            type="button"
-          />
-        </div>
-        <EditProfileModal
-          onRefetchProfile={refetchGetProfile}
-          handleClose={handleClose}
-          showModal={handleOnExpandClick}
-          openEdit={openEdit}
-          platinumCount={platinumCount}
-          userName={getProfileInfo.data.username}
-          userImage={getProfileInfo.data.avatar}
-        />
+        {profile &&
+          profile.data &&
+          profile.data.id === (player_id as string) && (
+            <>
+              <div className="absolute top-0 right-0 m-4">
+                <ButtonToggleIcon
+                  handleClick={handleOnExpandClick}
+                  startIcon={<SettingIcon />}
+                  text="Edit Profile"
+                  className="z-[2] h-[50px] w-[148px] bg-neutral-900 font-bold capitalize text-white-default"
+                  type="button"
+                />
+              </div>
+              <EditProfileModal
+                onRefetchProfile={refetchGetProfile}
+                handleClose={handleClose}
+                showModal={handleOnExpandClick}
+                openEdit={openEdit}
+                platinumCount={platinumCount}
+                userName={getProfileInfo.data.username}
+                userImage={getProfileInfo.data.avatar}
+              />
+            </>
+          )}
       </div>
       <div className="relative">
         <Tagline
@@ -184,7 +164,7 @@ const ProfileContent = () => {
               <div className="relative">
                 <Lavel className="absolute" />
                 <Typography className="absolute flex h-[45px] w-[45px] items-center justify-center p-2 font-digital-7 text-[24px] text-white-default">
-                  {profileData.level}
+                  {profileFetched.level}
                 </Typography>
               </div>
             </div>
@@ -218,7 +198,7 @@ const ProfileContent = () => {
       </div>
       <div className="flex w-full justify-center">
         <Typography className="text-xs font-bold uppercase text-error-main">
-          Joined : {dayjs(profileData.createdAt).format("MMM YYYY")}
+          Joined : {dayjs(profileFetched.createdAt).format("MMM YYYY")}
         </Typography>
       </div>
       <div className="flex justify-center">
@@ -264,7 +244,7 @@ const ProfileContent = () => {
           )}
         </div>
       </div>
-      <SliderBadges _playerId={profileData.id} />
+      <SliderBadges _playerId={profileFetched.id} />
       <GameStatOverview
         key={uuidv4()}
         data={getProfileInfo}

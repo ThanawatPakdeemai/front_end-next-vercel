@@ -3,14 +3,20 @@ import React, { ReactElement } from "react"
 import dynamic from "next/dynamic"
 
 const MarketplaceLayoutWithFilter = dynamic(
-  () =>
-    import("@components/templates/marketplace/MarketplaceLayoutWithoutFilter"),
+  () => import("@components/templates/marketplace/MarketplaceLayoutWithFilter"),
   {
     suspense: true
   }
 )
 
-const Building = () => <div>index</div>
+const MarketplaceCardList = dynamic(
+  () => import("@feature/page/marketplace/MarketplaceCardList"),
+  {
+    suspense: true
+  }
+)
+
+const Building = () => <MarketplaceCardList />
 
 Building.getLayout = function getLayout(page: ReactElement) {
   return <MarketplaceLayoutWithFilter>{page}</MarketplaceLayoutWithFilter>

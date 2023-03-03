@@ -760,7 +760,7 @@ const FormRegister = () => {
             >
               <Grid item>
                 <ButtonLink
-                  href="/login"
+                  href="/"
                   text="Login"
                   icon={null}
                   size="medium"

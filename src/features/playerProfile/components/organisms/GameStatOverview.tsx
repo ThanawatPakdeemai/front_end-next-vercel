@@ -1,124 +1,29 @@
-import React, { memo, useEffect, useRef, useState } from "react"
-import { Card, Chip, InputAdornment, TextField } from "@mui/material"
+import React, { memo, useState } from "react"
+import { Card, Chip } from "@mui/material"
 import NumberRank from "@feature/ranking/components/atoms/NumberRank"
 import { Image } from "@components/atoms/image"
-import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import { v4 as uuidv4 } from "uuid"
-import SearchIcon from "@components/icons/SearchIcon"
-import useGetProfileInfo from "@feature/profile/containers/hook/getProfileInfo"
-import useProfileStore from "@stores/profileStore"
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import Helper from "@utils/helper"
 import TooltipsCustom from "@components/atoms/TooltipsCustom"
 import { motion } from "framer-motion"
-import { getPlayerInfoByPlayerId } from "@feature/profile/containers/services/profile.service"
-import { useQueryClient } from "@tanstack/react-query"
-import DropdownLimit from "@components/atoms/DropdownLimit"
-import useGlobal from "@hooks/useGlobal"
+import { IPlayerInfoResponse } from "@src/types/profile"
 import RankIcon from "../atoms/RankIcon"
 import SliderGameStat from "./SliderGameStat"
 
-const GameStatOverview = () => {
-  const [page, setPage] = useState<number>(1)
-  const [totalCount, setTotalCount] = useState<number>(0)
-  // const limit = 20
-  const [limit, setLimit] = useState<number>(20)
-  const profile = useProfileStore((state) => state.profile)
-  // const [dataInfo, setDatainfo] = useState<IPlayerInfoResponse>()
-  const [idPlayer, setIdPlayer] = useState<string>("")
-  const queryClient = useQueryClient()
-  const fetchRef = useRef(false)
-  const { hydrated, pager } = useGlobal()
+interface IProp {
+  data: IPlayerInfoResponse
+  limit: number
+  page: number
+}
 
-  // const { response, isLoading, mutateGetPlayerInfo } = useGetProfileInfo()
-
-  // const { getProfileInfo, isLoading, isPreviousData, refetchGetProfile } =
-  //   useGetProfileInfo({
-  //     _limit: 20,
-  //     _playerId: idPlayer,
-  //     _page: page,
-  //     _sort: "",
-  //     _cheat: "All",
-  //     _rewards_send_status: "All"
-  //   })
-
+const GameStatOverview = ({ data, limit, page }: IProp) => {
   const [openBadges, setOpenBadges] = useState<boolean>(false)
-
   const handleOnExpandClick = () => {
     setOpenBadges(!openBadges)
   }
 
-  useEffect(() => {
-    if (profile && profile.data) {
-      setIdPlayer(profile.data.id as string)
-    }
-  }, [profile])
-
-  // useQuery
-  const { getProfileInfo, isLoading, isPreviousData, refetchGetProfile } =
-    useGetProfileInfo({
-      _limit: limit,
-      _playerId: idPlayer,
-      _page: page,
-      _sort: "",
-      _cheat: "All",
-      _rewards_send_status: "All"
-    })
-  useEffect(() => {
-    if (!fetchRef.current && getProfileInfo) {
-      fetchRef.current = true
-      setTotalCount(getProfileInfo.data.info.totalCount)
-    }
-  }, [getProfileInfo])
-
-  useEffect(() => {
-    if (!isPreviousData && getProfileInfo) {
-      queryClient.prefetchQuery({
-        queryKey: ["PlayerInfoByPlayerId", page],
-        queryFn: () =>
-          getPlayerInfoByPlayerId({
-            _limit: limit,
-            _playerId: idPlayer,
-            _page: page,
-            _sort: "",
-            _cheat: "All",
-            _rewards_send_status: "All"
-          })
-      })
-      refetchGetProfile()
-    }
-  }, [
-    getProfileInfo,
-    isPreviousData,
-    page,
-    queryClient,
-    idPlayer,
-    refetchGetProfile,
-    limit
-  ])
-  // useQuery
-
-  // useMutation
-  // useEffect(() => {
-  //   if (!response && profile) {
-  //     mutateGetPlayerInfo({
-  //       _limit: limit,
-  //       _playerId: idPlayer,
-  //       _page: page,
-  //       _sort: "",
-  //       _cheat: "All",
-  //       _rewards_send_status: "All"
-  //     }).then((_res) => {
-  //       setTotalCount(_res.data.info.totalCount)
-  //       setDatainfo(_res)
-  //     })
-  //   }
-  // }, [idPlayer, mutateGetPlayerInfo, page, response, profile])
-
-  // console.log("page", page)
-  // console.log("response", page, response)
   return (
-    <div className="w-[90%]">
+    <div className="w-full">
       <SliderGameStat
         openBadges={openBadges}
         handleOnExpandClick={handleOnExpandClick}
@@ -129,182 +34,97 @@ const GameStatOverview = () => {
             key={uuidv4()}
             className="mb-10 flex w-full flex-col gap-2 rounded-[26px] bg-neutral-800 p-2"
           >
-            {isLoading
-              ? [...Array(limit)].map(() => <SkeletonCard key={uuidv4()} />)
-              : null}
-            {getProfileInfo &&
-              getProfileInfo.data.game_data.map((item, index) => (
-                <Card
-                  key={uuidv4()}
-                  className="grid grid-cols-3 grid-rows-1 rounded-[18px] "
-                  sx={{
-                    backgroundImage: "none",
-                    backgroundColor: "#010101"
-                  }}
-                >
-                  <div className="py-10 px-10">
-                    <NumberRank
-                      className="m-0 h-6 w-8 !rounded-[4px]"
-                      index={index + limit * (page - 1)}
-                    />
-                    <h1 className="py-5 text-neutral-300">{item.name}</h1>
-                    <p className=" text-xs text-neutral-500">
-                      <TooltipsCustom
-                        className="truncate hover:text-clip"
-                        placement="bottom"
-                        title={item.story}
-                        color="error"
-                      >
-                        <div>{item.story}</div>
-                      </TooltipsCustom>
-                      {/* {item.story.substring(0, limitText)}
-                      <button
-                        className="ml-1 text-green-to"
-                        type="button"
-                        onClick={toggleBtn}
-                      >
-                        {isReadMoreShown ? item.story : "...Read More"}
-                      </button> */}
-                      {/* <TooltipsCustom
-                        color="error"
-                        title={item.story || "No Item"}
-                        children={undefined}
-                      /> */}
-                    </p>
-                  </div>
-                  <div className="my-7 mx-10 grid grid-cols-2 grid-rows-2 gap-5">
-                    <div>
-                      <p className="text-xs text-neutral-600">RANK</p>
-                      <Chip
-                        label={item.rank}
-                        variant="outlined"
-                        size="small"
-                        className="mt-2 cursor-pointer uppercase"
-                      />
-                    </div>
-                    <div>
-                      <p className="text-xs text-neutral-600">RANK SCORE</p>
-                      <Chip
-                        label={Helper.formatNumber(item.rankScore)}
-                        variant="outlined"
-                        size="small"
-                        className="mt-2 cursor-pointer uppercase"
-                      />
-                    </div>
-                    <div>
-                      <p className="text-xs text-neutral-600">PLAYED</p>
-                      <Chip
-                        label={Helper.formatNumber(item.played)}
-                        variant="outlined"
-                        size="small"
-                        className="mt-2 cursor-pointer uppercase"
-                      />
-                    </div>
-                    <div>
-                      <p className="text-xs text-neutral-600">WINRATE</p>
-                      <Chip
-                        label={item.winrate}
-                        variant="outlined"
-                        size="small"
-                        className="mt-2 cursor-pointer uppercase"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Image
-                      className="h-40 w-40 rounded-[15px] object-cover"
-                      src={item.image}
-                      alt={item.name}
-                      width={160}
-                      height={160}
-                    />
-                    <div className="flex h-40 w-40 items-center justify-center rounded-[10px] border-[1px] border-solid border-neutral-700 ">
-                      <motion.div
-                        whileHover={{ rotate: 15 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 100,
-                          damping: 4
-                        }}
-                      >
-                        <RankIcon
-                          width={70}
-                          height={70}
-                          icon={item.rank}
-                        />
-                      </motion.div>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-          </div>
-          {/* Wait for API Support */}
-          <div className="flex w-full justify-between">
-            <PaginationNaka
-              totalCount={totalCount}
-              limit={limit}
-              page={page}
-              setPage={setPage}
-            />
-            <div className="flex">
-              <TextField
-                // label="Search Game..."
+            {data.data.game_data.map((item, index) => (
+              <Card
+                key={uuidv4()}
+                className="grid grid-cols-3 grid-rows-1 rounded-[18px]"
                 sx={{
-                  input: {
-                    "&[type=text]": {
-                      paddingLeft: "15px"
-                    }
-                  }
+                  backgroundImage: "none",
+                  backgroundColor: "#010101"
                 }}
-                placeholder="Search Game..."
-                size="medium"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <SearchIcon />
-                    </InputAdornment>
-                  )
-                }}
-              />
-              {hydrated && (
-                <DropdownLimit
-                  className="ml-2"
-                  defaultValue={limit ?? 20}
-                  list={pager}
-                  onChangeSelect={setLimit}
-                />
-              )}
-            </div>
-
-            {/* {gameData && gameData.type_code === "multi_02" && (
-          <TextField
-            label="select map"
-            select
-            placeholder="select map..."
-            value={0}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <MapOutlined />
-                </InputAdornment>
-              )
-            }}
-          >
-            {maps &&
-              maps.map((option) => (
-                <MenuItem
-                  sx={{
-                    borderRadius: 4
-                  }}
-                  key={}
-                  value={2}
-                  onClick={}
-                >
-                  {option.map_name}
-                </MenuItem>
-              ))}
-          </TextField>
-        )} */}
+              >
+                <div className="py-10 px-10">
+                  <NumberRank
+                    className="m-0 h-6 w-8 !rounded-[4px]"
+                    index={index + limit * (page - 1)}
+                  />
+                  <h1 className="py-5 text-neutral-300">{item.name}</h1>
+                  <p className=" text-xs text-neutral-500">
+                    <TooltipsCustom
+                      className="truncate hover:text-clip"
+                      placement="bottom"
+                      title={item.story}
+                      color="error"
+                    >
+                      <div>{item.story}</div>
+                    </TooltipsCustom>
+                  </p>
+                </div>
+                <div className="my-7 mx-10 grid grid-cols-2 grid-rows-2 gap-5">
+                  <div>
+                    <p className="text-xs text-neutral-600">RANK</p>
+                    <Chip
+                      label={item.rank}
+                      variant="outlined"
+                      size="small"
+                      className="mt-2 cursor-pointer uppercase"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-xs text-neutral-600">RANK SCORE</p>
+                    <Chip
+                      label={Helper.formatNumber(item.rankScore)}
+                      variant="outlined"
+                      size="small"
+                      className="mt-2 cursor-pointer uppercase"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-xs text-neutral-600">PLAYED</p>
+                    <Chip
+                      label={Helper.formatNumber(item.played)}
+                      variant="outlined"
+                      size="small"
+                      className="mt-2 cursor-pointer uppercase"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-xs text-neutral-600">WINRATE</p>
+                    <Chip
+                      label={item.winrate}
+                      variant="outlined"
+                      size="small"
+                      className="mt-2 cursor-pointer uppercase"
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Image
+                    className="h-40 w-40 rounded-[15px] object-cover"
+                    src={item.image}
+                    alt={item.name}
+                    width={160}
+                    height={160}
+                  />
+                  <div className="flex h-40 w-40 items-center justify-center rounded-[10px] border-[1px] border-solid border-neutral-700 ">
+                    <motion.div
+                      whileHover={{ rotate: 15 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 4
+                      }}
+                    >
+                      <RankIcon
+                        width={70}
+                        height={70}
+                        icon={item.rank}
+                      />
+                    </motion.div>
+                  </div>
+                </div>
+              </Card>
+            ))}
           </div>
         </>
       )}

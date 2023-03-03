@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react"
+/* eslint-disable no-console */
+import React, { useEffect, useState } from "react"
 import {
   Table,
   TableBody,
@@ -33,7 +34,6 @@ const HistoryTable = () => {
   // States
   const [skip, setSkip] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
-  const fetchRef = useRef(false)
   const [hxHistory, setHxHistory] = useState<IHistory[]>([])
 
   const roomStatus = (status: string) => {
@@ -64,10 +64,7 @@ const HistoryTable = () => {
         })
       }
     }
-    if (fetchRef.current) {
-      fetchHistory()
-    }
-    fetchRef.current = true
+    fetchHistory()
   }, [limit, skip, profile, getHistoryData])
 
   return (

@@ -53,12 +53,11 @@ const ReferralProgramPage = () => {
     sort: undefined,
     sort_value: undefined
   })
-  const baseUrl = CONFIGS.BASE_URL.API
-  const url = new URL(baseUrl.toString())
-  url.pathname = url.pathname.replace("/api", "")
+  const baseUrl = CONFIGS.BASE_URL.FRONTEND
+
   const copyClipboard = () => {
     navigator.clipboard.writeText(
-      `${url}/register?referral=${profile && profile.id}`
+      `${baseUrl}/register?referral=${profile && profile.id}`
     )
     successToast(MESSAGES.copy)
   }
@@ -140,7 +139,7 @@ const ReferralProgramPage = () => {
                   />
                   <div className="ml-[15px] truncate uppercase text-neutral-600">
                     {Helper.textWithDots(
-                      `${url}/register?referral=${profile && profile.id}`,
+                      `${baseUrl}/register?referral=${profile && profile.id}`,
                       20
                     )}
                   </div>

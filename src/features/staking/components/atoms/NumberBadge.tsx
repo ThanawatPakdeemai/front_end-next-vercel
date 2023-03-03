@@ -29,7 +29,7 @@ const NumberBadge = ({
           {value}
         </p>
       ) : (
-        <Skeleton className="h-[50px] w-full rounded-sm" />
+        <Skeleton className="h-[32px] w-full rounded-sm sm:h-[50px]" />
       )}
 
       <IconNakaGlitch

@@ -108,7 +108,7 @@ const GameCard = ({
       whileHover="onHover"
       animate="animate"
     >
-      <motion.div className="relative flex w-full items-center justify-center overflow-hidden xl:h-[218px]">
+      <motion.div className="relative flex w-full items-center justify-center overflow-hidden px-1 xl:h-[218px]">
         {showNo && no ? (
           <NumberRank
             index={no - 1}

@@ -50,10 +50,10 @@ const FormStaking = ({ userName, onCloseModal }: IProp) => {
   }
 
   return (
-    <Box className="h-auto max-h-[644px]">
+    <Box className="h-auto max-h-[644px] overflow-y-auto">
       {profile && (
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid grid-cols-2 gap-x-[25px]">
+          <div className="grid gap-x-[25px] max-sm:gap-y-[25px] sm:grid-cols-2">
             <div className="left h-max rounded-[8px] border border-neutral-800 bg-neutral-780 p-6">
               <Typography className="mb-5 font-neue-machina-semi text-xs  uppercase text-neutral-400">
                 Start staking with only 1 naka worth of assets and reap higher

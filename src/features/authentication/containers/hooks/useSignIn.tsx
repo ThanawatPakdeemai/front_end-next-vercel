@@ -32,6 +32,9 @@ const useSignIn = () => {
           setVaultBalance(Number(_res.data))
         }
       })
+    },
+    onError() {
+      setClose()
     }
   })
 

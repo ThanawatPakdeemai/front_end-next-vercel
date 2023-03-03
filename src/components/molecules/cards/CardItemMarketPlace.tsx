@@ -1,8 +1,9 @@
 import React from "react"
 import { motion } from "framer-motion"
-import CrumbCustom from "@components/atoms/CrumbCustom"
 import ILogoMaster from "@components/icons/LogoMaster"
 import { Chip, Typography } from "@mui/material"
+import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded"
+import CopyMiniIcon from "@components/icons/Referral/CoopyMiniIcon"
 
 const CardItemMarketPlace = () => {
   const text = 2.8
@@ -24,11 +25,6 @@ const CardItemMarketPlace = () => {
       scale: 1.2,
       rotate: 10,
       ease: "easeIn"
-      // transition: {
-      //   duration: 0.4,
-      //   stiffness: 500,
-      //   type: "spring"
-      // }
     }
   }
 
@@ -39,20 +35,26 @@ const CardItemMarketPlace = () => {
     >
       <div className="relative">
         <div className="absolute m-[5px] flex">
-          <CrumbCustom
-            text="item name"
-            background="bg-neutral-900 text-neutral-400 border border-solid border-neutral-700 p-[20px] mr-1"
+          <Chip
+            label="0xfd86E58bCc217B2671Ca918441685a0a3444D253"
+            variant="outlined"
+            size="small"
+            className="z-10 w-[93px] cursor-pointer truncate uppercase"
+            deleteIcon={<CopyMiniIcon className="!h-[50px] !w-[50px]" />}
+            onDelete={() => {}}
           />
-          <CrumbCustom
-            text="item"
-            background="bg-neutral-900 text-neutral-400 border border-solid border-neutral-700 p-[20px]"
+          <Chip
+            label="item name"
+            variant="outlined"
+            size="small"
+            className="ml-1 cursor-pointer uppercase"
+            icon={
+              <GridViewRoundedIcon
+                color="inherit"
+                className="!h-[12px] !w-[12px]"
+              />
+            }
           />
-          {/* <Chip
-          label={339}
-          variant="outlined"
-          size="small"
-          className="cursor-pointer uppercase"
-        /> */}
         </div>
 
         <div className="flex h-[202px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900 p-6 group-hover:border-secondary-main">

@@ -88,9 +88,7 @@ const FormLogin = () => {
           successToast(MESSAGES.sign_in_success)
         }
       })
-      .catch(() => {
-        errorToast(MESSAGES.please_fill)
-      })
+      .catch(() => {})
   }
   const onError = () => {
     errorToast(MESSAGES.please_fill)

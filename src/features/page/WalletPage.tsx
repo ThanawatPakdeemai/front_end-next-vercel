@@ -212,8 +212,8 @@ export default function WalletPage() {
             statusWalletConnected={statusWalletConnected}
           />
         </div>
-        <div className="my-2 h-full w-full max-w-full flex-[1_1_100%] items-center justify-center gap-1 rounded-default bg-neutral-800 sm:max-w-[120px] sm:flex-[1_1_120px] md:col-span-2 md:my-0">
-          <Gas />
+        <div className="col-span-2 h-full w-full items-center justify-center gap-1 rounded-default bg-neutral-800">
+          <Gas type={type} />
         </div>
         <div className="col-span-4 w-full gap-1">
           <div className="w-full">

@@ -20,7 +20,7 @@ const MarketplaceLayoutWithFilter = ({
     <div className="flex flex-row gap-3">
       {/* add filter component here */}
       <div className="w-[200px]">Filter</div>
-      <div>{children}</div>
+      {children}
     </div>
     <Footer />
   </div>

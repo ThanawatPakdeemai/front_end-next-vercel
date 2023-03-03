@@ -281,14 +281,6 @@ const useWalletContoller = () => {
   /**
    * @description Check Tab type
    */
-  useEffect(() => {
-    if (!(statusWalletConnected as IErrorMessage).responseStatus) return
-    if (chainId && chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
-      setType("BNB")
-    } else {
-      setType("NAKA")
-    }
-  }, [chainId, statusWalletConnected])
 
   return {
     type,

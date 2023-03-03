@@ -222,7 +222,7 @@ export default function WalletPage() {
           )}
         </div>
         <div className="col-span-2 h-full w-full items-center justify-center gap-1 rounded-default bg-neutral-800">
-          <Gas />
+          <Gas type={type} />
         </div>
         <div className="col-span-4 w-full gap-1">
           <div className="w-full">

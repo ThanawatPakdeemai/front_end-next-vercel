@@ -20,10 +20,10 @@ import useProfileStore from "@stores/profileStore"
 import useTable from "@feature/table/containers/hooks/useTable"
 import TableNodata from "@feature/transaction/components/atoms/TableNodata"
 import { IHistory } from "@feature/history/interfaces/IHistoryService"
+import { validTypeGames } from "@pages/[typeGame]"
 
 const HistoryTable = () => {
   const profile = useProfileStore((state) => state.profile.data)
-
   // Hooks
   const { pager, hydrated } = useGlobal()
   const { HistoryTableHead, onHandleView } = useHistoryController()
@@ -68,8 +68,7 @@ const HistoryTable = () => {
       fetchHistory()
     }
     fetchRef.current = true
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [limit, skip])
+  }, [limit, skip, profile, getHistoryData])
 
   return (
     <>
@@ -162,7 +161,12 @@ const HistoryTable = () => {
                             variant="outlined"
                             className="font-bold text-grey-neutral04"
                             onClick={() => {
-                              onHandleView(row.path, row.room_id)
+                              onHandleView(
+                                `/${validTypeGames.find((res) =>
+                                  res.includes(row.game_mode)
+                                )}/${row.path}`,
+                                row.room_id
+                              )
                             }}
                           />
                         </div>

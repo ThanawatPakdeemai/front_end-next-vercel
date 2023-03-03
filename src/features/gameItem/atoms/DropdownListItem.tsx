@@ -30,7 +30,7 @@ const DropdownListItem = ({
   // const { errorToast } = useToast()
 
   const [defaultItem, setDefaultItem] = useState<IGameItemListData | null>(
-    itemSelected ?? null
+    itemSelected ?? list[0] ?? null
   )
 
   const onChangeItem = (_item: IGameItemListData) => {

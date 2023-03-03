@@ -8,8 +8,8 @@ import CopyAddress from "@components/atoms/CopyAddress"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import MetamaskLogo from "@components/icons/MetamaskLogo"
 import CONFIGS from "@configs/index"
-import { numberWithCommas } from "@utils/helpers"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
+import { numberWithCommas } from "@src/helpers/addComma"
 import BalanceWallet from "./BalanceWallet"
 
 interface IProp {
@@ -46,6 +46,7 @@ const MetamaskWallet = ({
         // />
       )
     }
+
     return (
       <>
         {chainSupport &&

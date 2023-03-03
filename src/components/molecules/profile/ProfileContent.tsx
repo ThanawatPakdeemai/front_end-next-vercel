@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import SettingIcon from "@components/icons/SettingIcon"
 import ShapeIcon from "@components/icons/ShapeIcon"
 import TableIcon from "@components/icons/TableIcon"
@@ -6,7 +6,7 @@ import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import Tagline from "@components/molecules/tagline/Tagline"
 import { Box, Typography } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
-import { IProfile } from "@src/types/profile"
+import { IPlayerInfoResponse, IProfile } from "@src/types/profile"
 import { RandomReveal } from "react-random-reveal"
 import { CHAR_SET_JP } from "@constants/characterSet"
 import dayjs from "dayjs"
@@ -14,6 +14,14 @@ import useGetProfileInfo from "@feature/profile/containers/hook/getProfileInfo"
 import Lavel from "@components/icons/Lavel"
 import { Image } from "@components/atoms/image"
 import Helper from "@utils/helper"
+import { v4 as uuidv4 } from "uuid"
+import DropdownLimit from "@components/atoms/DropdownLimit"
+// import useGlobal from "@hooks/useGlobal"
+import { PaginationNaka } from "@components/atoms/pagination"
+// import { getPlayerInfoByPlayerId } from "@feature/profile/containers/services/profile.service"
+// import { useQueryClient } from "@tanstack/react-query"
+import useLoadingStore from "@stores/loading"
+import GameStatOverview from "@feature/playerProfile/components/organisms/GameStatOverview"
 import EditProfileModal from "./EditProfileModal"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
@@ -24,6 +32,12 @@ const ProfileContent = () => {
   const [openEdit, setOpenEdit] = useState<boolean>(false)
   const [profileData, setProfileData] = useState<IProfile>()
   const [idPlayer, setIdPlayer] = useState<string>("")
+  const [limit, setLimit] = useState<number>(20)
+  const [page, setPage] = useState<number>(1)
+  const [getProfileInfo, setGetProfileInfo] = useState<IPlayerInfoResponse>()
+  const [totalCount, setTotalCount] = useState<number>(0)
+  const fetchRef = useRef(false)
+  const { setOpen, setClose } = useLoadingStore()
 
   useEffect(() => {
     if (profile && profile.data) {
@@ -32,14 +46,66 @@ const ProfileContent = () => {
     }
   }, [profile])
 
-  const { getProfileInfo, refetchGetProfile, isFetching } = useGetProfileInfo({
-    _limit: 20,
+  const {
+    getProfileInfo: profileDataFromQuery,
+    refetchGetProfile,
+    isPreviousData,
+    isFetching
+  } = useGetProfileInfo({
+    _limit: limit,
     _playerId: idPlayer,
-    _page: 1,
+    _page: page,
     _sort: "",
     _cheat: "All",
     _rewards_send_status: "All"
   })
+
+  useEffect(() => {
+    if (!fetchRef.current && getProfileInfo && !isFetching) {
+      fetchRef.current = true
+      setTotalCount(getProfileInfo.data.info.totalCount)
+    }
+  }, [getProfileInfo, isFetching])
+
+  useEffect(() => {
+    if (profileDataFromQuery) {
+      setGetProfileInfo(profileDataFromQuery)
+    }
+  }, [profileDataFromQuery])
+
+  useEffect(() => {
+    if (!isPreviousData) {
+      setOpen()
+      refetchGetProfile().then(() => setClose())
+    }
+  }, [isPreviousData, page, refetchGetProfile, setClose, setOpen])
+  // useEffect(() => {
+  //   if (!isPreviousData && getProfileInfo) {
+  //     queryClient.prefetchQuery({
+  //       queryKey: ["PlayerInfoByPlayerId", page + 1],
+  //       queryFn: () =>
+  //         getPlayerInfoByPlayerId({
+  //           _limit: limit,
+  //           _playerId: idPlayer,
+  //           _page: page,
+  //           _sort: "",
+  //           _cheat: "All",
+  //           _rewards_send_status: "All"
+  //         }).then((res) => {
+  //           setGetProfileInfo(res)
+  //         })
+  //     })
+  //     // refetchGetProfile()
+  //   }
+  // }, [
+  //   getProfileInfo,
+  //   isPreviousData,
+  //   page,
+  //   queryClient,
+  //   idPlayer,
+  //   refetchGetProfile,
+  //   limit
+  // ])
 
   // const { response: getProfileInfo } = useGetProfileInfo({
   //   _limit: 20,
@@ -99,7 +165,7 @@ const ProfileContent = () => {
       </div>
       <div className="relative">
         <Tagline
-          className="my-0 mt-4 mb-4"
+          className="!my-2 mt-4 mb-4"
           text="Nakamoto.Games - Secue. fun. simple. earn $naka AND enjoy"
           bgColor={platinumCount === 0 ? `bg-neutral-800` : `bg-error-main`}
           icon={
@@ -113,7 +179,7 @@ const ProfileContent = () => {
           <div className="absolute bottom-[-50px] z-10 h-[150px] w-[150px] rounded-3xl border-8 border-neutral-900 bg-neutral-700">
             <div
               className="absolute top-[-20px] right-[28px]
-    z-20"
+   z-20"
             >
               <div className="relative">
                 <Lavel className="absolute" />
@@ -156,7 +222,7 @@ const ProfileContent = () => {
         </Typography>
       </div>
       <div className="flex justify-center">
-        <div className="mt-[50px] grid grid-cols-3 gap-4">
+        <div className="mt-[50px] grid max-w-[700px] grid-cols-3 gap-4 overflow-x-auto">
           {getProfileInfo && (
             <>
               <TotalCardContent
@@ -199,6 +265,46 @@ const ProfileContent = () => {
         </div>
       </div>
       <SliderBadges _playerId={profileData.id} />
+      <GameStatOverview
+        key={uuidv4()}
+        data={getProfileInfo}
+        limit={limit}
+        page={page}
+      />
+      <div className="flex w-full justify-between">
+        <PaginationNaka
+          totalCount={totalCount}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+        <div className="flex">
+          {/* <TextField
+           sx={{
+             input: {
+               "&[type=text]": {
+                 paddingLeft: "15px"
+               }
+             }
+           }}
+           placeholder="Search Game..."
+           size="medium"
+           InputProps={{
+             endAdornment: (
+               <InputAdornment position="end">
+                 <SearchIcon />
+               </InputAdornment>
+             )
+           }}
+         /> */}
+          <DropdownLimit
+            className="ml-2"
+            defaultValue={limit}
+            list={[20, 40, 80]}
+            onChangeSelect={setLimit}
+          />
+        </div>
+      </div>
     </div>
   ) : null
 }

@@ -1,4 +1,5 @@
 import { gsap, Linear, Back, Power1 } from "gsap"
+import { useCallback } from "react"
 
 interface ITweenProps {
   yMin?: number
@@ -78,6 +79,7 @@ const useTweenEffect = (
     const max = map[`${prop}Max`]
     return min + (max - min) * Math.random()
   }
+
   const randomEase = (
     easeThis: string | gsap.EaseFunction | undefined,
     easeThat: string | gsap.EaseFunction | undefined
@@ -153,7 +155,7 @@ const useTweenEffect = (
   /**
    * @description Create a Spark Fire div
    */
-  const createParticle = () => {
+  const createParticle = useCallback(() => {
     const targetElement: HTMLElement = document.getElementById(
       "spark-fire"
     ) as HTMLElement
@@ -163,7 +165,9 @@ const useTweenEffect = (
       targetElement.appendChild(particleSpark)
       spawn(particleSpark)
     }
-  }
+    // density, start, mid, end, range, randomEase, spawn,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [spawn])
 
   return {
     createParticle

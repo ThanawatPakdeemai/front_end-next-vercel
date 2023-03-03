@@ -6,34 +6,34 @@ import { t } from "i18next"
 import React from "react"
 
 const SkeletonStake = () => (
-  <div className="grid grid-flow-row-dense grid-cols-4 gap-3 rounded-[13px] bg-neutral-800 p-3 uppercase">
+  <div className="grid grid-flow-row-dense grid-cols-1 gap-3 rounded-[13px] bg-neutral-800 p-3 uppercase sm:grid-cols-4">
     <div className="row-span-2 rounded-lg shadow-xl">
       <PeriodLabel
         days={-1}
         className="h-full"
       />
     </div>
-    <div className="col-span-3 shadow-xl">
+    <div className="sm-max:row-span-2 shadow-xl sm:col-span-3">
       <TotalStaked
         totalPoolStake={-1}
         poolLimit={-1}
       />
     </div>
-    <div className="col-span-3 shadow-xl">
+    <div className="shadow-xl sm:col-span-3">
       <StakingPeriod
         startDatetime="00:00:00"
         endDatetime="00:00:00"
         est={-1}
       />
     </div>
-    <div className="col-span-2 shadow-xl">
+    <div className="shadow-xl sm:col-span-2">
       <NumberBadge
         title={t("your_naka_staked")}
         color="red"
         value={-1}
       />
     </div>
-    <div className="col-span-2 shadow-xl">
+    <div className="shadow-xl sm:col-span-2">
       <NumberBadge
         title={t("your_naka_unclaimed")}
         color="purple"

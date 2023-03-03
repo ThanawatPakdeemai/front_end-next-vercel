@@ -3,13 +3,11 @@ import useGlobal from "@hooks/useGlobal"
 import { Box } from "@mui/material"
 import dayjs from "dayjs"
 import { useRouter } from "next/router"
-import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { v4 as uuid } from "uuid"
 import StakingTitle from "../atoms/StakingTitle"
 import RedBanner from "./RedBanner"
 import StakingDetails from "./StakingDetails"
-import StakingModal from "./StakingModal"
 
 const FixedAPRContent = () => {
   const router = useRouter()
@@ -19,9 +17,9 @@ const FixedAPRContent = () => {
   const { hydrated } = useGlobal()
 
   // State
-  const [open, setOpen] = useState<boolean>(true)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+  // const [open, setOpen] = useState<boolean>(true)
+  // const handleOpen = () => setOpen(true)
+  // const handleClose = () => setOpen(false)
 
   /**
    * @description find staking data by slug
@@ -72,16 +70,16 @@ const FixedAPRContent = () => {
               <StakingDetails
                 dataStaking={item}
                 className="mb-10"
-                handleOpen={handleOpen}
+                // handleOpen={handleOpen}
               />
             </div>
           ))}
         </Box>
       )}
-      <StakingModal
+      {/* <StakingModal
         open={open}
         handleClose={handleClose}
-      />
+      /> */}
     </section>
   )
 }

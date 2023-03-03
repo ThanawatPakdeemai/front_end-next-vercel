@@ -93,7 +93,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
         _playerId: profile.id,
         _type: "out"
       })
-      await router.push(`/${data.path}/roomlist`)
+      await router.push(`/${router.query.typeGame}/${data.path}/roomlist`)
     }
   }
 
@@ -134,7 +134,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
             <>Loading...</>
           ))}
         {(!data?.play_to_earn || !data.tournament) && (
-          <Box className=" w-[333px] rounded-3xl">
+          <Box className="rounded-3xl lg:w-[333px]">
             <CardBuyItem />
           </Box>
         )}

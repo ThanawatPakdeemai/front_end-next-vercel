@@ -42,7 +42,7 @@ const Gas = ({ type }) => {
 
   useEffect(() => {
     getGasPrices()
-  }, [])
+  }, [type])
 
   return (
     <Box className="p-4">

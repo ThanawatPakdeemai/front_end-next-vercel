@@ -7,7 +7,7 @@ interface IProp {
   title: string
 }
 
-const FromWallet = ({ title }: IProp) => {
+const FormWallet = ({ title }: IProp) => {
   const game = useGameStore((state) => state.data)
 
   return (
@@ -61,4 +61,4 @@ const FromWallet = ({ title }: IProp) => {
     </>
   )
 }
-export default memo(FromWallet)
+export default memo(FormWallet)

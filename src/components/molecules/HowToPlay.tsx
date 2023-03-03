@@ -101,7 +101,7 @@ const Howto = ({ data }: IProp) => {
 
   return (
     <>
-      <div className="mb-3 flex flex-col items-center justify-between rounded-2xl bg-neutral-800 p-5  xl:flex-row">
+      <div className="mb-3 flex flex-col items-center justify-between rounded-2xl bg-neutral-800 p-2 md:p-5 xl:flex-row">
         <div className="mb-2 flex flex-col items-center gap-2 md:flex-row md:gap-0 xl:mb-0">
           <div className="xs:mb-[20px] flex items-center justify-center">
             <div className="text-sm uppercase">
@@ -157,8 +157,8 @@ const Howto = ({ data }: IProp) => {
               ))}
           </div>
         </div>
-        <div className="flex items-center justify-end ">
-          <div className="flex items-center text-sm text-neutral-400">
+        <div className="flex flex-wrap items-center justify-end lg:flex-nowrap">
+          <div className="md flex flex-[1_1_150px] items-center justify-center text-sm text-neutral-400 md:flex-none">
             <HowToPlayIcon
               color="#FFFFFF"
               className="mr-2"
@@ -166,16 +166,19 @@ const Howto = ({ data }: IProp) => {
             How to play
           </div>
           <div className="mx-5 h-3 border-[1px] border-solid border-neutral-600" />
-          <div className="flex items-center text-sm text-neutral-400">
+          <div className="md flex flex-[1_1_150px] items-center justify-center text-sm text-neutral-400 md:flex-none">
             <ShareIcon
               color="#FFFFFF"
               className="mr-2"
             />
             Share
           </div>
-          <div className="mx-5 h-3 border-[1px] border-solid border-neutral-600" />
-          <Button onClick={() => onFavouriteGame(data.id)}>
-            <div className="flex items-center text-sm text-neutral-400">
+          <div className="mx-5 hidden h-3 border-[1px] border-solid border-neutral-600 md:block" />
+          <Button
+            className="flex-[1_1_100%] md:flex-none"
+            onClick={() => onFavouriteGame(data.id)}
+          >
+            <div className="md flex items-center justify-center text-sm text-neutral-400 md:flex-none md:justify-end">
               {active ? (
                 <FavouriteColorIcon className="mr-2" />
               ) : (

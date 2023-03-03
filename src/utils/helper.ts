@@ -5,11 +5,12 @@ import CryptoJS from "crypto-js"
 import { IPropsFormatNumberOption } from "@interfaces/IHelper"
 import { IGetEventLog } from "@interfaces/ITransaction"
 import { ILocal, TLocalKey, ELocalKey } from "@interfaces/ILocal"
-import { ICurrentNakaResponse } from "@feature/inventory/interfaces/IInventoryService"
+import {
+  ICurrentNakaData,
+  ICurrentNakaResponse
+} from "@feature/inventory/interfaces/IInventoryService"
 import { getCurrentNaka } from "@feature/inventory/containers/services/inventory.service"
 import { IResGetIp } from "@interfaces/IGetIP"
-import { getPriceCurrent } from "@feature/home/containers/services/home.service"
-import { IPointCurrentResponse } from "@feature/home/interfaces/IHomeService"
 import { trickerPriceBNBExternal } from "@feature/buyItem/containers/services/currency.services"
 
 const names = ["wei", "kwei", "mwei", "gwei", "szabo", "finney", "ether"]
@@ -261,8 +262,8 @@ const Helper = {
     return (amount / total) * 100
   },
   async getPriceNakaCurrent() {
-    const currenr_price = await getPriceCurrent()
-    return currenr_price
+    const currenr_price = await getCurrentNaka()
+    return currenr_price.data
   },
   async getPriceBSCCurrent(_symbol: string) {
     const currentPrice = await trickerPriceBNBExternal(_symbol)
@@ -272,11 +273,15 @@ const Helper = {
     const qty: number = _qty ?? 1
     const priceData = await this.getPriceNakaCurrent()
     if (priceData) {
-      const priceUsd = Number((priceData as IPointCurrentResponse).data.buy)
+      const priceUsd = Number((priceData as ICurrentNakaData).buy)
       const price = _priceItem * priceUsd * qty
       return this.number4digit(price)
     }
     return this.number4digit(0)
+  },
+  removeComma(text: string) {
+    // eslint-disable-next-line no-useless-escape
+    return Number(text.replace(/\,/g, ""))
   }
 }
 

@@ -14,6 +14,10 @@ import { useTranslation } from "next-i18next"
 import Helper from "@utils/helper"
 import { BaseToastComponent } from "@feature/toast/components"
 import Balance from "@components/molecules/balance/Balance"
+import SwitchChain from "@components/atoms/SwitchChain"
+import useSwitchNetwork from "@hooks/useSwitchNetwork"
+import CONFIGS from "@configs/index"
+import PleaseCheckWallet from "@components/atoms/PleaseCheckWallet"
 import useBuyGameItemController from "../containers/hooks/useBuyGameItemController"
 
 const iconmotion = {
@@ -29,7 +33,7 @@ const iconmotion = {
   }
 }
 
-const FromBuyItem = () => {
+const FormBuyItem = () => {
   const { t } = useTranslation()
   const {
     MessageAlert,
@@ -49,7 +53,11 @@ const FromBuyItem = () => {
     onQtyDown,
     chainSupport,
     isDisabled
+    // chainId,
+    // accounts,
+    // signer
   } = useBuyGameItemController()
+  const { handleSwitchNetwork, statusWalletConnected } = useSwitchNetwork()
 
   // console.log(
   //   "chainSupport",
@@ -235,28 +243,33 @@ const FromBuyItem = () => {
             </p>
           </div>
           <ButtonGroup className="mt-10 flex flex-col  gap-3">
-            <ButtonLink
-              href=""
-              size="medium"
-              disabled={isDisabled()}
-              className="h-[40px] w-full text-sm "
-              text={
-                <>
-                  {isLoading ? (
-                    <CircularProgress
-                      color="primary"
-                      size={15}
-                    />
-                  ) : (
-                    t("buy-now")
-                  )}
-                </>
-              }
-              onClick={() => {}}
-              type="submit"
-              color="secondary"
-              variant="contained"
-            />
+            {!statusWalletConnected.responseStatus ? (
+              <PleaseCheckWallet />
+            ) : (
+              <ButtonLink
+                href=""
+                size="medium"
+                disabled={isDisabled()}
+                className="h-[40px] w-full text-sm "
+                text={
+                  <>
+                    {isLoading ? (
+                      <CircularProgress
+                        color="primary"
+                        size={15}
+                      />
+                    ) : (
+                      t("buy-now")
+                    )}
+                  </>
+                }
+                onClick={() => {}}
+                type="submit"
+                color="secondary"
+                variant="contained"
+              />
+            )}
+
             <div className="flex w-full justify-center rounded-2xl  border border-black-200">
               <ButtonLink
                 className="h-[40px] w-full text-sm"
@@ -287,7 +300,7 @@ const FromBuyItem = () => {
               onClose={() => {}}
               className="mt-10 w-full"
             />
-            {/* <div className="col-span-5 m-2 flex flex-col items-center justify-center">
+            <div className="m-2 flex flex-col items-center justify-center md:col-span-5">
               <SwitchChain
                 variant="simple"
                 chainName={watch("currency").tokenName}
@@ -303,11 +316,11 @@ const FromBuyItem = () => {
                         )
                 }
               />
-            </div> */}
+            </div>
           </Box>
         </form>
       )}
     </>
   )
 }
-export default memo(FromBuyItem)
+export default memo(FormBuyItem)

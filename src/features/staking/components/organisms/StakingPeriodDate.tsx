@@ -23,7 +23,7 @@ const StakingPeriodDate = ({
 }: IStakingDate) => {
   const stakeContent = () => (
     <div
-      className={`relative grid w-full grid-cols-[140px_calc(100%-140px)] items-center rounded-[13px] bg-neutral-800 p-3 font-neue-machina-semi text-[10px] uppercase ${className}`}
+      className={`relative w-full grid-cols-[140px_calc(100%-140px)] items-center rounded-[13px] bg-neutral-800 p-3 font-neue-machina-semi text-[10px] uppercase sm:grid ${className}`}
     >
       <PeriodLabel
         days={days}
@@ -31,7 +31,7 @@ const StakingPeriodDate = ({
       />
       <PeriodDate
         datetime={datetime}
-        className="ml-3"
+        className="max-sm:mt-3 sm:ml-3"
         lockStatus={lockStatus}
       />
     </div>

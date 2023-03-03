@@ -14,17 +14,10 @@ const ProfileLayout = dynamic(
     suspense: true
   }
 )
-const GameStatOverview = dynamic(
-  () => import("@feature/playerProfile/components/organisms/GameStatOverview"),
-  {
-    suspense: true
-  }
-)
 
 const ProfilePage = () => (
   <article className="h-full w-full">
     <ProfileContent />
-    <GameStatOverview />
   </article>
 )
 

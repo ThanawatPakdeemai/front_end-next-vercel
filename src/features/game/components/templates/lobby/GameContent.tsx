@@ -45,6 +45,7 @@ const GameContent = ({ gameId, gameType }: IGameContentProps) => {
       <Box
         component="section"
         id="game-partners-overview"
+        className="w-full"
       >
         <div className="w-full rounded-2xl border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4">
           <div className="flex items-center gap-3">

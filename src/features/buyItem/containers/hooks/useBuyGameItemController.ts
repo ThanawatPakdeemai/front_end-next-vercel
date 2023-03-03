@@ -19,20 +19,17 @@ import { useForm } from "react-hook-form"
 import useBuyGameItems from "./useBuyGameItems"
 
 const useBuyGameItemController = () => {
-  const { handleSwitchNetwork } = useSwitchNetwork()
   const profile = useProfileStore((state) => state.profile.data)
   const { mutateBuyItems, mutateBuyItemsBSC, isLoading } = useBuyGameItems()
   const { onResetBalance } = useWalletContoller()
   const { setOpen, setClose } = useLoadingStore()
   const { errorToast, successToast } = useToast()
   const { data, onSetGameItemSelectd, itemSelected } = useGameStore()
-  const { chainId, accounts, signer, checkNetwork } = useSwitchNetwork()
+  const { chainId, accounts, signer } = useSwitchNetwork()
   const { chainSupport } = useChainSupport()
 
   // State
   const [openForm, setOpenForm] = useState<boolean>(false)
-
-  const handleOpen = () => setOpenForm(true)
 
   const DEFAULT_VALUES: IFormData = {
     player_id: profile ? profile?.id : "",
@@ -154,40 +151,29 @@ const useBuyGameItemController = () => {
   }
 
   const resetForm = useCallback(() => {
-    if (checkNetwork) checkNetwork()
     reset(DEFAULT_VALUES)
-    if (watch("nakaPerItem") === 0) {
+    const hasChainSupport = chainSupport && chainSupport.length > 0
+    const hasGameItemList =
+      (gameItemList as IGameItemListData[]) &&
+      (gameItemList as IGameItemListData[]).length > 0
+    if (hasChainSupport && hasGameItemList) {
+      setValue("currency", chainSupport[0] as ITokenContract)
+      setValue(
+        "item",
+        (gameItemList as IGameItemListData[])[0] as IGameItemListData
+      )
+      setValue("item_id", (gameItemList as IGameItemListData[])[0].id as string)
       updatePricePerItem()
     }
-    if (
-      // Object.keys(watch("currency")).length === 0 &&
-      chainSupport &&
-      chainSupport.length > 0
-    ) {
-      setValue("currency", chainSupport[0] as ITokenContract)
-    }
-
-    if (
-      // Object.keys(watch("item")).length === 0 &&
-      gameItemList &&
-      gameItemList.length > 0
-    ) {
-      setValue("item", gameItemList[0] as IGameItemListData)
-      setValue("item_id", gameItemList[0].id as string)
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    chainSupport,
-    checkNetwork,
-    gameItemList,
-    reset,
-    setValue,
-    updatePricePerItem,
-    watch
-  ])
+  }, [chainSupport])
 
   const handleClose = () => {
     setOpenForm(false)
+  }
+
+  const handleOpen = () => {
+    setOpenForm(true)
     resetForm()
   }
 
@@ -258,7 +244,7 @@ const useBuyGameItemController = () => {
   useEffect(() => {
     resetForm()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainId, resetForm, watch("nakaPerItem")])
+  }, [chainSupport, gameItemList, resetForm])
 
   return {
     MessageAlert,
@@ -278,7 +264,6 @@ const useBuyGameItemController = () => {
     updatePricePerItem,
     onQtyUp,
     onQtyDown,
-    handleSwitchNetwork,
     itemSelected,
     onSetGameItemSelectd,
     gameStore: data,
@@ -289,7 +274,7 @@ const useBuyGameItemController = () => {
     getValues,
     getFieldState,
     getErrorMessages,
-    resetForm: reset,
+    resetForm,
     chainSupport,
     isDisabled,
     chainId,

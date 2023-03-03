@@ -89,11 +89,14 @@ const Footer = () => {
 
   return (
     <>
-      <div className="flex items-center" />
-      <Divider sx={{ marginTop: 10, marginBottom: 10 }} />
-      <div className="justify-between text-[12px] lg:flex">
-        <div className="flex justify-center">
-          <div className="w-48">
+      <div className="items-center sm:flex" />
+      <Divider
+        className="my-8 md:my-16"
+        sx={{ marginTop: 10, marginBottom: 10 }}
+      />
+      <div className="justify-between overflow-hidden text-[12px] lg:flex">
+        <div className="flex justify-center whitespace-nowrap">
+          <div className="flex-auto sm:flex-none md:w-48">
             <div className="mb-4 uppercase text-white-primary">game</div>
             {NAKA_GAME?.map((item) => (
               <div key={`game_${item.label}`}>
@@ -126,7 +129,7 @@ const Footer = () => {
               </div>
             ))}
           </div>
-          <div className="w-48">
+          <div className="flex-auto sm:flex-none md:w-48">
             <div className="mb-4 uppercase text-white-primary">services</div>
             {NAKA_SERVICES?.map((item) => (
               <Link
@@ -144,8 +147,8 @@ const Footer = () => {
               </Link>
             ))}
           </div>
-          <div className="w-48">
-            <div className="mb-4 uppercase text-white-primary">
+          <div className="flex-auto sm:flex-none md:w-48">
+            <div className="mb-4 whitespace-normal uppercase text-white-primary">
               NAKA ecosystemss
             </div>
             {NAKA_ECOSYSTEMSS?.map((item) => (
@@ -170,7 +173,7 @@ const Footer = () => {
             ))}
           </div>
         </div>
-        <div className="flex justify-center pt-[20px] lg:justify-center lg:p-0">
+        <div className="flex justify-center pt-[20px] text-center md:text-left lg:justify-center lg:p-0">
           <div className="flex flex-col items-center justify-self-end lg:w-3/4 lg:items-start">
             <div className="mb-4 uppercase text-white-primary">
               BE A PART OF THE PLAY TO EARN REVOLUTION!
@@ -186,7 +189,7 @@ const Footer = () => {
                 type="button"
               />
             </div>
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap justify-center">
               {SOCIAL?.map((item, index) => (
                 <Link
                   key={Number(index)}
@@ -210,10 +213,10 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="pt-[80px] text-[12px] lg:flex">
-        <div className="w-full rounded-[20px] bg-neutral-800 p-6 lg:w-[90%]">
+      <div className="mx-2 pt-2 text-[12px] md:mx-0 lg:flex lg:pt-[80px]">
+        <div className="w-full rounded-xl bg-neutral-800 p-4 md:p-6 lg:w-[90%] lg:rounded-[20px]">
           <div className="md:flex">
-            <div className="flex items-center text-white-primary md:w-2/4 md:pr-[20px]">
+            <div className="mx-auto grid max-w-xs items-center justify-center gap-2 text-white-primary md:mx-0 md:flex md:w-2/4 md:max-w-none md:gap-0 md:pr-[20px]">
               <ButtonToggleIcon
                 handleClick={() =>
                   openInNewTab("https://main.nakamoto.games/joinus/")
@@ -223,12 +226,12 @@ const Footer = () => {
                 className="z-[2] h-[50px] !w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
                 type="button"
               />
-              <h3 className="pl-[30px] text-grey-neutral04 md:w-[280px]">
+              <h3 className="text-grey-neutral-04 md:w-[280px] md:pl-[30px]">
                 Join the industry&apos;s first comprehensive Play to Earn
                 ecosystem.
               </h3>
             </div>
-            <div className="mt-[20px] flex items-center md:mt-0 md:w-3/4">
+            <div className="mx-auto mt-[20px] grid max-w-xs items-center justify-center gap-2 md:mx-0 md:mt-0 md:flex md:w-3/4 md:max-w-none md:gap-0">
               <ButtonToggleIcon
                 handleClick={() => openInNewTab("https://main.nakamoto.games/")}
                 startIcon={<DollarPaperIcon />}
@@ -236,13 +239,13 @@ const Footer = () => {
                 className="z-[2] h-[50px] !w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
                 type="button"
               />
-              <h3 className="pl-[30px] text-grey-neutral04 md:max-w-[300px]">
+              <h3 className="text-grey-neutral04 md:max-w-[300px] md:pl-[30px]">
                 Earn some serious cash promoting Nakamoto.Games
               </h3>
             </div>
           </div>
         </div>
-        <div className="flex justify-center pt-2 lg:pt-0">
+        <div className="my-2 flex justify-center lg:my-0 lg:pt-2">
           <div className="flex h-[82px] w-[90px] items-center justify-center self-center rounded-[20px] bg-neutral-800 lg:ml-[10px] lg:h-full">
             <ButtonIcon
               onClick={() => {
@@ -261,7 +264,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="m-4 flex items-center justify-between py-[20px] text-[10px] uppercase text-neutral-600">
+      <div className="flex flex-col items-center justify-center text-[10px] uppercase text-neutral-600 md:flex-row md:justify-between lg:m-4 lg:py-[20px]">
         <h4>Copyright 2022 © Nakamoto Games</h4>
         <div
           className="h-[80px] cursor-pointer"

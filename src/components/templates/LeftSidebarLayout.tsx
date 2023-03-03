@@ -6,7 +6,7 @@ import React from "react"
 const LeftSidebarLayout = ({
   children
 }: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) => (
-  <div className="main-container mx-auto">
+  <div className="main-container mx-auto px-2 lg:px-0">
     <Header />
     <div className="flex flex-row gap-3">
       <SidebarGames />

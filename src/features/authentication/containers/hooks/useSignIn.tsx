@@ -3,6 +3,8 @@ import { useMutation } from "@tanstack/react-query"
 import useWalletStore from "@stores/wallet"
 import { getNaka } from "@feature/inventory/containers/services/inventory.service"
 import useLoadingStore from "@stores/loading"
+import { useToast } from "@feature/toast/containers"
+import { IMessage } from "@feature/multichain/interfaces/IMultichain"
 import { signIn } from "../services/auth.service"
 
 const useSignIn = () => {
@@ -10,6 +12,7 @@ const useSignIn = () => {
     useProfileStore()
   const { setVaultBalance } = useWalletStore()
   const { setOpen, setClose } = useLoadingStore()
+  const { errorToast } = useToast()
   const {
     data: _profile,
     error,
@@ -21,6 +24,10 @@ const useSignIn = () => {
     retry: false,
     onMutate() {
       setOpen("Signing in...")
+    },
+    onError(err) {
+      errorToast((err as IMessage).message)
+      setClose()
     },
     onSuccess(res) {
       onSetProfileData(res)

@@ -133,7 +133,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
         handleClick={handleOpen}
         startIcon={<PlusIcon />}
         text="Create Room"
-        className="btn-rainbow-theme z-[2] h-[50px] w-[156px] bg-secondary-main font-bold capitalize text-white-primary"
+        className="btn-rainbow-theme z-[2] w-[156px] bg-secondary-main font-bold capitalize text-white-primary"
         type="button"
       />
       <ModalCustom
@@ -240,7 +240,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
             }}
           />
           <ButtonToggleIcon
-            className="!h-[42px] bg-secondary-main text-white-default"
+            className=" bg-secondary-main text-white-default"
             startIcon={null}
             text={
               isLoading ? (

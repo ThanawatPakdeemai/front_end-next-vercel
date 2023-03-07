@@ -2,15 +2,18 @@ import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import SendIcon from "@components/icons/SendIcon"
 import useChatContext from "@feature/chat/containers/contexts/useChatContext"
 import useChat from "@feature/chat/containers/hooks/useChat"
+import { IChat } from "@feature/chat/interface/IChat"
 import { Box, TextField } from "@mui/material"
 import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
-import React from "react"
+// import useProfileStore from "@stores/profileStore"
+import React, { useEffect, useMemo } from "react"
 
 const MessageFooter = () => {
+  // const profile = useProfileStore((state) => state.profile.data)
   const { handleInputChat } = useChat()
-  const { message, setMessage } = useChatContext()
+  const { message, setMessage, setChat } = useChatContext()
   const propsSocket = useSocketProviderWaiting()
-  const { onSendMessage } = propsSocket
+  const { onSendMessage, getChat } = propsSocket
 
   const iconmotion = {
     hover: {
@@ -24,6 +27,23 @@ const MessageFooter = () => {
       }
     }
   }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const manageChat = useMemo(async () => {
+    if (getChat) {
+      const chat = await getChat()
+      // if ((chat as unknown as IChat)?.player_id !== profile?.id)
+      setChat((oldData) =>
+        [chat as unknown as IChat, ...oldData].filter((ele) => ele)
+      )
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getChat])
+
+  useEffect(() => {
+    manageChat
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onSendMessage])
 
   return (
     <Box className="message-input relative flex w-full items-center">
@@ -52,7 +72,9 @@ const MessageFooter = () => {
         icon={<SendIcon />}
         className="absolute right-4 flex h-[18px] w-[18px] cursor-pointer items-center justify-center rounded-lg bg-transparent"
         aria-label="send-button"
-        onClick={onSendMessage}
+        onClick={async () => {
+          await onSendMessage()
+        }}
       />
     </Box>
   )

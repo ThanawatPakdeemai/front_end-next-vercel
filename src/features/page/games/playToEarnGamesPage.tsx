@@ -27,7 +27,11 @@ const PlayToEarnGamesPage = () => {
     category: categoryDropdown,
     gameItem: gameItemDropdown,
     device: deviceDropdown,
-    search: searchDropdown
+    search: searchDropdown,
+    clearSearch,
+    clearCategory,
+    clearGameItem,
+    clearDevice
   } = useFilterStore()
 
   const {
@@ -58,7 +62,21 @@ const PlayToEarnGamesPage = () => {
       setGameFilter(gameData.data)
     }
     clearGameData()
-  }, [clearGameData, gameData, isPreviousData, page, queryClient])
+    clearSearch()
+    clearCategory()
+    clearGameItem()
+    clearDevice()
+  }, [
+    clearCategory,
+    clearDevice,
+    clearGameData,
+    clearGameItem,
+    clearSearch,
+    gameData,
+    isPreviousData,
+    page,
+    queryClient
+  ])
 
   useEffect(() => {
     const filterData = {

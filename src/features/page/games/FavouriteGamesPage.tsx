@@ -27,7 +27,11 @@ const FavouriteGamesPage = () => {
     category: categoryDropdown,
     gameItem: gameItemDropdown,
     device: deviceDropdown,
-    search: searchDropdown
+    search: searchDropdown,
+    clearSearch,
+    clearCategory,
+    clearGameItem,
+    clearDevice
   } = useFilterStore()
   const [gameFavourite, setGameFavourite] = useState<IGame[]>()
   const [loading, setLoading] = useState<boolean>(true)
@@ -157,7 +161,11 @@ const FavouriteGamesPage = () => {
       fetchRef.current = true
       setTotalCount(gameFavourite.length)
     }
-  }, [gameFavourite])
+    clearSearch()
+    clearCategory()
+    clearGameItem()
+    clearDevice()
+  }, [clearCategory, clearDevice, clearGameItem, clearSearch, gameFavourite])
 
   return (
     <div className="flex flex-col">

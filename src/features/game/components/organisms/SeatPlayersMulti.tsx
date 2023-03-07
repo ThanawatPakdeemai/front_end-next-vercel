@@ -342,7 +342,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
                   playerMe &&
                   playerMe.status === "inroom" &&
                   "text-neutral-300 "
-                } mx-4 w-[200px] font-neue-machina text-sm `}
+                } mx-4 w-full font-neue-machina text-sm `}
               >
                 {checkText}
               </Typography>

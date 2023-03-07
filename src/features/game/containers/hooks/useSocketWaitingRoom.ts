@@ -89,7 +89,7 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_TIMEOUT, () => {
       if (gameData) {
         errorToast(MESSAGES["room-expried"])
-        router.push(`/${gameData.path}/roomlist`)
+        router.push(`/${router.query.typeGame}/${gameData.path}/roomlist`)
       }
     })
   }, [errorToast, gameData, router, socketWaitingRoom])
@@ -99,7 +99,7 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_KICK, () => {
       if (gameData) {
         errorToast(MESSAGES["you-were-kicked"])
-        router.push(`/${gameData.path}/roomlist`)
+        router.push(`/${router.query.typeGame}/${gameData.path}/roomlist`)
       }
     })
   }, [errorToast, gameData, router, socketWaitingRoom])

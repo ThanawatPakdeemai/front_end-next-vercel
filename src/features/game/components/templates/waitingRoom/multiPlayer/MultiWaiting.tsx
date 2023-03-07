@@ -274,7 +274,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
                   </Typography>
                   {gameData && (
                     <ButtonLink
-                      href={`/${gameData?.path}/roomlist`}
+                      href={`/${router.query.typeGame}/${gameData?.path}/roomlist`}
                       text={t("out-room")}
                       icon=""
                       size="medium"

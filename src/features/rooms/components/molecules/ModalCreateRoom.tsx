@@ -95,9 +95,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
                 setQtyItemOfRoom(itemUse)
                 setCount(gameData.min_player || 2)
                 successToast(MESSAGES["create-room-success"])
-                await router.push(
-                  `/${gameData.path}/roomlist/${_res?.data.room_id}`
-                )
+                await router.push(`${router.asPath}/${_res?.data.room_id}`)
               }
             })
             .catch((error) => {
@@ -242,7 +240,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
             }}
           />
           <ButtonToggleIcon
-            className="bg-secondary-main text-white-default"
+            className="!h-[42px] bg-secondary-main text-white-default"
             startIcon={null}
             text={
               isLoading ? (

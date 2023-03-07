@@ -12,7 +12,7 @@ const TournamentLayout = dynamic(
 export default function Tournament() {
   return (
     <>
-      <article className="h-full w-full">Comming soon</article>
+      <article className="h-full w-full">Coming soon</article>
     </>
   )
 }

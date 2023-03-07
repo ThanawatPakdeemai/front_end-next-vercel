@@ -188,8 +188,8 @@ export default function CardBuyItem() {
                 className="m-auto block w-[124px]"
                 component="img"
                 height={124}
-                image={gameObject.item[0].image}
-                alt={gameObject.item[0].name}
+                image={gameObject.item?.[0]?.image}
+                alt={gameObject.item?.[0]?.name}
               />
             )}
           </div>
@@ -198,8 +198,8 @@ export default function CardBuyItem() {
               <p>{qtyItemSelected ?? 0}</p>
               {gameObject && (
                 <Image
-                  src={gameObject.item[0].image_icon_color}
-                  alt={gameObject.item[0].name}
+                  src={gameObject.item?.[0]?.image_icon_color}
+                  alt={gameObject.item?.[0]?.name}
                   width="30"
                   height="30"
                 />

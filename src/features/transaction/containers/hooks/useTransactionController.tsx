@@ -75,11 +75,54 @@ const useTransactionController = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [sortTime, sortAmount]
   )
+  const AllTransactionTableHeader: Array<ITableHeader> = useMemo(
+    () => [
+      {
+        title: t("time"),
+        arrowIcon: true,
+        keyUp: sortTime === 1,
+        keyDown: sortTime === -1,
+        onClick: () =>
+          setSortTime((prev: number | undefined) => {
+            if (prev) {
+              return prev * -1
+            }
+            return -1
+          })
+      },
+      {
+        title: t("event")
+      },
+      {
+        title: t("amount").concat(" (NAKA)"),
+        arrowIcon: true,
+        keyUp: sortAmount === 1,
+        keyDown: sortAmount === -1,
+        onClick: () =>
+          setSortAmount((prev: number | undefined) => {
+            if (prev) {
+              return prev * -1
+            }
+            return -1
+          })
+      },
+      {
+        title: t("fee").concat(" (MATIC)")
+      },
+      {
+        title: t("view"),
+        className: "flex justify-end w-full"
+      }
+    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [sortTime, sortAmount]
+  )
   return {
     sortTime,
     sortAmount,
     typeCheck,
-    TransactionTableHeader
+    TransactionTableHeader,
+    AllTransactionTableHeader
   }
 }
 

@@ -1,7 +1,5 @@
 import RightMenuWallet from "@components/molecules/rightMenu/RightMenuWallet"
 import Gas from "@components/molecules/Gas"
-import INaka from "@components/icons/Naka"
-import IBusd from "@components/icons/Busd"
 import React, { useEffect } from "react"
 import MetamaskWallet from "@components/molecules/balance/MetamaskWallet"
 import useProfileStore from "@stores/profileStore"
@@ -17,6 +15,7 @@ import useChainSupport from "@stores/chainSupport"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import useSwitchNetwork from "@hooks/useSwitchNetwork"
 import WalletContent from "@feature/wallet/components/organisms/WalletContent"
+import ButtonChooseChain from "@components/molecules/ButtonChooseChain"
 
 export default function WalletPage() {
   const { hydrated } = useGlobal()
@@ -144,7 +143,8 @@ export default function WalletPage() {
     <>
       <div className="flex w-full flex-wrap justify-center gap-4 md:justify-end lg:mx-2 xl:grid xl:grid-cols-12">
         <div className="h-full w-full justify-center md:col-span-8 md:flex md:justify-between">
-          <div className="my-2 items-center text-center uppercase md:my-0 md:text-left">
+          <ButtonChooseChain currentChain={type} />
+          {/* <div className="my-2 items-center text-center uppercase md:my-0 md:text-left">
             <p className="text-lg text-neutral-400">MY Wallet</p>
             <p className="text-xs text-neutral-600">
               Wallet manager for nakamoto.games world
@@ -188,7 +188,7 @@ export default function WalletPage() {
               </div>
               <p className="m-auto">BNB</p>
             </button>
-          </div>
+          </div> */}
         </div>
         <div className="my-2 h-full min-h-[360px] w-full max-w-full flex-[1_1_calc(100%-200px)] items-center justify-center rounded-default bg-neutral-800 p-2 md:col-span-6 md:my-0 md:max-w-md md:gap-1 md:p-0 lg:max-w-full">
           <WalletContent

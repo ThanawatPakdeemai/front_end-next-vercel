@@ -54,7 +54,6 @@ const HeadBlog = ({ children }: { children: React.ReactNode }) => {
             style: {
               fontSize: "12px",
               fontFamily: "neueMachina",
-              // width: "100%",
               color: "#fff"
             },
             startAdornment: <SearchIcon className="mr-4" />

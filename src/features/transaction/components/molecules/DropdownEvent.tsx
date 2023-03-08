@@ -89,7 +89,7 @@ const DropdownEvent = ({
                         data: m,
                         icon: "",
                         href: "",
-                        active: true
+                        active: m === event
                       }))
                     }
                     onChange={(_item) => {

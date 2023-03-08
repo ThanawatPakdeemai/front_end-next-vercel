@@ -5,11 +5,10 @@ import useChat from "@feature/chat/containers/hooks/useChat"
 import { IChat } from "@feature/chat/interface/IChat"
 import { Box, TextField } from "@mui/material"
 import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
-// import useProfileStore from "@stores/profileStore"
-import React, { useEffect, useMemo } from "react"
+import React, { useCallback, useEffect } from "react"
+import _ from "lodash"
 
 const MessageFooter = () => {
-  // const profile = useProfileStore((state) => state.profile.data)
   const { handleInputChat } = useChat()
   const { message, setMessage, setChat } = useChatContext()
   const propsSocket = useSocketProviderWaiting()
@@ -28,20 +27,22 @@ const MessageFooter = () => {
     }
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const manageChat = useMemo(async () => {
+  const manageChat = useCallback(async () => {
     if (getChat) {
       const chat = await getChat()
-      // if ((chat as unknown as IChat)?.player_id !== profile?.id)
-      setChat((oldData) =>
-        [chat as unknown as IChat, ...oldData].filter((ele) => ele)
-      )
+      setChat((oldData) => {
+        const data = [
+          chat as unknown as IChat,
+          ..._.uniqWith(oldData, _.isEqual)
+        ]
+        return _.uniqWith(data, _.isEqual)
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getChat])
+  }, [])
 
   useEffect(() => {
-    manageChat
+    manageChat()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onSendMessage])
 
@@ -72,8 +73,8 @@ const MessageFooter = () => {
         icon={<SendIcon />}
         className="absolute right-4 flex h-[18px] w-[18px] cursor-pointer items-center justify-center rounded-lg bg-transparent"
         aria-label="send-button"
-        onClick={async () => {
-          await onSendMessage()
+        onClick={() => {
+          onSendMessage()
         }}
       />
     </Box>

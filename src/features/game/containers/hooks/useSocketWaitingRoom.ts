@@ -129,8 +129,8 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     await socketWaitingRoom.emit(EVENTS.ACTION.CHAT_SEND_MESSAGE, {
       message
     })
-    await getChat()
     await setMessage("")
+    await getChat()
   }
 
   /**

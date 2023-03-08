@@ -11,12 +11,12 @@ interface IProp
 }
 
 const GamePageWithBreadcrumb = ({ children }: IProp) => (
-  <div className="main-container mx-auto">
+  <div className="main-container mx-auto justify-between">
     <Header />
     <div className="mb-10 flex">
       <Breadcrumb />
     </div>
-    <div className="flex flex-row gap-3">
+    <div className="flex-row gap-3 md:flex">
       <SidebarGames />
       {children}
     </div>

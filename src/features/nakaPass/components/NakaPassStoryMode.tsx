@@ -24,10 +24,10 @@ const NakaPassStoryMode = () => (
   // })
 
   <>
-    <div className="mb-3 flex h-[148px] w-full flex-row items-center rounded-2xl bg-neutral-780 p-2">
+    <div className="mb-3 mt-4 flex h-[148px] w-full items-center rounded-2xl bg-neutral-780 p-2 md:mt-0 md:flex-row">
       <div className="flex h-[-webkit-fill-available] basis-8/12 items-center  rounded-2xl border border-neutral-700 bg-primary-main ">
-        <Box className="bg-line-linear-gradient flex h-full w-full  items-center rounded-[13px] text-center text-[26px] uppercase">
-          <Typography className="text-shadow-red ml-6 font-neue-machina-semi text-[56px] text-error-main">
+        <Box className="bg-line-linear-gradient flex h-full w-full  items-center justify-center rounded-[13px] text-center uppercase">
+          <Typography className="text-shadow-red font-neue-machina-semi text-[26px] text-error-main md:text-[56px]">
             NAKA PASS SS II
           </Typography>
         </Box>
@@ -38,8 +38,10 @@ const NakaPassStoryMode = () => (
           season II
         </div>
         <div className=" flex  h-[50px] items-center justify-evenly rounded-sm bg-neutral-780 p-1 font-neue-machina-bold text-sm text-neutral-800">
-          <span className=" text-secondary-main">2W</span>
-          <span className=" text-secondary-main">1D</span>
+          <div className="flex items-center ">
+            <span className=" text-secondary-main">2W</span>
+            <span className=" text-secondary-main">1D</span>
+          </div>
           <span className=" text-neutral-400">24 : 00 :45</span>
         </div>
       </div>
@@ -85,7 +87,7 @@ const NakaPassStoryMode = () => (
         </div>
       </div>
 
-      <div className="ml-2 h-[-webkit-fill-available] w-[920px]  flex-auto">
+      <div className="ml-2 h-[-webkit-fill-available] w-[240px] md:w-[920px]  md:flex-auto">
         <div className="custom-scroll-line-green flex items-center gap-2 overflow-x-scroll ">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((ele, index) => (
             <motion.div

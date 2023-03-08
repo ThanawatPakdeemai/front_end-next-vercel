@@ -7,6 +7,7 @@ import {
   IconButton,
   InputAdornment,
   Link,
+  Stack,
   styled,
   TextField,
   Typography
@@ -27,7 +28,10 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { useForm } from "react-hook-form"
 import IEdit from "@components/icons/Edit"
+import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
+import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import useCreateNewPassword from "../containers/hooks/useCreateNewPassword"
+import FormLogin from "./FromLogin"
 
 const KeyFramesClockwise = styled("div")({
   "@keyframes rotation": {
@@ -56,7 +60,6 @@ const KeyFramesAnticlockwise = styled("div")({
 interface IProp {
   email: string
   token: string
-  // handleClose?: () => void
 }
 
 const FromCreatePassword = ({ email, token }: IProp) => {
@@ -80,6 +83,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
   const [formSubmitErrors, setFormSubmitErrors] = useState(false)
   const [createPassword, setCreatePassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+  const [disable, setDisable] = useState(true)
   const { mutateCreateNewPassword } = useCreateNewPassword()
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
@@ -99,6 +103,11 @@ const FromCreatePassword = ({ email, token }: IProp) => {
 
   const isCharacters = (_characters: string) => {
     if (_characters.length >= 6) {
+      if (_characters === createPassword) {
+        setDisable(false)
+      } else {
+        setDisable(true)
+      }
       setCharacterPasswordLength(true)
       if (patternPasswordUppercase.test(_characters)) {
         setCharacterUppercase(true)
@@ -109,12 +118,15 @@ const FromCreatePassword = ({ email, token }: IProp) => {
       setCharacterPasswordLength(false)
     }
   }
-
+  const [open, setOpen] = useState<boolean>(false)
+  const handleClose = () => setOpen(false)
   const onSubmitConfirm = () => {
     if (
       characterUppercase &&
       characterPasswordLength &&
-      createPassword === confirmPassword
+      createPassword === confirmPassword &&
+      createPassword !== "" &&
+      confirmPassword !== ""
     ) {
       mutateCreateNewPassword({
         _email: email,
@@ -122,15 +134,26 @@ const FromCreatePassword = ({ email, token }: IProp) => {
         _confirmPassword: confirmPassword,
         _token: token
       })
+      setOpen(true)
+    } else {
+      setFormSubmitErrors(true)
     }
-    setFormSubmitErrors(true)
   }
 
   const isConfirmPassword = (_password: string, _confirmPassword: string) => {
     if (_password === _confirmPassword) {
       setPasswordCorrect(true)
+      if (_password && _confirmPassword !== "") {
+        setDisable(false)
+      }
+      if (_password.length && _confirmPassword.length >= 6) {
+        setDisable(false)
+      } else {
+        setDisable(true)
+      }
     } else {
       setPasswordCorrect(false)
+      setDisable(true)
     }
   }
 
@@ -270,7 +293,6 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                         onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                           e.target.value = e.target.value.slice(0, 128)
                           isCharacters(e.target.value)
-                          // console.log("valuePassword", e.target.value)
                           setCreatePassword(e.target.value)
                         }}
                         {...register("password")}
@@ -372,7 +394,6 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                         onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                           e.target.value = e.target.value.slice(0, 128)
                           isCharacters(e.target.value)
-                          // console.log("valueConfirmpass", e.target.value)
                           setConfirmPassword(e.target.value)
                         }}
                         {...register("confirmPassword")}
@@ -474,12 +495,32 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                       </Grid>
                       <Grid item>
                         <ButtonToggleIcon
-                          // handleClick={() => onSubmitRegisterForm(true)}
+                          disabled={disable}
                           type="submit"
                           startIcon={<IEdit />}
                           text="Confirm"
-                          className="btn-rainbow-theme h-[40px] w-[209px] bg-secondary-main font-bold capitalize text-white-default"
+                          className={`${
+                            disable ? "" : `btn-rainbow-theme`
+                          }  h-[40px] w-[209px] bg-secondary-main font-bold capitalize text-white-default`}
                         />
+                        <ModalCustom
+                          open={open}
+                          onClose={handleClose}
+                          className="w-auto gap-3 rounded-[34px] p-[10px]"
+                          width={400}
+                        >
+                          <Stack
+                            spacing={3}
+                            className="md:p-5"
+                          >
+                            <ModalHeader
+                              handleClose={handleClose}
+                              title="Login"
+                            />
+
+                            <FormLogin href="/" />
+                          </Stack>
+                        </ModalCustom>
                       </Grid>
                     </Grid>
                   </Grid>

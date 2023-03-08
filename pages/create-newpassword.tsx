@@ -17,10 +17,12 @@ export default function CreatePassword() {
 
   return (
     <>
-      <FromCreatePassword
-        email={email as string}
-        token={token as string}
-      />
+      <article className="h-full w-full">
+        <FromCreatePassword
+          email={email as string}
+          token={token as string}
+        />
+      </article>
     </>
   )
 }

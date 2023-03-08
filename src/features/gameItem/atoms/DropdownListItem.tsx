@@ -72,7 +72,7 @@ const DropdownListItem = ({
                             <Image
                               src={
                                 defaultItem?.image_icon && gameData
-                                  ? gameData?.item[0].image_icon
+                                  ? gameData?.item?.[0]?.image_icon
                                   : ""
                               }
                               alt=""
@@ -117,8 +117,8 @@ const DropdownListItem = ({
                     title="GameItem"
                     icon={
                       <Image
-                        src={list && list[0].image_icon}
-                        alt={list && list[0].name}
+                        src={list && list?.[0]?.image_icon}
+                        alt={list && list?.[0]?.name}
                         width="20"
                         height="20"
                       />

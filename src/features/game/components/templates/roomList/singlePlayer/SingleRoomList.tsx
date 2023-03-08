@@ -73,7 +73,7 @@ const GameRoomList = () => {
             `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
           )
         } else {
-          router.push(`/${router?.query?.typeGame}/${router.asPath}/${_roomId}`)
+          router.push(`${router.asPath}/${_roomId}`)
         }
       } else if (new Date() > new Date(_dataRoom.end_time)) {
         errorToast(MESSAGES["room-timeout"])

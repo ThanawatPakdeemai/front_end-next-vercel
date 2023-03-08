@@ -18,6 +18,7 @@ import RepeatIcon from "@components/icons/RepeatIcon"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import useLoadingStore from "@stores/loading"
+import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import useUpdateProfile from "../containers/hook/getUpdateProfile"
 import { IGeoProfile } from "../interfaces/IProfileService"
 import { getGeoInfo } from "../containers/services/profile.service"
@@ -42,9 +43,11 @@ const FormEditProfile = ({
   const [defaultAvatar, setDefaultAvatar] = useState<string>(
     userImage || (profile ? profile.avatar : "")
   )
+
   const { setOpen, setClose } = useLoadingStore()
 
-  const { errorToast, successToast } = useToast()
+  const { errorToast, successToast, warnToast } = useToast()
+  const onOpenImage = () => warnToast("Upload image is not available yet")
   const { mutateUpdateProfile } = useUpdateProfile()
 
   const { register, handleSubmit, watch, setValue } = useForm({
@@ -103,8 +106,11 @@ const FormEditProfile = ({
           <Typography className="mt-2 mb-1 font-neue-machina text-xs uppercase  text-neutral-500">
             Banner UPload Only Rank Platinum
           </Typography>
-          <div className="flex h-[66px] items-center	justify-center rounded-xl bg-neutral-700">
-            <CameraIcon />
+          <div className="flex h-[66px] items-center justify-center rounded-xl bg-neutral-700">
+            <ButtonIcon
+              onClick={onOpenImage}
+              icon={<CameraIcon />}
+            />
           </div>
           <Typography
             className={`mt-2 font-neue-machina text-xs uppercase ${

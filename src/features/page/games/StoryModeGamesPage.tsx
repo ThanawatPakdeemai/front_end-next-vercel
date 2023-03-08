@@ -27,7 +27,11 @@ const StoryModeGamesPage = () => {
     category: categoryDropdown,
     gameItem: gameItemDropdown,
     device: deviceDropdown,
-    search: searchDropdown
+    search: searchDropdown,
+    clearSearch,
+    clearCategory,
+    clearGameItem,
+    clearDevice
   } = useFilterStore()
 
   const {
@@ -57,7 +61,20 @@ const StoryModeGamesPage = () => {
       })
       setGameFilter(gameData.data)
     }
-  }, [gameData, isPreviousData, page, queryClient])
+    clearSearch()
+    clearCategory()
+    clearGameItem()
+    clearDevice()
+  }, [
+    clearCategory,
+    clearDevice,
+    clearGameItem,
+    clearSearch,
+    gameData,
+    isPreviousData,
+    page,
+    queryClient
+  ])
 
   useEffect(() => {
     const filterData = {

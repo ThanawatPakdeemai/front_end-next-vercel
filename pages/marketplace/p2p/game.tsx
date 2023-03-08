@@ -10,7 +10,14 @@ const MarketplaceLayoutFilterNoBanner = dynamic(
   }
 )
 
-const Game = () => <div>Game</div>
+const MarketplaceCardList = dynamic(
+  () => import("@feature/page/marketplace/MarketplaceCardList"),
+  {
+    suspense: true
+  }
+)
+
+const Game = () => <MarketplaceCardList />
 
 Game.getLayout = function getLayout(page: ReactElement) {
   return (

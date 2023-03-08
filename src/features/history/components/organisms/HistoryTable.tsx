@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react"
+/* eslint-disable no-console */
+import React, { useEffect, useState } from "react"
 import {
   Table,
   TableBody,
@@ -20,10 +21,10 @@ import useProfileStore from "@stores/profileStore"
 import useTable from "@feature/table/containers/hooks/useTable"
 import TableNodata from "@feature/transaction/components/atoms/TableNodata"
 import { IHistory } from "@feature/history/interfaces/IHistoryService"
+import { validTypeGames } from "@pages/[typeGame]"
 
 const HistoryTable = () => {
   const profile = useProfileStore((state) => state.profile.data)
-
   // Hooks
   const { pager, hydrated } = useGlobal()
   const { HistoryTableHead, onHandleView } = useHistoryController()
@@ -33,7 +34,6 @@ const HistoryTable = () => {
   // States
   const [skip, setSkip] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
-  const fetchRef = useRef(false)
   const [hxHistory, setHxHistory] = useState<IHistory[]>([])
 
   const roomStatus = (status: string) => {
@@ -64,12 +64,8 @@ const HistoryTable = () => {
         })
       }
     }
-    if (fetchRef.current) {
-      fetchHistory()
-    }
-    fetchRef.current = true
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [limit, skip])
+    fetchHistory()
+  }, [limit, skip, profile, getHistoryData])
 
   return (
     <>
@@ -162,7 +158,12 @@ const HistoryTable = () => {
                             variant="outlined"
                             className="font-bold text-grey-neutral04"
                             onClick={() => {
-                              onHandleView(row.path, row.room_id)
+                              onHandleView(
+                                `/${validTypeGames.find((res) =>
+                                  res.includes(row.game_mode)
+                                )}/${row.path}`,
+                                row.room_id
+                              )
                             }}
                           />
                         </div>

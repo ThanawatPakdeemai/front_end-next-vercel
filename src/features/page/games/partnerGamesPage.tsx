@@ -9,6 +9,9 @@ import useGameStore from "@stores/game/index"
 import usePartnerGame from "@feature/game/containers/hooks/usePartnerGame"
 import useGlobal from "@hooks/useGlobal"
 import { getAllPartnerGames } from "@feature/game/partnerGames/containers/services/gamePartners.service"
+import { filterGamePartner } from "@feature/partner/containers/services/dropdownPartner.service"
+import useFilterStore from "@stores/blogFilter"
+import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 
 const PartnerGames = () => {
   const search = ""
@@ -16,9 +19,20 @@ const PartnerGames = () => {
   const [page, setPage] = useState<number>(1)
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
+  const [gameFilter, setGameFilter] = useState<IPartnerGameData[]>()
   const queryClient = useQueryClient()
   const { clearGamePartnersData } = useGameStore()
   const { onHandleClick } = useGlobal()
+  const {
+    category: categoryDropdown,
+    gameItem: gameItemDropdown,
+    device: deviceDropdown,
+    search: searchDropdown,
+    clearSearch,
+    clearCategory,
+    clearGameItem,
+    clearDevice
+  } = useFilterStore()
 
   const {
     isLoading,
@@ -29,6 +43,7 @@ const PartnerGames = () => {
     _limit: limit,
     _page: page
   })
+
   useEffect(() => {
     if (!fetchRef.current && gameData?.info && gameData) {
       fetchRef.current = true
@@ -47,9 +62,48 @@ const PartnerGames = () => {
             _page: page + 1
           })
       })
+      setGameFilter(gameData.data)
     }
     clearGamePartnersData()
-  }, [clearGamePartnersData, gameData, isPreviousData, page, queryClient])
+    clearSearch()
+    clearCategory()
+    clearGameItem()
+    clearDevice()
+  }, [
+    clearCategory,
+    clearDevice,
+    clearGameItem,
+    clearGamePartnersData,
+    clearSearch,
+    gameData,
+    isPreviousData,
+    page,
+    queryClient
+  ])
+
+  useEffect(() => {
+    const filterData = {
+      "limit": limit,
+      "skip": page,
+      "search": searchDropdown,
+      "type": "",
+      "genres_filter": categoryDropdown
+    }
+    filterGamePartner(filterData).then((res) => {
+      if (res) {
+        const { data, info } = res
+        setGameFilter(data.data)
+        setTotalCount(info ? info.totalCount : 1)
+      }
+    })
+  }, [
+    categoryDropdown,
+    gameItemDropdown,
+    deviceDropdown,
+    searchDropdown,
+    page,
+    limit
+  ])
 
   return (
     <div className="flex flex-col">
@@ -57,9 +111,8 @@ const PartnerGames = () => {
         {isLoading
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
           : null}
-        {gameData &&
-          gameData.data &&
-          gameData.data.map((game) => (
+        {gameFilter &&
+          gameFilter.map((game) => (
             <GameCard
               key={game.id}
               menu={P2EHeaderMenu}

@@ -1,12 +1,20 @@
-import { Button, InputAdornment, TextField, Typography } from "@mui/material"
+import {
+  Alert,
+  Button,
+  InputAdornment,
+  TextField,
+  Typography
+} from "@mui/material"
 import React, { useState } from "react"
 import CouponIcon from "@components/icons/CouponIcon"
 import { Image } from "@components/atoms/image"
 import useGetCoupon from "@feature/coupon/containers/hook/useGetCoupon"
 import { useToast } from "@feature/toast/containers"
-// import CardItemMarketPlace from "@components/molecules/cards/CardItemMarketPlace"
+import useProfileStore from "@stores/profileStore"
+import { MESSAGES } from "@constants/messages"
 
 const CouponPage = () => {
+  const profile = useProfileStore((state) => state.profile.data)
   const [coupon, setCoupon] = useState<string>("")
   const { errorToast, successToast } = useToast()
   const { getRedeemCode } = useGetCoupon()
@@ -23,6 +31,7 @@ const CouponPage = () => {
     }
     setCoupon(event.target.value)
   }
+
   return (
     <div className="relative z-10 w-[calc(100%)] px-[10%]">
       <div className="grid max-w-[678px] rounded-lg border border-neutral-800 bg-neutral-780 md:grid-cols-2 lg:grid-cols-2">
@@ -64,7 +73,9 @@ const CouponPage = () => {
               )
             }}
           />
+
           <Button
+            disabled={!profile}
             sx={{ fontFamily: "neueMachina" }}
             color="secondary"
             className="btn-rainbow-theme mt-[20px] w-full text-sm"
@@ -75,6 +86,15 @@ const CouponPage = () => {
           >
             Redeem
           </Button>
+          {!profile && (
+            <Alert
+              className="mt-3 !rounded-sm text-primary-main"
+              variant="filled"
+              severity="error"
+            >
+              {MESSAGES.please_login}
+            </Alert>
+          )}
         </div>
         <div className="flex justify-center pb-12 sm:p-8">
           <Image
@@ -85,7 +105,6 @@ const CouponPage = () => {
           />
         </div>
       </div>
-      {/* <CardItemMarketPlace /> */}
     </div>
   )
 }

@@ -1,29 +1,30 @@
-import ShineIcon from "@components/icons/ShineIcon"
+import ShapeIcon from "@components/icons/ShapeIcon"
 import Banners from "@components/molecules/Banners"
+import HeadPartnerGames from "@components/molecules/HeadPartnerGames"
+import SidebarGames from "@components/molecules/SidebarGames"
 import Tagline from "@components/molecules/tagline/Tagline"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
 import React from "react"
 
-const MarketplaceLayoutWithFilter = ({
+const GamePageLayout = ({
   children
 }: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) => (
   <div className="main-container mx-auto">
     <Header />
-    <Banners />
     <Tagline
-      icon={<ShineIcon />}
       bgColor="bg-neutral-800"
       textColor="text-neutral-500 font-bold"
-      text="Join the NFT revolution and become a part of the future of ownership. "
+      text="This Christmas, you’re the best gift I could ask for."
+      icon={<ShapeIcon fill="#4E5057" />}
     />
+    <Banners />
     <div className="flex flex-row gap-3">
-      {/* add filter component here */}
-      <div className="w-[200px]">Filter</div>
-      {children}
+      <SidebarGames />
+      <HeadPartnerGames>{children}</HeadPartnerGames>
     </div>
     <Footer />
   </div>
 )
 
-export default MarketplaceLayoutWithFilter
+export default GamePageLayout

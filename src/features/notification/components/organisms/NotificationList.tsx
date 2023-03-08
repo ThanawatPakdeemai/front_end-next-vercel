@@ -7,6 +7,7 @@ import { INotification } from "@feature/notification/interfaces/INotificationSer
 import DropdownLimit from "@components/atoms/DropdownLimit"
 import { updateAllNotiStatus } from "@feature/notification/containers/services/notification.service"
 import SkeletonNotification from "@components/atoms/skeleton/SkeletonNotification"
+import { Box } from "@mui/material"
 import Header from "../molecules/NotificationHeader"
 import NotificationTable from "./NotificationTable"
 
@@ -130,7 +131,14 @@ const NotificationList = () => {
           isLoading={isLoading}
         />
       )}
-      <div className="justify-between md:flex">
+      <Box
+        className="my-2 flex justify-between md:my-5 md:w-[678px]"
+        sx={{
+          ".MuiPagination-ul": {
+            gap: "5px 0"
+          }
+        }}
+      >
         <PaginationNaka
           totalCount={totalCount}
           limit={limit}
@@ -138,12 +146,12 @@ const NotificationList = () => {
           setPage={setPage}
         />
         <DropdownLimit
-          className="w-[160px] flex-row max-md:mt-2"
+          className="m-0 w-[160px] flex-row"
           defaultValue={limit}
           list={[6, 12, 24, 48, 64]}
           onChangeSelect={handleLimit}
         />
-      </div>
+      </Box>
     </div>
   )
 }

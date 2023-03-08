@@ -11,11 +11,11 @@ interface IProps {
 const Header = ({ unread, onHandleClick }: IProps) => {
   const { t } = useTranslation()
   return (
-    <div className="mb-6 mt-4 flex justify-between md:mt-0 md:flex">
-      <h1 className="mr-3 py-2 text-2xl uppercase text-neutral-400">
+    <div className="mb-6 mt-4 flex flex-wrap justify-between md:mt-0 md:flex">
+      <h1 className="flex-auto py-2 text-center text-2xl uppercase text-neutral-400 sm:mr-3 sm:flex-none sm:text-left">
         {t("notifications")}
       </h1>
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-auto flex-row gap-4 sm:flex-none">
         <Chip
           label={`${t("unread")} ${unread}`}
           size="small"

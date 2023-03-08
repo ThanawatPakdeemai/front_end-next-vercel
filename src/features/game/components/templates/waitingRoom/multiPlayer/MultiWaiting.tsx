@@ -1,4 +1,3 @@
-import useChatContext from "@feature/chat/containers/contexts/useChatContext"
 import HeaderWaitingRoom from "@components/organisms/HeaderWaitingRoom"
 import React, { memo, useEffect, useMemo, useState, useCallback } from "react"
 import useProfileStore from "@stores/profileStore"
@@ -12,11 +11,11 @@ import SocketProvider from "@providers/SocketProviderWaiting"
 import SeatPlayersMulti from "@feature/game/components/organisms/SeatPlayersMulti"
 import { useToast } from "@feature/toast/containers"
 import Chat from "@feature/chat/components/organisms/Chat"
-import { IChat } from "@feature/chat/interface/IChat"
 import { MESSAGES } from "@constants/messages"
 import CardButItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import { useTranslation } from "next-i18next"
+import BuyItemBody from "@components/templates/game/BuyItemBody"
 import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
 const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
@@ -25,10 +24,10 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   const router = useRouter()
   const { t } = useTranslation()
   const { errorToast } = useToast()
+
   const [dataPlayers, setDataPlayers] = useState<
     IGameRoomListSocket | undefined
   >()
-  const { setChat } = useChatContext()
 
   const item_id = useMemo(() => {
     if (gameData) {
@@ -65,7 +64,6 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     socketWaitingRoom,
     getPlayersMulti,
     kickRoom,
-    getChat,
     onSendMessage,
     cancelReadyPlayer,
     onReadyPlayerBurnItem,
@@ -74,7 +72,8 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     getPlayersCheckRoomRollbackListen,
     room_id,
     waitingRoomPlay,
-    startGame
+    startGame,
+    getChat
   } = useSocketWaitingRoom({ ...propsSocketWaitingRoom })
 
   useEffect(() => {
@@ -142,7 +141,8 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   }, [getPlayersMulti, isConnected, mapPlayer])
 
   const outRoom = useCallback(() => {
-    if (gameData) router.push(`/${gameData.path}/roomlist`)
+    if (gameData)
+      router.push(`/${router.query.typeGame}/${gameData.path}/roomlist`)
   }, [gameData, router])
 
   /**
@@ -164,19 +164,20 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   /**
    * @description Calling chatting function
    */
-  const onChat = useCallback(async () => {
-    const _dataChat = await getChat()
-    if (_dataChat) {
-      setChat((oldData) => [_dataChat as IChat, ...oldData])
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getChat])
+  // const onChat = useCallback(async () => {
+  //   const _dataChat = await getChat()
+  //   if (_dataChat) {
+  //     setChat((oldData) => [_dataChat as IChat, ...oldData])
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
-  useEffect(() => {
-    if (isConnected) {
-      onChat()
-    }
-  }, [isConnected, onChat])
+  // useEffect(() => {
+  //   if (isConnected) {
+  //     getChat()
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [onSendMessage])
 
   useEffect(() => {
     if (isConnected) {
@@ -224,10 +225,11 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
           onOwnerBurnItem,
           dataPlayers,
           waitingRoomPlay,
-          startGame
+          startGame,
+          getChat
         }}
       >
-        <Box className="block gap-3 lg:flex ">
+        <Box className="block gap-3 xl:flex ">
           {/* <Box className=" block gap-3 lg:grid lg:grid-flow-col"> */}
           {/* <Box className=" block gap-3 lg:grid lg:grid-flow-col"> */}
           <Box className="w-full gap-3 md:flex">
@@ -272,7 +274,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
                   </Typography>
                   {gameData && (
                     <ButtonLink
-                      href={`/${gameData?.path}/roomlist`}
+                      href={`/${router.query.typeGame}/${gameData?.path}/roomlist`}
                       text={t("out-room")}
                       icon=""
                       size="medium"
@@ -286,10 +288,10 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
             </Box>
           </Box>
           {gameData && (!gameData?.play_to_earn || !gameData.tournament) && (
-            <Box className=" w-[333px] flex-none gap-2">
+            <BuyItemBody>
               <CardButItem />
               <Chat />
-            </Box>
+            </BuyItemBody>
           )}
         </Box>
       </SocketProvider>

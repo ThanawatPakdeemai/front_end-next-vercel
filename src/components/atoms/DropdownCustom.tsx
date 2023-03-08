@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useState } from "react"
 import { Collapse } from "@mui/material"
 import DropdownIcon from "@components/icons/DropdownIcon"
 import {
@@ -15,7 +15,7 @@ import {
   IGameItem
 } from "@feature/dropdown/interfaces/IDropdownService"
 import useFilterStore from "@stores/blogFilter"
-import { IMenuBase } from "@interfaces/IMenu"
+import { getGamePartner } from "@feature/partner/containers/services/dropdownPartner.service"
 import SelectDropdown from "./selectDropdown/SelectDropdown"
 
 interface IProp {
@@ -28,40 +28,59 @@ const DropdownCustom = ({ title, className }: IProp) => {
   const [gameData, setGameData] = useState<
     IGameItem[] | IGameCategory[] | IDevice[]
   >([])
-  const [onTitle, setOnTitle] = useState<IDropdownAll | IMenuBase>()
+  const [onTitle, setOnTitle] = useState<IDropdownAll>()
   const { errorToast } = useToast()
   const {
     setCategory: setCategoryDropdown,
     setGameItem: setGameItemDropdown,
     setDevice: setDeviceDropdown
   } = useFilterStore()
+  const [textTitle, setTextTitle] = useState<string>("")
 
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
   }
 
-  const dataDetail = useMemo(() => {
-    if (gameData) {
-      return gameData.map((element) => ({
-        label: element.name ?? "",
-        data: element,
-        icon: "",
-        href: ""
-      }))
-    }
-    return Array(1).map(() => ({
-      label: "",
-      icon: "",
-      href: ""
-    }))
-  }, [gameData])
+  // const dataDetail = useMemo(() => {
+  //   if (gameData) {
+  //     return gameData.map((element) => ({
+  //       label: element.name ?? "",
+  //       icon: element._id ?? "",
+  //       data: element,
+  //       href: ""
+  //     }))
+  //   }
+  //   return Array(1).map(() => ({
+  //     label: "",
+  //     icon: "",
+  //     href: ""
+  //   }))
+  // }, [gameData])
+
+  const onGamePartner = () => {
+    getGamePartner()
+      .then((res) => {
+        res.data.data.splice(0, 0, {
+          created_at: "",
+          id: "",
+          is_active: true,
+          name: "All Categories",
+          slug: "",
+          updated_at: ""
+        })
+        setGameData(res.data.data)
+      })
+      .catch((error) => {
+        errorToast(error.message)
+      })
+  }
 
   const onGameAssets = () => {
     getGameAssets()
       .then((res) => {
         res.splice(0, 0, {
           crate_date: "",
-          _id: "",
+          _id: "all",
           current_time: "",
           name: "All Game Assets",
           detail: "",
@@ -102,7 +121,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
           image_list: "",
           image_banner: "",
           is_active: true,
-          _id: ""
+          _id: "all"
         })
         setGameData(res)
       })
@@ -113,7 +132,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
 
   const device = [
     {
-      _id: "",
+      _id: "all",
       name: "All Devices",
       supported: true
     },
@@ -132,22 +151,40 @@ const DropdownCustom = ({ title, className }: IProp) => {
   useEffect(() => {
     if (title === "All Categories") {
       onCategories()
+      setTextTitle("All Categories")
     } else if (title === "All Game Assets") {
       onGameAssets()
+      setTextTitle("All Game Assets")
     } else if (title === "All Devices") {
       setGameData(device)
+      setTextTitle("All Devices")
+    } else if (title === "All Partner Categories") {
+      onGamePartner()
+      setTextTitle("All Categories")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    if (onTitle && (onTitle as IDropdownAll)._id) {
-      if (title === "All Categories") {
-        setCategoryDropdown((onTitle as IDropdownAll)._id)
-      } else if (title === "All Game Assets") {
-        setGameItemDropdown((onTitle as IDropdownAll)._id)
-      } else if (title === "All Devices") {
-        setDeviceDropdown((onTitle as IDropdownAll)._id)
+    if (onTitle && textTitle) {
+      if (textTitle === "All Categories") {
+        if (onTitle._id) {
+          setCategoryDropdown(onTitle._id)
+        } else if (title === "All Partner Categories") {
+          if (onTitle.name === "All Categories") {
+            setCategoryDropdown("")
+          } else {
+            setCategoryDropdown(onTitle.name.toLowerCase())
+          }
+        }
+      } else if (textTitle === "All Game Assets") {
+        if (onTitle.name === "All Game Assets") {
+          setGameItemDropdown("all")
+        } else {
+          setGameItemDropdown(onTitle.name)
+        }
+      } else if (textTitle === "All Devices") {
+        setDeviceDropdown(onTitle._id)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -156,7 +193,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
   return (
     <>
       {gameData && (
-        <div>
+        <div className="flex w-full justify-center">
           <button
             type="button"
             onClick={handleOnExpandClick}
@@ -164,7 +201,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
           >
             <AllCategoriesIcon />
             <span className="">
-              {onTitle === undefined ? title : (onTitle as IMenuBase).label}
+              {onTitle === undefined ? textTitle : onTitle.name}
             </span>
             <div
               className={`${
@@ -179,7 +216,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
           <Collapse
             in={expanded}
             timeout="auto"
-            className="rounded-[19px]"
+            className={`${className} mt-10 rounded-[19px]`}
             sx={{
               backgroundColor: "#010101D9",
               zIndex: 99999,
@@ -188,8 +225,8 @@ const DropdownCustom = ({ title, className }: IProp) => {
             }}
           >
             <SelectDropdown
-              className={className}
-              details={dataDetail}
+              // className={className}
+              details={gameData}
               setOnTitle={setOnTitle}
               setExpanded={setExpanded}
             />

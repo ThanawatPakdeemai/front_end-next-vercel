@@ -1,7 +1,19 @@
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import GameRoomLayout from "@components/templates/GameRoomLayout"
-import GameRoomListPage from "@feature/page/games/gameRoomListPage"
+import dynamic from "next/dynamic"
+
+const GameRoomLayout = dynamic(
+  () => import("@components/templates/GameRoomLayout"),
+  {
+    suspense: true
+  }
+)
+const GameRoomListPage = dynamic(
+  () => import("@feature/page/games/gameRoomListPage"),
+  {
+    suspense: true
+  }
+)
 
 export default function GameRoomList() {
   return (

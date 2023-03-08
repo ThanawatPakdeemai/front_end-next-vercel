@@ -1,5 +1,13 @@
-import React, { useEffect, useRef, useState } from "react"
-import { Table, TableBody, TableContainer, Paper, Chip } from "@mui/material"
+/* eslint-disable no-console */
+import React, { useEffect, useState } from "react"
+import {
+  Table,
+  TableBody,
+  TableContainer,
+  Paper,
+  Chip,
+  Box
+} from "@mui/material"
 import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import useHistory from "@feature/history/containers/hook/useHistory"
 import dayjs from "dayjs"
@@ -13,10 +21,10 @@ import useProfileStore from "@stores/profileStore"
 import useTable from "@feature/table/containers/hooks/useTable"
 import TableNodata from "@feature/transaction/components/atoms/TableNodata"
 import { IHistory } from "@feature/history/interfaces/IHistoryService"
+import { validTypeGames } from "@pages/[typeGame]"
 
 const HistoryTable = () => {
   const profile = useProfileStore((state) => state.profile.data)
-
   // Hooks
   const { pager, hydrated } = useGlobal()
   const { HistoryTableHead, onHandleView } = useHistoryController()
@@ -26,7 +34,6 @@ const HistoryTable = () => {
   // States
   const [skip, setSkip] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
-  const fetchRef = useRef(false)
   const [hxHistory, setHxHistory] = useState<IHistory[]>([])
 
   const roomStatus = (status: string) => {
@@ -56,14 +63,9 @@ const HistoryTable = () => {
           }
         })
       }
-      // .catch((err) => console.log(err))
     }
-    if (fetchRef.current) {
-      fetchHistory()
-    }
-    fetchRef.current = true
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [limit, skip])
+    fetchHistory()
+  }, [limit, skip, profile, getHistoryData])
 
   return (
     <>
@@ -73,9 +75,9 @@ const HistoryTable = () => {
             title="PLAY HISTORY"
             subtitle="Wallet manager for nakamoto.games world"
           />
-
+          {/* sm:w-[380px] */}
           <TableContainer
-            className="w-[380px] overflow-x-auto rounded-2xl bg-transparent px-1.5 pt-4 pb-1.5 md:w-[678px] "
+            className="w-full overflow-x-auto rounded-2xl bg-transparent px-1.5 pt-4 pb-1.5 md:w-[678px]"
             component={Paper}
           >
             <Table className="whitespace-nowrap rounded-2xl border-black-500 bg-neutral-780 p-5 py-1.5 text-neutral-600">
@@ -156,7 +158,12 @@ const HistoryTable = () => {
                             variant="outlined"
                             className="font-bold text-grey-neutral04"
                             onClick={() => {
-                              onHandleView(row.path, row.room_id)
+                              onHandleView(
+                                `/${validTypeGames.find((res) =>
+                                  res.includes(row.game_mode)
+                                )}/${row.path}`,
+                                row.room_id
+                              )
                             }}
                           />
                         </div>
@@ -169,8 +176,14 @@ const HistoryTable = () => {
               </TableBody>
             </Table>
           </TableContainer>
-
-          <div className="my-5 w-[678px] justify-between lg:flex">
+          <Box
+            className="my-2 flex justify-between md:my-5 md:w-[678px]"
+            sx={{
+              ".MuiPagination-ul": {
+                gap: "5px 0"
+              }
+            }}
+          >
             <PaginationNaka
               totalCount={totalCount}
               limit={limit}
@@ -178,12 +191,12 @@ const HistoryTable = () => {
               setPage={setSkip}
             />
             <DropdownLimit
-              className="w-[160px] flex-row max-md:mt-2"
+              className="m-0 w-[160px] flex-row"
               defaultValue={12}
               list={pager}
               onChangeSelect={setLimit}
             />
-          </div>
+          </Box>
         </div>
       )}
     </>

@@ -11,15 +11,19 @@ interface ISearch {
   setCategory: (_category: string) => void
   setGameItem: (_gameItem: string) => void
   setDevice: (_device: string) => void
+  clearSearch: () => void
+  clearCategory: () => void
+  clearGameItem: () => void
+  clearDevice: () => void
 }
 
 const useFilterStore = create<ISearch>()(
   devtools(
     (set) => ({
       search: "",
-      category: "",
-      gameItem: "",
-      device: "",
+      category: "all",
+      gameItem: "all",
+      device: "all",
       setSearch: (_search: string) => {
         set(() => ({ search: _search }), false, "FilterStore/SetSearch")
       },
@@ -31,6 +35,18 @@ const useFilterStore = create<ISearch>()(
       },
       setDevice: (_device) => {
         set(() => ({ device: _device }), false, "FilterStore/SetDevice")
+      },
+      clearSearch: () => {
+        set(() => ({ search: "" }), false, "FilterStore/clearSearch")
+      },
+      clearCategory: () => {
+        set(() => ({ category: "all" }), false, "FilterStore/clearCategory")
+      },
+      clearGameItem: () => {
+        set(() => ({ gameItem: "all" }), false, "FilterStore/clearGameItem")
+      },
+      clearDevice: () => {
+        set(() => ({ device: "all" }), false, "FilterStore/clearDevice")
       }
     }),
     configZustandDevTools("Search-Store")

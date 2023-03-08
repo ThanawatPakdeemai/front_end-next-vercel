@@ -95,9 +95,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
                 setQtyItemOfRoom(itemUse)
                 setCount(gameData.min_player || 2)
                 successToast(MESSAGES["create-room-success"])
-                await router.push(
-                  `/${gameData.path}/roomlist/${_res?.data.room_id}`
-                )
+                await router.push(`${router.asPath}/${_res?.data.room_id}`)
               }
             })
             .catch((error) => {
@@ -135,7 +133,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
         handleClick={handleOpen}
         startIcon={<PlusIcon />}
         text="Create Room"
-        className="btn-rainbow-theme z-[2] h-[50px] w-[156px] bg-secondary-main font-bold capitalize text-white-primary"
+        className="btn-rainbow-theme z-[2] w-[156px] bg-secondary-main font-bold capitalize text-white-primary"
         type="button"
       />
       <ModalCustom
@@ -242,7 +240,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
             }}
           />
           <ButtonToggleIcon
-            className="bg-secondary-main text-white-default"
+            className=" bg-secondary-main text-white-default"
             startIcon={null}
             text={
               isLoading ? (

@@ -1,6 +1,6 @@
+import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
-import { ICURRENCY } from "@interfaces/ICurrency"
 
 export interface IDetailUsedItems {
   name: string
@@ -56,6 +56,19 @@ export interface IGameCategory {
   id: string
 }
 
+export interface IFilterGames {
+  limit: number
+  skip: number
+  sort: string
+  search: string
+  category: string
+  item: string
+  device: string
+  game_type: string
+  tournament: boolean
+  nftgame: string
+}
+
 export interface IGameAllResponse {
   status: boolean
   data: IGame[]
@@ -77,4 +90,4 @@ export interface IDropdownAll
     IGameItem,
     IDevice,
     IGameItemListData,
-    ICURRENCY {}
+    ITokenContract {}

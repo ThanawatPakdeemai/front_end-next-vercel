@@ -30,7 +30,7 @@ const DropdownListItem = ({
   // const { errorToast } = useToast()
 
   const [defaultItem, setDefaultItem] = useState<IGameItemListData | null>(
-    itemSelected ?? null
+    itemSelected ?? list[0] ?? null
   )
 
   const onChangeItem = (_item: IGameItemListData) => {
@@ -41,6 +41,13 @@ const DropdownListItem = ({
     }
     if (_item && onChangeSelect) onChangeSelect(_item)
   }
+
+  React.useEffect(() => {
+    if (itemSelected) {
+      setDefaultItem(itemSelected)
+    }
+  }, [itemSelected, setDefaultItem])
+
   return (
     <>
       {list && (
@@ -65,7 +72,7 @@ const DropdownListItem = ({
                             <Image
                               src={
                                 defaultItem?.image_icon && gameData
-                                  ? gameData?.item[0].image_icon
+                                  ? gameData?.item?.[0]?.image_icon
                                   : ""
                               }
                               alt=""
@@ -105,33 +112,20 @@ const DropdownListItem = ({
                 >
                   <SelectDropdown
                     className={className}
-                    details={
-                      list &&
-                      list.map((ele) => ({
-                        label: (
-                          <div className="flex items-center justify-between">
-                            <p>
-                              {ele.name} <span>[ {ele.item_size} ]</span>
-                            </p>
-                            <p>{`${ele.qty ?? 0} ${t("item")}`}</p>
-                          </div>
-                        ),
-                        icon:
-                          (
-                            <Image
-                              src={ele.image_icon ?? ""}
-                              alt={ele.name}
-                              width="20"
-                              height="20"
-                            />
-                          ) ?? "sss",
-                        data: ele,
-                        href: ""
-                      }))
+                    details={list}
+                    setOnTitle={setDefaultItem}
+                    title="GameItem"
+                    icon={
+                      <Image
+                        src={list && list?.[0]?.image_icon}
+                        alt={list && list?.[0]?.name}
+                        width="20"
+                        height="20"
+                      />
                     }
                     onChange={(_item) => {
                       popupState.close()
-                      onChangeItem(_item.data as IGameItemListData)
+                      onChangeItem(_item)
                     }}
                   />
                 </Popover>

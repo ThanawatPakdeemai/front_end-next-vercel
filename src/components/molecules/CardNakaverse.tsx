@@ -34,7 +34,7 @@ const CardNakaverse = ({
   <>
     <Card
       variant="outlined"
-      className=" relative flex h-[218px] w-[678px] max-w-full overflow-hidden  max-[480px]:w-auto"
+      className="relative flex h-[218px] w-full overflow-hidden max-[480px]:w-auto xl:w-[678px]"
     >
       <Image
         src={image}
@@ -57,17 +57,18 @@ const CardNakaverse = ({
           size="medium"
           color="secondary"
           variant="contained"
+          className="h-9"
         />
       </CardContent>
-      <CardContent className="relative w-full max-[480px]:hidden">
-        <div className="absolute left-[10%] top-[10.5%] h-[239.32px] w-[238.62px] max-[480px]:hidden max-[226px]:hidden">
+      <CardContent className="relative hidden w-full sm:block">
+        <div className="absolute left-[10%] top-[10.5%] h-[239.32px] w-[238.62px] ">
           <Image
             src={IMAGES.nakaVerseMascot.src}
             alt={IMAGES.nakaVerseMascot.alt}
             className="h-full w-full"
           />
         </div>
-        <div className="absolute right-[12%] top-[15%] max-[480px]:top-[20%] max-[480px]:w-[70%] max-[226px]:hidden">
+        <div className="absolute right-[12%] top-[15%] max-[480px]:top-[20%] max-[480px]:w-[70%]">
           <KeyFramesRotate>
             <Image
               src={IMAGES.worldNakaverse.src}
@@ -76,7 +77,7 @@ const CardNakaverse = ({
             />
           </KeyFramesRotate>
         </div>
-        <div className="absolute right-[10%] top-[13%] max-[480px]:top-[17%] max-[480px]:right-[6%] max-[480px]:w-[80%] max-[226px]:hidden">
+        <div className="absolute right-[10%] top-[13%] max-[480px]:top-[17%] max-[480px]:right-[6%] max-[480px]:w-[80%]">
           <Image
             src={IMAGES.ringNakaverse.src}
             alt={IMAGES.ringNakaverse.alt}

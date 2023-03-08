@@ -1,24 +1,25 @@
 import React, { useEffect, useRef, useState } from "react"
-import { IGame } from "@src/types/games"
+import { IGame } from "@feature/game/interfaces/IGameService"
 import useProfileStore from "@stores/profileStore"
-import { useRouter } from "next/router"
 import { getFavoriteGameByUser } from "@feature/favourite/containers/services/favourite.service"
 import { v4 as uuid } from "uuid"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { PaginationNaka } from "@components/atoms/pagination"
-import { useToast } from "@feature/toast/containers"
-import { MESSAGES } from "@constants/messages"
-import { P2EHeaderMenu } from "@constants/gameSlide"
+import {
+  F2PHeaderMenu,
+  NFTHeaderMenu,
+  P2EHeaderMenu,
+  StoryModeHeaderMenu
+} from "@constants/gameSlide"
 import GameCard from "@feature/game/containers/components/molecules/GameCard"
 import useFilterStore from "@stores/blogFilter"
+import useGlobal from "@hooks/useGlobal"
 
 const FavouriteGamesPage = () => {
-  const router = useRouter()
   // Don't Delete this **************************
   // const pathActive = router.pathname
   // const lang = pathActive.search("lang")
   // const { onSetGameData } = useGameStore()
-  const { errorToast } = useToast()
   const profile = useProfileStore((state) => state.profile.data)
   const [pageSize, setPageSize] = useState<number>(25)
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -26,28 +27,35 @@ const FavouriteGamesPage = () => {
     category: categoryDropdown,
     gameItem: gameItemDropdown,
     device: deviceDropdown,
-    search: searchDropdown
+    search: searchDropdown,
+    clearSearch,
+    clearCategory,
+    clearGameItem,
+    clearDevice
   } = useFilterStore()
   const [gameFavourite, setGameFavourite] = useState<IGame[]>()
   const [loading, setLoading] = useState<boolean>(true)
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
   const fetchRef = useRef(false)
+  const { onHandleClick } = useGlobal()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getData = async () => {
     if (profile) {
       await getFavoriteGameByUser(
-        profile.id,
         pageSize,
         currentPage,
-        categoryDropdown.toLocaleLowerCase(),
-        deviceDropdown.toLocaleLowerCase(),
-        gameItemDropdown.toLocaleLowerCase(),
-        searchDropdown.toLocaleLowerCase()
+        "",
+        searchDropdown,
+        categoryDropdown,
+        gameItemDropdown,
+        deviceDropdown,
+        "all",
+        false,
+        "all"
       ).then((res) => {
         const { data, info } = res
-
         if (data && info) {
           setGameFavourite(data)
           setTotalCount(info.totalCount)
@@ -55,16 +63,8 @@ const FavouriteGamesPage = () => {
           setCurrentPage(info.pages)
           setLoading(false)
         }
+        setLoading(false)
       })
-    }
-  }
-
-  const onHandleClick = async (_gameUrl: string, _gameData: IGame) => {
-    if (profile) {
-      // onSetGameData(_gameData)
-      await router.push(`/${_gameUrl}`)
-    } else {
-      errorToast(MESSAGES.please_login)
     }
   }
 
@@ -108,6 +108,36 @@ const FavouriteGamesPage = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [stateProfile])
 
+  const getGameMenu = (game) => {
+    if (game.game_free_status) {
+      return F2PHeaderMenu
+    }
+    if (game.play_to_earn) {
+      return P2EHeaderMenu
+    }
+    if (game.game_type === "storymode") {
+      return StoryModeHeaderMenu
+    }
+    if (game.is_NFT) {
+      return NFTHeaderMenu
+    }
+  }
+
+  const getGameClickHandler = (game) => {
+    if (game.game_free_status) {
+      return () => onHandleClick("free-to-play", game.path, game)
+    }
+    if (game.play_to_earn) {
+      return () => onHandleClick("play-to-earn", game.path, game)
+    }
+    if (game.game_type === "storymode") {
+      return () => onHandleClick("story-mode", game.path, game)
+    }
+    if (game.is_NFT) {
+      return () => onHandleClick("arcade-emporium", game.path, game)
+    }
+  }
+
   useEffect(() => {
     getData()
     let load = true
@@ -131,24 +161,35 @@ const FavouriteGamesPage = () => {
       fetchRef.current = true
       setTotalCount(gameFavourite.length)
     }
-  }, [gameFavourite])
+    clearSearch()
+    clearCategory()
+    clearGameItem()
+    clearDevice()
+  }, [clearCategory, clearDevice, clearGameItem, clearSearch, gameFavourite])
 
   return (
     <div className="flex flex-col">
-      <div className="mb-6 grid grid-cols-5 gap-y-4 gap-x-2">
+      <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-5">
         {loading
           ? [...Array(pageSize)].map(() => <SkeletonCard key={uuid()} />)
           : null}
-        {gameFavourite
-          ? gameFavourite.map((game) => (
+        {gameFavourite ? (
+          gameFavourite.map((game) => {
+            const menu = getGameMenu(game)
+            const handleClick = getGameClickHandler(game)
+
+            return (
               <GameCard
                 key={game.id}
-                menu={P2EHeaderMenu}
-                onHandleClick={() => onHandleClick(game.path, game)}
+                menu={menu || F2PHeaderMenu}
+                onHandleClick={handleClick}
                 data={game}
               />
-            ))
-          : null}
+            )
+          })
+        ) : (
+          <>No Data</>
+        )}
       </div>
       <PaginationNaka
         totalCount={totalCount}

@@ -1,15 +1,32 @@
+import dynamic from "next/dynamic"
 import { PaginationNaka } from "@components/atoms/pagination"
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import GamePageWithBreadcrumb from "@components/templates/GamePageWithBreadcrumb"
 import { P2EHeaderMenu } from "@constants/gameSlide"
-import GameCard from "@feature/game/components/molecules/GameCard"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import useCategories from "@hooks/useCategories"
-import useGlobal from "@hooks/useGlobal"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useRouter } from "next/router"
 import { ReactElement, useEffect, useState } from "react"
 import { v4 as uuid } from "uuid"
+import useCategories from "@hooks/useCategories"
+import useGlobal from "@hooks/useGlobal"
+
+const SkeletonCard = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonCard"),
+  {
+    suspense: true
+  }
+)
+const GamePageWithBreadcrumb = dynamic(
+  () => import("@components/templates/GamePageWithBreadcrumb"),
+  {
+    suspense: true
+  }
+)
+const GameCard = dynamic(
+  () => import("@feature/game/components/molecules/GameCard"),
+  {
+    suspense: true
+  }
+)
 
 export default function CatogoriesPageDetails() {
   const router = useRouter()
@@ -63,7 +80,7 @@ export default function CatogoriesPageDetails() {
 
   return (
     <div className="flex flex-col">
-      <div className="mb-6 grid grid-cols-5 gap-y-4 gap-x-2">
+      <div className="mx-2 mb-6 mt-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:mt-0 md:grid-cols-5">
         {isFetchingGamesFilterByCategoryId || isLoadingGamesFilterByCategoryId
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
           : null}

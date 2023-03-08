@@ -12,10 +12,21 @@ const P2PDexListMyOrder = () => {
   const [page, setPage] = useState<number>(1)
   const { address } = useWeb3Provider()
 
+  const [sortName, setSortName] = useState<string>("naka_amount")
+  const [sort, setSort] = useState<number>(1)
+  const dataSort = {
+    sort,
+    setSort,
+    sortName,
+    setSortName
+  }
   const dataP2p = useP2PDexMyOrder({
+    _type: type,
     _address: address ?? "",
     _limit: limit,
-    _page: page
+    _page: page,
+    _sort: sortName,
+    _sort_value: sort
   })
 
   const { data: P2PDexMyOrder } = dataP2p
@@ -28,11 +39,16 @@ const P2PDexListMyOrder = () => {
           setType(value)
           setPage(1)
         }}
+        dataButton={[
+          { title: "Buy", type: "buy" },
+          { title: "Sell", type: "sell" }
+        ]}
       />
 
       <div className="p2p-dex-content--pageList">
         <MyOrderList
           {...dataP2p}
+          {...dataSort}
           type={type}
         />
         <div className="my-5 flex w-full justify-between">

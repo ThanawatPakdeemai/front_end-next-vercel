@@ -2,7 +2,7 @@ import React, { memo, useState } from "react"
 import { Box, Stack } from "@mui/material"
 import { ModalCustom } from "../Modal/ModalCustom"
 import ButtonLogin from "./ButtonLogin"
-import FormLogin from "../../../features/authentication/components/FromLogin"
+import FormLogin from "../../../features/authentication/components/FormLogin"
 import ModalHeader from "../Modal/ModalHeader"
 
 const RightMenuNotLogIn = () => {
@@ -13,7 +13,7 @@ const RightMenuNotLogIn = () => {
 
   return (
     <>
-      <Box className="m-auto w-max rounded-xl bg-neutral-700 p-1">
+      <Box className="w-max rounded-xl bg-neutral-700 p-1">
         <Box className="xs:flex-col items-center justify-between gap-1 lg:flex">
           <ButtonLogin handleButton={handleOpen} />
         </Box>

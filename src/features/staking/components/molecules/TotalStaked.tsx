@@ -1,6 +1,6 @@
 import { Box, LinearProgress, Skeleton, Typography } from "@mui/material"
 import { TStaking } from "@src/types/staking"
-import { numberWithCommas } from "@utils/helpers"
+import Helper from "@utils/helper"
 import React from "react"
 
 interface ITotalStaked {
@@ -16,6 +16,7 @@ const TotalStaked = ({
   className,
   type
 }: ITotalStaked) => {
+  const { formatNumber } = Helper
   /**
    * @description Calculate total naka staked
    */
@@ -29,10 +30,10 @@ const TotalStaked = ({
 
   return (
     <div
-      className={`flex h-full items-center justify-between rounded-[10px] bg-neutral-900 ${className} px-2`}
+      className={`h-full items-center justify-between rounded-[10px] bg-neutral-900 sm:flex ${className} px-5 py-3 sm:px-2 sm:py-0`}
     >
       {totalPoolStake !== -1 && poolLimit !== -1 ? (
-        <div className="h-[50px] w-[200px] py-2">
+        <div className="h-[50px] w-full py-2 sm:w-[200px]">
           <div className="relative flex h-full w-full flex-col justify-center overflow-hidden rounded-[2px] bg-neutral-780 py-1">
             <Box
               className="absolute h-full w-full rounded-[2px]"
@@ -86,20 +87,20 @@ const TotalStaked = ({
         <Skeleton className="h-[50px] w-full rounded-sm" />
       )}
 
-      <div className="flex w-[calc(100%-200px)] items-center justify-end whitespace-nowrap pl-5 font-neue-machina-semi">
+      <div className="flex items-center justify-center font-neue-machina-semi sm:w-[calc(100%-200px)] sm:justify-end sm:whitespace-nowrap sm:pl-5">
         <span className="mr-2 text-neutral-600">total naka staked : </span>
         {totalPoolStake !== -1 && poolLimit !== -1 ? (
           <>
             <span className="text-neutral-300">
-              {numberWithCommas(totalPoolStake)}
+              {formatNumber(totalPoolStake, { maximumFractionDigits: 4 })}
             </span>
             &nbsp;/&nbsp;
             <span className="text-neutral-300">
-              {numberWithCommas(poolLimit)}
+              {formatNumber(poolLimit, { maximumFractionDigits: 4 })}
             </span>
           </>
         ) : (
-          <Skeleton className="h-[50px] w-full rounded-sm" />
+          <Skeleton className="h-[15px] w-[150px] rounded-sm sm:h-[50px] sm:w-full" />
         )}
       </div>
     </div>

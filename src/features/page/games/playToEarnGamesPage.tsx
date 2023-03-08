@@ -9,16 +9,30 @@ import useGameStore from "@stores/game/index"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import GameCard from "@feature/game/containers/components/molecules/GameCard"
 import useGlobal from "@hooks/useGlobal"
+import useFilterStore from "@stores/blogFilter"
+import { IGame } from "@feature/game/interfaces/IGameService"
+import { getGamesByCategoryId } from "@feature/dropdown/containers/services/dropdown.service"
 
 const PlayToEarnGamesPage = () => {
   const type = "play-to-earn"
-  const limit = 10
+  const limit = 20
   const [page, setPage] = useState<number>(1)
+  const [gameFilter, setGameFilter] = useState<IGame[]>()
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
   const { onHandleClick } = useGlobal(limit)
   const { clearGameData } = useGameStore()
+  const {
+    category: categoryDropdown,
+    gameItem: gameItemDropdown,
+    device: deviceDropdown,
+    search: searchDropdown,
+    clearSearch,
+    clearCategory,
+    clearGameItem,
+    clearDevice
+  } = useFilterStore()
 
   const {
     isLoading,
@@ -45,18 +59,62 @@ const PlayToEarnGamesPage = () => {
         queryFn: () =>
           getGameByTypes({ _type: type, _limit: limit, _page: page + 1 })
       })
+      setGameFilter(gameData.data)
     }
     clearGameData()
-  }, [clearGameData, gameData, isPreviousData, page, queryClient])
+    clearSearch()
+    clearCategory()
+    clearGameItem()
+    clearDevice()
+  }, [
+    clearCategory,
+    clearDevice,
+    clearGameData,
+    clearGameItem,
+    clearSearch,
+    gameData,
+    isPreviousData,
+    page,
+    queryClient
+  ])
+
+  useEffect(() => {
+    const filterData = {
+      limit,
+      skip: page,
+      sort: "name",
+      search: searchDropdown,
+      category: categoryDropdown,
+      item: gameItemDropdown,
+      device: deviceDropdown,
+      game_type: "play-to-earn-games",
+      tournament: false,
+      nftgame: "all"
+    }
+    getGamesByCategoryId(filterData).then((res) => {
+      if (res) {
+        const { data, info } = res
+        setGameFilter(data)
+        setTotalCount(info ? info.totalCount : 1)
+      }
+    })
+  }, [
+    categoryDropdown,
+    gameItemDropdown,
+    deviceDropdown,
+    searchDropdown,
+    page,
+    limit
+  ])
 
   return (
     <div className="flex flex-col">
-      <div className="mb-6 grid grid-cols-5 gap-y-4 gap-x-2">
+      <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-5">
         {isLoading
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
           : null}
-        {gameData
-          ? gameData.data.map((game) => (
+        {gameFilter
+          ? gameFilter.map((game) => (
               <GameCard
                 key={game.id}
                 menu={P2EHeaderMenu}

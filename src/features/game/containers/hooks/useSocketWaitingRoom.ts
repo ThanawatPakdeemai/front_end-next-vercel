@@ -107,23 +107,30 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
   /**
    * @description Calling socket chatting
    */
-  const getChat = () =>
-    new Promise((resolve, reject) => {
-      socketWaitingRoom.on(EVENTS.LISTENERS.ROOM_MESSAGE, (response: IChat) => {
-        if (response) {
-          response["time"] = dayjs().format("HH:mm A")
-          resolve(response)
-        } else {
-          reject(response)
-        }
-      })
-    })
+  const getChat = useCallback(
+    () =>
+      new Promise((resolve, reject) => {
+        socketWaitingRoom.on(
+          EVENTS.LISTENERS.ROOM_MESSAGE,
+          (response: IChat) => {
+            if (response) {
+              response["time"] = dayjs().format("HH:mm A")
+              resolve(response)
+            } else {
+              reject(response)
+            }
+          }
+        )
+      }),
+    [socketWaitingRoom]
+  )
 
-  const onSendMessage = () => {
-    socketWaitingRoom.emit(EVENTS.ACTION.CHAT_SEND_MESSAGE, {
+  const onSendMessage = async () => {
+    await socketWaitingRoom.emit(EVENTS.ACTION.CHAT_SEND_MESSAGE, {
       message
     })
-    setMessage("")
+    await setMessage("")
+    await getChat()
   }
 
   /**

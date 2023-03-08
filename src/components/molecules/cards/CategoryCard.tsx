@@ -45,13 +45,13 @@ const CategoryCard = ({ img, text, icon, onHandleClick }: ICategoryCard) => {
       xs={3}
     >
       <motion.div
-        className="slick-card-container-cate"
+        className="slick-card-container-cate px-1"
         initial="init"
         whileHover="onHover"
         animate="animate"
       >
         <motion.div
-          className="group relative flex h-[324px] w-full"
+          className="xs:h-[35vw] group relative flex h-[180px] w-full md:h-[324px]"
           variants={cardImg}
         >
           <Image
@@ -63,7 +63,7 @@ const CategoryCard = ({ img, text, icon, onHandleClick }: ICategoryCard) => {
           />
           <motion.div
             variants={btnCard}
-            className="absolute bottom-0 flex w-full max-w-[260px]  rounded-[25px] border-[1px] border-solid border-neutral-700  text-white-primary"
+            className="absolute bottom-0 flex w-full rounded-[25px]  border-[1px] border-solid border-neutral-700 text-white-primary  md:max-w-[260px]"
           >
             <ButtonToggleIcon
               startIcon={

@@ -17,8 +17,9 @@ const developerPart = () => (
         item
         xs={12}
         md={8}
+        className="flex-1"
       >
-        <Card className="!bg-neutral-800 p-2 sm:h-auto md:h-[465px]">
+        <Card className="h-full w-full !bg-neutral-800 p-2 md:h-[465px]">
           <CardTitle
             width="100%"
             icon={<DvrIcon className="mr-2 !text-neutral-900" />}
@@ -47,8 +48,9 @@ const developerPart = () => (
         item
         xs={12}
         md={4}
+        className="flex-1"
       >
-        <TopPlayer className="!md:h-[465px] w-[449px] !bg-neutral-800 !p-2" />
+        <TopPlayer className="!md:h-[465px] ml-auto w-full !bg-neutral-800 !p-2 xl:w-[449px]" />
       </Grid>
     </Grid>
   </>

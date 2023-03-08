@@ -48,7 +48,7 @@ const NotificationsTable = ({
       }}
       className="mb-10 bg-neutral-800 p-2"
     >
-      <Table className="w-full bg-neutral-800 p-2 text-[10px]">
+      <Table className="w-full flex-col bg-neutral-800 p-2 text-[10px]">
         <TableHead className="h-10 pl-2 uppercase text-neutral-600">
           <TableRow className="flex">
             <TableCell

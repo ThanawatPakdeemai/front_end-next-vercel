@@ -29,7 +29,11 @@ const FreeToPlayGamesPage = () => {
     category: categoryDropdown,
     gameItem: gameItemDropdown,
     device: deviceDropdown,
-    search: searchDropdown
+    search: searchDropdown,
+    clearSearch,
+    clearCategory,
+    clearGameItem,
+    clearDevice
   } = useFilterStore()
 
   const {
@@ -48,7 +52,6 @@ const FreeToPlayGamesPage = () => {
       fetchRef.current = true
       setTotalCount(gameData.info.totalCount)
     }
-    clearGameData()
   }, [clearGameData, gameData])
 
   useEffect(() => {
@@ -60,7 +63,22 @@ const FreeToPlayGamesPage = () => {
       })
       setGameFilter(gameData.data)
     }
-  }, [gameData, isPreviousData, page, queryClient])
+    clearGameData()
+    clearSearch()
+    clearCategory()
+    clearGameItem()
+    clearDevice()
+  }, [
+    clearCategory,
+    clearDevice,
+    clearGameData,
+    clearGameItem,
+    clearSearch,
+    gameData,
+    isPreviousData,
+    page,
+    queryClient
+  ])
 
   useEffect(() => {
     const filterData = {
@@ -93,7 +111,7 @@ const FreeToPlayGamesPage = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="mb-6 grid grid-cols-5 gap-y-4 gap-x-2">
+      <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-5">
         {isLoading
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
           : null}

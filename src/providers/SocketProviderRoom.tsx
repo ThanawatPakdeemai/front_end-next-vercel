@@ -4,6 +4,7 @@ import { ReactNode, createContext, useContext, useMemo } from "react"
 interface IPropSocket {
   getRoomListMultiPlayer: () => void
   fetchRoom: () => void
+  searchRoom: (_searchText: string) => void
 }
 interface IProp {
   propsSocket: IPropSocket
@@ -12,7 +13,8 @@ interface IProp {
 
 const SocketContext = createContext<IPropSocket>({
   getRoomListMultiPlayer: () => {},
-  fetchRoom: () => {}
+  fetchRoom: () => {},
+  searchRoom: () => {}
 })
 
 function SocketProvider({ propsSocket, children }: IProp) {

@@ -2,23 +2,6 @@ import { IGetPlayerInfoByPlayerId } from "@feature/profile/interfaces/IProfileSe
 import { useQuery } from "@tanstack/react-query"
 import { getPlayerInfoByPlayerId } from "../services/profile.service"
 
-// const useGetProfileInfo = () => {
-//   const {
-//     data: response,
-//     isLoading,
-//     mutateAsync: mutateGetPlayerInfo
-//   } = useMutation(getPlayerInfoByPlayerId, {
-//     mutationKey: ["getPlayerInfoByPlayerId"],
-//     retry: false
-//   })
-
-//   return {
-//     response,
-//     isLoading,
-//     mutateGetPlayerInfo
-//   }
-// }
-
 const useGetProfileInfo = ({
   _playerId,
   _limit,
@@ -47,8 +30,9 @@ const useGetProfileInfo = ({
         _rewards_send_status
       }),
     staleTime: Infinity,
-    enabled: _playerId !== "" && _playerId !== undefined,
-    keepPreviousData: true,
+    enabled:
+      _playerId !== "" && _playerId !== undefined && _playerId.length > 0,
+    keepPreviousData: false,
     retry: false
   })
   return {

@@ -27,7 +27,11 @@ const FavouriteGamesPage = () => {
     category: categoryDropdown,
     gameItem: gameItemDropdown,
     device: deviceDropdown,
-    search: searchDropdown
+    search: searchDropdown,
+    clearSearch,
+    clearCategory,
+    clearGameItem,
+    clearDevice
   } = useFilterStore()
   const [gameFavourite, setGameFavourite] = useState<IGame[]>()
   const [loading, setLoading] = useState<boolean>(true)
@@ -157,11 +161,15 @@ const FavouriteGamesPage = () => {
       fetchRef.current = true
       setTotalCount(gameFavourite.length)
     }
-  }, [gameFavourite])
+    clearSearch()
+    clearCategory()
+    clearGameItem()
+    clearDevice()
+  }, [clearCategory, clearDevice, clearGameItem, clearSearch, gameFavourite])
 
   return (
     <div className="flex flex-col">
-      <div className="mb-6 grid grid-cols-5 gap-y-4 gap-x-2">
+      <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-5">
         {loading
           ? [...Array(pageSize)].map(() => <SkeletonCard key={uuid()} />)
           : null}

@@ -97,9 +97,7 @@ const FormLogin = ({ href }: IProp) => {
           }
         }
       })
-      .catch(() => {
-        errorToast(MESSAGES.please_fill)
-      })
+      .catch(() => {})
   }
   const onError = () => {
     errorToast(MESSAGES.please_fill)

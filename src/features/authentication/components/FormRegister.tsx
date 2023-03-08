@@ -72,7 +72,7 @@ const SignUpSchema = yup
   })
   .required()
 
-const FromRegister = () => {
+const FormRegister = () => {
   const router = useRouter()
   const { referral } = router.query
 
@@ -760,7 +760,7 @@ const FromRegister = () => {
             >
               <Grid item>
                 <ButtonLink
-                  href="/login"
+                  href="/"
                   text="Login"
                   icon={null}
                   size="medium"
@@ -774,7 +774,7 @@ const FromRegister = () => {
                   type="submit"
                   startIcon={<IEdit />}
                   text="Regiter"
-                  className="btn-rainbow-theme h-[40px] w-[209px] bg-secondary-main font-bold capitalize text-white-default"
+                  className="btn-rainbow-theme h-[40px] !w-[209px] bg-secondary-main font-bold capitalize text-white-default"
                 />
               </Grid>
             </Grid>
@@ -865,4 +865,4 @@ const FromRegister = () => {
     </>
   )
 }
-export default memo(FromRegister)
+export default memo(FormRegister)

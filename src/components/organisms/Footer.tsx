@@ -94,7 +94,7 @@ const Footer = () => {
         className="my-8 md:my-16"
         sx={{ marginTop: 10, marginBottom: 10 }}
       />
-      <div className="justify-between text-[12px] lg:flex">
+      <div className="justify-between overflow-hidden text-[12px] lg:flex">
         <div className="flex justify-center whitespace-nowrap">
           <div className="flex-auto sm:flex-none md:w-48">
             <div className="mb-4 uppercase text-white-primary">game</div>

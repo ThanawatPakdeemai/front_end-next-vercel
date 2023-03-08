@@ -132,13 +132,13 @@ const CardLink = ({
   return (
     <>
       <motion.div
-        className={`relative h-[218px] w-[218px] overflow-hidden rounded-3xl ${classNameMain}`}
+        className={`card-link relative h-[40vw] max-h-[218px] w-full overflow-hidden rounded-3xl lg:h-[218px] xl:w-[218px] ${classNameMain}`}
         style={styleMain}
         onHoverStart={onHoverCard}
         onHoverEnd={onHoverCard}
       >
         <motion.div
-          className="absolute flex h-[218px] w-[218px] flex-col items-center justify-center rounded-3xl"
+          className="md card-link absolute flex h-full w-full flex-col items-center justify-center rounded-3xl lg:h-[218px] xl:w-[218px]"
           style={styleSecond || { backgroundColor: `${bgMain}` }}
           whileHover="hover"
           variants={cardLinkMotion}
@@ -160,7 +160,7 @@ const CardLink = ({
               alt={altMain}
               width={123}
               height={123}
-              className={`absolute left-[50px] z-[1] ${imageClassNameMain}`}
+              className={`absolute z-[1] max-w-[80px] md:max-w-[120px] ${imageClassNameMain}`}
               style={imageStyleMain || { transition: "all 0.2s ease-in" }}
               loading="eager"
               priority
@@ -176,7 +176,7 @@ const CardLink = ({
               alt={altSecond}
               width={123}
               height={123}
-              className={`absolute left-[50px] my-auto mx-0 ${imageClassNameSecond}`}
+              className={`md:max-w-[120px absolute my-auto mx-0 max-w-[80px] ${imageClassNameSecond}`}
               style={imageStyleSecond || { transition: "0.2s" }}
               loading="eager"
               priority

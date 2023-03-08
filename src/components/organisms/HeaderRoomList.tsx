@@ -1,5 +1,4 @@
 import ButtonClose from "@components/atoms/button/ButtonClose"
-import Dropdown from "@components/atoms/DropdownCustom"
 import SearchIcon from "@components/icons/SearchIcon"
 import { TextField, Typography } from "@mui/material"
 import { IGame } from "@feature/game/interfaces/IGameService"
@@ -8,6 +7,7 @@ import useGameStore from "@stores/game"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import ModalCreateRoom from "@feature/rooms/components/molecules/ModalCreateRoom"
+import { useSocketProviderRoom } from "@providers/SocketProviderRoom"
 
 export interface IHeaderRoomList {
   lobby: string
@@ -16,6 +16,7 @@ export interface IHeaderRoomList {
 const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
   const router = useRouter()
   const { data, itemSelected } = useGameStore()
+  const { searchRoom } = useSocketProviderRoom()
   const [gameData, setGameData] = useState<IGame>()
 
   useEffect(() => {
@@ -29,7 +30,11 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
       <div className="flex flex-wrap justify-between p-4">
         <div className="flex flex-[1_1_100%] flex-wrap gap-4 md:flex-none">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800">
-            <ButtonClose onClick={() => router.push(`/${gameData?.path}`)} />
+            <ButtonClose
+              onClick={() =>
+                router.push(`/${router?.query?.typeGame}/${gameData?.path}`)
+              }
+            />
           </div>
           <h1 className="text-white-defzault self-center uppercase">
             Lobby :{lobby}
@@ -44,25 +49,31 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
             )}
           </h1>
         </div>
-        <div className="flex flex-[1_1_100%] flex-wrap md:flex-none">
-          <Dropdown
+        <div className="flex flex-[1_1_100%] flex-wrap items-center gap-2 md:flex-none ">
+          {/* <Dropdown
             title="All Categories"
             className="w-[174px] rounded-lg"
-          />
-          <TextField
-            className="md:px-2"
-            placeholder="Search Room"
-            InputProps={{
-              style: {
-                fontSize: "14px",
-                fontFamily: "neueMachina",
-                width: "174px"
-              },
-              startAdornment: <SearchIcon className="mr-4" />
-            }}
-          />
+          /> */}
           {gameData && gameData.game_type === "multiplayer" && (
-            <ModalCreateRoom gameData={gameData} />
+            <>
+              <TextField
+                className="md:px-2"
+                placeholder="Search Room"
+                InputProps={{
+                  style: {
+                    fontSize: "14px",
+                    fontFamily: "neueMachina",
+                    width: "174px"
+                  },
+                  startAdornment: <SearchIcon className="mr-4" />
+                }}
+                onChange={(_event) => {
+                  const search = _event?.target?.value
+                  searchRoom(search)
+                }}
+              />
+              <ModalCreateRoom gameData={gameData} />
+            </>
           )}
         </div>
       </div>

@@ -31,7 +31,7 @@ import IEdit from "@components/icons/Edit"
 import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import useCreateNewPassword from "../containers/hooks/useCreateNewPassword"
-import FormLogin from "./FromLogin"
+import FormLogin from "./FormLogin"
 
 const KeyFramesClockwise = styled("div")({
   "@keyframes rotation": {

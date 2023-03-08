@@ -15,15 +15,15 @@ const HeadBlog = ({ children }: { children: React.ReactNode }) => {
   const { select: selectHeader, setSelect: setSelectHeader } = useSelectStore()
 
   return (
-    <div>
+    <div className="mx-auto xl:mx-0">
       {/* {selectHeader} */}
-      <div className="flex justify-between">
-        <div className="mb-[30px] flex w-[230px] justify-between rounded-2xl bg-neutral-700 p-1">
+      <div className="justify-between max-md:my-[30px] md:flex">
+        <div className="mx-auto mb-[30px] flex w-full max-w-xs justify-between gap-1 rounded-2xl bg-neutral-700 p-1 md:mx-0 md:w-[230px]">
           {MENU_BLOG_HEADER.map((item) => (
             <Button
               key={item.name}
               sx={styleButton}
-              className={`button-select-naka xs:mb-1 !hover:bg-error-main !hover:text-white-primary group mb-1 h-[50px] !text-black-default ${
+              className={`button-select-naka xs:mb-1 !hover:bg-error-main !hover:text-white-primary group h-[50px] w-full !text-black-default ${
                 selectHeader === item.link
                   ? "!bg-primary-main"
                   : "!bg-neutral-800"
@@ -48,13 +48,13 @@ const HeadBlog = ({ children }: { children: React.ReactNode }) => {
             value = value.replace(/[^A-Za-z0-9]/gi, "")
             setSearchBlog(value)
           }}
-          className="px-2"
+          className="mx-auto w-full max-w-xs max-md:flex md:mx-0 md:w-[234px] md:px-2"
           placeholder="Search Blog"
           InputProps={{
             style: {
               fontSize: "12px",
               fontFamily: "neueMachina",
-              width: "218px",
+              // width: "100%",
               color: "#fff"
             },
             startAdornment: <SearchIcon className="mr-4" />

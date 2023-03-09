@@ -1,7 +1,5 @@
 import RightMenuWallet from "@components/molecules/rightMenu/RightMenuWallet"
 import Gas from "@components/molecules/Gas"
-import INaka from "@components/icons/Naka"
-import IBusd from "@components/icons/Busd"
 import React, { useEffect } from "react"
 import MetamaskWallet from "@components/molecules/balance/MetamaskWallet"
 import useProfileStore from "@stores/profileStore"
@@ -17,29 +15,28 @@ import useChainSupport from "@stores/chainSupport"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import useSwitchNetwork from "@hooks/useSwitchNetwork"
 import WalletContent from "@feature/wallet/components/organisms/WalletContent"
+import ChainList from "@components/molecules/ChainList"
+import TokenList from "@components/molecules/TokenList"
+import { CHAIN_SUPPORT, IChainList } from "@configs/chain"
 
 export default function WalletPage() {
   const { hydrated } = useGlobal()
   const {
-    type,
     value,
     openWithDraw,
     openDeposit,
     disabled,
     setDisabled,
-    setType,
     setValue,
     handleOpen,
     handleClose,
     onSubmit,
     onClickMaxValue,
     handleConnectWallet,
-    currentChainSelected
+    currentChainSelected,
+    tabChainList,
+    setTabChainList
   } = useWalletContoller()
-  const router = useRouter()
-  const { token } = router.query
-  const { profile } = useProfileStore()
-  const { chainSupport } = useChainSupport()
   const {
     handleSwitchNetwork,
     address,
@@ -53,6 +50,10 @@ export default function WalletPage() {
     handleConnectWithMetamask,
     statusWalletConnected
   } = useSwitchNetwork()
+  const router = useRouter()
+  const { token } = router.query
+  const { profile } = useProfileStore()
+  const { chainSupport } = useChainSupport()
 
   /**
    * @description check disabled button
@@ -65,18 +66,31 @@ export default function WalletPage() {
     return true
   }
 
-  const renderWallets = () =>
-    chainSupport.map((chain) => (
+  const renderWallets = () => {
+    const tokenParam = chainSupport.find((item) => item.symbol === token)
+    return (
       <div
-        key={chain.address}
+        key={((tokenParam as ITokenContract) || chainSupport[0]).address}
         className="md:col-span-5 md:m-2"
       >
-        <WalletHeader tokenName={chain.symbol} />
+        <WalletHeader
+          tokenName={((tokenParam as ITokenContract) || chainSupport[0]).symbol}
+        />
         <WalletBody
-          tokenSymbol={chain.symbol}
-          className={type === "NAKA" ? " text-NAKA " : "text-BUSD"}
-          balance={chain.balanceVault}
-          contractAddress={chain.address}
+          tokenSymbol={
+            ((tokenParam as ITokenContract) || chainSupport[0]).symbol
+          }
+          className={
+            tabChainList?.link === "NAKA"
+              ? "text-red-default"
+              : "text-binance-default"
+          }
+          balance={
+            ((tokenParam as ITokenContract) || chainSupport[0]).balanceVault
+          }
+          contractAddress={
+            ((tokenParam as ITokenContract) || chainSupport[0]).address
+          }
         />
         <div className="mb-4 flex w-full justify-end">
           <RightMenuWallet
@@ -85,13 +99,20 @@ export default function WalletPage() {
             open={openWithDraw}
             value={value}
             setValue={setValue}
-            handleOpen={() => handleOpen("withdraw", chain)}
+            handleOpen={() =>
+              handleOpen(
+                "withdraw",
+                (tokenParam as ITokenContract) || chainSupport[0]
+              )
+            }
             handleClose={() => handleClose("withdraw")}
             onSubmit={() => onSubmit("withdraw")}
             onClickMaxValue={onClickMaxValue}
             disabled={disabled}
             setDisabled={setDisabled}
-            currentChainSelected={currentChainSelected as ITokenContract}
+            currentChainSelected={
+              (currentChainSelected as ITokenContract) || chainSupport[0]
+            }
             method="withdraw"
           />
           <RightMenuWallet
@@ -101,18 +122,28 @@ export default function WalletPage() {
             value={value}
             setValue={setValue}
             setDisabled={setDisabled}
-            handleOpen={() => handleOpen("deposit", chain)}
+            handleOpen={() =>
+              handleOpen(
+                "deposit",
+                (tokenParam as ITokenContract) || chainSupport[0]
+              )
+            }
             handleClose={() => handleClose("deposit")}
             onSubmit={() => onSubmit("deposit")}
             onClickMaxValue={onClickMaxValue}
             disabled={disabled}
-            currentChainSelected={currentChainSelected as ITokenContract}
+            currentChainSelected={
+              (currentChainSelected as ITokenContract) || chainSupport[0]
+            }
             method="deposit"
           />
         </div>
-        <WalletFooter address={chain.address} />
+        <WalletFooter
+          address={((tokenParam as ITokenContract) || chainSupport[0]).address}
+        />
       </div>
-    ))
+    )
+  }
 
   /**
    * @description set disabled button
@@ -121,74 +152,48 @@ export default function WalletPage() {
     if (!statusWalletConnected.responseStatus) return
     setDisabled(isDisabledButton())
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value, type])
+  }, [value, tabChainList])
 
   /**
    * @description Set type tab by router.query
    */
   useEffect(() => {
+    const _currentChain = CHAIN_SUPPORT.find((item) => item.chainId === chainId)
+    if (_currentChain) {
+      setTabChainList(_currentChain as IChainList)
+    }
+
     if (!statusWalletConnected.responseStatus) return
     if (token === "NAKA") {
-      setType("NAKA")
+      // setType("NAKA")
+      const _chainTarget = CHAIN_SUPPORT.find((item) => item.link === "NAKA")
+      setTabChainList(_chainTarget as IChainList)
       setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX)
-      router.push("/wallet?token=NAKA")
+      router.push("?token=NAKA")
     } else if (token === "BNB") {
-      setType("BNB")
+      // setType("BNB")
+      const _chainTarget = CHAIN_SUPPORT.find((item) => item.link === "BNB")
+      setTabChainList(_chainTarget as IChainList)
       setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX_BNB)
-      router.push("/wallet?token=BNB")
+      router.push("?token=BNB")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token, chainId])
+  }, [token, chainId, tabChainList])
 
   return hydrated ? (
     <>
       <div className="flex w-full flex-wrap justify-center gap-4 md:justify-end lg:mx-2 xl:grid xl:grid-cols-12">
         <div className="h-full w-full justify-center md:col-span-8 md:flex md:justify-between">
-          <div className="my-2 items-center text-center uppercase md:my-0 md:text-left">
-            <p className="text-lg text-neutral-400">MY Wallet</p>
-            <p className="text-xs text-neutral-600">
-              Wallet manager for nakamoto.games world
-            </p>
-          </div>
-          <div className="flex justify-center rounded-sm bg-neutral-700 p-2">
-            <button
-              type="button"
-              className={`flex h-[50px] w-[130px] items-center rounded-sm
-              ${
-                type === "NAKA"
-                  ? "bg-black-100 text-white-default"
-                  : "bg-neutral-800 text-black-default"
-              } p-4`}
-              onClick={() => {
-                setType("NAKA")
-                router.push("/wallet?token=NAKA")
-                setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX)
-              }}
-            >
-              <div className="pr-2">
-                <INaka />
-              </div>
-              <p className="m-auto">NAKA</p>
-            </button>
-            <button
-              type="button"
-              className={`ml-2 flex h-[50px] w-[130px] items-center rounded-sm ${
-                type === "BNB"
-                  ? "bg-black-100 text-white-default"
-                  : "bg-neutral-800 text-neutral-500"
-              } p-4`}
-              onClick={() => {
-                setType("BNB")
-                router.push("/wallet?token=BNB")
-                setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX_BNB)
-              }}
-            >
-              <div className=" pr-2">
-                <IBusd />
-              </div>
-              <p className="m-auto">BNB</p>
-            </button>
-          </div>
+          <ChainList currentTabChainSelected={tabChainList as IChainList} />
+          {chainId === tabChainList?.chainId && (
+            <TokenList
+              dataList={chainSupport}
+              currentTabChainSelected={tabChainList as IChainList}
+              currentTokenSelected={
+                (token as string) || chainSupport[0]?.symbol
+              }
+            />
+          )}
         </div>
         <div className="my-2 h-full min-h-[360px] w-full max-w-full flex-[1_1_calc(100%-200px)] items-center justify-center rounded-default bg-neutral-800 p-2 md:col-span-6 md:my-0 md:max-w-md md:gap-1 md:p-0 lg:max-w-full">
           <WalletContent
@@ -198,9 +203,9 @@ export default function WalletPage() {
             signer={signer}
             handleConnectWithMetamask={handleConnectWithMetamask}
             isWrongNetwork={isWrongNetwork}
-            type={type}
+            type={(tabChainList as IChainList).link}
             handleSwitchNetwork={
-              type === "NAKA"
+              tabChainList?.link === "NAKA"
                 ? () =>
                     handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX as string)
                 : () =>
@@ -213,7 +218,7 @@ export default function WalletPage() {
           />
         </div>
         <div className="col-span-2 h-full w-full items-center justify-center gap-1 rounded-default bg-neutral-800">
-          <Gas type={type} />
+          <Gas type={tabChainList?.link} />
         </div>
         <div className="col-span-4 w-full gap-1">
           <div className="w-full">
@@ -224,9 +229,11 @@ export default function WalletPage() {
               blockExplorerURL={
                 getNetwork?.(chainId as string).blockExplorerUrls[0]
               }
-              chainName={getNetwork?.(chainId as string).chainName as string}
               chainSupport={chainSupport}
-              chainId={chainId as string}
+              currentTokenSelected={
+                (token as string) || chainSupport[0]?.symbol
+              }
+              currentChainSelected={tabChainList as IChainList}
             />
           </div>
         </div>

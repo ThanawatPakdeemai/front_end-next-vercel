@@ -13,6 +13,7 @@ import { useCallback, useEffect, useState } from "react"
 import useQueryBalanceVault from "@feature/contract/containers/hooks/useQuery/useQueryBalanceVault"
 import { getBEP20Contract } from "@feature/contract/containers/contractHelpers"
 import { IErrorMessage } from "@interfaces/IErrorMessage"
+import { CHAIN_SUPPORT, IChainList } from "@configs/chain"
 import {
   useBEP20,
   useERC20
@@ -21,11 +22,10 @@ import { IMessage } from "@feature/multichain/interfaces/IMultichain"
 import simpleRpcProvider, { bnbRpcProvider } from "@utils/web3"
 
 export type Method = "deposit" | "withdraw"
-export type TokenSupport = "NAKA" | "BNB"
 
 const useWalletContoller = () => {
   // state
-  const [type, setType] = useState<TokenSupport>("NAKA")
+  const [tabChainList, setTabChainList] = useState<IChainList>(CHAIN_SUPPORT[0])
   const [isConnected, setIsConnected] = useState<boolean>(false)
   const [openWithDraw, setOpenWithDraw] = useState<boolean>(false)
   const [openDeposit, setOpenDeposit] = useState<boolean>(false)
@@ -344,14 +344,12 @@ const useWalletContoller = () => {
    */
 
   return {
-    type,
     value,
     openWithDraw,
     openDeposit,
     disabled,
     currentChainSelected,
     setDisabled,
-    setType,
     setValue,
     setCurrentChainSelected,
     handleOpen,
@@ -361,7 +359,9 @@ const useWalletContoller = () => {
     isConnected,
     onClickMaxValue,
     onResetBalance,
-    checkConnection
+    checkConnection,
+    tabChainList,
+    setTabChainList
   }
 }
 

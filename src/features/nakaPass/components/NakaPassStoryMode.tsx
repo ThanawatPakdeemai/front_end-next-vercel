@@ -24,8 +24,8 @@ const NakaPassStoryMode = () => (
   // })
 
   <>
-    <div className="mb-3 mt-4 flex h-[148px] w-full items-center rounded-2xl bg-neutral-780 p-2 md:mt-0 md:flex-row">
-      <div className="flex h-[-webkit-fill-available] basis-8/12 items-center  rounded-2xl border border-neutral-700 bg-primary-main ">
+    <div className="mb-3 mt-4 flex w-full flex-wrap items-center gap-[10px] rounded-2xl bg-neutral-780 p-2 md:mt-0 md:h-[148px] md:flex-row md:flex-nowrap md:gap-0">
+      <div className="flex h-[100px] flex-[1_1_100%] items-center rounded-2xl border border-neutral-700 bg-primary-main sm:h-[132px] sm:basis-[calc(50%-20px)] md:basis-8/12">
         <Box className="bg-line-linear-gradient flex h-full w-full  items-center justify-center rounded-[13px] text-center uppercase">
           <Typography className="text-shadow-red font-neue-machina-semi text-[26px] text-error-main md:text-[56px]">
             NAKA PASS SS II
@@ -33,17 +33,19 @@ const NakaPassStoryMode = () => (
         </Box>
       </div>
 
-      <div className="mx-2 h-[-webkit-fill-available] basis-2/12 rounded-2xl border border-neutral-700 bg-primary-main p-[10px] ">
-        <div className="text-md  mb-[10px] flex h-[50px] items-center justify-center  rounded-sm bg-secondary-main p-1 font-neue-machina-semi uppercase text-neutral-800">
+      <div className="h-[-webkit-fill-available] flex-[1_1_calc(50%-5px)] rounded-2xl border border-neutral-700 bg-primary-main p-[10px] sm:basis-3/12 md:mx-2 md:basis-2/12">
+        <div className="mb-[10px] flex h-[50px] items-center justify-center rounded-sm  bg-secondary-main p-1 font-neue-machina-semi text-[80%] uppercase text-neutral-800 md:text-base">
           season II
         </div>
-        <div className=" flex  h-[50px] items-center justify-evenly rounded-sm bg-neutral-780 p-1 font-neue-machina-bold text-sm text-neutral-800">
-          <span className=" text-secondary-main">2W</span>
-          <span className=" text-secondary-main">1D</span>
-          <span className=" text-neutral-400">24 : 00 :45</span>
+        <div className="flex h-[50px] flex-wrap items-center justify-evenly rounded-sm bg-neutral-780 p-1 text-center font-neue-machina-bold text-sm text-neutral-800 sm:flex-nowrap sm:text-left">
+          <span className=" flex-1 text-secondary-main sm:flex-none">2W</span>
+          <span className=" flex-1 text-secondary-main sm:flex-none">1D</span>
+          <span className=" flex-[1_1_100%] text-neutral-400 sm:flex-none">
+            24 : 00 :45
+          </span>
         </div>
       </div>
-      <div className="h-[-webkit-fill-available] basis-2/12 rounded-2xl border border-neutral-700   bg-primary-main p-[10px] ">
+      <div className="h-[-webkit-fill-available] flex-[1_1_calc(50%-5px)] rounded-2xl border border-neutral-700 bg-primary-main p-[10px] sm:basis-3/12 md:basis-2/12">
         <div className=" rounded-sm bg-neutral-780 px-3 ">
           <div className="mb-[10px]  flex h-[60px] items-center justify-between ">
             <div className=" flex h-[45px] w-[45px] items-center justify-center rounded border border-neutral-700 bg-neutral-700 ">
@@ -70,22 +72,23 @@ const NakaPassStoryMode = () => (
       </div>
     </div>
 
-    <div className="flex h-[225px] w-full flex-row items-center rounded-2xl bg-neutral-780 p-2">
-      <div className="h-[-webkit-fill-available]  w-[202px] rounded-2xl  border border-neutral-700 bg-primary-main p-[10px]">
-        <div className=" bg-line-linear-gradient  mb-[10px] flex h-[136px] items-center justify-center rounded-sm border border-neutral-700 ">
+    <div className="flex w-full flex-row flex-wrap items-center rounded-2xl bg-neutral-780 p-2 md:h-[225px] md:flex-nowrap">
+      <div className="w-full rounded-2xl border  border-neutral-700 bg-primary-main p-[10px] sm:w-[202px] md:h-[-webkit-fill-available]">
+        <div className="bg-line-linear-gradient  mb-[10px] flex h-[136px] items-center justify-center rounded-sm border border-neutral-700 ">
           <ILogoMaster
             width="100"
             height="48"
             className="svg-shadow-red"
           />
         </div>
-        <div className=" flex h-[40px]   items-center justify-center rounded-sm border border-neutral-700  font-digital-7">
+        <div className=" flex h-[40px] items-center justify-center rounded-sm border border-neutral-700  font-digital-7">
           <span className=" mr-2 text-2xl text-green-card">3 </span>
           <span className=" text-2xl text-error-main">: 25</span>
         </div>
       </div>
 
-      <div className="ml-2 h-[-webkit-fill-available] w-[240px] md:flex-auto  lg:w-[920px]">
+      {/* lg:w-[920px] */}
+      <div className="ml-2 h-[-webkit-fill-available] overflow-hidden sm:w-[calc(100%-210px)] md:flex-auto">
         <div className="custom-scroll-line-green flex items-center gap-2 overflow-x-scroll ">
           {/* max-sm:w-[230px] */}
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((ele, index) => (

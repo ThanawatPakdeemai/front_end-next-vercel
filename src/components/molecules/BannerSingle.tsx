@@ -13,7 +13,7 @@ const BannerSingle = ({ src, alt }: IProp) => (
         alt={alt}
         width={1368}
         height={180}
-        className="h-[180px] rounded-[24px] object-cover object-center"
+        className="h-[180px] rounded-[24px] object-fill object-center"
       />
     </div>
   </div>

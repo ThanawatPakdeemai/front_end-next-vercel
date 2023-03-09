@@ -68,7 +68,7 @@ const Balance = ({ className, buyItemCoinSeleced }: IProps) => {
     return (
       <TokenList
         dataList={chainSupport}
-        currentChain={
+        currentTabChainSelected={
           CHAIN_SUPPORT.find((item) => item.chainId === chainId) as IChainList
         }
         currentTokenSelected={(token as string) || chainSupport[0]?.symbol}

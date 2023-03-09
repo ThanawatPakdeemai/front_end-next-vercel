@@ -26,7 +26,7 @@ const useP2PDexController = ({
       getP2PDexOrderList({ _type, _limit, _page, _sort, _sort_value }),
     staleTime: Infinity,
     keepPreviousData: true,
-    enabled: _type !== "" || _page < 1 || _limit < 1
+    enabled: !!_type || _page < 1 || _limit < 1
   })
 
   return {

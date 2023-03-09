@@ -11,12 +11,13 @@ import useContractVaultBinance, {
 import useProfileStore from "@stores/profileStore"
 import { useCallback, useEffect, useState } from "react"
 import useQueryBalanceVault from "@feature/contract/containers/hooks/useQuery/useQueryBalanceVault"
-import {
-  getBEP20Contract,
-  getERC20Contract
-} from "@feature/contract/containers/contractHelpers"
+import { getBEP20Contract } from "@feature/contract/containers/contractHelpers"
 import { IErrorMessage } from "@interfaces/IErrorMessage"
 import { CHAIN_SUPPORT, IChainList } from "@configs/chain"
+import {
+  useBEP20,
+  useERC20
+} from "@feature/contract/containers/hooks/useContract"
 
 export type Method = "deposit" | "withdraw"
 
@@ -35,6 +36,7 @@ const useWalletContoller = () => {
   // Hooks
   // checkAllowNaka
   const { allowNaka, depositNaka, withdrawNaka } = useContractVault()
+  // eslint-disable-next-line no-unused-vars
   const { checkAllowToken, allowToken, depositToken, withdrawByToken } =
     useContractVaultBinance()
   const { toWei } = Helper
@@ -151,7 +153,23 @@ const useWalletContoller = () => {
     const resultWithdrawNaka = await withdrawNaka(toWei(value.toString()))
     return resultWithdrawNaka
   }
+  const tokenBinanceContract = useBEP20(
+    signer,
+    currentChainSelected?.address ?? ""
+  )
+  const tokenNakaContract = useERC20(
+    signer,
+    currentChainSelected?.address ?? ""
+  )
+  const checkAllowBnb = tokenBinanceContract.allowance(
+    address,
+    CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
+  )
 
+  const checkAllowNaka = tokenNakaContract.allowance(
+    address,
+    CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
+  )
   /**
    * @description handle deposit and withdraw
    * @param _method
@@ -161,7 +179,13 @@ const useWalletContoller = () => {
     _method: Method,
     _tokenAddress: string
   ) => {
-    if (!address) return
+    const approveToken = (
+      chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB
+        ? await checkAllowBnb
+        : await checkAllowNaka
+    ).toString()
+
+    if (!address && approveToken === "0") return
     try {
       /* Sample loading wait for loading popup design */
       setOpen("Blockchain transaction in progress...")
@@ -185,7 +209,7 @@ const useWalletContoller = () => {
       }
     } catch (error) {
       setClose()
-      errorToast("Transaction failed")
+      if (approveToken !== "0") errorToast("Transaction failed")
     }
   }
 
@@ -211,37 +235,51 @@ const useWalletContoller = () => {
         if (
           currentChainSelected.address !== CONFIGS.CONTRACT_ADDRESS.BNB_CONTRACT
         ) {
-          const allowanceToken = await checkAllowToken(
-            bep20Contract,
-            CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
-          )
+          // const allowanceToken = await checkAllowToken(
+          //   bep20Contract,
+          //   CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
+          // )
+          const allowanceToken = await checkAllowBnb
+
           if ((allowanceToken as string).toString() === "0") {
-            const allowResult = await allowToken(
+            allowToken(
               bep20Contract,
               // currentChainSelected.address, // spender
               currentChainSelected.totolSupply as string
-            )
-            successToast(allowResult as string)
+            ).then(async (_res) => {
+              await successToast(_res as string)
+              if (_res) {
+                await handleWalletProcess(_method, currentChainSelected.address)
+              }
+            })
+          } else {
+            await handleWalletProcess(_method, currentChainSelected.address)
           }
         }
-        handleWalletProcess(_method, currentChainSelected.address)
       } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
-        const erc20Contract = getERC20Contract(
-          currentChainSelected.address,
-          signer
-        )
+        // const erc20Contract = getERC20Contract(
+        //   currentChainSelected.address,
+        //   signer
+        // )
         // FOR NAKA
-        const allowanceToken = await checkAllowToken(
-          erc20Contract,
-          CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
-        )
+        // const allowanceToken = await checkAllowToken(
+        //   erc20Contract,
+        //   CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
+        // )
+        const allowanceToken = await checkAllowNaka
+
         if ((allowanceToken as string).toString() === "0") {
-          const allowResult = await allowNaka(
-            currentChainSelected.totolSupply as string
+          allowNaka(currentChainSelected.totolSupply as string).then(
+            async (_res) => {
+              await successToast(_res as string)
+              if (_res) {
+                await handleWalletProcess(_method, currentChainSelected.address)
+              }
+            }
           )
-          successToast(allowResult as string)
+        } else {
+          handleWalletProcess(_method, currentChainSelected.address)
         }
-        handleWalletProcess(_method, currentChainSelected.address)
       }
     } catch (error) {
       errorToast(error as string)

@@ -71,7 +71,7 @@ const useCurrencyCheck = (_symbol: string) => {
     queryFn: () => trickerPriceBNBExternal(_symbol),
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: _symbol !== undefined && _symbol !== ""
+    enabled: !!_symbol
   })
 
   return {

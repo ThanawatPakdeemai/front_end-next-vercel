@@ -21,7 +21,7 @@ const useGetReferral = ({
     queryFn: () => getReferrals({ player_id, skip, limit, sort, sort_value }),
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: player_id !== "" && player_id !== undefined
+    enabled: !!player_id
   })
   return {
     getReferralsData,

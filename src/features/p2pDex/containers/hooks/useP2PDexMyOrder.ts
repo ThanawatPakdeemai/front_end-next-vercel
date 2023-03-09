@@ -42,11 +42,7 @@ const useP2PDexMyOrder = ({
       }),
     staleTime: Infinity,
     keepPreviousData: true,
-    enabled:
-      _address !== "" ||
-      _address !== undefined ||
-      _type !== "" ||
-      _type !== undefined
+    enabled: !!_address || !!_type
   })
 
   return {

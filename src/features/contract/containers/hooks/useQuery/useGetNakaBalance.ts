@@ -13,7 +13,7 @@ const useGetNakaBalance = (_address: string, isConnectedWallet: boolean) => {
   const { data: balance, refetch: refetchBalance } = useQuery({
     queryKey: ["naka_balance", _address],
     queryFn: () => getNakaBalance(_address),
-    enabled: _address !== "" && isConnectedWallet,
+    enabled: !!_address && isConnectedWallet,
     staleTime: Infinity
   })
 

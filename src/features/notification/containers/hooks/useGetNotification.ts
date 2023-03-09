@@ -12,7 +12,7 @@ const useGetNotification = ({ player_id }: IProps) => {
       queryFn: () => getNotificationById(player_id),
       keepPreviousData: true,
       staleTime: Infinity,
-      enabled: player_id !== "" || player_id !== undefined
+      enabled: !!player_id
     })
   return { data, isLoading, isFetching, isPreviousData, isError, error }
 }

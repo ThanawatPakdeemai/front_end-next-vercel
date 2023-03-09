@@ -15,7 +15,7 @@ const useGetBalanceVault = (_address: string, isConnected: boolean) => {
     queryFn: () => getNaka(_address),
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: _address !== "" && _address !== undefined && isConnected
+    enabled: !!_address && isConnected
   })
 
   return {

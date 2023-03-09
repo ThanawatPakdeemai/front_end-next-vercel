@@ -1,24 +1,16 @@
-import MenuItemCustom from "@components/atoms/MenuItemCustom"
 import { MENU_LOGGEDIN } from "@configs/menu"
 import { MenuList } from "@mui/material"
 import { IProfile } from "@src/types/profile"
 import useProfileStore from "@stores/profileStore"
-import { NextRouter, useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
-import useQuestStore from "@stores/quest"
+import { v4 as uuidv4 } from "uuid"
 import Balance from "./balance/Balance"
 import StatProfile from "./statProfile/StatProfile"
+import MenuLoggedin from "./menuProfile/MenuLoggedin"
 
 const SidebarProfile = () => {
-  const router: NextRouter = useRouter()
   const { profile } = useProfileStore()
   const [profileData, setProfileData] = useState<IProfile>()
-  const { clearQuestStore, setOpen } = useQuestStore()
-
-  const handleModalMission = () => {
-    setOpen()
-    clearQuestStore()
-  }
 
   useEffect(() => {
     if (profile && profile.data) {
@@ -29,38 +21,12 @@ const SidebarProfile = () => {
   return (
     <div className="mx-auto w-full max-w-xs gap-5 md:mx-0 md:flex md:w-[200px] md:flex-col">
       <MenuList className="rounded-[13px] bg-neutral-700 p-[6px]">
-        {MENU_LOGGEDIN.map((ele) => {
-          const active = router.asPath.includes(ele.href)
-          return ele.href === "/profile" ? (
-            <MenuItemCustom
-              key={ele.id}
-              id={ele.id}
-              label={ele.label}
-              icon={ele.icon}
-              href={`/profile/${profileData && profileData.id}`}
-              external={ele.external}
-              onClick={() => {
-                router.push(`/profile/${profileData && profileData.id}`)
-              }}
-              active={active}
-            />
-          ) : (
-            <MenuItemCustom
-              key={ele.id}
-              id={ele.id}
-              label={ele.label}
-              icon={ele.icon}
-              href={ele.href}
-              external={ele.external}
-              onClick={
-                ele.id === "your-mission"
-                  ? () => handleModalMission()
-                  : undefined
-              }
-              active={active}
-            />
-          )
-        })}
+        {MENU_LOGGEDIN.map((ele) => (
+          <MenuLoggedin
+            ele={ele}
+            key={uuidv4()}
+          />
+        ))}
       </MenuList>
 
       <Balance

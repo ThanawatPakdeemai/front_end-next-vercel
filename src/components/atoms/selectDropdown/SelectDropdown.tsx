@@ -11,6 +11,7 @@ import {
 import { IMenuBase } from "@interfaces/IMenu"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { ICURRENCY } from "@interfaces/ICurrency"
+import { IList } from "@interfaces/ITransaction"
 import MenuItemCustom from "../MenuItemCustom"
 
 interface IProp {
@@ -22,6 +23,7 @@ interface IProp {
     | IMenuBase[]
     | IGameItemListData[]
     | ICURRENCY[]
+    | IList[]
   setOnTitle?: (_value: IDropdownAll) => void
   setExpanded?: (_value: boolean) => void
   title?: string

@@ -1,14 +1,15 @@
-import React from "react"
+import React, { memo } from "react"
+import useProfileStore from "@stores/profileStore"
+import AllTransactionTable from "../organisms/AllTransactionTable"
 
-const AllTransactions = () => (
-  // hook
-  // const { profile } = useProfileStore()
-  // const { hydrated } = useGlobal()
+const AllTransactions = () => {
+  const profile = useProfileStore((state) => state.profile.data)
 
-  <div className="mx-auto max-w-[678px]">
-    All transactions
-    {/* {hydrated && <TransactionTable profile={profile.data} />} */}
-  </div>
-)
+  return (
+    <div className="mx-auto max-w-[700px]">
+      <AllTransactionTable profile={profile} />
+    </div>
+  )
+}
 
-export default AllTransactions
+export default memo(AllTransactions)

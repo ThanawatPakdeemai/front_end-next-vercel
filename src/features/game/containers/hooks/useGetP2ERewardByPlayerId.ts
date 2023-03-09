@@ -13,7 +13,7 @@ const useGetP2ERewardByPlayerId = (_playerId: string) => {
     queryKey: ["getPlayToEarnRewardByPlayerId", _playerId],
     queryFn: () => getPlayToEarnRewardByPlayerId(_playerId),
     staleTime: Infinity,
-    enabled: _playerId !== undefined && _playerId !== ""
+    enabled: !!_playerId
   })
 
   return {

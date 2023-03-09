@@ -30,7 +30,7 @@ const useGamePartners = () => {
       gameData ? getGamePartnerAllReview(limit, page, gameData.id) : null,
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: gameData?.id !== "" && gameData?.id !== undefined
+    enabled: !!gameData?.id
   })
 
   /**
@@ -48,7 +48,7 @@ const useGamePartners = () => {
     queryFn: () => (gameData ? getGamePartnerNewVersion(gameData.id) : null),
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: gameData?.id !== "" && gameData?.id !== undefined
+    enabled: !!gameData?.id
   })
 
   /**

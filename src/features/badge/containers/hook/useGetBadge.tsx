@@ -12,7 +12,7 @@ const useGetBadge = (_playerId: string) => {
     queryKey: ["getBadgeData", _playerId],
     queryFn: () => getBadgeplayerId(_playerId),
     staleTime: Infinity,
-    enabled: _playerId !== undefined && _playerId !== ""
+    enabled: !!_playerId
   })
   return {
     getBadgeData,

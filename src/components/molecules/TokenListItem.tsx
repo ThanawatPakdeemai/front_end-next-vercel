@@ -73,7 +73,9 @@ const TokenListItem = ({
             onClick={
               handleClick ||
               (() => {
-                router.push(link ? `?token=${link}` : "?token=NAKA")
+                router.push(
+                  link ? `wallet/?token=${link}` : "wallet/?token=NAKA"
+                )
               })
             }
           />

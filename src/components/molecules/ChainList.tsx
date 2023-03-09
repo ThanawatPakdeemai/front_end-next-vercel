@@ -43,7 +43,7 @@ const ChainList = ({ currentChain }: IButtonChooseChain) => {
               <TabMenu
                 icon={ele.icon}
                 text={ele.title}
-                link={`?token=${ele.link}`}
+                link={`wallet/?token=${ele.link}`}
                 className="mt-4 p-2"
                 selected={ele.link === currentChain.link}
               />

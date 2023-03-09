@@ -85,6 +85,10 @@ export interface IDevice {
   supported: boolean
 }
 
+export interface IEvent {
+  eventname: string
+}
+
 export interface IDropdownAll
   extends IGameCategory,
     IGameItem,

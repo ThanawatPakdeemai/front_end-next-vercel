@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next"
 import useGlobal from "@hooks/useGlobal"
 import { IProfile } from "@src/types/profile"
 import { useRouter } from "next/router"
-import { baseUrl } from "@constants/sites"
+import CONFIGS from "@configs/index"
 import TableNodata from "../atoms/TableNodata"
 import DropdownEvent from "../molecules/DropdownEvent"
 
@@ -26,6 +26,7 @@ interface IProp {
 }
 
 export default function AllTransactionTable({ profile }: IProp) {
+  const baseUrl = CONFIGS.CHAIN.POLYGON_SCAN
   const { hydrated } = useGlobal()
   const { t } = useTranslation()
   const { getTransHistory } = useGetTransWallet()
@@ -101,7 +102,7 @@ export default function AllTransactionTable({ profile }: IProp) {
   }
 
   const onHandleView = (element: ITransData) => {
-    router.push(`${baseUrl.polygon}/tx/${element.transaction_hash}`)
+    router.push(`${baseUrl}/tx/${element.transaction_hash}`)
   }
 
   const formatNumber = (num: number): string => {

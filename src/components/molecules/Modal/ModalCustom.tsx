@@ -1,13 +1,17 @@
 import React from "react"
-import { Box, ModalUnstyledOwnProps, Modal } from "@mui/material"
+import { Box, ModalUnstyledOwnProps, Modal, Typography } from "@mui/material"
+import CircleNakaIcon from "@components/icons/CircleNakaIcon"
+import ButtonClose from "@components/atoms/button/ButtonClose"
 
 interface IProps extends ModalUnstyledOwnProps {
   bgcolor?: string
   className?: string
   width?: string | number
+  title?: string
+  onClose?: () => void
 }
 
-export const ModalCustom = ({ ...props }: IProps) => {
+export const ModalCustom = ({ title, onClose, ...props }: IProps) => {
   const { children, bgcolor, className, width } = props
   return (
     <Modal {...props}>
@@ -22,6 +26,21 @@ export const ModalCustom = ({ ...props }: IProps) => {
         }}
         className={`${className} rounded-md p-[10px] focus:border-none focus:outline-none focus-visible:outline-none`}
       >
+        {title && (
+          <Box
+            className="flex items-center rounded-lg bg-neutral-800 pl-5"
+            sx={{ height: "54px" }}
+          >
+            <div className="flex flex-1 flex-row items-center">
+              <CircleNakaIcon />
+              <Typography className="pl-[15px] uppercase text-neutral-300">
+                {title}
+              </Typography>
+            </div>
+            <ButtonClose onClick={onClose || (() => {})} />
+          </Box>
+        )}
+
         <Box className="rounded-md bg-neutral-900 p-4 focus:border-none focus:outline-none focus-visible:outline-none">
           {children}
         </Box>

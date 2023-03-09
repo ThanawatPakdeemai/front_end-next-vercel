@@ -38,10 +38,8 @@ const NakaPassStoryMode = () => (
           season II
         </div>
         <div className=" flex  h-[50px] items-center justify-evenly rounded-sm bg-neutral-780 p-1 font-neue-machina-bold text-sm text-neutral-800">
-          <div className="flex items-center ">
-            <span className=" text-secondary-main">2W</span>
-            <span className=" text-secondary-main">1D</span>
-          </div>
+          <span className=" text-secondary-main">2W</span>
+          <span className=" text-secondary-main">1D</span>
           <span className=" text-neutral-400">24 : 00 :45</span>
         </div>
       </div>
@@ -87,8 +85,9 @@ const NakaPassStoryMode = () => (
         </div>
       </div>
 
-      <div className="ml-2 h-[-webkit-fill-available] w-[240px] md:w-[920px]  md:flex-auto">
+      <div className="ml-2 h-[-webkit-fill-available] w-[240px] md:flex-auto  lg:w-[920px]">
         <div className="custom-scroll-line-green flex items-center gap-2 overflow-x-scroll ">
+          {/* max-sm:w-[230px] */}
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((ele, index) => (
             <motion.div
               className=" mb-2 h-[188px]  rounded-2xl border border-neutral-700 bg-neutral-900"

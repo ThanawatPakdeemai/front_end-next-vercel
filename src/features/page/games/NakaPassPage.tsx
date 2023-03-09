@@ -31,7 +31,7 @@ const NakaPassPage = () => {
         icon={<ShapeIcon fill="#4E5057" />}
         textColor="font-bold text-sm text-neutral-600"
       />
-      <div className="my-20  h-full w-full max-w-[1158px]">
+      <div className="my-20  h-full w-full lg:max-w-[1158px]">
         <div>
           {storyGame && !isFetching ? (
             <GameCarousel

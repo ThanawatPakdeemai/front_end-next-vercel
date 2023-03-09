@@ -96,7 +96,7 @@ export default function WalletPage() {
           />
           <RightMenuWallet
             title="Deposit"
-            titleHeader="diposit from metamask"
+            titleHeader="deposit from metamask"
             open={openDeposit}
             value={value}
             setValue={setValue}

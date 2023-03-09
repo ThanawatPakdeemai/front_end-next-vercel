@@ -19,7 +19,7 @@ import { Web3Provider } from "@ethersproject/providers"
 export const getContract = (
   abi: ContractInterface,
   address: string,
-  _provider?:
+  _provider:
     | Web3Provider
     | ethers.providers.JsonRpcProvider
     | ethers.providers.JsonRpcSigner
@@ -30,7 +30,7 @@ export const getContract = (
 
 export const getBalanceVaultContract = (
   address: string,
-  web3?:
+  web3:
     | Web3Provider
     | ethers.providers.JsonRpcProvider
     | ethers.providers.JsonRpcSigner
@@ -38,12 +38,12 @@ export const getBalanceVaultContract = (
 
 export const getBalanceVaultBinanceContract = (
   address: string,
-  web3?: Web3Provider | ethers.providers.JsonRpcSigner
+  web3: Web3Provider | ethers.providers.JsonRpcSigner
 ) => getContract(BinanceBalanceVaultAbi.abi, address, web3)
 
 export const getBEP20Contract = (
   address: string,
-  web3?:
+  web3:
     | Web3Provider
     | ethers.providers.JsonRpcProvider
     | ethers.providers.JsonRpcSigner
@@ -51,7 +51,7 @@ export const getBEP20Contract = (
 
 export const getERC20Contract = (
   address: string,
-  web3?:
+  web3:
     | Web3Provider
     | ethers.providers.JsonRpcProvider
     | ethers.providers.JsonRpcSigner
@@ -59,7 +59,7 @@ export const getERC20Contract = (
 
 export const getFlexibleStakingContract = (
   address: string,
-  web3?:
+  web3:
     | Web3Provider
     | ethers.providers.JsonRpcProvider
     | ethers.providers.JsonRpcSigner
@@ -67,7 +67,7 @@ export const getFlexibleStakingContract = (
 
 export const getInventoryVaultContract = (
   address: string,
-  web3?:
+  web3:
     | Web3Provider
     | ethers.providers.JsonRpcProvider
     | ethers.providers.JsonRpcSigner
@@ -75,7 +75,7 @@ export const getInventoryVaultContract = (
 
 export const getItemVaultContract = (
   address: string,
-  web3?:
+  web3:
     | Web3Provider
     | ethers.providers.JsonRpcProvider
     | ethers.providers.JsonRpcSigner
@@ -83,7 +83,7 @@ export const getItemVaultContract = (
 
 export const getP2PBinanceContract = (
   address: string,
-  web3?:
+  web3:
     | Web3Provider
     | ethers.providers.JsonRpcProvider
     | ethers.providers.JsonRpcSigner
@@ -91,7 +91,7 @@ export const getP2PBinanceContract = (
 
 export const getP2PBinanceMumbaiContract = (
   address: string,
-  web3?:
+  web3:
     | Web3Provider
     | ethers.providers.JsonRpcProvider
     | ethers.providers.JsonRpcSigner
@@ -99,7 +99,7 @@ export const getP2PBinanceMumbaiContract = (
 
 export const getP2PPolygonContract = (
   address: string,
-  web3?:
+  web3:
     | Web3Provider
     | ethers.providers.JsonRpcProvider
     | ethers.providers.JsonRpcSigner
@@ -107,7 +107,7 @@ export const getP2PPolygonContract = (
 
 export const getP2PPolygonMumbaiContract = (
   address: string,
-  web3?:
+  web3:
     | Web3Provider
     | ethers.providers.JsonRpcProvider
     | ethers.providers.JsonRpcSigner
@@ -115,7 +115,7 @@ export const getP2PPolygonMumbaiContract = (
 
 export const getShopContract = (
   address: string,
-  web3?:
+  web3:
     | Web3Provider
     | ethers.providers.JsonRpcProvider
     | ethers.providers.JsonRpcSigner
@@ -123,7 +123,7 @@ export const getShopContract = (
 
 export const getStakingContract = (
   address: string,
-  web3?:
+  web3:
     | Web3Provider
     | ethers.providers.JsonRpcProvider
     | ethers.providers.JsonRpcSigner
@@ -131,7 +131,7 @@ export const getStakingContract = (
 
 export const getUserGameItemsContract = (
   address: string,
-  web3?:
+  web3:
     | Web3Provider
     | ethers.providers.JsonRpcProvider
     | ethers.providers.JsonRpcSigner

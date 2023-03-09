@@ -55,7 +55,7 @@ const GameReviews = ({ gameType, gameId }: IGameReviewProps) => {
               review.map((_item) => (
                 <div
                   key={_item.id}
-                  className="review--item mb-3 grid min-h-[68px] grid-flow-col justify-between gap-2 rounded-2xl border border-neutral-800 bg-neutral-900 p-2"
+                  className="review--item mb-3 flex min-h-[68px] grid-flow-col flex-wrap items-center justify-between gap-2 rounded-2xl border border-neutral-800 bg-neutral-900 p-2 lg:grid"
                 >
                   <div className="review--item__avatar animation-image row-span-2 flex h-[58px] w-[58px] items-center">
                     <Image
@@ -66,7 +66,7 @@ const GameReviews = ({ gameType, gameId }: IGameReviewProps) => {
                       className="h-[58px] w-full rounded-sm object-fill object-center"
                     />
                   </div>
-                  <div className="review--item__content__header flex min-w-[300px] items-center justify-between">
+                  <div className="review--item__content__header flex flex-wrap items-center lg:min-w-[300px] lg:justify-between">
                     <div className="review--item__content-username">
                       {_item.user.username}
                     </div>
@@ -93,7 +93,7 @@ const GameReviews = ({ gameType, gameId }: IGameReviewProps) => {
                       />
                     </div>
                   </div>
-                  <div className="review--item__content min-w-[300px]">
+                  <div className="review--item__content lg:min-w-[300px]">
                     <Typography
                       className="mb-0 text-sm text-neutral-500 line-clamp-1"
                       variant="body1"

@@ -13,6 +13,20 @@ export const IMAGES = {
     height: 37,
     alt: "naka-logo-hover"
   },
+  nakaMarketplaceLogo: {
+    src: "/images/home/naka-marketplace-logo.svg",
+    blurDataURL: "/images/home/naka-marketplace-logo.svg",
+    width: 166,
+    height: 30,
+    alt: "naka-marketplace-logo"
+  },
+  nakaMarketplaceLogoHover: {
+    src: "/images/home/naka-marketplace-logo-hover.svg",
+    blurDataURL: "/images/home/naka-marketplace-logo-hover.svg",
+    width: 225,
+    height: 37,
+    alt: "naka-marketplace-logo"
+  },
   tableCom: {
     src: "/images/home/table-com.svg",
     blurDataURL: "/images/home/table-com.svg",

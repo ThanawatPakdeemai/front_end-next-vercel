@@ -56,12 +56,18 @@ const useGlobal = (
   const { getAllTokenInfoByContractAddress } = useContractVaultBinance()
   const { setChainSupport, setContractBNB } = useChainSupport()
   const { getNAKATokenInfo } = useContractVault()
-  const { chainId, signer, accounts } = useSwitchNetwork()
+  const { chainId, signer, accounts, statusWalletConnected } =
+    useSwitchNetwork()
 
   const profile = useProfileStore((state) => state.profile.data)
   // States
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
   const [hydrated, setHydrated] = useState(false)
+
+  /**
+   * @description check if url is in marketplace
+   */
+  const isMarketplace = router.asPath.includes("marketplace")
 
   /**
    * @description Set profile
@@ -156,8 +162,8 @@ const useGlobal = (
    * @description Fetch BNB token address
    */
   useMemo(() => {
+    if (!statusWalletConnected.responseStatus) return
     if (signer === undefined || accounts === undefined) return
-
     fetchContractBNB()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -279,7 +285,8 @@ const useGlobal = (
     getTokenSupply,
     fetchAllTokenSupported,
     fetchNAKAToken,
-    getDefaultCoin
+    getDefaultCoin,
+    isMarketplace
   }
 }
 

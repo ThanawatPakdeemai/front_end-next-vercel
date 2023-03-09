@@ -14,7 +14,7 @@ const Banners = () => {
     BANNER_DATA.find(({ path }) => path === router.pathname) || BANNER_DATA[0]
 
   return (
-    <div className="bg-line-linear-gradient mb-12 flex h-48 rounded-3xl border border-neutral-800 bg-primary-main uppercase">
+    <div className="bg-line-linear-gradient mb-2 flex h-48 overflow-hidden rounded-3xl border border-neutral-800 bg-primary-main uppercase md:mb-12">
       <div className="z-10 flex w-full items-center justify-center">
         <div className="flex w-full select-none items-center justify-between">
           <span

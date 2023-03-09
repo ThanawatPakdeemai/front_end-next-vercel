@@ -8,10 +8,11 @@ import {
 import CONFIGS from "@configs/index"
 import { WALLET_CONNECTOR_TYPES } from "@configs/walletConnect"
 import useProfileStore from "@stores/profileStore"
-import Helper from "@utils/helper"
 import { BigNumber, providers, utils } from "ethers"
 import { ELocalKey } from "@interfaces/ILocal"
 import useChainSupport from "@stores/chainSupport"
+import Helper from "@utils/helper"
+import { IErrorMessage } from "@interfaces/IErrorMessage"
 
 const useCreateWeb3Provider = () => {
   const [signer, setSigner] = useState<JsonRpcSigner | undefined>(undefined)
@@ -29,6 +30,8 @@ const useCreateWeb3Provider = () => {
     useState(false)
 
   const { setChainSupport } = useChainSupport()
+
+  const profile = useProfileStore((state) => state.profile.data)
 
   /**
    * @description Handle network setting for metamask
@@ -104,10 +107,7 @@ const useCreateWeb3Provider = () => {
     window.ethereum?.chainId === CONFIGS.CHAIN.CHAIN_ID_HEX ||
     window.ethereum?.chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB
 
-  // const { onReset } = useProfileStore()
   const handleDisconnectWallet = useCallback(async () => {
-    // onReset()
-    // Helper.resetLocalStorage()
     setProvider(undefined)
     setAddress(undefined)
     setAccounts(undefined)
@@ -120,6 +120,28 @@ const useCreateWeb3Provider = () => {
     setAddress(_address)
     useProfileStore.getState().onSetProfileAddress(_address)
   }, [])
+
+  const handleCheckingWallet = (): IErrorMessage => {
+    if (
+      profile &&
+      address &&
+      profile.address.toLocaleLowerCase() !== address.toLocaleLowerCase()
+    ) {
+      // Uncomment this if you want to disconnect wallet when user change account on metamask
+      // handleDisconnectWallet()
+      return {
+        responseStatus: false,
+        errorMsg: "Wallet is incorrect",
+        type: "error"
+      }
+    }
+
+    return {
+      responseStatus: true,
+      errorMsg: "Wallet is correct",
+      type: "success"
+    }
+  }
 
   /**
    * @description Check if current chain matches with the one we need
@@ -179,17 +201,14 @@ const useCreateWeb3Provider = () => {
     if (walletAccounts) {
       onSetAddress(walletAccounts[0])
     }
-
     const _signer = _provider.getSigner()
     setSigner(_signer)
-
     // Subscribe to accounts change
     window.ethereum.on("accountsChanged", async () => {
       // !Error - this code has problem when user change network on metamask
       // await handleDisconnectWallet()
       setHasChangeAccountMetamask(true)
     })
-
     // Subscribe to chainId change
     window.ethereum.on("chainChanged", (_chainId: string) => {
       if (_chainId === undefined) {
@@ -203,7 +222,6 @@ const useCreateWeb3Provider = () => {
         resetChainId()
       }
     })
-
     // Subscribe to session disconnection
     if (window.ethereum && window.ethereum.on) {
       window.ethereum.on("disconnect", (/* code: number, reason: string */) => {
@@ -230,6 +248,8 @@ const useCreateWeb3Provider = () => {
     }
     if (_provider && _provider.request) {
       try {
+        const _newProvider = new providers.Web3Provider(_provider)
+        const _signer = _newProvider.getSigner()
         setLoading(true)
         await _provider
           .request({
@@ -237,12 +257,13 @@ const useCreateWeb3Provider = () => {
             params: [{ chainId: _chainId }] // [handleNetworkSettings(_chainId)]
           })
           .then(() => {
-            // handleConnectWithMetamask()
             checkNetwork()
             setChainId(_chainId)
+            setSigner(_signer)
             setLoading(false)
+            handleConnectWithMetamask()
           })
-          .catch(() => {
+          .catch((_err) => {
             setLoading(false)
           })
 
@@ -294,6 +315,7 @@ const useCreateWeb3Provider = () => {
         setNetwork(_network)
         setBalance(_balance)
         setFeeData(_feeData)
+        handleCheckingWallet()
       }
       setAccounts(account)
       onSetAddress(account[0])
@@ -301,6 +323,8 @@ const useCreateWeb3Provider = () => {
       window.ethereum.on("accountsChanged", async () => {
         // await handleDisconnectWallet()
         await setHasChangeAccountMetamask(true)
+        // handleCheckingWallet(_provider, address[0])
+        checkChain()
       })
 
       // Subscribe to chainId change
@@ -360,9 +384,6 @@ const useCreateWeb3Provider = () => {
     }
   }, [])
 
-  // useEffect(() => {
-  // }, [provider])
-
   return {
     accounts,
     address,
@@ -386,7 +407,8 @@ const useCreateWeb3Provider = () => {
     // checkNetwork/
     setChainId,
     getNetwork,
-    checkChain
+    checkChain,
+    statusWalletConnected: handleCheckingWallet()
   }
 }
 

@@ -39,7 +39,7 @@ export const MuiButton: Components<Omit<Theme, "components">>["MuiButton"] = {
         },
         "&Large": {
           minWidth: "180px",
-          padding: "15px 25px 13px",
+          padding: "15px 15px 13px",
           borderRadius: "30px",
           ".MuiSvgIcon-root": {
             fontSize: "28px"

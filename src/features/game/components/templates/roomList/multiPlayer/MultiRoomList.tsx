@@ -2,6 +2,7 @@ import ReloadIcon from "@components/icons/ReloadIcon"
 import ButtonSticky from "@components/molecules/ButtonSticky"
 import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
+import BuyItemBody from "@components/templates/game/BuyItemBody"
 import { MESSAGES } from "@constants/messages"
 import useSocketRoomList from "@feature/game/containers/hooks/useSocketRoomList"
 import {
@@ -49,10 +50,16 @@ const MultiRoomList = () => {
     [data?._id, data?.socket_info?.url_lobby, item_id, profile?.id]
   )
 
-  const { socketRoomList, isConnected, getRoomListMultiPlayer } =
-    useSocketRoomList({
-      ...propsSocketRoomlist
-    })
+  const {
+    socketRoomList,
+    isConnected,
+    getRoomListMultiPlayer,
+    searchRoom,
+    getRoomFromSearch,
+    search
+  } = useSocketRoomList({
+    ...propsSocketRoomlist
+  })
 
   useEffect(() => {
     if (profile) {
@@ -70,24 +77,47 @@ const MultiRoomList = () => {
     }
   }, [profile, socketRoomList])
 
+  const getRooms = useCallback(async () => {
+    const roomMulti = await getRoomListMultiPlayer()
+    if (roomMulti) {
+      const uniquePlayerIn = (
+        roomMulti as IResSocketRoomList
+      ).data.gameRoomDetail.filter(
+        (thing, index, self) =>
+          index === self.findIndex((t) => t?._id === thing?._id)
+      )
+      setDataRoom(uniquePlayerIn)
+    }
+  }, [getRoomListMultiPlayer])
+
+  const fetchRoomFromSearch = useCallback(() => {
+    getRoomFromSearch().then((_room) => {
+      const room = _room as IResSocketRoomList
+      const uniquePlayerIn = (
+        room as IResSocketRoomList
+      ).data.gameRoomDetail.filter(
+        (thing, index, self) =>
+          index === self.findIndex((t) => t?._id === thing?._id)
+      )
+      setDataRoom(uniquePlayerIn)
+    })
+  }, [getRoomFromSearch])
+
   const fetchRoom = useCallback(async () => {
     if (isConnected) {
-      const roomMulti = await getRoomListMultiPlayer()
-      if (roomMulti) {
-        const uniquePlayerIn = (
-          roomMulti as IResSocketRoomList
-        ).data.gameRoomDetail.filter(
-          (thing, index, self) =>
-            index === self.findIndex((t) => t?._id === thing?._id)
-        )
-        setDataRoom(uniquePlayerIn)
+      if (search === "") {
+        getRooms()
+      } else {
+        fetchRoomFromSearch()
       }
     }
-  }, [getRoomListMultiPlayer, isConnected])
+  }, [fetchRoomFromSearch, getRooms, isConnected, search])
 
   useEffect(() => {
-    if (isConnected) fetchRoom()
-  }, [fetchRoom, isConnected])
+    if (isConnected) {
+      fetchRoom()
+    }
+  }, [fetchRoom, fetchRoomFromSearch, isConnected, search])
 
   const handleJoinRoom = (_data: IGameRoomListSocket) => {
     if (profile) {
@@ -126,12 +156,14 @@ const MultiRoomList = () => {
   return (
     <>
       <Box className=" block gap-3 lg:flex">
-        <SocketProviderRoom propsSocket={{ getRoomListMultiPlayer, fetchRoom }}>
-          <Box className="w-full rounded-3xl border border-neutral-700">
+        <SocketProviderRoom
+          propsSocket={{ getRoomListMultiPlayer, fetchRoom, searchRoom }}
+        >
+          <Box className="relative w-full rounded-3xl border border-neutral-700">
             {data && <HeaderRoomList lobby={data.name} />}
             <Divider />
 
-            <div className="custom-scroll flex h-[666px] flex-col items-center gap-[27px] overflow-y-scroll bg-room-list bg-contain p-[43px]">
+            <div className="custom-scroll md:0 m-4 flex h-96 flex-col gap-[27px] overflow-y-scroll bg-room-list bg-contain md:h-[666px] md:items-center lg:p-[43px]">
               {profile &&
                 dataRoom &&
                 dataRoom.length > 0 &&
@@ -170,9 +202,9 @@ const MultiRoomList = () => {
           </Box>
         </SocketProviderRoom>
         {data && (!data?.play_to_earn || !data.tournament) && (
-          <Box className=" w-[333px] flex-none gap-2">
+          <BuyItemBody>
             <CardBuyItem />
-          </Box>
+          </BuyItemBody>
         )}
       </Box>
     </>

@@ -12,7 +12,6 @@ import { motion } from "framer-motion"
 import useGetBlogTags from "@feature/blog/containers/hook/useGetBlogTags"
 import useGetPopularTags from "@feature/blog/containers/hook/useGetPopularTags"
 import { Chip, Typography } from "@mui/material"
-// import { SOCIAL_BLOG_SHARE } from "@configs/socialShare"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import useLoadingStore from "@stores/loading"
 import {
@@ -84,7 +83,7 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
             </p>
             <div className="my-12 grid w-4/12 justify-items-end">
               <motion.div
-                animate={{ rotate: [220, 135, 45] }}
+                animate={{ rotate: [0, -45, -90, -135, -180] }}
                 transition={{
                   duration: 5,
                   type: "spring",
@@ -162,11 +161,11 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
                       />
                     )}
                   </div>
-                  <div className="my-[40px] text-left font-neue-machina text-default uppercase text-white-primary text-grey-neutral04">
+                  <div className="my-[40px] text-left font-neue-machina text-default uppercase text-white-primary ">
                     {getBlogDetails.data?.description}
                   </div>
                   <div
-                    className="content-blog text-left font-neue-machina text-default text-black-default text-grey-neutral04"
+                    className="content-blog text-left font-neue-machina text-default  text-grey-neutral04"
                     // eslint-disable-next-line react/no-danger
                     dangerouslySetInnerHTML={{
                       __html: getBlogDetails.data?.content || ""
@@ -174,7 +173,7 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
                   />
                 </div>
                 <div className="absolute bottom-0 flex h-auto w-full border-2 border-neutral-780 bg-primary-main">
-                  <div className="mx-32 flex grid h-[70px] w-full grid-cols-2 items-center gap-4">
+                  <div className="mx-32 grid h-[70px] w-full grid-cols-2 items-center gap-4">
                     <div className="flex items-center gap-3">
                       <ViewIcon />
                       <div className=" text-sm text-neutral-100">

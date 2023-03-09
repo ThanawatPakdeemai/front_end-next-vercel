@@ -34,7 +34,7 @@ const PeriodLabel = ({ days, className, type }: IPeriodLabel) => {
           </p>
         </>
       ) : (
-        <Skeleton className="mb-4 h-[100px] w-full rounded-sm" />
+        <Skeleton className="h-[57px] w-full rounded-sm sm:mb-4 sm:h-[100px]" />
       )}
     </div>
   )

@@ -226,8 +226,8 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
       <Box>
         <PlayerCard players={players} />
         <Box className="mb-10  flex justify-center">
-          <Box className="w-fit items-center justify-center gap-3 rounded-[50px] border border-neutral-800 bg-primary-main p-3 md:flex">
-            <Typography className=" mx-4 w-[200px] font-neue-machina text-sm ">
+          <Box className="w-fit items-center justify-center gap-3 rounded-md border border-neutral-800 bg-primary-main p-3 md:flex md:rounded-[50px]">
+            <Typography className=" mx-4 w-full font-neue-machina text-sm ">
               {" It's time to play! Press the Start"}
             </Typography>
             <ButtonGame

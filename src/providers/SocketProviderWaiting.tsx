@@ -16,6 +16,7 @@ interface IPropSocket {
   dataPlayers: IGameRoomListSocket | undefined
   waitingRoomPlay: () => void
   startGame: () => void
+  getChat?: () => void
 }
 interface IProp {
   propsSocket: IPropSocket
@@ -31,7 +32,8 @@ const SocketContext = createContext<IPropSocket>({
   onOwnerBurnItem: () => {},
   dataPlayers: undefined,
   waitingRoomPlay: () => {},
-  startGame: () => {}
+  startGame: () => {},
+  getChat: () => {}
 })
 
 function SocketProvider({ propsSocket, children }: IProp) {

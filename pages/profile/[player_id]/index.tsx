@@ -1,6 +1,7 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import React, { ReactElement } from "react"
 import dynamic from "next/dynamic"
+import { GetServerSideProps } from "next"
 
 const ProfileContent = dynamic(
   () => import("@components/molecules/profile/ProfileContent"),
@@ -14,17 +15,10 @@ const ProfileLayout = dynamic(
     suspense: true
   }
 )
-const GameStatOverview = dynamic(
-  () => import("@feature/playerProfile/components/organisms/GameStatOverview"),
-  {
-    suspense: true
-  }
-)
 
 const ProfilePage = () => (
   <article className="h-full w-full">
     <ProfileContent />
-    <GameStatOverview />
   </article>
 )
 
@@ -32,12 +26,10 @@ ProfilePage.getLayout = function getLayout(page: ReactElement) {
   return <ProfileLayout>{page}</ProfileLayout>
 }
 
-export async function getServerSideProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["common"]))
-    }
+export const getServerSideProps: GetServerSideProps = async (ctx) => ({
+  props: {
+    ...(await serverSideTranslations(ctx.locale!, ["common"]))
   }
-}
+})
 
 export default ProfilePage

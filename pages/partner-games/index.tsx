@@ -3,7 +3,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 
 const GamePageLayout = dynamic(
-  () => import("@components/templates/GamePageLayout"),
+  () => import("@components/templates/PartnerPageLayout"),
   {
     suspense: true
   }

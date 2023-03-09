@@ -16,8 +16,8 @@ interface IProp {
  */
 
 const LikeNoLobby = ({ value, maxValue, imgSrc, imgAlt }: IProp) => (
-  <div>
-    <div className="mb-3 flex w-full flex-col gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 p-4 md:w-[218px]">
+  <div className="flex flex-[1_1_220px] gap-2 lg:block lg:flex-none lg:gap-0">
+    <div className="m-0 flex w-full flex-auto flex-col justify-center gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 p-4 md:w-[218px] lg:mb-3 lg:flex-none">
       <GaugeStats
         value={value}
         maxValue={maxValue}
@@ -44,6 +44,7 @@ const LikeNoLobby = ({ value, maxValue, imgSrc, imgAlt }: IProp) => (
         alt={imgAlt || "nakamoto-wars"}
         width={186}
         height={186}
+        className="object-contain"
       />
     </div>
   </div>

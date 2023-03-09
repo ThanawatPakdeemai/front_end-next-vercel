@@ -2,7 +2,7 @@ import React, { memo, useState } from "react"
 import { Box, Stack } from "@mui/material"
 import { ModalCustom } from "../Modal/ModalCustom"
 import ButtonLogin from "./ButtonLogin"
-import FormLogin from "../../../features/authentication/components/FromLogin"
+import FormLogin from "../../../features/authentication/components/FormLogin"
 import ModalHeader from "../Modal/ModalHeader"
 
 const RightMenuNotLogIn = () => {

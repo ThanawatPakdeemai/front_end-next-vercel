@@ -25,7 +25,7 @@ const useQueryBalanceVault = (
   } = useQuery({
     queryKey: ["getNakaBalanceVault", _address],
     queryFn: () => getNakaBalanceVault(_address || ""),
-    enabled: _address !== "" && isConnectedWallet,
+    enabled: !!_address && isConnectedWallet,
     staleTime: Infinity
   })
 
@@ -38,7 +38,7 @@ const useQueryBalanceVault = (
   } = useQuery({
     queryKey: ["getNakaBalanceWallet", _address],
     queryFn: () => getNakaBalanceWallet(_address || ""),
-    enabled: _address !== "" && isConnectedWallet,
+    enabled: !!_address && isConnectedWallet,
     staleTime: Infinity
   })
 
@@ -51,12 +51,7 @@ const useQueryBalanceVault = (
   } = useQuery({
     queryKey: ["getBalanceVaultBSC", _address, _tokenAddress],
     queryFn: () => getBalanceVaultBSC(_address || "", _tokenAddress || ""),
-    enabled:
-      _address !== undefined ||
-      _address !== "" ||
-      _tokenAddress !== "" ||
-      _tokenAddress !== undefined ||
-      isConnectedWallet,
+    enabled: !!_address || !!_tokenAddress || isConnectedWallet,
     staleTime: Infinity
   })
 
@@ -69,10 +64,7 @@ const useQueryBalanceVault = (
   } = useQuery({
     queryKey: ["getBalanceWalletBSC", _address],
     queryFn: () => getBalanceWalletBSC(_address || ""),
-    enabled:
-      _address !== undefined &&
-      _tokenAddress !== undefined &&
-      isConnectedWallet,
+    enabled: !!_address && !!_tokenAddress && isConnectedWallet,
     staleTime: Infinity
   })
 

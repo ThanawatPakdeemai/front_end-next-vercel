@@ -13,7 +13,7 @@ const useGetGameByPath = (_gamePath: string) => {
     retry: false,
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: _gamePath !== "" || _gamePath !== undefined
+    enabled: !!_gamePath
   })
 
   return {

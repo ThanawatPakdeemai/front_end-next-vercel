@@ -22,8 +22,8 @@ const BlogLayout = ({
       icon={<ShapeIcon fill="#4E5057" />}
     />
     <Banners />
-    <div className="flex flex-row gap-3">
-      <MenuList className="h-fit w-[200px] rounded-[13px] bg-neutral-800 p-[6px]">
+    <div className="flex-row gap-3 md:flex">
+      <MenuList className="mx-auto h-fit w-full max-w-xs rounded-[13px] bg-neutral-800 p-[6px] md:mx-0 md:w-[200px]">
         <div>
           <div className="mb-1 flex h-[40px] items-center rounded-xl bg-black-100">
             <BlogIcon className="mr-[12px] ml-1 stroke-neutral-300 text-white-default" />

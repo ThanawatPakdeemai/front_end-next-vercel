@@ -125,6 +125,7 @@ const useCreateWeb3Provider = () => {
     if (
       profile &&
       address &&
+      profile.address &&
       profile.address.toLocaleLowerCase() !== address.toLocaleLowerCase()
     ) {
       // Uncomment this if you want to disconnect wallet when user change account on metamask

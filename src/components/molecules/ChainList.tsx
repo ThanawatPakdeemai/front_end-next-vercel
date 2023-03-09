@@ -6,10 +6,10 @@ import { ModalCustom } from "./Modal/ModalCustom"
 import TokenListItem from "./TokenListItem"
 
 interface IButtonChooseChain {
-  currentChain: IChainList
+  currentTabChainSelected: IChainList
 }
 
-const ChainList = ({ currentChain }: IButtonChooseChain) => {
+const ChainList = ({ currentTabChainSelected }: IButtonChooseChain) => {
   const [open, setOpen] = useState<boolean>(false)
 
   const handleOpen = () => setOpen(true)
@@ -19,10 +19,14 @@ const ChainList = ({ currentChain }: IButtonChooseChain) => {
     <>
       <TokenListItem
         icon={
-          CHAIN_SUPPORT.find((item) => item.link === currentChain.link)?.icon
+          CHAIN_SUPPORT.find(
+            (item) => item.link === currentTabChainSelected.link
+          )?.icon
         }
         text={
-          CHAIN_SUPPORT.find((item) => item.link === currentChain.link)?.title
+          CHAIN_SUPPORT.find(
+            (item) => item.link === currentTabChainSelected.link
+          )?.title
         }
         handleClick={handleOpen}
         shadow
@@ -45,7 +49,7 @@ const ChainList = ({ currentChain }: IButtonChooseChain) => {
                 text={ele.title}
                 link={`wallet/?token=${ele.link}`}
                 className="mt-4 p-2"
-                selected={ele.link === currentChain.link}
+                selected={ele.link === currentTabChainSelected.link}
               />
             </Box>
           ))}

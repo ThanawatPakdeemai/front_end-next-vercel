@@ -10,14 +10,14 @@ import TokenListItem from "./TokenListItem"
 
 interface ITokenList {
   dataList: ITokenContract[]
-  currentChain: IChainList
+  currentTabChainSelected: IChainList
   currentTokenSelected: string
   displayBalance?: boolean
 }
 
 const TokenList = ({
   dataList,
-  currentChain,
+  currentTabChainSelected,
   currentTokenSelected,
   displayBalance = false
 }: ITokenList) => {
@@ -31,7 +31,7 @@ const TokenList = ({
    * @returns {ReactNode}
    */
   const tokenIcon = (): ReactNode => {
-    if (currentChain.link === "NAKA") {
+    if (currentTabChainSelected && currentTabChainSelected.link === "NAKA") {
       return <INaka />
     }
     return <IBusd />

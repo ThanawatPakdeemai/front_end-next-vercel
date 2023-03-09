@@ -10,6 +10,7 @@ import MetamaskLogo from "@components/icons/MetamaskLogo"
 import CONFIGS from "@configs/index"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import { numberWithCommas } from "@src/helpers/addComma"
+import { IChainList } from "@configs/chain"
 import BalanceWallet from "./BalanceWallet"
 
 interface IProp {
@@ -18,9 +19,9 @@ interface IProp {
   handleConnectWallet?: () => void
   handleOnDisconnectWallet?: () => void
   blockExplorerURL: string | undefined
-  chainId: string
   chainSupport: ITokenContract[]
-  chainName: string
+  currentTokenSelected: string
+  currentChainSelected: IChainList
 }
 
 const MetamaskWallet = ({
@@ -29,27 +30,43 @@ const MetamaskWallet = ({
   handleConnectWallet,
   handleOnDisconnectWallet,
   blockExplorerURL,
-  chainId,
   chainSupport,
-  chainName
+  currentTokenSelected,
+  currentChainSelected
 }: IProp) => {
   /**
    * @description Handle display balances from wallet
    */
   const handleDisplayBalance = () => {
-    if (chainId === CONFIGS.CHAIN.CHAIN_ID) {
-      return (
-        <></>
-        // <BalanceWallet
-        //   balance={balance.text ?? "N/A"}
-        //   tokenName={tokenName}
-        // />
-      )
-    }
-
+    // if (chainId === CONFIGS.CHAIN.CHAIN_ID) {
+    //   return (
+    //     <></>
+    //     // <BalanceWallet
+    //     //   balance={balance.text ?? "N/A"}
+    //     //   tokenName={tokenName}
+    //     // />
+    //   )
+    // }
+    const _tokenBalance = chainSupport.find(
+      (item) => item.symbol === currentTokenSelected
+    )
     return (
       <>
-        {chainSupport &&
+        <BalanceWallet
+          balance={
+            _tokenBalance
+              ? numberWithCommas(
+                  Helper.number4digit(
+                    (_tokenBalance as ITokenContract).balanceWallet.digit
+                  )
+                )
+              : "N/A"
+          }
+          tokenName={
+            _tokenBalance ? (_tokenBalance as ITokenContract).symbol : "NAKA"
+          }
+        />
+        {/* {chainSupport &&
           chainSupport.length > 0 &&
           chainSupport.map((coin) => (
             <BalanceWallet
@@ -61,7 +78,7 @@ const MetamaskWallet = ({
               }
               tokenName={coin.symbol}
             />
-          ))}
+          ))} */}
       </>
     )
   }
@@ -103,7 +120,7 @@ const MetamaskWallet = ({
           {isConnected ? (
             <div className="flex gap-2">
               <TextLink
-                name={`${chainName} Scan`}
+                name={`${currentChainSelected.title} Scan`}
                 className="!pb-0 capitalize"
                 onClick={() =>
                   window.open(`${blockExplorerURL}address/${address}`, "_blank")

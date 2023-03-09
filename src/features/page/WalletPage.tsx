@@ -178,17 +178,17 @@ export default function WalletPage() {
       router.push("?token=BNB")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token, chainId, setTabChainList])
+  }, [token, chainId, tabChainList])
 
   return hydrated ? (
     <>
       <div className="flex w-full flex-wrap justify-center gap-4 md:justify-end lg:mx-2 xl:grid xl:grid-cols-12">
         <div className="h-full w-full justify-center md:col-span-8 md:flex md:justify-between">
-          <ChainList currentChain={tabChainList as IChainList} />
+          <ChainList currentTabChainSelected={tabChainList as IChainList} />
           {chainId === tabChainList?.chainId && (
             <TokenList
               dataList={chainSupport}
-              currentChain={tabChainList as IChainList}
+              currentTabChainSelected={tabChainList as IChainList}
               currentTokenSelected={
                 (token as string) || chainSupport[0]?.symbol
               }
@@ -229,9 +229,11 @@ export default function WalletPage() {
               blockExplorerURL={
                 getNetwork?.(chainId as string).blockExplorerUrls[0]
               }
-              chainName={getNetwork?.(chainId as string).chainName as string}
               chainSupport={chainSupport}
-              chainId={chainId as string}
+              currentTokenSelected={
+                (token as string) || chainSupport[0]?.symbol
+              }
+              currentChainSelected={tabChainList as IChainList}
             />
           </div>
         </div>

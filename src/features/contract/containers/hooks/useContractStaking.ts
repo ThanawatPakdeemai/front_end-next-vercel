@@ -15,6 +15,7 @@ import {
 } from "@constants/staking"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import { TransactionResponse } from "@ethersproject/providers"
+import simpleRpcProvider from "@utils/web3"
 import {
   getFlexibleStakingContract,
   getStakingContract
@@ -28,8 +29,11 @@ const useContractStaking = () => {
     _stakingTypes: TStaking
   ) =>
     _stakingTypes === "flexible"
-      ? getFlexibleStakingContract(_contractAddress, signer)
-      : getStakingContract(_contractAddress, signer)
+      ? getFlexibleStakingContract(
+          _contractAddress,
+          signer ?? simpleRpcProvider
+        )
+      : getStakingContract(_contractAddress, signer ?? simpleRpcProvider)
 
   const handleAPR = (period: number) => {
     switch (period) {

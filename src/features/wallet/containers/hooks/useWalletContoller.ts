@@ -18,6 +18,8 @@ import {
   useBEP20,
   useERC20
 } from "@feature/contract/containers/hooks/useContract"
+import { IMessage } from "@feature/multichain/interfaces/IMultichain"
+import simpleRpcProvider, { bnbRpcProvider } from "@utils/web3"
 
 export type Method = "deposit" | "withdraw"
 
@@ -156,33 +158,15 @@ const useWalletContoller = () => {
 
   const tokenBinanceContract = useBEP20(
     signer,
-    currentChainSelected?.address ?? ""
+    (currentChainSelected?.tokenName === "bnbt"
+      ? CONFIGS.CONTRACT_ADDRESS.BNB_CONTRACT
+      : currentChainSelected?.address) ?? ""
   )
+
   const tokenNakaContract = useERC20(
     signer,
     currentChainSelected?.address ?? ""
   )
-  // const checkAllowBnb = tokenBinanceContract.allowance(
-  //   address,
-  //   CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
-  // )
-
-  // const checkAllowNaka = tokenNakaContract.allowance(
-  //   address,
-  //   CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
-  // )
-  const checkAllowBnb = tokenBinanceContract.address
-    ? tokenBinanceContract.allowance(
-        address,
-        CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
-      )
-    : "0"
-  const checkAllowNaka = tokenNakaContract.address
-    ? tokenNakaContract.allowance(
-        address,
-        CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
-      )
-    : "0"
 
   /**
    * @description handle deposit and withdraw
@@ -193,11 +177,22 @@ const useWalletContoller = () => {
     _method: Method,
     _tokenAddress: string
   ) => {
-    const approveToken = (
-      chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB
-        ? await checkAllowBnb
-        : await checkAllowNaka
-    ).toString()
+    const checkAllowBnb = tokenBinanceContract.allowance(
+      address,
+      CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
+    )
+
+    const checkAllowNaka = tokenNakaContract.allowance(
+      address,
+      CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
+    )
+    const approveToken =
+      currentChainSelected?.tokenName === "bnbt"
+        ? 1
+        : (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB
+            ? await checkAllowBnb
+            : await checkAllowNaka
+          ).toString()
 
     if (!address && approveToken === "0") return
     try {
@@ -222,8 +217,9 @@ const useWalletContoller = () => {
         }
       }
     } catch (error) {
+      errorToast((error as IMessage).message)
       setClose()
-      if (approveToken !== "0") errorToast("Transaction failed")
+      // if (approveToken !== "0") errorToast("Transaction failed")
     }
   }
 
@@ -240,19 +236,31 @@ const useWalletContoller = () => {
       if (!currentChainSelected) {
         return
       }
+      const checkAllowBnb = tokenBinanceContract.allowance(
+        address,
+        CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
+      )
+
+      const checkAllowNaka = tokenNakaContract.allowance(
+        address,
+        CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
+      )
       if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
         // FOR BSC
         const bep20Contract = getBEP20Contract(
           currentChainSelected.address,
-          signer
+          signer ?? chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB
+            ? bnbRpcProvider
+            : simpleRpcProvider
         )
         if (
           currentChainSelected.address !== CONFIGS.CONTRACT_ADDRESS.BNB_CONTRACT
         ) {
-          // const allowanceToken = await checkAllowToken(
+          // const _allowanceToken = await checkAllowToken(
           //   bep20Contract,
           //   CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
           // )
+
           const allowanceToken = await checkAllowBnb
 
           if ((allowanceToken as string).toString() === "0") {
@@ -269,6 +277,8 @@ const useWalletContoller = () => {
           } else {
             await handleWalletProcess(_method, currentChainSelected.address)
           }
+        } else {
+          await handleWalletProcess(_method, currentChainSelected.address)
         }
       } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
         // const erc20Contract = getERC20Contract(

@@ -153,6 +153,7 @@ const useWalletContoller = () => {
     const resultWithdrawNaka = await withdrawNaka(toWei(value.toString()))
     return resultWithdrawNaka
   }
+
   const tokenBinanceContract = useBEP20(
     signer,
     currentChainSelected?.address ?? ""
@@ -161,15 +162,28 @@ const useWalletContoller = () => {
     signer,
     currentChainSelected?.address ?? ""
   )
-  const checkAllowBnb = tokenBinanceContract.allowance(
-    address,
-    CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
-  )
+  // const checkAllowBnb = tokenBinanceContract.allowance(
+  //   address,
+  //   CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
+  // )
 
-  const checkAllowNaka = tokenNakaContract.allowance(
-    address,
-    CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
-  )
+  // const checkAllowNaka = tokenNakaContract.allowance(
+  //   address,
+  //   CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
+  // )
+  const checkAllowBnb = tokenBinanceContract.address
+    ? tokenBinanceContract.allowance(
+        address,
+        CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
+      )
+    : "0"
+  const checkAllowNaka = tokenNakaContract.address
+    ? tokenNakaContract.allowance(
+        address,
+        CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
+      )
+    : "0"
+
   /**
    * @description handle deposit and withdraw
    * @param _method

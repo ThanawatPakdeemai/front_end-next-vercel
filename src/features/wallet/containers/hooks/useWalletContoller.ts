@@ -168,6 +168,15 @@ const useWalletContoller = () => {
     currentChainSelected?.address ?? ""
   )
 
+  const checkAllowBnb = tokenBinanceContract.allowance(
+    address,
+    CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
+  )
+
+  const checkAllowNaka = tokenNakaContract.allowance(
+    address,
+    CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
+  )
   /**
    * @description handle deposit and withdraw
    * @param _method
@@ -177,15 +186,6 @@ const useWalletContoller = () => {
     _method: Method,
     _tokenAddress: string
   ) => {
-    const checkAllowBnb = tokenBinanceContract.allowance(
-      address,
-      CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
-    )
-
-    const checkAllowNaka = tokenNakaContract.allowance(
-      address,
-      CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
-    )
     const approveToken =
       currentChainSelected?.tokenName === "bnbt"
         ? 1
@@ -236,15 +236,7 @@ const useWalletContoller = () => {
       if (!currentChainSelected) {
         return
       }
-      const checkAllowBnb = tokenBinanceContract.allowance(
-        address,
-        CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
-      )
 
-      const checkAllowNaka = tokenNakaContract.allowance(
-        address,
-        CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
-      )
       if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
         // FOR BSC
         const bep20Contract = getBEP20Contract(

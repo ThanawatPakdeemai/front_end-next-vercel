@@ -15,7 +15,7 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import { IResponseGetFee } from "@feature/contract/interfaces/IMultichainHook"
 import { MESSAGES } from "@constants/messages"
 import { useToast } from "@feature/toast/containers"
-import useP2PDexCancelSellNaka from "@feature/p2pDex/containers/hooks/useP2PDexCancelSellNaka"
+import useP2PDexCancel from "@feature/p2pDex/containers/hooks/useP2PDexCancel"
 import useContractMultichain from "@feature/contract/containers/hooks/useContractMultichain"
 import useLoadingStore from "@stores/loading"
 import FormEdit from "./FormEdit"
@@ -33,7 +33,7 @@ interface IProp {
 }
 
 const OrderList = ({ ...props }: IProp) => {
-  const { mutateCancelP2PDexOrder } = useP2PDexCancelSellNaka()
+  const { mutateCancelP2PDexOrder } = useP2PDexCancel()
   const {
     cancelOrderSellNaka,
     sendAllowNaka,

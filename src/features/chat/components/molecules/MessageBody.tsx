@@ -3,7 +3,7 @@ import MessageInfo from "../atoms/MessageInfo"
 import MessageText from "../atoms/MessageText"
 
 const MessageBody = ({ ...props }: IChat) => (
-  <div className="mb-4 flex flex-col gap-2">
+  <div className="mb-4 flex w-full flex-col gap-2">
     <MessageInfo
       avatar={props.avatar}
       username={props.username}

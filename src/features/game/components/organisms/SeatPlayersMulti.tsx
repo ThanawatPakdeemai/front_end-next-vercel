@@ -18,6 +18,7 @@ import ButtonPlayer from "@feature/game/components/atoms/ButtonPlayer"
 import PlayerCard from "@feature/game/components/molecules/PlayerCard"
 import { IResGetIp } from "@interfaces/IGetIP"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
+import { useRouter } from "next/router"
 
 interface IProps {
   players: IGameCurrentPlayerMulti[] | undefined[]
@@ -39,6 +40,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   } = useSocketProviderWaiting()
 
   const profile = useProfileStore((state) => state.profile.data)
+  const router = useRouter()
   const { data: gameData, itemSelected, qtyItemOfRoom } = useGameStore()
   const [ownerPressPlay, setOwnPressPlay] = useState(false)
   const [playerPressReady, setPlayerPressReady] = useState(false)
@@ -81,7 +83,8 @@ const SeatPlayersMulti = ({ players }: IProps) => {
       profile &&
       gameData.game_type === "multiplayer"
     ) {
-      const frontendUrl = `${baseUrlFront}/${gameData.path}/summary/${room_id}`
+      const frontendUrl = `${baseUrlFront}/${router.query.typrGame}/${gameData.path}/summary/${room_id}`
+
       let gameURL = ""
       if (gameData.type_code === "multi_02" && ip) {
         const dataLinkGame = `${room_id}:|:${profile?.id}:|:${
@@ -104,13 +107,13 @@ const SeatPlayersMulti = ({ players }: IProps) => {
           "token"
         )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
           start_time
-        ).getTime()}:|:${profile?.username}`
-
+        ).getTime()}:|:${profile?.username}:|:${playerInroom?.length}:|:${
+          dataPlayers?.map_id
+        }:|:${ip}`
         gameURL = `${gameData.game_url}/${gameData.id}/?query=${Helper.makeID(
           8
         )}${btoa(dataLinkGame)}`
       }
-
       setGameUrl(gameURL)
     }
 
@@ -127,6 +130,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
     rank_name,
     room_id,
     room_number,
+    router?.query?.typrGame,
     start_time
   ])
 

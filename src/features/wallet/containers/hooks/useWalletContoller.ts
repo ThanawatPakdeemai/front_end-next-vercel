@@ -155,6 +155,7 @@ const useWalletContoller = () => {
     const resultWithdrawNaka = await withdrawNaka(toWei(value.toString()))
     return resultWithdrawNaka
   }
+
   const tokenBinanceContract = useBEP20(
     signer,
     (currentChainSelected?.tokenName === "bnbt"

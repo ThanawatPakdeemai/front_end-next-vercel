@@ -11,7 +11,6 @@ import { IBalance } from "@interfaces/IHelper"
 import BinanceBalanceVaultAbi from "@configs/abi/BinanceBalanceVault.json"
 import Helper from "@utils/helper"
 import { IBalanceDisplay } from "@hooks/useAllBalances"
-import { useToast } from "@feature/toast/containers"
 import { getBalanceVaultBinanceContract } from "../contractHelpers"
 
 export interface ITokenContract {
@@ -41,7 +40,6 @@ export const DEFAULT_TOKEN_INFO: ITokenContract = {
 const useContractVaultBinance = () => {
   const { signer, address: account } = useWeb3Provider()
   const [isLoading, setIsLoading] = useState(false)
-  const { errorToast } = useToast()
   const bep20Contract = useBEP20(signer, CONFIGS.CONTRACT_ADDRESS.BEP20)
   const balanceVaultContract = useBalanceVaultBinance(
     signer,
@@ -152,7 +150,6 @@ const useContractVaultBinance = () => {
             })
           })
           .catch((_error: Error) => {
-            errorToast(_error.message)
             setIsLoading(false)
             resolve({ status: false, data: ethers.BigNumber.from(0) })
           })

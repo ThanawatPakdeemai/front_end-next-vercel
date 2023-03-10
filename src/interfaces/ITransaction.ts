@@ -1,3 +1,12 @@
+import { ReactNode } from "react"
+
+export interface IList {
+  label: ReactNode
+  data: string
+  icon: string
+  href: string
+  active: boolean
+}
 interface ITransactionBase {
   date_time: string
   amount: number

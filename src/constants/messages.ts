@@ -47,6 +47,7 @@ export const MESSAGES = {
   "amount_many": "Amount too many",
   "approve_error": "Error approve",
   "approve_processing": "Approve processing",
+  "approve_success": "Approve success",
   "copy": "Copied to clipboard",
   "success": "Success"
 }

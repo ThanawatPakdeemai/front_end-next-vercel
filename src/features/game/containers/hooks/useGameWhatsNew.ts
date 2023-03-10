@@ -34,7 +34,7 @@ const useGameWhatsNew = (_gameType: IGetType, _gameId: string) => {
     queryFn: () => handleQueryFunction(),
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: _gameId !== "" && _gameId !== undefined
+    enabled: !!_gameId
   })
 
   /**
@@ -53,7 +53,7 @@ const useGameWhatsNew = (_gameType: IGetType, _gameId: string) => {
       _gameType === "partner-game" ? getGamePartnerNewVersion(_gameId) : null,
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: _gameId !== "" && _gameId !== undefined
+    enabled: !!_gameId
   })
 
   return {

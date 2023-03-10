@@ -19,7 +19,7 @@ const DefaultLobby = ({ gameData }: IDefaultLobby) => (
             height={300}
             image={gameData.image_main}
             alt={gameData.name}
-            className="absolute h-1/2 w-1/2 object-fill object-center"
+            className="absolute h-1/2 w-1/2 object-contain object-center"
           />
           <CardMedia
             component="img"

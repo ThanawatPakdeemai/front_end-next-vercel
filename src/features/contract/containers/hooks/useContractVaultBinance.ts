@@ -11,7 +11,6 @@ import { IBalance } from "@interfaces/IHelper"
 import BinanceBalanceVaultAbi from "@configs/abi/BinanceBalanceVault.json"
 import Helper from "@utils/helper"
 import { IBalanceDisplay } from "@hooks/useAllBalances"
-import { useToast } from "@feature/toast/containers"
 import { getBalanceVaultBinanceContract } from "../contractHelpers"
 
 export interface ITokenContract {
@@ -41,7 +40,6 @@ export const DEFAULT_TOKEN_INFO: ITokenContract = {
 const useContractVaultBinance = () => {
   const { signer, address: account } = useWeb3Provider()
   const [isLoading, setIsLoading] = useState(false)
-  const { errorToast } = useToast()
   const bep20Contract = useBEP20(signer, CONFIGS.CONTRACT_ADDRESS.BEP20)
   const balanceVaultContract = useBalanceVaultBinance(
     signer,
@@ -141,39 +139,42 @@ const useContractVaultBinance = () => {
   const getBalanceVaultBSC = (_userAddress: string, _tokenAddress: string) =>
     new Promise<IBalance>((resolve) => {
       setIsLoading(true)
-      balanceVaultContract
-        .getBalanceOf(_userAddress, _tokenAddress)
-        .then((response: BigNumber) => {
-          setIsLoading(false)
-          resolve({
-            status: true,
-            data: response
+      if (_userAddress && _tokenAddress) {
+        balanceVaultContract
+          .getBalanceOf(_userAddress, _tokenAddress)
+          .then((response: BigNumber) => {
+            setIsLoading(false)
+            resolve({
+              status: true,
+              data: response
+            })
           })
-        })
-        .catch((_error: Error) => {
-          errorToast(_error.message)
-          setIsLoading(false)
-          resolve({ status: false, data: ethers.BigNumber.from(0) })
-        })
+          .catch((_error: Error) => {
+            setIsLoading(false)
+            resolve({ status: false, data: ethers.BigNumber.from(0) })
+          })
+      }
     })
 
   /* balance (in metamask) */
   const getBalanceWalletBSC = (_userAddress: string) =>
     new Promise<IBalance>((resolve) => {
-      setIsLoading(true)
-      bep20Contract
-        .balanceOf(_userAddress)
-        .then((response: BigNumber) => {
-          setIsLoading(false)
-          resolve({
-            status: true,
-            data: response
+      if (_userAddress) {
+        setIsLoading(true)
+        bep20Contract
+          .balanceOf(_userAddress)
+          .then((response: BigNumber) => {
+            setIsLoading(false)
+            resolve({
+              status: true,
+              data: response
+            })
           })
-        })
-        .catch((_error: Error) => {
-          setIsLoading(false)
-          resolve({ status: false, data: ethers.BigNumber.from(0) })
-        })
+          .catch((_error: Error) => {
+            setIsLoading(false)
+            resolve({ status: false, data: ethers.BigNumber.from(0) })
+          })
+      }
     })
 
   /**

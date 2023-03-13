@@ -101,7 +101,14 @@ const useGlobal = (
     _gameUrl: string,
     _gameData: IGame | IPartnerGameData
   ) => {
+    // eslint-disable-next-line no-console
+    console.log("game", _gameData)
     switch (_type) {
+      case "partner-publisher":
+        onSetGamePartnersData(_gameData as IPartnerGameData)
+        await router.push(`/publishers/${_gameData.name}`)
+        break
+
       case "partner-game":
         onSetGamePartnersData(_gameData as IPartnerGameData)
         await router.push(`/partner-games/${_gameUrl}?id=${_gameData.id}`)

@@ -203,7 +203,7 @@ const useBuyGameItemController = () => {
           .then((res) => {
             // res && _data.currency.balanceVault.digit
             if (res && _data.currency.balanceVault.digit) {
-              // refetch()
+              refetch()
               onResetBalance()
               successToast("Buy Items Success")
               setClose()
@@ -225,7 +225,7 @@ const useBuyGameItemController = () => {
           .then((res) => {
             // res && balanceVaultNaka && balanceVaultNaka.data
             if (res && _data.currency.balanceVault.digit) {
-              // refetch()
+              refetch()
               onResetBalance()
               // setVaultBalance(Number(balanceVaultNaka.data))
               successToast("Buy Items Success")

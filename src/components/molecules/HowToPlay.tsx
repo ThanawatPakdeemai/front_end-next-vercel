@@ -1,7 +1,8 @@
+/* eslint-disable max-len */
 import IconCustoms from "@components/atoms/IconCustom"
 import FavouriteColorIcon from "@components/icons/HowToPlayIcon/FavouriteColorIcon"
 import FavouriteIcon from "@components/icons/HowToPlayIcon/FavouriteIcon"
-import HowToPlayIcon from "@components/icons/HowToPlayIcon/HowToPlayIcon"
+// import HowToPlayIcon from "@components/icons/HowToPlayIcon/HowToPlayIcon"
 import ShareIcon from "@components/icons/HowToPlayIcon/ShareIcon"
 import { MESSAGES } from "@constants/messages"
 import {
@@ -158,14 +159,14 @@ const Howto = ({ data }: IProp) => {
           </div>
         </div>
         <div className="flex flex-wrap items-center justify-end lg:flex-nowrap">
-          <div className="md flex flex-[1_1_150px] items-center justify-center text-sm text-neutral-400 md:flex-none">
+          {/* <div className="md flex flex-[1_1_150px] items-center justify-center text-sm text-neutral-400 md:flex-none">
             <HowToPlayIcon
               color="#FFFFFF"
               className="mr-2"
             />
             How to play
-          </div>
-          <div className="mx-5 h-3 border-[1px] border-solid border-neutral-600" />
+          </div> */}
+          {/* <div className="mx-5 h-3 border-[1px] border-solid border-neutral-600" /> */}
           <div className="md flex flex-[1_1_150px] items-center justify-center text-sm text-neutral-400 md:flex-none">
             <ShareIcon
               color="#FFFFFF"

@@ -15,7 +15,6 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined"
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined"
 import { useForm } from "react-hook-form"
 import ButtonLink from "@components/atoms/button/ButtonLink"
-import Link from "next/link"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
@@ -37,12 +36,18 @@ import Web3 from "web3"
 import useLoginTypeStore from "@stores/loginTypes"
 import useConnectMetamaskAction from "@utils/useConnectMetamesk"
 import { useWeb3Provider } from "@providers/Web3Provider"
+import { useRouter } from "next/router"
 import useSignIn from "../containers/hooks/useSignIn"
 import { ISignIn } from "../interfaces/IAuthService"
 import useLoginProvider from "../containers/hooks/useLoginProvider"
 import useLoginMetamask from "../containers/hooks/useLoginMetamask"
+import FromForgotPassword from "./FromForgotPassword"
 
-const FormLogin = () => {
+interface IProp {
+  href?: string
+}
+
+const FormLogin = ({ href }: IProp) => {
   const { mutateLoginProvider } = useLoginProvider()
   const { mutateLoginMetamask } = useLoginMetamask()
 
@@ -80,12 +85,16 @@ const FormLogin = () => {
     }
   })
   const { mutateSignIn, isLoading } = useSignIn()
+  const router = useRouter()
 
   const onSubmit = (_data: ISignIn) => {
     mutateSignIn({ _email: _data._email, _password: _data._password })
       .then((_profile) => {
         if (_profile) {
           successToast(MESSAGES.sign_in_success)
+          if (href) {
+            return router.push("/")
+          }
         }
       })
       .catch(() => {})
@@ -332,11 +341,7 @@ const FormLogin = () => {
           />
         </ButtonGroup>
       </form>
-      <Link href="/forget-password">
-        <Typography className="cursor-pointer text-right text-sm text-neutral-500">
-          Forget Password?
-        </Typography>
-      </Link>
+      <FromForgotPassword />
       <Grid
         item
         container

@@ -7,15 +7,8 @@ import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded"
 import Helper from "@utils/helper"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
-import { IMarketplaceInfoData } from "@constants/mockupMarketplace"
 import { Image } from "@components/atoms/image"
 import Video from "@components/atoms/Video"
-
-interface IProp {
-  cardType: "game" | "land" | "building" | "material"
-  data: IMarketplaceInfoData
-  isP2p?: boolean
-}
 
 // motion
 const imgMotion = {
@@ -39,9 +32,44 @@ const imgMotion = {
   }
 }
 
-const CardItemMarketPlace = (props: IProp) => {
-  const { cardType, data, isP2p } = props
-  const { copyClipboard } = Helper
+interface IProp {
+  cardType: "game" | "land" | "building" | "material" | "naka-punk"
+  id?: string
+  itemAmount?: number
+  itemTotal?: number
+  itemImage?: {
+    src: string
+    alt: string
+    width?: number
+    height?: number
+  }
+  itemVideo?: {
+    src: string
+    poster: string
+  }
+  itemName?: string
+  itemSize?: string
+  itemLevel?: string | number
+  sellingType?: string
+  price?: number
+  nakaPrice?: number
+}
+
+const CardItemMarketPlace = ({
+  cardType,
+  id,
+  itemAmount,
+  itemTotal,
+  itemImage,
+  itemVideo,
+  itemName,
+  itemSize,
+  itemLevel,
+  sellingType,
+  price,
+  nakaPrice
+}: IProp) => {
+  const { copyClipboard, formatNumber } = Helper
   const { successToast } = useToast()
 
   return (
@@ -52,36 +80,14 @@ const CardItemMarketPlace = (props: IProp) => {
     >
       <div className="relative">
         <div className="pointer-events-auto absolute z-20 m-[5px] flex">
-          {cardType === "game" ||
-            (cardType === "land" && (
-              <Chip
-                label={data.land_data?.land_id || data.order_id}
-                variant="outlined"
-                size="small"
-                className="pointer-events-auto w-[93px] cursor-pointer truncate uppercase"
-                deleteIcon={
-                  <ContentCopySharpIcon
-                    sx={{
-                      width: 16,
-                      height: 16
-                    }}
-                    className="pb-[2px] !text-neutral-400"
-                  />
-                }
-                onDelete={() => {
-                  copyClipboard("0xfd86E58bCc217B2671Ca918441685a0a3444D253")
-                  successToast(MESSAGES.copy)
-                }}
-              />
-            ))}
-          {cardType === "game" && (
+          {id && (
             <Chip
-              label={data.item_amount}
+              label={id}
               variant="outlined"
               size="small"
-              className="ml-1 cursor-pointer uppercase"
-              icon={
-                <GridViewRoundedIcon
+              className="pointer-events-auto w-[93px] cursor-pointer truncate uppercase"
+              deleteIcon={
+                <ContentCopySharpIcon
                   sx={{
                     width: 16,
                     height: 16
@@ -89,11 +95,15 @@ const CardItemMarketPlace = (props: IProp) => {
                   className="pb-[2px] !text-neutral-400"
                 />
               }
+              onDelete={() => {
+                copyClipboard(id)
+                successToast(MESSAGES.copy)
+              }}
             />
           )}
-          {cardType === "building" && (
+          {itemAmount && (
             <Chip
-              label={`${data.item_amount}/${data.item_total}`}
+              label={`${itemAmount}${itemTotal ? ` / ${itemTotal}` : ""}`}
               variant="outlined"
               size="small"
               className="ml-1 cursor-pointer uppercase"
@@ -110,81 +120,66 @@ const CardItemMarketPlace = (props: IProp) => {
           )}
         </div>
 
-        {/* item */}
-        {data.item_data && (
-          <div className="flex h-[202px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900 p-6 group-hover:border-secondary-main">
+        {itemImage && (
+          <div
+            className={`flex h-[202px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900 ${
+              cardType !== "naka-punk" ? "p-6" : "p-0"
+            } group-hover:border-secondary-main`}
+          >
             <motion.div
               transition={{ type: "spring", stiffness: 100, damping: 6 }}
-              variants={imgMotion}
-              className="relative flex !max-h-[182px] !w-[182px] items-center justify-center"
+              variants={cardType !== "naka-punk" ? imgMotion : undefined}
+              className="relative flex items-center justify-center"
             >
               <Image
-                src={data.item_data.image}
-                alt={data.item_data.name}
-                className="object-contain"
-                width={data.item_data.name.includes("Bullet") ? 40 : 100}
+                src={itemImage.src}
+                alt={itemImage.alt}
+                className={`"object-contain ${
+                  cardType === "naka-punk" && "rounded-lg"
+                }`}
+                width={itemImage.width}
+                height={itemImage.height}
               />
             </motion.div>
           </div>
         )}
         {/* land */}
-        {data.land_data && (
+        {itemVideo && (
           <div className="relative h-[202px] w-full overflow-hidden">
             <Video
-              src={data.land_data.NFT_video}
-              poster={data.land_data.NFT_image}
+              src={itemVideo.src}
+              poster={itemVideo.poster}
               className="rounded-2xl"
             />
-          </div>
-        )}
-        {data.building_data && (
-          <div className="flex h-[202px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900 p-6 group-hover:border-secondary-main">
-            <motion.div
-              transition={{ type: "spring", stiffness: 100, damping: 6 }}
-              variants={imgMotion}
-              className="relative flex items-center justify-center"
-            >
-              <Image
-                src={data.building_data.image}
-                alt={data.building_data.name}
-                className="h-full w-full"
-                width={200}
-                height={200}
-              />
-            </motion.div>
           </div>
         )}
       </div>
       <div className="mx-2 mt-[14px] flex items-center justify-between">
         <Typography className="text-sm uppercase text-white-default">
-          {data.item_data?.name ||
-            data.land_data?.name ||
-            data.building_data?.name}
+          {itemName}
         </Typography>
         <div className="flex flex-col justify-end gap-2">
-          {data.item_data && (
+          {itemSize && (
             <Chip
-              label={`${data.item_data && `Size ${data.item_data.item_size}`}`}
+              label={`Size ${itemSize}`}
               variant="filled"
               size="small"
               className="cursor-pointer uppercase"
               color="error"
             />
           )}
-          {data.building_data && (
+          {itemLevel && (
             <Chip
-              label={`${
-                data.building_data && `level : ${data.building_data.level}`
-              }`}
+              label={`level : ${itemLevel}`}
               variant="filled"
               size="small"
               className="cursor-pointer uppercase"
               color="error"
             />
           )}
-          {"selling_type" in data && data.selling_type && isP2p && (
+          {sellingType && (
             <Chip
-              label={data.selling_type}
+              label={sellingType}
               variant="filled"
               size="small"
               className="cursor-pointer uppercase"
@@ -203,15 +198,19 @@ const CardItemMarketPlace = (props: IProp) => {
             color="#ffff"
           />
           <Typography className="ml-[11px] text-sm uppercase text-white-default">
-            {data.price}
+            {formatNumber(price as number, { maximumFractionDigits: 4 })}
           </Typography>
         </div>
-        <Chip
-          label="= ... busd"
-          variant="outlined"
-          size="small"
-          className="cursor-pointer uppercase"
-        />
+        {nakaPrice && (
+          <Chip
+            label={`= ${formatNumber(nakaPrice, {
+              maximumFractionDigits: 4
+            })} usd`}
+            variant="outlined"
+            size="small"
+            className="cursor-pointer uppercase"
+          />
+        )}
       </div>
     </motion.div>
     // </Link>

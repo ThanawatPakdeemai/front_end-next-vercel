@@ -7,7 +7,7 @@ import { ITokenContract } from "@feature/contract/containers/hooks/useContractVa
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { useToast } from "@feature/toast/containers"
-import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContoller"
+import useGlobal from "@hooks/useGlobal"
 import useSwitchNetwork from "@hooks/useSwitchNetwork"
 import useChainSupport from "@stores/chainSupport"
 import useGameStore from "@stores/game"
@@ -21,12 +21,12 @@ import useBuyGameItems from "./useBuyGameItems"
 const useBuyGameItemController = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { mutateBuyItems, mutateBuyItemsBSC, isLoading } = useBuyGameItems()
-  const { onResetBalance } = useWalletContoller()
   const { setOpen, setClose } = useLoadingStore()
   const { errorToast, successToast } = useToast()
   const { data, onSetGameItemSelectd, itemSelected } = useGameStore()
   const { chainId, accounts, signer } = useSwitchNetwork()
   const { chainSupport } = useChainSupport()
+  const { fetchNAKAToken, fetchAllTokenSupported } = useGlobal()
 
   // State
   const [openForm, setOpenForm] = useState<boolean>(false)
@@ -202,9 +202,9 @@ const useBuyGameItemController = () => {
         })
           .then((res) => {
             // res && _data.currency.balanceVault.digit
+            fetchAllTokenSupported()
             if (res && _data.currency.balanceVault.digit) {
               // refetch()
-              onResetBalance()
               successToast("Buy Items Success")
               setClose()
               if (handleClose) handleClose()
@@ -224,9 +224,9 @@ const useBuyGameItemController = () => {
         })
           .then((res) => {
             // res && balanceVaultNaka && balanceVaultNaka.data
+            fetchNAKAToken()
             if (res && _data.currency.balanceVault.digit) {
               // refetch()
-              onResetBalance()
               // setVaultBalance(Number(balanceVaultNaka.data))
               successToast("Buy Items Success")
               setClose()
@@ -244,7 +244,7 @@ const useBuyGameItemController = () => {
   useEffect(() => {
     resetForm()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainSupport, gameItemList, resetForm])
+  }, [chainSupport, gameItemList, resetForm, fetchNAKAToken])
 
   return {
     MessageAlert,

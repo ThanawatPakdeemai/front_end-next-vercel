@@ -10,6 +10,7 @@ interface IProp {
   imageBadge?: string
   badgeCenter?: { status: boolean; name: string }
   height?: string
+  badgeColor?: string
 }
 const AvatarProfile = ({
   border = { width: "!w-[92px]", height: "!h-[92px]" },
@@ -18,7 +19,8 @@ const AvatarProfile = ({
   imageBadge,
   src,
   badgeCenter = { status: false, name: "" },
-  height = "h-[92px]"
+  height = "h-[92px]",
+  badgeColor = "!bg-green-lemon"
 }: IProp) => (
   <div className="flex justify-center	">
     <Box
@@ -66,8 +68,8 @@ const AvatarProfile = ({
                         {badgeCenter.name}
                       </Typography>
                     }
-                    className="absolute left-[20px] top-[60px]
-                  !h-[20px] rounded-less !bg-green-lemon"
+                    className={`absolute left-[20px] top-[60px]
+                  !h-[20px] rounded-less ${badgeColor}`}
                   />
                 )}
               </Box>

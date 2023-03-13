@@ -207,23 +207,22 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
         // system burn item
         waitingRoomReadyAction()
         resolve(true)
+      } else {
+        // system not burn item
+        transactionAction(true)
+        burnItemNowStatus(_item_id, _qty, false).then((res) => {
+          if (res) {
+            transactionAction(false)
+            waitingRoomReadyAction()
+            waitingRoomItemBurnAction(player_id, true)
+            resolve(true)
+          } else {
+            transactionAction(false)
+            MESSAGES["transaction-error"]
+            resolve(false)
+          }
+        })
       }
-
-      // system not burn item
-      transactionAction(true)
-      burnItemNowStatus(_item_id, _qty, false).then((res) => {
-        if (res) {
-          transactionAction(false)
-          waitingRoomReadyAction()
-          waitingRoomItemBurnAction(player_id, true)
-          successToast(MESSAGES["burn-item-success"])
-          resolve(true)
-        } else {
-          transactionAction(false)
-          MESSAGES["transaction-error"]
-          resolve(false)
-        }
-      })
     })
 
   /**

@@ -83,7 +83,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
       profile &&
       gameData.game_type === "multiplayer"
     ) {
-      const frontendUrl = `${baseUrlFront}/${router.query.typrGame}/${gameData.path}/summary/${room_id}`
+      const frontendUrl = `${baseUrlFront}/${router.query.typeGame}/${gameData.path}/summary/${room_id}`
 
       let gameURL = ""
       if (gameData.type_code === "multi_02" && ip) {
@@ -130,7 +130,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
     rank_name,
     room_id,
     room_number,
-    router?.query?.typrGame,
+    router.query.typeGame,
     start_time
   ])
 

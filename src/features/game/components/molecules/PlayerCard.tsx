@@ -48,6 +48,15 @@ const PlayerCard = ({ players }: IProps) => {
     return "Player"
   }
 
+  const colorsBadge = (item: IGameCurrentPlayer) => {
+    if (item.status === "inroom") {
+      return " !bg-warning-light "
+    }
+    if (item.status === "played") {
+      return " !bg-purple-primary "
+    }
+    return " !bg-green-lemon "
+  }
   return (
     <>
       <Box className="custom-scroll mb-5 overflow-y-auto">
@@ -76,6 +85,7 @@ const PlayerCard = ({ players }: IProps) => {
                     status: item.status,
                     name: item.status ?? "Ready"
                   }}
+                  badgeColor={colorsBadge(item)}
                 />
                 <Box className="m-auto w-[92px] py-3">
                   <Typography className="text-center font-neue-machina text-sm uppercase text-[700] text-neutral-300">

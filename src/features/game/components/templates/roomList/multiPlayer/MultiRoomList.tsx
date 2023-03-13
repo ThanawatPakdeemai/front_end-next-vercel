@@ -10,6 +10,7 @@ import {
   IResSocketRoomList
 } from "@feature/game/interfaces/IGameService"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
+import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import { useToast } from "@feature/toast/containers"
 import { Box, Divider } from "@mui/material"
 import SocketProviderRoom from "@providers/SocketProviderRoom"
@@ -50,10 +51,21 @@ const MultiRoomList = () => {
     [data?._id, data?.socket_info?.url_lobby, item_id, profile?.id]
   )
 
-  const { socketRoomList, isConnected, getRoomListMultiPlayer } =
-    useSocketRoomList({
-      ...propsSocketRoomlist
-    })
+  const {
+    socketRoomList,
+    isConnected,
+    getRoomListMultiPlayer,
+    searchRoom,
+    getRoomFromSearch,
+    search
+  } = useSocketRoomList({
+    ...propsSocketRoomlist
+  })
+
+  const { balanceofItem } = useGetBalanceOf({
+    _address: profile?.address ?? "",
+    _item_id: itemSelected?.item_id_smartcontract ?? 0
+  })
 
   useEffect(() => {
     if (profile) {
@@ -71,24 +83,47 @@ const MultiRoomList = () => {
     }
   }, [profile, socketRoomList])
 
+  const getRooms = useCallback(async () => {
+    const roomMulti = await getRoomListMultiPlayer()
+    if (roomMulti) {
+      const uniquePlayerIn = (
+        roomMulti as IResSocketRoomList
+      ).data.gameRoomDetail.filter(
+        (thing, index, self) =>
+          index === self.findIndex((t) => t?._id === thing?._id)
+      )
+      setDataRoom(uniquePlayerIn)
+    }
+  }, [getRoomListMultiPlayer])
+
+  const fetchRoomFromSearch = useCallback(() => {
+    getRoomFromSearch().then((_room) => {
+      const room = _room as IResSocketRoomList
+      const uniquePlayerIn = (
+        room as IResSocketRoomList
+      ).data.gameRoomDetail.filter(
+        (thing, index, self) =>
+          index === self.findIndex((t) => t?._id === thing?._id)
+      )
+      setDataRoom(uniquePlayerIn)
+    })
+  }, [getRoomFromSearch])
+
   const fetchRoom = useCallback(async () => {
     if (isConnected) {
-      const roomMulti = await getRoomListMultiPlayer()
-      if (roomMulti) {
-        const uniquePlayerIn = (
-          roomMulti as IResSocketRoomList
-        ).data.gameRoomDetail.filter(
-          (thing, index, self) =>
-            index === self.findIndex((t) => t?._id === thing?._id)
-        )
-        setDataRoom(uniquePlayerIn)
+      if (search === "") {
+        getRooms()
+      } else {
+        fetchRoomFromSearch()
       }
     }
-  }, [getRoomListMultiPlayer, isConnected])
+  }, [fetchRoomFromSearch, getRooms, isConnected, search])
 
   useEffect(() => {
-    if (isConnected) fetchRoom()
-  }, [fetchRoom, isConnected])
+    if (isConnected) {
+      fetchRoom()
+    }
+  }, [fetchRoom, fetchRoomFromSearch, isConnected, search])
 
   const handleJoinRoom = (_data: IGameRoomListSocket) => {
     if (profile) {
@@ -99,18 +134,23 @@ const MultiRoomList = () => {
         _data.amount_current_player < _data.max_players &&
         new Date() < new Date(_data.end_time) &&
         itemSelected &&
-        itemSelected?.qty >= qtyItemOfRoom
+        balanceofItem &&
+        balanceofItem?.data >= qtyItemOfRoom
       ) {
         if (player_me && player_me.status === "played") {
           errorToast(MESSAGES["you-played"])
         } else {
           router.push(`${router.asPath}/${_data._id}`)
         }
-      } else if (data && (data.play_to_earn || data.tournament)) {
+      } else if (
+        data &&
+        ((data.play_to_earn && data.play_to_earn_status === "free") ||
+          data.tournament)
+      ) {
         router.push(`${router.asPath}/${_data.id}`)
       } else if (new Date() > new Date(_data.end_time)) {
         errorToast(MESSAGES["room-timeout"])
-      } else if (itemSelected && itemSelected?.qty < qtyItemOfRoom) {
+      } else if (!balanceofItem || balanceofItem?.data < qtyItemOfRoom) {
         errorToast(MESSAGES["you-don't-have-item"])
       } else if (player_me && player_me.status === "played") {
         errorToast(MESSAGES["you-played"])
@@ -127,7 +167,9 @@ const MultiRoomList = () => {
   return (
     <>
       <Box className=" block gap-3 lg:flex">
-        <SocketProviderRoom propsSocket={{ getRoomListMultiPlayer, fetchRoom }}>
+        <SocketProviderRoom
+          propsSocket={{ getRoomListMultiPlayer, fetchRoom, searchRoom }}
+        >
           <Box className="relative w-full rounded-3xl border border-neutral-700">
             {data && <HeaderRoomList lobby={data.name} />}
             <Divider />

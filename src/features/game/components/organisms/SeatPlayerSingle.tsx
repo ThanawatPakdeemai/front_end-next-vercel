@@ -159,7 +159,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
       data &&
       data.game_type === "singleplayer"
     ) {
-      const frontendUrl = `${baseUrlFront}/${data.path}/summary/${room_id}`
+      const frontendUrl = `${baseUrlFront}/${router.query.typeGame}/${data.path}/summary/${room_id}`
 
       if (data.type_code === "survival_01") {
         if (ip) {
@@ -204,7 +204,16 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
     return () => {
       setGameUrl("")
     }
-  }, [data, gameRoomById, ip, itemSelected?._id, item_id, profile, room_id])
+  }, [
+    data,
+    gameRoomById,
+    ip,
+    itemSelected?._id,
+    item_id,
+    profile,
+    room_id,
+    router?.query?.typeGame
+  ])
 
   const onPlayGame = () => {
     if (
@@ -227,7 +236,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
         <PlayerCard players={players} />
         <Box className="mb-10  flex justify-center">
           <Box className="w-fit items-center justify-center gap-3 rounded-md border border-neutral-800 bg-primary-main p-3 md:flex md:rounded-[50px]">
-            <Typography className=" mx-4 w-[200px] font-neue-machina text-sm ">
+            <Typography className=" mx-4 w-full font-neue-machina text-sm ">
               {" It's time to play! Press the Start"}
             </Typography>
             <ButtonGame

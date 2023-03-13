@@ -89,7 +89,7 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_TIMEOUT, () => {
       if (gameData) {
         errorToast(MESSAGES["room-expried"])
-        router.push(`/${gameData.path}/roomlist`)
+        router.push(`/${router.query.typeGame}/${gameData.path}/roomlist`)
       }
     })
   }, [errorToast, gameData, router, socketWaitingRoom])
@@ -99,7 +99,7 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_KICK, () => {
       if (gameData) {
         errorToast(MESSAGES["you-were-kicked"])
-        router.push(`/${gameData.path}/roomlist`)
+        router.push(`/${router.query.typeGame}/${gameData.path}/roomlist`)
       }
     })
   }, [errorToast, gameData, router, socketWaitingRoom])
@@ -107,23 +107,29 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
   /**
    * @description Calling socket chatting
    */
-  const getChat = () =>
-    new Promise((resolve, reject) => {
-      socketWaitingRoom.on(EVENTS.LISTENERS.ROOM_MESSAGE, (response: IChat) => {
-        if (response) {
-          response["time"] = dayjs().format("HH:mm A")
-          resolve(response)
-        } else {
-          reject(response)
-        }
-      })
-    })
+  const getChat = useCallback(
+    () =>
+      new Promise((resolve, reject) => {
+        socketWaitingRoom.on(
+          EVENTS.LISTENERS.ROOM_MESSAGE,
+          (response: IChat) => {
+            if (response) {
+              response["time"] = dayjs().format("HH:mm A")
+              resolve(response)
+            } else {
+              reject(response)
+            }
+          }
+        )
+      }),
+    [socketWaitingRoom]
+  )
 
-  const onSendMessage = () => {
-    socketWaitingRoom.emit(EVENTS.ACTION.CHAT_SEND_MESSAGE, {
+  const onSendMessage = async () => {
+    await socketWaitingRoom.emit(EVENTS.ACTION.CHAT_SEND_MESSAGE, {
       message
     })
-    setMessage("")
+    await setMessage("")
   }
 
   /**
@@ -200,23 +206,22 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
         // system burn item
         waitingRoomReadyAction()
         resolve(true)
+      } else {
+        // system not burn item
+        transactionAction(true)
+        burnItemNowStatus(_item_id, _qty, false).then((res) => {
+          if (res) {
+            transactionAction(false)
+            waitingRoomReadyAction()
+            waitingRoomItemBurnAction(player_id, true)
+            resolve(true)
+          } else {
+            transactionAction(false)
+            MESSAGES["transaction-error"]
+            resolve(false)
+          }
+        })
       }
-
-      // system not burn item
-      transactionAction(true)
-      burnItemNowStatus(_item_id, _qty, false).then((res) => {
-        if (res) {
-          transactionAction(false)
-          waitingRoomReadyAction()
-          waitingRoomItemBurnAction(player_id, true)
-          successToast(MESSAGES["burn-item-success"])
-          resolve(true)
-        } else {
-          transactionAction(false)
-          MESSAGES["transaction-error"]
-          resolve(false)
-        }
-      })
     })
 
   /**

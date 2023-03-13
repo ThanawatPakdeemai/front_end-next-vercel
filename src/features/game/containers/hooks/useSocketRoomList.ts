@@ -1,6 +1,7 @@
 import EVENTS from "@configs/events"
 import { IResSocketRoomList } from "@feature/game/interfaces/IGameService"
 import { useSocket } from "@feature/socket"
+import { useState } from "react"
 
 export interface IPropsSocketRoomList {
   path: string
@@ -11,7 +12,7 @@ export interface IPropsSocketRoomList {
 
 const useSocketRoomList = (props: IPropsSocketRoomList) => {
   const { path, player_id, game_id, item_id } = props
-
+  const [search, setSearch] = useState("")
   const {
     socketInit: socketRoomList,
     onSetConnectedSocket,
@@ -27,23 +28,57 @@ const useSocketRoomList = (props: IPropsSocketRoomList) => {
 
   const getRoomListMultiPlayer = () =>
     new Promise((resolve, reject) => {
-      socketRoomList.on(
-        EVENTS.LISTENERS.LOBBY_ONLINE,
-        (response: IResSocketRoomList) => {
-          if (response) {
-            resolve(response)
-          } else {
-            reject(response)
+      if (search === "")
+        socketRoomList.on(
+          EVENTS.LISTENERS.LOBBY_ONLINE,
+          (response: IResSocketRoomList) => {
+            if (response) {
+              resolve(response)
+            } else {
+              reject(response)
+            }
           }
+        )
+    }).catch((_err) => {})
+
+  const getRoomFromSearch = () =>
+    new Promise((resolve, reject) => {
+      if (search !== "")
+        socketRoomList.on(
+          EVENTS.LISTENERS.LOBBY_SEARCH_DATA,
+          (response: IResSocketRoomList) => {
+            if (response) {
+              resolve(response)
+            } else {
+              reject(response)
+            }
+          }
+        )
+    }).catch((_err) => {})
+
+  const searchRoom = (_searchRoom: string) =>
+    new Promise(() => {
+      if (isConnected) {
+        if (_searchRoom.trim() !== "") {
+          setSearch(_searchRoom)
+          socketRoomList.emit(EVENTS.ACTION.LOBBY_SEARCH, {
+            room_code: _searchRoom
+          })
+        } else {
+          setSearch("")
+          socketRoomList.emit(EVENTS.ACTION.LOBBY_IN)
         }
-      )
+      }
     })
 
   return {
     socketRoomList,
     onSetConnectedSocket,
     isConnected,
-    getRoomListMultiPlayer
+    getRoomListMultiPlayer,
+    searchRoom,
+    getRoomFromSearch,
+    search
   }
 }
 

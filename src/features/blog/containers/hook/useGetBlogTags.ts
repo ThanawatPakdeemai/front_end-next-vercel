@@ -22,7 +22,7 @@ const useGetBlogTags = ({
     queryFn: () => getBlogTags({ limit, skip, sort, search, tags_id }),
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: tags_id !== "" || tags_id !== undefined
+    enabled: !!tags_id
   })
 
   return {

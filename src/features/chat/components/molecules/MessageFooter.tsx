@@ -5,6 +5,7 @@ import useChat from "@feature/chat/containers/hooks/useChat"
 import { Box, TextField } from "@mui/material"
 import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
 import React from "react"
+import _ from "lodash"
 
 const MessageFooter = () => {
   const { handleInputChat } = useChat()
@@ -52,7 +53,9 @@ const MessageFooter = () => {
         icon={<SendIcon />}
         className="absolute right-4 flex h-[18px] w-[18px] cursor-pointer items-center justify-center rounded-lg bg-transparent"
         aria-label="send-button"
-        onClick={onSendMessage}
+        onClick={() => {
+          onSendMessage()
+        }}
       />
     </Box>
   )

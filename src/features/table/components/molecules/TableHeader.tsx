@@ -12,7 +12,7 @@ interface IProps {
 
 const TableHeader = ({
   thead,
-  gridTemplateColumns = "180px 140px 130px 1fr"
+  gridTemplateColumns = "180px 140px 130px 90px 1fr"
 }: IProps) => {
   const TableRowStyle = styled(TableRow)({
     ":root": {

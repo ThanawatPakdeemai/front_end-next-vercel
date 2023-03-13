@@ -50,20 +50,23 @@ const Balance = ({ className, buyItemCoinSeleced }: IProps) => {
       const selectedCoin = chainSupport.find(
         (coin) => coin.symbol === buyItemCoinSeleced.symbol
       )
-      return (
-        <TokenListItem
-          icon={
-            (selectedCoin as ITokenContract).symbol === "NAKA" ? (
-              <INaka />
-            ) : (
-              <IBusd />
-            )
-          }
-          text={(selectedCoin as ITokenContract).balanceVault.text}
-          disabledClick
-          shadow
-        />
-      )
+      if (selectedCoin) {
+        return (
+          <TokenListItem
+            icon={
+              (selectedCoin as ITokenContract).symbol === "NAKA" ? (
+                <INaka />
+              ) : (
+                <IBusd />
+              )
+            }
+            text={(selectedCoin as ITokenContract).balanceVault.text}
+            disabledClick
+            shadow
+          />
+        )
+      }
+      return <></>
     }
     return (
       <TokenList

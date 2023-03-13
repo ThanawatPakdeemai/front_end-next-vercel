@@ -159,7 +159,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
       data &&
       data.game_type === "singleplayer"
     ) {
-      const frontendUrl = `${baseUrlFront}/${router.query.typrGame}/${data.path}/summary/${room_id}`
+      const frontendUrl = `${baseUrlFront}/${router.query.typeGame}/${data.path}/summary/${room_id}`
 
       if (data.type_code === "survival_01") {
         if (ip) {
@@ -212,7 +212,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
     item_id,
     profile,
     room_id,
-    router?.query?.typrGame
+    router?.query?.typeGame
   ])
 
   const onPlayGame = () => {

@@ -4,24 +4,19 @@ import dynamic from "next/dynamic"
 
 const EventDetailLayout = dynamic(
   () => import("@components/templates/EventDetailLayout"),
-  {
-    suspense: true
-  }
+  { suspense: true }
 )
 const EventDetailContent = dynamic(
-  () => import("@feature/page/events/EventDetailContent")
+  () => import("@feature/page/events/EventDetailContent"),
+  { suspense: true }
 )
 const RightSidebarContentEffect = dynamic(
   () => import("@components/templates/contents/RightSidebarContentEffect"),
-  {
-    suspense: true
-  }
+  { suspense: true }
 )
 const StoryLobby = dynamic(
   () => import("@feature/game/components/templates/lobby/StoryLobby"),
-  {
-    suspense: true
-  }
+  { suspense: true }
 )
 
 export default function Event() {

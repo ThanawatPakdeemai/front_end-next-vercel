@@ -10,8 +10,8 @@ const EventLayout = ({
     <Header />
     <div className="flex-row gap-3 md:flex">
       <SidebarGames />
+      {children}
     </div>
-    {children}
     <Footer />
   </div>
 )

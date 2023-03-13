@@ -10,7 +10,7 @@ import CardContent from "@feature/referral/components/CardContent"
 
 const EventDetailContent = () => (
   <div className="md:w-4/6">
-    <CardContent title="Demo">
+    <CardContent title="">
       <TableContainer>
         <Table>
           <TableHead>

@@ -7,7 +7,6 @@ import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import dynamic from "next/dynamic"
-import { ICurrentNakaData } from "@feature/inventory/interfaces/IInventoryService"
 import { getCurrentNaka } from "@feature/inventory/containers/services/inventory.service"
 
 const CardItemMarketPlace = dynamic(
@@ -19,7 +18,7 @@ const CardItemMarketPlace = dynamic(
 
 const MarketplaceCardList = () => {
   const [gameItemData, setGameItemData] = useState<IMarketplaceInfoData[]>([])
-  const [price, setPrice] = useState<ICurrentNakaData>()
+  const [nakaUsdPrice, setNakaUsdPrice] = useState<number>(0)
   const [type, setType] = useState<"game" | "land" | "building" | "material">(
     "land"
   )
@@ -28,7 +27,7 @@ const MarketplaceCardList = () => {
   const getPrice = async () => {
     const prices = await getCurrentNaka()
     if (prices) {
-      setPrice(prices.data)
+      setNakaUsdPrice(parseFloat(prices.data.last))
     }
   }
 
@@ -75,7 +74,7 @@ const MarketplaceCardList = () => {
           }
           itemName={_data.land_data?.name || _data.building_data?.name}
           itemLevel={_data.building_data?.level}
-          price={_data.price / (price?.last as number)}
+          price={_data.price / nakaUsdPrice}
         />
       ))}
     </div>

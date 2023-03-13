@@ -30,7 +30,7 @@ const MarketplaceP2PCardList = () => {
   const getPrice = async () => {
     const prices = await getCurrentNaka()
     if (prices) {
-      setNakaUsdPrice(prices.data.last as number)
+      setNakaUsdPrice(parseFloat(prices.data.last))
     }
   }
 

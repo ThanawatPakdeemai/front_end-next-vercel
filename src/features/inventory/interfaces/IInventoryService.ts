@@ -11,7 +11,7 @@ export interface ICurrentNakaData {
   low: string
   vol: string
   volValue: string
-  last: string | number
+  last: string
   averagePrice: string
   takerFeeRate: string
   makerFeeRate: string

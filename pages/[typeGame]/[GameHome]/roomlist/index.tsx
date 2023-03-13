@@ -27,7 +27,7 @@ export default function GameRoomList() {
   useEffect(() => {
     if (gameData) onSetGameData(gameData)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [gameData])
 
   return (
     <>

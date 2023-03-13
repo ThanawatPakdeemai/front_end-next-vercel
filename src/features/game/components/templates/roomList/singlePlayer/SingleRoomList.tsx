@@ -151,7 +151,7 @@ const GameRoomList = () => {
         </div>
         {gameData && (!gameData?.play_to_earn || !gameData.tournament) && (
           <BuyItemBody>
-            <CardBuyItem />
+            <CardBuyItem gameObject={gameData} />
           </BuyItemBody>
         )}
       </Box>

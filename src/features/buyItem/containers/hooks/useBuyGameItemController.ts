@@ -6,9 +6,11 @@ import {
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+import { ICurrentNakaData } from "@feature/inventory/interfaces/IInventoryService"
 import { useToast } from "@feature/toast/containers"
 import useGlobal from "@hooks/useGlobal"
 import useSwitchNetwork from "@hooks/useSwitchNetwork"
+import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
 import useChainSupport from "@stores/chainSupport"
 import useGameStore from "@stores/game"
 import useLoadingStore from "@stores/loading"
@@ -27,6 +29,7 @@ const useBuyGameItemController = () => {
   const { chainId, accounts, signer } = useSwitchNetwork()
   const { chainSupport } = useChainSupport()
   const { fetchNAKAToken, fetchAllTokenSupported } = useGlobal()
+  const { price } = useNakaPriceProvider()
 
   // State
   const [openForm, setOpenForm] = useState<boolean>(false)
@@ -97,7 +100,8 @@ const useBuyGameItemController = () => {
   const updatePricePerItem = useCallback(async () => {
     if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
       Helper.calculateItemPerPrice(
-        (watch("item") as IGameItemListData).price
+        (watch("item") as IGameItemListData).price,
+        (price as ICurrentNakaData).last
       ).then((res) => {
         if (res) {
           setValue("nakaPerItem", Number(res))
@@ -117,6 +121,7 @@ const useBuyGameItemController = () => {
         }
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, setValue, watch])
 
   const onQtyUp = useCallback(() => {

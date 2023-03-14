@@ -10,9 +10,16 @@ const MarketplaceLayoutFilterNoBanner = dynamic(
   }
 )
 
-const Material = () => <div>Material</div>
+const MarketplaceP2PCardList = dynamic(
+  () => import("@feature/page/marketplace/MarketplaceP2PCardList"),
+  {
+    suspense: true
+  }
+)
 
-Material.getLayout = function getLayout(page: ReactElement) {
+const NakaPunk = () => <MarketplaceP2PCardList />
+
+NakaPunk.getLayout = function getLayout(page: ReactElement) {
   return (
     <MarketplaceLayoutFilterNoBanner>{page}</MarketplaceLayoutFilterNoBanner>
   )
@@ -26,4 +33,4 @@ export async function getServerSideProps({ locale }: { locale: string }) {
   }
 }
 
-export default Material
+export default NakaPunk

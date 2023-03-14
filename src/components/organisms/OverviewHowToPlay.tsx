@@ -29,7 +29,7 @@ const OverviewHowToPlay = ({
   // }, [data])
 
   return (
-    <div className="relative my-2 flex flex-col overflow-hidden rounded-2xl bg-neutral-780 p-2 sm:m-0">
+    <div className="relative my-2 flex flex-col overflow-hidden rounded-2xl bg-neutral-780 p-2 sm:m-0 md:min-w-[330px]">
       <AsideLayout
         icon={<OverviewIcon />}
         title={title ? `${t(title)}` : `${t("game_overview")}`}

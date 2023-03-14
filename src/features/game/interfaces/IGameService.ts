@@ -28,6 +28,7 @@ export type IGetType =
   | "must-try"
   | "hot-game"
   | "partner-game"
+  | "partner-publisher"
   | "arcade-emporium"
   | "all"
 

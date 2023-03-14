@@ -13,7 +13,7 @@ import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import { IVerticalThumbSlide } from "@feature/slider/interfaces/ISlides"
 import { IGameItemList } from "@feature/gameItem/interfaces/IGameItemService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
-import useGamesById from "./useFindGameById"
+import useGameStore from "@stores/game"
 
 /**
  * @description Game Overview Hook functions to handle all game overview data
@@ -24,7 +24,8 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   const gameTags: IGameTag[] = []
   const gameDataMedia: IVerticalThumbSlide[] = []
   const gamePartnerSocial: IMenuBase[] = []
-  const { gameData, partnerGames } = useGamesById(gameId, gameType)
+  const gameData = useGameStore((state) => state.data)
+  const partnerGames = useGameStore((state) => state.dataGamePartner)
 
   const [gameDataState, setGameDataState] = React.useState<IGame>()
   const [gamePartnerState, setGamePartnerState] =

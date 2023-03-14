@@ -1,5 +1,5 @@
 import services from "@configs/axiosGlobalConfig"
-import { ITypesGameItemServ } from "@feature/marketplace/gameItem/interfaces/IGameItemService"
+import { ITypesGameItemServ } from "@feature/gameItem/marketplace/interfaces/IGameItemService"
 
 export const getTypesGameItem = () =>
   new Promise<ITypesGameItemServ>((resolve, reject) => {

@@ -2,30 +2,24 @@ import configZustandDevTools from "@utils/configDevtools"
 import { create } from "zustand"
 import { devtools } from "zustand/middleware"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
-import { IMaterials } from "@feature/marketplace/material/interfaces/IMaterialService"
-import { INFTBuilding } from "@feature/marketplace/building/interfaces/IBuildingService"
+import { ITypesBuildServ } from "@feature/building/interfaces/IBuildingService"
+import { ITypeMaterials } from "@feature/material/interfaces/IMaterialService"
+import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 
-type TCategory =
-  | "game-item"
-  | "nft-land"
-  | "nft-building"
-  | "material"
-  | "naka-punk"
-  | "nft-game"
-  | undefined
+type TCategory = TNFTType | undefined
 
 interface IUseCategoryStore {
   category: TCategory
   gameItemTypes: IGameItemListData[]
-  landTypes: IMaterials[]
-  buildingTypes: INFTBuilding[]
-  materialTypes: IMaterials[]
+  landTypes: ITypeMaterials[]
+  buildingTypes: ITypesBuildServ[]
+  materialTypes: ITypeMaterials[]
   getCurrentTypes: (_category: TCategory) => void
   onSetCategory: (_category: TCategory) => void
   onSetGameItemTypes: (_types: IGameItemListData[]) => void
-  onSetLandTypes: (_types: IMaterials[]) => void
-  onSetBuildingTypes: (_types: INFTBuilding[]) => void
-  onSetMaterialTypes: (_types: IMaterials[]) => void
+  onSetLandTypes: (_types: ITypeMaterials[]) => void
+  onSetBuildingTypes: (_types: ITypesBuildServ[]) => void
+  onSetMaterialTypes: (_types: ITypeMaterials[]) => void
 }
 
 const useMarketCategTypes = create<IUseCategoryStore>()(
@@ -37,24 +31,26 @@ const useMarketCategTypes = create<IUseCategoryStore>()(
       buildingTypes: [],
       materialTypes: [],
       getCurrentTypes: (_category) => {
-        let _types: Array<IGameItemListData | IMaterials | INFTBuilding> = []
+        let _types: Array<
+          IGameItemListData | ITypeMaterials | ITypesBuildServ
+        > = []
         switch (_category) {
-          case "game-item":
+          case "game_item":
             _types = get().gameItemTypes
             break
-          case "nft-land":
+          case "nft_land":
             _types = get().landTypes
             break
-          case "nft-building":
+          case "nft_building":
             _types = get().buildingTypes
             break
-          case "material":
+          case "nft_material":
             _types = get().materialTypes
             break
-          case "naka-punk":
+          case "nft_naka_punk":
             _types = []
             break
-          case "nft-game":
+          case "nft_game":
             _types = []
             break
           default:

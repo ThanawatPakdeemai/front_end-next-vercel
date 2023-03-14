@@ -1,5 +1,5 @@
 import services from "@configs/axiosGlobalConfig"
-import { ITypesMaterialServ } from "@feature/marketplace/material/interfaces/IMaterialService"
+import { ITypesMaterialServ } from "@feature/material/interfaces/IMaterialService"
 
 export const getTypesMaterial = () =>
   new Promise<ITypesMaterialServ>((resolve, reject) => {

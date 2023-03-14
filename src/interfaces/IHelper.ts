@@ -13,17 +13,20 @@ export interface IInfo {
   totalCount: number
 }
 
-export interface IFormatService {
-  status: boolean
+export interface IInfoFormatServ {
   info: IInfo
 }
 
-export interface IFormatMessageService {
+export interface IStatusFormatServ {
   status: boolean
+}
+
+export interface IFormatService extends IInfoFormatServ, IStatusFormatServ {}
+
+export interface IFormatMessageService extends IStatusFormatServ {
   message: string
 }
 
-export interface IBalance {
-  status: boolean
+export interface IBalance extends IStatusFormatServ {
   data: BigNumber
 }

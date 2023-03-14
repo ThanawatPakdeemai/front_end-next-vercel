@@ -13,6 +13,7 @@ import { ELocalKey } from "@interfaces/ILocal"
 import useChainSupport from "@stores/chainSupport"
 import Helper from "@utils/helper"
 import { IErrorMessage } from "@interfaces/IErrorMessage"
+import Web3 from "web3"
 
 const useCreateWeb3Provider = () => {
   const [signer, setSigner] = useState<JsonRpcSigner | undefined>(undefined)
@@ -101,6 +102,48 @@ const useCreateWeb3Provider = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const importNakaToken = useCallback(async () => {
+    const web3 = new Web3(Web3.givenProvider)
+    if (!web3) return
+    if (web3 && web3.givenProvider.request) {
+      try {
+        await web3.givenProvider.request({
+          method: "wallet_watchAsset",
+          params: {
+            type: "ERC20",
+            options: {
+              address: CONFIGS.CONTRACT_ADDRESS.ERC20,
+              symbol: "naka",
+              decimals: 18,
+              image:
+                `${process.env.NEXT_PUBLIC_FRONTEND}/favicon.ico` ??
+                "https://www.nakamoto.games/favicon.ico"
+            }
+          }
+        })
+
+        return {
+          responseStatus: true,
+          errorMsg: "",
+          type: "success"
+        }
+      } catch (error) {
+        return {
+          responseStatus: false,
+          errorMsg: (error as Error).message,
+          type: "failed"
+        }
+      }
+    } else {
+      return {
+        responseStatus: false,
+        errorMsg:
+          "Can't setup the MATIC network on metamask because window.ethereum is undefined",
+        type: "failed"
+      }
+    }
   }, [])
 
   const chainIdIsSupported = () =>
@@ -406,6 +449,7 @@ const useCreateWeb3Provider = () => {
     loading,
     switchNetwork,
     // checkNetwork/
+    importNakaToken,
     setChainId,
     getNetwork,
     checkChain,

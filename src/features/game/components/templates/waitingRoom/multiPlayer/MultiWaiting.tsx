@@ -289,7 +289,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
           </Box>
           {gameData && (!gameData?.play_to_earn || !gameData.tournament) && (
             <BuyItemBody>
-              <CardButItem />
+              <CardButItem gameObject={gameData} />
               <Chat />
             </BuyItemBody>
           )}

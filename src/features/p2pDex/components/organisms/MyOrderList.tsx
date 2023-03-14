@@ -14,11 +14,11 @@ import {
   IMultiOrderListDataServ
 } from "@feature/multichain/interfaces/IMultichain"
 import useContractMultichain from "@feature/contract/containers/hooks/useContractMultichain"
-import useP2PDexCancelSellNaka from "@feature/p2pDex/containers/hooks/useP2PDexCancelSellNaka"
 import { IResponseGetFee } from "@feature/contract/interfaces/IMultichainHook"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import useLoadingStore from "@stores/loading"
+import useP2PDexCancel from "@feature/p2pDex/containers/hooks/useP2PDexCancel"
 import FormEdit from "./FormEdit"
 
 interface IProp {
@@ -33,7 +33,7 @@ interface IProp {
   setSortName: (_data) => void
 }
 const MyOrderList = ({ ...props }: IProp) => {
-  const { mutateCancelP2PDexOrder } = useP2PDexCancelSellNaka()
+  const { mutateCancelP2PDexOrder } = useP2PDexCancel()
   const { errorToast } = useToast()
   const { cancelOrderSellNaka, cancelOrderBuyNaka } = useContractMultichain()
   const { setClose, setOpen } = useLoadingStore()

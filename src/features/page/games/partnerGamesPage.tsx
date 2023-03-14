@@ -3,7 +3,7 @@ import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { P2EHeaderMenu } from "@constants/gameSlide"
 import GameCard from "@feature/game/containers/components/molecules/GameCard"
 import { useQueryClient } from "@tanstack/react-query"
-import React, { memo, useEffect, useRef, useState } from "react"
+import React, { memo, useEffect, useState } from "react"
 import { v4 as uuid } from "uuid"
 import useGameStore from "@stores/game/index"
 import usePartnerGame from "@feature/game/containers/hooks/usePartnerGame"
@@ -17,7 +17,6 @@ const PartnerGames = () => {
   const search = ""
   const limit = 10
   const [page, setPage] = useState<number>(1)
-  const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const [gameFilter, setGameFilter] = useState<IPartnerGameData[]>()
   const queryClient = useQueryClient()
@@ -45,8 +44,7 @@ const PartnerGames = () => {
   })
 
   useEffect(() => {
-    if (!fetchRef.current && gameData?.info && gameData) {
-      fetchRef.current = true
+    if (gameData?.info && gameData) {
       setTotalCount(gameData.info?.totalCount)
     }
   }, [gameData])

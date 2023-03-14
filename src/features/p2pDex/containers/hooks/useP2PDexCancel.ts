@@ -3,7 +3,7 @@ import { IMessage } from "@feature/multichain/interfaces/IMultichain"
 import { useToast } from "@feature/toast/containers"
 import { useMutation } from "@tanstack/react-query"
 
-const useP2PDexCancelSellNaka = () => {
+const useP2PDexCancel = () => {
   const { errorToast, successToast } = useToast()
   const {
     data,
@@ -12,7 +12,7 @@ const useP2PDexCancelSellNaka = () => {
     isError,
     mutateAsync: mutateCancelP2PDexOrder
   } = useMutation(cancelP2PDexOrder, {
-    mutationKey: ["useP2PDexCancelSellNaka"],
+    mutationKey: ["useP2PDexCancel"],
     retry: false,
     onSuccess: (_response) => {
       successToast(_response.message)
@@ -31,4 +31,4 @@ const useP2PDexCancelSellNaka = () => {
   }
 }
 
-export default useP2PDexCancelSellNaka
+export default useP2PDexCancel

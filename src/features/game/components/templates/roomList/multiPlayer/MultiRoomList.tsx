@@ -10,6 +10,7 @@ import {
   IResSocketRoomList
 } from "@feature/game/interfaces/IGameService"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
+import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import { useToast } from "@feature/toast/containers"
 import { Box, Divider } from "@mui/material"
 import SocketProviderRoom from "@providers/SocketProviderRoom"
@@ -59,6 +60,11 @@ const MultiRoomList = () => {
     search
   } = useSocketRoomList({
     ...propsSocketRoomlist
+  })
+
+  const { balanceofItem } = useGetBalanceOf({
+    _address: profile?.address ?? "",
+    _item_id: itemSelected?.item_id_smartcontract ?? 0
   })
 
   useEffect(() => {
@@ -128,18 +134,23 @@ const MultiRoomList = () => {
         _data.amount_current_player < _data.max_players &&
         new Date() < new Date(_data.end_time) &&
         itemSelected &&
-        itemSelected?.qty >= qtyItemOfRoom
+        balanceofItem &&
+        balanceofItem?.data >= qtyItemOfRoom
       ) {
         if (player_me && player_me.status === "played") {
           errorToast(MESSAGES["you-played"])
         } else {
           router.push(`${router.asPath}/${_data._id}`)
         }
-      } else if (data && (data.play_to_earn || data.tournament)) {
+      } else if (
+        data &&
+        ((data.play_to_earn && data.play_to_earn_status === "free") ||
+          data.tournament)
+      ) {
         router.push(`${router.asPath}/${_data.id}`)
       } else if (new Date() > new Date(_data.end_time)) {
         errorToast(MESSAGES["room-timeout"])
-      } else if (itemSelected && itemSelected?.qty < qtyItemOfRoom) {
+      } else if (!balanceofItem || balanceofItem?.data < qtyItemOfRoom) {
         errorToast(MESSAGES["you-don't-have-item"])
       } else if (player_me && player_me.status === "played") {
         errorToast(MESSAGES["you-played"])
@@ -202,9 +213,7 @@ const MultiRoomList = () => {
           </Box>
         </SocketProviderRoom>
         {data && (!data?.play_to_earn || !data.tournament) && (
-          <BuyItemBody>
-            <CardBuyItem />
-          </BuyItemBody>
+          <BuyItemBody>{data && <CardBuyItem gameObject={data} />}</BuyItemBody>
         )}
       </Box>
     </>

@@ -8,24 +8,24 @@ const GamePageLayout = dynamic(
     suspense: true
   }
 )
-const PublisherPage = dynamic(
-  () => import("@feature/page/games/PublisherPage"),
+const PartnerPublisherPage = dynamic(
+  () => import("@feature/page/games/partnerPublisherPage"),
   {
     suspense: true
   }
 )
 
-export default function GameDevelopers() {
+export default function PartnerGames() {
   return (
     <>
       <article className="h-full w-full">
-        <PublisherPage />
+        <PartnerPublisherPage />
       </article>
     </>
   )
 }
 
-GameDevelopers.getLayout = function getLayout(page: ReactElement) {
+PartnerGames.getLayout = function getLayout(page: ReactElement) {
   return <GamePageLayout>{page}</GamePageLayout>
 }
 

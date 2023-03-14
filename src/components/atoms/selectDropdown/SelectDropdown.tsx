@@ -61,12 +61,13 @@ const SelectDropdown = ({
       >
         {title === "GameItem" ? (
           <MenuItemCustom
-            label={item.price}
+            label={`${item.price}`}
             icon={item.icon || icon}
             href={item.href}
             id=""
             external={false}
             active={item.active}
+            endText={item?.qty}
           />
         ) : (
           <MenuItemCustom

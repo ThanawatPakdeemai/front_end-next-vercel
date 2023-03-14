@@ -9,6 +9,7 @@ interface IProp extends IMenu {
   endIcon?: boolean
   icon: string | React.ReactElement
   onClick?: () => void
+  endText?: string | React.ReactElement
 }
 
 /**
@@ -20,6 +21,7 @@ const MenuItemCustom = ({
   endIcon,
   icon,
   onClick,
+  endText,
   ...props
 }: IProp) => {
   const router = useRouter()
@@ -40,7 +42,10 @@ const MenuItemCustom = ({
       }}
     >
       <ListItemIcon>{icon}</ListItemIcon>
-      <ListItemText>{props.label}</ListItemText>
+      <div className="flex w-full items-center justify-between">
+        <ListItemText className="w-full">{props.label}</ListItemText>
+        <ListItemText className="mr-3">{endText}</ListItemText>
+      </div>
       {endIcon && <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />}
     </MenuItem>
   )

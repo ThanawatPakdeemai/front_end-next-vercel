@@ -53,22 +53,8 @@ const FormBuyItem = () => {
     onQtyDown,
     chainSupport,
     isDisabled
-    // chainId,
-    // accounts,
-    // signer
   } = useBuyGameItemController()
   const { handleSwitchNetwork, statusWalletConnected } = useSwitchNetwork()
-
-  // console.log(
-  //   "chainSupport",
-  //   chainSupport,
-  //   chainId,
-  //   accounts,
-  //   signer,
-  //   watch("currency"),
-  //   watch("item"),
-  //   isDisabled()
-  // )
 
   return (
     <>
@@ -132,7 +118,6 @@ const FormBuyItem = () => {
               name="currency"
               control={control}
               rules={{ required: true }}
-              // defaultValue={watch("currency")[0]}
               render={({ field: { ...field } }) => (
                 <DropdownListCurrency
                   {...field}
@@ -143,10 +128,6 @@ const FormBuyItem = () => {
                     setValue("currency_id", _item.address)
                     updatePricePerItem()
                   }}
-                  // defaultValue={
-                  //   (chainSupport[0] as ITokenContract) ||
-                  //   ({} as ITokenContract)
-                  // }
                 />
               )}
             />

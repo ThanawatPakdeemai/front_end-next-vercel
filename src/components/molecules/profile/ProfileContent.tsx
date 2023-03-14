@@ -22,6 +22,8 @@ import useLoadingStore from "@stores/loading"
 import GameStatOverview from "@feature/playerProfile/components/organisms/GameStatOverview"
 import { useRouter } from "next/router"
 import useGetProfileByEmail from "@feature/profile/containers/hook/getProfileByEmail"
+import { useToast } from "@feature/toast/containers"
+import { MESSAGES } from "@constants/messages"
 import EditProfileModal from "./EditProfileModal"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
@@ -39,6 +41,7 @@ const ProfileContent = () => {
   const fetchRef = useRef(false)
   const { setOpen, setClose } = useLoadingStore()
   const router = useRouter()
+  const { errorToast } = useToast()
   const { player_id } = router.query
 
   const {
@@ -55,7 +58,14 @@ const ProfileContent = () => {
     _rewards_send_status: "All"
   })
 
-  const { profile: profileFetched } = useGetProfileByEmail(emailPlayer)
+  const { profile: profileFetched, isError } = useGetProfileByEmail(emailPlayer)
+
+  useEffect(() => {
+    if (isError) {
+      errorToast(MESSAGES.please_login)
+      router.push("/")
+    }
+  }, [isError, errorToast, router])
 
   useEffect(() => {
     if (!fetchRef.current && getProfileInfo && !isFetching) {

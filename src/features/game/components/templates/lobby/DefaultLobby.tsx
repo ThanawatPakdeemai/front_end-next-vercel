@@ -1,7 +1,7 @@
 import OverviewHowToPlay from "@components/organisms/OverviewHowToPlay"
 import BuyItemBody from "@components/templates/game/BuyItemBody"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import CardButItem from "@feature/gameItem/components/molecules/CardBuyItem"
+import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import { CardMedia } from "@mui/material"
 import React from "react"
 
@@ -19,7 +19,7 @@ const DefaultLobby = ({ gameData }: IDefaultLobby) => (
             height={300}
             image={gameData.image_main}
             alt={gameData.name}
-            className="absolute h-1/2 w-1/2 object-fill object-center"
+            className="absolute h-1/2 w-1/2 object-contain object-center"
           />
           <CardMedia
             component="img"
@@ -38,7 +38,7 @@ const DefaultLobby = ({ gameData }: IDefaultLobby) => (
         hight="h-[300px]"
         title="how_to_play"
       />
-      <CardButItem />
+      <CardBuyItem gameObject={gameData} />
     </BuyItemBody>
   </div>
 )

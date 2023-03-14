@@ -15,11 +15,7 @@ const useGetBalanceOf = ({ _address, _item_id }: IGetBalanceOf) => {
     queryFn: () => getBalanceOf({ _address, _item_id }),
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled:
-      _address !== "" &&
-      _item_id > 0 &&
-      _address !== undefined &&
-      _item_id !== undefined
+    enabled: !!_address && !!_item_id
   })
 
   return {

@@ -2,8 +2,8 @@ import IBusd from "@components/icons/Busd"
 import CopyTextIcon from "@components/icons/CopyTextIcon"
 import HrLine from "@components/icons/HrLine"
 import INaka from "@components/icons/Naka"
-import AmountBalance from "@components/molecules/balance/AmountBalance"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import TokenListItem from "@components/molecules/TokenListItem"
 import { chainIdConfig } from "@configs/sites"
 import { MESSAGES } from "@constants/messages"
 import {
@@ -144,9 +144,9 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
               <HrLine className="" />
             </div>
 
-            <AmountBalance
+            <TokenListItem
               icon={chain === "polygon" ? <INaka /> : <IBusd />}
-              balance={balance || { digit: 0, text: "N/A" }}
+              text={balance || { digit: 0, text: "N/A" }}
             />
           </div>
         </div>

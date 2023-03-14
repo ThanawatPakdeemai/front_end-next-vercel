@@ -2,17 +2,16 @@ import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import SendIcon from "@components/icons/SendIcon"
 import useChatContext from "@feature/chat/containers/contexts/useChatContext"
 import useChat from "@feature/chat/containers/hooks/useChat"
-import { IChat } from "@feature/chat/interface/IChat"
 import { Box, TextField } from "@mui/material"
 import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
-import React, { useCallback, useEffect } from "react"
+import React from "react"
 import _ from "lodash"
 
 const MessageFooter = () => {
   const { handleInputChat } = useChat()
-  const { message, setMessage, setChat } = useChatContext()
+  const { message, setMessage } = useChatContext()
   const propsSocket = useSocketProviderWaiting()
-  const { onSendMessage, getChat } = propsSocket
+  const { onSendMessage } = propsSocket
 
   const iconmotion = {
     hover: {
@@ -26,25 +25,6 @@ const MessageFooter = () => {
       }
     }
   }
-
-  const manageChat = useCallback(async () => {
-    if (getChat) {
-      const chat = await getChat()
-      setChat((oldData) => {
-        const data = [
-          chat as unknown as IChat,
-          ..._.uniqWith(oldData, _.isEqual)
-        ]
-        return _.uniqWith(data, _.isEqual)
-      })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
-    manageChat()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onSendMessage])
 
   return (
     <Box className="message-input relative flex w-full items-center">

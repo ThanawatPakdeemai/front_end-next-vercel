@@ -30,8 +30,7 @@ const useGetProfileInfo = ({
         _rewards_send_status
       }),
     staleTime: Infinity,
-    enabled:
-      _playerId !== "" && _playerId !== undefined && _playerId.length > 0,
+    enabled: !!_playerId && !!_playerId.length,
     keepPreviousData: false,
     retry: false
   })

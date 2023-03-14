@@ -1,6 +1,4 @@
 import { CardContent, SxProps, Theme } from "@mui/material"
-import INaka from "@components/icons/Naka"
-import IBusd from "@components/icons/Busd"
 import useProfileStore from "@stores/profileStore"
 import Metamask from "@components/atoms/metamask"
 import ButtonLink from "@components/atoms/button/ButtonLink"
@@ -10,10 +8,14 @@ import { useWeb3Provider } from "@providers/index"
 
 import useGlobal from "@hooks/useGlobal"
 import useChainSupport from "@stores/chainSupport"
-import CONFIGS from "@configs/index"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import PleaseCheckWallet from "@components/atoms/PleaseCheckWallet"
-import AmountBalance from "./AmountBalance"
+import { CHAIN_SUPPORT, IChainList } from "@configs/chain"
+import { useRouter } from "next/router"
+import INaka from "@components/icons/Naka"
+import IBusd from "@components/icons/Busd"
+import TokenList from "../TokenList"
+import TokenListItem from "../TokenListItem"
 
 interface IProps {
   token?: string | undefined
@@ -25,6 +27,8 @@ interface IProps {
 }
 
 const Balance = ({ className, buyItemCoinSeleced }: IProps) => {
+  const router = useRouter()
+  const { token } = router.query
   const profile = useProfileStore((state) => state.profile.data)
   const {
     address,
@@ -38,65 +42,42 @@ const Balance = ({ className, buyItemCoinSeleced }: IProps) => {
   const { chainId } = useWeb3Provider()
 
   /**
-   * @description Handle display balances from balance vault BSC Only
-   * @returns
-   */
-  const getBSCBalance = () => {
-    if (buyItemCoinSeleced) {
-      const selectedCoin = chainSupport.find(
-        (coin) => coin.symbol === buyItemCoinSeleced.symbol
-      )
-      return (
-        <AmountBalance
-          balance={selectedCoin?.balanceVault ?? "N/A"}
-          icon={
-            <IBusd
-              width={30}
-              height={30}
-            />
-          }
-          link="BNB"
-        />
-      )
-    }
-
-    // Display all coin assets
-    return (
-      <>
-        {chainSupport &&
-          chainSupport.length > 0 &&
-          chainSupport.map((coin) => (
-            <AmountBalance
-              key={coin.address}
-              balance={coin.balanceVault}
-              icon={<IBusd width={21} />}
-              link="BNB"
-            />
-          ))}
-      </>
-    )
-  }
-
-  /**
    * @description Handle display balances from balance vault
    * @returns
    */
   const handleDisplayBalance = () => {
-    if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
-      return (
-        <>
-          {chainSupport.map((coin) => (
-            <AmountBalance
-              key={coin.address}
-              balance={coin.balanceVault}
-              icon={<INaka />}
-              link="NAKA"
-            />
-          ))}
-        </>
+    if (buyItemCoinSeleced) {
+      const selectedCoin = chainSupport.find(
+        (coin) => coin.symbol === buyItemCoinSeleced.symbol
       )
+      if (selectedCoin) {
+        return (
+          <TokenListItem
+            icon={
+              (selectedCoin as ITokenContract).symbol === "NAKA" ? (
+                <INaka />
+              ) : (
+                <IBusd />
+              )
+            }
+            text={(selectedCoin as ITokenContract).balanceVault.text}
+            disabledClick
+            shadow
+          />
+        )
+      }
+      return <></>
     }
-    return getBSCBalance()
+    return (
+      <TokenList
+        dataList={chainSupport}
+        currentTabChainSelected={
+          CHAIN_SUPPORT.find((item) => item.chainId === chainId) as IChainList
+        }
+        currentTokenSelected={(token as string) || chainSupport[0]?.symbol}
+        displayBalance
+      />
+    )
   }
 
   return hydrated ? (

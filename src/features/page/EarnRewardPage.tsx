@@ -18,7 +18,9 @@ const EarnRewardPage = () => {
   const { allGameData, isLoading: isGameLoading } = useGetAllGames()
   const { mutateClaimReward } = useClaimReward()
   const { earnRewardData, refetchRewardData, isLoading } =
-    useGetP2ERewardByPlayerId(profile.data ? profile.data.id : "")
+    // useGetP2ERewardByPlayerId(profile.data ? profile.data.id : "")
+    useGetP2ERewardByPlayerId("61bc7f6be434487ef8e4a7c6")
+
   const { successToast, errorToast, warnToast } = useToast()
 
   const countUnClaim = rewardList ? rewardList.length : 0
@@ -91,8 +93,8 @@ const EarnRewardPage = () => {
   }
 
   return (
-    <div className="flex w-[678px] flex-col gap-10">
-      <div className="flex items-center justify-end">
+    <div className="grid max-w-[678px] gap-10">
+      <div className="mt-6 flex items-center justify-end md:mt-0">
         <Typography className="flex-1 text-[22px] uppercase text-neutral-400">
           item rewards
         </Typography>
@@ -106,7 +108,7 @@ const EarnRewardPage = () => {
             {/* for claim all */}
             <ButtonToggleIcon
               text="Claim All"
-              className="ml-[30px] h-[50px] w-[156px] !rounded-[20px] border border-neutral-700 bg-primary-main font-bold capitalize text-white-primary"
+              className="ml-4 h-[50px] !w-[135px] !rounded-[24px] border border-neutral-700 bg-primary-main font-bold capitalize text-white-primary md:ml-[30px]"
               startIcon={<CheckMarkIcon />}
               handleClick={onClaimAll}
             />
@@ -126,7 +128,9 @@ const EarnRewardPage = () => {
           Earn item rewards while you play your favorite games
         </Typography>
       </Box>
-      <div className="flex flex-col gap-[10px]">{content}</div>
+      <div className="grid max-w-[678px] gap-[10px] !overflow-x-scroll md:flex md:flex-col">
+        {content}
+      </div>
     </div>
   )
 }

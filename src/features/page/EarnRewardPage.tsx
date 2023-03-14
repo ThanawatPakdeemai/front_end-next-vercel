@@ -18,8 +18,8 @@ const EarnRewardPage = () => {
   const { allGameData, isLoading: isGameLoading } = useGetAllGames()
   const { mutateClaimReward } = useClaimReward()
   const { earnRewardData, refetchRewardData, isLoading } =
-    // useGetP2ERewardByPlayerId(profile.data ? profile.data.id : "")
-    useGetP2ERewardByPlayerId("61bc7f6be434487ef8e4a7c6")
+    useGetP2ERewardByPlayerId(profile.data ? profile.data.id : "")
+  // useGetP2ERewardByPlayerId("61bc7f6be434487ef8e4a7c6")
 
   const { successToast, errorToast, warnToast } = useToast()
 

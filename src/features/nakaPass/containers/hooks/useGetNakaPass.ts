@@ -15,11 +15,7 @@ const useGetNakaPass = ({ player_id, game_id }: IGetPropNakaPass) => {
     queryFn: () => getNakaPass({ player_id, game_id }),
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled:
-      player_id !== "" ||
-      game_id !== "" ||
-      player_id !== undefined ||
-      game_id !== undefined
+    enabled: !!player_id || !!game_id
   })
 
   return {

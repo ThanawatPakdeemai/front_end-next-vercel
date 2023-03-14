@@ -11,7 +11,7 @@ const useGetGameRoomById = (_roomId: string) => {
     /* prevent hook state problem */
     staleTime: Infinity,
     retry: false,
-    enabled: _roomId !== "" && _roomId !== undefined
+    enabled: !!_roomId
   })
 
   return {

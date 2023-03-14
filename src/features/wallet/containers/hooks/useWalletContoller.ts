@@ -13,17 +13,19 @@ import { useCallback, useEffect, useState } from "react"
 import useQueryBalanceVault from "@feature/contract/containers/hooks/useQuery/useQueryBalanceVault"
 import { getBEP20Contract } from "@feature/contract/containers/contractHelpers"
 import { IErrorMessage } from "@interfaces/IErrorMessage"
+import { CHAIN_SUPPORT, IChainList } from "@configs/chain"
 import {
   useBEP20,
   useERC20
 } from "@feature/contract/containers/hooks/useContract"
+import { IMessage } from "@feature/multichain/interfaces/IMultichain"
+import simpleRpcProvider, { bnbRpcProvider } from "@utils/web3"
 
 export type Method = "deposit" | "withdraw"
-export type TokenSupport = "NAKA" | "BNB"
 
 const useWalletContoller = () => {
   // state
-  const [type, setType] = useState<TokenSupport>("NAKA")
+  const [tabChainList, setTabChainList] = useState<IChainList>(CHAIN_SUPPORT[0])
   const [isConnected, setIsConnected] = useState<boolean>(false)
   const [openWithDraw, setOpenWithDraw] = useState<boolean>(false)
   const [openDeposit, setOpenDeposit] = useState<boolean>(false)
@@ -153,14 +155,19 @@ const useWalletContoller = () => {
     const resultWithdrawNaka = await withdrawNaka(toWei(value.toString()))
     return resultWithdrawNaka
   }
+
   const tokenBinanceContract = useBEP20(
     signer,
-    currentChainSelected?.address ?? ""
+    (currentChainSelected?.tokenName === "bnbt"
+      ? CONFIGS.CONTRACT_ADDRESS.BNB_CONTRACT
+      : currentChainSelected?.address) ?? ""
   )
+
   const tokenNakaContract = useERC20(
     signer,
     currentChainSelected?.address ?? ""
   )
+
   const checkAllowBnb = tokenBinanceContract.allowance(
     address,
     CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
@@ -179,11 +186,13 @@ const useWalletContoller = () => {
     _method: Method,
     _tokenAddress: string
   ) => {
-    const approveToken = (
-      chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB
-        ? await checkAllowBnb
-        : await checkAllowNaka
-    ).toString()
+    const approveToken =
+      currentChainSelected?.tokenName === "bnbt"
+        ? 1
+        : (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB
+            ? await checkAllowBnb
+            : await checkAllowNaka
+          ).toString()
 
     if (!address && approveToken === "0") return
     try {
@@ -208,8 +217,9 @@ const useWalletContoller = () => {
         }
       }
     } catch (error) {
+      errorToast((error as IMessage).message)
       setClose()
-      if (approveToken !== "0") errorToast("Transaction failed")
+      // if (approveToken !== "0") errorToast("Transaction failed")
     }
   }
 
@@ -226,19 +236,23 @@ const useWalletContoller = () => {
       if (!currentChainSelected) {
         return
       }
+
       if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
         // FOR BSC
         const bep20Contract = getBEP20Contract(
           currentChainSelected.address,
-          signer
+          signer ?? chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB
+            ? bnbRpcProvider
+            : simpleRpcProvider
         )
         if (
           currentChainSelected.address !== CONFIGS.CONTRACT_ADDRESS.BNB_CONTRACT
         ) {
-          // const allowanceToken = await checkAllowToken(
+          // const _allowanceToken = await checkAllowToken(
           //   bep20Contract,
           //   CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
           // )
+
           const allowanceToken = await checkAllowBnb
 
           if ((allowanceToken as string).toString() === "0") {
@@ -255,6 +269,8 @@ const useWalletContoller = () => {
           } else {
             await handleWalletProcess(_method, currentChainSelected.address)
           }
+        } else {
+          await handleWalletProcess(_method, currentChainSelected.address)
         }
       } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
         // const erc20Contract = getERC20Contract(
@@ -321,14 +337,12 @@ const useWalletContoller = () => {
    */
 
   return {
-    type,
     value,
     openWithDraw,
     openDeposit,
     disabled,
     currentChainSelected,
     setDisabled,
-    setType,
     setValue,
     setCurrentChainSelected,
     handleOpen,
@@ -338,7 +352,9 @@ const useWalletContoller = () => {
     isConnected,
     onClickMaxValue,
     onResetBalance,
-    checkConnection
+    checkConnection,
+    tabChainList,
+    setTabChainList
   }
 }
 

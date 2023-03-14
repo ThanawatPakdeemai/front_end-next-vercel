@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useState } from "react"
 import { Image } from "@components/atoms/image"
 import { Box, Typography } from "@mui/material"
 import { IMAGES } from "@constants/images"
@@ -10,8 +10,7 @@ import ButtonClose from "@components/atoms/button/ButtonClose"
 import { BUY_NAKA_MENU } from "@configs/buynaka"
 import Link from "next/link"
 import CONFIGS from "@configs/index"
-import { getCurrentNaka } from "@feature/inventory/containers/services/inventory.service"
-import { ICurrentNakaData } from "@feature/inventory/interfaces/IInventoryService"
+import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
 import { ModalCustom } from "./Modal/ModalCustom"
 import TabMenu from "./TabMenu"
 
@@ -31,23 +30,11 @@ const HeadPrice = ({
   showTime = true
 }: IProp) => {
   // const { t } = useTranslation()
-
-  const [price, setPrice] = useState<ICurrentNakaData>()
   const [open, setOpen] = useState<boolean>(false)
+  const { price } = useNakaPriceProvider()
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
-
-  const getPrice = async () => {
-    const prices = await getCurrentNaka()
-    if (prices) {
-      setPrice(prices.data)
-    }
-  }
-
-  useEffect(() => {
-    getPrice()
-  }, [])
 
   return (
     <Box className="relative mb-2 flex w-[100%] flex-row flex-wrap rounded-b-lg bg-neutral-800 sm:mb-0 lg:h-[30px] lg:flex-nowrap">

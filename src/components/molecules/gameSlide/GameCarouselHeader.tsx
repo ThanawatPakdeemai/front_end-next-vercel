@@ -101,7 +101,7 @@ const GameCarouselHeader = ({
   }, [isHover])
 
   return (
-    <div className="slick-header-container relative mb-4 w-full md:h-[50px]">
+    <div className="slick-header-container relative mb-4 w-full md:h-[50px] md:w-9/12">
       <motion.div
         key={`sticker_${menu.title}`}
         className="absolute top-[-80px] left-[-80px] hidden lg:block"
@@ -128,7 +128,7 @@ const GameCarouselHeader = ({
               {menu.title}
             </p>
           </div>
-          <div className="flex flex-[1_1_100%] justify-center sm:flex-none sm:justify-start">
+          <div className="flex flex-[1_1_100%] justify-center sm:flex-none sm:justify-start ">
             {" "}
             {menu.menuList.map((item) => (
               <button

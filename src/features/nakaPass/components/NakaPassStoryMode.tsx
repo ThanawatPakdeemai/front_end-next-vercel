@@ -24,7 +24,7 @@ const NakaPassStoryMode = () => (
   // })
 
   <>
-    <div className="mb-3 mt-4 flex w-full flex-wrap items-center gap-[10px] rounded-2xl bg-neutral-780 p-2 md:mt-0 md:h-[148px] md:flex-row md:flex-nowrap md:gap-0">
+    <div className="mb-3 mt-4 flex w-full flex-wrap items-center gap-[10px] rounded-2xl bg-neutral-780 p-2 md:mt-0 md:h-[148px] md:w-9/12 md:flex-row md:flex-nowrap md:gap-0 lg:max-w-full">
       <div className="flex h-[100px] flex-[1_1_100%] items-center rounded-2xl border border-neutral-700 bg-primary-main sm:h-[132px] sm:basis-[calc(50%-20px)] md:basis-8/12">
         <Box className="bg-line-linear-gradient flex h-full w-full  items-center justify-center rounded-[13px] text-center uppercase">
           <Typography className="text-shadow-red font-neue-machina-semi text-[26px] text-error-main md:text-[56px]">
@@ -72,7 +72,7 @@ const NakaPassStoryMode = () => (
       </div>
     </div>
 
-    <div className="flex w-full flex-row flex-wrap items-center rounded-2xl bg-neutral-780 p-2 md:h-[225px] md:flex-nowrap">
+    <div className="flex w-full flex-row flex-wrap items-center rounded-2xl bg-neutral-780 p-2 md:h-[225px] md:w-9/12 md:flex-nowrap">
       <div className="w-full rounded-2xl border  border-neutral-700 bg-primary-main p-[10px] sm:w-[202px] md:h-[-webkit-fill-available]">
         <div className="bg-line-linear-gradient  mb-[10px] flex h-[136px] items-center justify-center rounded-sm border border-neutral-700 ">
           <ILogoMaster
@@ -88,8 +88,8 @@ const NakaPassStoryMode = () => (
       </div>
 
       {/* lg:w-[920px] */}
-      <div className="ml-2 h-[-webkit-fill-available] overflow-hidden sm:w-[calc(100%-210px)] md:flex-auto">
-        <div className="custom-scroll-line-green flex items-center gap-2 overflow-x-scroll ">
+      <div className="ml-2 mt-2 h-[-webkit-fill-available] overflow-hidden sm:w-[calc(100%-210px)] md:flex-auto">
+        <div className="custom-scroll-line-green flex items-center gap-2 overflow-x-scroll">
           {/* max-sm:w-[230px] */}
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((ele, index) => (
             <motion.div

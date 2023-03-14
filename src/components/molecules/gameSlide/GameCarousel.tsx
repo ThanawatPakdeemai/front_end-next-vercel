@@ -109,7 +109,12 @@ const GameCarousel = ({
 
   const onHandleClick = (_gameUrl: string, _gameData: IGame) => {
     if (profile) {
-      router.push(`/${curType}-games/${_gameUrl}`)
+      if (_gameData.play_to_earn && _gameData.play_to_earn_status === "free") {
+        router.push(`/${curType}-games/${_gameUrl}/roomlist`)
+      } else {
+        router.push(`/${curType}-games/${_gameUrl}`)
+      }
+
       onSetGameData(_gameData)
     } else {
       errorToast(MESSAGES.please_login)

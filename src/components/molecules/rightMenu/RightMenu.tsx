@@ -14,10 +14,10 @@ const RightMenu = () => {
   const { hydrated } = useGlobal()
 
   const [isTokenValid, setIsTokenValid] = useState(false)
+  const token = Helper.getTokenFromLocal()
 
   useEffect(() => {
     // Retrieve the token from local storage
-    const token = Helper.getTokenFromLocal()
 
     if (token) {
       // Decode the token to obtain the expiration time
@@ -33,7 +33,7 @@ const RightMenu = () => {
         localStorage.removeItem("Profile-Store") // remove profile zustand
       }
     }
-  }, [])
+  }, [token])
 
   return hydrated ? (
     <Box className="mx-auto flex w-[360px] flex-1 justify-end md:order-2 xl:mx-0 xl:flex-none">

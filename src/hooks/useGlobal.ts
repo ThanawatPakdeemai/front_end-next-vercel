@@ -101,8 +101,6 @@ const useGlobal = (
     _gameUrl: string,
     _gameData: IGame | IPartnerGameData
   ) => {
-    // eslint-disable-next-line no-console
-    console.log("game", _gameData)
     switch (_type) {
       case "partner-publisher":
         onSetGamePartnersData(_gameData as IPartnerGameData)

@@ -5,10 +5,8 @@ import ButtonFavourite from "@components/atoms/button/ButtonFavourite"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { useRouter } from "next/router"
 import useGameStore from "@stores/game"
-import useProfileStore from "@stores/profileStore"
-import { useToast } from "@feature/toast/containers"
-import { MESSAGES } from "@constants/messages"
 import { Box } from "@mui/material"
+import { validTypeGames } from "@pages/[typeGame]"
 
 interface IContentFooterBannerSlide {
   gameData: IGame
@@ -19,18 +17,21 @@ const CardFooterSlide = ({
   gameData,
   text = "Play Now"
 }: IContentFooterBannerSlide) => {
-  const profile = useProfileStore((state) => state.profile.data)
   const { onSetGameData } = useGameStore()
   const router = useRouter()
-  const { errorToast } = useToast()
 
   const onHandleClick = (_gameUrl: string, _gameData: IGame) => {
-    if (profile) {
-      router.push(`/${_gameUrl}`)
-      onSetGameData(_gameData)
+    let type = validTypeGames?.[0]
+    if (_gameData?.play_to_earn && _gameData?.play_to_earn_status === "free") {
+      type = validTypeGames?.[1]
+      router.push(`/${type}/${_gameUrl}/roomlist`)
+    } else if (_gameData.game_type === "storymode") {
+      type = validTypeGames?.[2]
+      router.push(`/${type}/${_gameUrl}`)
     } else {
-      errorToast(MESSAGES.please_login)
+      router.push(`/${type}/${_gameUrl}`)
     }
+    onSetGameData(_gameData)
   }
 
   return (

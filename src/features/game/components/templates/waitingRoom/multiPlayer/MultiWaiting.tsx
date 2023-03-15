@@ -16,15 +16,17 @@ import CardButItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import { useTranslation } from "next-i18next"
 import BuyItemBody from "@components/templates/game/BuyItemBody"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
 const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { data: gameData, itemSelected } = useGameStore()
+  const { data: gameData, itemSelected, onSetGameItemSelectd } = useGameStore()
   const router = useRouter()
   const { t } = useTranslation()
   const { errorToast } = useToast()
-
+  const { gameItemList } = useBuyGameItemController()
   const [dataPlayers, setDataPlayers] = useState<
     IGameRoomListSocket | undefined
   >()
@@ -129,16 +131,32 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     [errorToast]
   )
 
+  const checkItemSelected = useCallback(
+    (data: IGameRoomListSocket) => {
+      if (gameItemList) {
+        const item = gameItemList?.find(
+          (_item: IGameItemListData) => _item.id === data.item_id
+        )
+        if (item) {
+          onSetGameItemSelectd(item)
+        }
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [gameItemList, dataPlayers]
+  )
+
   useEffect(() => {
     if (isConnected) {
       getPlayersMulti().then((res) => {
         if (res) {
           const data = res as IGameRoomListSocket
+          checkItemSelected(data)
           mapPlayer(data)
         }
       })
     }
-  }, [getPlayersMulti, isConnected, mapPlayer])
+  }, [checkItemSelected, getPlayersMulti, isConnected, mapPlayer])
 
   const outRoom = useCallback(() => {
     if (gameData)
@@ -184,6 +202,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
       getPlayersCheckItemOfPlayerListen().then((res) => {
         if (res) {
           const data = res as IGameRoomListSocket
+          checkItemSelected(data)
           mapPlayer(data)
         }
       })
@@ -193,7 +212,9 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     isConnected,
     mapPlayer,
     onReadyPlayerBurnItem,
-    onOwnerBurnItem
+    onOwnerBurnItem,
+    gameItemList,
+    checkItemSelected
   ])
 
   useEffect(() => {
@@ -201,6 +222,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
       getPlayersCheckRoomRollbackListen().then((res) => {
         if (res) {
           const data = res as IGameRoomListSocket
+          checkItemSelected(data)
           mapPlayer(data)
         }
       })
@@ -210,7 +232,8 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     isConnected,
     mapPlayer,
     onReadyPlayerBurnItem,
-    onOwnerBurnItem
+    onOwnerBurnItem,
+    checkItemSelected
   ])
 
   return (
@@ -250,7 +273,6 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
                   }}
                 />
               )}
-
               {dataPlayers && dataPlayers.current_player ? (
                 <SeatPlayersMulti players={dataPlayers?.current_player} />
               ) : (

@@ -56,7 +56,8 @@ const CONFIGS = {
     BNB_CHAIN_ID: process.env.NEXT_PUBLIC_BNB_CHAIN_ID,
     BNB_CHAIN_NAME: process.env.NEXT_PUBLIC_BNB_CHAIN_NAME,
     BNB_RPC_URL: process.env.NEXT_PUBLIC_BNB_RPC_URL,
-    BNB_SCAN: process.env.NEXT_PUBLIC_BNB_SCAN
+    BNB_SCAN: process.env.NEXT_PUBLIC_BNB_SCAN,
+    ICON_NAKA: process.env.NEXT_PUBLIC_ICON_NAKA
   }
 }
 

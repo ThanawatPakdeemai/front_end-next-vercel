@@ -18,7 +18,7 @@ const MissionItem = ({ data }: IProps) => {
   return (
     <div className="flex w-full flex-row items-center">
       <NoticeIcon.Left fill={data.type === "main" ? "#F42728" : "#7B5BE6"} />
-      <div className="h-[131px] w-full rounded-md border border-neutral-800 bg-neutral-780">
+      <div className="h-fit w-full rounded-md border border-neutral-800 bg-neutral-780">
         <div className="flex flex-row items-center p-2">
           <div className="ml-4 flex flex-1 flex-col pr-5">
             {/* quest title */}
@@ -37,7 +37,7 @@ const MissionItem = ({ data }: IProps) => {
             withText
           />
         </div>
-        <div className="flex h-12 items-center justify-between border-t border-neutral-800 pl-[18px]">
+        <div className="my-2 flex h-fit flex-wrap items-center justify-between border-t border-neutral-800 pt-2 pl-[18px]">
           <div className="flex items-center gap-[22px]">
             {/* current mission */}
             <span className="flex items-center gap-2 uppercase">

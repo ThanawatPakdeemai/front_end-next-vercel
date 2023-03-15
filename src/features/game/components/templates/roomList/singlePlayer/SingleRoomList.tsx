@@ -27,7 +27,6 @@ const GameRoomList = () => {
   const router = useRouter()
   const { errorToast } = useToast()
   const [gameData, setGameData] = useState<IGame>()
-
   const { balanceofItem } = useGetBalanceOf({
     _address: profile?.address ?? "",
     _item_id: itemSelected?.item_id_smartcontract ?? 0
@@ -69,18 +68,22 @@ const GameRoomList = () => {
         new Date() <= new Date(_dataRoom.end_time) &&
         _dataRoom.amount_current_player < _dataRoom.max_players
       ) {
-        if (data_player_me && data_player_me.status !== "played") {
-          router.push(`${router.asPath}/${_roomId}`)
-        } else if (
-          data &&
-          data_player_me &&
-          data_player_me.status === "played"
-        ) {
-          router.push(
-            `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
-          )
+        if (data_player_me) {
+          if (data_player_me && data_player_me.status !== "played") {
+            router.push(`${router.asPath}/${_roomId}`)
+          } else if (
+            data &&
+            data_player_me &&
+            data_player_me.status === "played"
+          ) {
+            router.push(
+              `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
+            )
+          } else {
+            errorToast(MESSAGES["error-something"])
+          }
         } else {
-          errorToast(MESSAGES["error-something"])
+          router.push(`${router.asPath}/${_roomId}`)
         }
       } else if (new Date() > new Date(_dataRoom.end_time)) {
         errorToast(MESSAGES["room-timeout"])
@@ -151,7 +154,7 @@ const GameRoomList = () => {
         </div>
         {gameData && (!gameData?.play_to_earn || !gameData.tournament) && (
           <BuyItemBody>
-            <CardBuyItem />
+            <CardBuyItem gameObject={gameData} />
           </BuyItemBody>
         )}
       </Box>

@@ -32,7 +32,8 @@ const GameCardSlide = ({ slide, ...props }: IBannerCardSlide) => {
           gotoNext={props.gotoNext}
           gotoPrev={props.gotoPrev}
         />
-        <CardButItem />
+
+        <CardButItem gameObject={datagame as IGame} />
       </div>
     </div>
   )

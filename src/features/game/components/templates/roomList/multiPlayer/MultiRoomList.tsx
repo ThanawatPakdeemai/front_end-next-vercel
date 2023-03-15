@@ -213,9 +213,7 @@ const MultiRoomList = () => {
           </Box>
         </SocketProviderRoom>
         {data && (!data?.play_to_earn || !data.tournament) && (
-          <BuyItemBody>
-            <CardBuyItem />
-          </BuyItemBody>
+          <BuyItemBody>{data && <CardBuyItem gameObject={data} />}</BuyItemBody>
         )}
       </Box>
     </>

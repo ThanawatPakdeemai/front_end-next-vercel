@@ -25,4 +25,36 @@ const filterGamePartner = (data) =>
       })
   })
 
-export { getGamePartner, filterGamePartner }
+const publisherGamePartner = (publisher, data) =>
+  new Promise<any>((resolve, reject) => {
+    services
+      .post(
+        `${CONFIGS.BASE_URL.API}/partner-game-content/publisher/${publisher}`,
+        data
+      )
+      .then((res) => {
+        resolve(res)
+      })
+      .catch((error: Error) => {
+        reject(error)
+      })
+  })
+
+const publisherAllPartner = () =>
+  new Promise<any>((resolve, reject) => {
+    services
+      .get(`${CONFIGS.BASE_URL.API}/partner-game-content/publisher/all`)
+      .then((res) => {
+        resolve(res)
+      })
+      .catch((error: Error) => {
+        reject(error)
+      })
+  })
+
+export {
+  getGamePartner,
+  filterGamePartner,
+  publisherGamePartner,
+  publisherAllPartner
+}

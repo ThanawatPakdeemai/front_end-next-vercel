@@ -102,6 +102,11 @@ const useGlobal = (
     _gameData: IGame | IPartnerGameData
   ) => {
     switch (_type) {
+      case "partner-publisher":
+        onSetGamePartnersData(_gameData as IPartnerGameData)
+        await router.push(`/publishers/${_gameData.name}`)
+        break
+
       case "partner-game":
         onSetGamePartnersData(_gameData as IPartnerGameData)
         await router.push(`/partner-games/${_gameUrl}?id=${_gameData.id}`)

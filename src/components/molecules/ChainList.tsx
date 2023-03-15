@@ -23,6 +23,7 @@ const ChainList = ({ currentTabChainSelected }: IButtonChooseChain) => {
             (item) => item.link === currentTabChainSelected.link
           )?.icon
         }
+        title="Chain"
         text={
           CHAIN_SUPPORT.find(
             (item) => item.link === currentTabChainSelected.link

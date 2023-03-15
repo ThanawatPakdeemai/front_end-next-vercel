@@ -69,6 +69,7 @@ const TokenList = ({
         text={`${
           displayBalance ? handleDisplayBalance() : handleDisplayToken()
         }`}
+        title="Asset"
         handleClick={handleOpen}
         shadow
       />

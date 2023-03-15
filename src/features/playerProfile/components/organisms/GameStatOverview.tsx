@@ -29,15 +29,17 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
         handleOnExpandClick={handleOnExpandClick}
       />
       {openBadges ? null : (
-        <>
+        <div className="">
           <div
             key={uuidv4()}
-            className="mb-10 flex w-full flex-col gap-2 rounded-[26px] bg-neutral-800 p-2"
+            className="mb-10 grid max-w-[1000px]  gap-2 overflow-x-scroll rounded-[26px] bg-neutral-800 p-2"
           >
             {data.data.game_data.map((item, index) => (
               <Card
                 key={uuidv4()}
                 className="grid grid-cols-3 grid-rows-1 rounded-[18px]"
+                // className="grid  grid-rows-1 rounded-[18px] md:grid-cols-2 lg:grid-cols-3"
+                // className="flex flex-wrap"
                 sx={{
                   backgroundImage: "none",
                   backgroundColor: "#010101"
@@ -126,7 +128,7 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
               </Card>
             ))}
           </div>
-        </>
+        </div>
       )}
     </div>
   )

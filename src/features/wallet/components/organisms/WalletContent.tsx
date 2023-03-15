@@ -40,9 +40,11 @@ const WalletContent = ({
     address === undefined
   ) {
     content = <SkeletionWallet />
+  } else if (!statusWalletConnected.responseStatus) {
+    content = <PleaseCheckWallet />
   } else if (isWrongNetwork) {
     content = (
-      <div className="m-2 flex h-full flex-col items-center justify-center md:col-span-5">
+      <div className="m-2 mx-auto flex h-full max-w-sm flex-col items-center justify-center md:col-span-5">
         <SwitchChain
           chainName={type === "NAKA" ? "Polygon" : "Binance Smart Chain"}
           handleClick={handleSwitchNetwork}
@@ -50,11 +52,9 @@ const WalletContent = ({
         />
       </div>
     )
-  } else if (!statusWalletConnected.responseStatus) {
-    content = <PleaseCheckWallet />
   } else {
     content = (
-      <div className="relative w-full gap-1 md:mx-2 md:grid md:grid-cols-7">
+      <div className="relative flex h-full w-full gap-1 md:p-2">
         {renderWallets()}
         <WalletLightAnimation />
       </div>

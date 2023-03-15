@@ -1,8 +1,7 @@
+/* eslint-disable max-len */
 import ButtonClose from "@components/atoms/button/ButtonClose"
-import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import LockIcon from "@components/icons/LockIcon"
-import PlusOutlineIcon from "@components/icons/PlusOutlineIcon"
-import SettingIcon from "@components/icons/SettingIcon"
+import ModalInvite from "@components/molecules/ModalInvite"
 import RoomListBox from "@components/molecules/roomList/RoomListBox"
 import { Chip } from "@mui/material"
 import { useRouter } from "next/dist/client/router"
@@ -36,7 +35,6 @@ const HeaderWaitingRoom = ({
   onClick
 }: IProp) => {
   const router = useRouter()
-
   return (
     <div
       className={`flex flex-wrap items-center gap-5 border-b border-neutral-800 p-2 lg:h-[72px] ${className}`}
@@ -84,7 +82,9 @@ const HeaderWaitingRoom = ({
         // for invite button
         icon={
           !isSummaryPage ? (
-            <PlusOutlineIcon className="mr-[15px] cursor-pointer" />
+            <>
+              <ModalInvite />
+            </>
           ) : null
         }
         onClick={onClick}
@@ -92,11 +92,11 @@ const HeaderWaitingRoom = ({
         color="neutral"
         shade="500"
       />
-      <ButtonIcon
+      {/* <ButtonIcon
         type="square"
         icon={<SettingIcon />}
         className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800 xl:mr-4"
-      />
+      /> */}
     </div>
   )
 }

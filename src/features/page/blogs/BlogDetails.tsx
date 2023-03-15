@@ -96,12 +96,12 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
             </div>
           </div>
           <div className="container mx-auto mt-1">
-            <div className=" flex ">
+            <div className="flex ">
               <div className="h-32 w-4/12 border-t-2 border-l-2 border-neutral-780 ">
                 <div className="px-6 pt-4 font-neue-machina text-sm text-white-default">
                   TAGS
                 </div>
-                <div className="px-6 pt-4 pb-2">
+                <div className="gap-3 px-6 pt-4 pb-2 sm:w-auto">
                   {getBlogTagData &&
                     getBlogTagData.data.map((item) => (
                       <div key={uuid()}>
@@ -119,8 +119,8 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
                     ))}
                 </div>
               </div>
-              <div className=" max-h-32 w-2/12  border-t-2 border-neutral-780">
-                <div className="px-6 pt-4 font-neue-machina text-sm text-white-default">
+              <div className=" max-h-32 w-auto border-t-2 border-neutral-780 lg:w-2/12">
+                <div className="px-6 pt-4 font-neue-machina text-sm text-white-default ">
                   WRITER
                 </div>
                 <div className="px-6 pt-4 pb-2">
@@ -129,7 +129,7 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
                   </div>
                 </div>
               </div>
-              <div className=" max-h-32 w-2/12 border-t-2 border-neutral-780">
+              <div className=" max-h-32 w-full border-t-2 border-r-2 border-neutral-780 lg:w-2/12">
                 <div className=" px-6 pt-4 font-neue-machina text-sm text-white-default">
                   DATE
                 </div>
@@ -141,15 +141,15 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
                   </span>
                 </div>
               </div>
-              <div className="content-relate max-h-32 w-4/12 bg-neutral-780">
+              <div className="content-relate invisible max-h-32 w-4/12 bg-neutral-780 lg:visible">
                 <div className="px-6 pt-12 text-center font-neue-machina text-sm uppercase text-white-default">
                   Relate Blog
                 </div>
               </div>
             </div>
-            <div className="flex">
+            <div className="grid lg:flex">
               <div className="relative h-auto w-8/12 bg-neutral-780 ">
-                <div className="mx-32 mt-[100px]">
+                <div className=" mx-12 mt-10 sm:w-auto">
                   <div className="h-auto justify-center">
                     {getBlogDetails.data?.image_list && (
                       <Image
@@ -165,7 +165,7 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
                     {getBlogDetails.data?.description}
                   </div>
                   <div
-                    className="content-blog text-left font-neue-machina text-default  text-grey-neutral04"
+                    className="content-blog mb-24 text-left  font-neue-machina text-default text-grey-neutral04"
                     // eslint-disable-next-line react/no-danger
                     dangerouslySetInnerHTML={{
                       __html: getBlogDetails.data?.content || ""
@@ -173,14 +173,17 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
                   />
                 </div>
                 <div className="absolute bottom-0 flex h-auto w-full border-2 border-neutral-780 bg-primary-main">
-                  <div className="mx-32 grid h-[70px] w-full grid-cols-2 items-center gap-4">
-                    <div className="flex items-center gap-3">
+                  <div className="mx-12 grid h-[70px] w-full grid-cols-2 items-center gap-4 md:w-max">
+                    <div className="items-center gap-3 md:flex ">
                       <ViewIcon />
-                      <div className=" text-sm text-neutral-100">
+                      <div
+                        className="text-sm text-neutral-100
+                      "
+                      >
                         {getBlogDetails.data?.info.view}
                       </div>
                     </div>
-                    <div className="flex items-center">
+                    <div className="mx-12 flex items-center">
                       <Typography className="font-neue-machina text-default text-neutral-100">
                         Shere :
                       </Typography>
@@ -247,8 +250,13 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
                   </div>
                 </div>
               </div>
-              <div className="h-auto w-4/12 border-r-2 border-b-2  border-neutral-780 bg-primary-main">
-                <div className="my-[78px] grid w-full justify-center">
+              <div className="max-h-32 w-8/12 items-center bg-neutral-780 lg:hidden">
+                <div className="px-6 py-12 text-center font-neue-machina text-sm uppercase text-white-default">
+                  Relate Blog
+                </div>
+              </div>
+              <div className="h-auto border-2 border-neutral-780 lg:w-4/12 ">
+                <div className=" flex justify-center gap-3 lg:grid">
                   {getBlogDetails.data?.related.map((item) => (
                     <BlogCard
                       key={uuid()}
@@ -260,13 +268,13 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
                       arrowMotion={arrowMotion}
                       imgMotion={imgMotion}
                       blog_id={item._id}
-                      className="mt-6"
+                      className="m-6"
                     />
                   ))}
                 </div>
                 <div className=" border-t-2 border-neutral-780">
                   <div className="grid w-full justify-center">
-                    <div className="my-[68px] w-[272px]">
+                    <div className="my-[68px] w-[272px] lg:w-auto">
                       <Typography className="mb-6 text-sm uppercase text-white-default">
                         Popular Tags
                       </Typography>

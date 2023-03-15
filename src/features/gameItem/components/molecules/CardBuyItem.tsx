@@ -146,17 +146,16 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
           } rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 `}
         >
           <div className="p-4">
-            {gameItemList &&
-              router.pathname !== "/[typeGame]/[GameHome]/roomlist/[id]" && (
-                <>
-                  <DropdownListItem
-                    isCheck
-                    list={gameItemList}
-                    className="w-[300px]"
-                    onChangeSelect={onChangeSelectItem}
-                  />
-                </>
-              )}
+            {gameItemList && (
+              <>
+                <DropdownListItem
+                  isCheck
+                  list={gameItemList}
+                  className="w-[300px]"
+                  onChangeSelect={onChangeSelectItem}
+                />
+              </>
+            )}
             <div
               className={`${
                 router.pathname === "/[typeGame]/[GameHome]"

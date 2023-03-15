@@ -44,7 +44,42 @@ const SliderBadges = ({ _playerId }: IProp) => {
     arrows: false,
     draggable: true,
     dots: true,
-    variableWidth: false
+    variableWidth: false,
+    responsive: [
+      // {
+      //   breakpoint: 1024,
+      //   settings: {
+      //     slidesToShow: 3,
+      //     slidesToScroll: 3,
+      //     infinite: true,
+      //     dots: true
+      //   }
+      // },
+      {
+        breakpoint: 850,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
   }
 
   const [slideArray, setSlideArray] = useState<IBadge[] | React.ReactElement[]>(
@@ -98,8 +133,8 @@ const SliderBadges = ({ _playerId }: IProp) => {
 
   return (
     <>
-      <div className="relative mt-[90px] flex items-center justify-between">
-        <div className="flex">
+      <div className="relative mt-[90px] grid md:flex md:items-center md:justify-between">
+        <div className="flex ">
           <CrumbCustom
             text="My emblems are more than just symbols"
             className="mr-4 cursor-default border border-solid border-neutral-700 p-[20px] text-neutral-400"
@@ -116,7 +151,7 @@ const SliderBadges = ({ _playerId }: IProp) => {
           )}
         </div>
         <Divider className="w-[40%]" />
-        <div className="flex items-center">
+        <div className="my-4 flex items-center md:my-0">
           <CheckBoxNaka
             value={openBadges}
             onHandle={handleOnExpandClick}
@@ -129,7 +164,7 @@ const SliderBadges = ({ _playerId }: IProp) => {
             className="cursor-default bg-purple-primary"
           />
         </div>
-        <div className="absolute top-[180%] right-[-24%] z-[5] flex flex-col items-center justify-center">
+        <div className="md: absolute top-[180%] right-[-24%] z-[5] flex hidden flex-col items-center justify-center">
           <ButtonSticky icon={<SupportIcon />} />
           <ButtonSticky
             multi
@@ -140,7 +175,7 @@ const SliderBadges = ({ _playerId }: IProp) => {
 
       {openBadges ? null : (
         <>
-          <div className="mt-[30px] flex h-[216px] !max-w-[1050px] items-center rounded-lg border border-neutral-700 bg-neutral-800">
+          <div className="mt-[30px] flex h-[216px] !max-w-[1050px] items-center rounded-lg border border-neutral-700 bg-neutral-800 ">
             {isLoading ? (
               "loading"
             ) : (

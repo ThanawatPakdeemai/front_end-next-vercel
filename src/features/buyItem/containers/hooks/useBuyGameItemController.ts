@@ -182,6 +182,13 @@ const useBuyGameItemController = () => {
     resetForm()
   }
 
+  const refetchItemSelected = useCallback(() => {
+    if (gameItemList) {
+      const item = gameItemList.find((_item) => _item.id === watch("item_id"))
+      if (item) onSetGameItemSelectd(item)
+    }
+  }, [gameItemList, onSetGameItemSelectd, watch])
+
   const onSubmit = (_data: IFormData) => {
     setOpen("Blockchain transaction in progress...")
     const coinName = (): string => {
@@ -205,11 +212,12 @@ const useBuyGameItemController = () => {
           _tokenAddress: _data.currency.address,
           _symbol: coinName()
         })
-          .then((res) => {
+          .then(async (res) => {
             // res && _data.currency.balanceVault.digit
             fetchAllTokenSupported()
             if (res && _data.currency.balanceVault.digit) {
-              // refetch()
+              await refetch()
+              await refetchItemSelected()
               successToast("Buy Items Success")
               setClose()
               if (handleClose) handleClose()
@@ -227,11 +235,12 @@ const useBuyGameItemController = () => {
           _item_id: _data.item_id,
           _qty: Number(_data.qty)
         })
-          .then((res) => {
+          .then(async (res) => {
             // res && balanceVaultNaka && balanceVaultNaka.data
             fetchNAKAToken()
             if (res && _data.currency.balanceVault.digit) {
-              // refetch()
+              await refetch()
+              await refetchItemSelected()
               // setVaultBalance(Number(balanceVaultNaka.data))
               successToast("Buy Items Success")
               setClose()

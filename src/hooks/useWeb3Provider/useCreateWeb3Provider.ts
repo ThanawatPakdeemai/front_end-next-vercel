@@ -13,6 +13,9 @@ import { ELocalKey } from "@interfaces/ILocal"
 import useChainSupport from "@stores/chainSupport"
 import Helper from "@utils/helper"
 import { IErrorMessage } from "@interfaces/IErrorMessage"
+import Web3 from "web3"
+import { useToast } from "@feature/toast/containers"
+import { MESSAGES } from "@constants/messages"
 
 import { updateWalletAddress } from "@feature/profile/containers/services/profile.service"
 
@@ -30,10 +33,20 @@ const useCreateWeb3Provider = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [hasChangeAccountMetamask, setHasChangeAccountMetamask] =
     useState(false)
-
   const { setChainSupport } = useChainSupport()
-
   const profile = useProfileStore((state) => state.profile.data)
+  const { successToast, errorToast } = useToast()
+
+  const getParams = () =>
+    ({
+      type: "ERC20",
+      options: {
+        address: CONFIGS.CONTRACT_ADDRESS.ERC20,
+        symbol: CONFIGS.CHAIN.TOKEN_NAME,
+        decimals: 18,
+        image: CONFIGS.CHAIN.ICON_NAKA
+      }
+    } as any)
 
   /**
    * @description Handle network setting for metamask
@@ -70,6 +83,29 @@ const useCreateWeb3Provider = () => {
     }
   }, [])
 
+  const importNakaToken = useCallback(async () => {
+    const web3 = new Web3(Web3.givenProvider)
+    if (!web3) return
+    if (web3 && web3.givenProvider.request) {
+      try {
+        return await web3.givenProvider.request({
+          method: "wallet_watchAsset",
+          params: {
+            type: "ERC20",
+            options: {
+              address: CONFIGS.CONTRACT_ADDRESS.ERC20,
+              symbol: "naka",
+              decimals: 18,
+              image: `${CONFIGS.BASE_URL.FRONTEND}/favicon.svg`
+            }
+          }
+        })
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  }, [])
+
   const resetChainId = useCallback(async () => {
     const _provider = window.ethereum
     if (_provider === undefined || _provider.request === undefined) {
@@ -102,8 +138,7 @@ const useCreateWeb3Provider = () => {
         type: "failed"
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [getNetwork])
 
   const chainIdIsSupported = () =>
     window.ethereum?.chainId === CONFIGS.CHAIN.CHAIN_ID_HEX ||
@@ -123,7 +158,7 @@ const useCreateWeb3Provider = () => {
     useProfileStore.getState().onSetProfileAddress(_address)
   }, [])
 
-  const handleCheckingWallet = (): IErrorMessage => {
+  const handleCheckingWallet = useCallback((): IErrorMessage => {
     if (
       profile &&
       address &&
@@ -144,7 +179,7 @@ const useCreateWeb3Provider = () => {
       errorMsg: "Wallet is correct",
       type: "success"
     }
-  }
+  }, [address, profile])
 
   /**
    * @description Check if current chain matches with the one we need
@@ -183,14 +218,12 @@ const useCreateWeb3Provider = () => {
     if (window.ethereum === undefined) {
       return
     }
-
     if (window.ethereum.request === undefined) return
     const _currentChainId = await window.ethereum.request({
       method: "eth_chainId"
     })
     if (_currentChainId === undefined) return
     setChainId(_currentChainId)
-
     const walletConnector = Helper.getLocalStorage(ELocalKey.walletConnector)
     if (walletConnector === WALLET_CONNECTOR_TYPES.injected) {
       const account = await Helper.getWalletAccount()
@@ -199,27 +232,27 @@ const useCreateWeb3Provider = () => {
         const _signer = _provider.getSigner()
         const _gasPrice = await _provider.getGasPrice()
         const _network = await _provider.getNetwork()
-        const _balance = await _provider.getBalance(account[0])
-        const _feeData = await _provider.getFeeData()
         const _gasPriceInGwei = utils.formatUnits(_gasPrice, "gwei")
-
+        const _feeData = await _provider.getFeeData()
+        if (account && account[0]) {
+          const _balance = await _provider.getBalance(account[0])
+          setBalance(_balance)
+        }
         setSigner(_signer)
-        setBestGasPrice(_gasPriceInGwei)
         setNetwork(_network)
-        setBalance(_balance)
+        setBestGasPrice(_gasPriceInGwei)
         setFeeData(_feeData)
         handleCheckingWallet()
       }
+
       setAccounts(account)
       onSetAddress(account[0])
-
       window.ethereum.on("accountsChanged", async () => {
         // await handleDisconnectWallet()
         await setHasChangeAccountMetamask(true)
         // handleCheckingWallet(_provider, address[0])
         checkChain()
       })
-
       // Subscribe to chainId change
       window.ethereum.on("chainChanged", (_chainId: string) => {
         if (_chainId === undefined) {
@@ -230,7 +263,6 @@ const useCreateWeb3Provider = () => {
         setChainId(_chainId)
         // handleDisconnectWallet()
       })
-
       // Subscribe to session disconnection
       if (window.ethereum && window.ethereum.on) {
         window.ethereum.on(
@@ -242,8 +274,7 @@ const useCreateWeb3Provider = () => {
         )
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [handleCheckingWallet, onSetAddress, resetChainId])
 
   const handleConnectWithMetamask = useCallback(async () => {
     if (window.ethereum === undefined) return
@@ -286,6 +317,7 @@ const useCreateWeb3Provider = () => {
     }
     const _signer = _provider.getSigner()
     setSigner(_signer)
+
     // Subscribe to accounts change
     window.ethereum.on("accountsChanged", async () => {
       // !Error - this code has problem when user change network on metamask
@@ -312,8 +344,17 @@ const useCreateWeb3Provider = () => {
         setAddress(undefined)
       })
     }
+    // Subscribe to session connection
+    // if (window.ethereum && window.ethereum.on) {
+    //   window.ethereum.on("connected", (/* code: number, reason: string */) => {
+    //     setIsConnected(true)
+    //     setProvider(_provider)
+    //     setAccounts(account)
+    //     setAddress(account[0])
+    //   })
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [checkNetwork, onSetAddress, resetChainId])
 
   const handleSignMessage = useCallback(
     async (
@@ -324,52 +365,54 @@ const useCreateWeb3Provider = () => {
     []
   )
 
-  const switchNetwork = useCallback(async (_chainId: string) => {
-    const _provider = window.ethereum
-    if (_provider === undefined || _provider.request === undefined) {
-      return
-    }
-    if (_provider && _provider.request) {
-      try {
-        const _newProvider = new providers.Web3Provider(_provider)
-        const _signer = _newProvider.getSigner()
-        setLoading(true)
-        await _provider
-          .request({
-            method: "wallet_switchEthereumChain",
-            params: [{ chainId: _chainId }] // [handleNetworkSettings(_chainId)]
-          })
-          .then(() => {
-            checkNetwork()
-            setChainId(_chainId)
-            setSigner(_signer)
-            setLoading(false)
-            handleConnectWithMetamask()
-          })
-          .catch((_err) => {
-            setLoading(false)
-          })
+  const switchNetwork = useCallback(
+    async (_chainId: string) => {
+      const _provider = window.ethereum
+      if (_provider === undefined || _provider.request === undefined) {
+        return
+      }
+      if (_provider && _provider.request) {
+        try {
+          const _newProvider = new providers.Web3Provider(_provider)
+          const _signer = _newProvider.getSigner()
+          setLoading(true)
+          await _provider
+            .request({
+              method: "wallet_switchEthereumChain",
+              params: [{ chainId: _chainId }] // [handleNetworkSettings(_chainId)]
+            })
+            .then(() => {
+              checkNetwork()
+              setChainId(_chainId)
+              setSigner(_signer)
+              setLoading(false)
+              handleConnectWithMetamask()
+            })
+            .catch((_err) => {
+              setLoading(false)
+            })
 
-        return {
-          responseStatus: true,
-          errorMsg: "",
-          type: "success"
-        }
-      } catch (error) {
-        return {
-          responseStatus: false,
-          errorMsg: (error as Error).message,
-          type: "failed"
+          return {
+            responseStatus: true,
+            errorMsg: "",
+            type: "success"
+          }
+        } catch (error) {
+          return {
+            responseStatus: false,
+            errorMsg: (error as Error).message,
+            type: "failed"
+          }
         }
       }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    },
+    [checkNetwork, handleConnectWithMetamask]
+  )
 
   useEffect(() => {
     checkChain()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [checkChain])
 
   useEffect(() => {
     const getWalletAccount = async () => {
@@ -398,6 +441,29 @@ const useCreateWeb3Provider = () => {
     }
   }, [])
 
+  /**
+   * @description Add token to metamask
+   */
+  const onAddToken = useCallback(async () => {
+    try {
+      if (window.ethereum === undefined) return
+      if (window.ethereum.request === undefined) return
+      // wasAdded is a boolean. Like any RPC method, an error may be thrown.
+      const wasAdded = await window.ethereum.request({
+        method: "wallet_watchAsset",
+        params: getParams()
+      })
+      if (wasAdded) {
+        successToast(MESSAGES.success)
+      } else {
+        errorToast(MESSAGES["error-something"])
+      }
+    } catch (error) {
+      // console.error(error)
+      errorToast(MESSAGES["error-something"])
+    }
+  }, [errorToast, successToast])
+
   return {
     accounts,
     address,
@@ -419,10 +485,12 @@ const useCreateWeb3Provider = () => {
     loading,
     switchNetwork,
     // checkNetwork/
+    importNakaToken,
     setChainId,
     getNetwork,
     checkChain,
-    statusWalletConnected: handleCheckingWallet()
+    statusWalletConnected: handleCheckingWallet(),
+    onAddToken
   }
 }
 

@@ -69,6 +69,29 @@ const useCreateWeb3Provider = () => {
     }
   }, [])
 
+  const importNakaToken = useCallback(async () => {
+    const web3 = new Web3(Web3.givenProvider)
+    if (!web3) return
+    if (web3 && web3.givenProvider.request) {
+      try {
+        return await web3.givenProvider.request({
+          method: "wallet_watchAsset",
+          params: {
+            type: "ERC20",
+            options: {
+              address: CONFIGS.CONTRACT_ADDRESS.ERC20,
+              symbol: "naka",
+              decimals: 18,
+              image: `${CONFIGS.BASE_URL.FRONTEND}/favicon.svg`
+            }
+          }
+        })
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  }, [])
+
   const resetChainId = useCallback(async () => {
     const _provider = window.ethereum
     if (_provider === undefined || _provider.request === undefined) {
@@ -102,48 +125,6 @@ const useCreateWeb3Provider = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const importNakaToken = useCallback(async () => {
-    const web3 = new Web3(Web3.givenProvider)
-    if (!web3) return
-    if (web3 && web3.givenProvider.request) {
-      try {
-        await web3.givenProvider.request({
-          method: "wallet_watchAsset",
-          params: {
-            type: "ERC20",
-            options: {
-              address: CONFIGS.CONTRACT_ADDRESS.ERC20,
-              symbol: "naka",
-              decimals: 18,
-              image:
-                `${process.env.NEXT_PUBLIC_FRONTEND}/favicon.ico` ??
-                "https://www.nakamoto.games/favicon.ico"
-            }
-          }
-        })
-
-        return {
-          responseStatus: true,
-          errorMsg: "",
-          type: "success"
-        }
-      } catch (error) {
-        return {
-          responseStatus: false,
-          errorMsg: (error as Error).message,
-          type: "failed"
-        }
-      }
-    } else {
-      return {
-        responseStatus: false,
-        errorMsg:
-          "Can't setup the MATIC network on metamask because window.ethereum is undefined",
-        type: "failed"
-      }
-    }
   }, [])
 
   const chainIdIsSupported = () =>
@@ -334,14 +315,12 @@ const useCreateWeb3Provider = () => {
     if (window.ethereum === undefined) {
       return
     }
-
     if (window.ethereum.request === undefined) return
     const _currentChainId = await window.ethereum.request({
       method: "eth_chainId"
     })
     if (_currentChainId === undefined) return
     setChainId(_currentChainId)
-
     const walletConnector = Helper.getLocalStorage(ELocalKey.walletConnector)
     if (walletConnector === WALLET_CONNECTOR_TYPES.injected) {
       const account = await Helper.getWalletAccount()
@@ -350,27 +329,27 @@ const useCreateWeb3Provider = () => {
         const _signer = _provider.getSigner()
         const _gasPrice = await _provider.getGasPrice()
         const _network = await _provider.getNetwork()
-        const _balance = await _provider.getBalance(account[0])
-        const _feeData = await _provider.getFeeData()
         const _gasPriceInGwei = utils.formatUnits(_gasPrice, "gwei")
-
+        const _feeData = await _provider.getFeeData()
+        if (account && account[0]) {
+          const _balance = await _provider.getBalance(account[0])
+          setBalance(_balance)
+        }
         setSigner(_signer)
-        setBestGasPrice(_gasPriceInGwei)
         setNetwork(_network)
-        setBalance(_balance)
+        setBestGasPrice(_gasPriceInGwei)
         setFeeData(_feeData)
         handleCheckingWallet()
       }
+
       setAccounts(account)
       onSetAddress(account[0])
-
       window.ethereum.on("accountsChanged", async () => {
         // await handleDisconnectWallet()
         await setHasChangeAccountMetamask(true)
         // handleCheckingWallet(_provider, address[0])
         checkChain()
       })
-
       // Subscribe to chainId change
       window.ethereum.on("chainChanged", (_chainId: string) => {
         if (_chainId === undefined) {
@@ -381,7 +360,6 @@ const useCreateWeb3Provider = () => {
         setChainId(_chainId)
         // handleDisconnectWallet()
       })
-
       // Subscribe to session disconnection
       if (window.ethereum && window.ethereum.on) {
         window.ethereum.on(

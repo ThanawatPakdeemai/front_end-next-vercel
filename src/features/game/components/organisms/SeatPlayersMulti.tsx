@@ -19,6 +19,7 @@ import PlayerCard from "@feature/game/components/molecules/PlayerCard"
 import { IResGetIp } from "@interfaces/IGetIP"
 import { useRouter } from "next/router"
 import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 
 interface IProps {
   players: IGameCurrentPlayerMulti[] | undefined[]
@@ -42,6 +43,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
   const { data: gameData, itemSelected, qtyItemOfRoom } = useGameStore()
+  const { gameItemList } = useBuyGameItemController()
   const [ownerPressPlay, setOwnPressPlay] = useState(false)
   const [playerPressReady, setPlayerPressReady] = useState(false)
   const [loading, setLoading] = useState<boolean>(false)
@@ -233,7 +235,6 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   }, [dataPlayers])
 
   const onReady = async () => {
-    // const itemGame = gameItemList?.find((ele) => ele._id === itemSelected?._id)
     if (profile) {
       if (
         playerMe &&
@@ -241,7 +242,8 @@ const SeatPlayersMulti = ({ players }: IProps) => {
         balanceofItem &&
         balanceofItem.data >= qtyItemOfRoom &&
         dataPlayers &&
-        balanceofItem.data >= dataPlayers?.create_room_detail.number_of_item
+        balanceofItem.data >= dataPlayers?.create_room_detail.number_of_item &&
+        dataPlayers.item_id === itemSelected._id
       ) {
         setLoading(true)
         await onReadyPlayerBurnItem(
@@ -255,21 +257,36 @@ const SeatPlayersMulti = ({ players }: IProps) => {
         setPlayerPressReady(false)
         errorToast(MESSAGES["no-player"])
       } else if (
-        balanceofItem &&
-        balanceofItem.data < qtyItemOfRoom &&
-        dataPlayers &&
-        balanceofItem.data < dataPlayers?.create_room_detail.number_of_item
+        !balanceofItem ||
+        (balanceofItem &&
+          balanceofItem.data < qtyItemOfRoom &&
+          dataPlayers &&
+          balanceofItem.data <
+            dataPlayers?.create_room_detail.number_of_item) ||
+        dataPlayers?.item_id !== itemSelected?._id
       ) {
         if (
-          itemSelected &&
-          balanceofItem &&
-          balanceofItem.data < qtyItemOfRoom
+          !balanceofItem ||
+          (balanceofItem && balanceofItem.data < qtyItemOfRoom)
         ) {
           errorToast(MESSAGES["you-not-enough"])
+        } else if (
+          dataPlayers &&
+          itemSelected &&
+          dataPlayers.item_id !== itemSelected._id
+        ) {
+          const item = gameItemList?.find(
+            (_item) => _item?.id === dataPlayers?.item_id
+          )
+          errorToast(
+            `${MESSAGES["please_item"]} for ${item?.name} ${item?.item_size}`
+          )
         } else {
           errorToast(MESSAGES["please_item"])
         }
         setPlayerPressReady(false)
+      } else {
+        errorToast(MESSAGES["error-something"])
       }
     } else {
       setPlayerPressReady(false)
@@ -287,7 +304,8 @@ const SeatPlayersMulti = ({ players }: IProps) => {
         balanceofItem &&
         balanceofItem.data >= qtyItemOfRoom &&
         dataPlayers &&
-        balanceofItem.data >= dataPlayers?.create_room_detail.number_of_item
+        balanceofItem.data >= dataPlayers?.create_room_detail.number_of_item &&
+        dataPlayers.item_id === itemSelected._id
       ) {
         onOwnerBurnItem(playerMe.item_burn, itemSelected?._id, qtyItemOfRoom)
         setOwnPressPlay(true)
@@ -297,16 +315,30 @@ const SeatPlayersMulti = ({ players }: IProps) => {
         errorToast(MESSAGES["no-player"])
       } else if (
         qtyItemOfRoom < 1 ||
+        !itemSelected ||
+        !balanceofItem ||
         (dataPlayers &&
           itemSelected &&
-          itemSelected.qty < dataPlayers?.create_room_detail.number_of_item)
+          itemSelected.qty < dataPlayers?.create_room_detail.number_of_item) ||
+        dataPlayers?.item_id !== itemSelected?._id
       ) {
         if (
-          itemSelected &&
-          balanceofItem &&
-          balanceofItem.data < qtyItemOfRoom
+          !itemSelected ||
+          !balanceofItem ||
+          (balanceofItem && balanceofItem.data < qtyItemOfRoom)
         ) {
           errorToast(MESSAGES["you-not-enough"])
+        } else if (
+          dataPlayers &&
+          itemSelected &&
+          dataPlayers.item_id !== itemSelected._id
+        ) {
+          const item = gameItemList?.find(
+            (_item) => _item?.id === dataPlayers?.item_id
+          )
+          errorToast(
+            `${MESSAGES["please_item"]} for ${item?.name} ${item?.item_size}`
+          )
         } else {
           errorToast(MESSAGES["please_item"])
         }

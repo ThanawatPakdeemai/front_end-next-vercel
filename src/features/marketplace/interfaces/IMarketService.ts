@@ -12,6 +12,14 @@ export type TNFTType =
   | "game_item"
   | "nft_game"
 
+export type TType =
+  | "land"
+  | "building"
+  | "naka-punk"
+  | "material"
+  | "game-item"
+  | "nft-game"
+
 export type TSellingType = "fullpayment" | "installment" | "rental"
 
 export type TSellerType = "system" | "user"

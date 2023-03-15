@@ -10,7 +10,8 @@ import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import dynamic from "next/dynamic"
-import { getCurrentNaka } from "@feature/inventory/containers/services/inventory.service"
+import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
+import { TType } from "@feature/marketplace/interfaces/IMarketService"
 
 const CardItemMarketPlace = dynamic(
   () => import("@components/molecules/cards/CardItemMarketPlace"),
@@ -19,29 +20,16 @@ const CardItemMarketPlace = dynamic(
   }
 )
 
-type ItemType = "game" | "land" | "building" | "material" | "naka-punk"
-
 const MarketplaceP2PCardList = () => {
   const [gameItemData, setGameItemData] = useState<IMarketplaceInfoData[]>([])
-  const [nakaUsdPrice, setNakaUsdPrice] = useState<number>(0)
-  const [type, setType] = useState<ItemType>("land")
+  const { price } = useNakaPriceProvider()
+  const [type, setType] = useState<TType>("land")
   const { pathname } = useRouter()
-
-  const getPrice = async () => {
-    const prices = await getCurrentNaka()
-    if (prices) {
-      setNakaUsdPrice(parseFloat(prices.data.last))
-    }
-  }
-
-  useEffect(() => {
-    getPrice()
-  }, [])
 
   useEffect(() => {
     const handleRouteChange = () => {
       if (pathname.includes("game")) {
-        setType("game")
+        setType("game-item")
         setGameItemData(MOCK_P2P_GAME_ITEM.data)
       } else if (pathname.includes("building")) {
         setType("building")
@@ -65,7 +53,7 @@ const MarketplaceP2PCardList = () => {
     <div className="grid w-full grid-cols-1 gap-x-3 gap-y-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {gameItemData.map((_data, _index) => {
         const handleImage = () => {
-          if (type === "game" && _data.item_data) {
+          if (type === "game-item" && _data.item_data) {
             return {
               src: _data.item_data.image,
               alt: _data.item_data.name,
@@ -102,7 +90,8 @@ const MarketplaceP2PCardList = () => {
             key={uuidv4()}
             cardType={type}
             id={_data.land_data?.land_id}
-            itemAmount={type === "game" ? _data.item_amount : undefined}
+            idLink={_data._id}
+            itemAmount={type === "game-item" ? _data.item_amount : undefined}
             itemTotal={_data.item_total}
             itemImage={handleImage()}
             itemVideo={
@@ -122,7 +111,9 @@ const MarketplaceP2PCardList = () => {
             price={_data.price}
             itemSize={_data.item_data?.item_size}
             sellingType={_data.selling_type}
-            nakaPrice={(_data.price * nakaUsdPrice) as number}
+            nakaPrice={
+              (_data.price / (price ? parseFloat(price.last) : 0)) as number
+            }
           />
         )
       })}

@@ -7,7 +7,8 @@ import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import dynamic from "next/dynamic"
-import { getCurrentNaka } from "@feature/inventory/containers/services/inventory.service"
+import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
+import { TType } from "@feature/marketplace/interfaces/IMarketService"
 
 const CardItemMarketPlace = dynamic(
   () => import("@components/molecules/cards/CardItemMarketPlace"),
@@ -18,22 +19,9 @@ const CardItemMarketPlace = dynamic(
 
 const MarketplaceCardList = () => {
   const [gameItemData, setGameItemData] = useState<IMarketplaceInfoData[]>([])
-  const [nakaUsdPrice, setNakaUsdPrice] = useState<number>(0)
-  const [type, setType] = useState<"game" | "land" | "building" | "material">(
-    "land"
-  )
+  const { price } = useNakaPriceProvider()
+  const [type, setType] = useState<TType>("land")
   const { pathname } = useRouter()
-
-  const getPrice = async () => {
-    const prices = await getCurrentNaka()
-    if (prices) {
-      setNakaUsdPrice(parseFloat(prices.data.last))
-    }
-  }
-
-  useEffect(() => {
-    getPrice()
-  }, [])
 
   useEffect(() => {
     const handleRouteChange = () => {
@@ -56,6 +44,7 @@ const MarketplaceCardList = () => {
           key={uuidv4()}
           cardType={type}
           id={_data.land_data?.land_id}
+          idLink={_data._id}
           itemAmount={_data.item_amount}
           itemTotal={_data.item_total}
           itemImage={
@@ -74,7 +63,7 @@ const MarketplaceCardList = () => {
           }
           itemName={_data.land_data?.name || _data.building_data?.name}
           itemLevel={_data.building_data?.level}
-          price={_data.price / nakaUsdPrice}
+          price={(_data.price / (price ? parseFloat(price.last) : 0)) as number}
         />
       ))}
     </div>

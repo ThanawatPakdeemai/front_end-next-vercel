@@ -16,7 +16,7 @@ const TaskList = ({ dataQuestTask, isLast }: IProp) => (
       y: 0,
       transition: { delay: 0.2, stiffness: 120, type: "spring", damping: 4 }
     }}
-    className={`flex w-full items-center justify-start gap-[6px] py-3 ${
+    className={`flex w-full flex-wrap items-center justify-start gap-[6px] py-3 ${
       !isLast && "border-b border-neutral-800"
     }`}
   >

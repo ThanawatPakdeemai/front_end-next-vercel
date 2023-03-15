@@ -130,7 +130,6 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
       message
     })
     await setMessage("")
-    await getChat()
   }
 
   /**

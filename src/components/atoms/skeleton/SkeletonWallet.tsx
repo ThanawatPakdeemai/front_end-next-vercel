@@ -1,13 +1,12 @@
 import IStickerSolid from "@components/icons/StickerSolid"
 import { KeyFramesRotate } from "@feature/wallet/components/molecules/WalletBody"
-import { Skeleton } from "@mui/material"
+import { Box, Skeleton } from "@mui/material"
 import React from "react"
-import { Image } from "@components/atoms/image"
 import { IMAGES } from "@constants/images"
 
 const SkeletionWallet = () => (
-  <div className="SkeletionWallet relative m-6 pr-[100px]">
-    <div className="mb-2 flex w-full flex-row items-center justify-between gap-1 whitespace-nowrap rounded-default bg-black-100 py-4">
+  <div className="SkeletionWallet relative h-full p-6">
+    <div className="mb-2 flex w-full flex-row items-center justify-between gap-1 whitespace-nowrap rounded-default bg-black-100 py-4 xl:xl:max-w-[390px]">
       <Skeleton
         variant="rectangular"
         height={20}
@@ -19,7 +18,7 @@ const SkeletionWallet = () => (
         className="mx-3 w-[40%] rounded-2xl"
       />
     </div>
-    <div className="relative mb-2 flex w-full flex-col gap-1 rounded-default bg-black-100 p-8">
+    <div className="relative mb-2 flex w-full flex-col gap-1 rounded-default bg-black-100 p-8 xl:max-w-[390px]">
       <p className="text-sm uppercase text-neutral-600">
         <Skeleton
           variant="rectangular"
@@ -48,7 +47,7 @@ const SkeletionWallet = () => (
         </KeyFramesRotate>
       </div>
     </div>
-    <div className="mb-4 flex w-full justify-end">
+    <div className="mb-4 flex w-full justify-end xl:max-w-[390px]">
       <Skeleton
         variant="rectangular"
         height={45}
@@ -60,7 +59,7 @@ const SkeletionWallet = () => (
         className="ml-4 w-[40%] rounded-3xl"
       />
     </div>
-    <div className="grid w-full grid-cols-2 gap-6">
+    <div className="grid w-full grid-cols-2 gap-6 xl:max-w-[390px]">
       <Skeleton
         variant="rectangular"
         height={30}
@@ -73,20 +72,18 @@ const SkeletionWallet = () => (
       />
     </div>
 
-    <div className="absolute right-[-35px] top-[-10px] col-span-2 m-2 flex w-[100px]">
-      <Image
-        src={IMAGES.Frame.src}
-        alt=""
-        width={120}
-        height={80}
-        className="mr-2"
-      />
-      <div className="mr-2 flex h-[365px] justify-center rounded-sm border-4 border-black-900 bg-black-100 p-[2px]">
+    <Box
+      className="absolute bottom-[10px] right-[12px] col-span-2 hidden h-[calc(100%-20px)] w-[137px] xl:flex"
+      sx={{
+        backgroundImage: `url(${IMAGES.Frame.src})`
+      }}
+    >
+      <div className="absolute right-1 top-0 flex h-full items-center rounded-sm border-4 border-black-900 bg-black-100">
         <div className="loader">
           <div className="loaderBar" />
         </div>
       </div>
-    </div>
+    </Box>
   </div>
 )
 

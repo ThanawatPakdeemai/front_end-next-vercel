@@ -14,6 +14,8 @@ import useChainSupport from "@stores/chainSupport"
 import Helper from "@utils/helper"
 import { IErrorMessage } from "@interfaces/IErrorMessage"
 
+import { updateWalletAddress } from "@feature/profile/containers/services/profile.service"
+
 const useCreateWeb3Provider = () => {
   const [signer, setSigner] = useState<JsonRpcSigner | undefined>(undefined)
   const [address, setAddress] = useState<string | undefined>(undefined)
@@ -174,6 +176,75 @@ const useCreateWeb3Provider = () => {
     }
   }, [])
 
+  const checkChain = useCallback(async () => {
+    if (!chainIdIsSupported()) {
+      resetChainId()
+    }
+    if (window.ethereum === undefined) {
+      return
+    }
+
+    if (window.ethereum.request === undefined) return
+    const _currentChainId = await window.ethereum.request({
+      method: "eth_chainId"
+    })
+    if (_currentChainId === undefined) return
+    setChainId(_currentChainId)
+
+    const walletConnector = Helper.getLocalStorage(ELocalKey.walletConnector)
+    if (walletConnector === WALLET_CONNECTOR_TYPES.injected) {
+      const account = await Helper.getWalletAccount()
+      const _provider = new providers.Web3Provider(window.ethereum)
+      if (_provider) {
+        const _signer = _provider.getSigner()
+        const _gasPrice = await _provider.getGasPrice()
+        const _network = await _provider.getNetwork()
+        const _balance = await _provider.getBalance(account[0])
+        const _feeData = await _provider.getFeeData()
+        const _gasPriceInGwei = utils.formatUnits(_gasPrice, "gwei")
+
+        setSigner(_signer)
+        setBestGasPrice(_gasPriceInGwei)
+        setNetwork(_network)
+        setBalance(_balance)
+        setFeeData(_feeData)
+        handleCheckingWallet()
+      }
+      setAccounts(account)
+      onSetAddress(account[0])
+
+      window.ethereum.on("accountsChanged", async () => {
+        // await handleDisconnectWallet()
+        await setHasChangeAccountMetamask(true)
+        // handleCheckingWallet(_provider, address[0])
+        checkChain()
+      })
+
+      // Subscribe to chainId change
+      window.ethereum.on("chainChanged", (_chainId: string) => {
+        if (_chainId === undefined) {
+          setChainId(undefined)
+          return
+        }
+        // switchNetwork(_chainId)
+        setChainId(_chainId)
+        // handleDisconnectWallet()
+      })
+
+      // Subscribe to session disconnection
+      if (window.ethereum && window.ethereum.on) {
+        window.ethereum.on(
+          "disconnect",
+          (/* code: number, reason: string */) => {
+            setProvider(undefined)
+            setAddress(undefined)
+          }
+        )
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const handleConnectWithMetamask = useCallback(async () => {
     if (window.ethereum === undefined) return
     if (!chainIdIsSupported()) {
@@ -201,6 +272,17 @@ const useCreateWeb3Provider = () => {
     if (walletAccounts === undefined) setAccounts(undefined)
     if (walletAccounts) {
       onSetAddress(walletAccounts[0])
+
+      if (profile) {
+        if (profile.address === undefined) {
+          if (profile.email) {
+            const data = { _email: profile.email, _address: walletAccounts[0] }
+
+            await updateWalletAddress(data)
+            checkChain()
+          }
+        }
+      }
     }
     const _signer = _provider.getSigner()
     setSigner(_signer)
@@ -279,75 +361,6 @@ const useCreateWeb3Provider = () => {
           errorMsg: (error as Error).message,
           type: "failed"
         }
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const checkChain = useCallback(async () => {
-    if (!chainIdIsSupported()) {
-      resetChainId()
-    }
-    if (window.ethereum === undefined) {
-      return
-    }
-
-    if (window.ethereum.request === undefined) return
-    const _currentChainId = await window.ethereum.request({
-      method: "eth_chainId"
-    })
-    if (_currentChainId === undefined) return
-    setChainId(_currentChainId)
-
-    const walletConnector = Helper.getLocalStorage(ELocalKey.walletConnector)
-    if (walletConnector === WALLET_CONNECTOR_TYPES.injected) {
-      const account = await Helper.getWalletAccount()
-      const _provider = new providers.Web3Provider(window.ethereum)
-      if (_provider) {
-        const _signer = _provider.getSigner()
-        const _gasPrice = await _provider.getGasPrice()
-        const _network = await _provider.getNetwork()
-        const _balance = await _provider.getBalance(account[0])
-        const _feeData = await _provider.getFeeData()
-        const _gasPriceInGwei = utils.formatUnits(_gasPrice, "gwei")
-
-        setSigner(_signer)
-        setBestGasPrice(_gasPriceInGwei)
-        setNetwork(_network)
-        setBalance(_balance)
-        setFeeData(_feeData)
-        handleCheckingWallet()
-      }
-      setAccounts(account)
-      onSetAddress(account[0])
-
-      window.ethereum.on("accountsChanged", async () => {
-        // await handleDisconnectWallet()
-        await setHasChangeAccountMetamask(true)
-        // handleCheckingWallet(_provider, address[0])
-        checkChain()
-      })
-
-      // Subscribe to chainId change
-      window.ethereum.on("chainChanged", (_chainId: string) => {
-        if (_chainId === undefined) {
-          setChainId(undefined)
-          return
-        }
-        // switchNetwork(_chainId)
-        setChainId(_chainId)
-        // handleDisconnectWallet()
-      })
-
-      // Subscribe to session disconnection
-      if (window.ethereum && window.ethereum.on) {
-        window.ethereum.on(
-          "disconnect",
-          (/* code: number, reason: string */) => {
-            setProvider(undefined)
-            setAddress(undefined)
-          }
-        )
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

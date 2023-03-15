@@ -2,29 +2,42 @@ import React, { useEffect, useState } from "react"
 import { Box } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
 import CreateProfile from "@feature/profile/components/createProfile/CreateProfile"
-import { IProfile } from "@feature/profile/interfaces/IProfileService"
-
-import useGetProfileByEmail from "@feature/profile/containers/hook/getProfileByEmail"
 
 import useGlobal from "@hooks/useGlobal"
+import jwt_decode from "jwt-decode"
+import Helper from "@utils/helper"
 import RightMenuLogIn from "./RightMenuLogIn"
 import RightMenuNotLogIn from "./RightMenuNotLogIn"
 
 const RightMenu = () => {
   const profile = useProfileStore((state) => state.profile.data)
-  const [stateProfile, setStateProfile] = useState<IProfile | null>()
-  const { profile: profileData } = useGetProfileByEmail(profile?.email ?? "")
   const { hydrated } = useGlobal()
 
+  const [isTokenValid, setIsTokenValid] = useState(false)
+
   useEffect(() => {
-    if (profileData) {
-      setStateProfile(profileData)
+    // Retrieve the token from local storage
+    const token = Helper.getTokenFromLocal()
+
+    if (token) {
+      // Decode the token to obtain the expiration time
+      const { exp }: any = jwt_decode(token)
+
+      // Compare the expiration time with the current time
+      if (Date.now() < exp * 1000) {
+        setIsTokenValid(true)
+      } else {
+        setIsTokenValid(false)
+        // If the token has expired, remove it from local storage
+        Helper.removeLocalStorage("token")
+        localStorage.removeItem("Profile-Store") // remove profile zustand
+      }
     }
-  }, [profileData, profile, profile?.email])
+  }, [])
 
   return hydrated ? (
     <Box className="mx-auto flex w-[360px] flex-1 justify-end md:order-2 xl:mx-0 xl:flex-none">
-      {stateProfile && profile ? (
+      {profile && isTokenValid ? (
         <>
           <CreateProfile />
           <RightMenuLogIn />

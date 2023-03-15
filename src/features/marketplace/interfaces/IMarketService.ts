@@ -207,6 +207,7 @@ export interface IMarketData extends IMarketOrder, ICurrentTime {
 export interface IMarketGameData extends Omit<IGameItemList, "min_item"> {}
 
 export interface IMarketDetail extends IMarketOrder {
+  item_total?: number
   land_data?: ILandData
   nakapunk_data?: INFTData
   material_data?: IMaterialInfo

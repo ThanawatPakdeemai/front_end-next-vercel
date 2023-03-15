@@ -11,7 +11,10 @@ import React from "react"
 const Banners = () => {
   const router = useRouter()
   const { title, textColor, imgSrc } =
-    BANNER_DATA.find(({ path }) => path === router.pathname) || BANNER_DATA[0]
+    BANNER_DATA.find(({ path }) => path === router.pathname) ||
+    (router.pathname.includes("marketplace") &&
+      BANNER_DATA.find(({ path }) => path === "/marketplace")) ||
+    BANNER_DATA[0]
 
   return (
     <div className="bg-line-linear-gradient mb-2 flex h-48 overflow-hidden rounded-3xl border border-neutral-800 bg-primary-main uppercase md:mb-12">

@@ -131,28 +131,30 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     [errorToast]
   )
 
-  const checkItemSelected = useCallback(
-    (data: IGameRoomListSocket) => {
-      if (gameItemList) {
-        const item = gameItemList?.find(
-          (_item: IGameItemListData) => _item.id === data.item_id
-        )
-        if (item) {
-          onSetGameItemSelectd(item)
-        }
+  const checkItemSelected = useCallback(() => {
+    if (gameItemList && dataPlayers) {
+      const item = gameItemList?.find(
+        (_item: IGameItemListData) => _item.id === dataPlayers.item_id
+      )
+      if (item) {
+        onSetGameItemSelectd(item)
       }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [gameItemList, dataPlayers]
-  )
+    }
+  }, [gameItemList, dataPlayers, onSetGameItemSelectd])
+
+  useEffect(() => {
+    if (profile) {
+      checkItemSelected()
+    }
+  }, [checkItemSelected, profile])
 
   useEffect(() => {
     if (isConnected) {
       getPlayersMulti().then((res) => {
         if (res) {
           const data = res as IGameRoomListSocket
-          checkItemSelected(data)
           mapPlayer(data)
+          checkItemSelected()
         }
       })
     }
@@ -202,8 +204,8 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
       getPlayersCheckItemOfPlayerListen().then((res) => {
         if (res) {
           const data = res as IGameRoomListSocket
-          checkItemSelected(data)
           mapPlayer(data)
+          checkItemSelected()
         }
       })
     }
@@ -222,7 +224,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
       getPlayersCheckRoomRollbackListen().then((res) => {
         if (res) {
           const data = res as IGameRoomListSocket
-          checkItemSelected(data)
+          checkItemSelected()
           mapPlayer(data)
         }
       })

@@ -10,8 +10,7 @@ import RightMenuLogIn from "./RightMenuLogIn"
 import RightMenuNotLogIn from "./RightMenuNotLogIn"
 
 const RightMenu = () => {
-  const profile = useProfileStore((state) => state.profile.data)
-  const { onReset } = useProfileStore()
+  const { onReset, profile } = useProfileStore()
 
   const { hydrated } = useGlobal()
 

@@ -101,7 +101,7 @@ const GameCarouselHeader = ({
   }, [isHover])
 
   return (
-    <div className="slick-header-container relative mb-4 w-full md:h-[50px] md:w-9/12">
+    <div className="slick-header-container relative mb-4 w-full md:h-[50px]">
       <motion.div
         key={`sticker_${menu.title}`}
         className="absolute top-[-80px] left-[-80px] hidden lg:block"

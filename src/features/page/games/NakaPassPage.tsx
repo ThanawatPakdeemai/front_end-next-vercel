@@ -10,11 +10,13 @@ import Tagline from "@components/molecules/tagline/Tagline"
 import NakaPassStoryMode from "@feature/nakaPass/components/NakaPassStoryMode"
 import useProfileStore from "@stores/profileStore"
 import PleaseLogin from "@components/atoms/PleaseLogin"
+import useGlobal from "@hooks/useGlobal"
 
 const NakaPassPage = () => {
   const [f2pCurType, setF2PCurType] = useState<IGetType>("story-mode")
   const [page] = useState<number>(1)
   const profile = useProfileStore((state) => state.profile.data)
+  const { hydrated } = useGlobal()
 
   const { data: storyGame, isFetching } = useGamesByTypes({
     _type: f2pCurType,
@@ -22,7 +24,7 @@ const NakaPassPage = () => {
     _page: page
   })
 
-  return (
+  return hydrated ? (
     <>
       {profile ? <NakaPassStoryMode /> : <PleaseLogin />}
       <Tagline
@@ -31,7 +33,7 @@ const NakaPassPage = () => {
         icon={<ShapeIcon fill="#4E5057" />}
         textColor="font-bold text-sm text-neutral-600"
       />
-      <div className="my-20  h-full w-full lg:max-w-[1158px]">
+      <div className="my-4 h-full w-full lg:my-20 lg:max-w-[1158px]">
         <div>
           {storyGame && !isFetching ? (
             <GameCarousel
@@ -52,6 +54,8 @@ const NakaPassPage = () => {
         </div>
       </div>
     </>
+  ) : (
+    <></>
   )
 }
 

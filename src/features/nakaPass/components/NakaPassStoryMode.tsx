@@ -72,7 +72,7 @@ const NakaPassStoryMode = () => (
       </div>
     </div>
 
-    <div className="flex w-full flex-row flex-wrap items-center rounded-2xl bg-neutral-780 p-2 md:h-[225px] md:w-9/12 md:flex-nowrap">
+    <div className="flex w-full flex-row flex-wrap items-center rounded-2xl bg-neutral-780 p-2 md:h-[225px] md:flex-nowrap">
       <div className="w-full rounded-2xl border  border-neutral-700 bg-primary-main p-[10px] sm:w-[202px] md:h-[-webkit-fill-available]">
         <div className="bg-line-linear-gradient  mb-[10px] flex h-[136px] items-center justify-center rounded-sm border border-neutral-700 ">
           <ILogoMaster

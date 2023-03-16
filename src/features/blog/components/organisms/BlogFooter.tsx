@@ -30,26 +30,19 @@ const BlogFooter = ({ view, shared, like, ...props }: IBlogFooterProps) => (
     }}
     className="relative flex h-[80px] w-full items-center border-b-[1px] border-t-[1px] border-neutral-780 bg-primary-main px-12"
   >
-    <div className="count-wrappe flex-1">
-      {view && (
-        <ViewCount
-          icon={<ViewIcon />}
-          count={view || 0}
-        />
-      )}
-
-      {shared && (
-        <ViewCount
-          icon={<ShareIcon />}
-          count={shared || 0}
-        />
-      )}
-      {like && (
-        <ViewCount
-          icon={<ThumbUpRoundedIcon />}
-          count={like || 0}
-        />
-      )}
+    <div className="count-wrapper flex flex-1 gap-3">
+      <ViewCount
+        icon={<ViewIcon />}
+        count={view || 0}
+      />
+      <ViewCount
+        icon={<ShareIcon />}
+        count={shared || 0}
+      />
+      <ViewCount
+        icon={<ThumbUpRoundedIcon />}
+        count={like || 0}
+      />
     </div>
 
     <div className="flex-1">

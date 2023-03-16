@@ -47,28 +47,19 @@ const SliderBadges = ({ _playerId }: IProp) => {
     variableWidth: false,
     responsive: [
       // {
-      //   breakpoint: 1024,
+      //   breakpoint: 870,
       //   settings: {
-      //     slidesToShow: 3,
-      //     slidesToScroll: 3,
+      //     slidesToShow: 4,
+      //     slidesToScroll: 4,
       //     infinite: true,
       //     dots: true
       //   }
       // },
       {
-        breakpoint: 850,
+        breakpoint: 600,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,
-          infinite: true,
-          dots: true
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
           initialSlide: 2
         }
       },
@@ -175,7 +166,7 @@ const SliderBadges = ({ _playerId }: IProp) => {
 
       {openBadges ? null : (
         <>
-          <div className="mt-[30px] flex h-[216px] !max-w-[1050px] items-center rounded-lg border border-neutral-700 bg-neutral-800 ">
+          <div className="mt-[30px] flex h-[216px] !max-w-[280] items-center rounded-lg border border-neutral-700 bg-neutral-800 md:!max-w-[400] lg:!max-w-[1050px] ">
             {isLoading ? (
               "loading"
             ) : (

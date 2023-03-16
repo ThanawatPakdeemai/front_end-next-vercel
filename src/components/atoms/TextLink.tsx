@@ -98,7 +98,7 @@ const TextLink = ({
           <></>
         )}
       </motion.div>
-      <div className="flex">
+      <div className="flex max-w-[120px]">
         <motion.div
           className={`pb-[14px]  ${className}`}
           variants={variantsText || textMotion}

@@ -12,9 +12,9 @@ import { useForm } from "react-hook-form"
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import ButtonClose from "@components/atoms/button/ButtonClose"
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
+// import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 import FieldItem from "@components/molecules/FieldItem"
-import { useRouter } from "next/router"
+// import { useRouter } from "next/router"
 import PortraitIcon from "@components/icons/PortraitIcon"
 import useProfileStore from "@stores/profileStore"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
@@ -71,13 +71,12 @@ const SignUpSchema = yup
   .required()
 
 const FormJoinus = () => {
-  const router = useRouter()
+  // const router = useRouter()
   const profile = useProfileStore((state) => state.profile.data)
 
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors }
   } = useForm<IFormJoinUsData>({
     resolver: yupResolver(SignUpSchema),
@@ -93,7 +92,7 @@ const FormJoinus = () => {
 
   const { isEmail, emailCorrect, isName } = useFormController()
   const { onSubmitRegister } = useFormJoinUsController()
-  const { executeRecaptcha } = useGoogleReCaptcha()
+  // const { executeRecaptcha } = useGoogleReCaptcha()
 
   return (
     <>

@@ -1,8 +1,8 @@
 import { useState } from "react"
 
 const useFormController = () => {
-  // const patternCode = "[0-9]{1,6}"
-  // const patternPasswordUppercase = /[A-Z]/
+  const patternCode = "[0-9]{1,6}"
+  const patternPasswordUppercase = /[A-Z]/
   const patternEmail =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
@@ -28,7 +28,14 @@ const useFormController = () => {
     return false
   }
 
-  return { isEmail, emailCorrect, isName }
+  return {
+    isEmail,
+    emailCorrect,
+    isName,
+    patternCode,
+    patternPasswordUppercase,
+    patternEmail
+  }
 }
 
 export default useFormController

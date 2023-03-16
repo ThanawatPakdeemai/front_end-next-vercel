@@ -5,30 +5,37 @@ import {
   Grid,
   Link,
   TextField,
-  InputAdornment
+  InputAdornment,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  FormLabel,
+  FormControl
 } from "@mui/material"
 import _ from "lodash"
-import { useForm } from "react-hook-form"
-import * as yup from "yup"
-import { yupResolver } from "@hookform/resolvers/yup"
+import { Controller } from "react-hook-form"
 import ButtonClose from "@components/atoms/button/ButtonClose"
-// import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 import FieldItem from "@components/molecules/FieldItem"
-// import { useRouter } from "next/router"
 import PortraitIcon from "@components/icons/PortraitIcon"
-import useProfileStore from "@stores/profileStore"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import EnvelopeIcon from "@components/icons/EnvelopeIcon"
-import useFormJoinUsController, {
-  IFormJoinUsData
-} from "../containers/hooks/useFormJoinUsController"
+import { CHAIN_LIST } from "@configs/chain"
+import DropdownListChainList from "@feature/dropdown/components/molecules/DropdownListChainList"
+import { DROPDOWN_GAMETYPE } from "@configs/gameType"
+import DropdownListGameType, {
+  StyledFormLabel
+} from "@feature/dropdown/components/molecules/DropdownListGameType"
+import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import IEdit from "@components/icons/Edit"
+import InsertLinkIcon from "@mui/icons-material/InsertLink"
 import useFormController from "../containers/hooks/useFormController"
+import useFormJoinUsController from "../containers/hooks/useFormJoinUsController"
 
 export const StyledTextField = {
   "& .MuiOutlinedInput-root": {
     width: "100%",
     fontWeight: 400,
-    fontSize: 14,
+    fontSize: "14px",
     fontWight: 700,
     fontFamily: "neueMachina"
   },
@@ -43,7 +50,7 @@ export const StyledTextField2 = {
   "& .MuiOutlinedInput-root": {
     width: "100%",
     fontWeight: 400,
-    fontSize: 14,
+    fontSize: "14px",
     fontWight: 700,
     fontFamily: "neueMachina",
     height: "120px"
@@ -52,247 +59,333 @@ export const StyledTextField2 = {
     color: "#70727B",
     fontFamily: "neueMachina",
     textTransform: "uppercase",
-    fontSize: "1rem",
+    fontSize: "14px",
     top: "0",
     left: "0",
-    transform: "translate(0, 0) scale(0.75)"
+    transform: "none"
   }
 }
 
-const SignUpSchema = yup
-  .object({
-    email: yup.string().required(),
-    password: yup.string().required(),
-    confirmPassword: yup.string().required(),
-    code: yup.number().required().positive().integer(),
-    subscription: yup.boolean().defined(),
-    referralId: yup.string().defined()
-  })
-  .required()
+const StyledRadio = {
+  "&.Mui-checked": {
+    color: "#70727B"
+  }
+}
 
 const FormJoinus = () => {
-  // const router = useRouter()
-  const profile = useProfileStore((state) => state.profile.data)
-
+  const { isEmail, isName } = useFormController()
   const {
-    register,
+    onSubmitRegister,
+    valueRadio,
+    handleChangeRadio,
     handleSubmit,
-    formState: { errors }
-  } = useForm<IFormJoinUsData>({
-    resolver: yupResolver(SignUpSchema),
-    defaultValues: {
-      name: profile ? profile.username : "",
-      email: profile ? profile.email : "",
-      gameName: "",
-      gameType: "multiplayer",
-      gameDescription: "",
-      link: ""
-    }
-  })
-
-  const { isEmail, emailCorrect, isName } = useFormController()
-  const { onSubmitRegister } = useFormJoinUsController()
-  // const { executeRecaptcha } = useGoogleReCaptcha()
+    register,
+    setValue,
+    control,
+    errors
+  } = useFormJoinUsController()
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmitRegister)}>
-        <Box style={{ width: 423, height: 638 }}>
-          <Box
-            className="flex items-center rounded-lg"
-            sx={{ height: "54px" }}
-          >
-            <div className="mb-6 flex flex-1 flex-row items-center border-b-[1px] border-b-neutral-700 pb-4">
-              <Typography className="text-lg uppercase text-neutral-300">
-                GAME DEVELOPERS Submit form
-              </Typography>
-            </div>
-            <Link href="/">
-              <ButtonClose onClick={() => {}} />
-            </Link>
-          </Box>
+    <form onSubmit={handleSubmit(onSubmitRegister)}>
+      <Box style={{ width: 423, height: 638 }}>
+        <Box
+          className="flex rounded-lg"
+          sx={{ height: "54px" }}
+        >
+          <div className="mb-6 flex flex-1 flex-row items-center border-b-[1px] border-b-neutral-700 pb-4">
+            <Typography className="text-lg uppercase text-neutral-300">
+              GAME DEVELOPERS Submit form
+            </Typography>
+          </div>
+          <Link href="/">
+            <ButtonClose onClick={() => {}} />
+          </Link>
+        </Box>
+        <Grid
+          container
+          spacing={2.25}
+        >
           <Grid
-            container
-            spacing={2.25}
+            item
+            xs={6}
           >
-            <Grid
-              item
-              xs={6}
-            >
-              <FieldItem
-                fieldType={
-                  <TextField
-                    className="w-full"
-                    type="name"
-                    placeholder="Name..."
-                    label="Game developer name"
-                    onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      isName(e.target.value.toString())
-                    }}
-                    {...register("name")}
-                    sx={StyledTextField}
-                    id="name"
-                    size="medium"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <PortraitIcon />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
-                }
-                formSubmitErrors={false}
-                error={errors.email}
-                statusError={emailCorrect}
-              />
-            </Grid>
-            <Grid
-              item
-              xs={6}
-            >
-              <FieldItem
-                fieldType={
-                  <TextField
-                    className="w-full"
-                    type="email"
-                    placeholder="Email..."
-                    label="Game developer email"
-                    onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      isEmail(e.target.value.toString())
-                    }}
-                    {...register("email")}
-                    sx={StyledTextField}
-                    id="email"
-                    size="medium"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <EnvelopeIcon />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
-                }
-                formSubmitErrors={false}
-                error={errors.email}
-                statusError={emailCorrect}
-              />
-            </Grid>
+            <FieldItem
+              fieldType={
+                <TextField
+                  className="w-full"
+                  type="name"
+                  placeholder="Name..."
+                  label="Game developer name"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    isName(e.target.value.toString())
+                    setValue("name", e.target.value)
+                  }}
+                  {...(register("name"), { required: true })}
+                  sx={StyledTextField}
+                  id="name"
+                  size="medium"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <PortraitIcon />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              }
+            />
           </Grid>
           <Grid
-            container
-            spacing={2.25}
+            item
+            xs={6}
           >
-            <Grid
-              item
-              xs={6}
-            >
-              <FieldItem
-                fieldType={
-                  <TextField
-                    className="w-full"
-                    type="text"
-                    placeholder="Game Name..."
-                    label="Game Name"
-                    onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      isName(e.target.value.toString())
-                    }}
-                    {...register("gameName")}
-                    sx={StyledTextField}
-                    id="gameName"
-                    size="medium"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <SportsEsportsOutlinedIcon />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
-                }
-                formSubmitErrors={false}
-                error={errors.email}
-                statusError={emailCorrect}
-              />
-            </Grid>
-            <Grid
-              item
-              xs={6}
-            >
-              {/* <FieldItem
-                fieldType={
-                  <>
-                    {gameItemList &&
-                      gameItemList.length > 0 &&
-                      (gameItemList as IGameItemListData[]).sort(
-                        (a, b) => a.price - b.price
-                      ) && (
-                        <Controller
-                          name="item_id"
-                          control={control}
-                          rules={{ required: true }}
-                          render={({ field: { ...field } }) => (
-                            <DropdownListItem
-                              {...field}
-                              list={gameItemList as IGameItemListData[]}
-                              className="w-[410px]"
-                              // onChangeSelect={(_item) => {
-                              //   setValue("item", _item)
-                              //   setValue("item_id", _item.id)
-                              //   updatePricePerItem()
-                              // }}
-                              // defaultValue={
-                              //   (gameItemList[0] as IGameItemListData) ||
-                              //   ({} as IGameItemListData)
-                              // }
-                            />
-                          )}
+            <FieldItem
+              fieldType={
+                <TextField
+                  className="w-full"
+                  type="email"
+                  placeholder="Email..."
+                  label="Game developer email"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    isEmail(e.target.value.toString())
+                    setValue("email", e.target.value)
+                  }}
+                  {...(register("email"), { required: true })}
+                  sx={StyledTextField}
+                  id="email"
+                  size="medium"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <EnvelopeIcon />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              }
+            />
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          spacing={2.25}
+        >
+          <Grid
+            item
+            xs={6}
+          >
+            <FieldItem
+              fieldType={
+                <TextField
+                  className="w-full"
+                  type="text"
+                  placeholder="Game Name..."
+                  label="Game Name"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    isName(e.target.value.toString())
+                    setValue("gameName", e.target.value)
+                  }}
+                  {...(register("gameName"), { required: true })}
+                  sx={StyledTextField}
+                  id="gameName"
+                  size="medium"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SportsEsportsOutlinedIcon />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              }
+              formSubmitErrors={false}
+              error={errors.name}
+              statusError={errors.name?.message}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={6}
+          >
+            <FieldItem
+              fieldType={
+                <>
+                  {DROPDOWN_GAMETYPE && DROPDOWN_GAMETYPE.length > 0 && (
+                    <Controller
+                      name="chain"
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field: { ...field } }) => (
+                        <DropdownListGameType
+                          {...field}
+                          list={DROPDOWN_GAMETYPE}
+                          label="Game type"
+                          onChangeSelect={(_item) => {
+                            setValue("gameType", _item.title)
+                            // updatePricePerItem()
+                          }}
                         />
                       )}
-                  </>
-                }
-                formSubmitErrors={false}
-                error={errors.email}
-                statusError={emailCorrect}
-              /> */}
-            </Grid>
+                    />
+                  )}
+                </>
+              }
+            />
           </Grid>
+        </Grid>
+        <Grid
+          container
+          spacing={2.25}
+        >
           <Grid
-            container
-            spacing={2.25}
+            item
+            xs={12}
           >
+            <FieldItem
+              fieldType={
+                <>
+                  {CHAIN_LIST && CHAIN_LIST.length > 0 && (
+                    <Controller
+                      name="chain"
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field: { ...field } }) => (
+                        <DropdownListChainList
+                          {...field}
+                          list={CHAIN_LIST}
+                          label="Blockchain"
+                          onChangeSelect={(_item) => {
+                            setValue("chain", _item)
+                            // updatePricePerItem()
+                          }}
+                        />
+                      )}
+                    />
+                  )}
+                </>
+              }
+            />
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          spacing={2.25}
+        >
+          <Grid
+            item
+            xs={12}
+          >
+            <FieldItem
+              fieldType={
+                <FormControl>
+                  <FormLabel
+                    sx={StyledFormLabel}
+                    id="gameStatus-label"
+                  >
+                    {`Is the game playable already? Please specify when if it's not ready yet.`}
+                  </FormLabel>
+                  <RadioGroup
+                    aria-labelledby="gameStatus-label"
+                    name="controlled-radio-buttons-group"
+                    value={valueRadio}
+                    onChange={handleChangeRadio}
+                    className="flex flex-row items-center"
+                  >
+                    <FormControlLabel
+                      value="yes"
+                      control={<Radio sx={StyledRadio} />}
+                      label="Yes"
+                    />
+                    <FormControlLabel
+                      value="no"
+                      control={<Radio sx={StyledRadio} />}
+                      label="No"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              }
+            />
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          spacing={2.25}
+        >
+          <Grid
+            item
+            xs={12}
+          >
+            <FieldItem
+              fieldType={
+                <TextField
+                  className="w-full"
+                  type="text"
+                  placeholder="Game Link..."
+                  label="Game Link"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setValue("link", e.target.value)
+                  }}
+                  {...(register("link"), { required: true })}
+                  sx={StyledTextField}
+                  id="link"
+                  size="medium"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <InsertLinkIcon />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              }
+            />
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          spacing={2.25}
+        >
+          <Grid
+            item
+            xs={12}
+          >
+            <FieldItem
+              fieldType={
+                <TextField
+                  className="w-full"
+                  type="text"
+                  placeholder="Description..."
+                  label="Game description"
+                  rows={4}
+                  multiline
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setValue("gameDescription", e.target.value)
+                  }}
+                  {...(register("gameDescription"), { required: true })}
+                  sx={StyledTextField2}
+                  id="gameDescription"
+                  size="medium"
+                />
+              }
+            />
+          </Grid>
+          <Grid container>
             <Grid
               item
               xs={12}
+              className="flex justify-center"
             >
-              <FieldItem
-                fieldType={
-                  <TextField
-                    className="w-full"
-                    type="text"
-                    placeholder="Description..."
-                    label="Game description"
-                    rows={4}
-                    multiline
-                    onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      isName(e.target.value.toString())
-                    }}
-                    {...register("gameDescription")}
-                    sx={StyledTextField2}
-                    id="gameDescription"
-                    size="medium"
-                  />
-                }
-                formSubmitErrors={false}
-                error={errors.email}
-                statusError={emailCorrect}
+              <ButtonToggleIcon
+                type="submit"
+                startIcon={<IEdit />}
+                text="Regiter"
+                className="btn-rainbow-theme h-[40px] !w-[209px] bg-secondary-main font-bold capitalize text-white-default"
               />
             </Grid>
           </Grid>
-        </Box>
-      </form>
-    </>
+        </Grid>
+      </Box>
+    </form>
   )
 }
 export default memo(FormJoinus)

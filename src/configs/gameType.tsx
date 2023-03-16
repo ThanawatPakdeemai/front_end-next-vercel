@@ -1,22 +1,24 @@
 import * as React from "react"
-import AllCategoriesIcon from "@components/icons/AllCategoriesIcon"
-import AllGamesIcon from "@components/icons/AllGamesIcon"
+import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined"
+import GroupAddOutlinedIcon from "@mui/icons-material/GroupAddOutlined"
+import { TGameType } from "@feature/game/interfaces/IGameService"
 
 export interface IDropdownGameType {
-  id: string
-  title: string
+  title: TGameType
   icon: React.ReactNode
 }
 
 export const DROPDOWN_GAMETYPE: IDropdownGameType[] = [
   {
-    id: "singleplayer",
-    title: "Singleplayer",
-    icon: <AllGamesIcon />
+    title: "singleplayer",
+    icon: <PermIdentityOutlinedIcon />
   },
   {
-    id: "multiplayer",
-    title: "Multiplayer",
-    icon: <AllCategoriesIcon />
+    title: "multiplayer",
+    icon: <GroupAddOutlinedIcon />
+  },
+  {
+    title: "storymode",
+    icon: <GroupAddOutlinedIcon />
   }
 ]

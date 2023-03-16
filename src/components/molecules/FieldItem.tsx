@@ -5,9 +5,9 @@ import { FieldError } from "react-hook-form"
 
 interface IInputCustom {
   fieldType: React.ReactNode
-  formSubmitErrors: boolean
-  error: FieldError | undefined
-  statusError: boolean
+  formSubmitErrors?: boolean
+  error?: FieldError | undefined
+  statusError?: string | undefined
 }
 
 const FieldItem = ({
@@ -51,7 +51,7 @@ const FieldItem = ({
         </Alert>
       </motion.div>
     )}
-    {!statusError && (
+    {statusError !== undefined && (
       <motion.div
         initial={{ opacity: 0, marginBottom: 0 }}
         animate={{
@@ -63,7 +63,7 @@ const FieldItem = ({
           severity="warning"
           className="rounded-lg"
         >
-          Invalid Email Format
+          Invalid {statusError} Format
         </Alert>
       </motion.div>
     )}

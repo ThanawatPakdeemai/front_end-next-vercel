@@ -51,6 +51,7 @@ import { useRouter } from "next/router"
 import useLoginProvider from "@feature/authentication/containers/hooks/useLoginProvider"
 import useRegisterAvatarStore from "@stores/registerAvater"
 import { IProfileFaceBook } from "@src/types/profile"
+import useFormController from "../containers/hooks/useFormController"
 
 interface TFormData {
   email: string
@@ -88,16 +89,13 @@ const FormRegister = () => {
     }
   })
 
-  const patternCode = "[0-9]{1,6}"
-  const patternPasswordUppercase = /[A-Z]/
-  const patternEmail =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-
   const { executeRecaptcha } = useGoogleReCaptcha()
   const { mutateVerifyCode } = useVerifyCode()
   const { mutateSignUp } = useSignUp()
   const { mutateLoginProvider } = useLoginProvider()
   const { errorToast, successToast } = useToast()
+  const { patternEmail, patternCode, patternPasswordUppercase } =
+    useFormController()
 
   const firebaseConfig = {
     apiKey: "AIzaSyAszETPfcbQt0gd2Ifpep83_C05zOt_k1c",

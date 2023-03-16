@@ -30,7 +30,10 @@ const MultiRoomList = () => {
 
   const item_id = useMemo(() => {
     if (data) {
-      if (data.play_to_earn || data.tournament) {
+      if (
+        (data.play_to_earn && data.play_to_earn_status === "free") ||
+        data.tournament
+      ) {
         return data.item[0]._id
       }
       if (itemSelected) {

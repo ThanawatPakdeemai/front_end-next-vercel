@@ -13,7 +13,8 @@ const useGetAllGameRooms = ({ _gameId, _email, _itemId }: IGetAllGameRooms) => {
     queryKey: ["getAllGameRooms", { _gameId, _email, _itemId }],
     queryFn: () => getAllGameRooms({ _gameId, _email, _itemId }),
     retry: false,
-    enabled: !!_gameId && !!_email && !!_itemId
+    enabled: !!_gameId && !!_email && !!_itemId,
+    cacheTime: 0
   })
 
   return {

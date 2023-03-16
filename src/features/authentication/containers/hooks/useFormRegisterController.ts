@@ -146,8 +146,8 @@ const useFormRegisterController = () => {
               successToast(MESSAGES.success_get_code)
             }
           })
-          .catch(() => {
-            errorToast(MESSAGES.code_number_not_expired)
+          .catch((error: Error) => {
+            errorToast(error.message)
           })
       } catch (error) {
         errorToast("Verify Error")

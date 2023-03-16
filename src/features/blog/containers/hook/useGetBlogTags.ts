@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { BlogTagsPayload } from "@feature/blog/interfaces/IBlogTagsService"
 import { useQuery } from "@tanstack/react-query"
 import { getBlogTags } from "../services/blog.service"
@@ -26,7 +25,7 @@ const useGetBlogTags = ({
   })
 
   return {
-    getBlogTagData,
+    getBlogTagData: getBlogTagData?.data[0],
     error,
     isLoading,
     isPreviousData,

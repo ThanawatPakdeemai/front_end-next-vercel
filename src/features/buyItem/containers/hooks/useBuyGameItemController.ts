@@ -6,9 +6,11 @@ import {
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+import { ICurrentNakaData } from "@feature/inventory/interfaces/IInventoryService"
 import { useToast } from "@feature/toast/containers"
-import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContoller"
+import useGlobal from "@hooks/useGlobal"
 import useSwitchNetwork from "@hooks/useSwitchNetwork"
+import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
 import useChainSupport from "@stores/chainSupport"
 import useGameStore from "@stores/game"
 import useLoadingStore from "@stores/loading"
@@ -21,12 +23,13 @@ import useBuyGameItems from "./useBuyGameItems"
 const useBuyGameItemController = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { mutateBuyItems, mutateBuyItemsBSC, isLoading } = useBuyGameItems()
-  const { onResetBalance } = useWalletContoller()
   const { setOpen, setClose } = useLoadingStore()
   const { errorToast, successToast } = useToast()
   const { data, onSetGameItemSelectd, itemSelected } = useGameStore()
   const { chainId, accounts, signer } = useSwitchNetwork()
   const { chainSupport } = useChainSupport()
+  const { fetchNAKAToken, fetchAllTokenSupported } = useGlobal()
+  const { price } = useNakaPriceProvider()
 
   // State
   const [openForm, setOpenForm] = useState<boolean>(false)
@@ -97,7 +100,8 @@ const useBuyGameItemController = () => {
   const updatePricePerItem = useCallback(async () => {
     if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
       Helper.calculateItemPerPrice(
-        (watch("item") as IGameItemListData).price
+        (watch("item") as IGameItemListData).price,
+        (price as ICurrentNakaData).last
       ).then((res) => {
         if (res) {
           setValue("nakaPerItem", Number(res))
@@ -117,6 +121,7 @@ const useBuyGameItemController = () => {
         }
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, setValue, watch])
 
   const onQtyUp = useCallback(() => {
@@ -177,20 +182,27 @@ const useBuyGameItemController = () => {
     resetForm()
   }
 
+  const refetchItemSelected = useCallback(() => {
+    if (gameItemList) {
+      const item = gameItemList.find((_item) => _item.id === watch("item_id"))
+      if (item) onSetGameItemSelectd(item)
+    }
+  }, [gameItemList, onSetGameItemSelectd, watch])
+
   const onSubmit = (_data: IFormData) => {
     setOpen("Blockchain transaction in progress...")
-    const coinName = (): string => {
-      switch (
-        _data.currency.symbol &&
-        _data.currency.symbol.toLocaleUpperCase()
-      ) {
-        case "BNB":
-        case "BNBT":
-          return "BNBBUSD"
-        default:
-          return `BNB${_data.currency.symbol.toLocaleUpperCase()}`
-      }
-    }
+    // const coinName = (): string => {
+    //   switch (
+    //     _data.currency.symbol &&
+    //     _data.currency.symbol.toLocaleUpperCase()
+    //   ) {
+    //     case "BNB":
+    //     case "BNBT":
+    //       return "BNBBUSD"
+    //     default:
+    //       return `BNB${_data.currency.symbol.toLocaleUpperCase()}`
+    //   }
+    // }
     switch (chainId) {
       case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
         mutateBuyItemsBSC({
@@ -198,13 +210,15 @@ const useBuyGameItemController = () => {
           _item_id: _data.item_id,
           _qty: Number(_data.qty),
           _tokenAddress: _data.currency.address,
-          _symbol: coinName()
+          _symbol:
+            _data.currency.symbol === "BNBT" ? "BNB" : _data.currency.symbol // coinName()
         })
-          .then((res) => {
+          .then(async (res) => {
             // res && _data.currency.balanceVault.digit
+            fetchAllTokenSupported()
             if (res && _data.currency.balanceVault.digit) {
-              // refetch()
-              onResetBalance()
+              await refetch()
+              await refetchItemSelected()
               successToast("Buy Items Success")
               setClose()
               if (handleClose) handleClose()
@@ -222,11 +236,12 @@ const useBuyGameItemController = () => {
           _item_id: _data.item_id,
           _qty: Number(_data.qty)
         })
-          .then((res) => {
+          .then(async (res) => {
             // res && balanceVaultNaka && balanceVaultNaka.data
+            fetchNAKAToken()
             if (res && _data.currency.balanceVault.digit) {
-              // refetch()
-              onResetBalance()
+              await refetch()
+              await refetchItemSelected()
               // setVaultBalance(Number(balanceVaultNaka.data))
               successToast("Buy Items Success")
               setClose()
@@ -244,7 +259,7 @@ const useBuyGameItemController = () => {
   useEffect(() => {
     resetForm()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainSupport, gameItemList, resetForm])
+  }, [chainSupport, gameItemList, resetForm, fetchNAKAToken])
 
   return {
     MessageAlert,

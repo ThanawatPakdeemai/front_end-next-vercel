@@ -42,6 +42,10 @@ import BlogIcon from "@components/icons/BlogIcon/BlogIcon"
 import WalletIcon from "@components/icons/MenunIcon/WalletIcon"
 import LaunchIcon from "@components/icons/MenunIcon/LaunchIcon"
 import TransactionIcon from "@components/icons/MenunIcon/TransactionIcon"
+import MyLandIcon from "@components/icons/Inventory/MyLandIcon"
+import TransactionIconMKP from "@components/icons/Inventory/TransactionIcon"
+import DollarIcon from "@components/icons/Referral/DollarIcon"
+import ProcessPaymentIcon from "@components/icons/Inventory/ProcessPaymentIcon"
 
 export const MENU = [
   {
@@ -563,7 +567,7 @@ export const MENU_MARKETPLACE = [
     chide: [
       {
         name: "Game Item",
-        link: "/marketplace/p2p/game",
+        link: "/marketplace/p2p/game-item",
         icon: MarketPlaceIcon
       },
       {
@@ -603,5 +607,43 @@ export const MENU_MARKETPLACE = [
       height: 150,
       alt: "image-game"
     }
+  }
+]
+
+export const MENU_MARKETPLACE_INVENTORY: IMenu[] = [
+  {
+    id: "inventory",
+    label: "Inventory",
+    icon: <InventoryIcon />,
+    href: "/",
+    external: false
+  },
+  {
+    id: "for-sale",
+    label: "For Sale",
+    icon: <DollarIcon />,
+    href: "/",
+    external: false
+  },
+  {
+    id: "process-payment",
+    label: "Process Payment",
+    icon: <ProcessPaymentIcon />,
+    href: "/",
+    external: false
+  },
+  {
+    id: "transaction",
+    label: "Transaction",
+    icon: <TransactionIconMKP />,
+    href: "/",
+    external: false
+  },
+  {
+    id: "my-land",
+    label: "My Land",
+    icon: <MyLandIcon />,
+    href: "/",
+    external: false
   }
 ]

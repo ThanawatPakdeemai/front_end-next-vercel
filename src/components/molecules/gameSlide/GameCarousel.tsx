@@ -5,10 +5,7 @@ import GameCarouselHeader, {
 } from "@components/molecules/gameSlide/GameCarouselHeader"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import useGameStore from "@stores/game"
-import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import { MESSAGES } from "@constants/messages"
-import { useToast } from "@feature/toast/containers"
 import GameCard from "@feature/game/components/molecules/GameCard"
 
 interface IProps {
@@ -76,10 +73,8 @@ const GameCarousel = ({
       }
     ]
   }
-  const profile = useProfileStore((state) => state.profile.data)
   const { onSetGameData } = useGameStore()
   const router = useRouter()
-  const { errorToast } = useToast()
 
   const sliderRef = useRef<Slider>(null)
   const [cooldown, setCooldown] = useState<boolean>(false)
@@ -108,12 +103,13 @@ const GameCarousel = ({
   }
 
   const onHandleClick = (_gameUrl: string, _gameData: IGame) => {
-    if (profile) {
-      router.push(`/${curType}-games/${_gameUrl}`)
-      onSetGameData(_gameData)
+    if (_gameData.play_to_earn && _gameData.play_to_earn_status === "free") {
+      router.push(`/${curType}-games/${_gameUrl}/roomlist`)
     } else {
-      errorToast(MESSAGES.please_login)
+      router.push(`/${curType}-games/${_gameUrl}`)
     }
+
+    onSetGameData(_gameData)
   }
 
   return (

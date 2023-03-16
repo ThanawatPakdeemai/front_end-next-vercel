@@ -1,8 +1,8 @@
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import SwitchCustom from "@components/atoms/SwitchCustom"
 import PlusIcon from "@components/icons/CountIcon/PlusIcon"
-import FlagIcon from "@components/icons/FlagIcon"
-import LockIcon from "@components/icons/LockIcon"
+// import FlagIcon from "@components/icons/FlagIcon"
+// import LockIcon from "@components/icons/LockIcon"
 import PlayersIcon from "@components/icons/PlayersIcon"
 import CountItem from "@components/molecules/CountItem"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
@@ -152,7 +152,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
             </div>
             <ButtonClose onClick={handleClose} />
           </Box>
-          <TextField
+          {/* <TextField
             label="Room Name"
             placeholder="Room Name..."
             size="medium"
@@ -163,7 +163,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
                 </InputAdornment>
               )
             }}
-          />
+          /> */}
           <CountItem
             endIcon={<PlayersIcon />}
             label="number of players"
@@ -228,7 +228,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
               </span>
             </button>
           </div>
-          <TextField
+          {/* <TextField
             placeholder="Password..."
             size="medium"
             InputProps={{
@@ -238,10 +238,11 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
                 </InputAdornment>
               )
             }}
-          />
+          /> */}
           <ButtonToggleIcon
-            className=" bg-secondary-main text-white-default"
+            className=" flex items-center bg-secondary-main text-white-default"
             startIcon={null}
+            disabled={isLoading}
             text={
               isLoading ? (
                 <CircularProgress

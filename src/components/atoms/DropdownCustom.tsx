@@ -161,6 +161,9 @@ const DropdownCustom = ({ title, className }: IProp) => {
     } else if (title === "All Partner Categories") {
       onGamePartner()
       setTextTitle("All Categories")
+    } else if (title === "All Publisher Categories") {
+      onGamePartner()
+      setTextTitle("All Categories")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -168,6 +171,8 @@ const DropdownCustom = ({ title, className }: IProp) => {
   useEffect(() => {
     if (onTitle && textTitle) {
       if (textTitle === "All Categories") {
+        // eslint-disable-next-line no-console
+        console.log("onTitle", onTitle)
         if (onTitle._id) {
           setCategoryDropdown(onTitle._id)
         } else if (title === "All Partner Categories") {
@@ -175,6 +180,12 @@ const DropdownCustom = ({ title, className }: IProp) => {
             setCategoryDropdown("")
           } else {
             setCategoryDropdown(onTitle.name.toLowerCase())
+          }
+        } else if (title === "All Publisher Categories") {
+          if (onTitle.name === "All Categories") {
+            setCategoryDropdown("")
+          } else {
+            setCategoryDropdown(onTitle.slug)
           }
         }
       } else if (textTitle === "All Game Assets") {

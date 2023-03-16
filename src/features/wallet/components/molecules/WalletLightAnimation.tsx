@@ -1,24 +1,23 @@
 import { Image } from "@components/atoms/image"
 import React from "react"
 import { IMAGES } from "@constants/images"
+import { Box } from "@mui/material"
 
 const WalletLightAnimation = () => (
   <>
-    <div className="col-span-2 m-2 hidden md:flex">
-      <Image
-        src={IMAGES.Frame.src}
-        alt=""
-        width={120}
-        height={80}
-        className="mr-2"
-      />
-      <div className="mr-2 flex h-[365px] justify-center rounded-sm border-4 border-black-900 bg-black-100 p-[2px]">
+    <Box
+      className="absolute bottom-[10px] right-[12px] col-span-2 hidden h-[calc(100%-20px)] w-[137px] xl:flex"
+      sx={{
+        backgroundImage: `url(${IMAGES.Frame.src})`
+      }}
+    >
+      <div className="absolute right-1 top-0 flex h-full items-center rounded-sm border-4 border-black-900 bg-black-100">
         <div className="loader">
           <div className="loaderBar" />
         </div>
       </div>
-    </div>
-    <div className="absolute top-[75px] left-[-16px]">
+    </Box>
+    <div className="absolute top-[75px] left-[-16px] hidden sm:block">
       <Image
         src={IMAGES.RectangleRed.src}
         alt=""

@@ -5,10 +5,7 @@ import CryptoJS from "crypto-js"
 import { IPropsFormatNumberOption } from "@interfaces/IHelper"
 import { IGetEventLog } from "@interfaces/ITransaction"
 import { ILocal, TLocalKey, ELocalKey } from "@interfaces/ILocal"
-import {
-  ICurrentNakaData,
-  ICurrentNakaResponse
-} from "@feature/inventory/interfaces/IInventoryService"
+import { ICurrentNakaData } from "@feature/inventory/interfaces/IInventoryService"
 import { getCurrentNaka } from "@feature/inventory/containers/services/inventory.service"
 import { IResGetIp } from "@interfaces/IGetIP"
 import { trickerPriceBNBExternal } from "@feature/buyItem/containers/services/currency.services"
@@ -183,10 +180,8 @@ const Helper = {
   toWei(_ether: string): BigNumber {
     return ethers.utils.parseUnits(_ether, 18)
   },
-  async calItemToNaka(_qty: number, _bulletPerUSD: number) {
-    const response = await getCurrentNaka()
-    const { data } = response as unknown as ICurrentNakaResponse
-    const bulletPrice = _bulletPerUSD / parseFloat(data.last)
+  async calItemToNaka(_qty: number, _bulletPerUSD: number, lastPrice: string) {
+    const bulletPrice = _bulletPerUSD / parseFloat(lastPrice)
     const bulletToFixed = bulletPrice.toFixed(5)
     const bulletPerNaka = parseFloat(
       bulletToFixed.substring(0, bulletToFixed.length - 1)
@@ -195,8 +190,8 @@ const Helper = {
 
     return total
   },
-  async calculateItemPerPrice(price: number) {
-    const itemPrice = await this.calItemToNaka(1, price)
+  async calculateItemPerPrice(price: number, lastPrice: string) {
+    const itemPrice = await this.calItemToNaka(1, price, lastPrice)
     const itemToFixed = itemPrice.toFixed(5)
     const itemPerNaka = parseFloat(
       itemToFixed.substring(0, itemToFixed.length - 1)

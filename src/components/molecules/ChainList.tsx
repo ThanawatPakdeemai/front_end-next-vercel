@@ -23,6 +23,7 @@ const ChainList = ({ currentTabChainSelected }: IButtonChooseChain) => {
             (item) => item.link === currentTabChainSelected.link
           )?.icon
         }
+        title="Chain"
         text={
           CHAIN_SUPPORT.find(
             (item) => item.link === currentTabChainSelected.link
@@ -47,7 +48,7 @@ const ChainList = ({ currentTabChainSelected }: IButtonChooseChain) => {
               <TabMenu
                 icon={ele.icon}
                 text={ele.title}
-                link={`wallet/?token=${ele.link}`}
+                link={`/wallet/?token=${ele.link}`}
                 className="mt-4 p-2"
                 selected={ele.link === currentTabChainSelected.link}
               />

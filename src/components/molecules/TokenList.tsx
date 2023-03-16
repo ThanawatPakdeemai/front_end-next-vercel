@@ -69,6 +69,7 @@ const TokenList = ({
         text={`${
           displayBalance ? handleDisplayBalance() : handleDisplayToken()
         }`}
+        title="Asset"
         handleClick={handleOpen}
         shadow
       />
@@ -88,7 +89,7 @@ const TokenList = ({
               <TabMenu
                 icon={tokenIcon()}
                 text={token.tokenName}
-                link={`wallet/?token=${token.symbol}`}
+                link={`/wallet/?token=${token.symbol}`}
                 className="mt-4 p-2"
               />
             </Box>

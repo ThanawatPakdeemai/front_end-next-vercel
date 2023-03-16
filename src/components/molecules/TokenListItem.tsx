@@ -25,6 +25,7 @@ export interface ITokenListItem {
   shadow?: boolean
   handleClick?: () => void
   disabledClick?: boolean
+  title?: string
 }
 const TokenListItem = ({
   icon,
@@ -32,7 +33,8 @@ const TokenListItem = ({
   link,
   shadow = false,
   handleClick,
-  disabledClick = false
+  disabledClick = false,
+  title
 }: ITokenListItem) => {
   const router = useRouter()
 
@@ -55,7 +57,14 @@ const TokenListItem = ({
       >
         <div className="token--list-item__text flex h-[40px] flex-1 items-center rounded-lg border border-neutral-700 bg-neutral-900 px-3">
           {icon || <></>}
-          <p className="ml-6 text-sm font-bold text-white-primary">
+          {title ? (
+            <span className="ml-3 text-xs uppercase text-neutral-500">
+              {title}
+            </span>
+          ) : (
+            <></>
+          )}
+          <p className="ml-3 text-sm font-bold text-white-primary">
             {renderText()}
           </p>
         </div>
@@ -74,7 +83,7 @@ const TokenListItem = ({
               handleClick ||
               (() => {
                 router.push(
-                  link ? `wallet/?token=${link}` : "wallet/?token=NAKA"
+                  link ? `/wallet/?token=${link}` : "/wallet/?token=NAKA"
                 )
               })
             }

@@ -1,7 +1,7 @@
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { F2PHeaderMenu } from "@constants/gameSlide"
-import { getGamesByCategoryId } from "@feature/dropdown/containers/services/dropdown.service"
+import useFilterGameList from "@feature/dropdown/containers/hooks/useFilterGameList"
 import GameCard from "@feature/game/components/molecules/GameCard"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import { getGameByTypes } from "@feature/game/containers/services/game.service"
@@ -80,6 +80,9 @@ const FreeToPlayGamesPage = () => {
     queryClient
   ])
 
+  const { mutateGetGamesByCategoryId, isLoading: loadingFilterGame } =
+    useFilterGameList()
+
   useEffect(() => {
     const filterData = {
       limit,
@@ -93,7 +96,7 @@ const FreeToPlayGamesPage = () => {
       tournament: false,
       nftgame: "all"
     }
-    getGamesByCategoryId(filterData).then((res) => {
+    mutateGetGamesByCategoryId(filterData).then((res) => {
       if (res) {
         const { data, info } = res
         setGameFilter(data)
@@ -106,17 +109,17 @@ const FreeToPlayGamesPage = () => {
     deviceDropdown,
     searchDropdown,
     page,
-    limit
+    limit,
+    mutateGetGamesByCategoryId
   ])
 
   return (
     <div className="flex flex-col">
       <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-5">
-        {isLoading
+        {isLoading || loadingFilterGame
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
-          : null}
-        {gameFilter
-          ? gameFilter.map((game) => (
+          : gameFilter &&
+            gameFilter.map((game) => (
               <GameCard
                 key={game.id}
                 menu={F2PHeaderMenu}
@@ -129,8 +132,7 @@ const FreeToPlayGamesPage = () => {
                   onHandleClick("free-to-play", `${game.path}/roomlist`, game)
                 }
               />
-            ))
-          : null}
+            ))}
       </div>
       <PaginationNaka
         totalCount={totalCount}

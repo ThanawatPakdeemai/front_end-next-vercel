@@ -32,9 +32,8 @@ const ArcadeEmporiumGamesPage = () => {
       <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-5">
         {isLoadingGamesFilterByNftgame
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
-          : null}
-        {gameData
-          ? gameData.map((game) => (
+          : gameData &&
+            gameData.map((game) => (
               <GameCard
                 key={game.id}
                 menu={NFTHeaderMenu}
@@ -43,8 +42,7 @@ const ArcadeEmporiumGamesPage = () => {
                   onHandleClick("arcade-emporium", game.path, game)
                 }
               />
-            ))
-          : null}
+            ))}
       </div>
       <PaginationNaka
         totalCount={totalCount}

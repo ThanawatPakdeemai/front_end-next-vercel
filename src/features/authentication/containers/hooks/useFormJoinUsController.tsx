@@ -40,11 +40,19 @@ const useFormJoinUsController = () => {
     }
   })
 
+  /**
+   * @description Handle change radio
+   * @param event
+   */
   const handleChangeRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValueRadio((event.target as HTMLInputElement).value as "yes" | "no")
     setValue("gameStatus", (event.target as HTMLInputElement).value === "yes")
   }
 
+  /**
+   * @description Handle submit form
+   * @param _data
+   */
   const onSubmitRegister = (_data: IFormJoinUsData) => {
     console.error("_data", _data)
   }

@@ -11,6 +11,8 @@ import RightMenuNotLogIn from "./RightMenuNotLogIn"
 
 const RightMenu = () => {
   const profile = useProfileStore((state) => state.profile.data)
+  const { onReset } = useProfileStore()
+
   const { hydrated } = useGlobal()
 
   const [isTokenValid, setIsTokenValid] = useState(false)
@@ -29,11 +31,11 @@ const RightMenu = () => {
       } else {
         setIsTokenValid(false)
         // If the token has expired, remove it from local storage
-        Helper.removeLocalStorage("token")
-        localStorage.removeItem("Profile-Store") // remove profile zustand
+
+        onReset() // remove profile zustand
       }
     }
-  }, [token])
+  }, [onReset, token])
 
   return hydrated ? (
     <Box className="mx-auto flex w-[360px] flex-1 justify-end md:order-2 xl:mx-0 xl:flex-none">

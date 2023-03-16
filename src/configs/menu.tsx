@@ -200,7 +200,7 @@ export const MENU_GUEST: IMenu[] = [
     id: "tournament",
     label: "Tournament",
     icon: <TournamentIcon className="stroke-neutral-300" />,
-    href: "/tournament/636e5091feb7364211af6858/naka-runner-tournament-hosted-by-slayer",
+    href: "/tournament",
     external: false
   },
   {

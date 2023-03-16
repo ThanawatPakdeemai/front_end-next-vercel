@@ -1,24 +1,24 @@
 import { useQuery } from "@tanstack/react-query"
 import { IGetAllEventsProps } from "../../interface/IEventsService"
-import { getEventAll } from "../services/events.service"
+import { getEventList } from "../services/events.service"
 
-const useGetEvents = ({ limit, skip, sort, search }: IGetAllEventsProps) => {
+const useGetEventList = ({ limit, skip, sort, search }: IGetAllEventsProps) => {
   const {
-    data: getEventAllData,
+    data: eventListData,
     error,
     isLoading,
     isPreviousData,
     isError,
     isFetching
   } = useQuery({
-    queryKey: ["getEventAll", { limit, skip, sort, search }],
-    queryFn: () => getEventAll({ limit, skip, sort, search }),
+    queryKey: ["getEventList", { limit, skip, sort, search }],
+    queryFn: () => getEventList({ limit, skip, sort, search }),
     keepPreviousData: true,
     staleTime: Infinity
   })
 
   return {
-    getEventAllData,
+    eventListData,
     error,
     isLoading,
     isPreviousData,
@@ -28,4 +28,4 @@ const useGetEvents = ({ limit, skip, sort, search }: IGetAllEventsProps) => {
   }
 }
 
-export default useGetEvents
+export default useGetEventList

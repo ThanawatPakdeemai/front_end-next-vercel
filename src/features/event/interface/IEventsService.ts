@@ -56,3 +56,65 @@ export interface IGetEventResponse {
   data: IGetEventResponseData[]
   info: IGetEventResponseInfo
 }
+
+export interface IPlayerData {
+  player_id: string
+  username: string
+  wallet_address: string
+  email: string
+  avatar: string
+  country: string
+  score_event: number
+  data_type: string
+}
+
+export interface INewDataPlayerScore {
+  player_id: string
+  player_data: IPlayerData[]
+  score_event: number
+  username: string
+  country: string
+  email: string
+  wallet_address: string
+  avatar: string
+  prize_pool_percent: number
+  reward_for_player: number
+  game_score: number
+  game_play_count: number
+  share_score: number
+}
+
+export interface IResponseLeaderBoardData {
+  new_data_player_score: INewDataPlayerScore[]
+  player_count: number
+  transaction_count: number
+}
+
+export interface IResponseLeaderBoard {
+  status: boolean
+  data: IResponseLeaderBoardData
+}
+
+export interface IResponseSummaryData {
+  _id: string
+  username: string
+  country: string
+  amount_play: number
+  max_score: number
+}
+
+export interface IResponseTopScoreSummaryDataData {
+  data: IResponseSummaryData[]
+  player_count: number
+  transaction_count: number
+}
+
+export interface IResponseTopScoreSummaryData {
+  status: boolean
+  message: string
+  data: IResponseTopScoreSummaryDataData
+}
+export interface IResponseTopScoreSummary {
+  status: boolean
+  data: IResponseTopScoreSummaryData
+}

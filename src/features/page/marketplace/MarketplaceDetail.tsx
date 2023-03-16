@@ -1,5 +1,8 @@
+import CardWriterDetails from "@components/molecules/Inventory/CardWriterDetails"
+import CardContentDetails from "@feature/marketplace/components/organisms/CardContentDetails"
 import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
 import useGetMarketOrderById from "@feature/marketplace/hooks/getMarketOrderById"
+import CONFIGS from "@configs/index"
 import { IMarketDetail } from "@feature/marketplace/interfaces/IMarketService"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
@@ -40,7 +43,43 @@ const MarketplaceDetail = () => {
 
   return detailData ? (
     <div className="flex w-full gap-x-[120px]">
-      <div className="w-1/2">left component</div>
+      <CardContentDetails
+        detail={
+          detailData.land_data?.details ??
+          detailData.building_data?.detail ??
+          detailData.item_data?.detail ??
+          detailData.material_data?.detail ??
+          detailData.nakapunk_data?.description
+        }
+        image={
+          detailData.building_data?.NFT_image ??
+          detailData.item_data?.image ??
+          detailData.material_data?.image ??
+          detailData.nakapunk_data?.image
+        }
+        video={detailData.land_data?.NFT_video}
+        poster={detailData.land_data?.NFT_image}
+        alt={detailData.land_data?.type}
+      >
+        <div className="grid grid-cols-2 px-8 py-6">
+          <CardWriterDetails
+            textHead="creat by"
+            name="nakamoto.game"
+            date="2022-06-22T07:39:13.280Z"
+            link={CONFIGS.CONTRACT_ADDRESS.NAKA}
+          />
+          {detailData.seller_id && (
+            <CardWriterDetails
+              textHead="Owned by"
+              name="XXXXXXXXXXXXX"
+              date={String(detailData.created_at)}
+              link={detailData.seller_id}
+              image={detailData.land_data?.image}
+              alt={detailData.land_data?.type}
+            />
+          )}
+        </div>
+      </CardContentDetails>
       <RightDetailsMarketplace
         token={
           detailData.land_data?.land_id ||
@@ -55,7 +94,7 @@ const MarketplaceDetail = () => {
           detailData.nakapunk_data?.name ||
           detailData.material_data?.name
         }
-        method="buy"
+        method={detailData.seller_id ? "buy" : "mint"}
         position={detailData.land_data?.position}
         price={detailData.price as number}
       />

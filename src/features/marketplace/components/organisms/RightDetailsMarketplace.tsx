@@ -37,7 +37,7 @@ const RightDetailsMarketplace = ({
   const calcNakaPrice = price
     ? ((price / (nakaPrice ? parseFloat(nakaPrice.last) : 0)) as number)
     : 0
-  const { formatNumber } = Helper
+  const { formatNumber, shortenString } = Helper
   const getPathnameType = router.pathname.split("/")[2]
   const handleType = () => {
     const pathMap = {
@@ -57,7 +57,7 @@ const RightDetailsMarketplace = ({
         <div className="flex w-full items-center justify-between">
           <div className="flex gap-[6px]">
             <Chip
-              label={`TOKEN ID : ${token}`}
+              label={`TOKEN ID : ${shortenString(String(token))}`}
               size="small"
               variant="outlined"
             />

@@ -24,7 +24,7 @@ const GamePageLayout = ({
         icon={<ShapeIcon fill="#4E5057" />}
       />
       <Banners />
-      <div className="flex flex-row gap-3">
+      <div className="flex-row gap-3 md:flex">
         <SidebarGames />
         {path.length === 2 && path[1] === "publishers" ? (
           children

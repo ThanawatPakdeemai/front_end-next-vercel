@@ -16,6 +16,7 @@ interface Iprop {
   subtitle?: boolean
   elevation?: number
   sumTotal?: number
+  className?: string
 }
 const CardTitle = ({
   width,
@@ -25,7 +26,8 @@ const CardTitle = ({
   background = "purple",
   subtitle = false,
   elevation,
-  sumTotal
+  sumTotal,
+  className
 }: Iprop) => {
   const week = dayjs().startOf("week")
 
@@ -37,7 +39,7 @@ const CardTitle = ({
       <Card
         elevation={elevation}
         sx={{ maxWidth: width ?? "auto" }}
-        className={`card-title-page mb-3 w-full max-w-full sm:flex-[1_1_100%] lg:flex-none ${
+        className={`card-title-page mb-3 w-full max-w-full sm:flex-[1_1_100%] lg:flex-none ${className} ${
           background === "purple" && "!bg-purple-primary"
         } ${background === "red" && "!bg-red-card"}
        ${background === "neutral" && "!bg-neutral-800"}

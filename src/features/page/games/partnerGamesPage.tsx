@@ -9,9 +9,9 @@ import useGameStore from "@stores/game/index"
 import usePartnerGame from "@feature/game/containers/hooks/usePartnerGame"
 import useGlobal from "@hooks/useGlobal"
 import { getAllPartnerGames } from "@feature/game/partnerGames/containers/services/gamePartners.service"
-import { filterGamePartner } from "@feature/partner/containers/services/dropdownPartner.service"
 import useFilterStore from "@stores/blogFilter"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
+import useFilterGamePartnerList from "@feature/partner/containers/hooks/useFilterGamePartnerList"
 
 const PartnerGames = () => {
   const search = ""
@@ -78,7 +78,8 @@ const PartnerGames = () => {
     page,
     queryClient
   ])
-
+  const { mutateFilterGamePartner, isLoading: loadFilter } =
+    useFilterGamePartnerList()
   useEffect(() => {
     const filterData = {
       "limit": limit,
@@ -87,7 +88,8 @@ const PartnerGames = () => {
       "type": "",
       "genres_filter": categoryDropdown
     }
-    filterGamePartner(filterData).then((res) => {
+
+    mutateFilterGamePartner(filterData).then((res) => {
       if (res) {
         const { data, info } = res
         setGameFilter(data.data)
@@ -100,27 +102,27 @@ const PartnerGames = () => {
     deviceDropdown,
     searchDropdown,
     page,
-    limit
+    limit,
+    mutateFilterGamePartner
   ])
 
   return (
     <div className="flex flex-col">
       <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-5">
-        {isLoading
+        {isLoading || loadFilter
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
-          : null}
-        {gameFilter &&
-          gameFilter.map((game) => (
-            <GameCard
-              key={game.id}
-              menu={P2EHeaderMenu}
-              partnerdata={game}
-              imgPartner={game.image_thumbnail}
-              onHandleClick={() =>
-                onHandleClick("partner-game", game.slug, game)
-              }
-            />
-          ))}
+          : gameFilter &&
+            gameFilter.map((game) => (
+              <GameCard
+                key={game.id}
+                menu={P2EHeaderMenu}
+                partnerdata={game}
+                imgPartner={game.image_thumbnail}
+                onHandleClick={() =>
+                  onHandleClick("partner-game", game.slug, game)
+                }
+              />
+            ))}
       </div>
       <PaginationNaka
         totalCount={totalCount}

@@ -16,7 +16,7 @@ const TotalCardContent = ({
   icon = "bronze"
 }: IProp) => (
   <>
-    <div className="h-[110px] w-[190px] rounded-lg border border-solid border-neutral-700 p-[20px]">
+    <div className="h-[110px] w-[175px] rounded-lg border border-solid border-neutral-700 p-[20px]">
       {rank ? (
         <div className="grid grid-cols-2">
           <div>

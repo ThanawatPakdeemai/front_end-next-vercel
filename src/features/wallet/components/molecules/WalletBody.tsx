@@ -1,6 +1,5 @@
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import IStickerSolid from "@components/icons/StickerSolid"
-import IVector from "@components/icons/Vector"
 import { MESSAGES } from "@constants/messages"
 import { useToast } from "@feature/toast/containers"
 import { IBalanceDisplay } from "@hooks/useAllBalances"
@@ -36,7 +35,7 @@ const WalletBody = ({
 }: IWalletBodyProps) => {
   const { successToast } = useToast()
   return (
-    <div className="relative mb-2 flex w-full flex-col gap-1 rounded-default bg-black-100 p-8">
+    <div className="relative mb-2 flex w-full flex-col gap-1 rounded-default bg-black-100 p-4 sm:p-8">
       <p className="text-sm uppercase text-neutral-600">
         Your {tokenSymbol} in storage{" "}
       </p>
@@ -46,11 +45,7 @@ const WalletBody = ({
           {`${balance && balance.text} ${tokenSymbol}`}
         </p>
       </div>
-      <IVector
-        width="325"
-        height="6"
-        className="mb-2"
-      />
+      <div className="h-[10px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')]" />
       <div className="flex items-center">
         <span className="text-xl uppercase text-neutral-600">
           {tokenSymbol}

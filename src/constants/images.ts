@@ -250,5 +250,11 @@ export const IMAGES = {
     width: 10,
     height: 10,
     alt: "rectangle-black"
+  },
+  NAKACoin: {
+    src: "/images/coin/naka/large.webp",
+    blurDataURL: "/images/coin/naka/large.webp",
+    width: 35,
+    height: 35
   }
 }

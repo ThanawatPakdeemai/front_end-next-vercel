@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import useGetTransWallet from "@feature/transaction/containers/hooks/useGetTransWallet"
 import useTransactionController from "@feature/transaction/containers/hooks/useTransactionController"
@@ -28,7 +28,6 @@ export default function TransactionTable({ profile }: IProp) {
   const [limit, setLimit] = useState<number>(12)
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
-  const fetchRef = useRef(false)
   const [txHistory, setTxHistory] = useState<ITransactionWalletData[]>([])
 
   useEffect(() => {
@@ -54,10 +53,7 @@ export default function TransactionTable({ profile }: IProp) {
         })
       }
     }
-    if (fetchRef.current) {
-      fetchHistory()
-    }
-    fetchRef.current = true
+    fetchHistory()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, page, sortTime, typeCheck, sortAmount])
 

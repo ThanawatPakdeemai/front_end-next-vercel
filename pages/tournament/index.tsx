@@ -9,10 +9,19 @@ const TournamentLayout = dynamic(
   }
 )
 
+const TournamentPage = dynamic(
+  () => import("@feature/page/games/TournamentPage"),
+  {
+    suspense: true
+  }
+)
+
 export default function Tournament() {
   return (
     <>
-      <article className="h-full w-full">Coming soon</article>
+      <article className="h-full w-full">
+        <TournamentPage />
+      </article>
     </>
   )
 }

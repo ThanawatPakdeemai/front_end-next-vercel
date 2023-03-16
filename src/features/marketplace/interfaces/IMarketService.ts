@@ -12,6 +12,14 @@ export type TNFTType =
   | "game_item"
   | "nft_game"
 
+export type TType =
+  | "land"
+  | "building"
+  | "naka-punk"
+  | "material"
+  | "game-item"
+  | "nft-game"
+
 export type TSellingType = "fullpayment" | "installment" | "rental"
 
 export type TSellerType = "system" | "user"
@@ -94,6 +102,7 @@ export interface INFTInitial extends IId {
   image: string
   name: string
   detail: string
+  details?: string
 }
 
 export interface IMarketServForm {
@@ -199,6 +208,7 @@ export interface IMarketData extends IMarketOrder, ICurrentTime {
 export interface IMarketGameData extends Omit<IGameItemList, "min_item"> {}
 
 export interface IMarketDetail extends IMarketOrder {
+  item_total?: number
   land_data?: ILandData
   nakapunk_data?: INFTData
   material_data?: IMaterialInfo

@@ -1,6 +1,7 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import React, { ReactElement } from "react"
 import dynamic from "next/dynamic"
+// import MarketplaceDetail from "@feature/page/marketplace/MarketplaceDetail"
 
 const MarketplaceLayoutWithoutFilter = dynamic(
   () =>
@@ -10,7 +11,14 @@ const MarketplaceLayoutWithoutFilter = dynamic(
   }
 )
 
-const Page = () => <div>Land/[id]</div>
+const MarketplaceDetail = dynamic(
+  () => import("@feature/page/marketplace/MarketplaceDetail"),
+  {
+    suspense: true
+  }
+)
+
+const Page = () => <MarketplaceDetail />
 
 Page.getLayout = function getLayout(page: ReactElement) {
   return <MarketplaceLayoutWithoutFilter>{page}</MarketplaceLayoutWithoutFilter>

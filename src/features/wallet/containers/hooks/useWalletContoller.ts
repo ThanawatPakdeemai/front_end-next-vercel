@@ -168,15 +168,20 @@ const useWalletContoller = () => {
     currentChainSelected?.address ?? ""
   )
 
-  const checkAllowBnb = tokenBinanceContract.allowance(
-    address,
-    CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
-  )
+  const checkAllowBnb = tokenBinanceContract.address
+    ? tokenBinanceContract.allowance(
+        address,
+        CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
+      )
+    : "0"
 
-  const checkAllowNaka = tokenNakaContract.allowance(
-    address,
-    CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
-  )
+  const checkAllowNaka = tokenNakaContract.address
+    ? tokenNakaContract.allowance(
+        address,
+        CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
+      )
+    : "0"
+
   /**
    * @description handle deposit and withdraw
    * @param _method

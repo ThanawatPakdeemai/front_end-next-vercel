@@ -2,13 +2,15 @@ import LanguageIcon from "@mui/icons-material/Language"
 import { Card, Typography } from "@mui/material"
 import React from "react"
 import CardTitle from "@components/organisms/CardTitle"
-import NewsCardDetail, { INewsCardDetail } from "../moleculs/NewsCardDetail"
+import CardTournamentNewsSlide, {
+  INewsCardDetail
+} from "../molecules/CardTournamentNewsSlide"
 
 interface INewsCardSlide {
   slide: INewsCardDetail
 }
 
-const NewsCardSlide = ({ slide }: INewsCardSlide) => (
+const TournamentNewsCardSlide = ({ slide }: INewsCardSlide) => (
   <>
     <Card className="h-[300px] overflow-y-auto border !border-neutral-800 bg-neutral-780 p-2 lg:h-[391px]">
       <CardTitle
@@ -25,7 +27,7 @@ const NewsCardSlide = ({ slide }: INewsCardSlide) => (
         background="neutral"
         className="border border-neutral-700"
       />
-      <NewsCardDetail
+      <CardTournamentNewsSlide
         title={slide.title}
         description={slide.description}
         image={slide.image}
@@ -35,4 +37,4 @@ const NewsCardSlide = ({ slide }: INewsCardSlide) => (
   </>
 )
 
-export default NewsCardSlide
+export default TournamentNewsCardSlide

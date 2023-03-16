@@ -11,7 +11,7 @@ export interface INewsCardDetail {
   path: string
 }
 
-const NewsCardDetail = ({
+const CardTournamentNewsSlide = ({
   title,
   description,
   image,
@@ -62,4 +62,4 @@ const NewsCardDetail = ({
   </Grid>
 )
 
-export default NewsCardDetail
+export default CardTournamentNewsSlide

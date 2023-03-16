@@ -589,12 +589,12 @@ export const MENU_MARKETPLACE = [
         name: "NAKA Punk",
         link: "/marketplace/p2p/naka-punk",
         icon: MarketPlaceIcon
+      },
+      {
+        name: "Arcade Game",
+        link: "/marketplace/p2p/arcade-game",
+        icon: MarketPlaceIcon
       }
-      // {
-      //   name: "NFT Game",
-      //   link: "/marketplace/p2p/nft",
-      //   icon: MarketPlaceIcon
-      // }
     ]
   },
   {

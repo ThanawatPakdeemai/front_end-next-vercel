@@ -102,6 +102,7 @@ export interface INFTInitial extends IId {
   image: string
   name: string
   detail: string
+  details?: string
 }
 
 export interface IMarketServForm {

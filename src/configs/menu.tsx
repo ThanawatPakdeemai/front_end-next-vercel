@@ -567,7 +567,7 @@ export const MENU_MARKETPLACE = [
     chide: [
       {
         name: "Game Item",
-        link: "/marketplace/p2p/game",
+        link: "/marketplace/p2p/game-item",
         icon: MarketPlaceIcon
       },
       {

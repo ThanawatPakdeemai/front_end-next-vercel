@@ -2,7 +2,7 @@ import SettingIconFilter from "@components/icons/Inventory/SettingIconFilter"
 import { Box } from "@mui/material"
 import React, { useState } from "react"
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded"
-import CardContentDetails from "./CardContentDetails"
+import CardContentDetails from "../../marketplace/components/organisms/CardContentDetails"
 import CardWriterDetails from "../../../components/molecules/Inventory/CardWriterDetails"
 import GotNaKAPunk from "../../../components/molecules/Inventory/GotNaKAPunk"
 

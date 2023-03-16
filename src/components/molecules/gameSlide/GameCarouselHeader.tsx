@@ -128,7 +128,7 @@ const GameCarouselHeader = ({
               {menu.title}
             </p>
           </div>
-          <div className="flex flex-[1_1_100%] justify-center sm:flex-none sm:justify-start">
+          <div className="flex flex-[1_1_100%] justify-center sm:flex-none sm:justify-start ">
             {" "}
             {menu.menuList.map((item) => (
               <button

@@ -57,7 +57,7 @@ const GameCarousel = ({
         }
       },
       {
-        breakpoint: 600,
+        breakpoint: 640,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,

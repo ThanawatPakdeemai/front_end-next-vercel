@@ -10,7 +10,7 @@ interface INewsCardSlide {
 
 const NewsCardSlide = ({ slide }: INewsCardSlide) => (
   <>
-    <Card className="h-[391px] border !border-neutral-800 bg-neutral-780 p-2">
+    <Card className="h-[300px] overflow-y-auto border !border-neutral-800 bg-neutral-780 p-2 lg:h-[391px]">
       <CardTitle
         width="100%"
         icon={<LanguageIcon className="mr-2 text-neutral-300" />}

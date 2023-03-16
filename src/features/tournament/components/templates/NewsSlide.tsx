@@ -47,7 +47,7 @@ const NewsSlide = () => {
   }
 
   return (
-    <section className="relative w-full overflow-hidden md:w-[907px]">
+    <section className="relative w-full overflow-hidden lg:w-[907px]">
       <Slider
         ref={sliderRef}
         {...settings}

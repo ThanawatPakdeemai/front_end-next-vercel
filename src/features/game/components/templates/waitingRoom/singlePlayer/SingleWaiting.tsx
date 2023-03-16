@@ -41,7 +41,8 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
     return () => {
       load = false
     }
-  }, [fetchPlayers])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     router.beforePopState(({ as }) => {

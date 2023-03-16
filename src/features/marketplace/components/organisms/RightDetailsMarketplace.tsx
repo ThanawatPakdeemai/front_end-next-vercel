@@ -1,20 +1,19 @@
+import React from "react"
+import { useRouter } from "next/router"
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import CopyButton from "@components/atoms/CopyButton"
-import PinnedMapIcon from "@components/icons/PinnedMapIcon"
-import {
-  Chip,
-  Divider,
-  InputAdornment,
-  TextField,
-  Typography
-} from "@mui/material"
-import { useRouter } from "next/router"
-import React from "react"
-import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
-import LogoIcon from "@components/icons/LogoIcon"
+import { Chip, Divider, Typography } from "@mui/material"
+import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
 import Helper from "@utils/helper"
+import { Image } from "@components/atoms/image"
+import { TType } from "@feature/marketplace/interfaces/IMarketService"
+import CONFIGS from "@configs/index"
+import TextfieldDetailContent from "../molecules/TextfieldDetailContent"
+import ChipsLink from "../molecules/ChipsLink"
 
 interface IProp {
+  type: TType
+  id: string
   token?: string | number
   title?: string
   method: "buy" | "mint"
@@ -22,22 +21,26 @@ interface IProp {
     x: string
     y: string
   }
+  itemAmount?: number
   price?: number
+  qrCode?: string
+  durability?: string
 }
 
 const RightDetailsMarketplace = ({
+  type,
+  id,
   token,
   title,
   method,
   position,
-  price
+  itemAmount,
+  price,
+  qrCode,
+  durability
 }: IProp) => {
   const router = useRouter()
-  const { price: nakaPrice } = useNakaPriceProvider()
-  const calcNakaPrice = price
-    ? ((price / (nakaPrice ? parseFloat(nakaPrice.last) : 0)) as number)
-    : 0
-  const { formatNumber, shortenString } = Helper
+  const { shortenString } = Helper
   const getPathnameType = router.pathname.split("/")[2]
   const handleType = () => {
     const pathMap = {
@@ -45,6 +48,7 @@ const RightDetailsMarketplace = ({
       game: "game assets",
       material: "material",
       "naka-punk": "nft",
+      "arcade-game": "arcade game",
       default: "land"
     }
 
@@ -52,7 +56,7 @@ const RightDetailsMarketplace = ({
   }
 
   return (
-    <div className="w-1/2">
+    <div className="flex w-1/2 flex-col gap-y-5">
       {token && (
         <div className="flex w-full items-center justify-between">
           <div className="flex gap-[6px]">
@@ -85,55 +89,49 @@ const RightDetailsMarketplace = ({
           />
         </div>
         <Divider className="!block border-[1px] border-neutral-800" />
-        <div className="flex w-full items-start justify-between">
-          {position && (
-            <TextField
-              value={`${position.x}, ${position.y}`}
-              label="BLOCK IN MAP"
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  backgroundColor: "#010101"
-                },
-                "input": {
-                  color: "#E1E2E2 !important"
-                }
-              }}
-              disabled
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <PinnedMapIcon />
-                  </InputAdornment>
-                )
-              }}
-            />
-          )}
-          {price && (
-            <TextField
-              value={price}
-              label="PRICE (NAKA)"
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  backgroundColor: "#010101"
-                },
-                "input": {
-                  color: "#E1E2E2 !important"
-                }
-              }}
-              disabled
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <LogoIcon />
-                  </InputAdornment>
-                )
-              }}
-              helperText={`= ${formatNumber(calcNakaPrice, {
-                maximumFractionDigits: 4
-              })} USD`}
-            />
-          )}
-        </div>
+        <TextfieldDetailContent
+          type={type}
+          position={position}
+          itemAmount={itemAmount}
+          price={price}
+        />
+        {qrCode && (
+          <>
+            <div className="flex h-[158px] w-full gap-1 rounded-lg bg-primary-main p-1">
+              <div className="w-3/4">map</div>
+              <div className="relative flex w-1/4 items-center justify-center rounded bg-neutral-800">
+                <Image
+                  src={qrCode}
+                  alt={`QRCode ${token}`}
+                  width={80}
+                  height={80}
+                />
+                <a
+                  href={`${CONFIGS.BASE_URL.NAKAVERSE}/nft-land/${id}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Chip
+                    className="absolute bottom-0 right-0 cursor-pointer"
+                    label="LAND INFO"
+                    color="primary"
+                    size="small"
+                    deleteIcon={
+                      <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />
+                    }
+                    onDelete={() => null}
+                  />
+                </a>
+              </div>
+            </div>
+            <ChipsLink id={id} />
+          </>
+        )}
+        {durability && (
+          <Typography className="text-[46px] font-bold uppercase text-neutral-300">
+            {durability}
+          </Typography>
+        )}
         <Divider className="!block border-[1px] border-neutral-800" />
       </div>
     </div>

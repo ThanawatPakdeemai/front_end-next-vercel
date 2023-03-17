@@ -439,8 +439,10 @@ export interface IGameCategoryService extends IFormatService {
   data: IGameCategoryDetail[]
 }
 
-export interface IGetAllGameRooms {
+export interface IGameId {
   _gameId: string
+}
+export interface IGetAllGameRooms extends IGameId {
   _email: string
   _itemId: string
 }

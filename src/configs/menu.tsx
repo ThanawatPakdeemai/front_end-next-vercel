@@ -172,7 +172,11 @@ export const MENU = [
         link: "/marketplace",
         icon: MarketPlaceIcon
       },
-      { name: "Nakaverse", link: "/marketplace/map", icon: NakaverseIcon },
+      {
+        name: "Nakaverse",
+        link: `${CONFIGS.BASE_URL.NAKAVERSE}`,
+        icon: NakaverseIcon
+      },
       { name: "Nakapunks", link: "/marketplace/naka-punk", icon: NakapunksIcon }
     ]
   }
@@ -414,7 +418,7 @@ export const MENU_BLOG: IMenu[] = [
     label: "About Us",
     icon: <AboutUsIcon className="stroke-neutral-300" />,
     href: "https://main.nakamoto.games",
-    external: false
+    external: true
   },
   {
     id: "marketplace",
@@ -427,8 +431,8 @@ export const MENU_BLOG: IMenu[] = [
     id: "nakaverse",
     label: "Nakaverse",
     icon: <NakaverseIcon className="stroke-neutral-300" />,
-    href: "/marketplace/map",
-    external: false
+    href: `${CONFIGS.BASE_URL.NAKAVERSE}`,
+    external: true
   },
   {
     id: "nakapunks",

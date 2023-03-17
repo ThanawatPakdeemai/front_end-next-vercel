@@ -1,3 +1,5 @@
+import CONFIGS from "@configs/index"
+
 export const NAKA_ECOSYSTEMSS = [
   {
     label: "Blog",
@@ -16,7 +18,7 @@ export const NAKA_ECOSYSTEMSS = [
   },
   {
     label: "Nakaverse",
-    path: "/marketplace/map",
+    path: `${CONFIGS.BASE_URL.NAKAVERSE}`,
     icon: true
   },
   {

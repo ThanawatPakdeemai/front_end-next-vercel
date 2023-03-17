@@ -8,7 +8,7 @@ export const NAKA_ECOSYSTEMSS = [
   },
   {
     label: "About Us",
-    path: "https://main.nakamoto.games",
+    path: "https://main.nakamoto.games/",
     icon: true
   },
   {

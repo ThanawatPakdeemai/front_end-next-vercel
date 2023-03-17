@@ -417,8 +417,8 @@ export const MENU_BLOG: IMenu[] = [
     id: "about-us",
     label: "About Us",
     icon: <AboutUsIcon className="stroke-neutral-300" />,
-    href: "https://main.nakamoto.games",
-    external: true
+    href: "https://main.nakamoto.games/",
+    external: false
   },
   {
     id: "marketplace",

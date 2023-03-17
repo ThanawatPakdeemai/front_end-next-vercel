@@ -25,16 +25,16 @@ const Meta = () => {
     }
   }, [])
 
-  const contentMeta = (_meta) => (
+  const contentMeta = (_meta: ISeoData) => (
     <>
-      <title>{_meta.meta_title}</title>
+      <title>{_meta?.meta_title}</title>
       <meta
         name="keywords"
-        content={_meta.meta_keyword}
+        content={_meta?.meta_keyword}
       />
       <meta
         name="description"
-        content={_meta.meta_description}
+        content={_meta?.meta_description}
       />
       <meta
         property="og:url"
@@ -46,7 +46,7 @@ const Meta = () => {
       />
       <meta
         property="og:title"
-        content={_meta.meta_title}
+        content={_meta?.meta_title}
       />
       <meta
         property="og:site_name"
@@ -54,11 +54,11 @@ const Meta = () => {
       />
       <meta
         property="og:description"
-        content={_meta.meta_description}
+        content={_meta?.meta_description}
       />
       <meta
         property="og:image"
-        content={_meta.og_image}
+        content={_meta?.og_image}
       />
       <meta
         property="og:width"
@@ -86,7 +86,7 @@ const Meta = () => {
       />
       <meta
         name="twitter:image"
-        content={_meta.og_image}
+        content={_meta?.og_image}
       />
       <meta
         name="site"
@@ -94,26 +94,33 @@ const Meta = () => {
       />
       <meta
         name="twitter:title"
-        content={_meta.meta_title}
+        content={_meta?.meta_title}
       />
       <meta
         name="twitter:description"
-        content={_meta.meta_description}
+        content={_meta?.meta_description}
       />
     </>
   )
 
   const metaHome = useMemo(() => _.find(meta, { url: "/" }), [meta])
+  const metaPage = useMemo(
+    () => _.find(meta, { url: pathActive }),
+    [meta, pathActive]
+  )
+
+  const metaGame = useMemo(
+    () => _.find(meta, { url: `/${router.query.GameHome}` }),
+    [meta, router.query.GameHome]
+  )
 
   return (
     <>
-      {meta.map((_meta) => (
-        <Head key={_meta.url}>
-          {_meta.url.includes(pathActive)
-            ? contentMeta(_meta)
-            : contentMeta(metaHome)}
-        </Head>
-      ))}
+      <Head>
+        {metaPage && contentMeta(metaPage)}
+        {metaGame && contentMeta(metaGame)}
+        {!metaPage && !metaGame && metaHome && contentMeta(metaHome)}
+      </Head>
       {/* {DATA_META_TAG?.map((item) =>
         item.path === "/" ? (
           <Head key={item.path}>

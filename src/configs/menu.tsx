@@ -413,14 +413,14 @@ export const MENU_BLOG: IMenu[] = [
     id: "about-us",
     label: "About Us",
     icon: <AboutUsIcon className="stroke-neutral-300" />,
-    href: "/",
+    href: "https://main.nakamoto.games/",
     external: false
   },
   {
     id: "marketplace",
     label: "Marketplace",
     icon: <MarketPlaceIcon className="stroke-neutral-300" />,
-    href: "/",
+    href: "/marketplace",
     external: false
   },
   {
@@ -434,7 +434,7 @@ export const MENU_BLOG: IMenu[] = [
     id: "nakapunks",
     label: "Nakapunks",
     icon: <NakapunksIcon className="stroke-neutral-300" />,
-    href: "/",
+    href: "/marketplace/naka-punk",
     external: false
   }
 ]

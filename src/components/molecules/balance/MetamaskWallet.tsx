@@ -19,7 +19,8 @@ interface IProp {
   address?: string
   handleConnectWallet?: () => void
   handleOnDisconnectWallet?: () => void
-  blockExplorerURL: string | undefined
+  // blockExplorerURL: string
+  blockExplorerUrls: string[]
   chainSupport: ITokenContract[]
   currentTokenSelected: string
   currentChainSelected: IChainList
@@ -30,7 +31,7 @@ const MetamaskWallet = ({
   address,
   handleConnectWallet,
   handleOnDisconnectWallet,
-  blockExplorerURL,
+  blockExplorerUrls,
   chainSupport,
   currentTokenSelected,
   currentChainSelected
@@ -118,7 +119,10 @@ const MetamaskWallet = ({
                 name={`${currentChainSelected.title} Scan`}
                 className="!pb-0 capitalize"
                 onClick={() =>
-                  window.open(`${blockExplorerURL}address/${address}`, "_blank")
+                  window.open(
+                    `${(blockExplorerUrls as string[])[0]}address/${address}`,
+                    "_blank"
+                  )
                 }
               />
               <span className="text-neutral-700">|</span>

@@ -149,7 +149,8 @@ const Form = ({
     balanceValutNaka,
     balanceValutBusd,
     disableButton,
-    profile
+    profile,
+    address
   ])
 
   return (

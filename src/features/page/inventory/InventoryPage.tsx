@@ -21,6 +21,53 @@ const InventoryPage = () => {
       "type": "nft_land",
       "is_active": true,
       "order_id": null,
+      "meta_data": [
+        {
+          "item_id": "6412cbf37587db7426008461",
+          "name": "NakaPunk #5066",
+          "description":
+            "The NAKA Punks is a next-generation NFT collection. It not only brings a limited collection of unique punklike characters into a world built for them but also integrates privileges to the holders of these NFTs. Each punk will have distinct characteristics, strengths, and weaknesses, bestowing unique capabilities on their owners and will be particularly suitable for certain activities within the Nakamoto.games and NAKAVERSE.",
+          "NFT_token": "5066",
+          "image":
+            "https://nakamoto-prod-new.s3.eu-central-1.amazonaws.com/naka-punk-new/5066.png"
+        },
+        {
+          "item_id": "6412cbf37587db7426008464",
+          "name": "NakaPunk #5511",
+          "description":
+            "The NAKA Punks is a next-generation NFT collection. It not only brings a limited collection of unique punklike characters into a world built for them but also integrates privileges to the holders of these NFTs. Each punk will have distinct characteristics, strengths, and weaknesses, bestowing unique capabilities on their owners and will be particularly suitable for certain activities within the Nakamoto.games and NAKAVERSE.",
+          "NFT_token": "5511",
+          "image":
+            "https://nakamoto-prod-new.s3.eu-central-1.amazonaws.com/naka-punk-new/5511.png"
+        },
+        {
+          "item_id": "6412cbf37587db7426008467",
+          "name": "NakaPunk #8035",
+          "description":
+            "The NAKA Punks is a next-generation NFT collection. It not only brings a limited collection of unique punklike characters into a world built for them but also integrates privileges to the holders of these NFTs. Each punk will have distinct characteristics, strengths, and weaknesses, bestowing unique capabilities on their owners and will be particularly suitable for certain activities within the Nakamoto.games and NAKAVERSE.",
+          "NFT_token": "8035",
+          "image":
+            "https://nakamoto-prod-new.s3.eu-central-1.amazonaws.com/naka-punk-new/8035.png"
+        },
+        {
+          "item_id": "6412cbf37587db742600846a",
+          "name": "NakaPunk #8441",
+          "description":
+            "The NAKA Punks is a next-generation NFT collection. It not only brings a limited collection of unique punklike characters into a world built for them but also integrates privileges to the holders of these NFTs. Each punk will have distinct characteristics, strengths, and weaknesses, bestowing unique capabilities on their owners and will be particularly suitable for certain activities within the Nakamoto.games and NAKAVERSE.",
+          "NFT_token": "8441",
+          "image":
+            "https://nakamoto-prod-new.s3.eu-central-1.amazonaws.com/naka-punk-new/8441.png"
+        },
+        {
+          "item_id": "6412cbf37587db742600846d",
+          "name": "NakaPunk #8009",
+          "description":
+            "The NAKA Punks is a next-generation NFT collection. It not only brings a limited collection of unique punklike characters into a world built for them but also integrates privileges to the holders of these NFTs. Each punk will have distinct characteristics, strengths, and weaknesses, bestowing unique capabilities on their owners and will be particularly suitable for certain activities within the Nakamoto.games and NAKAVERSE.",
+          "NFT_token": "8009",
+          "image":
+            "https://nakamoto-prod-new.s3.eu-central-1.amazonaws.com/naka-punk-new/8009.png"
+        }
+      ],
       "land_data": {
         "_id": "61fa18cbf2378b4c8083db66",
         "name": "Copper",
@@ -76,7 +123,8 @@ const InventoryPage = () => {
           <CardContentDetails
             key={data._id}
             detail={data.land_data.details}
-            image={data.land_data.NFT_image}
+            // image={data.land_data.NFT_image}
+            meta_data={data.meta_data}
             alt={data.land_data.type}
           >
             <div className="grid grid-cols-2 px-8 py-6">

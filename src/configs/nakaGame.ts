@@ -24,7 +24,7 @@ export const NAKA_GAME = [
     game: [
       {
         name: "Tournament",
-        path: "/"
+        path: "/tournament"
       }
     ]
   }

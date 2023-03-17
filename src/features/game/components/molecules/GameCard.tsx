@@ -103,7 +103,7 @@ const GameCard = ({
 
   return (
     <motion.div
-      className="slick-card-container flex flex-col justify-center blur-none md:w-9/12"
+      className="slick-card-container flex flex-col justify-center blur-none"
       initial="init"
       whileHover="onHover"
       animate="animate"

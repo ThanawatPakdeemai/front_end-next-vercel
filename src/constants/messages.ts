@@ -49,5 +49,9 @@ export const MESSAGES = {
   "approve_processing": "Approve processing",
   "approve_success": "Approve success",
   "copy": "Copied to clipboard",
-  "success": "Success"
+  "success": "Success",
+  "install_wallet":
+    "MetaMask is not installed. Please consider installing it: https://metamask.io/download.html",
+  "wallet_switchEthereumChain": "Switch chain success",
+  "wallet_addEthereumChain": "Add chain success"
 }

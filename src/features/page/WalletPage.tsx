@@ -231,8 +231,8 @@ export default function WalletPage() {
           isConnected={!!address}
           handleConnectWallet={handleConnectWallet}
           handleOnDisconnectWallet={handleDisconnectWallet}
-          blockExplorerURL={
-            getNetwork?.(chainId as string).blockExplorerUrls[0]
+          blockExplorerUrls={
+            getNetwork?.(chainId as string)?.blockExplorerUrls as string[]
           }
           chainSupport={chainSupport}
           currentTokenSelected={(token as string) || chainSupport[0]?.symbol}

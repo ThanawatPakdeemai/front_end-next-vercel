@@ -1,9 +1,7 @@
-import IBusd from "@components/icons/Busd"
 import CopyTextIcon from "@components/icons/CopyTextIcon"
 import HrLine from "@components/icons/HrLine"
-import INaka from "@components/icons/Naka"
+import Balance from "@components/molecules/balance/Balance"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import TokenListItem from "@components/molecules/TokenListItem"
 import { chainIdConfig } from "@configs/sites"
 import { MESSAGES } from "@constants/messages"
 import {
@@ -12,7 +10,7 @@ import {
 } from "@feature/multichain/interfaces/IMultichain"
 import { useToast } from "@feature/toast/containers"
 
-import useAllBalances from "@hooks/useAllBalances"
+// import useAllBalances from "@hooks/useAllBalances"
 import { Box, Typography } from "@mui/material"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import Helper from "@utils/helper"
@@ -32,7 +30,7 @@ interface IProp {
 const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
   const { successToast } = useToast()
   const { signer } = useWeb3Provider()
-  const { balanceValutNaka, balanceValutBusd } = useAllBalances()
+  // const { balanceValutNaka, balanceValutBusd } = useAllBalances()
   const { shortenString, copyClipboard } = Helper
   const chainRequired = signer ? signer?.provider?._network?.chainId : 0
 
@@ -43,12 +41,12 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
     return Number(chainRequired) === Number(chainIdConfig.binance)
   }, [chain, chainRequired])
 
-  const balance = useMemo(() => {
-    if (chain === "polygon") {
-      return balanceValutNaka
-    }
-    return balanceValutBusd
-  }, [balanceValutBusd, balanceValutNaka, chain])
+  // const balance = useMemo(() => {
+  //   if (chain === "polygon") {
+  //     return balanceValutNaka
+  //   }
+  //   return balanceValutBusd
+  // }, [balanceValutBusd, balanceValutNaka, chain])
 
   const price = useMemo(() => {
     if (edit) {
@@ -143,11 +141,11 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
               </Typography>
               <HrLine className="" />
             </div>
-
-            <TokenListItem
+            <Balance />
+            {/* <TokenListItem
               icon={chain === "polygon" ? <INaka /> : <IBusd />}
               text={balance || { digit: 0, text: "N/A" }}
-            />
+            /> */}
           </div>
         </div>
         {edit && isSwitchChain && (

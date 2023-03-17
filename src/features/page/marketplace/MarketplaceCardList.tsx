@@ -1,16 +1,10 @@
-import { useRouter } from "next/router"
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { v4 as uuidv4 } from "uuid"
 import dynamic from "next/dynamic"
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
-import {
-  IMarketOrderServ,
-  IMarketServForm,
-  TType
-} from "@feature/marketplace/interfaces/IMarketService"
-import useGetMarketOrder from "@feature/marketplace/hooks/getMarketOrder"
 import { PaginationNaka } from "@components/atoms/pagination"
 import useLoadingStore from "@stores/loading"
+import useMarketplace from "@hooks/useMarketplace"
 
 const CardItemMarketPlace = dynamic(
   () => import("@components/molecules/cards/CardItemMarketPlace"),
@@ -20,43 +14,17 @@ const CardItemMarketPlace = dynamic(
 )
 
 const MarketplaceCardList = () => {
-  const [orderData, setOrderData] = useState<IMarketOrderServ>()
-  const [currentPage, setCurrentPage] = useState<number>(1)
-  const [totalCount, setTotalCount] = useState<number>(0)
   const { setOpen, setClose } = useLoadingStore()
-  const { getMarketOrderAsnyc, isLoading } = useGetMarketOrder()
   const { price } = useNakaPriceProvider()
-  const [type, setType] = useState<TType>("land")
-  const { pathname } = useRouter()
-  const limit = 15
-
-  const handleSearch = useCallback(async () => {
-    if (pathname.includes("building")) {
-      setType("building")
-      return {
-        type_marketplace: "nft_building",
-        seller_type: "system"
-      }
-    }
-    setType("land")
-    return {
-      type_marketplace: "nft_land",
-      seller_type: "system"
-    }
-  }, [pathname])
-
-  const fetchOrderList = useCallback(async () => {
-    const search = await handleSearch()
-
-    getMarketOrderAsnyc({
-      _limit: limit,
-      _page: currentPage,
-      _search: search
-    } as IMarketServForm).then((_res) => {
-      setOrderData(_res)
-      setTotalCount(_res.info.totalCount)
-    })
-  }, [currentPage, getMarketOrderAsnyc, handleSearch, limit])
+  const {
+    orderData,
+    isLoading,
+    currentPage,
+    totalCount,
+    type,
+    limit,
+    setCurrentPage
+  } = useMarketplace()
 
   // mockup for skeleton
   useEffect(() => {
@@ -66,10 +34,6 @@ const MarketplaceCardList = () => {
       setClose()
     }
   }, [isLoading, setClose, setOpen])
-
-  useEffect(() => {
-    fetchOrderList()
-  }, [fetchOrderList, currentPage])
 
   return (
     <div className="flex flex-col gap-y-7">

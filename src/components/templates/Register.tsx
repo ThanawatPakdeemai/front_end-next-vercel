@@ -81,7 +81,7 @@ const RegisterLayout = () => {
           item
           container
           component="div"
-          className={`rounded-3xl border border-solid border-neutral-800 p-2.5 ${
+          className={`min-h-[790px] rounded-3xl border border-solid border-neutral-800 p-2.5 ${
             !_.isEmpty({ errors }.errors) && submitRegisterForm
               ? "h-[135vh]"
               : "h-[95vh]"

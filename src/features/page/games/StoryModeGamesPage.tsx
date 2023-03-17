@@ -10,7 +10,7 @@ import { memo, useEffect, useRef, useState } from "react"
 import { v4 as uuid } from "uuid"
 import useFilterStore from "@stores/blogFilter"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { getGamesByCategoryId } from "@feature/dropdown/containers/services/dropdown.service"
+import useFilterGameList from "@feature/dropdown/containers/hooks/useFilterGameList"
 
 const StoryModeGamesPage = () => {
   const type = "story-mode"
@@ -75,7 +75,8 @@ const StoryModeGamesPage = () => {
     page,
     queryClient
   ])
-
+  const { mutateGetGamesByCategoryId, isLoading: loadingFilterGame } =
+    useFilterGameList()
   useEffect(() => {
     const filterData = {
       limit,
@@ -89,7 +90,7 @@ const StoryModeGamesPage = () => {
       tournament: false,
       nftgame: "all"
     }
-    getGamesByCategoryId(filterData).then((res) => {
+    mutateGetGamesByCategoryId(filterData).then((res) => {
       if (res) {
         const { data, info } = res
         setGameFilter(data)
@@ -102,17 +103,17 @@ const StoryModeGamesPage = () => {
     deviceDropdown,
     searchDropdown,
     page,
-    limit
+    limit,
+    mutateGetGamesByCategoryId
   ])
 
   return (
     <div className="flex flex-col">
       <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-5">
-        {isLoading
+        {isLoading || loadingFilterGame
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
-          : null}
-        {gameFilter
-          ? gameFilter.map((game) => (
+          : gameFilter &&
+            gameFilter.map((game) => (
               <GameCard
                 key={game.id}
                 menu={StoryModeHeaderMenu}
@@ -125,8 +126,7 @@ const StoryModeGamesPage = () => {
                   onHandleClick("story-mode", game.path, game)
                 }
               />
-            ))
-          : null}
+            ))}
       </div>
       <PaginationNaka
         totalCount={totalCount}

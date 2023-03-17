@@ -18,7 +18,7 @@ export type TType =
   | "naka-punk"
   | "material"
   | "game-item"
-  | "nft-game"
+  | "arcade-game"
 
 export type TSellingType = "fullpayment" | "installment" | "rental"
 
@@ -183,6 +183,56 @@ export interface INFTData extends IId, INFTDesc, IPlayerId {
   owner_id: string
 }
 
+export interface MetaData {
+  name: string
+  description: string
+  external_url: string
+  image: string
+  animation_url: string
+}
+
+export interface NFTInfo {
+  NFT_token: string
+  image_game_ipfs_cid: string
+  vdo_game_ipfs_cid: string
+  address_owner: string
+  owner_id: string
+  meta_data: MetaData
+  player_id: string
+}
+
+export interface CategoryList {
+  _id: string
+  createdAt: Date
+  updatedAt: Date
+  name: string
+  detail: string
+  slug: string
+  color_code: string
+  image_list: string
+  image_banner: string
+  is_active: boolean
+  __v: number
+  current_time: Date
+  category_no: string
+}
+
+export interface IGameData {
+  _id: string
+  NFT_info: NFTInfo
+  name: string
+  story: string
+  play_time: number
+  version: string
+  developer: string
+  game_type: string
+  game_url: string
+  is_NFT: boolean
+  animation_nft_arcade_game: string
+  image_nft_arcade_game: string
+  category_list: CategoryList[]
+}
+
 interface IMarketOrder extends IMarketInit, IPrice {
   item_amount: number
   order_id: string
@@ -214,6 +264,7 @@ export interface IMarketDetail extends IMarketOrder {
   material_data?: IMaterialInfo
   item_data?: IMarketGameData
   building_data?: IBuildData
+  game_data?: IGameData
 }
 
 export interface IMarketForm {

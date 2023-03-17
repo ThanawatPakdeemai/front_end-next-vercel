@@ -14,11 +14,9 @@ const GamePageWithBreadcrumb = dynamic(
 
 export default function NakaPass() {
   return (
-    <>
-      <article className="h-full w-full">
-        <NakaPassPage />
-      </article>
-    </>
+    <article className="h-full md:w-[calc(100%-220px)]">
+      <NakaPassPage />
+    </article>
   )
 }
 

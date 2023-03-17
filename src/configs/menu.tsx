@@ -204,7 +204,7 @@ export const MENU_GUEST: IMenu[] = [
     id: "tournament",
     label: "Tournament",
     icon: <TournamentIcon className="stroke-neutral-300" />,
-    href: "/tournament/636e5091feb7364211af6858/naka-runner-tournament-hosted-by-slayer",
+    href: "/tournament",
     external: false
   },
   {
@@ -589,12 +589,12 @@ export const MENU_MARKETPLACE = [
         name: "NAKA Punk",
         link: "/marketplace/p2p/naka-punk",
         icon: MarketPlaceIcon
+      },
+      {
+        name: "Arcade Game",
+        link: "/marketplace/p2p/arcade-game",
+        icon: MarketPlaceIcon
       }
-      // {
-      //   name: "NFT Game",
-      //   link: "/marketplace/p2p/nft",
-      //   icon: MarketPlaceIcon
-      // }
     ]
   },
   {

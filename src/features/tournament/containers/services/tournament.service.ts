@@ -1,4 +1,5 @@
 import services from "@configs/axiosGlobalConfig"
+
 import {
   ITournamentPlayerService,
   ITournamentCheckStatusService,
@@ -10,6 +11,22 @@ import {
   ITournamentService,
   IGetTourRegister
 } from "@feature/tournament/interfaces/ITournament"
+
+// const token = localStorage.getItem("token")
+
+// Check player tickets
+export const checkPlayerTicket = async (tournament_id: string) =>
+  new Promise<ITournamentService>((resolve, reject) => {
+    services
+      .get<ITournamentService>(`/tournament/check-ticket/${tournament_id}`)
+      // .get<ITournamentService>(`/tournament/check-ticket/${tournament_id}`, {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`
+      //   }
+      // })
+      .then((reponse) => resolve(reponse.data))
+      .catch((error) => reject(error))
+  })
 
 export const registTournament = (_tournamentId: string) =>
   new Promise<ITournamentPlayerService>((resolve, reject) => {

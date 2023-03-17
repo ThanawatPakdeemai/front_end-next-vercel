@@ -13,7 +13,7 @@ const useGetBlogDetails = (blog_id: string) => {
     staleTime: Infinity
   })
   return {
-    getBlogDetails,
+    getBlogDetails: getBlogDetails?.data,
     error,
     isLoading,
     isError

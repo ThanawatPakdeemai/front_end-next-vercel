@@ -357,6 +357,7 @@ const useCreateWeb3Provider = () => {
         setAddress(undefined)
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkNetwork, onSetAddress, resetChainId])
 
   const handleSignMessage = useCallback(

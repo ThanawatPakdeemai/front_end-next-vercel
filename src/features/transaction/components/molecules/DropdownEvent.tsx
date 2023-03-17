@@ -72,7 +72,8 @@ const DropdownEvent = ({
                   sx={{
                     "& .MuiPaper-root": {
                       background: "#010101",
-                      borderRadius: "15px"
+                      borderRadius: "15px",
+                      maxHeight: "270px"
                     }
                   }}
                 >

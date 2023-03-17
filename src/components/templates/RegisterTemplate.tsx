@@ -10,9 +10,7 @@ import HeadLogo from "@components/molecules/HeadLogo"
 import Tagline from "@components/molecules/tagline/Tagline"
 import VectorIcon from "@components/icons/VectorIcon"
 import { useRouter } from "next/router"
-import CreateProfile from "@feature/profile/components/createProfile/CreateProfile"
 import useRegisterAvatarStore from "@stores/registerAvater"
-import FormRegister from "@feature/authentication/components/FormRegister"
 
 const KeyFramesClockwise = styled("div")({
   "@keyframes rotation": {
@@ -58,7 +56,12 @@ const SignUpSchema = yup
   })
   .required()
 
-const RegisterLayout = () => {
+interface IRegisterTemplate {
+  children: React.ReactNode
+  background?: string
+}
+
+const RegisterTemplate = ({ children, background }: IRegisterTemplate) => {
   const router = useRouter()
   const { referral } = router.query
 
@@ -94,7 +97,7 @@ const RegisterLayout = () => {
             md={6}
             className="relative rounded-[14px] bg-cover bg-center bg-no-repeat"
             sx={{
-              backgroundImage: `url(${IMAGES.rectagle.src})`
+              backgroundImage: background || `url(${IMAGES.rectagle.src})`
             }}
           >
             <Box
@@ -155,7 +158,7 @@ const RegisterLayout = () => {
                 alignItems: "center"
               }}
             >
-              <FormRegister />
+              {children}
               <Grid
                 item
                 container
@@ -171,9 +174,9 @@ const RegisterLayout = () => {
           </Grid>
         </Grid>
       </Box>
-      <CreateProfile />
+      {/* <CreateProfile /> */}
     </Box>
   )
 }
 
-export default RegisterLayout
+export default RegisterTemplate

@@ -9,6 +9,29 @@ const CardTournamentSlider = () => {
   //   sliderRef?.current?.slickNext()
   // }
 
+  const tournamentmock = [
+    {
+      id: "1",
+      img: "/images/banner/tournament.webp"
+    },
+    {
+      id: "1",
+      img: "/images/banner/staking.webp"
+    },
+    {
+      id: "1",
+      img: "/images/banner/nakamoto.webp"
+    },
+    {
+      id: "1",
+      img: "/images/banner/nakaMarket.webp"
+    },
+    {
+      id: "1",
+      img: "/images/banner/blog.webp"
+    }
+  ]
+
   const settings: Settings = {
     infinite: true,
     speed: 4000,
@@ -23,80 +46,28 @@ const CardTournamentSlider = () => {
     dots: true
   }
   return (
-    <div className="mt-10 h-full w-full">
-      <div className="w-1/2">
-        <Slider
-          ref={sliderRef}
-          {...settings}
-        >
-          <Image
-            className="h-44 rounded-[20px]"
-            src="/images/banner/tournament.webp"
-            width={680}
-            height={176}
-            alt="alt"
-          />
-          <Image
-            className="h-44 rounded-[20px]"
-            src="/images/banner/staking.webp"
-            width={700}
-            height={176}
-            alt="alt"
-          />
-          <Image
-            className="h-44 rounded-[20px]"
-            src="/images/banner/nakamoto.webp"
-            width={700}
-            height={176}
-            alt="alt"
-          />
-          <Image
-            className="h-44 rounded-[20px]"
-            src="/images/banner/nakaMarket.webp"
-            width={700}
-            height={176}
-            alt="alt"
-          />
-          <Image
-            className="h-44 rounded-[20px]"
-            src="/images/banner/blog.webp"
-            width={700}
-            height={176}
-            alt="alt"
-          />
-        </Slider>
-      </div>
-      {/* <section className="relative w-full overflow-hidden">
-        {isLoading ? (
-          <SkeletonBanner />
-        ) : (
+    <div className="w-full md:w-[71.5%] lg:w-[78.5%] xl:w-[84.5%]">
+      <div className="flex items-center justify-center">
+        <div className="mt-5 w-full md:mt-0 lg:w-9/12">
           <Slider
             ref={sliderRef}
             {...settings}
           >
-            {slideGames &&
-              slideGames.slice(0, 5).map((slide, index) => (
-                <div key={slide.id}>
-                  {slide[index] !== undefined ? (
-                    <BannerCardSlide
-                      slide={slide}
-                      slideNext={
-                        index === 4 ? slideGames[0] : slideGames[index + 1]
-                      }
-                      gotoNext={gotoNext}
-                    />
-                  ) : (
-                    <BannerCardSlide
-                      slide={slide}
-                      slideNext={slideGames[index + 1]}
-                      gotoNext={gotoNext}
-                    />
-                  )}
+            {tournamentmock &&
+              tournamentmock.slice(0, 5).map((item) => (
+                <div key={item.id}>
+                  <Image
+                    className="h-[204px] w-[908px] rounded-[20px] object-cover"
+                    src={item.img}
+                    width={908}
+                    height={204}
+                    alt="alt"
+                  />
                 </div>
               ))}
           </Slider>
-        )}
-      </section> */}
+        </div>
+      </div>
     </div>
   )
 }

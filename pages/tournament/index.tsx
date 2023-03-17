@@ -9,10 +9,17 @@ const TournamentLayout = dynamic(
   }
 )
 
+const CardTournamentSlider = dynamic(
+  () => import("@feature/slider/components/molecules/CardTournamentSlider"),
+  {
+    suspense: true
+  }
+)
+
 export default function Tournament() {
   return (
     <>
-      <article className="h-full w-full">Coming soon</article>
+      <CardTournamentSlider />
     </>
   )
 }

@@ -2,25 +2,38 @@ import { create } from "zustand"
 import { devtools } from "zustand/middleware"
 import configZustandDevTools from "@utils/configDevtools"
 
-interface ISearch {
-  search: string
-  setSearch: (_search: string) => void
-  clearSearch: () => void
+interface IEvent {
+  _id: string
+  name: string | undefined
+}
+export interface IEventStore {
+  event: IEvent
+  getEvent: () => IEvent
+  onReset: () => void
+  setEventData: (_event: IEvent) => void
 }
 
-const useFilterEvents = create<ISearch>()(
+const useEventStore = create<IEventStore>()(
   devtools(
-    (set) => ({
-      search: "",
-      setSearch: (_search: string) => {
-        set(() => ({ search: _search }), false, "FilterEvent/SetSearch")
+    (set, get) => ({
+      event: {
+        _id: "",
+        name: ""
       },
-      clearSearch: () => {
-        set(() => ({ search: "" }), false, "FilterEvent/clearSearch")
+      getEvent: () => get().event,
+      onReset: () =>
+        set({
+          event: {
+            _id: "",
+            name: ""
+          }
+        }),
+      setEventData: (_event) => {
+        set(() => ({ event: _event }), false, "Event/setEventData")
       }
     }),
-    configZustandDevTools("Events-Store")
+    configZustandDevTools("Event-Store")
   )
 )
 
-export default useFilterEvents
+export default useEventStore

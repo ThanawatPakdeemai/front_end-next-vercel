@@ -6,7 +6,7 @@ import {
   TableCell,
   TableHead
 } from "@mui/material"
-import CardContent from "@feature/referral/components/CardContent"
+import EventCardContent from "@feature/event/components/EventCardContent"
 import { IResponseLeaderBoardData } from "@feature/event/interface/IEventsService"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import { v4 as uuid } from "uuid"
@@ -17,9 +17,13 @@ interface IEventShareAndPlayProps {
 }
 const EventsShareAndPlay = ({ users }: IEventShareAndPlayProps) => (
   <div className="md:w-4/6">
-    <CardContent
-      title="LeaderBoard"
+    <EventCardContent
+      title="Share and Play"
       icon={<TwitterIcon />}
+      labels={{
+        player_count: users?.player_count,
+        transaction_count: users?.transaction_count
+      }}
     >
       <TableContainer>
         <Table>
@@ -83,7 +87,7 @@ const EventsShareAndPlay = ({ users }: IEventShareAndPlayProps) => (
           </TableBody>
         </Table>
       </TableContainer>
-    </CardContent>
+    </EventCardContent>
   </div>
 )
 

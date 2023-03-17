@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query"
 import { getEventDetail } from "../services/events.service"
 
-const useGetEventDetail = (event_id) => {
+const useGetEventDetail = (event_id: string) => {
   const {
     data: eventDetailData,
     error,
-    isLoading,
+    isLoading: eventDetailIsFetched,
     isError
   } = useQuery({
     queryKey: ["getEventDetail", event_id],
@@ -15,7 +15,7 @@ const useGetEventDetail = (event_id) => {
   return {
     eventDetailData,
     error,
-    isLoading,
+    eventDetailIsFetched,
     isError
   }
 }

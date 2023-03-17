@@ -5,7 +5,7 @@ const useGetEventLeaderBoard = (event_id: string, isShareAndPlay: boolean) => {
   const {
     data: leaderBoardData,
     error,
-    isLoading,
+    isLoading: leaderBoardIsLoading,
     isError
   } = useQuery({
     queryKey: ["getEventLeaderBoard", event_id],
@@ -16,7 +16,7 @@ const useGetEventLeaderBoard = (event_id: string, isShareAndPlay: boolean) => {
   return {
     leaderBoardData,
     error,
-    isLoading,
+    leaderBoardIsLoading,
     isError
   }
 }

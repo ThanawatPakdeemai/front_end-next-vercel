@@ -5,7 +5,7 @@ const useGetEventTopScore = (event_id: string, isTopScore: boolean) => {
   const {
     data: topScoreData,
     error,
-    isFetched,
+    isLoading: topScoreIsLoading,
     isError
   } = useQuery({
     queryKey: ["getEventTopScore", event_id],
@@ -16,7 +16,7 @@ const useGetEventTopScore = (event_id: string, isTopScore: boolean) => {
   return {
     topScoreData,
     error,
-    isFetched,
+    topScoreIsLoading,
     isError
   }
 }

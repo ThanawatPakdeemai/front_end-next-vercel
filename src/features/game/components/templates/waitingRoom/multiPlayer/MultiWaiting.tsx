@@ -13,11 +13,12 @@ import { useToast } from "@feature/toast/containers"
 import Chat from "@feature/chat/components/organisms/Chat"
 import { MESSAGES } from "@constants/messages"
 import CardButItem from "@feature/gameItem/components/molecules/CardBuyItem"
-import ButtonLink from "@components/atoms/button/ButtonLink"
 import { useTranslation } from "next-i18next"
 import BuyItemBody from "@components/templates/game/BuyItemBody"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+import ArrowBackIcon from "@mui/icons-material/ArrowBack"
+import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
 const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
@@ -276,7 +277,9 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
                 />
               )}
               {dataPlayers && dataPlayers.current_player ? (
-                <SeatPlayersMulti players={dataPlayers?.current_player} />
+                <>
+                  <SeatPlayersMulti players={dataPlayers?.current_player} />
+                </>
               ) : (
                 <>
                   <HeaderWaitingRoom
@@ -297,15 +300,29 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
                     {t("no-player")}
                   </Typography>
                   {gameData && (
-                    <ButtonLink
-                      href={`/${router.query.typeGame}/${gameData?.path}/roomlist`}
-                      text={t("out-room")}
-                      icon=""
-                      size="medium"
-                      className="m-auto"
-                      color="secondary"
-                      variant="contained"
-                    />
+                    // <ButtonLink
+                    //   href={`roomlist`}
+                    //   text={t("out-room")}
+                    //   icon=""
+                    //   size="medium"
+                    //   className="m-auto"
+                    //   color="secondary"
+                    //   variant="contained"
+                    // />
+                    <div className="mb-5 flex w-full items-center justify-center">
+                      <ButtonToggleIcon
+                        startIcon=""
+                        endIcon={<ArrowBackIcon />}
+                        text="Back"
+                        handleClick={() =>
+                          router.push(
+                            `/${router.query.typeGame}/${gameData?.path}/`
+                          )
+                        }
+                        className="flex h-[40px] !w-[100px] items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
+                        type="button"
+                      />
+                    </div>
                   )}
                 </>
               )}

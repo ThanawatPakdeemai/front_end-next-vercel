@@ -5,13 +5,18 @@ import { BaseToastComponent } from "../components"
 const useToast = () => {
   const successToast = useCallback(
     (content: string) =>
-      toast((t) => (
-        <BaseToastComponent
-          onClose={() => toast.dismiss(t.id)}
-          status="success"
-          text={content}
-        />
-      )),
+      toast(
+        (t) => (
+          <BaseToastComponent
+            onClose={() => toast.dismiss(t.id)}
+            status="success"
+            text={content}
+          />
+        ),
+        {
+          className: "toast toast--success"
+        }
+      ),
     []
   )
   const infoToast = useCallback(
@@ -28,36 +33,51 @@ const useToast = () => {
 
   const warnToast = useCallback(
     (content: string) =>
-      toast((t) => (
-        <BaseToastComponent
-          onClose={() => toast.dismiss(t.id)}
-          status="warning"
-          text={content}
-        />
-      )),
+      toast(
+        (t) => (
+          <BaseToastComponent
+            onClose={() => toast.dismiss(t.id)}
+            status="warning"
+            text={content}
+          />
+        ),
+        {
+          className: "toast toast--warning"
+        }
+      ),
     []
   )
 
   const errorToast = useCallback(
     (content: string) =>
-      toast((t) => (
-        <BaseToastComponent
-          onClose={() => toast.dismiss(t.id)}
-          status="error"
-          text={content}
-        />
-      )),
+      toast(
+        (t) => (
+          <BaseToastComponent
+            onClose={() => toast.dismiss(t.id)}
+            status="error"
+            text={content}
+          />
+        ),
+        {
+          className: "toast toast--error"
+        }
+      ),
     []
   )
 
   const sampleToast = useCallback((content: string) => {
-    toast((t) => (
-      <BaseToastComponent
-        onClose={() => toast.dismiss(t.id)}
-        status="inherit"
-        text={content}
-      />
-    ))
+    toast(
+      (t) => (
+        <BaseToastComponent
+          onClose={() => toast.dismiss(t.id)}
+          status="inherit"
+          text={content}
+        />
+      ),
+      {
+        className: "toast toast--sample"
+      }
+    )
   }, [])
 
   return {

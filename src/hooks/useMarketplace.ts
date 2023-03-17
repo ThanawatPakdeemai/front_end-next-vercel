@@ -150,6 +150,7 @@ const useMarketplace = () => {
       setDetailData(detailOrder.data[0])
     }
   }, [detailOrder])
+  // end fetch detail
 
   return {
     orderData,

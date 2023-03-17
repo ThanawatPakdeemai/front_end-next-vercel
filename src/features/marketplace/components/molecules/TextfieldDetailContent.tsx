@@ -1,6 +1,7 @@
 import LogoIcon from "@components/icons/LogoIcon"
 import NumpadIcon from "@components/icons/NumpadIcon"
 import PinnedMapIcon from "@components/icons/PinnedMapIcon"
+import CountItem from "@components/molecules/CountItem"
 import { TType } from "@feature/marketplace/interfaces/IMarketService"
 import { InputAdornment, TextField } from "@mui/material"
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
@@ -15,20 +16,39 @@ interface IProp {
   }
   itemAmount?: number
   price?: number
+  count?: {
+    helperText?: string
+    label?: string
+    min: number
+    max: number
+    count: number
+  }
 }
 
 const TextfieldDetailContent = ({
-  type,
+  // type,
   position,
-  itemAmount,
-  price
+  // itemAmount,
+  price,
+  count
 }: IProp) => {
   const { price: nakaPrice } = useNakaPriceProvider()
   const calcNakaPrice = price
     ? ((price / (nakaPrice ? parseFloat(nakaPrice.last) : 0)) as number)
     : 0
+
   return (
-    <div className="flex w-full items-start justify-between">
+    <div className="flex w-full items-center justify-between">
+      {count && (
+        <CountItem
+          endIcon={<NumpadIcon />}
+          helperText={count.helperText}
+          label={count.label}
+          min={count.min}
+          max={count.max}
+          count={count.count}
+        />
+      )}
       {position && (
         <TextField
           value={`${position.x}, ${position.y}`}
@@ -49,28 +69,6 @@ const TextfieldDetailContent = ({
               </InputAdornment>
             )
           }}
-        />
-      )}
-      {(type === "game-item" || type === "material") && itemAmount && (
-        <TextField
-          value={itemAmount}
-          label="SUPPLY IN MARKET"
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              backgroundColor: "#010101"
-            },
-            "input": {
-              color: "#E1E2E2 !important"
-            }
-          }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <NumpadIcon />
-              </InputAdornment>
-            )
-          }}
-          helperText={`TOTAL SUPPLY : ${itemAmount}`}
         />
       )}
       {price && (

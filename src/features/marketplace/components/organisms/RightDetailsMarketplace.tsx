@@ -13,7 +13,7 @@ import ChipsLink from "../molecules/ChipsLink"
 
 interface IProp {
   type: TType
-  id: string
+  id?: string
   token?: string | number
   title?: string
   method: "buy" | "mint"
@@ -25,6 +25,14 @@ interface IProp {
   price?: number
   qrCode?: string
   durability?: string
+  count?: {
+    helperText?: string
+    label?: string
+    min: number
+    max: number
+    count: number
+  }
+  children?: React.ReactNode
 }
 
 const RightDetailsMarketplace = ({
@@ -37,7 +45,9 @@ const RightDetailsMarketplace = ({
   itemAmount,
   price,
   qrCode,
-  durability
+  durability,
+  count,
+  children
 }: IProp) => {
   const router = useRouter()
   const { shortenString } = Helper
@@ -94,8 +104,9 @@ const RightDetailsMarketplace = ({
           position={position}
           itemAmount={itemAmount}
           price={price}
+          count={count}
         />
-        {qrCode && (
+        {qrCode && id && (
           <>
             <div className="flex h-[158px] w-full gap-1 rounded-lg bg-primary-main p-1">
               <div className="w-3/4">map</div>
@@ -133,6 +144,7 @@ const RightDetailsMarketplace = ({
           </Typography>
         )}
         <Divider className="!block border-[1px] border-neutral-800" />
+        <div>{children}</div>
       </div>
     </div>
   )

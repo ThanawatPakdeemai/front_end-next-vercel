@@ -106,7 +106,11 @@ const RightMenuLogIn = () => {
                   />
                 )}
 
-                <div className="flex-1 flex-col items-center">
+                <div
+                  className={`${
+                    isMarketplace ? "ml-4" : "ml-0"
+                  } flex-1 flex-col items-center`}
+                >
                   <Typography className="text-sm font-bold">
                     {profile?.username}
                   </Typography>

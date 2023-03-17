@@ -46,7 +46,8 @@ const useProfileStore = create<IUseProfileStore>()(
             (prev) => ({
               ...prev,
               profile: { ...resetData },
-              address: undefined
+              address: undefined,
+              isLogin: false
             }),
             false,
             "ProfileStore/onReset"
@@ -66,7 +67,8 @@ const useProfileStore = create<IUseProfileStore>()(
           set(
             () => ({
               address: _profile.address,
-              profile: { ...dummyProfile }
+              profile: { ...dummyProfile },
+              isLogin: true
             }),
             false,
             "ProfileStore/onSetProfileData"

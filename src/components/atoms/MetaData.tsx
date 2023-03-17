@@ -105,20 +105,26 @@ const Meta = () => {
 
   const metaHome = useMemo(() => _.find(meta, { url: "/" }), [meta])
   const metaPage = useMemo(
-    () => _.find(meta, { url: pathActive }),
+    () =>
+      meta.find(
+        (_data) => _data.url.replace("/", "") === pathActive.replace("/", "")
+      ),
     [meta, pathActive]
   )
 
   const metaGame = useMemo(
-    () => _.find(meta, { url: `/${router.query.GameHome}` }),
+    () =>
+      meta.find(
+        (_data) => _data.url.replace("/", "") === router.query.GameHome
+      ),
     [meta, router.query.GameHome]
   )
 
   return (
     <>
       <Head>
-        {metaPage && contentMeta(metaPage)}
-        {metaGame && contentMeta(metaGame)}
+        {metaPage && contentMeta(metaPage as ISeoData)}
+        {metaGame && contentMeta(metaGame as ISeoData)}
         {!metaPage && !metaGame && metaHome && contentMeta(metaHome)}
       </Head>
       {/* {DATA_META_TAG?.map((item) =>

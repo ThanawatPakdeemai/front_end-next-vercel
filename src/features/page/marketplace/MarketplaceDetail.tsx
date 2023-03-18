@@ -4,6 +4,7 @@ import RightDetailsMarketplace from "@feature/marketplace/components/organisms/R
 import CONFIGS from "@configs/index"
 import React from "react"
 import useMarketplace from "@hooks/useMarketplace"
+import ButtonMarket from "@components/atoms/button/ButtonMarket"
 
 const MarketplaceDetail = () => {
   const { detailData, type } = useMarketplace()
@@ -54,30 +55,37 @@ const MarketplaceDetail = () => {
           )}
         </div>
       </CardContentDetails>
-      <RightDetailsMarketplace
-        type={type}
-        id={detailData.item_id}
-        token={
-          detailData.land_data?.land_id ||
-          detailData.building_data?.building_id_smartcontract ||
-          detailData.order_id ||
-          detailData.nakapunk_data?.NFT_token
-        }
-        title={
-          detailData.land_data?.name ||
-          detailData.building_data?.name ||
-          (detailData.item_data &&
-            `${detailData.item_data.name} ${detailData.item_data.item_size}`) ||
-          detailData.nakapunk_data?.name ||
-          detailData.material_data?.name ||
-          detailData.game_data?.name
-        }
-        method={detailData.seller_id ? "buy" : "mint"}
-        position={detailData.land_data?.position}
-        price={detailData.price as number}
-        itemAmount={detailData.item_amount}
-        qrCode={detailData.land_data?.qrcode_image}
-      />
+      <div className="flex h-full w-full flex-col">
+        <RightDetailsMarketplace
+          type={type}
+          id={detailData.item_id}
+          token={
+            detailData.land_data?.land_id ||
+            detailData.building_data?.building_id_smartcontract ||
+            detailData.order_id ||
+            detailData.nakapunk_data?.NFT_token
+          }
+          title={
+            detailData.land_data?.name ||
+            detailData.building_data?.name ||
+            (detailData.item_data &&
+              `${detailData.item_data.name} ${detailData.item_data.item_size}`) ||
+            detailData.nakapunk_data?.name ||
+            detailData.material_data?.name ||
+            detailData.game_data?.name
+          }
+          method={detailData.seller_id ? "buy" : "mint"}
+          position={detailData.land_data?.position}
+          price={detailData.price as number}
+          itemAmount={detailData.item_amount}
+          qrCode={detailData.land_data?.qrcode_image}
+        />
+        <ButtonMarket
+          _nftType="game_item"
+          _sellerType={detailData.seller_type}
+          _sellerId={detailData.seller_id}
+        />
+      </div>
     </div>
   ) : null
 }

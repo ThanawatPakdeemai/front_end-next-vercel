@@ -22,7 +22,8 @@ export interface IPosition {
   y: string
 }
 
-interface ILand extends INFTInitial {
+interface ILand extends Omit<INFTInitial, "detail"> {
+  details: string
   qrcode_image: string
   land_id: string
   position: IPosition

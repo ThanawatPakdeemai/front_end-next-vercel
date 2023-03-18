@@ -14,6 +14,18 @@ import P2PPolygonMumbaiAbi from "@configs/abi/P2PPolygonMumbai.json"
 import ShopAbi from "@configs/abi/Shop.json"
 import StakingAbi from "@configs/abi/Staking.json"
 import UserGameItemsAbi from "@configs/abi/UserGameItems.json"
+// market
+import MarketGameItem from "@configs/abi/marketplace/MarketGameItem.json"
+import MarketMaterial from "@configs/abi/marketplace/MarketMaterial.json"
+import MarketNFT from "@configs/abi/marketplace/MarketNFT.json"
+import MarketNFTInstall from "@configs/abi/marketplace/MarketNFTInstallment.json"
+import MarketNFTRent from "@configs/abi/marketplace/MarketNFTRenting.json"
+// nft
+import NFTArcGame from "@configs/abi/marketplace/NFTArcadeGame.json"
+import NFTBuilding from "@configs/abi/marketplace/NFTBuilding.json"
+import NFTLand from "@configs/abi/marketplace/NFTLand.json"
+import NFTPunk from "@configs/abi/marketplace/NFTNakapunk.json"
+
 import { Web3Provider } from "@ethersproject/providers"
 
 export const getContract = (
@@ -136,3 +148,77 @@ export const getUserGameItemsContract = (
     | ethers.providers.JsonRpcProvider
     | ethers.providers.JsonRpcSigner
 ) => getContract(UserGameItemsAbi.abi, address, web3)
+
+// Marketplace
+export const getMarketGameItemContract = (
+  address: string,
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
+) => getContract(MarketGameItem.abi, address, web3)
+
+export const getMarketMaterialContract = (
+  address: string,
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
+) => getContract(MarketMaterial.abi, address, web3)
+
+export const getMarketNFTContract = (
+  address: string,
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
+) => getContract(MarketNFT.abi, address, web3)
+
+export const getMarketNFTInstallContract = (
+  address: string,
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
+) => getContract(MarketNFTInstall.abi, address, web3)
+
+export const getMarketNFTRentContract = (
+  address: string,
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
+) => getContract(MarketNFTRent.abi, address, web3)
+
+// nft
+export const getNFTArcGameContract = (
+  address: string,
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
+) => getContract(NFTArcGame.abi, address, web3)
+
+export const getNFTBuildingContract = (
+  address: string,
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
+) => getContract(NFTBuilding.abi, address, web3)
+
+export const getNFTLandContract = (
+  address: string,
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
+) => getContract(NFTLand.abi, address, web3)
+
+export const getNFTPunkContract = (
+  address: string,
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
+) => getContract(NFTPunk.abi, address, web3)

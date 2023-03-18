@@ -2,6 +2,8 @@ import services from "@configs/axiosGlobalConfig"
 import {
   ICancelOrderParams,
   IClaimRentalServ,
+  ICreateOrderParams,
+  IMarketCreateOrderServ,
   IMarketOrderServ,
   IMarketServForm,
   IPurchOrderParams,
@@ -44,6 +46,35 @@ export const getMarketOrderById = async ({
     }
     services
       .post<IMarketOrderServ>(`/market-place/order-detail`, { ...data })
+      .then((response) => resolve(response.data))
+      .catch((error) => reject(error))
+  })
+
+export const createMarketOrder = ({
+  _orderId,
+  _itemId,
+  _itemAmount,
+  _price,
+  _type,
+  _txHash,
+  _sellerType,
+  _sellingType,
+  _periodAmount
+}: ICreateOrderParams) =>
+  new Promise<IMarketCreateOrderServ>((resolve, reject) => {
+    const data = {
+      order_id: _orderId,
+      item_id: _itemId,
+      item_amount: _itemAmount,
+      price: _price,
+      type: _type,
+      transaction_hash: _txHash,
+      seller_type: _sellerType,
+      selling_type: _sellingType,
+      period_amount: _periodAmount
+    }
+    services
+      .post<IMarketCreateOrderServ>(`/market-place/create-order`, { ...data })
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

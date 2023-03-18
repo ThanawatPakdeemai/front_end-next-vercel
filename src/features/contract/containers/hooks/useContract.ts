@@ -7,6 +7,15 @@ import {
   getFlexibleStakingContract,
   getInventoryVaultContract,
   getItemVaultContract,
+  getMarketGameItemContract,
+  getMarketMaterialContract,
+  getMarketNFTContract,
+  getMarketNFTInstallContract,
+  getMarketNFTRentContract,
+  getNFTArcGameContract,
+  getNFTBuildingContract,
+  getNFTLandContract,
+  getNFTPunkContract,
   getP2PBinanceContract,
   getP2PBinanceMumbaiContract,
   getP2PPolygonContract,
@@ -134,3 +143,101 @@ export const useUserGameItems = (
     () => getUserGameItemsContract(_address, _provider),
     [_address, _provider]
   )
+
+// marketplace
+export const useMarketplaceGameItems = (
+  _provider: Web3Provider | JsonRpcSigner | undefined,
+  _address: string
+) =>
+  useMemo(
+    () => getMarketGameItemContract(_address, _provider),
+    [_address, _provider]
+  )
+export const useMarketplaceGameItemsNoAccount = (_address: string) =>
+  useMemo(() => getMarketGameItemContract(_address, web3NoAccount), [_address])
+
+export const useMarketplaceMaterial = (
+  _provider: Web3Provider | JsonRpcSigner | undefined,
+  _address: string
+) =>
+  useMemo(
+    () => getMarketMaterialContract(_address, _provider),
+    [_address, _provider]
+  )
+export const useMarketplaceMaterialNoAccount = (_address: string) =>
+  useMemo(() => getMarketMaterialContract(_address, web3NoAccount), [_address])
+
+export const useMarketplaceNFT = (
+  _provider: Web3Provider | JsonRpcSigner | undefined,
+  _address: string
+) =>
+  useMemo(
+    () => getMarketNFTContract(_address, _provider),
+    [_address, _provider]
+  )
+export const useMarketplaceNFTNoAccount = (_address: string) =>
+  useMemo(() => getMarketNFTContract(_address, web3NoAccount), [_address])
+
+export const useMarketplaceNFTInstall = (
+  _provider: Web3Provider | JsonRpcSigner | undefined,
+  _address: string
+) =>
+  useMemo(
+    () => getMarketNFTInstallContract(_address, _provider),
+    [_address, _provider]
+  )
+export const useMarketplaceNFTInstallNoAccount = (_address: string) =>
+  useMemo(
+    () => getMarketNFTInstallContract(_address, web3NoAccount),
+    [_address]
+  )
+
+export const useMarketplaceNFTRent = (
+  _provider: Web3Provider | JsonRpcSigner | undefined,
+  _address: string
+) =>
+  useMemo(
+    () => getMarketNFTRentContract(_address, _provider),
+    [_address, _provider]
+  )
+export const useMarketplaceNFTRentNoAccount = (_address: string) =>
+  useMemo(() => getMarketNFTRentContract(_address, web3NoAccount), [_address])
+
+// nft
+export const useNFTArcGame = (
+  _provider: Web3Provider | JsonRpcSigner | undefined,
+  _address: string
+) =>
+  useMemo(
+    () => getNFTArcGameContract(_address, _provider),
+    [_address, _provider]
+  )
+export const useNFTArcGameNoAccount = (_address: string) =>
+  useMemo(() => getNFTArcGameContract(_address, web3NoAccount), [_address])
+
+export const useNFTBuilding = (
+  _provider: Web3Provider | JsonRpcSigner | undefined,
+  _address: string
+) =>
+  useMemo(
+    () => getNFTBuildingContract(_address, _provider),
+    [_address, _provider]
+  )
+export const useNFTBuildingNoAccount = (_address: string) =>
+  useMemo(() => getNFTBuildingContract(_address, web3NoAccount), [_address])
+
+export const useNFTLand = (
+  _provider: Web3Provider | JsonRpcSigner | undefined,
+  _address: string
+) =>
+  useMemo(() => getNFTLandContract(_address, _provider), [_address, _provider])
+export const useNFTLandNoAccount = (_address: string) =>
+  useMemo(() => getNFTLandContract(_address, web3NoAccount), [_address])
+
+export const useNFTPunk = (
+  _provider: Web3Provider | JsonRpcSigner | undefined,
+  _address: string
+) =>
+  useMemo(() => getNFTPunkContract(_address, _provider), [_address, _provider])
+export const useNFTPunkNoAccount = (_address: string) =>
+  useMemo(() => getNFTPunkContract(_address, web3NoAccount), [_address])

@@ -3,6 +3,7 @@ import { IFormatMessageService, IFormatService } from "@interfaces/IHelper"
 import { IBuildData } from "@feature/building/interfaces/IBuildingService"
 import { ILandData } from "@feature/land/interfaces/ILandService"
 import { IMaterialInfo } from "@feature/material/interfaces/IMaterialService"
+import { IArcGameInfo } from "@feature/game/marketplace/interfaces/IArcGameService"
 
 export type TNFTType =
   | "nft_land"
@@ -23,6 +24,18 @@ export type TType =
 export type TSellingType = "fullpayment" | "installment" | "rental"
 
 export type TSellerType = "system" | "user"
+
+export interface ICreateOrderParams {
+  _orderId: string
+  _itemId: string
+  _itemAmount: number
+  _price: number
+  _type: TNFTType
+  _txHash: string
+  _sellerType: TSellerType
+  _sellingType?: TSellingType
+  _periodAmount?: number
+}
 
 export interface IPurchOrderParams {
   _marketplaceId: string
@@ -102,7 +115,6 @@ export interface INFTInitial extends IId {
   image: string
   name: string
   detail: string
-  details?: string
 }
 
 export interface IMarketServForm {
@@ -183,63 +195,14 @@ export interface INFTData extends IId, INFTDesc, IPlayerId {
   owner_id: string
 }
 
-export interface MetaData {
-  name: string
-  description: string
-  external_url: string
-  image: string
-  animation_url: string
-}
-
-export interface NFTInfo {
-  NFT_token: string
-  image_game_ipfs_cid: string
-  vdo_game_ipfs_cid: string
-  address_owner: string
-  owner_id: string
-  meta_data: MetaData
-  player_id: string
-}
-
-export interface CategoryList {
-  _id: string
-  createdAt: Date
-  updatedAt: Date
-  name: string
-  detail: string
-  slug: string
-  color_code: string
-  image_list: string
-  image_banner: string
-  is_active: boolean
-  __v: number
-  current_time: Date
-  category_no: string
-}
-
-export interface IGameData {
-  _id: string
-  NFT_info: NFTInfo
-  name: string
-  story: string
-  play_time: number
-  version: string
-  developer: string
-  game_type: string
-  game_url: string
-  is_NFT: boolean
-  animation_nft_arcade_game: string
-  image_nft_arcade_game: string
-  category_list: CategoryList[]
-}
-
 interface IMarketOrder extends IMarketInit, IPrice {
   item_amount: number
   order_id: string
   period_amount?: number
   seller_id: string
-  seller_type: string
+  seller_type: TSellerType
   selling_type?: TSellingType
+  item_total?: number
 }
 
 export interface IBuyerDetail extends ITransHash {
@@ -258,13 +221,12 @@ export interface IMarketData extends IMarketOrder, ICurrentTime {
 export interface IMarketGameData extends Omit<IGameItemList, "min_item"> {}
 
 export interface IMarketDetail extends IMarketOrder {
-  item_total?: number
   land_data?: ILandData
   nakapunk_data?: INFTData
   material_data?: IMaterialInfo
   item_data?: IMarketGameData
   building_data?: IBuildData
-  game_data?: IGameData
+  game_data?: IArcGameInfo
 }
 
 export interface IMarketForm {
@@ -307,4 +269,8 @@ export interface INFTTransferServ extends IFormatMessageService {
 
 export interface IMarketOrderServ extends IFormatService {
   data: IMarketDetail[]
+}
+
+export interface IMarketCreateOrderServ extends IFormatService {
+  data: null
 }

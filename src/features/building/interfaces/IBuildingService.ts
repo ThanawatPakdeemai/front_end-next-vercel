@@ -3,7 +3,7 @@ import {
   INFTInitial
 } from "@feature/marketplace/interfaces/IMarketService"
 import { TLand } from "@feature/land/interfaces/ILandService"
-import { ITypeMaterials } from "@feature/material/interfaces/IMaterialService"
+import { ITypeMaterials } from "@feature/material/marketplace/interfaces/IMaterialService"
 import { IFormatService } from "@interfaces/IHelper"
 
 interface IModel {

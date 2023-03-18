@@ -1,5 +1,7 @@
 import { useMemo } from "react"
 import {
+  getAllGameItemContract,
+  getAllLandContract,
   getBalanceVaultBinanceContract,
   getBalanceVaultContract,
   getBEP20Contract,
@@ -12,6 +14,7 @@ import {
   getMarketNFTContract,
   getMarketNFTInstallContract,
   getMarketNFTRentContract,
+  getMaterialVaultContract,
   getNFTArcGameContract,
   getNFTBuildingContract,
   getNFTLandContract,
@@ -144,6 +147,17 @@ export const useUserGameItems = (
     [_address, _provider]
   )
 
+export const useMaterialVault = (
+  _provider: Web3Provider | JsonRpcSigner | undefined,
+  _address: string
+) =>
+  useMemo(
+    () => getMaterialVaultContract(_address, _provider),
+    [_address, _provider]
+  )
+export const useMaterialVaultNoAccount = (_address: string) =>
+  useMemo(() => getMaterialVaultContract(_address, web3NoAccount), [_address])
+
 // marketplace
 export const useMarketplaceGameItems = (
   _provider: Web3Provider | JsonRpcSigner | undefined,
@@ -241,3 +255,8 @@ export const useNFTPunk = (
   useMemo(() => getNFTPunkContract(_address, _provider), [_address, _provider])
 export const useNFTPunkNoAccount = (_address: string) =>
   useMemo(() => getNFTPunkContract(_address, web3NoAccount), [_address])
+
+export const useGetAllGameItemofAddrs = (_address: string) =>
+  useMemo(() => getAllGameItemContract(_address, web3NoAccount), [_address])
+export const useGetAllLandofAddrs = (_address: string) =>
+  useMemo(() => getAllLandContract(_address, web3NoAccount), [_address])

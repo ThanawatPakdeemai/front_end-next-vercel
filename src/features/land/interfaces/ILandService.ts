@@ -3,7 +3,7 @@ import {
   INFTInitial,
   TNFTType
 } from "@feature/marketplace/interfaces/IMarketService"
-import { IMaterialData } from "@feature/material/interfaces/IMaterialService"
+import { IMaterialData } from "@feature/material/marketplace/interfaces/IMaterialService"
 import { IFormatService, IInfoFormatServ } from "@interfaces/IHelper"
 
 export type TLand =

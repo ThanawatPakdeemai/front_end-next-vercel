@@ -14,6 +14,7 @@ import P2PPolygonMumbaiAbi from "@configs/abi/P2PPolygonMumbai.json"
 import ShopAbi from "@configs/abi/Shop.json"
 import StakingAbi from "@configs/abi/Staking.json"
 import UserGameItemsAbi from "@configs/abi/UserGameItems.json"
+import MaterialVault from "@configs/abi/MaterialVault.json"
 // market
 import MarketGameItem from "@configs/abi/marketplace/MarketGameItem.json"
 import MarketMaterial from "@configs/abi/marketplace/MarketMaterial.json"
@@ -25,6 +26,9 @@ import NFTArcGame from "@configs/abi/marketplace/NFTArcadeGame.json"
 import NFTBuilding from "@configs/abi/marketplace/NFTBuilding.json"
 import NFTLand from "@configs/abi/marketplace/NFTLand.json"
 import NFTPunk from "@configs/abi/marketplace/NFTNakapunk.json"
+
+import GetAllGameItem from "@configs/abi/GetAddressItems.json"
+import GetAllLand from "@configs/abi/GetAllLandsOfAddress.json"
 
 import { Web3Provider } from "@ethersproject/providers"
 
@@ -149,6 +153,14 @@ export const getUserGameItemsContract = (
     | ethers.providers.JsonRpcSigner
 ) => getContract(UserGameItemsAbi.abi, address, web3)
 
+export const getMaterialVaultContract = (
+  address: string,
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
+) => getContract(MaterialVault.abi, address, web3)
+
 // Marketplace
 export const getMarketGameItemContract = (
   address: string,
@@ -222,3 +234,19 @@ export const getNFTPunkContract = (
     | ethers.providers.JsonRpcProvider
     | ethers.providers.JsonRpcSigner
 ) => getContract(NFTPunk.abi, address, web3)
+
+export const getAllGameItemContract = (
+  address: string,
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
+) => getContract(GetAllGameItem.abi, address, web3)
+
+export const getAllLandContract = (
+  address: string,
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
+) => getContract(GetAllLand.abi, address, web3)

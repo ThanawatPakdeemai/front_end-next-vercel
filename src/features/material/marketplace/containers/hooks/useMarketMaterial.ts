@@ -1,44 +1,44 @@
 import CONFIGS from "@configs/index"
 import { MESSAGES } from "@constants/messages"
 import { TransactionResponse } from "@ethersproject/providers"
-import { useMarketplaceGameItems } from "@feature/contract/containers/hooks/useContract"
-import useInvenGameItem from "@feature/gameItem/inventory/containers/hooks/useInvenGameItem"
+import { useMarketplaceMaterial } from "@feature/contract/containers/hooks/useContract"
 import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutateMarketplace"
 import {
   ICancelOrderParams,
   ICreateOrderParams,
   IPurchOrderParams
 } from "@feature/marketplace/interfaces/IMarketService"
+import useInvenMaterial from "@feature/material/inventory/containers/hooks/useInvenMaterial"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
 import Helper from "@utils/helper"
 import { BigNumberish, ethers } from "ethers"
 
-const useMarketGameItem = () => {
-  const { utils } = ethers
+const useMarketMaterial = () => {
   const { signer } = useWeb3Provider()
-  const marketGameItemContract = useMarketplaceGameItems(
+  const marketMaterialContract = useMarketplaceMaterial(
     signer,
     CONFIGS.CONTRACT_ADDRESS.MARKETPLACE
   )
-  const { WeiToNumber } = Helper
   const { setOpen, setClose } = useLoadingStore()
+  const { utils } = ethers
+  const { WeiToNumber } = Helper
   const {
     mutateMarketCreateOrder,
     mutateMarketCancelOrder,
     mutateMarketPurcOrder
   } = useMutateMarketplace()
-  const { updateGameItemList } = useInvenGameItem()
+  const { updateMaterialList } = useInvenMaterial()
 
-  // create
-  const createGameItemOrder = (
-    _itemId: string,
-    _itemAmount: number,
+  // create order
+  const createMaterialOrder = (
+    _materialId: string,
+    _materialAmount: number,
     _nakaAmount: BigNumberish
   ) =>
     new Promise<TransactionResponse>((resolve, reject) => {
-      marketGameItemContract
-        .createOrder(_itemId, _itemAmount, _nakaAmount)
+      marketMaterialContract
+        .createOrderMaterial(_materialId, _materialAmount, _nakaAmount)
         .then((_response: TransactionResponse) => {
           resolve(_response)
         })
@@ -47,18 +47,18 @@ const useMarketGameItem = () => {
         })
     })
 
-  const onCreateGameItemOrder = async (
-    _itemId: string,
-    _itemAmount: number,
+  const onCreateMaterialOrder = async (
+    _materialId: string,
+    _materialAmount: number,
     _nakaAmount: BigNumberish
   ) => {
     setOpen(MESSAGES.transaction_processing_order)
-    await createGameItemOrder(_itemId, _itemAmount, _nakaAmount)
+    await createMaterialOrder(_materialId, _materialAmount, _nakaAmount)
       .then(async (response) => {
         const _res = await response.wait()
         const _enTopic = await utils.keccak256(
           utils.toUtf8Bytes(
-            "OrderCreated(bytes32,address,uint256,uint256,uint256)"
+            "OrderCreatedMaterial(bytes32,address,uint256,uint256,uint256)"
           )
         )
         const _log = _res.logs.find((f) => f.topics.find((l) => l === _enTopic))
@@ -72,11 +72,11 @@ const useMarketGameItem = () => {
             _itemId: _resultEvent[1].toString(),
             _itemAmount: _resultEvent[2].toString(),
             _price: WeiToNumber(_resultEvent[3]),
-            _type: "game_item",
+            _type: "nft_material",
             _txHash: _res.transactionHash,
             _sellerType: "user"
           }
-          updateGameItemList(
+          updateMaterialList(
             "decrease",
             _resultEvent[1].toString(),
             Number(_resultEvent[2].toString())
@@ -88,11 +88,11 @@ const useMarketGameItem = () => {
       .finally(() => setClose())
   }
 
-  // cancel
-  const cancelGameItemOrder = (_sellerAccount: string, _orderId: string) =>
+  // cancel order
+  const cancelMaterialOrder = (_sellerAccount: string, _orderId: string) =>
     new Promise<TransactionResponse>((resolve, reject) => {
-      marketGameItemContract
-        .cancelOrder(_sellerAccount, _orderId)
+      marketMaterialContract
+        .cancelOrderMaterial(_sellerAccount, _orderId)
         .then((_response: TransactionResponse) => {
           resolve(_response)
         })
@@ -101,16 +101,19 @@ const useMarketGameItem = () => {
         })
     })
 
-  const onCancelGameItemOrder = async (
+  const onCancelMaterialOrder = async (
     _sellerAccount: string,
     _orderID: string
   ) => {
     setOpen(MESSAGES.transaction_processing_order)
-    await cancelGameItemOrder(_sellerAccount, _orderID)
+    await cancelMaterialOrder(_sellerAccount, _orderID)
       .then(async (response) => {
         const _res = await response.wait()
+
         const _enTopic = await utils.keccak256(
-          utils.toUtf8Bytes("OrderCancelled(bytes32,address,uint256,uint256)")
+          utils.toUtf8Bytes(
+            "OrderCancelledMaterial(bytes32,address,uint256,uint256)"
+          )
         )
         const _log = _res.logs.find((f) => f.topics.find((l) => l === _enTopic))
         if (_log) {
@@ -122,7 +125,7 @@ const useMarketGameItem = () => {
             _orderId: _resultEvent[0],
             _txHash: _res.transactionHash
           }
-          updateGameItemList(
+          updateMaterialList(
             "increase",
             _resultEvent[1].toString(),
             Number(_resultEvent[2].toString())
@@ -134,15 +137,15 @@ const useMarketGameItem = () => {
       .finally(() => setClose())
   }
 
-  // buy with approve
-  const executeGameItemOrder = (
+  // execute order
+  const executeMaterialOrder = (
     _sellerAccount: string,
     _orderId: string,
-    _itemAmount: number
+    _materialAmount: number
   ) =>
     new Promise<TransactionResponse>((resolve, reject) => {
-      marketGameItemContract
-        .executeOrder(_sellerAccount, _orderId, _itemAmount)
+      marketMaterialContract
+        .executeOrderMaterial(_sellerAccount, _orderId, _materialAmount)
         .then((_response: TransactionResponse) => {
           resolve(_response)
         })
@@ -151,7 +154,7 @@ const useMarketGameItem = () => {
         })
     })
 
-  const onPurchaseGameItemOrder = async (
+  const onPurchaseMaterialOrder = async (
     _marketId: string,
     _itemID: string,
     _sellerAccount: string,
@@ -159,12 +162,12 @@ const useMarketGameItem = () => {
     _amountItem: number
   ) => {
     setOpen(MESSAGES.transaction_processing_order)
-    await executeGameItemOrder(_sellerAccount, _orderId, _amountItem)
+    await executeMaterialOrder(_sellerAccount, _orderId, _amountItem)
       .then(async (response) => {
         const _res = await response.wait()
         const _enTopic = await utils.keccak256(
           utils.toUtf8Bytes(
-            "OrderExecuted(bytes32,address,address,uint256,uint256,uint256,uint256)"
+            "OrderExecutedMaterial(bytes32,address,address,uint256,uint256,uint256,uint256,uint256)"
           )
         )
         const _log = _res.logs.find((f) => f.topics.find((l) => l === _enTopic))
@@ -180,7 +183,7 @@ const useMarketGameItem = () => {
             _smcAmount: Number(_resultEvent[2].toString()),
             _txHash: _res.transactionHash
           }
-          updateGameItemList(
+          updateMaterialList(
             "increase",
             _resultEvent[1].toString(),
             Number(_resultEvent[3].toString())
@@ -193,10 +196,10 @@ const useMarketGameItem = () => {
   }
 
   return {
-    onCreateGameItemOrder,
-    onCancelGameItemOrder,
-    onPurchaseGameItemOrder
+    onCreateMaterialOrder,
+    onCancelMaterialOrder,
+    onPurchaseMaterialOrder
   }
 }
 
-export default useMarketGameItem
+export default useMarketMaterial

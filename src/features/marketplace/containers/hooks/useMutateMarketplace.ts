@@ -7,7 +7,7 @@ import {
   purchaseMarketOrder
 } from "../services/marketplace.service"
 
-const useMarketplace = () => {
+const useMutateMarketplace = () => {
   const { errorToast, successToast } = useToast()
   const { mutateAsync: mutateMarketCreateOrder } = useMutation(
     createMarketOrder,
@@ -58,4 +58,4 @@ const useMarketplace = () => {
   }
 }
 
-export default useMarketplace
+export default useMutateMarketplace

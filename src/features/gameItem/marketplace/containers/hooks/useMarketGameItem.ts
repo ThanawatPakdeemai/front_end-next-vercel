@@ -2,7 +2,7 @@ import CONFIGS from "@configs/index"
 import { MESSAGES } from "@constants/messages"
 import { TransactionResponse } from "@ethersproject/providers"
 import { useMarketplaceGameItems } from "@feature/contract/containers/hooks/useContract"
-import useMarketplace from "@feature/marketplace/containers/hooks/useMarketplace"
+import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutateMarketplace"
 import {
   ICancelOrderParams,
   ICreateOrderParams,
@@ -26,7 +26,7 @@ const useMarketGameItem = () => {
     mutateMarketCreateOrder,
     mutateMarketCancelOrder,
     mutateMarketPurcOrder
-  } = useMarketplace()
+  } = useMutateMarketplace()
 
   // create
   const createGameItemOrder = (

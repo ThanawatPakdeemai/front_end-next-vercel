@@ -2,7 +2,7 @@ import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import FormLogin from "@feature/authentication/components/FormLogin"
 import useMarketGameItem from "@feature/gameItem/marketplace/containers/hooks/useMarketGameItem"
-import useMarketplace from "@feature/marketplace/containers/hooks/useMarketplace"
+import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutateMarketplace"
 import {
   IMarketData,
   TNFTType,
@@ -59,7 +59,7 @@ const ButtonMarket = ({
     onCancelGameItemOrder,
     onPurchaseGameItemOrder
   } = useMarketGameItem()
-  const { mutateMarketPurcOrder } = useMarketplace()
+  const { mutateMarketPurcOrder } = useMutateMarketplace()
   const { t } = useTranslation()
   const handleOpen = () => setIsOpen(true)
   const handleClose = () => {

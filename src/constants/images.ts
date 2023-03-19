@@ -1,4 +1,13 @@
-export const IMAGES = {
+export interface IImageProps {
+  src: string
+  blurDataURL: string
+  width: number
+  height: number
+  alt: string
+}
+export const IMAGES: {
+  [key: string]: IImageProps
+} = {
   nakaLogo: {
     src: "/images/home/naka-logo.svg",
     blurDataURL: "/images/home/naka-logo.svg",
@@ -255,6 +264,49 @@ export const IMAGES = {
     src: "/images/coin/naka/large.webp",
     blurDataURL: "/images/coin/naka/large.webp",
     width: 35,
-    height: 35
+    height: 35,
+    alt: "naka-coin"
+  },
+  featureImgVersion: {
+    src: "/images/features/feature_01.png",
+    blurDataURL: "/images/features/feature_01.png",
+    width: 200,
+    height: 200,
+    alt: "featureImgVersion"
+  },
+  featureImgAmpiply: {
+    src: "/images/features/feature_02.png",
+    blurDataURL: "/images/features/feature_02.png",
+    width: 200,
+    height: 200,
+    alt: "featureImgAmpiply"
+  },
+  featureImgSocial: {
+    src: "/images/features/feature_03.png",
+    blurDataURL: "/images/features/feature_03.png",
+    width: 200,
+    height: 200,
+    alt: "featureImgSocial"
+  },
+  featureImgSecure: {
+    src: "/images/features/feature_04.png",
+    blurDataURL: "/images/features/feature_04.png",
+    width: 200,
+    height: 200,
+    alt: "featureImgSecure"
+  },
+  becomeDeveloperSection1: {
+    src: "/images/becomeDeveloper/become_developer_01.png",
+    blurDataURL: "/images/becomeDeveloper/become_developer_01.png",
+    width: 1000,
+    height: 1000,
+    alt: "Import your existing NFTs."
+  },
+  becomeDeveloperSection2: {
+    src: "/images/becomeDeveloper/become_developer_02.png",
+    blurDataURL: "/images/becomeDeveloper/become_developer_02.png",
+    width: 1000,
+    height: 1000,
+    alt: "Ready to try nakamoto.games For Game DEVELOPER_ "
   }
 }

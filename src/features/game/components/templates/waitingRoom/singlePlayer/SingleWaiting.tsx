@@ -99,11 +99,11 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
 
   return (
     <>
-      <Box className="block gap-3 lg:flex ">
+      <Box className="block w-full gap-3 lg:flex">
         {_roomId &&
           (data ? (
             <>
-              <Box className="relative w-full rounded-3xl border border-neutral-700 lg:w-[1020px]">
+              <Box className="relative w-full rounded-3xl border border-neutral-700">
                 {playerGameSingle && (
                   <HeaderWaitingRoom
                     roomTag={playerGameSingle.room_number}
@@ -133,11 +133,13 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
           ) : (
             <>Loading...</>
           ))}
-        {(!data?.play_to_earn || !data.tournament) && (
-          <Box className="rounded-3xl lg:w-[333px]">
-            {data && <CardBuyItem gameObject={data} />}
-          </Box>
-        )}
+        {data &&
+          ((data?.play_to_earn && data?.play_to_earn_status !== "free") ||
+            data.tournament) && (
+            <Box className="rounded-3xl lg:w-[333px]">
+              {data && <CardBuyItem gameObject={data} />}
+            </Box>
+          )}
       </Box>
     </>
   )

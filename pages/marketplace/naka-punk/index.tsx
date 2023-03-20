@@ -2,18 +2,27 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import React, { ReactElement } from "react"
 import dynamic from "next/dynamic"
 
-const MarketplaceLayoutWithFilter = dynamic(
+const MarketplaceLayoutWithoutFilter = dynamic(
   () =>
     import("@components/templates/marketplace/MarketplaceLayoutWithoutFilter"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 
-const NakaPunk = () => <div>index</div>
+const MarketplaceNakaPunk = dynamic(
+  () => import("@feature/page/marketplace/MarketplaceNakaPunk"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
-NakaPunk.getLayout = function getLayout(page: ReactElement) {
-  return <MarketplaceLayoutWithFilter>{page}</MarketplaceLayoutWithFilter>
+const Page = () => <MarketplaceNakaPunk />
+
+Page.getLayout = function getLayout(page: ReactElement) {
+  return <MarketplaceLayoutWithoutFilter>{page}</MarketplaceLayoutWithoutFilter>
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {
@@ -24,4 +33,4 @@ export async function getServerSideProps({ locale }: { locale: string }) {
   }
 }
 
-export default NakaPunk
+export default Page

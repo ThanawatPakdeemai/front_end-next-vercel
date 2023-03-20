@@ -5,23 +5,47 @@ import SkullIcon from "@components/icons/CountIcon/SkullIcon"
 import { iconmotion } from "@components/organisms/Footer"
 import { TextField, Typography } from "@mui/material"
 import useCountStore from "@stores/countComponant"
-import React from "react"
+import React, { useEffect } from "react"
+import { unstable_batchedUpdates } from "react-dom"
 
 interface IProp {
   endIcon?: React.ReactNode
   label?: string
+  helperText?: string
   _minusItem?: () => void
   _addItem?: () => void
+  min?: number
+  max?: number
+  count?: number
   _item?: number
 }
 
-const CountItem = ({ endIcon, label, _minusItem, _addItem, _item }: IProp) => {
+const CountItem = ({
+  endIcon,
+  label,
+  helperText,
+  _minusItem,
+  _addItem,
+  min,
+  max,
+  count,
+  _item
+}: IProp) => {
   const minusItem = useCountStore((state: any) => state.decrease)
   const addItem = useCountStore((state: any) => state.increase)
   const item = useCountStore((state: any) => state.count)
+  const { setMin, setMax, setCount } = useCountStore()
+
+  useEffect(() => {
+    unstable_batchedUpdates(() => {
+      if (min) setMin(min)
+      if (max) setMax(max)
+      if (count) setCount(count)
+    })
+  }, [count, max, min, setCount, setMax, setMin])
 
   return (
-    <div className="flex flex-col items-start">
+    <div className="flex flex-col items-start gap-y-2">
       {label && (
         <Typography className="text-sm font-bold uppercase text-neutral-500">
           {label}
@@ -74,6 +98,11 @@ const CountItem = ({ endIcon, label, _minusItem, _addItem, _item }: IProp) => {
           className="m-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-secondary-main"
         />
       </div>
+      {helperText && (
+        <Typography className="text-sm font-bold uppercase text-neutral-600">
+          {helperText}
+        </Typography>
+      )}
     </div>
   )
 }

@@ -9,20 +9,8 @@ interface IProp {
 }
 
 const GotNaKAPunk = ({ address, token_id }: IProp) => (
-  <div>
-    <div className="flex items-center">
-      <Chip
-        label="congrats!"
-        variant="filled"
-        color="success"
-        size="small"
-        className="cursor-pointer uppercase"
-      />
-      <Typography className="ml-4 text-sm uppercase text-white-primary">
-        you got naka punk
-      </Typography>
-    </div>
-    <div className="my-[21px] grid grid-cols-2">
+  <div className="px-8">
+    <div className="my-2 grid grid-cols-2">
       <div className="flex items-center">
         <Typography className="mr-2 text-xs uppercase text-white-primary">
           address :
@@ -56,13 +44,13 @@ const GotNaKAPunk = ({ address, token_id }: IProp) => (
         />
       </div>
     </div>
-    <Typography
+    {/* <Typography
       variant="button"
       onClick={() => {}}
       className="cursor-pointer text-xs uppercase text-purple-primary"
     >
-      view transaetion
-    </Typography>
+      view transaction
+    </Typography> */}
   </div>
 )
 

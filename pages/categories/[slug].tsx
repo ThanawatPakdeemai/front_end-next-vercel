@@ -12,19 +12,22 @@ import useGlobal from "@hooks/useGlobal"
 const SkeletonCard = dynamic(
   () => import("@components/atoms/skeleton/SkeletonCard"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const GamePageWithBreadcrumb = dynamic(
   () => import("@components/templates/GamePageWithBreadcrumb"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const GameCard = dynamic(
   () => import("@feature/game/components/molecules/GameCard"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

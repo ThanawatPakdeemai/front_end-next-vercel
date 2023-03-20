@@ -7,14 +7,16 @@ const MarketplaceLayoutWithoutFilter = dynamic(
   () =>
     import("@components/templates/marketplace/MarketplaceLayoutWithoutFilter"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 
 const MarketplaceDetail = dynamic(
   () => import("@feature/page/marketplace/MarketplaceDetail"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

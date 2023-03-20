@@ -6,14 +6,16 @@ const MarketplaceLayoutFilterNoBanner = dynamic(
   () =>
     import("@components/templates/marketplace/MarketplaceLayoutFilterNoBanner"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 
 const MarketplaceP2PCardList = dynamic(
   () => import("@feature/page/marketplace/MarketplaceP2PCardList"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

@@ -6,13 +6,15 @@ import React, { ReactElement } from "react"
 const GameRoomLayout = dynamic(
   () => import("@components/templates/GameRoomLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const GameSummaryPage = dynamic(
   () => import("@feature/page/games/gameSummaryPage"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

@@ -5,11 +5,13 @@ import dynamic from "next/dynamic"
 const ServicesPageLayout = dynamic(
   () => import("@components/templates/ServicesPageLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const CouponPage = dynamic(() => import("@feature/page/CouponPage"), {
-  suspense: true
+  suspense: true,
+  ssr: false
 })
 
 export default function Coupon() {

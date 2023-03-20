@@ -9,7 +9,8 @@ import SkeletonItem from "@feature/marketplace/components/molecules/SkeletonItem
 const CardItemMarketPlace = dynamic(
   () => import("@components/molecules/cards/CardItemMarketPlace"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

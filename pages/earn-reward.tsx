@@ -6,11 +6,13 @@ import dynamic from "next/dynamic"
 const ProfileLayout = dynamic(
   () => import("@components/templates/ProfileLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const EarnRewardPage = dynamic(() => import("@feature/page/EarnRewardPage"), {
-  suspense: true
+  suspense: true,
+  ssr: false
 })
 
 export default function EarnReward() {

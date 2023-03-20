@@ -10,37 +10,43 @@ import useGameStore from "@stores/game"
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const StoryLobby = dynamic(
   () => import("@feature/game/components/templates/lobby/StoryLobby"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const GamePageDefault = dynamic(
   () => import("@components/templates/GamePageDefault"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const RightSidebarContentEffect = dynamic(
   () => import("@components/templates/contents/RightSidebarContentEffect"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const OverviewHowToPlay = dynamic(
   () => import("@components/organisms/OverviewHowToPlay"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const DefaultLobby = dynamic(
   () => import("@feature/game/components/templates/lobby/DefaultLobby"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

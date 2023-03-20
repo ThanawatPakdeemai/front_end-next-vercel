@@ -172,8 +172,12 @@ export const MENU = [
         link: "/marketplace",
         icon: MarketPlaceIcon
       },
-      { name: "Nakaverse", link: "/nakaverse", icon: NakaverseIcon },
-      { name: "Nakapunks", link: "/nakapunks", icon: NakapunksIcon }
+      {
+        name: "Nakaverse",
+        link: `${CONFIGS.BASE_URL.NAKAVERSE}`,
+        icon: NakaverseIcon
+      },
+      { name: "Nakapunks", link: "/marketplace/naka-punk", icon: NakapunksIcon }
     ]
   }
 ]
@@ -427,8 +431,8 @@ export const MENU_BLOG: IMenu[] = [
     id: "nakaverse",
     label: "Nakaverse",
     icon: <NakaverseIcon className="stroke-neutral-300" />,
-    href: "/",
-    external: false
+    href: `${CONFIGS.BASE_URL.NAKAVERSE}`,
+    external: true
   },
   {
     id: "nakapunks",

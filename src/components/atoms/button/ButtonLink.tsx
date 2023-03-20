@@ -1,4 +1,4 @@
-import { Button } from "@mui/material"
+import { Button, SxProps, Theme } from "@mui/material"
 import Link from "next/link"
 import React, { ReactNode, useMemo } from "react"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
@@ -18,6 +18,7 @@ export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   disabled?: boolean
   disabledStartIcon?: boolean
   disabledEndIcon?: boolean
+  sxCustomStyled?: SxProps<Theme>
 }
 
 const ButtonLink = ({
@@ -34,7 +35,8 @@ const ButtonLink = ({
   type,
   disabled = false,
   disabledStartIcon = false,
-  disabledEndIcon = false
+  disabledEndIcon = false,
+  sxCustomStyled = {}
 }: IButtonLink) => {
   const ButtonSelf = useMemo(
     () => (
@@ -60,6 +62,7 @@ const ButtonLink = ({
             </div>
           )
         }
+        sx={sxCustomStyled}
       >
         <span
           className={`animation-button-text flex items-center ${textColor}`}
@@ -68,6 +71,7 @@ const ButtonLink = ({
         </span>
       </Button>
     ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       arrowColor,
       className,

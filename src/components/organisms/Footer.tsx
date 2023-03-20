@@ -16,6 +16,7 @@ import NakaMask3 from "@components/icons/Footer/NaKaMask3"
 import { useState } from "react"
 import TextLink from "@components/atoms/TextLink"
 import { ShakeIcon } from "@components/atoms/LigthShake"
+import { useRouter } from "next/router"
 
 export const arrowMotion = {
   rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
@@ -75,6 +76,7 @@ const iconArrow = {
 }
 
 const Footer = () => {
+  const router = useRouter()
   const openInNewTab = (url: string) => {
     window.open(url, "_blank", "noreferrer")
   }
@@ -218,9 +220,7 @@ const Footer = () => {
           <div className="md:flex">
             <div className="mx-auto grid max-w-xs items-center justify-center gap-2 text-white-primary md:mx-0 md:flex md:w-2/4 md:max-w-none md:gap-0 md:pr-[20px]">
               <ButtonToggleIcon
-                handleClick={() =>
-                  openInNewTab("https://main.nakamoto.games/joinus/")
-                }
+                handleClick={() => router.push("/become-developer")}
                 startIcon={<DesktopIcon />}
                 text="Become a Naka Devs"
                 className="z-[2] h-[50px] !w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"

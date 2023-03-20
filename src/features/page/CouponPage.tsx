@@ -12,14 +12,24 @@ import useGetCoupon from "@feature/coupon/containers/hook/useGetCoupon"
 import { useToast } from "@feature/toast/containers"
 import useProfileStore from "@stores/profileStore"
 import { MESSAGES } from "@constants/messages"
+import { motion } from "framer-motion"
+
+interface ICharacterCoupon {
+  couponLength: number
+  disableCoupon: boolean
+}
 
 const CouponPage = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const [coupon, setCoupon] = useState<string>("")
+  const [characterCoupon, setCharacterCoupon] = useState<ICharacterCoupon>({
+    couponLength: 0,
+    disableCoupon: true
+  })
   const { errorToast, successToast } = useToast()
   const { getRedeemCode } = useGetCoupon()
 
-  const handleClick = (event) => {
+  const handleClick = () => {
     if (coupon) {
       getRedeemCode(coupon)
         .then((res) => {
@@ -29,7 +39,26 @@ const CouponPage = () => {
           errorToast(error.message)
         })
     }
-    setCoupon(event.target.value)
+    setCoupon("")
+    setCharacterCoupon({
+      couponLength: 0,
+      disableCoupon: true
+    })
+  }
+
+  const isCharactersCoupon = (_CharactersCoupon: string) => {
+    if (_CharactersCoupon.length < 6) {
+      setCharacterCoupon({
+        couponLength: _CharactersCoupon.length,
+        disableCoupon: true
+      })
+    } else {
+      setCharacterCoupon({
+        couponLength: _CharactersCoupon.length,
+        disableCoupon: false
+      })
+    }
+    setCoupon(_CharactersCoupon)
   }
 
   return (
@@ -46,16 +75,15 @@ const CouponPage = () => {
             className="mb-5 w-full"
             required
             type="text"
+            value={coupon}
             sx={{
               "& .MuiOutlinedInput-root": {
                 width: "100%"
               }
             }}
-            value={coupon}
-            onChange={(event) => {
-              let { value } = event.target
-              value = value.replace(/[^A-Za-z0-9]/gi, "")
-              setCoupon(value)
+            onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+              e.target.value = e.target.value.replace(/[^A-Za-z0-9]/gi, "")
+              isCharactersCoupon(e.target.value)
             }}
             id="username-create"
             placeholder="Ex. naka12345"
@@ -70,12 +98,32 @@ const CouponPage = () => {
                 <InputAdornment position="start">
                   <CouponIcon />
                 </InputAdornment>
-              )
+              ),
+              inputProps: {
+                pattern: "[a-zA-Z0-9]"
+              }
             }}
           />
+          {characterCoupon.disableCoupon &&
+            characterCoupon.couponLength > 0 && (
+              <motion.div
+                initial={{ opacity: 0, marginBottom: 0 }}
+                animate={{
+                  opacity: 1,
+                  marginTop: 10
+                }}
+              >
+                <Alert
+                  severity="warning"
+                  className="rounded-lg"
+                >
+                  The coupon must contain at least 6 characters.
+                </Alert>
+              </motion.div>
+            )}
 
           <Button
-            disabled={!profile}
+            disabled={!profile || characterCoupon.disableCoupon}
             sx={{ fontFamily: "neueMachina" }}
             color="secondary"
             className="btn-rainbow-theme mt-[20px] w-full text-sm"

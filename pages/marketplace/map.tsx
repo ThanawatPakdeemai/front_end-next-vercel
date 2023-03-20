@@ -6,7 +6,8 @@ const MarketplaceLayoutWithoutFilter = dynamic(
   () =>
     import("@components/templates/marketplace/MarketplaceLayoutWithoutFilter"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

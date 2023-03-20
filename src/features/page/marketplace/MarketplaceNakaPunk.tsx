@@ -15,6 +15,7 @@ import useProfileStore from "@stores/profileStore"
 import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
 import GotNaKAPunk from "@components/molecules/Inventory/GotNaKAPunk"
 import { v4 as uuidv4 } from "uuid"
+import CONFIGS from "@configs/index"
 
 const MarketplaceNakaPunk = () => {
   const [priceNP, setPriceNP] = useState<number>(0)
@@ -58,6 +59,7 @@ const MarketplaceNakaPunk = () => {
         detail="NAKA Punk"
         image={!resNakapunk ? "/images/temp-nakapunk.webp" : undefined}
         alt="naka-punk"
+        txHash={resNakapunk?.data.transaction_hash}
         meta_data={resNakapunk ? metaData : undefined}
       >
         <div>
@@ -92,13 +94,18 @@ const MarketplaceNakaPunk = () => {
                     ))}
                   </div>
                   {metaData && metaData.length > 0 && (
-                    <Typography
-                      variant="button"
-                      onClick={() => {}}
-                      className="cursor-pointer px-8 text-xs uppercase text-purple-primary"
+                    <a
+                      href={`${CONFIGS.CHAIN.POLYGON_SCAN}/tx/${resNakapunk.data.transaction_hash}`}
+                      target="_blank"
+                      rel="noreferrer"
                     >
-                      view transaction
-                    </Typography>
+                      <Typography
+                        variant="button"
+                        className="cursor-pointer px-8 text-xs uppercase text-purple-primary"
+                      >
+                        view transaction
+                      </Typography>
+                    </a>
                   )}
                 </div>
               )}

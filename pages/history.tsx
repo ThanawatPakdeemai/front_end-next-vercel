@@ -6,13 +6,15 @@ import dynamic from "next/dynamic"
 const ProfileLayout = dynamic(
   () => import("@components/templates/ProfileLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const HistoryTable = dynamic(
   () => import("@feature/history/components/organisms/HistoryTable"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

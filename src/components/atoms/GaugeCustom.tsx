@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic"
 
 const GaugeChart = dynamic(() => import("react-gauge-chart"), {
+  suspense: true,
   ssr: false
 })
 

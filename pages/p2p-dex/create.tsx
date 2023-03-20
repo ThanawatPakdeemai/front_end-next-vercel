@@ -7,19 +7,22 @@ import dynamic from "next/dynamic"
 const FixedWidthContent = dynamic(
   () => import("@components/templates/contents/FixedWidthContent"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const ServicesPageLayout = dynamic(
   () => import("@components/templates/ServicesPageLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const P2PDexCreatePage = dynamic(
   () => import("@feature/page/p2pDex/P2PDexCreatePage"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

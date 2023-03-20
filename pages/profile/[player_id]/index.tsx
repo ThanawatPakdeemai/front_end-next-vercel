@@ -6,13 +6,15 @@ import { GetServerSideProps } from "next"
 const ProfileContent = dynamic(
   () => import("@components/molecules/profile/ProfileContent"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const ProfileLayout = dynamic(
   () => import("@components/templates/ProfileLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

@@ -19,11 +19,13 @@ import rt from "dayjs/plugin/relativeTime"
 import createEmotionCache from "@utils/createEmotionCache"
 
 const Loading = dynamic(() => import("@components/molecules/Loading"), {
-  suspense: true
+  suspense: true,
+  ssr: false
 })
 
 const Meta = dynamic(() => import("@components/atoms/MetaData"), {
-  suspense: true
+  suspense: true,
+  ssr: false
 })
 
 dayjs.extend(rt)

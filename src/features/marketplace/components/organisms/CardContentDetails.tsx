@@ -1,9 +1,11 @@
 import { Image } from "@components/atoms/image"
 import Video from "@components/atoms/Video"
 import NakaPunkStar from "@components/icons/marketplace/NakaPunkStar"
+import CONFIGS from "@configs/index"
 import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import { MetaData } from "@feature/marketplace/interfaces/INakaPung"
 import { Button, Divider, Typography } from "@mui/material"
+import { v4 as uuidv4 } from "uuid"
 import React, { useState } from "react"
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined"
 
@@ -14,11 +16,21 @@ interface IProp {
   video?: string
   alt?: string
   poster?: string
+  txHash?: string
   meta_data?: MetaData[]
 }
 
 const CardContentDetails = ({ ...props }: IProp) => {
-  const { children, detail = "-", image, alt, video, poster, meta_data } = props
+  const {
+    children,
+    detail = "-",
+    image,
+    alt,
+    video,
+    poster,
+    txHash,
+    meta_data
+  } = props
   const [open, setOpen] = useState<boolean>(false)
 
   const handleOpen = () => setOpen(true)
@@ -135,23 +147,28 @@ const CardContentDetails = ({ ...props }: IProp) => {
       >
         <div className="grid grid-cols-5 gap-[10px]">
           {meta_data &&
+            txHash &&
             meta_data.map((item) => (
-              <div
-                key={item.item_id}
-                className="group relative cursor-pointer"
+              <a
+                key={uuidv4()}
+                href={`${CONFIGS.CHAIN.POLYGON_SCAN}/tx/${txHash}`}
+                target="_blank"
+                rel="noreferrer"
               >
-                <Image
-                  src={item.image as string}
-                  alt={item.item_id as string}
-                  width={563}
-                  height={563}
-                  className="rounded"
-                />
-                <div className="invisible absolute top-0 grid h-full w-full content-center justify-items-center rounded text-xs uppercase opacity-50 group-hover:visible group-hover:bg-neutral-900">
-                  <RemoveRedEyeOutlinedIcon />
-                  transactions
+                <div className="group relative cursor-pointer">
+                  <Image
+                    src={item.image as string}
+                    alt={item.item_id as string}
+                    width={563}
+                    height={563}
+                    className="rounded"
+                  />
+                  <div className="invisible absolute top-0 grid h-full w-full content-center justify-items-center rounded text-xs uppercase opacity-50 group-hover:visible group-hover:bg-neutral-900">
+                    <RemoveRedEyeOutlinedIcon />
+                    transactions
+                  </div>
                 </div>
-              </div>
+              </a>
             ))}
         </div>
       </ModalCustom>

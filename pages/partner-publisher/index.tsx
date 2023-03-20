@@ -5,13 +5,15 @@ import dynamic from "next/dynamic"
 const GamePageLayout = dynamic(
   () => import("@components/templates/PartnerPageLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const PartnerPublisherPage = dynamic(
   () => import("@feature/page/games/partnerPublisherPage"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

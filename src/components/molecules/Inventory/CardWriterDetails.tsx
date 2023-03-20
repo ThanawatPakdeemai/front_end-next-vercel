@@ -7,7 +7,7 @@ import dayjs from "dayjs"
 import React from "react"
 
 interface IProp {
-  textHead: string
+  textHead?: string
   name?: string
   link?: string
   date?: string
@@ -24,9 +24,11 @@ const CardWriterDetails = ({
   alt
 }: IProp) => (
   <div>
-    <Typography className="text-sm uppercase text-black-default">
-      {textHead}
-    </Typography>
+    {textHead && (
+      <Typography className="text-sm uppercase text-black-default">
+        {textHead}
+      </Typography>
+    )}
     <div className="my-2 flex">
       <div
         className={`image grid h-[45px] w-[45px] content-center justify-center rounded bg-error-main ${
@@ -65,9 +67,11 @@ const CardWriterDetails = ({
         )}
       </div>
     </div>
-    <Typography className="text-sm uppercase text-neutral-600">
-      {dayjs(date).format("DD MMM YYYY")}
-    </Typography>
+    {date && (
+      <Typography className="text-sm uppercase text-neutral-600">
+        {dayjs(date).format("DD MMM YYYY")}
+      </Typography>
+    )}
   </div>
 )
 

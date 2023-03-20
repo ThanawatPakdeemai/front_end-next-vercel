@@ -4,6 +4,7 @@ import TournamentReward from "@components/molecules/tournament/TournamentReward"
 import RoundStatus from "@components/molecules/tournament/RoundStatus"
 import TournamentRegister from "@components/molecules/tournament/TournamentRegister"
 import TournamentNewsSlide from "@feature/slider/components/templates/TournamentNewsSlide"
+import CardTournamentSlider from "@feature/slider/components/molecules/CardTournamentSlider"
 // import { Trans, useTranslation } from "react-i18next"
 // import { ITournamentData, ITournamentRound } from "@src/types/tournament"
 // import { IGame } from "@src/types/games"
@@ -133,7 +134,9 @@ const TournamentPage = () => (
   //   )}
   // </section>
   <div className="grid h-full w-full grid-cols-5 gap-4">
-    <div className="col-span-5"> </div>
+    <div className="col-span-5">
+      <CardTournamentSlider />
+    </div>
     <div className="col-span-3">
       <TournamentProfile />
       <TournamentReward />

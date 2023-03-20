@@ -1,7 +1,5 @@
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import WandIcon from "@components/icons/WandIcon"
-import CardWriterDetails from "@components/molecules/Inventory/CardWriterDetails"
-import CONFIGS from "@configs/index"
 import CardContentDetails from "@feature/marketplace/components/organisms/CardContentDetails"
 import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
 import useGetPriceNakaPunk from "@feature/nakapunk/containers/hooks/useGetPriceNakapunk"
@@ -60,40 +58,52 @@ const MarketplaceNakaPunk = () => {
         detail="NAKA Punk"
         image={!resNakapunk ? "/images/temp-nakapunk.webp" : undefined}
         alt="naka-punk"
-        meta_data={metaData}
+        meta_data={resNakapunk ? metaData : undefined}
       >
         <div>
-          <div className="grid grid-cols-2 px-8 py-6">
-            <CardWriterDetails
-              name="nakamoto.games"
-              link={CONFIGS.CONTRACT_ADDRESS.NAKA}
-            />
-          </div>
-          <div>
-            <div className="flex items-center">
-              <Chip
-                label="congrats!"
-                variant="filled"
-                color="success"
-                size="small"
-                className="cursor-pointer uppercase"
-              />
+          {" "}
+          {resNakapunk ? (
+            <div>
+              {metaData && profile && profile.data && (
+                <div>
+                  {metaData && metaData.length > 0 && (
+                    <div className="flex items-center px-8 pt-6">
+                      <Chip
+                        label="congrats!"
+                        variant="filled"
+                        color="success"
+                        size="small"
+                        className="cursor-pointer uppercase"
+                      />
+                      <Typography className="ml-4 text-sm uppercase text-white-primary">
+                        you got naka punk
+                      </Typography>
+                    </div>
+                  )}
+                  <div
+                    className={metaData && "max-h-[100px] overflow-y-scroll"}
+                  >
+                    {metaData.map((_data) => (
+                      <GotNaKAPunk
+                        key={uuidv4()}
+                        address={String(profile.data?.address)}
+                        token_id={_data.NFT_token}
+                      />
+                    ))}
+                  </div>
+                  {metaData && metaData.length > 0 && (
+                    <Typography
+                      variant="button"
+                      onClick={() => {}}
+                      className="cursor-pointer px-8 text-xs uppercase text-purple-primary"
+                    >
+                      view transaction
+                    </Typography>
+                  )}
+                </div>
+              )}
             </div>
-            {metaData && profile && profile.data && (
-              <div>
-                <Typography className="ml-4 text-sm uppercase text-white-primary">
-                  you got naka punk
-                </Typography>
-                {metaData.map((_data) => (
-                  <GotNaKAPunk
-                    key={uuidv4()}
-                    address={String(profile.data?.address)}
-                    token_id={_data.NFT_token}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
+          ) : undefined}
         </div>
       </CardContentDetails>
       <RightDetailsMarketplace

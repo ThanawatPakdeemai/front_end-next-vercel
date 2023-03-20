@@ -5,7 +5,6 @@ import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
 import { MENU_MARKETPLACE_INVENTORY } from "@configs/menu"
-import InventoryPage from "@feature/page/inventory/InventoryPage"
 import { Divider, MenuList, Typography } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
@@ -94,7 +93,6 @@ const MarketplaceLayoutInventory = ({
             />
           )}
         </div>
-        <InventoryPage />
         <div>{children}</div>
       </div>
       <Footer />

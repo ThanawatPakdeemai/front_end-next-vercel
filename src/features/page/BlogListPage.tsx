@@ -48,7 +48,7 @@ const BlogListPage = () => {
   const { getBlogAllData, isPreviousData } = useGetBlog({
     limit: limitPage,
     skip: page,
-    search: searchBlog,
+    search: !fetchRef.current ? "" : searchBlog,
     sort: type,
     cate: "all"
   })
@@ -73,6 +73,7 @@ const BlogListPage = () => {
             cate: "all"
           })
       })
+      setTotalCount(getBlogAllData.info.totalCount)
     }
   }, [getBlogAllData, isPreviousData, page, queryClient, type])
 

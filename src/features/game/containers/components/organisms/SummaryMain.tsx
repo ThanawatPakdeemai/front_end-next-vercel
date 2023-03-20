@@ -109,7 +109,7 @@ const SummaryMain = ({ summaryData }: IProp) => {
             />
             <SummaryGameDetail
               title="asset:"
-              value={playerSummary.detail_used_items.name}
+              value={`${playerSummary.detail_used_items.name}  ${playerSummary.detail_used_items.item_size}`}
             />
             <SummaryGameDetail
               title="game reward:"

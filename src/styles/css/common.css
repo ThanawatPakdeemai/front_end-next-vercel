@@ -645,3 +645,10 @@ body {
     width: -webkit-fill-available;
   }
 }
+
+.toast {
+  max-width: 400px;
+}
+.toast > div {
+  width: 100%;
+}

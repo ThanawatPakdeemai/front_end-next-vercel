@@ -121,9 +121,10 @@ const GameCard = ({
           alt="home-slide"
           width={218}
           height={218}
-          className={`slick-card-content rounded-md ${
+          className={`slick-card-content cursor-pointer rounded-md ${
             partnerdata ? " sm:h-2/4 lg:h-4/6 xl:h-full" : ""
           }`}
+          onClick={onHandleClick}
         />
         <motion.div
           variants={btnCard}

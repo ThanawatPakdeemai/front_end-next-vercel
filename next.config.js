@@ -9,7 +9,8 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const { i18n } = require("./next-i18next.config")
 
 const nextConfig = {
-  reactStrictMode: true,
+  // if true api will call twice
+  reactStrictMode: false,
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

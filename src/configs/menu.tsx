@@ -204,7 +204,7 @@ export const MENU_GUEST: IMenu[] = [
     id: "tournament",
     label: "Tournament",
     icon: <TournamentIcon className="stroke-neutral-300" />,
-    href: "/tournament/636e5091feb7364211af6858/naka-runner-tournament-hosted-by-slayer",
+    href: "/tournament",
     external: false
   },
   {
@@ -413,14 +413,14 @@ export const MENU_BLOG: IMenu[] = [
     id: "about-us",
     label: "About Us",
     icon: <AboutUsIcon className="stroke-neutral-300" />,
-    href: "/",
+    href: "https://main.nakamoto.games/",
     external: false
   },
   {
     id: "marketplace",
     label: "Marketplace",
     icon: <MarketPlaceIcon className="stroke-neutral-300" />,
-    href: "/",
+    href: "/marketplace",
     external: false
   },
   {
@@ -434,7 +434,7 @@ export const MENU_BLOG: IMenu[] = [
     id: "nakapunks",
     label: "Nakapunks",
     icon: <NakapunksIcon className="stroke-neutral-300" />,
-    href: "/",
+    href: "/marketplace/naka-punk",
     external: false
   }
 ]
@@ -567,7 +567,7 @@ export const MENU_MARKETPLACE = [
     chide: [
       {
         name: "Game Item",
-        link: "/marketplace/p2p/game",
+        link: "/marketplace/p2p/game-item",
         icon: MarketPlaceIcon
       },
       {
@@ -589,12 +589,12 @@ export const MENU_MARKETPLACE = [
         name: "NAKA Punk",
         link: "/marketplace/p2p/naka-punk",
         icon: MarketPlaceIcon
+      },
+      {
+        name: "Arcade Game",
+        link: "/marketplace/p2p/arcade-game",
+        icon: MarketPlaceIcon
       }
-      // {
-      //   name: "NFT Game",
-      //   link: "/marketplace/p2p/nft",
-      //   icon: MarketPlaceIcon
-      // }
     ]
   },
   {

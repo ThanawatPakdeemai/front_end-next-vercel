@@ -96,7 +96,8 @@ export const refreshProfileToken = async (
         callBeckWhenError && callBeckWhenError()
         if (error instanceof Error) {
           // console.error("Error", error.message)
-          throw Error(`refreshToken : ${error}`)
+          // throw Error(`refreshToken : ${error}`)
+          console.error(`refreshToken : ${error}`)
         }
       })
   } catch (error) {

@@ -5,6 +5,7 @@ import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded"
 
 const InventoryPage = () => {
   const [open, setOpen] = useState(false)
+
   return (
     <div className="h-full border-l-[1px] border-l-neutral-700">
       <div className="flex">
@@ -31,13 +32,6 @@ const InventoryPage = () => {
           )}
         </Box>
       </div>
-
-      {/* <Drawer
-        variant="permanent"
-        open={open}
-      >
-        <div>test</div>
-      </Drawer> */}
     </div>
   )
 }

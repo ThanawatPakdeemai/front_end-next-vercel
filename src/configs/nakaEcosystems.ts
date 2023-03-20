@@ -6,12 +6,12 @@ export const NAKA_ECOSYSTEMSS = [
   },
   {
     label: "About Us",
-    path: "/",
+    path: "https://main.nakamoto.games/",
     icon: true
   },
   {
     label: "Marketplace",
-    path: "/",
+    path: "/marketplace",
     icon: true
   },
   {
@@ -21,7 +21,7 @@ export const NAKA_ECOSYSTEMSS = [
   },
   {
     label: "Nakapunks",
-    path: "/",
+    path: "/marketplace/naka-punk",
     icon: true
   }
 ]

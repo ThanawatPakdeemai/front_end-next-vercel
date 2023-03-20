@@ -22,7 +22,7 @@ import { parseUnits } from "ethers/lib/utils"
 import useP2PDexEditOrder from "@feature/p2pDex/containers/hooks/useP2PDexEditOrder"
 import useP2PDexExOrder from "@feature/p2pDex/containers/hooks/useP2PDexExOrder "
 import useP2PDexCreateOrder from "@feature/p2pDex/containers/hooks/useP2PDexCreateOrder"
-import { useToast } from "@feature/toast/containers"
+// import { useToast } from "@feature/toast/containers"
 
 export interface IDataOptions {
   transactionName: string
@@ -38,12 +38,12 @@ const dataBinanceOptions: IDataOptions = {
   transactionName: "Wrap"
 }
 const useContractMultichain = () => {
-  const { signer, address: account } = useWeb3Provider()
+  const { signer, address: account, chainId } = useWeb3Provider()
   const { setOpen, setClose } = useLoadingStore()
   const { mutateEditOrder } = useP2PDexEditOrder()
   const { mutateCreateOrder } = useP2PDexCreateOrder()
   const { mutateExOrder } = useP2PDexExOrder()
-  const { errorToast } = useToast()
+  // const { errorToast } = useToast()
   // const web3 = new Web3("https://bsc-dataseed.binance.org/")
 
   const p2pBinanceContract = useP2PBinance(
@@ -85,17 +85,22 @@ const useContractMultichain = () => {
   const [fee, setFee] = useState("00000000000000000")
 
   const allowNaka =
-    (signer && Number(signer?.provider?._network?.chainId)) ===
-      Number(CONFIGS.CHAIN.CHAIN_ID) &&
-    tokenPlygonContract.allowance(account, CONFIGS.CONTRACT_ADDRESS.P2P_POLYGON)
+    signer &&
+    chainId === CONFIGS.CHAIN.CHAIN_ID_HEX &&
+    tokenPlygonContract &&
+    tokenPlygonContract?.allowance(
+      account,
+      CONFIGS.CONTRACT_ADDRESS.P2P_POLYGON
+    )
 
   const allowBinance =
-    (signer && Number(signer?.provider?._network?.chainId)) ===
-      Number(CONFIGS.CHAIN.BNB_CHAIN_ID) &&
-    tokenBinanceContract
-      .allowance(account, CONFIGS.CONTRACT_ADDRESS.P2P_BINANCE)
-      .then((res) => res)
-      .catch((err) => errorToast(err.message))
+    signer &&
+    chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB &&
+    tokenBinanceContract &&
+    tokenBinanceContract?.allowance(
+      account,
+      CONFIGS.CONTRACT_ADDRESS.P2P_BINANCE
+    )
 
   // const { send: sendEditOrderSellNaka } = useContractFunction(
   //   p2pPolygonContract,
@@ -422,11 +427,15 @@ const useContractMultichain = () => {
   }
 
   useEffect(() => {
-    priceCurrentNaka()
-    getFeeData()
+    let clear = false
+    if (!clear) {
+      priceCurrentNaka()
+      getFeeData()
+    }
     return () => {
       setNakaCurrentPrice(undefined)
       setFee("00000000000000000")
+      clear = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signer])

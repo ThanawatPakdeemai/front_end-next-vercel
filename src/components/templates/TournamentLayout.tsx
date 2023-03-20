@@ -4,6 +4,7 @@ import Header from "@components/organisms/Header"
 import React from "react"
 import Tagline from "@components/molecules/tagline/Tagline"
 import ShapeIcon from "@components/icons/ShapeIcon"
+import SidebarGames from "@components/molecules/SidebarGames"
 
 const TournamentLayout = ({
   children
@@ -17,7 +18,11 @@ const TournamentLayout = ({
       icon={<ShapeIcon fill="#4E5057" />}
     />
     <Banners />
-    <div className="flex flex-row gap-3">{children}</div>
+    {/* <div className="flex flex-row gap-3">{children}</div> */}
+    <div className="flex-row gap-3 md:flex">
+      <SidebarGames />
+      {children}
+    </div>
     <Footer />
   </div>
 )

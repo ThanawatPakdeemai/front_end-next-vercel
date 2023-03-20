@@ -46,9 +46,9 @@ const CardTournamentSlider = () => {
     dots: true
   }
   return (
-    <div className="w-full md:w-[71.5%] lg:w-[78.5%] xl:w-[84.5%]">
+    <div className="h-full w-full">
       <div className="flex items-center justify-center">
-        <div className="mt-5 w-full md:mt-0 lg:w-9/12">
+        <div className="mt-5 w-full md:mt-0 xl:w-[908px]">
           <Slider
             ref={sliderRef}
             {...settings}

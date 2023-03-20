@@ -22,13 +22,16 @@ const GameRoomListPage = () => {
         case "singleplayer":
           return <SingleRoomList />
         case "multiplayer":
-          return <MultiRoomList />
+          if (profile) {
+            return <MultiRoomList />
+          }
+          return <PleaseLogin />
         default:
           return <Box className="m-auto block">No Data</Box>
       }
     }
   }
-  return <>{profile ? getTemplateGame() : <PleaseLogin />}</>
+  return <>{getTemplateGame()}</>
 }
 
 export default GameRoomListPage

@@ -26,7 +26,7 @@ const RightMenuLogIn = () => {
   const { address } = useWeb3Provider()
   const [expanded, setExpanded] = useState<boolean>(false)
   const [hoverExpand, setHoverExpand] = useState<boolean>(false)
-  const { isMarketplace } = useGlobal()
+  const { isMarketplace, isDeveloperPage } = useGlobal()
 
   const iconmotion = {
     hover: {
@@ -39,6 +39,16 @@ const RightMenuLogIn = () => {
         type: "spring"
       }
     }
+  }
+
+  const themeColor = (): string => {
+    if (isMarketplace) {
+      return "secondary-main"
+    }
+    if (isDeveloperPage) {
+      return "green-lemon"
+    }
+    return "error-main"
   }
 
   const handleOnExpandClick = () => {
@@ -87,7 +97,6 @@ const RightMenuLogIn = () => {
                 disableSpacing
               >
                 {/* notification */}
-
                 {!isMarketplace && (
                   <ButtonIcon
                     onClick={handleOnNotiClick}
@@ -120,7 +129,7 @@ const RightMenuLogIn = () => {
                       component="span"
                       variant="body1"
                       onClick={() => Helper.copyClipboard(profile?.address)}
-                      className="cursor-pointer text-xs font-bold text-secondary-main"
+                      className={`cursor-pointer text-xs font-bold text-${themeColor().toString()}`}
                     >
                       {Helper.shortenString(profile?.address)}
                     </Typography>
@@ -141,17 +150,21 @@ const RightMenuLogIn = () => {
                   onClick={handleOnExpandClick}
                   aria-expanded={Boolean(expanded)}
                   aria-label="expanded-menu-profile"
-                  className={`mr-[2px] h-10 w-10 rounded-[13px] border-[2px] border-neutral-700 duration-100 ease-bounce  ${
+                  className={`mr-[2px] h-10 w-10 rounded-[13px] border-[2px] border-neutral-700 duration-100 ease-bounce ${
                     !expanded
-                      ? "bg-secondary-main hover:scale-[85%]"
+                      ? `bg-${themeColor().toString()} hover:scale-[85%]`
                       : "bg-error-main"
                   }
-            ${!expanded ? "rotate-0" : "rotate-180"} ${
+                  ${!expanded ? "rotate-0" : "rotate-180"} ${
                     expanded && !hoverExpand
                       ? "rotate-[-45deg] scale-[75%]"
                       : "scale-1 rotate-0"
                   }
-            ${!expanded ? "hover:bg-secondary-main" : "hover:bg-error-main"}`}
+                  ${
+                    !expanded
+                      ? `hover:bg-${themeColor().toString()}`
+                      : `hover:bg-error-main`
+                  }`}
                   onMouseOver={() => {
                     setHoverExpand(true)
                   }}

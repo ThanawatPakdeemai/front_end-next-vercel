@@ -1,8 +1,7 @@
 import React, { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-// import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
 import dynamic from "next/dynamic"
-// import RegisterTemplate from "@components/templates/RegisterTemplate"
+import BecomeDeveloperTemplate from "@components/templates/BecomeDeveloperTemplate"
 
 const BecomeDeveloperPage = dynamic(
   () => import("@feature/page/BecomeDeveloperPage")
@@ -11,7 +10,7 @@ const BecomeDeveloperPage = dynamic(
 const BecomeDeveloper = () => <BecomeDeveloperPage />
 
 BecomeDeveloper.getLayout = function getLayout(page: ReactElement) {
-  return <>{page}</>
+  return <BecomeDeveloperTemplate>{page}</BecomeDeveloperTemplate>
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {

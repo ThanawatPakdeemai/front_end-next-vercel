@@ -10,13 +10,15 @@ interface IProp {
   url: string
   fillIcon?: string
   classCssButton?: string
+  onClick?: () => void
 }
 const ButtonGame = ({
   description,
   textButton,
   url,
   fillIcon = "#A0ED61",
-  classCssButton = " btn-green-rainbow bg-green-lemon text-primary-main "
+  classCssButton = " btn-green-rainbow bg-green-lemon text-primary-main ",
+  onClick
 }: IProp) => {
   const router = useRouter()
   return (
@@ -28,7 +30,11 @@ const ButtonGame = ({
         <ButtonPlayer
           startIcon={<Ellipse fill={fillIcon} />}
           handleClick={() => {
-            router.push(`${url}`)
+            if (onClick) {
+              onClick()
+            } else {
+              router.push(`${url}`)
+            }
           }}
           text={
             <Typography className="w-full   font-neue-machina text-2xl uppercase text-primary-main">

@@ -84,10 +84,10 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   const setGameDeveloper = (): string => {
     switch (gameType) {
       case "partner-game":
-        return (partnerGames && partnerGames.short_detail.developer) || "-"
+        return (partnerGames && partnerGames?.short_detail?.developer) || "-"
 
       default:
-        return (gameData && gameData.developer) || "-"
+        return (gameData && gameData?.developer) || "-"
     }
   }
 
@@ -98,7 +98,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   const setPublisher = (): string => {
     switch (gameType) {
       case "partner-game":
-        return (partnerGames && partnerGames.short_detail.publisher) || "-"
+        return (partnerGames && partnerGames?.short_detail.publisher) || "-"
       default:
         return "-"
     }
@@ -113,7 +113,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
       case "partner-game":
         return (
           (partnerGames &&
-            dayjs(partnerGames.short_detail.release_date).format(
+            dayjs(partnerGames?.short_detail.release_date).format(
               "DD MMM YYYY"
             )) ||
           "-"
@@ -135,37 +135,37 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
             {
               icon: <GlobalIcon />,
               label: "Website",
-              href: partnerGames.social.web || ""
+              href: partnerGames?.social.web || ""
             },
             {
               icon: <DiscordIcon />,
               label: "Discord",
-              href: partnerGames.social.discord || ""
+              href: partnerGames?.social.discord || ""
             },
             {
               icon: <FacebookIcon />,
               label: "Facebook",
-              href: partnerGames.social.facebook || ""
+              href: partnerGames?.social.facebook || ""
             },
             {
               icon: <MediumIcon />,
               label: "Medium",
-              href: partnerGames.social.medium || ""
+              href: partnerGames?.social.medium || ""
             },
             {
               icon: <TelegramIcon />,
               label: "Telegram",
-              href: partnerGames.social.telegram || ""
+              href: partnerGames?.social.telegram || ""
             },
             {
               icon: <TiktokIcon />,
               label: "Tiktok",
-              href: partnerGames.social.tiktok || ""
+              href: partnerGames?.social.tiktok || ""
             },
             {
               icon: <TwitterIcon />,
               label: "Twitter",
-              href: partnerGames.social.twitter || ""
+              href: partnerGames?.social.twitter || ""
             }
           )
         return gamePartnerSocial
@@ -182,7 +182,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   const setDescription = (): string => {
     switch (gameType) {
       case "partner-game":
-        return (partnerGames && partnerGames.description) || "-"
+        return (partnerGames && partnerGames?.description) || "-"
       default:
         return (gameData && gameData.story) || "-"
     }
@@ -191,7 +191,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   const setChainName = () => {
     switch (gameType) {
       case "partner-game":
-        return (partnerGames && partnerGames.short_detail.network_name) || "-"
+        return (partnerGames && partnerGames?.short_detail?.network_name) || "-"
       default:
         return "-"
     }
@@ -200,7 +200,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   const setChainIcon = () => {
     switch (gameType) {
       case "partner-game":
-        return (partnerGames && partnerGames.short_detail.network_icon) || "-"
+        return (partnerGames && partnerGames?.short_detail.network_icon) || "-"
       default:
         return "-"
     }
@@ -213,8 +213,8 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   const setGameMedia = (): IVerticalThumbSlide[] => {
     switch (gameType) {
       case "partner-game":
-        if (partnerGames && partnerGames.media_list.length > 0) {
-          partnerGames.media_list.map((media) =>
+        if (partnerGames && partnerGames?.media_list.length > 0) {
+          partnerGames?.media_list.map((media) =>
             gameDataMedia.push({
               id: media._id,
               type: media.media_type,
@@ -324,7 +324,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   const setGameHowToPlay = (): string => {
     switch (gameType) {
       case "partner-game":
-        return (partnerGames && partnerGames.how_to_play) || ""
+        return (partnerGames && partnerGames?.how_to_play) || ""
       default:
         return (
           (gameData &&

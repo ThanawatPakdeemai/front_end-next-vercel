@@ -8,13 +8,15 @@ import { useRouter } from "next/router"
 const GameRoomLayout = dynamic(
   () => import("@components/templates/GameRoomLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const GameRoomListPage = dynamic(
   () => import("@feature/page/games/gameRoomListPage"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

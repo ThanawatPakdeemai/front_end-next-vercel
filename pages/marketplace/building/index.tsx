@@ -5,14 +5,16 @@ import dynamic from "next/dynamic"
 const MarketplaceLayoutWithFilter = dynamic(
   () => import("@components/templates/marketplace/MarketplaceLayoutWithFilter"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 
 const MarketplaceCardList = dynamic(
   () => import("@feature/page/marketplace/MarketplaceCardList"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

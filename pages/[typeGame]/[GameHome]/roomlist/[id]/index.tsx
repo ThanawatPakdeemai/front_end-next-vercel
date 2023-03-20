@@ -8,13 +8,15 @@ import useGameStore from "@stores/game"
 const GameRoomLayout = dynamic(
   () => import("@components/templates/GameRoomLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const GameRoomWaitingPage = dynamic(
   () => import("@feature/page/games/gameRoomWaitingPage"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

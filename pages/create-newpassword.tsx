@@ -6,7 +6,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 const FromCreatePassword = dynamic(
   () => import("@feature/authentication/components/FromCreatePassword"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

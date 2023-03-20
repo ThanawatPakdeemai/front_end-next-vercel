@@ -5,13 +5,15 @@ import dynamic from "next/dynamic"
 const ReferralProgramPage = dynamic(
   () => import("@feature/page/ReferralProgramPage"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const ServicesPageLayout = dynamic(
   () => import("@components/templates/ServicesPageLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

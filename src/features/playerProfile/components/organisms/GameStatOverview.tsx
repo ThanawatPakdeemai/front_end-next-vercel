@@ -23,7 +23,7 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
   }
 
   return (
-    <div className="w-full">
+   <div className="w-full">
       <SliderGameStat
         openBadges={openBadges}
         handleOnExpandClick={handleOnExpandClick}

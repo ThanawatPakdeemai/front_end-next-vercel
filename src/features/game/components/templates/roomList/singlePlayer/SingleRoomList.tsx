@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { Box, Divider } from "@mui/material"
 import React, { useEffect, useMemo, useState } from "react"
 import RoomListBar from "@components/molecules/roomList/RoomListBar"
@@ -28,10 +29,6 @@ const GameRoomList = () => {
   const router = useRouter()
   const { errorToast } = useToast()
   const [gameData, setGameData] = useState<IGame>()
-  const { balanceofItem } = useGetBalanceOf({
-    _address: profile?.address ?? "",
-    _item_id: itemSelected?.item_id_smartcontract ?? 0
-  })
 
   const item = useMemo(() => {
     if (data) {
@@ -56,7 +53,12 @@ const GameRoomList = () => {
   })
 
   const { allGameRoomsById } = useGetAllGameRoomsById({
-    _gameId: data ? data._id : ""
+    _gameId: !profile && data ? data._id : ""
+  })
+
+  const { balanceofItem } = useGetBalanceOf({
+    _address: profile?.address ?? "",
+    _item_id: itemSelected?.item_id_smartcontract ?? 0
   })
 
   const handleJoinRoom = (_dataRoom: IGameRoomDetail) => {
@@ -66,15 +68,19 @@ const GameRoomList = () => {
       }
       return undefined
     })
+
     const _roomId = _dataRoom._id
     if (profile) {
       if (
-        itemSelected &&
-        itemSelected.qty > 0 &&
-        balanceofItem &&
-        balanceofItem?.data > 0 &&
-        new Date() <= new Date(_dataRoom.end_time) &&
-        _dataRoom.amount_current_player < _dataRoom.max_players
+        (itemSelected &&
+          itemSelected.qty > 0 &&
+          balanceofItem &&
+          balanceofItem?.data > 0 &&
+          new Date() <= new Date(_dataRoom.end_time) &&
+          _dataRoom.amount_current_player < _dataRoom.max_players) ||
+        (data &&
+          ((data.play_to_earn && data.play_to_earn_status === "free") ||
+            data.tournament))
       ) {
         if (data_player_me) {
           if (data_player_me && data_player_me.status !== "played") {
@@ -87,6 +93,7 @@ const GameRoomList = () => {
             router.push(
               `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
             )
+            errorToast(MESSAGES["you-played"])
           } else {
             errorToast(MESSAGES["error-something"])
           }
@@ -97,12 +104,6 @@ const GameRoomList = () => {
         errorToast(MESSAGES["room-timeout"])
       } else if (_dataRoom.amount_current_player >= _dataRoom.max_players) {
         errorToast(MESSAGES["room-full"])
-      } else if (
-        data &&
-        ((data.play_to_earn && data.play_to_earn_status === "free") ||
-          data.tournament)
-      ) {
-        router.push(`/${router?.query?.typeGame}/${router.asPath}/${_roomId}`)
       } else if (
         (balanceofItem && balanceofItem?.data < 1) ||
         balanceofItem === undefined
@@ -148,8 +149,17 @@ const GameRoomList = () => {
                         maxPlayer: _data.max_players
                       }}
                       roomId={_data.room_number}
-                      roomName="Room NAKA"
+                      roomName={`Room NAKA ${itemSelected?.item_size}`}
                       onClick={() => handleJoinRoom(_data)}
+                      btnText={
+                        _data?.current_player?.find(
+                          (ele) => ele.player_id === profile?.id
+                        )?.status === "played"
+                          ? "played"
+                          : _data?.amount_current_player >= _data.max_players
+                          ? "full"
+                          : "join"
+                      }
                     />
                   )
                 })
@@ -169,7 +179,7 @@ const GameRoomList = () => {
                         maxPlayer: _data.max_players
                       }}
                       roomId={_data.room_number}
-                      roomName="Room NAKA"
+                      roomName={`Room NAKA ${itemSelected?.item_size}`}
                       onClick={() => handleJoinRoom(_data)}
                     />
                   )
@@ -181,11 +191,14 @@ const GameRoomList = () => {
             />
           </div>
         </div>
-        {gameData && (!gameData?.play_to_earn || !gameData.tournament) && (
-          <BuyItemBody>
-            <CardBuyItem gameObject={gameData} />
-          </BuyItemBody>
-        )}
+        {gameData &&
+          ((gameData?.play_to_earn &&
+            gameData?.play_to_earn_status !== "free") ||
+            !gameData.tournament) && (
+            <BuyItemBody>
+              <CardBuyItem gameObject={gameData} />
+            </BuyItemBody>
+          )}
       </Box>
     </>
   )

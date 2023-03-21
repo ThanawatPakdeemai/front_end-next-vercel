@@ -3,7 +3,8 @@ import { MENU_BLOG_HEADER } from "@configs/menu"
 import { Button, TextField, Typography } from "@mui/material"
 import useSearchStore from "@stores/blogFilter"
 import useSelectStore from "@stores/selector"
-import React from "react"
+import { useRouter } from "next/router"
+import React, { useEffect } from "react"
 
 const HeadBlog = ({ children }: { children: React.ReactNode }) => {
   const styleButton = {
@@ -11,8 +12,18 @@ const HeadBlog = ({ children }: { children: React.ReactNode }) => {
     borderRadius: "15px !important"
   }
 
-  const { search: searchBlog, setSearch: setSearchBlog } = useSearchStore()
+  const {
+    search: searchBlog,
+    setSearch: setSearchBlog,
+    clearSearch
+  } = useSearchStore()
   const { select: selectHeader, setSelect: setSelectHeader } = useSelectStore()
+  const router = useRouter()
+
+  useEffect(() => {
+    clearSearch()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.pathname])
 
   return (
     <div className="mx-auto xl:mx-0">

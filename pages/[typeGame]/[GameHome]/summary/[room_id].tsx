@@ -1,7 +1,9 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useRouter } from "next/router"
 import dynamic from "next/dynamic"
-import React, { ReactElement } from "react"
+import React, { ReactElement, useEffect } from "react"
+import useGetGameByPath from "@feature/game/containers/hooks/useFindGameByPath"
+import useGameStore from "@stores/game"
 
 const GameRoomLayout = dynamic(
   () => import("@components/templates/GameRoomLayout"),
@@ -20,7 +22,14 @@ const GameSummaryPage = dynamic(
 
 export default function Notification_id() {
   const router = useRouter()
-  const { room_id } = router.query
+  const { onSetGameData } = useGameStore()
+  const { room_id, GameHome } = router.query
+  const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
+
+  useEffect(() => {
+    if (!gameData) return
+    onSetGameData(gameData)
+  }, [gameData, onSetGameData])
 
   return (
     <>

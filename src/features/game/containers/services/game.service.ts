@@ -16,7 +16,8 @@ import {
   IClaimEarnedRewardByPlayerId,
   IGetGameByTypesProps,
   IGetGameByTypes,
-  IFilterGamesByKey
+  IFilterGamesByKey,
+  IResponseGameUpdatedPlaying
 } from "@feature/game/interfaces/IGameService"
 
 export const getAllGames = () =>
@@ -219,6 +220,16 @@ export const getMyGameNFT = (data: IFilterGamesByKey) =>
       .post<IGameService>(`${CONFIGS.BASE_URL.API}/game/NFT/my-game`, {
         ...data
       })
+      .then((response) => resolve(response.data))
+      .catch((error) => reject(error))
+  })
+
+export const updatePlayCounting = (gameId: string) =>
+  new Promise<IResponseGameUpdatedPlaying>((resolve, reject) => {
+    services
+      .put<IResponseGameUpdatedPlaying>(
+        `${CONFIGS.BASE_URL.API}/game/stat-play-data/${gameId}`
+      )
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

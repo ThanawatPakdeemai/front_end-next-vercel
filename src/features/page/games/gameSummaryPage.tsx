@@ -41,7 +41,9 @@ const GameSummaryPage = ({ _roomId }: IProp) => {
           maxPlayer: gameRoomById.max_players
         }}
         className="rounded-t-3xl border"
-        onOutRoom={() => router.push(`/${splitPath[1]}/${splitPath[2]}`)}
+        onOutRoom={() =>
+          router.push(`/${splitPath[1]}/${splitPath[2]}/roomlist`)
+        }
         isSummaryPage
       />
       <div className="flex flex-wrap justify-center rounded-b-md bg-neutral-800 p-[10px]">

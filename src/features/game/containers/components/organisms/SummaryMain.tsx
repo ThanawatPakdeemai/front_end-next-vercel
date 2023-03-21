@@ -113,7 +113,7 @@ const SummaryMain = ({ summaryData }: IProp) => {
             />
             <SummaryGameDetail
               title="game reward:"
-              value={`${playerSummary.naka_for_player} Naka`}
+              value={`${playerSummary?.naka_for_player ?? 0} Naka`}
             />
           </div>
           <div className="flex w-full flex-col items-center justify-center gap-[10px] rounded border border-neutral-800 bg-neutral-800 p-[10px] text-sm">

@@ -1,3 +1,4 @@
+import SkeletonCardPlayers from "@components/atoms/skeleton/SkeletonCardPlayers"
 import HeaderWaitingRoom from "@components/organisms/HeaderWaitingRoom"
 import SeatPlayersSingle from "@feature/game/components/organisms/SeatPlayerSingle"
 import useGetCurrentPlayerGameSingle from "@feature/game/containers/hooks/useGetCurrentPlayerGameSingle"
@@ -104,28 +105,53 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
           (data ? (
             <>
               <Box className="relative w-full rounded-3xl border border-neutral-700">
-                {playerGameSingle && (
+                {isLoading && (
                   <HeaderWaitingRoom
-                    roomTag={playerGameSingle.room_number}
-                    roomName={`#${data.name} ${playerGameSingle.room_number}`}
+                    roomTag={playerGameSingle?.room_number ?? ""}
+                    roomName={`#${data.name} ${
+                      playerGameSingle?.room_number ?? "000"
+                    }`}
                     timer={{
-                      time: new Date(playerGameSingle.end_time)
+                      time: playerGameSingle
+                        ? new Date(playerGameSingle?.end_time)
+                        : new Date()
                     }}
                     player={{
                       currentPlayer:
-                        playersMap.filter((ele) => ele).length ?? 0,
-                      maxPlayer: playerGameSingle.max_players ?? 8
+                        playersMap?.filter((ele) => ele).length ?? 0,
+                      maxPlayer: playerGameSingle?.max_players ?? 8
                     }}
                     onOutRoom={outRoom}
                   />
                 )}
 
-                {!isLoading && (
+                {!isLoading ? (
                   <>
+                    <HeaderWaitingRoom
+                      roomTag={playerGameSingle?.room_number ?? ""}
+                      roomName={`#${data.name} ${
+                        playerGameSingle?.room_number ?? "000"
+                      }`}
+                      timer={{
+                        time: playerGameSingle
+                          ? new Date(playerGameSingle?.end_time)
+                          : new Date()
+                      }}
+                      player={{
+                        currentPlayer:
+                          playersMap?.filter((ele) => ele).length ?? 0,
+                        maxPlayer: playerGameSingle?.max_players ?? 8
+                      }}
+                      onOutRoom={outRoom}
+                    />
                     <SeatPlayersSingle
                       players={playersMap}
                       room_id={_roomId}
                     />
+                  </>
+                ) : (
+                  <>
+                    <SkeletonCardPlayers />
                   </>
                 )}
               </Box>

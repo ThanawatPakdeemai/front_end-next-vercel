@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable import/no-unresolved */
 import React from "react"
 import { Player } from "@lottiefiles/react-lottie-player"
 import { scroller } from "react-scroll"

@@ -2,6 +2,8 @@ import { memo } from "react"
 import TournamentProfile from "@components/molecules/tournament/TournamentProfile"
 import TournamentReward from "@components/molecules/tournament/TournamentReward"
 import RoundStatus from "@components/molecules/tournament/RoundStatus"
+import StepRound from "@components/molecules/tournament/StepRound"
+import QualifyingRound from "@components/molecules/tournament/QualifyingRound"
 import TournamentRegister from "@components/molecules/tournament/TournamentRegister"
 import TournamentNewsSlide from "@feature/slider/components/templates/TournamentNewsSlide"
 import CardTournamentSlider from "@feature/slider/components/molecules/CardTournamentSlider"
@@ -146,6 +148,8 @@ const TournamentPage = () => (
       <RoundStatus />
     </div>
     <div className="col-span-5">
+      <StepRound />
+      <QualifyingRound />
       <TournamentNewsSlide />
     </div>
   </div>

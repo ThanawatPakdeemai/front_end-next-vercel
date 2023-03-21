@@ -135,7 +135,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
           ))}
         {data &&
           ((data?.play_to_earn && data?.play_to_earn_status !== "free") ||
-            data.tournament) && (
+            !data.tournament) && (
             <Box className="rounded-3xl lg:w-[333px]">
               {data && <CardBuyItem gameObject={data} />}
             </Box>

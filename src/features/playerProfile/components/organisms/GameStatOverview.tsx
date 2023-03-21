@@ -58,7 +58,7 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
                       title={item.story}
                       color="error"
                     >
-                      <div>{item.story}</div>
+                      <span>{item.story}</span>
                     </TooltipsCustom>
                   </p>
                 </div>

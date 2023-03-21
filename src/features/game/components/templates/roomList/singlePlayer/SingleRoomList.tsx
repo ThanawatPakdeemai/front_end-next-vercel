@@ -28,10 +28,6 @@ const GameRoomList = () => {
   const router = useRouter()
   const { errorToast } = useToast()
   const [gameData, setGameData] = useState<IGame>()
-  const { balanceofItem } = useGetBalanceOf({
-    _address: profile?.address ?? "",
-    _item_id: itemSelected?.item_id_smartcontract ?? 0
-  })
 
   const item = useMemo(() => {
     if (data) {
@@ -56,7 +52,12 @@ const GameRoomList = () => {
   })
 
   const { allGameRoomsById } = useGetAllGameRoomsById({
-    _gameId: data ? data._id : ""
+    _gameId: !profile && data ? data._id : ""
+  })
+
+  const { balanceofItem } = useGetBalanceOf({
+    _address: profile?.address ?? "",
+    _item_id: itemSelected?.item_id_smartcontract ?? 0
   })
 
   const handleJoinRoom = (_dataRoom: IGameRoomDetail) => {
@@ -102,7 +103,7 @@ const GameRoomList = () => {
         ((data.play_to_earn && data.play_to_earn_status === "free") ||
           data.tournament)
       ) {
-        router.push(`/${router?.query?.typeGame}/${router.asPath}/${_roomId}`)
+        router.push(`/${router.asPath}/${_roomId}`)
       } else if (
         (balanceofItem && balanceofItem?.data < 1) ||
         balanceofItem === undefined
@@ -181,11 +182,14 @@ const GameRoomList = () => {
             />
           </div>
         </div>
-        {gameData && (!gameData?.play_to_earn || !gameData.tournament) && (
-          <BuyItemBody>
-            <CardBuyItem gameObject={gameData} />
-          </BuyItemBody>
-        )}
+        {gameData &&
+          ((gameData?.play_to_earn &&
+            gameData?.play_to_earn_status !== "free") ||
+            gameData.tournament) && (
+            <BuyItemBody>
+              <CardBuyItem gameObject={gameData} />
+            </BuyItemBody>
+          )}
       </Box>
     </>
   )

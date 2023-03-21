@@ -5,7 +5,8 @@ import dynamic from "next/dynamic"
 const MarketplaceLayoutInventory = dynamic(
   () => import("@components/templates/marketplace/MarketplaceLayoutInventory"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

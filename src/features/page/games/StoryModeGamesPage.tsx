@@ -128,6 +128,11 @@ const StoryModeGamesPage = () => {
               />
             ))}
       </div>
+
+      {totalCount === 0 && (
+        <div className="d-flex  justify-center text-center">No data</div>
+      )}
+
       <PaginationNaka
         totalCount={totalCount}
         limit={limit}

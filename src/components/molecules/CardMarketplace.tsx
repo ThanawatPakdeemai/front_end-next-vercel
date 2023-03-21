@@ -41,7 +41,9 @@ const CardMarketplace = ({
           {description}
         </h2>
         <ButtonLink
-          href={href}
+          href=""
+          // eslint-disable-next-line no-return-assign
+          onClick={() => (window.location.href = href)}
           text="Marketplace"
           icon={<IShoppingCart />}
           size="medium"

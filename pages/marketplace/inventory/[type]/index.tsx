@@ -7,7 +7,8 @@ import { GetServerSideProps } from "next"
 const MarketplaceLayoutInventory = dynamic(
   () => import("@components/templates/marketplace/MarketplaceLayoutInventory"),
   {
-    suspense: true
+    suspense: false,
+    ssr: false
   }
 )
 
@@ -18,21 +19,21 @@ Page.getLayout = function getLayout(page: ReactElement) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  // eslint-disable-next-line no-unused-vars
   const validParams = MENU_ROUTER_MARKETPLACE_TYPE.some((_type) =>
-    ctx.params?.typeGame?.includes(_type)
+    ctx.params?.type?.includes(_type)
   )
 
   return {
     props: {
       ...(await serverSideTranslations(ctx.locale!, ["common"]))
-    },
-    redirect: {
-      source: "/marketplace/inventory",
-      destination: !validParams
-        ? "/404"
-        : `/${ctx.locale!}/marketplace/inventory/land`,
-      permanent: true
     }
+    // ERR_TOO_MANY_REDIRECTS
+    // redirect: {
+    //   source: `/marketplace/inventory`,
+    //   destination: !validParams ? "/404" : `/marketplace/inventory/land`,
+    //   permanent: true
+    // }
   }
 }
 

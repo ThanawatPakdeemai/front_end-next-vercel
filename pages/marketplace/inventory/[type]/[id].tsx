@@ -8,7 +8,8 @@ const MarketplaceLayoutInventoryNoFilter = dynamic(
       "@components/templates/marketplace/MarketplaceLayoutInventoryNoFilter"
     ),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

@@ -6,6 +6,7 @@ import CreateProfile from "@feature/profile/components/createProfile/CreateProfi
 import useGlobal from "@hooks/useGlobal"
 import jwt_decode from "jwt-decode"
 import Helper from "@utils/helper"
+import { refreshProfileToken } from "@feature/authentication/containers/services/auth.service"
 import RightMenuLogIn from "./RightMenuLogIn"
 import RightMenuNotLogIn from "./RightMenuNotLogIn"
 
@@ -19,19 +20,35 @@ const RightMenu = () => {
 
   useEffect(() => {
     // Retrieve the token from local storage
+    let load = false
+    if (!load) {
+      if (token) {
+        // Decode the token to obtain the expiration time
+        const { exp }: any = jwt_decode(token)
+        // Compare the expiration time with the current time
+        // console.log(Date.now(), exp * 1000)
+        // console.log(Date.now() < exp * 1000)
 
-    if (token) {
-      // Decode the token to obtain the expiration time
-      const { exp }: any = jwt_decode(token)
-      // Compare the expiration time with the current time
-      if (Date.now() < exp * 1000) {
-        setIsTokenValid(true)
-      } else {
-        // If the token has expired, remove it from local storage
-        setIsTokenValid(false)
-
-        onReset() // remove profile zustand
+        if (Date.now() < exp * 1000) {
+          setIsTokenValid(true)
+        } else {
+          // If the token has expired, remove it from local storage
+          refreshProfileToken()
+            .then((_res) => {
+              if (_res) {
+                // console.log(_res)
+              }
+            })
+            .catch((err) => {
+              console.error(err)
+              setIsTokenValid(false)
+              onReset() // remove profile zustand
+            })
+        }
       }
+    }
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token, profile])

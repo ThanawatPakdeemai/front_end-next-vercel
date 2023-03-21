@@ -79,7 +79,7 @@ export const refreshProfileToken = async (
           withCredentials: true
         }
       )
-      .then((_response) => {
+      .then(async (_response) => {
         Helper.setLocalStorage({
           key: ELocalKey.token,
           value: _response.data.jwtToken
@@ -87,7 +87,7 @@ export const refreshProfileToken = async (
         axios.defaults.headers.common = {
           Authorization: `Bearer ${_response.data.jwtToken}`
         }
-
+        // console.log(_response)
         return _response.data.jwtToken
       })
       .catch((error) => {

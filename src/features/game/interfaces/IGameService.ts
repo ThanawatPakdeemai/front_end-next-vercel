@@ -535,3 +535,17 @@ export interface IFilterGamesByKey {
   tournament?: boolean
   nftgame?: boolean
 }
+
+export interface IResponseGameUpdatedPlayingData {
+  play_total_count: number
+  _id: string
+  history: History[]
+  createdAt: Date
+  updatedAt: Date
+  game_id: string
+}
+
+export interface IResponseGameUpdatedPlaying {
+  status: boolean
+  data: IResponseGameUpdatedPlayingData
+}

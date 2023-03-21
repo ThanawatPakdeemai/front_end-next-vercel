@@ -35,6 +35,7 @@ import useQuestStore from "@stores/quest"
 import { MenuLists } from "@configs/social"
 import useGlobal from "@hooks/useGlobal"
 import CardLinkTemplate from "@components/templates/contents/CardLinkTemplate"
+import CONFIGS from "@configs/index"
 
 const Home = () => {
   const limit = 10
@@ -123,7 +124,7 @@ const Home = () => {
       </div>
       <div className="flex grid-cols-1 flex-wrap gap-6 lg:grid lg:grid-cols-2">
         <Box className="flex-[1_1_100%] sm:flex-[1_1_60%] xl:flex-none">
-          <CardMarketplace />
+          <CardMarketplace href={CONFIGS.BASE_URL.MARKETPLACE} />
           <div className="mt-4">
             <Grid
               container
@@ -270,7 +271,7 @@ const Home = () => {
           </Grid>
         </Box>
         <Box className="mt-2 flex-1 sm:mt-4 md:max-w-full lg:mt-0 lg:max-w-[33.33%] xl:flex-none">
-          <CardNakaverse href="/" />
+          <CardNakaverse href={CONFIGS.BASE_URL.NAKAVERSE} />
         </Box>
       </Box>
     </>

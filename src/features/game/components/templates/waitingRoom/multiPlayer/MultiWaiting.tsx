@@ -19,6 +19,7 @@ import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGa
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import SkeletonCardPlayers from "@components/atoms/skeleton/SkeletonCardPlayers"
 import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
 const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
@@ -261,20 +262,22 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
           <Box className="w-full gap-3 md:flex">
             <Box className="w-full shrink rounded-3xl border border-neutral-800">
               {dataPlayers && gameData && (
-                <HeaderWaitingRoom
-                  roomTag={dataPlayers.create_room_detail.no_room}
-                  roomName="#ROOM NAME"
-                  timer={{
-                    time: new Date(dataPlayers.end_time)
-                  }}
-                  player={{
-                    currentPlayer: dataPlayers.amount_current_player,
-                    maxPlayer: dataPlayers.max_players
-                  }}
-                  onOutRoom={() => {
-                    outRoom()
-                  }}
-                />
+                <>
+                  <HeaderWaitingRoom
+                    roomTag={dataPlayers.create_room_detail.no_room}
+                    roomName="#ROOM NAME"
+                    timer={{
+                      time: new Date(dataPlayers.end_time)
+                    }}
+                    player={{
+                      currentPlayer: dataPlayers.amount_current_player,
+                      maxPlayer: dataPlayers.max_players
+                    }}
+                    onOutRoom={() => {
+                      outRoom()
+                    }}
+                  />
+                </>
               )}
               {dataPlayers && dataPlayers.current_player ? (
                 <>
@@ -296,19 +299,11 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
                       outRoom()
                     }}
                   />
+                  <SkeletonCardPlayers />
                   <Typography className="my-5 text-center">
                     {t("no-player")}
                   </Typography>
                   {gameData && (
-                    // <ButtonLink
-                    //   href={`roomlist`}
-                    //   text={t("out-room")}
-                    //   icon=""
-                    //   size="medium"
-                    //   className="m-auto"
-                    //   color="secondary"
-                    //   variant="contained"
-                    // />
                     <div className="mb-5 flex w-full items-center justify-center">
                       <ButtonToggleIcon
                         startIcon=""
@@ -331,7 +326,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
           {gameData &&
             ((gameData?.play_to_earn &&
               gameData?.play_to_earn_status !== "free") ||
-              gameData.tournament) && (
+              !gameData.tournament) && (
               <BuyItemBody>
                 <CardButItem gameObject={gameData} />
                 <Chat />

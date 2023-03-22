@@ -30,13 +30,15 @@ const GameRoomLayout = ({
   // const lang = searchParams.get("lang")
 
   useEffect(() => {
-    if (data) {
-      setGameData(data as IGame)
+    let load = false
+    if (!load) {
+      if (data) {
+        setGameData(data as IGame)
+      }
     }
-  }, [data])
-
-  useEffect(() => {
-    if (data) setGameData(data as IGame)
+    return () => {
+      load = true
+    }
   }, [data])
 
   useEffect(() => {

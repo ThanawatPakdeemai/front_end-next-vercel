@@ -501,7 +501,7 @@ const FormRegister = () => {
                   handleClick={() => onSubmitRegisterForm(true)}
                   type="submit"
                   startIcon={<IEdit />}
-                  text="Regiter"
+                  text="Register"
                   className="btn-rainbow-theme h-[40px] !w-[209px] bg-secondary-main font-bold capitalize text-white-default"
                 />
               </Grid>

@@ -10,17 +10,9 @@ const MarketplaceLayoutInventory = dynamic(
   }
 )
 
-const InventoryPage = dynamic(
-  () => import("@feature/page/inventory/InventoryPage"),
-  {
-    suspense: true,
-    ssr: false
-  }
-)
+const Page = () => <>test</>
 
-const Inventory = () => <InventoryPage />
-
-Inventory.getLayout = function getLayout(page: ReactElement) {
+Page.getLayout = function getLayout(page: ReactElement) {
   return <MarketplaceLayoutInventory>{page}</MarketplaceLayoutInventory>
 }
 
@@ -32,4 +24,4 @@ export async function getServerSideProps({ locale }: { locale: string }) {
   }
 }
 
-export default Inventory
+export default Page

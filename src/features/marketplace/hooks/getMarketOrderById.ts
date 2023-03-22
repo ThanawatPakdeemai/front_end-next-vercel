@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { getMarketOrderById } from "../containers/services/marketplace.service"
+import { TNFTType } from "../interfaces/IMarketService"
 
 const useGetMarketOrderById = ({
   _id,
@@ -7,7 +8,7 @@ const useGetMarketOrderById = ({
   _isActive
 }: {
   _id: string
-  _type: string
+  _type: TNFTType | undefined
   _isActive: boolean
 }) => {
   const { data: orderData, isLoading } = useQuery({

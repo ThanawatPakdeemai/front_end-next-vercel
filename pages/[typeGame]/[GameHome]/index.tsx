@@ -57,8 +57,14 @@ export default function GameLobby() {
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
 
   useEffect(() => {
-    if (!gameData) return
-    onSetGameData(gameData)
+    let load = false
+    if (!load) {
+      if (!gameData) return
+      onSetGameData(gameData)
+    }
+    return () => {
+      load = true
+    }
   }, [gameData, onSetGameData])
 
   const getTemplateLobby = () => {

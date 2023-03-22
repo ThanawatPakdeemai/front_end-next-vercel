@@ -4,6 +4,7 @@ import {
   IMarketDetail,
   IMarketOrderServ,
   IMarketServForm,
+  TNFTType,
   TType
 } from "@feature/marketplace/interfaces/IMarketService"
 import { useRouter } from "next/router"
@@ -11,12 +12,66 @@ import { useCallback, useEffect, useState } from "react"
 
 const useMarketplace = () => {
   const router = useRouter()
-  const [orderData, setOrderData] = useState<IMarketOrderServ>()
+  const [nameNFT, setNameNFT] = useState<string | undefined>(undefined)
+  const [tokenNFT, setTokenNFT] = useState<string | undefined>(undefined)
+  const [orderData, setOrderData] = useState<IMarketOrderServ | undefined>(
+    undefined
+  )
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [type, setType] = useState<TType>("land")
   const [totalCount, setTotalCount] = useState<number>(0)
   const { getMarketOrderAsnyc, isLoading } = useGetMarketOrder()
   const limit = 15
+
+  const handleSelectToken = (
+    _type: TNFTType | undefined,
+    _data: IMarketDetail
+  ) => {
+    let _tokenId: string = "000000"
+    let _nameNFT: string = "NFT-Namce"
+    switch (_type) {
+      case "game_item":
+        if (_data.item_data) {
+          _tokenId = _data.item_data.item_id_smartcontract.toString()
+          _nameNFT = _data.item_data.name
+        }
+        break
+      case "nft_material":
+        if (_data.material_data) {
+          _tokenId = _data.material_data.material_id_smartcontract.toString()
+          _nameNFT = _data.material_data.name
+        }
+        break
+      case "nft_land":
+        if (_data.land_data) {
+          _tokenId = _data.land_data.land_id
+          _nameNFT = _data.land_data.name
+        }
+        break
+      case "nft_building":
+        if (_data.building_data && _data.building_data.NFT_token) {
+          _tokenId = _data.building_data.NFT_token
+          _nameNFT = _data.building_data.name
+        }
+        break
+      case "nft_naka_punk":
+        if (_data.nakapunk_data) {
+          _tokenId = _data.nakapunk_data.NFT_token
+          _nameNFT = _data.nakapunk_data.name
+        }
+        break
+      case "nft_game":
+        if (_data.game_data) {
+          _tokenId = _data.game_data.NFT_info.NFT_token
+          _nameNFT = _data.game_data.name
+        }
+        break
+      default:
+        break
+    }
+    setTokenNFT(_tokenId)
+    setNameNFT(_nameNFT)
+  }
 
   // all fetch info lsit
   const handleSearch = useCallback(async () => {
@@ -80,21 +135,29 @@ const useMarketplace = () => {
   const [detailData, setDetailData] = useState<IMarketDetail>()
   const getPathnameType = router.pathname.split("/")[2]
   const id = router.query.id as string
+
   const handleType = () => {
+    let _type: TNFTType | undefined
     switch (getPathnameType) {
       case "land":
-        return "nft_land"
+        _type = "nft_land"
+        break
       case "building":
-        return "nft_building"
+        _type = "nft_building"
+        break
       case "naka-punk":
-        return "nft_naka_punk"
+        _type = "nft_naka_punk"
+        break
       case "material":
-        return "nft_material"
+        _type = "nft_material"
+        break
       case "game":
-        return "game_item"
+        _type = "game_item"
+        break
       default:
-        return "land"
+        break
     }
+    return _type
   }
 
   const handleImage = (_data: IMarketDetail) => {
@@ -147,12 +210,17 @@ const useMarketplace = () => {
 
   useEffect(() => {
     if (detailOrder) {
-      setDetailData(detailOrder.data[0])
+      const result = detailOrder.data[0]
+      setDetailData(result)
+      handleSelectToken(handleType(), result)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [detailOrder])
   // end fetch detail
 
   return {
+    nameNFT,
+    tokenNFT,
     orderData,
     isLoading,
     totalCount,

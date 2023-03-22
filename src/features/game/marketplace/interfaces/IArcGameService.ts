@@ -4,11 +4,7 @@ import {
   TGameType,
   TTypeCode
 } from "@feature/game/interfaces/IGameService"
-import {
-  IInstallData,
-  IMarketData,
-  IMarketHistory
-} from "@feature/marketplace/interfaces/IMarketService"
+import { IMarketForm } from "@feature/marketplace/interfaces/IMarketService"
 import { IFormatService, IInfoFormatServ } from "@interfaces/IHelper"
 
 interface IId {
@@ -38,7 +34,6 @@ export interface INFTInfo {
 
 interface INFTInfoData {
   NFT_info: INFTInfo
-  marketplaces_data: IMarketData[] | null //
 }
 
 interface IArcGameCateg extends IName {
@@ -47,24 +42,35 @@ interface IArcGameCateg extends IName {
 
 interface IArcGameCategList extends IId, IName {}
 
-export interface IArcGameData extends IId, IName, INFTInfoData {
-  story: string
-  play_time: number
-  version: string
-  developer: string
-  category: IArcGameCateg
-  category_list: IArcGameCategList[]
-  game_type: TGameType
-  type_code: TTypeCode
-  game_url: string
-  game_mode: IGetType
+export interface IArcGame extends IId, IName, INFTInfoData {
   animation_nft_arcade_game: string
-  history: IMarketHistory[]
+  category_list: IArcGameCategList[]
+  developer: string
+  game_type: TGameType
+  game_url: string
   image_nft_arcade_game: string
-  installments_data: IInstallData[] | null //
+  play_time: number
+  story: string
+  version: string
 }
 
-export interface IArcGameDetail extends IId, IGame, INFTInfoData {
+export interface IArcGameInfo extends IArcGame {
+  is_NFT: string
+}
+
+export interface IArcGameData
+  extends IArcGame,
+    Pick<IMarketForm, "history" | "marketplaces_data" | "installments_data"> {
+  category: IArcGameCateg
+  type_code: TTypeCode
+  game_mode: IGetType
+}
+
+export interface IArcGameDetail
+  extends IId,
+    IGame,
+    INFTInfoData,
+    Pick<IMarketForm, "marketplaces_data"> {
   pdf_url: string
 }
 

@@ -4,10 +4,18 @@ import RightDetailsMarketplace from "@feature/marketplace/components/organisms/R
 import CONFIGS from "@configs/index"
 import React from "react"
 import useMarketplace from "@hooks/useMarketplace"
-import ButtonMarket from "@components/atoms/button/ButtonMarket"
+import dynamic from "next/dynamic"
+
+const ButtonMarket = dynamic(
+  () => import("@components/atoms/button/ButtonMarket"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 const MarketplaceDetail = () => {
-  const { detailData, type } = useMarketplace()
+  const { detailData, type, tokenNFT, nameNFT } = useMarketplace()
 
   return detailData ? (
     <div className="flex w-full gap-x-[120px]">
@@ -81,9 +89,14 @@ const MarketplaceDetail = () => {
           qrCode={detailData.land_data?.qrcode_image}
         />
         <ButtonMarket
-          _nftType="game_item"
-          _sellerType={detailData.seller_type}
-          _sellerId={detailData.seller_id}
+          nftType={detailData.type}
+          name={nameNFT}
+          tokenId={tokenNFT}
+          price={detailData.price}
+          // period={detailData.period_amount}
+          sellerType={detailData.seller_type}
+          sellingType={detailData.selling_type}
+          sellerId={detailData.seller_id}
         />
       </div>
     </div>

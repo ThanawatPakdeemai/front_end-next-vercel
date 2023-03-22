@@ -14,7 +14,10 @@ interface IProps extends ModalUnstyledOwnProps {
 export const ModalCustom = ({ title, onClose, ...props }: IProps) => {
   const { children, bgcolor, className, width } = props
   return (
-    <Modal {...props}>
+    <Modal
+      onClose={onClose}
+      {...props}
+    >
       <Box
         sx={{
           position: "absolute" as "absolute",

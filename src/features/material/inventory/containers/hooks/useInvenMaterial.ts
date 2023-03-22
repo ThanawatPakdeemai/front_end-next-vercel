@@ -81,7 +81,11 @@ const useInvenMaterial = () => {
   }
 
   // transfer
-  const transMaterial = (_to: string, _materialId: string, _materialAmount) =>
+  const transferMaterial = (
+    _to: string,
+    _materialId: string,
+    _materialAmount: number
+  ) =>
     new Promise<TransactionResponse>((resolve, reject) => {
       materialContract
         .moveMaterialToUserSingle(_to, _materialId, _materialAmount)
@@ -93,14 +97,14 @@ const useInvenMaterial = () => {
         })
     })
 
-  const onTransMaterial = async (
+  const onTransferMaterial = async (
     _from: string,
     _to: string,
     _materialId: string,
-    _materialAmount
+    _materialAmount: number
   ) => {
     setOpen(MESSAGES.transaction_processing_order)
-    await transMaterial(_to, _materialId, _materialAmount)
+    await transferMaterial(_to, _materialId, _materialAmount)
       .then(async (response) => {
         const _res = await response.wait()
         const _enTopic = await utils.keccak256(
@@ -131,7 +135,7 @@ const useInvenMaterial = () => {
     materialList,
     updateMaterialList,
     onFetchInvenMaterial,
-    onTransMaterial
+    onTransferMaterial
   }
 }
 

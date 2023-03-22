@@ -22,7 +22,7 @@ const useMarketMaterial = () => {
   )
   const { setOpen, setClose } = useLoadingStore()
   const { utils } = ethers
-  const { WeiToNumber } = Helper
+  const { WeiToNumber, toWei } = Helper
   const {
     mutateMarketCreateOrder,
     mutateMarketCancelOrder,
@@ -50,10 +50,14 @@ const useMarketMaterial = () => {
   const onCreateMaterialOrder = async (
     _materialId: string,
     _materialAmount: number,
-    _nakaAmount: BigNumberish
+    _nakaAmount: number
   ) => {
     setOpen(MESSAGES.transaction_processing_order)
-    await createMaterialOrder(_materialId, _materialAmount, _nakaAmount)
+    await createMaterialOrder(
+      _materialId,
+      _materialAmount,
+      toWei(_nakaAmount.toString())
+    )
       .then(async (response) => {
         const _res = await response.wait()
         const _enTopic = await utils.keccak256(
@@ -81,7 +85,7 @@ const useMarketMaterial = () => {
             _resultEvent[1].toString(),
             Number(_resultEvent[2].toString())
           )
-          mutateMarketCreateOrder(data)
+          await mutateMarketCreateOrder(data)
         }
       })
       .catch((error) => console.error(error))
@@ -130,7 +134,7 @@ const useMarketMaterial = () => {
             _resultEvent[1].toString(),
             Number(_resultEvent[2].toString())
           )
-          mutateMarketCancelOrder(data)
+          await mutateMarketCancelOrder(data)
         }
       })
       .catch((error) => console.error(error))
@@ -154,7 +158,7 @@ const useMarketMaterial = () => {
         })
     })
 
-  const onPurchaseMaterialOrder = async (
+  const onExecuteMaterialOrder = async (
     _marketId: string,
     _itemID: string,
     _sellerAccount: string,
@@ -188,7 +192,7 @@ const useMarketMaterial = () => {
             _resultEvent[1].toString(),
             Number(_resultEvent[3].toString())
           )
-          mutateMarketPurcOrder(data)
+          await mutateMarketPurcOrder(data)
         }
       })
       .catch((error) => console.error(error))
@@ -198,7 +202,7 @@ const useMarketMaterial = () => {
   return {
     onCreateMaterialOrder,
     onCancelMaterialOrder,
-    onPurchaseMaterialOrder
+    onExecuteMaterialOrder
   }
 }
 

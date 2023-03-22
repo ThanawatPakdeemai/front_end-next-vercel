@@ -6,8 +6,11 @@ import {
   IMarketCreateOrderServ,
   IMarketOrderServ,
   IMarketServForm,
+  IPayBillInstallServ,
+  IPayBillParams,
   IPurchOrderParams,
-  IPutOrderServ
+  IPutOrderServ,
+  TNFTType
 } from "@feature/marketplace/interfaces/IMarketService"
 
 export const getMarketOrder = ({
@@ -35,7 +38,7 @@ export const getMarketOrderById = async ({
   _isActive
 }: {
   _id: string
-  _type: string
+  _type: TNFTType | undefined
   _isActive: boolean
 }) =>
   new Promise<IMarketOrderServ>((resolve, reject) => {
@@ -83,7 +86,6 @@ export const purchaseMarketOrder = ({
   _marketplaceId,
   _itemId,
   _itemAmount = 1,
-  _landId,
   _txHash,
   _smcAmount,
   _rentalData,
@@ -94,7 +96,6 @@ export const purchaseMarketOrder = ({
       marketplace_id: _marketplaceId,
       item_amount: _itemAmount,
       item_id: _itemId,
-      land_id: _landId,
       transaction_hash: _txHash,
       smc_amount: _smcAmount,
       rental_data: _rentalData,
@@ -114,6 +115,31 @@ export const cancelMarketOrder = ({ _orderId, _txHash }: ICancelOrderParams) =>
     }
     services
       .put<IPutOrderServ>(`/market-place/cancel-order`, { ...data })
+      .then((response) => resolve(response.data))
+      .catch((error) => reject(error))
+  })
+
+export const payBillInstallNFT = ({
+  _billId,
+  _billBalance,
+  _periodBalance,
+  _txHash,
+  _roundPayed,
+  _roundPayedAmount
+}: IPayBillParams) =>
+  new Promise<IPayBillInstallServ>((resolve, reject) => {
+    const data = {
+      bill_id: _billId,
+      bill_balance: _billBalance,
+      period_balance: _periodBalance,
+      round_payed: _roundPayed,
+      round_payed_amount: _roundPayedAmount,
+      transaction_hash: _txHash
+    }
+    services
+      .post<IPayBillInstallServ>(`/installment/pay-installment-bill`, {
+        ...data
+      })
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

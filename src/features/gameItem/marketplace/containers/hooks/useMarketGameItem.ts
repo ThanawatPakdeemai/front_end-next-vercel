@@ -21,7 +21,7 @@ const useMarketGameItem = () => {
     signer,
     CONFIGS.CONTRACT_ADDRESS.MARKETPLACE
   )
-  const { WeiToNumber } = Helper
+  const { WeiToNumber, toWei } = Helper
   const { setOpen, setClose } = useLoadingStore()
   const {
     mutateMarketCreateOrder,
@@ -50,10 +50,14 @@ const useMarketGameItem = () => {
   const onCreateGameItemOrder = async (
     _itemId: string,
     _itemAmount: number,
-    _nakaAmount: BigNumberish
+    _nakaAmount: number
   ) => {
     setOpen(MESSAGES.transaction_processing_order)
-    await createGameItemOrder(_itemId, _itemAmount, _nakaAmount)
+    await createGameItemOrder(
+      _itemId,
+      _itemAmount,
+      toWei(_nakaAmount.toString())
+    )
       .then(async (response) => {
         const _res = await response.wait()
         const _enTopic = await utils.keccak256(
@@ -81,7 +85,7 @@ const useMarketGameItem = () => {
             _resultEvent[1].toString(),
             Number(_resultEvent[2].toString())
           )
-          mutateMarketCreateOrder(data)
+          await mutateMarketCreateOrder(data)
         }
       })
       .catch((error) => console.error(error))
@@ -127,7 +131,7 @@ const useMarketGameItem = () => {
             _resultEvent[1].toString(),
             Number(_resultEvent[2].toString())
           )
-          mutateMarketCancelOrder(data)
+          await mutateMarketCancelOrder(data)
         }
       })
       .catch((error) => console.error(error))
@@ -151,7 +155,7 @@ const useMarketGameItem = () => {
         })
     })
 
-  const onPurchaseGameItemOrder = async (
+  const onExecuteGameItemOrder = async (
     _marketId: string,
     _itemID: string,
     _sellerAccount: string,
@@ -185,7 +189,7 @@ const useMarketGameItem = () => {
             _resultEvent[1].toString(),
             Number(_resultEvent[3].toString())
           )
-          mutateMarketPurcOrder(data)
+          await mutateMarketPurcOrder(data)
         }
       })
       .catch((error) => console.error(error))
@@ -195,7 +199,7 @@ const useMarketGameItem = () => {
   return {
     onCreateGameItemOrder,
     onCancelGameItemOrder,
-    onPurchaseGameItemOrder
+    onExecuteGameItemOrder
   }
 }
 

@@ -37,18 +37,26 @@ export interface ICreateOrderParams {
   _periodAmount?: number
 }
 
+export interface IPayBillParams {
+  _billId: string
+  _billBalance: number
+  _periodBalance: number
+  _txHash: string
+  _roundPayed: number
+  _roundPayedAmount: number
+}
+
 export interface IPurchOrderParams {
   _marketplaceId: string
   _itemId: string
   _itemAmount: number
-  _landId?: string
   _txHash?: string
   _smcAmount?: number
   _rentalData?: {
     orderId: string
-    totalPrice: number
-    rentStart: Date
-    rentEnd: Date
+    totalPrice: string
+    rentStart: string
+    rentEnd: string
     marketplaceId: string
     itemId: string
     period: number
@@ -257,6 +265,21 @@ export interface INFTTransfer
   item_qty: number
   meta_data: ITransferMetaData
   id: string
+}
+
+export interface IPayBillData {
+  bill_id: string
+  createdAt: Date
+  id: string
+  installment_round_payed: number
+  round_payed_amount: number
+  transaction_hash: string
+  type: "pay_bill"
+  updatedAt: Date
+}
+
+export interface IPayBillInstallServ extends IFormatMessageService {
+  data: IPayBillData
 }
 
 export interface IPutOrderServ extends IFormatService {

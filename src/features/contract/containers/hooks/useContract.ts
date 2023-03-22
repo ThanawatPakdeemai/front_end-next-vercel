@@ -58,6 +58,9 @@ export const useERC20 = (
   _address: string
 ) => useMemo(() => getERC20Contract(_address, _provider), [_address, _provider])
 
+export const useERC20NoAcc = (_address: string) =>
+  useMemo(() => getERC20Contract(_address, web3NoAccount), [_address])
+
 export const useFlexibleStaking = (
   _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
@@ -218,7 +221,7 @@ export const useMarketplaceNFTRentNoAccount = (_address: string) =>
   useMemo(() => getMarketNFTRentContract(_address, web3NoAccount), [_address])
 
 // nft
-export const useNFTArcGame = (
+export const useArcGameNFT = (
   _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
 ) =>
@@ -226,10 +229,10 @@ export const useNFTArcGame = (
     () => getNFTArcGameContract(_address, _provider),
     [_address, _provider]
   )
-export const useNFTArcGameNoAccount = (_address: string) =>
+export const useArcGameNFTNoAccount = (_address: string) =>
   useMemo(() => getNFTArcGameContract(_address, web3NoAccount), [_address])
 
-export const useNFTBuilding = (
+export const useBuildingNFT = (
   _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
 ) =>
@@ -237,23 +240,23 @@ export const useNFTBuilding = (
     () => getNFTBuildingContract(_address, _provider),
     [_address, _provider]
   )
-export const useNFTBuildingNoAccount = (_address: string) =>
+export const useBuildingNFTNoAccount = (_address: string) =>
   useMemo(() => getNFTBuildingContract(_address, web3NoAccount), [_address])
 
-export const useNFTLand = (
+export const useLandNFT = (
   _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
 ) =>
   useMemo(() => getNFTLandContract(_address, _provider), [_address, _provider])
-export const useNFTLandNoAccount = (_address: string) =>
+export const useLandNFTNoAccount = (_address: string) =>
   useMemo(() => getNFTLandContract(_address, web3NoAccount), [_address])
 
-export const useNFTPunk = (
+export const usePunkNFT = (
   _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string
 ) =>
   useMemo(() => getNFTPunkContract(_address, _provider), [_address, _provider])
-export const useNFTPunkNoAccount = (_address: string) =>
+export const usePunkNFTNoAccount = (_address: string) =>
   useMemo(() => getNFTPunkContract(_address, web3NoAccount), [_address])
 
 export const useGetAllGameItemofAddrs = (_address: string) =>

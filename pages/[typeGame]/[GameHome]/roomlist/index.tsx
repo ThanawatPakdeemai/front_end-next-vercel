@@ -27,7 +27,13 @@ export default function GameRoomList() {
   const { onSetGameData } = useGameStore()
 
   useEffect(() => {
-    if (gameData) onSetGameData(gameData)
+    let load = false
+    if (!load) {
+      if (gameData) onSetGameData(gameData)
+    }
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameData])
 

@@ -89,7 +89,7 @@ const useNFTLand = () => {
     setClose()
   }
 
-  return { onCheckApprovalLandForAll, onTransferLand }
+  return { onCheckApprovalLandForAll, onTransferLand, isLandApprovedForAll }
 }
 
 export default useNFTLand

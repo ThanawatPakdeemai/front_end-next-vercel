@@ -7,7 +7,10 @@ import {
 } from "@feature/contract/containers/hooks/useContract"
 import useNFTArcGame from "@feature/game/marketplace/containers/hooks/useNFTArcGame"
 import useNFTLand from "@feature/land/containers/services/hooks/useNFTLand"
-import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
+import {
+  TNFTType,
+  TSellingType
+} from "@feature/marketplace/interfaces/IMarketService"
 import useNFTPunk from "@feature/nakapunk/containers/hooks/useNFTPunk"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import Helper from "@utils/helper"
@@ -19,20 +22,22 @@ const useGlobalMarket = () => {
   const { utils } = ethers
   const erc20Contract = useERC20(signer, CONFIGS.CONTRACT_ADDRESS.ERC20)
   const erc20ContractNoAcc = useERC20NoAcc(CONFIGS.CONTRACT_ADDRESS.ERC20)
-  const { onCheckApprovalLandForAll } = useNFTLand()
-  const { onCheckApprovalBuildingForAll } = useNFTBuilding()
-  const { onCheckApprovalPunkForAll } = useNFTPunk()
-  const { onCheckApprovalArcGameForAll } = useNFTArcGame()
+  const { onCheckApprovalLandForAll, isLandApprovedForAll } = useNFTLand()
+  const { onCheckApprovalBuildingForAll, isBuildingApprovedForAll } =
+    useNFTBuilding()
+  const { onCheckApprovalPunkForAll, isPunkApprovedForAll } = useNFTPunk()
+  const { onCheckApprovalArcGameForAll, isArcGameApprovedForAll } =
+    useNFTArcGame()
 
   const checkAllowance = (_address: string, _tokenAddress: string) =>
-    new Promise((resolve, reject) => {
+    new Promise<BigNumberish>((resolve, reject) => {
       erc20ContractNoAcc
         .allowance(_address, _tokenAddress)
-        .then((_response: string) => {
-          resolve(_response)
+        .then((response: BigNumberish) => {
+          resolve(response)
         })
-        .catch((_error: Error) => {
-          reject(_error)
+        .catch((error) => {
+          reject(error)
         })
     })
 
@@ -151,10 +156,100 @@ const useGlobalMarket = () => {
     return { isApproved: _isApproved }
   }
 
+  const onCheckAllowance = async (_type: TNFTType) => {
+    let _contractAddrs: string = ""
+    let _allowance: BigNumberish = "0"
+    if (address) {
+      switch (_type) {
+        case "nft_land":
+          _contractAddrs = CONFIGS.CONTRACT_ADDRESS.LAND_NFT
+          break
+        case "nft_building":
+          _contractAddrs = CONFIGS.CONTRACT_ADDRESS.BUILDING_NFT
+          break
+        case "nft_naka_punk":
+          _contractAddrs = CONFIGS.CONTRACT_ADDRESS.NAKAPUNK_NFT
+          break
+        case "nft_game":
+          _contractAddrs = CONFIGS.CONTRACT_ADDRESS.ARCADEGAME_NFT
+          break
+        default:
+          break
+      }
+      await checkAllowance(address, _contractAddrs)
+        .then((response) => {
+          _allowance = response
+        })
+        .catch((error) => console.error(error))
+    }
+    return WeiToNumber(_allowance)
+  }
+
+  const onCheckApprovalForAllNFT = async (
+    _NFTType: TNFTType,
+    _selling: TSellingType
+  ) => {
+    let _contract = ""
+    let _approve: boolean = false
+    switch (_selling) {
+      case "fullpayment":
+        _contract = CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT
+        break
+      case "installment":
+        _contract = CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_INSTALL
+        break
+      case "rental":
+        _contract = CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_RENTAL
+        break
+      default:
+        break
+    }
+    if (address) {
+      switch (_NFTType) {
+        case "nft_land":
+          await isLandApprovedForAll(address, _contract)
+            .then((response) => {
+              _approve = response
+            })
+            .catch((error) => console.error(error))
+          break
+        case "nft_building":
+          await isBuildingApprovedForAll(address, _contract)
+            .then((response) => {
+              _approve = response
+            })
+            .catch((error) => console.error(error))
+
+          break
+        case "nft_naka_punk":
+          await isPunkApprovedForAll(address, _contract)
+            .then((response) => {
+              _approve = response
+            })
+            .catch((error) => console.error(error))
+
+          break
+        case "nft_game":
+          await isArcGameApprovedForAll(address, _contract)
+            .then((response) => {
+              _approve = response
+            })
+            .catch((error) => console.error(error))
+
+          break
+        default:
+          break
+      }
+    }
+    return _approve
+  }
+
   return {
     checkAllowanceNaka,
     getContractAddrsByNFTType,
-    onCheckNFTIsApproveForAll
+    onCheckNFTIsApproveForAll,
+    onCheckAllowance,
+    onCheckApprovalForAllNFT
   }
 }
 

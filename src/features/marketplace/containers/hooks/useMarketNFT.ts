@@ -2,7 +2,6 @@ import CONFIGS from "@configs/index"
 import { MESSAGES } from "@constants/messages"
 import { TransactionResponse } from "@ethersproject/providers"
 import { useMarketplaceNFT } from "@feature/contract/containers/hooks/useContract"
-
 import {
   ICancelOrderParams,
   ICreateOrderParams,

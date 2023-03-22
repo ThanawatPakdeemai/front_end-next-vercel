@@ -8,13 +8,15 @@ import useGameStore from "@stores/game"
 const GameRoomLayout = dynamic(
   () => import("@components/templates/GameRoomLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const GameRoomWaitingPage = dynamic(
   () => import("@feature/page/games/gameRoomWaitingPage"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 
@@ -25,7 +27,13 @@ export default function GameRoomList() {
   const { onSetGameData } = useGameStore()
 
   useEffect(() => {
-    if (gameData) onSetGameData(gameData)
+    let load = false
+    if (!load) {
+      if (gameData) onSetGameData(gameData)
+    }
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameData])
 

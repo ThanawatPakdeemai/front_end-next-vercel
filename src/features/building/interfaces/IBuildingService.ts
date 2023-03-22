@@ -3,7 +3,7 @@ import {
   INFTInitial
 } from "@feature/marketplace/interfaces/IMarketService"
 import { TLand } from "@feature/land/interfaces/ILandService"
-import { ITypeMaterials } from "@feature/material/interfaces/IMaterialService"
+import { ITypeMaterials } from "@feature/material/marketplace/interfaces/IMaterialService"
 import { IFormatService } from "@interfaces/IHelper"
 
 interface IModel {
@@ -40,12 +40,13 @@ export interface IBuildDeterio {
   material_repair_array: IBuildRepair[]
 }
 
-interface IBuild extends INFTInitial, IModel {
-  counting_mining_days: number
-  building_id_smartcontract: number
-  player_id: string
-  owner_id: string
-  deteriorate_building: IBuildDeterio
+interface IBuild extends Omit<INFTInitial, "NFT_token">, IModel {
+  NFT_token: string | undefined
+  counting_mining_days: number | undefined
+  building_id_smartcontract: number | undefined
+  player_id: string | undefined
+  owner_id: string | undefined
+  deteriorate_building: IBuildDeterio | undefined
 }
 
 export interface IMyBuildData extends IBuild, IMarketForm {
@@ -54,7 +55,8 @@ export interface IMyBuildData extends IBuild, IMarketForm {
 }
 
 export interface IBuildData extends IBuild, IPrefixNo {
-  wallet_adddress: string
+  prefix: number | undefined
+  wallet_adddress: string | undefined
 }
 
 export interface ITypeBuild

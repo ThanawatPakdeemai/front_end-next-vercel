@@ -46,6 +46,7 @@ import MyLandIcon from "@components/icons/Inventory/MyLandIcon"
 import TransactionIconMKP from "@components/icons/Inventory/TransactionIcon"
 import DollarIcon from "@components/icons/Referral/DollarIcon"
 import ProcessPaymentIcon from "@components/icons/Inventory/ProcessPaymentIcon"
+import { TType } from "@feature/marketplace/interfaces/IMarketService"
 
 export const MENU = [
   {
@@ -346,6 +347,7 @@ export const MENU_PROFILE = [
     external: false
   }
 ]
+
 export const MENU_PROFILE_Datell: IMenu[] = [
   {
     id: "my profile",
@@ -397,6 +399,7 @@ export const MENU_PROFILE_Datell: IMenu[] = [
     external: false
   }
 ]
+
 export const MENU_MAIN_PC: IMenuIcon[] = [
   {
     title: "P2P Trading",
@@ -619,35 +622,113 @@ export const MENU_MARKETPLACE_INVENTORY: IMenu[] = [
     id: "inventory",
     label: "Inventory",
     icon: <InventoryIcon />,
-    href: "/",
+    href: "/marketplace/inventory",
     external: false
   },
   {
     id: "for-sale",
     label: "For Sale",
     icon: <DollarIcon />,
-    href: "/",
+    href: "/marketplace/inventory/forsale",
     external: false
   },
   {
     id: "process-payment",
     label: "Process Payment",
     icon: <ProcessPaymentIcon />,
-    href: "/",
+    href: "/marketplace/inventory/process-payment",
     external: false
   },
   {
     id: "transaction",
     label: "Transaction",
     icon: <TransactionIconMKP />,
-    href: "/",
+    href: "/marketplace/inventory/transaction",
     external: false
   },
   {
     id: "my-land",
     label: "My Land",
     icon: <MyLandIcon />,
-    href: "/",
+    href: "/marketplace/inventory/my-land",
     external: false
+  }
+]
+
+export const MENU_ROUTER_MARKETPLACE_TYPE: TType[] = [
+  "land",
+  "building",
+  "naka-punk",
+  "material",
+  "game-item",
+  "arcade-game"
+]
+
+export const INVENTORY_DROPDOWN = [
+  {
+    label: "Land",
+    href: "/marketplace/inventory/land"
+  },
+  {
+    label: "Building",
+    href: "/marketplace/inventory/building"
+  },
+  {
+    label: "Game Item",
+    href: "/marketplace/inventory/game-item"
+  },
+  {
+    label: "Material",
+    href: "/marketplace/inventory/material"
+  },
+  {
+    label: "Naka Punk",
+    href: "/marketplace/inventory/naka-punk"
+  },
+  {
+    label: "Arcade Game",
+    href: "/marketplace/inventory/arcade-game"
+  }
+]
+
+export const INVENTORY_DROPDOWN_FORSALE = [
+  {
+    label: "Land",
+    href: "/marketplace/inventory/forsale/land"
+  },
+  {
+    label: "Building",
+    href: "/marketplace/inventory/forsale/building"
+  },
+  {
+    label: "Game Item",
+    href: "/marketplace/inventory/forsale/game-item"
+  },
+  {
+    label: "Material",
+    href: "/marketplace/inventory/forsale/material"
+  },
+  {
+    label: "Naka Punk",
+    href: "/marketplace/inventory/forsale/naka-punk"
+  },
+  {
+    label: "Arcade Game",
+    href: "/marketplace/inventory/forsale/arcade-game"
+  }
+]
+
+export const INVENTORY_DROPDOWN_PROCESS = [
+  {
+    label: "Land",
+    href: "/marketplace/inventory/process-payment/land"
+  },
+  {
+    label: "Building",
+    href: "/marketplace/inventory/process-payment/building"
+  },
+  {
+    label: "Arcade Game",
+    href: "/marketplace/inventory/process-payment/arcade-game"
   }
 ]

@@ -24,11 +24,15 @@ const HeadLogo = () => {
   }, [])
 
   useEffect(() => {
-    // add eventlistener to window
-    window.addEventListener("scroll", onScroll, { passive: true })
-    // remove event on unmount to prevent a memory leak with the cleanup
+    let load = false
+    if (!load) {
+      // add eventlistener to window
+      window.addEventListener("scroll", onScroll, { passive: true })
+      // remove event on unmount to prevent a memory leak with the cleanup
+    }
     return () => {
       window.removeEventListener("scroll", onScroll)
+      load = true
     }
   }, [onScroll])
 
@@ -83,13 +87,14 @@ const HeadLogo = () => {
         } lg:flex-none ${scrollPage < 100 ? "opacity-100" : "opacity-0"}`}
       >
         <div
-          className={`ml-2 flex w-full items-center md:w-auto md:justify-center lg:ml-0 ${
-            scrollPage < 100 ? "block" : " hidden"
-          } `}
+          className={`ml-2 flex w-full items-center md:w-auto md:justify-center lg:ml-0 ${""}`}
         >
-          <Link href="/">
-            <LogoNaka />
-          </Link>
+          {scrollPage < 100 && (
+            <Link href="/">
+              <LogoNaka />
+            </Link>
+          )}
+
           {isDeveloperPage && (
             <Box
               component="div"

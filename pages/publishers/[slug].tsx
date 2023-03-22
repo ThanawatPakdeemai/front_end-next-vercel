@@ -14,7 +14,8 @@ import { useRouter } from "next/router"
 const GamePageLayout = dynamic(
   () => import("@components/templates/PartnerPageLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 // const SkeletonPublisherCard = dynamic(

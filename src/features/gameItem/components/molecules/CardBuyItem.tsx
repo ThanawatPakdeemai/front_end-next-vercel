@@ -90,9 +90,8 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
   }, [getTotalPriceItemSelectProfile, itemSelected])
 
   const onChangeSelectItem = (_item: IGameItemListData) => {
-    if (_item.qty > 0) {
-      onSetGameItemSelectd(_item as IGameItemListData)
-    } else {
+    onSetGameItemSelectd(_item as IGameItemListData)
+    if (_item.qty < 1) {
       errorToast(MESSAGES["you-don't-have-item"])
     }
   }
@@ -150,7 +149,7 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
               <>
                 <DropdownListItem
                   isCheck
-                  list={gameItemList}
+                  list={gameItemList?.sort((a, b) => a.price - b.price)}
                   className="w-[300px]"
                   onChangeSelect={onChangeSelectItem}
                 />

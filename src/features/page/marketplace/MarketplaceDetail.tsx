@@ -4,6 +4,7 @@ import RightDetailsMarketplace from "@feature/marketplace/components/organisms/R
 import CONFIGS from "@configs/index"
 import React from "react"
 import useMarketplace from "@hooks/useMarketplace"
+import useCountStore from "@stores/countComponant"
 import dynamic from "next/dynamic"
 
 const ButtonMarket = dynamic(
@@ -15,7 +16,8 @@ const ButtonMarket = dynamic(
 )
 
 const MarketplaceDetail = () => {
-  const { detailData, type, tokenNFT, nameNFT } = useMarketplace()
+  const { detailData, type } = useMarketplace()
+  const { count } = useCountStore()
 
   return detailData ? (
     <div className="flex w-full gap-x-[120px]">
@@ -46,9 +48,9 @@ const MarketplaceDetail = () => {
       >
         <div className="grid grid-cols-2 px-8 py-6">
           <CardWriterDetails
-            textHead="creat by"
-            name="nakamoto.game"
-            date="2022-06-22T07:39:13.280Z"
+            textHead="create by"
+            name="nakamoto.games"
+            date={String(detailData.created_at)}
             link={CONFIGS.CONTRACT_ADDRESS.NAKA}
           />
           {detailData.seller_id && (
@@ -65,29 +67,35 @@ const MarketplaceDetail = () => {
       </CardContentDetails>
       <div className="flex h-full w-full flex-col">
         <RightDetailsMarketplace
-          type={type}
-          id={detailData.item_id}
-          token={
-            detailData.land_data?.land_id ||
-            detailData.building_data?.building_id_smartcontract ||
-            detailData.order_id ||
-            detailData.nakapunk_data?.NFT_token
-          }
-          title={
-            detailData.land_data?.name ||
-            detailData.building_data?.name ||
-            (detailData.item_data &&
-              `${detailData.item_data.name} ${detailData.item_data.item_size}`) ||
-            detailData.nakapunk_data?.name ||
-            detailData.material_data?.name ||
-            detailData.game_data?.name
-          }
-          method={detailData.seller_id ? "buy" : "mint"}
-          position={detailData.land_data?.position}
-          price={detailData.price as number}
-          itemAmount={detailData.item_amount}
-          qrCode={detailData.land_data?.qrcode_image}
-        />
+        type={type}
+        id={detailData.item_id}
+        token={
+          detailData.land_data?.land_id ||
+          detailData.building_data?.building_id_smartcontract ||
+          detailData.order_id ||
+          detailData.nakapunk_data?.NFT_token
+        }
+        title={
+          detailData.land_data?.name ||
+          detailData.building_data?.name ||
+          (detailData.item_data &&
+            `${detailData.item_data.name} ${detailData.item_data.item_size}`) ||
+          detailData.nakapunk_data?.name ||
+          detailData.material_data?.name ||
+          detailData.game_data?.name
+        }
+        method={detailData.seller_id ? "buy" : "mint"}
+        position={detailData.land_data?.position}
+        price={detailData.price as number}
+        qrCode={detailData.land_data?.qrcode_image}
+        count={{
+          helperText: `Total supply : ${count}`,
+          label: "Supply in market",
+          min: 1,
+          max: detailData.item_amount,
+          count: 1
+        }}
+      />
         <ButtonMarket
           nftType={detailData.type}
           name={nameNFT}

@@ -4,18 +4,21 @@ import { ReactElement } from "react"
 import dynamic from "next/dynamic"
 
 const HeadStaking = dynamic(() => import("@components/molecules/HeadStaking"), {
-  suspense: true
+  suspense: true,
+  ssr: false
 })
 const ServicesPageLayout = dynamic(
   () => import("@components/templates/ServicesPageLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const FixedAPRContent = dynamic(
   () => import("@feature/staking/components/organisms/FixedAPRContent"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

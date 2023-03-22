@@ -70,6 +70,13 @@ const useGlobal = (
   const isMarketplace = router.asPath.includes("marketplace")
 
   /**
+   * @description check if url is in marketplace
+   */
+  const isDeveloperPage =
+    router.asPath.includes("become-developer") ||
+    router.asPath.includes("developer")
+
+  /**
    * @description Set profile
    */
   useEffect(() => {
@@ -291,7 +298,8 @@ const useGlobal = (
     fetchAllTokenSupported,
     fetchNAKAToken,
     getDefaultCoin,
-    isMarketplace
+    isMarketplace,
+    isDeveloperPage
   }
 }
 

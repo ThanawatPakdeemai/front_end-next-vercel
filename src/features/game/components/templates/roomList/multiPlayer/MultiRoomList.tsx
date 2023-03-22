@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import ReloadIcon from "@components/icons/ReloadIcon"
 import ButtonSticky from "@components/molecules/ButtonSticky"
 import RoomListBar from "@components/molecules/roomList/RoomListBar"
@@ -194,7 +195,11 @@ const MultiRoomList = () => {
                         onExpire: () => null
                       }}
                       btnText={
-                        player && player.status === "played" ? "played" : "join"
+                        player && player.status === "played"
+                          ? "played"
+                          : _data?.amount_current_player >= _data.max_players
+                          ? "full"
+                          : "join"
                       }
                       player={{
                         currentPlayer: _data.amount_current_player,
@@ -215,9 +220,13 @@ const MultiRoomList = () => {
             </div>
           </Box>
         </SocketProviderRoom>
-        {data && (!data?.play_to_earn || !data.tournament) && (
-          <BuyItemBody>{data && <CardBuyItem gameObject={data} />}</BuyItemBody>
-        )}
+        {data &&
+          ((data?.play_to_earn && data?.play_to_earn_status !== "free") ||
+            !data.tournament) && (
+            <BuyItemBody>
+              {data && <CardBuyItem gameObject={data} />}
+            </BuyItemBody>
+          )}
       </Box>
     </>
   )

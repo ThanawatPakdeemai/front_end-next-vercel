@@ -5,14 +5,16 @@ import dynamic from "next/dynamic"
 const TournamentLayout = dynamic(
   () => import("@components/templates/TournamentLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 
 const TournamentPage = dynamic(
   () => import("@feature/page/games/TournamentPage"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

@@ -216,6 +216,7 @@ const useMarketplace = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [detailOrder])
+  // end fetch detail
 
   return {
     nameNFT,

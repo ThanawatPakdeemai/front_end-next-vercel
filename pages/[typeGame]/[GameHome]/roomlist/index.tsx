@@ -8,13 +8,15 @@ import { useRouter } from "next/router"
 const GameRoomLayout = dynamic(
   () => import("@components/templates/GameRoomLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const GameRoomListPage = dynamic(
   () => import("@feature/page/games/gameRoomListPage"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 
@@ -25,7 +27,13 @@ export default function GameRoomList() {
   const { onSetGameData } = useGameStore()
 
   useEffect(() => {
-    if (gameData) onSetGameData(gameData)
+    let load = false
+    if (!load) {
+      if (gameData) onSetGameData(gameData)
+    }
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameData])
 

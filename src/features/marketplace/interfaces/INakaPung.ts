@@ -27,7 +27,7 @@ export interface Data {
 
 export interface Info {}
 
-export interface INakaPang {
+export interface INakaPank {
   status: boolean
   data: Data
   info: Info

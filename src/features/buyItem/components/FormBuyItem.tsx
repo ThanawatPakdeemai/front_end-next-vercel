@@ -56,10 +56,6 @@ const FormBuyItem = () => {
   } = useBuyGameItemController()
   const { handleSwitchNetwork, statusWalletConnected } = useSwitchNetwork()
 
-  // console.log("test-game", game)
-  // console.log("test-control", control)
-  // console.log("test-gameItemList", gameItemList)
-
   return (
     <>
       {game && (

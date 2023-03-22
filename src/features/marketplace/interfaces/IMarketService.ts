@@ -112,8 +112,16 @@ export interface IMarketServForm {
     type_marketplace?: TNFTType
     seller_type?: TSellerType
     type_land?: string[]
+    player_id?: string
+    isRent?: boolean
+    type?: TNFTType
   }
-  _sort: { price?: number; created_at: number }
+  _sort: {
+    price?: number
+    created_at: number
+    land_id?: number
+    position?: number
+  }
   _active?: boolean
 }
 

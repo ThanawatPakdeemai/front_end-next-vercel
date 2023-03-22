@@ -88,7 +88,7 @@ export const refreshProfileToken = async (
           Authorization: `Bearer ${_response.data.jwtToken}`
         }
         // console.log(_response)
-        return _response.data.jwtToken
+        return _response.data
       })
       .catch((error) => {
         useProfileStore.getState().onReset()

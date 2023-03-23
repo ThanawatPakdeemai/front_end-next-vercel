@@ -29,7 +29,7 @@ const CardBodyList = ({ width, players, className, rewardType }: IProp) => {
               index > 2 ? "!bg-neutral-780" : "!bg-neutral-900"
             } !border-1 top-player !mb-3 !rounded-default !border-neutral-900`}
           >
-            <div className=" flex items-center justify-between p-2">
+            <div className="flex max-w-[340px] items-center justify-between p-2">
               <NumberRank index={index} />
               <PlayerList
                 index={index}
@@ -55,7 +55,7 @@ const CardBodyList = ({ width, players, className, rewardType }: IProp) => {
               index > 2 ? "!bg-neutral-780" : "!bg-neutral-900"
             } !border-1 top-player !mb-3 !rounded-default !border-neutral-900`}
           >
-            <div className="flex items-center justify-between p-2">
+            <div className="flex max-w-[340px] items-center justify-between p-2">
               <NumberRank index={index} />
               <PlayerList
                 avatar={item.avatar}

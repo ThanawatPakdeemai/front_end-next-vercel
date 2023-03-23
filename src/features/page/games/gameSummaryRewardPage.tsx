@@ -50,6 +50,7 @@ const GameSummaryRewardPage = () => {
             gameName={gameDataState?.name || ""}
             value={
               notificationItem?.naka_for_player ||
+              summaryDataPlayerId.naka_for_player ||
               summaryDataPlayerId.current_score ||
               summaryDataPlayerIdWeekly.reward ||
               0
@@ -60,7 +61,12 @@ const GameSummaryRewardPage = () => {
               ""
             }
             gameURLtoShare={shareURL}
-            title={playHistoryItem ? "Your score is" : "Your reward is"}
+            title={
+              notificationItem?.naka_for_player ||
+              summaryDataPlayerId.naka_for_player
+                ? "Your reward is"
+                : "Your score is"
+            }
             itemName={usedItem.name}
             itemImage={usedItem.images}
             usedAmount={usedItem.usedAmount}

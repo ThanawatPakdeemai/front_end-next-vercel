@@ -49,12 +49,16 @@ const HeaderWaitingRoom = ({
             }}
           />
         </div>
-        <span
-          className="summary-page__roomNo text-xs text-neutral-500 "
-          aria-label="room-tag"
-        >
-          #{roomTag || "000"}
-        </span>
+
+        {roomTag ? (
+          <span
+            className="summary-page__roomNo text-xs text-neutral-500 "
+            aria-label="room-tag"
+          >
+            #{roomTag}
+          </span>
+        ) : null}
+
         <LockIcon />
         {roomName && (
           <span

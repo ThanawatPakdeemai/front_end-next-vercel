@@ -101,7 +101,7 @@ const useBuyGameItemController = () => {
     if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
       Helper.calculateItemPerPrice(
         (watch("item") as IGameItemListData).price,
-        (price as ICurrentNakaData).last
+        (price as ICurrentNakaData)?.last
       ).then((res) => {
         if (res) {
           setValue("nakaPerItem", Number(res))
@@ -182,20 +182,27 @@ const useBuyGameItemController = () => {
     resetForm()
   }
 
+  const refetchItemSelected = useCallback(() => {
+    if (gameItemList) {
+      const item = gameItemList.find((_item) => _item.id === watch("item_id"))
+      if (item) onSetGameItemSelectd(item)
+    }
+  }, [gameItemList, onSetGameItemSelectd, watch])
+
   const onSubmit = (_data: IFormData) => {
     setOpen("Blockchain transaction in progress...")
-    const coinName = (): string => {
-      switch (
-        _data.currency.symbol &&
-        _data.currency.symbol.toLocaleUpperCase()
-      ) {
-        case "BNB":
-        case "BNBT":
-          return "BNBBUSD"
-        default:
-          return `BNB${_data.currency.symbol.toLocaleUpperCase()}`
-      }
-    }
+    // const coinName = (): string => {
+    //   switch (
+    //     _data.currency.symbol &&
+    //     _data.currency.symbol.toLocaleUpperCase()
+    //   ) {
+    //     case "BNB":
+    //     case "BNBT":
+    //       return "BNBBUSD"
+    //     default:
+    //       return `BNB${_data.currency.symbol.toLocaleUpperCase()}`
+    //   }
+    // }
     switch (chainId) {
       case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
         mutateBuyItemsBSC({
@@ -203,13 +210,15 @@ const useBuyGameItemController = () => {
           _item_id: _data.item_id,
           _qty: Number(_data.qty),
           _tokenAddress: _data.currency.address,
-          _symbol: coinName()
+          _symbol:
+            _data.currency.symbol === "BNBT" ? "BNB" : _data.currency.symbol // coinName()
         })
-          .then((res) => {
+          .then(async (res) => {
             // res && _data.currency.balanceVault.digit
             fetchAllTokenSupported()
             if (res && _data.currency.balanceVault.digit) {
-              // refetch()
+              await refetch()
+              await refetchItemSelected()
               successToast("Buy Items Success")
               setClose()
               if (handleClose) handleClose()
@@ -227,11 +236,12 @@ const useBuyGameItemController = () => {
           _item_id: _data.item_id,
           _qty: Number(_data.qty)
         })
-          .then((res) => {
+          .then(async (res) => {
             // res && balanceVaultNaka && balanceVaultNaka.data
             fetchNAKAToken()
             if (res && _data.currency.balanceVault.digit) {
-              // refetch()
+              await refetch()
+              await refetchItemSelected()
               // setVaultBalance(Number(balanceVaultNaka.data))
               successToast("Buy Items Success")
               setClose()

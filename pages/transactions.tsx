@@ -6,13 +6,15 @@ import dynamic from "next/dynamic"
 const ProfileLayout = dynamic(
   () => import("@components/templates/ProfileLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const AllTransactions = dynamic(
   () => import("@feature/transaction/components/templates/AllTransactions"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

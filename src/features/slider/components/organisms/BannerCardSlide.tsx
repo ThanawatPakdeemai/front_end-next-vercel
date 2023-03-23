@@ -16,7 +16,7 @@ const BannerCardSlide = ({ slide, ...props }: IBannerCardSlide) => (
     >
       <Box
         component="div"
-        className="slide-item relative gap-4 align-middle text-white-default md:flex"
+        className="slide-item relative w-full gap-4 align-middle text-white-default md:flex"
       >
         <Grid
           item

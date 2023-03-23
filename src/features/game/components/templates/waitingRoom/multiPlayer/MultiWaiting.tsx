@@ -13,18 +13,22 @@ import { useToast } from "@feature/toast/containers"
 import Chat from "@feature/chat/components/organisms/Chat"
 import { MESSAGES } from "@constants/messages"
 import CardButItem from "@feature/gameItem/components/molecules/CardBuyItem"
-import ButtonLink from "@components/atoms/button/ButtonLink"
 import { useTranslation } from "next-i18next"
 import BuyItemBody from "@components/templates/game/BuyItemBody"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+import ArrowBackIcon from "@mui/icons-material/ArrowBack"
+import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import SkeletonCardPlayers from "@components/atoms/skeleton/SkeletonCardPlayers"
 import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
 const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { data: gameData, itemSelected } = useGameStore()
+  const { data: gameData, itemSelected, onSetGameItemSelectd } = useGameStore()
   const router = useRouter()
   const { t } = useTranslation()
   const { errorToast } = useToast()
-
+  const { gameItemList } = useBuyGameItemController()
   const [dataPlayers, setDataPlayers] = useState<
     IGameRoomListSocket | undefined
   >()
@@ -129,16 +133,34 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     [errorToast]
   )
 
+  const checkItemSelected = useCallback(() => {
+    if (gameItemList && dataPlayers) {
+      const item = gameItemList?.find(
+        (_item: IGameItemListData) => _item.id === dataPlayers.item_id
+      )
+      if (item) {
+        onSetGameItemSelectd(item)
+      }
+    }
+  }, [gameItemList, dataPlayers, onSetGameItemSelectd])
+
+  useEffect(() => {
+    if (profile) {
+      checkItemSelected()
+    }
+  }, [checkItemSelected, profile])
+
   useEffect(() => {
     if (isConnected) {
       getPlayersMulti().then((res) => {
         if (res) {
           const data = res as IGameRoomListSocket
           mapPlayer(data)
+          checkItemSelected()
         }
       })
     }
-  }, [getPlayersMulti, isConnected, mapPlayer])
+  }, [checkItemSelected, getPlayersMulti, isConnected, mapPlayer])
 
   const outRoom = useCallback(() => {
     if (gameData)
@@ -185,6 +207,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
         if (res) {
           const data = res as IGameRoomListSocket
           mapPlayer(data)
+          checkItemSelected()
         }
       })
     }
@@ -193,7 +216,9 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     isConnected,
     mapPlayer,
     onReadyPlayerBurnItem,
-    onOwnerBurnItem
+    onOwnerBurnItem,
+    gameItemList,
+    checkItemSelected
   ])
 
   useEffect(() => {
@@ -201,6 +226,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
       getPlayersCheckRoomRollbackListen().then((res) => {
         if (res) {
           const data = res as IGameRoomListSocket
+          checkItemSelected()
           mapPlayer(data)
         }
       })
@@ -210,7 +236,8 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
     isConnected,
     mapPlayer,
     onReadyPlayerBurnItem,
-    onOwnerBurnItem
+    onOwnerBurnItem,
+    checkItemSelected
   ])
 
   return (
@@ -235,24 +262,27 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
           <Box className="w-full gap-3 md:flex">
             <Box className="w-full shrink rounded-3xl border border-neutral-800">
               {dataPlayers && gameData && (
-                <HeaderWaitingRoom
-                  roomTag={dataPlayers.create_room_detail.no_room}
-                  roomName="#ROOM NAME"
-                  timer={{
-                    time: new Date(dataPlayers.end_time)
-                  }}
-                  player={{
-                    currentPlayer: dataPlayers.amount_current_player,
-                    maxPlayer: dataPlayers.max_players
-                  }}
-                  onOutRoom={() => {
-                    outRoom()
-                  }}
-                />
+                <>
+                  <HeaderWaitingRoom
+                    roomTag={dataPlayers.create_room_detail.no_room}
+                    roomName="#ROOM NAME"
+                    timer={{
+                      time: new Date(dataPlayers.end_time)
+                    }}
+                    player={{
+                      currentPlayer: dataPlayers.amount_current_player,
+                      maxPlayer: dataPlayers.max_players
+                    }}
+                    onOutRoom={() => {
+                      outRoom()
+                    }}
+                  />
+                </>
               )}
-
               {dataPlayers && dataPlayers.current_player ? (
-                <SeatPlayersMulti players={dataPlayers?.current_player} />
+                <>
+                  <SeatPlayersMulti players={dataPlayers?.current_player} />
+                </>
               ) : (
                 <>
                   <HeaderWaitingRoom
@@ -269,30 +299,39 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
                       outRoom()
                     }}
                   />
+                  <SkeletonCardPlayers />
                   <Typography className="my-5 text-center">
                     {t("no-player")}
                   </Typography>
                   {gameData && (
-                    <ButtonLink
-                      href={`/${router.query.typeGame}/${gameData?.path}/roomlist`}
-                      text={t("out-room")}
-                      icon=""
-                      size="medium"
-                      className="m-auto"
-                      color="secondary"
-                      variant="contained"
-                    />
+                    <div className="mb-5 flex w-full items-center justify-center">
+                      <ButtonToggleIcon
+                        startIcon=""
+                        endIcon={<ArrowBackIcon />}
+                        text="Back"
+                        handleClick={() =>
+                          router.push(
+                            `/${router.query.typeGame}/${gameData?.path}/`
+                          )
+                        }
+                        className="flex h-[40px] !w-[100px] items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
+                        type="button"
+                      />
+                    </div>
                   )}
                 </>
               )}
             </Box>
           </Box>
-          {gameData && (!gameData?.play_to_earn || !gameData.tournament) && (
-            <BuyItemBody>
-              <CardButItem gameObject={gameData} />
-              <Chat />
-            </BuyItemBody>
-          )}
+          {gameData &&
+            ((gameData?.play_to_earn &&
+              gameData?.play_to_earn_status !== "free") ||
+              !gameData.tournament) && (
+              <BuyItemBody>
+                <CardButItem gameObject={gameData} />
+                <Chat />
+              </BuyItemBody>
+            )}
         </Box>
       </SocketProvider>
     </>

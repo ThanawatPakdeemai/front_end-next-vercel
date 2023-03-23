@@ -3,7 +3,11 @@ import { TableCell, TableRow } from "@mui/material"
 import React, { memo } from "react"
 import { useTranslation } from "react-i18next"
 
-const TableNoData = () => {
+interface IProps {
+  className?: string
+}
+
+const TableNoData = ({ className }: IProps) => {
   const { t } = useTranslation()
   /**
    * @description This is the table row style
@@ -22,7 +26,7 @@ const TableNoData = () => {
     }
   })
   return (
-    <TableRowStyle className="bg-neutral-900 px-3.5">
+    <TableRowStyle className={`${className} bg-neutral-900 px-3.5`}>
       <TableCellStyle className="font-neue-machina-bold uppercase text-neutral-400">
         {t("no_data")}
       </TableCellStyle>

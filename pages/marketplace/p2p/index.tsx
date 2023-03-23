@@ -9,7 +9,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => ({
   },
   redirect: {
     source: "/marketplace/p2p",
-    destination: `/${ctx.locale!}/marketplace/p2p/land`,
+    destination: `/${ctx.locale!}/marketplace/p2p/game-item`,
     permanent: true
   }
 })

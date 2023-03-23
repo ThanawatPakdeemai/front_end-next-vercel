@@ -109,11 +109,11 @@ const SummaryMain = ({ summaryData }: IProp) => {
             />
             <SummaryGameDetail
               title="asset:"
-              value={playerSummary.detail_used_items.name}
+              value={`${playerSummary.detail_used_items.name}  ${playerSummary.detail_used_items.item_size}`}
             />
             <SummaryGameDetail
               title="game reward:"
-              value={`${playerSummary.naka_for_player} Naka`}
+              value={`${playerSummary?.naka_for_player ?? 0} Naka`}
             />
           </div>
           <div className="flex w-full flex-col items-center justify-center gap-[10px] rounded border border-neutral-800 bg-neutral-800 p-[10px] text-sm">
@@ -132,7 +132,7 @@ const SummaryMain = ({ summaryData }: IProp) => {
               text="Withdraw"
               className="btn-green-rainbow bg-green-lemon font-bold text-neutral-900"
               // wait for wallet page then chnage to path/wallet
-              handleClick={() => router.push("/")}
+              handleClick={() => router.push("/wallet")}
               type="button"
             />
           </div>

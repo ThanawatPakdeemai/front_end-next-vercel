@@ -6,13 +6,15 @@ import dynamic from "next/dynamic"
 const NotificationList = dynamic(
   () => import("@feature/notification/components/organisms/NotificationList"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const ProfileLayout = dynamic(
   () => import("@components/templates/ProfileLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

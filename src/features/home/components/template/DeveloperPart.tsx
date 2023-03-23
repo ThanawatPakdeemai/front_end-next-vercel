@@ -32,7 +32,7 @@ const developerPart = () => (
             background="red"
             rightTitle={
               <ButtonLink
-                href="/"
+                href="/joinus"
                 text="Register"
                 icon={<AddIcon />}
                 color="error"

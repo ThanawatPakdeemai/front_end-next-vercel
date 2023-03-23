@@ -195,6 +195,8 @@ const OrderList = ({ ...props }: IProp) => {
               data.data.map((order, index) => (
                 <TableRowData
                   key={Number(index)}
+                  className="!mb-[5px] !rounded-less"
+                  borderBottom={false}
                   child={[
                     <>
                       <div className="mr-2 rounded border border-neutral-700 px-2.5 py-1 uppercase text-neutral-400">

@@ -1,5 +1,6 @@
 import { memo } from "react"
 import { Image } from "@components/atoms/image"
+import { Box } from "@mui/material"
 
 interface IProp {
   handleButton: () => void
@@ -7,9 +8,14 @@ interface IProp {
 }
 const ButtonWallet = ({ handleButton, title }: IProp) => (
   <>
-    <button
+    <Box
+      component="button"
+      sx={{
+        boxShadow:
+          "0px 1px 1px rgba(0, 0, 0, 0.25), inset 0px 1px 1px rgba(255, 255, 255, 0.05), inset 0px -1px 1px rgba(0, 0, 0, 0.25)"
+      }}
       type="button"
-      className={`ml-2 flex rounded-3xl p-3 text-primary-main ${
+      className={`flex rounded-3xl p-3 text-primary-main sm:ml-2 ${
         title === "withdraw" ? "bg-error-main" : "bg-varidian-default"
       }`}
       onClick={() => handleButton()}
@@ -25,7 +31,7 @@ const ButtonWallet = ({ handleButton, title }: IProp) => (
         height={20}
       />
       <p className="ml-4 mr-2 font-bold uppercase">{title}</p>
-    </button>
+    </Box>
   </>
 )
 

@@ -12,7 +12,8 @@ const useGetCurrentPlayerGameSingle = () => {
   } = useMutation({
     mutationFn: ({ _roomId, _playerId, _type }: IGetPlayerInRoom) =>
       getPlayerInRoom({ _roomId, _playerId, _type }),
-    retry: false
+    retry: false,
+    cacheTime: 0
   })
   return {
     playerGameSingle: playerGameSingle || undefined,

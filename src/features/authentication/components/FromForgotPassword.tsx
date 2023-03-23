@@ -55,7 +55,7 @@ const FromForgotPassword = () => {
       >
         Forget Password?
       </Typography>
-      <Box className="m-auto w-max rounded-xl bg-neutral-700 p-1">
+      <Box className="m-auto w-max p-1">
         <Box className="xs:flex-col items-center justify-between gap-1 lg:flex">
           {/* <ButtonLogin handleButton={handleOpen} /> */}
         </Box>

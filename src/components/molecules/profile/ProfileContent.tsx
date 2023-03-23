@@ -116,8 +116,9 @@ const ProfileContent = () => {
   const platinumCount = getRankCount("platinum")
 
   return profileFetched && getProfileInfo && !isFetching ? (
-    <div className="w-[90%]">
-      <SideSocialShare />
+    <div className="mt-8 w-full md:mt-0 md:w-[98%] lg:w-[90%]">
+      {/* <div className="w-[90%]"> */}
+      <SideSocialShare hidden="hidden lg:block" />
       <div className="relative">
         <Box
           component="img"
@@ -132,12 +133,12 @@ const ProfileContent = () => {
           profile.data &&
           profile.data.id === (player_id as string) && (
             <>
-              <div className="absolute top-0 right-0 m-4">
+              <div className="absolute top-0 right-0 m-1 sm:m-4">
                 <ButtonToggleIcon
                   handleClick={handleOnExpandClick}
                   startIcon={<SettingIcon />}
                   text="Edit Profile"
-                  className="z-[2] h-[50px] w-[148px] bg-neutral-900 font-bold capitalize text-white-default"
+                  className="z-[2] h-[40px] w-fit bg-neutral-900 !text-[8px] font-bold capitalize text-white-default sm:h-[50px] sm:w-[148px] sm:text-sm"
                   type="button"
                 />
               </div>
@@ -166,7 +167,7 @@ const ProfileContent = () => {
           } `}
         />
         <div className="flex w-full justify-center">
-          <div className="absolute bottom-[-50px] z-10 h-[150px] w-[150px] rounded-3xl border-8 border-neutral-900 bg-neutral-700">
+          <div className="absolute bottom-[-50px] z-10 h-[110px] w-[110px] rounded-3xl border-8 border-neutral-900 bg-neutral-700 sm:h-[150px] sm:w-[150px]">
             <div
               className="absolute top-[-20px] right-[28px]
    z-20"
@@ -212,7 +213,7 @@ const ProfileContent = () => {
         </Typography>
       </div>
       <div className="flex justify-center">
-        <div className="mt-[50px] grid max-w-[700px] grid-cols-3 gap-4 overflow-x-auto">
+        <div className="mt-[50px] grid  grid-cols-2 gap-4 overflow-x-auto md:grid-cols-3">
           {getProfileInfo && (
             <>
               <TotalCardContent

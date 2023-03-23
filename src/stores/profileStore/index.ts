@@ -37,6 +37,7 @@ const useProfileStore = create<IUseProfileStore>()(
         getProfileAddress: () => get().address,
         getProfileJWT: () => get().profile.data?.jwtToken || "",
         onReset: () => {
+          Helper.resetLocalStorage()
           const resetData = {
             status: false,
             data: undefined,
@@ -46,12 +47,12 @@ const useProfileStore = create<IUseProfileStore>()(
             (prev) => ({
               ...prev,
               profile: { ...resetData },
-              address: undefined
+              address: undefined,
+              isLogin: false
             }),
             false,
             "ProfileStore/onReset"
           )
-          Helper.resetLocalStorage()
         },
         onSetProfileAddress: (_address) => {
           set(
@@ -66,7 +67,8 @@ const useProfileStore = create<IUseProfileStore>()(
           set(
             () => ({
               address: _profile.address,
-              profile: { ...dummyProfile }
+              profile: { ...dummyProfile },
+              isLogin: true
             }),
             false,
             "ProfileStore/onSetProfileData"

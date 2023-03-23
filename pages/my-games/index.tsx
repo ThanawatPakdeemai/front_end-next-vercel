@@ -5,11 +5,13 @@ import dynamic from "next/dynamic"
 const GamePageLayout = dynamic(
   () => import("@components/templates/GamePageLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const MyGamesPage = dynamic(() => import("@feature/page/games/MyGamesPage"), {
-  suspense: true
+  suspense: true,
+  ssr: false
 })
 
 export default function MyGames() {

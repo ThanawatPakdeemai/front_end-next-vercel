@@ -86,24 +86,35 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
   }, [itemSelected, priceItemSelected, qtyItemSelected, price])
 
   useEffect(() => {
-    if (itemSelected) getTotalPriceItemSelectProfile()
+    let load = false
+    if (!load) {
+      if (itemSelected) getTotalPriceItemSelectProfile()
+    }
+    return () => {
+      load = true
+    }
   }, [getTotalPriceItemSelectProfile, itemSelected])
 
   const onChangeSelectItem = (_item: IGameItemListData) => {
-    if (_item.qty > 0) {
-      onSetGameItemSelectd(_item as IGameItemListData)
-    } else {
+    onSetGameItemSelectd(_item as IGameItemListData)
+    if (_item.qty < 1) {
       errorToast(MESSAGES["you-don't-have-item"])
     }
   }
   useEffect(() => {
-    if (gameObject) {
-      const item_name =
-        gameObject.item && 0 in gameObject.item ? gameObject.item[0].name : 0
-      const item_selected = itemSelect ? itemSelect?.name : 1
-      if (item_name !== item_selected) {
-        onSetGameItemSelectd(null)
+    let load = false
+    if (!load) {
+      if (gameObject) {
+        const item_name =
+          gameObject.item && 0 in gameObject.item ? gameObject.item[0].name : 0
+        const item_selected = itemSelect ? itemSelect?.name : 1
+        if (item_name !== item_selected) {
+          onSetGameItemSelectd(null)
+        }
       }
+    }
+    return () => {
+      load = true
     }
   }, [gameObject, itemSelect, onSetGameItemSelectd])
 
@@ -146,17 +157,16 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
           } rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 `}
         >
           <div className="p-4">
-            {gameItemList &&
-              router.pathname !== "/[typeGame]/[GameHome]/roomlist/[id]" && (
-                <>
-                  <DropdownListItem
-                    isCheck
-                    list={gameItemList}
-                    className="w-[300px]"
-                    onChangeSelect={onChangeSelectItem}
-                  />
-                </>
-              )}
+            {gameItemList && (
+              <>
+                <DropdownListItem
+                  isCheck
+                  list={gameItemList?.sort((a, b) => a.price - b.price)}
+                  className="w-[300px]"
+                  onChangeSelect={onChangeSelectItem}
+                />
+              </>
+            )}
             <div
               className={`${
                 router.pathname === "/[typeGame]/[GameHome]"
@@ -212,7 +222,9 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
                   <AttachMoneyIcon />
                 </div>
                 <div className="w-full">
-                  <RightMenuBuyItem />
+                  <RightMenuBuyItem
+                    disabled={!!(profile === undefined || profile === null)}
+                  />
                 </div>
               </div>
             </div>

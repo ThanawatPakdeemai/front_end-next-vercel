@@ -1,24 +1,33 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import React, { ReactElement } from "react"
 import dynamic from "next/dynamic"
+import useProfileStore from "@stores/profileStore"
 
 const MarketplaceLayoutInventory = dynamic(
   () => import("@components/templates/marketplace/MarketplaceLayoutInventory"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
-
-const InventoryPage = dynamic(
-  () => import("@feature/page/inventory/InventoryPage"),
+const TransactionPage = dynamic(
+  () => import("@feature/page/inventory/TransactionPage"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 
-const Inventory = () => <InventoryPage />
+const Page = () => {
+  const profile = useProfileStore((state) => state.profile.data)
+  return (
+    <>
+      <TransactionPage profile={profile} />
+    </>
+  )
+}
 
-Inventory.getLayout = function getLayout(page: ReactElement) {
+Page.getLayout = function getLayout(page: ReactElement) {
   return <MarketplaceLayoutInventory>{page}</MarketplaceLayoutInventory>
 }
 
@@ -30,4 +39,4 @@ export async function getServerSideProps({ locale }: { locale: string }) {
   }
 }
 
-export default Inventory
+export default Page

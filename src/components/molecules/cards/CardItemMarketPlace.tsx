@@ -195,16 +195,18 @@ const CardItemMarketPlace = ({
         {/* <div className="" /> */}
         <div className="my-[10px] border-b border-neutral-700 border-opacity-80" />
         <div className="mx-2 flex items-center justify-between">
-          <div className="flex items-center">
-            <ILogoMaster
-              width="24"
-              height="11"
-              color="#ffff"
-            />
-            <Typography className="ml-[11px] text-sm uppercase text-white-default">
-              {formatNumber(price as number, { maximumFractionDigits: 4 })}
-            </Typography>
-          </div>
+          {price && (
+            <div className="flex items-center">
+              <ILogoMaster
+                width="24"
+                height="11"
+                color="#ffff"
+              />
+              <Typography className="ml-[11px] text-sm uppercase text-white-default">
+                {formatNumber(price as number, { maximumFractionDigits: 4 })}
+              </Typography>
+            </div>
+          )}
           {nakaPrice && (
             <Chip
               label={`= ${formatNumber(nakaPrice, {

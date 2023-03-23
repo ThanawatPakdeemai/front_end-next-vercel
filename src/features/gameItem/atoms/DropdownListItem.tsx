@@ -80,7 +80,7 @@ const DropdownListItem = ({
                               height="20"
                             />
                           )}
-                          <p className="px-2">{defaultItem?.name}</p>
+                          <p className="px-2 pt-1">{defaultItem?.name}</p>
                         </div>
 
                         <p className="px-2 text-white-default">

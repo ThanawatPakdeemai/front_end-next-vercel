@@ -8,12 +8,21 @@ import { IGameTag } from "@feature/slider/interfaces/IGameTags"
 import TagMultiple from "@components/molecules/TagMultiple"
 import TagSingular from "@components/molecules/TagSingular"
 import ButtonGame from "@feature/game/components/molecules/ButtonGame"
+import { useRouter } from "next/router"
+import useCountPlayGame from "@feature/game/containers/hooks/useCountPlayGame"
+import useProfileStore from "@stores/profileStore"
+import { useToast } from "@feature/toast/containers"
+import CONFIGS from "@configs/index"
+import Helper from "@utils/helper"
+import { MESSAGES } from "@constants/messages"
 
 const StoryLobby = () => {
   const { t } = useTranslation()
+  const profile = useProfileStore((state) => state.profile.data)
   const data = useGameStore((state) => state.data)
   const [gameData, setGameData] = useState<IGame>()
-
+  const route = useRouter()
+  const { errorToast } = useToast()
   useEffect(() => {
     if (data) setGameData(data)
   }, [data])
@@ -39,6 +48,40 @@ const StoryLobby = () => {
       name: gameData.category.name,
       link: `categories/${_categorySlug[1].toLocaleLowerCase()}`
     })
+  }
+
+  const { gameDataCount } = useCountPlayGame(gameData?._id ?? "")
+
+  const onPlayGame = async () => {
+    if (gameData && profile) {
+      /**
+       * @description Send value play time to API before play game
+       */
+      if (!gameDataCount.status) {
+        errorToast(MESSAGES["room-id-not-found"])
+      }
+      const room_id = null
+      const frontendUrl = `${CONFIGS.BASE_URL.FRONTEND}/${route.query.typeGame}/${gameData.path}/summary/${room_id}`
+      const profile_id = profile.id
+      const room_number = null
+      const item_size = null
+      const { email } = profile
+      const token = Helper.getTokenFromLocal()
+      const rank_name = null
+      const date = null
+      const stage_id = null
+      const profile_name = profile.username
+      const type_play = gameData.play_to_earn === true ? "free" : "not_free"
+
+      window.location.href = `${CONFIGS.BASE_URL.GAME}/${
+        gameData.id
+      }/?${Helper.makeID(8)}${btoa(
+        `${room_id}:|:${profile_id}:|:${item_size}:|:${email}:|:${token}:|:${frontendUrl}:|:${CONFIGS.BASE_URL.API?.slice(
+          0,
+          -4
+        )}:|:${rank_name}:|:${room_number}:|:${date}:|:${stage_id}:|:${profile_name}:|:${type_play}`
+      )}`
+    }
   }
 
   return (
@@ -88,7 +131,8 @@ const StoryLobby = () => {
             <ButtonGame
               description={"ready to go. Let's start the game!"}
               textButton="Start"
-              url={gameData.game_url}
+              url=""
+              onClick={onPlayGame}
             />
           </div>
         )}

@@ -7,24 +7,28 @@ import useGlobalStaking from "@feature/staking/containers/hook/useStakingControl
 import useTabContext from "@feature/tab/contexts/useTabContext"
 
 const HeadStaking = dynamic(() => import("@components/molecules/HeadStaking"), {
-  suspense: true
+  suspense: true,
+  ssr: false
 })
 const ServicesPageLayout = dynamic(
   () => import("@components/templates/ServicesPageLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const FlexibleAPRContent = dynamic(
   () => import("@feature/staking/components/organisms/FlexibleAPRContent"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const StakingList = dynamic(
   () => import("@feature/staking/components/templates/StakingList"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

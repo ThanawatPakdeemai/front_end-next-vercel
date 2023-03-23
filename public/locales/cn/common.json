@@ -286,5 +286,6 @@
   "please_swap_coin": "请交换币",
   "swap": "交换",
   "buyItem_alert_bsc": "您可以将 Metamask 切换到 Polygon 网络以使用您的 NAKA 代币购买物品",
-  "buyItem_alert_polygon": "您可以将 Metamask 切换到 BSC 网络以使用另一个代币购买物品"
+  "buyItem_alert_polygon": "您可以将 Metamask 切换到 BSC 网络以使用另一个代币购买物品",
+  "staking_not_available": "質押目前不可用"
 }

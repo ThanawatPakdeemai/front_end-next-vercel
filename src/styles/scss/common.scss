@@ -670,3 +670,16 @@ body {
     width: 100%;
   }
 }
+
+.hidden-input-number {
+  -moz-appearance: textfield;
+  &::-webkit-inner-spin-button {
+    display: none;
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}

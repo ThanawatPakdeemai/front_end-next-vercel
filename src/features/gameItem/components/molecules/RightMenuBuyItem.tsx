@@ -6,13 +6,20 @@ import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import FormBuyItem from "@feature/buyItem/components/FormBuyItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 
-const RightMenuBuyItem = () => {
+interface IProp {
+  disabled: boolean
+}
+
+const RightMenuBuyItem = ({ disabled }: IProp) => {
   const { handleClose, handleOpen, openForm } = useBuyGameItemController()
 
   return (
     <>
       <Box className="xs:flex-col items-center justify-between gap-1 lg:flex">
-        <ButtonBuyItem handleButton={handleOpen} />
+        <ButtonBuyItem
+          handleButton={handleOpen}
+          disabled={disabled}
+        />
       </Box>
       <ModalCustom
         open={openForm}

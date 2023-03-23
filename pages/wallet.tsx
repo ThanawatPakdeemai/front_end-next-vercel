@@ -3,12 +3,14 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 
 const WalletPage = dynamic(() => import("@feature/page/WalletPage"), {
-  suspense: true
+  suspense: true,
+  ssr: false
 })
 const ProfileLayout = dynamic(
   () => import("@components/templates/ProfileLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

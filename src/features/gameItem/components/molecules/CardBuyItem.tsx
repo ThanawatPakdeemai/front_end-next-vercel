@@ -41,6 +41,13 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
     _gameId: gameObject ? gameObject._id : ""
   })
 
+  const getListItemDefalut = useMemo(() => {
+    if (profile && gameItemList) {
+      gameItemList?.sort((a, b) => a.price - b.price)
+      return gameItemList[0]
+    }
+  }, [gameItemList, profile])
+
   const itemSelect = useMemo(() => {
     if (itemSelected) {
       if (gameItemList) {
@@ -58,8 +65,20 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
     if (itemSelected) {
       return itemSelected.qty
     }
+    if (getListItemDefalut) {
+      const dataItem = getListItemDefalut as IGameItemListData
+      setTotalPrice(
+        Number(
+          Helper.formatNumber((dataItem?.qty ?? 0) * (dataItem?.price ?? 0), {
+            maximumFractionDigits: 4
+          })
+        )
+      )
+      onSetGameItemSelectd(dataItem)
+      return dataItem?.qty ?? 0
+    }
     return 0
-  }, [itemSelect, itemSelected])
+  }, [getListItemDefalut, itemSelect, itemSelected, onSetGameItemSelectd])
 
   const priceItemSelected = useMemo(() => {
     if (itemSelect) {
@@ -86,24 +105,35 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
   }, [itemSelected, priceItemSelected, qtyItemSelected, price])
 
   useEffect(() => {
-    if (itemSelected) getTotalPriceItemSelectProfile()
+    let load = false
+    if (!load) {
+      if (itemSelected) getTotalPriceItemSelectProfile()
+    }
+    return () => {
+      load = true
+    }
   }, [getTotalPriceItemSelectProfile, itemSelected])
 
   const onChangeSelectItem = (_item: IGameItemListData) => {
-    if (_item.qty > 0) {
-      onSetGameItemSelectd(_item as IGameItemListData)
-    } else {
+    onSetGameItemSelectd(_item as IGameItemListData)
+    if (_item.qty < 1) {
       errorToast(MESSAGES["you-don't-have-item"])
     }
   }
   useEffect(() => {
-    if (gameObject) {
-      const item_name =
-        gameObject.item && 0 in gameObject.item ? gameObject.item[0].name : 0
-      const item_selected = itemSelect ? itemSelect?.name : 1
-      if (item_name !== item_selected) {
-        onSetGameItemSelectd(null)
+    let load = false
+    if (!load) {
+      if (gameObject) {
+        const item_name =
+          gameObject.item && 0 in gameObject.item ? gameObject.item[0].name : 0
+        const item_selected = itemSelect ? itemSelect?.name : 1
+        if (item_name !== item_selected) {
+          onSetGameItemSelectd(null)
+        }
       }
+    }
+    return () => {
+      load = true
     }
   }, [gameObject, itemSelect, onSetGameItemSelectd])
 
@@ -150,7 +180,7 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
               <>
                 <DropdownListItem
                   isCheck
-                  list={gameItemList}
+                  list={gameItemList?.sort((a, b) => a.price - b.price)}
                   className="w-[300px]"
                   onChangeSelect={onChangeSelectItem}
                 />
@@ -211,7 +241,9 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
                   <AttachMoneyIcon />
                 </div>
                 <div className="w-full">
-                  <RightMenuBuyItem />
+                  <RightMenuBuyItem
+                    disabled={!!(profile === undefined || profile === null)}
+                  />
                 </div>
               </div>
             </div>

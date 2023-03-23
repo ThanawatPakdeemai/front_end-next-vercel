@@ -10,14 +10,17 @@ import { v4 as uuid } from "uuid"
 
 const ArcadeEmporiumGamesPage = () => {
   // Hooks
+
   const { setTotalCount, limit, onHandleClick, totalCount, page, setPage } =
     useGlobal()
-  const { getGamesFilterByNftgame, isLoadingGamesFilterByNftgame } =
-    useArcadeEmporiumGames()
+  const {
+    getGamesFilterByNftgame,
+    isLoadingGamesFilterByNftgame,
+    isPreviousGamesFilterByNftgame
+  } = useArcadeEmporiumGames()
 
   // States
   const [gameData, setGameData] = useState<IGame[]>()
-
   useEffect(() => {
     if (getGamesFilterByNftgame && getGamesFilterByNftgame.data) {
       setGameData(getGamesFilterByNftgame.data)
@@ -30,7 +33,7 @@ const ArcadeEmporiumGamesPage = () => {
   return (
     <div className="flex flex-col">
       <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-5">
-        {isLoadingGamesFilterByNftgame
+        {isLoadingGamesFilterByNftgame || isPreviousGamesFilterByNftgame
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
           : gameData &&
             gameData.map((game) => (

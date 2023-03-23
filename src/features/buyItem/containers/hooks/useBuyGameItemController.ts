@@ -16,7 +16,7 @@ import useGameStore from "@stores/game"
 import useLoadingStore from "@stores/loading"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 import { useForm } from "react-hook-form"
 import useBuyGameItems from "./useBuyGameItems"
 
@@ -31,6 +31,11 @@ const useBuyGameItemController = () => {
   const { fetchNAKAToken, fetchAllTokenSupported } = useGlobal()
   const { price } = useNakaPriceProvider()
 
+  const game = useGameStore((state) => state.data)
+  const { gameItemList, refetch } = useGamesByGameId({
+    _playerId: profile ? profile.id : "",
+    _gameId: game ? game._id : ""
+  })
   // State
   const [openForm, setOpenForm] = useState<boolean>(false)
 
@@ -39,8 +44,8 @@ const useBuyGameItemController = () => {
     currency: {} as ITokenContract,
     currency_id: "",
     qty: 1,
-    item: {} as IGameItemListData,
-    item_id: "",
+    item: itemSelected || ({} as IGameItemListData),
+    item_id: itemSelected?._id ?? "",
     nakaPerItem: 0
   }
 
@@ -57,7 +62,6 @@ const useBuyGameItemController = () => {
   } = useForm({
     defaultValues: DEFAULT_VALUES
   })
-
   const isDisabled = (): boolean => {
     const totalPrice = watch("nakaPerItem") * watch("qty")
     if (
@@ -73,12 +77,6 @@ const useBuyGameItemController = () => {
     }
     return true
   }
-
-  const game = useGameStore((state) => state.data)
-  const { gameItemList, refetch } = useGamesByGameId({
-    _playerId: profile ? profile.id : "",
-    _gameId: game ? game._id : ""
-  })
 
   /**
    * @description Message alert when user switch network
@@ -101,7 +99,7 @@ const useBuyGameItemController = () => {
     if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
       Helper.calculateItemPerPrice(
         (watch("item") as IGameItemListData).price,
-        (price as ICurrentNakaData).last
+        (price as ICurrentNakaData)?.last
       ).then((res) => {
         if (res) {
           setValue("nakaPerItem", Number(res))
@@ -163,6 +161,7 @@ const useBuyGameItemController = () => {
       (gameItemList as IGameItemListData[]).length > 0
     if (hasChainSupport && hasGameItemList) {
       setValue("currency", chainSupport[0] as ITokenContract)
+
       setValue(
         "item",
         (gameItemList as IGameItemListData[])[0] as IGameItemListData
@@ -183,11 +182,17 @@ const useBuyGameItemController = () => {
   }
 
   const refetchItemSelected = useCallback(() => {
-    if (gameItemList) {
-      const item = gameItemList.find((_item) => _item.id === watch("item_id"))
-      if (item) onSetGameItemSelectd(item)
-    }
-  }, [gameItemList, onSetGameItemSelectd, watch])
+    refetch().then((_item: any) => {
+      if (_item) {
+        const item = _item?.data?.find((ele) => ele.id === watch("item_id"))
+
+        if (item) {
+          onSetGameItemSelectd(item)
+          handleClose()
+        }
+      }
+    })
+  }, [onSetGameItemSelectd, refetch, watch])
 
   const onSubmit = (_data: IFormData) => {
     setOpen("Blockchain transaction in progress...")
@@ -221,7 +226,7 @@ const useBuyGameItemController = () => {
               await refetchItemSelected()
               successToast("Buy Items Success")
               setClose()
-              if (handleClose) handleClose()
+              handleClose()
             }
           })
           .catch((error) => {
@@ -245,7 +250,7 @@ const useBuyGameItemController = () => {
               // setVaultBalance(Number(balanceVaultNaka.data))
               successToast("Buy Items Success")
               setClose()
-              if (handleClose) handleClose()
+              handleClose()
             }
           })
           .catch((error) => {
@@ -256,10 +261,10 @@ const useBuyGameItemController = () => {
     }
   }
 
-  useEffect(() => {
-    resetForm()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainSupport, gameItemList, resetForm, fetchNAKAToken])
+  // useEffect(() => {
+  // resetForm()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [chainSupport, gameItemList, resetForm, fetchNAKAToken])
 
   return {
     MessageAlert,

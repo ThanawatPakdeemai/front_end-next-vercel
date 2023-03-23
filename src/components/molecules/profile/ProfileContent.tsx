@@ -118,9 +118,7 @@ const ProfileContent = () => {
   return profileFetched && getProfileInfo && !isFetching ? (
     <div className="mt-8 w-full md:mt-0 md:w-[98%] lg:w-[90%]">
       {/* <div className="w-[90%]"> */}
-      <div className="hidden lg:block">
-        <SideSocialShare />
-      </div>
+      <SideSocialShare hidden="hidden lg:block" />
       <div className="relative">
         <Box
           component="img"

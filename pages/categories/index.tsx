@@ -5,13 +5,15 @@ import dynamic from "next/dynamic"
 const GamePageWithBreadcrumb = dynamic(
   () => import("@components/templates/GamePageWithBreadcrumb"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const CatogoriesListPage = dynamic(
   () => import("@feature/page/CatogoriesListPage"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

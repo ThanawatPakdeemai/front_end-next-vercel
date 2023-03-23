@@ -15,7 +15,7 @@ interface IProp {
 const CardContentDetails = ({ ...props }: IProp) => {
   const { children, detail = "-", image, alt, video, poster } = props
   return (
-    <div className="h-fit w-[563px] rounded-[24px] border-[1px] border-neutral-800 bg-neutral-780">
+    <div className="h-fit rounded-[24px] border-[1px] border-neutral-800 bg-neutral-780">
       <div className="p-2">
         <div className="grid h-fit w-full content-center justify-center rounded-[24px] border-[1px] border-neutral-800 bg-neutral-900 p-2">
           {image ? (

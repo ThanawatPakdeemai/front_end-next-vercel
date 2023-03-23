@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unstable-nested-components */
+/* eslint-disable react/destructuring-assignment */
 import * as React from "react"
 import { useState } from "react"
 import { Popover } from "@mui/material"
@@ -6,6 +8,8 @@ import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import SelectDropdownCurrency from "@components/atoms/selectDropdown/SelectDropdownCurrency"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import useGlobal from "@hooks/useGlobal"
+import INaka from "@components/icons/Naka"
+import IBusd from "@components/icons/Busd"
 import ButtonDropdown from "./ButtonDropdown"
 
 interface IProp {
@@ -14,6 +18,10 @@ interface IProp {
   className?: string
   onChangeSelect?: (_item: ITokenContract) => void
   // defaultValue: ITokenContract
+}
+
+interface ITokenName {
+  tokenName: string
 }
 
 const DropdownListItem = ({
@@ -38,6 +46,17 @@ IProp) => {
     }
   }, [list, setDefaultItem])
 
+  const IconToken = (props: ITokenName) => {
+    switch (props.tokenName) {
+      case "NK":
+        return <INaka color="#fff" />
+      case "BNB":
+        return <IBusd color="#fff" />
+      default:
+        return <INaka color="#fff" />
+    }
+  }
+
   return (
     <>
       {list && (
@@ -58,9 +77,12 @@ IProp) => {
                     leftContent={
                       <>
                         <div className="flex items-start">
-                          <p className="px-2">{defaultItem.symbol}</p>
+                          <IconToken tokenName={defaultItem.tokenName} />
                         </div>
 
+                        <div className="flex items-start">
+                          <p className="px-2">{defaultItem.symbol}</p>
+                        </div>
                         <p className="px-2 text-white-default">
                           {defaultItem.tokenName}
                         </p>

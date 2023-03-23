@@ -210,7 +210,9 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
                   <AttachMoneyIcon />
                 </div>
                 <div className="w-full">
-                  <RightMenuBuyItem />
+                  <RightMenuBuyItem
+                    disabled={!!(profile === undefined || profile === null)}
+                  />
                 </div>
               </div>
             </div>

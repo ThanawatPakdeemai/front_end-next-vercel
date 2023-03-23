@@ -15,8 +15,8 @@ export const ModalCustom = ({ title, onClose, ...props }: IProps) => {
   const { children, bgcolor, className, width } = props
   return (
     <Modal
-      {...props}
       onClose={onClose}
+      {...props}
     >
       <Box
         sx={{

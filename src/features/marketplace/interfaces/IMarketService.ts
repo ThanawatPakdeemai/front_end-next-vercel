@@ -136,7 +136,7 @@ export interface IMarketServForm {
     isRent?: boolean
     type?: TNFTType
   }
-  _sort: {
+  _sort?: {
     price?: number
     created_at: number
     land_id?: number

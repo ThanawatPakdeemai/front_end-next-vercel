@@ -1,16 +1,18 @@
 import CONFIGS from "@configs/index"
 import { MESSAGES } from "@constants/messages"
-import { useGetAllLandofAddrs } from "@feature/contract/containers/hooks/useContract"
+import { useGetAllGameItemofAddrs } from "@feature/contract/containers/hooks/useContract"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+import useGetGameItems from "@feature/gameItem/marketplace/containers/hooks/useGetGameItem"
 import { TInvenVaultAction } from "@feature/inventory/interfaces/IInventoryItem"
 import useLoadingStore from "@stores/loading"
-import useMarketCategTypes from "@stores/marketCategTypes"
-import { useState } from "react"
+import useProfileStore from "@stores/profileStore"
+import { useEffect, useState } from "react"
 
 const useInvenGameItem = () => {
-  const { gameItemTypes } = useMarketCategTypes()
+  const { profile } = useProfileStore()
+  const { gameItemTypes } = useGetGameItems()
   const { setOpen, setClose } = useLoadingStore()
-  const allGameItemContract = useGetAllLandofAddrs(
+  const allGameItemContract = useGetAllGameItemofAddrs(
     CONFIGS.CONTRACT_ADDRESS.GET_GAMEITEMOFADDRESS
   )
   const [gameItemList, setGameItemList] = useState<
@@ -61,10 +63,14 @@ const useInvenGameItem = () => {
     )
       .then((response) => {
         if (gameItemTypes) {
-          const data = gameItemTypes.map((g) => ({
-            ...g,
-            amount: Number(response[g.item_id_smartcontract + 1]) // ! Please check index again
-          }))
+          const data = gameItemTypes
+            .sort((_a, _b) =>
+              _a.item_id_smartcontract < _b.item_id_smartcontract ? -1 : 1
+            )
+            .map((g) => ({
+              ...g,
+              amount: Number(response[g.item_id_smartcontract]) // ! Please check index again
+            }))
           setGameItemList(data)
         }
       })
@@ -72,7 +78,19 @@ const useInvenGameItem = () => {
       .finally(() => setClose())
   }
 
-  return { gameItemList, updateGameItemList, onFetchInvenGameItem }
+  useEffect(() => {
+    if (profile && profile.data) {
+      onFetchInvenGameItem(profile.data.address)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile, gameItemTypes])
+
+  return {
+    gameItemList:
+      gameItemList && gameItemList.filter((_item) => _item.amount > 0),
+    updateGameItemList,
+    onFetchInvenGameItem
+  }
 }
 
 export default useInvenGameItem

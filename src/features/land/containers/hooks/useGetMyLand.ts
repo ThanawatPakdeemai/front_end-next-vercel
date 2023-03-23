@@ -3,7 +3,7 @@ import { getMyLand } from "../services/land.service"
 
 const useGetMyLand = () => {
   const {
-    mutateAsync: getMyLandHistory,
+    mutateAsync: mutateGetMyLand,
     data: myLandHistoryData,
     error,
     isLoading,
@@ -11,10 +11,11 @@ const useGetMyLand = () => {
     isSuccess
   } = useMutation(getMyLand, {
     mutationKey: ["getMyLand"],
-    retry: false
+    retry: false,
+    cacheTime: Infinity
   })
   return {
-    getMyLandHistory,
+    mutateGetMyLand,
     myLandHistoryData,
     error,
     isLoading,

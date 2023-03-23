@@ -19,7 +19,6 @@ import {
   TableBody,
   TableContainer
 } from "@mui/material"
-// import { validTypeGames } from "@pages/[typeGame]"
 import { v4 as uuid } from "uuid"
 import dayjs from "dayjs"
 import React, { useEffect, useState } from "react"
@@ -27,40 +26,29 @@ import DropdownEvent from "@feature/transaction/components/molecules/DropdownEve
 import { useRouter } from "next/router"
 import CONFIGS from "@configs/index"
 import { IProfile } from "@src/types/profile"
+import { gameItemType, landType, nakaType } from "@constants/historyTransaction"
+import ReloadIcon from "../../../components/icons/ReloadIcon"
 
 interface IProp {
   profile?: IProfile
 }
 
 const TransactionPage = ({ profile }: IProp) => {
-  // const { profile } = useProfileStore()
-  const { getTransHistory } = useGetTransWallet()
+  const { getTransHistory, isLoading } = useGetTransWallet()
 
   const { sortTime, sortAmount, AllTransactionTableHeader } =
     useTransactionController()
 
-  // const landType = [
-  //   "MintLand",
-  //   "BuyLandInstallment",
-  //   "BuyLandFullpayment",
-  //   "RentLand",
-  //   "CreateLandOrder",
-  //   "CancleLandOrder",
-  //   "TransferLand",
-  //   "ClaimRental"
-  // ]
-
-  const landType = "MintLand"
-
   const typeTandsactionDropDown = [
     "Land",
-    "GameType",
+    "Game Item",
     "Building",
     "Material",
     "NAKA Punk"
   ]
 
   const [Event, setEvent] = useState<string>("Land")
+  const [typeList, setTypeList] = useState<string[]>(landType)
   const [limit, setLimit] = useState<number>(12)
   const { hydrated, pager } = useGlobal()
   const [page, setPage] = useState<number>(1)
@@ -72,6 +60,33 @@ const TransactionPage = ({ profile }: IProp) => {
 
   const onHandleEvent = (_event: string) => {
     setEvent(_event)
+
+    // if (_event === "Land") {
+    //   setTypeList(landType)
+    // }
+    // if (_event === "Game Item") {
+    //   setTypeList(buildingType)
+    // } else {
+    //   setTypeList(bmnakaType)
+    // }
+
+    switch (_event) {
+      case "Land":
+        setTypeList(landType)
+        break
+      case "Game Item":
+        setTypeList(gameItemType)
+        break
+      // case "Building":
+      //   setTypeList(buildingType)
+      //   break
+      // case "Material":
+      //   setTypeList(materialType)
+      //   break
+      default:
+        setTypeList(nakaType)
+        break
+    }
   }
 
   const onHandleView = (element: ITransData) => {
@@ -79,11 +94,11 @@ const TransactionPage = ({ profile }: IProp) => {
   }
 
   useEffect(() => {
-    const fetchTransaction = () => {
+    const fetchTransaction = async () => {
       if (profile) {
-        getTransHistory({
+        await getTransHistory({
           _playerId: profile && profile.id ? profile.id : "",
-          _type: landType,
+          _type: typeList,
           _page: page,
           _limit: limit,
           _sort:
@@ -101,126 +116,14 @@ const TransactionPage = ({ profile }: IProp) => {
       }
     }
 
-    if (!txHistory) {
-      fetchTransaction()
-    }
-    // fetchTransaction()
-  }, [
-    getTransHistory,
-    landType,
-    limit,
-    page,
-    profile,
-    sortAmount,
-    sortTime,
-    txHistory
-  ])
-
-  // if (profile) {
-  //   await getTransHistory({
-  //     _playerId: profile && profile.data?.id ? profile.data?.id : "",
-  //     _type: landType,
-  //     _page: page,
-  //     _limit: limit,
-  //     _sort:
-  //       sortTime || sortAmount
-  //         ? { "current_time": sortTime, "amount": sortAmount }
-  //         : undefined
-  //   }).then((res) => {
-  //     // res.status === 200 -> ok
-  //     if (res.data) {
-  //       setTxHistory(res.data)
-  //     }
-  //     if (res.info) {
-  //       setTotalCount(res.info.totalCount)
-  //     }
-  //   })
-  // }
-
-  // useEffect(() => {
-  // const fetchTransaction = async () => {
-  //   if (profile) {
-  //     await getTransHistory({
-  //       _playerId: profile && profile.data?.id ? profile.data?.id : "",
-  //       _type: landType,
-  //       _page: page,
-  //       _limit: limit,
-  //       _sort:
-  //         sortTime || sortAmount
-  //           ? { "current_time": sortTime, "amount": sortAmount }
-  //           : undefined
-  //     }).then((res) => {
-  //       // res.status === 200 -> ok
-  //       if (res.data) {
-  //         setTxHistory(res.data)
-  //       }
-  //       if (res.info) {
-  //         setTotalCount(res.info.totalCount)
-  //       }
-  //     })
-  //     // .catch((error) => {
-  //     //   // errorToast(error.message)
-  //     // })
-  //   }
-  // }
-  // fetchTransaction()
-  // }, [landType, limit, page, profile, sortAmount, sortTime])
-
-  // const fetchData = () => {
-  //   getTransHistory({
-  //     _playerId: profile && profile.data?.id ? profile.data?.id : "",
-  //     _type: landType,
-  //     _page: page,
-  //     _limit: limit,
-  //     _sort:
-  //       sortTime || sortAmount
-  //         ? { "current_time": sortTime, "amount": sortAmount }
-  //         : undefined
-  //   }).then((res) => {
-  //     // res.status === 200 -> ok
-  //     if (res.data) {
-  //       setTxHistory(res.data)
-  //     }
-  //     if (res.info) {
-  //       setTotalCount(res.info.totalCount)
-  //     }
-  //   })
-  // }
-
-  // useEffect(() => {
-  //   const fetchTransaction = async () => {
-  //     if (profile && profile.data) {
-  //       await getTransHistory({
-  //         _playerId: profile && profile.data.id ? profile.data.id : "",
-  //         _type: Event === "all" ? allTypes : Event,
-  //         _limit: limit,
-  //         _page: page,
-  //         _sort:
-  //           sortTime || sortAmount
-  //             ? { "current_time": sortTime, "amount": sortAmount }
-  //             : undefined
-  //       }).then((res) => {
-  //         // res.status === 200 -> ok
-  //         if (res.data) {
-  //           setTxHistory(res.data)
-  //         }
-  //         if (res.info) {
-  //           setTotalCount(res.info.totalCount)
-  //         }
-  //       })
-  //     }
-  //   }
-  //   fetchTransaction()
-  // }),
-
-  // console.log("Event", Event)
+    fetchTransaction()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [limit, page, sortAmount, sortTime, typeList])
 
   return (
     <>
       {hydrated && (
-        // <TransactionTable profile={profile.data} />
         <div className="md-w-[678px] mx-auto">
-          {/* <Button onClick={fetchData}>click</Button> */}
           <div className="flex justify-between">
             <PageHeader
               title="HISTORY TRANSACTION"
@@ -251,8 +154,13 @@ const TransactionPage = ({ profile }: IProp) => {
                   overflow: "hidden",
                   "tr:last-of-type td": { borderBottom: 0 }
                 }}
-                className="uppercase"
+                className="relative uppercase"
               >
+                {isLoading && (
+                  <div className="absolute z-[2] grid h-full w-full content-center justify-items-center bg-neutral-900 opacity-50">
+                    <ReloadIcon className="animate-spin" />
+                  </div>
+                )}
                 {txHistory && txHistory.length > 0 ? (
                   txHistory.map((item) => (
                     <TableRowData
@@ -271,7 +179,7 @@ const TransactionPage = ({ profile }: IProp) => {
                           <Chip
                             label={item.type}
                             size="small"
-                            className={`font-neue-machina-bold uppercase !text-neutral-900 ${
+                            className={`max-w-[120px] font-neue-machina-bold uppercase !text-neutral-900 ${
                               item.type && item.type === "DepositNaka"
                                 ? "!bg-varidian-default"
                                 : "!bg-red-card"
@@ -291,7 +199,6 @@ const TransactionPage = ({ profile }: IProp) => {
                           }}
                           key={item.id}
                           variant="outlined"
-                          // color="secondary"
                           label="view transaction"
                           size="small"
                         />

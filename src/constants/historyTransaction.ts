@@ -109,3 +109,48 @@ export const txMaterialTypes: ITransTypes[] = [
     value: "CancleMaterialOrder"
   }
 ]
+
+export const landType = [
+  "MintLand",
+  "BuyLandInstallment",
+  "BuyLandFullpayment",
+  "RentLand",
+  "CreateLandOrder",
+  "CancleLandOrder",
+  "TransferLand",
+  "ClaimRental"
+]
+export const gameItemType = [
+  "BuyItem",
+  "UseItem",
+  "ReturnItem",
+  "ClaimRewardItem",
+  "BuyItemP2P",
+  "CreateItemOrder",
+  "CancleItemOrder",
+  "CreateItem"
+]
+export const buildingType = [
+  "MintBuilding",
+  "BuyBuildingFullpayment",
+  "BuyBuildingInstallment",
+  "RentBuilding",
+  "CreateBuildingOrder",
+  "CancleBuildingOrder",
+  "NakaVerseTransferBuildingOwner",
+  "ClaimRental"
+]
+export const nakaType = [
+  "MintNakaPunk",
+  "BuyNFTNakaPunkFullpayment",
+  "CreateNakaPunkOrder",
+  "CancleNakaPunkOrder",
+  "NakaPunkTransferOwner"
+]
+export const materialType = [
+  "BuyMaterialFullpayment",
+  "DepositMaterial",
+  "WithdrawMaterial",
+  "CreateMaterialOrder",
+  "CancleMaterialOrder"
+]

@@ -8,13 +8,15 @@ import dynamic from "next/dynamic"
 const IconArrowRight = dynamic(
   () => import("@components/icons/arrowRightIcon"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 const ButtonToggleIcon = dynamic(
   () => import("@components/molecules/gameSlide/ButtonToggleIcon"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

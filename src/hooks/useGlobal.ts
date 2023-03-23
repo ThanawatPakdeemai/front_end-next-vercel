@@ -70,6 +70,13 @@ const useGlobal = (
   const isMarketplace = router.asPath.includes("marketplace")
 
   /**
+   * @description check if url is in marketplace
+   */
+  const isDeveloperPage =
+    router.asPath.includes("become-developer") ||
+    router.asPath.includes("developer")
+
+  /**
    * @description Set profile
    */
   useEffect(() => {
@@ -101,8 +108,6 @@ const useGlobal = (
     _gameUrl: string,
     _gameData: IGame | IPartnerGameData
   ) => {
-    // eslint-disable-next-line no-console
-    console.log("game", _gameData)
     switch (_type) {
       case "partner-publisher":
         onSetGamePartnersData(_gameData as IPartnerGameData)
@@ -293,7 +298,8 @@ const useGlobal = (
     fetchAllTokenSupported,
     fetchNAKAToken,
     getDefaultCoin,
-    isMarketplace
+    isMarketplace,
+    isDeveloperPage
   }
 }
 

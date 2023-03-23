@@ -5,14 +5,25 @@ import dynamic from "next/dynamic"
 const TournamentLayout = dynamic(
   () => import("@components/templates/TournamentLayout"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
+  }
+)
+
+const TournamentPage = dynamic(
+  () => import("@feature/page/games/TournamentPage"),
+  {
+    suspense: true,
+    ssr: false
   }
 )
 
 export default function Tournament() {
   return (
     <>
-      <article className="h-full w-full">Coming soon</article>
+      <article className="h-full w-full">
+        <TournamentPage />
+      </article>
     </>
   )
 }

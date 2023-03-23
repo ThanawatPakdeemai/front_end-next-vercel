@@ -6,11 +6,20 @@ const MarketplaceLayoutWithoutFilter = dynamic(
   () =>
     import("@components/templates/marketplace/MarketplaceLayoutWithoutFilter"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 
-const Page = () => <div>naka-punk/[id]</div>
+const MarketplaceDetail = dynamic(
+  () => import("@feature/page/marketplace/MarketplaceDetail"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const Page = () => <MarketplaceDetail />
 
 Page.getLayout = function getLayout(page: ReactElement) {
   return <MarketplaceLayoutWithoutFilter>{page}</MarketplaceLayoutWithoutFilter>

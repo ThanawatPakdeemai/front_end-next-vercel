@@ -181,3 +181,116 @@ h6 {
 .Cardtext {
   box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
 }
+
+.text-neon {
+  text-shadow: 0 0 5px #ea0000, 0 0 10px #ea0000, 0 0 15px #ea0000;
+  /* ,0 0 20px #ea0000, 0 0 25px #ea0000; */
+}
+
+.checkbox {
+  position: relative;
+  margin-right: 8px;
+}
+
+.checkbox input {
+  width: 7px;
+  height: 7px;
+  display: block;
+  border-color: #7b5be6;
+}
+input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+  outline: none;
+  background: #232329;
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 1px;
+  border-color: #7b5be6;
+  color: #4e5057;
+  transition: all 0.3s;
+}
+input:hover {
+  --s: 2px;
+  --b: #7b5be6;
+}
+input:checked {
+  --b: #00c076;
+  background: #00c076;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.showlist {
+  animation: fade-in 1s;
+}
+/* MuiSlider */
+.MuiSlider-root {
+  padding: 5px 0;
+}
+.Mui-disabled {
+  padding: 4px 0;
+  color: #7b5be6;
+}
+.MuiSlider-track {
+  padding: 4px 0;
+  color: #7b5be6;
+  position: inherit;
+  scrollbar-width: thin;
+  border-radius: 0;
+  background: #7b5be6 !important;
+  background: linear-gradient(
+    90deg,
+    #7b5be6 50%,
+    rgb(35, 35, 41) 50%
+  ) !important;
+  background-repeat: repeat-x !important;
+  background-size: 0.2% !important;
+  border-color: transparent;
+  top: -6px;
+}
+.MuiSlider-rail {
+  padding: 4px 0;
+  color: #7b5be6;
+  position: inherit;
+  scrollbar-width: thin;
+  border-radius: 0;
+  background: #7b5be6 !important;
+  background: linear-gradient(
+    90deg,
+    #4e4e4e 50%,
+    rgb(35, 35, 41) 50%
+  ) !important;
+  background-repeat: repeat-x !important;
+  background-size: 0.5% !important;
+  border-color: transparent;
+}
+
+.MuiSlider-mark {
+  background: transparent;
+}
+
+.MuiSlider-thumb {
+  background: #7b5be6;
+  width: 1px;
+  display: none;
+}

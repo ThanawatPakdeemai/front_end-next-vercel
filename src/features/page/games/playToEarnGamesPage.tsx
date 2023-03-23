@@ -11,7 +11,7 @@ import GameCard from "@feature/game/containers/components/molecules/GameCard"
 import useGlobal from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { getGamesByCategoryId } from "@feature/dropdown/containers/services/dropdown.service"
+import useFilterGameList from "@feature/dropdown/containers/hooks/useFilterGameList"
 
 const PlayToEarnGamesPage = () => {
   const type = "play-to-earn"
@@ -78,6 +78,9 @@ const PlayToEarnGamesPage = () => {
     queryClient
   ])
 
+  const { mutateGetGamesByCategoryId, isLoading: loadingFilterGame } =
+    useFilterGameList()
+
   useEffect(() => {
     const filterData = {
       limit,
@@ -91,7 +94,7 @@ const PlayToEarnGamesPage = () => {
       tournament: false,
       nftgame: "all"
     }
-    getGamesByCategoryId(filterData).then((res) => {
+    mutateGetGamesByCategoryId(filterData).then((res) => {
       if (res) {
         const { data, info } = res
         setGameFilter(data)
@@ -104,17 +107,17 @@ const PlayToEarnGamesPage = () => {
     deviceDropdown,
     searchDropdown,
     page,
-    limit
+    limit,
+    mutateGetGamesByCategoryId
   ])
 
   return (
     <div className="flex flex-col">
       <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-5">
-        {isLoading
+        {isLoading || loadingFilterGame
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
-          : null}
-        {gameFilter
-          ? gameFilter.map((game) => (
+          : gameFilter &&
+            gameFilter.map((game) => (
               <GameCard
                 key={game.id}
                 menu={P2EHeaderMenu}
@@ -123,9 +126,13 @@ const PlayToEarnGamesPage = () => {
                   onHandleClick("play-to-earn", game.path, game)
                 }
               />
-            ))
-          : null}
+            ))}
       </div>
+
+      {totalCount === 0 && (
+        <div className="d-flex  justify-center text-center">No data</div>
+      )}
+
       <PaginationNaka
         totalCount={totalCount}
         limit={limit}

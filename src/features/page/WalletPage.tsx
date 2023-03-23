@@ -50,6 +50,7 @@ export default function WalletPage() {
     handleConnectWithMetamask,
     statusWalletConnected
   } = useSwitchNetwork()
+
   const router = useRouter()
   const { token } = router.query
   const { profile } = useProfileStore()
@@ -71,7 +72,7 @@ export default function WalletPage() {
     return (
       <div
         key={((tokenParam as ITokenContract) || chainSupport[0]).address}
-        className="md:col-span-5 md:m-2"
+        className="w-full md:m-2 xl:max-w-[380px]"
       >
         <WalletHeader
           tokenName={((tokenParam as ITokenContract) || chainSupport[0]).symbol}
@@ -92,7 +93,7 @@ export default function WalletPage() {
             ((tokenParam as ITokenContract) || chainSupport[0]).address
           }
         />
-        <div className="mb-4 flex w-full justify-end">
+        <div className="flex w-full justify-end gap-1 sm:mb-4">
           <RightMenuWallet
             title="withdraw"
             titleHeader="Withdraw to metamask"
@@ -152,7 +153,7 @@ export default function WalletPage() {
     if (!statusWalletConnected.responseStatus) return
     setDisabled(isDisabledButton())
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value, tabChainList])
+  }, [value, tabChainList, statusWalletConnected])
 
   /**
    * @description Set type tab by router.query
@@ -182,9 +183,11 @@ export default function WalletPage() {
 
   return hydrated ? (
     <>
-      <div className="flex w-full flex-wrap justify-center gap-4 md:justify-end lg:mx-2 xl:grid xl:grid-cols-12">
-        <div className="h-full w-full justify-center md:col-span-8 md:flex md:justify-between">
+      <div className="mt-2 w-full gap-2 sm:flex md:mt-0 xl:max-w-[570px] xl:justify-between">
+        <div className="md:min-w-[327px]">
           <ChainList currentTabChainSelected={tabChainList as IChainList} />
+        </div>
+        <div className="md:min-w-[224px]">
           {chainId === tabChainList?.chainId && (
             <TokenList
               dataList={chainSupport}
@@ -195,48 +198,46 @@ export default function WalletPage() {
             />
           )}
         </div>
-        <div className="my-2 h-full min-h-[360px] w-full max-w-full flex-[1_1_calc(100%-200px)] items-center justify-center rounded-default bg-neutral-800 p-2 md:col-span-6 md:my-0 md:max-w-md md:gap-1 md:p-0 lg:max-w-full">
-          <WalletContent
-            chainSupport={chainSupport}
-            loading={loading as boolean}
-            address={address as string}
-            signer={signer}
-            handleConnectWithMetamask={handleConnectWithMetamask}
-            isWrongNetwork={isWrongNetwork}
-            type={(tabChainList as IChainList).link}
-            handleSwitchNetwork={
-              tabChainList?.link === "NAKA"
-                ? () =>
-                    handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX as string)
-                : () =>
-                    handleSwitchNetwork(
-                      CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string
-                    )
-            }
-            renderWallets={renderWallets}
-            statusWalletConnected={statusWalletConnected}
-          />
-        </div>
-        <div className="col-span-2 h-full w-full items-center justify-center gap-1 rounded-default bg-neutral-800">
-          <Gas type={tabChainList?.link} />
-        </div>
-        <div className="col-span-4 w-full gap-1">
-          <div className="w-full">
-            <MetamaskWallet
-              isConnected={!!address}
-              handleConnectWallet={handleConnectWallet}
-              handleOnDisconnectWallet={handleDisconnectWallet}
-              blockExplorerURL={
-                getNetwork?.(chainId as string).blockExplorerUrls[0]
-              }
+      </div>
+      <div className="flex flex-wrap gap-2 lg:flex-nowrap">
+        <div className="flex flex-1 flex-wrap justify-center gap-4 lg:max-w-[570px] xl:w-full xl:justify-end">
+          <div className="my-2 h-full flex-[1_1_calc(100%-200px)] items-center justify-center rounded-default bg-neutral-800 p-2 md:my-0 md:min-h-[360px] md:p-0 xl:w-[570px]">
+            <WalletContent
               chainSupport={chainSupport}
-              currentTokenSelected={
-                (token as string) || chainSupport[0]?.symbol
+              loading={loading as boolean}
+              address={address as string}
+              signer={signer}
+              handleConnectWithMetamask={handleConnectWithMetamask}
+              isWrongNetwork={isWrongNetwork}
+              type={(tabChainList as IChainList).link}
+              handleSwitchNetwork={
+                tabChainList?.link === "NAKA"
+                  ? () =>
+                      handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX as string)
+                  : () =>
+                      handleSwitchNetwork(
+                        CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string
+                      )
               }
-              currentChainSelected={tabChainList as IChainList}
+              renderWallets={renderWallets}
+              statusWalletConnected={statusWalletConnected}
             />
           </div>
         </div>
+        <div className="flex flex-col gap-1 rounded-default bg-neutral-800">
+          <Gas type={tabChainList?.link} />
+        </div>
+        <MetamaskWallet
+          isConnected={!!address}
+          handleConnectWallet={handleConnectWallet}
+          handleOnDisconnectWallet={handleDisconnectWallet}
+          blockExplorerUrls={
+            getNetwork?.(chainId as string)?.blockExplorerUrls as string[]
+          }
+          chainSupport={chainSupport}
+          currentTokenSelected={(token as string) || chainSupport[0]?.symbol}
+          currentChainSelected={tabChainList as IChainList}
+        />
       </div>
       <TransactionTable profile={profile.data} />
     </>

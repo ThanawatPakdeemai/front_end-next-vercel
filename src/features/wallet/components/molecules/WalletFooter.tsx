@@ -8,7 +8,7 @@ interface IWalletFooterProps {
   address?: string
 }
 const WalletFooter = ({ address }: IWalletFooterProps) => (
-  <div className="mt-6 grid w-full grid-cols-12 gap-2">
+  <div className="mt-6 hidden w-full grid-cols-12 gap-2 sm:grid">
     <div className="col-span-7 rounded-xl border-2 border-black-800 text-center ">
       <p className="pt-1 uppercase text-black-800">NAKA storage model:S</p>
     </div>

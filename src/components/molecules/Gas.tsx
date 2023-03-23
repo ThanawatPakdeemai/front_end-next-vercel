@@ -45,13 +45,13 @@ const Gas = ({ type }) => {
   }, [type])
 
   return (
-    <Box className="p-4">
+    <Box className="p-[8px]">
       <div className="grid h-full w-full gap-2 !rounded-[14px]">
         <Box className="flex justify-center">
           <Card className="Cardtext h-full w-full !rounded-lg bg-black-100">
-            <div className="mx-auto flex items-center justify-between p-3">
+            <div className="mx-auto flex items-center justify-between p-[8px]">
               <div>
-                <p className="p-2 text-[14px] uppercase text-neutral-600">
+                <p className="p-2 text-sm uppercase text-neutral-600">
                   Gas Now
                 </p>
               </div>

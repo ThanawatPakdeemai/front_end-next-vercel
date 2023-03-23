@@ -10,7 +10,8 @@ export const ImageCustom = ({
   placeholder,
   className,
   blurDataURL,
-  fill
+  fill,
+  onClick = () => {}
 }: ImageProps) => {
   const imgSrc = src || ""
 
@@ -25,6 +26,7 @@ export const ImageCustom = ({
       placeholder={placeholder}
       fill={fill}
       alt={alt || ""}
+      onClick={onClick}
     />
   )
 }

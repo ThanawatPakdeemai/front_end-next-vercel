@@ -240,8 +240,9 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
             }}
           /> */}
           <ButtonToggleIcon
-            className=" bg-secondary-main text-white-default"
+            className=" flex items-center bg-secondary-main text-white-default"
             startIcon={null}
+            disabled={isLoading}
             text={
               isLoading ? (
                 <CircularProgress

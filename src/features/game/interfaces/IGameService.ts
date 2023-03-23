@@ -439,8 +439,10 @@ export interface IGameCategoryService extends IFormatService {
   data: IGameCategoryDetail[]
 }
 
-export interface IGetAllGameRooms {
+export interface IGameId {
   _gameId: string
+}
+export interface IGetAllGameRooms extends IGameId {
   _email: string
   _itemId: string
 }
@@ -532,4 +534,18 @@ export interface IFilterGamesByKey {
   game_type?: IGetType
   tournament?: boolean
   nftgame?: boolean
+}
+
+export interface IResponseGameUpdatedPlayingData {
+  play_total_count: number
+  _id: string
+  history: History[]
+  createdAt: Date
+  updatedAt: Date
+  game_id: string
+}
+
+export interface IResponseGameUpdatedPlaying {
+  status: boolean
+  data: IResponseGameUpdatedPlayingData
 }

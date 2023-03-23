@@ -3,22 +3,22 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 
 const NakaPassPage = dynamic(() => import("@feature/page/games/NakaPassPage"), {
-  suspense: true
+  suspense: true,
+  ssr: false
 })
 const GamePageWithBreadcrumb = dynamic(
   () => import("@components/templates/GamePageWithBreadcrumb"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 
 export default function NakaPass() {
   return (
-    <>
-      <article className="h-full w-full">
-        <NakaPassPage />
-      </article>
-    </>
+    <article className="h-full md:w-[calc(100%-220px)]">
+      <NakaPassPage />
+    </article>
   )
 }
 

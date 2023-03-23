@@ -1,5 +1,5 @@
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import AddIcon from "@mui/icons-material/Add"
+// import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+// import AddIcon from "@mui/icons-material/Add"
 import React from "react"
 import { motion } from "framer-motion"
 
@@ -8,7 +8,7 @@ interface IProp {
   handleClaimAll: () => void
 }
 
-const ClaimAllComponent = ({ count, handleClaimAll }: IProp) => (
+const ClaimAllComponent = ({ count }: IProp) => (
   <div className="flex h-[54px] w-full flex-row items-center justify-center gap-[10px] rounded-lg border border-neutral-700 bg-neutral-780 p-1">
     <motion.div
       initial={{ x: 15 }}
@@ -36,7 +36,7 @@ const ClaimAllComponent = ({ count, handleClaimAll }: IProp) => (
         {count}
       </motion.span>
     </motion.div>
-    <motion.div
+    {/* <motion.div
       initial={{ width: 184 }}
       animate={{
         width: 248,
@@ -50,7 +50,7 @@ const ClaimAllComponent = ({ count, handleClaimAll }: IProp) => (
         handleClick={handleClaimAll}
         dropColor
       />
-    </motion.div>
+    </motion.div> */}
   </div>
 )
 

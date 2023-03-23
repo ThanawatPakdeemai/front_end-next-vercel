@@ -153,9 +153,10 @@ const FormBuyItem = () => {
               />
             </div>
             <div className="input col-span-4">
-              <div className="flex h-full w-full justify-between rounded-xl bg-neutral-700 p-2  text-neutral-500">
+              <div className="flex h-full w-full items-center justify-between rounded-xl bg-neutral-700  p-2 text-neutral-500">
                 <div className="text-center">
                   <input
+                    type="number"
                     {...register("qty", { required: true })}
                     onChange={(event: any) => {
                       event.preventDefault()
@@ -168,14 +169,18 @@ const FormBuyItem = () => {
                         setValue("qty", qty)
                       }
                     }}
-                    className="h-full w-[220px] bg-neutral-700 pt-2 text-center text-neutral-500 focus-visible:bg-neutral-700 focus-visible:outline-0"
+                    className="hidden-input-number h-full w-[220px] bg-neutral-700 pt-2 pl-8 text-center text-neutral-500 focus-visible:bg-neutral-700 focus-visible:outline-0"
                     value={watch("qty")}
                   />
                 </div>
-                <Image
-                  src="/images/gamePage/skull.png"
-                  alt="skull"
-                />
+                <div className="flex items-start">
+                  <Image
+                    src={game.item[0].image_icon}
+                    alt={game.item[0].name}
+                    width={20}
+                    height={20}
+                  />
+                </div>
               </div>
             </div>
             <div className="btn">

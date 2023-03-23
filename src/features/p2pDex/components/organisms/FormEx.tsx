@@ -65,8 +65,6 @@ const FormEx = ({
     fee,
     allowNaka,
     sendAllowNaka,
-    // eslint-disable-next-line no-unused-vars
-    sendRequestBuyNaka,
     allowBinance,
     sendAllowBinance,
     saveRequestNaka

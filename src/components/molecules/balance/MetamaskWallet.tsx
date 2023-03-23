@@ -10,6 +10,8 @@ import MetamaskLogo from "@components/icons/MetamaskLogo"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import { numberWithCommas } from "@src/helpers/addComma"
 import { IChainList } from "@configs/chain"
+import { useWeb3Provider } from "@providers/Web3Provider"
+import { Typography } from "@mui/material"
 import BalanceWallet from "./BalanceWallet"
 
 interface IProp {
@@ -17,7 +19,8 @@ interface IProp {
   address?: string
   handleConnectWallet?: () => void
   handleOnDisconnectWallet?: () => void
-  blockExplorerURL: string | undefined
+  // blockExplorerURL: string
+  blockExplorerUrls: string[]
   chainSupport: ITokenContract[]
   currentTokenSelected: string
   currentChainSelected: IChainList
@@ -28,24 +31,16 @@ const MetamaskWallet = ({
   address,
   handleConnectWallet,
   handleOnDisconnectWallet,
-  blockExplorerURL,
+  blockExplorerUrls,
   chainSupport,
   currentTokenSelected,
   currentChainSelected
 }: IProp) => {
+  const { onAddToken } = useWeb3Provider()
   /**
    * @description Handle display balances from wallet
    */
   const handleDisplayBalance = () => {
-    // if (chainId === CONFIGS.CHAIN.CHAIN_ID) {
-    //   return (
-    //     <></>
-    //     // <BalanceWallet
-    //     //   balance={balance.text ?? "N/A"}
-    //     //   tokenName={tokenName}
-    //     // />
-    //   )
-    // }
     const _tokenBalance = chainSupport.find(
       (item) => item.symbol === currentTokenSelected
     )
@@ -65,25 +60,12 @@ const MetamaskWallet = ({
             _tokenBalance ? (_tokenBalance as ITokenContract).symbol : "NAKA"
           }
         />
-        {/* {chainSupport &&
-          chainSupport.length > 0 &&
-          chainSupport.map((coin) => (
-            <BalanceWallet
-              key={coin.address}
-              balance={
-                numberWithCommas(
-                  Helper.number4digit(coin.balanceWallet.digit)
-                ) ?? "N/A"
-              }
-              tokenName={coin.symbol}
-            />
-          ))} */}
       </>
     )
   }
 
   return (
-    <div className="flex h-full flex-col rounded-default bg-neutral-700 p-2">
+    <div className="flex flex-[1_1_calc(100%-134px)] flex-col rounded-default bg-neutral-700 p-2 lg:max-w-[333px] lg:flex-[1_1_333px]">
       <div className="relative mb-[10px] flex h-full flex-col items-center justify-center rounded-t-default bg-neutral-900 pt-6">
         {/* isConnected */}
         <div className="absolute right-[14px] top-[14px] flex h-[30px] w-[57px] items-center justify-evenly rounded-[10px] bg-neutral-800">
@@ -98,12 +80,27 @@ const MetamaskWallet = ({
           <MetamaskLogo />
         </div>
         {/* isConnected */}
-        <div className="my-6 flex flex-col items-center gap-4 uppercase">
-          <span className="text-[14px] text-neutral-300">
+        <div className="my-6 flex flex-col items-center gap-4">
+          <span className="text-[14px] uppercase text-neutral-300">
             {isConnected
               ? "connected with metamask"
               : "not connected with metamask"}
           </span>
+          <Typography
+            variant="h3"
+            className="import-token--title my-4 text-center text-sm"
+          >
+            {`Don't see your token on Metamask?`}
+            <span className="block">
+              <button
+                type="button"
+                onClick={onAddToken}
+                className="mt-1 text-sm underline hover:no-underline"
+              >
+                Import NAKA Token
+              </button>
+            </span>
+          </Typography>
           {isConnected && address && (
             <div>
               <span className="text-xs text-neutral-500">
@@ -122,7 +119,10 @@ const MetamaskWallet = ({
                 name={`${currentChainSelected.title} Scan`}
                 className="!pb-0 capitalize"
                 onClick={() =>
-                  window.open(`${blockExplorerURL}address/${address}`, "_blank")
+                  window.open(
+                    `${(blockExplorerUrls as string[])[0]}address/${address}`,
+                    "_blank"
+                  )
                 }
               />
               <span className="text-neutral-700">|</span>
@@ -141,7 +141,6 @@ const MetamaskWallet = ({
           )}
         </div>
       </div>
-      {/* isConnected */}
       {isConnected ? (
         handleDisplayBalance()
       ) : (

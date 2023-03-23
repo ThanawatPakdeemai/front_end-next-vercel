@@ -6,12 +6,12 @@ import {
   Paper,
   Chip,
   Box,
-  TextField
+  TextField,
+  TableCell
 } from "@mui/material"
 import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import TableHeader from "@feature/table/components/molecules/TableHeader"
 import PageHeader from "@feature/table/components/molecules/PageHeader"
-import TableRowData from "@feature/table/components/molecules/TableRowData"
 import TableNodata from "@feature/transaction/components/atoms/TableNodata"
 import DropdownLimit from "@components/atoms/DropdownLimit"
 import dayjs from "dayjs"
@@ -21,6 +21,8 @@ import SearchIcon from "@components/icons/SearchIcon"
 import useFilterStore from "@stores/blogFilter"
 import useTournamentController from "@feature/tournament/containers/hooks/useTournamentController"
 import { Image } from "@components/atoms/image"
+import CopyMiniIcon from "@components/icons/Referral/CoopyMiniIcon"
+import Helper from "@utils/helper"
 
 const TournamentList = () => {
   const { search: searchBlog, setSearch: setSearchBlog } = useFilterStore()
@@ -36,9 +38,18 @@ const TournamentList = () => {
       game_type: "NAKAMOTO WARS",
       reward: "200,000 NAKA",
       banner_image: "/images/home/table-com.svg",
-      name: "OX56419643GGSDF656230348"
+      user: "Designer Game",
+      id: "OX5641964230348"
     }
   ]
+
+  // function copyFriendCode(id:string) {
+  //   throw new Error("Function not implemented.")
+  // }
+
+  // function textWithDots(id: string): React.ReactNode {
+  //   throw new Error("Function not implemented.")
+  // }
 
   return (
     <>
@@ -78,66 +89,78 @@ const TournamentList = () => {
               gridTemplateColumns="120px 200px 240px 1fr"
             />
             <TableBody
-              sx={{
-                display: "block",
-                borderRadius: "5px",
-                overflow: "hidden",
-                "tr:last-of-type td": { borderBottom: 0 }
-              }}
-              className="uppercase"
+            // sx={{
+            //   display: "block",
+            //   borderRadius: "5px",
+            //   overflow: "hidden",
+            //   "tr:last-of-type td": { borderBottom: 0 }
+            // }}
+            // className="uppercase"
             >
               {mockupData && mockupData.length > 0 ? (
                 mockupData.map((row) => (
-                  <TableRowData
-                    key={row.name}
-                    gridTemplateColumns="120px 200px 240px 1fr"
-                    child={[
-                      <div
-                        key={row.name}
-                        className="history--datetime flex items-center"
-                      >
-                        <Chip
-                          label={dayjs(row.date_end).format("DD MMM YYYY")}
-                          size="small"
-                          color="default"
-                          variant="outlined"
-                          className="font-bold"
-                        />
-                      </div>,
-                      <div
-                        key={row.name}
-                        className="history--gameName truncate text-xs text-neutral-300"
-                      >
+                  // <TableRow
+                  //   key={row.id}
+                  //   // gridTemplateColumns="120px 200px 240px 1fr"
+                  //   className="border-b-[6px] border-neutral-800 bg-primary-main"
+                  // >
+                  <div
+                    key={row.id}
+                    className="rounded-xl border-b-[6px] border-neutral-800 bg-primary-main"
+                  >
+                    <TableCell className="rounded-r-2xl text-end font-neue-machina-bold text-xs uppercase">
+                      <Chip
+                        label={dayjs(row.date_end).format("DD MMM YYYY")}
+                        size="small"
+                        color="default"
+                        variant="outlined"
+                        className="text-sm font-bold"
+                      />
+                    </TableCell>
+                    <TableCell className="rounded-r-2xl text-end font-neue-machina text-xs uppercase">
+                      <div className="flex w-[165px] items-center text-white-primary">
                         {row.game_type}
-                      </div>,
-                      <div
-                        key={row.name}
-                        className="history--gameType text-xs text-neutral-300"
-                      >
+                      </div>
+                    </TableCell>
+                    <TableCell className="rounded-r-2xl text-end font-neue-machina text-xs uppercase">
+                      <div className="flex w-[200px] items-center text-white-primary">
                         {row.reward}
-                      </div>,
-                      <div
-                        key={row.name}
-                        className="history--roomStatus"
-                      >
-                        <div className="flex items-center">
-                          <Image
-                            src={row.banner_image}
-                            width={48}
-                            height={48}
-                            alt="news image"
-                            className="m-auto"
-                          />
-                          <div className="border-box item-center flex h-[48px] w-[257px] justify-center gap-[10px] rounded-sm border-neutral-800 bg-neutral-800 pl-4 pt-1 uppercase">
-                            Designer Game
-                            <Box className="border-box text-[10px]rounded-sm  flex h-[20px] w-[99px] content-center overflow-hidden text-ellipsis border-neutral-700 bg-secondary-contrastText">
-                              {row.name}
-                            </Box>
+                      </div>
+                    </TableCell>
+                    <TableCell className="w-[320px] rounded-r-2xl p-1 font-neue-machina text-xs uppercase">
+                      <div className="flex items-center">
+                        <Image
+                          src={row.banner_image}
+                          width={48}
+                          height={48}
+                          alt="news image"
+                          className="m-auto"
+                        />
+                        <div className="ml-1 flex h-[50px] w-[259px] items-center rounded-[4px] border border-solid border-neutral-680 bg-neutral-800 px-2">
+                          <div className="flex w-[100px] items-center text-white-primary">
+                            {row.user}
+                          </div>
+                          <div
+                            className="mx-2 flex
+                            h-[20px] w-[99px] items-center justify-center rounded-[4px] border border-solid bg-secondary-contrastText text-xs uppercase"
+                          >
+                            {Helper.shortenString(row.id)}
+                          </div>
+                          <div className="flex h-[25px] w-[25px] cursor-pointer items-center justify-center rounded-[4px] border border-solid border-neutral-700">
+                            <button
+                              type="button"
+                              className="focus:outline-none"
+                              // onClick={() => {
+                              //   copyFriendCode(row.id)
+                              // }}
+                            >
+                              <CopyMiniIcon />
+                            </button>
                           </div>
                         </div>
                       </div>
-                    ]}
-                  />
+                    </TableCell>
+                  </div>
                 ))
               ) : (
                 <TableNodata />

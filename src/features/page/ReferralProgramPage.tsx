@@ -47,7 +47,8 @@ const ReferralProgramPage = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { successToast } = useToast()
   const { getReferralsData, isPreviousData } = useGetReferral({
-    player_id: profile && profile.id ? profile.id : "",
+    // player_id: profile && profile.id ? profile.id : "",
+    player_id: "61bc302f7f8867700b66dd4b",
     skip: page,
     limit: limitPage,
     sort: undefined,
@@ -192,7 +193,7 @@ const ReferralProgramPage = () => {
               </CardContent>
             )}
 
-            <div className="flex hidden justify-center self-center sm:block md:block lg:block">
+            <div className="flex-hidden justify-center self-center sm:block md:block lg:block">
               <RadarAnimateIcon />
             </div>
           </div>

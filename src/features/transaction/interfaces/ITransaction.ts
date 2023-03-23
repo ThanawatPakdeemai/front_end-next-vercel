@@ -64,3 +64,9 @@ export interface IGetTransWallet extends IParamTrans {
   _page: string | number
   _sort?: object
 }
+
+export interface ITransTypes {
+  id: string
+  label: string
+  value: string
+}

@@ -217,11 +217,15 @@ const SellActionComponent = ({
         </>
       ) : null}
 
-      {isApproved || isApproved === undefined ? null : (
+      {isApproved ||
+      isApproved === undefined ||
+      nftType === "game_item" ||
+      nftType === "nft_material" ? null : (
         <TextTip
           text="Please allow the contract to access your NFTS first."
-          shade="dark"
-          color="warning"
+          textColor="text-warning-dark"
+          bgColor="bg-warning-dark/20"
+          borderColor="border-warning-dark"
         />
       )}
     </Stack>

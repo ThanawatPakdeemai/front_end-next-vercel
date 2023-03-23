@@ -11,6 +11,7 @@ import React, { memo, useMemo, useState } from "react"
 import LoginIcon from "@mui/icons-material/Login"
 import { TMarketAction } from "@feature/marketplace/interfaces/IMarket"
 import dynamic from "next/dynamic"
+import { IPosition } from "@feature/land/interfaces/ILandService"
 
 const ModalMarketplace = dynamic(
   () => import("@components/molecules/Modal/ModalMarket"),
@@ -23,6 +24,8 @@ const ModalMarketplace = dynamic(
 interface IMarketButton {
   nftType: TNFTType
   name: string
+  img: string
+  vdo?: string
   tokenId?: string
   marketId?: string
   itemId?: string
@@ -36,11 +39,14 @@ interface IMarketButton {
   sellingType?: TSellingType
   sellerId?: string
   marketplaces_data?: IMarketData[] | null
+  plot?: IPosition
 }
 
 const ButtonMarket = ({
   nftType,
   name,
+  img,
+  vdo,
   tokenId,
   marketId,
   itemId,
@@ -53,7 +59,8 @@ const ButtonMarket = ({
   sellerType, // p2p
   sellingType = "fullpayment",
   sellerId, // p2p
-  marketplaces_data // inventory
+  marketplaces_data, // inventory
+  plot
 }: IMarketButton) => {
   const { profile } = useProfileStore()
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -161,6 +168,8 @@ const ButtonMarket = ({
         onClose={handleClose}
         action={actionValue}
         name={name}
+        img={img}
+        vdo={vdo}
         priceValue={price}
         periodValue={period}
         amount={amount}
@@ -173,6 +182,7 @@ const ButtonMarket = ({
         sellerId={sellerId}
         sellerType={sellerType}
         sellingType={sellingType}
+        plot={plot}
       />
     </>
   )

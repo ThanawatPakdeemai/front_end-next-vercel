@@ -16,7 +16,8 @@ const ButtonMarket = dynamic(
 )
 
 const MarketplaceDetail = () => {
-  const { detailData, type, nameNFT, tokenNFT } = useMarketplace()
+  const { detailData, type, nameNFT, tokenNFT, imageNFT, vdoNFT } =
+    useMarketplace()
   const { count } = useCountStore()
 
   return detailData ? (
@@ -30,16 +31,8 @@ const MarketplaceDetail = () => {
           detailData.nakapunk_data?.description ??
           detailData.game_data?.story
         }
-        image={
-          detailData.building_data?.NFT_image ??
-          detailData.item_data?.image ??
-          detailData.material_data?.image ??
-          detailData.nakapunk_data?.image
-        }
-        video={
-          detailData.land_data?.NFT_video ??
-          detailData.game_data?.animation_nft_arcade_game
-        }
+        image={imageNFT}
+        video={vdoNFT}
         poster={
           detailData.land_data?.NFT_image ??
           detailData.game_data?.image_nft_arcade_game
@@ -69,12 +62,7 @@ const MarketplaceDetail = () => {
         <RightDetailsMarketplace
           type={type}
           id={detailData.item_id}
-          token={
-            detailData.land_data?.land_id ||
-            detailData.building_data?.building_id_smartcontract ||
-            detailData.order_id ||
-            detailData.nakapunk_data?.NFT_token
-          }
+          token={tokenNFT}
           title={
             detailData.land_data?.name ||
             detailData.building_data?.name ||
@@ -99,6 +87,8 @@ const MarketplaceDetail = () => {
         <ButtonMarket
           nftType={detailData.type}
           name={nameNFT || ""}
+          img={imageNFT}
+          vdo={vdoNFT}
           tokenId={tokenNFT}
           marketId={detailData._id}
           itemId={detailData.item_id}
@@ -109,6 +99,7 @@ const MarketplaceDetail = () => {
           sellerType={detailData.seller_type}
           sellingType={detailData.selling_type}
           sellerId={detailData.seller_id}
+          plot={detailData.land_data?.position}
         />
       </div>
     </div>

@@ -11,8 +11,9 @@ import React, { memo, useEffect, useMemo, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import dynamic from "next/dynamic"
 import Helper from "@utils/helper"
+import { IPosition } from "@feature/land/interfaces/ILandService"
+import Video from "@components/atoms/Video"
 import { ModalCustom } from "./ModalCustom"
-import ModalHeader from "./ModalHeader"
 
 const SellActionComp = dynamic(
   () => import("@components/molecules/Modal/SellActionComponent"),
@@ -42,6 +43,8 @@ interface IProps {
   onClose: () => void
   action: TMarketAction
   name: string
+  img: string
+  vdo?: string
   priceValue?: number
   periodValue?: number
   amount?: number
@@ -54,6 +57,7 @@ interface IProps {
   sellerId?: string
   sellerType?: TSellerType
   sellingType?: TSellingType
+  plot?: IPosition
 }
 
 const ModalMarket = ({
@@ -62,6 +66,8 @@ const ModalMarket = ({
   onClose,
   action,
   name,
+  img,
+  vdo,
   priceValue = 0,
   periodValue = 0,
   amount = 0,
@@ -72,8 +78,9 @@ const ModalMarket = ({
   itemId,
   orderId,
   sellerId,
-  sellerType,
-  sellingType = "fullpayment"
+  sellerType = "user",
+  sellingType = "fullpayment",
+  plot
 }: IProps) => {
   const currencyRef = useRef<boolean>(false)
   const { getPriceNakaCurrent } = Helper
@@ -106,6 +113,12 @@ const ModalMarket = ({
   const titleModal = useMemo(() => {
     let _title: string | undefined
     switch (action) {
+      case "login":
+        _title = "login"
+        break
+      case "mint":
+        _title = `: ${name}`
+        break
       case "buy":
         _title = `: ${name}`
         break
@@ -116,6 +129,7 @@ const ModalMarket = ({
         _title = `: ${name}`
         break
       default:
+        _title = "loading"
         break
     }
     if (_title) return `${action} ${_title}`
@@ -154,7 +168,11 @@ const ModalMarket = ({
     switch (action) {
       case "cancel":
         if (orderId && sellerId && sellingType) {
-          await onCancelOrder(nftType, sellingType, orderId, sellerId)
+          await onCancelOrder(nftType, sellingType, orderId, sellerId).finally(
+            () => {
+              onClose()
+            }
+          )
         } else {
           console.error(
             `sellingType:${sellingType}, order: ${orderId}, sellerAcc: ${sellerId}`
@@ -170,7 +188,9 @@ const ModalMarket = ({
             tokenId,
             amount,
             priceValue
-          )
+          ).finally(() => {
+            onClose()
+          })
         } else
           console.error(`marketAmount: ${amount}, marketPrice: ${priceValue}`)
         break
@@ -193,7 +213,9 @@ const ModalMarket = ({
             orderId,
             amount,
             period
-          )
+          ).finally(() => {
+            onClose()
+          })
         } else
           console.error(
             `id: ${marketId}, idItem: ${itemId}, selllerAcc: ${sellerId}, order: ${orderId}, orderPeriod: ${period}`
@@ -201,7 +223,9 @@ const ModalMarket = ({
         break
       case "mint":
         if (marketId && itemId && price) {
-          await onMintOrder(nftType, marketId, itemId, price)
+          await onMintOrder(nftType, marketId, itemId, price).finally(() => {
+            onClose()
+          })
         } else
           console.error(
             `id: ${marketId}, idItem: ${itemId}, marketAmount: ${price}`
@@ -218,106 +242,127 @@ const ModalMarket = ({
       open={open}
       onClose={onClose}
       title={titleModal}
-      className="rounded-[34px]"
       width={action === "login" ? 400 : 680}
     >
-      <>
-        {action === "login" ? (
-          <Stack
-            spacing={3}
-            className="md:p-5"
-          >
-            <ModalHeader
-              handleClose={onClose}
-              title="Login"
-            />
-            <FormLogin />
-          </Stack>
-        ) : null}
-        {action !== "login" ? (
-          <div className="grid h-96 w-full grid-cols-1 items-center gap-2 md:grid-cols-2">
-            <div className="flex h-full min-h-[320px] w-full flex-col gap-2">
-              <div className="h-full w-full rounded-xl bg-secondary-main" />
-              <div className="flex w-full flex-col gap-2 rounded-xl border border-neutral-800/75 p-6 uppercase text-neutral-500">
-                <div className="flex w-full flex-row items-center justify-between">
-                  <span>token id:</span>
-                  <span>11100240</span>
+      <div className="rounded-lg">
+        <Stack
+          spacing={3}
+          className="md:p-5"
+        >
+          {/* <ModalHeader
+            handleClose={onClose}
+            title={titleModal}
+            bg="bg-neutral-800"
+          /> */}
+          {action === "login" ? <FormLogin /> : null}
+          {action !== "login" ? (
+            <div className="grid h-96 w-full grid-cols-1 items-center gap-2 md:grid-cols-2">
+              <div className="flex h-full min-h-[320px] w-full flex-col gap-2">
+                <div className="relative flex  h-full max-h-[240px] w-full flex-col items-center justify-center">
+                  <Video
+                    poster={img}
+                    src={vdo || ""}
+                    autoPlay
+                    disableOnClick
+                    className="rounded-xl object-cover"
+                  />
+                  {/* <Image
+                    src={img}
+                    alt=""
+                    width={320}
+                    height={360}
+                    className="object-cover"
+                  /> */}
                 </div>
-                <Divider className="!block border-b-[1px] border-neutral-800/75" />
-                <div className="flex w-full flex-row items-center justify-between">
-                  <span>plot:</span>
-                  <span>205, 11</span>
+                <div className="flex w-full flex-col gap-2 rounded-xl border border-neutral-800/75 p-6 uppercase text-neutral-500">
+                  <div className="flex w-full flex-row items-center justify-between">
+                    <span>token id :</span>
+                    <span>{tokenId}</span>
+                  </div>
+                  {plot ? (
+                    <>
+                      <Divider className="!block border-b-[1px] border-neutral-800/75" />
+                      <div className="flex w-full flex-row items-center justify-between">
+                        <span>plot :</span>
+                        <span>
+                          {plot.x}, {plot.y}
+                        </span>
+                      </div>
+                    </>
+                  ) : null}
                 </div>
               </div>
-            </div>
-            <div className="flex h-full w-full flex-col gap-2 px-4 py-2">
-              {action === "sell" &&
-              nftType !== "game_item" &&
-              nftType !== "nft_material" ? (
-                <SellActionComp
-                  nftType={nftType}
-                  selling={selling}
-                  setSelling={setSelling}
-                  currency={currency}
-                  price={price}
-                  onPriceChange={onPriceChange}
-                  period={period}
-                  setPeriod={setPeriod}
-                  maxPeriod={365}
-                />
-              ) : null}
-              {action === "buy" &&
-              nftType !== "game_item" &&
-              nftType !== "nft_material" ? (
-                <BuyActionComponent
-                  nftType={nftType}
-                  selling={selling}
-                  currency={currency}
-                  price={price}
-                  period={period}
-                  setPeriod={setPeriod}
-                  maxPeriod={maxPeriod}
-                />
-              ) : null}
-              {action === "cancel" ||
-              nftType === "game_item" ||
-              nftType === "nft_material" ? (
-                <ReceiptComp
-                  nftType={nftType}
-                  name={name}
-                  tokenId={tokenId}
-                  orderId={orderId}
-                  amount={amount}
-                  price={periodValue}
-                  selling={
-                    nftType === "game_item" || nftType === "nft_material"
-                      ? undefined
-                      : sellingType
-                  }
-                  period={
-                    nftType === "game_item" || nftType === "nft_material"
-                      ? undefined
-                      : maxPeriod
-                  }
-                />
-              ) : null}
-              <form
-                onSubmit={onSubmit}
-                className="flex flex-grow items-center justify-center"
-              >
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="secondary"
-                  className="h-10 w-full"
+              <div className="flex h-full w-full flex-col gap-2 px-4 py-2">
+                {action === "sell" &&
+                nftType !== "game_item" &&
+                nftType !== "nft_material" ? (
+                  <SellActionComp
+                    nftType={nftType}
+                    selling={selling}
+                    setSelling={setSelling}
+                    currency={currency}
+                    price={price}
+                    onPriceChange={onPriceChange}
+                    period={period}
+                    setPeriod={setPeriod}
+                    maxPeriod={365}
+                  />
+                ) : null}
+                {(action === "buy" || action === "mint") &&
+                nftType !== "game_item" &&
+                nftType !== "nft_material" ? (
+                  <BuyActionComponent
+                    nftType={nftType}
+                    seller={sellerType}
+                    selling={selling}
+                    currency={currency}
+                    price={price}
+                    period={period}
+                    setPeriod={setPeriod}
+                    maxPeriod={maxPeriod}
+                  />
+                ) : null}
+                {action === "cancel" ||
+                nftType === "game_item" ||
+                nftType === "nft_material" ? (
+                  <ReceiptComp
+                    nftType={nftType}
+                    seller={sellerType}
+                    name={name}
+                    tokenId={tokenId}
+                    orderId={orderId}
+                    amount={amount}
+                    price={periodValue}
+                    selling={
+                      nftType === "game_item" || nftType === "nft_material"
+                        ? undefined
+                        : sellingType
+                    }
+                    period={
+                      nftType === "game_item" || nftType === "nft_material"
+                        ? undefined
+                        : maxPeriod
+                    }
+                  />
+                ) : null}
+                <form
+                  onSubmit={onSubmit}
+                  className="flex flex-grow items-center justify-center"
                 >
-                  {textBtn}
-                </Button>
-              </form>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="secondary"
+                    className="h-10 w-full"
+                  >
+                    {textBtn}
+                  </Button>
+                </form>
+              </div>
             </div>
-          </div>
-        ) : null}
-      </>
+          ) : null}
+        </Stack>
+      </div>
     </ModalCustom>
   )
 }

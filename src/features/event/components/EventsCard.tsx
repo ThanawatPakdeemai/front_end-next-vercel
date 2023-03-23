@@ -27,7 +27,7 @@ const EventCard = ({
         sx={{ height: "218px", borderRadius: "24px" }}
       />
     </Link>
-    <Typography className="text-default uppercase md:my-[20px]">
+    <Typography className="truncate text-default  uppercase md:my-[20px]">
       {title}
     </Typography>
     <div className="flex justify-center gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 py-[10px] px-[10px]">

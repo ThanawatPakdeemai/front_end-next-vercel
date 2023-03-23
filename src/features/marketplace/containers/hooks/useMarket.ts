@@ -235,15 +235,17 @@ const useMarket = () => {
   ) => {
     setOpen(MESSAGES.transaction_processing_order)
     if (_type === "nft_naka_punk") {
-      await mutateMarketPurcPunkOrder({ _qty: _amount })
+      await mutateMarketPurcPunkOrder({ _qty: _amount }).finally(() =>
+        setClose()
+      )
     } else {
       await mutateMarketPurcOrder({
         _marketplaceId: _marketId,
         _itemId: _itemID,
         _itemAmount: _amount
-      })
+      }).finally(() => setClose())
     }
-    setClose()
+    // setClose()
   }
 
   const onExecuteOrder = async (

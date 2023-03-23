@@ -8,6 +8,7 @@ interface IProps extends ModalUnstyledOwnProps {
   className?: string
   width?: string | number
   title?: string
+  rounded?: boolean
   onClose?: () => void
 }
 

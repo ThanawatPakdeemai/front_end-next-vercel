@@ -2,6 +2,7 @@ import TextTip from "@components/atoms/TextTip"
 import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
 import {
   TNFTType,
+  TSellerType,
   TSellingType
 } from "@feature/marketplace/interfaces/IMarketService"
 import { Divider, Stack } from "@mui/material"
@@ -10,6 +11,7 @@ import React, { memo, useEffect, useState } from "react"
 
 interface IProps {
   nftType: TNFTType
+  seller: TSellerType
   name: string
   amount: number
   price: number
@@ -21,6 +23,7 @@ interface IProps {
 
 const ReceiptComponent = ({
   nftType,
+  seller,
   name,
   amount,
   price,
@@ -31,24 +34,24 @@ const ReceiptComponent = ({
 }: IProps) => {
   const { shortenString } = Helper
   const { onCheckAllowance } = useGlobalMarket()
-  const [isAllowance, setAllowance] = useState<number | undefined>(undefined)
+  const [isAllowance, setAllowance] = useState<boolean | undefined>(undefined)
 
   useEffect(() => {
     const onGetApproval = async () => {
-      await onCheckAllowance(nftType)
+      await onCheckAllowance(nftType, seller)
         .then((response) => {
-          setAllowance(response)
+          setAllowance(response.allowStatus)
         })
         .catch((error) => console.error(error))
     }
-    if (nftType) onGetApproval()
-  }, [nftType, onCheckAllowance])
+    if (nftType && seller) onGetApproval()
+  }, [nftType, onCheckAllowance, seller])
 
   return (
     <Stack
       spacing={1}
       direction="column"
-      className="gap-2 rounded-xl border border-neutral-800/75 p-6 uppercase text-neutral-500"
+      className="rounded-xl border border-neutral-800/75 p-6 text-sm uppercase text-neutral-500"
     >
       <div className="flex w-full flex-row items-center justify-between">
         <span>name :</span>
@@ -108,8 +111,9 @@ const ReceiptComponent = ({
       {isAllowance || isAllowance === undefined ? null : (
         <TextTip
           text="Please allow the contract to access your NFTS first."
-          shade="dark"
-          color="warning"
+          textColor="text-warning-dark"
+          bgColor="bg-warning-dark/20"
+          borderColor="border-warning-dark"
         />
       )}
     </Stack>

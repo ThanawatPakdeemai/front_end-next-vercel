@@ -45,7 +45,7 @@ const TableHeader = ({
         {thead.map((h) => (
           <TableCellStyle
             key={uuidv4()}
-            className={`${CellStyled} bg-neutral-780`}
+            className={`${CellStyled}`}
             onClick={h.onClick}
           >
             <div

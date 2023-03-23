@@ -9,6 +9,7 @@ import useNFTArcGame from "@feature/game/marketplace/containers/hooks/useNFTArcG
 import useNFTLand from "@feature/land/containers/services/hooks/useNFTLand"
 import {
   TNFTType,
+  TSellerType,
   TSellingType
 } from "@feature/marketplace/interfaces/IMarketService"
 import useNFTPunk from "@feature/nakapunk/containers/hooks/useNFTPunk"
@@ -156,41 +157,8 @@ const useGlobalMarket = () => {
     return { isApproved: _isApproved }
   }
 
-  const onCheckAllowance = async (_type: TNFTType) => {
-    let _contractAddrs: string = ""
-    let _allowance: BigNumberish = "0"
-    if (address) {
-      switch (_type) {
-        case "nft_land":
-          _contractAddrs = CONFIGS.CONTRACT_ADDRESS.LAND_NFT
-          break
-        case "nft_building":
-          _contractAddrs = CONFIGS.CONTRACT_ADDRESS.BUILDING_NFT
-          break
-        case "nft_naka_punk":
-          _contractAddrs = CONFIGS.CONTRACT_ADDRESS.NAKAPUNK_NFT
-          break
-        case "nft_game":
-          _contractAddrs = CONFIGS.CONTRACT_ADDRESS.ARCADEGAME_NFT
-          break
-        default:
-          break
-      }
-      await checkAllowance(address, _contractAddrs)
-        .then((response) => {
-          _allowance = response
-        })
-        .catch((error) => console.error(error))
-    }
-    return WeiToNumber(_allowance)
-  }
-
-  const onCheckApprovalForAllNFT = async (
-    _NFTType: TNFTType,
-    _selling: TSellingType
-  ) => {
-    let _contract = ""
-    let _approve: boolean = false
+  const getMarketContractBySelling = (_selling: TSellingType) => {
+    let _contract: string | undefined
     switch (_selling) {
       case "fullpayment":
         _contract = CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT
@@ -204,6 +172,70 @@ const useGlobalMarket = () => {
       default:
         break
     }
+    return _contract || ""
+  }
+
+  const onCheckAllowance = async (
+    _type: TNFTType,
+    _seller: TSellerType,
+    _selling?: TSellingType
+  ) => {
+    let _contractAddrs: string | undefined
+    let _allowance: BigNumberish = "0"
+    let _allowStatus: boolean = false
+    if (address) {
+      switch (_type) {
+        case "game_item": // no need to approve
+          _allowStatus = true
+          break
+        case "nft_material": // no need to approve
+          _allowStatus = true
+          break
+        case "nft_land":
+          if (_seller === "system")
+            _contractAddrs = CONFIGS.CONTRACT_ADDRESS.LAND_NFT
+          else if (_selling)
+            _contractAddrs = getMarketContractBySelling(_selling)
+          break
+        case "nft_building":
+          if (_seller === "system")
+            _contractAddrs = CONFIGS.CONTRACT_ADDRESS.BUILDING_NFT
+          else if (_selling)
+            _contractAddrs = getMarketContractBySelling(_selling)
+          break
+        case "nft_naka_punk":
+          if (_seller === "system")
+            _contractAddrs = CONFIGS.CONTRACT_ADDRESS.NAKAPUNK_NFT
+          else if (_selling)
+            _contractAddrs = getMarketContractBySelling(_selling)
+          break
+        case "nft_game":
+          if (_seller === "system")
+            _contractAddrs = CONFIGS.CONTRACT_ADDRESS.ARCADEGAME_NFT
+          else if (_selling)
+            _contractAddrs = getMarketContractBySelling(_selling)
+          break
+        default:
+          break
+      }
+      if (_contractAddrs)
+        await checkAllowance(address, _contractAddrs)
+          .then((response) => {
+            _allowance = response
+          })
+          .catch((error) => console.error(error))
+      if (WeiToNumber(_allowance) > 0) _allowStatus = true
+    }
+    return { allowStatus: _allowStatus, allowance: WeiToNumber(_allowance) }
+  }
+
+  const onCheckApprovalForAllNFT = async (
+    _NFTType: TNFTType,
+    _selling: TSellingType
+  ) => {
+    let _contract = ""
+    let _approve: boolean = false
+    _contract = getMarketContractBySelling(_selling)
     if (address) {
       switch (_NFTType) {
         case "nft_land":
@@ -235,7 +267,6 @@ const useGlobalMarket = () => {
               _approve = response
             })
             .catch((error) => console.error(error))
-
           break
         default:
           break

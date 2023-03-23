@@ -8,10 +8,16 @@ interface IProps extends ModalUnstyledOwnProps {
   className?: string
   width?: string | number
   title?: string
+  rounded?: boolean
   onClose?: () => void
 }
 
-export const ModalCustom = ({ title, onClose, ...props }: IProps) => {
+export const ModalCustom = ({
+  title,
+  onClose,
+  rounded = false,
+  ...props
+}: IProps) => {
   const { children, bgcolor, className, width } = props
   return (
     <Modal {...props}>
@@ -41,7 +47,11 @@ export const ModalCustom = ({ title, onClose, ...props }: IProps) => {
           </Box>
         )}
 
-        <Box className="rounded-md rounded-t-none bg-neutral-900 p-4  focus:border-none focus:outline-none focus-visible:outline-none">
+        <Box
+          className={`${
+            rounded ? "" : "rounded-t-none"
+          } rounded-md  bg-neutral-900 p-4  focus:border-none focus:outline-none focus-visible:outline-none`}
+        >
           {children}
         </Box>
       </Box>

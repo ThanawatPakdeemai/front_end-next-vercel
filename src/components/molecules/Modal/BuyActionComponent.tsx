@@ -3,6 +3,7 @@ import MinusIcon from "@components/icons/CountIcon/MinusIcon"
 import LogoIcon from "@components/icons/LogoIcon"
 import {
   TNFTType,
+  TSellerType,
   TSellingType
 } from "@feature/marketplace/interfaces/IMarketService"
 import {
@@ -25,6 +26,7 @@ import { MARKET_INSTALL_PERIOD, MARKET_SELLING } from "@constants/market"
 interface IProps {
   nftType: TNFTType
   selling: TSellingType
+  seller: TSellerType
   currency: number
   price: number
   period: number
@@ -36,6 +38,7 @@ interface IProps {
 const BuyActionComponent = ({
   nftType,
   selling,
+  seller,
   currency,
   price,
   period,
@@ -44,7 +47,7 @@ const BuyActionComponent = ({
 }: IProps) => {
   const { formatNumber } = Helper
   const { onCheckAllowance } = useGlobalMarket()
-  const [isAllowance, setAllowance] = useState<number | undefined>(undefined)
+  const [isAllowance, setAllowance] = useState<boolean | undefined>(undefined)
 
   const onIncreasePeriod = () => {
     const _value = period + 1
@@ -60,14 +63,14 @@ const BuyActionComponent = ({
 
   useEffect(() => {
     const onGetApproval = async () => {
-      await onCheckAllowance(nftType)
+      await onCheckAllowance(nftType, seller)
         .then((response) => {
-          setAllowance(response)
+          setAllowance(response.allowStatus)
         })
         .catch((error) => console.error(error))
     }
-    if (nftType) onGetApproval()
-  }, [nftType, onCheckAllowance])
+    if (nftType && seller) onGetApproval()
+  }, [nftType, onCheckAllowance, seller])
 
   return (
     <Stack
@@ -230,8 +233,9 @@ const BuyActionComponent = ({
       {isAllowance || isAllowance === undefined ? null : (
         <TextTip
           text="Please allow the contract to access your NFTS first."
-          shade="dark"
-          color="warning"
+          textColor="text-warning-dark"
+          bgColor="bg-warning-dark/20"
+          borderColor="border-warning-dark"
         />
       )}
     </Stack>

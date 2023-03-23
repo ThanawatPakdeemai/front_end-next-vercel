@@ -2,12 +2,14 @@ import CONFIGS from "@configs/index"
 import { MESSAGES } from "@constants/messages"
 import { TransactionResponse } from "@ethersproject/providers"
 import {
+  useGetAllLandofAddrs,
   useLandNFT,
   useLandNFTNoAccount
 } from "@feature/contract/containers/hooks/useContract"
 import { useToast } from "@feature/toast/containers"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
+import { BigNumberish } from "ethers"
 
 const useNFTLand = () => {
   const { signer, address } = useWeb3Provider()
@@ -15,6 +17,10 @@ const useNFTLand = () => {
   const landContractNoAcc = useLandNFTNoAccount(
     CONFIGS.CONTRACT_ADDRESS.LAND_NFT
   )
+  const landAllContract = useGetAllLandofAddrs(
+    CONFIGS.CONTRACT_ADDRESS.GET_LANDOFADDRESS
+  )
+
   const { successToast } = useToast()
   const { setOpen, setClose } = useLoadingStore()
   // check isApprovedForAll
@@ -89,7 +95,25 @@ const useNFTLand = () => {
     setClose()
   }
 
-  return { onCheckApprovalLandForAll, onTransferLand, isLandApprovedForAll }
+  const getLandsOfAddress = async (
+    _nftAddress: string,
+    _ownerAddress: string
+  ) =>
+    new Promise<BigNumberish[]>((resolve, reject) => {
+      landAllContract
+        .getLandsOfAddress(_nftAddress, _ownerAddress)
+        .then((_response: BigNumberish[]) => resolve(_response))
+        .catch((_error: Error) => {
+          reject(_error)
+        })
+    })
+
+  return {
+    onCheckApprovalLandForAll,
+    onTransferLand,
+    isLandApprovedForAll,
+    getLandsOfAddress
+  }
 }
 
 export default useNFTLand

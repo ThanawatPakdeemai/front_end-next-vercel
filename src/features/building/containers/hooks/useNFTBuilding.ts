@@ -99,6 +99,10 @@ const useNFTBuilding = () => {
     setClose()
   }
 
-  return { onCheckApprovalBuildingForAll, onTransferBuilding }
+  return {
+    onCheckApprovalBuildingForAll,
+    onTransferBuilding,
+    isBuildingApprovedForAll
+  }
 }
 export default useNFTBuilding

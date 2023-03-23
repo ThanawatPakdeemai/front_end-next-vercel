@@ -96,6 +96,6 @@ const useNFTPunk = () => {
     setClose()
   }
 
-  return { onCheckApprovalPunkForAll, onTransferPunk }
+  return { onCheckApprovalPunkForAll, onTransferPunk, isPunkApprovedForAll }
 }
 export default useNFTPunk

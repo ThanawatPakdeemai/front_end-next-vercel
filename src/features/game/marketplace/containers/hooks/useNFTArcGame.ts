@@ -98,7 +98,11 @@ const useNFTArcGame = () => {
     setClose()
   }
 
-  return { onCheckApprovalArcGameForAll, onTransferArcGame }
+  return {
+    onCheckApprovalArcGameForAll,
+    onTransferArcGame,
+    isArcGameApprovedForAll
+  }
 }
 
 export default useNFTArcGame

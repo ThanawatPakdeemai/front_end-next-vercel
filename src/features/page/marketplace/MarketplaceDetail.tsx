@@ -98,10 +98,14 @@ const MarketplaceDetail = () => {
         />
         <ButtonMarket
           nftType={detailData.type}
-          name={nameNFT}
+          name={nameNFT || ""}
           tokenId={tokenNFT}
+          marketId={detailData._id}
+          itemId={detailData.item_id}
+          orderId={detailData.order_id}
           price={detailData.price}
-          // period={detailData.period_amount}
+          maxPeriod={detailData.period_amount}
+          maxAmount={detailData.item_amount}
           sellerType={detailData.seller_type}
           sellingType={detailData.selling_type}
           sellerId={detailData.seller_id}

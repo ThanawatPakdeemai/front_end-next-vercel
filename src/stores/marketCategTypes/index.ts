@@ -3,17 +3,17 @@ import { create } from "zustand"
 import { devtools } from "zustand/middleware"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { ITypesBuildServ } from "@feature/building/interfaces/IBuildingService"
-import { ITypeMaterials } from "@feature/material/interfaces/IMaterialService"
+import { ITypeMaterials } from "@feature/material/marketplace/interfaces/IMaterialService"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 
 type TCategory = TNFTType | undefined
 
 interface IUseCategoryStore {
   category: TCategory
-  gameItemTypes: IGameItemListData[]
-  landTypes: ITypeMaterials[]
-  buildingTypes: ITypesBuildServ[]
-  materialTypes: ITypeMaterials[]
+  gameItemTypes: IGameItemListData[] | undefined
+  landTypes: ITypeMaterials[] | undefined
+  buildingTypes: ITypesBuildServ[] | undefined
+  materialTypes: ITypeMaterials[] | undefined
   getCurrentTypes: (_category: TCategory) => void
   onSetCategory: (_category: TCategory) => void
   onSetGameItemTypes: (_types: IGameItemListData[]) => void
@@ -26,14 +26,14 @@ const useMarketCategTypes = create<IUseCategoryStore>()(
   devtools(
     (set, get) => ({
       category: undefined,
-      gameItemTypes: [],
-      landTypes: [],
-      buildingTypes: [],
-      materialTypes: [],
+      gameItemTypes: undefined,
+      landTypes: undefined,
+      buildingTypes: undefined,
+      materialTypes: undefined,
       getCurrentTypes: (_category) => {
-        let _types: Array<
-          IGameItemListData | ITypeMaterials | ITypesBuildServ
-        > = []
+        let _types:
+          | Array<IGameItemListData | ITypeMaterials | ITypesBuildServ>
+          | undefined
         switch (_category) {
           case "game_item":
             _types = get().gameItemTypes
@@ -48,13 +48,13 @@ const useMarketCategTypes = create<IUseCategoryStore>()(
             _types = get().materialTypes
             break
           case "nft_naka_punk":
-            _types = []
+            _types = undefined
             break
           case "nft_game":
-            _types = []
+            _types = undefined
             break
           default:
-            _types = []
+            _types = undefined
             break
         }
         return _types

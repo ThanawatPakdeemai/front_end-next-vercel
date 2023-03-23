@@ -101,7 +101,7 @@ const useBuyGameItemController = () => {
     if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
       Helper.calculateItemPerPrice(
         (watch("item") as IGameItemListData).price,
-        (price as ICurrentNakaData).last
+        (price as ICurrentNakaData)?.last
       ).then((res) => {
         if (res) {
           setValue("nakaPerItem", Number(res))

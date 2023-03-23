@@ -86,7 +86,13 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
   }, [itemSelected, priceItemSelected, qtyItemSelected, price])
 
   useEffect(() => {
-    if (itemSelected) getTotalPriceItemSelectProfile()
+    let load = false
+    if (!load) {
+      if (itemSelected) getTotalPriceItemSelectProfile()
+    }
+    return () => {
+      load = true
+    }
   }, [getTotalPriceItemSelectProfile, itemSelected])
 
   const onChangeSelectItem = (_item: IGameItemListData) => {
@@ -96,13 +102,19 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
     }
   }
   useEffect(() => {
-    if (gameObject) {
-      const item_name =
-        gameObject.item && 0 in gameObject.item ? gameObject.item[0].name : 0
-      const item_selected = itemSelect ? itemSelect?.name : 1
-      if (item_name !== item_selected) {
-        onSetGameItemSelectd(null)
+    let load = false
+    if (!load) {
+      if (gameObject) {
+        const item_name =
+          gameObject.item && 0 in gameObject.item ? gameObject.item[0].name : 0
+        const item_selected = itemSelect ? itemSelect?.name : 1
+        if (item_name !== item_selected) {
+          onSetGameItemSelectd(null)
+        }
       }
+    }
+    return () => {
+      load = true
     }
   }, [gameObject, itemSelect, onSetGameItemSelectd])
 
@@ -210,7 +222,9 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
                   <AttachMoneyIcon />
                 </div>
                 <div className="w-full">
-                  <RightMenuBuyItem />
+                  <RightMenuBuyItem
+                    disabled={!!(profile === undefined || profile === null)}
+                  />
                 </div>
               </div>
             </div>

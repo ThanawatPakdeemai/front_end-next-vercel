@@ -1,3 +1,4 @@
+import { TSellerType } from "@feature/marketplace/interfaces/IMarketService"
 import { IFormatService } from "@src/interfaces/IHelper"
 
 interface IType {
@@ -14,7 +15,7 @@ export interface ITransMetaData extends IType, IItemId {
   seller_id: string | null
   price?: number
   item_amount?: number
-  seller_type: string
+  seller_type: TSellerType
   selling_type: string
   order_id: null | string
   buyer_id?: string

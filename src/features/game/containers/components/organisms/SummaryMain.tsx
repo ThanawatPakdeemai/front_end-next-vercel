@@ -132,7 +132,7 @@ const SummaryMain = ({ summaryData }: IProp) => {
               text="Withdraw"
               className="btn-green-rainbow bg-green-lemon font-bold text-neutral-900"
               // wait for wallet page then chnage to path/wallet
-              handleClick={() => router.push("/")}
+              handleClick={() => router.push("/wallet")}
               type="button"
             />
           </div>

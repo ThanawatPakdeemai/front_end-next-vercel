@@ -3,7 +3,7 @@ import {
   INFTInitial,
   TNFTType
 } from "@feature/marketplace/interfaces/IMarketService"
-import { IMaterialData } from "@feature/material/interfaces/IMaterialService"
+import { IMaterialData } from "@feature/material/marketplace/interfaces/IMaterialService"
 import { IFormatService, IInfoFormatServ } from "@interfaces/IHelper"
 
 export type TLand =
@@ -22,7 +22,8 @@ export interface IPosition {
   y: string
 }
 
-interface ILand extends INFTInitial {
+interface ILand extends Omit<INFTInitial, "detail"> {
+  details: string
   qrcode_image: string
   land_id: string
   position: IPosition

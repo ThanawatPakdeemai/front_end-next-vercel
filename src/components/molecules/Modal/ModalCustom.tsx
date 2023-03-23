@@ -14,7 +14,10 @@ interface IProps extends ModalUnstyledOwnProps {
 export const ModalCustom = ({ title, onClose, ...props }: IProps) => {
   const { children, bgcolor, className, width } = props
   return (
-    <Modal {...props}>
+    <Modal
+      onClose={onClose}
+      {...props}
+    >
       <Box
         sx={{
           position: "absolute" as "absolute",
@@ -28,7 +31,7 @@ export const ModalCustom = ({ title, onClose, ...props }: IProps) => {
       >
         {title && (
           <Box
-            className="flex items-center rounded-lg bg-neutral-800 pl-5"
+            className="flex items-center rounded-lg rounded-b-none bg-neutral-800 pl-5"
             sx={{ height: "54px" }}
           >
             <div className="flex flex-1 flex-row items-center">
@@ -41,7 +44,11 @@ export const ModalCustom = ({ title, onClose, ...props }: IProps) => {
           </Box>
         )}
 
-        <Box className="rounded-md bg-neutral-900 p-4 focus:border-none focus:outline-none focus-visible:outline-none">
+        <Box
+          className={`rounded-md ${
+            title === "orion trade" ? "rounded-t-none" : ""
+          }  bg-neutral-900 p-4  focus:border-none focus:outline-none focus-visible:outline-none`}
+        >
           {children}
         </Box>
       </Box>

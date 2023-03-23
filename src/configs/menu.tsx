@@ -663,3 +663,72 @@ export const MENU_ROUTER_MARKETPLACE_TYPE: TType[] = [
   "game-item",
   "arcade-game"
 ]
+
+export const INVENTORY_DROPDOWN = [
+  {
+    label: "Land",
+    href: "/marketplace/inventory/land"
+  },
+  {
+    label: "Building",
+    href: "/marketplace/inventory/building"
+  },
+  {
+    label: "Game Item",
+    href: "/marketplace/inventory/game-item"
+  },
+  {
+    label: "Material",
+    href: "/marketplace/inventory/material"
+  },
+  {
+    label: "Naka Punk",
+    href: "/marketplace/inventory/naka-punk"
+  },
+  {
+    label: "Arcade Game",
+    href: "/marketplace/inventory/arcade-game"
+  }
+]
+
+export const INVENTORY_DROPDOWN_FORSALE = [
+  {
+    label: "Land",
+    href: "/marketplace/inventory/forsale/land"
+  },
+  {
+    label: "Building",
+    href: "/marketplace/inventory/forsale/building"
+  },
+  {
+    label: "Game Item",
+    href: "/marketplace/inventory/forsale/game-item"
+  },
+  {
+    label: "Material",
+    href: "/marketplace/inventory/forsale/material"
+  },
+  {
+    label: "Naka Punk",
+    href: "/marketplace/inventory/forsale/naka-punk"
+  },
+  {
+    label: "Arcade Game",
+    href: "/marketplace/inventory/forsale/arcade-game"
+  }
+]
+
+export const INVENTORY_DROPDOWN_PROCESS = [
+  {
+    label: "Land",
+    href: "/marketplace/inventory/process-payment/land"
+  },
+  {
+    label: "Building",
+    href: "/marketplace/inventory/process-payment/building"
+  },
+  {
+    label: "Arcade Game",
+    href: "/marketplace/inventory/process-payment/arcade-game"
+  }
+]

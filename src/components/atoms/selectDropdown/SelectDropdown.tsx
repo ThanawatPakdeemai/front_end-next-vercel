@@ -1,7 +1,7 @@
 import * as React from "react"
 import MenuList from "@mui/material/MenuList"
 
-import { Box } from "@mui/material"
+import { Box, SelectChangeEvent } from "@mui/material"
 import {
   IDevice,
   IDropdownAll,
@@ -29,6 +29,7 @@ interface IProp {
   title?: string
   icon?: string | React.ReactElement
   onChange?: any
+  onClick?: (_event: SelectChangeEvent) => void
 }
 
 const SelectDropdown = ({

@@ -5,10 +5,11 @@ import { useTranslation } from "next-i18next"
 import CheckMarkIcon from "@components/icons/CheckMarkIcon"
 
 interface IProps {
+  disabled: boolean
   unread: number
   onHandleClick?: () => void
 }
-const Header = ({ unread, onHandleClick }: IProps) => {
+const Header = ({ unread, onHandleClick, disabled }: IProps) => {
   const { t } = useTranslation()
   return (
     <div className="mb-6 mt-4 flex flex-wrap justify-between md:mt-0 md:flex">
@@ -28,6 +29,7 @@ const Header = ({ unread, onHandleClick }: IProps) => {
           handleClick={onHandleClick}
           className="border-sky-500 z-[2] rounded-full border border-solid text-[12px] capitalize md:w-[170px]"
           type="button"
+          disabled={disabled}
         />
       </div>
     </div>

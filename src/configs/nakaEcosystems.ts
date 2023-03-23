@@ -25,5 +25,10 @@ export const NAKA_ECOSYSTEMSS = [
     label: "Nakapunks",
     path: "/marketplace/naka-punk",
     icon: true
+  },
+  {
+    label: "Become Developer",
+    path: "/become-developer",
+    icon: true
   }
 ]

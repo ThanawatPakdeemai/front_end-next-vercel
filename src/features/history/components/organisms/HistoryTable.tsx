@@ -21,13 +21,12 @@ import useProfileStore from "@stores/profileStore"
 import useTable from "@feature/table/containers/hooks/useTable"
 import TableNodata from "@feature/transaction/components/atoms/TableNodata"
 import { IHistory } from "@feature/history/interfaces/IHistoryService"
-import { validTypeGames } from "@pages/[typeGame]"
 
 const HistoryTable = () => {
   const profile = useProfileStore((state) => state.profile.data)
   // Hooks
   const { pager, hydrated } = useGlobal()
-  const { HistoryTableHead, onHandleView } = useHistoryController()
+  const { HistoryTableHead, handleClickView } = useHistoryController()
   const { limit, setLimit } = useTable()
   const { getHistoryData } = useHistory()
 
@@ -54,8 +53,8 @@ const HistoryTable = () => {
           limit,
           skip
         }).then((res) => {
-          // res.status === 200 -> ok
-          if (res.data) {
+          if (res.data && res.data.length > 0) {
+            // res.status === 200 -> ok
             setHxHistory(res.data)
           }
           if (res.info) {
@@ -157,14 +156,7 @@ const HistoryTable = () => {
                             color="default"
                             variant="outlined"
                             className="font-bold text-grey-neutral04"
-                            onClick={() => {
-                              onHandleView(
-                                `/${validTypeGames.find((res) =>
-                                  res.includes(row.game_mode)
-                                )}/${row.path}`,
-                                row.room_id
-                              )
-                            }}
+                            onClick={() => handleClickView(row)}
                           />
                         </div>
                       ]}

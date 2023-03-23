@@ -17,81 +17,92 @@ export interface ISocialShareProps {
   hideTwitter?: boolean
   hideFacebook?: boolean
   hideTelegram?: boolean
+  variant?: "large" | "small"
 }
 
 const SocialShare = ({
-  shareHeading = "Shere :",
+  shareHeading = "",
   shareTitle,
   shareURL,
   hideTwitter = false,
   hideFacebook = false,
-  hideTelegram = false
-}: ISocialShareProps) => (
-  <div className="mx-12 flex items-center">
-    {shareHeading && (
-      <Typography className="font-neue-machina text-default text-neutral-100">
-        {shareHeading}
-      </Typography>
-    )}
+  hideTelegram = false,
+  variant = "small"
+}: ISocialShareProps) => {
+  const classes =
+    variant === "large"
+      ? "m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-error-main border-opacity-40"
+      : "flex h-[40px] w-[40px] items-center justify-center !fill-white-default"
 
-    <div className="flex text-sm">
-      {!hideTwitter && (
-        <TwitterShareButton
-          url={shareTitle}
-          title={shareURL}
-          hashtags={["nakamoto"]}
-        >
-          <ButtonIcon
-            whileHover="hover"
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 4
-            }}
-            icon={<TwitterIcon fill="#ffffff" />}
-            className="flex h-[40px] w-[40px] items-center justify-center !fill-white-default"
-          />
-        </TwitterShareButton>
+  const fillColor = variant === "large" ? "#F42728" : "#ffffff"
+
+  return (
+    <div className="mx-12 flex items-center">
+      {shareHeading && (
+        <Typography className="font-neue-machina text-default text-neutral-100">
+          {shareHeading}
+        </Typography>
       )}
 
-      {!hideFacebook && (
-        <FacebookShareButton
-          url={shareTitle}
-          quote={shareURL}
-          hashtag="#nakamoto"
-        >
-          <ButtonIcon
-            whileHover="hover"
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 4
-            }}
-            icon={<FacebookIcon fill="#ffffff" />}
-            className="flex h-[40px] w-[40px] items-center justify-center !fill-white-default"
-          />
-        </FacebookShareButton>
-      )}
+      <div className="flex text-sm">
+        {!hideTwitter && (
+          <TwitterShareButton
+            url={shareTitle}
+            title={shareURL}
+            hashtags={["nakamoto"]}
+          >
+            <ButtonIcon
+              whileHover="hover"
+              transition={{
+                type: "spring",
+                stiffness: 400,
+                damping: 4
+              }}
+              icon={<TwitterIcon fill={fillColor} />}
+              className={classes}
+            />
+          </TwitterShareButton>
+        )}
 
-      {!hideTelegram && (
-        <TelegramShareButton
-          url={shareTitle}
-          title={shareURL}
-        >
-          <ButtonIcon
-            whileHover="hover"
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 4
-            }}
-            icon={<TelegramIcon fill="#ffffff" />}
-            className="flex h-[40px] w-[40px] items-center justify-center !fill-white-default"
-          />
-        </TelegramShareButton>
-      )}
+        {!hideFacebook && (
+          <FacebookShareButton
+            url={shareTitle}
+            quote={shareURL}
+            hashtag="#nakamoto"
+          >
+            <ButtonIcon
+              whileHover="hover"
+              transition={{
+                type: "spring",
+                stiffness: 400,
+                damping: 4
+              }}
+              icon={<FacebookIcon fill={fillColor} />}
+              className={classes}
+            />
+          </FacebookShareButton>
+        )}
+
+        {!hideTelegram && (
+          <TelegramShareButton
+            url={shareTitle}
+            title={shareURL}
+          >
+            <ButtonIcon
+              whileHover="hover"
+              transition={{
+                type: "spring",
+                stiffness: 400,
+                damping: 4
+              }}
+              icon={<TelegramIcon fill={fillColor} />}
+              className={classes}
+            />
+          </TelegramShareButton>
+        )}
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default SocialShare

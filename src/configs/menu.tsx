@@ -46,6 +46,7 @@ import MyLandIcon from "@components/icons/Inventory/MyLandIcon"
 import TransactionIconMKP from "@components/icons/Inventory/TransactionIcon"
 import DollarIcon from "@components/icons/Referral/DollarIcon"
 import ProcessPaymentIcon from "@components/icons/Inventory/ProcessPaymentIcon"
+import DesktopIcon from "@components/icons/DesktopIcon"
 
 export const MENU = [
   {
@@ -177,7 +178,16 @@ export const MENU = [
         link: `${CONFIGS.BASE_URL.NAKAVERSE}`,
         icon: NakaverseIcon
       },
-      { name: "Nakapunks", link: "/marketplace/naka-punk", icon: NakapunksIcon }
+      {
+        name: "Nakapunks",
+        link: "/marketplace/naka-punk",
+        icon: NakapunksIcon
+      },
+      {
+        name: "Become Developer",
+        link: "/become-developer",
+        icon: DesktopIcon
+      }
     ]
   }
 ]
@@ -439,6 +449,13 @@ export const MENU_BLOG: IMenu[] = [
     label: "Nakapunks",
     icon: <NakapunksIcon className="stroke-neutral-300" />,
     href: "/marketplace/naka-punk",
+    external: false
+  },
+  {
+    id: "become-developer",
+    label: "Become Developer",
+    icon: <DesktopIcon className="stroke-neutral-300" />,
+    href: "/become-developer",
     external: false
   }
 ]

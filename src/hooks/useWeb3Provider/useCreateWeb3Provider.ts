@@ -21,7 +21,10 @@ import {
   WatchAssetParams
 } from "@interfaces/IMetamask"
 
-import { updateWalletAddress } from "@feature/profile/containers/services/profile.service"
+import {
+  getProfileByEmail,
+  updateWalletAddress
+} from "@feature/profile/containers/services/profile.service"
 
 const useCreateWeb3Provider = () => {
   const [signer, setSigner] = useState<JsonRpcSigner | undefined>(undefined)
@@ -286,6 +289,9 @@ const useCreateWeb3Provider = () => {
     }
   }, [handleCheckingWallet, onSetAddress, resetChainId])
 
+  const { onSetProfileData, onSetProfileAddress, onSetProfileJWT } =
+    useProfileStore()
+
   const handleConnectWithMetamask = useCallback(async () => {
     if (window.ethereum === undefined) return
     if (!chainIdIsSupported()) {
@@ -313,9 +319,8 @@ const useCreateWeb3Provider = () => {
     if (walletAccounts === undefined) setAccounts(undefined)
     if (walletAccounts) {
       onSetAddress(walletAccounts[0])
-
       if (profile) {
-        if (profile.address === undefined) {
+        if (!profile.address) {
           if (profile.email) {
             const data = {
               _email: profile.email,
@@ -323,6 +328,11 @@ const useCreateWeb3Provider = () => {
             }
 
             await updateWalletAddress(data)
+            await getProfileByEmail(profile.email).then((_res) => {
+              onSetProfileData(_res)
+              onSetProfileAddress(_res.address)
+              onSetProfileJWT(_res.jwtToken)
+            })
             checkChain()
           }
         }

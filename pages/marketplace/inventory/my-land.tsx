@@ -13,9 +13,18 @@ const MarketplaceLayoutInventoryNoFilter = dynamic(
   }
 )
 
-const Page = () => <>test</>
+const MyLandPage = dynamic(() => import("@feature/page/inventory/MyLandPage"), {
+  suspense: true,
+  ssr: false
+})
 
-Page.getLayout = function getLayout(page: ReactElement) {
+const MyLand = () => (
+  <article className="h-full w-full">
+    <MyLandPage />
+  </article>
+)
+
+MyLand.getLayout = function getLayout(page: ReactElement) {
   return (
     <MarketplaceLayoutInventoryNoFilter>
       {page}
@@ -31,4 +40,4 @@ export async function getServerSideProps({ locale }: { locale: string }) {
   }
 }
 
-export default Page
+export default MyLand

@@ -23,6 +23,26 @@ const RightMenu = () => {
   const { onSetProfileData, onSetProfileAddress, onSetProfileJWT } =
     useProfileStore()
 
+  const fetchToken = () => {
+    refreshProfileToken()
+      .then((_res) => {
+        if (_res) {
+          getProfileByEmail(_res.email).then((__res: IProfile) => {
+            onSetProfileData(__res)
+            onSetProfileAddress(__res.address)
+            onSetProfileJWT(__res.jwtToken)
+            if (!address) {
+              if (handleConnectWithMetamask) handleConnectWithMetamask()
+            }
+          })
+        }
+      })
+      .catch((err) => {
+        console.error(err)
+        setIsTokenValid(false)
+        onReset() // remove profile zustand
+      })
+  }
   useEffect(() => {
     // Retrieve the token from local storage
     let load = false
@@ -35,25 +55,10 @@ const RightMenu = () => {
           setIsTokenValid(true)
         } else {
           // If the token has expired, remove it from local storage
-          refreshProfileToken()
-            .then((_res) => {
-              if (_res) {
-                getProfileByEmail(_res.email).then((__res: IProfile) => {
-                  onSetProfileData(__res)
-                  onSetProfileAddress(__res.address)
-                  onSetProfileJWT(__res.jwtToken)
-                  if (!address) {
-                    if (handleConnectWithMetamask) handleConnectWithMetamask()
-                  }
-                })
-              }
-            })
-            .catch((err) => {
-              console.error(err)
-              setIsTokenValid(false)
-              onReset() // remove profile zustand
-            })
+          fetchToken()
         }
+      } else {
+        fetchToken()
       }
     }
     return () => {

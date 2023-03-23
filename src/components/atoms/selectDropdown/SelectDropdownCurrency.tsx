@@ -42,12 +42,11 @@ const SelectDropdownCurrency = ({
         <MenuItem
           key={item.address}
           aria-label={item.address}
-          sx={
-            {
-              // color: active ? "#E1E2E2" : null,
-              // backgroundColor: active ? "#010101" : null
-            }
-          }
+          sx={{
+            alignItems: "baseline"
+            // color: active ? "#E1E2E2" : null,
+            // backgroundColor: active ? "#010101" : null
+          }}
         >
           <ListItemIcon className="text-center">{item.symbol}</ListItemIcon>
           <ListItemText className="ml-2">{item.tokenName}</ListItemText>

@@ -19,18 +19,18 @@ import BannerSingle from "@components/molecules/BannerSingle"
 import Banners from "@components/molecules/Banners"
 import { IGame } from "@src/features/game/interfaces/IGameService"
 import dayjs from "dayjs"
-import useEventStore from "@stores/events"
 import { EVENT_CRUMB } from "@configs/crumb"
+import useCrumbStore from "@stores/crumb"
 
 interface IEventDetailProps {
   _eventId: string
 }
 
 const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
-  const { eventDetailData, eventDetailIsFetched } = useGetEventDetail(_eventId)
+  const { eventDetailData, eventDetailIsLoading } = useGetEventDetail(_eventId)
   const { setOpen, setClose } = useLoadingStore()
   const { onSetGameData } = useGameStore()
-  const { setEventData } = useEventStore()
+  const { setCrumbData } = useCrumbStore()
 
   const { topScoreData, topScoreIsLoading } = useGetEventTopScore(
     _eventId,
@@ -43,21 +43,21 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
   )
 
   useEffect(() => {
-    if (eventDetailIsFetched && (topScoreIsLoading || leaderBoardIsLoading)) {
+    if (eventDetailIsLoading && (topScoreIsLoading || leaderBoardIsLoading)) {
       setOpen()
     } else {
-      setEventData({ _id: _eventId, name: eventDetailData?.data[0].name })
+      setCrumbData({ _id: _eventId, title: eventDetailData?.data[0].name })
       onSetGameData(eventDetailData?.data[0].games_to_play[0] as IGame)
       setClose()
     }
   }, [
     _eventId,
     eventDetailData?.data,
-    eventDetailIsFetched,
+    eventDetailIsLoading,
     leaderBoardIsLoading,
     onSetGameData,
     setClose,
-    setEventData,
+    setCrumbData,
     setOpen,
     topScoreIsLoading
   ])
@@ -77,7 +77,7 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
       ) : (
         <Banners />
       )}
-      <div className="flex items-center justify-between rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:mb-4 md:w-full md:py-8 md:px-16  md:text-base">
+      <div className="flex items-center justify-between rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 font-neue-machina-bold md:mb-4 md:w-full md:py-8 md:px-4">
         <Typography className="uppercase">
           {`Event start : ${dayjs(eventDetailData?.data[0].date_start).format(
             "DD MMM YYYY"
@@ -87,9 +87,15 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
         </Typography>
         <Typography className="text-[15px] uppercase">
           status :{" "}
-          <span className="text-red-default">
-            {eventDetailData?.data[0].status}
-          </span>
+          {eventDetailData?.data[0].is_active ? (
+            <span className="text-green-card">
+              {eventDetailData?.data[0].status}
+            </span>
+          ) : (
+            <span className="text-red-default">
+              {eventDetailData?.data[0].status}
+            </span>
+          )}
         </Typography>
       </div>
       <RightSidebarContentEffect

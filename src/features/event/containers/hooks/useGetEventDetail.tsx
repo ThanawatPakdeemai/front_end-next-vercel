@@ -5,7 +5,7 @@ const useGetEventDetail = (event_id: string) => {
   const {
     data: eventDetailData,
     error,
-    isLoading: eventDetailIsFetched,
+    isLoading: eventDetailIsLoading,
     isError
   } = useQuery({
     queryKey: ["getEventDetail", event_id],
@@ -15,7 +15,7 @@ const useGetEventDetail = (event_id: string) => {
   return {
     eventDetailData,
     error,
-    eventDetailIsFetched,
+    eventDetailIsLoading,
     isError
   }
 }

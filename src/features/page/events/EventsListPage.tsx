@@ -1,15 +1,15 @@
 import { useEffect, useRef } from "react"
 import { useQueryClient } from "@tanstack/react-query"
-import useFilterEvents from "@stores/events"
-import useSelectStore from "@stores/selector"
-import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import { v4 as uuid } from "uuid"
+import useGlobal from "@hooks/useGlobal"
+import useSelectStore from "@stores/selector"
+import useEventFilter from "@stores/event"
+import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
+import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import EventsCard from "@feature/event/components/EventsCard"
 import useGetEventList from "@feature/event/containers/hooks/useGetEventList"
-import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import useGlobal from "@hooks/useGlobal"
-import { getEventList } from "../../event/containers/services/events.service"
-import { IGetEventResponseData } from "../../event/interface/IEventsService"
+import { getEventList } from "@feature/event/containers/services/events.service"
+import { IGetEventResponseData } from "@feature/event/interface/IEventsService"
 
 const EventsListPage = () => {
   const { page, limit, setPage, totalCount, setTotalCount } = useGlobal()
@@ -17,7 +17,7 @@ const EventsListPage = () => {
   const queryClient = useQueryClient()
   const { select: selectHeader } = useSelectStore()
   const type = selectHeader
-  const searchEvent = useFilterEvents((state: any) => state.search)
+  const searchEvent = useEventFilter((state: any) => state.search)
 
   const { eventListData, isPreviousData } = useGetEventList({
     limit,

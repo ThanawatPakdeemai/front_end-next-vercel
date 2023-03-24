@@ -12,7 +12,15 @@ const MarketplaceLayoutInventory = dynamic(
   }
 )
 
-const Page = () => <>test</>
+const MarketplaceOwnerList = dynamic(
+  () => import("@feature/page/marketplace/MarketplaceOwnerList"),
+  {
+    suspense: false,
+    ssr: false
+  }
+)
+
+const Page = () => <MarketplaceOwnerList />
 
 Page.getLayout = function getLayout(page: ReactElement) {
   return <MarketplaceLayoutInventory>{page}</MarketplaceLayoutInventory>

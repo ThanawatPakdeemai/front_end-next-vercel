@@ -6,15 +6,17 @@ import {
   useMaterialVaultNoAccount
 } from "@feature/contract/containers/hooks/useContract"
 import { TInvenVaultAction } from "@feature/inventory/interfaces/IInventoryItem"
+import useGetMaterialTypes from "@feature/material/marketplace/containers/hooks/useGetTypeMaterial"
 import { ITypeMaterials } from "@feature/material/marketplace/interfaces/IMaterialService"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
-import useMarketCategTypes from "@stores/marketCategTypes"
+import useProfileStore from "@stores/profileStore"
 import { ethers } from "ethers"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const useInvenMaterial = () => {
-  const { materialTypes } = useMarketCategTypes()
+  const { profile } = useProfileStore()
+  const { materialTypes } = useGetMaterialTypes()
   const { utils } = ethers
   const { signer } = useWeb3Provider()
   const materialContract = useMaterialVault(
@@ -69,10 +71,16 @@ const useInvenMaterial = () => {
     await getAllMaterialByAddrs(_address)
       .then((response) => {
         if (materialTypes) {
-          const data = materialTypes.map((m) => ({
-            ...m,
-            amount: Number(response[m.material_id_smartcontract + 1]) // ! Please check index again
-          }))
+          const data = materialTypes
+            .sort((_a, _b) =>
+              _a.material_id_smartcontract < _b.material_id_smartcontract
+                ? -1
+                : 1
+            )
+            .map((m) => ({
+              ...m,
+              amount: Number(response[m.material_id_smartcontract]) // ! Please check index again
+            }))
           setMaterialList(data)
         }
       })
@@ -131,8 +139,16 @@ const useInvenMaterial = () => {
       })
   }
 
+  useEffect(() => {
+    if (profile && profile.data) {
+      onFetchInvenMaterial(profile.data.address)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile, materialTypes])
+
   return {
-    materialList,
+    materialList:
+      materialList && materialList.filter((_item) => _item.amount > 0),
     updateMaterialList,
     onFetchInvenMaterial,
     onTransferMaterial

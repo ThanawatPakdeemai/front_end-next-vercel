@@ -66,7 +66,7 @@ const RightDetailsMarketplace = ({
   }
 
   return (
-    <div className="flex w-1/2 flex-col gap-y-5">
+    <div className="flex flex-col gap-y-5">
       {token && (
         <div className="flex w-full items-center justify-between">
           <div className="flex gap-[6px]">

@@ -41,6 +41,13 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
     _gameId: gameObject ? gameObject._id : ""
   })
 
+  const getListItemDefalut = useMemo(() => {
+    if (profile && gameItemList) {
+      gameItemList?.sort((a, b) => a.price - b.price)
+      return gameItemList[0]
+    }
+  }, [gameItemList, profile])
+
   const itemSelect = useMemo(() => {
     if (itemSelected) {
       if (gameItemList) {
@@ -58,8 +65,20 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
     if (itemSelected) {
       return itemSelected.qty
     }
+    if (getListItemDefalut) {
+      const dataItem = getListItemDefalut as IGameItemListData
+      setTotalPrice(
+        Number(
+          Helper.formatNumber((dataItem?.qty ?? 0) * (dataItem?.price ?? 0), {
+            maximumFractionDigits: 4
+          })
+        )
+      )
+      onSetGameItemSelectd(dataItem)
+      return dataItem?.qty ?? 0
+    }
     return 0
-  }, [itemSelect, itemSelected])
+  }, [getListItemDefalut, itemSelect, itemSelected, onSetGameItemSelectd])
 
   const priceItemSelected = useMemo(() => {
     if (itemSelect) {

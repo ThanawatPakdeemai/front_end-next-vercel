@@ -30,21 +30,26 @@ const DropdownListItem = ({
   onChangeSelect
 }: // defaultValue
 IProp) => {
+  // eslint-disable-next-line no-unused-vars
   const { getDefaultCoin } = useGlobal()
-  const [defaultItem, setDefaultItem] = useState<ITokenContract>(
-    getDefaultCoin()[0]
-  )
+  const [defaultItem, setDefaultItem] = useState<ITokenContract>()
+  // getDefaultCoin()[0]
 
   const onChangeItem = (_item: ITokenContract) => {
     setDefaultItem(_item)
     if (_item && onChangeSelect) onChangeSelect(_item)
   }
+  // React.useEffect(() => {
+  //   setValue("currency", getDefaultCoin()[0] as ITokenContract)
+  //   setValue("currency_id", getDefaultCoin()[0]?.symbol as string)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
-  React.useEffect(() => {
-    if (list && list.length > 0) {
-      setDefaultItem(list[0])
-    }
-  }, [list, setDefaultItem])
+  // React.useEffect(() => {
+  //   if (list && list.length > 0) {
+  //     setDefaultItem(list[0])
+  //   }
+  // }, [list, setDefaultItem])
 
   const IconToken = (props: ITokenName) => {
     switch (props.tokenName) {
@@ -77,14 +82,14 @@ IProp) => {
                     leftContent={
                       <>
                         <div className="flex items-start">
-                          <IconToken tokenName={defaultItem.tokenName} />
+                          <IconToken tokenName={defaultItem?.tokenName ?? ""} />
                         </div>
 
                         <div className="flex items-start">
-                          <p className="px-2">{defaultItem.symbol}</p>
+                          <p className="px-2">{defaultItem?.symbol ?? ""}</p>
                         </div>
                         <p className="px-2 text-white-default">
-                          {defaultItem.tokenName}
+                          {defaultItem?.tokenName ?? ""}
                         </p>
                       </>
                     }

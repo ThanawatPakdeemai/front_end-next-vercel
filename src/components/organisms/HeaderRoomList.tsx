@@ -23,7 +23,7 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
     if (data) {
       setGameData(data)
     }
-  }, [data])
+  }, [data, itemSelected])
 
   return (
     <>

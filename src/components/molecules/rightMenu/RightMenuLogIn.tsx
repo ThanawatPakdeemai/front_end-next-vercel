@@ -20,8 +20,10 @@ import Link from "next/link"
 import TooltipsCustom from "@components/atoms/TooltipsCustom"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useGlobal from "@hooks/useGlobal"
+import { useRouter } from "next/router"
 
 const RightMenuLogIn = () => {
+  const router = useRouter()
   const profile = useProfileStore((state) => state.profile.data)
   const { address } = useWeb3Provider()
   const [expanded, setExpanded] = useState<boolean>(false)
@@ -60,7 +62,7 @@ const RightMenuLogIn = () => {
   }
 
   const handleOnNotiClick = () => {
-    /* do someing wth notification */
+    router.push("/notification")
   }
 
   return (

@@ -64,12 +64,14 @@ const EventsListPage = () => {
             ))
           : [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)}
       </div>
-      <PaginationNaka
-        totalCount={totalCount}
-        limit={limit}
-        page={page}
-        setPage={setPage}
-      />
+      {eventListData && eventListData.data.length > 0 && (
+        <PaginationNaka
+          totalCount={totalCount}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+      )}
     </>
   )
 }

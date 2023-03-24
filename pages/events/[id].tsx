@@ -1,6 +1,7 @@
 import { ReactElement } from "react"
 import { useRouter } from "next/router"
 import dynamic from "next/dynamic"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 
 const EventDetailLayout = dynamic(
   () => import("@components/templates/EventDetailLayout"),
@@ -24,4 +25,12 @@ export default function Event() {
 
 Event.getLayout = function getLayout(page: ReactElement) {
   return <EventDetailLayout>{page}</EventDetailLayout>
+}
+
+export async function getServerSideProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"]))
+    }
+  }
 }

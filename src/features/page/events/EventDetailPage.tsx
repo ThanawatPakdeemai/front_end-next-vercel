@@ -1,11 +1,9 @@
 import React, { useEffect } from "react"
 import { Typography } from "@mui/material"
 import RightSidebarContentEffect from "@components/templates/contents/RightSidebarContentEffect"
-import StoryLobby from "@feature/game/components/templates/lobby/StoryLobby"
 import useGetEventDetail from "@feature/event/containers/hooks/useGetEventDetail"
 import useLoadingStore from "@stores/loading"
-import useGameStore from "@stores/game"
-import { v4 as uuid } from "uuid"
+// import { v4 as uuid } from "uuid"
 import {
   IResponseLeaderBoardData,
   IResponseTopScoreSummaryDataData
@@ -17,10 +15,10 @@ import useGetEventTopScore from "@feature/event/containers/hooks/useGetEventTopS
 import useGetEventLeaderBoard from "@feature/event/containers/hooks/useGetEventLeaderBoard"
 import BannerSingle from "@components/molecules/BannerSingle"
 import Banners from "@components/molecules/Banners"
-import { IGame } from "@src/features/game/interfaces/IGameService"
 import dayjs from "dayjs"
 import { EVENT_CRUMB } from "@configs/crumb"
 import useCrumbStore from "@stores/crumb"
+import GamesLobby from "@feature/event/components/GamesLobby"
 
 interface IEventDetailProps {
   _eventId: string
@@ -29,7 +27,6 @@ interface IEventDetailProps {
 const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
   const { eventDetailData, eventDetailIsLoading } = useGetEventDetail(_eventId)
   const { setOpen, setClose } = useLoadingStore()
-  const { onSetGameData } = useGameStore()
   const { setCrumbData } = useCrumbStore()
 
   const { topScoreData, topScoreIsLoading } = useGetEventTopScore(
@@ -47,7 +44,6 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
       setOpen()
     } else {
       setCrumbData({ _id: _eventId, title: eventDetailData?.data[0].name })
-      onSetGameData(eventDetailData?.data[0].games_to_play[0] as IGame)
       setClose()
     }
   }, [
@@ -55,7 +51,6 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
     eventDetailData?.data,
     eventDetailIsLoading,
     leaderBoardIsLoading,
-    onSetGameData,
     setClose,
     setCrumbData,
     setOpen,
@@ -99,7 +94,9 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
         </Typography>
       </div>
       <RightSidebarContentEffect
-        content={<StoryLobby key={uuid()} />}
+        content={
+          <GamesLobby _gameData={eventDetailData?.data[0].games_to_play} />
+        }
         aside={eventDetailData?.data[0].event_detail}
       />
       <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2 md:w-4/6 md:py-8 md:px-16 md:text-center md:text-base">

@@ -27,16 +27,16 @@ const EventCard = ({
         sx={{ height: "218px", borderRadius: "24px" }}
       />
     </Link>
-    <Typography className="truncate text-default  uppercase md:my-[20px]">
+    <Typography className="truncate text-default uppercase md:my-[20px]">
       {title}
     </Typography>
-    <div className="flex justify-center gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 py-[10px] px-[10px]">
+    <div className="flex justify-center gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 py-[10px]">
       <div className="flex flex-col">
         <Typography className="flex text-xs">
-          Start at: {dayjs(date_start).format("DD MMM YYYY")}
+          {`Start: ${dayjs(date_start).format("DD MMM YYYY")}`}
         </Typography>
         <Typography className="flex text-xs">
-          End at: {dayjs(date_end).format("DD MMM YYYY")}
+          {`End: ${dayjs(date_end).format("DD MMM YYYY")}`}
         </Typography>
       </div>
       <div className="border-r border-neutral-700 border-opacity-80" />

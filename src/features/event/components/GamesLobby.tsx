@@ -1,58 +1,29 @@
-import React, { memo, useEffect, useState } from "react"
-import { useTranslation } from "react-i18next"
+import React, { memo } from "react"
 import { Image } from "@components/atoms/image"
-import useGameStore from "@stores/game"
-import { IGame } from "@feature/game/interfaces/IGameService"
-import { Chip, Typography } from "@mui/material"
-import { IGameTag } from "@feature/slider/interfaces/IGameTags"
-import TagMultiple from "@components/molecules/TagMultiple"
-import TagSingular from "@components/molecules/TagSingular"
-import ButtonGame from "@feature/game/components/molecules/ButtonGame"
+import { Button, Chip } from "@mui/material"
+import { v4 as uuid } from "uuid"
+import { IGamesToPlay } from "../interface/IEventsService"
 
-const GamesLobby = () => {
-  const { t } = useTranslation()
-  const data = useGameStore((state) => state.data)
-  const [gameData, setGameData] = useState<IGame>()
+interface IGamesLobbyProps {
+  _gameData: IGamesToPlay[] | undefined
+}
 
-  useEffect(() => {
-    if (data) setGameData(data)
-  }, [data])
-
-  /**
-   * @description Push game tags to array
-   */
-  const gameTags: IGameTag[] = []
-  if (gameData && gameData.category_list && gameData.category_list.length > 0) {
-    gameData.category_list.map((category) =>
-      gameTags.push({
-        id: category.id,
-        name: category.name,
-        link: `/categories/${
-          category.slug ? category.slug : category.name.toLocaleLowerCase()
-        }`
-      })
-    )
-  } else if (gameData && gameData.category) {
-    const _categorySlug = gameData.category.name.split(" ")
-    gameTags.push({
-      id: gameData.category.id,
-      name: gameData.category.name,
-      link: `categories/${_categorySlug[1].toLocaleLowerCase()}`
-    })
-  }
-
-  return (
-    <div className="flex h-full items-center justify-center">
-      <div className="mx-auto md:w-[578px]">
-        <div className="mb-4 flex flex-wrap gap-4 sm:flex-nowrap">
+const GamesLobby = ({ _gameData }: IGamesLobbyProps) => (
+  <div className="flex h-full items-center justify-center gap-4 lg:gap-16">
+    <div className="mx-auto md:w-[578px]">
+      {_gameData?.map((game) => (
+        <div
+          key={uuid()}
+          className="mb-4 flex flex-wrap gap-4 sm:flex-nowrap"
+        >
           <div className="h-[230px] w-full justify-center overflow-hidden rounded-3xl border-[1px] border-neutral-700 border-opacity-80 sm:w-[230px] md:justify-start">
             <Image
               src={
-                gameData
-                  ? gameData.image_category_list
+                game
+                  ? game.image_category_list
                   : "/images/gameDetails/nakamoto-wars.webp"
               }
-              alt={gameData ? gameData.name : "nakamoto-wars"}
+              alt={game ? game.name : "nakamoto-wars"}
               width={230}
               height={230}
               className="h-full w-full object-cover object-center"
@@ -60,48 +31,30 @@ const GamesLobby = () => {
           </div>
           <div className="w-full rounded-3xl border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 sm:w-[calc(100%-230px)]">
             <Chip
-              label={gameData?.game_type}
+              label={game.game_type}
               size="small"
               color="info"
               className="mb-4 font-bold uppercase"
             />
             <h1 className="font-neue-machina text-lg font-bold uppercase text-white-default">
-              {gameData?.name}
+              {game.name}
             </h1>
-            <div className="mt-6 mb-4 border-b-[1px] border-neutral-700" />
-            <TagMultiple
-              title={t("genre")}
-              tags={gameTags}
-            />
-            <TagSingular
-              title={`${t("play_count_title")}`}
-              label={
-                gameData && gameData.play_total_count
-                  ? gameData.play_total_count.toString()
-                  : ""
-              }
-            />
+            {game && (
+              <div className="flex justify-center">
+                <Button
+                  className="bg-green-card"
+                  variant="contained"
+                  href={game.game_url}
+                >
+                  Play
+                </Button>
+              </div>
+            )}
           </div>
         </div>
-        {gameData && (
-          <div className="flex justify-center">
-            <ButtonGame
-              description={"ready to go. Let's start the game!"}
-              textButton="Start"
-              url={gameData.game_url}
-            />
-          </div>
-        )}
-        <Typography
-          className="mt-3 text-center text-sm uppercase text-neutral-500"
-          variant="body1"
-          dangerouslySetInnerHTML={{
-            __html: t("game_story_text")
-          }}
-        />
-      </div>
+      ))}
     </div>
-  )
-}
+  </div>
+)
 
 export default memo(GamesLobby)

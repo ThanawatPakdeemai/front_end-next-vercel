@@ -46,7 +46,8 @@ const useFindGameById = (gameId: string, gameType?: IGetType) => {
     enabled:
       gameType !== "hot-game" &&
       gameType !== "must-try" &&
-      gameType !== "partner-game"
+      gameType !== "partner-game" &&
+      gameId !== ""
   })
 
   return {

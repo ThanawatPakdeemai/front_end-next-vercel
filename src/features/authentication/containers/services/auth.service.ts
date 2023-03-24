@@ -87,7 +87,6 @@ export const refreshProfileToken = async (
         axios.defaults.headers.common = {
           Authorization: `Bearer ${_response.data.jwtToken}`
         }
-        // console.log(_response)
         return _response.data
       })
       .catch((error) => {
@@ -105,7 +104,6 @@ export const refreshProfileToken = async (
     Helper.resetLocalStorage()
     callBeckWhenError && callBeckWhenError()
     if (error instanceof Error) {
-      // console.error("Error", error.message)
       throw Error(`refreshToken : ${error}`)
     }
   }

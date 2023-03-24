@@ -671,8 +671,6 @@ const useContractMultichain = () => {
           type
         ).then(async (_receipt) => {
           if ((_receipt as IResponseGetFee).data) {
-            // console.log(receipt)
-
             const receipt = (_receipt as IResponseGetFee).data
             if (receipt && receipt.logs) {
               const event = receipt.logs.find((log) => {

@@ -193,7 +193,7 @@ export const MENU_GUEST: IMenu[] = [
   },
   {
     id: "free-to-earn",
-    label: "Free Mode",
+    label: "Free To Earn",
     icon: <IconDollar.Mask className="stroke-neutral-300" />,
     href: "/free-to-play-games",
     external: false

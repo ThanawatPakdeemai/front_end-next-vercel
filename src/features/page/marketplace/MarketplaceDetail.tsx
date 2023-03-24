@@ -3,9 +3,10 @@ import CardContentDetails from "@feature/marketplace/components/organisms/CardCo
 import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
 import CONFIGS from "@configs/index"
 import React from "react"
-import useMarketplace from "@hooks/useMarketplace"
 import useCountStore from "@stores/countComponant"
 import dynamic from "next/dynamic"
+import useMarketDetail from "@feature/marketplace/containers/hooks/useMarketDetail"
+import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 
 const ButtonMarket = dynamic(
   () => import("@components/atoms/button/ButtonMarket"),
@@ -16,8 +17,8 @@ const ButtonMarket = dynamic(
 )
 
 const MarketplaceDetail = () => {
-  const { detailData, type, nameNFT, tokenNFT, imageNFT, vdoNFT } =
-    useMarketplace()
+  const { detailData, marketType, nameNFT, tokenNFT, imageNFT, vdoNFT } =
+    useMarketDetail()
   const { count } = useCountStore()
 
   return detailData ? (
@@ -60,7 +61,7 @@ const MarketplaceDetail = () => {
       </CardContentDetails>
       <div className="flex h-full w-full flex-col">
         <RightDetailsMarketplace
-          type={type}
+          type={marketType as TNFTType}
           id={detailData.item_id}
           token={tokenNFT}
           title={

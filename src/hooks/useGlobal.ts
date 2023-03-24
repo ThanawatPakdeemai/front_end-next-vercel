@@ -64,7 +64,7 @@ const useGlobal = (
   // States
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
   const [hydrated, setHydrated] = useState(false)
-  const [marketType, setMarketType] = useState<TNFTType>("nft_land")
+  const [marketType, setMarketType] = useState<TNFTType>()
 
   /**
    * @description check if url is in marketplace

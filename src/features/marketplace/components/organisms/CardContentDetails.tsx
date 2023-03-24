@@ -8,6 +8,7 @@ import { Button, Divider, Typography } from "@mui/material"
 import { v4 as uuidv4 } from "uuid"
 import React, { useState } from "react"
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined"
+import useGlobal from "@hooks/useGlobal"
 
 interface IProp {
   detail?: string
@@ -32,21 +33,24 @@ const CardContentDetails = ({ ...props }: IProp) => {
     meta_data
   } = props
   const [open, setOpen] = useState<boolean>(false)
+  const { marketType } = useGlobal()
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   return (
-    <div className="h-fit rounded-[24px] border-[1px] border-neutral-800 bg-neutral-780">
+    <div className="h-fit w-full rounded-[24px] border-[1px] border-neutral-800 bg-neutral-780">
       <div className="p-2">
-        <div className="h-fit w-full content-center justify-center rounded-[24px] border-[1px] border-neutral-800 bg-neutral-900 p-2">
-          {video && (
+        <div className="flex h-fit w-full content-center justify-center rounded-[24px] border-[1px] border-neutral-800 bg-neutral-900 p-2">
+          {marketType === "nft_land" && video && (
             <Video
               src={video as string}
               poster={poster as string}
               className="rounded-2xl"
+              autoPlay
+              controls
             />
           )}
-          {image && (
+          {marketType !== "nft_land" && image && (
             <Image
               // src="/images/not_found.webp"
               src={image as string}

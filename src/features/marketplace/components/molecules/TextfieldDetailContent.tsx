@@ -2,14 +2,14 @@ import LogoIcon from "@components/icons/LogoIcon"
 import NumpadIcon from "@components/icons/NumpadIcon"
 import PinnedMapIcon from "@components/icons/PinnedMapIcon"
 import CountItem from "@components/molecules/CountItem"
-import { TType } from "@feature/marketplace/interfaces/IMarketService"
+import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import { InputAdornment, TextField } from "@mui/material"
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
 import Helper from "@utils/helper"
 import React from "react"
 
 interface IProp {
-  type: TType
+  type: TNFTType
   position?: {
     x: string
     y: string

@@ -16,7 +16,7 @@ const useGetMarketOrderById = ({
     queryFn: () => getMarketOrderById({ _id, _type, _isActive }),
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: !!_id
+    enabled: !!_id && !!_type
   })
 
   return {

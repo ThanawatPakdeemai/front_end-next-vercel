@@ -132,8 +132,8 @@ const ButtonMarket = ({
   }, [actionValue])
 
   return (
-    <>
-      <div className="w-fit rounded-xl bg-neutral-400 p-1">
+    <div className="flex flex-row justify-between">
+      <div className="rounded-xl bg-neutral-700 p-1">
         <Button
           type="button"
           variant="contained"
@@ -157,7 +157,7 @@ const ButtonMarket = ({
         type="button"
         variant="contained"
         color="error"
-        className="h-10 w-20"
+        className="h-10 w-20 text-[12px]"
         onClick={handleDisconnectWallet}
       >
         disconnect wallet
@@ -184,7 +184,7 @@ const ButtonMarket = ({
         sellingType={sellingType}
         plot={plot}
       />
-    </>
+    </div>
   )
 }
 export default memo(ButtonMarket)

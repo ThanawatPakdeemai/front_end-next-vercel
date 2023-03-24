@@ -26,7 +26,7 @@ interface IProp {
 }
 
 const TextfieldDetailContent = ({
-  // type,
+  type,
   position,
   // itemAmount,
   price,
@@ -39,7 +39,7 @@ const TextfieldDetailContent = ({
 
   return (
     <div className="flex w-full items-center justify-between">
-      {count && (
+      {count && type !== "nft_land" && type !== "nft_building" && (
         <CountItem
           endIcon={<NumpadIcon />}
           helperText={count.helperText}

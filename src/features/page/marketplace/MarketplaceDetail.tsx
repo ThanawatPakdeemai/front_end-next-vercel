@@ -81,27 +81,28 @@ const MarketplaceDetail = () => {
             helperText: `Total supply : ${count}`,
             label: "Supply in market",
             min: 1,
-            max: detailData.item_amount,
+            max: detailData.item_total || 1,
             count: 1
           }}
-        />
-        <ButtonMarket
-          nftType={detailData.type}
-          name={nameNFT || ""}
-          img={imageNFT}
-          vdo={vdoNFT}
-          tokenId={tokenNFT}
-          marketId={detailData._id}
-          itemId={detailData.item_id}
-          orderId={detailData.order_id}
-          price={detailData.price}
-          maxPeriod={detailData.period_amount}
-          maxAmount={detailData.item_amount}
-          sellerType={detailData.seller_type}
-          sellingType={detailData.selling_type}
-          sellerId={detailData.seller_id}
-          plot={detailData.land_data?.position}
-        />
+        >
+          <ButtonMarket
+            nftType={detailData.type}
+            name={nameNFT || ""}
+            img={imageNFT}
+            vdo={vdoNFT}
+            tokenId={tokenNFT}
+            marketId={detailData._id}
+            itemId={detailData.item_id}
+            orderId={detailData.order_id}
+            price={detailData.price}
+            maxPeriod={detailData.period_amount}
+            maxAmount={detailData.item_amount}
+            sellerType={detailData.seller_type}
+            sellingType={detailData.selling_type}
+            sellerId={detailData.seller_id}
+            plot={detailData.land_data?.position}
+          />
+        </RightDetailsMarketplace>
       </div>
     </div>
   ) : null

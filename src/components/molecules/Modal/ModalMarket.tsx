@@ -13,6 +13,7 @@ import dynamic from "next/dynamic"
 import Helper from "@utils/helper"
 import { IPosition } from "@feature/land/interfaces/ILandService"
 import Video from "@components/atoms/Video"
+import { useRouter } from "next/router"
 import { ModalCustom } from "./ModalCustom"
 
 const SellActionComp = dynamic(
@@ -88,6 +89,7 @@ const ModalMarket = ({
   const [period, setPeriod] = useState<number>(periodValue)
   const [selling, setSelling] = useState<TSellingType>(sellingType)
   const [currency, setCurrency] = useState<number>(0)
+  const router = useRouter()
 
   const { handleSubmit } = useForm()
   const { onCreateOrder, onCancelOrder, onMintOrder, onExecuteOrder } =
@@ -223,8 +225,9 @@ const ModalMarket = ({
         break
       case "mint":
         if (marketId && itemId && price) {
-          await onMintOrder(nftType, marketId, itemId, price).finally(() => {
+          await onMintOrder(nftType, marketId, itemId, 1).finally(() => {
             onClose()
+            router.back()
           })
         } else
           console.error(

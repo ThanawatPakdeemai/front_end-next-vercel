@@ -37,7 +37,6 @@ const imgMotion = {
 interface IProp {
   cardType: TType
   id?: string
-  idLink: string
   itemAmount?: number
   itemTotal?: number
   itemImage?: {
@@ -56,12 +55,12 @@ interface IProp {
   sellingType?: string
   price?: number
   nakaPrice?: number
+  href?: string
 }
 
 const CardItemMarketPlace = ({
   cardType,
   id,
-  idLink,
   itemAmount,
   itemTotal,
   itemImage,
@@ -71,13 +70,14 @@ const CardItemMarketPlace = ({
   itemLevel,
   sellingType,
   price,
-  nakaPrice
+  nakaPrice,
+  href
 }: IProp) => {
   const { copyClipboard, formatNumber } = Helper
   const { successToast } = useToast()
 
   return (
-    <Link href={`/marketplace/${cardType}/${idLink}`}>
+    <Link href={href || "/"}>
       <motion.div
         whileHover="hover"
         className="group relative h-fit w-[218px] cursor-pointer rounded-2xl border border-neutral-700 bg-neutral-780 p-2 hover:bg-neutral-900"

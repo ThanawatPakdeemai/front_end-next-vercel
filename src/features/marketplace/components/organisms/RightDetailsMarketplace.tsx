@@ -6,13 +6,13 @@ import { Chip, Divider, Typography } from "@mui/material"
 import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
 import Helper from "@utils/helper"
 import { Image } from "@components/atoms/image"
-import { TType } from "@feature/marketplace/interfaces/IMarketService"
+import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import CONFIGS from "@configs/index"
 import TextfieldDetailContent from "../molecules/TextfieldDetailContent"
 import ChipsLink from "../molecules/ChipsLink"
 
 interface IProp {
-  type: TType
+  type: TNFTType
   id?: string
   token?: string | number
   title?: string

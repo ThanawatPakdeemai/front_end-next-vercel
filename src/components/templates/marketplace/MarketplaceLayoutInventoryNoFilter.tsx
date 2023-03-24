@@ -93,7 +93,7 @@ const MarketplaceLayoutInventory = ({
             />
           )}
         </div>
-        <div>{children}</div>
+        <div className="flex w-full justify-center">{children}</div>
       </div>
       <Footer />
     </div>

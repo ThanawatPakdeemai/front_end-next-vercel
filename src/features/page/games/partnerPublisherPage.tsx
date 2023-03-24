@@ -112,8 +112,6 @@ const PartnerGames = () => {
     publisherAllPartner().then((res) => {
       if (res) {
         const { data, info } = res
-        // eslint-disable-next-line no-console
-        // console.log("partner_data", data)
         setGameFilter(data.data)
         setTotalCount(info ? info.totalCount : 1)
       }

@@ -52,8 +52,7 @@ const GameSummaryRewardPage = () => {
               notificationItem?.naka_for_player ||
               summaryDataPlayerId.naka_for_player ||
               summaryDataPlayerId.current_score ||
-              summaryDataPlayerIdWeekly.reward ||
-              0
+              summaryDataPlayerIdWeekly.reward
             }
             hash={
               summaryDataPlayerId.tx_address ||

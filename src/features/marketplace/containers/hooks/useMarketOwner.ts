@@ -1,5 +1,6 @@
 import CONFIGS from "@configs/index"
 import useGetMyBuilding from "@feature/building/containers/hooks/useGetMyBuilding"
+import useGetMyArcGame from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
 import useInvenGameItem from "@feature/gameItem/inventory/containers/hooks/useInvenGameItem"
 import useGetMyLand from "@feature/land/containers/hooks/useGetMyLand"
 import useNFTLand from "@feature/land/containers/services/hooks/useNFTLand"
@@ -7,7 +8,6 @@ import { TType } from "@feature/marketplace/interfaces/IMarketService"
 import useInvenMaterial from "@feature/material/inventory/containers/hooks/useInvenMaterial"
 import useGetMyNakaPunk from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import useGlobal from "@hooks/useGlobal"
-import { useWeb3Provider } from "@providers/Web3Provider"
 import useProfileStore from "@stores/profileStore"
 import { useEffect, useState } from "react"
 
@@ -34,7 +34,6 @@ const useMartketOwner = () => {
 
   // hook
   const { marketType } = useGlobal()
-  const { address } = useWeb3Provider()
   const { profile } = useProfileStore()
   const { getLandsOfAddress } = useNFTLand()
   const { gameItemList } = useInvenGameItem()
@@ -42,14 +41,15 @@ const useMartketOwner = () => {
   const { mutateGetMyLand } = useGetMyLand()
   const { mutateGetOwnerBuilding } = useGetMyBuilding()
   const { mutateGetMyNakaPunk } = useGetMyNakaPunk()
+  const { mutateGeyMyArcGame } = useGetMyArcGame()
 
   const fetchOwnerDataList = async () => {
     setOwnerData([])
     setIsLoading(true)
-    if (address && profile && profile.data) {
+    if (profile && profile.data) {
       const allLandResponse = await getLandsOfAddress(
         CONFIGS.CONTRACT_ADDRESS.LAND_NFT,
-        address as string
+        profile.data.address
       )
       const cvLandList: string[] = allLandResponse.map((item) =>
         item.toString()
@@ -128,6 +128,25 @@ const useMartketOwner = () => {
             })
             .finally(() => setIsLoading(false))
           break
+        case "nft_game":
+          mutateGeyMyArcGame({
+            _limit: limit,
+            _page: currentPage,
+            _search: {}
+          })
+            .then((_res) => {
+              const dumpData: IOwnerData[] = _res.data.map((_data) => ({
+                type: "land",
+                id: _data._id,
+                tokenId: _data.NFT_info.NFT_token,
+                image: _data.image_nft_arcade_game,
+                name: _data.name
+              }))
+              setOwnerData(dumpData)
+              setTotalCount(_res.info.totalCount)
+            })
+            .finally(() => setIsLoading(false))
+          break
         default:
           break
       }
@@ -141,7 +160,7 @@ const useMartketOwner = () => {
         if (materialList) {
           const dumpData: IOwnerData[] = materialList.map((_data) => ({
             type: "game-item",
-            id: String(_data.material_id_smartcontract),
+            id: _data.id,
             image: _data.image,
             amount: _data.amount,
             name: _data.name
@@ -158,7 +177,7 @@ const useMartketOwner = () => {
             gameItemList &&
             gameItemList.map((_data) => ({
               type: "game-item",
-              id: String(_data.item_id_smartcontract),
+              id: _data.id,
               image: _data.image,
               size: _data.item_size,
               amount: _data.amount,
@@ -180,6 +199,13 @@ const useMartketOwner = () => {
       fetchOwnerDataList()
     } else {
       fetchWithContract()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [marketType, currentPage])
+
+  useEffect(() => {
+    if (currentPage > 1) {
+      setCurrentPage(1)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [marketType])

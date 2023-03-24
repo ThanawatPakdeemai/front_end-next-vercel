@@ -293,8 +293,10 @@ const useGlobal = (
       setMarketType("nft_naka_punk")
     } else if (router.asPath.includes("material")) {
       setMarketType("nft_material")
-    } else if (router.asPath.includes("game")) {
+    } else if (router.asPath.includes("game-item")) {
       setMarketType("game_item")
+    } else if (router.asPath.includes("arcade-game")) {
+      setMarketType("nft_game")
     }
   }, [router.asPath])
 

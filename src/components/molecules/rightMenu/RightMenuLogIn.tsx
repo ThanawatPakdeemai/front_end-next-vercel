@@ -207,7 +207,7 @@ const RightMenuLogIn = () => {
 
             <StatProfile
               exp={{
-                level: profile?.level,
+                level: profile?.level ?? 0,
                 expAmount: profile?.exp,
                 maxExp: profile?.max_exp
               }}

@@ -33,7 +33,7 @@ export interface IHeaderSlide {
 
 interface IProps {
   menu?: IHeaderSlide
-  curType?: string
+  curType?: IGetType
   setCurType?: (_type: IGetType) => void
   onNext?: () => void
   onPrev?: () => void
@@ -156,7 +156,7 @@ const GameCarouselHeader = ({
         )}
         <div className="flex h-10 w-fit max-w-sm flex-auto items-center justify-between gap-4 text-[8px] lg:flex-none">
           <Link
-            href={`/${curType}`}
+            href={`/${curType}-games`}
             className="h-full"
           >
             <ButtonToggleIcon

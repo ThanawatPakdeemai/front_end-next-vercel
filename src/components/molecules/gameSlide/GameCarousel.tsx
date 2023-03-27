@@ -4,7 +4,6 @@ import GameCarouselHeader, {
   IHeaderSlide
 } from "@components/molecules/gameSlide/GameCarouselHeader"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
-import { useRouter } from "next/router"
 import GameCard from "@feature/game/components/molecules/GameCard"
 import useGlobal from "@hooks/useGlobal"
 
@@ -74,7 +73,6 @@ const GameCarousel = ({
     ]
   }
   const { onHandleSetGameStore } = useGlobal()
-  const router = useRouter()
 
   const sliderRef = useRef<Slider>(null)
   const [cooldown, setCooldown] = useState<boolean>(false)
@@ -86,28 +84,11 @@ const GameCarousel = ({
     sliderRef?.current?.slickPrev()
   }
 
-  const onViewAll = () => {
-    switch (curType) {
-      case "play-to-earn":
-        router.push(`/play-to-earn-games`)
-        break
-      case "free-to-play":
-        router.push(`/free-to-play-games`)
-        break
-      case "story-mode":
-        router.push(`/story-mode-games`)
-        break
-      default:
-        router.push(`/play-to-earn-games`)
-    }
-  }
-
   return (
     <div className="md:mb-10">
       <GameCarouselHeader
         menu={menu}
         curType={curType}
-        onView={onViewAll}
         onNext={onSlideNext}
         onPrev={onSlidePrev}
         setCurType={setCurType}

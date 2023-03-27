@@ -168,12 +168,10 @@ const useWalletContoller = () => {
     currentChainSelected?.address ?? ""
   )
 
-  const checkAllowBnb = tokenBinanceContract.address
-    ? tokenBinanceContract.allowance(
-        address,
-        CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
-      )
-    : "0"
+  const checkAllowBnb =
+    tokenBinanceContract.address && currentChainSelected
+      ? tokenBinanceContract.allowance(address, currentChainSelected.address)
+      : "0"
 
   const checkAllowNaka = tokenNakaContract.address
     ? tokenNakaContract.allowance(

@@ -231,7 +231,7 @@ const FormBuyItem = () => {
               <ButtonLink
                 href=""
                 size="medium"
-                disabled={isDisabled()}
+                disabled={isDisabled}
                 className="h-[40px] w-full text-sm "
                 text={
                   <>

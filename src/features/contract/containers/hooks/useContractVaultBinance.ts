@@ -67,8 +67,8 @@ const useContractVaultBinance = () => {
 
   const allowToken = (_contract: Contract, _amount: string) =>
     new Promise((resolve, reject) => {
-      setOpen(MESSAGES.approve_processing)
       if (signer && account) {
+        setOpen(MESSAGES.approve_processing)
         setIsLoading(true)
         _contract
           .approve(CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE, _amount)
@@ -85,8 +85,12 @@ const useContractVaultBinance = () => {
             const errMsg =
               "Please try again, Confirm the transaction and make sure you are paying enough gas!"
             reject(errMsg)
+            setClose()
           })
-      } else reject()
+      } else {
+        reject()
+        setClose()
+      }
     })
 
   const depositToken = async (

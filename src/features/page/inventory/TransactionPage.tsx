@@ -166,6 +166,8 @@ const TransactionPage = ({ profile }: IProp) => {
                     <TableRowData
                       key={uuid()}
                       gridTemplateColumns="180px 130px 130px 100px 1fr"
+                      className="m-2 !rounded-[11px]"
+                      borderBottom={false}
                       child={[
                         <div key={item.id}>
                           <span className="rounded-less border border-neutral-700 p-[5px] font-neue-machina-bold text-xs uppercase text-neutral-400">

@@ -19,7 +19,7 @@ import {
   useERC20
 } from "@feature/contract/containers/hooks/useContract"
 import { IMessage } from "@feature/multichain/interfaces/IMultichain"
-import simpleRpcProvider, { bnbRpcProvider } from "@utils/web3"
+// import simpleRpcProvider, { bnbRpcProvider } from "@utils/web3"
 
 export type Method = "deposit" | "withdraw"
 
@@ -244,11 +244,15 @@ const useWalletContoller = () => {
 
       if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
         // FOR BSC
+        // const bep20Contract = getBEP20Contract(
+        //   currentChainSelected.address,
+        //   signer ?? chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB
+        //     ? bnbRpcProvider
+        //     : simpleRpcProvider
+        // )
         const bep20Contract = getBEP20Contract(
           currentChainSelected.address,
-          signer ?? chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB
-            ? bnbRpcProvider
-            : simpleRpcProvider
+          signer
         )
         if (
           currentChainSelected.address !== CONFIGS.CONTRACT_ADDRESS.BNB_CONTRACT
@@ -266,8 +270,11 @@ const useWalletContoller = () => {
               // currentChainSelected.address, // spender
               currentChainSelected.totolSupply as string
             ).then(async (_res) => {
-              await successToast(_res as string)
               if (_res) {
+                // console.log(allowanceToken)
+                // console.log(allowanceToken.toString())
+
+                await successToast(_res as string)
                 await handleWalletProcess(_method, currentChainSelected.address)
               }
             })

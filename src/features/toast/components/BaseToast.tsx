@@ -78,7 +78,7 @@ function BaseToastComponent({
       }}
     >
       <Typography
-        className={`hide-scroll w-[500px] break-words font-neue-machina ${
+        className={`hide-scroll max-w-[500px] break-words font-neue-machina ${
           status === "inherit"
             ? "text-white-primary"
             : status === "info"

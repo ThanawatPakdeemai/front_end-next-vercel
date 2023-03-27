@@ -72,6 +72,9 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
       ) : (
         <Banners />
       )}
+      <Typography className="mb-6 font-neue-machina-bold text-xl uppercase">
+        {`Event : ${eventDetailData?.data[0].name}`}
+      </Typography>
       <div className="flex items-center justify-between rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 font-neue-machina-bold md:mb-4 md:w-full md:py-8 md:px-4">
         <Typography className="uppercase">
           {`Event start : ${dayjs(eventDetailData?.data[0].date_start).format(

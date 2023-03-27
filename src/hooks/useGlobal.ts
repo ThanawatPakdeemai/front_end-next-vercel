@@ -293,11 +293,11 @@ const useGlobal = (
   }
 
   /**
-   * @description Get type game path folder example: play-to-earn-games, free-to-play, story-mode
+   * @description Get type game path folder
    */
   const getTypeGamePathFolder = (_gameData: IGame): IGetType => {
     if (_gameData) {
-      if (_gameData.play_to_earn) {
+      if (_gameData.play_to_earn && !_gameData.game_free_status) {
         return "play-to-earn-games"
       }
       if (_gameData.game_free_status) {
@@ -305,6 +305,9 @@ const useGlobal = (
       }
       if (_gameData.game_type === "storymode") {
         return "story-mode"
+      }
+      if (_gameData.is_NFT) {
+        return "arcade-emporium"
       }
     }
     return "play-to-earn-games"

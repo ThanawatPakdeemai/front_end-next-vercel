@@ -178,13 +178,13 @@ const Home = () => {
           </div>
         </Box>
         <div className="relative flex-[1_1_100%] overflow-hidden sm:flex-[1_1_60%] xl:flex-none">
+          <div
+            id="spark-fire"
+            className="absolute top-0 left-0 hidden h-[calc(100%-100px)] w-full xl:block"
+          />
           <CarouselSlide
             slideGames={GAME_DOWNLOAD}
             isLoading={false}
-          />
-          <div
-            id="spark-fire"
-            className="absolute top-0 left-0 hidden h-full w-full xl:block"
           />
         </div>
       </div>

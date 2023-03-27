@@ -2,6 +2,7 @@ import React, { ReactNode } from "react"
 import { motion, Variants } from "framer-motion"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
+import Link from "next/link"
 
 export interface ITextLink {
   name?: string
@@ -15,6 +16,8 @@ export interface ITextLink {
   arrowHeight?: number
   className?: string
   onClick?: () => void
+  href?: string
+  target?: string
 }
 
 const TextLink = ({
@@ -25,7 +28,9 @@ const TextLink = ({
   arrow = true,
   className,
   arrowHeight,
-  onClick
+  onClick,
+  href,
+  target
 }: ITextLink) => {
   const arrowMotion = {
     rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
@@ -80,7 +85,7 @@ const TextLink = ({
     }
   }
 
-  return (
+  const renderButton = () => (
     <motion.div
       initial="rest"
       whileHover="hover"
@@ -110,6 +115,17 @@ const TextLink = ({
         </motion.div>
       </div>
     </motion.div>
+  )
+
+  return href ? (
+    <Link
+      href={href}
+      target={target}
+    >
+      {renderButton()}
+    </Link>
+  ) : (
+    renderButton()
   )
 }
 

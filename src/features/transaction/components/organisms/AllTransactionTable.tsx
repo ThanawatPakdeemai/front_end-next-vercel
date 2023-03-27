@@ -6,19 +6,16 @@ import dayjs from "dayjs"
 import { Chip, TableBody, Table, TableContainer, Button } from "@mui/material"
 import IconArrowTop from "@components/icons/arrowTopIcon"
 import { v4 as uuid } from "uuid"
-import {
-  ITransactionWalletData,
-  ITransData
-} from "@feature/transaction/interfaces/ITransaction"
+import { ITransactionWalletData } from "@feature/transaction/interfaces/ITransaction"
 import DropdownLimit from "@components/atoms/DropdownLimit"
 import TableHeader from "@feature/table/components/molecules/TableHeader"
 import TableRowData from "@feature/table/components/molecules/TableRowData"
 import { useTranslation } from "react-i18next"
 import useGlobal from "@hooks/useGlobal"
 import { IProfile } from "@src/types/profile"
-import { useRouter } from "next/router"
 import CONFIGS from "@configs/index"
 import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
+import Link from "next/link"
 import TableNodata from "../atoms/TableNodata"
 import DropdownEvent from "../molecules/DropdownEvent"
 
@@ -59,7 +56,6 @@ export default function AllTransactionTable({ profile }: IProp) {
   const [Event, setEvent] = useState<string>("all")
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
-  const router = useRouter()
   const [txHistory, setTxHistory] = useState<ITransactionWalletData[]>([])
   const gridTemplateColumns: string = "170px 150px 130px 80px 1fr"
 
@@ -96,10 +92,6 @@ export default function AllTransactionTable({ profile }: IProp) {
 
   const onHandleEvent = (_event: string) => {
     setEvent(_event)
-  }
-
-  const onHandleView = (element: ITransData) => {
-    router.push(`${baseUrl}/tx/${element.transaction_hash}`)
   }
 
   const formatNumber = (num: number): string => {
@@ -219,21 +211,26 @@ export default function AllTransactionTable({ profile }: IProp) {
                             key={item.id}
                             className="flex w-full justify-end"
                           >
-                            <Button
-                              variant="outlined"
-                              sx={{
-                                paddingX: "10px !important",
-                                marginTop: "4px !important",
-                                minWidth: "10px !important",
-                                borderRadius: "5px !important"
-                              }}
-                              className="h-6 flex-none justify-self-end font-neue-machina text-[10px] uppercase text-grey-neutral04"
-                              onClick={() => {
-                                onHandleView(item)
-                              }}
+                            <Link
+                              href={`${baseUrl}/tx/${item.transaction_hash}`}
+                              target="_blank"
                             >
-                              {t("view_Transaction")}
-                            </Button>
+                              <Button
+                                variant="outlined"
+                                sx={{
+                                  paddingX: "10px !important",
+                                  marginTop: "4px !important",
+                                  minWidth: "10px !important",
+                                  borderRadius: "5px !important"
+                                }}
+                                className="h-6 flex-none justify-self-end font-neue-machina text-[10px] uppercase text-grey-neutral04"
+                                // onClick={() => {
+                                //   onHandleView(item)
+                                // }}
+                              >
+                                {t("view_Transaction")}
+                              </Button>
+                            </Link>
                           </div>
                         ]}
                       />

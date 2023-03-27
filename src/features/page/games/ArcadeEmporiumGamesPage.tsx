@@ -11,8 +11,15 @@ import { v4 as uuid } from "uuid"
 const ArcadeEmporiumGamesPage = () => {
   // Hooks
 
-  const { setTotalCount, limit, onHandleClick, totalCount, page, setPage } =
-    useGlobal()
+  const {
+    setTotalCount,
+    limit,
+    onHandleSetGameStore,
+    totalCount,
+    page,
+    setPage,
+    getTypeGamePathFolder
+  } = useGlobal()
   const {
     getGamesFilterByNftgame,
     isLoadingGamesFilterByNftgame,
@@ -41,8 +48,9 @@ const ArcadeEmporiumGamesPage = () => {
                 key={game.id}
                 menu={NFTHeaderMenu}
                 data={game}
+                href={`/${getTypeGamePathFolder(game)}-games/${game.path}`}
                 onHandleClick={() =>
-                  onHandleClick("arcade-emporium", game.path, game)
+                  onHandleSetGameStore(getTypeGamePathFolder(game), game)
                 }
               />
             ))}

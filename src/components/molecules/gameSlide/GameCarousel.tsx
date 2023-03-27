@@ -4,9 +4,9 @@ import GameCarouselHeader, {
   IHeaderSlide
 } from "@components/molecules/gameSlide/GameCarouselHeader"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
-import useGameStore from "@stores/game"
 import { useRouter } from "next/router"
 import GameCard from "@feature/game/components/molecules/GameCard"
+import useGlobal from "@hooks/useGlobal"
 
 interface IProps {
   menu: IHeaderSlide
@@ -73,7 +73,7 @@ const GameCarousel = ({
       }
     ]
   }
-  const { onSetGameData } = useGameStore()
+  const { onHandleSetGameStore } = useGlobal()
   const router = useRouter()
 
   const sliderRef = useRef<Slider>(null)
@@ -100,16 +100,6 @@ const GameCarousel = ({
       default:
         router.push(`/play-to-earn-games`)
     }
-  }
-
-  const onHandleClick = (_gameUrl: string, _gameData: IGame) => {
-    if (_gameData.play_to_earn && _gameData.play_to_earn_status === "free") {
-      router.push(`/${curType}-games/${_gameUrl}/roomlist`)
-    } else {
-      router.push(`/${curType}-games/${_gameUrl}`)
-    }
-
-    onSetGameData(_gameData)
   }
 
   return (
@@ -139,7 +129,8 @@ const GameCarousel = ({
                 cooldown={cooldown}
                 setCooldown={setCooldown}
                 staminaRecovery={staminaRecovery}
-                onHandleClick={() => onHandleClick(item.path, item)}
+                href={`/${curType}-games/${item.path}`}
+                onHandleClick={() => onHandleSetGameStore(curType, item)}
               />
             ))}
         </Slider>

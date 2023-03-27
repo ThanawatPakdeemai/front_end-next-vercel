@@ -9,7 +9,7 @@ import {
   P2EHeaderMenu,
   StoryModeHeaderMenu
 } from "@constants/gameSlide"
-import GameCard from "@feature/game/containers/components/molecules/GameCard"
+import GameCard from "@feature/game/components/molecules/GameCard"
 import useFilterStore from "@stores/blogFilter"
 import useGlobal from "@hooks/useGlobal"
 import useFavoriteGame from "@feature/favourite/containers/hooks/useFavoriteGame"
@@ -36,9 +36,13 @@ const FavouriteGamesPage = () => {
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
   const fetchRef = useRef(false)
-  const { onHandleClick } = useGlobal()
 
-  const { stateProfile, getTypeGamePathFolder } = useGlobal()
+  const {
+    stateProfile,
+    getTypeGamePathFolder,
+    onHandleSetGameStore,
+    isRedirectRoomlist
+  } = useGlobal()
   const { gameFavourite, gameFavouriteInfo, isLoadingGameFavourite } =
     useFavoriteGame({
       playerId: stateProfile?.id ?? ""
@@ -52,7 +56,13 @@ const FavouriteGamesPage = () => {
       setCurrentPage(gameFavouriteInfo.pages)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [
+    gameFavourite,
+    gameFavouriteInfo,
+    gameFavouriteInfo.totalCount,
+    gameFavouriteInfo.limit,
+    gameFavouriteInfo.pages
+  ])
 
   const getGameMenu = (game) => {
     if (game.game_free_status) {
@@ -86,8 +96,7 @@ const FavouriteGamesPage = () => {
     categoryDropdown,
     gameItemDropdown,
     deviceDropdown,
-    fetchGameFavorite,
-    stateProfile
+    fetchGameFavorite
   ])
 
   useEffect(() => {
@@ -99,6 +108,7 @@ const FavouriteGamesPage = () => {
     clearCategory()
     clearGameItem()
     clearDevice()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     clearCategory,
     clearDevice,
@@ -106,13 +116,6 @@ const FavouriteGamesPage = () => {
     clearSearch,
     gameFavouriteState
   ])
-
-  const isRedirectRoomlist = (_game: IGame) => {
-    if (_game.game_free_status) {
-      return true
-    }
-    return false
-  }
 
   return (
     <div className="flex flex-col">
@@ -127,14 +130,11 @@ const FavouriteGamesPage = () => {
               <GameCard
                 key={game.id}
                 menu={menu || F2PHeaderMenu}
+                href={`/${getTypeGamePathFolder(game)}-games/${
+                  game.path
+                }${isRedirectRoomlist(game).toString()}`}
                 onHandleClick={() =>
-                  onHandleClick(
-                    getTypeGamePathFolder(game),
-                    `${game.path}${
-                      isRedirectRoomlist(game) ? "/roomlist" : ""
-                    }`,
-                    game
-                  )
+                  onHandleSetGameStore(getTypeGamePathFolder(game), game)
                 }
                 data={game}
               />

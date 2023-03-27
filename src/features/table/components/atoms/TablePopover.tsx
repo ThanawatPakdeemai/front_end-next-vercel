@@ -58,6 +58,7 @@ const TablePopover = ({ icon, checkboxList, check, setCheck }: IProps) => {
       <IconButton
         aria-describedby={id}
         onClick={handleClick}
+        className="p-1 py-0.5"
       >
         {icon}
       </IconButton>

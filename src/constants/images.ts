@@ -57,6 +57,20 @@ export const IMAGES: {
     height: 30,
     alt: "nakamoto-band"
   },
+  backHomeNakaNFT: {
+    src: "/images/home/backHomeNakaNFT.svg",
+    blurDataURL: "/images/home/backHomeNakaNFT.svg",
+    width: 123,
+    height: 123,
+    alt: "blog-band"
+  },
+  homeNakaNFT: {
+    src: "/images/home/homeNakaNFT.svg",
+    blurDataURL: "/images/home/homeNakaNFT.svg",
+    width: 123,
+    height: 123,
+    alt: "blog-band"
+  },
   frontBlogBand: {
     src: "/images/AnimationIcon/front_blog.svg",
     blurDataURL: "/images/AnimationIcon/front_blog.svg",

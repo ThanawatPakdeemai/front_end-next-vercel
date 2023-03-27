@@ -171,8 +171,6 @@ const DropdownCustom = ({ title, className }: IProp) => {
   useEffect(() => {
     if (onTitle && textTitle) {
       if (textTitle === "All Categories") {
-        // eslint-disable-next-line no-console
-        console.log("onTitle", onTitle)
         if (onTitle._id) {
           setCategoryDropdown(onTitle._id)
         } else if (title === "All Partner Categories") {

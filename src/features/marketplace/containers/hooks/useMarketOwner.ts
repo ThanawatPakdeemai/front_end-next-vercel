@@ -195,10 +195,12 @@ const useMartketOwner = () => {
   }
 
   useEffect(() => {
-    if (marketType !== "game_item" && marketType !== "nft_material") {
-      fetchOwnerDataList()
-    } else {
-      fetchWithContract()
+    if (marketType) {
+      if (marketType !== "game_item" && marketType !== "nft_material") {
+        fetchOwnerDataList()
+      } else {
+        fetchWithContract()
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [marketType, currentPage])

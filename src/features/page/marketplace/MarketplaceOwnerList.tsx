@@ -4,6 +4,7 @@ import useMartketOwner from "@feature/marketplace/containers/hooks/useMarketOwne
 import { v4 as uuidv4 } from "uuid"
 import React from "react"
 import SkeletonItem from "@feature/marketplace/components/molecules/SkeletonItem"
+import { useRouter } from "next/router"
 
 const MarketplaceOwnerList = () => {
   const {
@@ -15,6 +16,8 @@ const MarketplaceOwnerList = () => {
     ownerData
   } = useMartketOwner()
 
+  const router = useRouter()
+
   if (ownerData && ownerData.length > 0 && !isLoading) {
     return (
       <div className="flex flex-col gap-y-7">
@@ -23,7 +26,6 @@ const MarketplaceOwnerList = () => {
             <CardItemMarketPlace
               key={uuidv4()}
               cardType={_data.type}
-              idLink={_data.id}
               id={_data.tokenId}
               itemImage={
                 _data.type === "game-item"
@@ -46,6 +48,7 @@ const MarketplaceOwnerList = () => {
               itemLevel={_data.level}
               itemSize={_data.size as string}
               itemAmount={_data.amount as number}
+              href={`/${router.locale}/marketplace/inventory/${_data.type}/${_data.id}`}
             />
           ))}
         </div>

@@ -11,14 +11,18 @@ import { IGameReward } from "@src/types/games"
 import useGameStore from "@stores/game"
 import useNotiStore from "@stores/notification"
 import useProfileStore from "@stores/profileStore"
+import { useRouter } from "next/router"
 import { useCallback, useEffect, useState } from "react"
-import useGetGameByPath from "./useFindGameByPath"
+import useFindGameById from "./useFindGameById"
 import useGetGameRoomById from "./useGetGameRoomById"
 import useGetSummaryGameByRoomId from "./useGetSummaryGameByRoomId"
 
 const useGameSummaryRewardController = () => {
+  const router = useRouter()
+  const { room_id, notification_id } = router.query
+
   // Store
-  const { notification, playHistory } = useNotiStore()
+  const { notification, playHistory, notificationAll } = useNotiStore()
   const profile = useProfileStore((state) => state.profile.data)
   const { onSetGameData, data: dataGameStore } = useGameStore()
   const { getTypeGamePathFolder } = useGlobal()
@@ -41,10 +45,16 @@ const useGameSummaryRewardController = () => {
 
   // Hooks
   const { gameRoomById } = useGetGameRoomById(
-    notification?.room_id || playHistory?.room_id || ""
+    notificationItem?.room_id ||
+      playHistoryItem?.room_id ||
+      (room_id as string) ||
+      ""
   )
   const { summaryGameData } = useGetSummaryGameByRoomId(
-    notification?.room_id || playHistory?.room_id || ""
+    notificationItem?.room_id ||
+      playHistoryItem?.room_id ||
+      (room_id as string) ||
+      ""
   )
   const { balanceofItem } = useGetBalanceOf({
     _address: profile?.address || "",
@@ -58,7 +68,7 @@ const useGameSummaryRewardController = () => {
       0
   })
   const { mutateUpdateNotiStatusById } = useNotificationRead(
-    notification?._id || ""
+    notificationItem?._id || ""
   )
 
   /**
@@ -66,13 +76,13 @@ const useGameSummaryRewardController = () => {
    * @returns
    */
   const getPoolId = (): string => {
-    if (notification?.type === "REWARD_WEEKLY") {
-      return notification?.weekly_pool_id || ""
+    if (notificationItem?.type === "REWARD_WEEKLY") {
+      return notificationItem?.weekly_pool_id || ""
     }
-    if (notification?.type === "REWARD_GAME_POOL") {
-      return notification?.pool_id || ""
+    if (notificationItem?.type === "REWARD_GAME_POOL") {
+      return notificationItem?.pool_id || ""
     }
-    return notification?.room_id || playHistory?.room_id || ""
+    return notificationItem?.room_id || playHistoryItem?.room_id || ""
   }
 
   /**
@@ -80,15 +90,20 @@ const useGameSummaryRewardController = () => {
    */
   const { dataWeeklyPool, dataGamePoolReward } = useGetReward({
     _poolId: getPoolId(),
-    _gameId: notification?.game_id || "",
-    _type: notification?.type || "REWARD"
+    _gameId: notificationItem?.game_id || "",
+    _type: notificationItem?.type || "REWARD"
   })
 
   /**
    * @description Get game data from notification game path
    */
-  const { gameData } = useGetGameByPath(
-    notification?.path || playHistory?.path || ""
+  // const { gameData } = useGetGameByPath(
+  //   notificationItem?.path || playHistoryItem?.path || ""
+  // )
+  const { gameData } = useFindGameById(
+    notificationItem?.game_id
+      ? notificationItem?.game_id
+      : gameRoomById?.game_id || ""
   )
 
   /**
@@ -96,7 +111,7 @@ const useGameSummaryRewardController = () => {
    */
   const fetchPlayersByNotificationType = useCallback(
     () => {
-      switch (notification?.type) {
+      switch (notificationItem?.type) {
         case "REWARD_WEEKLY":
           if (!dataWeeklyPool) return
           if (dataWeeklyPool) {
@@ -111,7 +126,9 @@ const useGameSummaryRewardController = () => {
             const _currentPlayerData = dataWeeklyPool.find(
               (item) =>
                 item.player_id ===
-                (notification?.player_id || playHistoryItem?.player_id)
+                (notificationItem?.player_id ||
+                  playHistoryItem?.player_id ||
+                  profile?.id)
             )
             if (_currentPlayerData) {
               setSummaryDataPlayerIdWeekly(_currentPlayerData)
@@ -127,6 +144,18 @@ const useGameSummaryRewardController = () => {
               dataGamePoolReward as IRewardWeeklyData[]
             ).reduce((partialSum, a) => partialSum + a.reward, 0)
             setTotalGameReward(_totalGameReward)
+
+            // Find current player's summary data by player id
+            const _currentPlayerData = dataGamePoolReward.find(
+              (item) =>
+                item.player_id ===
+                (notificationItem?.player_id ||
+                  playHistoryItem?.player_id ||
+                  profile?.id)
+            )
+            if (_currentPlayerData) {
+              setSummaryDataPlayerIdWeekly(_currentPlayerData)
+            }
           }
           break
 
@@ -150,7 +179,9 @@ const useGameSummaryRewardController = () => {
             const _currentPlayerData = summaryGameData.find(
               (item) =>
                 item.player_id ===
-                (notification?.player_id || playHistoryItem?.player_id)
+                (notificationItem?.player_id ||
+                  playHistoryItem?.player_id ||
+                  profile?.id)
             )
             if (_currentPlayerData) {
               setSummaryDataPlayerId(_currentPlayerData)
@@ -170,7 +201,7 @@ const useGameSummaryRewardController = () => {
   )
 
   const fetchPlayersList = () => {
-    switch (notification?.type) {
+    switch (notificationItem?.type) {
       case "REWARD_WEEKLY":
       case "REWARD_GAME_POOL":
         return playerWeekly
@@ -224,22 +255,44 @@ const useGameSummaryRewardController = () => {
    * @param _notificationItem
    * @returns
    */
-  const onUpdateReadNotification = (_notificationItem: INotification) => {
-    if (_notificationItem?.read === true) return
-    mutateUpdateNotiStatusById()
-  }
+  const onUpdateReadNotification = useCallback(
+    (_notificationItem: INotification) => {
+      if (_notificationItem?.read === true) return
+      mutateUpdateNotiStatusById()
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
 
   /**
    * Set notification to store
    */
   useEffect(() => {
     if (!notification) return
-    if (notification) {
+    if (notification && notification._id === (notification_id as string)) {
       setNotificationItem(notification)
       onUpdateReadNotification(notification)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notification])
+
+  useEffect(() => {
+    if (!notification_id) return
+    if (notification_id) {
+      const currentNotification = notificationAll.find(
+        (item) => item._id === notification_id
+      )
+      if (currentNotification) {
+        setNotificationItem(currentNotification)
+        onUpdateReadNotification(currentNotification)
+      }
+    }
+  }, [
+    notification_id,
+    notificationAll,
+    notificationItem,
+    onUpdateReadNotification
+  ])
 
   /**
    * Set notification to store

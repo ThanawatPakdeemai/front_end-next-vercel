@@ -30,6 +30,7 @@ export type IGetType =
   | "partner-game"
   | "partner-publisher"
   | "arcade-emporium"
+  | "nft-game"
   | "all"
 
 export type TRoomStatus =

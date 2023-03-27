@@ -19,6 +19,7 @@ import BEP20Abi from "@configs/abi/BEP20.json"
 import ERC20Abi from "@configs/abi/ERC20.json"
 import useChainSupport from "@stores/chainSupport"
 import useContractVault from "@feature/contract/containers/hooks/useContractVault"
+import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import { DEFAULT_CURRENCY_BNB, DEFAULT_CURRENCY_NAKA } from "@configs/currency"
 import useSwitchNetwork from "./useSwitchNetwork"
 
@@ -63,6 +64,7 @@ const useGlobal = (
   // States
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
   const [hydrated, setHydrated] = useState(false)
+  const [marketType, setMarketType] = useState<TNFTType>()
 
   /**
    * @description check if url is in marketplace
@@ -282,6 +284,47 @@ const useGlobal = (
     }
   }
 
+  /**
+   * @description Open link in new tab
+   * @param url {string}
+   */
+  const openInNewTab = (url: string) => {
+    window.open(url, "_blank", "noreferrer")
+  }
+
+  /**
+   * @description Get type game path folder example: play-to-earn-games, free-to-play, story-mode
+   */
+  const getTypeGamePathFolder = (_gameData: IGame): IGetType => {
+    if (_gameData) {
+      if (_gameData.play_to_earn) {
+        return "play-to-earn-games"
+      }
+      if (_gameData.game_free_status) {
+        return "free-to-play"
+      }
+      if (_gameData.game_type === "storymode") {
+        return "story-mode"
+      }
+    }
+    return "play-to-earn-games"
+  }
+  useEffect(() => {
+    if (router.asPath.includes("land")) {
+      setMarketType("nft_land")
+    } else if (router.asPath.includes("building")) {
+      setMarketType("nft_building")
+    } else if (router.asPath.includes("naka-punk")) {
+      setMarketType("nft_naka_punk")
+    } else if (router.asPath.includes("material")) {
+      setMarketType("nft_material")
+    } else if (router.asPath.includes("game-item")) {
+      setMarketType("game_item")
+    } else if (router.asPath.includes("arcade-game")) {
+      setMarketType("nft_game")
+    }
+  }, [router.asPath])
+
   return {
     onHandleClick,
     limit,
@@ -299,7 +342,10 @@ const useGlobal = (
     fetchNAKAToken,
     getDefaultCoin,
     isMarketplace,
-    isDeveloperPage
+    isDeveloperPage,
+    openInNewTab,
+    getTypeGamePathFolder,
+    marketType
   }
 }
 

@@ -79,7 +79,7 @@ export const refreshProfileToken = async (
           withCredentials: true
         }
       )
-      .then((_response) => {
+      .then(async (_response) => {
         Helper.setLocalStorage({
           key: ELocalKey.token,
           value: _response.data.jwtToken
@@ -87,8 +87,7 @@ export const refreshProfileToken = async (
         axios.defaults.headers.common = {
           Authorization: `Bearer ${_response.data.jwtToken}`
         }
-
-        return _response.data.jwtToken
+        return _response.data
       })
       .catch((error) => {
         useProfileStore.getState().onReset()
@@ -105,7 +104,6 @@ export const refreshProfileToken = async (
     Helper.resetLocalStorage()
     callBeckWhenError && callBeckWhenError()
     if (error instanceof Error) {
-      // console.error("Error", error.message)
       throw Error(`refreshToken : ${error}`)
     }
   }

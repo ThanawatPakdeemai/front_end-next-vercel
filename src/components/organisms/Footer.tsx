@@ -17,6 +17,7 @@ import { useState } from "react"
 import TextLink from "@components/atoms/TextLink"
 import { ShakeIcon } from "@components/atoms/LigthShake"
 import { useRouter } from "next/router"
+import useGlobal from "@hooks/useGlobal"
 
 export const arrowMotion = {
   rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
@@ -77,9 +78,8 @@ const iconArrow = {
 
 const Footer = () => {
   const router = useRouter()
-  const openInNewTab = (url: string) => {
-    window.open(url, "_blank", "noreferrer")
-  }
+  const { openInNewTab } = useGlobal()
+
   const [isHover, setIsHover] = useState<boolean>(false)
   const handleMouseEnter = () => {
     setIsHover(true)

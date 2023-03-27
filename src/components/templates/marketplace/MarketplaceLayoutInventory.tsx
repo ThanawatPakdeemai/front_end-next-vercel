@@ -5,6 +5,7 @@ import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
 import { MENU_MARKETPLACE_INVENTORY } from "@configs/menu"
+import FilterDropdown from "@feature/marketplace/components/molecules/FilterDropdown"
 import InventoryPage from "@feature/page/inventory/InventoryPage"
 import { Divider, MenuList, Typography } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
@@ -95,7 +96,10 @@ const MarketplaceLayoutInventory = ({
           )}
         </div>
         <InventoryPage />
-        <div>{children}</div>
+        <div className="flex w-full flex-col gap-y-4">
+          <FilterDropdown />
+          {children}
+        </div>
       </div>
       <Footer />
     </div>

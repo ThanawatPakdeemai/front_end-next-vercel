@@ -72,8 +72,6 @@ const useFormRegisterController = () => {
     appId: "1:104862138123:web:2e7578e0d8a80277052c0e",
     measurementId: "G-4NN0JPG9X4"
   }
-  const app = initializeApp(firebaseConfig)
-  const auth = getAuth(app)
 
   if (!getApps().length) {
     initializeApp(firebaseConfig)
@@ -186,6 +184,8 @@ const useFormRegisterController = () => {
   const twitterLogin = async (referralId: string | string[]) => {
     const provider = new TwitterAuthProvider()
     provider.addScope("email")
+    const app = initializeApp(firebaseConfig)
+    const auth = getAuth(app)
     await signInWithPopup(auth, provider)
       .then((result) => {
         const { user } = result
@@ -224,6 +224,8 @@ const useFormRegisterController = () => {
   const googleRegister = async (referralId: string | string[]) => {
     const provider = new GoogleAuthProvider()
     provider.addScope("email")
+    const app = initializeApp(firebaseConfig)
+    const auth = getAuth(app)
     await signInWithPopup(auth, provider)
       .then((result) => {
         const { user } = result

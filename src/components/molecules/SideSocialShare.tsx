@@ -18,14 +18,18 @@ import TelegramIcon from "@components/icons/SocialIcon/TelegramIcon"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 
-const SideSocialShare = () => {
+interface IProp {
+  hidden?: string
+}
+
+const SideSocialShare = ({ hidden }: IProp) => {
   const router = useRouter()
   const { successToast } = useToast()
   const classStyle =
     "my-2 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-red-card/20"
 
   return (
-    <div className="sticky top-[202px]">
+    <div className={`${hidden} sticky top-[202px]`}>
       <div className="absolute top-0 right-[-10%] rounded-[18px] border border-neutral-800 px-2 ">
         <div className="flex flex-col items-center">
           <Typography

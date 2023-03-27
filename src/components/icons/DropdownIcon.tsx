@@ -2,7 +2,8 @@ import React from "react"
 
 function DropdownIcon({
   width = 12,
-  height = 12
+  height = 12,
+  fill
 }: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -14,7 +15,7 @@ function DropdownIcon({
     >
       <path
         d="M5.82915 6.69195L9.00375 4L9.65454 4.75926L5.82915 8.03817L2.00375 4.75926L2.65454 4L5.82915 6.69195Z"
-        fill="#E1E2E2"
+        fill={"#E1E2E2" || fill}
       />
     </svg>
   )

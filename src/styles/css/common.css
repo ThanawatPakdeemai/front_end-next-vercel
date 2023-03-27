@@ -652,3 +652,16 @@ body {
 .toast > div {
   width: 100%;
 }
+
+.hidden-input-number {
+  -moz-appearance: textfield;
+}
+.hidden-input-number::-webkit-inner-spin-button {
+  display: none;
+  -webkit-appearance: none;
+  margin: 0;
+}
+.hidden-input-number::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

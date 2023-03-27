@@ -27,7 +27,6 @@ const MenuItemCustom = ({
   const router = useRouter()
   return (
     <MenuItem
-      key={props.id}
       aria-label={props.id}
       onClick={() => {
         if (props.href && props.href !== "") {

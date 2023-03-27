@@ -19,7 +19,7 @@ import {
 import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
 import Helper from "@utils/helper"
 import { Image } from "@components/atoms/image"
-import { TType } from "@feature/marketplace/interfaces/IMarketService"
+import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import CONFIGS from "@configs/index"
 import MuiAccordionSummary, {
   AccordionSummaryProps
@@ -40,7 +40,7 @@ interface ICharacterCoupon {
 }
 
 interface IProp {
-  type: TType
+  type: TNFTType
   id?: string
   token?: string | number
   title?: string
@@ -157,7 +157,7 @@ const RightDetailsMarketplace = ({
   }))
 
   return (
-    <div className="flex w-1/2 flex-col gap-y-5">
+    <div className="flex flex-col gap-y-5">
       {token && (
         <div className="flex w-full items-center justify-between">
           <div className="flex gap-[6px]">

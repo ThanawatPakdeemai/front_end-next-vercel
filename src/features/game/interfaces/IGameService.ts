@@ -394,6 +394,7 @@ export interface IGameSummary extends IGameBase {
   wallet_address: string
   room_status: TRoomStatus
   detail_used_items: IGameUsedItemsDetail
+  id_room: string
 }
 
 export interface IGameReport {

@@ -8,11 +8,15 @@ interface ITableRowDataProps {
   child: ReactNode[]
   // Example: "180px 130px 130px 1fr"
   gridTemplateColumns?: string
+  borderBottom?: boolean
+  className?: string
 }
 
 const RefactorTableBody = ({
   child,
-  gridTemplateColumns = "180px 140px 130px 1fr"
+  gridTemplateColumns = "180px 140px 130px 1fr",
+  borderBottom = true,
+  className
 }: ITableRowDataProps) => {
   /**
    * @description This is the table row style
@@ -24,8 +28,7 @@ const RefactorTableBody = ({
     "&.MuiTableRow-root": {
       display: "grid",
       gridTemplateColumns,
-      background: "black",
-      marginBottom: "5px"
+      background: "black"
     }
   })
 
@@ -43,10 +46,12 @@ const RefactorTableBody = ({
     }
   })
   return (
-    <TableRowStyle className="rounded-less bg-neutral-900 px-3.5">
+    <TableRowStyle className={`${className} bg-neutral-900 px-3.5`}>
       {child.map((c) => (
         <TableCellStyle
-          className="border-b-0 px-0"
+          className={`${
+            borderBottom ? "border-b border-neutral-800" : "border-b-0"
+          } px-0`}
           key={uuidv4()}
         >
           {c}

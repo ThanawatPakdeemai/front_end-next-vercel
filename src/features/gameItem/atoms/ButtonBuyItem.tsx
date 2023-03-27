@@ -4,10 +4,12 @@ import AddIcon from "@mui/icons-material/Add"
 
 interface IProp {
   handleButton: () => void
+  disabled: boolean
 }
-const ButtonBuyItem = ({ handleButton }: IProp) => (
+const ButtonBuyItem = ({ handleButton, disabled }: IProp) => (
   <>
     <ButtonLink
+      disabled={disabled}
       onClick={() => handleButton()}
       text="Buy Assets"
       href="/"

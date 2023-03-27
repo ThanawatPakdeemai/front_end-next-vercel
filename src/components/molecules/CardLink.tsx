@@ -4,6 +4,7 @@ import { Image } from "@components/atoms/image"
 import { IMAGES } from "@constants/images"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import IBookReading from "@components/icons/BookReading"
+import { useRouter } from "next/router"
 
 interface ICardLink {
   bgMain?: string
@@ -23,6 +24,7 @@ interface ICardLink {
   iconBtn?: JSX.Element
   textBtn?: string
   href?: string
+  onClick?: () => void
 }
 
 const CardLink = ({
@@ -41,8 +43,10 @@ const CardLink = ({
   imageStyleSecond,
   iconBtn = <IBookReading />,
   textBtn = "",
-  href = "/"
+  href = "/",
+  onClick
 }: ICardLink) => {
+  const router = useRouter()
   const [isHover, setIsHover] = useState<boolean>(false)
 
   const onHoverCard = () => {
@@ -183,7 +187,10 @@ const CardLink = ({
             />
           </motion.div>
           <ButtonLink
-            href={href}
+            href=""
+            onClick={() => {
+              onClick ? onClick() : router.push(href)
+            }}
             text={textBtn}
             icon={iconBtn}
             size="medium"

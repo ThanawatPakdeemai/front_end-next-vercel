@@ -37,7 +37,6 @@ const imgMotion = {
 interface IProp {
   cardType: TType
   id?: string
-  idLink: string
   itemAmount?: number
   itemTotal?: number
   itemImage?: {
@@ -56,12 +55,12 @@ interface IProp {
   sellingType?: string
   price?: number
   nakaPrice?: number
+  href?: string
 }
 
 const CardItemMarketPlace = ({
   cardType,
   id,
-  idLink,
   itemAmount,
   itemTotal,
   itemImage,
@@ -71,13 +70,14 @@ const CardItemMarketPlace = ({
   itemLevel,
   sellingType,
   price,
-  nakaPrice
+  nakaPrice,
+  href
 }: IProp) => {
   const { copyClipboard, formatNumber } = Helper
   const { successToast } = useToast()
 
   return (
-    <Link href={`/marketplace/${cardType}/${idLink}`}>
+    <Link href={href || "/"}>
       <motion.div
         whileHover="hover"
         className="group relative h-fit w-[218px] cursor-pointer rounded-2xl border border-neutral-700 bg-neutral-780 p-2 hover:bg-neutral-900"
@@ -195,16 +195,18 @@ const CardItemMarketPlace = ({
         {/* <div className="" /> */}
         <div className="my-[10px] border-b border-neutral-700 border-opacity-80" />
         <div className="mx-2 flex items-center justify-between">
-          <div className="flex items-center">
-            <ILogoMaster
-              width="24"
-              height="11"
-              color="#ffff"
-            />
-            <Typography className="ml-[11px] text-sm uppercase text-white-default">
-              {formatNumber(price as number, { maximumFractionDigits: 4 })}
-            </Typography>
-          </div>
+          {price && (
+            <div className="flex items-center">
+              <ILogoMaster
+                width="24"
+                height="11"
+                color="#ffff"
+              />
+              <Typography className="ml-[11px] text-sm uppercase text-white-default">
+                {formatNumber(price as number, { maximumFractionDigits: 4 })}
+              </Typography>
+            </div>
+          )}
           {nakaPrice && (
             <Chip
               label={`= ${formatNumber(nakaPrice, {

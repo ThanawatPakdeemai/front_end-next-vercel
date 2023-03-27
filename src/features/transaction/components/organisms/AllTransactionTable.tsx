@@ -18,6 +18,7 @@ import useGlobal from "@hooks/useGlobal"
 import { IProfile } from "@src/types/profile"
 import { useRouter } from "next/router"
 import CONFIGS from "@configs/index"
+import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
 import TableNodata from "../atoms/TableNodata"
 import DropdownEvent from "../molecules/DropdownEvent"
 
@@ -29,7 +30,7 @@ export default function AllTransactionTable({ profile }: IProp) {
   const baseUrl = CONFIGS.CHAIN.POLYGON_SCAN
   const { hydrated } = useGlobal()
   const { t } = useTranslation()
-  const { getTransHistory } = useGetTransWallet()
+  const { getTransHistory, isLoading } = useGetTransWallet()
   const { sortTime, sortAmount, typeCheck, AllTransactionTableHeader } =
     useTransactionController()
   const [limit, setLimit] = useState<number>(12)
@@ -60,7 +61,7 @@ export default function AllTransactionTable({ profile }: IProp) {
   const [totalCount, setTotalCount] = useState<number>(0)
   const router = useRouter()
   const [txHistory, setTxHistory] = useState<ITransactionWalletData[]>([])
-  const gridTemplateColumns: string = "160px 160px 130px 80px 1fr"
+  const gridTemplateColumns: string = "170px 150px 130px 80px 1fr"
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -145,94 +146,103 @@ export default function AllTransactionTable({ profile }: IProp) {
                 thead={AllTransactionTableHeader}
                 gridTemplateColumns={gridTemplateColumns}
               />
-              <TableBody
-                sx={{
-                  display: "block",
-                  borderRadius: "9px",
-                  overflow: "hidden",
-                  "tr:last-of-type td": { borderBottom: 0 }
-                }}
-              >
-                {txHistory && txHistory.length !== 0 ? (
-                  txHistory.map((item) => (
-                    <TableRowData
-                      key={uuid()}
-                      gridTemplateColumns={gridTemplateColumns}
-                      child={[
-                        <div key={item.id}>
-                          <span className="rounded-less border border-neutral-700 p-[5px] font-neue-machina-bold text-xs uppercase text-neutral-400">
-                            {dayjs(item.current_time).format("DD MMM YYYY")}
-                          </span>
-                          <span className="px-3 font-neue-machina-bold text-xs text-neutral-600">
-                            {dayjs(item.current_time).format("hh:mm A")}
-                          </span>
-                        </div>,
-                        <div key={item.id}>
-                          <Chip
-                            label={item.type}
-                            size="small"
-                            className={`font-neue-machina-bold uppercase !text-neutral-900 ${
-                              item.type && item.type === "DepositNaka"
-                                ? "!bg-varidian-default"
-                                : "!bg-red-card"
-                            }`}
-                          />
-                        </div>,
-                        <div key={item.id}>
-                          <div
-                            className={`flex items-center font-neue-machina-bold text-sm ${
-                              item.type && item.type === "DepositNaka"
-                                ? "text-varidian-default"
-                                : "text-red-card"
-                            }`}
-                          >
-                            <div className="flex flex-row">
-                              <div className="pr-[8.35px]">
-                                {item.type && item.type === "DepositNaka" ? (
-                                  <IconArrowTop className="rotate-180" />
-                                ) : (
-                                  <IconArrowTop />
-                                )}
+              {isLoading ? (
+                [...Array(limit)].map(() => (
+                  <SkeletonTableWallet key={uuid()} />
+                ))
+              ) : (
+                <TableBody
+                  sx={{
+                    display: "block",
+                    borderRadius: "9px",
+                    overflow: "hidden",
+                    "tr:last-of-type td": { borderBottom: 0 }
+                  }}
+                >
+                  {txHistory && txHistory.length !== 0 ? (
+                    txHistory.map((item) => (
+                      <TableRowData
+                        key={uuid()}
+                        gridTemplateColumns={gridTemplateColumns}
+                        child={[
+                          <div key={item.id}>
+                            <span className="rounded-less border border-neutral-700 p-[5px] font-neue-machina-bold text-xs uppercase text-neutral-400">
+                              {dayjs(item.current_time).format("DD MMM YYYY")}
+                            </span>
+                            <span className="px-3 font-neue-machina-bold text-xs text-neutral-600">
+                              {dayjs(item.current_time).format("hh:mm A")}
+                            </span>
+                          </div>,
+                          <div key={item.id}>
+                            <Chip
+                              label={item.type}
+                              size="small"
+                              className={`max-w-[140px] truncate font-neue-machina-bold uppercase !text-neutral-900 ${
+                                item.type && item.type === "DepositNaka"
+                                  ? "!bg-varidian-default"
+                                  : "!bg-red-card"
+                              }`}
+                            />
+                          </div>,
+                          <div key={item.id}>
+                            <div
+                              className={`flex items-center font-neue-machina-bold text-sm ${
+                                item.type && item.type === "DepositNaka"
+                                  ? "text-varidian-default"
+                                  : "text-red-card"
+                              }`}
+                            >
+                              <div className="flex flex-row">
+                                <div className="pr-[8.35px]">
+                                  {item.type && item.type === "DepositNaka" ? (
+                                    <IconArrowTop className="rotate-180" />
+                                  ) : (
+                                    <IconArrowTop />
+                                  )}
+                                </div>
+                                {item.amount !== undefined
+                                  ? formatNumber(item.amount)
+                                  : item.meta_data?.amount_naka &&
+                                    formatNumber(item.meta_data.amount_naka)}
                               </div>
-                              {formatNumber(item.amount)}
                             </div>
-                          </div>
-                        </div>,
-                        <div
-                          key={item.id}
-                          className="flex w-fit"
-                        >
-                          <span className="font-neue-machina-bold text-sm text-neutral-600">
-                            - {item.fee.toFixed(4)}
-                          </span>
-                        </div>,
-                        <div
-                          key={item.id}
-                          className="flex w-full justify-end"
-                        >
-                          <Button
-                            variant="outlined"
-                            sx={{
-                              paddingX: "10px !important",
-                              marginTop: "4px !important",
-                              minWidth: "10px !important",
-                              borderRadius: "5px !important"
-                            }}
-                            className="h-6 flex-none justify-self-end font-neue-machina text-[10px] uppercase text-grey-neutral04"
-                            onClick={() => {
-                              onHandleView(item)
-                            }}
+                          </div>,
+                          <div
+                            key={item.id}
+                            className="flex w-fit"
                           >
-                            {t("view_Transaction")}
-                          </Button>
-                        </div>
-                      ]}
-                    />
-                  ))
-                ) : (
-                  <TableNodata />
-                )}
-              </TableBody>
+                            <span className="font-neue-machina-bold text-sm text-neutral-600">
+                              - {item.fee.toFixed(4)}
+                            </span>
+                          </div>,
+                          <div
+                            key={item.id}
+                            className="flex w-full justify-end"
+                          >
+                            <Button
+                              variant="outlined"
+                              sx={{
+                                paddingX: "10px !important",
+                                marginTop: "4px !important",
+                                minWidth: "10px !important",
+                                borderRadius: "5px !important"
+                              }}
+                              className="h-6 flex-none justify-self-end font-neue-machina text-[10px] uppercase text-grey-neutral04"
+                              onClick={() => {
+                                onHandleView(item)
+                              }}
+                            >
+                              {t("view_Transaction")}
+                            </Button>
+                          </div>
+                        ]}
+                      />
+                    ))
+                  ) : (
+                    <TableNodata />
+                  )}
+                </TableBody>
+              )}
             </Table>
           </TableContainer>
           <div className="flex justify-between">

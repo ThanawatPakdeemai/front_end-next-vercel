@@ -16,8 +16,9 @@ import useGameStore from "@stores/game"
 import useLoadingStore from "@stores/loading"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
+import { JsonRpcSigner } from "@ethersproject/providers"
 import useBuyGameItems from "./useBuyGameItems"
 
 const useBuyGameItemController = () => {
@@ -26,11 +27,16 @@ const useBuyGameItemController = () => {
   const { setOpen, setClose } = useLoadingStore()
   const { errorToast, successToast } = useToast()
   const { data, onSetGameItemSelectd, itemSelected } = useGameStore()
-  const { chainId, accounts, signer } = useSwitchNetwork()
+  const { chainId, accounts, signer, address } = useSwitchNetwork()
   const { chainSupport } = useChainSupport()
   const { fetchNAKAToken, fetchAllTokenSupported } = useGlobal()
   const { price } = useNakaPriceProvider()
 
+  const game = useGameStore((state) => state.data)
+  const { gameItemList, refetch } = useGamesByGameId({
+    _playerId: profile ? profile.id : "",
+    _gameId: game ? game._id : ""
+  })
   // State
   const [openForm, setOpenForm] = useState<boolean>(false)
 
@@ -39,8 +45,8 @@ const useBuyGameItemController = () => {
     currency: {} as ITokenContract,
     currency_id: "",
     qty: 1,
-    item: {} as IGameItemListData,
-    item_id: "",
+    item: itemSelected || ({} as IGameItemListData),
+    item_id: itemSelected?._id ?? "",
     nakaPerItem: 0
   }
 
@@ -58,27 +64,9 @@ const useBuyGameItemController = () => {
     defaultValues: DEFAULT_VALUES
   })
 
-  const isDisabled = (): boolean => {
-    const totalPrice = watch("nakaPerItem") * watch("qty")
-    if (
-      Object.keys(watch("currency")).length !== 0 &&
-      Object.keys(watch("item")).length !== 0 &&
-      watch("qty") > 0 &&
-      totalPrice <= watch("currency").balanceVault.digit &&
-      totalPrice > 0 &&
-      accounts &&
-      signer
-    ) {
-      return false
-    }
-    return true
-  }
+  // console.log(isDisabled)
 
-  const game = useGameStore((state) => state.data)
-  const { gameItemList, refetch } = useGamesByGameId({
-    _playerId: profile ? profile.id : "",
-    _gameId: game ? game._id : ""
-  })
+  // console.log(watch())
 
   /**
    * @description Message alert when user switch network
@@ -100,7 +88,7 @@ const useBuyGameItemController = () => {
   const updatePricePerItem = useCallback(async () => {
     if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
       Helper.calculateItemPerPrice(
-        (watch("item") as IGameItemListData).price,
+        (watch("item") as IGameItemListData)?.price,
         (price as ICurrentNakaData)?.last
       ).then((res) => {
         if (res) {
@@ -111,8 +99,8 @@ const useBuyGameItemController = () => {
       })
     } else {
       Helper.calPriceBinanceChain(
-        (watch("item") as IGameItemListData).price,
-        (watch("currency") as ITokenContract).symbol
+        (watch("item") as IGameItemListData)?.price,
+        (watch("currency") as ITokenContract)?.symbol
       ).then((res) => {
         if (res) {
           setValue("nakaPerItem", Number(res))
@@ -122,7 +110,17 @@ const useBuyGameItemController = () => {
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainId, setValue, watch])
+  }, [
+    chainId,
+    setValue,
+    watch,
+    price,
+    address,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    watch("item"),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    watch("currency")
+  ])
 
   const onQtyUp = useCallback(() => {
     setValue("qty", watch("qty") >= 99 ? 99 : Number(watch("qty")) + 1)
@@ -163,6 +161,7 @@ const useBuyGameItemController = () => {
       (gameItemList as IGameItemListData[]).length > 0
     if (hasChainSupport && hasGameItemList) {
       setValue("currency", chainSupport[0] as ITokenContract)
+
       setValue(
         "item",
         (gameItemList as IGameItemListData[])[0] as IGameItemListData
@@ -179,15 +178,21 @@ const useBuyGameItemController = () => {
 
   const handleOpen = () => {
     setOpenForm(true)
-    resetForm()
+    // resetForm()
   }
 
   const refetchItemSelected = useCallback(() => {
-    if (gameItemList) {
-      const item = gameItemList.find((_item) => _item.id === watch("item_id"))
-      if (item) onSetGameItemSelectd(item)
-    }
-  }, [gameItemList, onSetGameItemSelectd, watch])
+    refetch().then((_item: any) => {
+      if (_item) {
+        const item = _item?.data?.find((ele) => ele.id === watch("item_id"))
+
+        if (item) {
+          onSetGameItemSelectd(item)
+          handleClose()
+        }
+      }
+    })
+  }, [onSetGameItemSelectd, refetch, watch])
 
   const onSubmit = (_data: IFormData) => {
     setOpen("Blockchain transaction in progress...")
@@ -221,7 +226,7 @@ const useBuyGameItemController = () => {
               await refetchItemSelected()
               successToast("Buy Items Success")
               setClose()
-              if (handleClose) handleClose()
+              handleClose()
             }
           })
           .catch((error) => {
@@ -245,7 +250,7 @@ const useBuyGameItemController = () => {
               // setVaultBalance(Number(balanceVaultNaka.data))
               successToast("Buy Items Success")
               setClose()
-              if (handleClose) handleClose()
+              handleClose()
             }
           })
           .catch((error) => {
@@ -256,10 +261,31 @@ const useBuyGameItemController = () => {
     }
   }
 
-  useEffect(() => {
-    resetForm()
+  // useEffect(() => {
+  // resetForm()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [chainSupport, gameItemList, resetForm, fetchNAKAToken])
+  // console.log(isDisabled)
+
+  const isDisabled = useMemo(() => {
+    updatePricePerItem()
+    const totalPrice = watch("nakaPerItem") * watch("qty")
+    if (
+      Object.keys(watch("currency"))?.length !== 0 &&
+      Object.keys(watch("item"))?.length !== 0 &&
+      watch("qty") > 0 &&
+      totalPrice <= watch("currency")?.balanceVault?.digit &&
+      totalPrice > 0 &&
+      Object.keys(accounts as string[])?.length > 0 &&
+      Object.keys(signer as JsonRpcSigner)?.length > 0
+    ) {
+      return false
+      // eslint-disable-next-line no-else-return
+    } else {
+      return true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainSupport, gameItemList, resetForm, fetchNAKAToken])
+  }, [accounts, signer, watch, watch("currency"), watch("nakaPerItem")])
 
   return {
     MessageAlert,

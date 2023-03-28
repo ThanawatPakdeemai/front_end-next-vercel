@@ -7,11 +7,11 @@ import React, { memo, useEffect, useRef, useState } from "react"
 import { v4 as uuid } from "uuid"
 import useGameStore from "@stores/game/index"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
-import GameCard from "@feature/game/containers/components/molecules/GameCard"
 import useGlobal from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import useFilterGameList from "@feature/dropdown/containers/hooks/useFilterGameList"
+import GameCard from "@feature/game/components/molecules/GameCard"
 
 const PlayToEarnGamesPage = () => {
   const type = "play-to-earn"
@@ -21,7 +21,7 @@ const PlayToEarnGamesPage = () => {
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
-  const { onHandleClick } = useGlobal(limit)
+  const { onHandleSetGameStore, getTypeGamePathFolder } = useGlobal(limit)
   const { clearGameData } = useGameStore()
   const {
     category: categoryDropdown,
@@ -122,9 +122,13 @@ const PlayToEarnGamesPage = () => {
                 key={game.id}
                 menu={P2EHeaderMenu}
                 data={game}
+                href={`/${getTypeGamePathFolder(game)}/${game.path}`}
                 onHandleClick={() =>
-                  onHandleClick("play-to-earn", game.path, game)
+                  onHandleSetGameStore(getTypeGamePathFolder(game), game)
                 }
+                // onHandleClick={() =>
+                //   onHandleClick("play-to-earn", game.path, game)
+                // }
               />
             ))}
       </div>

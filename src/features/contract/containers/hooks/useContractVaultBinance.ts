@@ -11,6 +11,8 @@ import { IBalance } from "@interfaces/IHelper"
 import BinanceBalanceVaultAbi from "@configs/abi/BinanceBalanceVault.json"
 import Helper from "@utils/helper"
 import { IBalanceDisplay } from "@hooks/useAllBalances"
+import useLoadingStore from "@stores/loading"
+import { MESSAGES } from "@constants/messages"
 import { getBalanceVaultBinanceContract } from "../contractHelpers"
 
 export interface ITokenContract {
@@ -46,6 +48,7 @@ const useContractVaultBinance = () => {
     CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
   )
   const { WeiToNumber } = Helper
+  const { setOpen, setClose } = useLoadingStore()
 
   const checkAllowToken = (_contract: Contract, _tokenAddress: string) =>
     new Promise((resolve, reject) => {
@@ -63,23 +66,31 @@ const useContractVaultBinance = () => {
     })
 
   const allowToken = (_contract: Contract, _amount: string) =>
-    // eslint-disable-next-line no-async-promise-executor
     new Promise((resolve, reject) => {
       if (signer && account) {
+        setOpen(MESSAGES.approve_processing)
         setIsLoading(true)
         _contract
           .approve(CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE, _amount)
-          .then((_res) => {
+          .then(async (_res) => {
             setIsLoading(false)
-            resolve("Contract Approved!")
+            const resData = await _res.wait()
+            if (resData) {
+              resolve("Contract Approved!")
+            }
+            setClose()
           })
           .catch(() => {
             setIsLoading(false)
             const errMsg =
               "Please try again, Confirm the transaction and make sure you are paying enough gas!"
             reject(errMsg)
+            setClose()
           })
-      } else reject()
+      } else {
+        reject()
+        setClose()
+      }
     })
 
   const depositToken = async (

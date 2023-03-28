@@ -2,9 +2,10 @@ import React from "react"
 import { v4 as uuidv4 } from "uuid"
 import dynamic from "next/dynamic"
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
-import useMarketplace from "@hooks/useMarketplace"
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonItem from "@feature/marketplace/components/molecules/SkeletonItem"
+import useMarketInfo from "@feature/marketplace/containers/hooks/useMarketInfo"
+import { useRouter } from "next/router"
 
 const CardItemMarketPlace = dynamic(
   () => import("@components/molecules/cards/CardItemMarketPlace"),
@@ -24,8 +25,9 @@ const MarketplaceP2PCardList = () => {
     limit,
     handleImage,
     setCurrentPage
-  } = useMarketplace()
+  } = useMarketInfo()
   const { price } = useNakaPriceProvider()
+  const router = useRouter()
 
   if (orderData && orderData.data.length > 0 && !isLoading) {
     return (
@@ -39,7 +41,6 @@ const MarketplaceP2PCardList = () => {
                 key={uuidv4()}
                 cardType={type}
                 id={_data.land_data?.land_id}
-                idLink={_data._id}
                 itemAmount={
                   type === "game-item" ? _data.item_amount : undefined
                 }
@@ -65,6 +66,7 @@ const MarketplaceP2PCardList = () => {
                 nakaPrice={
                   (_data.price / (price ? parseFloat(price.last) : 0)) as number
                 }
+                href={`/${router.locale}/marketplace/${type}/${_data._id}`}
               />
             ))}
         </div>

@@ -100,10 +100,6 @@ const FormBuyItem = () => {
                         setValue("item_id", _item.id)
                         updatePricePerItem()
                       }}
-                      // defaultValue={
-                      //   (gameItemList[0] as IGameItemListData) ||
-                      //   ({} as IGameItemListData)
-                      // }
                     />
                   )}
                 />
@@ -228,14 +224,14 @@ const FormBuyItem = () => {
               )}
             </p>
           </div>
-          <ButtonGroup className="mt-10 flex flex-col  gap-3">
+          <ButtonGroup className="mt-5 flex flex-col  gap-3">
             {!statusWalletConnected.responseStatus ? (
               <PleaseCheckWallet />
             ) : (
               <ButtonLink
                 href=""
                 size="medium"
-                disabled={isDisabled()}
+                disabled={isDisabled}
                 className="h-[40px] w-full text-sm "
                 text={
                   <>

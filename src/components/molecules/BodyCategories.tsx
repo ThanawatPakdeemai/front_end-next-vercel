@@ -4,9 +4,7 @@ import React, { useEffect, useRef } from "react"
 import Slider, { Settings } from "react-slick"
 import useCategories from "@hooks/useCategories"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-// import AddIcon from "@mui/icons-material/Add"
 import CategoryCard from "./cards/CategoryCard"
-// import ButtonToggleIcon from "./gameSlide/ButtonToggleIcon"
 
 const BodyCategories = () => {
   const limitPage = 16
@@ -75,7 +73,7 @@ const BodyCategories = () => {
                 key={uuid()}
                 img={item.image_list}
                 text={item.name}
-                onHandleClick={() => onHandleClickCatogory(item.slug, item.id)}
+                href={onHandleClickCatogory(item.slug, item.id)}
               />
             ))
           : [...Array(limitPage)].map(() => <SkeletonCard key={uuid()} />)}

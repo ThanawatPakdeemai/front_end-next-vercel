@@ -6,6 +6,7 @@ import { motion, useAnimation } from "framer-motion"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { Chip } from "@mui/material"
 import { IGetType } from "@feature/game/interfaces/IGameService"
+import Link from "next/link"
 
 export interface ISlideList extends React.HTMLAttributes<HTMLDivElement> {
   id: string
@@ -32,9 +33,8 @@ export interface IHeaderSlide {
 
 interface IProps {
   menu?: IHeaderSlide
-  curType?: string
+  curType?: IGetType
   setCurType?: (_type: IGetType) => void
-  onView?: () => void
   onNext?: () => void
   onPrev?: () => void
 }
@@ -43,7 +43,6 @@ const GameCarouselHeader = ({
   menu,
   curType,
   setCurType,
-  onView,
   onNext,
   onPrev
 }: IProps) => {
@@ -66,12 +65,6 @@ const GameCarouselHeader = ({
   const onChangeType = (_type: IGetType) => {
     if (!setCurType) return
     setCurType(_type as IGetType)
-  }
-
-  const onClickedView = () => {
-    if (onView) {
-      return onView()
-    }
   }
 
   const onClickedNext = () => {
@@ -123,7 +116,7 @@ const GameCarouselHeader = ({
         </motion.div>
       )}
 
-      <div className="flex h-full w-full flex-wrap items-center justify-end gap-2 sm:flex-nowrap">
+      <div className="flex h-full w-full flex-wrap items-center justify-between gap-2 sm:flex-nowrap">
         {menu && (
           <div className="relative flex h-full w-fit max-w-[424px] flex-auto flex-wrap items-center justify-between rounded-lg border-2 border-neutral-800 bg-neutral-900 bg-opacity-40 px-1 text-[10px] capitalize backdrop-blur-[25px] sm:flex-nowrap lg:flex-none">
             <div className="flex flex-auto items-center justify-center whitespace-nowrap py-1 pl-4 font-bold sm:justify-start md:flex-none">
@@ -161,16 +154,18 @@ const GameCarouselHeader = ({
             </div>
           </div>
         )}
-        <div className="flex h-10 w-fit max-w-sm flex-auto items-center justify-between text-[8px] lg:flex-none">
-          {onView && (
+        <div className="flex h-10 w-fit max-w-sm flex-auto items-center justify-between gap-4 text-[8px] lg:flex-none">
+          <Link
+            href={`/${curType}-games`}
+            className="h-full"
+          >
             <ButtonToggleIcon
               startIcon={<AddIcon />}
               text="view all"
-              handleClick={onClickedView}
               className="mr-4 flex h-full w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
               type="button"
             />
-          )}
+          </Link>
 
           <div className="arrow-slick-container bg-black grid h-full w-[100px] grid-cols-2 divide-x divide-neutral-700 rounded-md border border-neutral-700 text-white-primary ">
             <button

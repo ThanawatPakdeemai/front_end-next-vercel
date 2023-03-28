@@ -19,11 +19,9 @@ const FavouriteGamesPage = dynamic(
 
 export default function FavouriteGames() {
   return (
-    <>
-      <article className="h-full w-full">
-        <FavouriteGamesPage />
-      </article>
-    </>
+    <article className="h-full w-full">
+      <FavouriteGamesPage />
+    </article>
   )
 }
 

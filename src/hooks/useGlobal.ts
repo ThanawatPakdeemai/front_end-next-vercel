@@ -19,6 +19,7 @@ import BEP20Abi from "@configs/abi/BEP20.json"
 import ERC20Abi from "@configs/abi/ERC20.json"
 import useChainSupport from "@stores/chainSupport"
 import useContractVault from "@feature/contract/containers/hooks/useContractVault"
+import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import { DEFAULT_CURRENCY_BNB, DEFAULT_CURRENCY_NAKA } from "@configs/currency"
 import useSwitchNetwork from "./useSwitchNetwork"
 
@@ -63,6 +64,7 @@ const useGlobal = (
   // States
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
   const [hydrated, setHydrated] = useState(false)
+  const [marketType, setMarketType] = useState<TNFTType>()
 
   /**
    * @description check if url is in marketplace
@@ -111,23 +113,68 @@ const useGlobal = (
     switch (_type) {
       case "partner-publisher":
         onSetGamePartnersData(_gameData as IPartnerGameData)
-        await router.push(`/publishers/${_gameData.name}`)
+        // await router.push(`/publishers/${_gameData.name}`)
         break
 
       case "partner-game":
         onSetGamePartnersData(_gameData as IPartnerGameData)
-        await router.push(`/partner-games/${_gameUrl}?id=${_gameData.id}`)
+        // await router.push(`/partner-games/${_gameUrl}?id=${_gameData.id}`)
         break
 
       case "arcade-emporium":
         onSetGameData(_gameData as IGame)
-        await router.push(`/arcade-emporium/${_gameUrl}?id=${_gameData.id}`)
+        // await router.push(`/arcade-emporium/${_gameUrl}?id=${_gameData.id}`)
         break
 
       default:
         onSetGameData(_gameData as IGame)
-        await router.push(`/${_type}-games/${_gameUrl}`)
+        // await router.push(`/${_type}-games/${_gameUrl}`)
         break
+    }
+    // NOTE: No need this code
+    // await router.push(`/${_gameUrl}`)
+  }
+
+  const onHandleSetGameStore = async (
+    _type: IGetType,
+    _gameData: IGame | IPartnerGameData
+  ) => {
+    switch (_type) {
+      case "partner-publisher":
+        onSetGamePartnersData(_gameData as IPartnerGameData)
+        break
+
+      case "partner-game":
+        onSetGamePartnersData(_gameData as IPartnerGameData)
+        break
+
+      case "arcade-emporium":
+        onSetGameData(_gameData as IGame)
+        break
+
+      default:
+        onSetGameData(_gameData as IGame)
+        break
+    }
+  }
+
+  const onClickLink = async (
+    _type: IGetType,
+    _gameUrl: string,
+    _gameData: IGame | IPartnerGameData
+  ) => {
+    switch (_type) {
+      case "partner-publisher":
+        return `/publishers/${_gameData.name}`
+
+      case "partner-game":
+        return `/partner-games/${_gameUrl}?id=${_gameData.id}`
+
+      case "arcade-emporium":
+        return `/arcade-emporium/${_gameUrl}?id=${_gameData.id}`
+
+      default:
+        ;`/${_type}-games/${_gameUrl}`
     }
     // NOTE: No need this code
     // await router.push(`/${_gameUrl}`)
@@ -282,8 +329,61 @@ const useGlobal = (
     }
   }
 
+  /**
+   * @description Open link in new tab
+   * @param url {string}
+   */
+  const openInNewTab = (url: string) => {
+    window.open(url, "_blank", "noreferrer")
+  }
+
+  /**
+   * @description Get type game path folder
+   */
+  const getTypeGamePathFolder = (_gameData: IGame): IGetType => {
+    if (_gameData) {
+      // if (_gameData.play_to_earn && _gameData.play_to_earn_status !== "free") {
+      //   return "play-to-earn-games"
+      // }
+      if (_gameData.play_to_earn_status === "free") {
+        return "free-to-play"
+      }
+      if (_gameData.game_type === "storymode") {
+        return "story-mode"
+      }
+      if (_gameData.is_NFT) {
+        return "arcade-emporium"
+      }
+    }
+    return "play-to-earn-games"
+  }
+
+  const isRedirectRoomlist = (_game: IGame): "/roomlist" | "" => {
+    if (_game.play_to_earn_status === "free") {
+      return "/roomlist"
+    }
+    return ""
+  }
+
+  useEffect(() => {
+    if (router.asPath.includes("land")) {
+      setMarketType("nft_land")
+    } else if (router.asPath.includes("building")) {
+      setMarketType("nft_building")
+    } else if (router.asPath.includes("naka-punk")) {
+      setMarketType("nft_naka_punk")
+    } else if (router.asPath.includes("material")) {
+      setMarketType("nft_material")
+    } else if (router.asPath.includes("game-item")) {
+      setMarketType("game_item")
+    } else if (router.asPath.includes("arcade-game")) {
+      setMarketType("nft_game")
+    }
+  }, [router.asPath])
+
   return {
     onHandleClick,
+    onClickLink,
     limit,
     page,
     setPage,
@@ -299,7 +399,12 @@ const useGlobal = (
     fetchNAKAToken,
     getDefaultCoin,
     isMarketplace,
-    isDeveloperPage
+    isDeveloperPage,
+    openInNewTab,
+    getTypeGamePathFolder,
+    marketType,
+    isRedirectRoomlist,
+    onHandleSetGameStore
   }
 }
 

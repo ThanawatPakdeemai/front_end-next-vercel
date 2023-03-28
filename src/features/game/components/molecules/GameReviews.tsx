@@ -66,7 +66,7 @@ const GameReviews = ({ gameType, gameId }: IGameReviewProps) => {
                       className="h-[58px] w-full rounded-sm object-fill object-center"
                     />
                   </div>
-                  <div className="review--item__content__header flex flex-wrap items-center lg:min-w-[300px] lg:justify-between">
+                  <div className="review--item__content__header flex w-full flex-wrap items-center lg:justify-between">
                     <div className="review--item__content-username">
                       {_item.user.username}
                     </div>

@@ -3,6 +3,7 @@ import { IMAGES } from "@constants/images"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import { Box, Card, CardMedia } from "@mui/material"
 import IShoppingCart from "@components/icons/ShoppingCart"
+import CONFIGS from "@configs/index"
 
 interface ICardMarketplace {
   title?: string
@@ -41,7 +42,7 @@ const CardMarketplace = ({
           {description}
         </h2>
         <ButtonLink
-          href=""
+          href={CONFIGS.BASE_URL.MARKETPLACE}
           // eslint-disable-next-line no-return-assign
           onClick={() => (window.location.href = href)}
           text="Marketplace"

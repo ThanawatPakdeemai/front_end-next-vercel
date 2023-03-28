@@ -41,7 +41,9 @@ const WalletBody = ({
       </p>
       <div className="mb-4 flex w-[250px] items-center uppercase">
         {tokenSymbol}
-        <p className={`font-digital ml-2 text-2xl uppercase ${className}`}>
+        <p
+          className={`font-digital ml-2 w-[234px] break-words text-2xl uppercase ${className}`}
+        >
           {`${balance && balance.text} ${tokenSymbol}`}
         </p>
       </div>

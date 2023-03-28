@@ -21,7 +21,7 @@ const PublisherPage = () => {
     // clearGameItem,
     // clearDevice
   } = useFilterStore()
-  const { onHandleClick } = useGlobal()
+  const { onHandleSetGameStore } = useGlobal()
   const [gameFilter, setGameFilter] = useState<IPartnerGameData[]>()
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
@@ -64,7 +64,6 @@ const PublisherPage = () => {
       if (res) {
         const { data, info } = res
         // eslint-disable-next-line no-console
-        console.log("partner_data", data)
         setGameFilter(data.data)
         setTotalCount(info ? info.totalCount : 1)
       }
@@ -94,9 +93,13 @@ const PublisherPage = () => {
               menu={P2EHeaderMenu}
               partnerdata={game}
               imgPartner={game.image_thumbnail}
+              href={`/partner-publisher/${game.slug}`}
               onHandleClick={() =>
-                onHandleClick("partner-publisher", game.slug, game)
+                onHandleSetGameStore("partner-publisher", game)
               }
+              // onHandleClick={() =>
+              //   onHandleClick("partner-publisher", game.slug, game)
+              // }
             />
           ))}
       </div>

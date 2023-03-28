@@ -4,9 +4,8 @@ import GameCarouselHeader, {
   IHeaderSlide
 } from "@components/molecules/gameSlide/GameCarouselHeader"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
-import useGameStore from "@stores/game"
-import { useRouter } from "next/router"
 import GameCard from "@feature/game/components/molecules/GameCard"
+import useGlobal from "@hooks/useGlobal"
 
 interface IProps {
   menu: IHeaderSlide
@@ -73,8 +72,7 @@ const GameCarousel = ({
       }
     ]
   }
-  const { onSetGameData } = useGameStore()
-  const router = useRouter()
+  const { onHandleSetGameStore } = useGlobal()
 
   const sliderRef = useRef<Slider>(null)
   const [cooldown, setCooldown] = useState<boolean>(false)
@@ -86,38 +84,11 @@ const GameCarousel = ({
     sliderRef?.current?.slickPrev()
   }
 
-  const onViewAll = () => {
-    switch (curType) {
-      case "play-to-earn":
-        router.push(`/play-to-earn-games`)
-        break
-      case "free-to-play":
-        router.push(`/free-to-play-games`)
-        break
-      case "story-mode":
-        router.push(`/story-mode-games`)
-        break
-      default:
-        router.push(`/play-to-earn-games`)
-    }
-  }
-
-  const onHandleClick = (_gameUrl: string, _gameData: IGame) => {
-    if (_gameData.play_to_earn && _gameData.play_to_earn_status === "free") {
-      router.push(`/${curType}-games/${_gameUrl}/roomlist`)
-    } else {
-      router.push(`/${curType}-games/${_gameUrl}`)
-    }
-
-    onSetGameData(_gameData)
-  }
-
   return (
     <div className="md:mb-10">
       <GameCarouselHeader
         menu={menu}
         curType={curType}
-        onView={onViewAll}
         onNext={onSlideNext}
         onPrev={onSlidePrev}
         setCurType={setCurType}
@@ -139,7 +110,8 @@ const GameCarousel = ({
                 cooldown={cooldown}
                 setCooldown={setCooldown}
                 staminaRecovery={staminaRecovery}
-                onHandleClick={() => onHandleClick(item.path, item)}
+                href={`/${curType}-games/${item.path}`}
+                onHandleClick={() => onHandleSetGameStore(curType, item)}
               />
             ))}
         </Slider>

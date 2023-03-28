@@ -8,11 +8,14 @@ import useQuestStore from "@stores/quest"
 import MissionComponent from "@feature/quest/components/organisms/MissionComponent"
 import { v4 as uuidv4 } from "uuid"
 import useGlobal from "@hooks/useGlobal"
+import useGameStore from "@stores/game"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 import MenuLoggedin from "./MenuLoggedin"
 
 const MenuProfile = () => {
   const { onReset } = useProfileStore()
+  const { onSetGameItemSelectd, setQtyItemOfRoom } = useGameStore()
   const { open } = useQuestStore()
   const router = useRouter()
   const { isMarketplace } = useGlobal()
@@ -30,6 +33,8 @@ const MenuProfile = () => {
         startIcon={<PlugIcon />}
         text="Logout"
         handleClick={async () => {
+          onSetGameItemSelectd({} as IGameItemListData)
+          setQtyItemOfRoom(0)
           await onReset()
           await router.push("/")
         }}

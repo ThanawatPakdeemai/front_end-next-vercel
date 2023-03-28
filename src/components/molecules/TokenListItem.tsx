@@ -64,7 +64,7 @@ const TokenListItem = ({
           ) : (
             <></>
           )}
-          <p className="ml-3 text-sm font-bold text-white-primary">
+          <p className="ml-3 w-[40px] truncate text-ellipsis text-sm font-bold text-white-primary">
             {renderText()}
           </p>
         </div>

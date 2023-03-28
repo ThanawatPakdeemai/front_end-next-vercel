@@ -13,7 +13,8 @@ const useGetAllQuest = (_playerId: string) => {
     queryFn: () => getAllQuest(_playerId).then((res) => res),
     enabled: !!_playerId,
     refetchOnWindowFocus: false,
-    keepPreviousData: false
+    keepPreviousData: false,
+    retry: 2
   })
 
   return {

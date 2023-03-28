@@ -37,25 +37,32 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
   )
 
   useEffect(() => {
-    let load = true
-    if (load) fetchPlayers("in")
+    let load = false
+
+    if (!load) fetchPlayers("in")
+
     return () => {
-      load = false
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    router.beforePopState(({ as }) => {
-      if (as !== router.asPath) {
-        // Will run when leaving the current page; on back/forward actions
-        // out room this game
-        fetchPlayers("out")
-      }
-      return true
-    })
+    let load = false
+
+    if (!load) {
+      router.beforePopState(({ as }) => {
+        if (as !== router.asPath) {
+          // Will run when leaving the current page; on back/forward actions
+          // out room this game
+          fetchPlayers("out")
+        }
+        return true
+      })
+    }
 
     return () => {
+      load = true
       router.beforePopState(() => true)
     }
   }, [fetchPlayers, router])
@@ -68,6 +75,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
     )
 
     const playerMe = uniquePlayerIn.find((ele) => ele.player_id === profile?.id)
+
     const playerMeIndex = uniquePlayerIn.findIndex(
       (ele) => ele.player_id === profile?.id
     )
@@ -87,16 +95,40 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
     profile?.id
   ])
 
+  const playersMe = useMemo(() => {
+    if (playersMap)
+      return playersMap?.find((ele) => ele?.player_id === profile?.id)
+  }, [playersMap, profile?.id])
+
+  const outRoomLink = useCallback(async () => {
+    if (data)
+      await router.push(`/${router.query.typeGame}/${data.path}/roomlist`)
+  }, [data, router])
+
   const outRoom = async () => {
-    if (_roomId && profile && data) {
+    if (_roomId && profile) {
       await fetchPlayerGameSingle({
         _roomId,
         _playerId: profile.id,
         _type: "out"
       })
-      await router.push(`/${router.query.typeGame}/${data.path}/roomlist`)
+      await outRoomLink()
     }
   }
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      if (playersMe) {
+        if (playersMe.status === "played") {
+          outRoomLink()
+        }
+      }
+    }
+    return () => {
+      load = true
+    }
+  }, [outRoomLink, playersMe])
 
   return (
     <>

@@ -127,7 +127,8 @@ const useCreateWeb3Provider = () => {
             method: "wallet_addEthereumChain",
             params: [getNetwork(_chainId)]
           })
-          successToast(MESSAGES.wallet_addEthereumChain)
+          successToast(`Switch to chain ${getNetwork(_chainId).chainName}`)
+          // successToast(MESSAGES.wallet_addEthereumChain)
           return {
             responseStatus: true,
             errorMsg: "",
@@ -349,10 +350,7 @@ const useCreateWeb3Provider = () => {
     if (walletAccounts) {
       onSetAddress(walletAccounts[0])
       if (profile) {
-        // eslint-disable-next-line no-console
-        // console.log(profile)
-
-        if (!profile.address) {
+        if (!profile.address || profile.address === "") {
           if (profile.email) {
             const data = {
               _email: profile.email,
@@ -424,7 +422,8 @@ const useCreateWeb3Provider = () => {
             method: "wallet_switchEthereumChain",
             params: [{ chainId: _chainId }] // chainId must be in hexadecimal numbers
           })
-          successToast(MESSAGES.wallet_switchEthereumChain)
+          // successToast(MESSAGES.wallet_switchEthereumChain)
+          successToast(`Switch to chain ${getNetwork(_chainId).chainName}`)
           const _newProvider = new providers.Web3Provider(_provider)
           const _signer = _newProvider.getSigner()
           if (_signer) {
@@ -452,6 +451,7 @@ const useCreateWeb3Provider = () => {
         }
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       checkNetwork,
       handleConnectWithMetamask,
@@ -462,32 +462,59 @@ const useCreateWeb3Provider = () => {
   )
 
   useEffect(() => {
-    checkChain()
+    let load = false
+
+    if (!load) checkChain()
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    const getWalletAccount = async () => {
-      const walletAccounts = await provider?.listAccounts()
-      if (walletAccounts) {
-        setAddress(walletAccounts[0])
-      } else {
-        setAccounts(undefined)
+    let load = false
+
+    if (!load) {
+      const getWalletAccount = async () => {
+        const walletAccounts = await provider?.listAccounts()
+        if (walletAccounts) {
+          setAddress(walletAccounts[0])
+        } else {
+          setAccounts(undefined)
+        }
       }
+      getWalletAccount()
     }
-    getWalletAccount()
+
+    return () => {
+      load = true
+    }
   }, [provider])
 
   useEffect(() => {
+    let load = false
+
     if (address === undefined) return
     if (provider === undefined) return
-    const _signer = provider?.getSigner()
-    setSigner(_signer)
+    if (!load) {
+      const _signer = provider?.getSigner()
+      setSigner(_signer)
+    }
+
+    return () => {
+      load = true
+    }
   }, [address, provider])
 
   useEffect(() => {
-    const checkHasMetamask: boolean = typeof window.ethereum !== "undefined"
-    setHasMetamask(checkHasMetamask)
+    const load = false
+
+    if (!load) {
+      const checkHasMetamask: boolean = typeof window.ethereum !== "undefined"
+      setHasMetamask(checkHasMetamask)
+    }
+
     return () => {
       setHasMetamask(false)
     }

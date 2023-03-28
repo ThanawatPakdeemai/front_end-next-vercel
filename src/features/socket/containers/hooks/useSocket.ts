@@ -35,24 +35,35 @@ export function useSocket({ path, query }: IUseSocket) {
   }, [])
 
   useEffect(() => {
-    socketInit.current.on("connect_error", (err) => {
-      if (err && err.message === "jwt expired") {
-        errorToast(MESSAGES["error-socket"])
-      }
-    })
+    let load = false
 
-    return () => {}
+    if (!load) {
+      socketInit.current.on("connect_error", (err) => {
+        if (err && err.message === "jwt expired") {
+          errorToast(MESSAGES["error-socket"])
+        }
+      })
+    }
+
+    return () => {
+      load = true
+    }
   }, [errorToast, profile, socketInit])
 
   useEffect(() => {
-    socketInit.current.on("connect", () => {
-      if (socketInit.current.connected) {
-        onSetConnectedSocket(socketInit.current.connected)
-      }
-    })
+    let load = false
+
+    if (!load) {
+      socketInit.current.on("connect", () => {
+        if (socketInit.current.connected) {
+          onSetConnectedSocket(socketInit.current.connected)
+        }
+      })
+    }
 
     return () => {
       setIsConnected(false)
+      load = true
     }
   }, [onSetConnectedSocket, socketInit])
 

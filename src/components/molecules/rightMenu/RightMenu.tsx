@@ -48,6 +48,7 @@ const RightMenu = () => {
   useEffect(() => {
     // Retrieve the token from local storage
     let load = false
+
     if (!load) {
       if (token) {
         // Decode the token to obtain the expiration time
@@ -63,6 +64,7 @@ const RightMenu = () => {
         fetchToken()
       }
     }
+
     return () => {
       load = true
     }

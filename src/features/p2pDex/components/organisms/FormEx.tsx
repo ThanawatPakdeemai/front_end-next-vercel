@@ -103,29 +103,44 @@ const FormEx = ({
 
   // !defaultvalue
   useEffect(() => {
-    const price =
-      type === "buy"
-        ? Number(priceNakaDefault) * Number(amountDefault)
-        : Number(priceBusdDefault) * Number(amountDefault)
+    let load = false
 
-    setValue("price", price)
-    setValue("amount", amountDefault)
+    if (!load) {
+      const price =
+        type === "buy"
+          ? Number(priceNakaDefault) * Number(amountDefault)
+          : Number(priceBusdDefault) * Number(amountDefault)
+
+      setValue("price", price)
+      setValue("amount", amountDefault)
+    }
 
     return () => {
       setValue("amount", 0)
       setValue("price", 0)
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataEdit])
 
   // !setValue amount
   useEffect(() => {
-    const price =
-      type === "buy"
-        ? Number(priceNakaDefault) * Number(watch("amount"))
-        : Number(priceBusdDefault) * Number(watch("amount"))
-    setValue("price", Number(formatNumber(price, { maximumFractionDigits: 4 })))
+    let load = false
 
+    if (!load) {
+      const price =
+        type === "buy"
+          ? Number(priceNakaDefault) * Number(watch("amount"))
+          : Number(priceBusdDefault) * Number(watch("amount"))
+      setValue(
+        "price",
+        Number(formatNumber(price, { maximumFractionDigits: 4 }))
+      )
+    }
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch("amount")])
 

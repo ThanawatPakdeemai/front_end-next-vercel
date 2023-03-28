@@ -22,6 +22,7 @@ const NakaPriceContext = createContext<NakaPriceContextType | undefined>(
 export function NakaPriceProvider({ children }: { children: ReactNode }) {
   const [price, setPrice] = useState<ICurrentNakaData>()
   const { currentPrice, isLoadingCurrentPrice } = useGetCurrentPrice()
+  const isCancelled = React.useRef(false)
 
   /**
    * @description Set Naka Price to state
@@ -34,7 +35,11 @@ export function NakaPriceProvider({ children }: { children: ReactNode }) {
   }, [isLoadingCurrentPrice, currentPrice, setPrice])
 
   useEffect(() => {
-    fetchPrice()
+    if (!isCancelled.current) fetchPrice()
+
+    return () => {
+      isCancelled.current = true
+    }
   }, [fetchPrice])
 
   const value = useMemo(

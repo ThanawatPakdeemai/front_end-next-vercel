@@ -79,8 +79,16 @@ const useInvenGameItem = () => {
   }
 
   useEffect(() => {
-    if (profile && profile.data) {
-      onFetchInvenGameItem(profile.data.address)
+    let load = false
+
+    if (!load) {
+      if (profile && profile.data) {
+        onFetchInvenGameItem(profile.data.address)
+      }
+    }
+
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile, gameItemTypes])

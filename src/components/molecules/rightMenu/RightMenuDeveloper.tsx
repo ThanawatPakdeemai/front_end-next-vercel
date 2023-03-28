@@ -24,25 +24,31 @@ const RightMenuDeveloper = () => {
 
   useEffect(() => {
     // Retrieve the token from local storage
+    let load = false
 
-    if (token) {
-      // Decode the token to obtain the expiration time
-      const { exp }: any = jwt_decode(token)
-      // Compare the expiration time with the current time
-      if (Date.now() < exp * 1000) {
-        setIsTokenValid(true)
-      } else {
-        // If the token has expired, remove it from local storage
-        setIsTokenValid(false)
-        onResetNotification() // remove notification zustand
-        onReset() // remove profile zustand
+    if (!load) {
+      if (token) {
+        // Decode the token to obtain the expiration time
+        const { exp }: any = jwt_decode(token)
+        // Compare the expiration time with the current time
+        if (Date.now() < exp * 1000) {
+          setIsTokenValid(true)
+        } else {
+          // If the token has expired, remove it from local storage
+          setIsTokenValid(false)
+          onResetNotification() // remove notification zustand
+          onReset() // remove profile zustand
+        }
+      }
+
+      if (profile.data) {
+        handleClose()
       }
     }
 
-    if (profile.data) {
-      handleClose()
+    return () => {
+      load = true
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token, profile])
 

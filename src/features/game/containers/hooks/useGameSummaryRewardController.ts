@@ -268,24 +268,40 @@ const useGameSummaryRewardController = () => {
    * Set notification to store
    */
   useEffect(() => {
+    let load = false
+
     if (!notification) return
-    if (notification && notification._id === (notification_id as string)) {
-      setNotificationItem(notification)
-      onUpdateReadNotification(notification)
+    if (!load) {
+      if (notification && notification._id === (notification_id as string)) {
+        setNotificationItem(notification)
+        onUpdateReadNotification(notification)
+      }
+    }
+
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notification])
 
   useEffect(() => {
+    let load = false
+
     if (!notification_id) return
-    if (notification_id) {
-      const currentNotification = notificationAll.find(
-        (item) => item._id === notification_id
-      )
-      if (currentNotification) {
-        setNotificationItem(currentNotification)
-        onUpdateReadNotification(currentNotification)
+    if (!load) {
+      if (notification_id) {
+        const currentNotification = notificationAll.find(
+          (item) => item._id === notification_id
+        )
+        if (currentNotification) {
+          setNotificationItem(currentNotification)
+          onUpdateReadNotification(currentNotification)
+        }
       }
+    }
+
+    return () => {
+      load = true
     }
   }, [
     notification_id,
@@ -298,9 +314,17 @@ const useGameSummaryRewardController = () => {
    * Set notification to store
    */
   useEffect(() => {
+    let load = false
+
     if (!playHistory) return
-    if (playHistory) {
-      setPlayHistory(playHistory)
+    if (!load) {
+      if (playHistory) {
+        setPlayHistory(playHistory)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [playHistory])
 
@@ -308,22 +332,38 @@ const useGameSummaryRewardController = () => {
    * Set game data to store
    */
   useEffect(() => {
-    if (gameData) {
-      onSetGameData(gameData)
-      setGameDataState(gameData)
-      setShareURL(
-        `${CONFIGS.BASE_URL.FRONTEND}/${getTypeGamePathFolder(gameData)}/${
-          gameData.path
-        }`
-      )
+    let load = false
+
+    if (!load) {
+      if (gameData) {
+        onSetGameData(gameData)
+        setGameDataState(gameData)
+        setShareURL(
+          `${CONFIGS.BASE_URL.FRONTEND}/${getTypeGamePathFolder(gameData)}/${
+            gameData.path
+          }`
+        )
+      }
+    }
+
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameData, onSetGameData])
 
   useEffect(() => {
+    let load = false
+
     if (!balanceofItem) return
-    if (balanceofItem && balanceofItem.data) {
-      setGameItemBalance(balanceofItem.data)
+    if (!load) {
+      if (balanceofItem && balanceofItem.data) {
+        setGameItemBalance(balanceofItem.data)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [balanceofItem])
 
@@ -331,7 +371,13 @@ const useGameSummaryRewardController = () => {
    * Check summary/reward data from notification type
    */
   useEffect(() => {
-    fetchPlayersByNotificationType()
+    let load = false
+
+    if (!load) fetchPlayersByNotificationType()
+
+    return () => {
+      load = true
+    }
   }, [
     fetchPlayersByNotificationType,
     notification,

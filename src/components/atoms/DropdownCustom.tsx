@@ -149,52 +149,68 @@ const DropdownCustom = ({ title, className }: IProp) => {
   ]
 
   useEffect(() => {
-    if (title === "All Categories") {
-      onCategories()
-      setTextTitle("All Categories")
-    } else if (title === "All Game Assets") {
-      onGameAssets()
-      setTextTitle("All Game Assets")
-    } else if (title === "All Devices") {
-      setGameData(device)
-      setTextTitle("All Devices")
-    } else if (title === "All Partner Categories") {
-      onGamePartner()
-      setTextTitle("All Categories")
-    } else if (title === "All Publisher Categories") {
-      onGamePartner()
-      setTextTitle("All Categories")
+    let load = false
+
+    if (!load) {
+      if (title === "All Categories") {
+        onCategories()
+        setTextTitle("All Categories")
+      } else if (title === "All Game Assets") {
+        onGameAssets()
+        setTextTitle("All Game Assets")
+      } else if (title === "All Devices") {
+        setGameData(device)
+        setTextTitle("All Devices")
+      } else if (title === "All Partner Categories") {
+        onGamePartner()
+        setTextTitle("All Categories")
+      } else if (title === "All Publisher Categories") {
+        onGamePartner()
+        setTextTitle("All Categories")
+      }
+    }
+
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    if (onTitle && textTitle) {
-      if (textTitle === "All Categories") {
-        if (onTitle._id) {
-          setCategoryDropdown(onTitle._id)
-        } else if (title === "All Partner Categories") {
-          if (onTitle.name === "All Categories") {
-            setCategoryDropdown("")
-          } else {
-            setCategoryDropdown(onTitle.name.toLowerCase())
+    let load = false
+
+    if (!load) {
+      if (onTitle && textTitle) {
+        if (textTitle === "All Categories") {
+          if (onTitle._id) {
+            setCategoryDropdown(onTitle._id)
+          } else if (title === "All Partner Categories") {
+            if (onTitle.name === "All Categories") {
+              setCategoryDropdown("")
+            } else {
+              setCategoryDropdown(onTitle.name.toLowerCase())
+            }
+          } else if (title === "All Publisher Categories") {
+            if (onTitle.name === "All Categories") {
+              setCategoryDropdown("")
+            } else {
+              setCategoryDropdown(onTitle.slug)
+            }
           }
-        } else if (title === "All Publisher Categories") {
-          if (onTitle.name === "All Categories") {
-            setCategoryDropdown("")
+        } else if (textTitle === "All Game Assets") {
+          if (onTitle.name === "All Game Assets") {
+            setGameItemDropdown("all")
           } else {
-            setCategoryDropdown(onTitle.slug)
+            setGameItemDropdown(onTitle.name)
           }
+        } else if (textTitle === "All Devices") {
+          setDeviceDropdown(onTitle._id)
         }
-      } else if (textTitle === "All Game Assets") {
-        if (onTitle.name === "All Game Assets") {
-          setGameItemDropdown("all")
-        } else {
-          setGameItemDropdown(onTitle.name)
-        }
-      } else if (textTitle === "All Devices") {
-        setDeviceDropdown(onTitle._id)
       }
+    }
+
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onTitle])

@@ -77,12 +77,17 @@ const FormEdit = ({
 
   // !default value
   useEffect(() => {
-    setValue("price", price)
-    setValue("amount", amount)
+    let load = false
+
+    if (!load) {
+      setValue("price", price)
+      setValue("amount", amount)
+    }
 
     return () => {
       setValue("amount", 0)
       setValue("price", 0)
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [price])

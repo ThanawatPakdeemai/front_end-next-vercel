@@ -47,7 +47,8 @@ const ReferralProgramPage = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { successToast } = useToast()
   const { getReferralsData, isPreviousData } = useGetReferral({
-    player_id: profile && profile.id ? profile.id : "",
+    // player_id: profile && profile.id ? profile.id : "",
+    player_id: "61bc302f7f8867700b66dd4b",
     skip: page,
     limit: limitPage,
     sort: undefined,
@@ -79,37 +80,47 @@ const ReferralProgramPage = () => {
   }
 
   useEffect(() => {
-    if (!fetchRef.current && getReferralsData) {
-      fetchRef.current = true
-      setTotalCount(getReferralsData.data.info.totalCount)
+    let load = false
+
+    if (!load) {
+      if (!fetchRef.current && getReferralsData) {
+        fetchRef.current = true
+        setTotalCount(getReferralsData.data.info.totalCount)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [getReferralsData])
 
   useEffect(() => {
-    if (!isPreviousData && getReferralsData) {
-      queryClient.prefetchQuery({
-        queryKey: ["getReferralsData", profile && profile.id ? profile.id : ""],
-        queryFn: () =>
-          getReferrals({
-            player_id: profile && profile.id ? profile.id : "",
-            skip: page,
-            limit: limitPage,
-            sort: sortType.sort,
-            sort_value: sortType.sort_value
-          })
-      })
-    }
-  }, [
-    page,
-    limitPage,
-    isPreviousData,
-    getReferralsData,
-    queryClient,
-    sortType.sort,
-    sortType.sort_value,
-    profile
-  ])
+    let load = false
 
+    if (!load) {
+      if (!isPreviousData && getReferralsData) {
+        queryClient.prefetchQuery({
+          queryKey: [
+            "getReferralsData",
+            profile && profile.id ? profile.id : ""
+          ],
+          queryFn: () =>
+            getReferrals({
+              player_id: profile && profile.id ? profile.id : "",
+              skip: page,
+              limit: limitPage,
+              sort: sortType.sort,
+              sort_value: sortType.sort_value
+            })
+        })
+      }
+    }
+
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, limitPage, sortType.sort, sortType.sort_value])
   return (
     <>
       {hydrated && (

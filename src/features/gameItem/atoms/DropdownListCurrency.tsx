@@ -12,6 +12,7 @@ import INaka from "@components/icons/Naka"
 import IBusd from "@components/icons/Busd"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import { useWeb3Provider } from "@providers/Web3Provider"
+import useProfileStore from "@stores/profileStore"
 import ButtonDropdown from "./ButtonDropdown"
 
 interface IProp {
@@ -35,7 +36,8 @@ IProp) => {
   // eslint-disable-next-line no-unused-vars
   const { getDefaultCoin } = useGlobal()
   const { address } = useWeb3Provider()
-  const [defaultItem, setDefaultItem] = useState<ITokenContract>(list?.[2])
+  const profile = useProfileStore((state) => state.profile.data)
+  const [defaultItem, setDefaultItem] = useState<ITokenContract>(list?.[0])
   // getDefaultCoin()[0]
   const { setValue, updatePricePerItem } = useBuyGameItemController()
 
@@ -45,12 +47,12 @@ IProp) => {
   }
 
   React.useEffect(() => {
-    setValue("currency", list?.[2])
-    setValue("currency_id", list[2]?.symbol as string)
+    setValue("currency", list?.[0])
+    setValue("currency_id", list?.[0]?.symbol as string)
     updatePricePerItem()
-    if (onChangeSelect) onChangeSelect(list?.[2])
+    if (onChangeSelect) onChangeSelect(list?.[0])
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address])
+  }, [address, profile])
 
   React.useEffect(() => {
     let load = false

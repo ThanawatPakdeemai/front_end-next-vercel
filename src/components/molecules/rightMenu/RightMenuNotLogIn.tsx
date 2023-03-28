@@ -1,9 +1,12 @@
-import React, { memo, useState } from "react"
+import React, { ReactElement, memo, useState } from "react"
 import { Box } from "@mui/material"
 import RightMenuNotLogInTemplate from "@components/templates/contents/RightMenuNotLogInTemplate"
 import ButtonLogin from "./ButtonLogin"
 
-const RightMenuNotLogIn = () => {
+interface IProps {
+  button?: ReactElement
+}
+const RightMenuNotLogIn = ({ button }: IProps) => {
   const [open, setOpen] = useState<boolean>(false)
 
   const handleOpen = () => setOpen(true)
@@ -13,11 +16,20 @@ const RightMenuNotLogIn = () => {
       open={open}
       handleClose={handleClose}
     >
-      <Box className="w-max rounded-xl bg-neutral-700 p-1">
-        <Box className="xs:flex-col items-center justify-between gap-1 lg:flex">
-          <ButtonLogin handleButton={handleOpen} />
+      {button ? (
+        <Box
+          className="w-full"
+          onClick={handleOpen}
+        >
+          {button}
         </Box>
-      </Box>
+      ) : (
+        <Box className="w-max rounded-xl bg-neutral-700 p-1">
+          <Box className="xs:flex-col items-center justify-between gap-1 lg:flex">
+            <ButtonLogin handleButton={handleOpen} />
+          </Box>
+        </Box>
+      )}
     </RightMenuNotLogInTemplate>
   )
 }

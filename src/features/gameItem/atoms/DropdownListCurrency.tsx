@@ -35,7 +35,8 @@ IProp) => {
   // eslint-disable-next-line no-unused-vars
   const { getDefaultCoin } = useGlobal()
   const { address } = useWeb3Provider()
-  const [defaultItem, setDefaultItem] = useState<ITokenContract>(list?.[2])
+
+  const [defaultItem, setDefaultItem] = useState<ITokenContract>(list?.[0])
   // getDefaultCoin()[0]
   const { setValue, updatePricePerItem } = useBuyGameItemController()
 
@@ -45,10 +46,10 @@ IProp) => {
   }
 
   React.useEffect(() => {
-    setValue("currency", list?.[2])
-    setValue("currency_id", list?.[2]?.symbol as string)
+    setValue("currency", list?.[0])
+    setValue("currency_id", list?.[0]?.symbol as string)
     updatePricePerItem()
-    if (onChangeSelect) onChangeSelect(list?.[2])
+    if (onChangeSelect) onChangeSelect(list?.[0])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address])
 

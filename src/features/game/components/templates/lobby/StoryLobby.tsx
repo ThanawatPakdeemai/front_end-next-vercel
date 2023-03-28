@@ -57,7 +57,7 @@ const StoryLobby = () => {
       /**
        * @description Send value play time to API before play game
        */
-      if (!gameDataCount.status) {
+      if (!gameDataCount?.status) {
         errorToast(MESSAGES["room-id-not-found"])
       }
       const room_id = null

@@ -91,7 +91,7 @@ const ButtonLink = ({
 
   return (
     <>
-      {href ? (
+      {href && !onClick ? (
         <Link
           href={href || "/"}
           className="w-auto"

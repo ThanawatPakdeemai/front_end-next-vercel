@@ -26,6 +26,7 @@ export interface ITokenListItem {
   handleClick?: () => void
   disabledClick?: boolean
   title?: string
+  widthBalance?: string
 }
 const TokenListItem = ({
   icon,
@@ -34,7 +35,8 @@ const TokenListItem = ({
   shadow = false,
   handleClick,
   disabledClick = false,
-  title
+  title,
+  widthBalance = "w-[40px]"
 }: ITokenListItem) => {
   const router = useRouter()
 
@@ -64,7 +66,9 @@ const TokenListItem = ({
           ) : (
             <></>
           )}
-          <p className="ml-3 w-[40px] truncate text-ellipsis text-sm font-bold text-white-primary">
+          <p
+            className={`ml-3 ${widthBalance} truncate text-ellipsis text-sm font-bold text-white-primary`}
+          >
             {renderText()}
           </p>
         </div>

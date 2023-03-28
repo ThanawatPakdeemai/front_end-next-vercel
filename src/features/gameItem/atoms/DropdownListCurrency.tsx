@@ -46,7 +46,7 @@ IProp) => {
 
   React.useEffect(() => {
     setValue("currency", list?.[2])
-    setValue("currency_id", list[2]?.symbol as string)
+    setValue("currency_id", list?.[2]?.symbol as string)
     updatePricePerItem()
     if (onChangeSelect) onChangeSelect(list?.[2])
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -47,7 +47,8 @@ const ReferralProgramPage = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { successToast } = useToast()
   const { getReferralsData, isPreviousData } = useGetReferral({
-    player_id: profile && profile.id ? profile.id : "",
+    // player_id: profile && profile.id ? profile.id : "",
+    player_id: "61bc302f7f8867700b66dd4b",
     skip: page,
     limit: limitPage,
     sort: undefined,
@@ -99,17 +100,8 @@ const ReferralProgramPage = () => {
           })
       })
     }
-  }, [
-    page,
-    limitPage,
-    isPreviousData,
-    getReferralsData,
-    queryClient,
-    sortType.sort,
-    sortType.sort_value,
-    profile
-  ])
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, limitPage, sortType.sort, sortType.sort_value])
   return (
     <>
       {hydrated && (

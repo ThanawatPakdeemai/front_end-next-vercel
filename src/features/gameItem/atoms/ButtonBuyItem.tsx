@@ -12,7 +12,7 @@ const ButtonBuyItem = ({ handleButton, disabled }: IProp) => (
       disabled={disabled}
       onClick={() => handleButton()}
       text="Buy Assets"
-      href="/"
+      href=""
       icon={<AddIcon />}
       size="small"
       color="error"

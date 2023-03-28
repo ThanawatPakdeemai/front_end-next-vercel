@@ -1,7 +1,6 @@
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { P2EHeaderMenu } from "@constants/gameSlide"
-import GameCard from "@feature/game/containers/components/molecules/GameCard"
 import { useQueryClient } from "@tanstack/react-query"
 import React, { memo, useEffect, useState } from "react"
 import { v4 as uuid } from "uuid"
@@ -12,6 +11,8 @@ import { getAllPartnerGames } from "@feature/game/partnerGames/containers/servic
 import useFilterStore from "@stores/blogFilter"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import useFilterGamePartnerList from "@feature/partner/containers/hooks/useFilterGamePartnerList"
+import GameCard from "@feature/game/components/molecules/GameCard"
+import NoData from "@components/molecules/NoData"
 
 const PartnerGames = () => {
   const search = ""
@@ -21,7 +22,7 @@ const PartnerGames = () => {
   const [gameFilter, setGameFilter] = useState<IPartnerGameData[]>()
   const queryClient = useQueryClient()
   const { clearGamePartnersData } = useGameStore()
-  const { onHandleClick } = useGlobal()
+  const { onHandleSetGameStore } = useGlobal()
   const {
     category: categoryDropdown,
     gameItem: gameItemDropdown,
@@ -109,20 +110,23 @@ const PartnerGames = () => {
   return (
     <div className="flex flex-col">
       <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-5">
-        {isLoading || loadFilter
-          ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
-          : gameFilter &&
-            gameFilter.map((game) => (
-              <GameCard
-                key={game.id}
-                menu={P2EHeaderMenu}
-                partnerdata={game}
-                imgPartner={game.image_thumbnail}
-                onHandleClick={() =>
-                  onHandleClick("partner-game", game.slug, game)
-                }
-              />
-            ))}
+        {isLoading ||
+          (loadFilter &&
+            [...Array(limit)].map(() => <SkeletonCard key={uuid()} />))}
+        {gameFilter && gameFilter.length > 0 ? (
+          gameFilter.map((game) => (
+            <GameCard
+              key={game.id}
+              menu={P2EHeaderMenu}
+              partnerdata={game}
+              imgPartner={game.image_thumbnail}
+              href={`/partner-game/${game.slug}`}
+              onHandleClick={() => onHandleSetGameStore("partner-game", game)}
+            />
+          ))
+        ) : (
+          <NoData className="w-[300px]" />
+        )}
       </div>
       <PaginationNaka
         totalCount={totalCount}

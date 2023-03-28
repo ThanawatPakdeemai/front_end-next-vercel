@@ -2,11 +2,9 @@ import { getCategories } from "@feature/dropdown/containers/services/dropdown.se
 import { getGamesByKey } from "@feature/game/containers/services/game.service"
 import { IFilterGamesByKey } from "@feature/game/interfaces/IGameService"
 import { useQuery } from "@tanstack/react-query"
-import { useRouter } from "next/router"
 import useGlobal from "./useGlobal"
 
 const useCategories = (_body?: IFilterGamesByKey | undefined) => {
-  const router = useRouter()
   const { defaultBody } = useGlobal()
 
   /**
@@ -49,9 +47,8 @@ const useCategories = (_body?: IFilterGamesByKey | undefined) => {
    * @description Handle click
    * @param _link
    */
-  const onHandleClickCatogory = (_link: string, _id: string) => {
-    router.push(`/categories/${_link}?id=${_id}`)
-  }
+  const onHandleClickCatogory = (_link: string, _id: string) =>
+    `/categories/${_link}?id=${_id}`
 
   return {
     getCategoriesAll,

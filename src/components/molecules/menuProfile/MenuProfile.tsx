@@ -9,6 +9,7 @@ import MissionComponent from "@feature/quest/components/organisms/MissionCompone
 import { v4 as uuidv4 } from "uuid"
 import useGlobal from "@hooks/useGlobal"
 import useGameStore from "@stores/game"
+import useNotiStore from "@stores/notification"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 import MenuLoggedin from "./MenuLoggedin"
@@ -17,6 +18,7 @@ const MenuProfile = () => {
   const { onReset } = useProfileStore()
   const { onSetGameItemSelectd, setQtyItemOfRoom } = useGameStore()
   const { open } = useQuestStore()
+  const { onResetNotification } = useNotiStore()
   const router = useRouter()
   const { isMarketplace } = useGlobal()
   const menuProfile = isMarketplace ? MENU_MARKETPLACE_INVENTORY : MENU_LOGGEDIN
@@ -35,6 +37,7 @@ const MenuProfile = () => {
         handleClick={async () => {
           onSetGameItemSelectd({} as IGameItemListData)
           setQtyItemOfRoom(0)
+          await onResetNotification()
           await onReset()
           await router.push("/")
         }}

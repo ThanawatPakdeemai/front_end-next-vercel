@@ -7,6 +7,7 @@ import Header from "@components/organisms/Header"
 import { MENU_MARKETPLACE_INVENTORY } from "@configs/menu"
 import { Divider, MenuList, Typography } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
+import useNotiStore from "@stores/notification"
 import Helper from "@utils/helper"
 import { NextRouter, useRouter } from "next/router"
 import React from "react"
@@ -15,6 +16,7 @@ const MarketplaceLayoutInventory = ({
   children
 }: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) => {
   const profile = useProfileStore((state) => state.profile.data)
+  const { onResetNotification } = useNotiStore()
   const { onReset } = useProfileStore()
   const router: NextRouter = useRouter()
 
@@ -86,6 +88,7 @@ const MarketplaceLayoutInventory = ({
               startIcon={<PlugIcon />}
               text="Logout"
               handleClick={async () => {
+                await onResetNotification()
                 await onReset()
               }}
               className="btn-rainbow-theme my-4 bg-error-main px-14 text-sm text-white-default"

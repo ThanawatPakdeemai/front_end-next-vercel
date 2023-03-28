@@ -53,6 +53,7 @@ const ModalInvite = () => {
       </Typography>
       <ModalCustom
         open={open}
+        onClose={handleClose}
         width={353}
       >
         <div className="flex w-full flex-col gap-y-[20px]">

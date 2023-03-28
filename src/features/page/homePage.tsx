@@ -267,10 +267,10 @@ const Home = () => {
                 iconBtn={<IDiamond />}
                 textBtn="NAKA NFT"
                 href="/arcade-emporium"
-                srcMain={IMAGES.frontNakaBand.src}
-                altMain={IMAGES.frontNakaBand.alt}
-                srcSecond={IMAGES.backNakaBand.src}
-                altSecond={IMAGES.backNakaBand.alt}
+                srcMain={IMAGES.homeNakaNFT.src}
+                altMain={IMAGES.homeNakaNFT.alt}
+                srcSecond={IMAGES.backHomeNakaNFT.src}
+                altSecond={IMAGES.backHomeNakaNFT.alt}
               />
             </CardLinkTemplate>
           </Grid>

@@ -41,13 +41,13 @@ const SidebarProfile = () => {
       {profileData && (
         <StatProfile
           exp={{
-            level: profileData.level,
-            expAmount: profileData.exp,
-            maxExp: profileData.max_exp
+            level: profileData?.level,
+            expAmount: profileData?.exp,
+            maxExp: profileData?.max_exp
           }}
           energy={{
-            staminaPoint: profileData.stamina_point,
-            totalStamina: profileData.total_stamina || 20
+            staminaPoint: profileData?.stamina_point,
+            totalStamina: profileData?.total_stamina || 20
           }}
           className="flex-col"
           sx={{

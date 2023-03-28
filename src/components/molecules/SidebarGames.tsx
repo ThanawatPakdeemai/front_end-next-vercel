@@ -41,13 +41,13 @@ const SidebarGames = () => {
 
           <StatProfile
             exp={{
-              level: profile.level,
-              expAmount: profile.exp,
-              maxExp: profile.max_exp
+              level: profile?.level ?? 0,
+              expAmount: profile?.exp,
+              maxExp: profile?.max_exp
             }}
             energy={{
-              staminaPoint: profile.stamina_point,
-              totalStamina: profile.total_stamina
+              staminaPoint: profile?.stamina_point,
+              totalStamina: profile?.total_stamina
             }}
             className="flex-col"
             sx={{

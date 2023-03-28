@@ -1,5 +1,5 @@
+import { getCurrentNaka } from "@feature/balance/containers/services/balance.services"
 import { useQuery } from "@tanstack/react-query"
-import { getCurrentNaka } from "../services/inventory.service"
 
 const useGetCurrentPrice = () => {
   const {

@@ -21,7 +21,8 @@ const GamePageLayout = dynamic(
 const SkeletonPublisherCard = dynamic(
   () => import("@components/atoms/skeleton/SkeletonPublisherCard"),
   {
-    suspense: true
+    suspense: true,
+    ssr: false
   }
 )
 

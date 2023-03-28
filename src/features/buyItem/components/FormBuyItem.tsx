@@ -100,10 +100,6 @@ const FormBuyItem = () => {
                         setValue("item_id", _item.id)
                         updatePricePerItem()
                       }}
-                      // defaultValue={
-                      //   (gameItemList[0] as IGameItemListData) ||
-                      //   ({} as IGameItemListData)
-                      // }
                     />
                   )}
                 />
@@ -125,7 +121,7 @@ const FormBuyItem = () => {
                   className="w-[410px]"
                   onChangeSelect={(_item) => {
                     setValue("currency", _item)
-                    setValue("currency_id", _item.address)
+                    setValue("currency_id", _item?.address)
                     updatePricePerItem()
                   }}
                 />
@@ -198,7 +194,10 @@ const FormBuyItem = () => {
           </div>
           <Box className="my-4 w-full">
             <p className="py-2 uppercase text-black-default">Your Balance</p>
-            <Balance buyItemCoinSeleced={watch("currency")} />
+            <Balance
+              buyItemCoinSeleced={watch("currency")}
+              widthBalance="w-full"
+            />
           </Box>
           <div className="my-2 flex w-full justify-between rounded-xl border border-neutral-700 p-4">
             <div className="">
@@ -228,14 +227,14 @@ const FormBuyItem = () => {
               )}
             </p>
           </div>
-          <ButtonGroup className="mt-10 flex flex-col  gap-3">
+          <ButtonGroup className="mt-5 flex flex-col  gap-3">
             {!statusWalletConnected.responseStatus ? (
               <PleaseCheckWallet />
             ) : (
               <ButtonLink
                 href=""
                 size="medium"
-                disabled={isDisabled()}
+                disabled={isDisabled}
                 className="h-[40px] w-full text-sm "
                 text={
                   <>
@@ -289,9 +288,9 @@ const FormBuyItem = () => {
             <div className="m-2 flex flex-col items-center justify-center md:col-span-5">
               <SwitchChain
                 variant="simple"
-                chainName={watch("currency").tokenName}
+                chainName={watch("currency")?.tokenName}
                 handleClick={
-                  watch("currency").symbol === "NAKA"
+                  watch("currency")?.symbol === "NAKA"
                     ? () =>
                         handleSwitchNetwork(
                           CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string

@@ -9,6 +9,7 @@ const useGetGameRoomById = (_roomId: string) => {
     isError
   } = useQuery(["getGameRoom", _roomId], () => getGameRoomById(_roomId), {
     /* prevent hook state problem */
+    keepPreviousData: true,
     staleTime: Infinity,
     retry: false,
     enabled: !!_roomId

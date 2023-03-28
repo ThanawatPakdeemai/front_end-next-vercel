@@ -5,7 +5,6 @@ import RightDetailsMarketplace from "@feature/marketplace/components/organisms/R
 import useGetPriceNakaPunk from "@feature/nakapunk/containers/hooks/useGetPriceNakapunk"
 import usePurchaseNakapunk from "@feature/nakapunk/containers/hooks/usePurchaseNakapunk"
 import { useToast } from "@feature/toast/containers"
-import useMarketplace from "@hooks/useMarketplace"
 import { Chip, Typography } from "@mui/material"
 import useCountStore from "@stores/countComponant"
 import useLoadingStore from "@stores/loading"
@@ -16,11 +15,13 @@ import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn
 import GotNaKAPunk from "@components/molecules/Inventory/GotNaKAPunk"
 import { v4 as uuidv4 } from "uuid"
 import CONFIGS from "@configs/index"
+import useGlobal from "@hooks/useGlobal"
+import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 
 const MarketplaceNakaPunk = () => {
   const [priceNP, setPriceNP] = useState<number>(0)
   const [metaData, setMetaData] = useState<IPunkMetaData[]>([])
-  const { type } = useMarketplace()
+  const { marketType } = useGlobal()
   const { priceNakaPunk } = useGetPriceNakaPunk()
   const { resNakapunk, mutatePurchaseNakapunk } = usePurchaseNakapunk()
   const { count } = useCountStore()
@@ -114,7 +115,7 @@ const MarketplaceNakaPunk = () => {
         </div>
       </CardContentDetails>
       <RightDetailsMarketplace
-        type={type}
+        type={marketType as TNFTType}
         title="NAKA Punk mystery box"
         method="mint"
         price={priceNP * count}

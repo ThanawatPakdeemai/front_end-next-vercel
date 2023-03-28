@@ -28,14 +28,14 @@ const MyLandList = () => {
   const [page, setPage] = useState<number>(1)
   const [txHistory, setTxHistory] = useState<IMarketLandData[]>([])
 
-  const { getMyLandHistory, isLoading } = useGetMyLand()
+  const { mutateGetMyLand, isLoading } = useGetMyLand()
   const { hydrated, pager } = useGlobal()
   const { sortLandId, sortBlockPoint, landListHeader } = useMyLandController()
 
   useEffect(() => {
     const fetchHistory = async () => {
       if (profile.data) {
-        await getMyLandHistory({
+        await mutateGetMyLand({
           _limit: limit,
           _page: page,
           _search: {

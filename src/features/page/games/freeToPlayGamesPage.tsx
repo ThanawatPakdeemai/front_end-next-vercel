@@ -23,7 +23,8 @@ const FreeToPlayGamesPage = () => {
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
-  const { onHandleClick } = useGlobal()
+  const { getTypeGamePathFolder, onHandleSetGameStore, isRedirectRoomlist } =
+    useGlobal()
   const { clearGameData } = useGameStore()
   const {
     category: categoryDropdown,
@@ -128,8 +129,11 @@ const FreeToPlayGamesPage = () => {
                 staminaRecovery={staminaRecovery}
                 cooldown={cooldown}
                 setCooldown={setCooldown}
+                href={`/${getTypeGamePathFolder(game)}-games/${
+                  game.path
+                }${isRedirectRoomlist(game).toString()}`}
                 onHandleClick={() =>
-                  onHandleClick("free-to-play", `${game.path}/roomlist`, game)
+                  onHandleSetGameStore(getTypeGamePathFolder(game), game)
                 }
               />
             ))}

@@ -10,6 +10,9 @@ import { ITokenContract } from "@feature/contract/containers/hooks/useContractVa
 import useGlobal from "@hooks/useGlobal"
 import INaka from "@components/icons/Naka"
 import IBusd from "@components/icons/Busd"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
+import { useWeb3Provider } from "@providers/Web3Provider"
+import useProfileStore from "@stores/profileStore"
 import ButtonDropdown from "./ButtonDropdown"
 
 interface IProp {
@@ -30,10 +33,13 @@ const DropdownListItem = ({
   onChangeSelect
 }: // defaultValue
 IProp) => {
+  // eslint-disable-next-line no-unused-vars
   const { getDefaultCoin } = useGlobal()
-  const [defaultItem, setDefaultItem] = useState<ITokenContract>(
-    getDefaultCoin()[0]
-  )
+  const { address } = useWeb3Provider()
+  const profile = useProfileStore((state) => state.profile.data)
+  const [defaultItem, setDefaultItem] = useState<ITokenContract>(list?.[0])
+  // getDefaultCoin()[0]
+  const { setValue, updatePricePerItem } = useBuyGameItemController()
 
   const onChangeItem = (_item: ITokenContract) => {
     setDefaultItem(_item)
@@ -41,10 +47,26 @@ IProp) => {
   }
 
   React.useEffect(() => {
-    if (list && list.length > 0) {
-      setDefaultItem(list[0])
+    setValue("currency", list?.[0])
+    setValue("currency_id", list?.[0]?.symbol as string)
+    updatePricePerItem()
+    if (onChangeSelect) onChangeSelect(list?.[0])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address, profile])
+
+  React.useEffect(() => {
+    let load = false
+    if (!load) updatePricePerItem()
+    return () => {
+      load = true
     }
-  }, [list, setDefaultItem])
+  }, [updatePricePerItem])
+
+  // React.useEffect(() => {
+  //   if (list && list.length > 0) {
+  //     setDefaultItem(list[0])
+  //   }
+  // }, [list, setDefaultItem])
 
   const IconToken = (props: ITokenName) => {
     switch (props.tokenName) {
@@ -77,14 +99,14 @@ IProp) => {
                     leftContent={
                       <>
                         <div className="flex items-start">
-                          <IconToken tokenName={defaultItem.tokenName} />
+                          <IconToken tokenName={defaultItem?.tokenName ?? ""} />
                         </div>
 
                         <div className="flex items-start">
-                          <p className="px-2">{defaultItem.symbol}</p>
+                          <p className="px-2">{defaultItem?.symbol ?? ""}</p>
                         </div>
                         <p className="px-2 text-white-default">
-                          {defaultItem.tokenName}
+                          {defaultItem?.tokenName ?? ""}
                         </p>
                       </>
                     }

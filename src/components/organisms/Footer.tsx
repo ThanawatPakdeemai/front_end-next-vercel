@@ -16,7 +16,7 @@ import NakaMask3 from "@components/icons/Footer/NaKaMask3"
 import { useState } from "react"
 import TextLink from "@components/atoms/TextLink"
 import { ShakeIcon } from "@components/atoms/LigthShake"
-import { useRouter } from "next/router"
+import useGlobal from "@hooks/useGlobal"
 
 export const arrowMotion = {
   rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
@@ -76,10 +76,8 @@ const iconArrow = {
 }
 
 const Footer = () => {
-  const router = useRouter()
-  const openInNewTab = (url: string) => {
-    window.open(url, "_blank", "noreferrer")
-  }
+  const { openInNewTab } = useGlobal()
+
   const [isHover, setIsHover] = useState<boolean>(false)
   const handleMouseEnter = () => {
     setIsHover(true)
@@ -219,26 +217,31 @@ const Footer = () => {
         <div className="w-full rounded-xl bg-neutral-800 p-4 md:p-6 lg:w-[90%] lg:rounded-[20px]">
           <div className="md:flex">
             <div className="mx-auto grid max-w-xs items-center justify-center gap-2 text-white-primary md:mx-0 md:flex md:w-2/4 md:max-w-none md:gap-0 md:pr-[20px]">
-              <ButtonToggleIcon
-                handleClick={() => router.push("/become-developer")}
-                startIcon={<DesktopIcon />}
-                text="Become a Naka Devs"
-                className="z-[2] h-[50px] !w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
-                type="button"
-              />
+              <Link href="/become-developer">
+                <ButtonToggleIcon
+                  startIcon={<DesktopIcon />}
+                  text="Become a Naka Devs"
+                  className="z-[2] h-[50px] !w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
+                  type="button"
+                />
+              </Link>
               <h3 className="text-grey-neutral-04 md:w-[280px] md:pl-[30px]">
                 Join the industry&apos;s first comprehensive Play to Earn
                 ecosystem.
               </h3>
             </div>
             <div className="mx-auto mt-[20px] grid max-w-xs items-center justify-center gap-2 md:mx-0 md:mt-0 md:flex md:w-3/4 md:max-w-none md:gap-0">
-              <ButtonToggleIcon
-                handleClick={() => openInNewTab("https://main.nakamoto.games/")}
-                startIcon={<DollarPaperIcon />}
-                text="Become a Partner"
-                className="z-[2] h-[50px] !w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
-                type="button"
-              />
+              <Link href="/joinus">
+                <ButtonToggleIcon
+                  // handleClick={() =>
+                  //   openInNewTab("https://main.nakamoto.games/")
+                  // }
+                  startIcon={<DollarPaperIcon />}
+                  text="Become a Partner"
+                  className="z-[2] h-[50px] !w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
+                  type="button"
+                />
+              </Link>
               <h3 className="text-grey-neutral04 md:max-w-[300px] md:pl-[30px]">
                 Earn some serious cash promoting Nakamoto.Games
               </h3>

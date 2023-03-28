@@ -1,10 +1,14 @@
 import services from "@configs/axiosGlobalConfig"
 import { INotification } from "@feature/notification/interfaces/INotificationService"
 
-export const getNotificationById = (_playerId: string) =>
+export const getNotificationById = (_limit: number, _skip: number) =>
   new Promise<INotification[]>((resolve, reject) => {
+    const data = {
+      limit: _limit,
+      skip: _skip
+    }
     services
-      .get<INotification[]>(`/notification/${_playerId}`)
+      .post<INotification[]>(`/notification`, { ...data })
       .then((reponse) => resolve(reponse.data))
       .catch((error) => reject(error))
   })

@@ -30,6 +30,7 @@ export type IGetType =
   | "partner-game"
   | "partner-publisher"
   | "arcade-emporium"
+  | "nft-game"
   | "all"
 
 export type TRoomStatus =
@@ -394,6 +395,7 @@ export interface IGameSummary extends IGameBase {
   wallet_address: string
   room_status: TRoomStatus
   detail_used_items: IGameUsedItemsDetail
+  id_room: string
 }
 
 export interface IGameReport {

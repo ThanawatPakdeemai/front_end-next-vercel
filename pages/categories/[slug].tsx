@@ -93,6 +93,7 @@ export default function CatogoriesPageDetails() {
                 key={game.id}
                 menu={P2EHeaderMenu}
                 data={game}
+                href={`/play-to-earn-games/${game.path}`}
                 onHandleClick={() =>
                   onHandleClick("play-to-earn", game.path, game)
                 }

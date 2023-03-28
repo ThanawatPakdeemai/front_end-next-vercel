@@ -226,11 +226,6 @@ const RightMenuLogIn = () => {
           </Collapse>
         </div>
       </ClickAwayListener>
-      {/* {profile && (
-        <>
-          
-        </>
-      )} */}
     </div>
   )
 }

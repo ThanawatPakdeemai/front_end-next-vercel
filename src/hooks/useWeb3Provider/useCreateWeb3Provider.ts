@@ -127,7 +127,8 @@ const useCreateWeb3Provider = () => {
             method: "wallet_addEthereumChain",
             params: [getNetwork(_chainId)]
           })
-          successToast(MESSAGES.wallet_addEthereumChain)
+          successToast(`Switch to chain ${getNetwork(_chainId).chainName}`)
+          // successToast(MESSAGES.wallet_addEthereumChain)
           return {
             responseStatus: true,
             errorMsg: "",
@@ -320,7 +321,7 @@ const useCreateWeb3Provider = () => {
     if (walletAccounts) {
       onSetAddress(walletAccounts[0])
       if (profile) {
-        if (!profile.address) {
+        if (!profile.address || profile.address === "") {
           if (profile.email) {
             const data = {
               _email: profile.email,
@@ -392,7 +393,8 @@ const useCreateWeb3Provider = () => {
             method: "wallet_switchEthereumChain",
             params: [{ chainId: _chainId }] // chainId must be in hexadecimal numbers
           })
-          successToast(MESSAGES.wallet_switchEthereumChain)
+          // successToast(MESSAGES.wallet_switchEthereumChain)
+          successToast(`Switch to chain ${getNetwork(_chainId).chainName}`)
           const _newProvider = new providers.Web3Provider(_provider)
           const _signer = _newProvider.getSigner()
           if (_signer) {
@@ -420,6 +422,7 @@ const useCreateWeb3Provider = () => {
         }
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       checkNetwork,
       handleConnectWithMetamask,

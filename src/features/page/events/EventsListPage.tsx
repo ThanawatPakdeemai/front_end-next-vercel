@@ -27,24 +27,36 @@ const EventsListPage = () => {
   })
 
   useEffect(() => {
-    if (!fetchRef.current && eventListData) {
-      fetchRef.current = true
-      setTotalCount(eventListData.info.totalCount)
+    let load = false
+    if (!load) {
+      if (!fetchRef.current && eventListData) {
+        fetchRef.current = true
+        setTotalCount(eventListData.info.totalCount)
+      }
+    }
+    return () => {
+      load = true
     }
   }, [eventListData, setTotalCount])
 
   useEffect(() => {
-    if (!isPreviousData && eventListData) {
-      queryClient.prefetchQuery({
-        queryKey: ["events", type, page + 1],
-        queryFn: () =>
-          getEventList({
-            limit,
-            skip: page + 1,
-            search: "",
-            sort: type
-          })
-      })
+    let load = false
+    if (!load) {
+      if (!isPreviousData && eventListData) {
+        queryClient.prefetchQuery({
+          queryKey: ["events", type, page + 1],
+          queryFn: () =>
+            getEventList({
+              limit,
+              skip: page + 1,
+              search: "",
+              sort: type
+            })
+        })
+      }
+    }
+    return () => {
+      load = true
     }
   }, [eventListData, isPreviousData, page, queryClient, type, limit])
 

@@ -4,13 +4,11 @@ import dynamic from "next/dynamic"
 
 const EventLayout = dynamic(
   () => import("@components/templates/EventsListLayout"),
-  { suspense: true }
+  { suspense: true, ssr: false }
 )
 const EventListPage = dynamic(
   () => import("@feature/page/events/EventsListPage"),
-  {
-    suspense: true
-  }
+  { suspense: true, ssr: false }
 )
 
 export default function Events() {

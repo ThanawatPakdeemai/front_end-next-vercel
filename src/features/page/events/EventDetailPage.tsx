@@ -40,11 +40,17 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
   )
 
   useEffect(() => {
-    if (eventDetailIsLoading && (topScoreIsLoading || leaderBoardIsLoading)) {
-      setOpen()
-    } else {
-      setCrumbData({ _id: _eventId, title: eventDetailData?.data[0].name })
-      setClose()
+    let load = false
+    if (!load) {
+      if (eventDetailIsLoading && (topScoreIsLoading || leaderBoardIsLoading)) {
+        setOpen()
+      } else {
+        setCrumbData({ _id: _eventId, title: eventDetailData?.data[0].name })
+        setClose()
+      }
+    }
+    return () => {
+      load = true
     }
   }, [
     _eventId,

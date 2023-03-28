@@ -5,11 +5,11 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 
 const EventDetailLayout = dynamic(
   () => import("@components/templates/EventDetailLayout"),
-  { suspense: true }
+  { suspense: true, ssr: false }
 )
 const EventDetailPage = dynamic(
   () => import("@feature/page/events/EventDetailPage"),
-  { suspense: true }
+  { suspense: true, ssr: false }
 )
 
 export default function Event() {

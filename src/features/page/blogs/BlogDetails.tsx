@@ -41,11 +41,17 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
   }, [isLoading, setOpen, setClose])
 
   useEffect(() => {
-    if (getBlogDetails) {
-      setCrumbData({
-        title: getBlogDetails.title,
-        _id: _blogId
-      })
+    let load = false
+    if (!load) {
+      if (getBlogDetails) {
+        setCrumbData({
+          title: getBlogDetails.title,
+          _id: _blogId
+        })
+      }
+    }
+    return () => {
+      load = true
     }
   }, [getBlogDetails, setCrumbData, _blogId])
 

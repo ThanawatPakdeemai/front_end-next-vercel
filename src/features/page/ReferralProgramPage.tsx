@@ -100,17 +100,8 @@ const ReferralProgramPage = () => {
           })
       })
     }
-  }, [
-    page,
-    limitPage,
-    isPreviousData,
-    getReferralsData,
-    queryClient,
-    sortType.sort,
-    sortType.sort_value,
-    profile
-  ])
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, limitPage, sortType.sort, sortType.sort_value])
   return (
     <>
       {hydrated && (

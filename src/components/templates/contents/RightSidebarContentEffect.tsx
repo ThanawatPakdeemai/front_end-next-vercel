@@ -9,7 +9,15 @@ const RightSidebarContentEffect = ({
 }: IContentTemplateProps) => {
   const { createParticle } = useTweenEffect(600, 300, 100, -300)
   useEffect(() => {
-    createParticle()
+    let load = false
+
+    if (!load) {
+      createParticle()
+    }
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createParticle])
 

@@ -43,7 +43,7 @@ const MenuItemCustom = ({
     >
       <Link
         href={props.href ?? ""}
-        className="flex items-center"
+        className="flex w-full items-center"
       >
         <ListItemIcon>{icon}</ListItemIcon>
         <div className="flex w-full items-center justify-between">

@@ -68,29 +68,61 @@ const ProfileContent = () => {
   }, [isError, errorToast, router])
 
   useEffect(() => {
-    if (!fetchRef.current && getProfileInfo && !isFetching) {
-      fetchRef.current = true
-      setTotalCount(getProfileInfo.data.info.totalCount)
+    let load = false
+
+    if (!load) {
+      if (!fetchRef.current && getProfileInfo && !isFetching) {
+        fetchRef.current = true
+        setTotalCount(getProfileInfo.data.info.totalCount)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [getProfileInfo, isFetching])
 
   useEffect(() => {
-    if (profileDataFromQuery) {
-      setGetProfileInfo(profileDataFromQuery)
-      setEmailPlayer(profileDataFromQuery.data.email)
+    let load = false
+
+    if (!load) {
+      if (profileDataFromQuery) {
+        setGetProfileInfo(profileDataFromQuery)
+        setEmailPlayer(profileDataFromQuery.data.email)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [profileDataFromQuery])
 
   useEffect(() => {
-    if (!isPreviousData && idPlayer) {
-      setOpen()
-      refetchGetProfile().then(() => setClose())
+    let load = false
+
+    if (!load) {
+      if (!isPreviousData && idPlayer) {
+        setOpen()
+        refetchGetProfile().then(() => setClose())
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [idPlayer, isPreviousData, page, refetchGetProfile, setClose, setOpen])
 
   useEffect(() => {
-    if (player_id) {
-      setIdPlayer(player_id as string)
+    let load = false
+
+    if (!load) {
+      if (player_id) {
+        setIdPlayer(player_id as string)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [player_id])
 

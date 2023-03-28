@@ -80,7 +80,9 @@ const FavouriteGamesPage = () => {
   }
 
   useEffect(() => {
-    fetchGameFavorite()
+    let load = false
+
+    if (!load) fetchGameFavorite()
     // let load = true
     // if (load) {
     //   setLoading(true)
@@ -88,6 +90,10 @@ const FavouriteGamesPage = () => {
     // return () => {
     //   load = false
     // }
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     pageSize,
@@ -100,14 +106,22 @@ const FavouriteGamesPage = () => {
   ])
 
   useEffect(() => {
-    if (!fetchRef.current && gameFavouriteState) {
-      fetchRef.current = true
-      setTotalCount(gameFavouriteState.length)
+    let load = false
+
+    if (!load) {
+      if (!fetchRef.current && gameFavouriteState) {
+        fetchRef.current = true
+        setTotalCount(gameFavouriteState.length)
+      }
+      clearSearch()
+      clearCategory()
+      clearGameItem()
+      clearDevice()
     }
-    clearSearch()
-    clearCategory()
-    clearGameItem()
-    clearDevice()
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     clearCategory,

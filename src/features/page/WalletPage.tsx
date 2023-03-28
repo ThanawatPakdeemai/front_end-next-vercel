@@ -151,8 +151,14 @@ export default function WalletPage() {
    * @description set disabled button
    */
   useEffect(() => {
+    let load = false
+
     if (!statusWalletConnected.responseStatus) return
-    setDisabled(isDisabledButton())
+    if (!load) setDisabled(isDisabledButton())
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, tabChainList, statusWalletConnected])
 
@@ -160,24 +166,34 @@ export default function WalletPage() {
    * @description Set type tab by router.query
    */
   useEffect(() => {
-    const _currentChain = CHAIN_SUPPORT.find((item) => item.chainId === chainId)
-    if (_currentChain) {
-      setTabChainList(_currentChain as IChainList)
+    let load = false
+
+    if (!load) {
+      const _currentChain = CHAIN_SUPPORT.find(
+        (item) => item.chainId === chainId
+      )
+      if (_currentChain) {
+        setTabChainList(_currentChain as IChainList)
+      }
+
+      if (!statusWalletConnected.responseStatus) return
+      if (token === "NAKA") {
+        // setType("NAKA")
+        const _chainTarget = CHAIN_SUPPORT.find((item) => item.link === "NAKA")
+        setTabChainList(_chainTarget as IChainList)
+        setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX)
+        router.push("?token=NAKA")
+      } else if (token === "BNB") {
+        // setType("BNB")
+        const _chainTarget = CHAIN_SUPPORT.find((item) => item.link === "BNB")
+        setTabChainList(_chainTarget as IChainList)
+        setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX_BNB)
+        router.push("?token=BNB")
+      }
     }
 
-    if (!statusWalletConnected.responseStatus) return
-    if (token === "NAKA") {
-      // setType("NAKA")
-      const _chainTarget = CHAIN_SUPPORT.find((item) => item.link === "NAKA")
-      setTabChainList(_chainTarget as IChainList)
-      setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX)
-      router.push("?token=NAKA")
-    } else if (token === "BNB") {
-      // setType("BNB")
-      const _chainTarget = CHAIN_SUPPORT.find((item) => item.link === "BNB")
-      setTabChainList(_chainTarget as IChainList)
-      setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX_BNB)
-      router.push("?token=BNB")
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token, chainId, tabChainList])

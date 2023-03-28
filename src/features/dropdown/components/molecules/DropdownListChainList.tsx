@@ -41,8 +41,16 @@ IProp) => {
   }
 
   React.useEffect(() => {
-    if (list && list.length > 0) {
-      setDefaultItem(list[0])
+    let load = false
+
+    if (!load) {
+      if (list && list.length > 0) {
+        setDefaultItem(list[0])
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [list, setDefaultItem])
 

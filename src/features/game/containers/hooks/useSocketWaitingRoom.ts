@@ -85,23 +85,39 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
   }
 
   useEffect(() => {
-    // check room time out
-    socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_TIMEOUT, () => {
-      if (gameData) {
-        errorToast(MESSAGES["room-expried"])
-        router.push(`/${router.query.typeGame}/${gameData.path}/roomlist`)
-      }
-    })
+    let load = false
+
+    if (!load) {
+      // check room time out
+      socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_TIMEOUT, () => {
+        if (gameData) {
+          errorToast(MESSAGES["room-expried"])
+          router.push(`/${router.query.typeGame}/${gameData.path}/roomlist`)
+        }
+      })
+    }
+
+    return () => {
+      load = true
+    }
   }, [errorToast, gameData, router, socketWaitingRoom])
 
   useEffect(() => {
-    // check owner kick
-    socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_KICK, () => {
-      if (gameData) {
-        errorToast(MESSAGES["you-were-kicked"])
-        router.push(`/${router.query.typeGame}/${gameData.path}/roomlist`)
-      }
-    })
+    let load = false
+
+    if (!load) {
+      // check owner kick
+      socketWaitingRoom.on(EVENTS.LISTENERS.WAITING_ROOM_KICK, () => {
+        if (gameData) {
+          errorToast(MESSAGES["you-were-kicked"])
+          router.push(`/${router.query.typeGame}/${gameData.path}/roomlist`)
+        }
+      })
+    }
+
+    return () => {
+      load = true
+    }
   }, [errorToast, gameData, router, socketWaitingRoom])
 
   /**
@@ -291,11 +307,23 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
   )
 
   useEffect(() => {
-    getPlayersCheckRoomRollbackListen()
+    let load = false
+
+    if (!load) getPlayersCheckRoomRollbackListen()
+
+    return () => {
+      load = true
+    }
   }, [getPlayersCheckRoomRollbackListen, isConnected])
 
   useEffect(() => {
-    getPlayersCheckItemOfPlayerListen()
+    let load = false
+
+    if (!load) getPlayersCheckItemOfPlayerListen()
+
+    return () => {
+      load = true
+    }
   }, [getPlayersCheckItemOfPlayerListen, isConnected])
 
   return {

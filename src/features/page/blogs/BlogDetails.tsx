@@ -30,10 +30,18 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
   const { getPopularTagsData } = useGetPopularTags()
 
   useEffect(() => {
-    if (isLoading) {
-      setOpen()
-    } else {
-      setClose()
+    let load = false
+
+    if (!load) {
+      if (isLoading) {
+        setOpen()
+      } else {
+        setClose()
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [isLoading, setOpen, setClose])
 

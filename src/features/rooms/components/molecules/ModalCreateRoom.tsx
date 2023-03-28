@@ -109,21 +109,37 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
   }
 
   useEffect(() => {
-    if (profileStore && profileStore.data) {
-      setProfile(profileStore.data)
+    let load = false
+
+    if (!load) {
+      if (profileStore && profileStore.data) {
+        setProfile(profileStore.data)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [profileStore])
 
   useEffect(() => {
-    if (gameData) {
-      if (gameData.map && gameData.type_code === "multi_02") {
-        setMaps(gameData.map)
+    let load = false
+
+    if (!load) {
+      if (gameData) {
+        if (gameData.map && gameData.type_code === "multi_02") {
+          setMaps(gameData.map)
+        }
+        unstable_batchedUpdates(() => {
+          setCount(gameData.min_player || 2)
+          setMin(gameData.min_player || 2)
+          setMax(gameData.max_players || 8)
+        })
       }
-      unstable_batchedUpdates(() => {
-        setCount(gameData.min_player || 2)
-        setMin(gameData.min_player || 2)
-        setMax(gameData.max_players || 8)
-      })
+    }
+
+    return () => {
+      load = true
     }
   }, [gameData, setCount, setMax, setMin])
 

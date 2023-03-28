@@ -39,22 +39,30 @@ export default function PublisherDetails() {
   const { slug } = router.query
 
   useEffect(() => {
-    const filterData = {
-      "limit": limit,
-      "skip": page,
-      "sort": "slug",
-      "search": searchDropdown,
-      "active": true,
-      "search_option": "name",
-      "genres_filter": categoryDropdown
-    }
-    publisherGamePartner(slug, filterData).then((res) => {
-      if (res) {
-        const { data, info } = res
-        setGameFilter(data.data)
-        setTotalCount(info ? info.totalCount : 1)
+    let load = false
+
+    if (!load) {
+      const filterData = {
+        "limit": limit,
+        "skip": page,
+        "sort": "slug",
+        "search": searchDropdown,
+        "active": true,
+        "search_option": "name",
+        "genres_filter": categoryDropdown
       }
-    })
+      publisherGamePartner(slug, filterData).then((res) => {
+        if (res) {
+          const { data, info } = res
+          setGameFilter(data.data)
+          setTotalCount(info ? info.totalCount : 1)
+        }
+      })
+    }
+
+    return () => {
+      load = true
+    }
   }, [categoryDropdown, searchDropdown, page, limit, slug])
 
   return (

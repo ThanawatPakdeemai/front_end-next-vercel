@@ -57,8 +57,14 @@ const useNotificationController = () => {
   ])
 
   useEffect(() => {
+    let load = false
+
     if (isLoadingNotification) return
-    fetchNotification()
+    if (!load) fetchNotification()
+
+    return () => {
+      load = true
+    }
   }, [
     dataNotification,
     isLoadingNotification,
@@ -108,8 +114,16 @@ const useNotificationController = () => {
 
   // Check if count is 0, then disabled button
   useEffect(() => {
-    if (count === 0) {
-      setButtonStatus(true)
+    let load = false
+
+    if (!load) {
+      if (count === 0) {
+        setButtonStatus(true)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [count])
 

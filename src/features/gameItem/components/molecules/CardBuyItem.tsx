@@ -18,6 +18,7 @@ import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
 import useGlobal from "@hooks/useGlobal"
+import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
 
 interface ICardBuyItemProp {
   gameObject: IGame
@@ -59,56 +60,78 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
   }, [gameItemList, itemSelected])
 
   const qtyItemSelected = useMemo(() => {
-    if (itemSelect) {
-      return itemSelect.qty
-    }
-    if (itemSelected) {
-      return itemSelected.qty
-    }
-    if (getListItemDefalut) {
-      const dataItem = getListItemDefalut as IGameItemListData
-      setTotalPrice(
-        Number(
-          Helper.formatNumber((dataItem?.qty ?? 0) * (dataItem?.price ?? 0), {
-            maximumFractionDigits: 4
-          })
-        )
-      )
-      onSetGameItemSelectd(dataItem)
-      return dataItem?.qty ?? 0
-    }
-    return 0
-  }, [getListItemDefalut, itemSelect, itemSelected, onSetGameItemSelectd])
-
-  const priceItemSelected = useMemo(() => {
-    if (itemSelect) {
-      return itemSelect.price
-    }
-    if (itemSelected) {
-      return itemSelected.price
-    }
-    return 0
-  }, [itemSelect, itemSelected])
-
-  const getTotalPriceItemSelectProfile = useCallback(async () => {
-    if (itemSelected) {
-      if (price && qtyItemSelected) {
+    if (profile) {
+      if (itemSelect) {
+        return itemSelect.qty
+      }
+      if (itemSelected) {
+        return itemSelected.qty
+      }
+      if (getListItemDefalut) {
+        const dataItem = getListItemDefalut as IGameItemListData
         setTotalPrice(
           Number(
-            Helper.formatNumber(qtyItemSelected * priceItemSelected, {
+            Helper.formatNumber((dataItem?.qty ?? 0) * (dataItem?.price ?? 0), {
               maximumFractionDigits: 4
             })
           )
         )
+        onSetGameItemSelectd(dataItem)
+        return dataItem?.qty ?? 0
       }
     }
-  }, [itemSelected, priceItemSelected, qtyItemSelected, price])
+    return 0
+  }, [
+    getListItemDefalut,
+    itemSelect,
+    itemSelected,
+    onSetGameItemSelectd,
+    profile
+  ])
+
+  const priceItemSelected = useMemo(() => {
+    if (profile) {
+      if (itemSelect) {
+        return itemSelect.price
+      }
+      if (itemSelected) {
+        return itemSelected.price
+      }
+    }
+    return 0
+  }, [itemSelect, itemSelected, profile])
+
+  const getTotalPriceItemSelectProfile = useCallback(async () => {
+    if (profile) {
+      if (itemSelected) {
+        if (price && qtyItemSelected) {
+          setTotalPrice(
+            Number(
+              Helper.formatNumber(qtyItemSelected * priceItemSelected, {
+                maximumFractionDigits: 4
+              })
+            )
+          )
+        } else {
+          setTotalPrice(
+            Number(
+              Helper.formatNumber(qtyItemSelected * priceItemSelected, {
+                maximumFractionDigits: 4
+              })
+            )
+          )
+        }
+      }
+    }
+  }, [profile, itemSelected, price, qtyItemSelected, priceItemSelected])
 
   useEffect(() => {
     let load = false
+
     if (!load) {
       if (itemSelected) getTotalPriceItemSelectProfile()
     }
+
     return () => {
       load = true
     }
@@ -122,6 +145,7 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
   }
   useEffect(() => {
     let load = false
+
     if (!load) {
       if (gameObject) {
         const item_name =
@@ -132,6 +156,7 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
         }
       }
     }
+
     return () => {
       load = true
     }
@@ -252,13 +277,17 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
                 {profile ? (
                   buttonInToGame
                 ) : (
-                  <ButtonLink
-                    text={t("please_login")}
-                    href="/"
-                    icon={<LogoutIcon />}
-                    size="medium"
-                    color="secondary"
-                    className="w-full whitespace-nowrap"
+                  <RightMenuNotLogIn
+                    button={
+                      <ButtonLink
+                        text={t("please_login")}
+                        href=""
+                        icon={<LogoutIcon />}
+                        size="medium"
+                        color="secondary"
+                        className="w-full whitespace-nowrap"
+                      />
+                    }
                   />
                 )}
               </div>

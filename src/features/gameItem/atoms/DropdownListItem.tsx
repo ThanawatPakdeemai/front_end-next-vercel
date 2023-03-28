@@ -43,8 +43,16 @@ const DropdownListItem = ({
   }
 
   React.useEffect(() => {
-    if (itemSelected) {
-      setDefaultItem(itemSelected)
+    let load = false
+
+    if (!load) {
+      if (itemSelected) {
+        setDefaultItem(itemSelected)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [itemSelected, setDefaultItem])
 

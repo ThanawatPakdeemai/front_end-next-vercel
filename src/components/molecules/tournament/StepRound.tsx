@@ -77,7 +77,9 @@ const StepRound = () => {
           max={datas.length}
         />
       </div>
-      <div className={`mt-[12px] flex  items-center justify-between  `}>
+      <div
+        className={`mt-[12px] flex  items-center justify-between overflow-x-auto `}
+      >
         {datas.map((item, index) => (
           <div className="m-2 flex h-auto w-full flex-col">
             <div

@@ -24,7 +24,15 @@ const StoryLobby = () => {
   const route = useRouter()
   const { errorToast } = useToast()
   useEffect(() => {
-    if (data) setGameData(data)
+    let load = false
+
+    if (!load) {
+      if (data) setGameData(data)
+    }
+
+    return () => {
+      load = true
+    }
   }, [data])
 
   /**
@@ -57,7 +65,7 @@ const StoryLobby = () => {
       /**
        * @description Send value play time to API before play game
        */
-      if (!gameDataCount.status) {
+      if (!gameDataCount?.status) {
         errorToast(MESSAGES["room-id-not-found"])
       }
       const room_id = null

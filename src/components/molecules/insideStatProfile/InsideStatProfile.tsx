@@ -26,10 +26,18 @@ const InsideStatProfile = ({ type, barColor, exp, energy }: IProps) => {
   }
 
   useEffect(() => {
-    if (type === "exp" && exp) {
-      refetchValue(exp)
-    } else if (type === "energy" && energy) {
-      refetchValue(energy)
+    let load = false
+
+    if (!load) {
+      if (type === "exp" && exp) {
+        refetchValue(exp)
+      } else if (type === "energy" && energy) {
+        refetchValue(energy)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [type, exp, energy])
 

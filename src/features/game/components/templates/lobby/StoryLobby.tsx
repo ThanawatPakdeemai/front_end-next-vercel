@@ -24,7 +24,15 @@ const StoryLobby = () => {
   const route = useRouter()
   const { errorToast } = useToast()
   useEffect(() => {
-    if (data) setGameData(data)
+    let load = false
+
+    if (!load) {
+      if (data) setGameData(data)
+    }
+
+    return () => {
+      load = true
+    }
   }, [data])
 
   /**

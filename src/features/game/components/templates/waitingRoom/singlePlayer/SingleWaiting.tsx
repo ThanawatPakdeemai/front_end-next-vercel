@@ -37,25 +37,32 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
   )
 
   useEffect(() => {
-    let load = true
-    if (load) fetchPlayers("in")
+    let load = false
+
+    if (!load) fetchPlayers("in")
+
     return () => {
-      load = false
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    router.beforePopState(({ as }) => {
-      if (as !== router.asPath) {
-        // Will run when leaving the current page; on back/forward actions
-        // out room this game
-        fetchPlayers("out")
-      }
-      return true
-    })
+    let load = false
+
+    if (!load) {
+      router.beforePopState(({ as }) => {
+        if (as !== router.asPath) {
+          // Will run when leaving the current page; on back/forward actions
+          // out room this game
+          fetchPlayers("out")
+        }
+        return true
+      })
+    }
 
     return () => {
+      load = true
       router.beforePopState(() => true)
     }
   }, [fetchPlayers, router])

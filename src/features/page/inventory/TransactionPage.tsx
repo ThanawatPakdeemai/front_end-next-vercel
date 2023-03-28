@@ -86,29 +86,37 @@ const TransactionPage = ({ profile }: IProp) => {
   }
 
   useEffect(() => {
-    const fetchTransaction = async () => {
-      if (profile) {
-        await getTransHistory({
-          _playerId: profile && profile.id ? profile.id : "",
-          _type: typeList,
-          _page: page,
-          _limit: limit,
-          _sort:
-            sortTime || sortAmount
-              ? { "current_time": sortTime, "amount": sortAmount }
-              : undefined
-        }).then((res) => {
-          if (res.data) {
-            setTxHistory(res.data)
-          }
-          if (res.info) {
-            setTotalCount(res.info.totalCount)
-          }
-        })
+    let load = false
+
+    if (!load) {
+      const fetchTransaction = async () => {
+        if (profile) {
+          await getTransHistory({
+            _playerId: profile && profile.id ? profile.id : "",
+            _type: typeList,
+            _page: page,
+            _limit: limit,
+            _sort:
+              sortTime || sortAmount
+                ? { "current_time": sortTime, "amount": sortAmount }
+                : undefined
+          }).then((res) => {
+            if (res.data) {
+              setTxHistory(res.data)
+            }
+            if (res.info) {
+              setTotalCount(res.info.totalCount)
+            }
+          })
+        }
       }
+
+      fetchTransaction()
     }
 
-    fetchTransaction()
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, page, sortAmount, sortTime, typeList])
 

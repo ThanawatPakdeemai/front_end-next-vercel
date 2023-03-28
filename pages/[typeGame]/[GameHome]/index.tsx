@@ -58,10 +58,12 @@ export default function GameLobby() {
 
   useEffect(() => {
     let load = false
+
     if (!load) {
       if (!gameData) return
       onSetGameData(gameData)
     }
+
     return () => {
       load = true
     }

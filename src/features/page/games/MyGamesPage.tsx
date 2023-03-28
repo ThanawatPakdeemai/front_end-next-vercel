@@ -37,27 +37,43 @@ const MyGamesPage = () => {
   } = useGetMyGame()
 
   useEffect(() => {
-    // totalCount
-    if (!fetchRef.current && myGamesData) {
-      fetchRef.current = true
-      setTotalCount(myGamesData.info.totalCount)
+    let load = false
+
+    if (!load) {
+      // totalCount
+      if (!fetchRef.current && myGamesData) {
+        fetchRef.current = true
+        setTotalCount(myGamesData.info.totalCount)
+      }
+    }
+
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [myGamesData])
 
   useEffect(() => {
-    if (!myGamesIsPreviousData && myGamesData) {
-      queryClient.prefetchQuery({
-        queryKey: ["games", type, page + 1],
-        queryFn: () =>
-          getMyGameNFT({
-            ...defaultBody,
-            nftgame: true
-          }),
-        staleTime: Infinity
-      })
+    let load = false
+
+    if (!load) {
+      if (!myGamesIsPreviousData && myGamesData) {
+        queryClient.prefetchQuery({
+          queryKey: ["games", type, page + 1],
+          queryFn: () =>
+            getMyGameNFT({
+              ...defaultBody,
+              nftgame: true
+            }),
+          staleTime: Infinity
+        })
+      }
+      clearGameData()
     }
-    clearGameData()
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clearGameData, myGamesData, myGamesIsPreviousData, page, queryClient])
 

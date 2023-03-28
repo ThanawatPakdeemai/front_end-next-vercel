@@ -48,27 +48,35 @@ const EarnRewardPage = () => {
   const onClaimAll = () => warnToast("Claim all is not available yet")
 
   useEffect(() => {
-    if (earnRewardData && allGameData && earnRewardData.data.length > 0) {
-      setRewardList([])
-      earnRewardData.data.map(async (item) => {
-        const game = allGameData.data.find((data) => data.id === item.game_id)
-        if (game) {
-          setRewardList((oldArray) => {
-            if (oldArray) {
-              return [
-                ...oldArray,
-                {
-                  ...item,
-                  game_item_name: game?.item?.[0]?.name,
-                  game_item_image: game?.item?.[0]?.image,
-                  game_name: game?.name,
-                  game_image: game?.image_category_list
-                }
-              ]
-            }
-          })
-        }
-      })
+    let load = false
+
+    if (!load) {
+      if (earnRewardData && allGameData && earnRewardData.data.length > 0) {
+        setRewardList([])
+        earnRewardData.data.map(async (item) => {
+          const game = allGameData.data.find((data) => data.id === item.game_id)
+          if (game) {
+            setRewardList((oldArray) => {
+              if (oldArray) {
+                return [
+                  ...oldArray,
+                  {
+                    ...item,
+                    game_item_name: game?.item?.[0]?.name,
+                    game_item_image: game?.item?.[0]?.image,
+                    game_name: game?.name,
+                    game_image: game?.image_category_list
+                  }
+                ]
+              }
+            })
+          }
+        })
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [allGameData, earnRewardData])
 

@@ -60,29 +60,37 @@ export default function AllTransactionTable({ profile }: IProp) {
   const gridTemplateColumns: string = "170px 150px 130px 80px 1fr"
 
   useEffect(() => {
-    const fetchHistory = async () => {
-      if (profile) {
-        await getTransHistory({
-          _playerId: profile && profile.id ? profile.id : "",
-          _type: Event === "all" ? allTypes : Event,
-          _limit: limit,
-          _page: page,
-          _sort:
-            sortTime || sortAmount
-              ? { "current_time": sortTime, "amount": sortAmount }
-              : undefined // sort: {}
-        }).then((res) => {
-          // res.status === 200 -> ok
-          if (res.data) {
-            setTxHistory(res.data)
-          }
-          if (res.info) {
-            setTotalCount(res.info.totalCount)
-          }
-        })
+    let load = false
+
+    if (!load) {
+      const fetchHistory = async () => {
+        if (profile) {
+          await getTransHistory({
+            _playerId: profile && profile.id ? profile.id : "",
+            _type: Event === "all" ? allTypes : Event,
+            _limit: limit,
+            _page: page,
+            _sort:
+              sortTime || sortAmount
+                ? { "current_time": sortTime, "amount": sortAmount }
+                : undefined // sort: {}
+          }).then((res) => {
+            // res.status === 200 -> ok
+            if (res.data) {
+              setTxHistory(res.data)
+            }
+            if (res.info) {
+              setTotalCount(res.info.totalCount)
+            }
+          })
+        }
       }
+      fetchHistory()
     }
-    fetchHistory()
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, page, sortTime, Event, typeCheck, sortAmount])
 

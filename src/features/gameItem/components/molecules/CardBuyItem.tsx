@@ -114,9 +114,11 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
 
   useEffect(() => {
     let load = false
+
     if (!load) {
       if (itemSelected) getTotalPriceItemSelectProfile()
     }
+
     return () => {
       load = true
     }
@@ -130,6 +132,7 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
   }
   useEffect(() => {
     let load = false
+
     if (!load) {
       if (gameObject) {
         const item_name =
@@ -140,6 +143,7 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
         }
       }
     }
+
     return () => {
       load = true
     }

@@ -7,7 +7,7 @@ const CardLinkTemplate = ({ children }: { children: ReactNode }) => (
     xs={12}
     sm={12}
     md={4}
-    className="flex-[1_1_50%] sm:flex-auto"
+    className="flex-[1_1_100%] sm:flex-auto"
   >
     {children}
   </Grid>

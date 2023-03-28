@@ -2,7 +2,7 @@ import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 import {
   IFilterGamesByKey,
   IGame,
@@ -50,6 +50,8 @@ const useGlobal = (
     nftgame: _nftgame ?? false
   }
 
+  const isCancelled = React.useRef(false)
+
   // hook
   const { onSetGameData, onSetGamePartnersData } = useGameStore()
   const { getAllTokenAddressInContract, getBNBContract } =
@@ -82,14 +84,12 @@ const useGlobal = (
    * @description Set profile
    */
   useEffect(() => {
-    let load = false
-
-    if (!load) {
+    if (!isCancelled.current) {
       setStateProfile(profile)
     }
 
     return () => {
-      load = true
+      isCancelled.current = true
     }
   }, [profile])
 
@@ -97,14 +97,12 @@ const useGlobal = (
    * @description Set hydrate to fix error "Text content does not match server-rendered HTML"
    */
   useEffect(() => {
-    let load = false
-
-    if (!load) {
+    if (!isCancelled.current) {
       setHydrated(true)
     }
 
     return () => {
-      load = true
+      isCancelled.current = true
     }
   }, [])
 
@@ -263,16 +261,15 @@ const useGlobal = (
       //   allContract.push(contract)
       // }
     }
-    await Promise.all(
-      allContract.map(async (contract) => {
-        const result = await getAllTokenInfoByContractAddress(
-          contract,
-          contract.address,
-          profile ? profile.address : ""
-        )
-        allTokenSupported.push(result)
-      })
-    )
+    allContract.map(async (contract) => {
+      const result = await getAllTokenInfoByContractAddress(
+        contract,
+        contract.address,
+        profile ? profile.address : ""
+      )
+      allTokenSupported.push(result)
+    })
+    await Promise.all(allTokenSupported)
     const allTokenSupportedSorted = allTokenSupported.sort((a, b) => {
       if (a.symbol < b.symbol) {
         return -1
@@ -296,16 +293,15 @@ const useGlobal = (
       const contract = new ethers.Contract(tokens[index], ERC20Abi, _web3)
       allContract.push(contract)
     }
-    await Promise.all(
-      allContract.map(async (contract) => {
-        const result = await getNAKATokenInfo(
-          contract,
-          contract.address,
-          profile ? profile.address : ""
-        )
-        allTokenSupported.push(result)
-      })
-    )
+    allContract.map(async (contract) => {
+      const result = await getNAKATokenInfo(
+        contract,
+        contract.address,
+        profile ? profile.address : ""
+      )
+      allTokenSupported.push(result)
+    })
+    await Promise.all(allTokenSupported)
     const allTokenSupportedSorted = allTokenSupported.sort((a, b) => {
       if (a.symbol < b.symbol) {
         return -1
@@ -323,9 +319,7 @@ const useGlobal = (
    * @description Fetch all token supported
    */
   useEffect(() => {
-    let load = false
-
-    if (!load) {
+    if (!isCancelled.current) {
       if (signer && accounts) {
         if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
           fetchAllTokenSupported()
@@ -338,7 +332,7 @@ const useGlobal = (
     }
 
     return () => {
-      load = true
+      isCancelled.current = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, signer, fetchAllTokenSupported, fetchNAKAToken])
@@ -393,9 +387,7 @@ const useGlobal = (
   }
 
   useEffect(() => {
-    let load = false
-
-    if (!load) {
+    if (!isCancelled.current) {
       if (router.asPath.includes("land")) {
         setMarketType("nft_land")
       } else if (router.asPath.includes("building")) {
@@ -412,7 +404,7 @@ const useGlobal = (
     }
 
     return () => {
-      load = true
+      isCancelled.current = true
     }
   }, [router.asPath])
 

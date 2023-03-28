@@ -100,6 +100,14 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
             })
           )
         )
+      } else {
+        setTotalPrice(
+          Number(
+            Helper.formatNumber(qtyItemSelected * priceItemSelected, {
+              maximumFractionDigits: 4
+            })
+          )
+        )
       }
     }
   }, [itemSelected, priceItemSelected, qtyItemSelected, price])

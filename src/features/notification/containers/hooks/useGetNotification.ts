@@ -1,20 +1,35 @@
 import { useQuery } from "@tanstack/react-query"
 import { getNotificationById } from "../services/notification.service"
-// import { INotification } from "../../interfaces/INotificationService"
 
 interface IProps {
-  player_id: string
+  limit: number
+  skip: number
+  player_id?: string
 }
-const useGetNotification = ({ player_id }: IProps) => {
-  const { data, isLoading, isFetching, isPreviousData, isError, error } =
-    useQuery({
-      queryKey: ["notificationPage", player_id],
-      queryFn: () => getNotificationById(player_id),
-      keepPreviousData: true,
-      staleTime: Infinity,
-      enabled: !!player_id
-    })
-  return { data, isLoading, isFetching, isPreviousData, isError, error }
+const useGetNotification = ({ player_id, limit, skip }: IProps) => {
+  const {
+    data: dataNotification,
+    isLoading: isLoadingNotification,
+    isFetching: isFetchingNotification,
+    isPreviousData: isPreviousDataNotification,
+    isError: isErrorNotification,
+    error: errorNotification
+  } = useQuery({
+    queryKey: ["notificationPage", limit, skip],
+    queryFn: () => getNotificationById(limit, skip),
+    keepPreviousData: true,
+    staleTime: Infinity,
+    enabled: !!player_id
+  })
+
+  return {
+    dataNotification,
+    isLoadingNotification,
+    isFetchingNotification,
+    isPreviousDataNotification,
+    isErrorNotification,
+    errorNotification
+  }
 }
 
 export default useGetNotification

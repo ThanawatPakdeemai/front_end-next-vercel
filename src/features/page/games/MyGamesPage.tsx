@@ -6,11 +6,11 @@ import { useQueryClient } from "@tanstack/react-query"
 import React, { memo, useEffect, useRef } from "react"
 import { v4 as uuid } from "uuid"
 import useGameStore from "@stores/game/index"
-import GameCard from "@feature/game/containers/components/molecules/GameCard"
 import useGlobal from "@hooks/useGlobal"
 import { IGetType } from "@feature/game/interfaces/IGameService"
 import useGetMyGame from "@feature/game/containers/hooks/useGetMyGame"
 import NoData from "@components/molecules/NoData"
+import GameCard from "@feature/game/components/molecules/GameCard"
 
 const MyGamesPage = () => {
   const type: IGetType = "play-to-earn-games"
@@ -20,8 +20,10 @@ const MyGamesPage = () => {
     page,
     totalCount,
     setTotalCount,
-    onHandleClick,
-    defaultBody
+    onHandleSetGameStore,
+    getTypeGamePathFolder,
+    defaultBody,
+    isRedirectRoomlist
   } = useGlobal()
   const fetchRef = useRef(false)
   const queryClient = useQueryClient()
@@ -71,8 +73,11 @@ const MyGamesPage = () => {
                 key={game.id}
                 menu={P2EHeaderMenu}
                 data={game}
+                href={`/${getTypeGamePathFolder(game)}-games/${
+                  game.path
+                }${isRedirectRoomlist(game).toString()}`}
                 onHandleClick={() =>
-                  onHandleClick("play-to-earn", game.path, game)
+                  onHandleSetGameStore(getTypeGamePathFolder(game), game)
                 }
               />
             ))

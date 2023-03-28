@@ -21,15 +21,16 @@ import useProfileStore from "@stores/profileStore"
 import useTable from "@feature/table/containers/hooks/useTable"
 import TableNodata from "@feature/transaction/components/atoms/TableNodata"
 import { IHistory } from "@feature/history/interfaces/IHistoryService"
-import { validTypeGames } from "@pages/[typeGame]"
+import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
+import { v4 as uuid } from "uuid"
 
 const HistoryTable = () => {
   const profile = useProfileStore((state) => state.profile.data)
   // Hooks
   const { pager, hydrated } = useGlobal()
-  const { HistoryTableHead, onHandleView } = useHistoryController()
+  const { HistoryTableHead, handleClickView } = useHistoryController()
   const { limit, setLimit } = useTable()
-  const { getHistoryData } = useHistory()
+  const { getHistoryData, historyIsLoading } = useHistory()
 
   // States
   const [skip, setSkip] = useState<number>(1)
@@ -54,8 +55,8 @@ const HistoryTable = () => {
           limit,
           skip
         }).then((res) => {
-          // res.status === 200 -> ok
-          if (res.data) {
+          if (res.data && res.data.length > 0) {
+            // res.status === 200 -> ok
             setHxHistory(res.data)
           }
           if (res.info) {
@@ -70,7 +71,7 @@ const HistoryTable = () => {
   return (
     <>
       {hydrated && (
-        <div className="md-w-[678px] mx-auto">
+        <div className="mx-auto max-w-[678px]">
           <PageHeader
             title="PLAY HISTORY"
             subtitle="Wallet manager for nakamoto.games world"
@@ -85,95 +86,94 @@ const HistoryTable = () => {
                 thead={HistoryTableHead}
                 gridTemplateColumns="180px 130px 130px 100px 1fr"
               />
-              <TableBody
-                sx={{
-                  display: "block",
-                  borderRadius: "5px",
-                  overflow: "hidden",
-                  "tr:last-of-type td": { borderBottom: 0 }
-                }}
-                className="uppercase"
-              >
-                {hxHistory && hxHistory.length > 0 ? (
-                  hxHistory.map((row) => (
-                    <TableRowData
-                      key={row._id}
-                      gridTemplateColumns="180px 130px 130px 90px 1fr"
-                      child={[
-                        <div
-                          key={row._id}
-                          className="history--datetime flex items-center"
-                        >
-                          <Chip
-                            label={dayjs(row.createdAt).format("DD MMM YYYY")}
-                            size="small"
-                            color="default"
-                            variant="outlined"
-                            className="font-bold"
-                          />
-                          <span className="ml-4">
-                            {dayjs(row.createdAt).format("hh:mm A")}
-                          </span>
-                        </div>,
-                        <div
-                          key={row._id}
-                          className="history--gameName truncate"
-                        >
-                          {row.game_name}
-                        </div>,
-                        <div
-                          key={row._id}
-                          className="history--gameType"
-                        >
-                          {row.game_mode === "play-to-earn" ? (
+              {historyIsLoading ? (
+                [...Array(limit)].map(() => (
+                  <SkeletonTableWallet key={uuid()} />
+                ))
+              ) : (
+                <TableBody
+                  sx={{
+                    display: "block",
+                    borderRadius: "5px",
+                    overflow: "hidden",
+                    "tr:last-of-type td": { borderBottom: 0 }
+                  }}
+                  className="uppercase"
+                >
+                  {hxHistory && hxHistory.length > 0 ? (
+                    hxHistory.map((row) => (
+                      <TableRowData
+                        key={row._id}
+                        gridTemplateColumns="180px 130px 130px 90px 1fr"
+                        child={[
+                          <div
+                            key={row._id}
+                            className="history--datetime flex items-center"
+                          >
                             <Chip
-                              label={row.game_mode.split("-").join(" ")}
+                              label={dayjs(row.createdAt).format("DD MMM YYYY")}
                               size="small"
-                              color="error"
+                              color="default"
+                              variant="outlined"
                               className="font-bold"
                             />
-                          ) : (
+                            <span className="ml-4">
+                              {dayjs(row.createdAt).format("hh:mm A")}
+                            </span>
+                          </div>,
+                          <div
+                            key={row._id}
+                            className="history--gameName truncate"
+                          >
+                            {row.game_name}
+                          </div>,
+                          <div
+                            key={row._id}
+                            className="history--gameType"
+                          >
+                            {row.game_mode === "play-to-earn" ? (
+                              <Chip
+                                label={row.game_mode.split("-").join(" ")}
+                                size="small"
+                                color="error"
+                                className="font-bold"
+                              />
+                            ) : (
+                              <Chip
+                                label={row.game_mode}
+                                size="small"
+                                color="secondary"
+                                className="font-bold"
+                              />
+                            )}
+                          </div>,
+                          <div
+                            key={row._id}
+                            className="history--roomStatus"
+                          >
+                            {roomStatus(row.room_status)}
+                          </div>,
+                          <div
+                            key={row._id}
+                            className="history--viewMore flex w-full justify-end"
+                          >
                             <Chip
-                              label={row.game_mode}
+                              label="View Summary"
                               size="small"
-                              color="secondary"
-                              className="font-bold"
+                              color="default"
+                              variant="outlined"
+                              className="font-bold text-grey-neutral04"
+                              onClick={() => handleClickView(row)}
                             />
-                          )}
-                        </div>,
-                        <div
-                          key={row._id}
-                          className="history--roomStatus"
-                        >
-                          {roomStatus(row.room_status)}
-                        </div>,
-                        <div
-                          key={row._id}
-                          className="history--viewMore flex w-full justify-end"
-                        >
-                          <Chip
-                            label="View Summary"
-                            size="small"
-                            color="default"
-                            variant="outlined"
-                            className="font-bold text-grey-neutral04"
-                            onClick={() => {
-                              onHandleView(
-                                `/${validTypeGames.find((res) =>
-                                  res.includes(row.game_mode)
-                                )}/${row.path}`,
-                                row.room_id
-                              )
-                            }}
-                          />
-                        </div>
-                      ]}
-                    />
-                  ))
-                ) : (
-                  <TableNodata />
-                )}
-              </TableBody>
+                          </div>
+                        ]}
+                      />
+                    ))
+                  ) : (
+                    <TableNodata />
+                  )}
+                </TableBody>
+              )}
             </Table>
           </TableContainer>
           <Box

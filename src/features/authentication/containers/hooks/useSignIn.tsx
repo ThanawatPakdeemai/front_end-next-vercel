@@ -1,10 +1,10 @@
 import useProfileStore from "@stores/profileStore"
 import { useMutation } from "@tanstack/react-query"
 import useWalletStore from "@stores/wallet"
-import { getNaka } from "@feature/inventory/containers/services/inventory.service"
 import useLoadingStore from "@stores/loading"
 import { useToast } from "@feature/toast/containers"
 import { IMessage } from "@feature/multichain/interfaces/IMultichain"
+import { getNaka } from "@feature/balance/containers/services/balance.services"
 import { signIn } from "../services/auth.service"
 
 const useSignIn = () => {

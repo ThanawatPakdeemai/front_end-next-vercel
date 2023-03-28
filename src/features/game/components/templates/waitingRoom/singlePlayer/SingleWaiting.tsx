@@ -109,7 +109,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
                   <HeaderWaitingRoom
                     roomTag={playerGameSingle?.room_number ?? ""}
                     roomName={`#${data.name} ${
-                      playerGameSingle?.room_number ?? "000"
+                      playerGameSingle?.room_number ?? ""
                     }`}
                     timer={{
                       time: playerGameSingle
@@ -130,7 +130,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
                     <HeaderWaitingRoom
                       roomTag={playerGameSingle?.room_number ?? ""}
                       roomName={`#${data.name} ${
-                        playerGameSingle?.room_number ?? "000"
+                        playerGameSingle?.room_number ?? ""
                       }`}
                       timer={{
                         time: playerGameSingle

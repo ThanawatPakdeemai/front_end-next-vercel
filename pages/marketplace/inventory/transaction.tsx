@@ -3,13 +3,17 @@ import React, { ReactElement } from "react"
 import dynamic from "next/dynamic"
 import useProfileStore from "@stores/profileStore"
 
-const MarketplaceLayoutInventory = dynamic(
-  () => import("@components/templates/marketplace/MarketplaceLayoutInventory"),
+const MarketplaceLayoutInventoryNoFilter = dynamic(
+  () =>
+    import(
+      "@components/templates/marketplace/MarketplaceLayoutInventoryNoFilter"
+    ),
   {
     suspense: true,
     ssr: false
   }
 )
+
 const TransactionPage = dynamic(
   () => import("@feature/page/inventory/TransactionPage"),
   {
@@ -28,7 +32,11 @@ const Page = () => {
 }
 
 Page.getLayout = function getLayout(page: ReactElement) {
-  return <MarketplaceLayoutInventory>{page}</MarketplaceLayoutInventory>
+  return (
+    <MarketplaceLayoutInventoryNoFilter>
+      {page}
+    </MarketplaceLayoutInventoryNoFilter>
+  )
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {

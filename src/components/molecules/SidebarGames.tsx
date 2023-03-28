@@ -1,12 +1,14 @@
 import MenuItemCustom from "@components/atoms/MenuItemCustom"
 import { MENU_GUEST } from "@configs/menu"
-import { PROFILE_MOCKUP } from "@constants/profileMockup"
+// import { PROFILE_MOCKUP } from "@constants/profileMockup"
 import { MenuList } from "@mui/material"
 import { NextRouter, useRouter } from "next/router"
+import useProfileStore from "@stores/profileStore"
 import Balance from "./balance/Balance"
 import StatProfile from "./statProfile/StatProfile"
 
 const SidebarGames = () => {
+  const profile = useProfileStore((state) => state.profile.data)
   const router: NextRouter = useRouter()
   return (
     <div className="mx-auto w-full max-w-xs gap-5 md:mx-0 md:flex md:w-[200px] md:flex-col">
@@ -26,32 +28,35 @@ const SidebarGames = () => {
           )
         })}
       </MenuList>
+      {profile && (
+        <>
+          <Balance
+            variant="naka"
+            token="NAKA"
+            sx={{
+              minWidth: 200,
+              height: "auto"
+            }}
+          />
 
-      <Balance
-        variant="naka"
-        token="NAKA"
-        sx={{
-          minWidth: 200,
-          height: "auto"
-        }}
-      />
-
-      <StatProfile
-        exp={{
-          level: PROFILE_MOCKUP.level,
-          expAmount: PROFILE_MOCKUP.exp,
-          maxExp: PROFILE_MOCKUP.max_exp
-        }}
-        energy={{
-          staminaPoint: PROFILE_MOCKUP.stamina_point,
-          totalStamina: PROFILE_MOCKUP.total_stamina
-        }}
-        className="flex-col"
-        sx={{
-          minWidth: 200,
-          height: "auto"
-        }}
-      />
+          <StatProfile
+            exp={{
+              level: profile?.level ?? 0,
+              expAmount: profile?.exp,
+              maxExp: profile?.max_exp
+            }}
+            energy={{
+              staminaPoint: profile?.stamina_point,
+              totalStamina: profile?.total_stamina
+            }}
+            className="flex-col"
+            sx={{
+              minWidth: 200,
+              height: "auto"
+            }}
+          />
+        </>
+      )}
     </div>
   )
 }

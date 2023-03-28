@@ -2,79 +2,132 @@ import { useRouter } from "next/router"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import { INotification } from "@feature/notification/interfaces/INotificationService"
-import {
-  updateNotiStatusById
-  // updateAllNotiStatus
-} from "@feature/notification/containers/services/notification.service"
+import useNotiStore from "@stores/notification"
+import { IHistory } from "@feature/history/interfaces/IHistoryService"
+import { validTypeGames } from "@pages/[typeGame]"
+import { useCallback, useEffect, useState } from "react"
+import useProfileStore from "@stores/profileStore"
+import useGlobal from "@hooks/useGlobal"
+import useGetNotification from "./useGetNotification"
+import useNotificationReadAll from "./useNotificationReadAll"
 
 const useNotificationController = () => {
   const router = useRouter()
   const { errorToast } = useToast()
-  // const dispatch = useDispatch();
-  // const { notifications } = useSelector((state: RootState) => state.notification);
-  // const addNotification = (notification: Notification) => {
-  //   dispatch(addNotificationAction(notification));
-  // };
-  // const removeNotification = (id: string) => {
-  //   dispatch(removeNotificationAction(id));
-  // };
-  // return {
-  //   notifications,
-  //   addNotification,
-  //   removeNotification,
-  // };
+  const { page, limit, pager, setTotalCount, setLimit, totalCount, setPage } =
+    useGlobal()
 
-  /**
-   * @description Handle click on notification
-   */
-  const onHandleClick = () => {
-    // if (unread) {
-    //   updateAllNotiStatus(playerId).then(() => {
-    //     setUnread(0)
-    //   })
-    // }
-  }
+  // State
+  const [sortBy, setSortBy] = useState<string>("dateDESC")
+  const [buttonStatus, setButtonStatus] = useState<boolean>(false)
 
-  /**
-   * @description Handle sort by...
-   */
-  const onHandleSortBy = (_sort: string) => {
-    // setSortBy(_sort)
-  }
-  const onHandleView = (element: INotification, playerId: string) => {
+  // Store
+  const profile = useProfileStore((state) => state.profile.data)
+  const {
+    setNotificationItem,
+    setPlayHistoryItem,
+    setNotificationAll,
+    setNotificationCount,
+    count
+  } = useNotiStore()
+  const { isLoadingNotification, dataNotification } = useGetNotification({
+    player_id: profile?.id || "",
+    limit,
+    skip: page
+  })
+  const {
+    mutateUpdateAllNotiStatus,
+    isLoadingUpdateAllNotiStatus,
+    isErrorUpdateAllNotiStatus
+  } = useNotificationReadAll(profile?.id || "")
+
+  const fetchNotification = useCallback(() => {
+    if (dataNotification && dataNotification.length > 0) {
+      setTotalCount(dataNotification.length)
+      const result = dataNotification.filter((item) => !item.read)
+      // Set values to store
+      setNotificationAll(dataNotification)
+      setNotificationCount(result.length)
+    }
+  }, [
+    dataNotification,
+    setNotificationAll,
+    setNotificationCount,
+    setTotalCount
+  ])
+
+  useEffect(() => {
+    if (isLoadingNotification) return
+    fetchNotification()
+  }, [
+    dataNotification,
+    isLoadingNotification,
+    fetchNotification,
+    profile,
+    setNotificationAll,
+    setNotificationCount,
+    setTotalCount,
+    setLimit
+  ])
+
+  const onHandleView = (notification: INotification, playerId: string) => {
     if (playerId) {
-      updateNotiStatusById(element._id)
-        .then(() => {
-          if (element.type.toLowerCase() === "reward") {
-            router.push(`/${element.path}/reward/${element._id}`)
-          } else if (element.type.toLowerCase() === "tournament") {
-            router.push(
-              `/${element.path}/summary/${element.room_id}/${element._id}`
-            )
-          } else if (element.type.toLowerCase() === "reward_weekly") {
-            router.push(`/${element.path}/reward/${element._id}`)
-          } else if (element.type.toLowerCase() === "reward_game_pool") {
-            router.push(`/${element.path}/reward/${element._id}`)
-          } else if (element.type.toLowerCase() === "game_free") {
-            router.push(
-              `/${element.path}/summary/${element.room_id}/${element._id}`
-            )
-          } else {
-            router.push(`/${element.path}/reward/${element._id}`)
-          }
-        })
-        .catch(() => {
-          errorToast(MESSAGES.cant_update_data)
-        })
+      setPlayHistoryItem({} as IHistory)
+      setNotificationItem(notification)
+      // TODO: Ask backend to return game_mode as well
+      router.push(
+        `/${validTypeGames.find((res) =>
+          res.includes(notification.game_mode || "play-to-earn-games")
+        )}/${notification.path}/${notification.type
+          .toLocaleLowerCase()
+          .replaceAll("_", "-")}/${notification._id}`
+      )
     } else {
       errorToast(MESSAGES.please_login)
     }
   }
 
+  const onHandleClick = () => {
+    if (count !== 0) {
+      setButtonStatus(true)
+      mutateUpdateAllNotiStatus()
+        .then(() => {
+          setButtonStatus(isLoadingUpdateAllNotiStatus)
+        })
+        .catch(() => {
+          setButtonStatus(isErrorUpdateAllNotiStatus)
+        })
+    }
+  }
+  const onHandleSortBy = (_sort: string) => {
+    setSortBy(_sort)
+  }
+  const onClickView = (_notificationItem: INotification) => {
+    onHandleView(_notificationItem, profile?.id || "")
+  }
+
+  // Check if count is 0, then disabled button
+  useEffect(() => {
+    if (count === 0) {
+      setButtonStatus(true)
+    }
+  }, [count])
+
   return {
     onHandleView,
+    onHandleSortBy,
+    sortBy,
     onHandleClick,
-    onHandleSortBy
+    onClickView,
+    isLoadingNotification,
+    unread: count,
+    buttonStatus,
+    limit,
+    page,
+    pager,
+    setLimit,
+    totalCount,
+    setPage
   }
 }
 

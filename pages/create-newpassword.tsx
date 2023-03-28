@@ -14,7 +14,6 @@ const FromCreatePassword = dynamic(
 export default function CreatePassword() {
   const router = useRouter()
   const { email, token } = router.query
-  // console.log("router", email, token)
 
   return (
     <>

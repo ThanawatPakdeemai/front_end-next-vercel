@@ -2,14 +2,14 @@ import LogoIcon from "@components/icons/LogoIcon"
 import NumpadIcon from "@components/icons/NumpadIcon"
 import PinnedMapIcon from "@components/icons/PinnedMapIcon"
 import CountItem from "@components/molecules/CountItem"
-import { TType } from "@feature/marketplace/interfaces/IMarketService"
+import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import { InputAdornment, TextField } from "@mui/material"
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
 import Helper from "@utils/helper"
 import React from "react"
 
 interface IProp {
-  type: TType
+  type: TNFTType
   position?: {
     x: string
     y: string
@@ -26,7 +26,7 @@ interface IProp {
 }
 
 const TextfieldDetailContent = ({
-  // type,
+  type,
   position,
   // itemAmount,
   price,
@@ -39,7 +39,7 @@ const TextfieldDetailContent = ({
 
   return (
     <div className="flex w-full items-center justify-between">
-      {count && (
+      {count && type !== "nft_land" && type !== "nft_building" && (
         <CountItem
           endIcon={<NumpadIcon />}
           helperText={count.helperText}

@@ -22,7 +22,7 @@ const StoryModeGamesPage = () => {
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
-  const { onHandleClick } = useGlobal()
+  const { getTypeGamePathFolder, onHandleSetGameStore } = useGlobal()
   const {
     category: categoryDropdown,
     gameItem: gameItemDropdown,
@@ -122,15 +122,19 @@ const StoryModeGamesPage = () => {
                 staminaRecovery={staminaRecovery}
                 cooldown={cooldown}
                 setCooldown={setCooldown}
+                href={`/${getTypeGamePathFolder(game)}/${game.path}`}
                 onHandleClick={() =>
-                  onHandleClick("story-mode", game.path, game)
+                  onHandleSetGameStore(getTypeGamePathFolder(game), game)
                 }
+                // onHandleClick={() =>
+                //   onHandleClick("story-mode", game.path, game)
+                // }
               />
             ))}
       </div>
 
       {totalCount === 0 && (
-        <div className="d-flex  justify-center text-center">No data</div>
+        <div className="d-flex justify-center text-center">No data</div>
       )}
 
       <PaginationNaka

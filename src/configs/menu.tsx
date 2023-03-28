@@ -79,7 +79,7 @@ export const MENU = [
         icon: AttachMoneyIcon
       },
       {
-        name: "Free Mode",
+        name: "Free To Earn",
         link: "/free-to-play-games",
         icon: MoneyOffIcon,
         textRight: "Free"

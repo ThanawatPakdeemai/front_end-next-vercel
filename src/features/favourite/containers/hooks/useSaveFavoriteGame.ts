@@ -43,8 +43,14 @@ const useSaveFavoriteGame = ({ playerId, gameId }: IGameFavoriteBody) => {
         }
       }
     },
+    onSettled() {
+      setClose()
+    },
     onError(err: AxiosError) {
-      if (err) errorToast(err.message)
+      if (err) {
+        setClose()
+        errorToast(err.message)
+      }
     }
   })
 

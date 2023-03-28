@@ -111,10 +111,13 @@ const useGlobal = (
   /**
    * @description Global values for pagination
    */
-  const limit = _limit || 20
+  const [limit, setLimit] = useState<number>(24)
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
   const pager: number[] = [6, 12, 24, 48, 64]
+  const handleLimit = (limitItem: number) => {
+    setLimit(limitItem)
+  }
 
   /**
    * @description Handle click on game card
@@ -419,8 +422,10 @@ const useGlobal = (
     limit,
     page,
     setPage,
+    setLimit,
     totalCount,
     setTotalCount,
+    handleLimit,
     stateProfile,
     hydrated,
     defaultBody,

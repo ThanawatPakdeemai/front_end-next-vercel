@@ -7,18 +7,18 @@ import { IHistory } from "@feature/history/interfaces/IHistoryService"
 import { validTypeGames } from "@pages/[typeGame]"
 import { useCallback, useEffect, useState } from "react"
 import useProfileStore from "@stores/profileStore"
+import useGlobal from "@hooks/useGlobal"
 import useGetNotification from "./useGetNotification"
 import useNotificationReadAll from "./useNotificationReadAll"
 
 const useNotificationController = () => {
   const router = useRouter()
   const { errorToast } = useToast()
+  const { page, limit, pager, setTotalCount, setLimit, totalCount, setPage } =
+    useGlobal()
 
   // State
-  const [page, setPage] = useState<number>(1)
-  const [totalCount, setTotalCount] = useState<number>(0)
   const [sortBy, setSortBy] = useState<string>("dateDESC")
-  const [limit, setLimit] = useState<number>(24)
   const [buttonStatus, setButtonStatus] = useState<boolean>(false)
 
   // Store
@@ -31,7 +31,9 @@ const useNotificationController = () => {
     count
   } = useNotiStore()
   const { isLoadingNotification, dataNotification } = useGetNotification({
-    player_id: profile?.id || ""
+    player_id: profile?.id || "",
+    limit,
+    skip: page
   })
   const {
     mutateUpdateAllNotiStatus,
@@ -47,7 +49,12 @@ const useNotificationController = () => {
       setNotificationAll(dataNotification)
       setNotificationCount(result.length)
     }
-  }, [dataNotification, setNotificationAll, setNotificationCount])
+  }, [
+    dataNotification,
+    setNotificationAll,
+    setNotificationCount,
+    setTotalCount
+  ])
 
   useEffect(() => {
     let load = false
@@ -64,7 +71,9 @@ const useNotificationController = () => {
     fetchNotification,
     profile,
     setNotificationAll,
-    setNotificationCount
+    setNotificationCount,
+    setTotalCount,
+    setLimit
   ])
 
   const onHandleView = (notification: INotification, playerId: string) => {
@@ -84,9 +93,6 @@ const useNotificationController = () => {
     }
   }
 
-  const handleLimit = (_limit: number) => {
-    setLimit(_limit)
-  }
   const onHandleClick = () => {
     if (count !== 0) {
       setButtonStatus(true)
@@ -124,17 +130,18 @@ const useNotificationController = () => {
   return {
     onHandleView,
     onHandleSortBy,
-    page,
-    setPage,
-    totalCount,
     sortBy,
-    limit,
     onHandleClick,
-    handleLimit,
     onClickView,
     isLoadingNotification,
     unread: count,
-    buttonStatus
+    buttonStatus,
+    limit,
+    page,
+    pager,
+    setLimit,
+    totalCount,
+    setPage
   }
 }
 

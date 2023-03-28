@@ -270,20 +270,21 @@ const useBuyGameItemController = () => {
   const isDisabled = useMemo(() => {
     updatePricePerItem()
     const totalPrice = watch("nakaPerItem") * watch("qty")
-    if (
-      Object.keys(watch("currency"))?.length !== 0 &&
-      Object.keys(watch("item"))?.length !== 0 &&
-      watch("qty") > 0 &&
-      totalPrice <= watch("currency")?.balanceVault?.digit &&
-      totalPrice > 0 &&
-      Object.keys(accounts as string[])?.length > 0 &&
-      Object.keys(signer as JsonRpcSigner)?.length > 0
-    ) {
-      return false
-      // eslint-disable-next-line no-else-return
-    } else {
+    if (watch("currency")) {
+      if (
+        Object.keys(watch("currency"))?.length !== 0 &&
+        Object.keys(watch("item"))?.length !== 0 &&
+        watch("qty") > 0 &&
+        totalPrice <= watch("currency")?.balanceVault?.digit &&
+        totalPrice > 0 &&
+        Object.keys(accounts as string[])?.length > 0 &&
+        Object.keys(signer as JsonRpcSigner)?.length > 0
+      ) {
+        return false
+      }
       return true
     }
+    return true
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accounts, signer, watch, watch("currency"), watch("nakaPerItem")])
 

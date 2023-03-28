@@ -34,7 +34,13 @@ export function NakaPriceProvider({ children }: { children: ReactNode }) {
   }, [isLoadingCurrentPrice, currentPrice, setPrice])
 
   useEffect(() => {
-    fetchPrice()
+    let load = false
+
+    if (!load) fetchPrice()
+
+    return () => {
+      load = true
+    }
   }, [fetchPrice])
 
   const value = useMemo(

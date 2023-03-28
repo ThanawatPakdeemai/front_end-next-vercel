@@ -90,10 +90,18 @@ const useMarketDetail = () => {
   })
 
   useEffect(() => {
-    if (detailOrder) {
-      const result = detailOrder.data[0]
-      setDetailData(result)
-      handleSelectToken(marketType, result)
+    let load = false
+
+    if (!load) {
+      if (detailOrder) {
+        const result = detailOrder.data[0]
+        setDetailData(result)
+        handleSelectToken(marketType, result)
+      }
+    }
+
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [detailOrder])

@@ -345,9 +345,15 @@ const useWalletContoller = () => {
    * @description Check metamask
    */
   useEffect(() => {
+    let load = false
+
     if (!(statusWalletConnected as IErrorMessage).responseStatus) return
     if (signer === undefined || address === undefined) return
-    checkConnection()
+    if (!load) checkConnection()
+
+    return () => {
+      load = true
+    }
   }, [address, haveMetamask, checkConnection, signer, statusWalletConnected])
 
   /**

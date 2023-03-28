@@ -68,14 +68,22 @@ const SellActionComponent = ({
   }
 
   useEffect(() => {
-    const onGetApproval = async () => {
-      await onCheckApprovalForAllNFT(nftType, selling)
-        .then((response) => {
-          setIsApproved(response)
-        })
-        .catch((error) => console.error(error))
+    let load = false
+
+    if (!load) {
+      const onGetApproval = async () => {
+        await onCheckApprovalForAllNFT(nftType, selling)
+          .then((response) => {
+            setIsApproved(response)
+          })
+          .catch((error) => console.error(error))
+      }
+      if (nftType && selling) onGetApproval()
     }
-    if (nftType && selling) onGetApproval()
+
+    return () => {
+      load = true
+    }
   }, [nftType, onCheckApprovalForAllNFT, selling])
 
   return (

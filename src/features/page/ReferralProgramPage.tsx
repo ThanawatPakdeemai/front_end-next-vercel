@@ -79,25 +79,44 @@ const ReferralProgramPage = () => {
   }
 
   useEffect(() => {
-    if (!fetchRef.current && getReferralsData) {
-      fetchRef.current = true
-      setTotalCount(getReferralsData.data.info.totalCount)
+    let load = false
+
+    if (!load) {
+      if (!fetchRef.current && getReferralsData) {
+        fetchRef.current = true
+        setTotalCount(getReferralsData.data.info.totalCount)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [getReferralsData])
 
   useEffect(() => {
-    if (!isPreviousData && getReferralsData) {
-      queryClient.prefetchQuery({
-        queryKey: ["getReferralsData", profile && profile.id ? profile.id : ""],
-        queryFn: () =>
-          getReferrals({
-            player_id: profile && profile.id ? profile.id : "",
-            skip: page,
-            limit: limitPage,
-            sort: sortType.sort,
-            sort_value: sortType.sort_value
-          })
-      })
+    let load = false
+
+    if (!load) {
+      if (!isPreviousData && getReferralsData) {
+        queryClient.prefetchQuery({
+          queryKey: [
+            "getReferralsData",
+            profile && profile.id ? profile.id : ""
+          ],
+          queryFn: () =>
+            getReferrals({
+              player_id: profile && profile.id ? profile.id : "",
+              skip: page,
+              limit: limitPage,
+              sort: sortType.sort,
+              sort_value: sortType.sort_value
+            })
+        })
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [
     page,

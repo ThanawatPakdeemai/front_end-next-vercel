@@ -462,32 +462,59 @@ const useCreateWeb3Provider = () => {
   )
 
   useEffect(() => {
-    checkChain()
+    let load = false
+
+    if (!load) checkChain()
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    const getWalletAccount = async () => {
-      const walletAccounts = await provider?.listAccounts()
-      if (walletAccounts) {
-        setAddress(walletAccounts[0])
-      } else {
-        setAccounts(undefined)
+    let load = false
+
+    if (!load) {
+      const getWalletAccount = async () => {
+        const walletAccounts = await provider?.listAccounts()
+        if (walletAccounts) {
+          setAddress(walletAccounts[0])
+        } else {
+          setAccounts(undefined)
+        }
       }
+      getWalletAccount()
     }
-    getWalletAccount()
+
+    return () => {
+      load = true
+    }
   }, [provider])
 
   useEffect(() => {
+    let load = false
+
     if (address === undefined) return
     if (provider === undefined) return
-    const _signer = provider?.getSigner()
-    setSigner(_signer)
+    if (!load) {
+      const _signer = provider?.getSigner()
+      setSigner(_signer)
+    }
+
+    return () => {
+      load = true
+    }
   }, [address, provider])
 
   useEffect(() => {
-    const checkHasMetamask: boolean = typeof window.ethereum !== "undefined"
-    setHasMetamask(checkHasMetamask)
+    const load = false
+
+    if (!load) {
+      const checkHasMetamask: boolean = typeof window.ethereum !== "undefined"
+      setHasMetamask(checkHasMetamask)
+    }
+
     return () => {
       setHasMetamask(false)
     }

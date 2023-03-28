@@ -49,7 +49,15 @@ const Home = () => {
    */
   const { createParticle } = useTweenEffect(600, 300, 50, -500)
   useEffect(() => {
-    if (hydrated) createParticle()
+    let load = false
+
+    if (!load) {
+      if (hydrated) createParticle()
+    }
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hydrated])
 
@@ -78,20 +86,36 @@ const Home = () => {
   })
 
   useEffect(() => {
-    if (f2pGameData) {
-      setF2PGame(f2pGameData.data)
+    let load = false
+
+    if (!load) {
+      if (f2pGameData) {
+        setF2PGame(f2pGameData.data)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [f2pCurType, f2pGameData, p2eGameData])
 
   useEffect(() => {
-    if (p2eCurType === "hot-game") {
-      if (hotGameData) {
-        setP2EGame(hotGameData.data)
+    let load = false
+
+    if (!load) {
+      if (p2eCurType === "hot-game") {
+        if (hotGameData) {
+          setP2EGame(hotGameData.data)
+        }
+      } else if (p2eCurType === "play-to-earn") {
+        if (p2eGameData) {
+          setP2EGame(p2eGameData.data)
+        }
       }
-    } else if (p2eCurType === "play-to-earn") {
-      if (p2eGameData) {
-        setP2EGame(p2eGameData.data)
-      }
+    }
+
+    return () => {
+      load = true
     }
   }, [p2eCurType, hotGameData, p2eGameData])
 

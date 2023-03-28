@@ -31,7 +31,13 @@ const useChat = () => {
   }
 
   useEffect(() => {
-    manageChat()
+    let load = false
+
+    if (!load) manageChat()
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onSendMessage])
 

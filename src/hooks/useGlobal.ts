@@ -82,14 +82,30 @@ const useGlobal = (
    * @description Set profile
    */
   useEffect(() => {
-    setStateProfile(profile)
+    let load = false
+
+    if (!load) {
+      setStateProfile(profile)
+    }
+
+    return () => {
+      load = true
+    }
   }, [profile])
 
   /**
    * @description Set hydrate to fix error "Text content does not match server-rendered HTML"
    */
   useEffect(() => {
-    setHydrated(true)
+    let load = false
+
+    if (!load) {
+      setHydrated(true)
+    }
+
+    return () => {
+      load = true
+    }
   }, [])
 
   /**
@@ -304,15 +320,23 @@ const useGlobal = (
    * @description Fetch all token supported
    */
   useEffect(() => {
-    if (signer && accounts) {
-      if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
-        fetchAllTokenSupported()
-      } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
-        fetchNAKAToken()
-      }
-    } /* else {
+    let load = false
+
+    if (!load) {
+      if (signer && accounts) {
+        if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+          fetchAllTokenSupported()
+        } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
+          fetchNAKAToken()
+        }
+      } /* else {
       console.log("signer or accounts is undefined", signer, accounts, provider)
     } */
+    }
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, signer, fetchAllTokenSupported, fetchNAKAToken])
 
@@ -366,18 +390,26 @@ const useGlobal = (
   }
 
   useEffect(() => {
-    if (router.asPath.includes("land")) {
-      setMarketType("nft_land")
-    } else if (router.asPath.includes("building")) {
-      setMarketType("nft_building")
-    } else if (router.asPath.includes("naka-punk")) {
-      setMarketType("nft_naka_punk")
-    } else if (router.asPath.includes("material")) {
-      setMarketType("nft_material")
-    } else if (router.asPath.includes("game-item")) {
-      setMarketType("game_item")
-    } else if (router.asPath.includes("arcade-game")) {
-      setMarketType("nft_game")
+    let load = false
+
+    if (!load) {
+      if (router.asPath.includes("land")) {
+        setMarketType("nft_land")
+      } else if (router.asPath.includes("building")) {
+        setMarketType("nft_building")
+      } else if (router.asPath.includes("naka-punk")) {
+        setMarketType("nft_naka_punk")
+      } else if (router.asPath.includes("material")) {
+        setMarketType("nft_material")
+      } else if (router.asPath.includes("game-item")) {
+        setMarketType("game_item")
+      } else if (router.asPath.includes("arcade-game")) {
+        setMarketType("nft_game")
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [router.asPath])
 

@@ -45,16 +45,26 @@ IProp) => {
   }
 
   React.useEffect(() => {
-    setValue("currency", list?.[2])
-    setValue("currency_id", list[2]?.symbol as string)
-    updatePricePerItem()
-    if (onChangeSelect) onChangeSelect(list?.[2])
+    let load = false
+
+    if (!load) {
+      setValue("currency", list?.[2])
+      setValue("currency_id", list[2]?.symbol as string)
+      updatePricePerItem()
+      if (onChangeSelect) onChangeSelect(list?.[2])
+    }
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address])
 
   React.useEffect(() => {
     let load = false
+
     if (!load) updatePricePerItem()
+
     return () => {
       load = true
     }

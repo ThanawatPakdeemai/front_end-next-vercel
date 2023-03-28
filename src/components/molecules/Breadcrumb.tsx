@@ -13,6 +13,7 @@ interface IProp {
 
 const Breadcrumb = ({ className, isCustom, _breadcrumbs }: IProp) => {
   const router = useRouter()
+  const isCancelled = React.useRef(false)
   const [breadcrumbs, setBreadcrumbs] = React.useState<ICrumb[]>()
 
   /* this function will automatically generate breadcrumb by url name path */
@@ -46,8 +47,12 @@ const Breadcrumb = ({ className, isCustom, _breadcrumbs }: IProp) => {
         title: path.charAt(0).toUpperCase() + path.slice(1)
       }
     })
+    if (!isCancelled.current)
+      setBreadcrumbs([{ href: "/", title: "Home" }, ...bread_crumbs])
 
-    setBreadcrumbs([{ href: "/", title: "Home" }, ...bread_crumbs])
+    return () => {
+      isCancelled.current = true
+    }
   }, [router.asPath])
 
   return (

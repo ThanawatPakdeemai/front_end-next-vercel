@@ -3,7 +3,6 @@ import { Box, Chip, SxProps } from "@mui/material"
 import VerticalThumbSlide from "@feature/slider/components/templates/VerticalThumbSlide"
 import { IGetType } from "@feature/game/interfaces/IGameService"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
-import { indexOf } from "lodash"
 import ButtonGame from "../../molecules/ButtonGame"
 
 const CustomStyle: SxProps = {
@@ -32,10 +31,10 @@ const GameContent = ({ gameId, gameType }: IGameContentProps) => {
    */
   const handleGameURL = (): string => {
     if (gameDataState && gameDataState.game_url) {
-      if (indexOf("http", gameDataState.game_url) === -1) {
+      if (gameDataState.game_url.includes("http")) {
         return `${gameDataState.game_url}`
       }
-      return `/${gameDataState.game_url}`
+      return `/${gameType}/${gameDataState.game_url}/roomlist`
     }
     return "/"
   }

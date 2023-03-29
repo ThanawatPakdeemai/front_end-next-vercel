@@ -136,7 +136,7 @@ const EarnRewardPage = () => {
           Earn item rewards while you play your favorite games
         </Typography>
       </Box>
-      <div className="grid max-w-[678px] gap-[10px] !overflow-x-scroll md:flex md:flex-col">
+      <div className="grid max-w-[678px] gap-[10px] !overflow-x-auto md:flex md:flex-col">
         {content}
       </div>
     </div>

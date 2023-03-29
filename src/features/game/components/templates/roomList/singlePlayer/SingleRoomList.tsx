@@ -168,6 +168,8 @@ const GameRoomList = () => {
                           ? "full"
                           : "join"
                       }
+                      path={gameData?.path}
+                      dataGoalRush={_data.data_play}
                     />
                   )
                 })

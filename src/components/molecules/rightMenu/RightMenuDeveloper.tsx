@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
+import useNotiStore from "@stores/notification"
 import Helper from "@utils/helper"
 import jwt_decode from "jwt-decode"
 import { Box } from "@mui/material"
@@ -12,6 +13,7 @@ import RightMenuLogIn from "./RightMenuLogIn"
 
 const RightMenuDeveloper = () => {
   const { onReset, profile } = useProfileStore()
+  const { onResetNotification } = useNotiStore()
   const { hydrated } = useGlobal()
   const [isTokenValid, setIsTokenValid] = useState(false)
   const token = Helper.getTokenFromLocal()
@@ -34,6 +36,7 @@ const RightMenuDeveloper = () => {
         } else {
           // If the token has expired, remove it from local storage
           setIsTokenValid(false)
+          onResetNotification() // remove notification zustand
           onReset() // remove profile zustand
         }
       }

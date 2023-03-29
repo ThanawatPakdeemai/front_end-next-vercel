@@ -23,6 +23,7 @@ const StoryLobby = () => {
   const [gameData, setGameData] = useState<IGame>()
   const route = useRouter()
   const { errorToast } = useToast()
+
   useEffect(() => {
     let load = false
 

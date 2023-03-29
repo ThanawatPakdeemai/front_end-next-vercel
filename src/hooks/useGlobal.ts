@@ -84,9 +84,7 @@ const useGlobal = (
    * @description Set profile
    */
   useEffect(() => {
-    if (!isCancelled.current) {
-      setStateProfile(profile)
-    }
+    if (!isCancelled.current) setStateProfile(profile)
 
     return () => {
       isCancelled.current = true
@@ -97,9 +95,7 @@ const useGlobal = (
    * @description Set hydrate to fix error "Text content does not match server-rendered HTML"
    */
   useEffect(() => {
-    if (!isCancelled.current) {
-      setHydrated(true)
-    }
+    if (!isCancelled.current) setHydrated(true)
 
     return () => {
       isCancelled.current = true

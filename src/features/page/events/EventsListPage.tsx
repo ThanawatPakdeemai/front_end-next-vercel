@@ -1,0 +1,91 @@
+import { useEffect, useRef } from "react"
+import { useQueryClient } from "@tanstack/react-query"
+import { v4 as uuid } from "uuid"
+import useGlobal from "@hooks/useGlobal"
+import useSelectStore from "@stores/selector"
+import useEventFilter from "@stores/event"
+import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
+import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
+import EventsCard from "@feature/event/components/EventsCard"
+import useGetEventList from "@feature/event/containers/hooks/useGetEventList"
+import { getEventList } from "@feature/event/containers/services/events.service"
+import { IGetEventResponseData } from "@feature/event/interface/IEventsService"
+
+const EventsListPage = () => {
+  const { page, limit, setPage, totalCount, setTotalCount } = useGlobal()
+  const fetchRef = useRef(false)
+  const queryClient = useQueryClient()
+  const { select: selectHeader } = useSelectStore()
+  const type = selectHeader
+  const searchEvent = useEventFilter((state: any) => state.search)
+
+  const { eventListData, isPreviousData } = useGetEventList({
+    limit,
+    skip: page,
+    search: searchEvent,
+    sort: type
+  })
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      if (!fetchRef.current && eventListData) {
+        fetchRef.current = true
+        setTotalCount(eventListData.info.totalCount)
+      }
+    }
+    return () => {
+      load = true
+    }
+  }, [eventListData, setTotalCount])
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      if (!isPreviousData && eventListData) {
+        queryClient.prefetchQuery({
+          queryKey: ["events", type, page + 1],
+          queryFn: () =>
+            getEventList({
+              limit,
+              skip: page + 1,
+              search: "",
+              sort: type
+            })
+        })
+      }
+    }
+    return () => {
+      load = true
+    }
+  }, [eventListData, isPreviousData, page, queryClient, type, limit])
+
+  return (
+    <>
+      <div className="lg: mb-6 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {eventListData
+          ? eventListData.data.map((item: IGetEventResponseData) => (
+              <EventsCard
+                key={uuid()}
+                event_id={item._id}
+                title={item.name}
+                image={item.banner_image}
+                date_start={item.date_start}
+                date_end={item.date_end}
+              />
+            ))
+          : [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)}
+      </div>
+      {eventListData && eventListData.data.length > 0 && (
+        <PaginationNaka
+          totalCount={totalCount}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+      )}
+    </>
+  )
+}
+
+export default EventsListPage

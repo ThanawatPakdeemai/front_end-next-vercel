@@ -3,6 +3,7 @@ import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { F2PHeaderMenu } from "@constants/gameSlide"
 import useFilterGameList from "@feature/dropdown/containers/hooks/useFilterGameList"
 import GameCard from "@feature/game/components/molecules/GameCard"
+// import GameCard from "@feature/game/containers/components/molecules/GameCard"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import { getGameByTypes } from "@feature/game/containers/services/game.service"
 import { IGame } from "@feature/game/interfaces/IGameService"
@@ -23,7 +24,8 @@ const FreeToPlayGamesPage = () => {
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
-  const { onHandleClick } = useGlobal()
+  const { getTypeGamePathFolder, onHandleSetGameStore, isRedirectRoomlist } =
+    useGlobal()
   const { clearGameData } = useGameStore()
   const {
     category: categoryDropdown,
@@ -47,27 +49,43 @@ const FreeToPlayGamesPage = () => {
   })
 
   useEffect(() => {
-    // totalCount
-    if (!fetchRef.current && gameData) {
-      fetchRef.current = true
-      setTotalCount(gameData.info.totalCount)
+    let load = false
+
+    if (!load) {
+      // totalCount
+      if (!fetchRef.current && gameData) {
+        fetchRef.current = true
+        setTotalCount(gameData.info.totalCount)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [clearGameData, gameData])
 
   useEffect(() => {
-    if (!isPreviousData && gameData) {
-      queryClient.prefetchQuery({
-        queryKey: ["games", type, page + 1],
-        queryFn: () =>
-          getGameByTypes({ _type: type, _limit: limit, _page: page + 1 })
-      })
-      setGameFilter(gameData.data)
+    let load = false
+
+    if (!load) {
+      if (!isPreviousData && gameData) {
+        queryClient.prefetchQuery({
+          queryKey: ["games", type, page + 1],
+          queryFn: () =>
+            getGameByTypes({ _type: type, _limit: limit, _page: page + 1 })
+        })
+        setGameFilter(gameData.data)
+      }
+      clearGameData()
+      clearSearch()
+      clearCategory()
+      clearGameItem()
+      clearDevice()
     }
-    clearGameData()
-    clearSearch()
-    clearCategory()
-    clearGameItem()
-    clearDevice()
+
+    return () => {
+      load = true
+    }
   }, [
     clearCategory,
     clearDevice,
@@ -84,25 +102,33 @@ const FreeToPlayGamesPage = () => {
     useFilterGameList()
 
   useEffect(() => {
-    const filterData = {
-      limit,
-      skip: page,
-      sort: "name",
-      search: searchDropdown,
-      category: categoryDropdown,
-      item: gameItemDropdown,
-      device: deviceDropdown,
-      game_type: "free-to-play-games",
-      tournament: false,
-      nftgame: "all"
-    }
-    mutateGetGamesByCategoryId(filterData).then((res) => {
-      if (res) {
-        const { data, info } = res
-        setGameFilter(data)
-        setTotalCount(info ? info.totalCount : 1)
+    let load = false
+
+    if (!load) {
+      const filterData = {
+        limit,
+        skip: page,
+        sort: "name",
+        search: searchDropdown,
+        category: categoryDropdown,
+        item: gameItemDropdown,
+        device: deviceDropdown,
+        game_type: "free-to-play-games",
+        tournament: false,
+        nftgame: "all"
       }
-    })
+      mutateGetGamesByCategoryId(filterData).then((res) => {
+        if (res) {
+          const { data, info } = res
+          setGameFilter(data)
+          setTotalCount(info ? info.totalCount : 1)
+        }
+      })
+    }
+
+    return () => {
+      load = true
+    }
   }, [
     categoryDropdown,
     gameItemDropdown,
@@ -128,8 +154,11 @@ const FreeToPlayGamesPage = () => {
                 staminaRecovery={staminaRecovery}
                 cooldown={cooldown}
                 setCooldown={setCooldown}
+                href={`/${getTypeGamePathFolder(game)}-games/${
+                  game.path
+                }${isRedirectRoomlist(game).toString()}`}
                 onHandleClick={() =>
-                  onHandleClick("free-to-play", `${game.path}/roomlist`, game)
+                  onHandleSetGameStore(getTypeGamePathFolder(game), game)
                 }
               />
             ))}

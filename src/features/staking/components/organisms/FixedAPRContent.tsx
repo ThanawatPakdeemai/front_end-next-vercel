@@ -47,15 +47,23 @@ const FixedAPRContent = () => {
     )
 
   useEffect(() => {
-    if (!fetchRef.current && stakingData) {
-      setStakingStatus(
-        stakingData.dataAPI.some((item) => {
-          fetchStakingInfo(item.contract_address, item.type)
-          return userStakedInfo?.comInterest && userStakedInfo.stakeAmount
-        })
-      )
+    let load = false
+
+    if (!load) {
+      if (!fetchRef.current && stakingData) {
+        setStakingStatus(
+          stakingData.dataAPI.some((item) => {
+            fetchStakingInfo(item.contract_address, item.type)
+            return userStakedInfo?.comInterest && userStakedInfo.stakeAmount
+          })
+        )
+      }
+      fetchRef.current = true
     }
-    fetchRef.current = true
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stakingData])
 

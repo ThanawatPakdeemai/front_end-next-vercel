@@ -82,23 +82,42 @@ const useGlobal = (
    * @description Set profile
    */
   useEffect(() => {
-    setStateProfile(profile)
+    let load = false
+
+    if (!load) {
+      setStateProfile(profile)
+    }
+
+    return () => {
+      load = true
+    }
   }, [profile])
 
   /**
    * @description Set hydrate to fix error "Text content does not match server-rendered HTML"
    */
   useEffect(() => {
-    setHydrated(true)
+    let load = false
+
+    if (!load) {
+      setHydrated(true)
+    }
+
+    return () => {
+      load = true
+    }
   }, [])
 
   /**
    * @description Global values for pagination
    */
-  const limit = _limit || 20
+  const [limit, setLimit] = useState<number>(24)
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
   const pager: number[] = [6, 12, 24, 48, 64]
+  const handleLimit = (limitItem: number) => {
+    setLimit(limitItem)
+  }
 
   /**
    * @description Handle click on game card
@@ -113,23 +132,68 @@ const useGlobal = (
     switch (_type) {
       case "partner-publisher":
         onSetGamePartnersData(_gameData as IPartnerGameData)
-        await router.push(`/publishers/${_gameData.name}`)
+        // await router.push(`/publishers/${_gameData.name}`)
         break
 
       case "partner-game":
         onSetGamePartnersData(_gameData as IPartnerGameData)
-        await router.push(`/partner-games/${_gameUrl}?id=${_gameData.id}`)
+        // await router.push(`/partner-games/${_gameUrl}?id=${_gameData.id}`)
         break
 
       case "arcade-emporium":
         onSetGameData(_gameData as IGame)
-        await router.push(`/arcade-emporium/${_gameUrl}?id=${_gameData.id}`)
+        // await router.push(`/arcade-emporium/${_gameUrl}?id=${_gameData.id}`)
         break
 
       default:
         onSetGameData(_gameData as IGame)
-        await router.push(`/${_type}-games/${_gameUrl}`)
+        // await router.push(`/${_type}-games/${_gameUrl}`)
         break
+    }
+    // NOTE: No need this code
+    // await router.push(`/${_gameUrl}`)
+  }
+
+  const onHandleSetGameStore = async (
+    _type: IGetType,
+    _gameData: IGame | IPartnerGameData
+  ) => {
+    switch (_type) {
+      case "partner-publisher":
+        onSetGamePartnersData(_gameData as IPartnerGameData)
+        break
+
+      case "partner-game":
+        onSetGamePartnersData(_gameData as IPartnerGameData)
+        break
+
+      case "arcade-emporium":
+        onSetGameData(_gameData as IGame)
+        break
+
+      default:
+        onSetGameData(_gameData as IGame)
+        break
+    }
+  }
+
+  const onClickLink = async (
+    _type: IGetType,
+    _gameUrl: string,
+    _gameData: IGame | IPartnerGameData
+  ) => {
+    switch (_type) {
+      case "partner-publisher":
+        return `/publishers/${_gameData.name}`
+
+      case "partner-game":
+        return `/partner-games/${_gameUrl}?id=${_gameData.id}`
+
+      case "arcade-emporium":
+        return `/arcade-emporium/${_gameUrl}?id=${_gameData.id}`
+
+      default:
+        ;`/${_type}-games/${_gameUrl}`
     }
     // NOTE: No need this code
     // await router.push(`/${_gameUrl}`)
@@ -199,16 +263,15 @@ const useGlobal = (
       //   allContract.push(contract)
       // }
     }
-    await Promise.all(
-      allContract.map(async (contract) => {
-        const result = await getAllTokenInfoByContractAddress(
-          contract,
-          contract.address,
-          profile ? profile.address : ""
-        )
-        allTokenSupported.push(result)
-      })
-    )
+    allContract.map(async (contract) => {
+      const result = await getAllTokenInfoByContractAddress(
+        contract,
+        contract.address,
+        profile ? profile.address : ""
+      )
+      allTokenSupported.push(result)
+    })
+    await Promise.all(allTokenSupported)
     const allTokenSupportedSorted = allTokenSupported.sort((a, b) => {
       if (a.symbol < b.symbol) {
         return -1
@@ -232,16 +295,15 @@ const useGlobal = (
       const contract = new ethers.Contract(tokens[index], ERC20Abi, _web3)
       allContract.push(contract)
     }
-    await Promise.all(
-      allContract.map(async (contract) => {
-        const result = await getNAKATokenInfo(
-          contract,
-          contract.address,
-          profile ? profile.address : ""
-        )
-        allTokenSupported.push(result)
-      })
-    )
+    allContract.map(async (contract) => {
+      const result = await getNAKATokenInfo(
+        contract,
+        contract.address,
+        profile ? profile.address : ""
+      )
+      allTokenSupported.push(result)
+    })
+    await Promise.all(allTokenSupported)
     const allTokenSupportedSorted = allTokenSupported.sort((a, b) => {
       if (a.symbol < b.symbol) {
         return -1
@@ -259,15 +321,23 @@ const useGlobal = (
    * @description Fetch all token supported
    */
   useEffect(() => {
-    if (signer && accounts) {
-      if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
-        fetchAllTokenSupported()
-      } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
-        fetchNAKAToken()
-      }
-    } /* else {
+    let load = false
+
+    if (!load) {
+      if (signer && accounts) {
+        if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+          fetchAllTokenSupported()
+        } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
+          fetchNAKAToken()
+        }
+      } /* else {
       console.log("signer or accounts is undefined", signer, accounts, provider)
     } */
+    }
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, signer, fetchAllTokenSupported, fetchNAKAToken])
 
@@ -293,45 +363,67 @@ const useGlobal = (
   }
 
   /**
-   * @description Get type game path folder example: play-to-earn-games, free-to-play, story-mode
+   * @description Get type game path folder
    */
   const getTypeGamePathFolder = (_gameData: IGame): IGetType => {
     if (_gameData) {
-      if (_gameData.play_to_earn) {
-        return "play-to-earn-games"
-      }
-      if (_gameData.game_free_status) {
+      // if (_gameData.play_to_earn && _gameData.play_to_earn_status !== "free") {
+      //   return "play-to-earn-games"
+      // }
+      if (_gameData.play_to_earn_status === "free") {
         return "free-to-play"
       }
       if (_gameData.game_type === "storymode") {
         return "story-mode"
       }
+      if (_gameData.is_NFT) {
+        return "arcade-emporium"
+      }
     }
     return "play-to-earn-games"
   }
+
+  const isRedirectRoomlist = (_game: IGame): "/roomlist" | "" => {
+    if (_game.play_to_earn_status === "free") {
+      return "/roomlist"
+    }
+    return ""
+  }
+
   useEffect(() => {
-    if (router.asPath.includes("land")) {
-      setMarketType("nft_land")
-    } else if (router.asPath.includes("building")) {
-      setMarketType("nft_building")
-    } else if (router.asPath.includes("naka-punk")) {
-      setMarketType("nft_naka_punk")
-    } else if (router.asPath.includes("material")) {
-      setMarketType("nft_material")
-    } else if (router.asPath.includes("game-item")) {
-      setMarketType("game_item")
-    } else if (router.asPath.includes("arcade-game")) {
-      setMarketType("nft_game")
+    let load = false
+
+    if (!load) {
+      if (router.asPath.includes("land")) {
+        setMarketType("nft_land")
+      } else if (router.asPath.includes("building")) {
+        setMarketType("nft_building")
+      } else if (router.asPath.includes("naka-punk")) {
+        setMarketType("nft_naka_punk")
+      } else if (router.asPath.includes("material")) {
+        setMarketType("nft_material")
+      } else if (router.asPath.includes("game-item")) {
+        setMarketType("game_item")
+      } else if (router.asPath.includes("arcade-game")) {
+        setMarketType("nft_game")
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [router.asPath])
 
   return {
     onHandleClick,
+    onClickLink,
     limit,
     page,
     setPage,
+    setLimit,
     totalCount,
     setTotalCount,
+    handleLimit,
     stateProfile,
     hydrated,
     defaultBody,
@@ -345,7 +437,9 @@ const useGlobal = (
     isDeveloperPage,
     openInNewTab,
     getTypeGamePathFolder,
-    marketType
+    marketType,
+    isRedirectRoomlist,
+    onHandleSetGameStore
   }
 }
 

@@ -6,26 +6,28 @@ import { Box } from "@mui/material"
 import useNotiStore from "@stores/notification"
 import useGlobal from "@hooks/useGlobal"
 import DropdownLimit from "@components/atoms/DropdownLimit"
+import NoData from "@components/molecules/NoData"
 import NotificationTable from "./NotificationTable"
 import Header from "../molecules/NotificationHeader"
 
 const NotificationList = () => {
+  const { hydrated } = useGlobal()
   const {
-    page,
     limit,
+    page,
     totalCount,
-    sortBy,
     setPage,
+    pager,
+    setLimit,
+    sortBy,
     onHandleSortBy,
     isLoadingNotification,
-    handleLimit,
     unread,
     onHandleClick,
     onClickView,
     buttonStatus
   } = useNotificationController()
   const { notificationAll } = useNotiStore()
-  const { hydrated } = useGlobal()
 
   return hydrated ? (
     <div className="mx-auto w-full lg:w-3/4 xl:w-3/5">
@@ -34,7 +36,13 @@ const NotificationList = () => {
         onHandleClick={() => onHandleClick()}
         disabled={buttonStatus}
       />
-      {notificationAll ? (
+      {isLoadingNotification && (
+        <SkeletonNotification
+          data={[]}
+          isLoading={isLoadingNotification}
+        />
+      )}
+      {notificationAll && notificationAll.length > 0 ? (
         <NotificationTable
           data={notificationAll}
           page={page}
@@ -44,10 +52,7 @@ const NotificationList = () => {
           onHandleSortBy={onHandleSortBy}
         />
       ) : (
-        <SkeletonNotification
-          data={[]}
-          isLoading={isLoadingNotification}
-        />
+        <NoData />
       )}
       <Box
         className="my-2 flex justify-between md:my-5 md:w-[678px]"
@@ -65,9 +70,9 @@ const NotificationList = () => {
         />
         <DropdownLimit
           className="m-0 w-[160px] flex-row"
-          defaultValue={limit}
-          list={[6, 12, 24, 48, 64]}
-          onChangeSelect={handleLimit}
+          defaultValue={12}
+          list={pager}
+          onChangeSelect={setLimit}
         />
       </Box>
     </div>

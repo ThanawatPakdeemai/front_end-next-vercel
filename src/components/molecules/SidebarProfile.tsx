@@ -13,8 +13,16 @@ const SidebarProfile = () => {
   const [profileData, setProfileData] = useState<IProfile>()
 
   useEffect(() => {
-    if (profile && profile.data) {
-      setProfileData(profile.data as IProfile)
+    let load = false
+
+    if (!load) {
+      if (profile && profile.data) {
+        setProfileData(profile.data as IProfile)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [profile])
 
@@ -41,13 +49,13 @@ const SidebarProfile = () => {
       {profileData && (
         <StatProfile
           exp={{
-            level: profileData.level,
-            expAmount: profileData.exp,
-            maxExp: profileData.max_exp
+            level: profileData?.level,
+            expAmount: profileData?.exp,
+            maxExp: profileData?.max_exp
           }}
           energy={{
-            staminaPoint: profileData.stamina_point,
-            totalStamina: profileData.total_stamina || 20
+            staminaPoint: profileData?.stamina_point,
+            totalStamina: profileData?.total_stamina || 20
           }}
           className="flex-col"
           sx={{

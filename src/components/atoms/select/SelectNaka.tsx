@@ -12,6 +12,7 @@ import {
 } from "@mui/material"
 import { useTranslation } from "next-i18next"
 import { useRouter } from "next/router"
+import Link from "next/link"
 import ButtonClose from "../button/ButtonClose"
 
 interface IProp {
@@ -101,25 +102,30 @@ const SelectNaka = ({
                             }
                           }}
                         >
-                          <ListItemIcon className="!text-primary-contrastText ">
-                            {option.icon}
-                          </ListItemIcon>
-                          <ListItemText className="w-50">
-                            <Typography className="!font-neue-machina-semi !text-sm">
-                              {option.label}
-                            </Typography>
-                          </ListItemText>
-                          {option.textEnd && (
-                            <Box
-                              component="div"
-                              className="w-max "
-                            >
-                              <ListItemText className="text-end-select-naka rounded-less border border-neutral-700 bg-primary-main py-[2px] px-2 text-center font-neue-machina-semi text-xs uppercase ">
-                                <Typography className="uppercase text-primary-contrastText" />
-                                {option.textEnd}
-                              </ListItemText>
-                            </Box>
-                          )}
+                          <Link
+                            href={option.link ?? ""}
+                            className="flex w-full justify-between"
+                          >
+                            <ListItemIcon className="!text-primary-contrastText ">
+                              {option.icon}
+                            </ListItemIcon>
+                            <ListItemText className="w-50">
+                              <Typography className="!font-neue-machina-semi !text-sm">
+                                {option.label}
+                              </Typography>
+                            </ListItemText>
+                            {option.textEnd && (
+                              <Box
+                                component="div"
+                                className="w-max "
+                              >
+                                <ListItemText className="text-end-select-naka rounded-less border border-neutral-700 bg-primary-main py-[2px] px-2 text-center font-neue-machina-semi text-xs uppercase ">
+                                  <Typography className="uppercase text-primary-contrastText" />
+                                  {option.textEnd}
+                                </ListItemText>
+                              </Box>
+                            )}
+                          </Link>
                         </MenuItem>
                       ))}
                     </MenuList>

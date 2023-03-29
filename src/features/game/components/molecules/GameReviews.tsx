@@ -26,9 +26,17 @@ const GameReviews = ({ gameType, gameId }: IGameReviewProps) => {
   const [average, setAverage] = useState<number>(0)
 
   useEffect(() => {
-    if (allReviewsData) {
-      setReview(allReviewsData.data)
-      setTotalCount(allReviewsData.info.totalCount)
+    let load = false
+
+    if (!load) {
+      if (allReviewsData) {
+        setReview(allReviewsData.data)
+        setTotalCount(allReviewsData.info.totalCount)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [allReviewsData, setTotalCount])
 
@@ -36,13 +44,21 @@ const GameReviews = ({ gameType, gameId }: IGameReviewProps) => {
    * @description Calculate average rating
    */
   useEffect(() => {
-    if (review && review.length > 0) {
-      const total = review.reduce(
-        (acc, cur) => acc + parseFloat(cur.review_rate),
-        0
-      )
-      const _average = total / review.length
-      setAverage(_average)
+    let load = false
+
+    if (!load) {
+      if (review && review.length > 0) {
+        const total = review.reduce(
+          (acc, cur) => acc + parseFloat(cur.review_rate),
+          0
+        )
+        const _average = total / review.length
+        setAverage(_average)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [review])
 

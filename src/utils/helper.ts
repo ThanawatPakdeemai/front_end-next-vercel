@@ -6,9 +6,9 @@ import { IPropsFormatNumberOption } from "@interfaces/IHelper"
 import { IGetEventLog } from "@interfaces/ITransaction"
 import { ILocal, TLocalKey, ELocalKey } from "@interfaces/ILocal"
 import { ICurrentNakaData } from "@feature/inventory/interfaces/IInventoryService"
-import { getCurrentNaka } from "@feature/inventory/containers/services/inventory.service"
 import { IResGetIp } from "@interfaces/IGetIP"
 import { trickerPriceBNBExternal } from "@feature/buyItem/containers/services/currency.services"
+import { getCurrentNaka } from "@feature/balance/containers/services/balance.services"
 
 const names = ["wei", "kwei", "mwei", "gwei", "szabo", "finney", "ether"]
 

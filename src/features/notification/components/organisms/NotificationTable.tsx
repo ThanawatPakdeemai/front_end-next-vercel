@@ -34,8 +34,16 @@ const NotificationsTable = ({
   const { t } = useTranslation()
 
   useEffect(() => {
-    setStart((page - 1) * limit)
-    setEnd(page * limit)
+    let load = false
+
+    if (!load) {
+      setStart((page - 1) * limit)
+      setEnd(page * limit)
+    }
+
+    return () => {
+      load = true
+    }
   }, [page, limit])
 
   const handleKeyword = (_text: string) => {

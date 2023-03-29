@@ -20,11 +20,19 @@ const GameSummaryPage = ({ _roomId }: IProp) => {
   const splitPath = router.asPath.split("/")
 
   useEffect(() => {
-    if (summaryGameData) {
-      const sortResult = summaryGameData.sort(
-        (a, b) => b.current_score - a.current_score
-      )
-      setPlayerReward(sortResult)
+    let load = false
+
+    if (!load) {
+      if (summaryGameData) {
+        const sortResult = summaryGameData.sort(
+          (a, b) => b.current_score - a.current_score
+        )
+        setPlayerReward(sortResult)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [summaryGameData])
 
@@ -56,7 +64,7 @@ const GameSummaryPage = ({ _roomId }: IProp) => {
       </div>
     </>
   ) : (
-    <>Loading...</>
+    <>Please login</>
   )
 }
 

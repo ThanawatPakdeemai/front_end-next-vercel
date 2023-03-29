@@ -23,8 +23,16 @@ const MenuLoggedin = ({ ele }: IProp) => {
   }
 
   useEffect(() => {
-    if (profile && profile.data) {
-      setProfileData(profile.data as IProfile)
+    let load = false
+
+    if (!load) {
+      if (profile && profile.data) {
+        setProfileData(profile.data as IProfile)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [profile])
 

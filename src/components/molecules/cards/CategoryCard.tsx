@@ -8,10 +8,17 @@ export interface ICategoryCard {
   img: string
   text: string
   icon?: string
+  href?: string
   onHandleClick?: (_link?: string) => void
 }
 
-const CategoryCard = ({ img, text, icon, onHandleClick }: ICategoryCard) => {
+const CategoryCard = ({
+  img,
+  text,
+  icon,
+  href,
+  onHandleClick
+}: ICategoryCard) => {
   const cardImg = {
     init: {
       scale: 1
@@ -78,6 +85,7 @@ const CategoryCard = ({ img, text, icon, onHandleClick }: ICategoryCard) => {
               }
               type="button"
               text={text}
+              href={href}
               handleClick={onHandleClick}
               className="z-[2] h-[50px] w-full bg-primary-main capitalize "
             />

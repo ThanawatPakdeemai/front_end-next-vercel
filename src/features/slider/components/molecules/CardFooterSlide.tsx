@@ -3,10 +3,11 @@ import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import ButtonFavourite from "@components/atoms/button/ButtonFavourite"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { useRouter } from "next/router"
-import useGameStore from "@stores/game"
 import { Box } from "@mui/material"
-import { validTypeGames } from "@pages/[typeGame]"
+import useGlobal from "@hooks/useGlobal"
+import useFavoriteGameContoller from "@feature/favourite/containers/hooks/useFavoriteGameContoller"
+import { useRouter } from "next/router"
+import { useTranslation } from "react-i18next"
 
 interface IContentFooterBannerSlide {
   gameData: IGame
@@ -15,24 +16,16 @@ interface IContentFooterBannerSlide {
 
 const CardFooterSlide = ({
   gameData,
-  text = "Play Now"
+  text = "play_now"
 }: IContentFooterBannerSlide) => {
-  const { onSetGameData } = useGameStore()
+  const { t } = useTranslation()
   const router = useRouter()
-
-  const onHandleClick = (_gameUrl: string, _gameData: IGame) => {
-    let type = validTypeGames?.[0]
-    if (_gameData?.play_to_earn && _gameData?.play_to_earn_status === "free") {
-      type = validTypeGames?.[1]
-      router.push(`/${type}/${_gameUrl}/roomlist`)
-    } else if (_gameData.game_type === "storymode") {
-      type = validTypeGames?.[2]
-      router.push(`/${type}/${_gameUrl}`)
-    } else {
-      router.push(`/${type}/${_gameUrl}`)
-    }
-    onSetGameData(_gameData)
-  }
+  const { onHandleSetGameStore, getTypeGamePathFolder, stateProfile } =
+    useGlobal()
+  const { onClickFavouriteButton, favouriteStatus } = useFavoriteGameContoller({
+    playerId: stateProfile?.id ?? "",
+    gameId: gameData.id
+  })
 
   return (
     <footer className="slide-item--footer relative mt-4 flex items-center justify-between md:mt-auto">
@@ -46,17 +39,26 @@ const CardFooterSlide = ({
         className="w-[calc(100%-80px)]"
       >
         <ButtonLink
-          text={text}
-          href={gameData.path}
+          text={t(text)}
           icon={<SportsEsportsOutlinedIcon />}
           size="large"
           color="secondary"
           variant="contained"
           className="w-full"
-          onClick={() => onHandleClick(gameData.path, gameData)}
+          href=""
+          onClick={() => {
+            onHandleSetGameStore(getTypeGamePathFolder(gameData), gameData)
+            router.push(
+              `/${getTypeGamePathFolder(gameData)}-games/${gameData.path}`
+            )
+          }}
         />
       </Box>
-      <ButtonFavourite className="absolute right-0 top-0" />
+      <ButtonFavourite
+        handleClick={onClickFavouriteButton}
+        favouriteStatus={favouriteStatus}
+        className="absolute right-0 top-0"
+      />
     </footer>
   )
 }

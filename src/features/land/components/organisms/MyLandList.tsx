@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from "react"
 import { IconVerify } from "@components/icons/Icons"
 import CopyButton from "@components/atoms/CopyButton"
-import useGetMyLand from "@feature/land/containers/hooks/useGetMyLand"
+import { useGetMyLand } from "@feature/land/containers/hooks/useGetMyLand"
 import { IMarketLandData } from "@feature/land/interfaces/ILandService"
 import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import DropdownLimit from "@components/atoms/DropdownLimit"
@@ -33,37 +33,45 @@ const MyLandList = () => {
   const { sortLandId, sortBlockPoint, landListHeader } = useMyLandController()
 
   useEffect(() => {
-    const fetchHistory = async () => {
-      if (profile.data) {
-        await mutateGetMyLand({
-          _limit: limit,
-          _page: page,
-          _search: {
-            player_id: profile.data && profile.data.id ? profile.data.id : "",
-            isRent: false,
-            type: "nft_land"
-          },
-          _sort:
-            sortLandId || sortBlockPoint
-              ? {
-                  land_id: sortLandId,
-                  position: sortBlockPoint,
-                  created_at: -1
-                }
-              : { created_at: -1 },
-          _landList: []
-        }).then((res) => {
-          // res.status === 200 -> ok
-          if (res.data) {
-            setTxHistory(res.data)
-          }
-          if (res.info) {
-            setTotalCount(res.info.totalCount)
-          }
-        })
+    let load = false
+
+    if (!load) {
+      const fetchHistory = async () => {
+        if (profile.data) {
+          await mutateGetMyLand({
+            _limit: limit,
+            _page: page,
+            _search: {
+              player_id: profile.data && profile.data.id ? profile.data.id : "",
+              isRent: false,
+              type: "nft_land"
+            },
+            _sort:
+              sortLandId || sortBlockPoint
+                ? {
+                    land_id: sortLandId,
+                    position: sortBlockPoint,
+                    created_at: -1
+                  }
+                : { created_at: -1 },
+            _landList: []
+          }).then((res) => {
+            // res.status === 200 -> ok
+            if (res.data) {
+              setTxHistory(res.data)
+            }
+            if (res.info) {
+              setTotalCount(res.info.totalCount)
+            }
+          })
+        }
       }
+      fetchHistory()
     }
-    fetchHistory()
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, page, sortLandId, sortBlockPoint])
 

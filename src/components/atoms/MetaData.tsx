@@ -13,6 +13,7 @@ const Meta = () => {
 
   useEffect(() => {
     let load = false
+
     if (!load) {
       getSeoAll().then((_result) => {
         const { data } = _result as ISeoResponse

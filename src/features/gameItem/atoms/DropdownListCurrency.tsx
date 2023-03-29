@@ -7,11 +7,12 @@ import { Popover } from "@mui/material"
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import SelectDropdownCurrency from "@components/atoms/selectDropdown/SelectDropdownCurrency"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
-import useGlobal from "@hooks/useGlobal"
+// import useGlobal from "@hooks/useGlobal"
 import INaka from "@components/icons/Naka"
 import IBusd from "@components/icons/Busd"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import { useWeb3Provider } from "@providers/Web3Provider"
+import useProfileStore from "@stores/profileStore"
 import ButtonDropdown from "./ButtonDropdown"
 
 interface IProp {
@@ -33,9 +34,10 @@ const DropdownListItem = ({
 }: // defaultValue
 IProp) => {
   // eslint-disable-next-line no-unused-vars
-  const { getDefaultCoin } = useGlobal()
+  // const { getDefaultCoin } = useGlobal()
   const { address } = useWeb3Provider()
-  const [defaultItem, setDefaultItem] = useState<ITokenContract>(list?.[2])
+  const profile = useProfileStore((state) => state.profile.data)
+  const [defaultItem, setDefaultItem] = useState<ITokenContract>(list?.[0])
   // getDefaultCoin()[0]
   const { setValue, updatePricePerItem } = useBuyGameItemController()
 
@@ -45,16 +47,28 @@ IProp) => {
   }
 
   React.useEffect(() => {
-    setValue("currency", list?.[2])
-    setValue("currency_id", list[2]?.symbol as string)
-    updatePricePerItem()
-    if (onChangeSelect) onChangeSelect(list?.[2])
+    let load = false
+
+    if (!load) {
+      if (list) {
+        setValue("currency", list?.[0])
+        setValue("currency_id", list?.[0]?.symbol as string)
+        updatePricePerItem()
+        if (onChangeSelect) onChangeSelect(list?.[0])
+      }
+    }
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address])
+  }, [address, profile])
 
   React.useEffect(() => {
     let load = false
+
     if (!load) updatePricePerItem()
+
     return () => {
       load = true
     }

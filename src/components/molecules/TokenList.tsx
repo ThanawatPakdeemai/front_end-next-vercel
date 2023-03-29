@@ -13,13 +13,15 @@ interface ITokenList {
   currentTabChainSelected: IChainList
   currentTokenSelected: string
   displayBalance?: boolean
+  widthBalance?: string
 }
 
 const TokenList = ({
   dataList,
   currentTabChainSelected,
   currentTokenSelected,
-  displayBalance = false
+  displayBalance = false,
+  widthBalance = "w-[40px]"
 }: ITokenList) => {
   const [open, setOpen] = useState<boolean>(false)
 
@@ -72,6 +74,7 @@ const TokenList = ({
         title="Asset"
         handleClick={handleOpen}
         shadow
+        widthBalance={widthBalance}
       />
       <ModalCustom
         open={open}

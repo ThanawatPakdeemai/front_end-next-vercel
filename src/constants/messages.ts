@@ -53,5 +53,12 @@ export const MESSAGES = {
   "install_wallet":
     "MetaMask is not installed. Please consider installing it: https://metamask.io/download.html",
   "wallet_switchEthereumChain": "Switch chain success",
-  "wallet_addEthereumChain": "Add chain success"
+  "wallet_addEthereumChain": "Add chain success",
+  "wallet_is_correct": "Wallet is correct",
+  "wallet_is_incorrect": "Wallet is incorrect",
+  "wallet_is_locked": "Wallet is locked",
+  "wallet_is_not_installed": "Wallet is not installed",
+  "wallet_is_not_unlocked": "Wallet is not unlocked",
+  "wallet_is_not_connected": "Wallet is not connected",
+  "wallet_is_not_correct_network": "Wallet is not correct network"
 }

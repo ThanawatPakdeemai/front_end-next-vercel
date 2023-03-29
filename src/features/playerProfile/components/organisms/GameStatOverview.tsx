@@ -31,12 +31,12 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
       {openBadges ? null : (
         <div
           key={uuidv4()}
-          className="mb-10 grid w-full gap-2 overflow-x-scroll rounded-[26px] bg-neutral-800 p-2"
+          className="mb-10 grid w-full gap-2 rounded-[26px] bg-neutral-800 p-2 "
         >
           {data.data.game_data.map((item, index) => (
             <div
               key={uuidv4()}
-              className="grid w-full min-w-[720px] grid-cols-8 gap-4 rounded-[18px] bg-neutral-900 p-8 sm:min-w-min md:overflow-x-scroll "
+              className="grid w-full  grid-cols-4 gap-4 rounded-[18px] bg-neutral-900 p-8 sm:min-w-min md:grid-cols-8 "
             >
               {/* sm:min-w-min md:max-w-max sm:min-w-[720px] */}
               <div className="col-span-2 md:col-span-3">
@@ -45,16 +45,14 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
                   index={index + limit * (page - 1)}
                 />
                 <h1 className="py-5 text-neutral-300">{item.name}</h1>
-                <Typography className=" text-xs text-neutral-500">
-                  <TooltipsCustom
-                    className="truncate hover:text-clip"
-                    placement="bottom"
-                    title={item.story}
-                    color="error"
-                  >
-                    <div>{item.story}</div>
-                  </TooltipsCustom>
-                </Typography>
+                <TooltipsCustom
+                  className="truncate text-xs text-neutral-500 hover:text-clip"
+                  placement="bottom"
+                  title={item.story}
+                  color="error"
+                >
+                  <div>{item.story}</div>
+                </TooltipsCustom>
               </div>
               <div className="col-span-2 grid grid-cols-2 gap-2 md:gap-4">
                 <div>
@@ -102,7 +100,7 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
                   />
                 </div>
               </div>
-              <div className="col-span-3 flex items-center justify-between">
+              <div className="col-span-4 flex items-center justify-between md:col-span-3">
                 <Image
                   className="mr-4 h-40 w-40 rounded-[15px] object-cover"
                   src={item.image}

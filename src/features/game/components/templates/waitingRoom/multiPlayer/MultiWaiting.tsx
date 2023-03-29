@@ -81,16 +81,21 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   } = useSocketWaitingRoom({ ...propsSocketWaitingRoom })
 
   useEffect(() => {
-    if (profile) {
-      const token = helper.getTokenFromLocal()
+    let load = false
 
-      if (token) {
-        socketWaitingRoom.auth = { token }
-        socketWaitingRoom.connect()
+    if (!load) {
+      if (profile) {
+        const token = helper.getTokenFromLocal()
+
+        if (token) {
+          socketWaitingRoom.auth = { token }
+          socketWaitingRoom.connect()
+        }
       }
     }
 
     return () => {
+      load = false
       if (socketWaitingRoom.connected === false) return
       socketWaitingRoom.disconnect()
     }
@@ -145,20 +150,36 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   }, [gameItemList, dataPlayers, onSetGameItemSelectd])
 
   useEffect(() => {
-    if (profile) {
-      checkItemSelected()
+    let load = false
+
+    if (!load) {
+      if (profile) {
+        checkItemSelected()
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [checkItemSelected, profile])
 
   useEffect(() => {
-    if (isConnected) {
-      getPlayersMulti().then((res) => {
-        if (res) {
-          const data = res as IGameRoomListSocket
-          mapPlayer(data)
-          checkItemSelected()
-        }
-      })
+    let load = false
+
+    if (!load) {
+      if (isConnected) {
+        getPlayersMulti().then((res) => {
+          if (res) {
+            const data = res as IGameRoomListSocket
+            mapPlayer(data)
+            checkItemSelected()
+          }
+        })
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [checkItemSelected, getPlayersMulti, isConnected, mapPlayer])
 
@@ -171,14 +192,19 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
    *@description Will run when leaving the current page; on back/forward actions out room this game
    */
   useEffect(() => {
-    router.beforePopState(({ as }) => {
-      if (as !== router.asPath) {
-        outRoom()
-      }
-      return true
-    })
+    let load = false
+
+    if (!load) {
+      router.beforePopState(({ as }) => {
+        if (as !== router.asPath) {
+          outRoom()
+        }
+        return true
+      })
+    }
 
     return () => {
+      load = true
       router.beforePopState(() => true)
     }
   }, [outRoom, router])
@@ -202,14 +228,22 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   // }, [onSendMessage])
 
   useEffect(() => {
-    if (isConnected) {
-      getPlayersCheckItemOfPlayerListen().then((res) => {
-        if (res) {
-          const data = res as IGameRoomListSocket
-          mapPlayer(data)
-          checkItemSelected()
-        }
-      })
+    let load = false
+
+    if (!load) {
+      if (isConnected) {
+        getPlayersCheckItemOfPlayerListen().then((res) => {
+          if (res) {
+            const data = res as IGameRoomListSocket
+            mapPlayer(data)
+            checkItemSelected()
+          }
+        })
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [
     getPlayersCheckItemOfPlayerListen,
@@ -222,14 +256,22 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   ])
 
   useEffect(() => {
-    if (isConnected) {
-      getPlayersCheckRoomRollbackListen().then((res) => {
-        if (res) {
-          const data = res as IGameRoomListSocket
-          checkItemSelected()
-          mapPlayer(data)
-        }
-      })
+    let load = false
+
+    if (!load) {
+      if (isConnected) {
+        getPlayersCheckRoomRollbackListen().then((res) => {
+          if (res) {
+            const data = res as IGameRoomListSocket
+            checkItemSelected()
+            mapPlayer(data)
+          }
+        })
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [
     getPlayersCheckRoomRollbackListen,
@@ -324,9 +366,8 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
             </Box>
           </Box>
           {gameData &&
-            ((gameData?.play_to_earn &&
-              gameData?.play_to_earn_status !== "free") ||
-              !gameData.tournament) && (
+            gameData?.play_to_earn_status !== "free" &&
+            !gameData.tournament && (
               <BuyItemBody>
                 <CardButItem gameObject={gameData} />
                 <Chat />

@@ -2,6 +2,7 @@ import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { StoryModeHeaderMenu } from "@constants/gameSlide"
 import GameCard from "@feature/game/components/molecules/GameCard"
+// import GameCard from "@feature/game/containers/components/molecules/GameCard"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import { getGameByTypes } from "@feature/game/containers/services/game.service"
 import useGlobal from "@hooks/useGlobal"
@@ -22,7 +23,7 @@ const StoryModeGamesPage = () => {
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
-  const { onHandleClick } = useGlobal()
+  const { getTypeGamePathFolder, onHandleSetGameStore } = useGlobal()
   const {
     category: categoryDropdown,
     gameItem: gameItemDropdown,
@@ -45,26 +46,42 @@ const StoryModeGamesPage = () => {
   })
 
   useEffect(() => {
-    // totalCount
-    if (!fetchRef.current && gameData) {
-      fetchRef.current = true
-      setTotalCount(gameData.info.totalCount)
+    let load = false
+
+    if (!load) {
+      // totalCount
+      if (!fetchRef.current && gameData) {
+        fetchRef.current = true
+        setTotalCount(gameData.info.totalCount)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [gameData])
 
   useEffect(() => {
-    if (!isPreviousData && gameData) {
-      queryClient.prefetchQuery({
-        queryKey: ["games", type, page + 1],
-        queryFn: () =>
-          getGameByTypes({ _type: type, _limit: limit, _page: page + 1 })
-      })
-      setGameFilter(gameData.data)
+    let load = false
+
+    if (!load) {
+      if (!isPreviousData && gameData) {
+        queryClient.prefetchQuery({
+          queryKey: ["games", type, page + 1],
+          queryFn: () =>
+            getGameByTypes({ _type: type, _limit: limit, _page: page + 1 })
+        })
+        setGameFilter(gameData.data)
+      }
+      clearSearch()
+      clearCategory()
+      clearGameItem()
+      clearDevice()
     }
-    clearSearch()
-    clearCategory()
-    clearGameItem()
-    clearDevice()
+
+    return () => {
+      load = true
+    }
   }, [
     clearCategory,
     clearDevice,
@@ -78,25 +95,33 @@ const StoryModeGamesPage = () => {
   const { mutateGetGamesByCategoryId, isLoading: loadingFilterGame } =
     useFilterGameList()
   useEffect(() => {
-    const filterData = {
-      limit,
-      skip: page,
-      sort: "name",
-      search: searchDropdown,
-      category: categoryDropdown,
-      item: gameItemDropdown,
-      device: deviceDropdown,
-      game_type: "storymode",
-      tournament: false,
-      nftgame: "all"
-    }
-    mutateGetGamesByCategoryId(filterData).then((res) => {
-      if (res) {
-        const { data, info } = res
-        setGameFilter(data)
-        setTotalCount(info ? info.totalCount : 1)
+    let load = false
+
+    if (!load) {
+      const filterData = {
+        limit,
+        skip: page,
+        sort: "name",
+        search: searchDropdown,
+        category: categoryDropdown,
+        item: gameItemDropdown,
+        device: deviceDropdown,
+        game_type: "storymode",
+        tournament: false,
+        nftgame: "all"
       }
-    })
+      mutateGetGamesByCategoryId(filterData).then((res) => {
+        if (res) {
+          const { data, info } = res
+          setGameFilter(data)
+          setTotalCount(info ? info.totalCount : 1)
+        }
+      })
+    }
+
+    return () => {
+      load = true
+    }
   }, [
     categoryDropdown,
     gameItemDropdown,
@@ -122,15 +147,19 @@ const StoryModeGamesPage = () => {
                 staminaRecovery={staminaRecovery}
                 cooldown={cooldown}
                 setCooldown={setCooldown}
+                href={`/${getTypeGamePathFolder(game)}/${game.path}`}
                 onHandleClick={() =>
-                  onHandleClick("story-mode", game.path, game)
+                  onHandleSetGameStore(getTypeGamePathFolder(game), game)
                 }
+                // onHandleClick={() =>
+                //   onHandleClick("story-mode", game.path, game)
+                // }
               />
             ))}
       </div>
 
       {totalCount === 0 && (
-        <div className="d-flex  justify-center text-center">No data</div>
+        <div className="d-flex justify-center text-center">No data</div>
       )}
 
       <PaginationNaka

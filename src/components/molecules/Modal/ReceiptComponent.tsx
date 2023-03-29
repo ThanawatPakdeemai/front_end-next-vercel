@@ -37,14 +37,22 @@ const ReceiptComponent = ({
   const [isAllowance, setAllowance] = useState<boolean | undefined>(undefined)
 
   useEffect(() => {
-    const onGetApproval = async () => {
-      await onCheckAllowance(nftType, seller)
-        .then((response) => {
-          setAllowance(response.allowStatus)
-        })
-        .catch((error) => console.error(error))
+    let load = false
+
+    if (!load) {
+      const onGetApproval = async () => {
+        await onCheckAllowance(nftType, seller)
+          .then((response) => {
+            setAllowance(response.allowStatus)
+          })
+          .catch((error) => console.error(error))
+      }
+      if (nftType && seller) onGetApproval()
     }
-    if (nftType && seller) onGetApproval()
+
+    return () => {
+      load = true
+    }
   }, [nftType, onCheckAllowance, seller])
 
   return (

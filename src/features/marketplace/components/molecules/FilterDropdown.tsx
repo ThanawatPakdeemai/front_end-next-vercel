@@ -23,11 +23,19 @@ const FilterDropdown = () => {
   }
 
   useEffect(() => {
-    const checkRoute = ddList().find((_val) =>
-      _val.href.includes(router.asPath.split("/").pop() as string)
-    )
-    if (checkRoute) {
-      setValue(checkRoute.label)
+    let load = false
+
+    if (!load) {
+      const checkRoute = ddList().find((_val) =>
+        _val.href.includes(router.asPath.split("/").pop() as string)
+      )
+      if (checkRoute) {
+        setValue(checkRoute.label)
+      }
+    }
+
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router])

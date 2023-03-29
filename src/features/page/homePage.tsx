@@ -49,7 +49,15 @@ const Home = () => {
    */
   const { createParticle } = useTweenEffect(600, 300, 50, -500)
   useEffect(() => {
-    if (hydrated) createParticle()
+    let load = false
+
+    if (!load) {
+      if (hydrated) createParticle()
+    }
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hydrated])
 
@@ -78,20 +86,36 @@ const Home = () => {
   })
 
   useEffect(() => {
-    if (f2pGameData) {
-      setF2PGame(f2pGameData.data)
+    let load = false
+
+    if (!load) {
+      if (f2pGameData) {
+        setF2PGame(f2pGameData.data)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [f2pCurType, f2pGameData, p2eGameData])
 
   useEffect(() => {
-    if (p2eCurType === "hot-game") {
-      if (hotGameData) {
-        setP2EGame(hotGameData.data)
+    let load = false
+
+    if (!load) {
+      if (p2eCurType === "hot-game") {
+        if (hotGameData) {
+          setP2EGame(hotGameData.data)
+        }
+      } else if (p2eCurType === "play-to-earn") {
+        if (p2eGameData) {
+          setP2EGame(p2eGameData.data)
+        }
       }
-    } else if (p2eCurType === "play-to-earn") {
-      if (p2eGameData) {
-        setP2EGame(p2eGameData.data)
-      }
+    }
+
+    return () => {
+      load = true
     }
   }, [p2eCurType, hotGameData, p2eGameData])
 
@@ -178,13 +202,13 @@ const Home = () => {
           </div>
         </Box>
         <div className="relative flex-[1_1_100%] overflow-hidden sm:flex-[1_1_60%] xl:flex-none">
+          <div
+            id="spark-fire"
+            className="absolute top-0 left-0 hidden h-[calc(100%-100px)] w-full xl:block"
+          />
           <CarouselSlide
             slideGames={GAME_DOWNLOAD}
             isLoading={false}
-          />
-          <div
-            id="spark-fire"
-            className="absolute top-0 left-0 hidden h-full w-full xl:block"
           />
         </div>
       </div>
@@ -267,10 +291,10 @@ const Home = () => {
                 iconBtn={<IDiamond />}
                 textBtn="NAKA NFT"
                 href="/arcade-emporium"
-                srcMain={IMAGES.frontNakaBand.src}
-                altMain={IMAGES.frontNakaBand.alt}
-                srcSecond={IMAGES.backNakaBand.src}
-                altSecond={IMAGES.backNakaBand.alt}
+                srcMain={IMAGES.homeNakaNFT.src}
+                altMain={IMAGES.homeNakaNFT.alt}
+                srcSecond={IMAGES.backHomeNakaNFT.src}
+                altSecond={IMAGES.backHomeNakaNFT.alt}
               />
             </CardLinkTemplate>
           </Grid>

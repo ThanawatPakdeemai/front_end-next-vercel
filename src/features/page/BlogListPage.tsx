@@ -54,26 +54,42 @@ const BlogListPage = () => {
   })
 
   useEffect(() => {
-    if (!fetchRef.current && getBlogAllData) {
-      fetchRef.current = true
-      setTotalCount(getBlogAllData.info.totalCount)
+    let load = false
+
+    if (!load) {
+      if (!fetchRef.current && getBlogAllData) {
+        fetchRef.current = true
+        setTotalCount(getBlogAllData.info.totalCount)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [getBlogAllData])
 
   useEffect(() => {
-    if (!isPreviousData && getBlogAllData) {
-      queryClient.prefetchQuery({
-        queryKey: ["blog", type, page + 1],
-        queryFn: () =>
-          getBlogAll({
-            limit: limitPage,
-            skip: page + 1,
-            search: "",
-            sort: type,
-            cate: "all"
-          })
-      })
-      setTotalCount(getBlogAllData.info.totalCount)
+    let load = false
+
+    if (!load) {
+      if (!isPreviousData && getBlogAllData) {
+        queryClient.prefetchQuery({
+          queryKey: ["blog", type, page + 1],
+          queryFn: () =>
+            getBlogAll({
+              limit: limitPage,
+              skip: page + 1,
+              search: "",
+              sort: type,
+              cate: "all"
+            })
+        })
+        setTotalCount(getBlogAllData.info.totalCount)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [getBlogAllData, isPreviousData, page, queryClient, type])
 

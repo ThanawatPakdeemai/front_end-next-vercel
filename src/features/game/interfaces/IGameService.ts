@@ -30,6 +30,7 @@ export type IGetType =
   | "partner-game"
   | "partner-publisher"
   | "arcade-emporium"
+  | "nft-game"
   | "all"
 
 export type TRoomStatus =
@@ -317,6 +318,29 @@ export interface IGameCurrentPlayerMulti extends IGameCurrentPlayer {
   owner?: boolean
 }
 
+export interface IGameMode {
+  number: number
+  type: string
+  text: string
+}
+
+export interface IPlayerTeam {
+  number: number
+  type: string
+  text: string
+}
+
+export interface IAiTeam {
+  number: number
+  type: string
+  text: string
+}
+export interface IGoalRushData {
+  game_mode: IGameMode
+  player_team: IPlayerTeam
+  ai_team: IAiTeam
+}
+
 export interface IGameHistoryUserPlay extends IGameBase {
   status: string
   timestamp: Date
@@ -365,6 +389,7 @@ export interface IGameRoomDetail extends IGameRoom {
   history_user_play: IGameHistoryUserPlay[]
   current_time: Date
   item_id: string
+  data_play?: IGoalRushData
 }
 
 export interface IGameUsedItemsDetail extends IGameItem {

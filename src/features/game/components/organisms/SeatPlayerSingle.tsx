@@ -37,12 +37,18 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   const [ip, setIp] = useState("")
 
   useEffect(() => {
-    if (data && data.type_code === "survival_01")
-      Helper.getIP().then((res) => {
-        setIp((res as IResGetIp).ip)
-      })
+    let load = false
+
+    if (!load) {
+      if (data && data.type_code === "survival_01")
+        Helper.getIP().then((res) => {
+          setIp((res as IResGetIp).ip)
+        })
+    }
+
     return () => {
       setIp("")
+      load = true
     }
   }, [data])
 
@@ -99,12 +105,19 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   }, [gameRoomById])
 
   useEffect(() => {
-    const statueTimout = checkRoomTimeout()
-    if (statueTimout) {
-      router.push(`/${data?.path}/roomlist`)
-      errorToast(MESSAGES["room-timeout"])
+    let load = false
+
+    if (!load) {
+      const statueTimout = checkRoomTimeout()
+      if (statueTimout) {
+        router.push(`/${data?.path}/roomlist`)
+        errorToast(MESSAGES["room-timeout"])
+      }
     }
-    return () => {}
+
+    return () => {
+      load = true
+    }
   }, [checkRoomTimeout, errorToast, data?.path, gameRoomById, router])
 
   const checkReadyPlayer = () => {
@@ -151,58 +164,63 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   }
 
   useEffect(() => {
-    if (
-      gameRoomById &&
-      profile &&
-      room_id &&
-      item_id &&
-      data &&
-      data.game_type === "singleplayer"
-    ) {
-      const frontendUrl = `${baseUrlFront}/${router.query.typeGame}/${data.path}/summary/${room_id}`
+    let load = false
 
-      if (data.type_code === "survival_01") {
-        if (ip) {
-          const data_game = `${room_id}:|:${profile.id}:|:${
-            itemSelected?._id
-          }:|:${profile.email}:|:${Helper.getLocalStorage(
+    if (!load) {
+      if (
+        gameRoomById &&
+        profile &&
+        room_id &&
+        item_id &&
+        data &&
+        data.game_type === "singleplayer"
+      ) {
+        const frontendUrl = `${baseUrlFront}/${router.query.typeGame}/${data.path}/summary/${room_id}`
+
+        if (data.type_code === "survival_01") {
+          if (ip) {
+            const data_game = `${room_id}:|:${profile.id}:|:${
+              itemSelected?._id
+            }:|:${profile.email}:|:${Helper.getLocalStorage(
+              "token"
+            )}:|:${frontendUrl}:|:${CONFIGS.BASE_URL.API}:|:${
+              gameRoomById.rank_name
+            }:|:${gameRoomById.room_number}:|:${new Date(
+              gameRoomById.start_time
+            ).getTime()}:|:${profile.username}:|:${
+              gameRoomById.max_players
+            }:|:${gameRoomById.stage_id}:|:${ip}:|:${
+              data.play_to_earn === true ? "free" : "not_free"
+            }:|:${profile.country}`
+            const gameURL = `${CONFIGS.BASE_URL.GAME}/${
+              data.id
+            }/?query=${Helper.makeID(8)}${btoa(data_game)}`
+            setGameUrl(gameURL)
+          }
+        } else {
+          const url_data = `${room_id}:|:${profile.id}:|:${item_id}:|:${
+            profile.email
+          }:|:${Helper.getLocalStorage(
             "token"
-          )}:|:${frontendUrl}:|:${CONFIGS.BASE_URL.API}:|:${
-            gameRoomById.rank_name
-          }:|:${gameRoomById.room_number}:|:${new Date(
-            gameRoomById.start_time
-          ).getTime()}:|:${profile.username}:|:${gameRoomById.max_players}:|:${
-            gameRoomById.stage_id
-          }:|:${ip}:|:${data.play_to_earn === true ? "free" : "not_free"}:|:${
-            profile.country
+          )}:|:${frontendUrl}:|:${baseUrlApi}:|:${gameRoomById.rank_name}:|:${
+            gameRoomById.room_number
+          }:|:${new Date(gameRoomById.start_time).getTime()}${
+            gameRoomById.stage_id !== undefined
+              ? `:|:${gameRoomById.stage_id}`
+              : ":|:0"
+          }:|:${profile.username}:|:${
+            data.play_to_earn === true ? "free" : "not_free"
           }`
-          const gameURL = `${CONFIGS.BASE_URL.GAME}/${
-            data.id
-          }/?query=${Helper.makeID(8)}${btoa(data_game)}`
+          const gameURL = `${baseUrlGame}/${data.id}/?${Helper.makeID(8)}${btoa(
+            url_data
+          )}`
           setGameUrl(gameURL)
         }
-      } else {
-        const url_data = `${room_id}:|:${profile.id}:|:${item_id}:|:${
-          profile.email
-        }:|:${Helper.getLocalStorage(
-          "token"
-        )}:|:${frontendUrl}:|:${baseUrlApi}:|:${gameRoomById.rank_name}:|:${
-          gameRoomById.room_number
-        }:|:${new Date(gameRoomById.start_time).getTime()}${
-          gameRoomById.stage_id !== undefined
-            ? `:|:${gameRoomById.stage_id}`
-            : ":|:0"
-        }:|:${profile.username}:|:${
-          data.play_to_earn === true ? "free" : "not_free"
-        }`
-        const gameURL = `${baseUrlGame}/${data.id}/?${Helper.makeID(8)}${btoa(
-          url_data
-        )}`
-        setGameUrl(gameURL)
       }
     }
     return () => {
       setGameUrl("")
+      load = true
     }
   }, [
     data,

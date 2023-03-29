@@ -1,7 +1,10 @@
 import { useMutation } from "@tanstack/react-query"
-import { getMyBuilding } from "../services/building.services"
+import {
+  getMyBuilding,
+  getMyForSaleBuilding
+} from "../services/building.services"
 
-const useGetMyBuilding = () => {
+export const useGetMyBuilding = () => {
   const { mutateAsync: mutateGetOwnerBuilding, isLoading } = useMutation({
     mutationKey: ["getMyBuilding"],
     mutationFn: getMyBuilding,
@@ -10,4 +13,13 @@ const useGetMyBuilding = () => {
   })
   return { mutateGetOwnerBuilding, isLoading }
 }
-export default useGetMyBuilding
+
+export const useGetMyForSaleBuilding = () => {
+  const { mutateAsync: mutateGetMyForSaleBuilding, isLoading } = useMutation({
+    mutationKey: ["getMyForsaleBuilding"],
+    mutationFn: getMyForSaleBuilding,
+    retry: false,
+    cacheTime: Infinity
+  })
+  return { mutateGetMyForSaleBuilding, isLoading }
+}

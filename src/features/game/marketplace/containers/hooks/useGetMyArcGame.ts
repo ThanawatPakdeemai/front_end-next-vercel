@@ -1,14 +1,27 @@
 import { useMutation } from "@tanstack/react-query"
-import { getMyArcGame } from "../services/arcadeGame.service"
+import {
+  getMyArcGame,
+  getMyForSaleArcGame
+} from "../services/arcadeGame.service"
 
-const useGetMyArcGame = () => {
+export const useGetMyArcGame = () => {
   const { mutateAsync: mutateGeyMyArcGame, isLoading } = useMutation(
     getMyArcGame,
     {
-      mutationKey: ["useTransferNFTArcGame"],
+      mutationKey: ["getMyArcGame"],
       retry: false
     }
   )
   return { mutateGeyMyArcGame, isLoading }
 }
-export default useGetMyArcGame
+
+export const useGetForSaleArcGame = () => {
+  const { mutateAsync: mutateGetForsaleArcGame, isLoading } = useMutation(
+    getMyForSaleArcGame,
+    {
+      mutationKey: ["getMyForSaleArcGame"],
+      retry: false
+    }
+  )
+  return { mutateGetForsaleArcGame, isLoading }
+}

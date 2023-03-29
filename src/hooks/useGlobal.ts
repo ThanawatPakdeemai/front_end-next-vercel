@@ -387,24 +387,20 @@ const useGlobal = (
   }
 
   useEffect(() => {
-    if (!isCancelled.current) {
-      if (router.asPath.includes("land")) {
-        setMarketType("nft_land")
-      } else if (router.asPath.includes("building")) {
-        setMarketType("nft_building")
-      } else if (router.asPath.includes("naka-punk")) {
-        setMarketType("nft_naka_punk")
-      } else if (router.asPath.includes("material")) {
-        setMarketType("nft_material")
-      } else if (router.asPath.includes("game-item")) {
-        setMarketType("game_item")
-      } else if (router.asPath.includes("arcade-game")) {
-        setMarketType("nft_game")
-      }
-    }
+    // use Effect not working correctly
 
-    return () => {
-      isCancelled.current = true
+    if (router.asPath.includes("land")) {
+      setMarketType("nft_land")
+    } else if (router.asPath.includes("building")) {
+      setMarketType("nft_building")
+    } else if (router.asPath.includes("naka-punk")) {
+      setMarketType("nft_naka_punk")
+    } else if (router.asPath.includes("material")) {
+      setMarketType("nft_material")
+    } else if (router.asPath.includes("game-item")) {
+      setMarketType("game_item")
+    } else if (router.asPath.includes("arcade-game")) {
+      setMarketType("nft_game")
     }
   }, [router.asPath])
 

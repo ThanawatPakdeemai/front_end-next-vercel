@@ -47,7 +47,7 @@ const MenuItemList = ({ data, ...props }: IProp | undefined | any) => (
       <>
         <p className="px-2">{data.name}</p>
         <div className="flex w-full items-center justify-between">
-          <span className="px-2  text-white-default ">XL {data.price} USD</span>
+          <span className="px-2  text-white-default ">{data.price} USD</span>
           {data.qty && <span className="px-2">{data.qty} item</span>}
         </div>
       </>

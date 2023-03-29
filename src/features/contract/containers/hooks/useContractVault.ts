@@ -9,7 +9,8 @@ import { useWeb3Provider } from "@providers/index"
 import { ITransactionResponse } from "@interfaces/ITransaction"
 import Helper from "@utils/helper"
 import BalanceVaultAbi from "@configs/abi/BalanceVault.json"
-import { DEFAULT_TOKEN_INFO, ITokenContract } from "./useContractVaultBinance"
+import { DEFAULT_TOKEN_INFO } from "@constants/defaultValues"
+import { ITokenContract } from "./useContractVaultBinance"
 
 const useContractVault = () => {
   const { WeiToNumber } = Helper
@@ -181,7 +182,8 @@ const useContractVault = () => {
 
         resolve({
           symbol: tokenSymbol.toString(),
-          tokenName: tokenName.toString(),
+          tokenName:
+            tokenName.toString() === "NK" ? "NAKA" : tokenName.toString(),
           totolSupply: totalSupply,
           decimals: decimalsPromise,
           address: _tokenAddress,

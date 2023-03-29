@@ -8,10 +8,7 @@ import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameI
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { ICurrentNakaData } from "@feature/inventory/interfaces/IInventoryService"
 import { useToast } from "@feature/toast/containers"
-import useGlobal from "@hooks/useGlobal"
-import useSwitchNetwork from "@hooks/useSwitchNetwork"
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
-import useChainSupport from "@stores/chainSupport"
 import useGameStore from "@stores/game"
 import useLoadingStore from "@stores/loading"
 import useProfileStore from "@stores/profileStore"
@@ -19,6 +16,9 @@ import Helper from "@utils/helper"
 import { useCallback, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { JsonRpcSigner } from "@ethersproject/providers"
+import useSupportedChain from "@hooks/useSupportedChain"
+import { useWeb3Provider } from "@providers/Web3Provider"
+import useChainSupportStore from "@stores/chainSupport"
 import useBuyGameItems from "./useBuyGameItems"
 
 const useBuyGameItemController = () => {
@@ -27,9 +27,9 @@ const useBuyGameItemController = () => {
   const { setOpen, setClose } = useLoadingStore()
   const { errorToast, successToast } = useToast()
   const { data, onSetGameItemSelectd, itemSelected } = useGameStore()
-  const { chainId, accounts, signer, address } = useSwitchNetwork()
-  const { chainSupport } = useChainSupport()
-  const { fetchNAKAToken, fetchAllTokenSupported } = useGlobal()
+  const { chainId, accounts, signer, address } = useWeb3Provider()
+  const { chainSupport } = useChainSupportStore()
+  const { fetchNAKAToken, fetchAllTokenSupported } = useSupportedChain()
   const { price } = useNakaPriceProvider()
 
   const game = useGameStore((state) => state.data)

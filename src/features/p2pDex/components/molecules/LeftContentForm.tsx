@@ -142,10 +142,6 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
               <HrLine className="" />
             </div>
             <Balance />
-            {/* <TokenListItem
-              icon={chain === "polygon" ? <INaka /> : <IBusd />}
-              text={balance || { digit: 0, text: "N/A" }}
-            /> */}
           </div>
         </div>
         {edit && isSwitchChain && (

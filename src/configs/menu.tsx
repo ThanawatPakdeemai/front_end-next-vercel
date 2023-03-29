@@ -46,7 +46,6 @@ import MyLandIcon from "@components/icons/Inventory/MyLandIcon"
 import TransactionIconMKP from "@components/icons/Inventory/TransactionIcon"
 import DollarIcon from "@components/icons/Referral/DollarIcon"
 import ProcessPaymentIcon from "@components/icons/Inventory/ProcessPaymentIcon"
-import DesktopIcon from "@components/icons/DesktopIcon"
 import { TType } from "@feature/marketplace/interfaces/IMarketService"
 
 export const MENU = [
@@ -105,12 +104,12 @@ export const MENU = [
         name: "Arcade Emporium",
         link: "/arcade-emporium",
         icon: DiamondIcon
-      },
-      {
-        name: "NAKA Pass",
-        icon: BoltIcon,
-        link: "/naka-pass"
       }
+      // {
+      //   name: "NAKA Pass",
+      //   icon: BoltIcon,
+      //   link: "/naka-pass"
+      // }
       // {
       //   name: "NFT Pass",
       //   link: "/nft-pass",
@@ -171,7 +170,7 @@ export const MENU = [
       },
       {
         name: "Marketplace",
-        link: "/marketplace",
+        link: `${CONFIGS.BASE_URL.MARKETPLACE}`,
         icon: MarketPlaceIcon
       },
       {
@@ -181,14 +180,14 @@ export const MENU = [
       },
       {
         name: "Nakapunks",
-        link: "/marketplace/naka-punk",
+        link: `${CONFIGS.BASE_URL.MARKETPLACE}/naka-punk`,
         icon: NakapunksIcon
-      },
-      {
-        name: "Become Developer",
-        link: "/become-developer",
-        icon: DesktopIcon
       }
+      // {
+      //   name: "Become Developer",
+      //   link: "/become-developer",
+      //   icon: DesktopIcon
+      // }
     ]
   }
 ]
@@ -437,8 +436,8 @@ export const MENU_BLOG: IMenu[] = [
     id: "marketplace",
     label: "Marketplace",
     icon: <MarketPlaceIcon className="stroke-neutral-300" />,
-    href: "/marketplace",
-    external: false
+    href: CONFIGS.BASE_URL.MARKETPLACE,
+    external: true
   },
   {
     id: "nakaverse",
@@ -451,16 +450,16 @@ export const MENU_BLOG: IMenu[] = [
     id: "nakapunks",
     label: "Nakapunks",
     icon: <NakapunksIcon className="stroke-neutral-300" />,
-    href: "/marketplace/naka-punk",
-    external: false
-  },
-  {
-    id: "become-developer",
-    label: "Become Developer",
-    icon: <DesktopIcon className="stroke-neutral-300" />,
-    href: "/become-developer",
+    href: `${CONFIGS.BASE_URL.MARKETPLACE}/nakapunks`,
     external: false
   }
+  // {
+  //   id: "become-developer",
+  //   label: "Become Developer",
+  //   icon: <DesktopIcon className="stroke-neutral-300" />,
+  //   href: "/become-developer",
+  //   external: false
+  // }
 ]
 
 export const MENU_BLOG_HEADER = [

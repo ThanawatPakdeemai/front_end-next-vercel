@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import { CHAIN_SUPPORT, IChainList } from "@configs/chain"
 import { Box } from "@mui/material"
+import useChainSupportStore from "@stores/chainSupport"
+import { useWeb3Provider } from "@providers/Web3Provider"
 import TabMenu from "./TabMenu"
 import { ModalCustom } from "./Modal/ModalCustom"
 import TokenListItem from "./TokenListItem"
@@ -10,10 +12,19 @@ interface IButtonChooseChain {
 }
 
 const ChainList = ({ currentTabChainSelected }: IButtonChooseChain) => {
+  const { setCurrentChainConnected } = useChainSupportStore()
+  const { switchNetwork } = useWeb3Provider()
   const [open, setOpen] = useState<boolean>(false)
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+
+  const onSelectedChain = (_selectedItem: IChainList) => {
+    setCurrentChainConnected(_selectedItem.chainId)
+    if (switchNetwork) {
+      switchNetwork(_selectedItem.chainId)
+    }
+  }
 
   return (
     <>
@@ -46,9 +57,9 @@ const ChainList = ({ currentTabChainSelected }: IButtonChooseChain) => {
               onClick={handleClose}
             >
               <TabMenu
+                handleClick={() => onSelectedChain(ele)}
                 icon={ele.icon}
                 text={ele.title}
-                link={`/wallet/?token=${ele.link}`}
                 className="mt-4 p-2"
                 selected={ele.link === currentTabChainSelected.link}
               />

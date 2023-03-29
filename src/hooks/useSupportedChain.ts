@@ -1,0 +1,174 @@
+import { useCallback, useMemo } from "react"
+import CONFIGS from "@configs/index"
+import useContractVaultBinance, {
+  ITokenContract
+} from "@feature/contract/containers/hooks/useContractVaultBinance"
+
+import { Contract, ethers } from "ethers"
+import BEP20Abi from "@configs/abi/BEP20.json"
+import ERC20Abi from "@configs/abi/ERC20.json"
+import useContractVault from "@feature/contract/containers/hooks/useContractVault"
+import {
+  DEFAULT_CURRENCY_BNB,
+  DEFAULT_CURRENCY_NAKA
+} from "@constants/currency"
+import { useWeb3Provider } from "@providers/Web3Provider"
+import useChainSupportStore from "@stores/chainSupport"
+
+const useSupportedChain = () => {
+  const { getAllTokenAddressInContract, getBNBContract } =
+    useContractVaultBinance()
+  const { getAllTokenInfoByContractAddress } = useContractVaultBinance()
+  const {
+    chainSupport,
+    currentChainSelected,
+    setChainSupport,
+    setContractBNB,
+    setCurrentChainConnected
+  } = useChainSupportStore()
+  const { getNAKATokenInfo } = useContractVault()
+  const { chainId, signer, accounts, address } = useWeb3Provider()
+
+  /**
+   * @description Get default currency
+   * @returns {ITokenContract[]}
+   */
+  const getDefaultCoin = (): ITokenContract[] => {
+    switch (chainId) {
+      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
+        return DEFAULT_CURRENCY_BNB
+      default:
+        return DEFAULT_CURRENCY_NAKA
+    }
+  }
+
+  /**
+   * @description Get tokens amount
+   * @param _chainId
+   * @returns {string}
+   */
+  const getTokenSupply = (_chainId: string): string => {
+    switch (_chainId) {
+      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
+        return "31000000000000000000000000"
+
+      default:
+        return "179999996000000000000000008"
+    }
+  }
+
+  const getTokenAddress = (_chainId: string) => {
+    switch (_chainId) {
+      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
+        return CONFIGS.CONTRACT_ADDRESS.BEP20
+
+      default:
+        return CONFIGS.CONTRACT_ADDRESS.ERC20
+    }
+  }
+
+  /**
+   * @description Fetch BNB token address from Smart Contract
+   */
+  const fetchContractBNB = useCallback(async () => {
+    if (currentChainSelected !== CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) return
+    const result = await getBNBContract()
+    if (result) {
+      setContractBNB(result)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getBNBContract, currentChainSelected])
+  /**
+   * @description Fetch BNB token address
+   */
+  useMemo(() => {
+    if (signer === undefined || accounts === undefined) return
+    fetchContractBNB()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  /**
+   * @description Get all token supported
+   */
+  const fetchAllTokenSupported = useCallback(async () => {
+    const allContract: Contract[] = []
+    const allTokenSupported: ITokenContract[] = []
+    const tokens = await getAllTokenAddressInContract()
+    for (let index = 0; index < tokens.length; index += 1) {
+      const { ethereum }: any = window
+      const _web3 = new ethers.providers.Web3Provider(ethereum)
+      const contract = new ethers.Contract(tokens[index], BEP20Abi.abi, _web3)
+      allContract.push(contract)
+      // if (tokens[index] !== CONFIGS.CONTRACT_ADDRESS.BNB_CONTRACT) {
+      //   const contract = new ethers.Contract(tokens[index], BEP20Abi.abi, _web3)
+      //   allContract.push(contract)
+      // }
+    }
+    await Promise.all(
+      allContract.map(async (contract) => {
+        const result = await getAllTokenInfoByContractAddress(
+          contract,
+          contract.address,
+          address ?? ""
+        )
+        allTokenSupported.push(result)
+      })
+    )
+    const allTokenSupportedSorted = allTokenSupported.sort((a, b) => {
+      if (a.symbol < b.symbol) {
+        return -1
+      }
+      if (a.symbol > b.symbol) {
+        return 1
+      }
+      return 0
+    })
+    setChainSupport(allTokenSupportedSorted)
+    setCurrentChainConnected(CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chainSupport])
+
+  const fetchNAKAToken = useCallback(async () => {
+    const allContract: Contract[] = []
+    const allTokenSupported: ITokenContract[] = []
+    const tokens = [CONFIGS.CONTRACT_ADDRESS.ERC20]
+    for (let index = 0; index < tokens.length; index += 1) {
+      const { ethereum }: any = window
+      const _web3 = new ethers.providers.Web3Provider(ethereum)
+      const contract = new ethers.Contract(tokens[index], ERC20Abi, _web3)
+      allContract.push(contract)
+    }
+    await Promise.all(
+      allContract.map(async (contract) => {
+        const result = await getNAKATokenInfo(
+          contract,
+          contract.address,
+          address ?? ""
+        )
+        allTokenSupported.push(result)
+      })
+    )
+    const allTokenSupportedSorted = allTokenSupported.sort((a, b) => {
+      if (a.symbol < b.symbol) {
+        return -1
+      }
+      if (a.symbol > b.symbol) {
+        return 1
+      }
+      return 0
+    })
+    setChainSupport(allTokenSupportedSorted)
+    setCurrentChainConnected(CONFIGS.CHAIN.CHAIN_ID_HEX)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address, getNAKATokenInfo, setChainSupport])
+
+  return {
+    getTokenSupply,
+    getDefaultCoin,
+    getTokenAddress,
+    fetchAllTokenSupported,
+    fetchNAKAToken
+  }
+}
+
+export default useSupportedChain

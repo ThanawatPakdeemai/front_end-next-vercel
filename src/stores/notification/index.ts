@@ -18,6 +18,7 @@ interface INotiStore {
   setPlayHistoryItem: (_history: IHistory) => void
   setNotificationCount: (_count: number) => void
   setNotificationReadAll: (_status: boolean) => void
+  onResetNotiStore: () => void
 }
 
 const useNotiStore = create<INotiStore>()(
@@ -65,6 +66,19 @@ const useNotiStore = create<INotiStore>()(
             () => ({ playHistory: _history }),
             false,
             "Notification/setPlayHistoryItem"
+          )
+        },
+        onResetNotiStore: () => {
+          set(
+            () => ({
+              count: 0,
+              notification: null,
+              playHistory: null,
+              readAll: false,
+              notificationAll: []
+            }),
+            false,
+            "Notification/onResetNotiStore"
           )
         }
       }),

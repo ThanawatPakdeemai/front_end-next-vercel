@@ -29,6 +29,7 @@ const RightMenuLogIn = () => {
   const [expanded, setExpanded] = useState<boolean>(false)
   const [hoverExpand, setHoverExpand] = useState<boolean>(false)
   const { isMarketplace, isDeveloperPage } = useGlobal()
+  const { isConnected } = useWeb3Provider()
 
   const iconmotion = {
     hover: {
@@ -75,7 +76,7 @@ const RightMenuLogIn = () => {
               </p>
             }
             color="warning"
-            open={!address && !expanded}
+            open={!address && !expanded && !isConnected}
           >
             <Card
               className={`${

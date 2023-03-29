@@ -49,7 +49,7 @@ const DropdownList = ({ title, list, className }: IProp) => {
                     height="20"
                   />
                   <p className="px-2">{data.name}</p>
-                  <p className="px-2 text-[#ffffff]">XL {data.price} USD</p>
+                  <p className="px-2 text-white-default">{data.price} USD</p>
                 </>
               ) : (
                 <>
@@ -60,7 +60,7 @@ const DropdownList = ({ title, list, className }: IProp) => {
                     height="30"
                   />
                   <p className="px-2">CURENCY</p>
-                  <p className="px-2 text-[#ffffff]">{data.name}</p>
+                  <p className="px-2 text-white-default">{data.name}</p>
                 </>
               )}
             </div>

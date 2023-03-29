@@ -140,7 +140,7 @@ const SummaryMain = ({ summaryData }: IProp) => {
       </div>
     </div>
   ) : (
-    <>Loading...</>
+    <>Please login</>
   )
 }
 

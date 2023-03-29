@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from "react"
 import { IconVerify } from "@components/icons/Icons"
 import CopyButton from "@components/atoms/CopyButton"
-import useGetMyLand from "@feature/land/containers/hooks/useGetMyLand"
+import { useGetMyLand } from "@feature/land/containers/hooks/useGetMyLand"
 import { IMarketLandData } from "@feature/land/interfaces/ILandService"
 import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import DropdownLimit from "@components/atoms/DropdownLimit"

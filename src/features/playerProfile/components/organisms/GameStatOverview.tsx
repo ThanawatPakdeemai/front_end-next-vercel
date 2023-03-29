@@ -31,12 +31,12 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
       {openBadges ? null : (
         <div
           key={uuidv4()}
-          className="mb-10 grid w-full gap-2 overflow-x-auto rounded-[26px] bg-neutral-800 p-2"
+          className="mb-10 grid w-full gap-2 rounded-[26px] bg-neutral-800 p-2 "
         >
           {data.data.game_data.map((item, index) => (
             <div
               key={uuidv4()}
-              className="grid w-full min-w-[720px] grid-cols-8 gap-4 rounded-[18px] bg-neutral-900 p-8 sm:min-w-min md:overflow-x-auto"
+              className="grid w-full  grid-cols-4 gap-4 rounded-[18px] bg-neutral-900 p-8 sm:min-w-min md:grid-cols-8 "
             >
               {/* sm:min-w-min md:max-w-max sm:min-w-[720px] */}
               <div className="col-span-2 md:col-span-3">
@@ -100,7 +100,7 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
                   />
                 </div>
               </div>
-              <div className="col-span-3 flex items-center justify-between">
+              <div className="col-span-4 flex items-center justify-between md:col-span-3">
                 <Image
                   className="mr-4 h-40 w-40 rounded-[15px] object-cover"
                   src={item.image}

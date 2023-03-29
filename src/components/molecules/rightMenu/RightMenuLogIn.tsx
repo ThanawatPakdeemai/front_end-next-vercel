@@ -20,6 +20,7 @@ import Link from "next/link"
 import TooltipsCustom from "@components/atoms/TooltipsCustom"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useGlobal from "@hooks/useGlobal"
+import { useToast } from "@feature/toast/containers"
 import useNotiStore from "@stores/notification"
 
 const RightMenuLogIn = () => {
@@ -29,6 +30,7 @@ const RightMenuLogIn = () => {
   const [expanded, setExpanded] = useState<boolean>(false)
   const [hoverExpand, setHoverExpand] = useState<boolean>(false)
   const { isMarketplace, isDeveloperPage } = useGlobal()
+  const { successToast } = useToast()
 
   const iconmotion = {
     hover: {
@@ -130,7 +132,10 @@ const RightMenuLogIn = () => {
                       paragraph
                       component="span"
                       variant="body1"
-                      onClick={() => Helper.copyClipboard(profile?.address)}
+                      onClick={() => {
+                        Helper.copyClipboard(profile?.address)
+                        successToast("Copy Success")
+                      }}
                       className={`cursor-pointer text-xs font-bold text-${themeColor().toString()}`}
                     >
                       {Helper.shortenString(profile?.address)}

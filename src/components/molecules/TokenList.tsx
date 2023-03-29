@@ -79,7 +79,7 @@ const TokenList = ({
       <ModalCustom
         open={open}
         onClose={handleClose}
-        title="Select Chain"
+        title="Select Asset"
         className="gap-3 rounded-[34px] p-[10px]"
         width={400}
       >

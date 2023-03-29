@@ -31,6 +31,7 @@ const ChainList = ({ currentTabChainSelected }: IButtonChooseChain) => {
         }
         handleClick={handleOpen}
         shadow
+        widthBalance="w-full"
       />
       <ModalCustom
         open={open}

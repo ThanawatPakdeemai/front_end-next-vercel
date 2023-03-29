@@ -202,9 +202,8 @@ const GameRoomList = () => {
           </div>
         </div>
         {gameData &&
-          ((gameData?.play_to_earn &&
-            gameData?.play_to_earn_status !== "free") ||
-            !gameData.tournament) && (
+          gameData?.play_to_earn_status !== "free" &&
+          !gameData.tournament && (
             <BuyItemBody>
               <CardBuyItem gameObject={gameData} />
             </BuyItemBody>

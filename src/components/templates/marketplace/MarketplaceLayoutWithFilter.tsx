@@ -3,6 +3,7 @@ import Banners from "@components/molecules/Banners"
 import Tagline from "@components/molecules/tagline/Tagline"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
+import FilterBox from "@feature/marketplace/components/molecules/FilterBox"
 import React from "react"
 
 const MarketplaceLayoutWithFilter = ({
@@ -19,7 +20,11 @@ const MarketplaceLayoutWithFilter = ({
     />
     <div className="flex flex-row gap-3">
       {/* add filter component here */}
-      <div className="w-[200px]">Filter</div>
+      <div className="w-[200px]">
+        <div>
+          <FilterBox />
+        </div>
+      </div>
       {children}
     </div>
     <Footer />

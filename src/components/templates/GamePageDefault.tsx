@@ -25,10 +25,18 @@ const GamePageDefault = ({
   const [gameData, setGameData] = useState<IGame | IPartnerGameData>()
 
   useEffect(() => {
-    if (data) {
-      setGameData(data as IGame)
-    } else if (gamePartnerData) {
-      setGameData(gamePartnerData as IPartnerGameData)
+    let load = false
+
+    if (!load) {
+      if (data) {
+        setGameData(data as IGame)
+      } else if (gamePartnerData) {
+        setGameData(gamePartnerData as IPartnerGameData)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [data, gamePartnerData])
 

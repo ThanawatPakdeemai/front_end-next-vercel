@@ -158,7 +158,13 @@ const FromCreatePassword = ({ email, token }: IProp) => {
   }
 
   useEffect(() => {
-    isConfirmPassword(watch("password"), watch("confirmPassword"))
+    let load = false
+
+    if (!load) isConfirmPassword(watch("password"), watch("confirmPassword"))
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch("password"), watch("confirmPassword")])
 

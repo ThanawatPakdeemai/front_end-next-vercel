@@ -19,8 +19,16 @@ const GameRoomWaitingPage = ({ _roomId }: IProp) => {
   const [gameData, setGameData] = useState<IGame>()
 
   useEffect(() => {
-    if (data) {
-      setGameData(data)
+    let load = false
+
+    if (!load) {
+      if (data) {
+        setGameData(data)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [data])
 

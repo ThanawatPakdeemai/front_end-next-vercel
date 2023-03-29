@@ -78,26 +78,42 @@ const GameCard = ({
   }
 
   useEffect(() => {
-    if (imgPartner && imgPartner !== undefined) {
-      setImageSrc(imgPartner)
-    } else if (
-      !imgPartner &&
-      imgPartner === undefined &&
-      data &&
-      data.image_category_list
-    ) {
-      setImageSrc(data.image_category_list)
+    let load = false
+
+    if (!load) {
+      if (imgPartner && imgPartner !== undefined) {
+        setImageSrc(imgPartner)
+      } else if (
+        !imgPartner &&
+        imgPartner === undefined &&
+        data &&
+        data.image_category_list
+      ) {
+        setImageSrc(data.image_category_list)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [imgPartner, data])
 
   useEffect(() => {
-    if (partnerdata) {
-      setChipLable("partner")
-      setTheme("warning")
-      setLableButton("view detail")
-    } else if (!partnerdata && menu.title && menu.theme) {
-      setChipLable(menu.title)
-      setTheme(menu.theme)
+    let load = false
+
+    if (!load) {
+      if (partnerdata) {
+        setChipLable("partner")
+        setTheme("warning")
+        setLableButton("view detail")
+      } else if (!partnerdata && menu.title && menu.theme) {
+        setChipLable(menu.title)
+        setTheme(menu.theme)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [menu, partnerdata, data])
 

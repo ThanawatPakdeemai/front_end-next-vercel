@@ -6,6 +6,7 @@ import { IGame } from "@feature/game/interfaces/IGameService"
 import { Box } from "@mui/material"
 import useGlobal from "@hooks/useGlobal"
 import useFavoriteGameContoller from "@feature/favourite/containers/hooks/useFavoriteGameContoller"
+import { useRouter } from "next/router"
 
 interface IContentFooterBannerSlide {
   gameData: IGame
@@ -16,6 +17,7 @@ const CardFooterSlide = ({
   gameData,
   text = "Play Now"
 }: IContentFooterBannerSlide) => {
+  const router = useRouter()
   const { onHandleSetGameStore, getTypeGamePathFolder, stateProfile } =
     useGlobal()
   const { onClickFavouriteButton, favouriteStatus } = useFavoriteGameContoller({
@@ -41,10 +43,13 @@ const CardFooterSlide = ({
           color="secondary"
           variant="contained"
           className="w-full"
-          href={`/${getTypeGamePathFolder(gameData)}-games/${gameData.path}`}
-          onClick={() =>
+          href=""
+          onClick={() => {
             onHandleSetGameStore(getTypeGamePathFolder(gameData), gameData)
-          }
+            router.push(
+              `/${getTypeGamePathFolder(gameData)}-games/${gameData.path}`
+            )
+          }}
         />
       </Box>
       <ButtonFavourite

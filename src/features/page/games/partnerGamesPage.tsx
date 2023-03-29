@@ -45,29 +45,45 @@ const PartnerGames = () => {
   })
 
   useEffect(() => {
-    if (gameData?.info && gameData) {
-      setTotalCount(gameData.info?.totalCount)
+    let load = false
+
+    if (!load) {
+      if (gameData?.info && gameData) {
+        setTotalCount(gameData.info?.totalCount)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [gameData])
 
   useEffect(() => {
-    if (!isPreviousData && gameData) {
-      queryClient.prefetchQuery({
-        queryKey: ["partner-games", limit, search, page + 1],
-        queryFn: () =>
-          getAllPartnerGames({
-            _search: search,
-            _limit: limit,
-            _page: page + 1
-          })
-      })
-      setGameFilter(gameData.data)
+    let load = false
+
+    if (!load) {
+      if (!isPreviousData && gameData) {
+        queryClient.prefetchQuery({
+          queryKey: ["partner-games", limit, search, page + 1],
+          queryFn: () =>
+            getAllPartnerGames({
+              _search: search,
+              _limit: limit,
+              _page: page + 1
+            })
+        })
+        setGameFilter(gameData.data)
+      }
+      clearGamePartnersData()
+      clearSearch()
+      clearCategory()
+      clearGameItem()
+      clearDevice()
     }
-    clearGamePartnersData()
-    clearSearch()
-    clearCategory()
-    clearGameItem()
-    clearDevice()
+
+    return () => {
+      load = true
+    }
   }, [
     clearCategory,
     clearDevice,
@@ -82,21 +98,29 @@ const PartnerGames = () => {
   const { mutateFilterGamePartner, isLoading: loadFilter } =
     useFilterGamePartnerList()
   useEffect(() => {
-    const filterData = {
-      "limit": limit,
-      "skip": page,
-      "search": searchDropdown,
-      "type": "",
-      "genres_filter": categoryDropdown
+    let load = false
+
+    if (!load) {
+      const filterData = {
+        "limit": limit,
+        "skip": page,
+        "search": searchDropdown,
+        "type": "",
+        "genres_filter": categoryDropdown
+      }
+
+      mutateFilterGamePartner(filterData).then((res) => {
+        if (res) {
+          const { data, info } = res
+          setGameFilter(data.data)
+          setTotalCount(info ? info.totalCount : 1)
+        }
+      })
     }
 
-    mutateFilterGamePartner(filterData).then((res) => {
-      if (res) {
-        const { data, info } = res
-        setGameFilter(data.data)
-        setTotalCount(info ? info.totalCount : 1)
-      }
-    })
+    return () => {
+      load = true
+    }
   }, [
     categoryDropdown,
     gameItemDropdown,

@@ -53,7 +53,13 @@ const useFavoriteGameContoller = ({ playerId, gameId }: IProps) => {
   }
 
   useEffect(() => {
-    checkStatusFavourite()
+    let load = false
+
+    if (!load) checkStatusFavourite()
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameFavourite, favouriteStatus])
 

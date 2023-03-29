@@ -18,6 +18,13 @@ const TournamentPage = dynamic(
   }
 )
 
+// const TournamentList = dynamic(
+//   () => import("@feature/tournament/components/organisms/TournamentList"),
+//   {
+//     suspense: true
+//   }
+// )
+
 export default function Tournament() {
   return (
     <>

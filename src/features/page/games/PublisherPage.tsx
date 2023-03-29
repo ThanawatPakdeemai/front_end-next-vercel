@@ -60,14 +60,22 @@ const PublisherPage = () => {
   // }, [gameData, isPreviousData, page, queryClient])
 
   useEffect(() => {
-    publisherAllPartner().then((res) => {
-      if (res) {
-        const { data, info } = res
-        // eslint-disable-next-line no-console
-        setGameFilter(data.data)
-        setTotalCount(info ? info.totalCount : 1)
-      }
-    })
+    let load = false
+
+    if (!load) {
+      publisherAllPartner().then((res) => {
+        if (res) {
+          const { data, info } = res
+          // eslint-disable-next-line no-console
+          setGameFilter(data.data)
+          setTotalCount(info ? info.totalCount : 1)
+        }
+      })
+    }
+
+    return () => {
+      load = true
+    }
   }, [
     categoryDropdown,
     gameItemDropdown,

@@ -67,11 +67,19 @@ export default function CatogoriesPageDetails() {
   })
 
   useEffect(() => {
-    if (!isFetchingGamesFilterByCategoryId && getGamesFilterByCategoryId) {
-      setGameData(getGamesFilterByCategoryId.data)
-      if (getGamesFilterByCategoryId.info) {
-        setTotalCount(getGamesFilterByCategoryId.info.totalCount)
+    let load = false
+
+    if (!load) {
+      if (!isFetchingGamesFilterByCategoryId && getGamesFilterByCategoryId) {
+        setGameData(getGamesFilterByCategoryId.data)
+        if (getGamesFilterByCategoryId.info) {
+          setTotalCount(getGamesFilterByCategoryId.info.totalCount)
+        }
       }
+    }
+
+    return () => {
+      load = true
     }
   }, [
     getGamesFilterByCategoryId,

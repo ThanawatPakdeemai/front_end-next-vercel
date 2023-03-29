@@ -48,24 +48,32 @@ const HistoryTable = () => {
   }
 
   useEffect(() => {
-    const fetchHistory = async () => {
-      if (profile) {
-        await getHistoryData({
-          player_id: profile && profile.id ? profile.id : "",
-          limit,
-          skip
-        }).then((res) => {
-          if (res.data && res.data.length > 0) {
-            // res.status === 200 -> ok
-            setHxHistory(res.data)
-          }
-          if (res.info) {
-            setTotalCount(res.info.totalCount)
-          }
-        })
+    let load = false
+
+    if (!load) {
+      const fetchHistory = async () => {
+        if (profile) {
+          await getHistoryData({
+            player_id: profile && profile.id ? profile.id : "",
+            limit,
+            skip
+          }).then((res) => {
+            if (res.data && res.data.length > 0) {
+              // res.status === 200 -> ok
+              setHxHistory(res.data)
+            }
+            if (res.info) {
+              setTotalCount(res.info.totalCount)
+            }
+          })
+        }
       }
+      fetchHistory()
     }
-    fetchHistory()
+
+    return () => {
+      load = true
+    }
   }, [limit, skip, profile, getHistoryData])
 
   return (

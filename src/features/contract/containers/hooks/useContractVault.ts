@@ -10,9 +10,11 @@ import { ITransactionResponse } from "@interfaces/ITransaction"
 import Helper from "@utils/helper"
 import BalanceVaultAbi from "@configs/abi/BalanceVault.json"
 import { DEFAULT_TOKEN_INFO } from "@constants/defaultValues"
+import useProfileStore from "@stores/profileStore"
 import { ITokenContract } from "./useContractVaultBinance"
 
 const useContractVault = () => {
+  const profile = useProfileStore((state) => state.profile.data)
   const { WeiToNumber } = Helper
   const { signer, address: account } = useWeb3Provider()
   const [isLoading, setIsLoading] = useState(false)
@@ -155,6 +157,11 @@ const useContractVault = () => {
   ) =>
     // eslint-disable-next-line no-async-promise-executor
     new Promise<ITokenContract>(async (resolve) => {
+      if (
+        _userAddress.toLocaleLowerCase() !==
+        profile?.address.toLocaleLowerCase()
+      )
+        return
       try {
         const { ethereum }: any = window
         const _provider = new ethers.providers.Web3Provider(ethereum)

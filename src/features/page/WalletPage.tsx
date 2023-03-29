@@ -19,15 +19,9 @@ import useChainSupportStore from "@stores/chainSupport"
 
 export default function WalletPage() {
   const { hydrated } = useGlobal()
-  const {
-    value,
-    setDisabled,
-    handleConnectWallet,
-    tabChainList,
-    setTabChainList
-  } = useWalletContoller()
-  const { handleSwitchNetwork, setIsWrongNetwork, isWrongNetwork } =
-    useSwitchNetwork()
+  const { value, setDisabled, handleConnectWallet, tabChainList } =
+    useWalletContoller()
+  const { handleSwitchNetwork, isWrongNetwork } = useSwitchNetwork()
   const {
     isConnected,
     chainId,
@@ -65,52 +59,19 @@ export default function WalletPage() {
     return () => {
       load = true
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value, tabChainList, isConnected])
-
-  /**
-   * @description Set type tab by router.query
-   */
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      const _currentChain = CHAIN_SUPPORT.find(
-        (item) => item.chainId === chainId
-      )
-      if (_currentChain) {
-        setTabChainList(_currentChain as IChainList)
-      }
-
-      if (!isConnected) return
-      if (token === "NAKA") {
-        // setType("NAKA")
-        const _chainTarget = CHAIN_SUPPORT.find((item) => item.link === "NAKA")
-        setTabChainList(_chainTarget as IChainList)
-        setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX)
-        router.push("?token=NAKA")
-      } else if (token === "BNB") {
-        // setType("BNB")
-        const _chainTarget = CHAIN_SUPPORT.find((item) => item.link === "BNB")
-        setTabChainList(_chainTarget as IChainList)
-        setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX_BNB)
-        router.push("?token=BNB")
-      }
-    }
-    return () => {
-      load = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token, chainId, tabChainList])
+  }, [isConnected])
 
   return hydrated ? (
     <>
       <div className="mt-2 w-full gap-2 sm:flex md:mt-0 xl:max-w-[570px] xl:justify-between">
         <div className="md:min-w-[327px]">
-          <ChainList currentTabChainSelected={tabChainList as IChainList} />
+          <ChainList />
         </div>
+        {/* // TODO: Open after launch V2 */}
         <div className="md:min-w-[224px]">
-          {isConnected && (
+          {isConnected && currentTokenSelected?.address !== "" && (
             <TokenList
               dataList={chainSupport}
               currentTabChainSelected={

@@ -69,7 +69,6 @@ const useWalletContoller = () => {
     } else {
       errorToast("Please connect wallet")
     }
-    // setCurrentTokenSelected(_chain)
   }
 
   /**

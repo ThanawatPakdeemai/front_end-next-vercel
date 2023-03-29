@@ -13,8 +13,10 @@ interface IChainSupport {
   currentChainSelected: string | null
   setCurrentChainConnected: (_value: string) => void
   currentTokenSelected: ITokenContract | null
-  setCurrentTokenSelected: (_value: ITokenContract) => void
+  setCurrentTokenSelected: (_value: ITokenContract | null) => void
   onResetChainStore: () => void
+  isCorrectWallet: boolean
+  setIsCorrectWallet: (_value: boolean) => void
 }
 
 const useChainSupportStore = create<IChainSupport>()(
@@ -48,7 +50,7 @@ const useChainSupportStore = create<IChainSupport>()(
           )
         },
         currentTokenSelected: null,
-        setCurrentTokenSelected: (_value: ITokenContract) => {
+        setCurrentTokenSelected: (_value: ITokenContract | null) => {
           set(
             () => ({ currentTokenSelected: _value }),
             false,
@@ -65,6 +67,14 @@ const useChainSupportStore = create<IChainSupport>()(
             }),
             false,
             "ChainSupport/onResetChainStore"
+          )
+        },
+        isCorrectWallet: false,
+        setIsCorrectWallet: (_value: boolean) => {
+          set(
+            () => ({ isCorrectWallet: _value }),
+            false,
+            "ChainSupport/setIsCorrectWallet"
           )
         }
       }),

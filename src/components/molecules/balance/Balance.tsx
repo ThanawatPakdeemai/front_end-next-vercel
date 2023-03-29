@@ -98,7 +98,7 @@ const Balance = ({
 
   return hydrated ? (
     <div>
-      {isConnected && address && profile ? (
+      {isConnected && address && profile && currentChainSelected ? (
         <CardContent
           className={`my-2 min-w-[200px] items-center justify-center p-0 ${className}`}
         >

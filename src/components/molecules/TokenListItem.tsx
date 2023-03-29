@@ -66,6 +66,7 @@ const TokenListItem = ({
             {renderText()}
           </p>
         </div>
+        {/* // TODO: Open after launch V2 */}
         {disabledClick ? (
           <></>
         ) : (

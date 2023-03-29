@@ -47,7 +47,7 @@ const useGlobal = (
   const isCancelled = React.useRef(false)
 
   // hook
-  const { onResetChainStore } = useChainSupportStore()
+  const { onResetChainStore, currentChainSelected } = useChainSupportStore()
   const { onResetNotification } = useNotiStore()
   const {
     onSetGameData,
@@ -274,8 +274,32 @@ const useGlobal = (
         fetchNAKAToken()
       }
     }
+  }, [
+    address,
+    isLogin,
+    isConnected,
+    chainId,
+    signer,
+    fetchAllTokenSupported,
+    fetchNAKAToken
+  ])
+
+  const fetchChainData = async () => {
+    if (!isLogin) return
+    if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+      await fetchAllTokenSupported()
+    } else if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX) {
+      await fetchNAKAToken()
+    }
+  }
+
+  /**
+   * @description Fetch all token supported
+   */
+  useEffect(() => {
+    fetchChainData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [isLogin, currentChainSelected])
 
   return {
     onHandleClick,
@@ -298,7 +322,8 @@ const useGlobal = (
     marketType,
     isRedirectRoomlist,
     onHandleSetGameStore,
-    onClickLogout
+    onClickLogout,
+    fetchChainData
   }
 }
 

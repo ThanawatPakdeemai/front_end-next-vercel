@@ -1,4 +1,3 @@
-import Helper from "@utils/helper"
 import React from "react"
 import CircleIcon from "@mui/icons-material/Circle"
 import ChainPolygonIcon from "@components/icons/NetworkIcon/ChainPolygonIcon"
@@ -7,7 +6,6 @@ import CloseIcon from "@mui/icons-material/Close"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import MetamaskLogo from "@components/icons/MetamaskLogo"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
-import { numberWithCommas } from "@src/helpers/addComma"
 import { IChainList } from "@configs/chain"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import { Typography } from "@mui/material"
@@ -42,11 +40,9 @@ const MetamaskWallet = ({
       <BalanceWallet
         balance={
           currentChainSelected
-            ? numberWithCommas(
-                Helper.number4digit(
-                  (currentTokenSelected as ITokenContract).balanceWallet.digit
-                )
-              )
+            ? (currentTokenSelected as ITokenContract).balanceWallet.digit
+                .toFixed(4)
+                .toString()
             : "N/A"
         }
         tokenName={

@@ -1,7 +1,9 @@
 import { useGetMyForSaleBuilding } from "@feature/building/containers/hooks/useGetMyBuilding"
 import { useGetForSaleArcGame } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
 import { useGetMyForSaleLand } from "@feature/land/containers/hooks/useGetMyLand"
+import useGetMarketOrder from "@feature/marketplace/hooks/getMarketOrder"
 import {
+  IMarketServForm,
   IOwnerData,
   TSellerType
 } from "@feature/marketplace/interfaces/IMarketService"
@@ -25,18 +27,30 @@ const useMarketForSale = () => {
   const { mutateGetMyForSaleBuilding } = useGetMyForSaleBuilding()
   const { mutateGetMyForsaleNakaPunk } = useGetMyForSaleNakaPunk()
   const { mutateGetForsaleArcGame } = useGetForSaleArcGame()
+  const { getMarketOrderAsnyc } = useGetMarketOrder()
 
   const fetchMyForsale = async () => {
     setOwnerDataForsale([])
     setIsLoading(true)
     if (profile && profile.data) {
-      const initPayload = {
+      const initPayload: IMarketServForm = {
         _limit: limit,
         _page: currentPage,
         _search: {
           player_id: profile.data.id,
           seller_type: "user" as TSellerType,
           type: marketType
+        }
+      }
+      const infoPayload: IMarketServForm = {
+        _limit: limit,
+        _page: currentPage,
+        _sort: {},
+        _search: {
+          seller_id: profile.data.address,
+          seller_type: "user",
+          type: marketType,
+          type_marketplace: marketType
         }
       }
       switch (marketType) {
@@ -133,6 +147,35 @@ const useMarketForSale = () => {
             .finally(() => setIsLoading(false))
           break
         default:
+          if (marketType === "game_item" || marketType === "nft_material") {
+            getMarketOrderAsnyc(infoPayload)
+              .then((_res) => {
+                const dumpData: IOwnerData[] = _res.data.map((_data) => {
+                  if (marketType === "game_item" && _data.item_data) {
+                    return {
+                      type: "game-item",
+                      id: _data.item_id,
+                      image: _data.item_data.image,
+                      size: _data.item_data?.item_size,
+                      amount: _data.item_amount,
+                      name: _data.item_data.name,
+                      price: _data.price
+                    }
+                  }
+                  return {
+                    type: "material",
+                    id: _data.item_id,
+                    image: String(_data.material_data?.image),
+                    amount: _data.item_amount,
+                    name: String(_data.material_data?.name),
+                    price: _data.price
+                  }
+                })
+                setOwnerDataForsale(dumpData)
+                setTotalCount(_res.info.totalCount)
+              })
+              .finally(() => setIsLoading(false))
+          }
           break
       }
     }

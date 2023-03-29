@@ -146,7 +146,7 @@ const useMartketOwner = () => {
       case "nft_material":
         if (materialList) {
           const dumpData: IOwnerData[] = materialList.map((_data) => ({
-            type: "game-item",
+            type: "material",
             id: _data.id,
             image: _data.image,
             amount: _data.amount,

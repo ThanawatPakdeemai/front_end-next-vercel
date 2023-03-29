@@ -2,7 +2,10 @@ import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import { Image } from "@components/atoms/image"
 import LogoIcon from "@components/icons/LogoIcon"
 import CopyMiniIcon from "@components/icons/Referral/CoopyMiniIcon"
+import { MESSAGES } from "@constants/messages"
+import { useToast } from "@feature/toast/containers"
 import { Chip, Typography } from "@mui/material"
+import Helper from "@utils/helper"
 import dayjs from "dayjs"
 import React from "react"
 
@@ -22,57 +25,64 @@ const CardWriterDetails = ({
   image,
   textHead,
   alt
-}: IProp) => (
-  <div>
-    {textHead && (
-      <Typography className="text-sm uppercase text-black-default">
-        {textHead}
-      </Typography>
-    )}
-    <div className="my-2 flex">
-      <div
-        className={`image grid h-[45px] w-[45px] content-center justify-center rounded bg-error-main ${
-          image ? " bg-neutral-800" : "bg-error-main"
-        }`}
-      >
-        {image ? (
-          <Image
-            src={image}
-            alt={alt as string}
-            width={450}
-            height={450}
-          />
-        ) : (
-          <LogoIcon />
-        )}
-      </div>
-      <div className="ml-2 grid content-between">
-        <Typography className="text-xs uppercase text-white-primary">
-          {name}
+}: IProp) => {
+  const { successToast } = useToast()
+  const { copyClipboard } = Helper
+  return (
+    <div>
+      {textHead && (
+        <Typography className="text-sm uppercase text-black-default">
+          {textHead}
         </Typography>
-        {link && (
-          <div className="flex">
-            <Chip
-              label={link}
-              variant="outlined"
-              size="small"
-              className="max-w-[129px] cursor-pointer uppercase"
+      )}
+      <div className="my-2 flex">
+        <div
+          className={`image grid h-[45px] w-[45px] content-center justify-center rounded bg-error-main ${
+            image ? " bg-neutral-800" : "bg-error-main"
+          }`}
+        >
+          {image ? (
+            <Image
+              src={image}
+              alt={alt as string}
+              width={450}
+              height={450}
             />
-            <ButtonIcon
-              onClick={() => {}}
-              className="ml-2 flex !h-[25px] !w-[25px] items-center justify-center rounded-[4px] border border-neutral-700 bg-neutral-900"
-              icon={<CopyMiniIcon />}
-            />
-          </div>
-        )}
+          ) : (
+            <LogoIcon />
+          )}
+        </div>
+        <div className="ml-2 grid content-between">
+          <Typography className="text-xs uppercase text-white-primary">
+            {name}
+          </Typography>
+          {link && (
+            <div className="flex">
+              <Chip
+                label={link}
+                variant="outlined"
+                size="small"
+                className="max-w-[129px] cursor-pointer uppercase"
+              />
+              <ButtonIcon
+                onClick={() => {
+                  copyClipboard(link)
+                  successToast(MESSAGES.copy)
+                }}
+                className="ml-2 flex !h-[25px] !w-[25px] items-center justify-center rounded-[4px] border border-neutral-700 bg-neutral-900"
+                icon={<CopyMiniIcon />}
+              />
+            </div>
+          )}
+        </div>
       </div>
+      {date && (
+        <Typography className="text-sm uppercase text-neutral-600">
+          {dayjs(date).format("DD MMM YYYY")}
+        </Typography>
+      )}
     </div>
-    {date && (
-      <Typography className="text-sm uppercase text-neutral-600">
-        {dayjs(date).format("DD MMM YYYY")}
-      </Typography>
-    )}
-  </div>
-)
+  )
+}
 
 export default CardWriterDetails

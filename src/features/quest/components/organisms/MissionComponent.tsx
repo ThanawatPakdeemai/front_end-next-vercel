@@ -102,6 +102,7 @@ const MissionComponent = ({ open }: IProp) => {
   return (
     <Drawer
       open={open}
+      onClose={setClose}
       anchor="right"
       classes={{
         paper: classes.paper

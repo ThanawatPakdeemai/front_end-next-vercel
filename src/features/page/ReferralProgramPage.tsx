@@ -140,27 +140,29 @@ const ReferralProgramPage = () => {
                   Enjoy lifetime passive income. Start earning!
                 </div>
               </div>
-              <div className="relative h-[50px] w-full rounded-2xl border border-solid border-neutral-700 bg-primary-main">
-                <div className="ml-[15px] flex h-full items-center">
-                  <Chip
-                    label="Referral Link"
-                    variant="outlined"
-                    size="small"
-                    className="cursor-pointer uppercase"
-                  />
-                  <div className="ml-[15px] truncate uppercase text-neutral-600">
-                    {Helper.textWithDots(
-                      `${baseUrl}/register?referral=${profile && profile.id}`,
-                      20
-                    )}
+              {profile && (
+                <div className="relative h-[50px] w-full rounded-2xl border border-solid border-neutral-700 bg-primary-main">
+                  <div className="ml-[15px] flex h-full items-center">
+                    <Chip
+                      label="Referral Link"
+                      variant="outlined"
+                      size="small"
+                      className="cursor-pointer uppercase"
+                    />
+                    <div className="ml-[15px] truncate uppercase text-neutral-600">
+                      {Helper.textWithDots(
+                        `${baseUrl}/register?referral=${profile.id}`,
+                        20
+                      )}
+                    </div>
+                    <ButtonIcon
+                      onClick={copyClipboard}
+                      className="absolute right-0 m-1 flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+                      icon={<CopyIcon />}
+                    />
                   </div>
-                  <ButtonIcon
-                    onClick={copyClipboard}
-                    className="absolute right-0 m-1 flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                    icon={<CopyIcon />}
-                  />
                 </div>
-              </div>
+              )}
             </div>
             {getReferralsData && (
               <CardContent

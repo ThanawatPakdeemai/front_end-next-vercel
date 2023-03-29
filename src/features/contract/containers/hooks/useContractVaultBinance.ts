@@ -212,11 +212,13 @@ const useContractVaultBinance = () => {
                 : 0,
               text: _balance
                 ? ethers.utils.formatEther(_balance as BigNumber).toString()
-                : "0"
+                : "0",
+              hex: _balance
             },
             balanceVault: {
               digit: Number(Helper.WeiToNumber(vaultBalancePromise).toFixed(4)),
-              text: ethers.utils.formatEther(vaultBalancePromise)
+              text: ethers.utils.formatEther(vaultBalancePromise),
+              hex: vaultBalancePromise
             }
           })
         } else {
@@ -247,14 +249,13 @@ const useContractVaultBinance = () => {
               ),
               text: Helper.formatNumber(WeiToNumber(walletBalancePromise), {
                 maximumFractionDigits: 1
-              })
+              }),
+              hex: walletBalancePromise
             },
             balanceVault: {
               digit: Number(Helper.WeiToNumber(vaultBalancePromise).toFixed(4)),
-              text: ethers.utils.formatEther(vaultBalancePromise)
-              // text: Helper.formatNumber(WeiToNumber(vaultBalancePromise), {
-              //   maximumFractionDigits: 1
-              // })
+              text: ethers.utils.formatEther(vaultBalancePromise),
+              hex: vaultBalancePromise
             }
           })
         }

@@ -6,16 +6,19 @@ import useGetBalanceVault from "@feature/contract/containers/hooks/useQuery/useQ
 import { useEffect, useState } from "react"
 import { chainIdConfig } from "@configs/sites"
 import useChainSupportStore from "@stores/chainSupport"
+import { BigNumber } from "ethers"
 import useSupportedChain from "./useSupportedChain"
 
 export interface IBalanceDisplay {
   digit: number
   text: string | "N/A"
+  hex: BigNumber
 }
 
 export const defaultVaule: IBalanceDisplay = {
   digit: 0,
-  text: "N/A"
+  text: "N/A",
+  hex: BigNumber.from(0)
 }
 
 const useAllBalances = () => {

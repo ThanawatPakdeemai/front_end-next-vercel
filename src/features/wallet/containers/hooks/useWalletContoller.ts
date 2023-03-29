@@ -31,8 +31,6 @@ const useWalletContoller = () => {
   const [haveMetamask, sethaveMetamask] = useState(true)
   const [value, setValue] = useState<number | string>(0)
   const [disabled, setDisabled] = useState<boolean>(true)
-  // const [currentChainSelected, setCurrentChainSelected] =
-  //   useState<ITokenContract>()
 
   // Hooks
   const { allowNaka, depositNaka, withdrawNaka } = useContractVault()
@@ -44,14 +42,10 @@ const useWalletContoller = () => {
   const { successToast, errorToast } = useToast()
   const { getTokenAddress, fetchAllTokenSupported, fetchNAKAToken } =
     useSupportedChain()
-  const {
-    address,
-    handleConnectWithMetamask,
-    chainId,
-    signer,
-    statusWalletConnected
-  } = useWeb3Provider()
-  const { chainSupport, currentTokenSelected } = useChainSupportStore()
+  const { address, handleConnectWithMetamask, signer, statusWalletConnected } =
+    useWeb3Provider()
+  const { chainSupport, currentTokenSelected, currentChainSelected } =
+    useChainSupportStore()
 
   const {
     refetchBalanceVaultBSC,
@@ -60,7 +54,7 @@ const useWalletContoller = () => {
     refetchNakaBalanceWallet
   } = useQueryBalanceVault(
     address || "",
-    getTokenAddress(chainId as string) as string,
+    getTokenAddress(currentChainSelected as string) as string,
     isConnected
   )
 
@@ -95,7 +89,6 @@ const useWalletContoller = () => {
   const handleClose = (_method: Method) => {
     if (_method === "deposit") setOpenDeposit(false)
     else if (_method === "withdraw") setOpenWithDraw(false)
-    // setCurrentTokenSelected({} as ITokenContract)
     setValue(0)
     onResetBalance()
   }
@@ -107,9 +100,9 @@ const useWalletContoller = () => {
     if (profile.data && handleConnectWithMetamask) {
       handleConnectWithMetamask()
       if (chainSupport && chainSupport.length === 0) {
-        if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+        if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
           fetchAllTokenSupported()
-        } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
+        } else if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX) {
           fetchNAKAToken()
         }
       }
@@ -177,8 +170,14 @@ const useWalletContoller = () => {
 
       const res =
         _method === "deposit"
-          ? await handleDepisitByChainId(chainId as string, _tokenAddress)
-          : await handleWithdrawByChainId(chainId as string, _tokenAddress)
+          ? await handleDepisitByChainId(
+              currentChainSelected as string,
+              _tokenAddress
+            )
+          : await handleWithdrawByChainId(
+              currentChainSelected as string,
+              _tokenAddress
+            )
 
       /* Wait for transaction data */
       const resData = await res.wait()
@@ -186,7 +185,7 @@ const useWalletContoller = () => {
         setClose()
         successToast("Transaction success")
         handleClose(_method)
-        if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+        if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
           fetchAllTokenSupported()
         } else {
           fetchNAKAToken()
@@ -212,7 +211,7 @@ const useWalletContoller = () => {
         return
       }
 
-      if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+      if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
         const bep20Contract = getBEP20Contract(
           currentTokenSelected.address,
           signer
@@ -246,7 +245,7 @@ const useWalletContoller = () => {
         } else {
           await handleWalletProcess(_method, currentTokenSelected.address)
         }
-      } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
+      } else if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX) {
         const erc20Contract = getERC20Contract(
           currentTokenSelected.address,
           signer
@@ -280,9 +279,13 @@ const useWalletContoller = () => {
    * @description Handle click max value
    * @param _balance
    */
-  const onClickMaxValue = (_balance: number | string) => {
-    // setValue(_balance - 0.00001)
-    setValue(_balance)
+  const onClickMaxValue = (_balance: number | string, _method?: Method) => {
+    if (_method === "deposit") {
+      setValue(_balance)
+    } else {
+      setValue(Number(_balance) - 0.00001)
+    }
+
     setDisabled(false)
   }
 
@@ -306,7 +309,8 @@ const useWalletContoller = () => {
       onClickMaxValue(
         method === "deposit"
           ? tokenSelected.balanceWallet.digit
-          : tokenSelected.balanceVault.digit
+          : tokenSelected.balanceVault.digit,
+        method
       )
     }
   }

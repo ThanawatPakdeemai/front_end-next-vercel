@@ -27,8 +27,6 @@ export interface IRightMenuWalletProps {
   open: boolean
   handleOpen: (_chain: ITokenContract) => void
   handleClose: () => void
-  onSubmit: (_method: "deposit" | "withdraw") => void
-  onClickMaxValue: (_value: number) => void
   tokenSelected: ITokenContract
 }
 
@@ -39,11 +37,10 @@ const RightMenuWallet = ({
   open,
   handleOpen,
   handleClose,
-  onSubmit,
-  onClickMaxValue,
   tokenSelected
 }: IRightMenuWalletProps) => {
-  const { onChangeAmount, value, disabled } = useWalletContoller()
+  const { onChangeAmount, value, disabled, onClickMaxValue, onSubmit } =
+    useWalletContoller()
   return (
     <>
       <Box className="xs:flex-col items-center justify-between gap-1 lg:flex">
@@ -113,7 +110,8 @@ const RightMenuWallet = ({
                       onClickMaxValue(
                         method === "deposit"
                           ? tokenSelected.balanceWallet.digit
-                          : tokenSelected.balanceVault.digit
+                          : tokenSelected.balanceVault.digit,
+                        method
                       )
                     }
                   >
@@ -127,8 +125,8 @@ const RightMenuWallet = ({
               <span className="text-secondary-main">
                 {" "}
                 {method === "deposit"
-                  ? tokenSelected.balanceWallet.text
-                  : tokenSelected.balanceVault.text}{" "}
+                  ? tokenSelected.balanceWallet.digit
+                  : tokenSelected.balanceVault.digit}{" "}
                 {tokenSelected.symbol}
               </span>
             </Typography>

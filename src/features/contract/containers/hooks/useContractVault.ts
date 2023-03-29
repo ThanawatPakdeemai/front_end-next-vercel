@@ -191,13 +191,15 @@ const useContractVault = () => {
             digit: Number(Helper.WeiToNumber(walletBalancePromise).toFixed(4)),
             text: Helper.formatNumber(WeiToNumber(walletBalancePromise), {
               maximumFractionDigits: 1
-            })
+            }),
+            hex: walletBalancePromise
           },
           balanceVault: {
             digit: Number(Helper.WeiToNumber(vaultBalancePromise).toFixed(4)),
             text: Helper.formatNumber(WeiToNumber(vaultBalancePromise), {
               maximumFractionDigits: 1
-            })
+            }),
+            hex: vaultBalancePromise
           }
         })
       } catch (err) {

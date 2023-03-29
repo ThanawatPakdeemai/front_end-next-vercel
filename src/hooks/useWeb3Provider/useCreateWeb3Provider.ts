@@ -164,7 +164,6 @@ const useCreateWeb3Provider = () => {
    * @description Disconnect wallet
    */
   const handleDisconnectWallet = useCallback(async () => {
-    setDisabledConnectButton(true)
     setProvider(undefined)
     setAddress(undefined)
     setAccounts(undefined)

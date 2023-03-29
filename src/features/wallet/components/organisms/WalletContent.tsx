@@ -25,14 +25,8 @@ const WalletContent = ({
   type,
   handleSwitchNetwork
 }: IWalletContent) => {
-  const {
-    openWithDraw,
-    openDeposit,
-    handleOpen,
-    handleClose,
-    onSubmit,
-    onClickMaxValue
-  } = useWalletContoller()
+  const { openWithDraw, openDeposit, handleOpen, handleClose } =
+    useWalletContoller()
   const { chainSupport, currentTokenSelected, currentChainSelected } =
     useChainSupportStore()
   const { isConnected, signer, address } = useWeb3Provider()
@@ -97,8 +91,6 @@ const WalletContent = ({
               title="withdraw"
               titleHeader="Withdraw to metamask"
               open={openWithDraw}
-              // value={value}
-              // setValue={setValue}
               handleOpen={() =>
                 handleOpen(
                   "withdraw",
@@ -106,8 +98,6 @@ const WalletContent = ({
                 )
               }
               handleClose={() => handleClose("withdraw")}
-              onSubmit={() => onSubmit("withdraw")}
-              onClickMaxValue={onClickMaxValue}
               tokenSelected={
                 (currentTokenSelected as ITokenContract) || chainSupport[0]
               }
@@ -124,9 +114,6 @@ const WalletContent = ({
                 )
               }
               handleClose={() => handleClose("deposit")}
-              onSubmit={() => onSubmit("deposit")}
-              onClickMaxValue={onClickMaxValue}
-              // disabled={disabled}
               tokenSelected={currentTokenSelected as ITokenContract}
               method="deposit"
             />

@@ -4,7 +4,6 @@ import CircleIcon from "@mui/icons-material/Circle"
 import ChainPolygonIcon from "@components/icons/NetworkIcon/ChainPolygonIcon"
 import TextLink from "@components/atoms/TextLink"
 import CloseIcon from "@mui/icons-material/Close"
-import CopyAddress from "@components/atoms/CopyAddress"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import MetamaskLogo from "@components/icons/MetamaskLogo"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
@@ -13,6 +12,7 @@ import { IChainList } from "@configs/chain"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import { Typography } from "@mui/material"
 import useChainSupportStore from "@stores/chainSupport"
+import WalletAddress from "@feature/wallet/components/atoms/WalletAddress"
 import BalanceWallet from "./BalanceWallet"
 
 interface IProp {
@@ -103,16 +103,7 @@ const MetamaskWallet = ({
             </span>
           </Typography>
           {isConnected && address && (
-            <div>
-              <span className="text-xs text-neutral-500">
-                {Helper.shortenString(address, 5)}
-              </span>
-              <CopyAddress
-                title="copy address"
-                value={address}
-                className="ml-2 cursor-pointer text-xs text-secondary-main"
-              />
-            </div>
+            <WalletAddress contractAddress={address || ""} />
           )}
           {isConnected ? (
             <div className="flex gap-2">

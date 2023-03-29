@@ -13,6 +13,9 @@ interface IToastProps {
   width?: string
   className?: string
   onClose: () => void
+  imageSrc?: string
+  size?: string
+  count?: number
 }
 
 function BaseToastComponent({
@@ -20,7 +23,10 @@ function BaseToastComponent({
   status,
   width,
   className,
-  onClose
+  onClose,
+  imageSrc,
+  size,
+  count
 }: IToastProps) {
   return (
     <Alert
@@ -86,7 +92,23 @@ function BaseToastComponent({
             : ""
         }`}
       >
-        {text}
+        {imageSrc ? (
+          <>
+            <div className="flex items-center">
+              <Image
+                src={imageSrc}
+                width={25}
+                height={25}
+                alt={text}
+              />
+              <div className="pl-1">{text}</div>
+              <span className="pl-1">{size}</span>
+            </div>
+            <span className="pl-1">Total {count}</span>
+          </>
+        ) : (
+          text
+        )}
       </Typography>
     </Alert>
   )

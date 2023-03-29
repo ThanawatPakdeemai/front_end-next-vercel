@@ -19,6 +19,30 @@ const useToast = () => {
       ),
     []
   )
+  const successImageToast = useCallback(
+    (
+      _content: string,
+      _imageSrc: string,
+      _size: string,
+      _collect_qty: number
+    ) =>
+      toast(
+        (t) => (
+          <BaseToastComponent
+            onClose={() => toast.dismiss(t.id)}
+            status="success"
+            text={_content}
+            imageSrc={_imageSrc}
+            size={_size}
+            count={_collect_qty}
+          />
+        ),
+        {
+          className: "toast toast--success"
+        }
+      ),
+    []
+  )
   const infoToast = useCallback(
     (content: string) =>
       toast((t) => (
@@ -82,6 +106,7 @@ const useToast = () => {
 
   return {
     successToast,
+    successImageToast,
     infoToast,
     warnToast,
     errorToast,

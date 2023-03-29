@@ -78,7 +78,7 @@ export const MENU = [
         icon: AttachMoneyIcon
       },
       {
-        name: "Free Mode",
+        name: "Free To Earn",
         link: "/free-to-play-games",
         icon: MoneyOffIcon,
         textRight: "Free"
@@ -202,7 +202,7 @@ export const MENU_GUEST: IMenu[] = [
   },
   {
     id: "free-to-earn",
-    label: "Free Mode",
+    label: "Free To Earn",
     icon: <IconDollar.Mask className="stroke-neutral-300" />,
     href: "/free-to-play-games",
     external: false

@@ -117,25 +117,41 @@ const useAllBalances = () => {
   }
 
   useEffect(() => {
+    let load = false
+
     if (window.ethereum === undefined) return
-    if (signer?.provider?._network?.chainId === chainIdConfig.binance) {
-      handleBalanceVaults(CONFIGS.CONTRACT_ADDRESS.BEP20)
+    if (!load) {
+      if (signer?.provider?._network?.chainId === chainIdConfig.binance) {
+        handleBalanceVaults(CONFIGS.CONTRACT_ADDRESS.BEP20)
+      }
+      if (signer?.provider?._network?.chainId === chainIdConfig.polygon) {
+        handleBalanceVaults(CONFIGS.CONTRACT_ADDRESS.ERC20)
+      }
     }
-    if (signer?.provider?._network?.chainId === chainIdConfig.polygon) {
-      handleBalanceVaults(CONFIGS.CONTRACT_ADDRESS.ERC20)
+
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signer, chainId, isLoadingBalanceVaultBSC, isLoadingNakaBalanceVault])
 
   useEffect(() => {
-    if (chainSupport) {
-      chainSupport.forEach((_chain) => {
-        if (_chain.symbol === "BUSD") {
-          setbalanceValutBusd(_chain.balanceVault)
-        } else if (_chain.symbol === "NAKA") {
-          setbalanceValutNaka(_chain.balanceVault)
-        }
-      })
+    let load = false
+
+    if (!load) {
+      if (chainSupport) {
+        chainSupport.forEach((_chain) => {
+          if (_chain.symbol === "BUSD") {
+            setbalanceValutBusd(_chain.balanceVault)
+          } else if (_chain.symbol === "NAKA") {
+            setbalanceValutNaka(_chain.balanceVault)
+          }
+        })
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [chainSupport, signer])
 

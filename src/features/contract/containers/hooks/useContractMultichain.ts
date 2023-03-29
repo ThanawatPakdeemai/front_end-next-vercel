@@ -427,15 +427,17 @@ const useContractMultichain = () => {
   }
 
   useEffect(() => {
-    let clear = false
-    if (!clear) {
+    let load = false
+
+    if (!load) {
       priceCurrentNaka()
       getFeeData()
     }
+
     return () => {
       setNakaCurrentPrice(undefined)
       setFee("00000000000000000")
-      clear = true
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signer])

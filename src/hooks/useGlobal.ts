@@ -2,7 +2,7 @@ import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   IFilterGamesByKey,
   IGame,
@@ -44,9 +44,11 @@ const useGlobal = (
     nftgame: _nftgame ?? false
   }
 
+  const isCancelled = React.useRef(false)
+
   // hook
   const { onResetChainStore } = useChainSupportStore()
-  const { onResetNotiStore } = useNotiStore()
+  const { onResetNotification } = useNotiStore()
   const {
     onSetGameData,
     onSetGamePartnersData,
@@ -79,14 +81,22 @@ const useGlobal = (
    * @description Set profile
    */
   useEffect(() => {
-    setStateProfile(profile)
+    if (!isCancelled.current) setStateProfile(profile)
+
+    return () => {
+      isCancelled.current = true
+    }
   }, [profile])
 
   /**
    * @description Set hydrate to fix error "Text content does not match server-rendered HTML"
    */
   useEffect(() => {
-    setHydrated(true)
+    if (!isCancelled.current) setHydrated(true)
+
+    return () => {
+      isCancelled.current = true
+    }
   }, [])
 
   /**
@@ -220,27 +230,34 @@ const useGlobal = (
    * @description When logout reset all stores
    */
   const onClickLogout = async () => {
-    onResetNotiStore()
+    // onResetNotiStore()
     onResetChainStore()
     onSetGameItemSelectd({} as IGameItemListData)
     setQtyItemOfRoom(0)
+    await onResetNotification()
     await onReset()
     await router.push("/")
   }
 
   useEffect(() => {
-    if (router.asPath.includes("land")) {
-      setMarketType("nft_land")
-    } else if (router.asPath.includes("building")) {
-      setMarketType("nft_building")
-    } else if (router.asPath.includes("naka-punk")) {
-      setMarketType("nft_naka_punk")
-    } else if (router.asPath.includes("material")) {
-      setMarketType("nft_material")
-    } else if (router.asPath.includes("game-item")) {
-      setMarketType("game_item")
-    } else if (router.asPath.includes("arcade-game")) {
-      setMarketType("nft_game")
+    if (!isCancelled.current) {
+      if (router.asPath.includes("land")) {
+        setMarketType("nft_land")
+      } else if (router.asPath.includes("building")) {
+        setMarketType("nft_building")
+      } else if (router.asPath.includes("naka-punk")) {
+        setMarketType("nft_naka_punk")
+      } else if (router.asPath.includes("material")) {
+        setMarketType("nft_material")
+      } else if (router.asPath.includes("game-item")) {
+        setMarketType("game_item")
+      } else if (router.asPath.includes("arcade-game")) {
+        setMarketType("nft_game")
+      }
+    }
+
+    return () => {
+      isCancelled.current = true
     }
   }, [router.asPath])
 

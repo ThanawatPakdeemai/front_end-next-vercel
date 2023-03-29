@@ -41,7 +41,13 @@ const Gas = ({ type }) => {
   }
 
   useEffect(() => {
-    getGasPrices()
+    let load = false
+
+    if (!load) getGasPrices()
+
+    return () => {
+      load = true
+    }
   }, [type])
 
   return (

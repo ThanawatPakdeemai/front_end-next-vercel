@@ -2,6 +2,7 @@
 
 import { Box, Checkbox, Typography } from "@mui/material"
 import React, { memo } from "react"
+import { Image } from "@components/atoms/image"
 
 interface IProp {
   value: boolean
@@ -10,6 +11,7 @@ interface IProp {
   className?: string
   fontStyle?: string
   color?: "primary" | "secondary" | "error"
+  img?: string
 }
 const CheckBoxNaka = ({
   value,
@@ -17,7 +19,8 @@ const CheckBoxNaka = ({
   text,
   className,
   fontStyle = "text-sm text-neutral-500",
-  color = "secondary"
+  color = "secondary",
+  img = ""
 }: IProp) => (
   <>
     <label className={`${className} flex`}>
@@ -47,6 +50,15 @@ const CheckBoxNaka = ({
           </Box>
         }
       />
+      {img && (
+        <Image
+          src={img}
+          alt="icons"
+          width={20}
+          height={20}
+          className="mr-2"
+        />
+      )}
       <Typography className={`cursor-pointer font-neue-machina ${fontStyle}`}>
         {text ?? ""}
       </Typography>

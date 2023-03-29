@@ -23,13 +23,21 @@ const PartnerGames = () => {
   } = useFilterStore()
 
   useEffect(() => {
-    publisherAllPartner().then((res) => {
-      if (res) {
-        const { data, info } = res
-        setGameFilter(data.data)
-        setTotalCount(info ? info.totalCount : 1)
-      }
-    })
+    let load = false
+
+    if (!load) {
+      publisherAllPartner().then((res) => {
+        if (res) {
+          const { data, info } = res
+          setGameFilter(data.data)
+          setTotalCount(info ? info.totalCount : 1)
+        }
+      })
+    }
+
+    return () => {
+      load = true
+    }
   }, [
     categoryDropdown,
     gameItemDropdown,

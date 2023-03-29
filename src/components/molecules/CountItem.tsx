@@ -37,11 +37,18 @@ const CountItem = ({
   const { setMin, setMax, setCount } = useCountStore()
 
   useEffect(() => {
-    unstable_batchedUpdates(() => {
-      if (min) setMin(min)
-      if (max) setMax(max)
-      if (count) setCount(count)
-    })
+    let load = false
+
+    if (!load)
+      unstable_batchedUpdates(() => {
+        if (min) setMin(min)
+        if (max) setMax(max)
+        if (count) setCount(count)
+      })
+
+    return () => {
+      load = true
+    }
   }, [count, max, min, setCount, setMax, setMin])
 
   return (

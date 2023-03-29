@@ -118,7 +118,13 @@ const useMarketInfo = () => {
   }, [currentPage, getMarketOrderAsnyc, handleSearch, limit])
 
   useEffect(() => {
-    fetchOrderList()
+    let load = false
+
+    if (!load) fetchOrderList()
+
+    return () => {
+      load = true
+    }
   }, [currentPage, fetchOrderList])
   // end fetch info list
 

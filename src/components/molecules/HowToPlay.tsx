@@ -43,10 +43,12 @@ const Howto = ({ data }: IProp) => {
   useEffect(() => {
     // eslint-disable-next-line no-unused-vars
     let cancel = false
+
     if (data) {
       setDevice(data.device_support)
       setBrowser(data.browser_support)
     }
+
     return () => {
       cancel = true
     }

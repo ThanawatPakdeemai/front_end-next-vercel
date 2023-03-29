@@ -13,8 +13,16 @@ const SidebarProfile = () => {
   const [profileData, setProfileData] = useState<IProfile>()
 
   useEffect(() => {
-    if (profile && profile.data) {
-      setProfileData(profile.data as IProfile)
+    let load = false
+
+    if (!load) {
+      if (profile && profile.data) {
+        setProfileData(profile.data as IProfile)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [profile])
 

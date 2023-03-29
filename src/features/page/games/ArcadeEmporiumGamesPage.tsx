@@ -29,11 +29,19 @@ const ArcadeEmporiumGamesPage = () => {
   // States
   const [gameData, setGameData] = useState<IGame[]>()
   useEffect(() => {
-    if (getGamesFilterByNftgame && getGamesFilterByNftgame.data) {
-      setGameData(getGamesFilterByNftgame.data)
+    let load = false
+
+    if (!load) {
+      if (getGamesFilterByNftgame && getGamesFilterByNftgame.data) {
+        setGameData(getGamesFilterByNftgame.data)
+      }
+      if (getGamesFilterByNftgame && getGamesFilterByNftgame.info) {
+        setTotalCount(getGamesFilterByNftgame.info.totalCount)
+      }
     }
-    if (getGamesFilterByNftgame && getGamesFilterByNftgame.info) {
-      setTotalCount(getGamesFilterByNftgame.info.totalCount)
+
+    return () => {
+      load = true
     }
   }, [getGamesFilterByNftgame, setTotalCount])
 

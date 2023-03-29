@@ -110,7 +110,11 @@ const GameCarousel = ({
                 cooldown={cooldown}
                 setCooldown={setCooldown}
                 staminaRecovery={staminaRecovery}
-                href={`/${curType}-games/${item.path}`}
+                href={`/${curType}-games/${item.path}${
+                  item.play_to_earn_status === "free" || item.tournament
+                    ? "/roomlist"
+                    : ""
+                }`}
                 onHandleClick={() => onHandleSetGameStore(curType, item)}
               />
             ))}

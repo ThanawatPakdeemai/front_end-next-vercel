@@ -95,11 +95,11 @@ const SelectNaka = ({
                           key={option.value}
                           onClick={() => {
                             popupState.close()
-                            // if (option.handelClick) {
-                            //   option.handelClick()
-                            // } else if (option.link) {
-                            //   router.push(option.link)
-                            // }
+                            if (option.handelClick) {
+                              option.handelClick()
+                            } else if (option.link) {
+                              router.push(option.link)
+                            }
                           }}
                         >
                           <Link

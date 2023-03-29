@@ -55,8 +55,16 @@ const useGamePartners = () => {
    * @description Set game data
    */
   useEffect(() => {
-    if (dataGamePartner) {
-      setGameData(dataGamePartner)
+    let load = false
+
+    if (!load) {
+      if (dataGamePartner) {
+        setGameData(dataGamePartner)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [dataGamePartner])
 

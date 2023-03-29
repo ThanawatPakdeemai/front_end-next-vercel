@@ -161,7 +161,7 @@ const RegisterLayout = () => {
                 container
                 justifyContent="center"
                 alignItems="center"
-                className="absolute bottom-4"
+                className="absolute bottom-4 my-2"
               >
                 <Typography className="text-sm uppercase text-neutral-700">
                   Copyright 2022 © Nakamoto Games

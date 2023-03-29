@@ -1,6 +1,7 @@
 import { Button } from "@mui/material"
 import React from "react"
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"
+import FavouriteColorIcon from "@components/icons/HowToPlayIcon/FavouriteColorIcon"
 
 export interface IButtonFavourite {
   type?: "square" | "circle"
@@ -8,6 +9,8 @@ export interface IButtonFavourite {
   variant?: "text" | "outlined" | "contained"
   color?: "primary" | "secondary" | "success" | "error" | "info" | "warning"
   className?: string
+  handleClick?: () => void
+  favouriteStatus?: boolean
 }
 
 const ButtonFavourite = ({
@@ -15,19 +18,23 @@ const ButtonFavourite = ({
   icon = <FavoriteBorderIcon />,
   variant = "contained",
   color = "primary",
-  className
+  className,
+  handleClick,
+  favouriteStatus
 }: IButtonFavourite) => {
   const typeButton = {
     "circle": "!min-w-0 w-auto h-auto rounded-full !p-4",
     "square": "!min-w-0"
   }
+
   return (
     <Button
       variant={variant}
       color={color}
       className={`${className} ${typeButton[type]}`}
+      onClick={handleClick}
     >
-      {icon}
+      {favouriteStatus ? <FavouriteColorIcon /> : icon}
     </Button>
   )
 }

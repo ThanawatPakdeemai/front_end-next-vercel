@@ -18,6 +18,7 @@ import WalletContent from "@feature/wallet/components/organisms/WalletContent"
 import ChainList from "@components/molecules/ChainList"
 import TokenList from "@components/molecules/TokenList"
 import { CHAIN_SUPPORT, IChainList } from "@configs/chain"
+import WalletAddress from "@feature/wallet/components/atoms/WalletAddress"
 
 export default function WalletPage() {
   const { hydrated } = useGlobal()
@@ -150,8 +151,14 @@ export default function WalletPage() {
    * @description set disabled button
    */
   useEffect(() => {
+    let load = false
+
     if (!statusWalletConnected.responseStatus) return
-    setDisabled(isDisabledButton())
+    if (!load) setDisabled(isDisabledButton())
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, tabChainList, statusWalletConnected])
 
@@ -159,24 +166,34 @@ export default function WalletPage() {
    * @description Set type tab by router.query
    */
   useEffect(() => {
-    const _currentChain = CHAIN_SUPPORT.find((item) => item.chainId === chainId)
-    if (_currentChain) {
-      setTabChainList(_currentChain as IChainList)
+    let load = false
+
+    if (!load) {
+      const _currentChain = CHAIN_SUPPORT.find(
+        (item) => item.chainId === chainId
+      )
+      if (_currentChain) {
+        setTabChainList(_currentChain as IChainList)
+      }
+
+      if (!statusWalletConnected.responseStatus) return
+      if (token === "NAKA") {
+        // setType("NAKA")
+        const _chainTarget = CHAIN_SUPPORT.find((item) => item.link === "NAKA")
+        setTabChainList(_chainTarget as IChainList)
+        setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX)
+        router.push("?token=NAKA")
+      } else if (token === "BNB") {
+        // setType("BNB")
+        const _chainTarget = CHAIN_SUPPORT.find((item) => item.link === "BNB")
+        setTabChainList(_chainTarget as IChainList)
+        setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX_BNB)
+        router.push("?token=BNB")
+      }
     }
 
-    if (!statusWalletConnected.responseStatus) return
-    if (token === "NAKA") {
-      // setType("NAKA")
-      const _chainTarget = CHAIN_SUPPORT.find((item) => item.link === "NAKA")
-      setTabChainList(_chainTarget as IChainList)
-      setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX)
-      router.push("?token=NAKA")
-    } else if (token === "BNB") {
-      // setType("BNB")
-      const _chainTarget = CHAIN_SUPPORT.find((item) => item.link === "BNB")
-      setTabChainList(_chainTarget as IChainList)
-      setIsWrongNetwork(chainId !== CONFIGS.CHAIN.CHAIN_ID_HEX_BNB)
-      router.push("?token=BNB")
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token, chainId, tabChainList])
@@ -202,6 +219,7 @@ export default function WalletPage() {
       <div className="flex flex-wrap gap-2 lg:flex-nowrap">
         <div className="flex flex-1 flex-wrap justify-center gap-4 lg:max-w-[570px] xl:w-full xl:justify-end">
           <div className="my-2 h-full flex-[1_1_calc(100%-200px)] items-center justify-center rounded-default bg-neutral-800 p-2 md:my-0 md:min-h-[360px] md:p-0 xl:w-[570px]">
+            <WalletAddress contractAddress={address || ""} />
             <WalletContent
               chainSupport={chainSupport}
               loading={loading as boolean}

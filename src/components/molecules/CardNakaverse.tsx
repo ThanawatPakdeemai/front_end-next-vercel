@@ -51,7 +51,7 @@ const CardNakaverse = ({
           {title}
         </h6>
         <ButtonLink
-          href=""
+          href={href}
           // eslint-disable-next-line no-return-assign
           onClick={() => (window.location.href = href)}
           text={btnText}

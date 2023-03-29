@@ -1,6 +1,6 @@
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { Box, CardMedia, Grid } from "@mui/material"
 import React from "react"
+import { Box, CardMedia, Grid } from "@mui/material"
 import CardContentSlide from "../molecules/CardContentSlide"
 import CardNextSlide, { ICardNextSlide } from "../molecules/CardNextSlide"
 

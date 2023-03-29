@@ -7,9 +7,12 @@ import { Popover } from "@mui/material"
 import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import SelectDropdownCurrency from "@components/atoms/selectDropdown/SelectDropdownCurrency"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
-import useGlobal from "@hooks/useGlobal"
+// import useGlobal from "@hooks/useGlobal"
 import INaka from "@components/icons/Naka"
 import IBusd from "@components/icons/Busd"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
+import { useWeb3Provider } from "@providers/Web3Provider"
+import useProfileStore from "@stores/profileStore"
 import ButtonDropdown from "./ButtonDropdown"
 
 interface IProp {
@@ -31,19 +34,45 @@ const DropdownListItem = ({
 }: // defaultValue
 IProp) => {
   // eslint-disable-next-line no-unused-vars
-  const { getDefaultCoin } = useGlobal()
-  const [defaultItem, setDefaultItem] = useState<ITokenContract>()
+  // const { getDefaultCoin } = useGlobal()
+  const { address } = useWeb3Provider()
+  const profile = useProfileStore((state) => state.profile.data)
+  const [defaultItem, setDefaultItem] = useState<ITokenContract>(list?.[0])
   // getDefaultCoin()[0]
+  const { setValue, updatePricePerItem } = useBuyGameItemController()
 
   const onChangeItem = (_item: ITokenContract) => {
     setDefaultItem(_item)
     if (_item && onChangeSelect) onChangeSelect(_item)
   }
-  // React.useEffect(() => {
-  //   setValue("currency", getDefaultCoin()[0] as ITokenContract)
-  //   setValue("currency_id", getDefaultCoin()[0]?.symbol as string)
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
+
+  React.useEffect(() => {
+    let load = false
+
+    if (!load) {
+      if (list) {
+        setValue("currency", list?.[0])
+        setValue("currency_id", list?.[0]?.symbol as string)
+        updatePricePerItem()
+        if (onChangeSelect) onChangeSelect(list?.[0])
+      }
+    }
+
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address, profile])
+
+  React.useEffect(() => {
+    let load = false
+
+    if (!load) updatePricePerItem()
+
+    return () => {
+      load = true
+    }
+  }, [updatePricePerItem])
 
   // React.useEffect(() => {
   //   if (list && list.length > 0) {

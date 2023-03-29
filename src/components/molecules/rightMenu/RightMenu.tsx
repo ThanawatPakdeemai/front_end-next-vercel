@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Box } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
 import CreateProfile from "@feature/profile/components/createProfile/CreateProfile"
-
+import useNotiStore from "@stores/notification"
 import useGlobal from "@hooks/useGlobal"
 import jwt_decode from "jwt-decode"
 import Helper from "@utils/helper"
@@ -22,6 +22,7 @@ const RightMenu = () => {
   const token = Helper.getTokenFromLocal()
   const { onSetProfileData, onSetProfileAddress, onSetProfileJWT } =
     useProfileStore()
+  const { onResetNotification } = useNotiStore()
 
   const fetchToken = () => {
     refreshProfileToken()
@@ -40,12 +41,14 @@ const RightMenu = () => {
       .catch((err) => {
         console.error(err)
         setIsTokenValid(false)
+        onResetNotification() // remove notification zustand
         onReset() // remove profile zustand
       })
   }
   useEffect(() => {
     // Retrieve the token from local storage
     let load = false
+
     if (!load) {
       if (token) {
         // Decode the token to obtain the expiration time
@@ -61,6 +64,7 @@ const RightMenu = () => {
         fetchToken()
       }
     }
+
     return () => {
       load = true
     }

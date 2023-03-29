@@ -137,6 +137,8 @@ const MetamaskWallet = ({
             <TextLink
               name="What is metamask ?"
               className="!pb-0 capitalize"
+              href="https://metamask.io/"
+              target="_blank"
             />
           )}
         </div>

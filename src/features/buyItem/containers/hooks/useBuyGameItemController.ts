@@ -16,8 +16,9 @@ import useGameStore from "@stores/game"
 import useLoadingStore from "@stores/loading"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
-import { useCallback, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
+import { JsonRpcSigner } from "@ethersproject/providers"
 import useBuyGameItems from "./useBuyGameItems"
 
 const useBuyGameItemController = () => {
@@ -26,7 +27,7 @@ const useBuyGameItemController = () => {
   const { setOpen, setClose } = useLoadingStore()
   const { errorToast, successToast } = useToast()
   const { data, onSetGameItemSelectd, itemSelected } = useGameStore()
-  const { chainId, accounts, signer } = useSwitchNetwork()
+  const { chainId, accounts, signer, address } = useSwitchNetwork()
   const { chainSupport } = useChainSupport()
   const { fetchNAKAToken, fetchAllTokenSupported } = useGlobal()
   const { price } = useNakaPriceProvider()
@@ -62,21 +63,10 @@ const useBuyGameItemController = () => {
   } = useForm({
     defaultValues: DEFAULT_VALUES
   })
-  const isDisabled = (): boolean => {
-    const totalPrice = watch("nakaPerItem") * watch("qty")
-    if (
-      Object.keys(watch("currency")).length !== 0 &&
-      Object.keys(watch("item")).length !== 0 &&
-      watch("qty") > 0 &&
-      totalPrice <= watch("currency").balanceVault.digit &&
-      totalPrice > 0 &&
-      accounts &&
-      signer
-    ) {
-      return false
-    }
-    return true
-  }
+
+  // console.log(isDisabled)
+
+  // console.log(watch())
 
   /**
    * @description Message alert when user switch network
@@ -98,7 +88,7 @@ const useBuyGameItemController = () => {
   const updatePricePerItem = useCallback(async () => {
     if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
       Helper.calculateItemPerPrice(
-        (watch("item") as IGameItemListData).price,
+        (watch("item") as IGameItemListData)?.price,
         (price as ICurrentNakaData)?.last
       ).then((res) => {
         if (res) {
@@ -109,8 +99,8 @@ const useBuyGameItemController = () => {
       })
     } else {
       Helper.calPriceBinanceChain(
-        (watch("item") as IGameItemListData).price,
-        (watch("currency") as ITokenContract).symbol
+        (watch("item") as IGameItemListData)?.price,
+        (watch("currency") as ITokenContract)?.symbol
       ).then((res) => {
         if (res) {
           setValue("nakaPerItem", Number(res))
@@ -120,7 +110,17 @@ const useBuyGameItemController = () => {
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainId, setValue, watch])
+  }, [
+    chainId,
+    setValue,
+    watch,
+    price,
+    address,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    watch("item"),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    watch("currency")
+  ])
 
   const onQtyUp = useCallback(() => {
     setValue("qty", watch("qty") >= 99 ? 99 : Number(watch("qty")) + 1)
@@ -178,7 +178,7 @@ const useBuyGameItemController = () => {
 
   const handleOpen = () => {
     setOpenForm(true)
-    resetForm()
+    // resetForm()
   }
 
   const refetchItemSelected = useCallback(() => {
@@ -265,6 +265,25 @@ const useBuyGameItemController = () => {
   // resetForm()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [chainSupport, gameItemList, resetForm, fetchNAKAToken])
+  // console.log(isDisabled)
+
+  const isDisabled = useMemo(() => {
+    updatePricePerItem()
+    const totalPrice = watch("nakaPerItem") * watch("qty")
+    if (
+      Object.keys(watch("currency") ?? [])?.length !== 0 &&
+      Object.keys(watch("item") ?? [])?.length !== 0 &&
+      watch("qty") > 0 &&
+      totalPrice <= watch("currency")?.balanceVault?.digit &&
+      totalPrice > 0 &&
+      Object.keys((accounts as string[]) ?? [])?.length > 0 &&
+      Object.keys((signer as JsonRpcSigner) ?? [])?.length > 0
+    ) {
+      return false
+    }
+    return true
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accounts, signer, watch, watch("currency"), watch("nakaPerItem")])
 
   return {
     MessageAlert,

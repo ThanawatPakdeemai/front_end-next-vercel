@@ -13,20 +13,19 @@ const CreateProfile = () => {
   const handleClose = () => setOpen(false)
 
   useEffect(() => {
-    let load = true
-    // TODO YUI uncomment
-    if (profile && !profile.avatar && !profile.username) {
-      if (load) {
+    let load = false
+
+    if (!load) {
+      // TODO YUI uncomment
+      if (profile && !profile.avatar && !profile.username) {
         handleOpen()
-      }
-    } else if (profile && profile.avatar && profile.username) {
-      if (load) {
+      } else if (profile && profile.avatar && profile.username) {
         handleClose()
       }
     }
 
     return () => {
-      load = false
+      load = true
     }
   }, [profile, open])
 

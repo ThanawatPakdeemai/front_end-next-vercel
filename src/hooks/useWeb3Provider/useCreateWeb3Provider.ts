@@ -127,7 +127,8 @@ const useCreateWeb3Provider = () => {
             method: "wallet_addEthereumChain",
             params: [getNetwork(_chainId)]
           })
-          successToast(MESSAGES.wallet_addEthereumChain)
+          successToast(`Switch to chain ${getNetwork(_chainId).chainName}`)
+          // successToast(MESSAGES.wallet_addEthereumChain)
           return {
             responseStatus: true,
             errorMsg: "",
@@ -289,26 +290,48 @@ const useCreateWeb3Provider = () => {
     }
   }, [handleCheckingWallet, onSetAddress, resetChainId])
 
-  const { onSetProfileData, onSetProfileAddress, onSetProfileJWT } =
-    useProfileStore()
+  const { onSetProfileData, onSetProfileAddress } = useProfileStore()
 
   const handleConnectWithMetamask = useCallback(async () => {
+    // eslint-disable-next-line no-console
+    // console.log("1")
+
     if (window.ethereum === undefined) return
+    // eslint-disable-next-line no-console
+    // console.log("2")
+
     if (!chainIdIsSupported()) {
+      // eslint-disable-next-line no-console
+      // console.log("3")
       resetChainId(CONFIGS.CHAIN.CHAIN_ID_HEX)
     }
+    // eslint-disable-next-line no-console
+    // console.log("4")
+
     Helper.setLocalStorage({
       key: ELocalKey.walletConnector,
       value: WALLET_CONNECTOR_TYPES.injected
     })
     const _provider = new providers.Web3Provider(window.ethereum)
     _provider.send("eth_requestAccounts", []).then(() => {
+      // eslint-disable-next-line no-console
+      // console.log("5")
+
       setProvider(_provider)
     })
+    // eslint-disable-next-line no-console
+    // console.log("6")
+
     const account = await _provider.send("eth_requestAccounts", [])
+    // eslint-disable-next-line no-console
+    // console.log("7")
+
     if (account === undefined) {
       setAccounts(undefined)
       onSetAddress(undefined)
+      // eslint-disable-next-line no-console
+      // console.log("8")
+
       return
     }
     onSetAddress(account[0])
@@ -316,11 +339,18 @@ const useCreateWeb3Provider = () => {
     checkNetwork()
 
     const walletAccounts = await _provider?.listAccounts()
+    // eslint-disable-next-line no-console
+    // console.log("9")
+
     if (walletAccounts === undefined) setAccounts(undefined)
+    // eslint-disable-next-line no-console
+    // console.log("10")
+    // console.log(walletAccounts)
+
     if (walletAccounts) {
       onSetAddress(walletAccounts[0])
       if (profile) {
-        if (!profile.address) {
+        if (!profile.address || profile.address === "") {
           if (profile.email) {
             const data = {
               _email: profile.email,
@@ -329,9 +359,9 @@ const useCreateWeb3Provider = () => {
 
             await updateWalletAddress(data)
             await getProfileByEmail(profile.email).then((_res) => {
+              // console.log(_res)
               onSetProfileData(_res)
               onSetProfileAddress(_res.address)
-              onSetProfileJWT(_res.jwtToken)
             })
             checkChain()
           }
@@ -392,7 +422,8 @@ const useCreateWeb3Provider = () => {
             method: "wallet_switchEthereumChain",
             params: [{ chainId: _chainId }] // chainId must be in hexadecimal numbers
           })
-          successToast(MESSAGES.wallet_switchEthereumChain)
+          // successToast(MESSAGES.wallet_switchEthereumChain)
+          successToast(`Switch to chain ${getNetwork(_chainId).chainName}`)
           const _newProvider = new providers.Web3Provider(_provider)
           const _signer = _newProvider.getSigner()
           if (_signer) {
@@ -420,6 +451,7 @@ const useCreateWeb3Provider = () => {
         }
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       checkNetwork,
       handleConnectWithMetamask,
@@ -430,32 +462,59 @@ const useCreateWeb3Provider = () => {
   )
 
   useEffect(() => {
-    checkChain()
+    let load = false
+
+    if (!load) checkChain()
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    const getWalletAccount = async () => {
-      const walletAccounts = await provider?.listAccounts()
-      if (walletAccounts) {
-        setAddress(walletAccounts[0])
-      } else {
-        setAccounts(undefined)
+    let load = false
+
+    if (!load) {
+      const getWalletAccount = async () => {
+        const walletAccounts = await provider?.listAccounts()
+        if (walletAccounts) {
+          setAddress(walletAccounts[0])
+        } else {
+          setAccounts(undefined)
+        }
       }
+      getWalletAccount()
     }
-    getWalletAccount()
+
+    return () => {
+      load = true
+    }
   }, [provider])
 
   useEffect(() => {
+    let load = false
+
     if (address === undefined) return
     if (provider === undefined) return
-    const _signer = provider?.getSigner()
-    setSigner(_signer)
+    if (!load) {
+      const _signer = provider?.getSigner()
+      setSigner(_signer)
+    }
+
+    return () => {
+      load = true
+    }
   }, [address, provider])
 
   useEffect(() => {
-    const checkHasMetamask: boolean = typeof window.ethereum !== "undefined"
-    setHasMetamask(checkHasMetamask)
+    const load = false
+
+    if (!load) {
+      const checkHasMetamask: boolean = typeof window.ethereum !== "undefined"
+      setHasMetamask(checkHasMetamask)
+    }
+
     return () => {
       setHasMetamask(false)
     }

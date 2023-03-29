@@ -28,9 +28,11 @@ export default function GameRoomList() {
 
   useEffect(() => {
     let load = false
+
     if (!load) {
       if (gameData) onSetGameData(gameData)
     }
+
     return () => {
       load = true
     }

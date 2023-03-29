@@ -149,25 +149,33 @@ const ActionBar = ({
   }
 
   useEffect(() => {
-    // มีเงินต้นให้รับ
-    if (
-      userStakedInfo &&
-      userStakedInfo.comInterest === 0 &&
-      userStakedInfo.stakeAmount > 0
-    ) {
-      setDisabledWithdraw(false)
+    let load = false
+
+    if (!load) {
+      // มีเงินต้นให้รับ
+      if (
+        userStakedInfo &&
+        userStakedInfo.comInterest === 0 &&
+        userStakedInfo.stakeAmount > 0
+      ) {
+        setDisabledWithdraw(false)
+      }
+      // มีดอกเบี้ยและเงินต้นให้รับ
+      if (
+        dayjs() > dayjs(basicStakeInfo && basicStakeInfo.startDate) &&
+        userStakedInfo &&
+        userStakedInfo.comInterest > 0 &&
+        userStakedInfo.stakeAmount > 0
+      ) {
+        setDisabledClaim(false)
+      }
+      if (dayjs() < dayjs(basicStakeInfo && basicStakeInfo.startDate)) {
+        setDisabledStake(false)
+      }
     }
-    // มีดอกเบี้ยและเงินต้นให้รับ
-    if (
-      dayjs() > dayjs(basicStakeInfo && basicStakeInfo.startDate) &&
-      userStakedInfo &&
-      userStakedInfo.comInterest > 0 &&
-      userStakedInfo.stakeAmount > 0
-    ) {
-      setDisabledClaim(false)
-    }
-    if (dayjs() < dayjs(basicStakeInfo && basicStakeInfo.startDate)) {
-      setDisabledStake(false)
+
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userStakedInfo, basicStakeInfo])

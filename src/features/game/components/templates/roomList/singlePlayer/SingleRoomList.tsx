@@ -118,10 +118,18 @@ const GameRoomList = () => {
   }
 
   useEffect(() => {
-    if (data) {
-      unstable_batchedUpdates(() => {
-        setGameData(data)
-      })
+    let load = false
+
+    if (!load) {
+      if (data) {
+        unstable_batchedUpdates(() => {
+          setGameData(data)
+        })
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [allGameRooms, data])
 
@@ -160,6 +168,8 @@ const GameRoomList = () => {
                           ? "full"
                           : "join"
                       }
+                      path={gameData?.path}
+                      dataGoalRush={_data.data_play}
                     />
                   )
                 })

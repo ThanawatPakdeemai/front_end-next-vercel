@@ -24,9 +24,14 @@ interface IProps {
   className?: string | undefined
   sx?: SxProps<Theme> | undefined
   buyItemCoinSeleced?: ITokenContract
+  widthBalance?: string
 }
 
-const Balance = ({ className, buyItemCoinSeleced }: IProps) => {
+const Balance = ({
+  className,
+  buyItemCoinSeleced,
+  widthBalance = "w-[40px]"
+}: IProps) => {
   const router = useRouter()
   const { token } = router.query
   const profile = useProfileStore((state) => state.profile.data)
@@ -50,6 +55,7 @@ const Balance = ({ className, buyItemCoinSeleced }: IProps) => {
       const selectedCoin = chainSupport.find(
         (coin) => coin.symbol === buyItemCoinSeleced.symbol
       )
+
       if (selectedCoin) {
         return (
           <TokenListItem
@@ -62,6 +68,7 @@ const Balance = ({ className, buyItemCoinSeleced }: IProps) => {
             }
             text={(selectedCoin as ITokenContract).balanceVault.text}
             disabledClick
+            widthBalance={widthBalance}
             shadow
           />
         )
@@ -76,6 +83,7 @@ const Balance = ({ className, buyItemCoinSeleced }: IProps) => {
         }
         currentTokenSelected={(token as string) || chainSupport[0]?.symbol}
         displayBalance
+        widthBalance={widthBalance}
       />
     )
   }

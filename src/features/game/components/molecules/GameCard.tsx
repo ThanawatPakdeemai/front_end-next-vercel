@@ -12,10 +12,12 @@ import TimerStamina from "@components/atoms/timer/TimerStamina"
 import { IGame, IGameFav } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { IMAGES } from "@constants/images"
+import Link from "next/link"
 
 interface IProps {
+  href?: string
   menu: IHeaderSlide
-  data?: IGame | IGameFav
+  data?: IGame | IGameFav | IPartnerGameData
   partnerdata?: IPartnerGameData
   imgPartner?: string | undefined
   showNo?: boolean
@@ -28,6 +30,7 @@ interface IProps {
 }
 
 const GameCard = ({
+  href,
   menu,
   data,
   partnerdata,
@@ -78,44 +81,61 @@ const GameCard = ({
   }
 
   useEffect(() => {
-    if (imgPartner && imgPartner !== undefined) {
-      setImageSrc(imgPartner)
-    } else if (
-      !imgPartner &&
-      imgPartner === undefined &&
-      data &&
-      data.image_category_list
-    ) {
-      setImageSrc(data.image_category_list)
+    let load = false
+
+    if (!load) {
+      if (imgPartner && imgPartner !== undefined) {
+        setImageSrc(imgPartner)
+      } else if (
+        !imgPartner &&
+        imgPartner === undefined &&
+        data &&
+        (data as IGame).image_category_list
+      ) {
+        setImageSrc((data as IGame).image_category_list)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [imgPartner, data])
 
   useEffect(() => {
-    if (partnerdata) {
-      setChipLable("partner")
-      setTheme("warning")
-      setLableButton("view detail")
-    } else if (!partnerdata && menu.title && menu.theme) {
-      setChipLable(menu.title)
-      setTheme(menu.theme)
+    let load = false
+
+    if (!load) {
+      if (partnerdata) {
+        setChipLable("partner")
+        setTheme("warning")
+        setLableButton("view detail")
+      } else if (!partnerdata && menu.title && menu.theme) {
+        setChipLable(menu.title)
+        setTheme(menu.theme)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [menu, partnerdata, data])
 
-  return (
+  const renderCardContent = () => (
     <motion.div
       className="slick-card-container flex flex-col justify-center blur-none"
       initial="init"
       whileHover="onHover"
       animate="animate"
+      onClick={onHandleClick}
     >
       <motion.div className="relative flex w-full items-center justify-center overflow-hidden px-1 xl:h-[218px]">
-        {showNo && no ? (
+        {showNo && no && (
           <NumberRank
             index={no - 1}
             fixColor={false}
             className="slick-card-number absolute top-2 right-1 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
           />
-        ) : null}
+        )}
         <Image
           src={imageSrc}
           alt="home-slide"
@@ -134,7 +154,6 @@ const GameCard = ({
               cooldown ? <IconHourglass /> : <SportsEsportsOutlinedIcon />
             }
             text={cooldown ? "cooldown..." : lableButton}
-            handleClick={onHandleClick}
             className={`btn-rainbow-theme z-[2] w-[198px] ${
               cooldown ? "bg-error-main" : "bg-secondary-main "
             } capitalize`}
@@ -145,7 +164,7 @@ const GameCard = ({
       <div className="relative z-[3]">
         <div className="slick-card-desc flex h-10 w-full items-center">
           <p className="relative truncate uppercase hover:text-clip">
-            {data?.name ? data.name : partnerdata?.name}
+            {data?.name ?? partnerdata?.name}
           </p>
         </div>
         <div className="relative grid w-full grid-cols-2 gap-2 text-xs uppercase">
@@ -155,30 +174,30 @@ const GameCard = ({
             color={onChipColor(theme)}
             className="font-bold"
           />
-          {partnerdata ? (
+          {partnerdata && (
             <Chip
-              label={
-                partnerdata.genres &&
-                partnerdata.genres.map((el) => `${el.name}, `)
-              }
+              label={partnerdata.genres?.map((el) => `${el.name}, `)}
               size="small"
               color={onChipColor("default")}
               className="font-bold"
             />
-          ) : (
-            ""
           )}
-
-          {checkTimer && staminaRecovery && cooldown && setCooldown ? (
+          {checkTimer && staminaRecovery && cooldown && setCooldown && (
             <TimerStamina
               time={staminaRecovery}
               show={cooldown}
               setShow={setCooldown}
             />
-          ) : null}
+          )}
         </div>
       </div>
     </motion.div>
+  )
+
+  return href ? (
+    <Link href={href}>{renderCardContent()}</Link>
+  ) : (
+    renderCardContent()
   )
 }
 

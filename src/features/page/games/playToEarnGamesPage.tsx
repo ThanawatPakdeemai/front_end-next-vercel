@@ -7,11 +7,11 @@ import React, { memo, useEffect, useRef, useState } from "react"
 import { v4 as uuid } from "uuid"
 import useGameStore from "@stores/game/index"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
-import GameCard from "@feature/game/containers/components/molecules/GameCard"
 import useGlobal from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import useFilterGameList from "@feature/dropdown/containers/hooks/useFilterGameList"
+import GameCard from "@feature/game/components/molecules/GameCard"
 
 const PlayToEarnGamesPage = () => {
   const type = "play-to-earn"
@@ -21,7 +21,7 @@ const PlayToEarnGamesPage = () => {
   const fetchRef = useRef(false)
   const [totalCount, setTotalCount] = useState<number>(0)
   const queryClient = useQueryClient()
-  const { onHandleClick } = useGlobal(limit)
+  const { onHandleSetGameStore, getTypeGamePathFolder } = useGlobal(limit)
   const { clearGameData } = useGameStore()
   const {
     category: categoryDropdown,
@@ -45,27 +45,43 @@ const PlayToEarnGamesPage = () => {
   })
 
   useEffect(() => {
-    // totalCount
-    if (!fetchRef.current && gameData) {
-      fetchRef.current = true
-      setTotalCount(gameData.info.totalCount)
+    let load = false
+
+    if (!load) {
+      // totalCount
+      if (!fetchRef.current && gameData) {
+        fetchRef.current = true
+        setTotalCount(gameData.info.totalCount)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [gameData])
 
   useEffect(() => {
-    if (!isPreviousData && gameData) {
-      queryClient.prefetchQuery({
-        queryKey: ["games", type, page + 1],
-        queryFn: () =>
-          getGameByTypes({ _type: type, _limit: limit, _page: page + 1 })
-      })
-      setGameFilter(gameData.data)
+    let load = false
+
+    if (!load) {
+      if (!isPreviousData && gameData) {
+        queryClient.prefetchQuery({
+          queryKey: ["games", type, page + 1],
+          queryFn: () =>
+            getGameByTypes({ _type: type, _limit: limit, _page: page + 1 })
+        })
+        setGameFilter(gameData.data)
+      }
+      clearGameData()
+      clearSearch()
+      clearCategory()
+      clearGameItem()
+      clearDevice()
     }
-    clearGameData()
-    clearSearch()
-    clearCategory()
-    clearGameItem()
-    clearDevice()
+
+    return () => {
+      load = true
+    }
   }, [
     clearCategory,
     clearDevice,
@@ -82,25 +98,33 @@ const PlayToEarnGamesPage = () => {
     useFilterGameList()
 
   useEffect(() => {
-    const filterData = {
-      limit,
-      skip: page,
-      sort: "name",
-      search: searchDropdown,
-      category: categoryDropdown,
-      item: gameItemDropdown,
-      device: deviceDropdown,
-      game_type: "play-to-earn-games",
-      tournament: false,
-      nftgame: "all"
-    }
-    mutateGetGamesByCategoryId(filterData).then((res) => {
-      if (res) {
-        const { data, info } = res
-        setGameFilter(data)
-        setTotalCount(info ? info.totalCount : 1)
+    let load = false
+
+    if (!load) {
+      const filterData = {
+        limit,
+        skip: page,
+        sort: "name",
+        search: searchDropdown,
+        category: categoryDropdown,
+        item: gameItemDropdown,
+        device: deviceDropdown,
+        game_type: "play-to-earn-games",
+        tournament: false,
+        nftgame: "all"
       }
-    })
+      mutateGetGamesByCategoryId(filterData).then((res) => {
+        if (res) {
+          const { data, info } = res
+          setGameFilter(data)
+          setTotalCount(info ? info.totalCount : 1)
+        }
+      })
+    }
+
+    return () => {
+      load = true
+    }
   }, [
     categoryDropdown,
     gameItemDropdown,
@@ -122,9 +146,13 @@ const PlayToEarnGamesPage = () => {
                 key={game.id}
                 menu={P2EHeaderMenu}
                 data={game}
+                href={`/${getTypeGamePathFolder(game)}/${game.path}`}
                 onHandleClick={() =>
-                  onHandleClick("play-to-earn", game.path, game)
+                  onHandleSetGameStore(getTypeGamePathFolder(game), game)
                 }
+                // onHandleClick={() =>
+                //   onHandleClick("play-to-earn", game.path, game)
+                // }
               />
             ))}
       </div>

@@ -21,7 +21,7 @@ const PublisherPage = () => {
     // clearGameItem,
     // clearDevice
   } = useFilterStore()
-  const { onHandleClick } = useGlobal()
+  const { onHandleSetGameStore } = useGlobal()
   const [gameFilter, setGameFilter] = useState<IPartnerGameData[]>()
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
@@ -60,14 +60,22 @@ const PublisherPage = () => {
   // }, [gameData, isPreviousData, page, queryClient])
 
   useEffect(() => {
-    publisherAllPartner().then((res) => {
-      if (res) {
-        const { data, info } = res
-        // eslint-disable-next-line no-console
-        setGameFilter(data.data)
-        setTotalCount(info ? info.totalCount : 1)
-      }
-    })
+    let load = false
+
+    if (!load) {
+      publisherAllPartner().then((res) => {
+        if (res) {
+          const { data, info } = res
+          // eslint-disable-next-line no-console
+          setGameFilter(data.data)
+          setTotalCount(info ? info.totalCount : 1)
+        }
+      })
+    }
+
+    return () => {
+      load = true
+    }
   }, [
     categoryDropdown,
     gameItemDropdown,
@@ -93,9 +101,13 @@ const PublisherPage = () => {
               menu={P2EHeaderMenu}
               partnerdata={game}
               imgPartner={game.image_thumbnail}
+              href={`/partner-publisher/${game.slug}`}
               onHandleClick={() =>
-                onHandleClick("partner-publisher", game.slug, game)
+                onHandleSetGameStore("partner-publisher", game)
               }
+              // onHandleClick={() =>
+              //   onHandleClick("partner-publisher", game.slug, game)
+              // }
             />
           ))}
       </div>

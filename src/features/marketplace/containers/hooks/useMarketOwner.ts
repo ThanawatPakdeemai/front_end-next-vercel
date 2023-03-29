@@ -195,19 +195,35 @@ const useMartketOwner = () => {
   }
 
   useEffect(() => {
-    if (marketType) {
-      if (marketType !== "game_item" && marketType !== "nft_material") {
-        fetchOwnerDataList()
-      } else {
-        fetchWithContract()
+    let load = false
+
+    if (!load) {
+      if (marketType) {
+        if (marketType !== "game_item" && marketType !== "nft_material") {
+          fetchOwnerDataList()
+        } else {
+          fetchWithContract()
+        }
       }
+    }
+
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [marketType, currentPage])
 
   useEffect(() => {
-    if (currentPage > 1) {
-      setCurrentPage(1)
+    let load = false
+
+    if (!load) {
+      if (currentPage > 1) {
+        setCurrentPage(1)
+      }
+    }
+
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [marketType])

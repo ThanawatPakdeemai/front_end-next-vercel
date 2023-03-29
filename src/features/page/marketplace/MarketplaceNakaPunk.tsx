@@ -43,14 +43,30 @@ const MarketplaceNakaPunk = () => {
   }
 
   useEffect(() => {
-    if (resNakapunk) {
-      setMetaData(resNakapunk.data.meta_data)
+    let load = false
+
+    if (!load) {
+      if (resNakapunk) {
+        setMetaData(resNakapunk.data.meta_data)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [resNakapunk])
 
   useEffect(() => {
-    if (priceNakaPunk) {
-      setPriceNP(priceNakaPunk.data)
+    let load = false
+
+    if (!load) {
+      if (priceNakaPunk) {
+        setPriceNP(priceNakaPunk.data)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [priceNakaPunk])
 

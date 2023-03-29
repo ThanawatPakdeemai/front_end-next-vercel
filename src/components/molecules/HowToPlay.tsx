@@ -1,18 +1,11 @@
-/* eslint-disable max-len */
+import ButtonLink from "@components/atoms/button/ButtonLink"
 import IconCustoms from "@components/atoms/IconCustom"
 import FavouriteColorIcon from "@components/icons/HowToPlayIcon/FavouriteColorIcon"
 import FavouriteIcon from "@components/icons/HowToPlayIcon/FavouriteIcon"
-// import HowToPlayIcon from "@components/icons/HowToPlayIcon/HowToPlayIcon"
 import ShareIcon from "@components/icons/HowToPlayIcon/ShareIcon"
-import { MESSAGES } from "@constants/messages"
-import {
-  getFavoriteGameByUser,
-  saveFavoriteGame
-} from "@feature/favourite/containers/services/favourite.service"
+import useFavoriteGameContoller from "@feature/favourite/containers/hooks/useFavoriteGameContoller"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { useToast } from "@feature/toast/containers"
-import { Button } from "@mui/material"
-import useProfileStore from "@stores/profileStore"
+import useGlobal from "@hooks/useGlobal"
 import { useEffect, useState } from "react"
 
 interface IProp {
@@ -38,62 +31,24 @@ export interface IIconCustoms {
 }
 
 const Howto = ({ data }: IProp) => {
-  // useState
-  const profile = useProfileStore((state) => state.profile.data)
-  const { errorToast, successToast } = useToast()
+  // State
   const [device, setDevice] = useState<IGameDevice[]>([])
   const [browser, setBrowser] = useState<IGameBrowser[]>([])
-  const [active, setActive] = useState<boolean>(false)
-
-  const getData = async () => {
-    if (profile && data) {
-      await getFavoriteGameByUser(
-        10000,
-        1,
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        false,
-        ""
-      ).then((res) => {
-        const { status } = res
-        if (status) {
-          setActive(status)
-        }
-      })
-    }
-  }
-
-  const onFavouriteGame = (id: string) => {
-    if (profile && id) {
-      saveFavoriteGame(profile.id, id)
-        .then((res) => {
-          const { status } = res
-          if (status) {
-            // if (getFavoriteGame) saveFavoriteGame()
-            setActive(!active)
-            successToast(MESSAGES.success)
-          }
-        })
-        .catch((error: { message: string }) => {
-          errorToast(error.message)
-        })
-    } else {
-      errorToast(MESSAGES.please_login)
-    }
-  }
+  const { stateProfile } = useGlobal()
+  const { onClickFavouriteButton, favouriteStatus } = useFavoriteGameContoller({
+    playerId: stateProfile?.id ?? "",
+    gameId: data?.id ?? ""
+  })
 
   useEffect(() => {
     // eslint-disable-next-line no-unused-vars
     let cancel = false
+
     if (data) {
       setDevice(data.device_support)
       setBrowser(data.browser_support)
-      getData()
     }
+
     return () => {
       cancel = true
     }
@@ -159,14 +114,6 @@ const Howto = ({ data }: IProp) => {
           </div>
         </div>
         <div className="flex flex-wrap items-center justify-end lg:flex-nowrap">
-          {/* <div className="md flex flex-[1_1_150px] items-center justify-center text-sm text-neutral-400 md:flex-none">
-            <HowToPlayIcon
-              color="#FFFFFF"
-              className="mr-2"
-            />
-            How to play
-          </div> */}
-          {/* <div className="mx-5 h-3 border-[1px] border-solid border-neutral-600" /> */}
           <div className="md flex flex-[1_1_150px] items-center justify-center text-sm text-neutral-400 md:flex-none">
             <ShareIcon
               color="#FFFFFF"
@@ -175,22 +122,30 @@ const Howto = ({ data }: IProp) => {
             Share
           </div>
           <div className="mx-5 hidden h-3 border-[1px] border-solid border-neutral-600 md:block" />
-          <Button
-            className="flex-[1_1_100%] md:flex-none"
-            onClick={() => onFavouriteGame(data.id)}
-          >
-            <div className="md flex items-center justify-center text-sm text-neutral-400 md:flex-none md:justify-end">
-              {active ? (
+          <ButtonLink
+            onClick={() => onClickFavouriteButton()}
+            text={favouriteStatus ? "Delete Favourite" : "Add to Favourite"}
+            icon={
+              favouriteStatus ? (
                 <FavouriteColorIcon className="mr-2" />
               ) : (
                 <FavouriteIcon
                   color="#0b0b0b"
                   className="mr-2"
                 />
-              )}
-              {active ? "Delete Favourite" : "Add to Favourite"}
-            </div>
-          </Button>
+              )
+            }
+            size="medium"
+            color="secondary"
+            variant="contained"
+            className="md h-[34px] flex-[1_1_100%] items-center justify-center !bg-transparent text-sm text-neutral-400 md:justify-end"
+            sxCustomStyled={{
+              "&:hover": {
+                background: "transparent!important",
+                boxShadow: "none!important"
+              }
+            }}
+          />
         </div>
       </div>
     </>

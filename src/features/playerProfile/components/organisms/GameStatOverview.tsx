@@ -45,16 +45,14 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
                   index={index + limit * (page - 1)}
                 />
                 <h1 className="py-5 text-neutral-300">{item.name}</h1>
-                <Typography className=" text-xs text-neutral-500">
-                  <TooltipsCustom
-                    className="truncate hover:text-clip"
-                    placement="bottom"
-                    title={item.story}
-                    color="error"
-                  >
-                    <div>{item.story}</div>
-                  </TooltipsCustom>
-                </Typography>
+                <TooltipsCustom
+                  className="truncate text-xs text-neutral-500 hover:text-clip"
+                  placement="bottom"
+                  title={item.story}
+                  color="error"
+                >
+                  <div>{item.story}</div>
+                </TooltipsCustom>
               </div>
               <div className="col-span-2 grid grid-cols-2 gap-2 md:gap-4">
                 <div>

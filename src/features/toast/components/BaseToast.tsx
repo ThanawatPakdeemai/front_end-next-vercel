@@ -94,17 +94,19 @@ function BaseToastComponent({
       >
         {imageSrc ? (
           <>
-            <div className="flex items-center">
+            <div className="flex">
               <Image
                 src={imageSrc}
                 width={25}
                 height={25}
                 alt={text}
               />
-              <div className="pl-1">{text}</div>
-              <span className="pl-1">{size}</span>
+              <span className="pl-1 text-varidian-default">You Received</span>
+              <span className="pl-1 text-white-default">{text}</span>
+              <span className="pl-1 text-white-default">{size}</span>
+              <span className="pl-1 text-varidian-default">Total</span>
+              <span className="pl-1">{count}</span>
             </div>
-            <span className="pl-1">Total {count}</span>
           </>
         ) : (
           text

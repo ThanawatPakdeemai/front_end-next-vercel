@@ -24,18 +24,25 @@ const FilterBox = () => {
   const [marketType, setMarketType] = useState<TType>()
 
   useEffect(() => {
-    if (router.asPath.includes("p2p/land")) {
-      setMarketType("land")
-    } else if (router.asPath.includes("p2p/building")) {
-      setMarketType("building")
-    } else if (router.asPath.includes("p2p/naka-punk")) {
-      setMarketType("naka-punk")
-    } else if (router.asPath.includes("p2p/material")) {
-      setMarketType("material")
-    } else if (router.asPath.includes("game-item")) {
-      setMarketType("game-item")
-    } else if (router.asPath.includes("arcade-game")) {
-      setMarketType("arcade-game")
+    let load = false
+
+    if (!load) {
+      if (router.asPath.includes("p2p/land")) {
+        setMarketType("land")
+      } else if (router.asPath.includes("p2p/building")) {
+        setMarketType("building")
+      } else if (router.asPath.includes("p2p/naka-punk")) {
+        setMarketType("naka-punk")
+      } else if (router.asPath.includes("p2p/material")) {
+        setMarketType("material")
+      } else if (router.asPath.includes("game-item")) {
+        setMarketType("game-item")
+      } else if (router.asPath.includes("arcade-game")) {
+        setMarketType("arcade-game")
+      }
+    }
+    return () => {
+      load = true
     }
   }, [router.asPath])
 

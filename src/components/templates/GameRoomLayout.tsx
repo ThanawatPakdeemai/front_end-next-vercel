@@ -31,22 +31,32 @@ const GameRoomLayout = ({
 
   useEffect(() => {
     let load = false
+
     if (!load) {
       if (data) {
         setGameData(data as IGame)
       }
     }
+
     return () => {
       load = true
     }
   }, [data])
 
   useEffect(() => {
-    if (gameData && fetchStatsGameById && fetchTopPlayersByGameId) {
-      unstable_batchedUpdates(() => {
-        fetchStatsGameById(gameData._id)
-        fetchTopPlayersByGameId(gameData._id)
-      })
+    let load = false
+
+    if (!load) {
+      if (gameData && fetchStatsGameById && fetchTopPlayersByGameId) {
+        unstable_batchedUpdates(() => {
+          fetchStatsGameById(gameData._id)
+          fetchTopPlayersByGameId(gameData._id)
+        })
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [gameData, fetchStatsGameById, fetchTopPlayersByGameId])
 

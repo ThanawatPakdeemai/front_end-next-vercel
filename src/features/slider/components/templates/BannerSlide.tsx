@@ -1,8 +1,8 @@
+import React, { useRef } from "react"
 import SkeletonBanner from "@components/atoms/skeleton/SkeletonBanner"
 import { TagCircle } from "@components/atoms/tagCircle"
 import NewGameIcon from "@components/icons/NewGameIcon"
 import useGetGames from "@feature/home/containers/hook/useGetGames"
-import React, { useRef } from "react"
 import Slider, { Settings } from "react-slick"
 import BannerCardSlide from "../organisms/BannerCardSlide"
 
@@ -27,7 +27,7 @@ const BannerSlide = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
-    autoplay: false,
+    autoplay: true,
     autoplaySpeed: 5000,
     draggable: true,
     fade: true,

@@ -17,10 +17,18 @@ const ReviewForm = ({ avatar, username }: IReviewFormProps) => {
   const { setOpen, setClose } = useLoadingStore()
 
   useEffect(() => {
-    if (loading) {
-      setOpen()
-    } else {
-      setClose()
+    let load = false
+
+    if (!load) {
+      if (loading) {
+        setOpen()
+      } else {
+        setClose()
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [loading, setClose, setOpen])
 

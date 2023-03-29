@@ -58,11 +58,17 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   const time = new Date()
 
   useEffect(() => {
-    Helper.getIP().then((res) => {
-      setIp((res as IResGetIp).ip)
-    })
+    let load = false
+
+    if (!load) {
+      Helper.getIP().then((res) => {
+        setIp((res as IResGetIp).ip)
+      })
+    }
+
     return () => {
       setIp("")
+      load = true
     }
   }, [])
 
@@ -79,48 +85,53 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   }, [players])
 
   useEffect(() => {
-    if (
-      gameData &&
-      itemSelected &&
-      profile &&
-      gameData.game_type === "multiplayer"
-    ) {
-      const frontendUrl = `${baseUrlFront}/${router.query.typeGame}/${gameData.path}/summary/${room_id}`
+    let load = false
 
-      let gameURL = ""
-      if (gameData.type_code === "multi_02" && ip) {
-        const dataLinkGame = `${room_id}:|:${profile?.id}:|:${
-          itemSelected._id
-        }:|:${profile?.email}:|:${Helper.getLocalStorage(
-          "token"
-        )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
-          start_time
-        ).getTime()}:|:${profile?.username}:|:${playerInroom?.length}:|:${
-          dataPlayers?.map_id
-        }:|:${ip}`
+    if (!load) {
+      if (
+        gameData &&
+        itemSelected &&
+        profile &&
+        gameData.game_type === "multiplayer"
+      ) {
+        const frontendUrl = `${baseUrlFront}/${router.query.typeGame}/${gameData.path}/summary/${room_id}`
 
-        gameURL = `${baseUrlGame}/${gameData.id}/?query=${Helper.makeID(
-          8
-        )}${btoa(dataLinkGame)}`
-      } else {
-        const dataLinkGame = `${room_id}:|:${profile?.id}:|:${
-          itemSelected._id
-        }:|:${profile?.email}:|:${Helper.getLocalStorage(
-          "token"
-        )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
-          start_time
-        ).getTime()}:|:${profile?.username}:|:${playerInroom?.length}:|:${
-          dataPlayers?.map_id
-        }:|:${ip}`
-        gameURL = `${gameData.game_url}/${gameData.id}/?query=${Helper.makeID(
-          8
-        )}${btoa(dataLinkGame)}`
+        let gameURL = ""
+        if (gameData.type_code === "multi_02" && ip) {
+          const dataLinkGame = `${room_id}:|:${profile?.id}:|:${
+            itemSelected._id
+          }:|:${profile?.email}:|:${Helper.getLocalStorage(
+            "token"
+          )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
+            start_time
+          ).getTime()}:|:${profile?.username}:|:${playerInroom?.length}:|:${
+            dataPlayers?.map_id
+          }:|:${ip}`
+
+          gameURL = `${baseUrlGame}/${gameData.id}/?query=${Helper.makeID(
+            8
+          )}${btoa(dataLinkGame)}`
+        } else {
+          const dataLinkGame = `${room_id}:|:${profile?.id}:|:${
+            itemSelected._id
+          }:|:${profile?.email}:|:${Helper.getLocalStorage(
+            "token"
+          )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
+            start_time
+          ).getTime()}:|:${profile?.username}:|:${playerInroom?.length}:|:${
+            dataPlayers?.map_id
+          }:|:${ip}`
+          gameURL = `${gameData.game_url}/${gameData.id}/?query=${Helper.makeID(
+            8
+          )}${btoa(dataLinkGame)}`
+        }
+        setGameUrl(gameURL)
       }
-      setGameUrl(gameURL)
     }
 
     return () => {
       setGameUrl("")
+      load = true
     }
   }, [
     dataPlayers?.map_id,
@@ -218,18 +229,38 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   ])
 
   useEffect(() => {
-    if (dataPlayers && dataPlayers.room_status === "playing") {
-      waitingRoomPlay()
+    let load = false
+
+    if (!load) {
+      if (dataPlayers && dataPlayers.room_status === "playing") {
+        waitingRoomPlay()
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [dataPlayers, waitingRoomPlay])
 
   useEffect(() => {
-    if (dataPlayers?.room_status === "ready_play" && gameUrl && playerInroom) {
-      if (playerInroom.length === dataPlayers.max_players) {
-        setTimeout(() => {
-          window.location.href = gameUrl
-        }, 10000)
+    let load = false
+
+    if (!load) {
+      if (
+        dataPlayers?.room_status === "ready_play" &&
+        gameUrl &&
+        playerInroom
+      ) {
+        if (playerInroom.length === dataPlayers.max_players) {
+          setTimeout(() => {
+            window.location.href = gameUrl
+          }, 10000)
+        }
       }
+    }
+
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataPlayers])

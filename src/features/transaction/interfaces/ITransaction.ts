@@ -21,6 +21,7 @@ export interface ITransMetaData extends IType, IItemId {
   buyer_id?: string
   buy_price?: number | string
   qty?: number
+  amount_naka?: number
 }
 
 export interface ITransData extends IType {

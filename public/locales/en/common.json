@@ -290,5 +290,8 @@
   "swap": "Swap Coin",
   "buyItem_alert_bsc": "You can switch your Metamask to Polygon network to using your NAKA token to buy items",
   "buyItem_alert_polygon": "You can switch your Metamask to BSC network to using another token to buy items",
-  "staking_not_available": "Staking is not available at the moment."
+  "staking_not_available": "Staking is not available at the moment.",
+  "Services": "Services",
+  "Naka Ecosystems": "Naka Ecosystems"
+
 }

@@ -20,10 +20,10 @@ import Link from "next/link"
 import TooltipsCustom from "@components/atoms/TooltipsCustom"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useGlobal from "@hooks/useGlobal"
-import { useRouter } from "next/router"
+import useNotiStore from "@stores/notification"
 
 const RightMenuLogIn = () => {
-  const router = useRouter()
+  const { count } = useNotiStore()
   const profile = useProfileStore((state) => state.profile.data)
   const { address } = useWeb3Provider()
   const [expanded, setExpanded] = useState<boolean>(false)
@@ -61,10 +61,6 @@ const RightMenuLogIn = () => {
     setExpanded(false)
   }
 
-  const handleOnNotiClick = () => {
-    router.push("/notification")
-  }
-
   return (
     <div>
       <ClickAwayListener
@@ -100,21 +96,25 @@ const RightMenuLogIn = () => {
               >
                 {/* notification */}
                 {!isMarketplace && (
-                  <ButtonIcon
-                    onClick={handleOnNotiClick}
-                    variants={iconmotion}
-                    whileHover="hover"
-                    transition={{
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 4
-                    }}
-                    icon={
-                      <NotificationsOutlinedIcon className="text-white-primary" />
-                    }
-                    className="ml-1 mr-5 flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-lg border border-neutral-700 bg-transparent"
-                    aria-label="notification-button"
-                  />
+                  <Link href="/notification">
+                    <ButtonIcon
+                      variants={iconmotion}
+                      whileHover="hover"
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 4
+                      }}
+                      icon={
+                        <NotificationsOutlinedIcon className="text-white-primary" />
+                      }
+                      className={`relative ml-1 mr-5 flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-lg border border-neutral-700 bg-transparent before:absolute before:right-[6px] before:top-[5px] before:h-[6px] before:w-[6px] before:rounded-full before:bg-transparent before:bg-error-main ${
+                        (count > 0 && "before:opacity-100") ||
+                        "before:opacity-0"
+                      }`}
+                      aria-label="notification-button"
+                    />
+                  </Link>
                 )}
 
                 <div
@@ -207,7 +207,7 @@ const RightMenuLogIn = () => {
 
             <StatProfile
               exp={{
-                level: profile?.level,
+                level: profile?.level ?? 0,
                 expAmount: profile?.exp,
                 maxExp: profile?.max_exp
               }}
@@ -226,11 +226,6 @@ const RightMenuLogIn = () => {
           </Collapse>
         </div>
       </ClickAwayListener>
-      {/* {profile && (
-        <>
-          
-        </>
-      )} */}
     </div>
   )
 }

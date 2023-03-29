@@ -32,8 +32,16 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
     React.useState<IPartnerGameData>()
 
   useEffect(() => {
-    if (gameData) setGameDataState(gameData)
-    if (partnerGames) setGamePartnerState(partnerGames)
+    let load = false
+
+    if (!load) {
+      if (gameData) setGameDataState(gameData)
+      if (partnerGames) setGamePartnerState(partnerGames)
+    }
+
+    return () => {
+      load = true
+    }
   }, [gameData, partnerGames])
 
   /**

@@ -72,16 +72,21 @@ const MultiRoomList = () => {
   })
 
   useEffect(() => {
-    if (profile) {
-      const token = helper.getTokenFromLocal()
+    let load = false
 
-      if (token) {
-        socketRoomList.auth = { token }
-        socketRoomList.connect()
+    if (!load) {
+      if (profile) {
+        const token = helper.getTokenFromLocal()
+
+        if (token) {
+          socketRoomList.auth = { token }
+          socketRoomList.connect()
+        }
       }
     }
 
     return () => {
+      load = true
       if (socketRoomList.connected === false) return
       socketRoomList.disconnect()
     }
@@ -124,8 +129,16 @@ const MultiRoomList = () => {
   }, [fetchRoomFromSearch, getRooms, isConnected, search])
 
   useEffect(() => {
-    if (isConnected) {
-      fetchRoom()
+    let load = false
+
+    if (!load) {
+      if (isConnected) {
+        fetchRoom()
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [fetchRoom, fetchRoomFromSearch, isConnected, search])
 
@@ -220,13 +233,9 @@ const MultiRoomList = () => {
             </div>
           </Box>
         </SocketProviderRoom>
-        {data &&
-          ((data?.play_to_earn && data?.play_to_earn_status !== "free") ||
-            !data.tournament) && (
-            <BuyItemBody>
-              {data && <CardBuyItem gameObject={data} />}
-            </BuyItemBody>
-          )}
+        {data && data?.play_to_earn_status !== "free" && !data.tournament && (
+          <BuyItemBody>{data && <CardBuyItem gameObject={data} />}</BuyItemBody>
+        )}
       </Box>
     </>
   )

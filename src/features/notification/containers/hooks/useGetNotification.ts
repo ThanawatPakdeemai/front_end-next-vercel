@@ -2,9 +2,11 @@ import { useQuery } from "@tanstack/react-query"
 import { getNotificationById } from "../services/notification.service"
 
 interface IProps {
-  player_id: string
+  limit: number
+  skip: number
+  player_id?: string
 }
-const useGetNotification = ({ player_id }: IProps) => {
+const useGetNotification = ({ player_id, limit, skip }: IProps) => {
   const {
     data: dataNotification,
     isLoading: isLoadingNotification,
@@ -13,8 +15,8 @@ const useGetNotification = ({ player_id }: IProps) => {
     isError: isErrorNotification,
     error: errorNotification
   } = useQuery({
-    queryKey: ["notificationPage", player_id],
-    queryFn: () => getNotificationById(player_id),
+    queryKey: ["notificationPage", limit, skip],
+    queryFn: () => getNotificationById(limit, skip),
     keepPreviousData: true,
     staleTime: Infinity,
     enabled: !!player_id

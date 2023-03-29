@@ -20,7 +20,13 @@ const DropdownList = ({ title, list, className }: IProp) => {
     setExpanded(!expanded)
   }
   useEffect(() => {
-    setData(list[0])
+    let load = false
+
+    if (!load) setData(list[0])
+
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

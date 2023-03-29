@@ -67,11 +67,19 @@ export default function CatogoriesPageDetails() {
   })
 
   useEffect(() => {
-    if (!isFetchingGamesFilterByCategoryId && getGamesFilterByCategoryId) {
-      setGameData(getGamesFilterByCategoryId.data)
-      if (getGamesFilterByCategoryId.info) {
-        setTotalCount(getGamesFilterByCategoryId.info.totalCount)
+    let load = false
+
+    if (!load) {
+      if (!isFetchingGamesFilterByCategoryId && getGamesFilterByCategoryId) {
+        setGameData(getGamesFilterByCategoryId.data)
+        if (getGamesFilterByCategoryId.info) {
+          setTotalCount(getGamesFilterByCategoryId.info.totalCount)
+        }
       }
+    }
+
+    return () => {
+      load = true
     }
   }, [
     getGamesFilterByCategoryId,
@@ -93,6 +101,7 @@ export default function CatogoriesPageDetails() {
                 key={game.id}
                 menu={P2EHeaderMenu}
                 data={game}
+                href={`/play-to-earn-games/${game.path}`}
                 onHandleClick={() =>
                   onHandleClick("play-to-earn", game.path, game)
                 }

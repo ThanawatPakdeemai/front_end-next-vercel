@@ -2,6 +2,7 @@ import React, { ReactNode } from "react"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import { motion } from "framer-motion"
+import Link from "next/link"
 
 type TTypeButton = "submit" | "reset" | "button" | undefined
 interface IProps {
@@ -15,9 +16,11 @@ interface IProps {
   type?: TTypeButton
   disabled?: boolean
   dropColor?: boolean
+  href?: string
 }
 
 const ButtonToggleIcon = ({
+  href,
   startIcon = <SportsEsportsOutlinedIcon />,
   endIcon = <IconArrowRight />,
   text,
@@ -76,7 +79,7 @@ const ButtonToggleIcon = ({
     }
   }
 
-  return (
+  const renderContent = () => (
     <motion.button
       className={`btn-icon-container flex h-10 w-full  items-center justify-center rounded-md ${className} ${
         disabled && " !bg-neutral-680"
@@ -116,6 +119,17 @@ const ButtonToggleIcon = ({
       </motion.p>
       <motion.span variants={iconEnd}>{endIcon}</motion.span>
     </motion.button>
+  )
+
+  return href ? (
+    <Link
+      href={href || "/"}
+      className="flex w-full items-center justify-center"
+    >
+      {renderContent()}
+    </Link>
+  ) : (
+    renderContent()
   )
 }
 

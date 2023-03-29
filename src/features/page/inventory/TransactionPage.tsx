@@ -6,10 +6,7 @@ import TableRowData from "@feature/table/components/molecules/TableRowData"
 import TableNodata from "@feature/transaction/components/atoms/TableNodata"
 import useGetTransWallet from "@feature/transaction/containers/hooks/useGetTransWallet"
 import useTransactionController from "@feature/transaction/containers/hooks/useTransactionController"
-import {
-  ITransactionWalletData,
-  ITransData
-} from "@feature/transaction/interfaces/ITransaction"
+import { ITransactionWalletData } from "@feature/transaction/interfaces/ITransaction"
 import useGlobal from "@hooks/useGlobal"
 import {
   Box,
@@ -23,10 +20,10 @@ import { v4 as uuid } from "uuid"
 import dayjs from "dayjs"
 import React, { useEffect, useState } from "react"
 import DropdownEvent from "@feature/transaction/components/molecules/DropdownEvent"
-import { useRouter } from "next/router"
 import CONFIGS from "@configs/index"
 import { IProfile } from "@src/types/profile"
 import { gameItemType, landType, nakaType } from "@constants/historyTransaction"
+import Link from "next/link"
 import ReloadIcon from "../../../components/icons/ReloadIcon"
 
 interface IProp {
@@ -56,7 +53,6 @@ const TransactionPage = ({ profile }: IProp) => {
   const [txHistory, setTxHistory] = useState<ITransactionWalletData[]>([])
 
   const baseUrl = CONFIGS.CHAIN.POLYGON_SCAN
-  const router = useRouter()
 
   const onHandleEvent = (_event: string) => {
     setEvent(_event)
@@ -89,34 +85,38 @@ const TransactionPage = ({ profile }: IProp) => {
     }
   }
 
-  const onHandleView = (element: ITransData) => {
-    router.push(`${baseUrl}/tx/${element.transaction_hash}`)
-  }
-
   useEffect(() => {
-    const fetchTransaction = async () => {
-      if (profile) {
-        await getTransHistory({
-          _playerId: profile && profile.id ? profile.id : "",
-          _type: typeList,
-          _page: page,
-          _limit: limit,
-          _sort:
-            sortTime || sortAmount
-              ? { "current_time": sortTime, "amount": sortAmount }
-              : undefined
-        }).then((res) => {
-          if (res.data) {
-            setTxHistory(res.data)
-          }
-          if (res.info) {
-            setTotalCount(res.info.totalCount)
-          }
-        })
+    let load = false
+
+    if (!load) {
+      const fetchTransaction = async () => {
+        if (profile) {
+          await getTransHistory({
+            _playerId: profile && profile.id ? profile.id : "",
+            _type: typeList,
+            _page: page,
+            _limit: limit,
+            _sort:
+              sortTime || sortAmount
+                ? { "current_time": sortTime, "amount": sortAmount }
+                : undefined
+          }).then((res) => {
+            if (res.data) {
+              setTxHistory(res.data)
+            }
+            if (res.info) {
+              setTotalCount(res.info.totalCount)
+            }
+          })
+        }
       }
+
+      fetchTransaction()
     }
 
-    fetchTransaction()
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, page, sortAmount, sortTime, typeList])
 
@@ -192,16 +192,17 @@ const TransactionPage = ({ profile }: IProp) => {
                         <div key={item.id}>
                           {item.fee === 0 ? "-" : item.fee.toFixed(4)}
                         </div>,
-                        <Chip
-                          component="button"
-                          onClick={() => {
-                            onHandleView(item)
-                          }}
+                        <Link
                           key={item.id}
-                          variant="outlined"
-                          label="view transaction"
-                          size="small"
-                        />
+                          href={`${baseUrl}/tx/${item.transaction_hash}`}
+                        >
+                          <Chip
+                            component="button"
+                            variant="outlined"
+                            label="view transaction"
+                            size="small"
+                          />
+                        </Link>
                       ]}
                     />
                   ))

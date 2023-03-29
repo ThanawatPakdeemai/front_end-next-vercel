@@ -2,7 +2,7 @@ import { Typography } from "@mui/material"
 import React from "react"
 
 export interface INoData {
-  className: string
+  className?: string
   icon?: React.ReactNode
 }
 

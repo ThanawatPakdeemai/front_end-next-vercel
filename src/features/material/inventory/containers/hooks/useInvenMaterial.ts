@@ -140,8 +140,16 @@ const useInvenMaterial = () => {
   }
 
   useEffect(() => {
-    if (profile && profile.data) {
-      onFetchInvenMaterial(profile.data.address)
+    let load = false
+
+    if (!load) {
+      if (profile && profile.data) {
+        onFetchInvenMaterial(profile.data.address)
+      }
+    }
+
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile, materialTypes])

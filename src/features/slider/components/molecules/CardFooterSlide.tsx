@@ -15,7 +15,7 @@ interface IContentFooterBannerSlide {
 
 const CardFooterSlide = ({
   gameData,
-  text = "Play Now"
+  text = "play_now"
 }: IContentFooterBannerSlide) => {
   const router = useRouter()
   const { onHandleSetGameStore, getTypeGamePathFolder, stateProfile } =

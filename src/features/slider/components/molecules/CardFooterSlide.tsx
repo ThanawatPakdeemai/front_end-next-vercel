@@ -7,6 +7,7 @@ import { Box } from "@mui/material"
 import useGlobal from "@hooks/useGlobal"
 import useFavoriteGameContoller from "@feature/favourite/containers/hooks/useFavoriteGameContoller"
 import { useRouter } from "next/router"
+import { useTranslation } from "react-i18next"
 
 interface IContentFooterBannerSlide {
   gameData: IGame
@@ -17,6 +18,7 @@ const CardFooterSlide = ({
   gameData,
   text = "play_now"
 }: IContentFooterBannerSlide) => {
+  const { t } = useTranslation()
   const router = useRouter()
   const { onHandleSetGameStore, getTypeGamePathFolder, stateProfile } =
     useGlobal()
@@ -37,7 +39,7 @@ const CardFooterSlide = ({
         className="w-[calc(100%-80px)]"
       >
         <ButtonLink
-          text={text}
+          text={t(text)}
           icon={<SportsEsportsOutlinedIcon />}
           size="large"
           color="secondary"

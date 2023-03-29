@@ -2,7 +2,6 @@ import { Button, SxProps, Theme } from "@mui/material"
 import Link from "next/link"
 import React, { ReactNode, useMemo } from "react"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
-import { useTranslation } from "react-i18next"
 
 export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   text?: string | ReactNode
@@ -39,7 +38,6 @@ const ButtonLink = ({
   disabledEndIcon = false,
   sxCustomStyled = {}
 }: IButtonLink) => {
-  const { t } = useTranslation()
   const ButtonSelf = useMemo(
     () => (
       <Button
@@ -69,7 +67,7 @@ const ButtonLink = ({
         <span
           className={`animation-button-text flex items-center ${textColor}`}
         >
-          {t(`${text}`)}
+          {text}
         </span>
       </Button>
     ),

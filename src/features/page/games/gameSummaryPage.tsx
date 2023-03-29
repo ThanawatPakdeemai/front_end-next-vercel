@@ -56,7 +56,7 @@ const GameSummaryPage = ({ _roomId }: IProp) => {
       </div>
     </>
   ) : (
-    <>Loading...</>
+    <>Please login</>
   )
 }
 

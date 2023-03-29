@@ -11,9 +11,7 @@ const RightSidebarContentEffect = ({
   useEffect(() => {
     let load = false
 
-    if (!load) {
-      createParticle()
-    }
+    if (!load) createParticle()
 
     return () => {
       load = true

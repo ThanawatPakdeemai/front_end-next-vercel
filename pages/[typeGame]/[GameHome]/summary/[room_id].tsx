@@ -31,10 +31,8 @@ export default function Notification_id() {
   useEffect(() => {
     let load = false
 
-    if (!load) {
-      if (!gameData) return
-      onSetGameData(gameData)
-    }
+    if (!gameData) return
+    if (!load) onSetGameData(gameData)
 
     return () => {
       load = true

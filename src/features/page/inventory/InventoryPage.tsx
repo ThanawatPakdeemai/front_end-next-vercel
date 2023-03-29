@@ -3,6 +3,7 @@ import { Box } from "@mui/material"
 import React, { useState } from "react"
 import { motion } from "framer-motion"
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded"
+import FilterBox from "@feature/marketplace/components/molecules/FilterBox"
 
 const InventoryPage = () => {
   const [open, setOpen] = useState(false)
@@ -34,9 +35,9 @@ const InventoryPage = () => {
             initial="hidden"
             animate="shown"
             // transition={{ duration: 2, ease: "easeIn" }}
-            className="h-[248px] bg-neutral-780 "
+            className="h-fit bg-neutral-780 p-4"
           >
-            Filter
+            <FilterBox />
           </motion.div>
         )}
         <Box

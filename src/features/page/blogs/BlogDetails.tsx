@@ -12,6 +12,8 @@ import BlogContent from "@feature/blog/components/organisms/BlogContent"
 import BlogFooter from "@feature/blog/components/organisms/BlogFooter"
 import BlogReleated from "@feature/blog/components/organisms/BlogReleated"
 import { Box } from "@mui/material"
+import useCrumbStore from "@stores/crumb"
+import { BLOG_CRUMB } from "@configs/crumb"
 
 interface IProp {
   _blogId: string
@@ -19,6 +21,7 @@ interface IProp {
 
 const BlogPageDetails = ({ _blogId }: IProp) => {
   const { getBlogDetails, isLoading } = useGetBlogDetails(_blogId)
+  const { setCrumbData } = useCrumbStore()
   const { setOpen, setClose } = useLoadingStore()
   const { getBlogTagData } = useGetBlogTags({
     limit: 10,
@@ -45,9 +48,27 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
     }
   }, [isLoading, setOpen, setClose])
 
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      if (getBlogDetails) {
+        setCrumbData({
+          title: getBlogDetails.title,
+          _id: _blogId
+        })
+      }
+    }
+    return () => {
+      load = true
+    }
+  }, [getBlogDetails, setCrumbData, _blogId])
+
   return (
     <>
-      <Breadcrumb />
+      <Breadcrumb
+        isCustom
+        _breadcrumbs={BLOG_CRUMB() || ""}
+      />
       <div className="flex h-48 items-center overflow-hidden">
         <p className="w-8/12 font-mondwest text-5xl text-neutral-400">
           {getBlogDetails?.title}

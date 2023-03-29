@@ -118,6 +118,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
 
   useEffect(() => {
     let load = false
+
     if (!load) {
       if (playersMe) {
         if (playersMe.status === "played") {
@@ -125,6 +126,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
         }
       }
     }
+
     return () => {
       load = true
     }
@@ -191,13 +193,11 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
           ) : (
             <>Loading...</>
           ))}
-        {data &&
-          ((data?.play_to_earn && data?.play_to_earn_status !== "free") ||
-            !data.tournament) && (
-            <Box className="rounded-3xl lg:w-[333px]">
-              {data && <CardBuyItem gameObject={data} />}
-            </Box>
-          )}
+        {data && data?.play_to_earn_status !== "free" && !data.tournament && (
+          <Box className="rounded-3xl lg:w-[333px]">
+            {data && <CardBuyItem gameObject={data} />}
+          </Box>
+        )}
       </Box>
     </>
   )

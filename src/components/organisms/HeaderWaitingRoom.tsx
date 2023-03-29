@@ -4,6 +4,7 @@ import LockIcon from "@components/icons/LockIcon"
 import ModalInvite from "@components/molecules/ModalInvite"
 import RoomListBox from "@components/molecules/roomList/RoomListBox"
 import { Chip } from "@mui/material"
+import useGameStore from "@stores/game"
 import { useRouter } from "next/dist/client/router"
 import React from "react"
 
@@ -37,6 +38,7 @@ const HeaderWaitingRoom = ({
   onClick
 }: IHeaderWaitingRoomProp) => {
   const router = useRouter()
+  const game = useGameStore((state) => state.data)
   return (
     <div
       className={`flex flex-wrap items-center gap-5 border-b border-neutral-800 p-2 lg:h-[72px] ${className}`}
@@ -94,22 +96,24 @@ const HeaderWaitingRoom = ({
           color="green"
           shade="lemon"
         />
-        <RoomListBox
-          type="player"
-          player={player}
-          // for invite button
-          icon={
-            !isSummaryPage ? (
-              <>
-                <ModalInvite />
-              </>
-            ) : null
-          }
-          onClick={onClick}
-          //
-          color="neutral"
-          shade="500"
-        />
+        {game && game?.game_type === "multiplayer" && (
+          <RoomListBox
+            type="player"
+            player={player}
+            // for invite button
+            icon={
+              !isSummaryPage ? (
+                <>
+                  <ModalInvite />
+                </>
+              ) : null
+            }
+            onClick={onClick}
+            //
+            color="neutral"
+            shade="500"
+          />
+        )}
       </div>
       {/* <ButtonIcon
         type="square"

@@ -118,6 +118,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
 
   useEffect(() => {
     let load = false
+
     if (!load) {
       if (playersMe) {
         if (playersMe.status === "played") {
@@ -125,6 +126,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
         }
       }
     }
+
     return () => {
       load = true
     }

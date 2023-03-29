@@ -2,6 +2,7 @@ import CONFIGS from "@configs/index"
 import { IGame, IGameSummary } from "@feature/game/interfaces/IGameService"
 import { IHistory } from "@feature/history/interfaces/IHistoryService"
 import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
+import useGetNotificationById from "@feature/notification/containers/hooks/useGetNotificationById"
 import useNotificationRead from "@feature/notification/containers/hooks/useNotificationRead"
 import { INotification } from "@feature/notification/interfaces/INotificationService"
 import useGetReward from "@feature/rewardWeekly/containers/hooks/useGetReward"
@@ -25,8 +26,8 @@ const useGameSummaryRewardController = () => {
   const {
     notification,
     playHistory,
-    notificationAll
-    // setNotificationItem: setNotificationItemStore
+    notificationAll,
+    setNotificationItem: setNotificationItemStore
   } = useNotiStore()
   const profile = useProfileStore((state) => state.profile.data)
   const { onSetGameData, data: dataGameStore } = useGameStore()
@@ -75,18 +76,20 @@ const useGameSummaryRewardController = () => {
   const { mutateUpdateNotiStatusById } = useNotificationRead(
     notificationItem?._id || ""
   )
-  // const {dataNotificationItem} = useGetNotificationById()
+  const { dataNotificationItem } = useGetNotificationById(
+    notificationItem?._id || ""
+  )
 
   // Get notification item by notification_id
   const fetchNotificationItemById = useCallback(() => {
     if (notification_id) {
-      // Code here...
-      // if(dataNotificationItem){
-      //   // Set value to store
-      //   // setNotificationItem(dataNotificationItem)
-      // setNotificationItemStore(dataNotificationItem)
-      // }
+      if (dataNotificationItem) {
+        // Set value to store
+        // setNotificationItem(dataNotificationItem)
+        setNotificationItemStore(dataNotificationItem)
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notification_id])
   useEffect(() => {
     fetchNotificationItemById()

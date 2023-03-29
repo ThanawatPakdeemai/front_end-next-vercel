@@ -1,7 +1,7 @@
 import services from "@configs/axiosGlobalConfig"
 import { INotification } from "@feature/notification/interfaces/INotificationService"
 
-export const getNotificationById = (_limit: number, _skip: number) =>
+export const getAllNotification = (_limit: number, _skip: number) =>
   new Promise<INotification[]>((resolve, reject) => {
     const data = {
       limit: _limit,
@@ -9,6 +9,14 @@ export const getNotificationById = (_limit: number, _skip: number) =>
     }
     services
       .post<INotification[]>(`/notification`, { ...data })
+      .then((reponse) => resolve(reponse.data))
+      .catch((error) => reject(error))
+  })
+
+export const getNotificationById = (_notificationId: string) =>
+  new Promise<INotification>((resolve, reject) => {
+    services
+      .get<INotification>(`/notification/get-data/${_notificationId}`)
       .then((reponse) => resolve(reponse.data))
       .catch((error) => reject(error))
   })

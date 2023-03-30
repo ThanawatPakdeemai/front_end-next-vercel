@@ -273,10 +273,9 @@ const useGlobal = (
    */
   useEffect(() => {
     let load = false
-
+    if (!isLogin) return
+    if (!isConnected) return
     if (!load) {
-      if (!isLogin) return
-      if (!isConnected) return
       if (signer && address) {
         if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
           fetchAllTokenSupported()

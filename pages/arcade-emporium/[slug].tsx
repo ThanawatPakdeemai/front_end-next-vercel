@@ -58,8 +58,7 @@ export default function ArcadeEmporiumGameDetails() {
   const router = useRouter()
   const { id } = router.query
   const gameId = id ? id.toString() : ""
-  // const { gameData } = useGlobal()
-  // return <>{!gameData && <SkeletonGamePartner />}</>
+
   return (
     <GamePageDefault
       component={

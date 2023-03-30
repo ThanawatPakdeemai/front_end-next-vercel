@@ -6,6 +6,10 @@ import dynamic from "next/dynamic"
 import { getGameByPath } from "@feature/game/containers/services/game.service"
 import useGetGameByPath from "@feature/game/containers/hooks/useFindGameByPath"
 import useGameStore from "@stores/game"
+import { TabProvider } from "@feature/tab/contexts/TabProvider"
+import useGlobal from "@hooks/useGlobal"
+import { Box } from "@mui/material"
+import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
@@ -35,26 +39,97 @@ const RightSidebarContentEffect = dynamic(
     ssr: false
   }
 )
-const OverviewHowToPlay = dynamic(
-  () => import("@components/organisms/OverviewHowToPlay"),
-  {
-    suspense: true,
-    ssr: false
-  }
-)
-const DefaultLobby = dynamic(
-  () => import("@feature/game/components/templates/lobby/DefaultLobby"),
+const FullWidthContent = dynamic(
+  () => import("@components/templates/contents/FullWidthContent"),
   {
     suspense: true,
     ssr: false
   }
 )
 
+// const OverviewHowToPlay = dynamic(
+//   () => import("@components/organisms/OverviewHowToPlay"),
+//   {
+//     suspense: true,
+//     ssr: false
+//   }
+// )
+// const DefaultLobby = dynamic(
+//   () => import("@feature/game/components/templates/lobby/DefaultLobby"),
+//   {
+//     suspense: true,
+//     ssr: false
+//   }
+// )
+
+const GameContent = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const OverviewContent = dynamic(
+  () => import("@components/organisms/OverviewContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const GameTabs = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameTabs"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+// const GameReviews = dynamic(
+//   () => import("@feature/game/components/molecules/GameReviews"),
+//   {
+//     suspense: true,
+//     ssr: false
+//   }
+// )
+
+// const CardBuyItem = dynamic(
+//   () => import("@feature/gameItem/components/molecules/CardBuyItem"),
+//   {
+//     suspense: true,
+//     ssr: false
+//   }
+// )
+
+// const ButtonGame = dynamic(
+//   () => import("@feature/game/components/molecules/ButtonGame"),
+//   {
+//     suspense: true,
+//     ssr: false
+//   }
+// )
+
 export default function GameLobby() {
   const router = useRouter()
   const { onSetGameData } = useGameStore()
   const { GameHome } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
+  const { getTypeGamePathFolder, getColorChipByGameType } = useGlobal()
+
+  /**
+   * @description Handle Game URL
+   * @returns {string}
+   */
+  // const handleGameURL = (): string => {
+  //   if (gameData && gameData.game_url) {
+  //     if (gameData.game_url.includes("http")) {
+  //       return `${gameData.game_url}`
+  //     }
+  //     return `/${getTypeGamePathFolder(gameData)}/${gameData.game_url}/roomlist`
+  //   }
+  //   return "/"
+  // }
 
   useEffect(() => {
     let load = false
@@ -73,25 +148,95 @@ export default function GameLobby() {
     if (gameData) {
       switch (gameData.game_type) {
         case "storymode":
+          return <StoryLobby />
+        default:
           return (
-            <RightSidebarContentEffect
-              content={<StoryLobby />}
-              aside={
-                <OverviewHowToPlay
-                  gameId={gameData._id}
-                  gameType="story-mode"
-                  title="how_to_play"
-                />
-              }
+            <GameContent
+              gameId={gameData.id}
+              gameType={getTypeGamePathFolder(gameData)}
+              themeColor={getColorChipByGameType(
+                getTypeGamePathFolder(gameData)
+              )}
             />
           )
-        default:
-          return <DefaultLobby gameData={gameData} />
       }
     }
   }
 
-  return <>{gameData ? getTemplateLobby() : <SkeletonBanner />}</>
+  return (
+    <>
+      {gameData ? (
+        <GamePageDefault
+          component={
+            <RightSidebarContentEffect
+              className="mb-24"
+              content={getTemplateLobby()}
+              aside={
+                <Box
+                  component="div"
+                  className="aside-wrapper"
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "15px",
+                    ".panel-content": {
+                      maxHeight: "270px",
+                      ".custom-scroll": {
+                        overflow: "hidden"
+                      }
+                    }
+                  }}
+                >
+                  <OverviewContent
+                    gameId={gameData.id}
+                    gameType={getTypeGamePathFolder(gameData)}
+                  />
+                  <CardBuyItem
+                    buttonStyle="green"
+                    gameObject={gameData}
+                  />
+                </Box>
+              }
+            />
+          }
+          component2={
+            <FullWidthContent
+              sxCustomStyled={{
+                "&.container": {
+                  maxWidth: "100%!important"
+                }
+              }}
+            >
+              <TabProvider>
+                <GameTabs
+                  gameId={gameData.id}
+                  gameType="arcade-emporium"
+                />
+              </TabProvider>
+            </FullWidthContent>
+            // <FullWidthContent
+            //   content={
+            //     <TabProvider>
+            //       <GameTabs
+            //         gameId={gameData.id}
+            //         gameType="arcade-emporium"
+            //       />
+            //     </TabProvider>
+            //   }
+            //   aside={
+            //     <GameReviews
+            //       gameType="arcade-emporium"
+            //       gameId={gameData.id}
+            //     />
+            //   }
+            // />
+          }
+        />
+      ) : (
+        <SkeletonBanner />
+      )}
+    </>
+  )
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -108,5 +253,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 }
 
 GameLobby.getLayout = function getLayout(page: ReactElement) {
-  return <GamePageDefault component={page} />
+  return page
 }

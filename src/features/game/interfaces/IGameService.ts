@@ -101,7 +101,7 @@ export interface IGameRewardPaymentRate {
 export interface IGameMetaData {
   item_key: string
   item_name: string
-  type: string
+  type: "image" | "video"
   image: null | string
   mini_image: null | string
   active_display: boolean

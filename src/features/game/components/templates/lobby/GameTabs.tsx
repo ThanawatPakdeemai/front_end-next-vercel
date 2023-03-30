@@ -11,6 +11,7 @@ import useTab from "@feature/tab/hook/useTab"
 import { IGetType } from "@feature/game/interfaces/IGameService"
 import useGameWhatsNew from "@feature/game/containers/hooks/useGameWhatsNew"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
+import AboutGame from "@components/organisms/AboutGame"
 import WhatsNewBody from "../../molecules/WhatsNewBody"
 import HowToPlayBody from "../../molecules/HowToPlayBody"
 import GameItemsBody from "../../molecules/GameItemsBody"
@@ -26,10 +27,8 @@ const GameTabs = ({ gameType, gameId }: IProps) => {
   const { tabValue } = useTabContext()
 
   const { newVersionData } = useGameWhatsNew(gameType, gameId)
-  const { singleVersion, gameHowToPlay, gameItems } = useGameOverview(
-    gameId,
-    gameType
-  )
+  const { singleVersion, gameHowToPlay, gameItems, gameDescription } =
+    useGameOverview(gameId, gameType)
 
   /**
    * @description Tab Content Partner Game
@@ -37,11 +36,29 @@ const GameTabs = ({ gameType, gameId }: IProps) => {
   const GAME_TAB_CONTENT: {
     id: string
     label: string
-    icon: React.ReactNode
+    icon?: React.ReactNode
     component?: React.ReactNode
   }[] = [
     {
-      id: "1",
+      id: "about-us",
+      label: t("game_partner_about"),
+      icon: "",
+      component: <AboutGame text={gameDescription} />
+    },
+    {
+      id: "how-to-play",
+      label: t("how_to_play"),
+      icon: <HowToPlayIcon stroke="#70727B" />,
+      component: <HowToPlayBody text={gameHowToPlay} />
+    },
+    {
+      id: "game-items",
+      label: t("ntf_game"),
+      icon: <IDiamond stroke="#70727B" />,
+      component: <GameItemsBody gameItems={gameItems} />
+    },
+    {
+      id: "whats-new",
       label: t("whats_new"),
       icon: <WhatsNewIcon color="#70727B" />,
       component: (
@@ -50,24 +67,12 @@ const GameTabs = ({ gameType, gameId }: IProps) => {
           description={newVersionData ? newVersionData.content : ""}
         />
       )
-    },
-    {
-      id: "2",
-      label: t("how_to_play"),
-      icon: <HowToPlayIcon stroke="#70727B" />,
-      component: <HowToPlayBody text={gameHowToPlay} />
-    },
-    {
-      id: "3",
-      label: t("ntf_game"),
-      icon: <IDiamond stroke="#70727B" />,
-      component: <GameItemsBody gameItems={gameItems} />
     }
   ]
 
   return hydrated ? (
     <Box className="relative h-full">
-      <div className="absolute top-[-80px] left-[-20px] flex w-full flex-wrap overflow-hidden sm:w-auto">
+      <div className="absolute top-[-80px] left-[-30px] flex w-full flex-wrap overflow-hidden sm:w-auto">
         <div className="flex w-full items-center justify-between gap-2 rounded-xl bg-neutral-700 bg-opacity-40 px-1 capitalize sm:w-auto">
           {GAME_TAB_CONTENT.map((item) => (
             <Tab

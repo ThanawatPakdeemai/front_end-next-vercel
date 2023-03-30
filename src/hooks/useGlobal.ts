@@ -190,10 +190,8 @@ const useGlobal = (
         return `/arcade-emporium/${_gameUrl}?id=${_gameData.id}`
 
       default:
-        ;`/${_type}-games/${_gameUrl}`
+        return `/${_type}-games/${_gameUrl}`
     }
-    // NOTE: No need this code
-    // await router.push(`/${_gameUrl}`)
   }
 
   /**
@@ -223,6 +221,22 @@ const useGlobal = (
       }
     }
     return "play-to-earn-games"
+  }
+
+  const getColorChipByGameType = (type: IGetType): string => {
+    switch (type) {
+      case "partner-publisher":
+        return "!bg-green-lemon"
+
+      case "partner-game":
+        return "!bg-secondary-main"
+
+      case "arcade-emporium":
+        return "!bg-warning-light"
+
+      default:
+        return "!bg-error-main"
+    }
   }
 
   const isRedirectRoomlist = (_game: IGame): "/roomlist" | "" => {
@@ -337,7 +351,8 @@ const useGlobal = (
     isRedirectRoomlist,
     onHandleSetGameStore,
     onClickLogout,
-    fetchChainData
+    fetchChainData,
+    getColorChipByGameType
   }
 }
 

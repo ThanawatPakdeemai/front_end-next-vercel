@@ -324,3 +324,107 @@ export const IMAGES: {
     alt: "Ready to try nakamoto.games For Game DEVELOPER_ "
   }
 }
+
+export const SLIDES_GAME_MOCKUP: IImageProps[] = [
+  {
+    src: "/images/mocks/gameSlide/demo_slide_01.jpg",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_01.jpg",
+    width: 852,
+    height: 479,
+    alt: "slide1"
+  },
+  {
+    src: "/images/mocks/gameSlide/demo_slide_02.jpg",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_02.jpg",
+    width: 852,
+    height: 479,
+    alt: "slide2"
+  },
+  {
+    src: "/images/mocks/gameSlide/demo_slide_03.png",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_03.png",
+    width: 852,
+    height: 479,
+    alt: "slide3"
+  },
+  {
+    src: "/images/mocks/gameSlide/demo_slide_04.jpg",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_04.jpg",
+    width: 852,
+    height: 479,
+    alt: "slide4"
+  },
+  {
+    src: "/images/mocks/gameSlide/demo_slide_05.jpg",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_05.jpg",
+    width: 852,
+    height: 479,
+    alt: "slide5"
+  }
+]
+
+export const GAME_MOCKUP_CARD: IImageProps[] = [
+  {
+    src: "/images/mocks/gameSlide/demo_slide_06.jpg",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_06.jpg",
+    width: 852,
+    height: 479,
+    alt: "slide6"
+  },
+  {
+    src: "/images/mocks/gameSlide/demo_slide_07.jpg",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_07.jpg",
+    width: 852,
+    height: 479,
+    alt: "slide7"
+  },
+  {
+    src: "/images/mocks/gameSlide/demo_slide_08.jpg",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_08.jpg",
+    width: 852,
+    height: 479,
+    alt: "slide8"
+  },
+  {
+    src: "/images/mocks/gameSlide/demo_slide_09.jpg",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_09.jpg",
+    width: 852,
+    height: 479,
+    alt: "slide9"
+  },
+  {
+    src: "/images/mocks/gameSlide/demo_slide_10.jpg",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_10.jpg",
+    width: 852,
+    height: 479,
+    alt: "slide10"
+  },
+  {
+    src: "/images/mocks/gameSlide/demo_slide_11.png",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_11.png",
+    width: 852,
+    height: 479,
+    alt: "slide11"
+  },
+  {
+    src: "/images/mocks/gameSlide/demo_slide_12.jpg",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_12.jpg",
+    width: 852,
+    height: 479,
+    alt: "slide12"
+  },
+  {
+    src: "/images/mocks/gameSlide/demo_slide_13.jpg",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_13.jpg",
+    width: 852,
+    height: 479,
+    alt: "slide13"
+  },
+  {
+    src: "/images/mocks/gameSlide/demo_slide_14.jpg",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_14.jpg",
+    width: 852,
+    height: 479,
+    alt: "slide14"
+  }
+]

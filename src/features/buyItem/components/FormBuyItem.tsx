@@ -18,6 +18,7 @@ import SwitchChain from "@components/atoms/SwitchChain"
 import useSwitchNetwork from "@hooks/useSwitchNetwork"
 import CONFIGS from "@configs/index"
 import PleaseCheckWallet from "@components/atoms/PleaseCheckWallet"
+import { useWeb3Provider } from "@providers/Web3Provider"
 import useBuyGameItemController from "../containers/hooks/useBuyGameItemController"
 
 const iconmotion = {
@@ -54,7 +55,8 @@ const FormBuyItem = () => {
     chainSupport,
     isDisabled
   } = useBuyGameItemController()
-  const { handleSwitchNetwork, statusWalletConnected } = useSwitchNetwork()
+  const { handleSwitchNetwork } = useSwitchNetwork()
+  const { isConnected } = useWeb3Provider()
 
   return (
     <>
@@ -228,7 +230,7 @@ const FormBuyItem = () => {
             </p>
           </div>
           <ButtonGroup className="mt-5 flex flex-col  gap-3">
-            {!statusWalletConnected.responseStatus ? (
+            {!isConnected ? (
               <PleaseCheckWallet />
             ) : (
               <ButtonLink

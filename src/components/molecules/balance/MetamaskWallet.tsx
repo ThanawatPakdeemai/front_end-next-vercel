@@ -1,68 +1,65 @@
-import Helper from "@utils/helper"
 import React from "react"
 import CircleIcon from "@mui/icons-material/Circle"
 import ChainPolygonIcon from "@components/icons/NetworkIcon/ChainPolygonIcon"
 import TextLink from "@components/atoms/TextLink"
 import CloseIcon from "@mui/icons-material/Close"
-import CopyAddress from "@components/atoms/CopyAddress"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import MetamaskLogo from "@components/icons/MetamaskLogo"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
-import { numberWithCommas } from "@src/helpers/addComma"
 import { IChainList } from "@configs/chain"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import { Typography } from "@mui/material"
+import useChainSupportStore from "@stores/chainSupport"
+import WalletAddress from "@feature/wallet/components/atoms/WalletAddress"
 import BalanceWallet from "./BalanceWallet"
 
 interface IProp {
-  isConnected?: boolean
   address?: string
   handleConnectWallet?: () => void
   handleOnDisconnectWallet?: () => void
-  // blockExplorerURL: string
   blockExplorerUrls: string[]
-  chainSupport: ITokenContract[]
-  currentTokenSelected: string
-  currentChainSelected: IChainList
+  chainSupport?: ITokenContract[]
+  currentTokenSelected?: string
+  currentChainSelected?: IChainList
 }
 
 const MetamaskWallet = ({
-  isConnected,
   address,
   handleConnectWallet,
   handleOnDisconnectWallet,
-  blockExplorerUrls,
-  chainSupport,
-  currentTokenSelected,
-  currentChainSelected
+  blockExplorerUrls
 }: IProp) => {
-  const { onAddToken } = useWeb3Provider()
+  const { onAddToken, isConnected } = useWeb3Provider()
+  const { currentChainSelected, currentTokenSelected } = useChainSupportStore()
+
   /**
    * @description Handle display balances from wallet
    */
-  const handleDisplayBalance = () => {
-    const _tokenBalance = chainSupport.find(
-      (item) => item.symbol === currentTokenSelected
+  const handleDisplayBalance = () =>
+    isConnected && currentTokenSelected ? (
+      <BalanceWallet
+        balance={
+          currentChainSelected
+            ? (currentTokenSelected as ITokenContract).balanceWallet.digit
+                .toFixed(4)
+                .toString()
+            : "N/A"
+        }
+        tokenName={
+          currentTokenSelected
+            ? (currentTokenSelected as ITokenContract).symbol
+            : "NAKA"
+        }
+      />
+    ) : (
+      <ButtonToggleIcon
+        startIcon={null}
+        text="Connect Wallet"
+        type="button"
+        className="min-h-[40px] bg-secondary-main text-sm text-white-primary"
+        handleClick={handleConnectWallet}
+      />
     )
-    return (
-      <>
-        <BalanceWallet
-          balance={
-            _tokenBalance
-              ? numberWithCommas(
-                  Helper.number4digit(
-                    (_tokenBalance as ITokenContract).balanceWallet.digit
-                  )
-                )
-              : "N/A"
-          }
-          tokenName={
-            _tokenBalance ? (_tokenBalance as ITokenContract).symbol : "NAKA"
-          }
-        />
-      </>
-    )
-  }
 
   return (
     <div className="flex flex-[1_1_calc(100%-134px)] flex-col rounded-default bg-neutral-700 p-2 lg:max-w-[333px] lg:flex-[1_1_333px]">
@@ -102,21 +99,12 @@ const MetamaskWallet = ({
             </span>
           </Typography>
           {isConnected && address && (
-            <div>
-              <span className="text-xs text-neutral-500">
-                {Helper.shortenString(address, 5)}
-              </span>
-              <CopyAddress
-                title="copy address"
-                value={address}
-                className="ml-2 cursor-pointer text-xs text-secondary-main"
-              />
-            </div>
+            <WalletAddress contractAddress={address || ""} />
           )}
           {isConnected ? (
             <div className="flex gap-2">
               <TextLink
-                name={`${currentChainSelected.title} Scan`}
+                name={`${currentTokenSelected?.symbol} Scan`}
                 className="!pb-0 capitalize"
                 onClick={() =>
                   window.open(
@@ -143,17 +131,8 @@ const MetamaskWallet = ({
           )}
         </div>
       </div>
-      {isConnected ? (
-        handleDisplayBalance()
-      ) : (
-        <ButtonToggleIcon
-          startIcon={null}
-          text="Connect Wallet"
-          type="button"
-          className="min-h-[40px] bg-secondary-main text-sm text-white-primary"
-          handleClick={handleConnectWallet}
-        />
-      )}
+
+      {handleDisplayBalance()}
     </div>
   )
 }

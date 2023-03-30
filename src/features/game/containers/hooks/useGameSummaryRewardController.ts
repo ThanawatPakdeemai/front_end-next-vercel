@@ -22,7 +22,12 @@ const useGameSummaryRewardController = () => {
   const { room_id, notification_id } = router.query
 
   // Store
-  const { notification, playHistory, notificationAll } = useNotiStore()
+  const {
+    notification,
+    playHistory,
+    notificationAll
+    // setNotificationItem: setNotificationItemStore
+  } = useNotiStore()
   const profile = useProfileStore((state) => state.profile.data)
   const { onSetGameData, data: dataGameStore } = useGameStore()
   const { getTypeGamePathFolder } = useGlobal()
@@ -70,6 +75,31 @@ const useGameSummaryRewardController = () => {
   const { mutateUpdateNotiStatusById } = useNotificationRead(
     notificationItem?._id || ""
   )
+  // const {dataNotificationItem} = useGetNotificationById()
+
+  // Get notification item by notification_id
+  const fetchNotificationItemById = useCallback(() => {
+    if (notification_id) {
+      // Code here...
+      // if(dataNotificationItem){
+      //   // Set value to store
+      //   // setNotificationItem(dataNotificationItem)
+      // setNotificationItemStore(dataNotificationItem)
+      // }
+    }
+  }, [notification_id])
+
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      fetchNotificationItemById()
+    }
+
+    return () => {
+      load = true
+    }
+  }, [fetchNotificationItemById])
 
   /**
    * @description Get pool id from notification

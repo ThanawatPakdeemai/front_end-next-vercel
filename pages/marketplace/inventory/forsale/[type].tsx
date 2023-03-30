@@ -4,6 +4,14 @@ import dynamic from "next/dynamic"
 import { MENU_ROUTER_MARKETPLACE_TYPE } from "@configs/menu"
 import { GetServerSideProps } from "next"
 
+const MarketPlaceForsaleList = dynamic(
+  () => import("@feature/page/marketplace/MarketPlaceForsaleList"),
+  {
+    suspense: false,
+    ssr: false
+  }
+)
+
 const MarketplaceLayoutInventory = dynamic(
   () => import("@components/templates/marketplace/MarketplaceLayoutInventory"),
   {
@@ -12,7 +20,7 @@ const MarketplaceLayoutInventory = dynamic(
   }
 )
 
-const Page = () => <>For Sale</>
+const Page = () => <MarketPlaceForsaleList />
 
 Page.getLayout = function getLayout(page: ReactElement) {
   return <MarketplaceLayoutInventory>{page}</MarketplaceLayoutInventory>

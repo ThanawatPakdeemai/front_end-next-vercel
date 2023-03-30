@@ -5,26 +5,29 @@ import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContol
 import useGetBalanceVault from "@feature/contract/containers/hooks/useQuery/useQueryBalanceVault"
 import { useEffect, useState } from "react"
 import { chainIdConfig } from "@configs/sites"
-import useChainSupport from "@stores/chainSupport"
-import useGlobal from "./useGlobal"
+import useChainSupportStore from "@stores/chainSupport"
+import { BigNumber } from "ethers"
+import useSupportedChain from "./useSupportedChain"
 
 export interface IBalanceDisplay {
   digit: number
   text: string | "N/A"
+  hex: BigNumber
 }
 
 export const defaultVaule: IBalanceDisplay = {
   digit: 0,
-  text: "N/A"
+  text: "N/A",
+  hex: BigNumber.from(0)
 }
 
 const useAllBalances = () => {
   const { address, chainId, signer } = useWeb3Provider()
-  const { getTokenAddress } = useGlobal()
+  const { getTokenAddress } = useSupportedChain()
   const [balanceValutNaka, setbalanceValutNaka] = useState<IBalanceDisplay>()
   const [balanceValutBusd, setbalanceValutBusd] = useState<IBalanceDisplay>()
   const { isConnected } = useWalletContoller()
-  const { chainSupport } = useChainSupport()
+  const { chainSupport } = useChainSupportStore()
   const {
     balanceVaultBSC,
     balanceVaultNaka,

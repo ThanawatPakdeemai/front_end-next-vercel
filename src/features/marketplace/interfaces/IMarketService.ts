@@ -132,15 +132,17 @@ export interface IMarketServForm {
     type_marketplace?: TNFTType
     seller_type?: TSellerType
     type_land?: string[]
+    seller_id?: string
     player_id?: string
     isRent?: boolean
     type?: TNFTType
   }
   _sort?: {
     price?: number
-    created_at: number
+    created_at?: number
     land_id?: number
     position?: number
+    _id?: number
   }
   _active?: boolean
 }
@@ -284,6 +286,21 @@ export interface IPayBillData {
   transaction_hash: string
   type: "pay_bill"
   updatedAt: Date
+}
+
+export interface IOwnerData {
+  type: TType
+  id: string
+  tokenId?: string
+  image: string
+  video?: string
+  name: string
+  price?: number
+  selling_type?: TSellingType
+  durability?: string | number
+  level?: string | number
+  size?: string | number
+  amount?: string | number
 }
 
 export interface IPayBillInstallServ extends IFormatMessageService {

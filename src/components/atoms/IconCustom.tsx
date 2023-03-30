@@ -21,19 +21,19 @@ const IconCustoms = (props: IIconCustoms) => {
       {support ? (
         <>
           {icon_key === "edge" ? (
-            <EdgeIcon />
+            <EdgeIcon color={support && "#A0ED61"} />
           ) : icon_key === "firefox" ? (
-            <FirefoxIcon />
+            <FirefoxIcon color={support && "#A0ED61"} />
           ) : icon_key === "chorm" || icon_key === "chrome" ? (
-            <ChromeIcon />
+            <ChromeIcon color={support && "#A0ED61"} />
           ) : icon_key === "safari" ? (
-            <SafariIcon />
+            <SafariIcon color={support && "#A0ED61"} />
           ) : icon_key === "opera" ? (
-            <OperaIcon />
+            <OperaIcon color={support && "#A0ED61"} />
           ) : icon_key === "mobile" ? (
-            <MobileIcon />
+            <MobileIcon color={support && "#A0ED61"} />
           ) : icon_key === "desktop" ? (
-            <DesktopIcon />
+            <DesktopIcon color={support && "#A0ED61"} />
           ) : null}
         </>
       ) : null}

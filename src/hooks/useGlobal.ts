@@ -2,26 +2,20 @@ import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import React, { useCallback, useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import {
   IFilterGamesByKey,
   IGame,
   IGetType
 } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
-import CONFIGS from "@configs/index"
-import useContractVaultBinance, {
-  ITokenContract
-} from "@feature/contract/containers/hooks/useContractVaultBinance"
-
-import { Contract, ethers } from "ethers"
-import BEP20Abi from "@configs/abi/BEP20.json"
-import ERC20Abi from "@configs/abi/ERC20.json"
-import useChainSupport from "@stores/chainSupport"
-import useContractVault from "@feature/contract/containers/hooks/useContractVault"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
-import { DEFAULT_CURRENCY_BNB, DEFAULT_CURRENCY_NAKA } from "@configs/currency"
-import useSwitchNetwork from "./useSwitchNetwork"
+import { useWeb3Provider } from "@providers/Web3Provider"
+import CONFIGS from "@configs/index"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+import useChainSupportStore from "@stores/chainSupport"
+import useNotiStore from "@stores/notification"
+import useSupportedChain from "./useSupportedChain"
 
 const useGlobal = (
   _limit?: number,
@@ -50,19 +44,20 @@ const useGlobal = (
     nftgame: _nftgame ?? false
   }
 
-  const isCancelled = React.useRef(false)
-
   // hook
-  const { onSetGameData, onSetGamePartnersData } = useGameStore()
-  const { getAllTokenAddressInContract, getBNBContract } =
-    useContractVaultBinance()
-  const { getAllTokenInfoByContractAddress } = useContractVaultBinance()
-  const { setChainSupport, setContractBNB } = useChainSupport()
-  const { getNAKATokenInfo } = useContractVault()
-  const { chainId, signer, accounts, statusWalletConnected } =
-    useSwitchNetwork()
-
+  const { onResetChainStore, currentChainSelected } = useChainSupportStore()
+  const { onResetNotification } = useNotiStore()
+  const {
+    onSetGameData,
+    onSetGamePartnersData,
+    onSetGameItemSelectd,
+    setQtyItemOfRoom
+  } = useGameStore()
   const profile = useProfileStore((state) => state.profile.data)
+  const { isLogin, onReset } = useProfileStore()
+  const { fetchNAKAToken, fetchAllTokenSupported } = useSupportedChain()
+  const { chainId, signer, address, isConnected } = useWeb3Provider()
+
   // States
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
   const [hydrated, setHydrated] = useState(false)
@@ -84,10 +79,14 @@ const useGlobal = (
    * @description Set profile
    */
   useEffect(() => {
-    if (!isCancelled.current) setStateProfile(profile)
+    let load = false
+
+    if (!load) {
+      setStateProfile(profile)
+    }
 
     return () => {
-      isCancelled.current = true
+      load = true
     }
   }, [profile])
 
@@ -95,10 +94,14 @@ const useGlobal = (
    * @description Set hydrate to fix error "Text content does not match server-rendered HTML"
    */
   useEffect(() => {
-    if (!isCancelled.current) setHydrated(true)
+    let load = false
+
+    if (!load) {
+      setHydrated(true)
+    }
 
     return () => {
-      isCancelled.current = true
+      load = true
     }
   }, [])
 
@@ -193,159 +196,6 @@ const useGlobal = (
     // await router.push(`/${_gameUrl}`)
   }
 
-  const getTokenAddress = (_chainId: string) => {
-    switch (_chainId) {
-      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
-        return CONFIGS.CONTRACT_ADDRESS.BEP20
-
-      default:
-        return CONFIGS.CONTRACT_ADDRESS.ERC20
-    }
-  }
-
-  /**
-   * @description Get tokens amount
-   * @param _chainId
-   * @returns {string}
-   */
-  const getTokenSupply = (_chainId: string): string => {
-    switch (_chainId) {
-      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
-        return "31000000000000000000000000"
-
-      default:
-        return "179999996000000000000000008"
-    }
-    // NOTE: No need this code
-    // await router.push(`/${_gameUrl}`)
-  }
-
-  /**
-   * @description Fetch BNB token address from Smart Contract
-   */
-  const fetchContractBNB = useCallback(async () => {
-    const result = await getBNBContract()
-    if (result) {
-      setContractBNB(result)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getBNBContract])
-  /**
-   * @description Fetch BNB token address
-   */
-  useMemo(() => {
-    if (!statusWalletConnected.responseStatus) return
-    if (signer === undefined || accounts === undefined) return
-    fetchContractBNB()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  /**
-   * @description Get all token supported
-   */
-  const fetchAllTokenSupported = useCallback(async () => {
-    const allContract: Contract[] = []
-    const allTokenSupported: ITokenContract[] = []
-    const tokens = await getAllTokenAddressInContract()
-    for (let index = 0; index < tokens.length; index += 1) {
-      const { ethereum }: any = window
-      const _web3 = new ethers.providers.Web3Provider(ethereum)
-      const contract = new ethers.Contract(tokens[index], BEP20Abi.abi, _web3)
-      allContract.push(contract)
-      // if (tokens[index] !== CONFIGS.CONTRACT_ADDRESS.BNB_CONTRACT) {
-      //   const contract = new ethers.Contract(tokens[index], BEP20Abi.abi, _web3)
-      //   allContract.push(contract)
-      // }
-    }
-    allContract.map(async (contract) => {
-      const result = await getAllTokenInfoByContractAddress(
-        contract,
-        contract.address,
-        profile ? profile.address : ""
-      )
-      allTokenSupported.push(result)
-    })
-    await Promise.all(allTokenSupported)
-    const allTokenSupportedSorted = allTokenSupported.sort((a, b) => {
-      if (a.symbol < b.symbol) {
-        return -1
-      }
-      if (a.symbol > b.symbol) {
-        return 1
-      }
-      return 0
-    })
-    setChainSupport(allTokenSupportedSorted)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const fetchNAKAToken = useCallback(async () => {
-    const allContract: Contract[] = []
-    const allTokenSupported: ITokenContract[] = []
-    const tokens = [CONFIGS.CONTRACT_ADDRESS.ERC20]
-    for (let index = 0; index < tokens.length; index += 1) {
-      const { ethereum }: any = window
-      const _web3 = new ethers.providers.Web3Provider(ethereum)
-      const contract = new ethers.Contract(tokens[index], ERC20Abi, _web3)
-      allContract.push(contract)
-    }
-    allContract.map(async (contract) => {
-      const result = await getNAKATokenInfo(
-        contract,
-        contract.address,
-        profile ? profile.address : ""
-      )
-      allTokenSupported.push(result)
-    })
-    await Promise.all(allTokenSupported)
-    const allTokenSupportedSorted = allTokenSupported.sort((a, b) => {
-      if (a.symbol < b.symbol) {
-        return -1
-      }
-      if (a.symbol > b.symbol) {
-        return 1
-      }
-      return 0
-    })
-    setChainSupport(allTokenSupportedSorted)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  /**
-   * @description Fetch all token supported
-   */
-  useEffect(() => {
-    if (!isCancelled.current) {
-      if (signer && accounts) {
-        if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
-          fetchAllTokenSupported()
-        } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
-          fetchNAKAToken()
-        }
-      } /* else {
-      console.log("signer or accounts is undefined", signer, accounts, provider)
-    } */
-    }
-
-    return () => {
-      isCancelled.current = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainId, signer, fetchAllTokenSupported, fetchNAKAToken])
-
-  /**
-   * @description Get default currency
-   * @returns {ITokenContract[]}
-   */
-  const getDefaultCoin = (): ITokenContract[] => {
-    switch (chainId) {
-      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
-        return DEFAULT_CURRENCY_BNB
-      default:
-        return DEFAULT_CURRENCY_NAKA
-    }
-  }
-
   /**
    * @description Open link in new tab
    * @param url {string}
@@ -382,8 +232,22 @@ const useGlobal = (
     return ""
   }
 
+  /**
+   * @description When logout reset all stores
+   */
+  const onClickLogout = async () => {
+    onResetChainStore()
+    onSetGameItemSelectd({} as IGameItemListData)
+    setQtyItemOfRoom(0)
+    await onResetNotification()
+    await onReset()
+    // await router.push("/")
+  }
+
   useEffect(() => {
-    if (!isCancelled.current) {
+    let load = false
+
+    if (!load) {
       if (router.asPath.includes("land")) {
         setMarketType("nft_land")
       } else if (router.asPath.includes("building")) {
@@ -400,9 +264,56 @@ const useGlobal = (
     }
 
     return () => {
-      isCancelled.current = true
+      load = true
     }
   }, [router.asPath])
+
+  /**
+   * @description Fetch all token supported
+   */
+  useEffect(() => {
+    let load = false
+    if (!isLogin) return
+    if (!isConnected) return
+    if (!load) {
+      if (signer && address) {
+        if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+          fetchAllTokenSupported()
+        } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
+          fetchNAKAToken()
+        }
+      }
+    }
+
+    return () => {
+      load = true
+    }
+  }, [
+    address,
+    isLogin,
+    isConnected,
+    chainId,
+    signer,
+    fetchAllTokenSupported,
+    fetchNAKAToken
+  ])
+
+  const fetchChainData = async () => {
+    if (!isLogin) return
+    if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+      await fetchAllTokenSupported()
+    } else if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX) {
+      await fetchNAKAToken()
+    }
+  }
+
+  /**
+   * @description Fetch all token supported
+   */
+  useEffect(() => {
+    fetchChainData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLogin, currentChainSelected])
 
   return {
     onHandleClick,
@@ -418,18 +329,15 @@ const useGlobal = (
     hydrated,
     defaultBody,
     pager,
-    getTokenAddress,
-    getTokenSupply,
-    fetchAllTokenSupported,
-    fetchNAKAToken,
-    getDefaultCoin,
     isMarketplace,
     isDeveloperPage,
     openInNewTab,
     getTypeGamePathFolder,
     marketType,
     isRedirectRoomlist,
-    onHandleSetGameStore
+    onHandleSetGameStore,
+    onClickLogout,
+    fetchChainData
   }
 }
 

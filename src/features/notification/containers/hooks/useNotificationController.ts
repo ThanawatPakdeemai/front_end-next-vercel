@@ -46,6 +46,7 @@ const useNotificationController = () => {
       setTotalCount(dataNotification.data.length)
       const result = dataNotification.data.filter((item) => !item.read)
       // Set values to store
+      // TODO: Refactor this to no use store
       setNotificationAll(dataNotification.data)
       setNotificationCount(result.length)
     }

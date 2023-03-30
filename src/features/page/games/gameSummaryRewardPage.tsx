@@ -23,6 +23,20 @@ const GameSummaryRewardPage = () => {
   } = useGameSummaryRewardController()
   const { hydrated } = useGlobal()
 
+  const getSummaryValue = () => {
+    switch (notificationItem?.type) {
+      case "RETURN_ITEM":
+        return summaryDataPlayerId.current_score
+
+      case "REWARD_WEEKLY":
+      case "REWARD_GAME_POOL":
+        return summaryDataPlayerIdWeekly.reward
+
+      default:
+        return summaryDataPlayerId.naka_for_player
+    }
+  }
+
   const renderContent = () => {
     switch (notificationItem?.type) {
       case "RETURN_ITEM":
@@ -48,12 +62,7 @@ const GameSummaryRewardPage = () => {
             gameRaward={totalGameReward || 0}
             gameImage={gameDataState?.image_list || ""}
             gameName={gameDataState?.name || ""}
-            value={
-              notificationItem?.naka_for_player ||
-              summaryDataPlayerId.naka_for_player ||
-              summaryDataPlayerId.current_score ||
-              summaryDataPlayerIdWeekly.reward
-            }
+            value={getSummaryValue()}
             hash={
               summaryDataPlayerId.tx_address ||
               summaryDataPlayerIdWeekly.transaction_hash ||
@@ -93,6 +102,7 @@ const GameSummaryRewardPage = () => {
           width="auto"
           players={players || []}
           rewardType={notificationItem?.type}
+          // maxPlayer={gameRoomById?.max_players || 0}
         />
         {renderContent()}
       </div>

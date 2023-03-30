@@ -1,7 +1,9 @@
+import useProfileStore from "@stores/profileStore"
 import { useQuery } from "@tanstack/react-query"
 import { getNotificationById } from "../services/notification.service"
 
 const useGetNotificationById = (_notificationId: string) => {
+  const profile = useProfileStore((state) => state.profile.data)
   const {
     data: dataNotificationItem,
     error: errorNotificationItem,
@@ -13,11 +15,13 @@ const useGetNotificationById = (_notificationId: string) => {
     queryKey: ["getNotificationById", _notificationId],
     queryFn: () => getNotificationById(_notificationId),
     keepPreviousData: true,
-    staleTime: Infinity
+    staleTime: Infinity,
+    enabled: !!profile,
+    retry: 3
   })
 
   return {
-    dataNotificationItem,
+    dataNotificationItem: dataNotificationItem?.data,
     errorNotificationItem,
     isLoadingNotificationItem,
     isErrorNotificationItem,

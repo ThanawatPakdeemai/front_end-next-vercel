@@ -157,7 +157,7 @@ const useCreateWeb3Provider = () => {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [errorToast, errorToast]
+    [profile, isLogin, isCorrectWallet, setIsCorrectWallet, successToast]
   )
 
   /**
@@ -247,7 +247,7 @@ const useCreateWeb3Provider = () => {
       )
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [profile, onSetProfileData, onSetProfileAddress, successToast, errorToast]
   )
 
   /**
@@ -275,12 +275,10 @@ const useCreateWeb3Provider = () => {
 
     if (walletAccounts) {
       onSetAddress(walletAccounts[0])
-      if (profile) {
+      if (profile && profile.email) {
         if (!profile.address || profile.address === "") {
-          if (profile.email) {
-            onUpdateWallet(profile, walletAccounts[0])
-            return
-          }
+          onUpdateWallet(profile, walletAccounts[0])
+          return
         }
       }
     }
@@ -336,7 +334,14 @@ const useCreateWeb3Provider = () => {
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onSetAddress, resetChainId, chainSupport])
+  }, [
+    onSetAddress,
+    profile,
+    onUpdateWallet,
+    errorToast,
+    handleAccountsChanged,
+    chainIdIsSupported
+  ])
 
   /**
    * @description Check if current chain matches with the one we need
@@ -398,9 +403,6 @@ const useCreateWeb3Provider = () => {
           const _signer = _resetProvider.getSigner()
           if (_signer) {
             handleConnectWithMetamask()
-            // successToast(
-            //   `Switch to chain ${Helper.getNetwork(_chainId).chainName}`
-            // )
           }
         } catch (error: Error | any) {
           // This error code indicates that the chain has not been added to MetaMask
@@ -507,10 +509,6 @@ const useCreateWeb3Provider = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  // useEffect(() => {
-  //   console.log("fetchNAKAToken", signer, accounts, address, provider)
-  // }, [signer, address, provider])
 
   return {
     accounts,

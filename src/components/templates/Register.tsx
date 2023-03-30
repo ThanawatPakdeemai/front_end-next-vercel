@@ -81,7 +81,7 @@ const RegisterLayout = () => {
           item
           container
           component="div"
-          className={`min-h-[790px] rounded-3xl border border-solid border-neutral-800 p-2.5 ${
+          className={`min-h-[790px] rounded-3xl border border-solid border-neutral-800 p-[20px] md:p-[50px] lg:p-2.5 ${
             !_.isEmpty({ errors }.errors) && submitRegisterForm
               ? "h-[135vh]"
               : "h-[95vh]"
@@ -125,7 +125,7 @@ const RegisterLayout = () => {
           >
             <Box
               component="div"
-              className="flex justify-end"
+              className="relative flex  h-[100px] justify-end lg:h-auto"
             >
               <div className="absolute">
                 <KeyFramesClockwise>
@@ -148,8 +148,11 @@ const RegisterLayout = () => {
             </Box>
             <Box
               sx={{
-                my: 8,
-                mx: 4,
+                height: "auto",
+                width: { xs: "100%", lg: "auto" },
+                my: { xs: 2, lg: 8 },
+                mx: { xs: 0, lg: 0, xl: 4 },
+                px: { md: 2, xl: 0 },
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center"

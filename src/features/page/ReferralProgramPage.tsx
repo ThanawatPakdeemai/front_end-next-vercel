@@ -204,7 +204,7 @@ const ReferralProgramPage = () => {
                 </div>
               </CardContent>
             )}
-            <div className="flex justify-center self-center sm:block md:block lg:block">
+            <div className="col-span-2 flex justify-center self-center sm:block md:col-span-1 md:block  lg:block">
               <RadarAnimateIcon />
             </div>
           </div>

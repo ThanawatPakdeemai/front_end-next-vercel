@@ -6,7 +6,7 @@ export default function Layout({
   children
 }: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) {
   return (
-    <div className="main-container mx-auto px-2 lg:px-0">
+    <div className="main-container mx-auto w-full px-2 ">
       <Header />
       {children}
       <Footer />

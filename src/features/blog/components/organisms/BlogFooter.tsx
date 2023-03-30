@@ -28,7 +28,7 @@ const BlogFooter = ({ view, shared, like, ...props }: IBlogFooterProps) => (
         }
       }
     }}
-    className="relative flex h-[80px] w-full items-center border-b-[1px] border-t-[1px] border-neutral-780 bg-primary-main px-12"
+    className="relative flex h-[80px] w-full flex-col items-center border-b-[1px] border-t-[1px] border-neutral-780 bg-primary-main px-12 md:flex-row"
   >
     <div className="count-wrapper flex flex-1 gap-3">
       <ViewCount

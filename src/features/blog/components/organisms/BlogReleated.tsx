@@ -41,13 +41,13 @@ const BlogReleated = ({
   blogReleatedTitle = "Popular Tags",
   blogReleatedTag
 }: IBlogReleatedProps) => (
-  <div className="relative flex w-full flex-col lg:w-[512px]">
+  <div className="relative flex w-full flex-col  xl:w-[512px]">
     <div className="h-[100px] bg-neutral-780">
       <div className="px-6 py-12 text-center font-neue-machina text-sm uppercase text-white-default">
         Relate Blog
       </div>
     </div>
-    <div className="border-[1px] border-neutral-780">
+    <div className="w-full border-[1px] border-neutral-780  ">
       <div className="flex flex-wrap justify-center gap-3 lg:grid lg:flex-nowrap">
         {blogReleatedItems.map((item) => (
           <BlogCard
@@ -64,14 +64,14 @@ const BlogReleated = ({
           />
         ))}
       </div>
-      <div className="flex h-[80px] items-center border-t-[1px] border-neutral-780">
-        <div className="flex w-full flex-wrap justify-center">
+      <div className="flex h-auto w-full items-center border-t-[1px] border-neutral-780 xl:h-[80px] ">
+        <div className=" mx-auto h-auto w-full justify-center xl:flex  xl:w-full xl:flex-wrap">
           {blogReleatedTitle && (
-            <Typography className="mx-2 flex items-center justify-center text-sm uppercase text-white-default">
+            <Typography className="mx-2 my-2 flex items-center justify-center text-sm uppercase text-white-default xl:my-0">
               {blogReleatedTitle}
             </Typography>
           )}
-          <div className="flex gap-2">
+          <div className="grid w-full grid-cols-3 gap-2 md:grid-cols-4 xl:flex xl:h-[35px] xl:overflow-x-auto">
             {blogReleatedTag.map((popularItem) => (
               <Chip
                 key={uuid()}

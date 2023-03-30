@@ -241,7 +241,7 @@ const useGlobal = (
     setQtyItemOfRoom(0)
     await onResetNotification()
     await onReset()
-    // await router.push("/")
+    await router.push("/")
   }
 
   useEffect(() => {

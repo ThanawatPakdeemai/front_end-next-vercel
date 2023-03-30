@@ -1,3 +1,5 @@
+import { IFormatService } from "@interfaces/IHelper"
+
 export type RewardType =
   | "REWARD_WEEKLY"
   | "REWARD"
@@ -21,4 +23,8 @@ export interface INotification {
   weekly_pool_id?: string
   pool_id?: string
   game_mode?: string
+}
+
+export interface INotificationService extends IFormatService {
+  data: INotification[]
 }

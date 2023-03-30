@@ -18,10 +18,12 @@ const Banners = () => {
 
   return (
     <div className="bg-line-linear-gradient mb-2 flex h-48 overflow-hidden rounded-3xl border border-neutral-800 bg-primary-main uppercase md:mb-12">
-      <div className="z-10 flex w-full items-center justify-center">
+      <div className="z-10 mx-5 flex w-full items-center justify-center md:mx-0">
         <div className="flex w-full select-none items-center justify-between">
           <span
-            className={`pl-20 font-neue-machina-bold text-[46px] font-black uppercase ${
+            className={`mx-auto font-neue-machina-bold text-[46px] font-black uppercase md:pl-20 lg:mx-0
+            ${title === "referral program" ? " px-5 " : ""}
+            ${
               textColor === "red"
                 ? "text-shadow-red text-error-main"
                 : "text-shadow-purple text-secondary-main"

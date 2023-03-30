@@ -49,17 +49,27 @@ const useToast = () => {
   )
 
   const errorToast = useCallback(
-    (content: string) =>
+    (
+      content: string,
+      duration?: number,
+      confirmation?: boolean,
+      handleClickYes?: () => void,
+      handleClickNo?: () => void
+    ) =>
       toast(
         (t) => (
           <BaseToastComponent
             onClose={() => toast.dismiss(t.id)}
+            handleClickYes={handleClickYes}
+            handleClickNo={handleClickNo}
             status="error"
             text={content}
+            confirmation={confirmation}
           />
         ),
         {
-          className: "toast toast--error"
+          className: "toast toast--error",
+          duration: duration ?? 5000
         }
       ),
     []

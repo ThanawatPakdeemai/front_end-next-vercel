@@ -22,7 +22,7 @@ const MarketplaceDetail = () => {
   const { count } = useCountStore()
 
   return detailData ? (
-    <div className="flex w-full gap-x-[120px]">
+    <div className="flex w-full flex-col gap-y-[60px] gap-x-[120px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:py-0 sm:px-0">
       <CardContentDetails
         detail={
           detailData.land_data?.details ??

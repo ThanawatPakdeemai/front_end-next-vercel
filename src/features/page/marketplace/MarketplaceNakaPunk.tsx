@@ -38,7 +38,7 @@ const MarketplaceNakaPunk = () => {
       })
       .catch((_error) => {
         setClose()
-        errorToast(_error.message)
+        errorToast("Transection fail")
       })
   }
 

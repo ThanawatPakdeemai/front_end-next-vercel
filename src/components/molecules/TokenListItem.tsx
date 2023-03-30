@@ -1,9 +1,7 @@
-import { useRouter } from "next/router"
 import React, { ReactNode } from "react"
 import SyncAltIcon from "@mui/icons-material/SyncAlt"
 import { IBalanceDisplay } from "@hooks/useAllBalances"
 import { Box } from "@mui/material"
-import { TokenSupport } from "@configs/chain"
 import ButtonIcon from "../atoms/button/ButtonIcon"
 
 const iconmotion = {
@@ -21,7 +19,6 @@ const iconmotion = {
 export interface ITokenListItem {
   icon?: ReactNode
   text?: string | number | ReactNode | IBalanceDisplay
-  link?: TokenSupport
   shadow?: boolean
   handleClick?: () => void
   disabledClick?: boolean
@@ -31,15 +28,12 @@ export interface ITokenListItem {
 const TokenListItem = ({
   icon,
   text,
-  link,
   shadow = false,
   handleClick,
   disabledClick = false,
   title,
   widthBalance = "w-[40px]"
 }: ITokenListItem) => {
-  const router = useRouter()
-
   const renderText = () => {
     if (typeof text === "string") {
       return text
@@ -72,6 +66,7 @@ const TokenListItem = ({
             {renderText()}
           </p>
         </div>
+        {/* // TODO: Open after launch V2 */}
         {disabledClick ? (
           <></>
         ) : (
@@ -83,14 +78,7 @@ const TokenListItem = ({
               <SyncAltIcon className="h-[20px] w-[20px] rotate-90 text-white-primary" />
             }
             className="token--list-item__button ml-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900"
-            onClick={
-              handleClick ||
-              (() => {
-                router.push(
-                  link ? `/wallet/?token=${link}` : "/wallet/?token=NAKA"
-                )
-              })
-            }
+            onClick={handleClick}
           />
         )}
       </Box>

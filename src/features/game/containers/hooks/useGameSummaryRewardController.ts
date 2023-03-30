@@ -91,8 +91,17 @@ const useGameSummaryRewardController = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notification_id])
+
   useEffect(() => {
-    fetchNotificationItemById()
+    let load = false
+
+    if (!load) {
+      fetchNotificationItemById()
+    }
+
+    return () => {
+      load = true
+    }
   }, [fetchNotificationItemById])
 
   /**

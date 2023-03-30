@@ -89,10 +89,13 @@ const HeadLogo = () => {
         } lg:flex-none ${scrollPage < 100 ? "opacity-100" : "opacity-0"}`}
       >
         <div
-          className={`ml-2 flex w-full items-center md:w-auto md:justify-center lg:ml-0 ${""}`}
+          className={`ml-2 grid w-full grid-cols-3  grid-rows-2 items-center md:flex md:w-auto md:justify-center lg:ml-0 ${""}`}
         >
           {scrollPage < 100 && (
-            <Link href="/">
+            <Link
+              href="/"
+              className="col-span-3 mx-auto md:col-span-1"
+            >
               <LogoNaka />
             </Link>
           )}
@@ -106,7 +109,10 @@ const HeadLogo = () => {
             </Box>
           )}
           {isMarketplace && (
-            <Link href="/marketplace">
+            <Link
+              href="/marketplace"
+              className="col-span-2 md:col-span-1"
+            >
               <MarketplaceTextIcon className="ml-3" />
             </Link>
           )}
@@ -117,7 +123,7 @@ const HeadLogo = () => {
           />
           <Box
             component="div"
-            className="ms:ml-0 ml-auto flex items-center"
+            className="ms:ml-0 col-span-1 ml-auto flex h-auto items-center "
           >
             <LanguageIcon className={themeColor().toString()} />
             <SelectNaka

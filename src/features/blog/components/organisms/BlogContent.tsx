@@ -8,7 +8,7 @@ export interface IBlogBodyProps {
 }
 
 const BlogContent = ({ image, description, content }: IBlogBodyProps) => (
-  <div className="mx-auto max-w-[678px] p-5 lg:mx-0 lg:mt-10 lg:mr-10 lg:p-0">
+  <div className="mx-auto w-full p-2 md:max-w-[678px] lg:mx-0 lg:mt-10 lg:p-0 xl:mr-10 xl:p-5">
     <div className="h-auto justify-center">
       {image && (
         <Image

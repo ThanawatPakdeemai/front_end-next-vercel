@@ -13,6 +13,7 @@ import Helper from "@utils/helper"
 import { IBalanceDisplay } from "@hooks/useAllBalances"
 import useLoadingStore from "@stores/loading"
 import { MESSAGES } from "@constants/messages"
+import { DEFAULT_TOKEN_INFO } from "@constants/defaultValues"
 import { getBalanceVaultBinanceContract } from "../contractHelpers"
 
 export interface ITokenContract {
@@ -23,20 +24,6 @@ export interface ITokenContract {
   balanceVault: IBalanceDisplay
   totolSupply?: string
   decimals?: number
-}
-
-export const DEFAULT_TOKEN_INFO: ITokenContract = {
-  symbol: "",
-  tokenName: "",
-  address: "",
-  balanceWallet: {
-    digit: 0,
-    text: ""
-  },
-  balanceVault: {
-    digit: 0,
-    text: ""
-  }
 }
 
 const useContractVaultBinance = () => {
@@ -225,11 +212,13 @@ const useContractVaultBinance = () => {
                 : 0,
               text: _balance
                 ? ethers.utils.formatEther(_balance as BigNumber).toString()
-                : "0"
+                : "0",
+              hex: _balance
             },
             balanceVault: {
               digit: Number(Helper.WeiToNumber(vaultBalancePromise).toFixed(4)),
-              text: ethers.utils.formatEther(vaultBalancePromise)
+              text: ethers.utils.formatEther(vaultBalancePromise),
+              hex: vaultBalancePromise
             }
           })
         } else {
@@ -260,14 +249,13 @@ const useContractVaultBinance = () => {
               ),
               text: Helper.formatNumber(WeiToNumber(walletBalancePromise), {
                 maximumFractionDigits: 1
-              })
+              }),
+              hex: walletBalancePromise
             },
             balanceVault: {
               digit: Number(Helper.WeiToNumber(vaultBalancePromise).toFixed(4)),
-              text: ethers.utils.formatEther(vaultBalancePromise)
-              // text: Helper.formatNumber(WeiToNumber(vaultBalancePromise), {
-              //   maximumFractionDigits: 1
-              // })
+              text: ethers.utils.formatEther(vaultBalancePromise),
+              hex: vaultBalancePromise
             }
           })
         }

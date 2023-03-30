@@ -22,6 +22,8 @@ import { DEFAULT_STATUS_WALLET } from "@constants/defaultValues"
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useChainSupportStore from "@stores/chainSupport"
 import useSupportedChain from "@hooks/useSupportedChain"
+import toast from "react-hot-toast"
+import useLoadingStore from "@stores/loading"
 
 const useCreateWeb3Provider = () => {
   const [signer, setSigner] = useState<JsonRpcSigner | undefined>(undefined)
@@ -55,6 +57,7 @@ const useCreateWeb3Provider = () => {
     currentChainSelected
   } = useChainSupportStore()
   const { successToast, errorToast } = useToast()
+  const { setClose, setOpen } = useLoadingStore()
 
   /**
    * @description Disconnect wallet
@@ -127,6 +130,7 @@ const useCreateWeb3Provider = () => {
       if (
         profile &&
         profile.address &&
+        profile.address !== "" &&
         profile.address.toLocaleLowerCase() === _accounts[0].toLocaleLowerCase()
       ) {
         setStatusWalletConnected({
@@ -148,6 +152,7 @@ const useCreateWeb3Provider = () => {
         })
         setIsCorrectWallet(false)
         if (!isLogin) return
+        if (profile?.address === "" || !profile?.address) return
         errorToast(`${_accounts[0]} ${MESSAGES.wallet_is_incorrect}`)
       }
     },
@@ -218,13 +223,28 @@ const useCreateWeb3Provider = () => {
         _email: _profile.email,
         _address
       }
-      await updateWalletAddress(data)
-      await getProfileByEmail(_profile.email).then((_res) => {
-        onSetProfileData(_res)
-        onSetProfileAddress(_res.address)
-      })
-      // TODO: Do something when updated wallet address
-      // handleConnectWithMetamask()
+
+      errorToast(
+        `Your are connecting ${_address}\n${MESSAGES.please_update_wallet_address}\n${MESSAGES.are_you_sure}`,
+        10000,
+        true,
+        async () => {
+          setOpen()
+          await updateWalletAddress(data).then(async (_resUpdate) => {
+            if (_resUpdate) {
+              await getProfileByEmail(_profile.email).then((_res) => {
+                onSetProfileData(_res)
+                onSetProfileAddress(_res.address)
+                successToast(MESSAGES.success)
+                toast.dismiss()
+                setClose()
+                // eslint-disable-next-line no-use-before-define
+                handleConnectWithMetamask()
+              })
+            }
+          })
+        }
+      )
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -250,6 +270,21 @@ const useCreateWeb3Provider = () => {
       value: WALLET_CONNECTOR_TYPES.injected
     })
     const _provider = new providers.Web3Provider(window.ethereum)
+    const walletAccounts = await _provider?.listAccounts()
+    if (walletAccounts === undefined) setAccounts(undefined)
+
+    if (walletAccounts) {
+      onSetAddress(walletAccounts[0])
+      if (profile) {
+        if (!profile.address || profile.address === "") {
+          if (profile.email) {
+            onUpdateWallet(profile, walletAccounts[0])
+            return
+          }
+        }
+      }
+    }
+
     const walletConnector = Helper.getLocalStorage(ELocalKey.walletConnector)
     if (walletConnector === WALLET_CONNECTOR_TYPES.injected) {
       const account = await Helper.getWalletAccount()
@@ -271,10 +306,11 @@ const useCreateWeb3Provider = () => {
     }
     _provider
       .send("eth_requestAccounts", [])
-      .then((_accounts) => {
+      .then(async (_accounts) => {
         setProvider(_provider)
         onSetAddress(_accounts[0])
         setAccounts(_accounts)
+
         if (handleAccountsChanged) {
           handleAccountsChanged(_accounts)
         }
@@ -292,20 +328,6 @@ const useCreateWeb3Provider = () => {
           )
         }
       })
-
-    const walletAccounts = await _provider?.listAccounts()
-    if (walletAccounts === undefined) setAccounts(undefined)
-
-    if (walletAccounts) {
-      onSetAddress(walletAccounts[0])
-      if (profile) {
-        if (!profile.address || profile.address === "") {
-          if (profile.email) {
-            onUpdateWallet(profile, walletAccounts[0])
-          }
-        }
-      }
-    }
 
     // Subscribe to session disconnection
     if (window.ethereum && window.ethereum.on) {

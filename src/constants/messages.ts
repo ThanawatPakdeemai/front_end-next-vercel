@@ -62,5 +62,7 @@ export const MESSAGES = {
   "wallet_is_not_unlocked": "Wallet is not unlocked",
   "wallet_is_not_connected": "Wallet is not connected",
   "wallet_is_not_correct_network": "Wallet is not correct network",
-  "user_reject_request": "User rejected request"
+  "user_reject_request": "User rejected request",
+  "please_update_wallet_address": "Please update wallet address",
+  "are_you_sure": "Are you sure to do this?"
 }

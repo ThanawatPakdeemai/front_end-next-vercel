@@ -236,13 +236,12 @@ const useGlobal = (
    * @description When logout reset all stores
    */
   const onClickLogout = async () => {
-    // onResetNotiStore()
     onResetChainStore()
     onSetGameItemSelectd({} as IGameItemListData)
     setQtyItemOfRoom(0)
     await onResetNotification()
     await onReset()
-    await router.push("/")
+    // await router.push("/")
   }
 
   useEffect(() => {

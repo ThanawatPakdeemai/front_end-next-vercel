@@ -19,8 +19,11 @@ import useProfileStore from "@stores/profileStore"
 const useSupportedChain = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { getBNBContract } = useContractVaultBinance()
-  const { getAllTokenInfoByContractAddress } = useContractVaultBinance()
+  const { getAllTokenInfoByContractAddress, getAllTokenAddressInContract } =
+    useContractVaultBinance()
   const {
+    chainSupport,
+    currentTokenSelected,
     currentChainSelected,
     setChainSupport,
     setContractBNB,
@@ -98,8 +101,9 @@ const useSupportedChain = () => {
     const allContract: Contract[] = []
     const allTokenSupported: ITokenContract[] = []
     // TODO: Open after launch V2
-    // const tokens = await getAllTokenAddressInContract()
-    const tokens = [CONFIGS.CONTRACT_ADDRESS.BEP20]
+    const tokens = await getAllTokenAddressInContract()
+    // ONLY FOR BUSD TOKEN
+    // const tokens = [CONFIGS.CONTRACT_ADDRESS.BEP20]
     for (let index = 0; index < tokens.length; index += 1) {
       const contract = new ethers.Contract(
         tokens[index],
@@ -170,6 +174,8 @@ const useSupportedChain = () => {
       return 0
     })
     setChainSupport(allTokenSupportedSorted)
+    if (currentTokenSelected && currentTokenSelected?.address !== "") return
+    if (currentTokenSelected !== chainSupport[0]) return
     setCurrentTokenSelected(allTokenSupportedSorted[0])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setChainSupport])

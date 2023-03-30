@@ -272,14 +272,22 @@ const useGlobal = (
    * @description Fetch all token supported
    */
   useEffect(() => {
-    if (!isLogin) return
-    if (!isConnected) return
-    if (signer && address) {
-      if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
-        fetchAllTokenSupported()
-      } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
-        fetchNAKAToken()
+    let load = false
+
+    if (!load) {
+      if (!isLogin) return
+      if (!isConnected) return
+      if (signer && address) {
+        if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+          fetchAllTokenSupported()
+        } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
+          fetchNAKAToken()
+        }
       }
+    }
+
+    return () => {
+      load = true
     }
   }, [
     address,

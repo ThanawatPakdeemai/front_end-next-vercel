@@ -88,8 +88,17 @@ const useGameSummaryRewardController = () => {
       // }
     }
   }, [notification_id])
+
   useEffect(() => {
-    fetchNotificationItemById()
+    let load = false
+
+    if (!load) {
+      fetchNotificationItemById()
+    }
+
+    return () => {
+      load = true
+    }
   }, [fetchNotificationItemById])
 
   /**

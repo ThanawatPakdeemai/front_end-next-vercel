@@ -15,6 +15,7 @@ import CONFIGS from "@configs/index"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import useChainSupportStore from "@stores/chainSupport"
 import useNotiStore from "@stores/notification"
+import Helper from "@utils/helper"
 import useSupportedChain from "./useSupportedChain"
 
 const useGlobal = (
@@ -190,10 +191,8 @@ const useGlobal = (
         return `/arcade-emporium/${_gameUrl}?id=${_gameData.id}`
 
       default:
-        ;`/${_type}-games/${_gameUrl}`
+        return `/${_type}-games/${_gameUrl}`
     }
-    // NOTE: No need this code
-    // await router.push(`/${_gameUrl}`)
   }
 
   /**
@@ -223,6 +222,78 @@ const useGlobal = (
       }
     }
     return "play-to-earn-games"
+  }
+
+  /**
+   * @description Get color chip by game type
+   * @param type
+   * @returns
+   */
+  const getColorChipByGameType = (type: IGetType): string => {
+    switch (type) {
+      case "partner-publisher":
+        return "!bg-green-lemon"
+
+      case "partner-game":
+        return "!bg-green-lemon"
+
+      case "arcade-emporium":
+        return "!bg-warning-dark"
+
+      case "story-mode":
+        return "!bg-info-main"
+
+      case "play-to-earn-games":
+        return "!bg-error-main"
+
+      case "free-to-play":
+        return "!bg-secondary-main"
+
+      default:
+        return "!bg-neutral-800"
+    }
+  }
+
+  /**
+   * @description Get game url by game type
+   * @param gameData
+   * @returns
+   */
+  const getGameStoryModeURL = (gameData: IGame): string => {
+    if (!profile) return ""
+
+    const room_id = null
+    const frontendUrl = `${CONFIGS.BASE_URL.FRONTEND}/${router.query.typeGame}/${gameData.path}/summary/${room_id}`
+    const profile_id = profile.id
+    const room_number = null
+    const item_size = null
+    const { email } = profile
+    const token = Helper.getTokenFromLocal()
+    const rank_name = null
+    const date = null
+    const stage_id = null
+    const profile_name = profile.username
+    const type_play = gameData.play_to_earn === true ? "free" : "not_free"
+    // Get url by game type
+    switch (gameData.game_type) {
+      case "storymode":
+        return `${CONFIGS.BASE_URL.GAME}/${gameData.id}/?${Helper.makeID(
+          8
+        )}${btoa(
+          `${room_id}:|:${profile_id}:|:${item_size}:|:${email}:|:${token}:|:${frontendUrl}:|:${CONFIGS.BASE_URL.API?.slice(
+            0,
+            -4
+          )}:|:${rank_name}:|:${room_number}:|:${date}:|:${stage_id}:|:${profile_name}:|:${type_play}`
+        )}`
+      case "singleplayer":
+        // TODO: Need to update url later
+        return "/singleplayer"
+      case "multiplayer":
+        // TODO: Need to update url later
+        return "/multiplayer"
+      default:
+        return ""
+    }
   }
 
   const isRedirectRoomlist = (_game: IGame): "/roomlist" | "" => {
@@ -337,7 +408,10 @@ const useGlobal = (
     isRedirectRoomlist,
     onHandleSetGameStore,
     onClickLogout,
-    fetchChainData
+    fetchChainData,
+    getColorChipByGameType,
+    getGameStoryModeURL
+    // getGameFreeToPlayURL
   }
 }
 

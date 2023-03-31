@@ -2,10 +2,10 @@ import { Skeleton } from "@mui/material"
 import React, { memo } from "react"
 
 const SkeletonCard = () => (
-  <div className="relative h-[282px] w-[218px]">
+  <div className="relative h-full w-full">
     <Skeleton
       variant="rectangular"
-      width={218}
+      width="100%"
       height={218}
       className="rounded-md"
     />

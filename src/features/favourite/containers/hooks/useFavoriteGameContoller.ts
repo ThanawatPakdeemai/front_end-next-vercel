@@ -67,6 +67,10 @@ const useFavoriteGameContoller = ({ playerId, gameId }: IProps) => {
    * @description Click favourite button
    */
   const onClickFavouriteButton = () => {
+    if (!profile) {
+      errorToast(MESSAGES.please_login)
+      return
+    }
     setOpen()
     if (profile) {
       mutateSaveFavoriteGame()

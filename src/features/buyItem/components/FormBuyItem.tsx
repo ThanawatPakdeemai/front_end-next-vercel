@@ -12,10 +12,7 @@ import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { useTranslation } from "next-i18next"
 import Helper from "@utils/helper"
-import { BaseToastComponent } from "@feature/toast/components"
 import Balance from "@components/molecules/balance/Balance"
-import SwitchChain from "@components/atoms/SwitchChain"
-import useSwitchNetwork from "@hooks/useSwitchNetwork"
 import CONFIGS from "@configs/index"
 import PleaseCheckWallet from "@components/atoms/PleaseCheckWallet"
 import { useWeb3Provider } from "@providers/Web3Provider"
@@ -37,7 +34,6 @@ const iconmotion = {
 const FormBuyItem = () => {
   const { t } = useTranslation()
   const {
-    MessageAlert,
     handleSubmit,
     watch,
     setValue,
@@ -55,7 +51,7 @@ const FormBuyItem = () => {
     chainSupport,
     isDisabled
   } = useBuyGameItemController()
-  const { handleSwitchNetwork } = useSwitchNetwork()
+  // const { handleSwitchNetwork } = useSwitchNetwork()
   const { isConnected } = useWeb3Provider()
 
   return (
@@ -263,7 +259,8 @@ const FormBuyItem = () => {
             <div className="flex w-full justify-center rounded-2xl  border border-black-200">
               <ButtonLink
                 className="h-[40px] w-full text-sm"
-                href="/"
+                href={CONFIGS.BASE_URL.MARKETPLACE}
+                target="_blank"
                 text="View in Marketplace"
                 size="medium"
                 variant="contained"
@@ -271,43 +268,20 @@ const FormBuyItem = () => {
               />
             </div>
           </ButtonGroup>
-          <Box
-            sx={{
-              ".MuiTypography-root": {
-                fontSize: "90%"
-              },
-              ".MuiAlert-action": {
-                display: "none"
-              },
-              ".switch-chain--subtitle": {
-                fontSize: "80%"
-              }
-            }}
-          >
-            <BaseToastComponent
-              text={MessageAlert()}
-              status="info"
-              onClose={() => {}}
-              className="mt-10 w-full"
-            />
-            <div className="m-2 flex flex-col items-center justify-center md:col-span-5">
-              <SwitchChain
-                variant="simple"
-                chainName={watch("currency")?.tokenName}
-                handleClick={
-                  watch("currency")?.symbol === "NAKA"
-                    ? () =>
-                        handleSwitchNetwork(
-                          CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string
-                        )
-                    : () =>
-                        handleSwitchNetwork(
-                          CONFIGS.CHAIN.CHAIN_ID_HEX as string
-                        )
-                }
-              />
-            </div>
-          </Box>
+          {/* // TODO: Open after launch V2 */}
+          {/* <InformSwitchChain
+            message={MessageAlert()}
+            tokenName={watch("currency")?.tokenName}
+            handleClick={
+              watch("currency")?.symbol === "NAKA"
+                ? () =>
+                    handleSwitchNetwork(
+                      CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string
+                    )
+                : () =>
+                    handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX as string)
+            }
+          /> */}
         </form>
       )}
     </>

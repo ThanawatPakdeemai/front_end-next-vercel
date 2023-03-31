@@ -83,7 +83,7 @@ const StoryModeGamesPage = () => {
                 staminaRecovery={staminaRecovery}
                 cooldown={cooldown}
                 setCooldown={setCooldown}
-                href={`/${getTypeGamePathFolder(game)}/${game.path}`}
+                href={`/${getTypeGamePathFolder(game)}-games/${game.path}`}
                 onHandleClick={() =>
                   onHandleSetGameStore(getTypeGamePathFolder(game), game)
                 }

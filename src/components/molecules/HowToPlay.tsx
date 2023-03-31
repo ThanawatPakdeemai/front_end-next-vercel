@@ -160,7 +160,7 @@ const Howto = ({ data }: IProp) => {
                 {device && device.length > 0 && "devices:"}
               </span>
             </div>
-            {device.map((item: IGameDevice) => (
+            {device?.map((item: IGameDevice) => (
               <div
                 key={item.key}
                 className="ml-3 cursor-pointer"

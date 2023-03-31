@@ -102,7 +102,7 @@ const HeadMenu = () => {
               button={
                 <Button
                   sx={styleButton}
-                  className={`button-select-naka xs:mb-1 !hover:bg-error-main  !hover:text-white-primary !px-[23px]md:mb-0 w-full  !rounded-[8px] px-2 !py-[12px] !text-black-default md:w-auto ${
+                  className={`button-select-naka xs:mb-1 !hover:bg-error-main  !hover:text-white-primary w-full !rounded-[8px] px-2  !py-[12px] !text-black-default last:p-[15px_5px_13px] md:mb-0 md:w-auto ${
                     item.isChide &&
                     item.chide &&
                     (router.pathname ===

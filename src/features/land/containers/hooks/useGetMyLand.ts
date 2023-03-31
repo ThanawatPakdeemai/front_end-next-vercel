@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
 import {
+  getLandById,
   getMyForSaleLand,
   getMyInstallmentLand,
   getMyLand
@@ -66,6 +67,29 @@ export const useGetMyInstallmentLand = () => {
   })
   return {
     mutateGetMyInstallmentLand,
+    data,
+    error,
+    isLoading,
+    isError,
+    isSuccess
+  }
+}
+
+export const useGetLandById = () => {
+  const {
+    mutateAsync: mutateGetLandById,
+    data,
+    error,
+    isLoading,
+    isError,
+    isSuccess
+  } = useMutation(getLandById, {
+    mutationKey: ["getLandById"],
+    retry: false,
+    cacheTime: Infinity
+  })
+  return {
+    mutateGetLandById,
     data,
     error,
     isLoading,

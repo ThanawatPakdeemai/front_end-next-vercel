@@ -265,45 +265,43 @@ const Howto = ({ data }: IProp) => {
             </div>
           </div>
         </div>
-        {stateProfile && (
-          <div className="flex flex-wrap items-center justify-end lg:flex-nowrap">
-            <Button
-              className="md flex flex-[1_1_150px] items-center justify-center text-sm text-neutral-400 md:flex-none"
-              onClick={() => handleOpen()}
-            >
-              <ShareIcon
-                color="#FFFFFF"
-                className="mr-2"
-              />
-              Share to Earn
-            </Button>
-            <div className="mx-5 hidden h-3 border-[1px] border-solid border-neutral-600 md:block" />
-            <ButtonLink
-              onClick={() => onClickFavouriteButton()}
-              text={favouriteStatus ? "Delete Favourite" : "Add to Favourite"}
-              icon={
-                favouriteStatus ? (
-                  <FavouriteColorIcon className="mr-2" />
-                ) : (
-                  <FavouriteIcon
-                    color="#0b0b0b"
-                    className="mr-2"
-                  />
-                )
-              }
-              size="medium"
-              color="secondary"
-              variant="contained"
-              className="md h-[34px] flex-[1_1_100%] items-center justify-center !bg-transparent text-sm text-neutral-400 md:justify-end"
-              sxCustomStyled={{
-                "&:hover": {
-                  background: "transparent!important",
-                  boxShadow: "none!important"
-                }
-              }}
+        <div className="flex items-center justify-end ">
+          <Button
+            className="md flex flex-[1_1_150px] items-center justify-center text-sm text-neutral-400 md:flex-none"
+            onClick={() => handleOpen()}
+          >
+            <ShareIcon
+              color="#FFFFFF"
+              className="mr-2"
             />
-          </div>
-        )}
+            Share
+          </Button>
+          <div className="mx-5 hidden h-3 border-[1px] border-solid border-neutral-600 md:block" />
+          <ButtonLink
+            onClick={() => onClickFavouriteButton()}
+            text={favouriteStatus ? "Delete Favourite" : "Add to Favourite"}
+            icon={
+              favouriteStatus ? (
+                <FavouriteColorIcon className="mr-2" />
+              ) : (
+                <FavouriteIcon
+                  color="#0b0b0b"
+                  className="mr-2"
+                />
+              )
+            }
+            size="medium"
+            color="secondary"
+            variant="contained"
+            className="md h-[34px] flex-[1_1_100%] items-center justify-center !bg-transparent text-sm text-neutral-400 md:justify-end"
+            sxCustomStyled={{
+              "&:hover": {
+                background: "transparent!important",
+                boxShadow: "none!important"
+              }
+            }}
+          />
+        </div>
       </div>
       <ModalCustom
         open={openForm}

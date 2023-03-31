@@ -42,11 +42,12 @@ const useNotificationController = () => {
   } = useNotificationReadAll(profile?.id || "")
 
   const fetchNotification = useCallback(() => {
-    if (dataNotification && dataNotification.length > 0) {
-      setTotalCount(dataNotification.length)
-      const result = dataNotification.filter((item) => !item.read)
+    if (dataNotification && dataNotification.data.length > 0) {
+      setTotalCount(dataNotification.data.length)
+      const result = dataNotification.data.filter((item) => !item.read)
       // Set values to store
-      setNotificationAll(dataNotification)
+      // TODO: Refactor this to no use store
+      setNotificationAll(dataNotification.data)
       setNotificationCount(result.length)
     }
   }, [

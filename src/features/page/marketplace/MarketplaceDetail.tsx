@@ -6,7 +6,10 @@ import React from "react"
 import useCountStore from "@stores/countComponant"
 import dynamic from "next/dynamic"
 import useMarketDetail from "@feature/marketplace/containers/hooks/useMarketDetail"
-import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
+import {
+  TNFTType,
+  TSellingType
+} from "@feature/marketplace/interfaces/IMarketService"
 
 const ButtonMarket = dynamic(
   () => import("@components/atoms/button/ButtonMarket"),
@@ -20,6 +23,16 @@ const MarketplaceDetail = () => {
   const { detailData, marketType, nameNFT, tokenNFT, imageNFT, vdoNFT } =
     useMarketDetail()
   const { count } = useCountStore()
+
+  const handleColorSellingType = (selling_type: TSellingType) => {
+    if (selling_type === "fullpayment") {
+      return "info"
+    }
+    if (selling_type === "rental") {
+      return "error"
+    }
+    return "warning"
+  }
 
   return detailData ? (
     <div className="flex w-full flex-col gap-y-[60px] gap-x-[120px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:py-0 sm:px-0">
@@ -83,6 +96,12 @@ const MarketplaceDetail = () => {
             min: 1,
             max: detailData.item_total || 1,
             count: 1
+          }}
+          sellingType={{
+            title: detailData.selling_type,
+            color: handleColorSellingType(
+              detailData.selling_type as TSellingType
+            )
           }}
         >
           <ButtonMarket

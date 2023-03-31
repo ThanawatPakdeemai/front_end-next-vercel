@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react"
+import ShineIcon from "@components/icons/ShineIcon"
 import Banners from "@components/molecules/Banners"
 import BannerSingle from "@components/molecules/BannerSingle"
-import Howto from "@components/molecules/HowToPlay"
+import LikeNoLobby from "@components/molecules/LikeNoLobby"
+import StatisticGameDetail from "@components/molecules/statistic/StatisticGameDetail"
+import Tagline from "@components/molecules/tagline/Tagline"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
 import { MESSAGES } from "@constants/messages"
@@ -11,9 +14,13 @@ import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { useToast } from "@feature/toast/containers"
 import useGlobal from "@hooks/useGlobal"
 import { ELocalKey } from "@interfaces/ILocal"
+import useGetStatisticsGameById from "@feature/game/containers/hooks/useGetStatisticsGameById"
+import TopPlayer from "@feature/ranking/components/template/TopPlayer"
+import useTopPlayerByGameId from "@feature/ranking/containers/hook/useTopPlayerByGameId"
 import useGameStore from "@stores/game"
 import Helper from "@utils/helper"
 import { useRouter } from "next/router"
+import Howto from "@components/molecules/HowToPlay"
 
 interface IGamePageDefaultProps {
   component: React.ReactNode
@@ -35,6 +42,8 @@ const GamePageDefault = ({
   const { stateProfile } = useGlobal()
   const gamePartnerData = useGameStore((state) => state.dataGamePartner)
   const [gameData, setGameData] = useState<IGame | IPartnerGameData>()
+  const { statsGameById } = useGetStatisticsGameById()
+  const { topPlayerGameId } = useTopPlayerByGameId()
 
   const getCodeShareToEarn = () => {
     const gameId = data?.id
@@ -140,6 +149,36 @@ const GamePageDefault = ({
        */}
       {component2 && <div className="mt-12">{component2}</div>}
       {component3 && <div className="mt-12">{component3}</div>}
+      <Tagline
+        bgColor="bg-neutral-800"
+        textColor="text-neutral-500 font-bold"
+        text="Don't miss the information analysis about this game"
+        // text={`${gameData?.name} : ${
+        //   gameData && "story" in gameData ? gameData?.story : ""
+        // }`}
+        icon={<ShineIcon />}
+      />
+      <div className="flex flex-wrap gap-3 xl:flex-row xl:flex-nowrap">
+        <LikeNoLobby
+          imgSrc={
+            gameData && "image_category_list" in gameData
+              ? gameData.image_category_list
+              : ""
+          }
+          value={78.34}
+        />
+        <StatisticGameDetail statsGameById={statsGameById} />
+        <TopPlayer
+          element="select"
+          subtitle
+          background="neutral"
+          note
+          elevation={0}
+          className="lg:max-w-auto max-w-full border border-neutral-900 border-opacity-80 !bg-warning-contrastText lg:!h-[424px] xl:!w-[550px]"
+          rank
+          topPlayerGameId={topPlayerGameId && topPlayerGameId}
+        />
+      </div>
       <Footer />
     </div>
   )

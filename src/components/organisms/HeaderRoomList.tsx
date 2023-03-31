@@ -63,13 +63,12 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
           {gameData && gameData.game_type === "multiplayer" && (
             <>
               <TextField
-                className="md:px-2"
+                className="w-full md:px-2"
                 placeholder="Search Room"
                 InputProps={{
                   style: {
                     fontSize: "14px",
-                    fontFamily: "neueMachina",
-                    width: "174px"
+                    fontFamily: "neueMachina"
                   },
                   startAdornment: <SearchIcon className="mr-4" />
                 }}

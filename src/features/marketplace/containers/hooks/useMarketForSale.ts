@@ -4,12 +4,12 @@ import { useGetMyForSaleLand } from "@feature/land/containers/hooks/useGetMyLand
 import useGetMarketOrder from "@feature/marketplace/hooks/getMarketOrder"
 import {
   IMarketServForm,
-  IOwnerData,
-  TSellerType
+  IOwnerData
 } from "@feature/marketplace/interfaces/IMarketService"
 import { useGetMyForSaleNakaPunk } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
 const useMarketForSale = () => {
@@ -21,6 +21,7 @@ const useMarketForSale = () => {
   const limit = 15
 
   // hook
+  const router = useRouter()
   const { marketType } = useGlobal()
   const { profile } = useProfileStore()
   const { mutateGetMyForSaleLand } = useGetMyForSaleLand()
@@ -38,7 +39,7 @@ const useMarketForSale = () => {
         _page: currentPage,
         _search: {
           player_id: profile.data.id,
-          seller_type: "user" as TSellerType,
+          seller_type: "user",
           type: marketType
         }
       }
@@ -175,6 +176,9 @@ const useMarketForSale = () => {
                 setTotalCount(_res.info.totalCount)
               })
               .finally(() => setIsLoading(false))
+          } else {
+            // prevent incorrect url path
+            router.push("/marketplace/inventory/forsale/land")
           }
           break
       }

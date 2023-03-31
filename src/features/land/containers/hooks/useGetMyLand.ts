@@ -1,5 +1,9 @@
 import { useMutation } from "@tanstack/react-query"
-import { getMyForSaleLand, getMyLand } from "../services/land.service"
+import {
+  getMyForSaleLand,
+  getMyInstallmentLand,
+  getMyLand
+} from "../services/land.service"
 
 export const useGetMyLand = () => {
   const {
@@ -39,6 +43,29 @@ export const useGetMyForSaleLand = () => {
   })
   return {
     mutateGetMyForSaleLand,
+    data,
+    error,
+    isLoading,
+    isError,
+    isSuccess
+  }
+}
+
+export const useGetMyInstallmentLand = () => {
+  const {
+    mutateAsync: mutateGetMyInstallmentLand,
+    data,
+    error,
+    isLoading,
+    isError,
+    isSuccess
+  } = useMutation(getMyInstallmentLand, {
+    mutationKey: ["getMyInstallmentLand"],
+    retry: false,
+    cacheTime: Infinity
+  })
+  return {
+    mutateGetMyInstallmentLand,
     data,
     error,
     isLoading,

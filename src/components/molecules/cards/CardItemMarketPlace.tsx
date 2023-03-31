@@ -52,7 +52,17 @@ interface IProp {
   itemName?: string
   itemSize?: string
   itemLevel?: string | number
-  sellingType?: string
+  sellingType?: {
+    title: string
+    color?:
+      | "default"
+      | "info"
+      | "primary"
+      | "secondary"
+      | "error"
+      | "success"
+      | "warning"
+  }
   price?: number
   nakaPrice?: number
   href?: string
@@ -185,11 +195,11 @@ const CardItemMarketPlace = ({
             )}
             {sellingType && (
               <Chip
-                label={sellingType}
+                label={sellingType.title}
                 variant="filled"
                 size="small"
                 className="cursor-pointer uppercase"
-                color="info"
+                color={sellingType.color || "info"}
               />
             )}
           </div>

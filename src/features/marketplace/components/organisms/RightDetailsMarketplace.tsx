@@ -62,6 +62,17 @@ interface IProp {
   }
   children?: React.ReactNode
   redemption?: boolean
+  sellingType?: {
+    title?: string
+    color?:
+      | "default"
+      | "info"
+      | "primary"
+      | "secondary"
+      | "error"
+      | "success"
+      | "warning"
+  }
 }
 
 const RightDetailsMarketplace = ({
@@ -77,7 +88,8 @@ const RightDetailsMarketplace = ({
   durability,
   count,
   children,
-  redemption
+  redemption,
+  sellingType
 }: IProp) => {
   const router = useRouter()
   const profile = useProfileStore((state) => state.profile.data)
@@ -159,7 +171,7 @@ const RightDetailsMarketplace = ({
   }))
 
   return (
-    <div className="flex flex-col gap-y-5">
+    <div className="flex w-full flex-col gap-y-5">
       {token && (
         <div className="flex w-full items-center justify-between">
           <div className="flex gap-[6px]">
@@ -190,6 +202,15 @@ const RightDetailsMarketplace = ({
             size="small"
             color="info"
           />
+          {sellingType && (
+            <Chip
+              label={sellingType.title}
+              variant="filled"
+              size="small"
+              className="cursor-pointer uppercase"
+              color={sellingType.color || "info"}
+            />
+          )}
         </div>
         <Divider className="!block border-[1px] border-neutral-800" />
         <TextfieldDetailContent

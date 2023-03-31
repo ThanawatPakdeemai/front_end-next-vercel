@@ -55,9 +55,21 @@ const CardContentDetails = ({ ...props }: IProp) => {
               // src="/images/not_found.webp"
               src={image as string}
               alt={alt as string}
-              width={marketType === "nft_building" ? 400 : 203}
-              height={marketType === "nft_building" ? 400 : 203}
-              className="m-4 rounded-2xl"
+              width={
+                marketType === "nft_building" || marketType === "game_item"
+                  ? 400
+                  : 563
+              }
+              height={
+                marketType === "nft_building" || marketType === "game_item"
+                  ? 400
+                  : 563
+              }
+              className={
+                marketType === "nft_building" || marketType === "game_item"
+                  ? "m-4 rounded-2xl"
+                  : "rounded-2xl"
+              }
             />
           )}
           {meta_data && meta_data.length > 4 ? (

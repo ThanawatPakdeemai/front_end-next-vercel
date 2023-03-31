@@ -36,6 +36,7 @@ export interface ILandData extends ILand {
 }
 
 export interface IMarketLandData extends ILand, IMarketForm {
+  key_type?: string
   type: TLand
   effect_percent: null
   is_open: boolean

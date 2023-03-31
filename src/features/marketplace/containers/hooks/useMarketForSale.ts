@@ -4,8 +4,7 @@ import { useGetMyForSaleLand } from "@feature/land/containers/hooks/useGetMyLand
 import useGetMarketOrder from "@feature/marketplace/hooks/getMarketOrder"
 import {
   IMarketServForm,
-  IOwnerData,
-  TSellerType
+  IOwnerData
 } from "@feature/marketplace/interfaces/IMarketService"
 import { useGetMyForSaleNakaPunk } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import useGlobal from "@hooks/useGlobal"
@@ -38,7 +37,7 @@ const useMarketForSale = () => {
         _page: currentPage,
         _search: {
           player_id: profile.data.id,
-          seller_type: "user" as TSellerType,
+          seller_type: "user",
           type: marketType
         }
       }

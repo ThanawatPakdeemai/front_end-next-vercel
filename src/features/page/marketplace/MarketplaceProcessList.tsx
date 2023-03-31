@@ -1,39 +1,28 @@
 import CardItemMarketPlace from "@components/molecules/cards/CardItemMarketPlace"
-import useMarketForSale from "@feature/marketplace/containers/hooks/useMarketForSale"
+import useMartketProcessPayment from "@feature/marketplace/containers/hooks/useMartketProcessPayment"
 import { useRouter } from "next/router"
 import { v4 as uuidv4 } from "uuid"
 import React from "react"
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonItem from "@feature/marketplace/components/molecules/SkeletonItem"
-import { TSellingType } from "@feature/marketplace/interfaces/IMarketService"
 
-const MarketPlaceForsaleList = () => {
+const MarketplaceProcessList = () => {
   const {
     totalCount,
     isLoading,
     limit,
     currentPage,
     setCurrentPage,
-    ownerDataForsale
-  } = useMarketForSale()
+    ownerDataProcess
+  } = useMartketProcessPayment()
 
   const router = useRouter()
 
-  const handleColorSellingType = (selling_type: TSellingType) => {
-    if (selling_type === "fullpayment") {
-      return "info"
-    }
-    if (selling_type === "rental") {
-      return "error"
-    }
-    return "warning"
-  }
-
-  if (ownerDataForsale && ownerDataForsale.length > 0 && !isLoading) {
+  if (ownerDataProcess && ownerDataProcess.length > 0 && !isLoading) {
     return (
       <div className="flex flex-col gap-y-7">
         <div className="grid w-full grid-cols-1 gap-x-3 gap-y-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {ownerDataForsale.map((_data) => (
+          {ownerDataProcess.map((_data) => (
             <CardItemMarketPlace
               key={uuidv4()}
               cardType={_data.type}
@@ -62,9 +51,7 @@ const MarketPlaceForsaleList = () => {
               href={`/${router.locale}/marketplace/inventory/${_data.type}/${_data.id}`}
               sellingType={{
                 title: _data.selling_type as string,
-                color: handleColorSellingType(
-                  _data.selling_type as TSellingType
-                )
+                color: _data.selling_type === "unpaid" ? "error" : "info"
               }}
               price={_data.price}
             />
@@ -81,7 +68,7 @@ const MarketPlaceForsaleList = () => {
   }
   return (
     <>
-      {ownerDataForsale.length === 0 && !isLoading ? (
+      {ownerDataProcess.length === 0 && !isLoading ? (
         <div>No Data</div>
       ) : (
         <div className="grid w-full grid-cols-1 gap-x-3 gap-y-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
@@ -94,4 +81,4 @@ const MarketPlaceForsaleList = () => {
   )
 }
 
-export default MarketPlaceForsaleList
+export default MarketplaceProcessList

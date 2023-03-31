@@ -70,7 +70,7 @@ const Video = ({
   return (
     <video
       className={`${className || ""} ${
-        src.includes(".mp4") ? "h-full" : "max-h-60"
+        src && src.includes(".mp4") ? "h-full" : "max-h-60"
       }  w-auto cursor-pointer object-cover `}
       loop
       muted

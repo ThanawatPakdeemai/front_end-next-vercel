@@ -80,7 +80,7 @@ const MarketplaceP2PCardList = () => {
                   )
                 }}
                 nakaPrice={
-                  (_data.price / (price ? parseFloat(price.last) : 0)) as number
+                  (_data.price * (price ? parseFloat(price.last) : 0)) as number
                 }
                 href={`/${router.locale}/marketplace/${type}/${_data._id}`}
               />

@@ -4,12 +4,15 @@ import { MENU_GUEST } from "@configs/menu"
 import { MenuList } from "@mui/material"
 import { NextRouter, useRouter } from "next/router"
 import useProfileStore from "@stores/profileStore"
+import { useWeb3Provider } from "@providers/Web3Provider"
 import Balance from "./balance/Balance"
 import StatProfile from "./statProfile/StatProfile"
 
 const SidebarGames = () => {
   const profile = useProfileStore((state) => state.profile.data)
+  const { isConnected, address } = useWeb3Provider()
   const router: NextRouter = useRouter()
+
   return (
     <div className="mx-auto w-full max-w-xs gap-5 md:mx-0 md:flex md:w-[200px] md:flex-col">
       <MenuList className="rounded-[13px] bg-neutral-700 p-[6px]">
@@ -30,14 +33,7 @@ const SidebarGames = () => {
       </MenuList>
       {profile && (
         <>
-          <Balance
-            variant="naka"
-            token="NAKA"
-            sx={{
-              minWidth: 200,
-              height: "auto"
-            }}
-          />
+          {address && isConnected && <Balance />}
 
           <StatProfile
             exp={{

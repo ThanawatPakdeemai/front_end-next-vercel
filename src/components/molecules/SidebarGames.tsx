@@ -4,13 +4,11 @@ import { MENU_GUEST } from "@configs/menu"
 import { MenuList } from "@mui/material"
 import { NextRouter, useRouter } from "next/router"
 import useProfileStore from "@stores/profileStore"
-import { useWeb3Provider } from "@providers/Web3Provider"
 import Balance from "./balance/Balance"
 import StatProfile from "./statProfile/StatProfile"
 
 const SidebarGames = () => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { isConnected, address } = useWeb3Provider()
   const router: NextRouter = useRouter()
 
   return (
@@ -33,7 +31,7 @@ const SidebarGames = () => {
       </MenuList>
       {profile && (
         <>
-          {address && isConnected && <Balance />}
+          <Balance />
 
           <StatProfile
             exp={{

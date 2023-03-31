@@ -199,11 +199,9 @@ const RightMenuLogIn = () => {
               zIndex: 99999
             }}
           >
-            {address && isConnected && (
-              <>
-                <Balance />
-              </>
-            )}
+            <>
+              <Balance />
+            </>
             <StatProfile
               exp={{
                 level: profile?.level ?? 0,

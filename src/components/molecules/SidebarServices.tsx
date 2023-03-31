@@ -2,12 +2,10 @@ import MenuItemCustom from "@components/atoms/MenuItemCustom"
 import { MENU_SERVICES } from "@configs/menu"
 import { MenuList } from "@mui/material"
 import { NextRouter, useRouter } from "next/router"
-import { useWeb3Provider } from "@providers/Web3Provider"
 import Balance from "./balance/Balance"
 
 const SidebarStaking = () => {
   const router: NextRouter = useRouter()
-  const { isConnected, address } = useWeb3Provider()
 
   return (
     <div className="hidden w-[200px] flex-col gap-5 lg:flex">
@@ -28,7 +26,7 @@ const SidebarStaking = () => {
             )
           })}
       </MenuList>
-      {address && isConnected && <Balance />}
+      <Balance />
     </div>
   )
 }

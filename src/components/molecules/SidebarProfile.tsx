@@ -4,7 +4,6 @@ import { IProfile } from "@src/types/profile"
 import useProfileStore from "@stores/profileStore"
 import React, { useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
-import { useWeb3Provider } from "@providers/Web3Provider"
 import Balance from "./balance/Balance"
 import StatProfile from "./statProfile/StatProfile"
 import MenuLoggedin from "./menuProfile/MenuLoggedin"
@@ -12,7 +11,6 @@ import MenuLoggedin from "./menuProfile/MenuLoggedin"
 const SidebarProfile = () => {
   const { profile } = useProfileStore()
   const [profileData, setProfileData] = useState<IProfile>()
-  const { isConnected, address } = useWeb3Provider()
 
   useEffect(() => {
     let load = false
@@ -39,7 +37,7 @@ const SidebarProfile = () => {
         ))}
       </MenuList>
 
-      {address && isConnected && <Balance />}
+      <Balance />
 
       {profileData && (
         <StatProfile

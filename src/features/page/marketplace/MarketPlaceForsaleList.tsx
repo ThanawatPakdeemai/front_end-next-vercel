@@ -59,9 +59,9 @@ const MarketPlaceForsaleList = () => {
               itemLevel={_data.level}
               itemSize={_data.size as string}
               itemAmount={_data.amount as number}
-              href={`/${router.locale}/marketplace/inventory/${_data.type}/${_data.id}`}
+              href={`/${router.locale}/marketplace/${_data.type}/${_data.id}`}
               sellingType={{
-                title: _data.selling_type as string,
+                title: _data.selling_type,
                 color: handleColorSellingType(
                   _data.selling_type as TSellingType
                 )

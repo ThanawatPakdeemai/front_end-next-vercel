@@ -209,18 +209,19 @@ const GameCard = ({
           </p>
         </div>
         <div className="relative flex w-full flex-wrap items-center gap-2 text-xs uppercase">
+
           <Chip
             label={chipLable}
             size="small"
             color={onChipColor(theme)}
-            className="font-bold"
+            className="w-full font-bold md:w-auto"
           />
           {partnerdata && (
             <Chip
               label={partnerdata.genres?.map((el) => `${el.name}, `)}
               size="small"
               color={onChipColor("default")}
-              className="font-bold"
+              className="w-full font-bold md:w-auto"
             />
           )}
           {onPlaying && (

@@ -1,4 +1,5 @@
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
+import { BigNumber } from "ethers"
 
 export const DEFAULT_CURRENCY_NAKA: ITokenContract[] = [
   {
@@ -9,11 +10,13 @@ export const DEFAULT_CURRENCY_NAKA: ITokenContract[] = [
     address: "",
     balanceWallet: {
       digit: 0,
-      text: "N/A"
+      text: "N/A",
+      hex: BigNumber.from(0)
     },
     balanceVault: {
       digit: 0,
-      text: "N/A"
+      text: "N/A",
+      hex: BigNumber.from(0)
     }
   }
 ]
@@ -27,11 +30,13 @@ export const DEFAULT_CURRENCY_BNB: ITokenContract[] = [
     address: "",
     balanceWallet: {
       digit: 0,
-      text: "N/A"
+      text: "N/A",
+      hex: BigNumber.from(0)
     },
     balanceVault: {
       digit: 0,
-      text: "N/A"
+      text: "N/A",
+      hex: BigNumber.from(0)
     }
   }
 ]

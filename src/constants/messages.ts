@@ -3,6 +3,7 @@ export const MESSAGES = {
   "getdata-success": "Get Data Success",
   "please_login": "Please Login",
   "please_connect_wallet": "Please Connect Wallet",
+  "please_connect_metamask": "Please connect to MetaMask.",
   "logged_in_successfully": "Logged in successfully",
   "logged_in_unsuccessfully": "Logged in unsuccessfully",
   "sign_in_success": "Sign in successfully",
@@ -60,5 +61,8 @@ export const MESSAGES = {
   "wallet_is_not_installed": "Wallet is not installed",
   "wallet_is_not_unlocked": "Wallet is not unlocked",
   "wallet_is_not_connected": "Wallet is not connected",
-  "wallet_is_not_correct_network": "Wallet is not correct network"
+  "wallet_is_not_correct_network": "Wallet is not correct network",
+  "user_reject_request": "User rejected request",
+  "please_update_wallet_address": "Please update wallet address",
+  "are_you_sure": "Are you sure to do this?"
 }

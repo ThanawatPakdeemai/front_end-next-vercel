@@ -105,10 +105,6 @@ const FormCreate = ({ type = "buy" }: IProp) => {
                 <HrLine className="" />
               </div>
               <Balance />
-              {/* <TokenListItem
-                icon={type === "sell" ? <INaka /> : <IBusd />}
-                balance={type === "sell" ? nakaVaultBalance : busdVaultBalance}
-              /> */}
             </div>
           </div>
         </div>

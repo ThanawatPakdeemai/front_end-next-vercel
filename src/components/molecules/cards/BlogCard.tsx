@@ -36,7 +36,9 @@ const BlogCard = ({
       whileHover="hover"
       initial="rest"
       key={uuid()}
-      className={`mx-auto w-[265px] md:mx-0 lg:w-[250px] 2xl:w-[272px] ${className}`}
+      className={`mx-auto w-[265px] md:mx-0 md:w-[256px] lg:w-[250px] 2xl:w-[272px] ${
+        className ?? ""
+      }`}
     >
       <div className="relative">
         <ButtonIcon

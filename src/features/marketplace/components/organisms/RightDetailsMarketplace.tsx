@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from "react"
 import { useRouter } from "next/router"
 import ButtonClose from "@components/atoms/button/ButtonClose"
@@ -139,7 +138,6 @@ const RightDetailsMarketplace = ({
   }
 
   const isCharactersCoupon = (_CharactersCoupon: string) => {
-    // console.log("test-_CharactersCoupon", _CharactersCoupon)
     if (_CharactersCoupon.length < 6) {
       setCharacterCoupon({
         couponLength: _CharactersCoupon.length,

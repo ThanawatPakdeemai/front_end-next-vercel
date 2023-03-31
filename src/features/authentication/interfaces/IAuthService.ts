@@ -31,6 +31,20 @@ export interface ISignUp extends ISignIn {
   _subscription: boolean
 }
 
+export interface IShareToEarnAction {
+  player_id: string
+  game_id: string
+  code: string
+}
+export interface ITrackingResponse {
+  time_expires: string
+}
+export interface IShareToEarnResponse {
+  status: boolean
+  message: string
+  data: ITrackingResponse
+}
+
 export interface IGetVerifyCode {
   _email: string
   _recaptcha: string

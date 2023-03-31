@@ -55,9 +55,21 @@ const CardContentDetails = ({ ...props }: IProp) => {
               // src="/images/not_found.webp"
               src={image as string}
               alt={alt as string}
-              width={563}
-              height={563}
-              className="rounded-2xl"
+              width={
+                marketType === "nft_building" || marketType === "game_item"
+                  ? 400
+                  : 563
+              }
+              height={
+                marketType === "nft_building" || marketType === "game_item"
+                  ? 400
+                  : 563
+              }
+              className={
+                marketType === "nft_building" || marketType === "game_item"
+                  ? "m-4 rounded-2xl"
+                  : "rounded-2xl"
+              }
             />
           )}
           {meta_data && meta_data.length > 4 ? (
@@ -147,7 +159,7 @@ const CardContentDetails = ({ ...props }: IProp) => {
         onClose={handleClose}
         className="gap-3 rounded-[34px] p-[10px]"
         width={600}
-        title="You got 6 NAKA Punk"
+        title="You got 6 NAKA Punks"
       >
         <div className="grid grid-cols-5 gap-[10px]">
           {meta_data &&

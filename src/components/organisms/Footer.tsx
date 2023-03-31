@@ -89,12 +89,12 @@ const Footer = () => {
 
   return (
     <>
-      <div className="items-center sm:flex" />
+      <div className="mx-2 flex items-center sm:flex" />
       <Divider
         className="my-8 md:my-16"
         sx={{ marginTop: 10, marginBottom: 10 }}
       />
-      <div className="w-full justify-between overflow-hidden text-[12px] lg:flex">
+      <div className="mx-4 w-full justify-between overflow-hidden text-[12px] lg:flex">
         <div className="grid grid-cols-2 justify-center gap-3 whitespace-nowrap p-5 md:flex md:gap-0">
           <div className="flex-auto sm:flex-none md:w-48">
             <div className="mb-4 uppercase text-white-primary">game</div>
@@ -149,7 +149,7 @@ const Footer = () => {
           </div>
           <div className="col-span-2 flex-auto sm:flex-none md:col-span-1 md:w-48">
             <div className="mb-4 whitespace-normal uppercase text-white-primary">
-              NAKA ecosystemss
+              NAKA Ecosystem
             </div>
             {NAKA_ECOSYSTEMSS?.map((item) => (
               <Link
@@ -176,7 +176,7 @@ const Footer = () => {
         <div className="flex justify-center pt-[20px] text-center md:text-left lg:justify-center lg:p-0">
           <div className="flex flex-col items-center justify-self-end lg:w-3/4 lg:items-start">
             <div className="mb-4 uppercase text-white-primary">
-              BE A PART OF THE PLAY TO EARN REVOLUTION!
+              JOIN THE PLAY TO EARN REVOLUTION!
             </div>
             Join the industry&apos;s first comprehensive Play to Earn ecosystem
             and explore the many benefits it has to offer.
@@ -213,21 +213,20 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="mx-2 pt-2 text-[12px] md:mx-0 lg:flex lg:pt-[80px]">
+      <div className="mx-4 pt-2 text-[12px] md:mx-4 lg:flex lg:pt-[80px]">
         <div className="w-full rounded-xl bg-neutral-800 p-4 md:p-6 lg:w-[90%] lg:rounded-[20px]">
           <div className="md:flex">
             <div className="mx-auto grid max-w-xs items-center justify-center gap-2 text-white-primary md:mx-0 md:flex md:w-2/4 md:max-w-none md:gap-0 md:pr-[20px]">
               <Link href="/become-developer">
                 <ButtonToggleIcon
                   startIcon={<DesktopIcon />}
-                  text="Become a Naka Devs"
+                  text="Become a NAKA Dev"
                   className="z-[2] h-[50px] !w-[220px] border-[1px] border-solid border-neutral-700 bg-transparent font-bold capitalize text-white-default"
                   type="button"
                 />
               </Link>
               <h3 className="text-grey-neutral-04 md:w-[280px] md:pl-[30px]">
-                Join the industry&apos;s first comprehensive Play to Earn
-                ecosystem.
+                Work with the industry`s premier Web3 gaming platform.
               </h3>
             </div>
             <div className="mx-auto mt-[20px] grid max-w-xs items-center justify-center gap-2 md:mx-0 md:mt-0 md:flex md:w-3/4 md:max-w-none md:gap-0">
@@ -245,6 +244,7 @@ const Footer = () => {
               <h3 className="text-grey-neutral04 md:max-w-[300px] md:pl-[30px]">
                 Earn some serious cash promoting Nakamoto.Games
               </h3>
+              NAKA Ecosystem
             </div>
           </div>
         </div>

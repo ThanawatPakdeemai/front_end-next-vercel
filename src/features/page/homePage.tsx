@@ -128,7 +128,7 @@ const Home = () => {
         <Tagline
           bgColor="bg-secondary-main"
           textColor="text-white-default"
-          text="Secue. fun. simple. earn $naka AND enjoy "
+          text="SECURE. SUBLIME. SIMPLE. EARN $NAKA TODAY. "
           icon={<LogoIcon />}
         />
         {/* notification */}
@@ -253,7 +253,7 @@ const Home = () => {
       <Tagline
         bgColor="bg-green-lemon"
         textColor="text-neutral-800 font-bold"
-        text="Show your God Mode for the blockchain gaming landscape"
+        text="SWITCH TO GOD MODE AND UNLEASH YOUR TRUE GAMING POTENTIAL"
         icon={<ShapeIcon />}
       />
 

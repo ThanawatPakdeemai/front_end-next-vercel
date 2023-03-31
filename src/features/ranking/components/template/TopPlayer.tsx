@@ -81,8 +81,8 @@ const TopPlayer = ({
           //   )
           // }
         />
-        {isLoading ? (
-          <div className="custom-scroll h-[375px] overflow-y-scroll pr-4">
+        {isLoading || topPlayerAllGame === undefined ? (
+          <div className="custom-scroll h-[375px] w-full overflow-y-scroll pr-4">
             {[...Array(skeleton)].map((item, index) => (
               <SkeletonTopPlayer
                 key={uuid()}

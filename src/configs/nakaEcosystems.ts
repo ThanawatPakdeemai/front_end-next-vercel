@@ -27,7 +27,7 @@ export const NAKA_ECOSYSTEMSS = [
     icon: true
   },
   {
-    label: "Become Developer",
+    label: "Become A Developer",
     path: "/become-developer",
     icon: true
   }

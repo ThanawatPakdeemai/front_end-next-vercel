@@ -138,7 +138,7 @@ const Howto = ({ data }: IProp) => {
     <>
       <div className="mb-3 flex flex-col items-center justify-between rounded-2xl bg-neutral-800 p-2 md:p-5 xl:flex-row">
         <div className="mb-2 flex flex-col items-center gap-2 md:flex-row md:gap-0 xl:mb-0">
-          <div className="xs:mb-[20px] flex items-center justify-center">
+          <div className="xs:mb-[20px] flex items-center justify-center p-2 md:p-0">
             <div className="text-sm uppercase">
               <span className=" text-neutral-600">Game: </span>
               <span className="text-neutral-400">{data && data.name}</span>
@@ -154,7 +154,7 @@ const Howto = ({ data }: IProp) => {
             </div>
             <div className="mx-2 h-3 border-[1px] border-solid border-neutral-600" />
           </div>
-          <div className="xs:mb-[20px] flex items-center justify-center">
+          <div className="xs:mb-[20px] grid grid-cols-3 items-center justify-center gap-2 md:flex">
             <div className="text-sm">
               <span className="uppercase text-neutral-600">
                 {device && device.length > 0 && "devices:"}
@@ -171,7 +171,7 @@ const Howto = ({ data }: IProp) => {
                 />
               </div>
             ))}
-            <div className="mx-2 h-3 border-[1px] border-solid border-neutral-600" />
+            <div className="mx-2 hidden h-3 border-[1px] border-solid border-neutral-600 md:block" />
             <div className="text-sm">
               <span className="uppercase text-neutral-600">
                 {browser && browser.length > 0 && "browsers:"}
@@ -192,7 +192,7 @@ const Howto = ({ data }: IProp) => {
               ))}
           </div>
         </div>
-        <div className="flex flex-wrap items-center justify-end lg:flex-nowrap">
+        <div className="flex items-center justify-end ">
           <Button
             className="md flex flex-[1_1_150px] items-center justify-center text-sm text-neutral-400 md:flex-none"
             onClick={() => handleOpen()}

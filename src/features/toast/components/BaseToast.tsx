@@ -32,7 +32,7 @@ function BaseToastComponent({
   return (
     <Alert
       variant="outlined"
-      className={`flex items-center rounded-sm bg-primary-main ${className}`}
+      className={`flex w-full items-center rounded-sm bg-primary-main ${className}`}
       severity={status !== "inherit" ? status : "info"}
       sx={{
         width: width ?? "max-content",

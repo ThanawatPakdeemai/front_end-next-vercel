@@ -7,9 +7,9 @@ export interface IMetaDate {
 }
 
 const MetaDate = ({ date, dateTitle = "RELEASE DATE" }: IMetaDate) => (
-  <div className="date-wrapper">
+  <div className="date-wrapper grid grid-rows-2">
     {dateTitle && (
-      <div className="date-wrapper--title px-6 pt-4 font-neue-machina text-sm text-white-default ">
+      <div className="date-wrapper--title items-middle flex px-6 pt-4 font-neue-machina text-sm text-white-default">
         {dateTitle}
       </div>
     )}

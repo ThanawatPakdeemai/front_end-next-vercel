@@ -81,7 +81,8 @@ const GameTabs = ({ gameType, gameId }: IProps) => {
     return () => {
       load = true
     }
-  }, [setTabValue, tabValue])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setTabValue])
 
   return hydrated ? (
     <Box className="relative h-full">

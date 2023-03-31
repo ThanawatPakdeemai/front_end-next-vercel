@@ -13,7 +13,7 @@ export const NAKA_ECOSYSTEMSS = [
   },
   {
     label: "Marketplace",
-    path: "/marketplace",
+    path: `${CONFIGS.BASE_URL.MARKETPLACE}`,
     icon: true
   },
   {
@@ -23,11 +23,11 @@ export const NAKA_ECOSYSTEMSS = [
   },
   {
     label: "Nakapunks",
-    path: "/marketplace/naka-punk",
+    path: `${CONFIGS.BASE_URL.MARKETPLACE}/naka-punk`,
     icon: true
   },
   {
-    label: "Become Developer",
+    label: "Become A Developer",
     path: "/become-developer",
     icon: true
   }

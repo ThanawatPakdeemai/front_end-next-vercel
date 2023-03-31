@@ -38,7 +38,6 @@ IProp) => {
   const { address } = useWeb3Provider()
   const profile = useProfileStore((state) => state.profile.data)
   const [defaultItem, setDefaultItem] = useState<ITokenContract>(list?.[0])
-  // getDefaultCoin()[0]
   const { setValue, updatePricePerItem } = useBuyGameItemController()
 
   const onChangeItem = (_item: ITokenContract) => {
@@ -73,12 +72,6 @@ IProp) => {
       load = true
     }
   }, [updatePricePerItem])
-
-  // React.useEffect(() => {
-  //   if (list && list.length > 0) {
-  //     setDefaultItem(list[0])
-  //   }
-  // }, [list, setDefaultItem])
 
   const IconToken = (props: ITokenName) => {
     switch (props.tokenName) {

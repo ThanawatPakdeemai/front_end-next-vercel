@@ -29,10 +29,11 @@ const PleaseCheckWallet = ({ size }: IPleaseCheckWalletProps) => {
         instructions above.
       </Typography>
       <ul>
-        <li>1. Login your wallet on Matamask</li>
+        <li>1. You are already Connect Wallet</li>
+        <li>2. Login your wallet on Matamask</li>
         <li className="relative">
           <div className="flex items-center">
-            <span>2. Import token to Matamask </span>
+            <span>3. Import token to Matamask </span>
             <span className="mx-2 inline-block rounded-sm bg-neutral-700 px-2 pt-2 pb-1">
               {Helper.shortenString(CONFIGS.CONTRACT_ADDRESS.ERC20 as string)}
             </span>
@@ -56,8 +57,8 @@ const PleaseCheckWallet = ({ size }: IPleaseCheckWalletProps) => {
             </button>
           </div>
         </li>
-        <li>3. Your connected chain is supporting to our website</li>
-        <li>4. Connecting correct wallet</li>
+        <li>4. Your connected chain is supporting to our website</li>
+        <li>5. Connecting correct wallet</li>
       </ul>
     </div>
   )

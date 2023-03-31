@@ -36,7 +36,7 @@ const WalletBody = ({
     <div className="mb-4 flex w-[250px] items-center uppercase">
       {tokenSymbol}
       <p className={`font-digital ml-2 text-2xl uppercase ${className}`}>
-        {`${balance && balance.text} ${tokenSymbol}`}
+        {`${balance && balance.digit} ${tokenSymbol}`}
       </p>
     </div>
     <div className="h-[10px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')]" />

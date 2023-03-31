@@ -50,6 +50,7 @@ interface IBuild extends Omit<INFTInitial, "NFT_token">, IModel {
 }
 
 export interface IMyBuildData extends IBuild, IMarketForm {
+  key_type?: string
   is_rent: boolean
   wallet_address: string
 }

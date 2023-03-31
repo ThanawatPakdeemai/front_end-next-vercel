@@ -41,7 +41,7 @@ const TransactionPage = ({ profile }: IProp) => {
     "Game Item",
     "Building",
     "Material",
-    "NAKA Punk"
+    "NAKA Punks"
   ]
 
   const [Event, setEvent] = useState<string>("Land")

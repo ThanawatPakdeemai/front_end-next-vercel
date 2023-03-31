@@ -157,7 +157,7 @@ const GameRoomList = () => {
                         maxPlayer: _data.max_players
                       }}
                       roomId={_data.room_number}
-                      roomName={`Room NAKA ${itemSelected?.item_size}`}
+                      roomName={`Room ${itemSelected?.item_size ?? ""}`}
                       onClick={() => handleJoinRoom(_data)}
                       btnText={
                         _data?.current_player?.find(
@@ -189,7 +189,7 @@ const GameRoomList = () => {
                         maxPlayer: _data.max_players
                       }}
                       roomId={_data.room_number}
-                      roomName={`Room NAKA ${itemSelected?.item_size}`}
+                      roomName={`Room ${itemSelected?.item_size ?? ""}`}
                       onClick={() => handleJoinRoom(_data)}
                     />
                   )

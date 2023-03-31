@@ -14,7 +14,7 @@ const useToast = () => {
           />
         ),
         {
-          className: "toast toast--success"
+          className: "toast toast--success  w-full"
         }
       ),
     []
@@ -66,24 +66,34 @@ const useToast = () => {
           />
         ),
         {
-          className: "toast toast--warning"
+          className: "toast toast--warning w-full"
         }
       ),
     []
   )
 
   const errorToast = useCallback(
-    (content: string) =>
+    (
+      content: string,
+      duration?: number,
+      confirmation?: boolean,
+      handleClickYes?: () => void,
+      handleClickNo?: () => void
+    ) =>
       toast(
         (t) => (
           <BaseToastComponent
             onClose={() => toast.dismiss(t.id)}
+            handleClickYes={handleClickYes}
+            handleClickNo={handleClickNo}
             status="error"
             text={content}
+            confirmation={confirmation}
           />
         ),
         {
-          className: "toast toast--error"
+          className: "toast toast--error w-full",
+          duration: duration ?? 5000
         }
       ),
     []
@@ -99,7 +109,7 @@ const useToast = () => {
         />
       ),
       {
-        className: "toast toast--sample"
+        className: "toast toast--sample  w-full"
       }
     )
   }, [])

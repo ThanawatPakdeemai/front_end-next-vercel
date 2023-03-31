@@ -43,7 +43,6 @@ const Form = ({
   const { nakaCurrentPrice, fee } = useContractMultichain()
   const { handleSwitchNetwork } = useSwitchNetwork()
   const { formatNumber } = Helper
-  // const { chainSupport } = useChainSupport()
 
   const chainRequired = signer?.provider?._network?.chainId ?? 0
 

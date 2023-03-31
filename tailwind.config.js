@@ -29,9 +29,9 @@ module.exports = {
         contrastText: "#010101"
       },
       success: {
-        main: "#5DBE74",
+        main: "#3DCD95",
         light: "#D8F3D5",
-        dark: "#5DBE74",
+        dark: "#3DCD95",
         contrastText: "#010101"
       },
       warning: {

@@ -9,6 +9,10 @@ import { ICurrentNakaData } from "@feature/inventory/interfaces/IInventoryServic
 import { IResGetIp } from "@interfaces/IGetIP"
 import { trickerPriceBNBExternal } from "@feature/buyItem/containers/services/currency.services"
 import { getCurrentNaka } from "@feature/balance/containers/services/balance.services"
+import {
+  AddEthereumChainParameter,
+  WatchAssetParams
+} from "@interfaces/IMetamask"
 
 const names = ["wei", "kwei", "mwei", "gwei", "szabo", "finney", "ether"]
 
@@ -277,6 +281,51 @@ const Helper = {
   removeComma(text: string) {
     // eslint-disable-next-line no-useless-escape
     return Number(text.replace(/\,/g, ""))
+  },
+  /**
+   * @description Handle network setting for metamask
+   * @param _chainId
+   * @returns
+   */
+  getNetwork(_chainId: string): AddEthereumChainParameter {
+    switch (_chainId) {
+      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
+        return {
+          chainId: `0x${Number(CONFIGS.CHAIN.BNB_CHAIN_ID).toString(16)}`,
+          chainName: `${CONFIGS.CHAIN.BNB_CHAIN_NAME}`,
+          rpcUrls: [`${CONFIGS.CHAIN.BNB_RPC_URL}/`],
+          blockExplorerUrls: [`${CONFIGS.CHAIN.BNB_SCAN}/`],
+          nativeCurrency: {
+            name: CONFIGS.CHAIN.TOKEN_NAME_BUSD,
+            symbol: CONFIGS.CHAIN.TOKEN_SYMBOL_BNB,
+            decimals: 18
+          }
+        }
+
+      default:
+        return {
+          chainId: `0x${Number(CONFIGS.CHAIN.CHAIN_ID).toString(16)}`,
+          chainName: `${CONFIGS.CHAIN.CHAIN_NAME}`,
+          rpcUrls: [`${CONFIGS.CHAIN.POLYGON_RPC_URL}/`],
+          blockExplorerUrls: [`${CONFIGS.CHAIN.POLYGON_SCAN}/`],
+          nativeCurrency: {
+            name: CONFIGS.CHAIN.TOKEN_NAME,
+            symbol: CONFIGS.CHAIN.TOKEN_SYMBOL,
+            decimals: 18
+          }
+        }
+    }
+  },
+  getParams(): WatchAssetParams {
+    return {
+      type: "ERC20",
+      options: {
+        address: CONFIGS.CONTRACT_ADDRESS.ERC20,
+        symbol: CONFIGS.CHAIN.TOKEN_NAME,
+        decimals: 18,
+        image: CONFIGS.CHAIN.ICON_NAKA
+      }
+    }
   }
 }
 

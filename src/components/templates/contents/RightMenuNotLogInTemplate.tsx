@@ -21,8 +21,8 @@ const RightMenuNotLogInTemplate = ({
     <ModalCustom
       open={open}
       onClose={handleClose}
-      className="w-auto gap-3 rounded-[34px] p-[10px]"
-      width={400}
+      className="w-full gap-3 rounded-[34px] p-[10px] md:w-auto"
+      width="auto"
     >
       <Stack
         spacing={3}

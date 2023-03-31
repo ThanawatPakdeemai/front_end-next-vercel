@@ -189,7 +189,7 @@ const ProfileContent = () => {
       <div className="relative">
         <Tagline
           className="!my-2 mt-4 mb-4"
-          text="Nakamoto.Games - Secue. fun. simple. earn $naka AND enjoy"
+          text="Nakamoto.Games - SECURE. SUBLIME. SIMPLE. EARN $NAKA TODAY."
           bgColor={platinumCount === 0 ? `bg-neutral-800` : `bg-error-main`}
           icon={
             <ShapeIcon fill={platinumCount === 0 ? `#4E5057` : `#18181C`} />

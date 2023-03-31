@@ -56,13 +56,13 @@ const FilterBox = () => {
       img: "/images/logo/Logo-Master1.png"
     },
     {
-      name: "NAKA Punk",
+      name: "NAKA Punks",
       img: "/images/logo/Logo-Master1.png"
     }
   ]
 
   return (
-    <div className="grid gap-3">
+    <div className="grid w-full gap-3">
       <ButtonDropdown
         className="bg-secondary-main text-white-primary"
         leftContent={

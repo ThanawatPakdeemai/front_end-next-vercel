@@ -11,7 +11,7 @@ const useGetBalanceOf = ({ _address, _item_id }: IGetBalanceOf) => {
     isError,
     error
   } = useQuery({
-    queryKey: ["getGameByTypes", _address, _item_id],
+    queryKey: ["getBalanceOf", _address, _item_id],
     queryFn: () => getBalanceOf({ _address, _item_id }),
     keepPreviousData: true,
     staleTime: Infinity,

@@ -46,6 +46,10 @@ const useLoginMetamask = () => {
         }
       }
       handleConnectWallet()
+    },
+    onError(err) {
+      errorToast((err as Error).message)
+      setClose()
     }
   })
 

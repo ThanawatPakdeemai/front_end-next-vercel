@@ -46,7 +46,6 @@ import MyLandIcon from "@components/icons/Inventory/MyLandIcon"
 import TransactionIconMKP from "@components/icons/Inventory/TransactionIcon"
 import DollarIcon from "@components/icons/Referral/DollarIcon"
 import ProcessPaymentIcon from "@components/icons/Inventory/ProcessPaymentIcon"
-import DesktopIcon from "@components/icons/DesktopIcon"
 import { TType } from "@feature/marketplace/interfaces/IMarketService"
 
 export const MENU = [
@@ -105,12 +104,12 @@ export const MENU = [
         name: "Arcade Emporium",
         link: "/arcade-emporium",
         icon: DiamondIcon
-      },
-      {
-        name: "NAKA Pass",
-        icon: BoltIcon,
-        link: "/naka-pass"
       }
+      // {
+      //   name: "NAKA Pass",
+      //   icon: BoltIcon,
+      //   link: "/naka-pass"
+      // }
       // {
       //   name: "NFT Pass",
       //   link: "/nft-pass",
@@ -148,7 +147,7 @@ export const MENU = [
     ]
   },
   {
-    name: "Naka Ecosystems",
+    name: "NAKA Ecosystem",
     link: "/naka-ecosystems",
     isChide: true,
     left: "-180px !important",
@@ -171,7 +170,7 @@ export const MENU = [
       },
       {
         name: "Marketplace",
-        link: "/marketplace",
+        link: `${CONFIGS.BASE_URL.MARKETPLACE}`,
         icon: MarketPlaceIcon
       },
       {
@@ -181,14 +180,14 @@ export const MENU = [
       },
       {
         name: "Nakapunks",
-        link: "/marketplace/naka-punk",
+        link: `${CONFIGS.BASE_URL.MARKETPLACE}/naka-punk`,
         icon: NakapunksIcon
-      },
-      {
-        name: "Become Developer",
-        link: "/become-developer",
-        icon: DesktopIcon
       }
+      // {
+      //   name: "Become Developer",
+      //   link: "/become-developer",
+      //   icon: DesktopIcon
+      // }
     ]
   }
 ]
@@ -437,8 +436,8 @@ export const MENU_BLOG: IMenu[] = [
     id: "marketplace",
     label: "Marketplace",
     icon: <MarketPlaceIcon className="stroke-neutral-300" />,
-    href: "/marketplace",
-    external: false
+    href: CONFIGS.BASE_URL.MARKETPLACE,
+    external: true
   },
   {
     id: "nakaverse",
@@ -451,16 +450,16 @@ export const MENU_BLOG: IMenu[] = [
     id: "nakapunks",
     label: "Nakapunks",
     icon: <NakapunksIcon className="stroke-neutral-300" />,
-    href: "/marketplace/naka-punk",
-    external: false
-  },
-  {
-    id: "become-developer",
-    label: "Become Developer",
-    icon: <DesktopIcon className="stroke-neutral-300" />,
-    href: "/become-developer",
+    href: `${CONFIGS.BASE_URL.MARKETPLACE}/nakapunks`,
     external: false
   }
+  // {
+  //   id: "become-developer",
+  //   label: "Become Developer",
+  //   icon: <DesktopIcon className="stroke-neutral-300" />,
+  //   href: "/become-developer",
+  //   external: false
+  // }
 ]
 
 export const MENU_BLOG_HEADER = [
@@ -567,12 +566,12 @@ export const MENU_MARKETPLACE = [
         icon: MarketPlaceIcon
       },
       {
-        name: "Building",
+        name: "Buildings",
         link: "/marketplace/building",
         icon: MarketPlaceIcon
       },
       {
-        name: "NAKA Punk",
+        name: "NAKA Punks",
         link: "/marketplace/naka-punk",
         icon: MarketPlaceIcon
       }
@@ -600,7 +599,7 @@ export const MENU_MARKETPLACE = [
         icon: MarketPlaceIcon
       },
       {
-        name: "Building",
+        name: "Buildings",
         link: "/marketplace/p2p/building",
         icon: MarketPlaceIcon
       },
@@ -610,7 +609,7 @@ export const MENU_MARKETPLACE = [
         icon: MarketPlaceIcon
       },
       {
-        name: "NAKA Punk",
+        name: "NAKA Punks",
         link: "/marketplace/p2p/naka-punk",
         icon: MarketPlaceIcon
       },
@@ -687,7 +686,7 @@ export const INVENTORY_DROPDOWN = [
     href: "/marketplace/inventory/land"
   },
   {
-    label: "Building",
+    label: "Buildings",
     href: "/marketplace/inventory/building"
   },
   {
@@ -699,7 +698,7 @@ export const INVENTORY_DROPDOWN = [
     href: "/marketplace/inventory/material"
   },
   {
-    label: "Naka Punk",
+    label: "NAKA Punks",
     href: "/marketplace/inventory/naka-punk"
   },
   {
@@ -714,7 +713,7 @@ export const INVENTORY_DROPDOWN_FORSALE = [
     href: "/marketplace/inventory/forsale/land"
   },
   {
-    label: "Building",
+    label: "Buildings",
     href: "/marketplace/inventory/forsale/building"
   },
   {
@@ -726,7 +725,7 @@ export const INVENTORY_DROPDOWN_FORSALE = [
     href: "/marketplace/inventory/forsale/material"
   },
   {
-    label: "Naka Punk",
+    label: "NAKA Punks",
     href: "/marketplace/inventory/forsale/naka-punk"
   },
   {
@@ -741,7 +740,7 @@ export const INVENTORY_DROPDOWN_PROCESS = [
     href: "/marketplace/inventory/process-payment/land"
   },
   {
-    label: "Building",
+    label: "Buildings",
     href: "/marketplace/inventory/process-payment/building"
   },
   {

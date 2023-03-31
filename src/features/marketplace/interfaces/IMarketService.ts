@@ -296,7 +296,7 @@ export interface IOwnerData {
   video?: string
   name: string
   price?: number
-  selling_type?: TSellingType
+  selling_type?: TSellingType | string
   durability?: string | number
   level?: string | number
   size?: string | number

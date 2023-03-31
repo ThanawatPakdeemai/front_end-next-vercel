@@ -6,6 +6,7 @@ import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonItem from "@feature/marketplace/components/molecules/SkeletonItem"
 import useMarketInfo from "@feature/marketplace/containers/hooks/useMarketInfo"
 import { useRouter } from "next/router"
+import { TSellingType } from "@feature/marketplace/interfaces/IMarketService"
 
 const CardItemMarketPlace = dynamic(
   () => import("@components/molecules/cards/CardItemMarketPlace"),
@@ -28,6 +29,16 @@ const MarketplaceP2PCardList = () => {
   } = useMarketInfo()
   const { price } = useNakaPriceProvider()
   const router = useRouter()
+
+  const handleColorSellingType = (selling_type: TSellingType) => {
+    if (selling_type === "fullpayment") {
+      return "info"
+    }
+    if (selling_type === "rental") {
+      return "error"
+    }
+    return "warning"
+  }
 
   if (orderData && orderData.data.length > 0 && !isLoading) {
     return (
@@ -62,7 +73,12 @@ const MarketplaceP2PCardList = () => {
                 itemLevel={_data.building_data?.level}
                 price={_data.price}
                 itemSize={_data.item_data?.item_size}
-                sellingType={_data.selling_type}
+                sellingType={{
+                  title: _data.selling_type as string,
+                  color: handleColorSellingType(
+                    _data.selling_type as TSellingType
+                  )
+                }}
                 nakaPrice={
                   (_data.price / (price ? parseFloat(price.last) : 0)) as number
                 }

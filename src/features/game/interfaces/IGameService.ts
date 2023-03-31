@@ -197,13 +197,13 @@ interface ICategory {
   id: string
 }
 
-interface IGameDevice {
+export interface IGameDevice {
   key: string
   name: string
   supported: boolean
 }
 
-interface IGameBrowser {
+export interface IGameBrowser {
   key: string
   name: string
   supported: boolean

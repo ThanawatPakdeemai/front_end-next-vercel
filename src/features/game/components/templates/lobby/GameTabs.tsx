@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import PanelContent from "@components/molecules/PanelContent"
 import { Box, Chip, Tab } from "@mui/material"
 import useGlobal from "@hooks/useGlobal"
@@ -24,7 +24,7 @@ const GameTabs = ({ gameType, gameId }: IProps) => {
   const { hydrated } = useGlobal()
   const { t } = useTranslation()
   const { handleChangeTab } = useTab()
-  const { tabValue } = useTabContext()
+  const { tabValue, setTabValue } = useTabContext()
 
   const { newVersionData } = useGameWhatsNew(gameType, gameId)
   const { singleVersion, gameHowToPlay, gameItems, gameDescription } =
@@ -41,7 +41,7 @@ const GameTabs = ({ gameType, gameId }: IProps) => {
   }[] = [
     {
       id: "about-us",
-      label: t("game_partner_about"),
+      label: t("game_details"),
       icon: "",
       component: <AboutGame text={gameDescription} />
     },
@@ -53,7 +53,7 @@ const GameTabs = ({ gameType, gameId }: IProps) => {
     },
     {
       id: "game-items",
-      label: t("ntf_game"),
+      label: t("game_items"),
       icon: <IDiamond stroke="#70727B" />,
       component: <GameItemsBody gameItems={gameItems} />
     },
@@ -69,6 +69,19 @@ const GameTabs = ({ gameType, gameId }: IProps) => {
       )
     }
   ]
+
+  useEffect(() => {
+    if (!tabValue) return
+    let load = false
+
+    if (!load) {
+      setTabValue("about-us")
+    }
+
+    return () => {
+      load = true
+    }
+  }, [setTabValue, tabValue])
 
   return hydrated ? (
     <Box className="relative h-full">

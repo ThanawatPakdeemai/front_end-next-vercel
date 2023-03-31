@@ -286,13 +286,6 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
         //     src: metaData.image as string
         //   })
         // )
-        // ;[...Array(10)].map(() => {
-        //   return gameDataMedia.push({
-        //     id: uuid(),
-        //     type: "image",
-        //     src: gameData?.image_background || ""
-        //   })
-        // })
         gameDataMedia.push(
           {
             id: uuid(),
@@ -304,8 +297,28 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
             type: "image",
             src: gameData ? gameData.image_category_list : ""
           },
-          ...EMPTY_MEDIAS,
-          ...EMPTY_MEDIAS
+          {
+            id: uuid(),
+            type: "image",
+            src: gameData ? gameData.image_room : ""
+          },
+          {
+            id: uuid(),
+            type: "image",
+            src: gameData ? gameData.image_waiting : ""
+          },
+          {
+            id: uuid(),
+            type: "image",
+            src: gameData ? gameData.image_sum : ""
+          },
+          {
+            id: uuid(),
+            type: "image",
+            src: gameData ? gameData.image_reward : ""
+          }
+          // ...EMPTY_MEDIAS,
+          // ...EMPTY_MEDIAS
         )
     }
     return gameDataMedia
@@ -329,12 +342,19 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
    * @returns {string} gameOwner
    */
   const setGameOwner = (): string => {
-    switch (gameType) {
-      case "arcade-emporium":
-        return (gameData && gameData.NFT_Owner) || "-"
-      default:
-        return "-"
+    if (gameData) {
+      switch (gameType) {
+        case "arcade-emporium":
+          return (
+            ("NFT_info" in gameData && gameData.NFT_info.NFT_token) ||
+            gameData.NFT_Owner ||
+            "-"
+          )
+        default:
+          return gameData.developer || "-"
+      }
     }
+    return "-"
   }
 
   /**

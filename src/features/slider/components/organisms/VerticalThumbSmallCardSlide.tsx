@@ -7,7 +7,7 @@ const VerticalThumbSmallCardSlide = ({
   item
 }: IVerticalThumbCardSlideProps) => (
   <div className="verticalSmallThumb-slide__item relative my-[2px]">
-    <div className="verticalSmallThumb-slide__item__image cursor-pointer transition-all hover:opacity-70">
+    <div className="verticalSmallThumb-slide__item__image h-[70px] w-[70px] cursor-pointer transition-all hover:opacity-70">
       {item.type === "video" && (
         <div className="absolute flex h-full w-full items-center justify-center">
           <span className="flex h-8 w-8 items-center justify-center rounded bg-neutral-900/60">

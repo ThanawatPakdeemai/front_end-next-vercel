@@ -207,9 +207,10 @@ export default function CardBuyItem({
       />
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [qtyItemSelected, router.asPath, t])
+  }, [qtyItemSelected, router.asPath, t, buttonStyle, router.pathname])
 
   const renderButton = () =>
+    router &&
     router.pathname === "/[typeGame]/[GameHome]" && (
       <div className="mt-4 w-full">
         {profile ? (
@@ -312,7 +313,9 @@ export default function CardBuyItem({
                   </div>
                 </div>
               </div>
-              {buttonStyle === "purple" && renderButton()}
+              {/* {buttonStyle === "purple" && (
+                <div className="mt-4">{renderButton()}</div>
+              )} */}
             </div>
           </div>
           {buttonStyle === "green" && renderButton()}

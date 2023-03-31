@@ -4,6 +4,7 @@ import { IGetType } from "@feature/game/interfaces/IGameService"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
 import HorizontalThumbSlide from "@feature/slider/components/templates/HorizontalThumbSlide"
 import FullWidthSlide from "@feature/slider/components/templates/FullWidthSlide"
+import ArcadeEmporiumIcon from "@components/icons/ArcadeEmporiumIcon"
 
 export const StartButtonCustomStyle: SxProps = {
   "& > div": {
@@ -43,6 +44,7 @@ const GameContent = ({
       >
         <div className="relative z-[1] w-full rounded-2xl border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 uppercase text-neutral-300">
           <div className="flex items-center gap-3">
+            {gameType === "arcade-emporium" && <ArcadeEmporiumIcon />}
             <Chip
               label={gameType.split("-").join(" ")}
               size="small"

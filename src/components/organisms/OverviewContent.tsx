@@ -25,13 +25,13 @@ const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
     gameTags,
     gameDeveloper,
     gamePublisher,
-    gameReleaseDate,
+    // gameReleaseDate,
     gamePartnerSocial,
-    chainName,
-    chainIcon,
+    // chainName,
+    // chainIcon,
     gameTypeCode,
-    gameOwner,
-    singleVersion
+    gameOwner
+    // singleVersion
   } = useGameOverview(gameId, gameType)
 
   return (
@@ -65,7 +65,7 @@ const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
                 </>
               )}
 
-              <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+              {/* <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
               <div className="overview-row grid gap-2 lg:grid-cols-2">
                 <div
                   id="overview-release-date"
@@ -91,7 +91,7 @@ const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
                     />
                   </div>
                 )}
-              </div>
+              </div> */}
               {gameTypeCode !== "-" && (
                 <>
                   <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
@@ -124,7 +124,7 @@ const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
                   </div>
                 </>
               )}
-              {singleVersion !== "-" && (
+              {/* {singleVersion !== "-" && (
                 <>
                   <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
                   <div className="overview-row grid gap-2 lg:grid-cols-2">
@@ -139,7 +139,7 @@ const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
                     </div>
                   </div>
                 </>
-              )}
+              )} */}
               {gamePartnerSocial && gamePartnerSocial.length > 0 && (
                 <>
                   <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />

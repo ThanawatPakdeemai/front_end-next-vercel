@@ -10,6 +10,9 @@ import { TabProvider } from "@feature/tab/contexts/TabProvider"
 import useGlobal from "@hooks/useGlobal"
 import { Box } from "@mui/material"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
+import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
+import { useTranslation } from "react-i18next"
+// import LikeNoLobby from "@components/molecules/LikeNoLobby"
 
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
@@ -46,21 +49,6 @@ const FullWidthContent = dynamic(
     ssr: false
   }
 )
-
-// const OverviewHowToPlay = dynamic(
-//   () => import("@components/organisms/OverviewHowToPlay"),
-//   {
-//     suspense: true,
-//     ssr: false
-//   }
-// )
-// const DefaultLobby = dynamic(
-//   () => import("@feature/game/components/templates/lobby/DefaultLobby"),
-//   {
-//     suspense: true,
-//     ssr: false
-//   }
-// )
 
 const GameContent = dynamic(
   () => import("@feature/game/components/templates/lobby/GameContent"),
@@ -102,34 +90,42 @@ const GameTabs = dynamic(
 //   }
 // )
 
-// const ButtonGame = dynamic(
-//   () => import("@feature/game/components/molecules/ButtonGame"),
+// const OverviewHowToPlay = dynamic(
+//   () => import("@components/organisms/OverviewHowToPlay"),
 //   {
 //     suspense: true,
 //     ssr: false
 //   }
 // )
 
+// const DefaultLobby = dynamic(
+//   () => import("@feature/game/components/templates/lobby/DefaultLobby"),
+//   {
+//     suspense: true,
+//     ssr: false
+//   }
+// )
+
+const ButtonGame = dynamic(
+  () => import("@feature/game/components/molecules/ButtonGame"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
 export default function GameLobby() {
   const router = useRouter()
   const { onSetGameData } = useGameStore()
   const { GameHome } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
-  const { getTypeGamePathFolder, getColorChipByGameType } = useGlobal()
-
-  /**
-   * @description Handle Game URL
-   * @returns {string}
-   */
-  // const handleGameURL = (): string => {
-  //   if (gameData && gameData.game_url) {
-  //     if (gameData.game_url.includes("http")) {
-  //       return `${gameData.game_url}`
-  //     }
-  //     return `/${getTypeGamePathFolder(gameData)}/${gameData.game_url}/roomlist`
-  //   }
-  //   return "/"
-  // }
+  const {
+    getTypeGamePathFolder,
+    getColorChipByGameType,
+    getGameStoryModeURL,
+    isRedirectRoomlist
+  } = useGlobal()
+  const { t } = useTranslation()
 
   useEffect(() => {
     let load = false
@@ -147,8 +143,8 @@ export default function GameLobby() {
   const getTemplateLobby = () => {
     if (gameData) {
       switch (gameData.game_type) {
-        case "storymode":
-          return <StoryLobby />
+        // case "storymode":
+        //   return <StoryLobby />
         default:
           return (
             <GameContent
@@ -163,6 +159,85 @@ export default function GameLobby() {
     }
   }
 
+  /**
+   * @description Render Form Buy Item
+   */
+  const renderFormBuyItem = () => {
+    if (!gameData) return null
+    switch (getTypeGamePathFolder(gameData)) {
+      case "story-mode":
+        return (
+          <Box
+            className="flex w-full flex-col justify-between gap-4 uppercase"
+            sx={{
+              ".like-no_wrapper": {
+                flex: "0 0 100%",
+                ".like-no_score": {
+                  width: "100%"
+                }
+              }
+            }}
+          >
+            <StoryLobby
+              hideButtonPlay
+              hideImage
+            />
+            <Box
+              sx={StartButtonCustomStyle}
+              className="flex w-full justify-center uppercase"
+            >
+              <ButtonGame
+                textButton={t("join-game")}
+                url={getGameStoryModeURL(gameData)}
+              />
+            </Box>
+            {/* <LikeNoLobby
+                hideImage={true}
+                value={0}
+              /> */}
+          </Box>
+        )
+
+      case "free-to-play":
+        return (
+          <Box
+            className="flex w-full flex-col justify-between gap-4 uppercase"
+            sx={{
+              ".like-no_wrapper": {
+                flex: "0 0 100%",
+                ".like-no_score": {
+                  width: "100%"
+                }
+              }
+            }}
+          >
+            {/* <LikeNoLobby
+              hideImage={true}
+              value={0}
+            /> */}
+            <Box
+              sx={StartButtonCustomStyle}
+              className="flex w-full justify-center uppercase"
+            >
+              <ButtonGame
+                textButton={t("join-game")}
+                url={`/${getTypeGamePathFolder(gameData)}-games/${
+                  gameData.path
+                }${isRedirectRoomlist(gameData).toString()}`}
+              />
+            </Box>
+          </Box>
+        )
+      default:
+        return (
+          <CardBuyItem
+            buttonStyle="green"
+            gameObject={gameData}
+          />
+        )
+    }
+  }
+
   return (
     <>
       {gameData ? (
@@ -174,16 +249,16 @@ export default function GameLobby() {
               aside={
                 <Box
                   component="div"
-                  className="aside-wrapper"
+                  className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
                   sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "15px",
                     ".panel-content": {
                       maxHeight: "270px",
                       ".custom-scroll": {
                         overflow: "hidden"
                       }
+                    },
+                    ".like-no_score": {
+                      margin: "0"
                     }
                   }}
                 >
@@ -191,10 +266,7 @@ export default function GameLobby() {
                     gameId={gameData.id}
                     gameType={getTypeGamePathFolder(gameData)}
                   />
-                  <CardBuyItem
-                    buttonStyle="green"
-                    gameObject={gameData}
-                  />
+                  {renderFormBuyItem()}
                 </Box>
               }
             />
@@ -213,23 +285,11 @@ export default function GameLobby() {
                   gameType="arcade-emporium"
                 />
               </TabProvider>
+              {/* <GameReviews
+                gameType="arcade-emporium"
+                gameId={gameData.id}
+              /> */}
             </FullWidthContent>
-            // <FullWidthContent
-            //   content={
-            //     <TabProvider>
-            //       <GameTabs
-            //         gameId={gameData.id}
-            //         gameType="arcade-emporium"
-            //       />
-            //     </TabProvider>
-            //   }
-            //   aside={
-            //     <GameReviews
-            //       gameType="arcade-emporium"
-            //       gameId={gameData.id}
-            //     />
-            //   }
-            // />
           }
         />
       ) : (

@@ -8,6 +8,7 @@ import {
   IInfo
 } from "@interfaces/IHelper"
 import { IPlayToEarnRewardData } from "@src/types/games"
+import { INFTInfo } from "../marketplace/interfaces/IArcGameService"
 import { IPartnerGameData } from "./IPartnerGame"
 
 export type TGameType = "singleplayer" | "multiplayer" | "storymode"
@@ -185,6 +186,9 @@ export interface IGame extends IGameArcadeEmporium {
 
   must_try_no: number
   must_try_status: boolean
+
+  // When is_NFT: true
+  NFT_info: INFTInfo
 }
 
 interface IGameHowto {

@@ -59,8 +59,24 @@ const HorizontalThumbSlide = ({ items }: IHorizontalThumbSlideProps) => {
   }
 
   const SlickThumbnailSlideCSS: SxProps = {
+    ".slick-list": {
+      height: "70px",
+      overflow: "hidden"
+    },
+    ".slick-slider": {
+      display: "flex",
+      justifyContent: "center",
+      width: "100%",
+      alignItems: "center",
+      "& > .slick-list": {
+        width: "100%"
+      }
+    },
     ".slick-slide": {
       opacity: 0.5,
+      ".verticalSmallThumb-slide__item": {
+        margin: "0 4px"
+      },
       "&.slick-current.slick-active": {
         opacity: 1,
         ".MuiCardMedia-root": {
@@ -79,7 +95,7 @@ const HorizontalThumbSlide = ({ items }: IHorizontalThumbSlideProps) => {
     speed: 1000,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 5000,
     draggable: true,
     fade: true,
@@ -99,6 +115,7 @@ const HorizontalThumbSlide = ({ items }: IHorizontalThumbSlideProps) => {
     centerPadding: "10px",
     centerMode: false,
     rows: 1,
+    variableWidth: true,
     prevArrow: (
       <Box sx={StyleArrow}>
         <ButtonIcon

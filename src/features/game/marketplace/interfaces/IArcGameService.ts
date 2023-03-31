@@ -32,7 +32,7 @@ export interface INFTInfo {
   player_id: string
 }
 
-interface INFTInfoData {
+export interface INFTInfoData {
   NFT_info: INFTInfo
 }
 

@@ -12,6 +12,7 @@ import { useEffect, useState } from "react"
 import { _toEscapedUtf8String } from "ethers/lib/utils"
 import { useGetMyInstallmentBuilding } from "@feature/building/containers/hooks/useGetMyBuilding"
 import { useGetMyInstallmentArcGame } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
+import { useRouter } from "next/router"
 
 dayjs.extend(utc)
 
@@ -24,6 +25,7 @@ const useMartketProcessPayment = () => {
   const limit = 15
 
   // hook
+  const router = useRouter()
   const { marketType } = useGlobal()
   const { profile } = useProfileStore()
   const { mutateGetMyInstallmentLand } = useGetMyInstallmentLand()
@@ -131,6 +133,8 @@ const useMartketProcessPayment = () => {
             .finally(() => setIsLoading(false))
           break
         default:
+          // prevent incorrect url path
+          router.push("/marketplace/inventory/process-payment/land")
           break
       }
     }

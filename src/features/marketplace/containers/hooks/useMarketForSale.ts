@@ -9,6 +9,7 @@ import {
 import { useGetMyForSaleNakaPunk } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
 const useMarketForSale = () => {
@@ -20,6 +21,7 @@ const useMarketForSale = () => {
   const limit = 15
 
   // hook
+  const router = useRouter()
   const { marketType } = useGlobal()
   const { profile } = useProfileStore()
   const { mutateGetMyForSaleLand } = useGetMyForSaleLand()
@@ -174,6 +176,9 @@ const useMarketForSale = () => {
                 setTotalCount(_res.info.totalCount)
               })
               .finally(() => setIsLoading(false))
+          } else {
+            // prevent incorrect url path
+            router.push("/marketplace/inventory/forsale/land")
           }
           break
       }

@@ -167,19 +167,19 @@ const GameCard = ({
             {data?.name ?? partnerdata?.name}
           </p>
         </div>
-        <div className="relative grid w-full grid-cols-2 gap-2 text-xs uppercase">
+        <div className="relative  grid  w-fit gap-2  text-xs uppercase xl:grid xl:grid-cols-2">
           <Chip
             label={chipLable}
             size="small"
             color={onChipColor(theme)}
-            className="font-bold"
+            className="w-full font-bold md:w-auto"
           />
           {partnerdata && (
             <Chip
               label={partnerdata.genres?.map((el) => `${el.name}, `)}
               size="small"
               color={onChipColor("default")}
-              className="font-bold"
+              className="w-full font-bold md:w-auto"
             />
           )}
           {checkTimer && staminaRecovery && cooldown && setCooldown && (

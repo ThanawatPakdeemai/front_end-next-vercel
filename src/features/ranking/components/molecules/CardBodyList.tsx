@@ -64,6 +64,7 @@ const CardBodyList = ({ width, players, className, rewardType }: IProp) => {
                 className="mr-[10px]"
                 score={item.current_score}
                 reward={item.naka_for_player}
+                id={item._id}
               />
             </div>
           </Card>

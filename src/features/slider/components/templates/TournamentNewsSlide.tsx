@@ -5,16 +5,18 @@ import TournamentNewsCardSlide from "../organisms/TournamentNewsCardSlide"
 const TournamentNewsSlide = () => {
   const mockupNews = [
     {
-      title: "HEAVEN FOR DEVELOPERS: UNLIMITED OPPORTUNITIES YOUR WAY 👀",
+      title:
+        "APPLY YOUR SKILLS IN A GROWING MARKET. COUNTLESS OPPORTUNITIES TO EARN AND LEARN.",
       description:
-        "Just like mobile app developers deploy their applications on the Google Play Store, gaming developers now have access to the Nakamoto User Base - an all-in-one exclusive platform to launch their very own Play to Earn games. Now monetize your game in any way you want with our versatile platform and explore the array of interesting possibilities that Nakamoto Games has on board for skilled developers like you!",
+        "Deploy your skills in a way that matters. Web3 is rapidly growing and there are abundant opportunties to enter early. Developers can deploy games in the Nakamoto Games marketplace and earn in perpetutity. The marketplace functions similarly to the Google Play Store but with developers holding complete control over monetization. Start building today.",
       image: "/images/tounament/Thumbnail_Sqaure.png",
       path: "/"
     },
     {
-      title: "HEAVEN FOR DEVELOPERS: UNLIMITED OPPORTUNITIES YOUR WAY 👀",
+      title:
+        "APPLY YOUR SKILLS IN A GROWING MARKET. COUNTLESS OPPORTUNITIES TO EARN AND LEARN.",
       description:
-        "Just like mobile app developers deploy their applications on the Google Play Store, gaming developers now have access to the Nakamoto User Base - an all-in-one exclusive platform to launch their very own Play to Earn games. Now monetize your game in any way you want with our versatile platform and explore the array of interesting possibilities that Nakamoto Games has on board for skilled developers like you!",
+        "Deploy your skills in a way that matters. Web3 is rapidly growing and there are abundant opportunties to enter early. Developers can deploy games in the Nakamoto Games marketplace and earn in perpetutity. The marketplace functions similarly to the Google Play Store but with developers holding complete control over monetization. Start building today.",
       image: "/images/home/table-com.svg",
       path: "/"
     }

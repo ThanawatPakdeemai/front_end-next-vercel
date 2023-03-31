@@ -138,8 +138,10 @@ const CardItemMarketPlace = ({
                 <Image
                   src={itemImage.src}
                   alt={itemImage.alt}
-                  className={`"object-contain ${
-                    cardType === "naka-punk" && "rounded-lg"
+                  className={`"object-contain  ${
+                    cardType === "naka-punk"
+                      ? "rounded-lg"
+                      : cardType === "building" && "image-building"
                   }`}
                   width={itemImage.width}
                   height={itemImage.height}

@@ -321,6 +321,6 @@ export const IMAGES: {
     blurDataURL: "/images/becomeDeveloper/become_developer_02.png",
     width: 1000,
     height: 1000,
-    alt: "Ready to try nakamoto.games For Game DEVELOPER_ "
+    alt: "READY TO TRY NAKAMOTO.GAMES?"
   }
 }

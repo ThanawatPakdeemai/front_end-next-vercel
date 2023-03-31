@@ -3206,7 +3206,7 @@ export const MOCK_P2P_NAKA_PUNK: IMarketplaceInfoResponse = {
         "_id": "63c638682b6443221ccbaa93",
         "name": "NakaPunk #8791",
         "description":
-          "The NAKA Punks is a next-generation NFT collection. It not only brings a limited collection of unique punklike characters into a world built for them but also integrates privileges to the holders of these NFTs. Each punk will have distinct characteristics, strengths, and weaknesses, bestowing unique capabilities on their owners and will be particularly suitable for certain activities within the Nakamoto.games and NAKAVERSE.",
+          "The NAKA Punkss is a next-generation NFT collection. It not only brings a limited collection of unique punklike characters into a world built for them but also integrates privileges to the holders of these NFTs. Each punk will have distinct characteristics, strengths, and weaknesses, bestowing unique capabilities on their owners and will be particularly suitable for certain activities within the Nakamoto.games and NAKAVERSE.",
         "NFT_token": "8791",
         "is_active": true,
         "wallet_adddress": "0x5CBb8603db4A5F954084ccFBF9E123D476e989A4",
@@ -3235,7 +3235,7 @@ export const MOCK_P2P_NAKA_PUNK: IMarketplaceInfoResponse = {
         "_id": "63bfc5d7649004244f7f4224",
         "name": "NakaPunk #5155",
         "description":
-          "The NAKA Punks is a next-generation NFT collection. It not only brings a limited collection of unique punklike characters into a world built for them but also integrates privileges to the holders of these NFTs. Each punk will have distinct characteristics, strengths, and weaknesses, bestowing unique capabilities on their owners and will be particularly suitable for certain activities within the Nakamoto.games and NAKAVERSE.",
+          "The NAKA Punkss is a next-generation NFT collection. It not only brings a limited collection of unique punklike characters into a world built for them but also integrates privileges to the holders of these NFTs. Each punk will have distinct characteristics, strengths, and weaknesses, bestowing unique capabilities on their owners and will be particularly suitable for certain activities within the Nakamoto.games and NAKAVERSE.",
         "NFT_token": "5155",
         "is_active": true,
         "wallet_adddress": "0x20E7B302f92185098082988c482C4218f5c58695",
@@ -3264,7 +3264,7 @@ export const MOCK_P2P_NAKA_PUNK: IMarketplaceInfoResponse = {
         "_id": "63bf095cf0a7760172a6a554",
         "name": "NakaPunk #5456",
         "description":
-          "The NAKA Punks is a next-generation NFT collection. It not only brings a limited collection of unique punklike characters into a world built for them but also integrates privileges to the holders of these NFTs. Each punk will have distinct characteristics, strengths, and weaknesses, bestowing unique capabilities on their owners and will be particularly suitable for certain activities within the Nakamoto.games and NAKAVERSE.",
+          "The NAKA Punkss is a next-generation NFT collection. It not only brings a limited collection of unique punklike characters into a world built for them but also integrates privileges to the holders of these NFTs. Each punk will have distinct characteristics, strengths, and weaknesses, bestowing unique capabilities on their owners and will be particularly suitable for certain activities within the Nakamoto.games and NAKAVERSE.",
         "NFT_token": "5456",
         "is_active": true,
         "wallet_adddress": "0x20E7B302f92185098082988c482C4218f5c58695",
@@ -3293,7 +3293,7 @@ export const MOCK_P2P_NAKA_PUNK: IMarketplaceInfoResponse = {
         "_id": "63be8a3fdb948270058bc7e1",
         "name": "NakaPunk #7382",
         "description":
-          "The NAKA Punks is a next-generation NFT collection. It not only brings a limited collection of unique punklike characters into a world built for them but also integrates privileges to the holders of these NFTs. Each punk will have distinct characteristics, strengths, and weaknesses, bestowing unique capabilities on their owners and will be particularly suitable for certain activities within the Nakamoto.games and NAKAVERSE.",
+          "The NAKA Punkss is a next-generation NFT collection. It not only brings a limited collection of unique punklike characters into a world built for them but also integrates privileges to the holders of these NFTs. Each punk will have distinct characteristics, strengths, and weaknesses, bestowing unique capabilities on their owners and will be particularly suitable for certain activities within the Nakamoto.games and NAKAVERSE.",
         "NFT_token": "7382",
         "is_active": true,
         "wallet_adddress": "0x05572Be097ea6351bd4a5e0D7afD3960B24CEc22",
@@ -3323,7 +3323,7 @@ export const MOCK_P2P_NAKA_PUNK: IMarketplaceInfoResponse = {
         "NFT_token": "6733",
         "is_active": true,
         "description":
-          "The NAKA Punks is a next-generation NFT collection. It not only brings a limited collection of unique punklike characters into a world built for them but also integrates privileges to the holders of these NFTs. Each punk will have distinct characteristics, strengths, and weaknesses, bestowing unique capabilities on their owners and will be particularly suitable for certain activities within the Nakamoto.games and NAKAVERSE.",
+          "The NAKA Punkss is a next-generation NFT collection. It not only brings a limited collection of unique punklike characters into a world built for them but also integrates privileges to the holders of these NFTs. Each punk will have distinct characteristics, strengths, and weaknesses, bestowing unique capabilities on their owners and will be particularly suitable for certain activities within the Nakamoto.games and NAKAVERSE.",
         "name": "NakaPunk #6733",
         "owner_id": "63843931fce386616bcf7bf0",
         "player_id": "63843931fce386616bcf7bf0",

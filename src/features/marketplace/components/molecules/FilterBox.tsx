@@ -56,7 +56,7 @@ const FilterBox = () => {
       img: "/images/logo/Logo-Master1.png"
     },
     {
-      name: "NAKA Punk",
+      name: "NAKA Punks",
       img: "/images/logo/Logo-Master1.png"
     }
   ]

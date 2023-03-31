@@ -73,7 +73,7 @@ const MarketplaceNakaPunk = () => {
   return (
     <div className="flex w-full gap-x-[120px]">
       <CardContentDetails
-        detail="NAKA Punk"
+        detail="NAKA Punks"
         image={!resNakapunk ? "/images/temp-nakapunk.webp" : undefined}
         alt="naka-punk"
         txHash={resNakapunk?.data.transaction_hash}
@@ -95,7 +95,7 @@ const MarketplaceNakaPunk = () => {
                         className="cursor-pointer uppercase"
                       />
                       <Typography className="ml-4 text-sm uppercase text-white-primary">
-                        you got naka punk
+                        you got NAKA Punks
                       </Typography>
                     </div>
                   )}
@@ -132,7 +132,7 @@ const MarketplaceNakaPunk = () => {
       </CardContentDetails>
       <RightDetailsMarketplace
         type={marketType as TNFTType}
-        title="NAKA Punk mystery box"
+        title="NAKA Punks mystery box"
         method="mint"
         price={priceNP * count}
         count={{

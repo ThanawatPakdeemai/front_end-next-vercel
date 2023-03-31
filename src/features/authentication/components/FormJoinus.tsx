@@ -94,7 +94,7 @@ const FormJoinus = () => {
         >
           <div className="mb-6 flex flex-1 flex-row items-center border-b-[1px] border-b-neutral-700 pb-4">
             <Typography className="text-lg uppercase text-neutral-300">
-              GAME DEVELOPERS Submit form
+              PLEASE FILL THIS FORM
             </Typography>
           </div>
           <Link href="/">

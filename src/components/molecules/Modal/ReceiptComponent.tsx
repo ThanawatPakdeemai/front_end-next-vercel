@@ -101,7 +101,7 @@ const ReceiptComponent = ({
       {selling ? (
         <>
           <div className="flex w-full flex-row items-center justify-between">
-            <span>selling type :</span>
+            <span>Payment Type :</span>
             <span>{selling}</span>
           </div>
           <Divider className="!block border-b-[1px] border-neutral-800/75" />

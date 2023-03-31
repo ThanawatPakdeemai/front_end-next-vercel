@@ -147,7 +147,7 @@ export const MENU = [
     ]
   },
   {
-    name: "Naka Ecosystems",
+    name: "NAKA Ecosystem",
     link: "/naka-ecosystems",
     isChide: true,
     left: "-180px !important",
@@ -566,12 +566,12 @@ export const MENU_MARKETPLACE = [
         icon: MarketPlaceIcon
       },
       {
-        name: "Building",
+        name: "Buildings",
         link: "/marketplace/building",
         icon: MarketPlaceIcon
       },
       {
-        name: "NAKA Punk",
+        name: "NAKA Punks",
         link: "/marketplace/naka-punk",
         icon: MarketPlaceIcon
       }
@@ -599,7 +599,7 @@ export const MENU_MARKETPLACE = [
         icon: MarketPlaceIcon
       },
       {
-        name: "Building",
+        name: "Buildings",
         link: "/marketplace/p2p/building",
         icon: MarketPlaceIcon
       },
@@ -609,7 +609,7 @@ export const MENU_MARKETPLACE = [
         icon: MarketPlaceIcon
       },
       {
-        name: "NAKA Punk",
+        name: "NAKA Punks",
         link: "/marketplace/p2p/naka-punk",
         icon: MarketPlaceIcon
       },
@@ -686,7 +686,7 @@ export const INVENTORY_DROPDOWN = [
     href: "/marketplace/inventory/land"
   },
   {
-    label: "Building",
+    label: "Buildings",
     href: "/marketplace/inventory/building"
   },
   {
@@ -698,7 +698,7 @@ export const INVENTORY_DROPDOWN = [
     href: "/marketplace/inventory/material"
   },
   {
-    label: "Naka Punk",
+    label: "NAKA Punks",
     href: "/marketplace/inventory/naka-punk"
   },
   {
@@ -713,7 +713,7 @@ export const INVENTORY_DROPDOWN_FORSALE = [
     href: "/marketplace/inventory/forsale/land"
   },
   {
-    label: "Building",
+    label: "Buildings",
     href: "/marketplace/inventory/forsale/building"
   },
   {
@@ -725,7 +725,7 @@ export const INVENTORY_DROPDOWN_FORSALE = [
     href: "/marketplace/inventory/forsale/material"
   },
   {
-    label: "Naka Punk",
+    label: "NAKA Punks",
     href: "/marketplace/inventory/forsale/naka-punk"
   },
   {
@@ -740,7 +740,7 @@ export const INVENTORY_DROPDOWN_PROCESS = [
     href: "/marketplace/inventory/process-payment/land"
   },
   {
-    label: "Building",
+    label: "Buildings",
     href: "/marketplace/inventory/process-payment/building"
   },
   {

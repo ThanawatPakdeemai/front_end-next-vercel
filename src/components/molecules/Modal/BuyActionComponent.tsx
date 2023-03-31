@@ -113,7 +113,7 @@ const BuyActionComponent = ({
       </span>
       {selling === "fullpayment" ? (
         <>
-          <span className="text-xs uppercase">selling type</span>
+          <span className="text-xs uppercase">Payment Type</span>
           <Select
             className="mx-[6px] mt-2 mb-2 rounded-sm bg-neutral-800 !px-2 py-1 capitalize text-white-primary"
             value={selling}

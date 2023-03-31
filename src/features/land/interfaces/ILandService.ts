@@ -22,6 +22,15 @@ export interface IPosition {
   y: string
 }
 
+export interface IHistory {
+  _id: string
+  event: string
+  seller: string
+  buyer: string
+  price: number
+  timestamp: Date
+}
+
 interface ILand extends Omit<INFTInitial, "detail"> {
   details: string
   qrcode_image: string
@@ -32,10 +41,12 @@ interface ILand extends Omit<INFTInitial, "detail"> {
 }
 
 export interface ILandData extends ILand {
+  history?: IHistory[]
   type: TNFTType
 }
 
 export interface IMarketLandData extends ILand, IMarketForm {
+  key_type?: string
   type: TLand
   effect_percent: null
   is_open: boolean

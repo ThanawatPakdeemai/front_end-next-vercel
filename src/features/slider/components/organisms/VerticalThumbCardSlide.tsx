@@ -5,7 +5,9 @@ const VerticalThumbCardSlide = ({ item }: IVerticalThumbCardSlideProps) => (
   <div className="verticalThumb-slide__item relative">
     <div className="verticalThumb-slide__item__image">
       <CardMedia
-        className="h-[408px] overflow-hidden rounded-2xl object-cover object-center"
+        className={`overflow-hidden rounded-2xl object-cover object-center ${
+          item.type === "video" ? "h-full" : "h-[408px]"
+        }`}
         component={item.type === "video" ? "video" : "img"}
         alt="Slide"
         src={item.src}

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo, useCallback } from "react"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import LogoutIcon from "@mui/icons-material/Logout"
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
-import { CardMedia } from "@mui/material"
+import { Box } from "@mui/material"
 import useProfileStore from "@stores/profileStore/index"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
@@ -19,12 +19,18 @@ import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGa
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
 import useGlobal from "@hooks/useGlobal"
 import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
+import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
+import ButtonGame from "@feature/game/components/molecules/ButtonGame"
 
 interface ICardBuyItemProp {
   gameObject: IGame
+  buttonStyle?: "green" | "purple"
 }
 
-export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
+export default function CardBuyItem({
+  gameObject,
+  buttonStyle = "purple"
+}: ICardBuyItemProp) {
   const { t } = useTranslation()
   const { itemSelected, onSetGameItemSelectd } = useBuyGameItemController()
   const { price } = useNakaPriceProvider()
@@ -165,7 +171,17 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
   const buttonInToGame = useMemo(() => {
     if (qtyItemSelected) {
       if (qtyItemSelected > 0) {
-        return (
+        return buttonStyle === "green" ? (
+          <Box
+            sx={StartButtonCustomStyle}
+            className="flex w-full justify-center uppercase"
+          >
+            <ButtonGame
+              textButton={t("join-game")}
+              url={`${router.asPath}/roomlist`}
+            />
+          </Box>
+        ) : (
           <ButtonLink
             text={t("join-game")}
             href={`${router.asPath}/roomlist`}
@@ -190,110 +206,119 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
         disabled
       />
     )
-  }, [qtyItemSelected, router.asPath, t])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [qtyItemSelected, router.asPath, t, buttonStyle, router.pathname])
+
+  const renderButton = () =>
+    router &&
+    router.pathname === "/[typeGame]/[GameHome]" && (
+      <div className="mt-4 w-full">
+        {profile ? (
+          buttonInToGame
+        ) : (
+          <RightMenuNotLogIn
+            button={
+              <ButtonLink
+                text={t("please_login")}
+                href=""
+                icon={<LogoutIcon />}
+                size="medium"
+                color="secondary"
+                className="w-full whitespace-nowrap"
+              />
+            }
+          />
+        )}
+      </div>
+    )
 
   return (
     <>
       {hydrated && (
-        <div
-          className={`mt-2 flex h-full flex-[1_1_340px] justify-center lg:mt-0 lg:flex-none ${
-            router.pathname === "/[typeGame]/[GameHome]" ? "w-full" : "w-full"
-          } rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 `}
-        >
-          <div className="p-4">
-            {gameItemList && (
-              <>
-                <DropdownListItem
-                  isCheck
-                  list={gameItemList?.sort((a, b) => a.price - b.price)}
-                  className="w-[300px]"
-                  onChangeSelect={onChangeSelectItem}
-                />
-              </>
-            )}
-            <div
-              className={`${
-                router.pathname === "/[typeGame]/[GameHome]"
-                  ? "w-full"
-                  : "w-fit"
-              } mb-1 rounded-xl border-[1px] border-primary-main bg-primary-main p-2 first-letter:my-2`}
-            >
-              <p className="w-[285px] uppercase text-white-default">
-                {t("my")}{" "}
-                <span className="text-purple-primary]">
-                  {itemSelected?.name} {itemSelected?.item_size}
-                </span>{" "}
-                {t("bag")}
-              </p>
-            </div>
-
-            <div
-              className={`grid ${
-                router.pathname === "/[typeGame]/[GameHome]"
-                  ? "w-full"
-                  : " w-fit"
-              } grid-cols-2 gap-4 `}
-            >
-              <div className="flex items-center justify-center rounded-xl border-[1px] border-primary-main bg-primary-main">
-                {gameObject && (
-                  <CardMedia
-                    className="m-auto block w-[124px]"
-                    component="img"
-                    height={124}
-                    image={gameObject.item?.[0]?.image}
-                    alt={gameObject.item?.[0]?.name}
+        <>
+          <div
+            className={`mt-2 flex h-full flex-[1_1_340px] justify-center lg:mt-0 lg:flex-none ${
+              router.pathname === "/[typeGame]/[GameHome]" ? "w-full" : "w-full"
+            } rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 `}
+          >
+            <div className="p-4">
+              {gameItemList && (
+                <>
+                  <DropdownListItem
+                    isCheck
+                    list={gameItemList?.sort((a, b) => a.price - b.price)}
+                    className="w-[300px]"
+                    onChangeSelect={onChangeSelectItem}
                   />
-                )}
+                </>
+              )}
+              <div
+                className={`${
+                  router.pathname === "/[typeGame]/[GameHome]"
+                    ? "w-full"
+                    : "w-fit"
+                } mb-1 rounded-xl border-[1px] border-primary-main bg-primary-main p-2 first-letter:my-2`}
+              >
+                <p className="w-[285px] uppercase text-white-default">
+                  {t("my")}{" "}
+                  <span className="text-purple-primary]">
+                    {itemSelected?.name} {itemSelected?.item_size}
+                  </span>{" "}
+                  {t("bag")}
+                </p>
               </div>
-              <div className="flex w-full flex-col justify-center">
-                <div className="mb-2 flex w-full items-center justify-between rounded-xl bg-[#E1E2E2]  p-2 text-center text-[#111111]">
-                  <p>{qtyItemSelected ?? 0}</p>
+
+              <div
+                className={`grid ${
+                  router.pathname === "/[typeGame]/[GameHome]"
+                    ? "w-full"
+                    : " w-fit"
+                } grid-cols-2 gap-4 `}
+              >
+                <div className="flex items-center justify-center rounded-xl border-[1px] border-primary-main bg-primary-main">
                   {gameObject && (
                     <Image
-                      src={gameObject.item[0].image_icon_color}
-                      alt={gameObject.item[0].name}
+                      src={gameObject?.item?.[0]?.image_icon_color}
+                      alt={gameObject?.item?.[0]?.name}
                       width="30"
                       height="30"
                     />
                   )}
                 </div>
-                <div className="mb-2 flex w-full justify-between rounded-xl bg-neutral-700 p-2 text-center text-black-default">
-                  <p>= {totalPrice}</p>
-                  {/* <Input
+                <div className="flex w-full flex-col justify-center">
+                  <div className="mb-2 flex w-full items-center justify-between rounded-xl bg-[#E1E2E2]  p-2 text-center text-[#111111]">
+                    <p>{qtyItemSelected ?? 0}</p>
+                    {gameObject && (
+                      <Image
+                        src={gameObject.item[0].image_icon_color}
+                        alt={gameObject.item[0].name}
+                        width="30"
+                        height="30"
+                      />
+                    )}
+                  </div>
+                  <div className="mb-2 flex w-full justify-between rounded-xl bg-neutral-700 p-2 text-center text-black-default">
+                    <p>= {totalPrice}</p>
+                    {/* <Input
                   defaultValue=" 0.00"
                   inputProps={ariaLabel}
                 /> */}
-                  <AttachMoneyIcon />
-                </div>
-                <div className="w-full">
-                  <RightMenuBuyItem
-                    disabled={!!(profile === undefined || profile === null)}
-                  />
+                    <AttachMoneyIcon />
+                  </div>
+                  <div className="w-full">
+                    <RightMenuBuyItem
+                      disabled={!!(profile === undefined || profile === null)}
+                    />
+                  </div>
                 </div>
               </div>
+              {/* {buttonStyle === "purple" && (
+                <div className="mt-4">{renderButton()}</div>
+              )} */}
             </div>
-            {router.pathname === "/[typeGame]/[GameHome]" && (
-              <div className="mt-4 w-full">
-                {profile ? (
-                  buttonInToGame
-                ) : (
-                  <RightMenuNotLogIn
-                    button={
-                      <ButtonLink
-                        text={t("please_login")}
-                        href=""
-                        icon={<LogoutIcon />}
-                        size="medium"
-                        color="secondary"
-                        className="w-full whitespace-nowrap"
-                      />
-                    }
-                  />
-                )}
-              </div>
-            )}
           </div>
-        </div>
+          {buttonStyle === "green" && renderButton()}
+        </>
       )}
     </>
   )

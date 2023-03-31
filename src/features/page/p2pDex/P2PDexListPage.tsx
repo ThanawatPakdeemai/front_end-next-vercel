@@ -19,7 +19,7 @@ const P2PDexListPage = () => {
   return (
     <div className="p2p-dex-page">
       <PageHeader
-        title="Connect, negotiate and trade with our P2P marketplace, no middleman or fees."
+        title="CONNECT AND TRADE IN OUR P2P MARKETPLACE. NO INTERMEDIARY FEES."
         button={
           <div className="">
             <ButtonToggleIcon

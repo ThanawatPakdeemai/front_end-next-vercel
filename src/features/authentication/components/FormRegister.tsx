@@ -72,8 +72,14 @@ const FormRegister = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmitRegister)}>
-        <Box style={{ width: 333, height: 638 }}>
+      <form
+        className="flex w-full justify-center"
+        onSubmit={handleSubmit(onSubmitRegister)}
+      >
+        <Box
+          className="w-full xl:w-[353px]"
+          style={{ height: 638 }}
+        >
           <Grid
             container
             spacing={2.25}
@@ -83,7 +89,7 @@ const FormRegister = () => {
               xs={12}
             >
               <Box
-                className="flex items-center rounded-lg"
+                className="flex w-full items-center rounded-lg md:w-auto"
                 sx={{ height: "54px" }}
               >
                 <div className="flex flex-1 flex-row items-center">
@@ -181,12 +187,16 @@ const FormRegister = () => {
             <Grid
               item
               xs={12}
+              className=" grid w-full grid-cols-3 "
               container
               direction="row"
             >
-              <Grid item>
+              <Grid
+                className="col-span-2 w-full md:pr-[5px]  xl:w-auto"
+                item
+              >
                 <TextField
-                  className="hidden-arrow-number Mui-error mr-2 w-[235px]"
+                  className="hidden-arrow-number Mui-error mr-2 w-full pb-4 xl:w-[235px] xl:pb-0"
                   type="number"
                   placeholder="Verification code"
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -214,11 +224,14 @@ const FormRegister = () => {
                   size="medium"
                 />
               </Grid>
-              <Grid item>
+              <Grid
+                className="w-full "
+                item
+              >
                 <Button
                   disabled={!emailCorrect || watch("email") === ""}
                   onClick={() => onClickGetCode(watch("email"))}
-                  className="btn-rainbow-theme h-[40px] !min-w-[90px] rounded-lg bg-error-main text-sm text-neutral-300"
+                  className="btn-rainbow-theme h-[40px] w-full !min-w-[90px] rounded-lg bg-error-main text-sm text-neutral-300 "
                 >
                   Get Code
                 </Button>
@@ -486,23 +499,29 @@ const FormRegister = () => {
               direction="row"
               justifyContent="space-between"
             >
-              <Grid item>
+              <Grid
+                className="w-full md:w-auto"
+                item
+              >
                 <ButtonLink
                   href="/"
                   text="Login"
                   icon={null}
                   size="medium"
                   disabledEndIcon
-                  className="h-[40px] !min-w-[108px] border border-solid border-neutral-700 text-sm hover:h-[45px]"
+                  className="h-[40px] w-full !min-w-[108px] border border-solid border-neutral-700 text-sm hover:h-[45px] md:w-auto"
                 />
               </Grid>
-              <Grid item>
+              <Grid
+                className="mt-[10px] w-full md:mt-[0px] md:w-auto"
+                item
+              >
                 <ButtonToggleIcon
                   handleClick={() => onSubmitRegisterForm(true)}
                   type="submit"
                   startIcon={<IEdit />}
                   text="Register"
-                  className="btn-rainbow-theme h-[40px] !w-[209px] bg-secondary-main font-bold capitalize text-white-default"
+                  className="btn-rainbow-theme h-[40px] w-full bg-secondary-main font-bold capitalize text-white-default md:!w-[209px] "
                 />
               </Grid>
             </Grid>

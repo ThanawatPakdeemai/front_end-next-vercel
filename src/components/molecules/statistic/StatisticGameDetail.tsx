@@ -10,7 +10,7 @@ import StatsDetail from "./StatsDetail"
 import StatWithIcon from "./StatWithIcon"
 
 interface IProp {
-  statsGameById: IGameReportService
+  statsGameById?: IGameReportService
 }
 
 const StatisticGameDetail = ({ statsGameById }: IProp) => (
@@ -21,7 +21,7 @@ const StatisticGameDetail = ({ statsGameById }: IProp) => (
         className="bg-error-main"
         textColor="text-error-main"
         title="player today"
-        amount={statsGameById.data.player_number}
+        amount={statsGameById?.data.player_number || 0}
         unit="people"
       />
       <StatWithIcon
@@ -29,7 +29,7 @@ const StatisticGameDetail = ({ statsGameById }: IProp) => (
         className="bg-secondary-main"
         textColor="text-secondary-main"
         title="invest today"
-        amount={statsGameById.data.invest}
+        amount={statsGameById?.data.invest || 0}
         unit="naka"
       />
       <StatWithIcon
@@ -37,7 +37,7 @@ const StatisticGameDetail = ({ statsGameById }: IProp) => (
         className="bg-varidian-default"
         textColor="text-varidian-default"
         title="reward today"
-        amount={statsGameById.data.reward_naka}
+        amount={statsGameById?.data.reward_naka || 0}
         unit="naka"
       />
     </div>
@@ -47,20 +47,20 @@ const StatisticGameDetail = ({ statsGameById }: IProp) => (
           icon={<ControllerIcon />}
           title="game per day"
           type="normal"
-          amount={statsGameById.data.numnber_game_play}
+          amount={statsGameById?.data.numnber_game_play || 0}
           unit="games"
         />
         <StatsDetail
           icon={<BankIcon />}
           title="cost per game"
           type="range"
-          amount={statsGameById.data.cost_per_game_doller}
-          unit={`= ${statsGameById.data.cost_per_game_naka}`}
+          amount={statsGameById?.data.cost_per_game_doller || 0}
+          unit={`= ${statsGameById?.data.cost_per_game_naka || 0}`}
         />
       </div>
       <StatEstimatedProfit
-        minValue={`+${statsGameById.data.profit_potential_min}%`}
-        maxValue={`+${statsGameById.data.profit_potential_max}%`}
+        minValue={`+${statsGameById?.data.profit_potential_min || 0}%`}
+        maxValue={`+${statsGameById?.data.profit_potential_max || 0}%`}
       />
     </div>
   </div>

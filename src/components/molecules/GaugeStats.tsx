@@ -14,7 +14,7 @@ const GaugeStats = ({ value, maxValue }: IProp) => (
         maxValue={maxValue}
       />
     </div>
-    <span className="flex h-full w-[108px] items-center justify-center rounded-lg bg-neutral-700 text-[14px] text-neutral-300">
+    <span className="flex h-full w-[108px] flex-1 items-center justify-center rounded-lg bg-neutral-700 text-[14px] text-neutral-300">
       {value} %
     </span>
   </div>

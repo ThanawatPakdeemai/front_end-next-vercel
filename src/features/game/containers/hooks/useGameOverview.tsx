@@ -14,6 +14,8 @@ import { IVerticalThumbSlide } from "@feature/slider/interfaces/ISlides"
 import { IGameItemList } from "@feature/gameItem/interfaces/IGameItemService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import useGameStore from "@stores/game"
+import { SLIDES_GAME_MOCKUP } from "@constants/images"
+import { v4 as uuid } from "uuid"
 
 /**
  * @description Game Overview Hook functions to handle all game overview data
@@ -219,12 +221,20 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
    * @returns {IVerticalThumbSlide[]}
    */
   const setGameMedia = (): IVerticalThumbSlide[] => {
+    const EMPTY_MEDIAS: IVerticalThumbSlide[] = []
+    SLIDES_GAME_MOCKUP.map((slide) =>
+      EMPTY_MEDIAS.push({
+        id: slide.alt,
+        type: "image",
+        src: slide.src
+      })
+    )
     switch (gameType) {
       case "partner-game":
         if (partnerGames && partnerGames?.media_list?.length > 0) {
           partnerGames?.media_list?.map((media) =>
             gameDataMedia.push({
-              id: media._id,
+              id: uuid(),
               type: media.media_type,
               src: media.path
             })
@@ -235,32 +245,32 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
         if (gameData) {
           gameDataMedia.push(
             {
-              id: "1",
+              id: uuid(),
               type: "image",
               src: gameData ? gameData.image_banner : ""
             },
             {
-              id: "2",
+              id: uuid(),
               type: "video",
               src: gameData ? gameData.animation_nft_arcade_game : ""
             },
             {
-              id: "3",
+              id: uuid(),
               type: "image",
               src: gameData ? gameData.image_nft_arcade_game : ""
             },
             {
-              id: "4",
+              id: uuid(),
               type: "image",
               src: gameData ? gameData.image_background : ""
             },
             {
-              id: "5",
+              id: uuid(),
               type: "image",
               src: gameData ? gameData.image_category_list : ""
             },
             {
-              id: "6",
+              id: uuid(),
               type: "image",
               src: gameData ? gameData.image_background : ""
             }
@@ -268,19 +278,48 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
         }
         break
       default:
+        // TODO: Change to use media_list
+        // gameData.meta_data_list.map((metaData) =>
+        //   gameDataMedia.push({
+        //     id: uuid(),
+        //     type: metaData.type,
+        //     src: metaData.image as string
+        //   })
+        // )
         gameDataMedia.push(
           {
-            id: "1",
+            id: uuid(),
             type: "image",
-            src: gameData ? gameData.image_banner : ""
+            src: gameData ? gameData.image_background : ""
           },
           {
-            id: "2",
+            id: uuid(),
             type: "image",
-            src: gameData ? gameData.image_list : ""
+            src: gameData ? gameData.image_category_list : ""
+          },
+          {
+            id: uuid(),
+            type: "image",
+            src: gameData ? gameData.image_room : ""
+          },
+          {
+            id: uuid(),
+            type: "image",
+            src: gameData ? gameData.image_waiting : ""
+          },
+          {
+            id: uuid(),
+            type: "image",
+            src: gameData ? gameData.image_sum : ""
+          },
+          {
+            id: uuid(),
+            type: "image",
+            src: gameData ? gameData.image_reward : ""
           }
+          // ...EMPTY_MEDIAS,
+          // ...EMPTY_MEDIAS
         )
-        break
     }
     return gameDataMedia
   }
@@ -303,12 +342,19 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
    * @returns {string} gameOwner
    */
   const setGameOwner = (): string => {
-    switch (gameType) {
-      case "arcade-emporium":
-        return (gameData && gameData.NFT_Owner) || "-"
-      default:
-        return "-"
+    if (gameData) {
+      switch (gameType) {
+        case "arcade-emporium":
+          return (
+            ("NFT_info" in gameData && gameData.NFT_info.NFT_token) ||
+            gameData.NFT_Owner ||
+            "-"
+          )
+        default:
+          return gameData.developer || "-"
+      }
     }
+    return "-"
   }
 
   /**

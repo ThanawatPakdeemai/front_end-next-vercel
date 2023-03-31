@@ -294,3 +294,8 @@ input:checked {
   width: 1px;
   display: none;
 }
+
+.image-building {
+  height: 200px;
+  min-width: 368px;
+}

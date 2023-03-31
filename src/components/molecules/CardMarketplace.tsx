@@ -20,7 +20,7 @@ const CardMarketplace = ({
   title = "MARKET PLACE",
   bgImage = IMAGES.marketPlace.src,
   href = "/",
-  description = "The Crypto Economy Marketplace, Your Entrance Gate to web3"
+  description = "Nakamoto Games Marketplace. Your Gateway to the Web3 Economy. "
 }: ICardMarketplace) => (
   <>
     <Card

@@ -13,11 +13,16 @@ import { IGame, IGameFav } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { IMAGES } from "@constants/images"
 import Link from "next/link"
+import { IRoomAvaliableData } from "@feature/home/interfaces/IHomeService"
+import LocalActivityOutlinedIcon from "@mui/icons-material/LocalActivityOutlined"
+import useGameStore from "@stores/game"
+import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
+import useProfileStore from "@stores/profileStore"
 
 interface IProps {
   href?: string
   menu: IHeaderSlide
-  data?: IGame | IGameFav | IPartnerGameData
+  data?: IGame | IGameFav | IPartnerGameData | IRoomAvaliableData
   partnerdata?: IPartnerGameData
   imgPartner?: string | undefined
   showNo?: boolean
@@ -27,6 +32,7 @@ interface IProps {
   staminaRecovery?: Date
   setCooldown?: (_value: boolean) => void
   onHandleClick?: () => void
+  onPlaying?: boolean
 }
 
 const GameCard = ({
@@ -41,12 +47,20 @@ const GameCard = ({
   cooldown,
   staminaRecovery,
   setCooldown,
-  onHandleClick
+  onHandleClick,
+  onPlaying = false
 }: IProps) => {
   const [imageSrc, setImageSrc] = useState<string>(IMAGES.no_image.src)
   const [chipLable, setChipLable] = useState<string>("")
   const [theme, setTheme] = useState<string>("")
   const [lableButton, setLableButton] = useState<string>("play now")
+  const profile = useProfileStore((state) => state.profile.data)
+  const game = useGameStore((state) => state.data)
+  const { gameItemList } = useGamesByGameId({
+    _playerId: profile ? profile.id : "",
+    _gameId: game ? game._id : ""
+  })
+  const { onSetGameItemSelectd } = useGameStore()
   const btnCard = {
     init: {
       y: 40,
@@ -86,6 +100,8 @@ const GameCard = ({
     if (!load) {
       if (imgPartner && imgPartner !== undefined) {
         setImageSrc(imgPartner)
+      } else if ((data as IRoomAvaliableData).game_image) {
+        setImageSrc((data as IRoomAvaliableData).game_image)
       } else if (
         !imgPartner &&
         imgPartner === undefined &&
@@ -113,12 +129,32 @@ const GameCard = ({
         setChipLable(menu.title)
         setTheme(menu.theme)
       }
+      if (onPlaying) {
+        if ((data as IRoomAvaliableData).game_free_play) {
+          setChipLable("free to play")
+          setTheme("secondary")
+        } else {
+          setChipLable("play to earn")
+          setTheme("error")
+        }
+      }
     }
 
     return () => {
       load = true
     }
-  }, [menu, partnerdata, data])
+  }, [menu, partnerdata, data, onPlaying])
+
+  const setItemSelect = (ele) => {
+    if (profile) {
+      if (gameItemList) {
+        const itemSelcte = gameItemList.find(
+          (elem) => elem.item_size === ele.item_size
+        )
+        if (itemSelcte) onSetGameItemSelectd(itemSelcte)
+      }
+    }
+  }
 
   const renderCardContent = () => (
     <motion.div
@@ -126,7 +162,10 @@ const GameCard = ({
       initial="init"
       whileHover="onHover"
       animate="animate"
-      onClick={onHandleClick}
+      onClick={() => {
+        setItemSelect({})
+        if (onHandleClick) onHandleClick()
+      }}
     >
       <motion.div className="relative flex w-full items-center justify-center overflow-hidden px-1 xl:h-[218px]">
         {showNo && no && (
@@ -162,26 +201,47 @@ const GameCard = ({
         </motion.div>
       </motion.div>
       <div className="relative z-[3]">
-        <div className="slick-card-desc flex h-10 w-full items-center">
+        <div className="slick-card-desc flex h-10 w-full items-center justify-between">
           <p className="relative truncate uppercase hover:text-clip">
-            {data?.name ?? partnerdata?.name}
+            {(data as IRoomAvaliableData)
+              ? (data as IRoomAvaliableData)?.game_name
+              : (data as IGame).name ?? partnerdata?.name}
           </p>
         </div>
-        <div className="relative grid w-full grid-cols-2 gap-2 text-xs uppercase">
+        <div className="relative flex w-full flex-wrap items-center gap-2 text-xs uppercase">
           <Chip
             label={chipLable}
             size="small"
             color={onChipColor(theme)}
-            className="font-bold"
+            className="w-full font-bold md:w-auto"
           />
           {partnerdata && (
             <Chip
               label={partnerdata.genres?.map((el) => `${el.name}, `)}
               size="small"
               color={onChipColor("default")}
-              className="font-bold"
+              className="w-full font-bold md:w-auto"
             />
           )}
+          {onPlaying && (
+            // (data as IRoomAvaliableData)?
+            // .map(
+            // (el) =>
+            // el?.room_list?.map((ele) => (
+            <>
+              <Chip
+                key={(data as IRoomAvaliableData)?.game_id}
+                label={`${
+                  (data as IRoomAvaliableData)?.item_list?.[0]?.item_name
+                }`}
+                size="small"
+                className="w-fit !bg-neutral-400 font-bold !text-neutral-700"
+              />
+            </>
+            // )
+            // ))
+          )}
+
           {checkTimer && staminaRecovery && cooldown && setCooldown && (
             <TimerStamina
               time={staminaRecovery}
@@ -190,6 +250,33 @@ const GameCard = ({
             />
           )}
         </div>
+        {onPlaying && (
+          <div className="relative mt-2 flex w-full flex-wrap items-center gap-2 text-xs uppercase">
+            <LocalActivityOutlinedIcon className=" text-[18px] font-thin" />
+            {(data as IRoomAvaliableData)?.item_list?.map((el) =>
+              el?.room_list?.map((room) => (
+                <>
+                  <Link
+                    // href=""
+                    href={`/${room.game_type}-games/${room.game_path}/roomlist`}
+                    key={el.item_size}
+                  >
+                    <Chip
+                      onClick={() => setItemSelect(el)}
+                      label={`${
+                        !(data as IRoomAvaliableData)?.game_free_play
+                          ? `${el.item_size} / `
+                          : ""
+                      }  rooms ${room?.room_number}`}
+                      size="small"
+                      className=" w-fit cursor-pointer !border border-solid !border-neutral-700 !bg-primary-main font-bold !text-primary-contrastText"
+                    />
+                  </Link>
+                </>
+              ))
+            )}
+          </div>
+        )}
       </div>
     </motion.div>
   )

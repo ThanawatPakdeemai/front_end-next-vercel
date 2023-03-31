@@ -219,7 +219,7 @@ const MultiRoomList = () => {
                         maxPlayer: _data.max_players
                       }}
                       roomId={_data.create_room_detail.no_room}
-                      roomName="Room Name"
+                      roomName="Room Naka"
                       onClick={() => handleJoinRoom(_data)}
                     />
                   )

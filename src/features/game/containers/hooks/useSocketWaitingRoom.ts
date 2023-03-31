@@ -187,7 +187,8 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
       }).then(async (_res: IBurnItemResponse) => {
         if (_res) {
           resolve(_res.status)
-          successToast(MESSAGES["you-burn-item"])
+          if (gameData?.play_to_earn_status !== "free")
+            successToast(MESSAGES["you-burn-item"])
         }
         reject(_res)
       })

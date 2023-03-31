@@ -19,10 +19,10 @@ const BecomeDeveloperContent = ({
   image,
   children = (
     <Jumbotron
-      textTitle="Makamoto.games"
-      textTitleDark="For Game DEVELOPER_"
-      text="We take care about all the distribution infrastructure so you can care about's next. Publish your web3 game in seconds ⚡"
-      textButton="Submit Now"
+      textTitle="NAKAMOTO.GAMES"
+      textTitleDark="FOR GAME DEVELOPERS_"
+      text="We take care of the infrastructure and distribution so you can focus on creating games. Publish your Web3 game now ⚡"
+      textButton="Subscribe Now"
       className="w-[620px]"
       sxCustomStyled={{
         ".jumbotron-title--text": {

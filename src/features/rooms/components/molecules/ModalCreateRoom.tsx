@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import SwitchCustom from "@components/atoms/SwitchCustom"
 import PlusIcon from "@components/icons/CountIcon/PlusIcon"
@@ -72,17 +73,25 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
   const handleSubmit = () => {
     if (gameItemList) {
       const gameItem = gameItemList.find((ele) => ele._id === itemSelected?._id)
-      if (gameItem && gameItem.qty >= itemUse) {
+      if (
+        gameData.play_to_earn_status === "free" ||
+        (gameItem && gameItem.qty >= itemUse)
+      ) {
         if (gameData && gameData.play_to_earn === true) {
           setItemUse(0)
         }
 
-        if (profile && itemSelected) {
+        if (profile) {
           mutateCreateRoom({
             _gameId: gameData.id,
-            _playerId: profile.id,
-            _walletAddress: profile.address,
-            _itemId: itemSelected?._id,
+            _playerId: profile ? profile.id : "",
+            _walletAddress: profile ? profile.address : "",
+            _itemId:
+              gameData.play_to_earn_status === "free"
+                ? gameItemList?.[0]?._id
+                : itemSelected
+                ? itemSelected?._id
+                : "",
             _maxPlayer: count,
             _numberItem: itemUse,
             _mapId: map,
@@ -99,7 +108,13 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
               }
             })
             .catch((error) => {
-              errorToast((error as IPropMessage).message)
+              if ((error as IPropMessage)?.message?.length > 0) {
+                errorToast(
+                  (error as IPropMessage)?.message?.[0]?.["msg"] ?? "Error"
+                )
+              } else {
+                errorToast((error as IPropMessage)?.message ?? "Error")
+              }
             })
         }
       } else {

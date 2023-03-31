@@ -37,6 +37,7 @@ import useGlobal from "@hooks/useGlobal"
 import CardLinkTemplate from "@components/templates/contents/CardLinkTemplate"
 import CONFIGS from "@configs/index"
 import OrionTrade from "@components/organisms/OrionTrade"
+import OnPlaying from "@feature/home/components/molecules/OnPlaying"
 
 const Home = () => {
   const limit = 10
@@ -127,7 +128,7 @@ const Home = () => {
         <Tagline
           bgColor="bg-secondary-main"
           textColor="text-white-default"
-          text="Secue. fun. simple. earn $naka AND enjoy "
+          text="SECURE. SUBLIME. SIMPLE. EARN $NAKA TODAY. "
           icon={<LogoIcon />}
         />
         {/* notification */}
@@ -252,12 +253,12 @@ const Home = () => {
       <Tagline
         bgColor="bg-green-lemon"
         textColor="text-neutral-800 font-bold"
-        text="Show your God Mode for the blockchain gaming landscape"
+        text="SWITCH TO GOD MODE AND UNLEASH YOUR TRUE GAMING POTENTIAL"
         icon={<ShapeIcon />}
       />
 
       <BodyCategories />
-
+      <OnPlaying />
       <DeveloperPart />
       <Box className="xs:flex-col mt-4 mb-10 gap-4 lg:flex">
         <Box className="flex-1 xl:flex-none">

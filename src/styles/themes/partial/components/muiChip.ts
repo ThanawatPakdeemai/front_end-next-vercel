@@ -36,7 +36,7 @@ export const MuiChip: Components<Omit<Theme, "components">>["MuiChip"] = {
           },
           "&Success": {
             backgroundColor: PaletteCustom.success.main,
-            color: PaletteCustom.success.contrastText
+            color: `${PaletteCustom.success.contrastText} !important`
           },
           "&Warning": {
             backgroundColor: PaletteCustom.warning.main,

@@ -53,7 +53,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   const { errorToast } = useToast()
   const [gameUrl, setGameUrl] = useState<string>("")
   const [room_number] = useState<string>("")
-  const [rank_name] = useState<string>("")
+  const [rank_name] = useState<string>("multiplayer_rank")
   const [start_time] = useState<string>("")
   const time = new Date()
 
@@ -268,20 +268,25 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   const onReady = async () => {
     if (profile) {
       if (
-        playerMe &&
-        itemSelected &&
-        balanceofItem &&
-        balanceofItem.data >= qtyItemOfRoom &&
-        dataPlayers &&
-        balanceofItem.data >= dataPlayers?.create_room_detail.number_of_item &&
-        dataPlayers.item_id === itemSelected._id
+        (gameData && gameData?.play_to_earn_status === "free") ||
+        (playerMe &&
+          itemSelected &&
+          balanceofItem &&
+          balanceofItem.data >= qtyItemOfRoom &&
+          dataPlayers &&
+          balanceofItem.data >=
+            dataPlayers?.create_room_detail.number_of_item &&
+          dataPlayers.item_id === itemSelected._id)
       ) {
         setLoading(true)
-        await onReadyPlayerBurnItem(
-          playerMe?.item_burn,
-          itemSelected._id,
-          qtyItemOfRoom
-        )
+
+        if (playerMe && itemSelected) {
+          await onReadyPlayerBurnItem(
+            playerMe?.item_burn,
+            itemSelected._id,
+            qtyItemOfRoom
+          )
+        }
         await setPlayerPressReady(true)
         await setLoading(false)
       } else if (!playerMe) {
@@ -329,16 +334,20 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   const onPlayGame = () => {
     if (profile) {
       if (
-        playerMe &&
-        itemSelected &&
-        playerAllReady &&
-        balanceofItem &&
-        balanceofItem.data >= qtyItemOfRoom &&
-        dataPlayers &&
-        balanceofItem.data >= dataPlayers?.create_room_detail.number_of_item &&
-        dataPlayers.item_id === itemSelected._id
+        (gameData && gameData?.play_to_earn_status === "free") ||
+        (playerMe &&
+          itemSelected &&
+          playerAllReady &&
+          balanceofItem &&
+          balanceofItem.data >= qtyItemOfRoom &&
+          dataPlayers &&
+          balanceofItem.data >=
+            dataPlayers?.create_room_detail.number_of_item &&
+          dataPlayers.item_id === itemSelected._id)
       ) {
-        onOwnerBurnItem(playerMe.item_burn, itemSelected?._id, qtyItemOfRoom)
+        if (playerMe && itemSelected) {
+          onOwnerBurnItem(playerMe.item_burn, itemSelected?._id, qtyItemOfRoom)
+        }
         setOwnPressPlay(true)
         startGame()
       } else if (!playerMe) {

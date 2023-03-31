@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo, useCallback } from "react"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import LogoutIcon from "@mui/icons-material/Logout"
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
-import { Box, CardMedia } from "@mui/material"
+import { Box } from "@mui/material"
 import useProfileStore from "@stores/profileStore/index"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
@@ -277,12 +277,11 @@ export default function CardBuyItem({
               >
                 <div className="flex items-center justify-center rounded-xl border-[1px] border-primary-main bg-primary-main">
                   {gameObject && (
-                    <CardMedia
-                      className="m-auto block w-[124px]"
-                      component="img"
-                      height={124}
-                      image={gameObject.item?.[0]?.image}
-                      alt={gameObject.item?.[0]?.name}
+                    <Image
+                      src={gameObject?.item?.[0]?.image_icon_color}
+                      alt={gameObject?.item?.[0]?.name}
+                      width="30"
+                      height="30"
                     />
                   )}
                 </div>

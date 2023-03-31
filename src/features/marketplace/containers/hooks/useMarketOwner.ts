@@ -9,6 +9,7 @@ import useInvenMaterial from "@feature/material/inventory/containers/hooks/useIn
 import { useGetMyNakaPunk } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
 const useMartketOwner = () => {
@@ -20,6 +21,7 @@ const useMartketOwner = () => {
   const limit = 15
 
   // hook
+  const router = useRouter()
   const { marketType } = useGlobal()
   const { profile } = useProfileStore()
   const { getLandsOfAddress } = useNFTLand()
@@ -135,6 +137,8 @@ const useMartketOwner = () => {
             .finally(() => setIsLoading(false))
           break
         default:
+          // prevent incorrect url path
+          router.push("/marketplace/inventory/land")
           break
       }
     }

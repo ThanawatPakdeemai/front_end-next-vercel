@@ -209,7 +209,6 @@ const GameCard = ({
           </p>
         </div>
         <div className="relative flex w-full flex-wrap items-center gap-2 text-xs uppercase">
-
           <Chip
             label={chipLable}
             size="small"

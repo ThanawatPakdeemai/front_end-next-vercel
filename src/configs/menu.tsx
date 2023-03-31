@@ -47,6 +47,7 @@ import TransactionIconMKP from "@components/icons/Inventory/TransactionIcon"
 import DollarIcon from "@components/icons/Referral/DollarIcon"
 import ProcessPaymentIcon from "@components/icons/Inventory/ProcessPaymentIcon"
 import { TType } from "@feature/marketplace/interfaces/IMarketService"
+import CommissionIcon from "@components/icons/MenunIcon/CommissionIcon"
 
 export const MENU = [
   {
@@ -285,6 +286,13 @@ export const MENU_LOGGEDIN: IMenu[] = [
     label: "Play History",
     href: "/history",
     icon: <PlayHistoryIcon />,
+    external: false
+  },
+  {
+    id: "commission",
+    label: "Commission",
+    href: "/commission",
+    icon: <CommissionIcon />,
     external: false
   },
   {

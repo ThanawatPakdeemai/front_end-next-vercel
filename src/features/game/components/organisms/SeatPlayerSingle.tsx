@@ -155,6 +155,13 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
     return true
   }
 
+  const checkGameFree = () => {
+    if (data?.play_to_earn && data?.play_to_earn_status === "free") {
+      return true
+    }
+    return false
+  }
+
   const checkAccountProfile = () => {
     if (profile && address === profile.address) {
       return true
@@ -235,10 +242,11 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
 
   const onPlayGame = () => {
     if (
-      checkPlayerIsNotBanned() &&
-      checkAccountProfile() &&
-      checkBalanceOfItem() &&
-      checkReadyPlayer()
+      checkGameFree() ||
+      (checkPlayerIsNotBanned() &&
+        checkAccountProfile() &&
+        checkBalanceOfItem() &&
+        checkReadyPlayer())
     ) {
       window.location.href = gameUrl
     } else if (!item_id) {

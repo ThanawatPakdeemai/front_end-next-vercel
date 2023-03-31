@@ -250,8 +250,8 @@ export default function CardBuyItem({ gameObject }: ICardBuyItemProp) {
                   <p>{qtyItemSelected ?? 0}</p>
                   {gameObject && (
                     <Image
-                      src={gameObject.item[0].image_icon_color}
-                      alt={gameObject.item[0].name}
+                      src={gameObject?.item?.[0]?.image_icon_color}
+                      alt={gameObject?.item?.[0]?.name}
                       width="30"
                       height="30"
                     />

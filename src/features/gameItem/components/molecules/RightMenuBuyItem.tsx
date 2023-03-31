@@ -24,7 +24,7 @@ const RightMenuBuyItem = ({ disabled }: IProp) => {
       <ModalCustom
         open={openForm}
         onClose={handleClose}
-        className="min-w-[515px] gap-3 rounded-[34px] p-[10px]"
+        className="w-full gap-3 rounded-[34px] p-[10px] md:m-auto md:w-[550px] lg:min-w-[515px]"
         width={400}
       >
         <Stack

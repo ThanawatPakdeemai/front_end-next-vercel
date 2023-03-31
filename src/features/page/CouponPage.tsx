@@ -26,14 +26,21 @@ const CouponPage = () => {
     couponLength: 0,
     disableCoupon: true
   })
-  const { errorToast, successToast } = useToast()
+  const { errorToast, successImageToast } = useToast()
   const { getRedeemCode } = useGetCoupon()
 
   const handleClick = () => {
     if (coupon) {
       getRedeemCode(coupon)
         .then((res) => {
-          successToast(res.message)
+          if (res.status) {
+            successImageToast(
+              res.data[0].item_name,
+              res.data[0].image,
+              res.data[0].item_size,
+              res.data[0].collect_qty
+            )
+          }
         })
         .catch((error) => {
           errorToast(error.message)

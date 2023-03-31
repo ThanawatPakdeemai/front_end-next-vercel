@@ -62,7 +62,7 @@ const FilterBox = () => {
   ]
 
   return (
-    <div className="grid gap-3">
+    <div className="grid w-full gap-3">
       <ButtonDropdown
         className="bg-secondary-main text-white-primary"
         leftContent={

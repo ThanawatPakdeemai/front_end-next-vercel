@@ -94,8 +94,8 @@ const Footer = () => {
         className="my-8 md:my-16"
         sx={{ marginTop: 10, marginBottom: 10 }}
       />
-      <div className="mx-4 justify-between overflow-hidden text-[12px] lg:flex">
-        <div className="flex justify-center whitespace-nowrap">
+      <div className="mx-4 w-full justify-between overflow-hidden text-[12px] lg:flex">
+        <div className="grid grid-cols-2 justify-center gap-3 whitespace-nowrap p-5 md:flex md:gap-0">
           <div className="flex-auto sm:flex-none md:w-48">
             <div className="mb-4 uppercase text-white-primary">game</div>
             {NAKA_GAME?.map((item) => (
@@ -147,7 +147,7 @@ const Footer = () => {
               </Link>
             ))}
           </div>
-          <div className="flex-auto sm:flex-none md:w-48">
+          <div className="col-span-2 flex-auto sm:flex-none md:col-span-1 md:w-48">
             <div className="mb-4 whitespace-normal uppercase text-white-primary">
               NAKA Ecosystem
             </div>

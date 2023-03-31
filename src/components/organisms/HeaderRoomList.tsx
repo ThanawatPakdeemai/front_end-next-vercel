@@ -50,9 +50,7 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
               ""
             ) : (
               <Typography className="uppercase text-secondary-main">
-                {`${itemSelected && itemSelected.name} ${
-                  itemSelected && itemSelected.item_size
-                }`}
+                {`${itemSelected?.name ?? ""} ${itemSelected?.item_size ?? ""}`}
               </Typography>
             )}
           </h1>

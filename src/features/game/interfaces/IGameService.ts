@@ -32,6 +32,7 @@ export type IGetType =
   | "arcade-emporium"
   | "nft-game"
   | "all"
+  | "on-playing"
 
 export type TRoomStatus =
   | "playing"

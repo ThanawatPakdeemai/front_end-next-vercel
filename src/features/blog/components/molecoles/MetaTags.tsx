@@ -9,9 +9,9 @@ export interface IMetaTags {
 }
 
 const MetaTags = ({ tags, titleTag = "Tags" }: IMetaTags) => (
-  <div className="flex flex-col flex-wrap">
+  <div className="flex w-full flex-col flex-wrap">
     {titleTag && (
-      <div className="font-neue-machina text-sm uppercase text-white-default">
+      <div className=" m-auto font-neue-machina text-sm uppercase text-white-default">
         {titleTag}
       </div>
     )}

@@ -53,7 +53,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   const { errorToast } = useToast()
   const [gameUrl, setGameUrl] = useState<string>("")
   const [room_number] = useState<string>("")
-  const [rank_name] = useState<string>("")
+  const [rank_name] = useState<string>("multiplayer_rank")
   const [start_time] = useState<string>("")
   const time = new Date()
 

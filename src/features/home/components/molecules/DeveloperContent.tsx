@@ -17,7 +17,7 @@ const DeveloperContent = () => (
         width={IMAGES.nakaLogo.width}
         height={IMAGES.nakaLogo.height}
         alt={IMAGES.nakaLogo.alt}
-        className="absolute top-5 right-5 rotate-12 text-red-default  hover:rotate-0"
+        className="duration-150hover:rotate-0 absolute top-5 right-5 rotate-12 text-red-default ease-linear"
       />
     </div>
   </>

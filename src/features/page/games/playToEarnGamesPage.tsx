@@ -13,84 +13,35 @@ const PlayToEarnGamesPage = () => {
   const limit = 20
   const [page, setPage] = useState<number>(1)
   const [gameFilter, setGameFilter] = useState<IGame[]>()
-  const [totalCount, setTotalCount] = useState<number>(20)
-  // const queryClient = useQueryClient()
-  const { onHandleSetGameStore, getTypeGamePathFolder } = useGlobal(limit)
-  // const { clearGameData } = useGameStore()
+  const [totalCount, setTotalCount] = useState<number>(0)
+  const { onHandleSetGameStore, getTypeGamePathFolder } = useGlobal(limit, 1)
   const {
     category: categoryDropdown,
     gameItem: gameItemDropdown,
     device: deviceDropdown,
-    search: searchDropdown
-    // clearSearch,
-    // clearCategory,
-    // clearGameItem,
-    // clearDevice
+    search: searchDropdown,
+    clearCategory,
+    clearDevice,
+    clearGameItem,
+    clearSearch
   } = useFilterStore()
-
-  // const {
-  //   isLoading,
-  //   // isPreviousData,
-  //   data: gameData
-  // } = useGamesByTypes({
-  //   _type: type,
-  //   _limit: limit,
-  //   _page: page
-  // })
-
-  // useEffect(() => {
-  //   let load = false
-
-  //   if (!load) {
-  //     // totalCount
-  //     if (!fetchRef.current && gameData) {
-  //       fetchRef.current = true
-  //       setTotalCount(gameData.info.totalCount)
-  //     }
-  //   }
-
-  //   return () => {
-  //     load = true
-  //   }
-  // }, [gameData])
-
-  // useEffect(() => {
-  //   let load = false
-
-  //   if (!load) {
-  //     if (!isPreviousData && gameData) {
-  //       queryClient.prefetchQuery({
-  //         queryKey: ["games", type, page + 1],
-  //         queryFn: () =>
-  //           getGameByTypes({ _type: type, _limit: limit, _page: page + 1 })
-  //       })
-  //       setGameFilter(gameData.data)
-  //     }
-  //     clearGameData()
-  //     clearSearch()
-  //     clearCategory()
-  //     clearGameItem()
-  //     clearDevice()
-  //   }
-
-  //   return () => {
-  //     load = true
-  //   }
-  // }, [
-  //   clearCategory,
-  //   clearDevice,
-  //   clearGameData,
-  //   clearGameItem,
-  //   clearSearch,
-  //   gameData,
-  //   isPreviousData,
-  //   page,
-  //   queryClient
-  // ])
 
   const { mutateGetGamesByCategoryId, isLoading: loadingFilterGame } =
     useFilterGameList()
 
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      clearCategory()
+      clearDevice()
+      clearGameItem()
+      clearSearch()
+    }
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   useEffect(() => {
     let load = false
 

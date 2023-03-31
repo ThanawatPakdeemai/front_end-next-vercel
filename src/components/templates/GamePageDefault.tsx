@@ -118,12 +118,30 @@ const GamePageDefault = ({
   }, [data, gamePartnerData])
 
   useEffect(() => {
-    handleTimeExpire()
+    let load = false
+
+    if (!load) {
+      if (data) {
+        handleTimeExpire()
+      }
+    }
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    getCodeShareToEarn()
+    let load = false
+
+    if (!load) {
+      if (data) {
+        getCodeShareToEarn()
+      }
+    }
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.asPath, stateProfile?.id])
 

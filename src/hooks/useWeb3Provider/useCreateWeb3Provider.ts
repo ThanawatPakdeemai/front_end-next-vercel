@@ -276,6 +276,8 @@ const useCreateWeb3Provider = () => {
     if (!chainIdIsSupported()) {
       resetChainId(CONFIGS.CHAIN.CHAIN_ID_HEX)
     }
+    // console.log(window.ethereum?.chainId)
+
     setCurrentChainConnected(window.ethereum?.chainId as string)
 
     Helper.setLocalStorage({
@@ -458,12 +460,15 @@ const useCreateWeb3Provider = () => {
   useEffect(() => {
     if (!isLogin) return
     let load = false
-    if (!load) handleConnectWithMetamask() // checkChain()
+    if (!load)
+      handleConnectWithMetamask().then(() => {
+        setCurrentChainConnected(window.ethereum?.chainId ?? "")
+      }) // checkChain()
     return () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [currentChainSelected])
 
   useEffect(() => {
     let load = false

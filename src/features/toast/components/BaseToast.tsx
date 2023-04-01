@@ -14,6 +14,9 @@ interface IToastProps {
   width?: string
   className?: string
   onClose: () => void
+  imageSrc?: string
+  size?: string
+  count?: number
   handleClickYes?: () => void
   handleClickNo?: () => void
   confirmation?: boolean
@@ -25,6 +28,9 @@ function BaseToastComponent({
   width,
   className,
   onClose,
+  imageSrc,
+  size,
+  count,
   handleClickYes,
   handleClickNo,
   confirmation
@@ -93,7 +99,25 @@ function BaseToastComponent({
             : ""
         }`}
       >
-        {text}
+        {imageSrc ? (
+          <>
+            <div className="flex">
+              <Image
+                src={imageSrc}
+                width={25}
+                height={25}
+                alt={text}
+              />
+              <span className="pl-1 text-varidian-default">You Received</span>
+              <span className="pl-1 text-white-default">{text}</span>
+              <span className="pl-1 text-white-default">{size}</span>
+              <span className="pl-1 text-varidian-default">Total</span>
+              <span className="pl-1">{count}</span>
+            </div>
+          </>
+        ) : (
+          text
+        )}
       </Typography>
       {confirmation && (
         <Box

@@ -47,8 +47,7 @@ const ReferralProgramPage = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { successToast } = useToast()
   const { getReferralsData, isPreviousData } = useGetReferral({
-    // player_id: profile && profile.id ? profile.id : "",
-    player_id: "61bc302f7f8867700b66dd4b",
+    player_id: profile && profile.id ? profile.id : "",
     skip: page,
     limit: limitPage,
     sort: undefined,

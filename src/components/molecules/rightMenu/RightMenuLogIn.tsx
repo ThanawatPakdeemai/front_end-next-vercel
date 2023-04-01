@@ -26,11 +26,10 @@ import useNotiStore from "@stores/notification"
 const RightMenuLogIn = () => {
   const { count } = useNotiStore()
   const profile = useProfileStore((state) => state.profile.data)
-  const { address } = useWeb3Provider()
   const [expanded, setExpanded] = useState<boolean>(false)
   const [hoverExpand, setHoverExpand] = useState<boolean>(false)
   const { isMarketplace, isDeveloperPage } = useGlobal()
-  const { isConnected } = useWeb3Provider()
+  const { isConnected, address } = useWeb3Provider()
   const { successToast } = useToast()
 
   const iconmotion = {
@@ -200,17 +199,9 @@ const RightMenuLogIn = () => {
               zIndex: 99999
             }}
           >
-            <Balance
-              variant="naka"
-              token="NAKA"
-              tokenUnit="NAKA"
-              sx={{
-                maxWidth: 265,
-                minWidth: 265,
-                height: "auto"
-              }}
-            />
-
+            <>
+              <Balance />
+            </>
             <StatProfile
               exp={{
                 level: profile?.level ?? 0,

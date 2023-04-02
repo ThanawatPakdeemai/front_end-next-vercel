@@ -17,6 +17,8 @@ import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import BuyItemBody from "@components/templates/game/BuyItemBody"
 import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGameRoomsById"
+import OverviewContent from "@components/organisms/OverviewContent"
+import useGlobal from "@hooks/useGlobal"
 
 /**
  *
@@ -29,6 +31,7 @@ const GameRoomList = () => {
   const router = useRouter()
   const { errorToast } = useToast()
   const [gameData, setGameData] = useState<IGame>()
+  const { getTypeGamePathFolder } = useGlobal()
 
   const item = useMemo(() => {
     if (data) {
@@ -204,6 +207,10 @@ const GameRoomList = () => {
         gameData?.play_to_earn_status !== "free" &&
         !gameData.tournament && (
           <BuyItemBody>
+            <OverviewContent
+              gameId={gameData.id}
+              gameType={getTypeGamePathFolder(gameData)}
+            />
             <CardBuyItem gameObject={gameData} />
           </BuyItemBody>
         )}

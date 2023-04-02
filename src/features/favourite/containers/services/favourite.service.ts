@@ -1,5 +1,6 @@
 import services from "@configs/axiosGlobalConfig"
 import { IResponseFavoriteGame } from "@feature/favourite/interfaces/IFavouriteService"
+import { IFilterGamesByKey } from "@feature/game/interfaces/IGameService"
 
 const saveFavoriteGame = (player_id: string, game_id: string) =>
   new Promise<IResponseFavoriteGame>((resolve, reject) => {
@@ -18,32 +19,10 @@ const saveFavoriteGame = (player_id: string, game_id: string) =>
     }
   })
 
-const getFavoriteGameByUser = (
-  limit: number,
-  skip: number,
-  sort: string,
-  search: string,
-  category: string,
-  item: string,
-  device: string,
-  game_type: string,
-  tournament: boolean,
-  nftgame: string
-) =>
+const getFavoriteGameByUser = (body: IFilterGamesByKey) =>
   new Promise<IResponseFavoriteGame>((resolve, reject) => {
     services
-      .post(`/profile/get_game_favorite`, {
-        limit,
-        skip,
-        sort,
-        search,
-        category,
-        item,
-        device,
-        game_type,
-        tournament,
-        nftgame
-      })
+      .post(`/profile/get_game_favorite`, body)
       .then((res) => {
         resolve(res.data)
       })

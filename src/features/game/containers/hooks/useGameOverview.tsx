@@ -68,20 +68,28 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
         break
 
       default:
-        gameData &&
-          gameData.category_list &&
-          gameData.category_list.length > 0 &&
-          gameData.category_list.map((category) =>
+        gameData && gameData.category_list && gameData.category_list.length > 0
+          ? gameData.category_list.map((category) =>
+              gameTags.push({
+                id: category.id,
+                name: category.name,
+                link: `/categories/${
+                  category.slug
+                    ? category.slug
+                    : category.name.toLocaleLowerCase()
+                }`
+              })
+            )
+          : gameData?.category &&
             gameTags.push({
-              id: category.id,
-              name: category.name,
+              id: gameData?.category.id,
+              name: gameData?.category.name,
               link: `/categories/${
-                category.slug
-                  ? category.slug
-                  : category.name.toLocaleLowerCase()
+                gameData?.category.slug
+                  ? gameData?.category.slug
+                  : gameData?.category.name.toLocaleLowerCase().split(" ")[1]
               }`
             })
-          )
         break
     }
     return gameTags

@@ -62,9 +62,7 @@ const PartnerGames = () => {
               imgPartner={game.image_thumbnail}
               href={`/partner-game/${game.slug}`}
               onHandleClick={() => onHandleSetGameStore("partner-game", game)}
-              // onHandleClick={() =>
-              //   onHandleClick("partner-game", game.slug, game)
-              // }
+              gameType="partner-game"
             />
           ))}
       </div>

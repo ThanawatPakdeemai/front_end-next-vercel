@@ -11,7 +11,6 @@ import {
   GAME_DOWNLOAD,
   P2EHeaderMenu
 } from "@constants/gameSlide"
-import DeveloperPart from "@feature/home/components/template/DeveloperPart"
 import BannerSlide from "@feature/slider/components/templates/BannerSlide"
 import CarouselSlide from "@feature/slider/components/templates/CarouselSlide"
 import CardMarketplace from "@components/molecules/CardMarketplace"
@@ -259,7 +258,7 @@ const Home = () => {
 
       <BodyCategories />
       <OnPlaying />
-      <DeveloperPart />
+      {/* <DeveloperPart /> */}
       <Box className="xs:flex-col mt-4 mb-10 gap-4 lg:flex">
         <Box className="flex-1 xl:flex-none">
           <Grid

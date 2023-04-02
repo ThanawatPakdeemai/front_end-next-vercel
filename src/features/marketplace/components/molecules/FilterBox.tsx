@@ -240,7 +240,6 @@ const FilterBox = () => {
         }}
         onChange={(_event) => {
           // const search = _event?.target?.value
-          // console.log("search", search)
         }}
       />
       <TextField

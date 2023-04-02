@@ -276,7 +276,6 @@ const useCreateWeb3Provider = () => {
     if (!chainIdIsSupported()) {
       resetChainId(CONFIGS.CHAIN.CHAIN_ID_HEX)
     }
-    // console.log(window.ethereum?.chainId)
 
     setCurrentChainConnected(window.ethereum?.chainId as string)
 

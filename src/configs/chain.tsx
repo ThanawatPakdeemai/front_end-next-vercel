@@ -18,13 +18,14 @@ export const CHAIN_SUPPORT: IChainList[] = [
     icon: <ChainPolygonIcon />,
     link: "NAKA",
     chainId: "0x13881"
-  },
-  {
-    title: "Binance smart chain",
-    icon: <BinanceIcon />,
-    link: "BNB",
-    chainId: "0x61"
   }
+  // TODO: Open after launch V2
+  // {
+  //   title: "Binance smart chain",
+  //   icon: <BinanceIcon />,
+  //   link: "BNB",
+  //   chainId: "0x61"
+  // }
 ]
 
 export const CHAIN_LIST: IChainList[] = [

@@ -23,6 +23,7 @@ import TableNodata from "@feature/transaction/components/atoms/TableNodata"
 import { IHistory } from "@feature/history/interfaces/IHistoryService"
 import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
 import { v4 as uuid } from "uuid"
+import { TRoomStatus } from "@feature/game/interfaces/IGameService"
 
 const HistoryTable = () => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -37,14 +38,17 @@ const HistoryTable = () => {
   const [totalCount, setTotalCount] = useState<number>(0)
   const [hxHistory, setHxHistory] = useState<IHistory[]>([])
 
-  const roomStatus = (status: string) => {
-    if (status === "send_noti") {
-      return "Done"
+  const roomStatus = (status: TRoomStatus) => {
+    switch (status) {
+      case "send_noti":
+        return "Done"
+      case "running":
+        return "Running"
+      case "end":
+        return "End"
+      default:
+        return "Done"
     }
-    if (status === "running") {
-      return "Running"
-    }
-    return ""
   }
 
   useEffect(() => {
@@ -139,6 +143,7 @@ const HistoryTable = () => {
                             key={row._id}
                             className="history--gameType"
                           >
+                            {/* //TODO: Refactor this game type */}
                             {row.game_mode === "play-to-earn" ? (
                               <Chip
                                 label={row.game_mode.split("-").join(" ")}
@@ -148,7 +153,7 @@ const HistoryTable = () => {
                               />
                             ) : (
                               <Chip
-                                label={row.game_mode}
+                                label={row.game_type}
                                 size="small"
                                 color="secondary"
                                 className="font-bold"

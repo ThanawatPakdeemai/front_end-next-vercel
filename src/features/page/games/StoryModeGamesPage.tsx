@@ -7,6 +7,7 @@ import { v4 as uuid } from "uuid"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 import { Box } from "@mui/material"
 import DropdownLimit from "@components/atoms/DropdownLimit"
+import NoData from "@components/molecules/NoData"
 
 const StoryModeGamesPage = () => {
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
@@ -47,7 +48,9 @@ const StoryModeGamesPage = () => {
       </div>
 
       {totalCount === 0 && (
-        <div className="d-flex justify-center text-center">No data</div>
+        <div className="d-flex justify-center text-center">
+          <NoData />
+        </div>
       )}
 
       <Box

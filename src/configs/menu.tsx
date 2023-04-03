@@ -290,7 +290,7 @@ export const MENU_LOGGEDIN: IMenu[] = [
   },
   {
     id: "play-history",
-    label: "Play History",
+    label: "Played History",
     href: "/history",
     icon: <PlayHistoryIcon />,
     external: false

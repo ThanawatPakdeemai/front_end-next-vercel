@@ -4,6 +4,7 @@ import { ITableHeader } from "@feature/table/interface/ITable"
 import { validTypeGames } from "@pages/[typeGame]"
 import useNotiStore from "@stores/notification"
 import { useRouter } from "next/router"
+import { Trans } from "react-i18next"
 
 import { useMemo } from "react"
 
@@ -14,19 +15,22 @@ const useHistoryController = () => {
   const HistoryTableHead: Array<ITableHeader> = useMemo(
     () => [
       {
-        title: "time",
+        title: <Trans i18nKey="time">time</Trans>,
         arrowIcon: false
       },
       {
-        title: "GAME",
+        title: <Trans i18nKey="game">game</Trans>,
         filterIcon: false
       },
       {
-        title: "TYPE",
+        title: <Trans i18nKey="type">type</Trans>,
         arrowIcon: false
       },
-      { title: "STATUS" },
-      { title: "VIEW", className: "justify-end flex w-full" }
+      { title: <Trans i18nKey="status">status</Trans> },
+      {
+        title: <Trans i18nKey="view">view</Trans>,
+        className: "justify-end flex w-full"
+      }
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []

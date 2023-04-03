@@ -11,6 +11,7 @@ import { IResponseLeaderBoardData } from "@feature/event/interface/IEventsServic
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import { v4 as uuid } from "uuid"
 import Image from "next/image"
+import NoData from "@components/molecules/NoData"
 
 interface IEventShareAndPlayProps {
   users: IResponseLeaderBoardData
@@ -80,7 +81,7 @@ const EventsShareAndPlay = ({ users }: IEventShareAndPlayProps) => (
                   colSpan={3}
                   className="justify-center rounded-lg border border-neutral-800 bg-neutral-700 py-3 text-center"
                 >
-                  No Data
+                  <NoData />
                 </TableCell>
               </TableRow>
             )}

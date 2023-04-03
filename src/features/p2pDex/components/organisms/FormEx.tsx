@@ -32,6 +32,7 @@ import useSwitchNetwork from "@hooks/useSwitchNetwork"
 import SwitchChain from "@components/atoms/SwitchChain"
 import { chainIdConfig } from "@configs/sites"
 import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
+import { Trans, useTranslation } from "react-i18next"
 import Input from "../atoms/Input"
 import LeftContentForm from "../molecules/LeftContentForm"
 
@@ -71,6 +72,7 @@ const FormEx = ({
   } = useContractMultichain()
 
   const { errorToast } = useToast()
+  const { t } = useTranslation()
 
   const { formatNumber } = Helper
 
@@ -324,7 +326,7 @@ const FormEx = ({
                       : " !text-error-main"
                   }`}
                 >
-                  {type}
+                  <Trans i18nKey={type} />
                   {" : "}
                 </span>
                 NAKA
@@ -345,18 +347,18 @@ const FormEx = ({
                   <div>
                     <Typography className=" font-neue-machina text-sm uppercase text-neutral-500">
                       {edit
-                        ? "enter price naka/busd"
-                        : `HOW MANY NAKA WOULD YOU LIKE TO ${type}?`}
+                        ? t("enter_price_naka_busd")
+                        : `${t("how_many_naka")} ${t(type)}?`}
                     </Typography>
                     <Input
                       name="amount"
                       endIcon={<INaka />}
-                      placeholder="Enter The amount of NAKA"
+                      placeholder={String(t("enter_amount_naka"))}
                       {...formData}
                     />
                     <Typography className="font-neue-machina text-sm uppercase text-neutral-600">
                       <p>
-                        your total naka{" "}
+                        ${t("your_total_naka")}{" "}
                         <span className=" text-neutral-300">
                           {dataEdit?.naka_amount ?? 0}
                         </span>{" "}
@@ -364,7 +366,7 @@ const FormEx = ({
                           className=" cursor-pointer text-secondary-main"
                           onClick={() => setValue("amount", amountDefault)}
                         >
-                          MAX
+                          {t("max")}
                         </span>{" "}
                       </p>
                     </Typography>
@@ -374,19 +376,20 @@ const FormEx = ({
                       </div>
                     </div>
                     <Typography className="font-neue-machina text-sm uppercase text-neutral-500">
-                      You will {type === "buy" ? "pay" : "recieve"}
+                      {t("you_will")} {type === "buy" ? t("pay") : "recieve"}
                     </Typography>
 
                     <Input
                       name="price"
                       endIcon={<IBusd />}
-                      placeholder="Enter price"
+                      placeholder={String(t("enter_price"))}
                       disabled={!edit}
                       {...formData}
                     />
                     {edit && (
                       <Typography className="font-neue-machina text-sm uppercase text-neutral-600">
-                        you will {type === "buy" ? "pay" : "recieve"}
+                        {t("you_will")}{" "}
+                        {type === "buy" ? t("pay") : t("recieve")}
                         <span className="ml-2 text-neutral-300">
                           {Helper.formatNumber(
                             Number(watch("price")) * Number(watch("amount")),
@@ -402,7 +405,7 @@ const FormEx = ({
                     {buttonData}
                     {edit && (
                       <Typography className="my-2 text-center font-neue-machina text-sm uppercase text-neutral-500">
-                        fee {fee ? formatEther(fee) : 0} busd
+                        {t("fee")} {fee ? formatEther(fee) : 0} busd
                       </Typography>
                     )}
 

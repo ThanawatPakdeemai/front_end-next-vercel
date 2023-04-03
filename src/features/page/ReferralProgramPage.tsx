@@ -33,6 +33,7 @@ import { useQueryClient } from "@tanstack/react-query"
 import { PaginationNaka } from "@components/atoms/pagination"
 import { getReferrals } from "@feature/referral/containers/services/referral.service"
 import { ISortReferrals } from "@feature/referral/interface/IReferralService"
+import NoData from "@components/molecules/NoData"
 
 const ReferralProgramPage = () => {
   const { hydrated, pager, page, setPage } = useGlobal()
@@ -371,7 +372,7 @@ const ReferralProgramPage = () => {
                         colSpan={3}
                         className="justify-center rounded-lg border border-neutral-800 bg-neutral-700 py-3 text-center"
                       >
-                        No Data
+                        <NoData />
                       </TableCell>
                     </TableRow>
                   )}

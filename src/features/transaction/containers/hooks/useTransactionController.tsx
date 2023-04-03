@@ -2,7 +2,7 @@ import FilterIcon from "@components/icons/FilterIcon"
 import TablePopover from "@feature/table/components/atoms/TablePopover"
 import { ITableHeader } from "@feature/table/interface/ITable"
 import { useMemo, useState } from "react"
-import { useTranslation } from "react-i18next"
+import { Trans, useTranslation } from "react-i18next"
 
 const useTransactionController = () => {
   const { t } = useTranslation()
@@ -30,7 +30,7 @@ const useTransactionController = () => {
   const TransactionTableHeader: Array<ITableHeader> = useMemo(
     () => [
       {
-        title: t("time"),
+        title: <Trans i18nKey="time">time</Trans>,
         arrowIcon: true,
         keyUp: sortTime === 1,
         keyDown: sortTime === -1,
@@ -43,7 +43,7 @@ const useTransactionController = () => {
           })
       },
       {
-        title: t("type"),
+        title: <Trans i18nKey="type">type</Trans>,
         filterIcon: true,
         child: (
           <TablePopover
@@ -55,7 +55,7 @@ const useTransactionController = () => {
         )
       },
       {
-        title: t("amount").concat(" (NAKA)"),
+        title: <Trans i18nKey="amount">amount</Trans>,
         arrowIcon: true,
         keyUp: sortAmount === 1,
         keyDown: sortAmount === -1,
@@ -68,7 +68,7 @@ const useTransactionController = () => {
           })
       },
       {
-        title: t("fee").concat(" (MATIC)"),
+        title: <Trans i18nKey="fee">fee</Trans>,
         className: "flex justify-end w-full"
       }
     ],
@@ -78,7 +78,7 @@ const useTransactionController = () => {
   const AllTransactionTableHeader: Array<ITableHeader> = useMemo(
     () => [
       {
-        title: t("time"),
+        title: <Trans i18nKey="time">time</Trans>,
         arrowIcon: true,
         keyUp: sortTime === 1,
         keyDown: sortTime === -1,
@@ -91,10 +91,10 @@ const useTransactionController = () => {
           })
       },
       {
-        title: t("event")
+        title: <Trans i18nKey="event">event</Trans>
       },
       {
-        title: t("amount").concat(" (NAKA)"),
+        title: <Trans i18nKey="amount">amount</Trans>,
         arrowIcon: true,
         keyUp: sortAmount === 1,
         keyDown: sortAmount === -1,
@@ -107,15 +107,15 @@ const useTransactionController = () => {
           })
       },
       {
-        title: t("fee").concat(" (MATIC)")
+        title: <Trans i18nKey="fee">fee</Trans>
       },
       {
-        title: t("view"),
+        title: <Trans i18nKey="view">view</Trans>,
         className: "flex justify-end w-full"
       }
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [sortTime, sortAmount]
+    [sortTime, sortAmount, t]
   )
   return {
     sortTime,

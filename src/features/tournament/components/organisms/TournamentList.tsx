@@ -28,6 +28,7 @@ import DropdownLimit from "@components/atoms/DropdownLimit"
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
+import NoData from "@components/molecules/NoData"
 
 interface IMockData {
   key: string
@@ -308,7 +309,7 @@ const TournamentList = () => {
                     colSpan={3}
                     className="justify-center rounded-lg border border-neutral-800 bg-neutral-700 py-3 text-center"
                   >
-                    No Data
+                    <NoData />
                   </TableCell>
                 </TableRow>
               )}

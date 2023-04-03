@@ -3,9 +3,11 @@ import SearchIcon from "@components/icons/SearchIcon"
 import { Grid, TextField } from "@mui/material"
 import useFilterStore from "@stores/blogFilter"
 import React from "react"
+import { useTranslation } from "react-i18next"
 
 const HeadGames = ({ children }: { children: React.ReactNode }) => {
   const { search: searchBlog, setSearch: setSearchBlog } = useFilterStore()
+  const { t } = useTranslation()
   const responsiveStyle =
     "mx-auto lg:mx-0 !w-[300px] md:!w-[265px] lg:!w-[200px] xl:!w-[218px]"
   return (
@@ -22,7 +24,7 @@ const HeadGames = ({ children }: { children: React.ReactNode }) => {
           className="max-w-full"
         >
           <Dropdown
-            title="All Categories"
+            title={t("all_categories")}
             className={responsiveStyle}
           />
         </Grid>
@@ -32,7 +34,7 @@ const HeadGames = ({ children }: { children: React.ReactNode }) => {
           className="max-w-full"
         >
           <Dropdown
-            title="All Game Assets"
+            title={t("all_game_assets")}
             className={responsiveStyle}
           />
         </Grid>
@@ -42,7 +44,7 @@ const HeadGames = ({ children }: { children: React.ReactNode }) => {
           className="max-w-full"
         >
           <Dropdown
-            title="All Devices"
+            title={t("all_devices")}
             className={responsiveStyle}
           />
         </Grid>

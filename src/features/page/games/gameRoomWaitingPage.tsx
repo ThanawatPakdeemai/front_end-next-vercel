@@ -7,6 +7,7 @@ import { Box } from "@mui/material"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import React, { useEffect, useState } from "react"
+import NoData from "@components/molecules/NoData"
 
 interface IProp {
   _roomId: string
@@ -45,7 +46,11 @@ const GameRoomWaitingPage = ({ _roomId }: IProp) => {
         // case "storymode":
         //   return <StoryWaiting />
         default:
-          return <Box className="m-auto block">No Data</Box>
+          return (
+            <Box className="m-auto block">
+              <NoData />
+            </Box>
+          )
       }
     }
   }

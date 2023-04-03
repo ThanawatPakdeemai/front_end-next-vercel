@@ -11,6 +11,7 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import { Typography } from "@mui/material"
 import useChainSupportStore from "@stores/chainSupport"
 import WalletAddress from "@feature/wallet/components/atoms/WalletAddress"
+import { useTranslation } from "react-i18next"
 import BalanceWallet from "./BalanceWallet"
 
 interface IProp {
@@ -31,7 +32,7 @@ const MetamaskWallet = ({
 }: IProp) => {
   const { onAddToken, isConnected } = useWeb3Provider()
   const { currentChainSelected, currentTokenSelected } = useChainSupportStore()
-
+  const { t } = useTranslation()
   /**
    * @description Handle display balances from wallet
    */
@@ -54,7 +55,7 @@ const MetamaskWallet = ({
     ) : (
       <ButtonToggleIcon
         startIcon={null}
-        text="Connect Wallet"
+        text={t("Connect Wallet")}
         type="button"
         className="min-h-[40px] bg-secondary-main text-sm text-white-primary"
         handleClick={handleConnectWallet}

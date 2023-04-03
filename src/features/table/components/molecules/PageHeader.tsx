@@ -1,8 +1,8 @@
 import React from "react"
 
 interface IPageHeaderTableProps {
-  title?: string
-  subtitle?: string
+  title?: string | null
+  subtitle?: string | null
   children?: React.ReactNode
   button?: React.ReactNode
 }

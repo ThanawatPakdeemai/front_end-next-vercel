@@ -2,6 +2,7 @@ import { ICommissionData } from "@feature/commission/interfaces/ICommission"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
 import { useCallback, useEffect, useMemo, useState } from "react"
+import { Trans } from "react-i18next"
 import useGetCommission from "./useGetCommission"
 
 const useCommissionController = () => {
@@ -43,18 +44,18 @@ const useCommissionController = () => {
   const commissionTableHeader = useMemo(
     () => [
       {
-        title: "Time",
+        title: <Trans i18nKey="time">time</Trans>,
         arrowIcon: false
       },
       {
-        title: "Status"
+        title: <Trans i18nKey="status">status</Trans>
       },
       {
-        title: "Amount (NAKA)",
+        title: <Trans i18nKey="amount">amount</Trans>,
         arrowIcon: false
       },
       {
-        title: "Details"
+        title: <Trans i18nKey="details">details</Trans>
       }
     ],
     []

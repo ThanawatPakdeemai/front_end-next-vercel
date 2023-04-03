@@ -4,6 +4,7 @@ import { Button, TextField, Typography } from "@mui/material"
 import useSearchStore from "@stores/blogFilter"
 import useSelectStore from "@stores/selector"
 import { useRouter } from "next/router"
+import { useTranslation } from "next-i18next"
 import React, { useEffect } from "react"
 
 const HeadBlog = ({ children }: { children: React.ReactNode }) => {
@@ -19,6 +20,8 @@ const HeadBlog = ({ children }: { children: React.ReactNode }) => {
   } = useSearchStore()
   const { select: selectHeader, setSelect: setSelectHeader } = useSelectStore()
   const router = useRouter()
+
+  const { t } = useTranslation()
 
   useEffect(() => {
     clearSearch()
@@ -47,7 +50,7 @@ const HeadBlog = ({ children }: { children: React.ReactNode }) => {
             >
               <div className="">{item.icon}</div>
               <Typography className="!font-neue-machina-semi !text-sm">
-                {item.name}
+                {t(`${item.name}`)}
               </Typography>
             </Button>
           ))}
@@ -60,7 +63,7 @@ const HeadBlog = ({ children }: { children: React.ReactNode }) => {
             setSearchBlog(value)
           }}
           className="mx-auto h-full w-full max-w-xs max-md:flex md:mx-0 md:w-[234px] md:px-2"
-          placeholder="Search Blog"
+          placeholder={t("search") + t("Blog")}
           InputProps={{
             style: {
               fontSize: "12px",

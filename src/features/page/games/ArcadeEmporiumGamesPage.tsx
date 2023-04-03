@@ -6,6 +6,7 @@ import GameCard from "@feature/game/components/molecules/GameCard"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 import useGlobal from "@hooks/useGlobal"
 import { Box } from "@mui/material"
+import NoData from "@components/molecules/NoData"
 import { memo } from "react"
 import { v4 as uuid } from "uuid"
 
@@ -43,7 +44,9 @@ const ArcadeEmporiumGamesPage = () => {
       </div>
 
       {totalCount === 0 && (
-        <div className="d-flex  justify-center text-center">No data</div>
+        <div className="d-flex  justify-center text-center">
+          <NoData />
+        </div>
       )}
 
       <Box

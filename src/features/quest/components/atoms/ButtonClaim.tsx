@@ -5,6 +5,7 @@ import { useToast } from "@feature/toast/containers"
 import useLoadingStore from "@stores/loading"
 import useProfileStore from "@stores/profileStore"
 import useQuestStore from "@stores/quest"
+import { useTranslation } from "react-i18next"
 import { motion, Variants } from "framer-motion"
 import React from "react"
 
@@ -24,6 +25,7 @@ const ButtonClaim = ({ data, variants, initial, animate }: IProp) => {
   )
   const { clearQuestStore } = useQuestStore()
   const { setOpen, setClose } = useLoadingStore()
+  const { t } = useTranslation()
 
   const handleClaim = (_questId: string) => {
     setOpen("Claim is processing...")
@@ -50,7 +52,7 @@ const ButtonClaim = ({ data, variants, initial, animate }: IProp) => {
     return (
       <motion.button
         type="button"
-        className="w-[108px] rounded-2xl border border-neutral-800 bg-varidian-default py-[8px] px-5 text-xs text-neutral-900"
+        className="w-[108px] rounded-2xl border border-neutral-800 bg-varidian-default py-[8px] px-5 text-xs uppercase text-neutral-900"
         onClick={() => handleClaim(data.id)}
       >
         <motion.div
@@ -60,7 +62,7 @@ const ButtonClaim = ({ data, variants, initial, animate }: IProp) => {
             transition: { stiffness: 120, type: "spring", damping: 4 }
           }}
         >
-          Claim
+          {t("claim")}
         </motion.div>
       </motion.button>
     )
@@ -89,8 +91,9 @@ const ButtonClaim = ({ data, variants, initial, animate }: IProp) => {
               x: 0,
               transition: { stiffness: 120, type: "spring", damping: 4 }
             }}
+            className="uppercase"
           >
-            X&nbsp;&nbsp;&nbsp;&nbsp;Claim
+            X&nbsp;&nbsp;&nbsp;&nbsp;{t("claim")}
           </motion.div>
         </motion.div>
       </motion.button>

@@ -24,6 +24,7 @@ import { useRouter } from "next/router"
 import useGetProfileByEmail from "@feature/profile/containers/hook/getProfileByEmail"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
+import { useTranslation } from "react-i18next"
 import EditProfileModal from "./EditProfileModal"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
@@ -43,6 +44,8 @@ const ProfileContent = () => {
   const router = useRouter()
   const { errorToast } = useToast()
   const { player_id } = router.query
+
+  const { t } = useTranslation()
 
   const {
     getProfileInfo: profileDataFromQuery,
@@ -249,7 +252,7 @@ const ProfileContent = () => {
           {getProfileInfo && (
             <>
               <TotalCardContent
-                text="Total Matches"
+                text={t("total_matches")}
                 totalNumber={getProfileInfo.data.total_game_played}
                 rank={false}
               />

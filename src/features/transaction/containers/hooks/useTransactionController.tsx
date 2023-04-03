@@ -2,11 +2,9 @@ import FilterIcon from "@components/icons/FilterIcon"
 import TablePopover from "@feature/table/components/atoms/TablePopover"
 import { ITableHeader } from "@feature/table/interface/ITable"
 import { useMemo, useState } from "react"
-import { Trans, useTranslation } from "react-i18next"
+import { Trans } from "react-i18next"
 
 const useTransactionController = () => {
-  const { t } = useTranslation()
-
   const [sortTime, setSortTime] = useState<number | undefined>(undefined) // 1 || -1
   const [sortAmount, setSortAmount] = useState<number | undefined>(undefined)
   const allTypes = ["DepositNaka", "WithdrawNaka"]
@@ -115,7 +113,7 @@ const useTransactionController = () => {
       }
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [sortTime, sortAmount, t]
+    [sortTime, sortAmount]
   )
   return {
     sortTime,

@@ -3,6 +3,7 @@ import BannerSingle from "@components/molecules/BannerSingle"
 import Howto from "@components/molecules/HowToPlay"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
+import ReleatedGames from "@feature/game/components/molecules/RelatedGames"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import useGameStore from "@stores/game"
@@ -62,6 +63,7 @@ const GamePageDefault = ({
        */}
       {component2 && <div className="mt-12">{component2}</div>}
       {component3 && <div className="mt-12">{component3}</div>}
+      <ReleatedGames gameType="play-to-earn" />
       <Footer />
     </div>
   )

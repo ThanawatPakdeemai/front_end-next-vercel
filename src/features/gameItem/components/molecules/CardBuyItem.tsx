@@ -239,7 +239,7 @@ export default function CardBuyItem({
       {hydrated && (
         <>
           <div
-            className={`mt-2 flex h-full flex-[1_1_340px] justify-center lg:mt-0 lg:flex-none ${
+            className={`mt-2 flex flex-[1_1_340px] justify-center lg:mt-0 lg:flex-none ${
               router.pathname === "/[typeGame]/[GameHome]" ? "w-full" : "w-full"
             } rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 `}
           >

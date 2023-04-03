@@ -116,11 +116,11 @@ const GameRoomLayout = ({
       <Banners />
       {gameData && <Howto data={gameData} />}
       {children}
-      {renderStatistic()}
       <FullWidthContent
         sxCustomStyled={{
           "&.container": {
-            maxWidth: "100%!important"
+            maxWidth: "100%!important",
+            marginTop: "90px!important"
           }
         }}
       >
@@ -133,6 +133,7 @@ const GameRoomLayout = ({
           </TabProvider>
         ) : null}
       </FullWidthContent>
+      {renderStatistic()}
       <Footer />
     </div>
   )

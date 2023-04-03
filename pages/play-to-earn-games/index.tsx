@@ -19,11 +19,9 @@ const PlayToEarnGamesPage = dynamic(
 
 export default function PlayToEarnGames() {
   return (
-    <>
-      <article className="h-full w-full">
-        <PlayToEarnGamesPage />
-      </article>
-    </>
+    <article className="h-full w-full">
+      <PlayToEarnGamesPage />
+    </article>
   )
 }
 

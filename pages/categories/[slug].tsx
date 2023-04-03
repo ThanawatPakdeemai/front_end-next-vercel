@@ -1,13 +1,14 @@
 import dynamic from "next/dynamic"
 import { PaginationNaka } from "@components/atoms/pagination"
-import { P2EHeaderMenu } from "@constants/gameSlide"
-import { IGame } from "@feature/game/interfaces/IGameService"
+import { F2PHeaderMenu } from "@constants/gameSlide"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import { useRouter } from "next/router"
-import { ReactElement, useEffect, useState } from "react"
+import { ReactElement } from "react"
 import { v4 as uuid } from "uuid"
-import useCategories from "@hooks/useCategories"
 import useGlobal from "@hooks/useGlobal"
+import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
+import { Box } from "@mui/material"
+import DropdownLimit from "@components/atoms/DropdownLimit"
+import NoData from "@components/molecules/NoData"
 
 const SkeletonCard = dynamic(
   () => import("@components/atoms/skeleton/SkeletonCard"),
@@ -31,90 +32,80 @@ const GameCard = dynamic(
   }
 )
 
+// const HeadGames = dynamic(() => import("@components/molecules/HeadGames"), {
+//   suspense: true,
+//   ssr: false
+// })
+// const GamePageLayout = dynamic(
+//   () => import("@components/templates/GamePageLayout"),
+//   {
+//     suspense: true,
+//     ssr: false
+//   }
+// )
+
 export default function CatogoriesPageDetails() {
-  const router = useRouter()
-  const pathId = router.query.id
-
-  const [gameData, setGameData] = useState<IGame[]>([])
   const {
-    onHandleClick,
-    setPage,
-    page,
-    setTotalCount,
-    totalCount,
+    loadingFilterGame,
     limit,
-    defaultBody
-  } = useGlobal()
-
-  // const body: IFilterGamesByKey = {
-  //   "limit": limit,
-  //   "skip": page,
-  //   "sort": "_id",
-  //   "search": "",
-  //   "item": "all",
-  //   "device": "all",
-  //   "game_type": "all",
-  //   "tournament": false
-  // }
-  const {
-    getGamesFilterByCategoryId,
-    isFetchingGamesFilterByCategoryId,
-    isLoadingGamesFilterByCategoryId,
-    isPreviousGamesFilterByCategoryId
-  } = useCategories({
-    ...defaultBody,
-    "category": pathId || ""
-  })
-
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (!isFetchingGamesFilterByCategoryId && getGamesFilterByCategoryId) {
-        setGameData(getGamesFilterByCategoryId.data)
-        if (getGamesFilterByCategoryId.info) {
-          setTotalCount(getGamesFilterByCategoryId.info.totalCount)
-        }
-      }
-    }
-
-    return () => {
-      load = true
-    }
-  }, [
-    getGamesFilterByCategoryId,
-    isPreviousGamesFilterByCategoryId,
+    gameFilter,
+    totalCount,
     page,
-    isFetchingGamesFilterByCategoryId,
-    setTotalCount
-  ])
+    setPage,
+    pager,
+    setLimit
+  } = useGamePageListController()
+  const { getTypeGamePathFolder, isRedirectRoomlist, onHandleSetGameStore } =
+    useGlobal()
 
   return (
-    <div className="flex flex-col">
-      <div className="mx-2 mb-6 mt-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:mt-0 md:grid-cols-5">
-        {isFetchingGamesFilterByCategoryId || isLoadingGamesFilterByCategoryId
+    <div className="flex w-full flex-col">
+      <div className="mx-2 mb-6 mt-6 grid w-full grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:mt-0 md:grid-cols-5">
+        {loadingFilterGame
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
           : null}
-        {gameData
-          ? gameData.map((game) => (
-              <GameCard
-                key={game.id}
-                menu={P2EHeaderMenu}
-                data={game}
-                href={`/play-to-earn-games/${game.path}`}
-                onHandleClick={() =>
-                  onHandleClick("play-to-earn", game.path, game)
-                }
-              />
-            ))
-          : [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)}
+        {gameFilter &&
+          gameFilter.length > 0 &&
+          !loadingFilterGame &&
+          gameFilter.map((game) => (
+            <GameCard
+              key={game.id}
+              menu={F2PHeaderMenu}
+              href={`/${getTypeGamePathFolder(game)}/${
+                game.path
+              }${isRedirectRoomlist(game).toString()}`}
+              onHandleClick={() =>
+                onHandleSetGameStore(getTypeGamePathFolder(game), game)
+              }
+              data={game}
+              gameType={getTypeGamePathFolder(game)}
+            />
+          ))}
       </div>
-      <PaginationNaka
-        totalCount={totalCount}
-        limit={limit}
-        page={page}
-        setPage={setPage}
-      />
+      {gameFilter && gameFilter.length === 0 && !loadingFilterGame && (
+        <NoData className="" />
+      )}
+      <Box
+        className="my-2 flex w-full justify-between md:my-5"
+        sx={{
+          ".MuiPagination-ul": {
+            gap: "5px 0"
+          }
+        }}
+      >
+        <PaginationNaka
+          totalCount={totalCount}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+        <DropdownLimit
+          className="m-0 w-[160px] flex-row"
+          defaultValue={30}
+          list={pager}
+          onChangeSelect={setLimit}
+        />
+      </Box>
     </div>
   )
 }

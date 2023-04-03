@@ -66,7 +66,7 @@ const PublisherPage = () => {
               onHandleClick={() =>
                 onHandleSetGameStore("partner-publisher", game)
               }
-              // onHandleClick={() =>
+              gameType="partner-publisher" // onHandleClick={() =>
               //   onHandleClick("partner-publisher", game.slug, game)
               // }
             />

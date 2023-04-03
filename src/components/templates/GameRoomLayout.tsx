@@ -52,14 +52,16 @@ const GameRoomLayout = ({
                 }
                 value={78.34}
               /> */}
-              <StatisticGameDetail statsGameById={statsGameById} />
+              {statsGameById && (
+                <StatisticGameDetail statsGameById={statsGameById} />
+              )}
               <TopPlayer
                 element="select"
                 subtitle
                 background="neutral"
                 note
                 elevation={0}
-                className="lg:max-w-auto max-w-full border border-neutral-900 border-opacity-80 !bg-warning-contrastText lg:!h-[424px] xl:!w-[100%]"
+                className="lg:max-w-auto max-w-full border border-neutral-900 border-opacity-80 !bg-warning-contrastText lg:!h-[424px] xl:!w-[550px]"
                 rank
                 topPlayerGameId={topPlayerGameId && topPlayerGameId}
               />

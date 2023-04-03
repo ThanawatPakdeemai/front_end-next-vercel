@@ -159,7 +159,7 @@ const CardContentDetails = ({ ...props }: IProp) => {
         onClose={handleClose}
         className="gap-3 rounded-[34px] p-[10px]"
         width={600}
-        title="You got 6 NAKA Punks"
+        title={`You got ${meta_data?.length} NAKA Punks`}
       >
         <div className="grid grid-cols-5 gap-[10px]">
           {meta_data &&

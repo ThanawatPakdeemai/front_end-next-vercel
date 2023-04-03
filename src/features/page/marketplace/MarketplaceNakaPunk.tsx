@@ -95,7 +95,7 @@ const MarketplaceNakaPunk = () => {
                         className="cursor-pointer uppercase"
                       />
                       <Typography className="ml-4 text-sm uppercase text-white-primary">
-                        you got NAKA Punks
+                        you got {metaData.length} NAKA Punks
                       </Typography>
                     </div>
                   )}

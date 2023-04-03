@@ -279,7 +279,7 @@ const FormLogin = ({ href }: IProp) => {
             {...register("_password")}
             type={showPassword ? "text" : "password"}
             placeholder="Password"
-            helperText="A number or symbol, atleast 6 characters"
+            helperText="A number or symbol, at least 6 characters"
             required
             autoComplete="current-password"
             InputProps={{

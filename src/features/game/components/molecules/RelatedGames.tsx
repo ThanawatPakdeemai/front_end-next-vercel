@@ -1,9 +1,10 @@
 import { Typography } from "@mui/material"
 import { v4 as uuid } from "uuid"
-import { IGetType } from "@feature/game/interfaces/IGameService"
+import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import { F2PHeaderMenu } from "@constants/gameSlide"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
+import { useEffect, useState } from "react"
 import GameCard from "./GameCard"
 
 interface IProps {
@@ -11,11 +12,26 @@ interface IProps {
 }
 
 const ReleatedGames = ({ _gameType }: IProps) => {
-  const { data: gamesData, isFetching } = useGamesByTypes({
-    _type: _gameType,
+  const [gamesByType, setgamesByType] = useState<IGame[]>()
+  const [curType, setCurType] = useState<IGetType>("free-to-play")
+
+  const { data: _gamesData, isFetching } = useGamesByTypes({
+    _type: curType,
     _limit: 6,
-    _page: Math.floor(Math.random() * 3) + 1
+    _page: 1
   })
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      setCurType(_gameType)
+      setgamesByType(_gamesData?.data)
+    }
+    return () => {
+      load = true
+    }
+  }, [_gamesData, _gameType])
+
   return (
     <div>
       <Typography
@@ -26,13 +42,13 @@ const ReleatedGames = ({ _gameType }: IProps) => {
         Related Games
       </Typography>
       <div className="overflow-hidden">
-        <div className="grid grid-flow-row grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-          {gamesData && !isFetching ? (
-            gamesData?.data?.map((game) => (
+        <div className="grid grid-flow-row grid-cols-2 gap-y-2 md:grid-cols-3 lg:grid-cols-6">
+          {gamesByType && !isFetching ? (
+            gamesByType?.map((game) => (
               <GameCard
-                key={game.id}
+                key={game._id}
                 data={game}
-                gameType={_gameType}
+                gameType={curType}
                 menu={F2PHeaderMenu}
                 href={`/${game.game_type}/${game.game_url}`}
               />

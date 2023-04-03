@@ -211,7 +211,9 @@ const GamePageDefault = ({
       {component2 && <div className="mt-12">{component2}</div>}
       {component3 && <div className="mt-12">{component3}</div>}
       {renderStatistic()}
-      <ReleatedGames _gameType="play-to-earn" />
+      {gameData && (
+        <ReleatedGames _gameType={getTypeGamePathFolder(gameData as IGame)} />
+      )}
       <Footer />
     </div>
   )

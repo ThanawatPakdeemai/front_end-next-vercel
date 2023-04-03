@@ -306,8 +306,8 @@ const Helper = {
         return {
           chainId: `0x${Number(CONFIGS.CHAIN.CHAIN_ID).toString(16)}`,
           chainName: `${CONFIGS.CHAIN.CHAIN_NAME}`,
-          rpcUrls: [`${CONFIGS.CHAIN.POLYGON_RPC_URL}/`],
-          blockExplorerUrls: [`${CONFIGS.CHAIN.POLYGON_SCAN}/`],
+          rpcUrls: [`${CONFIGS.CHAIN.POLYGON_RPC_URL}`],
+          blockExplorerUrls: [`${CONFIGS.CHAIN.POLYGON_SCAN}`],
           nativeCurrency: {
             name: CONFIGS.CHAIN.TOKEN_NAME,
             symbol: CONFIGS.CHAIN.TOKEN_SYMBOL,

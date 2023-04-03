@@ -21,8 +21,6 @@ const useSupportedChain = () => {
   const { getBNBContract } = useContractVaultBinance()
   const { getAllTokenInfoByContractAddress } = useContractVaultBinance()
   const {
-    chainSupport,
-    currentTokenSelected,
     currentChainSelected,
     setChainSupport,
     setContractBNB,
@@ -173,9 +171,9 @@ const useSupportedChain = () => {
       return 0
     })
     setChainSupport(allTokenSupportedSorted)
-    // if (currentTokenSelected && currentTokenSelected?.address !== "") return
-    if (currentTokenSelected !== chainSupport[0]) return
     setCurrentTokenSelected(allTokenSupportedSorted[0])
+    // if (currentTokenSelected && currentTokenSelected?.address !== "") return
+    // if (currentTokenSelected !== chainSupport[0]) return
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setChainSupport, setCurrentTokenSelected])
 

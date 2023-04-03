@@ -45,11 +45,19 @@ const HeaderWaitingRoom = ({
     >
       <div className="flex flex-auto items-center gap-2 md:flex-none md:gap-5 xl:ml-4">
         <div className="summary-page__button flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800">
-          <ButtonClose
-            onClick={() => {
-              onOutRoom ? onOutRoom() : router.back()
-            }}
-          />
+          {isSummaryPage ? (
+            <ButtonClose
+              onClick={() => {
+                router.push("/")
+              }}
+            />
+          ) : (
+            <ButtonClose
+              onClick={() => {
+                onOutRoom ? onOutRoom() : router.back()
+              }}
+            />
+          )}
         </div>
 
         {roomTag ? (

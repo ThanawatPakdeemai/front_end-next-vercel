@@ -17,7 +17,7 @@ const Banners = () => {
     BANNER_DATA[0]
 
   return (
-    <div className="bg-line-linear-gradient mb-2 flex h-48 overflow-hidden rounded-3xl border border-neutral-800 bg-primary-main uppercase md:mb-12">
+    <div className="bg-line-linear-gradient mb-2 hidden h-48 overflow-hidden rounded-3xl border border-neutral-800 bg-primary-main uppercase sm:flex md:mb-12">
       <div className="z-10 mx-[0.3rem] flex w-full items-center justify-center md:mx-0">
         <div className="flex w-full select-none items-center justify-between">
           <span

@@ -83,7 +83,14 @@ const GameRoomLayout = ({
         icon={<ShineIcon />}
       />
       <div className="flex flex-wrap gap-3 xl:flex-row xl:flex-nowrap">
-        <LikeNoLobby value={78.34} />
+        <LikeNoLobby
+          imgSrc={
+            gameData && "image_category_list" in gameData
+              ? gameData.image_category_list
+              : ""
+          }
+          value={78.34}
+        />
         {statsGameById && <StatisticGameDetail statsGameById={statsGameById} />}
         <TopPlayer
           element="select"

@@ -25,7 +25,9 @@ export type IGetType =
   | "play-to-earn"
   | "play-to-earn-games"
   | "free-to-play"
+  | "free-to-play-games"
   | "story-mode"
+  | "storymode"
   | "must-try"
   | "hot-game"
   | "partner-game"
@@ -41,6 +43,7 @@ export type TRoomStatus =
   | "send_noti"
   | "running"
   | "ready_play"
+  | "end"
 
 export interface IGetGameByTypesProps {
   _type: IGetType
@@ -564,7 +567,7 @@ export interface IFilterGamesByKey {
   device?: string
   game_type?: IGetType
   tournament?: boolean
-  nftgame?: boolean
+  nftgame?: boolean | string
 }
 
 export interface IResponseGameUpdatedPlayingData {

@@ -110,9 +110,10 @@ const RightMenuLogIn = () => {
                       icon={
                         <NotificationsOutlinedIcon className="text-white-primary" />
                       }
-                      className={`relative ml-1 mr-5 flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-lg border border-neutral-700 bg-transparent before:absolute before:right-[6px] before:top-[5px] before:h-[6px] before:w-[6px] before:rounded-full before:bg-transparent before:bg-error-main ${
-                        (count > 0 && "before:opacity-100") ||
-                        "before:opacity-0"
+                      className={`relative ml-1 mr-5 flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-lg border border-neutral-700 bg-transparent before:absolute before:right-[6px] before:top-[5px] before:h-[6px] before:w-[6px] before:rounded-full ${
+                        (count > 0 &&
+                          "before:bg-error-main before:opacity-100") ||
+                        "before:bg-transparent before:opacity-0"
                       }`}
                       aria-label="notification-button"
                     />

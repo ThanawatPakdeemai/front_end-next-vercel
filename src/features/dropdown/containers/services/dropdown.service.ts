@@ -1,12 +1,11 @@
 import services from "@configs/axiosGlobalConfig"
 import CONFIGS from "@configs/index"
 import {
-  IFilterGames,
   IGameAllResponse,
   IGameCategory,
   IGameItem
 } from "@feature/dropdown/interfaces/IDropdownService"
-import { IGame } from "@feature/game/interfaces/IGameService"
+import { IFilterGamesByKey, IGame } from "@feature/game/interfaces/IGameService"
 
 const getGameAssets = () =>
   new Promise<IGameItem[]>((resolve, reject) => {
@@ -48,7 +47,8 @@ const getGameAlls = () =>
       })
   })
 
-const getGamesByCategoryId = (data: IFilterGames) =>
+// IFilterGames
+const getGamesByCategoryId = (data: IFilterGamesByKey) =>
   new Promise<IGameAllResponse>((resolve, reject) => {
     services
       .post<IGameAllResponse>(
@@ -62,42 +62,5 @@ const getGamesByCategoryId = (data: IFilterGames) =>
         reject(error)
       })
   })
-
-/*
- * Get all games sort
- */
-// const getGamesAllSort = (
-//   countPerPage: number,
-//   page: number,
-//   searchDropdown: string,
-//   categoryDropdown: string,
-//   gameItemDropdown: string,
-//   deviceDropdown: string,
-//   game_type: string,
-//   tournament: boolean
-// ) => {
-//   const data = {
-//     limit: countPerPage,
-//     skip: page,
-//     sort: "name",
-//     search: searchDropdown,
-//     category: categoryDropdown,
-//     item: gameItemDropdown,
-//     device: deviceDropdown,
-//     game_type,
-//     tournament
-//   }
-//   // eslint-disable-next-line no-new
-//   new Promise<IGameAllResponse>((resolve, reject) => {
-//     services
-//       .post(`${CONFIGS.BASE_URL.API}/game/filter/game-all`, data)
-//       .then((res) => {
-//         resolve(res.data)
-//       })
-//       .catch((error) => {
-//         reject(error)
-//       })
-//   })
-// }
 
 export { getGameAssets, getCategories, getGameAlls, getGamesByCategoryId }

@@ -293,7 +293,7 @@ export default function GameLobby() {
           }
         />
       ) : (
-        <SkeletonBanner />
+        <GamePageDefault component={<SkeletonBanner />} />
       )}
     </>
   )

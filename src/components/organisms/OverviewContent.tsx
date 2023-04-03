@@ -16,9 +16,10 @@ import AsideLayout from "@components/templates/contents/AsideLayout"
 interface IOverviewGameProps {
   gameId: string
   gameType: IGetType
+  title?: string
 }
 
-const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
+const OverviewContent = ({ gameId, gameType, title }: IOverviewGameProps) => {
   const { t } = useTranslation()
   const { hydrated } = useGlobal()
   const {
@@ -39,7 +40,7 @@ const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
       {hydrated && (
         <AsideLayout
           icon={<OverviewIcon />}
-          title={t("game_overview")}
+          title={title || t("game_overview")}
         >
           <PanelContent height="h-[500px]">
             <div className="text-start text-sm text-neutral-500 lg:pl-6 lg:pt-3 lg:pr-3">

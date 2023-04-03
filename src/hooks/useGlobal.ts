@@ -33,7 +33,7 @@ const useGlobal = (
   const router = useRouter()
 
   const defaultBody: IFilterGamesByKey = {
-    limit: _limit ?? 20,
+    limit: _limit ?? 30,
     skip: _skip ?? 1,
     sort: _sort ?? "_id",
     search: _search ?? "",
@@ -109,10 +109,10 @@ const useGlobal = (
   /**
    * @description Global values for pagination
    */
-  const [limit, setLimit] = useState<number>(24)
+  const [limit, setLimit] = useState<number>(30)
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
-  const pager: number[] = [6, 12, 24, 48, 64]
+  const pager: number[] = [30, 60, 90, 120, 150]
   const handleLimit = (limitItem: number) => {
     setLimit(limitItem)
   }
@@ -207,22 +207,32 @@ const useGlobal = (
    * @description Get type game path folder
    */
   const getTypeGamePathFolder = (_gameData: IGame): IGetType => {
-    if (_gameData) {
-      // if (_gameData.play_to_earn && _gameData.play_to_earn_status !== "free") {
-      //   return "play-to-earn-games"
-      // }
-      if (_gameData.play_to_earn_status === "free") {
-        return "free-to-play"
-      }
-      if (_gameData.game_type === "storymode") {
-        return "story-mode"
-      }
-      if (_gameData.is_NFT) {
-        return "arcade-emporium"
-      }
+    if (
+      (_gameData.game_type === "singleplayer" ||
+        _gameData.game_type === "multiplayer") &&
+      _gameData.play_to_earn_status === "in_progress"
+    ) {
+      return "play-to-earn"
     }
-    return "play-to-earn-games"
+    if (
+      (_gameData.game_type === "singleplayer" ||
+        _gameData.game_type === "multiplayer") &&
+      _gameData.play_to_earn_status === "free"
+    ) {
+      return "free-to-play"
+    }
+    if (_gameData.game_type === "storymode") {
+      return "story-mode"
+    }
+    if (_gameData.is_NFT) {
+      return "arcade-emporium"
+    }
+    return "all"
   }
+
+  const getTypeGamePartnerPathFolder = (
+    _gameData: IPartnerGameData
+  ): IGetType => "partner-game"
 
   /**
    * @description Get color chip by game type
@@ -232,25 +242,59 @@ const useGlobal = (
   const getColorChipByGameType = (type: IGetType): string => {
     switch (type) {
       case "partner-publisher":
-        return "!bg-green-lemon"
+        return "!bg-green-lemon !text-neutral-900"
 
       case "partner-game":
-        return "!bg-green-lemon"
+        return "!bg-green-lemon !text-neutral-900"
 
       case "arcade-emporium":
-        return "!bg-warning-dark"
+        return "!bg-warning-dark !text-neutral-900"
 
       case "story-mode":
-        return "!bg-info-main"
+      case "storymode":
+        return "!bg-info-main !text-neutral-900"
 
       case "play-to-earn-games":
-        return "!bg-error-main"
+      case "play-to-earn":
+        return "!bg-error-main !text-neutral-900"
 
       case "free-to-play":
-        return "!bg-secondary-main"
+      case "free-to-play-games":
+        return "!bg-secondary-main !text-neutral-900"
 
       default:
-        return "!bg-neutral-800"
+        return "!bg-neutral-800 !text-neutral-900"
+    }
+  }
+
+  /**
+   * @description Get game type by pathname
+   * @returns {IGetType}
+   */
+  const getGameTypeByPathname = (): IGetType => {
+    switch (router.pathname) {
+      case "/arcade-emporium":
+      case "/arcade-emporium-games":
+        return "arcade-emporium"
+
+      case "/partner":
+      case "/partner-games":
+        return "partner-game"
+
+      case "/play-to-earn":
+      case "/play-to-earn-games":
+        return "play-to-earn-games"
+
+      case "/free-to-play":
+      case "/free-to-play-games":
+        return "free-to-play-games"
+
+      case "/story-mode":
+      case "/story-mode-games":
+        return "storymode"
+
+      default:
+        return "play-to-earn-games"
     }
   }
 
@@ -404,13 +448,15 @@ const useGlobal = (
     isDeveloperPage,
     openInNewTab,
     getTypeGamePathFolder,
+    getTypeGamePartnerPathFolder,
     marketType,
     isRedirectRoomlist,
     onHandleSetGameStore,
     onClickLogout,
     fetchChainData,
     getColorChipByGameType,
-    getGameStoryModeURL
+    getGameStoryModeURL,
+    getGameTypeByPathname
     // getGameFreeToPlayURL
   }
 }

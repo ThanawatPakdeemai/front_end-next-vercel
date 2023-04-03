@@ -1,32 +1,26 @@
-import { ReactElement } from "react"
+import { ReactElement, useEffect } from "react"
 import { useRouter } from "next/router"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
+import { Box } from "@mui/material"
+import useGlobal from "@hooks/useGlobal"
+import useGameStore from "@stores/game"
+import useGetGameByPath from "@feature/game/containers/hooks/useFindGameByPath"
+import { useTranslation } from "react-i18next"
+import ButtonGame from "@feature/game/components/molecules/ButtonGame"
+import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
+import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 
-const GameTabs = dynamic(
-  () => import("@feature/game/components/templates/lobby/GameTabs"),
+const SkeletonBanner = dynamic(
+  () => import("@components/atoms/skeleton/SkeletonBanner"),
   {
     suspense: true,
     ssr: false
   }
 )
-const GameReviews = dynamic(
-  () => import("@feature/game/components/molecules/GameReviews"),
-  {
-    suspense: true,
-    ssr: false
-  }
-)
-const GameContent = dynamic(
-  () => import("@feature/game/components/templates/lobby/GameContent"),
-  {
-    suspense: true,
-    ssr: false
-  }
-)
-const OverviewContent = dynamic(
-  () => import("@components/organisms/OverviewContent"),
+const StoryLobby = dynamic(
+  () => import("@feature/game/components/templates/lobby/StoryLobby"),
   {
     suspense: true,
     ssr: false
@@ -46,57 +40,194 @@ const RightSidebarContentEffect = dynamic(
     ssr: false
   }
 )
-const RightSidebarContent = dynamic(
-  () => import("@components/templates/contents/RightSidebarContent"),
+const FullWidthContent = dynamic(
+  () => import("@components/templates/contents/FullWidthContent"),
   {
     suspense: true,
     ssr: false
   }
 )
 
+const GameContent = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const OverviewContent = dynamic(
+  () => import("@components/organisms/OverviewContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const GameTabs = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameTabs"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+/**
+ * @description Maybe this component is not necessary, delete it later
+ */
 export default function ArcadeEmporiumGameDetails() {
   const router = useRouter()
-  const { id } = router.query
-  const gameId = id ? id.toString() : ""
+  const { slug } = router.query
+  const gamePath = slug ? slug.toString() : ""
+  const { gameData } = useGetGameByPath(gamePath)
+  const { onSetGameData } = useGameStore()
+  const { getTypeGamePathFolder, getGameStoryModeURL, isRedirectRoomlist } =
+    useGlobal()
+  const { t } = useTranslation()
 
-  return (
+  /**
+   * @description Render Form Buy Item
+   */
+  const renderFormBuyItem = () => {
+    if (!gameData) return null
+    switch (getTypeGamePathFolder(gameData)) {
+      case "story-mode":
+        return (
+          <Box
+            className="flex w-full flex-col justify-between gap-4 uppercase"
+            sx={{
+              ".like-no_wrapper": {
+                flex: "0 0 100%",
+                ".like-no_score": {
+                  width: "100%"
+                }
+              }
+            }}
+          >
+            <StoryLobby
+              hideButtonPlay
+              hideImage
+            />
+            <Box
+              sx={StartButtonCustomStyle}
+              className="flex w-full justify-center uppercase"
+            >
+              <ButtonGame
+                textButton={t("join-game")}
+                url={getGameStoryModeURL(gameData)}
+              />
+            </Box>
+          </Box>
+        )
+
+      case "free-to-play":
+        return (
+          <Box
+            className="flex w-full flex-col justify-between gap-4 uppercase"
+            sx={{
+              ".like-no_wrapper": {
+                flex: "0 0 100%",
+                ".like-no_score": {
+                  width: "100%"
+                }
+              }
+            }}
+          >
+            {/* <LikeNoLobby
+              hideImage={true}
+              value={0}
+            /> */}
+            <Box
+              sx={StartButtonCustomStyle}
+              className="flex w-full justify-center uppercase"
+            >
+              <ButtonGame
+                textButton={t("join-game")}
+                url={`/${getTypeGamePathFolder(gameData)}-games/${
+                  gameData.path
+                }${isRedirectRoomlist(gameData).toString()}`}
+              />
+            </Box>
+          </Box>
+        )
+      default:
+        return (
+          <CardBuyItem
+            buttonStyle="green"
+            gameObject={gameData}
+          />
+        )
+    }
+  }
+
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      if (!gameData) return
+      onSetGameData(gameData)
+    }
+
+    return () => {
+      load = true
+    }
+  }, [gameData, onSetGameData])
+
+  return gameData ? (
     <GamePageDefault
       component={
         <RightSidebarContentEffect
           className="mb-24"
           content={
             <GameContent
-              gameId={gameId}
+              gameId={gameData.id}
               gameType="arcade-emporium"
             />
           }
           aside={
-            <OverviewContent
-              gameId={gameId}
-              gameType="arcade-emporium"
-            />
+            <Box
+              component="div"
+              className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
+              sx={{
+                ".panel-content": {
+                  maxHeight: "270px",
+                  ".custom-scroll": {
+                    overflow: "hidden"
+                  }
+                },
+                ".like-no_score": {
+                  margin: "0"
+                }
+              }}
+            >
+              <OverviewContent
+                gameId={gameData.id}
+                gameType={getTypeGamePathFolder(gameData)}
+              />
+              {renderFormBuyItem()}
+            </Box>
           }
         />
       }
       component2={
-        <RightSidebarContent
-          content={
-            <TabProvider>
-              <GameTabs
-                gameId={gameId}
-                gameType="arcade-emporium"
-              />
-            </TabProvider>
-          }
-          aside={
-            <GameReviews
+        <FullWidthContent
+          sxCustomStyled={{
+            "&.container": {
+              maxWidth: "100%!important"
+            }
+          }}
+        >
+          <TabProvider>
+            <GameTabs
+              gameId={gameData.id}
               gameType="arcade-emporium"
-              gameId={gameId}
             />
-          }
-        />
+          </TabProvider>
+        </FullWidthContent>
       }
     />
+  ) : (
+    <GamePageDefault component={<SkeletonBanner />} />
   )
 }
 

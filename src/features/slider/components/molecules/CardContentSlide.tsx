@@ -23,7 +23,11 @@ const CardContentSlide = ({ slide }: ICardContentSlide) => {
       id: "1",
       name: slide.category.name,
       link: `categories/${
-        slide.category.slug || slide.category.name.toLocaleLowerCase()
+        slide.category.slug ||
+        (slide.category.name.toLocaleLowerCase().split(" ") &&
+        slide.category.name.toLocaleLowerCase().split(" ").length > 1
+          ? slide.category.name.toLocaleLowerCase().split(" ")[1]
+          : slide.category.name.toLocaleLowerCase().split(" ").join("-"))
       }`
     },
     {
@@ -45,7 +49,9 @@ const CardContentSlide = ({ slide }: ICardContentSlide) => {
         id: category.id,
         name: category.name,
         link: `categories/${
-          category.slug ? category.slug : category.name.toLocaleLowerCase()
+          category.slug
+            ? category.slug
+            : category.name.toLocaleLowerCase().split(" ").join("-")
         }?id=${category.id}`
       })
     )

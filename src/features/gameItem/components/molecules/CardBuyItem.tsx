@@ -241,7 +241,7 @@ export default function CardBuyItem({
               router.pathname === "/[typeGame]/[GameHome]" ? "w-full" : "w-full"
             } rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 `}
           >
-            <div className="p-4">
+            <div className="flex flex-col items-center justify-center p-4">
               {gameItemList && (
                 <>
                   <DropdownListItem

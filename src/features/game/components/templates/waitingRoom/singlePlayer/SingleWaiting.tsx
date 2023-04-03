@@ -2,7 +2,6 @@ import SkeletonCardPlayers from "@components/atoms/skeleton/SkeletonCardPlayers"
 import HeaderWaitingRoom from "@components/organisms/HeaderWaitingRoom"
 import SeatPlayersSingle from "@feature/game/components/organisms/SeatPlayerSingle"
 import useGetCurrentPlayerGameSingle from "@feature/game/containers/hooks/useGetCurrentPlayerGameSingle"
-import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import { Box } from "@mui/material"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
@@ -193,11 +192,11 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
           ) : (
             <>Loading...</>
           ))}
-        {data && data?.play_to_earn_status !== "free" && !data.tournament && (
+        {/* {data && data?.play_to_earn_status !== "free" && !data.tournament && (
           <Box className="rounded-3xl lg:w-[333px]">
             {data && <CardBuyItem gameObject={data} />}
           </Box>
-        )}
+        )} */}
       </Box>
     </>
   )

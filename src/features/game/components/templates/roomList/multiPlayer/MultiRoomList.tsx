@@ -3,18 +3,14 @@ import ReloadIcon from "@components/icons/ReloadIcon"
 import ButtonSticky from "@components/molecules/ButtonSticky"
 import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
-import OverviewContent from "@components/organisms/OverviewContent"
-import BuyItemBody from "@components/templates/game/BuyItemBody"
 import { MESSAGES } from "@constants/messages"
 import useSocketRoomList from "@feature/game/containers/hooks/useSocketRoomList"
 import {
   IGameRoomListSocket,
   IResSocketRoomList
 } from "@feature/game/interfaces/IGameService"
-import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import { useToast } from "@feature/toast/containers"
-import useGlobal from "@hooks/useGlobal"
 import { Box, Divider } from "@mui/material"
 import SocketProviderRoom from "@providers/SocketProviderRoom"
 import useGameStore from "@stores/game"
@@ -28,7 +24,6 @@ const MultiRoomList = () => {
   const router = useRouter()
   const { errorToast } = useToast()
   const { data, itemSelected, qtyItemOfRoom } = useGameStore()
-  const { getTypeGamePathFolder } = useGlobal()
 
   const [dataRoom, setDataRoom] = useState<IGameRoomListSocket[]>()
 
@@ -236,15 +231,17 @@ const MultiRoomList = () => {
             </div>
           </Box>
         </SocketProviderRoom>
-        {data && data?.play_to_earn_status !== "free" && !data.tournament && (
+        {/* {data && (
           <BuyItemBody>
             <OverviewContent
               gameId={data.id}
               gameType={getTypeGamePathFolder(data)}
             />
-            {data && <CardBuyItem gameObject={data} />}
+            {data?.play_to_earn_status !== "free" && !data.tournament && (
+              <CardBuyItem gameObject={data} />
+            )}
           </BuyItemBody>
-        )}
+        )} */}
       </Box>
     </>
   )

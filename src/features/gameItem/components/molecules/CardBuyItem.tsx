@@ -25,11 +25,13 @@ import ButtonGame from "@feature/game/components/molecules/ButtonGame"
 interface ICardBuyItemProp {
   gameObject: IGame
   buttonStyle?: "green" | "purple"
+  hideButtonPlay?: boolean
 }
 
 export default function CardBuyItem({
   gameObject,
-  buttonStyle = "purple"
+  buttonStyle = "purple",
+  hideButtonPlay = false
 }: ICardBuyItemProp) {
   const { t } = useTranslation()
   const { itemSelected, onSetGameItemSelectd } = useBuyGameItemController()
@@ -317,7 +319,7 @@ export default function CardBuyItem({
               )} */}
             </div>
           </div>
-          {buttonStyle === "green" && renderButton()}
+          {!hideButtonPlay && buttonStyle === "green" && renderButton()}
         </>
       )}
     </>

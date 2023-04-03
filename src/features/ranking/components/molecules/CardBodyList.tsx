@@ -4,6 +4,7 @@ import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
 import { IGameReward } from "@src/types/games"
 import { IRewardWeeklyData } from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
 import { RewardType } from "@feature/notification/interfaces/INotificationService"
+import NoData from "@components/molecules/NoData"
 import NumberRank from "../atoms/NumberRank"
 import PlayerList from "./PlayerList"
 
@@ -15,6 +16,15 @@ interface IProp {
 }
 const CardBodyList = ({ width, players, className, rewardType }: IProp) => {
   const renderContent = () => {
+    // When data is empty
+    if (players.length === 0 || !players.length)
+      return (
+        <div className="text-center text-white-primary">
+          <NoData />
+        </div>
+      )
+
+    // When data is not empty
     switch (rewardType) {
       case "REWARD_WEEKLY":
       case "REWARD_GAME_POOL":
@@ -29,7 +39,7 @@ const CardBodyList = ({ width, players, className, rewardType }: IProp) => {
               index > 2 ? "!bg-neutral-780" : "!bg-neutral-900"
             } !border-1 top-player !mb-3 !rounded-default !border-neutral-900`}
           >
-            <div className="flex max-w-[340px] items-center justify-between p-2">
+            <div className="flex max-w-[370px] items-center justify-between p-2">
               <NumberRank index={index} />
               <PlayerList
                 index={index}
@@ -55,7 +65,7 @@ const CardBodyList = ({ width, players, className, rewardType }: IProp) => {
               index > 2 ? "!bg-neutral-780" : "!bg-neutral-900"
             } !border-1 top-player !mb-3 !rounded-default !border-neutral-900`}
           >
-            <div className="flex max-w-[340px] items-center justify-between p-2">
+            <div className="flex max-w-[370px] items-center justify-between p-2">
               <NumberRank index={index} />
               <PlayerList
                 avatar={item.avatar}
@@ -83,33 +93,5 @@ const CardBodyList = ({ width, players, className, rewardType }: IProp) => {
       {renderContent()}
     </div>
   )
-
-  // return (
-  //   <div
-  //     className={`custom-scroll h-[375px] overflow-y-scroll pr-4 ${className}`}
-  //   >
-  //     {players.map((item, index: number) => (
-  //       <Card
-  //         key={item._id}
-  //         sx={{ maxWidth: width ?? "auto" }}
-  //         className={` ${
-  //           index > 2 ? "!bg-neutral-700" : "!bg-neutral-900"
-  //         } !border-1 top-player !mb-3 !rounded-default !border-neutral-900 `}
-  //       >
-  //         <div className=" flex items-center justify-between p-2">
-  //           <NumberRank index={index} />
-  //           <PlayerList
-  //             index={index}
-  //             className="mr-[10px] "
-  //             avatar={item.avatar}
-  //             username={item.username || item.user_name}
-  //             reward={item.naka_for_player}
-  //             score={item.current_score}
-  //           />
-  //         </div>
-  //       </Card>
-  //     ))}
-  //   </div>
-  // )
 }
 export default memo(CardBodyList)

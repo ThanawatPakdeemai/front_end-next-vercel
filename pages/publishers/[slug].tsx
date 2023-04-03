@@ -79,6 +79,7 @@ export default function PublisherDetails() {
                 onHandleClick={() =>
                   onHandleClick("partner-game", game.slug, game)
                 }
+                gameType="partner-game"
               />
             ))
           : [...Array(limit)].map(() => <SkeletonPublisherCard key={uuid()} />)}

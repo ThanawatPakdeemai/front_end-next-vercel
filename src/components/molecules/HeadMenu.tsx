@@ -102,7 +102,7 @@ const HeadMenu = () => {
               button={
                 <Button
                   sx={styleButton}
-                  className={`button-select-naka xs:mb-1 !hover:bg-error-main  !hover:text-white-primary w-full !rounded-[8px] px-2  !py-[12px] !text-black-default last:p-[15px_5px_13px] md:mb-0 md:w-auto ${
+                  className={`button-select-naka xs:mb-1 !hover:bg-error-main  !hover:text-white-primary w-full !min-w-[100px] !rounded-[8px]  px-2 !py-[12px] !text-black-default last:p-[15px_5px_13px] md:mb-0 md:w-auto ${
                     item.isChide &&
                     item.chide &&
                     (router.pathname ===
@@ -115,18 +115,19 @@ const HeadMenu = () => {
                   variant="contained"
                   size="large"
                 >
+                  {/* // TODO: Open after launch V2 */}
                   <Badge
                     color="error"
                     variant="dot"
-                    invisible={false} // ถ้ามี แจ้งเตือน false
-                    sx={{ "& .MuiBadge-badge": { margin: "9px -10px 0 0" } }}
+                    invisible // ถ้ามี แจ้งเตือน false
+                    // sx={{ "& .MuiBadge-badge": { margin: "9px -10px 0 0" } }}
                   >
                     <Typography className="!whitespace-nowrap !font-neue-machina-semi !text-sm">
                       {t(`${item.name}`)}
                     </Typography>
                   </Badge>
                   <DragHandleIcon
-                    className="ml-4"
+                    // className="ml-4"
                     sx={styleIcon}
                   />
                 </Button>

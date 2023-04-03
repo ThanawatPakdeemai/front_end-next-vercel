@@ -231,9 +231,6 @@ const useWalletContoller = () => {
               currentTokenSelected.totolSupply as string
             ).then(async (_res) => {
               if (_res) {
-                // console.log(allowanceToken)
-                // console.log(allowanceToken.toString())
-
                 await successToast(_res as string)
                 await handleWalletProcess(_method, currentTokenSelected.address)
               }

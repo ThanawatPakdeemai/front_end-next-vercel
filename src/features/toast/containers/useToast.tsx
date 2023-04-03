@@ -14,6 +14,30 @@ const useToast = () => {
           />
         ),
         {
+          className: "toast toast--success  w-full"
+        }
+      ),
+    []
+  )
+  const successImageToast = useCallback(
+    (
+      _content: string,
+      _imageSrc: string,
+      _size: string,
+      _collect_qty: number
+    ) =>
+      toast(
+        (t) => (
+          <BaseToastComponent
+            onClose={() => toast.dismiss(t.id)}
+            status="success"
+            text={_content}
+            imageSrc={_imageSrc}
+            size={_size}
+            count={_collect_qty}
+          />
+        ),
+        {
           className: "toast toast--success"
         }
       ),
@@ -42,7 +66,7 @@ const useToast = () => {
           />
         ),
         {
-          className: "toast toast--warning"
+          className: "toast toast--warning w-full"
         }
       ),
     []
@@ -68,7 +92,7 @@ const useToast = () => {
           />
         ),
         {
-          className: "toast toast--error",
+          className: "toast toast--error w-full",
           duration: duration ?? 5000
         }
       ),
@@ -85,13 +109,14 @@ const useToast = () => {
         />
       ),
       {
-        className: "toast toast--sample"
+        className: "toast toast--sample  w-full"
       }
     )
   }, [])
 
   return {
     successToast,
+    successImageToast,
     infoToast,
     warnToast,
     errorToast,

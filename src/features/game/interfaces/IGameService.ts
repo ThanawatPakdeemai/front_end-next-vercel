@@ -8,6 +8,7 @@ import {
   IInfo
 } from "@interfaces/IHelper"
 import { IPlayToEarnRewardData } from "@src/types/games"
+import { INFTInfo } from "../marketplace/interfaces/IArcGameService"
 import { IPartnerGameData } from "./IPartnerGame"
 
 export type TGameType = "singleplayer" | "multiplayer" | "storymode"
@@ -24,7 +25,9 @@ export type IGetType =
   | "play-to-earn"
   | "play-to-earn-games"
   | "free-to-play"
+  | "free-to-play-games"
   | "story-mode"
+  | "storymode"
   | "must-try"
   | "hot-game"
   | "partner-game"
@@ -40,6 +43,7 @@ export type TRoomStatus =
   | "send_noti"
   | "running"
   | "ready_play"
+  | "end"
 
 export interface IGetGameByTypesProps {
   _type: IGetType
@@ -102,7 +106,7 @@ export interface IGameRewardPaymentRate {
 export interface IGameMetaData {
   item_key: string
   item_name: string
-  type: string
+  type: "image" | "video"
   image: null | string
   mini_image: null | string
   active_display: boolean
@@ -186,6 +190,9 @@ export interface IGame extends IGameArcadeEmporium {
 
   must_try_no: number
   must_try_status: boolean
+
+  // When is_NFT: true
+  NFT_info: INFTInfo
 }
 
 interface IGameHowto {
@@ -198,13 +205,13 @@ interface ICategory {
   id: string
 }
 
-interface IGameDevice {
+export interface IGameDevice {
   key: string
   name: string
   supported: boolean
 }
 
-interface IGameBrowser {
+export interface IGameBrowser {
   key: string
   name: string
   supported: boolean
@@ -560,7 +567,7 @@ export interface IFilterGamesByKey {
   device?: string
   game_type?: IGetType
   tournament?: boolean
-  nftgame?: boolean
+  nftgame?: boolean | string
 }
 
 export interface IResponseGameUpdatedPlayingData {

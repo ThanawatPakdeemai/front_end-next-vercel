@@ -39,11 +39,7 @@ export default function GameRoomList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameData])
 
-  return (
-    <>
-      <GameRoomListPage />
-    </>
-  )
+  return <GameRoomListPage />
 }
 
 GameRoomList.getLayout = function getLayout(page: ReactElement) {

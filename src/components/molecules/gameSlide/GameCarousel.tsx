@@ -78,7 +78,7 @@ const GameCarousel = ({
       }
     ]
   }
-  const { onHandleSetGameStore } = useGlobal()
+  const { onHandleSetGameStore, getTypeGamePathFolder } = useGlobal()
   const { onSetGameItemSelectd } = useGameStore()
   const profile = useProfileStore((state) => state.profile.data)
   const game = useGameStore((state) => state.data)
@@ -142,6 +142,7 @@ const GameCarousel = ({
                     if (itemSelect) onSetGameItemSelectd(itemSelect)
                   }
                 }}
+                gameType={getTypeGamePathFolder(item)}
               />
             ))}
         </Slider>

@@ -19,11 +19,9 @@ const ArcadeEmporiumGamesPage = dynamic(
 
 export default function NFTGames() {
   return (
-    <>
-      <article className="h-full w-full">
-        <ArcadeEmporiumGamesPage />
-      </article>
-    </>
+    <article className="h-full w-full">
+      <ArcadeEmporiumGamesPage />
+    </article>
   )
 }
 

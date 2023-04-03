@@ -1,7 +1,7 @@
 import OverviewIcon from "@components/icons/OverviewIcon"
 import TagMultiple from "@components/molecules/TagMultiple"
 import TagSingular from "@components/molecules/TagSingular"
-import { Divider, Typography } from "@mui/material"
+import { Divider } from "@mui/material"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import { iconmotion } from "@components/organisms/Footer"
 import Link from "next/link"
@@ -11,35 +11,36 @@ import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
 import { IGetType } from "@feature/game/interfaces/IGameService"
 import PanelContent from "@components/molecules/PanelContent"
 import AsideLayout from "@components/templates/contents/AsideLayout"
+// import AboutGame from "./AboutGame"
 
 interface IOverviewGameProps {
   gameId: string
   gameType: IGetType
+  title?: string
 }
 
-const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
+const OverviewContent = ({ gameId, gameType, title }: IOverviewGameProps) => {
   const { t } = useTranslation()
   const { hydrated } = useGlobal()
   const {
     gameTags,
     gameDeveloper,
     gamePublisher,
-    gameReleaseDate,
-    gameDescription,
+    // gameReleaseDate,
     gamePartnerSocial,
-    chainName,
-    chainIcon,
+    // chainName,
+    // chainIcon,
     gameTypeCode,
-    gameOwner,
-    singleVersion
+    gameOwner
+    // singleVersion
   } = useGameOverview(gameId, gameType)
 
   return (
-    <div className="flex flex-col justify-start">
+    <div className="relative flex flex-col justify-start rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4">
       {hydrated && (
         <AsideLayout
           icon={<OverviewIcon />}
-          title={t("game_overview")}
+          title={title || t("game_overview")}
         >
           <PanelContent height="h-[500px]">
             <div className="text-start text-sm text-neutral-500 lg:pl-6 lg:pt-3 lg:pr-3">
@@ -65,7 +66,7 @@ const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
                 </>
               )}
 
-              <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+              {/* <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
               <div className="overview-row grid gap-2 lg:grid-cols-2">
                 <div
                   id="overview-release-date"
@@ -91,7 +92,7 @@ const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
                     />
                   </div>
                 )}
-              </div>
+              </div> */}
               {gameTypeCode !== "-" && (
                 <>
                   <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
@@ -124,7 +125,7 @@ const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
                   </div>
                 </>
               )}
-              {singleVersion !== "-" && (
+              {/* {singleVersion !== "-" && (
                 <>
                   <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
                   <div className="overview-row grid gap-2 lg:grid-cols-2">
@@ -139,7 +140,7 @@ const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
                     </div>
                   </div>
                 </>
-              )}
+              )} */}
               {gamePartnerSocial && gamePartnerSocial.length > 0 && (
                 <>
                   <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
@@ -170,19 +171,7 @@ const OverviewContent = ({ gameId, gameType }: IOverviewGameProps) => {
                 </>
               )}
               <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-              <Typography
-                variant="h2"
-                className="mb-4 mt-6 font-neue-machina-semi text-[14px] uppercase text-neutral-400"
-              >
-                {t("game_partner_about")}
-              </Typography>
-              <div className="pb-6">
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: gameDescription
-                  }}
-                />
-              </div>
+              {/* {gameDescription && <AboutGame text={gameDescription} />} */}
             </div>
           </PanelContent>
         </AsideLayout>

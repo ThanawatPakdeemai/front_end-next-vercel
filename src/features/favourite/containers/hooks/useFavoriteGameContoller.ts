@@ -3,6 +3,7 @@ import { MESSAGES } from "@constants/messages"
 import { useToast } from "@feature/toast/containers"
 import useLoadingStore from "@stores/loading"
 import useProfileStore from "@stores/profileStore"
+import useGlobal from "@hooks/useGlobal"
 import useFavoriteGame from "./useFavoriteGame"
 import useSaveFavoriteGame from "./useSaveFavoriteGame"
 
@@ -17,6 +18,7 @@ const useFavoriteGameContoller = ({ playerId, gameId }: IProps) => {
 
   // Hooks
   const { errorToast } = useToast()
+  const { defaultBody } = useGlobal()
 
   // Store
   const profile = useProfileStore((state) => state.profile.data)
@@ -25,8 +27,8 @@ const useFavoriteGameContoller = ({ playerId, gameId }: IProps) => {
    * @description Get favourite game
    */
   const { refetchGameFavourite, gameFavourite } = useFavoriteGame({
-    limit: 10000,
-    playerId
+    playerId,
+    ...defaultBody
   })
 
   /**
@@ -67,6 +69,10 @@ const useFavoriteGameContoller = ({ playerId, gameId }: IProps) => {
    * @description Click favourite button
    */
   const onClickFavouriteButton = () => {
+    if (!profile) {
+      errorToast(MESSAGES.please_login)
+      return
+    }
     setOpen()
     if (profile) {
       mutateSaveFavoriteGame()

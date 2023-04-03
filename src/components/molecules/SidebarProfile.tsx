@@ -37,14 +37,7 @@ const SidebarProfile = () => {
         ))}
       </MenuList>
 
-      <Balance
-        variant="naka"
-        token="NAKA"
-        sx={{
-          minWidth: 200,
-          height: "auto"
-        }}
-      />
+      <Balance />
 
       {profileData && (
         <StatProfile

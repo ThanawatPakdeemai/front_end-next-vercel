@@ -64,10 +64,6 @@ const useBuyGameItemController = () => {
     defaultValues: DEFAULT_VALUES
   })
 
-  // console.log(isDisabled)
-
-  // console.log(watch())
-
   /**
    * @description Message alert when user switch network
    * @returns {string}
@@ -260,12 +256,6 @@ const useBuyGameItemController = () => {
         break
     }
   }
-
-  // useEffect(() => {
-  // resetForm()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [chainSupport, gameItemList, resetForm, fetchNAKAToken])
-  // console.log(isDisabled)
 
   const isDisabled = useMemo(() => {
     updatePricePerItem()

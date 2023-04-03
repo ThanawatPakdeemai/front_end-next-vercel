@@ -1,5 +1,6 @@
 import { MESSAGES } from "@constants/messages"
 import { useToast } from "@feature/toast/containers"
+import useGlobal from "@hooks/useGlobal"
 import useLoadingStore from "@stores/loading"
 import { useMutation } from "@tanstack/react-query"
 import { AxiosError } from "axios"
@@ -13,9 +14,11 @@ interface IGameFavoriteBody {
 }
 const useSaveFavoriteGame = ({ playerId, gameId }: IGameFavoriteBody) => {
   const { setClose } = useLoadingStore()
+  const { defaultBody } = useGlobal()
+
   const { refetchGameFavourite } = useFavoriteGame({
-    limit: 10000,
-    playerId
+    playerId,
+    ...defaultBody
   })
   const { errorToast, successToast } = useToast()
   const [active, setActive] = useState<boolean>(false)

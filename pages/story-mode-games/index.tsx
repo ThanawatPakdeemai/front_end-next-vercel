@@ -19,11 +19,9 @@ const StoryModeGamesPage = dynamic(
 
 export default function StoryModeGames() {
   return (
-    <>
-      <article className="h-full w-full">
-        <StoryModeGamesPage />
-      </article>
-    </>
+    <article className="h-full w-full">
+      <StoryModeGamesPage />
+    </article>
   )
 }
 

@@ -6,9 +6,9 @@ export interface IMetaWriter {
 }
 
 const MetaWriter = ({ writerName, writerTitle = "WRITER" }: IMetaWriter) => (
-  <div className="writer-wrapper">
+  <div className="writer-wrapper grid h-full w-full grid-rows-2">
     {writerTitle && (
-      <div className="writer-wrapper--title px-6 pt-4 font-neue-machina text-sm text-white-default ">
+      <div className="writer-wrapper--title items-middle flex px-6 pt-4 font-neue-machina text-sm text-white-default ">
         {writerTitle}
       </div>
     )}

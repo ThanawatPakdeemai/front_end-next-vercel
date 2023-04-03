@@ -1,74 +1,72 @@
+import DropdownLimit from "@components/atoms/DropdownLimit"
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import { NFTHeaderMenu } from "@constants/gameSlide"
+import { P2EHeaderMenu } from "@constants/gameSlide"
 import GameCard from "@feature/game/components/molecules/GameCard"
-import useArcadeEmporiumGames from "@feature/game/containers/hooks/useArcadeEmporiumGames"
-import { IGame } from "@feature/game/interfaces/IGameService"
+import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 import useGlobal from "@hooks/useGlobal"
-import { memo, useEffect, useState } from "react"
+import { Box } from "@mui/material"
+import { memo } from "react"
 import { v4 as uuid } from "uuid"
 
 const ArcadeEmporiumGamesPage = () => {
   // Hooks
-
   const {
-    setTotalCount,
+    loadingFilterGame,
     limit,
-    onHandleSetGameStore,
+    gameFilter,
     totalCount,
     page,
     setPage,
-    getTypeGamePathFolder
-  } = useGlobal()
-  const {
-    getGamesFilterByNftgame,
-    isLoadingGamesFilterByNftgame,
-    isPreviousGamesFilterByNftgame
-  } = useArcadeEmporiumGames()
-
-  // States
-  const [gameData, setGameData] = useState<IGame[]>()
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (getGamesFilterByNftgame && getGamesFilterByNftgame.data) {
-        setGameData(getGamesFilterByNftgame.data)
-      }
-      if (getGamesFilterByNftgame && getGamesFilterByNftgame.info) {
-        setTotalCount(getGamesFilterByNftgame.info.totalCount)
-      }
-    }
-
-    return () => {
-      load = true
-    }
-  }, [getGamesFilterByNftgame, setTotalCount])
+    pager,
+    setLimit,
+    onSetGameStore
+  } = useGamePageListController()
+  const { getTypeGamePathFolder } = useGlobal()
 
   return (
     <div className="flex flex-col">
-      <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-5">
-        {isLoadingGamesFilterByNftgame || isPreviousGamesFilterByNftgame
+      <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        {loadingFilterGame
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
-          : gameData &&
-            gameData.map((game) => (
+          : gameFilter &&
+            gameFilter.map((game) => (
               <GameCard
                 key={game.id}
-                menu={NFTHeaderMenu}
+                menu={P2EHeaderMenu}
                 data={game}
-                href={`/${getTypeGamePathFolder(game)}-games/${game.path}`}
-                onHandleClick={() =>
-                  onHandleSetGameStore(getTypeGamePathFolder(game), game)
-                }
+                href={`/${getTypeGamePathFolder(game)}/${game.path}`}
+                onHandleClick={() => onSetGameStore(game)}
+                gameType="arcade-emporium"
               />
             ))}
       </div>
-      <PaginationNaka
-        totalCount={totalCount}
-        limit={limit}
-        page={page}
-        setPage={setPage}
-      />
+
+      {totalCount === 0 && (
+        <div className="d-flex  justify-center text-center">No data</div>
+      )}
+
+      <Box
+        className="my-2 flex w-full justify-between md:my-5"
+        sx={{
+          ".MuiPagination-ul": {
+            gap: "5px 0"
+          }
+        }}
+      >
+        <PaginationNaka
+          totalCount={totalCount}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+        <DropdownLimit
+          className="m-0 w-[160px] flex-row"
+          defaultValue={30}
+          list={pager}
+          onChangeSelect={setLimit}
+        />
+      </Box>
     </div>
   )
 }

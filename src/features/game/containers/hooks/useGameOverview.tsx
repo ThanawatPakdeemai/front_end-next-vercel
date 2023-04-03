@@ -299,32 +299,33 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
             id: uuid(),
             type: "image",
             src: gameData ? gameData.image_background : ""
-          },
-          {
-            id: uuid(),
-            type: "image",
-            src: gameData ? gameData.image_category_list : ""
-          },
-          {
-            id: uuid(),
-            type: "image",
-            src: gameData ? gameData.image_room : ""
-          },
-          {
-            id: uuid(),
-            type: "image",
-            src: gameData ? gameData.image_waiting : ""
-          },
-          {
-            id: uuid(),
-            type: "image",
-            src: gameData ? gameData.image_sum : ""
-          },
-          {
-            id: uuid(),
-            type: "image",
-            src: gameData ? gameData.image_reward : ""
           }
+          // TODO: uncomment when game data is ready
+          // {
+          //   id: uuid(),
+          //   type: "image",
+          //   src: gameData ? gameData.image_category_list : ""
+          // },
+          // {
+          //   id: uuid(),
+          //   type: "image",
+          //   src: gameData ? gameData.image_room : ""
+          // },
+          // {
+          //   id: uuid(),
+          //   type: "image",
+          //   src: gameData ? gameData.image_waiting : ""
+          // },
+          // {
+          //   id: uuid(),
+          //   type: "image",
+          //   src: gameData ? gameData.image_sum : ""
+          // },
+          // {
+          //   id: uuid(),
+          //   type: "image",
+          //   src: gameData ? gameData.image_reward : ""
+          // }
           // ...EMPTY_MEDIAS,
           // ...EMPTY_MEDIAS
         )

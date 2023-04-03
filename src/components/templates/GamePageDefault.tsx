@@ -7,6 +7,7 @@ import ReleatedGames from "@feature/game/components/molecules/RelatedGames"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import useGameStore from "@stores/game"
+// import router from "next/router"
 import React, { useEffect, useState } from "react"
 
 interface IGamePageDefaultProps {
@@ -24,6 +25,7 @@ const GamePageDefault = ({
   const data = useGameStore((state) => state.data)
   const gamePartnerData = useGameStore((state) => state.dataGamePartner)
   const [gameData, setGameData] = useState<IGame | IPartnerGameData>()
+  // const { typeGame } = router.query
 
   useEffect(() => {
     let load = false

@@ -1,64 +1,49 @@
 import { Typography } from "@mui/material"
 import { v4 as uuid } from "uuid"
-import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
+import { IGetType } from "@feature/game/interfaces/IGameService"
 import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
-import GameCarousel from "@components/molecules/gameSlide/GameCarousel"
 import { F2PHeaderMenu } from "@constants/gameSlide"
-import { useEffect, useState } from "react"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
+import GameCard from "./GameCard"
 
 interface IProps {
   gameType: IGetType
 }
 
 const ReleatedGames = ({ gameType }: IProps) => {
-  const [relatedGames, setRelatedGames] = useState<IGame[]>()
-  const [relatedType, setRelatedType] = useState<IGetType>("must-try")
-
   const { data: gamesData, isFetching } = useGamesByTypes({
-    _type: relatedType,
+    _type: gameType,
     _limit: 6,
-    _page: 1
+    _page: Math.floor(Math.random() * 3) + 1
   })
-
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (gamesData) {
-        setRelatedGames(gamesData.data)
-        setRelatedType(gameType)
-      }
-    }
-    return () => {
-      load = true
-    }
-  }, [gamesData, relatedType, gameType])
-
   return (
     <div>
       <Typography
         align="left"
-        className="uppercase"
+        className="my-2 uppercase md:my-4 lg:my-8"
         component="h2"
       >
         Related Games
       </Typography>
-      <div className="my-2 h-full w-full lg:my-20">
-        {relatedGames && !isFetching ? (
-          <GameCarousel
-            menu={F2PHeaderMenu}
-            list={relatedGames}
-            curType={gameType}
-            setCurType={setRelatedType}
-          />
-        ) : (
-          <div className="flex gap-x-3">
-            {[...Array(6)].map(() => (
-              <SkeletonCard key={uuid()} />
-            ))}
-          </div>
-        )}
+      <div className="overflow-hidden">
+        <div className="grid grid-flow-row grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+          {gamesData && !isFetching ? (
+            gamesData?.data?.map((game) => (
+              <GameCard
+                key={game.id}
+                data={game}
+                menu={F2PHeaderMenu}
+                href={`/${game.game_type}/${game.game_url}`}
+              />
+            ))
+          ) : (
+            <div className="flex gap-x-3">
+              {[...Array(6)].map(() => (
+                <SkeletonCard key={uuid()} />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

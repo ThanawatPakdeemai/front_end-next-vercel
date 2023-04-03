@@ -76,7 +76,7 @@ const Home = () => {
     switch (f2pCurType) {
       case "free-to-play":
         return "free-to-play-games"
-      case "storymode":
+      case "story-mode":
         return "storymode"
       default:
         return "free-to-play-games"
@@ -117,8 +117,8 @@ const Home = () => {
   }, [
     dataF2pGames,
     f2pCurType,
-    dataP2eGame,
     p2eCurType,
+    dataP2eGame,
     loadingDataF2pGames,
     loadingDataP2eGame
   ])

@@ -230,19 +230,32 @@ const useCreateWeb3Provider = () => {
         true,
         async () => {
           setOpen()
-          await updateWalletAddress(data).then(async (_resUpdate) => {
-            if (_resUpdate) {
-              await getProfileByEmail(_profile.email).then((_res) => {
-                onSetProfileData(_res)
-                onSetProfileAddress(_res.address)
-                successToast(MESSAGES.success)
-                toast.dismiss()
-                setClose()
-                // eslint-disable-next-line no-use-before-define
-                handleConnectWithMetamask()
-              })
-            }
-          })
+          await updateWalletAddress(data)
+            .then(async (_resUpdate) => {
+              if (_resUpdate) {
+                await getProfileByEmail(_profile.email).then((_res) => {
+                  onSetProfileData(_res)
+                  onSetProfileAddress(_res.address)
+                  toast.dismiss()
+                  setClose()
+                  setTimeout(() => {
+                    successToast(MESSAGES.success)
+                  }, 500)
+                  setTimeout(() => {
+                    // eslint-disable-next-line no-use-before-define
+                    // handleConnectWithMetamask()
+                    window.location.reload()
+                  }, 1000)
+                })
+              }
+            })
+            .catch((err) => {
+              setClose()
+              toast.dismiss()
+              setTimeout(() => {
+                errorToast(err.message)
+              }, 1000)
+            })
         }
       )
     },
@@ -263,6 +276,7 @@ const useCreateWeb3Provider = () => {
     if (!chainIdIsSupported()) {
       resetChainId(CONFIGS.CHAIN.CHAIN_ID_HEX)
     }
+
     setCurrentChainConnected(window.ethereum?.chainId as string)
 
     Helper.setLocalStorage({
@@ -445,12 +459,15 @@ const useCreateWeb3Provider = () => {
   useEffect(() => {
     if (!isLogin) return
     let load = false
-    if (!load) handleConnectWithMetamask() // checkChain()
+    if (!load)
+      handleConnectWithMetamask().then(() => {
+        setCurrentChainConnected(window.ethereum?.chainId ?? "")
+      }) // checkChain()
     return () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [currentChainSelected])
 
   useEffect(() => {
     let load = false

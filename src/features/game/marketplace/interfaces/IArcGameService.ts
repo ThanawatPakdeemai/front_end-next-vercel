@@ -32,7 +32,7 @@ export interface INFTInfo {
   player_id: string
 }
 
-interface INFTInfoData {
+export interface INFTInfoData {
   NFT_info: INFTInfo
 }
 
@@ -61,6 +61,7 @@ export interface IArcGameInfo extends IArcGame {
 export interface IArcGameData
   extends IArcGame,
     Pick<IMarketForm, "history" | "marketplaces_data" | "installments_data"> {
+  key_type?: string
   category: IArcGameCateg
   type_code: TTypeCode
   game_mode: IGetType

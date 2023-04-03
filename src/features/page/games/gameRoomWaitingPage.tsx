@@ -2,7 +2,6 @@ import PleaseLogin from "@components/atoms/PleaseLogin"
 import { ChatProvider } from "@feature/chat/containers/contexts/ChatProvider"
 import MultiWaiting from "@feature/game/components/templates/waitingRoom/multiPlayer/MultiWaiting"
 import SingleWaiting from "@feature/game/components/templates/waitingRoom/singlePlayer/SingleWaiting"
-import StoryWaiting from "@feature/game/components/templates/waitingRoom/storymode/StoryWaiting"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { Box } from "@mui/material"
 import useGameStore from "@stores/game"
@@ -43,8 +42,8 @@ const GameRoomWaitingPage = ({ _roomId }: IProp) => {
               <MultiWaiting _roomId={_roomId} />
             </ChatProvider>
           )
-        case "storymode":
-          return <StoryWaiting />
+        // case "storymode":
+        //   return <StoryWaiting />
         default:
           return <Box className="m-auto block">No Data</Box>
       }

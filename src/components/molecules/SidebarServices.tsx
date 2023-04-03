@@ -6,6 +6,7 @@ import Balance from "./balance/Balance"
 
 const SidebarStaking = () => {
   const router: NextRouter = useRouter()
+
   return (
     <div className="hidden w-[200px] flex-col gap-5 lg:flex">
       <MenuList className="rounded-[13px] bg-neutral-700 p-[6px]">
@@ -25,15 +26,7 @@ const SidebarStaking = () => {
             )
           })}
       </MenuList>
-
-      <Balance
-        variant="naka"
-        token="NAKA"
-        sx={{
-          minWidth: 200,
-          height: "auto"
-        }}
-      />
+      <Balance />
     </div>
   )
 }

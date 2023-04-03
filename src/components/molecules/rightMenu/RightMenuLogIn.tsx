@@ -22,15 +22,16 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import useGlobal from "@hooks/useGlobal"
 import { useToast } from "@feature/toast/containers"
 import useNotiStore from "@stores/notification"
+import PlugIcon from "@components/icons/MenunIcon/PlugIcon"
+import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 
 const RightMenuLogIn = () => {
   const { count } = useNotiStore()
   const profile = useProfileStore((state) => state.profile.data)
-  const { address } = useWeb3Provider()
   const [expanded, setExpanded] = useState<boolean>(false)
   const [hoverExpand, setHoverExpand] = useState<boolean>(false)
-  const { isMarketplace, isDeveloperPage } = useGlobal()
-  const { isConnected } = useWeb3Provider()
+  const { isMarketplace, isDeveloperPage, onClickLogout } = useGlobal()
+  const { isConnected, address } = useWeb3Provider()
   const { successToast } = useToast()
 
   const iconmotion = {
@@ -111,9 +112,10 @@ const RightMenuLogIn = () => {
                       icon={
                         <NotificationsOutlinedIcon className="text-white-primary" />
                       }
-                      className={`relative ml-1 mr-5 flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-lg border border-neutral-700 bg-transparent before:absolute before:right-[6px] before:top-[5px] before:h-[6px] before:w-[6px] before:rounded-full before:bg-transparent before:bg-error-main ${
-                        (count > 0 && "before:opacity-100") ||
-                        "before:opacity-0"
+                      className={`relative ml-1 mr-5 flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-lg border border-neutral-700 bg-transparent before:absolute before:right-[6px] before:top-[5px] before:h-[6px] before:w-[6px] before:rounded-full ${
+                        (count > 0 &&
+                          "before:bg-error-main before:opacity-100") ||
+                        "before:bg-transparent before:opacity-0"
                       }`}
                       aria-label="notification-button"
                     />
@@ -200,17 +202,9 @@ const RightMenuLogIn = () => {
               zIndex: 99999
             }}
           >
-            <Balance
-              variant="naka"
-              token="NAKA"
-              tokenUnit="NAKA"
-              sx={{
-                maxWidth: 265,
-                minWidth: 265,
-                height: "auto"
-              }}
-            />
-
+            <>
+              <Balance />
+            </>
             <StatProfile
               exp={{
                 level: profile?.level ?? 0,
@@ -229,6 +223,15 @@ const RightMenuLogIn = () => {
               type="row"
             />
             <MenuProfile />
+            <ButtonToggleIcon
+              startIcon={<PlugIcon />}
+              text="Logout"
+              handleClick={async () => {
+                onClickLogout()
+              }}
+              className="btn-rainbow-theme my-4 bg-error-main px-14 text-sm text-white-default"
+              type="button"
+            />
           </Collapse>
         </div>
       </ClickAwayListener>

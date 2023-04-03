@@ -64,10 +64,6 @@ const useBuyGameItemController = () => {
     defaultValues: DEFAULT_VALUES
   })
 
-  // console.log(isDisabled)
-
-  // console.log(watch())
-
   /**
    * @description Message alert when user switch network
    * @returns {string}
@@ -86,7 +82,18 @@ const useBuyGameItemController = () => {
   }
 
   const updatePricePerItem = useCallback(async () => {
-    if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
+    Helper.calculateItemPerPrice(
+      (watch("item") as IGameItemListData)?.price,
+      (price as ICurrentNakaData)?.last
+    ).then((res) => {
+      if (res) {
+        setValue("nakaPerItem", Number(res))
+      } else {
+        setValue("nakaPerItem", 0)
+      }
+    })
+    // TODO: Open after launch V2
+    /* if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
       Helper.calculateItemPerPrice(
         (watch("item") as IGameItemListData)?.price,
         (price as ICurrentNakaData)?.last
@@ -108,7 +115,7 @@ const useBuyGameItemController = () => {
           setValue("nakaPerItem", 0)
         }
       })
-    }
+    } */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     chainId,
@@ -261,15 +268,10 @@ const useBuyGameItemController = () => {
     }
   }
 
-  // useEffect(() => {
-  // resetForm()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [chainSupport, gameItemList, resetForm, fetchNAKAToken])
-  // console.log(isDisabled)
-
   const isDisabled = useMemo(() => {
     updatePricePerItem()
     const totalPrice = watch("nakaPerItem") * watch("qty")
+
     if (
       Object.keys(watch("currency") ?? [])?.length !== 0 &&
       Object.keys(watch("item") ?? [])?.length !== 0 &&

@@ -6,15 +6,20 @@ import GameCarouselHeader, {
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import GameCard from "@feature/game/components/molecules/GameCard"
 import useGlobal from "@hooks/useGlobal"
+import { IRoomAvaliableData } from "@feature/home/interfaces/IHomeService"
+import useGameStore from "@stores/game"
+import useProfileStore from "@stores/profileStore"
+import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 
 interface IProps {
   menu: IHeaderSlide
-  list: IGame[]
+  list: IGame[] | IRoomAvaliableData[]
   showNo?: boolean
   checkTimer?: boolean
   curType: IGetType
   setCurType: (_type: IGetType) => void
   showSlideCurrent?: number
+  onPlaying?: boolean
 }
 
 export type TColor =
@@ -33,7 +38,8 @@ const GameCarousel = ({
   checkTimer = false,
   curType,
   setCurType,
-  showSlideCurrent
+  showSlideCurrent,
+  onPlaying = false
 }: IProps) => {
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
   const showSlide = showSlideCurrent ?? 6
@@ -72,8 +78,14 @@ const GameCarousel = ({
       }
     ]
   }
-  const { onHandleSetGameStore } = useGlobal()
-
+  const { onHandleSetGameStore, getTypeGamePathFolder } = useGlobal()
+  const { onSetGameItemSelectd } = useGameStore()
+  const profile = useProfileStore((state) => state.profile.data)
+  const game = useGameStore((state) => state.data)
+  const { gameItemList } = useGamesByGameId({
+    _playerId: profile ? profile.id : "",
+    _gameId: game ? game._id : ""
+  })
   const sliderRef = useRef<Slider>(null)
   const [cooldown, setCooldown] = useState<boolean>(false)
 
@@ -92,6 +104,7 @@ const GameCarousel = ({
         onNext={onSlideNext}
         onPrev={onSlidePrev}
         setCurType={setCurType}
+        onPlaying
       />
       <div className="overflow-hidden">
         <Slider
@@ -101,7 +114,7 @@ const GameCarousel = ({
           {list &&
             list.map((item, index) => (
               <GameCard
-                key={item.id}
+                key={item?.id ?? item.game_id}
                 menu={menu}
                 data={item}
                 showNo={showNo}
@@ -110,12 +123,26 @@ const GameCarousel = ({
                 cooldown={cooldown}
                 setCooldown={setCooldown}
                 staminaRecovery={staminaRecovery}
-                href={`/${curType}-games/${item.path}${
-                  item.play_to_earn_status === "free" || item.tournament
+                href={`/${curType}-games/${
+                  !onPlaying ? item?.path : item?.game_url?.split("/")?.[3]
+                }${
+                  item?.play_to_earn_status === "free" ||
+                  item?.tournament ||
+                  onPlaying
                     ? "/roomlist"
                     : ""
                 }`}
-                onHandleClick={() => onHandleSetGameStore(curType, item)}
+                onPlaying={onPlaying}
+                onHandleClick={() => {
+                  onHandleSetGameStore(curType, item)
+                  if (onPlaying && item?.play_to_earn_status !== "free") {
+                    const itemSelect = gameItemList?.find(
+                      (ele) => ele.item_size === item.item_size
+                    )
+                    if (itemSelect) onSetGameItemSelectd(itemSelect)
+                  }
+                }}
+                gameType={getTypeGamePathFolder(item)}
               />
             ))}
         </Slider>

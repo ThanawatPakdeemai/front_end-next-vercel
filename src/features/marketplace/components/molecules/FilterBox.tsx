@@ -56,7 +56,7 @@ const FilterBox = () => {
       img: "/images/logo/Logo-Master1.png"
     },
     {
-      name: "NAKA Punk",
+      name: "NAKA Punks",
       img: "/images/logo/Logo-Master1.png"
     }
   ]
@@ -240,7 +240,6 @@ const FilterBox = () => {
         }}
         onChange={(_event) => {
           // const search = _event?.target?.value
-          // console.log("search", search)
         }}
       />
       <TextField

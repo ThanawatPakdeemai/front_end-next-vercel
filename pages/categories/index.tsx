@@ -19,11 +19,9 @@ const CatogoriesListPage = dynamic(
 
 export default function Categories() {
   return (
-    <>
-      <article className="h-full w-full">
-        <CatogoriesListPage />
-      </article>
-    </>
+    <article className="h-full w-full">
+      <CatogoriesListPage />
+    </article>
   )
 }
 

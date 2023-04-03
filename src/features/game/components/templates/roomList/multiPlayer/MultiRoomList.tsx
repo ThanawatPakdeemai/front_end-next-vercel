@@ -3,14 +3,12 @@ import ReloadIcon from "@components/icons/ReloadIcon"
 import ButtonSticky from "@components/molecules/ButtonSticky"
 import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
-import BuyItemBody from "@components/templates/game/BuyItemBody"
 import { MESSAGES } from "@constants/messages"
 import useSocketRoomList from "@feature/game/containers/hooks/useSocketRoomList"
 import {
   IGameRoomListSocket,
   IResSocketRoomList
 } from "@feature/game/interfaces/IGameService"
-import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import { useToast } from "@feature/toast/containers"
 import { Box, Divider } from "@mui/material"
@@ -219,7 +217,7 @@ const MultiRoomList = () => {
                         maxPlayer: _data.max_players
                       }}
                       roomId={_data.create_room_detail.no_room}
-                      roomName="Room Name"
+                      roomName="Room Naka"
                       onClick={() => handleJoinRoom(_data)}
                     />
                   )
@@ -233,9 +231,17 @@ const MultiRoomList = () => {
             </div>
           </Box>
         </SocketProviderRoom>
-        {data && data?.play_to_earn_status !== "free" && !data.tournament && (
-          <BuyItemBody>{data && <CardBuyItem gameObject={data} />}</BuyItemBody>
-        )}
+        {/* {data && (
+          <BuyItemBody>
+            <OverviewContent
+              gameId={data.id}
+              gameType={getTypeGamePathFolder(data)}
+            />
+            {data?.play_to_earn_status !== "free" && !data.tournament && (
+              <CardBuyItem gameObject={data} />
+            )}
+          </BuyItemBody>
+        )} */}
       </Box>
     </>
   )

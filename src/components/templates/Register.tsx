@@ -107,7 +107,7 @@ const RegisterLayout = () => {
               <Tagline
                 bgColor="bg-neutral-800"
                 textColor="text-neutral-500"
-                text="Secue. fun. simple. earn $naka AND enjoy "
+                text="SECURE. SUBLIME. SIMPLE. EARN $NAKA TODAY. "
                 icon={<VectorIcon />}
                 className="!my-[2.938rem]"
               />

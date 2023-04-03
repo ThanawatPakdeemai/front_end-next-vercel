@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from "react"
 import { useRouter } from "next/router"
 import ButtonClose from "@components/atoms/button/ButtonClose"
@@ -44,7 +43,7 @@ interface IProp {
   id?: string
   token?: string | number
   title?: string
-  method: "buy" | "mint"
+  method?: "buy" | "mint"
   position?: {
     x: string
     y: string
@@ -61,6 +60,18 @@ interface IProp {
     count: number
   }
   children?: React.ReactNode
+  redemption?: boolean
+  sellingType?: {
+    title?: string
+    color?:
+      | "default"
+      | "info"
+      | "primary"
+      | "secondary"
+      | "error"
+      | "success"
+      | "warning"
+  }
 }
 
 const RightDetailsMarketplace = ({
@@ -75,7 +86,9 @@ const RightDetailsMarketplace = ({
   qrCode,
   durability,
   count,
-  children
+  children,
+  redemption,
+  sellingType
 }: IProp) => {
   const router = useRouter()
   const profile = useProfileStore((state) => state.profile.data)
@@ -125,7 +138,6 @@ const RightDetailsMarketplace = ({
   }
 
   const isCharactersCoupon = (_CharactersCoupon: string) => {
-    console.log("test-_CharactersCoupon", _CharactersCoupon)
     if (_CharactersCoupon.length < 6) {
       setCharacterCoupon({
         couponLength: _CharactersCoupon.length,
@@ -157,7 +169,7 @@ const RightDetailsMarketplace = ({
   }))
 
   return (
-    <div className="flex flex-col gap-y-5">
+    <div className="flex w-full flex-col gap-y-5">
       {token && (
         <div className="flex w-full items-center justify-between">
           <div className="flex gap-[6px]">
@@ -188,6 +200,15 @@ const RightDetailsMarketplace = ({
             size="small"
             color="info"
           />
+          {sellingType && (
+            <Chip
+              label={sellingType.title}
+              variant="filled"
+              size="small"
+              className="cursor-pointer uppercase"
+              color={sellingType.color || "info"}
+            />
+          )}
         </div>
         <Divider className="!block border-[1px] border-neutral-800" />
         <TextfieldDetailContent
@@ -238,105 +259,109 @@ const RightDetailsMarketplace = ({
 
         <div>{children}</div>
       </div>
-      <Accordion
-        expanded={expanded === "panel1"}
-        onChange={handleChange("panel1")}
-        className="static rounded-md border-neutral-800 bg-neutral-780 px-[26px]"
-      >
-        <AccordionSummary
-          aria-controls="panel1d-content"
-          id="panel1d-header"
+      {redemption && (
+        <Accordion
+          expanded={expanded === "panel1"}
+          onChange={handleChange("panel1")}
+          className="static rounded-md border-neutral-800 bg-neutral-780 px-[26px]"
         >
-          <Typography className="text-neutral-300">REDEMPTION CODE</Typography>
+          <AccordionSummary
+            aria-controls="panel1d-content"
+            id="panel1d-header"
+          >
+            <Typography className="text-neutral-300">
+              REDEMPTION CODE
+            </Typography>
 
-          <div className="flex h-[40px] w-[40px] items-center justify-center rounded-lg border-[1px] border-solid border-neutral-700 bg-neutral-800">
-            <div
-              className={`flex items-center justify-center ${
-                expanded === "panel1"
-                  ? "rotate-45 transition-all duration-300"
-                  : "rotate-0 transition-all duration-300"
-              }`}
-            >
-              <PlusIcon />
-            </div>
-          </div>
-        </AccordionSummary>
-        <AccordionDetails>
-          <div className="flex flex-row items-center">
-            <TextField
-              className="mr-4 w-2/3"
-              required
-              type="text"
-              value={coupon}
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  width: "100%"
-                }
-              }}
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                e.target.value = e.target.value.replace(/[^A-Za-z0-9]/gi, "")
-                isCharactersCoupon(e.target.value)
-              }}
-              id="username-create"
-              placeholder="Ex. naka12345"
-              size="medium"
-              InputProps={{
-                style: {
-                  fontFamily: "neueMachina",
-                  backgroundColor: "#232329",
-                  borderColor: "#18181C"
-                },
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <CouponIcon />
-                  </InputAdornment>
-                ),
-                inputProps: {
-                  pattern: "[a-zA-Z0-9]"
-                }
-              }}
-            />
-            <Button
-              disabled={!profile || characterCoupon.disableCoupon}
-              sx={{ fontFamily: "neueMachina" }}
-              color="secondary"
-              className="btn-rainbow-theme w-1/3 text-sm"
-              variant="contained"
-              size="large"
-              type="submit"
-              onClick={handleClick}
-            >
-              Redeem
-            </Button>
-          </div>
-          {characterCoupon.disableCoupon &&
-            characterCoupon.couponLength > 0 && (
-              <motion.div
-                initial={{ opacity: 0, marginBottom: 0 }}
-                animate={{
-                  opacity: 1,
-                  marginTop: 10
-                }}
+            <div className="flex h-[40px] w-[40px] items-center justify-center rounded-lg border-[1px] border-solid border-neutral-700 bg-neutral-800">
+              <div
+                className={`flex items-center justify-center ${
+                  expanded === "panel1"
+                    ? "rotate-45 transition-all duration-300"
+                    : "rotate-0 transition-all duration-300"
+                }`}
               >
-                <Alert
-                  severity="warning"
-                  className="rounded-lg"
+                <PlusIcon />
+              </div>
+            </div>
+          </AccordionSummary>
+          <AccordionDetails>
+            <div className="flex flex-row items-center">
+              <TextField
+                className="mr-4 w-2/3"
+                required
+                type="text"
+                value={coupon}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    width: "100%"
+                  }
+                }}
+                onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  e.target.value = e.target.value.replace(/[^A-Za-z0-9]/gi, "")
+                  isCharactersCoupon(e.target.value)
+                }}
+                id="username-create"
+                placeholder="Ex. naka12345"
+                size="medium"
+                InputProps={{
+                  style: {
+                    fontFamily: "neueMachina",
+                    backgroundColor: "#232329",
+                    borderColor: "#18181C"
+                  },
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <CouponIcon />
+                    </InputAdornment>
+                  ),
+                  inputProps: {
+                    pattern: "[a-zA-Z0-9]"
+                  }
+                }}
+              />
+              <Button
+                disabled={!profile || characterCoupon.disableCoupon}
+                sx={{ fontFamily: "neueMachina" }}
+                color="secondary"
+                className="btn-rainbow-theme w-1/3 text-sm"
+                variant="contained"
+                size="large"
+                type="submit"
+                onClick={handleClick}
+              >
+                Redeem
+              </Button>
+            </div>
+            {characterCoupon.disableCoupon &&
+              characterCoupon.couponLength > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, marginBottom: 0 }}
+                  animate={{
+                    opacity: 1,
+                    marginTop: 10
+                  }}
                 >
-                  The coupon must contain at least 6 characters.
-                </Alert>
-              </motion.div>
+                  <Alert
+                    severity="warning"
+                    className="rounded-lg"
+                  >
+                    The coupon must contain at least 6 characters.
+                  </Alert>
+                </motion.div>
+              )}
+            {!profile && (
+              <Alert
+                className="mt-3 !rounded-sm text-primary-main"
+                variant="filled"
+                severity="error"
+              >
+                {MESSAGES.please_login}
+              </Alert>
             )}
-          {!profile && (
-            <Alert
-              className="mt-3 !rounded-sm text-primary-main"
-              variant="filled"
-              severity="error"
-            >
-              {MESSAGES.please_login}
-            </Alert>
-          )}
-        </AccordionDetails>
-      </Accordion>
+          </AccordionDetails>
+        </Accordion>
+      )}
       <div className="flex flex-row items-center" />
     </div>
   )

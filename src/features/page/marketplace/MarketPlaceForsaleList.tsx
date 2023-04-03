@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid"
 import React from "react"
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonItem from "@feature/marketplace/components/molecules/SkeletonItem"
+import { TSellingType } from "@feature/marketplace/interfaces/IMarketService"
 
 const MarketPlaceForsaleList = () => {
   const {
@@ -17,6 +18,16 @@ const MarketPlaceForsaleList = () => {
   } = useMarketForSale()
 
   const router = useRouter()
+
+  const handleColorSellingType = (selling_type: TSellingType) => {
+    if (selling_type === "fullpayment") {
+      return "info"
+    }
+    if (selling_type === "rental") {
+      return "error"
+    }
+    return "warning"
+  }
 
   if (ownerDataForsale && ownerDataForsale.length > 0 && !isLoading) {
     return (
@@ -48,8 +59,13 @@ const MarketPlaceForsaleList = () => {
               itemLevel={_data.level}
               itemSize={_data.size as string}
               itemAmount={_data.amount as number}
-              href={`/${router.locale}/marketplace/inventory/${_data.type}/${_data.id}`}
-              sellingType={_data.selling_type}
+              href={`/${router.locale}/marketplace/${_data.type}/${_data.id}`}
+              sellingType={{
+                title: _data.selling_type,
+                color: handleColorSellingType(
+                  _data.selling_type as TSellingType
+                )
+              }}
               price={_data.price}
             />
           ))}

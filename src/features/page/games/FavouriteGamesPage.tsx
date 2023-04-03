@@ -9,11 +9,13 @@ import {
   P2EHeaderMenu,
   StoryModeHeaderMenu
 } from "@constants/gameSlide"
-import GameCard from "@feature/game/components/molecules/GameCard"
 import useFilterStore from "@stores/blogFilter"
 import useGlobal from "@hooks/useGlobal"
 import useFavoriteGame from "@feature/favourite/containers/hooks/useFavoriteGame"
 import NoData from "@components/molecules/NoData"
+import { Box } from "@mui/material"
+import DropdownLimit from "@components/atoms/DropdownLimit"
+import GameCard from "@feature/game/components/molecules/GameCard"
 
 const FavouriteGamesPage = () => {
   // Don't Delete this **************************
@@ -41,11 +43,14 @@ const FavouriteGamesPage = () => {
     stateProfile,
     getTypeGamePathFolder,
     onHandleSetGameStore,
-    isRedirectRoomlist
+    isRedirectRoomlist,
+    defaultBody,
+    pager
   } = useGlobal()
   const { gameFavourite, gameFavouriteInfo, isLoadingGameFavourite } =
     useFavoriteGame({
-      playerId: stateProfile?.id ?? ""
+      playerId: stateProfile?.id ?? "",
+      ...defaultBody
     })
 
   const fetchGameFavorite = useCallback(async () => {
@@ -83,13 +88,6 @@ const FavouriteGamesPage = () => {
     let load = false
 
     if (!load) fetchGameFavorite()
-    // let load = true
-    // if (load) {
-    //   setLoading(true)
-    // }
-    // return () => {
-    //   load = false
-    // }
 
     return () => {
       load = true
@@ -133,7 +131,7 @@ const FavouriteGamesPage = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-5">
+      <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {isLoadingGameFavourite
           ? [...Array(pageSize)].map(() => <SkeletonCard key={uuid()} />)
           : null}
@@ -144,13 +142,14 @@ const FavouriteGamesPage = () => {
               <GameCard
                 key={game.id}
                 menu={menu || F2PHeaderMenu}
-                href={`/${getTypeGamePathFolder(game)}-games/${
+                href={`/${getTypeGamePathFolder(game)}/${
                   game.path
                 }${isRedirectRoomlist(game).toString()}`}
                 onHandleClick={() =>
                   onHandleSetGameStore(getTypeGamePathFolder(game), game)
                 }
                 data={game}
+                gameType={getTypeGamePathFolder(game)}
               />
             )
           })
@@ -158,12 +157,33 @@ const FavouriteGamesPage = () => {
           <NoData className="" />
         )}
       </div>
-      <PaginationNaka
+      <Box
+        className="my-2 flex w-full justify-between md:my-5"
+        sx={{
+          ".MuiPagination-ul": {
+            gap: "5px 0"
+          }
+        }}
+      >
+        <PaginationNaka
+          totalCount={totalCount}
+          limit={pageSize}
+          page={page}
+          setPage={setPage}
+        />
+        <DropdownLimit
+          className="m-0 w-[160px] flex-row"
+          defaultValue={30}
+          list={pager}
+          onChangeSelect={setPageSize}
+        />
+      </Box>
+      {/* <PaginationNaka
         totalCount={totalCount}
         limit={pageSize}
         page={page}
         setPage={setPage}
-      />
+      /> */}
     </div>
   )
 }

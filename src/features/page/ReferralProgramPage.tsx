@@ -47,8 +47,7 @@ const ReferralProgramPage = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { successToast } = useToast()
   const { getReferralsData, isPreviousData } = useGetReferral({
-    // player_id: profile && profile.id ? profile.id : "",
-    player_id: "61bc302f7f8867700b66dd4b",
+    player_id: profile && profile.id ? profile.id : "",
     skip: page,
     limit: limitPage,
     sort: undefined,
@@ -135,9 +134,9 @@ const ReferralProgramPage = () => {
                   </div>
                 </div>
                 <div className="col-span-2 text-sm text-black-default">
-                  Sharing is caring. Have your friends sign up and start
-                  playing.Earn 3% referral fee on every game your friends play.
-                  Enjoy lifetime passive income. Start earning!
+                  Sharing is caring. Invite your friends to sign up and earn 3%
+                  referral fee on every game they play. Start earning passive
+                  income.
                 </div>
               </div>
               {profile && (
@@ -187,7 +186,7 @@ const ReferralProgramPage = () => {
             {getReferralsData && (
               <CardContent
                 className="col-span-2"
-                title="My friends info"
+                title="FRIEND REFERRALS"
                 icon={<IReferrals stroke="#E1E2E2" />}
               >
                 <div className="gap-2 uppercase sm:grid md:flex lg:flex">
@@ -210,7 +209,7 @@ const ReferralProgramPage = () => {
           </div>
           <CardContent
             className="mt-8 max-w-[630px]"
-            title="friends Activities"
+            title="REFERRALS HISTORICAL ACTIVITY"
             icon={<FriendsActivitiesIcon />}
           >
             <TableContainer className="mt-4">

@@ -6,16 +6,15 @@ import dynamic from "next/dynamic"
 import { getGameByPath } from "@feature/game/containers/services/game.service"
 import useGetGameByPath from "@feature/game/containers/hooks/useFindGameByPath"
 import useGameStore from "@stores/game"
+import { TabProvider } from "@feature/tab/contexts/TabProvider"
+import useGlobal from "@hooks/useGlobal"
+import { Box } from "@mui/material"
+import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
+import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
+import { useTranslation } from "react-i18next"
 
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
-  {
-    suspense: true,
-    ssr: false
-  }
-)
-const StoryLobby = dynamic(
-  () => import("@feature/game/components/templates/lobby/StoryLobby"),
   {
     suspense: true,
     ssr: false
@@ -35,15 +34,40 @@ const RightSidebarContentEffect = dynamic(
     ssr: false
   }
 )
-const OverviewHowToPlay = dynamic(
-  () => import("@components/organisms/OverviewHowToPlay"),
+const FullWidthContent = dynamic(
+  () => import("@components/templates/contents/FullWidthContent"),
   {
     suspense: true,
     ssr: false
   }
 )
-const DefaultLobby = dynamic(
-  () => import("@feature/game/components/templates/lobby/DefaultLobby"),
+
+const GameContent = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const OverviewContent = dynamic(
+  () => import("@components/organisms/OverviewContent"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const GameTabs = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameTabs"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const ButtonGame = dynamic(
+  () => import("@feature/game/components/molecules/ButtonGame"),
   {
     suspense: true,
     ssr: false
@@ -55,6 +79,13 @@ export default function GameLobby() {
   const { onSetGameData } = useGameStore()
   const { GameHome } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
+  const {
+    getTypeGamePathFolder,
+    getColorChipByGameType,
+    getGameStoryModeURL,
+    isRedirectRoomlist
+  } = useGlobal()
+  const { t } = useTranslation()
 
   useEffect(() => {
     let load = false
@@ -72,26 +103,144 @@ export default function GameLobby() {
   const getTemplateLobby = () => {
     if (gameData) {
       switch (gameData.game_type) {
-        case "storymode":
+        // case "storymode":
+        //   return <StoryLobby />
+        default:
           return (
-            <RightSidebarContentEffect
-              content={<StoryLobby />}
-              aside={
-                <OverviewHowToPlay
-                  gameId={gameData._id}
-                  gameType="story-mode"
-                  title="how_to_play"
-                />
-              }
+            <GameContent
+              gameId={gameData.id}
+              gameType={getTypeGamePathFolder(gameData)}
+              themeColor={getColorChipByGameType(
+                getTypeGamePathFolder(gameData)
+              )}
             />
           )
-        default:
-          return <DefaultLobby gameData={gameData} />
       }
     }
   }
 
-  return <>{gameData ? getTemplateLobby() : <SkeletonBanner />}</>
+  /**
+   * @description Render Form Buy Item
+   */
+  const renderFormBuyItem = () => {
+    if (!gameData) return null
+    switch (getTypeGamePathFolder(gameData)) {
+      case "story-mode":
+        return (
+          <Box
+            className="flex w-full flex-col justify-between gap-4 uppercase"
+            sx={{
+              ".like-no_wrapper": {
+                flex: "0 0 100%",
+                ".like-no_score": {
+                  width: "100%"
+                }
+              }
+            }}
+          >
+            <Box
+              sx={StartButtonCustomStyle}
+              className="flex w-full justify-center uppercase"
+            >
+              <ButtonGame
+                textButton={t("join-game")}
+                url={getGameStoryModeURL(gameData)}
+              />
+            </Box>
+          </Box>
+        )
+
+      case "free-to-play":
+        return (
+          <Box
+            className="flex w-full flex-col justify-between gap-4 uppercase"
+            sx={{
+              ".like-no_wrapper": {
+                flex: "0 0 100%",
+                ".like-no_score": {
+                  width: "100%"
+                }
+              }
+            }}
+          >
+            <Box
+              sx={StartButtonCustomStyle}
+              className="flex w-full justify-center uppercase"
+            >
+              <ButtonGame
+                textButton={t("join-game")}
+                url={`/${getTypeGamePathFolder(gameData)}-games/${
+                  gameData.path
+                }${isRedirectRoomlist(gameData).toString()}`}
+              />
+            </Box>
+          </Box>
+        )
+      default:
+        return (
+          <CardBuyItem
+            buttonStyle="green"
+            gameObject={gameData}
+          />
+        )
+    }
+  }
+
+  return (
+    <>
+      {gameData ? (
+        <GamePageDefault
+          component={
+            <RightSidebarContentEffect
+              className="mb-24"
+              content={getTemplateLobby()}
+              aside={
+                <Box
+                  component="div"
+                  className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
+                  sx={{
+                    ".panel-content": {
+                      maxHeight: "270px",
+                      ".custom-scroll": {
+                        overflow: "hidden"
+                      }
+                    },
+                    ".like-no_score": {
+                      margin: "0"
+                    }
+                  }}
+                >
+                  <OverviewContent
+                    gameId={gameData.id}
+                    gameType={getTypeGamePathFolder(gameData)}
+                  />
+                  {renderFormBuyItem()}
+                </Box>
+              }
+            />
+          }
+          component2={
+            <FullWidthContent
+              sxCustomStyled={{
+                "&.container": {
+                  maxWidth: "100%!important"
+                }
+              }}
+            >
+              <TabProvider>
+                <GameTabs
+                  gameId={gameData.id}
+                  gameType="arcade-emporium"
+                />
+              </TabProvider>
+            </FullWidthContent>
+          }
+        />
+      ) : (
+        <GamePageDefault component={<SkeletonBanner />} />
+      )}
+    </>
+  )
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -108,5 +257,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 }
 
 GameLobby.getLayout = function getLayout(page: ReactElement) {
-  return <GamePageDefault component={page} />
+  return page
 }

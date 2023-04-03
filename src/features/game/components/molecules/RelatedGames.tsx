@@ -7,12 +7,12 @@ import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import GameCard from "./GameCard"
 
 interface IProps {
-  gameType: IGetType
+  _gameType: IGetType
 }
 
-const ReleatedGames = ({ gameType }: IProps) => {
+const ReleatedGames = ({ _gameType }: IProps) => {
   const { data: gamesData, isFetching } = useGamesByTypes({
-    _type: gameType,
+    _type: _gameType,
     _limit: 6,
     _page: Math.floor(Math.random() * 3) + 1
   })
@@ -32,6 +32,7 @@ const ReleatedGames = ({ gameType }: IProps) => {
               <GameCard
                 key={game.id}
                 data={game}
+                gameType={_gameType}
                 menu={F2PHeaderMenu}
                 href={`/${game.game_type}/${game.game_url}`}
               />

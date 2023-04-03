@@ -69,6 +69,7 @@ const TextfieldDetailContent = ({
               </InputAdornment>
             )
           }}
+          helperText="Land position on map"
         />
       )}
       {price && (

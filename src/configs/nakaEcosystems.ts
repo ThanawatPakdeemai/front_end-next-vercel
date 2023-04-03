@@ -25,10 +25,11 @@ export const NAKA_ECOSYSTEMSS = [
     label: "Nakapunks",
     path: `${CONFIGS.BASE_URL.MARKETPLACE}/naka-punk`,
     icon: true
-  },
-  {
-    label: "Become Developer",
-    path: "/become-developer",
-    icon: true
   }
+  // TODO: Open after launch V2
+  // {
+  //   label: "Become A Developer",
+  //   path: "/become-developer",
+  //   icon: true
+  // }
 ]

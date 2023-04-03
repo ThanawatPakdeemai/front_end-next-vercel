@@ -209,7 +209,7 @@ export default function CardBuyItem({
       />
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [qtyItemSelected, router.asPath, t, buttonStyle, router.pathname])
+  }, [qtyItemSelected, router.asPath, buttonStyle, router.pathname])
 
   const renderButton = () =>
     router &&
@@ -302,9 +302,9 @@ export default function CardBuyItem({
                   <div className="mb-2 flex w-full justify-between rounded-xl bg-neutral-700 p-2 text-center text-black-default">
                     <p>= {totalPrice}</p>
                     {/* <Input
-                  defaultValue=" 0.00"
-                  inputProps={ariaLabel}
-                /> */}
+                      defaultValue=" 0.00"
+                      inputProps={ariaLabel}
+                    /> */}
                     <AttachMoneyIcon />
                   </div>
                   <div className="w-full">

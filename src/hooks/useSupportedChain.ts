@@ -173,11 +173,11 @@ const useSupportedChain = () => {
       return 0
     })
     setChainSupport(allTokenSupportedSorted)
-    if (currentTokenSelected && currentTokenSelected?.address !== "") return
+    // if (currentTokenSelected && currentTokenSelected?.address !== "") return
     if (currentTokenSelected !== chainSupport[0]) return
     setCurrentTokenSelected(allTokenSupportedSorted[0])
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setChainSupport])
+  }, [setChainSupport, setCurrentTokenSelected])
 
   return {
     getTokenSupply,

@@ -82,7 +82,18 @@ const useBuyGameItemController = () => {
   }
 
   const updatePricePerItem = useCallback(async () => {
-    if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
+    Helper.calculateItemPerPrice(
+      (watch("item") as IGameItemListData)?.price,
+      (price as ICurrentNakaData)?.last
+    ).then((res) => {
+      if (res) {
+        setValue("nakaPerItem", Number(res))
+      } else {
+        setValue("nakaPerItem", 0)
+      }
+    })
+    // TODO: Open after launch V2
+    /* if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
       Helper.calculateItemPerPrice(
         (watch("item") as IGameItemListData)?.price,
         (price as ICurrentNakaData)?.last
@@ -104,7 +115,7 @@ const useBuyGameItemController = () => {
           setValue("nakaPerItem", 0)
         }
       })
-    }
+    } */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     chainId,
@@ -260,6 +271,7 @@ const useBuyGameItemController = () => {
   const isDisabled = useMemo(() => {
     updatePricePerItem()
     const totalPrice = watch("nakaPerItem") * watch("qty")
+
     if (
       Object.keys(watch("currency") ?? [])?.length !== 0 &&
       Object.keys(watch("item") ?? [])?.length !== 0 &&

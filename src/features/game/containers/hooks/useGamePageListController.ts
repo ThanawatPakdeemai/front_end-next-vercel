@@ -117,9 +117,9 @@ const useGamePageListController = () => {
   }
 
   const onClickLink = (game: IGame) =>
-    `/${getTypeGamePathFolder(game)}/${game.path}${isRedirectRoomlist(
-      game
-    ).toString()}`
+    `/${game.is_NFT ? "arcade-emporium" : getTypeGamePathFolder(game)}/${
+      game.path
+    }${isRedirectRoomlist(game).toString()}`
 
   return {
     limit,

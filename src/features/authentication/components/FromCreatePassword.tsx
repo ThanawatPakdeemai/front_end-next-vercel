@@ -395,7 +395,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                         className="mt-[5px] w-full"
                         type={showConfirmPassword ? "text" : "password"}
                         placeholder="Confirm Password"
-                        label="A Number or Symbol, Atleast 6 Characters"
+                        label="A Number or Symbol, at least 6 Characters"
                         autoComplete="new-password'"
                         onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                           e.target.value = e.target.value.slice(0, 128)

@@ -37,6 +37,7 @@ import CardLinkTemplate from "@components/templates/contents/CardLinkTemplate"
 import CONFIGS from "@configs/index"
 import OrionTrade from "@components/organisms/OrionTrade"
 import OnPlaying from "@feature/home/components/molecules/OnPlaying"
+import DeveloperPart from "@feature/home/components/template/DeveloperPart"
 
 const Home = () => {
   const limit = 10
@@ -258,7 +259,7 @@ const Home = () => {
 
       <BodyCategories />
       <OnPlaying />
-      {/* <DeveloperPart /> */}
+      <DeveloperPart />
       <Box className="xs:flex-col mt-4 mb-10 gap-4 lg:flex">
         <Box className="flex-1 xl:flex-none">
           <Grid

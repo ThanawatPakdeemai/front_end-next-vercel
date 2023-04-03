@@ -22,13 +22,15 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import useGlobal from "@hooks/useGlobal"
 import { useToast } from "@feature/toast/containers"
 import useNotiStore from "@stores/notification"
+import PlugIcon from "@components/icons/MenunIcon/PlugIcon"
+import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 
 const RightMenuLogIn = () => {
   const { count } = useNotiStore()
   const profile = useProfileStore((state) => state.profile.data)
   const [expanded, setExpanded] = useState<boolean>(false)
   const [hoverExpand, setHoverExpand] = useState<boolean>(false)
-  const { isMarketplace, isDeveloperPage } = useGlobal()
+  const { isMarketplace, isDeveloperPage, onClickLogout } = useGlobal()
   const { isConnected, address } = useWeb3Provider()
   const { successToast } = useToast()
 
@@ -221,6 +223,15 @@ const RightMenuLogIn = () => {
               type="row"
             />
             <MenuProfile />
+            <ButtonToggleIcon
+              startIcon={<PlugIcon />}
+              text="Logout"
+              handleClick={async () => {
+                onClickLogout()
+              }}
+              className="btn-rainbow-theme my-4 bg-error-main px-14 text-sm text-white-default"
+              type="button"
+            />
           </Collapse>
         </div>
       </ClickAwayListener>

@@ -1,4 +1,3 @@
-import useGlobal from "@hooks/useGlobal"
 import { Typography } from "@mui/material"
 import { v4 as uuid } from "uuid"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
@@ -34,7 +33,7 @@ const ReleatedGames = ({ gameType }: IProps) => {
     return () => {
       load = true
     }
-  }, [gamesData, relatedType])
+  }, [gamesData, relatedType, gameType])
 
   return (
     <div>

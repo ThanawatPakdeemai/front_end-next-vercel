@@ -67,9 +67,9 @@ const FormBuyItem = () => {
                 <Image
                   src={game.item[0].image}
                   alt={game.item[0].name}
-                  width={100}
-                  height={100}
-                  className="w-full p-4"
+                  width={500}
+                  height={500}
+                  className="w-[80%] object-contain p-4"
                 />
               </div>
               <div className="custom-scroll w-full overflow-y-scroll">

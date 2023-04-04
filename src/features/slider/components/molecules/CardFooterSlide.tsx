@@ -18,8 +18,12 @@ const CardFooterSlide = ({
   text = "play_now"
 }: IContentFooterBannerSlide) => {
   const { t } = useTranslation()
-  const { onHandleSetGameStore, getTypeGamePathFolder, stateProfile } =
-    useGlobal()
+  const {
+    onHandleSetGameStore,
+    getTypeGamePathFolder,
+    stateProfile,
+    isRedirectRoomlist
+  } = useGlobal()
   const { onClickFavouriteButton, favouriteStatus } = useFavoriteGameContoller({
     playerId: stateProfile?.id ?? "",
     gameId: gameData.id
@@ -43,7 +47,9 @@ const CardFooterSlide = ({
           color="secondary"
           variant="contained"
           className="w-full"
-          href={`/${getTypeGamePathFolder(gameData)}/${gameData.path}`}
+          href={`/${getTypeGamePathFolder(gameData)}/${
+            gameData.path
+          }${isRedirectRoomlist(gameData).toString()}`}
           onClick={() => {
             onHandleSetGameStore(getTypeGamePathFolder(gameData), gameData)
           }}

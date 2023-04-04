@@ -12,17 +12,9 @@ import { Box } from "@mui/material"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
 import { useTranslation } from "react-i18next"
-// import LikeNoLobby from "@components/molecules/LikeNoLobby"
 
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
-  {
-    suspense: true,
-    ssr: false
-  }
-)
-const StoryLobby = dynamic(
-  () => import("@feature/game/components/templates/lobby/StoryLobby"),
   {
     suspense: true,
     ssr: false
@@ -73,38 +65,6 @@ const GameTabs = dynamic(
     ssr: false
   }
 )
-
-// const GameReviews = dynamic(
-//   () => import("@feature/game/components/molecules/GameReviews"),
-//   {
-//     suspense: true,
-//     ssr: false
-//   }
-// )
-
-// const CardBuyItem = dynamic(
-//   () => import("@feature/gameItem/components/molecules/CardBuyItem"),
-//   {
-//     suspense: true,
-//     ssr: false
-//   }
-// )
-
-// const OverviewHowToPlay = dynamic(
-//   () => import("@components/organisms/OverviewHowToPlay"),
-//   {
-//     suspense: true,
-//     ssr: false
-//   }
-// )
-
-// const DefaultLobby = dynamic(
-//   () => import("@feature/game/components/templates/lobby/DefaultLobby"),
-//   {
-//     suspense: true,
-//     ssr: false
-//   }
-// )
 
 const ButtonGame = dynamic(
   () => import("@feature/game/components/molecules/ButtonGame"),
@@ -165,7 +125,7 @@ export default function GameLobby() {
   const renderFormBuyItem = () => {
     if (!gameData) return null
     switch (getTypeGamePathFolder(gameData)) {
-      case "story-mode":
+      case "story-mode-games":
         return (
           <Box
             className="flex w-full flex-col justify-between gap-4 uppercase"
@@ -178,10 +138,6 @@ export default function GameLobby() {
               }
             }}
           >
-            <StoryLobby
-              hideButtonPlay
-              hideImage
-            />
             <Box
               sx={StartButtonCustomStyle}
               className="flex w-full justify-center uppercase"
@@ -191,14 +147,10 @@ export default function GameLobby() {
                 url={getGameStoryModeURL(gameData)}
               />
             </Box>
-            {/* <LikeNoLobby
-                hideImage={true}
-                value={0}
-              /> */}
           </Box>
         )
 
-      case "free-to-play":
+      case "free-to-play-games":
         return (
           <Box
             className="flex w-full flex-col justify-between gap-4 uppercase"
@@ -211,10 +163,6 @@ export default function GameLobby() {
               }
             }}
           >
-            {/* <LikeNoLobby
-              hideImage={true}
-              value={0}
-            /> */}
             <Box
               sx={StartButtonCustomStyle}
               className="flex w-full justify-center uppercase"
@@ -286,10 +234,6 @@ export default function GameLobby() {
                   gameType="arcade-emporium"
                 />
               </TabProvider>
-              {/* <GameReviews
-                gameType="arcade-emporium"
-                gameId={gameData.id}
-              /> */}
             </FullWidthContent>
           }
         />

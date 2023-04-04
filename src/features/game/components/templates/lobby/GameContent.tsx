@@ -5,6 +5,7 @@ import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
 import HorizontalThumbSlide from "@feature/slider/components/templates/HorizontalThumbSlide"
 import FullWidthSlide from "@feature/slider/components/templates/FullWidthSlide"
 import ArcadeEmporiumIcon from "@components/icons/ArcadeEmporiumIcon"
+import GamePlayTime from "@feature/game/components/atoms/GamePlayTime"
 
 export const StartButtonCustomStyle: SxProps = {
   "& > div": {
@@ -29,7 +30,10 @@ const GameContent = ({
   gameType,
   themeColor = "!bg-green-lemon"
 }: IGameContentProps) => {
-  const { gameDataState, gameMedia } = useGameOverview(gameId, gameType)
+  const { gameDataState, gameMedia, playCount } = useGameOverview(
+    gameId,
+    gameType
+  )
 
   return (
     <div
@@ -46,12 +50,17 @@ const GameContent = ({
           <div className="flex items-center gap-3">
             {gameType === "arcade-emporium" && <ArcadeEmporiumIcon />}
             <Chip
-              label={gameType.split("-").join(" ")}
+              label={gameType.split("-").join(" ").split("games").join("")}
               size="small"
               color="success"
               className={`${themeColor.toString()} font-bold uppercase`}
             />
             <h2>{gameDataState && gameDataState.name}</h2>
+            {playCount !== undefined && (
+              <div className="ml-auto">
+                <GamePlayTime playTime={playCount} />
+              </div>
+            )}
           </div>
         </div>
         {gameMedia && gameMedia.length > 1 ? (
@@ -60,18 +69,6 @@ const GameContent = ({
           <FullWidthSlide items={gameMedia} />
         )}
       </Box>
-      {/* {gameDataState && (
-        <Box
-          sx={CustomStyle}
-          className="flex w-full justify-center uppercase"
-        >
-          <ButtonGame
-            description={"ready to go. Let's start the game!"}
-            textButton="Play"
-            url={handleGameURL()}
-          />
-        </Box>
-      )} */}
     </div>
   )
 }

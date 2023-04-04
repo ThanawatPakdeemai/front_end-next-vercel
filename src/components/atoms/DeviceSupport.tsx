@@ -13,7 +13,7 @@ const DeviceSupport = ({ type, support }: IProp) => {
   const desktopSupport = support
     ? "/assets/icons/social_icon/desktopSuccess.svg"
     : "/assets/icons/social_icon/desktop.svg"
-  return (
+  return !support ? (
     <>
       {type === "desktop" ? (
         <Image
@@ -35,6 +35,8 @@ const DeviceSupport = ({ type, support }: IProp) => {
         />
       )}
     </>
+  ) : (
+    <></>
   )
 }
 

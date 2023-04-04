@@ -91,7 +91,7 @@ export default function ArcadeEmporiumGameDetails() {
   const renderFormBuyItem = () => {
     if (!gameData) return null
     switch (getTypeGamePathFolder(gameData)) {
-      case "story-mode":
+      case "story-mode-games":
         return (
           <Box
             className="flex w-full flex-col justify-between gap-4 uppercase"
@@ -120,7 +120,7 @@ export default function ArcadeEmporiumGameDetails() {
           </Box>
         )
 
-      case "free-to-play":
+      case "free-to-play-games":
         return (
           <Box
             className="flex w-full flex-col justify-between gap-4 uppercase"
@@ -143,7 +143,7 @@ export default function ArcadeEmporiumGameDetails() {
             >
               <ButtonGame
                 textButton={t("join-game")}
-                url={`/${getTypeGamePathFolder(gameData)}-games/${
+                url={`/${getTypeGamePathFolder(gameData)}/${
                   gameData.path
                 }${isRedirectRoomlist(gameData).toString()}`}
               />

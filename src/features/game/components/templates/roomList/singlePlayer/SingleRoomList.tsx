@@ -13,11 +13,8 @@ import { unstable_batchedUpdates } from "react-dom"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
-import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
-import BuyItemBody from "@components/templates/game/BuyItemBody"
 import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGameRoomsById"
-import OverviewContent from "@components/organisms/OverviewContent"
 import useGlobal from "@hooks/useGlobal"
 
 /**
@@ -26,12 +23,12 @@ import useGlobal from "@hooks/useGlobal"
  */
 const GameRoomList = () => {
   /* mockup data */
+  const { getTypeGamePathFolder } = useGlobal()
   const profile = useProfileStore((state) => state.profile.data)
   const { data, itemSelected } = useGameStore()
   const router = useRouter()
   const { errorToast } = useToast()
   const [gameData, setGameData] = useState<IGame>()
-  const { getTypeGamePathFolder } = useGlobal()
 
   const item = useMemo(() => {
     if (data) {
@@ -120,6 +117,14 @@ const GameRoomList = () => {
     }
   }
 
+  const renderRoomName = (): string => {
+    if (!gameData) return "Room"
+    if (gameData && getTypeGamePathFolder(gameData) === "play-to-earn-games") {
+      return `Room ${itemSelected?.item_size}`
+    }
+    return "Room"
+  }
+
   useEffect(() => {
     let load = false
 
@@ -159,7 +164,7 @@ const GameRoomList = () => {
                       maxPlayer: _data.max_players
                     }}
                     roomId={_data.room_number}
-                    roomName={`Room ${itemSelected?.item_size ?? ""}`}
+                    roomName={renderRoomName()}
                     onClick={() => handleJoinRoom(_data)}
                     btnText={
                       _data?.current_player?.find(
@@ -191,7 +196,7 @@ const GameRoomList = () => {
                       maxPlayer: _data.max_players
                     }}
                     roomId={_data.room_number}
-                    roomName={`Room ${itemSelected?.item_size ?? ""}`}
+                    roomName={renderRoomName()}
                     onClick={() => handleJoinRoom(_data)}
                   />
                 )
@@ -203,18 +208,17 @@ const GameRoomList = () => {
           />
         </div>
       </div>
-      {gameData &&
-        gameData?.play_to_earn_status !== "free" &&
-        !gameData.tournament && (
-          <BuyItemBody>
-            <OverviewContent
-              gameId={gameData.id}
-              gameType={getTypeGamePathFolder(gameData)}
-              gameIdNFT={gameData.NFT_Owner}
-            />
+      {/* {gameData && (
+        <BuyItemBody>
+          <OverviewContent
+            gameId={gameData.id}
+            gameType={getTypeGamePathFolder(gameData)}
+          />
+          {gameData?.play_to_earn_status !== "free" && !gameData.tournament && (
             <CardBuyItem gameObject={gameData} />
-          </BuyItemBody>
-        )}
+          )}
+        </BuyItemBody>
+      )} */}
     </Box>
   )
 }

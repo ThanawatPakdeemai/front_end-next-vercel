@@ -22,11 +22,9 @@ export type TTypeCode =
   | "survival_01"
 
 export type IGetType =
-  | "play-to-earn"
   | "play-to-earn-games"
-  | "free-to-play"
   | "free-to-play-games"
-  | "story-mode"
+  | "story-mode-games"
   | "storymode"
   | "must-try"
   | "hot-game"

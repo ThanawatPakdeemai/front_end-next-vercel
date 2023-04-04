@@ -35,7 +35,9 @@ const PlayToEarnGamesPage = () => {
                 data={game}
                 href={gameLink(game)}
                 onHandleClick={() => onSetGameStore(game)}
-                gameType="play-to-earn"
+                gameType={
+                  game.is_NFT ? "arcade-emporium" : "play-to-earn-games"
+                }
               />
             ))}
       </div>

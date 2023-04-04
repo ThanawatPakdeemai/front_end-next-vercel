@@ -8,10 +8,11 @@ import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContol
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useChainSupportStore from "@stores/chainSupport"
 import React, { ReactNode } from "react"
-import WalletBody from "../molecules/WalletBody"
-import WalletFooter from "../molecules/WalletFooter"
+import CONFIGS from "@configs/index"
 import WalletHeader from "../molecules/WalletHeader"
+import WalletBody from "../molecules/WalletBody"
 import WalletLightAnimation from "../molecules/WalletLightAnimation"
+import WalletFooter from "../molecules/WalletFooter"
 
 interface IWalletContent {
   handleConnectWithMetamask: (() => Promise<void>) | undefined
@@ -73,7 +74,8 @@ const WalletContent = ({
                 .symbol
             }
             className={
-              currentChainSelected === "0x61"
+              currentChainSelected ===
+              (CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string)
                 ? "text-binance-default"
                 : "text-red-default"
             }

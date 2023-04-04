@@ -23,9 +23,7 @@ import CardLink from "@components/molecules/CardLink"
 import INakaSwap from "@components/icons/NakaSwap"
 import IStacking from "@components/icons/Stacking"
 import IReferrals from "@components/icons/Referrals"
-import useGetHotGames from "@feature/game/containers/hooks/useGetHotGames"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
-import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { v4 as uuid } from "uuid"
 import useTweenEffect from "@hooks/useSpartFireEffect"
@@ -37,33 +35,11 @@ import CardLinkTemplate from "@components/templates/contents/CardLinkTemplate"
 import CONFIGS from "@configs/index"
 import OrionTrade from "@components/organisms/OrionTrade"
 import OnPlaying from "@feature/home/components/molecules/OnPlaying"
-import { useQuery } from "@tanstack/react-query"
-import { getGamesByKey } from "../game/containers/services/game.service"
+import DeveloperPart from "@feature/home/components/template/DeveloperPart"
+import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 
 const Home = () => {
-  const limit = 10
-  const _limit = 30
-  const _skip = 1
-  const _sort = "_id"
-  const _search = ""
-  const _item = "all"
-  const _device = "all"
-  const _gameType = "all"
-  const _tournament = false
-  const _category = "all"
-  const _nftgame = false
-  const { defaultBody } = useGlobal(
-    _limit,
-    _skip,
-    _sort,
-    _search,
-    _item,
-    _device,
-    _gameType,
-    _tournament,
-    _category,
-    _nftgame
-  )
+  // const limit = 10
   const { profile } = useProfileStore()
   const { clearQuestStore, setOpen, hasCompleted } = useQuestStore()
   const { hydrated } = useGlobal()
@@ -91,73 +67,59 @@ const Home = () => {
   }
 
   const [f2pGame, setF2PGame] = useState<IGame[]>()
-  const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-play")
+  const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-play-games")
 
   const [p2eGame, setP2EGame] = useState<IGame[]>()
-  const [p2eCurType, setP2ECurType] = useState<IGetType>("hot-game")
+  const [p2eCurType, setP2ECurType] = useState<IGetType>("play-to-earn-games")
 
-  const { hotGameData } = useGetHotGames()
-  const { data: p2eGameData } = useGamesByTypes({
-    _type: p2eCurType,
-    _limit: limit,
-    _page: 1
-  })
+  const getGameTypeF2EByTitleClicked = (): IGetType => {
+    switch (f2pCurType) {
+      case "story-mode-games":
+        return "storymode"
+      default:
+        return f2pCurType
+    }
+  }
 
-  const { data: f2pGameData, isFetching: f2pLoading } = useGamesByTypes({
-    _type: f2pCurType,
-    _limit: limit,
-    _page: 1
-  })
+  const getGameTypeP2EByTitleClicked = (): IGetType => {
+    switch (p2eCurType) {
+      case "arcade-emporium":
+        // TODO: choose to change to hot-game
+        return "arcade-emporium"
+      default:
+        return "play-to-earn-games"
+    }
+  }
 
-  const { data: arcadeGameData, isFetching: arcadeLoading } = useQuery({
-    queryKey: ["getGamesByKey", defaultBody],
-    queryFn: () =>
-      getGamesByKey({
-        ...defaultBody,
-        game_type: "all",
-        nftgame: true
-      }),
-    keepPreviousData: true,
-    staleTime: Infinity
-  })
+  // const { hotGameData } = useGetHotGames()
+  const { gameFilter: dataF2pGames, loadingFilterGame: loadingDataF2pGames } =
+    useGamePageListController(getGameTypeF2EByTitleClicked())
+  const { gameFilter: dataP2eGame, loadingFilterGame: loadingDataP2eGame } =
+    useGamePageListController(getGameTypeP2EByTitleClicked())
 
   useEffect(() => {
     let load = false
 
     if (!load) {
-      if (f2pGameData) {
-        setF2PGame(f2pGameData.data)
+      if (dataF2pGames) {
+        setF2PGame(dataF2pGames)
+      }
+      if (dataP2eGame) {
+        setP2EGame(dataP2eGame)
       }
     }
 
     return () => {
       load = true
     }
-  }, [f2pCurType, f2pGameData, p2eGameData])
-
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (p2eCurType === "hot-game") {
-        if (hotGameData) {
-          setP2EGame(hotGameData.data)
-        }
-      } else if (p2eCurType === "play-to-earn") {
-        if (p2eGameData) {
-          setP2EGame(p2eGameData.data)
-        }
-      } else if (p2eCurType === "arcade-emporium") {
-        if (arcadeGameData) {
-          setP2EGame(arcadeGameData.data)
-        }
-      }
-    }
-
-    return () => {
-      load = true
-    }
-  }, [p2eCurType, hotGameData, p2eGameData, arcadeGameData])
+  }, [
+    dataF2pGames,
+    f2pCurType,
+    p2eCurType,
+    dataP2eGame,
+    loadingDataF2pGames,
+    loadingDataP2eGame
+  ])
 
   return hydrated ? (
     <>
@@ -254,7 +216,7 @@ const Home = () => {
       </div>
 
       <div className="my-2 h-full w-full lg:my-20">
-        {f2pGame && !f2pLoading ? (
+        {f2pGame && !loadingDataF2pGames ? (
           <GameCarousel
             menu={F2PHeaderMenu}
             list={f2pGame}
@@ -270,15 +232,15 @@ const Home = () => {
           </div>
         )}
       </div>
-      <div className="my-2 h-full w-full lg:my-20">
-        {p2eGame && !arcadeLoading ? (
+
+      <div className="h-loadingFreeToPlayGames my-2 w-full lg:my-20">
+        {p2eGame && !loadingDataP2eGame ? (
           <GameCarousel
             menu={P2EHeaderMenu}
             list={p2eGame}
             curType={p2eCurType}
             setCurType={setP2ECurType}
             showNo
-            // showSlideCurrent={2}
           />
         ) : (
           <div className="flex gap-x-3">
@@ -298,7 +260,7 @@ const Home = () => {
 
       <BodyCategories />
       <OnPlaying />
-      {/* <DeveloperPart /> */}
+      <DeveloperPart />
       <Box className="xs:flex-col mt-4 mb-10 gap-4 lg:flex">
         <Box className="flex-1 xl:flex-none">
           <Grid

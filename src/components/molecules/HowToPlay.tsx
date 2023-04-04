@@ -126,9 +126,9 @@ const Howto = ({ data }: IProp) => {
                   : null}
               </span>
             </div>
-            <div className="mx-2 h-3 border-[1px] border-solid border-neutral-600" />
+            <div className="mx-2 hidden h-3 border-[1px] border-solid border-neutral-600 sm:block" />
           </div>
-          <div className="xs:mb-[20px] grid grid-cols-3 items-center justify-center gap-2 md:flex">
+          <div className="xs:mb-[20px] flex flex-col items-center justify-center gap-2 sm:flex-row">
             <div className="text-sm">
               <span className="uppercase text-neutral-600">
                 {data.device_support &&
@@ -180,7 +180,7 @@ const Howto = ({ data }: IProp) => {
                   </>
                 ))}
             </div>
-            <div className="mx-2 h-3 border-[1px] border-solid border-neutral-600" />
+            <div className="mx-2 hidden h-3 border-[1px] border-solid border-neutral-600 sm:block" />
             <div className="text-sm">
               <span className="uppercase text-neutral-600">
                 {data.browser_support &&

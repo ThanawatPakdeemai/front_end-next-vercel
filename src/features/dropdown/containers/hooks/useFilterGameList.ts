@@ -11,7 +11,8 @@ const useFilterGameList = () => {
     mutateAsync: mutateGetGamesByCategoryId
   } = useMutation(getGamesByCategoryId, {
     mutationKey: ["filterGameList"],
-    retry: false
+    retry: 3,
+    cacheTime: 1000 * 60 * 60 * 24
   })
 
   return {

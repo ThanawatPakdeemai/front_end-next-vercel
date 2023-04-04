@@ -157,9 +157,21 @@ const GameCarouselHeader = ({
           </div>
         )}
         <div className="flex h-10 w-fit max-w-sm flex-auto items-center justify-between gap-4 text-[8px] lg:flex-none">
-          {!onPlaying && (
+          {!onPlaying ? (
             <Link
-              href={`/${curType}-games`}
+              href={`/${curType}`}
+              className="h-full"
+            >
+              <ButtonToggleIcon
+                startIcon={<AddIcon />}
+                text="view all"
+                className="mr-4 flex h-full w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
+                type="button"
+              />
+            </Link>
+          ) : (
+            <Link
+              href={`/${curType}`}
               className="h-full"
             >
               <ButtonToggleIcon

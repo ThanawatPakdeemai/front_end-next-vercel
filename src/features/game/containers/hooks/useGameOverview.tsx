@@ -14,7 +14,7 @@ import { IVerticalThumbSlide } from "@feature/slider/interfaces/ISlides"
 import { IGameItemList } from "@feature/gameItem/interfaces/IGameItemService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import useGameStore from "@stores/game"
-import { SLIDES_GAME_MOCKUP } from "@constants/images"
+import { GAME_MOCKUP_CARD, SLIDES_GAME_MOCKUP } from "@constants/images"
 import { v4 as uuid } from "uuid"
 
 /**
@@ -61,7 +61,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
               link: `/categories/${
                 category.slug
                   ? category.slug
-                  : category.name.toLocaleLowerCase()
+                  : category.name.toLocaleLowerCase().split(" ")[1]
               }`
             })
           )
@@ -76,7 +76,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
                 link: `/categories/${
                   category.slug
                     ? category.slug
-                    : category.name.toLocaleLowerCase()
+                    : category.name.toLocaleLowerCase().split(" ")[1]
                 }`
               })
             )
@@ -255,32 +255,42 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
             {
               id: uuid(),
               type: "image",
-              src: gameData ? gameData.image_banner : ""
+              src: gameData ? gameData.image_banner : GAME_MOCKUP_CARD[0].src
             },
             {
               id: uuid(),
               type: "video",
-              src: gameData ? gameData.animation_nft_arcade_game : ""
+              src: gameData
+                ? gameData.animation_nft_arcade_game
+                : GAME_MOCKUP_CARD[1].src
             },
             {
               id: uuid(),
               type: "image",
-              src: gameData ? gameData.image_nft_arcade_game : ""
+              src: gameData
+                ? gameData.image_nft_arcade_game
+                : GAME_MOCKUP_CARD[2].src
             },
             {
               id: uuid(),
               type: "image",
-              src: gameData ? gameData.image_background : ""
+              src: gameData
+                ? gameData.image_background
+                : GAME_MOCKUP_CARD[3].src
             },
             {
               id: uuid(),
               type: "image",
-              src: gameData ? gameData.image_category_list : ""
+              src: gameData
+                ? gameData.image_category_list
+                : GAME_MOCKUP_CARD[4].src
             },
             {
               id: uuid(),
               type: "image",
-              src: gameData ? gameData.image_background : ""
+              src: gameData
+                ? gameData.image_background
+                : GAME_MOCKUP_CARD[5].src
             }
           )
         }
@@ -298,33 +308,37 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
           {
             id: uuid(),
             type: "image",
-            src: gameData ? gameData.image_background : ""
-          },
-          {
-            id: uuid(),
-            type: "image",
-            src: gameData ? gameData.image_category_list : ""
-          },
-          {
-            id: uuid(),
-            type: "image",
-            src: gameData ? gameData.image_room : ""
-          },
-          {
-            id: uuid(),
-            type: "image",
-            src: gameData ? gameData.image_waiting : ""
-          },
-          {
-            id: uuid(),
-            type: "image",
-            src: gameData ? gameData.image_sum : ""
-          },
-          {
-            id: uuid(),
-            type: "image",
-            src: gameData ? gameData.image_reward : ""
+            src:
+              gameData && gameData.image_background
+                ? gameData.image_background
+                : GAME_MOCKUP_CARD[0].src
           }
+          // TODO: uncomment when game data is ready
+          // {
+          //   id: uuid(),
+          //   type: "image",
+          //   src: gameData ? gameData.image_category_list : ""
+          // },
+          // {
+          //   id: uuid(),
+          //   type: "image",
+          //   src: gameData ? gameData.image_room : ""
+          // },
+          // {
+          //   id: uuid(),
+          //   type: "image",
+          //   src: gameData ? gameData.image_waiting : ""
+          // },
+          // {
+          //   id: uuid(),
+          //   type: "image",
+          //   src: gameData ? gameData.image_sum : ""
+          // },
+          // {
+          //   id: uuid(),
+          //   type: "image",
+          //   src: gameData ? gameData.image_reward : ""
+          // }
           // ...EMPTY_MEDIAS,
           // ...EMPTY_MEDIAS
         )
@@ -411,6 +425,19 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
     }
   }
 
+  const getPlayingCount = (): number | undefined => {
+    if (gameDataState && "game_type" in gameDataState) {
+      switch (gameType) {
+        case "story-mode-games":
+          return gameDataState.play_total_count
+        default:
+          return undefined
+      }
+    } else {
+      return undefined
+    }
+  }
+
   return {
     gameTags: setGameTags(),
     gameDeveloper: setGameDeveloper(),
@@ -428,7 +455,8 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
     gameOwner: setGameOwner(),
     singleVersion: setSingleVersion(),
     gameHowToPlay: setGameHowToPlay(),
-    gameItems: setGameItems()
+    gameItems: setGameItems(),
+    playCount: getPlayingCount()
   }
 }
 

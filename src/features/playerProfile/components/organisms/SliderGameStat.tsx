@@ -24,7 +24,7 @@ const SliderGameStat = ({ openBadges, handleOnExpandClick }: IPorp) => {
         <CheckBoxNaka
           value={openBadges}
           onHandle={handleOnExpandClick}
-          text={t("hide_my_game_stats")}
+          text={t("hide_my_game_stats")!}
           className="mr-4 items-center self-center uppercase"
           fontStyle="text-xs text-black-default"
         />

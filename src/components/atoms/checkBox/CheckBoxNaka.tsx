@@ -7,7 +7,7 @@ import { Image } from "@components/atoms/image"
 interface IProp {
   value: boolean
   onHandle: (_event?: React.ChangeEvent<HTMLInputElement>) => void
-  text?: string | null
+  text?: string
   className?: string
   fontStyle?: string
   color?: "primary" | "secondary" | "error"

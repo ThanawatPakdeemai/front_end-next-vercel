@@ -1,28 +1,16 @@
 import CONFIGS from "@configs/index"
-import useGetMyBuilding from "@feature/building/containers/hooks/useGetMyBuilding"
-import useGetMyArcGame from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
+import { useGetMyBuilding } from "@feature/building/containers/hooks/useGetMyBuilding"
+import { useGetMyArcGame } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
 import useInvenGameItem from "@feature/gameItem/inventory/containers/hooks/useInvenGameItem"
-import useGetMyLand from "@feature/land/containers/hooks/useGetMyLand"
+import { useGetMyLand } from "@feature/land/containers/hooks/useGetMyLand"
 import useNFTLand from "@feature/land/containers/services/hooks/useNFTLand"
-import { TType } from "@feature/marketplace/interfaces/IMarketService"
+import { IOwnerData } from "@feature/marketplace/interfaces/IMarketService"
 import useInvenMaterial from "@feature/material/inventory/containers/hooks/useInvenMaterial"
-import useGetMyNakaPunk from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
+import { useGetMyNakaPunk } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-
-interface IOwnerData {
-  type: TType
-  id: string
-  tokenId?: string
-  image: string
-  video?: string
-  name: string
-  durability?: string | number
-  level?: string | number
-  size?: string | number
-  amount?: string | number
-}
 
 const useMartketOwner = () => {
   // state
@@ -33,6 +21,7 @@ const useMartketOwner = () => {
   const limit = 15
 
   // hook
+  const router = useRouter()
   const { marketType } = useGlobal()
   const { profile } = useProfileStore()
   const { getLandsOfAddress } = useNFTLand()
@@ -136,7 +125,7 @@ const useMartketOwner = () => {
           })
             .then((_res) => {
               const dumpData: IOwnerData[] = _res.data.map((_data) => ({
-                type: "land",
+                type: "arcade-game",
                 id: _data._id,
                 tokenId: _data.NFT_info.NFT_token,
                 image: _data.image_nft_arcade_game,
@@ -148,6 +137,8 @@ const useMartketOwner = () => {
             .finally(() => setIsLoading(false))
           break
         default:
+          // prevent incorrect url path
+          router.push("/marketplace/inventory/land")
           break
       }
     }
@@ -159,7 +150,7 @@ const useMartketOwner = () => {
       case "nft_material":
         if (materialList) {
           const dumpData: IOwnerData[] = materialList.map((_data) => ({
-            type: "game-item",
+            type: "material",
             id: _data.id,
             image: _data.image,
             amount: _data.amount,

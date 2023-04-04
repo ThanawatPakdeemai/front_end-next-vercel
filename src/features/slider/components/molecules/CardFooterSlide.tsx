@@ -6,7 +6,7 @@ import { IGame } from "@feature/game/interfaces/IGameService"
 import { Box } from "@mui/material"
 import useGlobal from "@hooks/useGlobal"
 import useFavoriteGameContoller from "@feature/favourite/containers/hooks/useFavoriteGameContoller"
-import { useRouter } from "next/router"
+import { useTranslation } from "react-i18next"
 
 interface IContentFooterBannerSlide {
   gameData: IGame
@@ -15,9 +15,9 @@ interface IContentFooterBannerSlide {
 
 const CardFooterSlide = ({
   gameData,
-  text = "Play Now"
+  text = "play_now"
 }: IContentFooterBannerSlide) => {
-  const router = useRouter()
+  const { t } = useTranslation()
   const { onHandleSetGameStore, getTypeGamePathFolder, stateProfile } =
     useGlobal()
   const { onClickFavouriteButton, favouriteStatus } = useFavoriteGameContoller({
@@ -37,18 +37,15 @@ const CardFooterSlide = ({
         className="w-[calc(100%-80px)]"
       >
         <ButtonLink
-          text={text}
+          text={t(text)}
           icon={<SportsEsportsOutlinedIcon />}
           size="large"
           color="secondary"
           variant="contained"
           className="w-full"
-          href=""
+          href={`/${getTypeGamePathFolder(gameData)}/${gameData.path}`}
           onClick={() => {
             onHandleSetGameStore(getTypeGamePathFolder(gameData), gameData)
-            router.push(
-              `/${getTypeGamePathFolder(gameData)}-games/${gameData.path}`
-            )
           }}
         />
       </Box>

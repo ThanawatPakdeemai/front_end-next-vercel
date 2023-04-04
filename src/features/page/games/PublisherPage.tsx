@@ -1,7 +1,5 @@
 import React, { memo, useEffect, useState } from "react"
-// import { v4 as uuid } from "uuid"
 import useGlobal from "@hooks/useGlobal"
-// import SkeletonPublisherCard from "@components/atoms/skeleton/SkeletonPublisherCard"
 import useFilterStore from "@stores/blogFilter"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { publisherAllPartner } from "@feature/partner/containers/services/dropdownPartner.service"
@@ -16,48 +14,11 @@ const PublisherPage = () => {
     gameItem: gameItemDropdown,
     device: deviceDropdown,
     search: searchDropdown
-    // clearSearch,
-    // clearCategory,
-    // clearGameItem,
-    // clearDevice
   } = useFilterStore()
   const { onHandleSetGameStore } = useGlobal()
   const [gameFilter, setGameFilter] = useState<IPartnerGameData[]>()
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
-  // const type: IGetType = "play-to-earn"
-  // const fetchRef = useRef(false)
-  // const queryClient = useQueryClient()
-  // const { onHandleClick } = useGlobal()
-  // const { clearGameData } = useGameStore()
-
-  // const {
-  //   isLoading,
-  //   isPreviousData,
-  //   data: gameData
-  // } = useGamesByTypes({
-  //   _type: type,
-  //   _limit: limit,
-  //   _page: page
-  // })
-
-  // useEffect(() => {
-  //   if (!fetchRef.current && gameData) {
-  //     fetchRef.current = true
-  //     setTotalCount(gameData.info.totalCount)
-  //   }
-  //   clearGameData()
-  // }, [clearGameData, gameData])
-
-  // useEffect(() => {
-  //   if (!isPreviousData && gameData) {
-  //     queryClient.prefetchQuery({
-  //       queryKey: ["games", type, page + 1],
-  //       queryFn: () =>
-  //         getGameByTypes({ _type: type, _limit: limit, _page: page + 1 })
-  //     })
-  //   }
-  // }, [gameData, isPreviousData, page, queryClient])
 
   useEffect(() => {
     let load = false
@@ -105,7 +66,7 @@ const PublisherPage = () => {
               onHandleClick={() =>
                 onHandleSetGameStore("partner-publisher", game)
               }
-              // onHandleClick={() =>
+              gameType="partner-publisher" // onHandleClick={() =>
               //   onHandleClick("partner-publisher", game.slug, game)
               // }
             />

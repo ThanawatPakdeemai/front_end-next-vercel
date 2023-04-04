@@ -38,7 +38,7 @@ const CardContentDetails = ({ ...props }: IProp) => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   return (
-    <div className="h-fit w-1/2 rounded-[24px] border-[1px] border-neutral-800 bg-neutral-780">
+    <div className="h-fit w-full rounded-[24px] border-[1px] border-neutral-800 bg-neutral-780">
       <div className="p-2">
         <div className="flex h-fit w-full content-center justify-center rounded-[24px] border-[1px] border-neutral-800 bg-neutral-900 p-2">
           {marketType === "nft_land" && video && (
@@ -55,9 +55,21 @@ const CardContentDetails = ({ ...props }: IProp) => {
               // src="/images/not_found.webp"
               src={image as string}
               alt={alt as string}
-              width={563}
-              height={563}
-              className="rounded-2xl"
+              width={
+                marketType === "nft_building" || marketType === "game_item"
+                  ? 400
+                  : 563
+              }
+              height={
+                marketType === "nft_building" || marketType === "game_item"
+                  ? 400
+                  : 563
+              }
+              className={
+                marketType === "nft_building" || marketType === "game_item"
+                  ? "m-4 rounded-2xl"
+                  : "rounded-2xl"
+              }
             />
           )}
           {meta_data && meta_data.length > 4 ? (
@@ -147,7 +159,7 @@ const CardContentDetails = ({ ...props }: IProp) => {
         onClose={handleClose}
         className="gap-3 rounded-[34px] p-[10px]"
         width={600}
-        title="You got 6 NAKA Punk"
+        title={`You got ${meta_data?.length} NAKA Punks`}
       >
         <div className="grid grid-cols-5 gap-[10px]">
           {meta_data &&

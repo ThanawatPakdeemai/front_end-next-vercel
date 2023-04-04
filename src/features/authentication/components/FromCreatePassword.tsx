@@ -197,7 +197,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
               <Tagline
                 bgColor="bg-neutral-800"
                 textColor="text-neutral-500"
-                text="Secue. fun. simple. earn $naka AND enjoy "
+                text="SECURE. SUBLIME. SIMPLE. EARN $NAKA TODAY. "
                 icon={<VectorIcon />}
                 className="!my-[2.938rem]"
               />
@@ -395,7 +395,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                         className="mt-[5px] w-full"
                         type={showConfirmPassword ? "text" : "password"}
                         placeholder="Confirm Password"
-                        label="A Number or Symbol, Atleast 6 Characters"
+                        label="A Number or Symbol, at least 6 Characters"
                         autoComplete="new-password'"
                         onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                           e.target.value = e.target.value.slice(0, 128)

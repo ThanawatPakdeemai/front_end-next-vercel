@@ -4,6 +4,7 @@ import { ITokenContract } from "@feature/contract/containers/hooks/useContractVa
 import INaka from "@components/icons/Naka"
 import IBusd from "@components/icons/Busd"
 import { IChainList } from "@configs/chain"
+import useChainSupportStore from "@stores/chainSupport"
 import { ModalCustom } from "./Modal/ModalCustom"
 import TabMenu from "./TabMenu"
 import TokenListItem from "./TokenListItem"
@@ -23,10 +24,15 @@ const TokenList = ({
   displayBalance = false,
   widthBalance = "w-[40px]"
 }: ITokenList) => {
-  const [open, setOpen] = useState<boolean>(false)
+  const { setCurrentTokenSelected } = useChainSupportStore()
 
+  const [open, setOpen] = useState<boolean>(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+
+  const handleSelectToken = (token: ITokenContract) => {
+    setCurrentTokenSelected(token)
+  }
 
   /**
    * @description get token icon
@@ -64,6 +70,14 @@ const TokenList = ({
     return "N/A"
   }
 
+  const handleDisplayTokenName = (): string | "" | undefined => {
+    if (dataList.find((item) => item.symbol === currentTokenSelected)?.symbol) {
+      return dataList.find((item) => item.symbol === currentTokenSelected)
+        ?.symbol
+    }
+    return ""
+  }
+
   return (
     <>
       <TokenListItem
@@ -71,7 +85,7 @@ const TokenList = ({
         text={`${
           displayBalance ? handleDisplayBalance() : handleDisplayToken()
         }`}
-        title="Asset"
+        title={handleDisplayTokenName()}
         handleClick={handleOpen}
         shadow
         widthBalance={widthBalance}
@@ -79,8 +93,8 @@ const TokenList = ({
       <ModalCustom
         open={open}
         onClose={handleClose}
-        title="Select Chain"
-        className="gap-3 rounded-[34px] p-[10px]"
+        title="Select Asset"
+        className="z-[99999] w-full gap-3 rounded-[34px] p-[10px] md:w-auto"
         width={400}
       >
         <>
@@ -92,8 +106,8 @@ const TokenList = ({
               <TabMenu
                 icon={tokenIcon()}
                 text={token.tokenName}
-                link={`/wallet/?token=${token.symbol}`}
                 className="mt-4 p-2"
+                handleClick={() => handleSelectToken(token)}
               />
             </Box>
           ))}

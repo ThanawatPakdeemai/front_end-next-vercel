@@ -19,6 +19,7 @@ export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   disabledStartIcon?: boolean
   disabledEndIcon?: boolean
   sxCustomStyled?: SxProps<Theme>
+  target?: "_blank" | "_self" | "_parent" | "_top"
 }
 
 const ButtonLink = ({
@@ -36,7 +37,8 @@ const ButtonLink = ({
   disabled = false,
   disabledStartIcon = false,
   disabledEndIcon = false,
-  sxCustomStyled = {}
+  sxCustomStyled = {},
+  target = "_self"
 }: IButtonLink) => {
   const ButtonSelf = useMemo(
     () => (
@@ -48,7 +50,9 @@ const ButtonLink = ({
         size={size}
         startIcon={
           !disabledStartIcon && (
-            <div className={`button-icon animation-arrow ${textColor}`}>
+            <div
+              className={`button-icon animation-arrow my-[5px] ${textColor}`}
+            >
               {icon}
             </div>
           )
@@ -65,7 +69,7 @@ const ButtonLink = ({
         sx={sxCustomStyled}
       >
         <span
-          className={`animation-button-text flex items-center ${textColor}`}
+          className={`animation-button-text flex h-fit items-center ${textColor}`}
         >
           {text}
         </span>
@@ -95,6 +99,7 @@ const ButtonLink = ({
         <Link
           href={href || "/"}
           className="w-auto"
+          target={target}
         >
           {ButtonSelf}
         </Link>

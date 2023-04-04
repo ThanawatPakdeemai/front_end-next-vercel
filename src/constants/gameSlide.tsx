@@ -9,6 +9,7 @@ import IconNakaWorld from "@components/icons/nakaWorldIcon"
 import IconDollar from "@components/icons/dollarIcon"
 import IconFree from "@components/icons/freeIcon"
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined"
+import ControllerIcon from "@components/icons/ControllerIcon"
 
 export const GAME_BANNER_SLIDES = [
   {
@@ -179,15 +180,36 @@ export const GAME_COMING_SOON = [
 const p2eMenu: ISlideList[] = [
   {
     id: "11",
-    label: "hot games",
-    type: "hot-game",
-    className: "w-[110px]"
-  },
-  {
-    id: "12",
     label: "play to earn games",
     type: "play-to-earn",
     className: "w-[166px]"
+  }
+  // {
+  //   id: "12",
+  //   label: "arcade emporium",
+  //   type: "arcade-emporium",
+  //   className: "w-[110px]"
+  // }
+]
+
+const onPlayingMenu: ISlideList[] = [
+  {
+    id: "15",
+    label: "All",
+    type: "all",
+    className: "w-[51px]"
+  },
+  {
+    id: "14",
+    label: "Play to earn",
+    type: "play-to-earn",
+    className: "w-[110px]"
+  },
+  {
+    id: "13",
+    label: "Free to play",
+    type: "free-to-play",
+    className: "w-[110px]"
   }
 ]
 export const P2EHeaderMenu: IHeaderSlide = {
@@ -230,6 +252,15 @@ export const NFTHeaderMenu: IHeaderSlide = {
   theme: "info",
   stickerRotate: 15,
   icon: <IconDollar.Ori className="slick-header-error-icon" />
+}
+
+export const onPlayingHeaderMenu: IHeaderSlide = {
+  sticker: <></>,
+  title: "On Playing",
+  menuList: onPlayingMenu,
+  theme: "success",
+  stickerRotate: 15,
+  icon: <ControllerIcon stroke="#3DCD95" /> // <IconDollar.Ori className="slick-header-error-icon" />
 }
 
 const f2pMenu: ISlideList[] = [

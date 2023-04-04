@@ -10,7 +10,7 @@ interface IWalletFooterProps {
 const WalletFooter = ({ address }: IWalletFooterProps) => (
   <div className="mt-6 hidden w-full grid-cols-12 gap-2 sm:grid">
     <div className="col-span-7 rounded-xl border-2 border-black-800 text-center ">
-      <p className="pt-1 uppercase text-black-800">NAKA storage model:S</p>
+      <p className="pt-1 uppercase text-neutral-600">NAKA storage model:S</p>
     </div>
     <div className="col-span-5 flex  h-[35px] content-center items-center justify-between rounded-[6px] bg-black-100 px-0.5 py-2 ">
       <div className=" border-1 mr-1 rounded-[5px] bg-neutral-800 py-2 px-0.5 ">

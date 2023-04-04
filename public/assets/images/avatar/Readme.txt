@@ -1,0 +1,1 @@
+Do not delete this folder because some player NOT updated avatar.

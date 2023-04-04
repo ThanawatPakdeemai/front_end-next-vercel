@@ -1,8 +1,10 @@
+/* eslint-disable no-nested-ternary */
 import { Chip, Typography } from "@mui/material"
 import { memo } from "react"
 import { Image } from "@components/atoms/image/index"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 import Helper from "@utils/helper"
+import Link from "next/link"
 
 interface IProp {
   avatar: string
@@ -12,6 +14,7 @@ interface IProp {
   className?: string
   reward?: number
   rate?: number
+  id?: string
 }
 
 const PlayerList = ({
@@ -21,7 +24,8 @@ const PlayerList = ({
   className,
   score,
   reward,
-  rate
+  rate,
+  id
 }: IProp) => {
   const { formatNumber } = Helper
   return (
@@ -66,7 +70,13 @@ const PlayerList = ({
       </div>
       <div className="animation-image !ml-2 h-[58px] w-[58px]">
         <Image
-          src={avatar}
+          src={
+            avatar.search("https") > -1
+              ? avatar
+              : avatar.search("/") === 0
+              ? avatar
+              : `/${avatar}`
+          }
           width="200"
           height="200"
           alt={username}
@@ -74,7 +84,9 @@ const PlayerList = ({
         />
       </div>
       <div className="show-arrow ml-3 hidden">
-        <ArrowForwardIcon />
+        <Link href={`/profile/${id}`}>
+          <ArrowForwardIcon />
+        </Link>
       </div>
     </div>
   )

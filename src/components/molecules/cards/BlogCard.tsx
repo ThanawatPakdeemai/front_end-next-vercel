@@ -36,27 +36,35 @@ const BlogCard = ({
       whileHover="hover"
       initial="rest"
       key={uuid()}
-      className={`mx-auto w-[265px] md:mx-0 lg:w-[250px] 2xl:w-[272px] ${className}`}
+      className={`mx-auto w-[265px] md:mx-0 md:w-[256px] lg:w-[250px] 2xl:w-[272px] ${
+        className ?? ""
+      }`}
     >
-      <div className="relative">
-        <ButtonIcon
-          variants={iconmotion}
-          icon={<FireIcon />}
-          className="z-4 absolute top-0 right-0 m-4 flex items-center justify-center rounded-lg bg-neutral-900 p-1"
-        />
-        <motion.div variants={imgMotion}>
-          <CardMedia
-            image={image}
-            sx={{
-              height: "238px",
-              borderRadius: "24px"
-            }}
+      <Link href={`/blog/${blog_id}`}>
+        <div className="relative">
+          <ButtonIcon
+            variants={iconmotion}
+            icon={<FireIcon />}
+            className="z-4 absolute top-0 right-0 m-4 flex items-center justify-center rounded-lg bg-neutral-900 p-1"
           />
-        </motion.div>
-      </div>
+          <motion.div variants={imgMotion}>
+            <CardMedia
+              image={image}
+              sx={{
+                height: "238px",
+                borderRadius: "24px"
+              }}
+            />
+          </motion.div>
+        </div>
 
-      <Typography className="mt-4 text-default uppercase">{title}</Typography>
-      <Typography className="mt-4 text-sm">{description}</Typography>
+        <Typography className="mt-4 min-h-[65px] text-default uppercase">
+          {title}
+        </Typography>
+      </Link>
+      <Typography className="mt-4 min-h-[65px] text-sm">
+        {description}
+      </Typography>
       <motion.div className="mt-[20px] flex justify-center gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 py-[10px] px-[30px]">
         {/* {blog_id} */}
         <Typography className="self-center text-sm">

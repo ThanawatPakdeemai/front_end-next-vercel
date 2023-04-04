@@ -2,26 +2,21 @@ import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import React, { useCallback, useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import {
   IFilterGamesByKey,
   IGame,
   IGetType
 } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
-import CONFIGS from "@configs/index"
-import useContractVaultBinance, {
-  ITokenContract
-} from "@feature/contract/containers/hooks/useContractVaultBinance"
-
-import { Contract, ethers } from "ethers"
-import BEP20Abi from "@configs/abi/BEP20.json"
-import ERC20Abi from "@configs/abi/ERC20.json"
-import useChainSupport from "@stores/chainSupport"
-import useContractVault from "@feature/contract/containers/hooks/useContractVault"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
-import { DEFAULT_CURRENCY_BNB, DEFAULT_CURRENCY_NAKA } from "@configs/currency"
-import useSwitchNetwork from "./useSwitchNetwork"
+import { useWeb3Provider } from "@providers/Web3Provider"
+import CONFIGS from "@configs/index"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+import useChainSupportStore from "@stores/chainSupport"
+import useNotiStore from "@stores/notification"
+import Helper from "@utils/helper"
+import useSupportedChain from "./useSupportedChain"
 
 const useGlobal = (
   _limit?: number,
@@ -38,7 +33,7 @@ const useGlobal = (
   const router = useRouter()
 
   const defaultBody: IFilterGamesByKey = {
-    limit: _limit ?? 20,
+    limit: _limit ?? 30,
     skip: _skip ?? 1,
     sort: _sort ?? "_id",
     search: _search ?? "",
@@ -50,19 +45,20 @@ const useGlobal = (
     nftgame: _nftgame ?? false
   }
 
-  const isCancelled = React.useRef(false)
-
   // hook
-  const { onSetGameData, onSetGamePartnersData } = useGameStore()
-  const { getAllTokenAddressInContract, getBNBContract } =
-    useContractVaultBinance()
-  const { getAllTokenInfoByContractAddress } = useContractVaultBinance()
-  const { setChainSupport, setContractBNB } = useChainSupport()
-  const { getNAKATokenInfo } = useContractVault()
-  const { chainId, signer, accounts, statusWalletConnected } =
-    useSwitchNetwork()
-
+  const { onResetChainStore, currentChainSelected } = useChainSupportStore()
+  const { onResetNotification } = useNotiStore()
+  const {
+    onSetGameData,
+    onSetGamePartnersData,
+    onSetGameItemSelectd,
+    setQtyItemOfRoom
+  } = useGameStore()
   const profile = useProfileStore((state) => state.profile.data)
+  const { isLogin, onReset } = useProfileStore()
+  const { fetchNAKAToken, fetchAllTokenSupported } = useSupportedChain()
+  const { chainId, signer, address, isConnected } = useWeb3Provider()
+
   // States
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
   const [hydrated, setHydrated] = useState(false)
@@ -84,12 +80,14 @@ const useGlobal = (
    * @description Set profile
    */
   useEffect(() => {
-    if (!isCancelled.current) {
+    let load = false
+
+    if (!load) {
       setStateProfile(profile)
     }
 
     return () => {
-      isCancelled.current = true
+      load = true
     }
   }, [profile])
 
@@ -97,22 +95,24 @@ const useGlobal = (
    * @description Set hydrate to fix error "Text content does not match server-rendered HTML"
    */
   useEffect(() => {
-    if (!isCancelled.current) {
+    let load = false
+
+    if (!load) {
       setHydrated(true)
     }
 
     return () => {
-      isCancelled.current = true
+      load = true
     }
   }, [])
 
   /**
    * @description Global values for pagination
    */
-  const [limit, setLimit] = useState<number>(24)
+  const [limit, setLimit] = useState<number>(30)
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
-  const pager: number[] = [6, 12, 24, 48, 64]
+  const pager: number[] = [30, 60, 90, 120, 150]
   const handleLimit = (limitItem: number) => {
     setLimit(limitItem)
   }
@@ -191,162 +191,7 @@ const useGlobal = (
         return `/arcade-emporium/${_gameUrl}?id=${_gameData.id}`
 
       default:
-        ;`/${_type}-games/${_gameUrl}`
-    }
-    // NOTE: No need this code
-    // await router.push(`/${_gameUrl}`)
-  }
-
-  const getTokenAddress = (_chainId: string) => {
-    switch (_chainId) {
-      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
-        return CONFIGS.CONTRACT_ADDRESS.BEP20
-
-      default:
-        return CONFIGS.CONTRACT_ADDRESS.ERC20
-    }
-  }
-
-  /**
-   * @description Get tokens amount
-   * @param _chainId
-   * @returns {string}
-   */
-  const getTokenSupply = (_chainId: string): string => {
-    switch (_chainId) {
-      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
-        return "31000000000000000000000000"
-
-      default:
-        return "179999996000000000000000008"
-    }
-    // NOTE: No need this code
-    // await router.push(`/${_gameUrl}`)
-  }
-
-  /**
-   * @description Fetch BNB token address from Smart Contract
-   */
-  const fetchContractBNB = useCallback(async () => {
-    const result = await getBNBContract()
-    if (result) {
-      setContractBNB(result)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getBNBContract])
-  /**
-   * @description Fetch BNB token address
-   */
-  useMemo(() => {
-    if (!statusWalletConnected.responseStatus) return
-    if (signer === undefined || accounts === undefined) return
-    fetchContractBNB()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  /**
-   * @description Get all token supported
-   */
-  const fetchAllTokenSupported = useCallback(async () => {
-    const allContract: Contract[] = []
-    const allTokenSupported: ITokenContract[] = []
-    const tokens = await getAllTokenAddressInContract()
-    for (let index = 0; index < tokens.length; index += 1) {
-      const { ethereum }: any = window
-      const _web3 = new ethers.providers.Web3Provider(ethereum)
-      const contract = new ethers.Contract(tokens[index], BEP20Abi.abi, _web3)
-      allContract.push(contract)
-      // if (tokens[index] !== CONFIGS.CONTRACT_ADDRESS.BNB_CONTRACT) {
-      //   const contract = new ethers.Contract(tokens[index], BEP20Abi.abi, _web3)
-      //   allContract.push(contract)
-      // }
-    }
-    allContract.map(async (contract) => {
-      const result = await getAllTokenInfoByContractAddress(
-        contract,
-        contract.address,
-        profile ? profile.address : ""
-      )
-      allTokenSupported.push(result)
-    })
-    await Promise.all(allTokenSupported)
-    const allTokenSupportedSorted = allTokenSupported.sort((a, b) => {
-      if (a.symbol < b.symbol) {
-        return -1
-      }
-      if (a.symbol > b.symbol) {
-        return 1
-      }
-      return 0
-    })
-    setChainSupport(allTokenSupportedSorted)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const fetchNAKAToken = useCallback(async () => {
-    const allContract: Contract[] = []
-    const allTokenSupported: ITokenContract[] = []
-    const tokens = [CONFIGS.CONTRACT_ADDRESS.ERC20]
-    for (let index = 0; index < tokens.length; index += 1) {
-      const { ethereum }: any = window
-      const _web3 = new ethers.providers.Web3Provider(ethereum)
-      const contract = new ethers.Contract(tokens[index], ERC20Abi, _web3)
-      allContract.push(contract)
-    }
-    allContract.map(async (contract) => {
-      const result = await getNAKATokenInfo(
-        contract,
-        contract.address,
-        profile ? profile.address : ""
-      )
-      allTokenSupported.push(result)
-    })
-    await Promise.all(allTokenSupported)
-    const allTokenSupportedSorted = allTokenSupported.sort((a, b) => {
-      if (a.symbol < b.symbol) {
-        return -1
-      }
-      if (a.symbol > b.symbol) {
-        return 1
-      }
-      return 0
-    })
-    setChainSupport(allTokenSupportedSorted)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  /**
-   * @description Fetch all token supported
-   */
-  useEffect(() => {
-    if (!isCancelled.current) {
-      if (signer && accounts) {
-        if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
-          fetchAllTokenSupported()
-        } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
-          fetchNAKAToken()
-        }
-      } /* else {
-      console.log("signer or accounts is undefined", signer, accounts, provider)
-    } */
-    }
-
-    return () => {
-      isCancelled.current = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainId, signer, fetchAllTokenSupported, fetchNAKAToken])
-
-  /**
-   * @description Get default currency
-   * @returns {ITokenContract[]}
-   */
-  const getDefaultCoin = (): ITokenContract[] => {
-    switch (chainId) {
-      case CONFIGS.CHAIN.CHAIN_ID_HEX_BNB:
-        return DEFAULT_CURRENCY_BNB
-      default:
-        return DEFAULT_CURRENCY_NAKA
+        return `/${_type}-games/${_gameUrl}`
     }
   }
 
@@ -362,21 +207,137 @@ const useGlobal = (
    * @description Get type game path folder
    */
   const getTypeGamePathFolder = (_gameData: IGame): IGetType => {
-    if (_gameData) {
-      // if (_gameData.play_to_earn && _gameData.play_to_earn_status !== "free") {
-      //   return "play-to-earn-games"
-      // }
-      if (_gameData.play_to_earn_status === "free") {
-        return "free-to-play"
-      }
-      if (_gameData.game_type === "storymode") {
-        return "story-mode"
-      }
-      if (_gameData.is_NFT) {
-        return "arcade-emporium"
-      }
+    if (
+      (_gameData.game_type === "singleplayer" ||
+        _gameData.game_type === "multiplayer") &&
+      _gameData.play_to_earn_status === "in_progress"
+    ) {
+      return "play-to-earn"
     }
-    return "play-to-earn-games"
+    if (
+      (_gameData.game_type === "singleplayer" ||
+        _gameData.game_type === "multiplayer") &&
+      _gameData.play_to_earn_status === "free"
+    ) {
+      return "free-to-play"
+    }
+    if (_gameData.game_type === "storymode") {
+      return "story-mode"
+    }
+    if (_gameData.is_NFT) {
+      return "arcade-emporium"
+    }
+    return "all"
+  }
+
+  const getTypeGamePartnerPathFolder = (
+    _gameData: IPartnerGameData
+  ): IGetType => "partner-game"
+
+  /**
+   * @description Get color chip by game type
+   * @param type
+   * @returns
+   */
+  const getColorChipByGameType = (type: IGetType): string => {
+    switch (type) {
+      case "partner-publisher":
+        return "!bg-green-lemon !text-neutral-900"
+
+      case "partner-game":
+        return "!bg-green-lemon !text-neutral-900"
+
+      case "arcade-emporium":
+        return "!bg-warning-dark !text-neutral-900"
+
+      case "story-mode":
+      case "storymode":
+        return "!bg-info-main !text-neutral-900"
+
+      case "play-to-earn-games":
+      case "play-to-earn":
+        return "!bg-error-main !text-neutral-900"
+
+      case "free-to-play":
+      case "free-to-play-games":
+        return "!bg-secondary-main !text-neutral-900"
+
+      default:
+        return "!bg-neutral-800 !text-neutral-900"
+    }
+  }
+
+  /**
+   * @description Get game type by pathname
+   * @returns {IGetType}
+   */
+  const getGameTypeByPathname = (): IGetType => {
+    switch (router.pathname) {
+      case "/arcade-emporium":
+      case "/arcade-emporium-games":
+        return "arcade-emporium"
+
+      case "/partner":
+      case "/partner-games":
+        return "partner-game"
+
+      case "/play-to-earn":
+      case "/play-to-earn-games":
+        return "play-to-earn-games"
+
+      case "/free-to-play":
+      case "/free-to-play-games":
+        return "free-to-play-games"
+
+      case "/story-mode":
+      case "/story-mode-games":
+        return "storymode"
+
+      default:
+        return "play-to-earn-games"
+    }
+  }
+
+  /**
+   * @description Get game url by game type
+   * @param gameData
+   * @returns
+   */
+  const getGameStoryModeURL = (gameData: IGame): string => {
+    if (!profile) return ""
+
+    const room_id = null
+    const frontendUrl = `${CONFIGS.BASE_URL.FRONTEND}/${router.query.typeGame}/${gameData.path}/summary/${room_id}`
+    const profile_id = profile.id
+    const room_number = null
+    const item_size = null
+    const { email } = profile
+    const token = Helper.getTokenFromLocal()
+    const rank_name = null
+    const date = null
+    const stage_id = null
+    const profile_name = profile.username
+    const type_play = gameData.play_to_earn === true ? "free" : "not_free"
+    // Get url by game type
+    switch (gameData.game_type) {
+      case "storymode":
+        return `${CONFIGS.BASE_URL.GAME}/${gameData.id}/?${Helper.makeID(
+          8
+        )}${btoa(
+          `${room_id}:|:${profile_id}:|:${item_size}:|:${email}:|:${token}:|:${frontendUrl}:|:${CONFIGS.BASE_URL.API?.slice(
+            0,
+            -4
+          )}:|:${rank_name}:|:${room_number}:|:${date}:|:${stage_id}:|:${profile_name}:|:${type_play}`
+        )}`
+      case "singleplayer":
+        // TODO: Need to update url later
+        return "/singleplayer"
+      case "multiplayer":
+        // TODO: Need to update url later
+        return "/multiplayer"
+      default:
+        return ""
+    }
   }
 
   const isRedirectRoomlist = (_game: IGame): "/roomlist" | "" => {
@@ -386,8 +347,22 @@ const useGlobal = (
     return ""
   }
 
+  /**
+   * @description When logout reset all stores
+   */
+  const onClickLogout = async () => {
+    onResetChainStore()
+    onSetGameItemSelectd({} as IGameItemListData)
+    setQtyItemOfRoom(0)
+    await onResetNotification()
+    await onReset()
+    await router.push("/")
+  }
+
   useEffect(() => {
-    if (!isCancelled.current) {
+    let load = false
+
+    if (!load) {
       if (router.asPath.includes("land")) {
         setMarketType("nft_land")
       } else if (router.asPath.includes("building")) {
@@ -404,9 +379,56 @@ const useGlobal = (
     }
 
     return () => {
-      isCancelled.current = true
+      load = true
     }
   }, [router.asPath])
+
+  /**
+   * @description Fetch all token supported
+   */
+  useEffect(() => {
+    let load = false
+    if (!isLogin) return
+    if (!isConnected) return
+    if (!load) {
+      if (signer && address) {
+        if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+          fetchAllTokenSupported()
+        } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
+          fetchNAKAToken()
+        }
+      }
+    }
+
+    return () => {
+      load = true
+    }
+  }, [
+    address,
+    isLogin,
+    isConnected,
+    chainId,
+    signer,
+    fetchAllTokenSupported,
+    fetchNAKAToken
+  ])
+
+  const fetchChainData = async () => {
+    if (!isLogin) return
+    if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+      await fetchAllTokenSupported()
+    } else if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX) {
+      await fetchNAKAToken()
+    }
+  }
+
+  /**
+   * @description Fetch all token supported
+   */
+  useEffect(() => {
+    fetchChainData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLogin, currentChainSelected])
 
   return {
     onHandleClick,
@@ -422,18 +444,20 @@ const useGlobal = (
     hydrated,
     defaultBody,
     pager,
-    getTokenAddress,
-    getTokenSupply,
-    fetchAllTokenSupported,
-    fetchNAKAToken,
-    getDefaultCoin,
     isMarketplace,
     isDeveloperPage,
     openInNewTab,
     getTypeGamePathFolder,
+    getTypeGamePartnerPathFolder,
     marketType,
     isRedirectRoomlist,
-    onHandleSetGameStore
+    onHandleSetGameStore,
+    onClickLogout,
+    fetchChainData,
+    getColorChipByGameType,
+    getGameStoryModeURL,
+    getGameTypeByPathname
+    // getGameFreeToPlayURL
   }
 }
 

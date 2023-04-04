@@ -9,13 +9,13 @@ export interface IMetaTags {
 }
 
 const MetaTags = ({ tags, titleTag = "Tags" }: IMetaTags) => (
-  <div className="flex flex-col flex-wrap">
+  <div className="grid h-full w-full grid-rows-2 flex-wrap">
     {titleTag && (
-      <div className="font-neue-machina text-sm uppercase text-white-default">
+      <div className="items-middle flex  px-6 pt-4 font-neue-machina text-sm uppercase text-white-default">
         {titleTag}
       </div>
     )}
-    <div className="mt-4 gap-3">
+    <div className="px-6 pt-4 pb-2">
       {tags &&
         tags.map((item) => (
           <Chip

@@ -298,7 +298,7 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
           getChat
         }}
       >
-        <Box className="block gap-3 xl:flex ">
+        <Box className="block gap-3 lg:flex ">
           {/* <Box className=" block gap-3 lg:grid lg:grid-flow-col"> */}
           {/* <Box className=" block gap-3 lg:grid lg:grid-flow-col"> */}
           <Box className="w-full gap-3 md:flex">
@@ -366,9 +366,8 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
             </Box>
           </Box>
           {gameData &&
-            ((gameData?.play_to_earn &&
-              gameData?.play_to_earn_status !== "free") ||
-              !gameData.tournament) && (
+            gameData?.play_to_earn_status !== "free" &&
+            !gameData.tournament && (
               <BuyItemBody>
                 <CardButItem gameObject={gameData} />
                 <Chat />

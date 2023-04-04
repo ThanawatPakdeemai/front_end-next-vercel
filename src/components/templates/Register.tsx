@@ -81,7 +81,7 @@ const RegisterLayout = () => {
           item
           container
           component="div"
-          className={`min-h-[790px] rounded-3xl border border-solid border-neutral-800 p-2.5 ${
+          className={`min-h-[790px] rounded-3xl border border-solid border-neutral-800 p-[20px] md:p-[50px] lg:p-2.5 ${
             !_.isEmpty({ errors }.errors) && submitRegisterForm
               ? "h-[135vh]"
               : "h-[95vh]"
@@ -107,7 +107,7 @@ const RegisterLayout = () => {
               <Tagline
                 bgColor="bg-neutral-800"
                 textColor="text-neutral-500"
-                text="Secue. fun. simple. earn $naka AND enjoy "
+                text="SECURE. SUBLIME. SIMPLE. EARN $NAKA TODAY. "
                 icon={<VectorIcon />}
                 className="!my-[2.938rem]"
               />
@@ -125,7 +125,7 @@ const RegisterLayout = () => {
           >
             <Box
               component="div"
-              className="flex justify-end"
+              className="relative flex  h-[100px] justify-end lg:h-auto"
             >
               <div className="absolute">
                 <KeyFramesClockwise>
@@ -148,8 +148,11 @@ const RegisterLayout = () => {
             </Box>
             <Box
               sx={{
-                my: 8,
-                mx: 4,
+                height: "auto",
+                width: { xs: "100%", lg: "auto" },
+                my: { xs: 2, lg: 8 },
+                mx: { xs: 0, lg: 0, xl: 4 },
+                px: { md: 2, xl: 0 },
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center"
@@ -161,7 +164,7 @@ const RegisterLayout = () => {
                 container
                 justifyContent="center"
                 alignItems="center"
-                className="absolute bottom-4"
+                className="absolute bottom-4 my-2"
               >
                 <Typography className="text-sm uppercase text-neutral-700">
                   Copyright 2022 © Nakamoto Games

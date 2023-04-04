@@ -38,7 +38,7 @@ const HeadPrice = ({
 
   return (
     <Box className="relative mb-2 flex w-[100%] flex-row flex-wrap rounded-b-lg bg-neutral-800 sm:mb-0 lg:h-[30px] lg:flex-nowrap">
-      <Typography className="text-black-01 flex max-w-[150px] flex-1 items-center justify-center whitespace-nowrap bg-secondary-main md:rounded-bl-lg lg:w-[15%] lg:flex-none">
+      <Typography className="text-black-01 flex h-full w-full max-w-[150px] flex-1 items-center justify-center whitespace-nowrap bg-secondary-main md:absolute md:rounded-bl-lg  lg:static lg:w-[15%] lg:flex-none">
         <span className="font-neue-machina text-sm uppercase text-primary-main">
           TOKENS INFO =
         </span>
@@ -54,24 +54,26 @@ const HeadPrice = ({
           <span className="mr-1 text-purple-primary">Polygon : </span>
           {siteInfo.contract && (
             <Link
-              href={`${CONFIGS.CHAIN.POLYGON_SCAN}/address/${siteInfo.contract}`}
+              href={`${CONFIGS.CHAIN.POLYGON_SCAN}/address/${CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT}`}
               target="_blank"
             >
               <Typography
                 paragraph
                 component="span"
                 variant="body1"
-                onClick={() => Helper.copyClipboard(siteInfo.contract)}
+                onClick={() =>
+                  Helper.copyClipboard(CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT)
+                }
                 className="mt-4 cursor-pointer font-neue-machina text-sm uppercase text-purple-primary"
               >
-                {Helper.textWithDots(siteInfo.contract, 8)}
+                {Helper.textWithDots(CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT, 8)}
               </Typography>
             </Link>
           )}
         </div>
       </Box>
       {price ? (
-        <Box className="flex w-full flex-wrap items-center justify-center lg:ml-auto lg:w-auto lg:flex-nowrap">
+        <Box className="flex w-full flex-wrap items-center justify-center md:px-[170px] lg:ml-auto lg:w-auto lg:flex-nowrap lg:px-0">
           {showTime && (
             <Typography
               variant="body1"
@@ -140,7 +142,7 @@ const HeadPrice = ({
           )}
           <button
             type="button"
-            className="sm:h-100% absolute top-0 right-0 z-[51] m-auto flex w-full max-w-[150px] flex-row items-center justify-center bg-error-main sm:w-[150px] sm:rounded-br-lg lg:relative lg:right-auto lg:top-auto lg:h-[30px] lg:justify-evenly xl:m-0 xl:ml-4"
+            className="absolute top-0 right-0 z-[51] m-auto flex w-full max-w-[150px] flex-row items-center justify-center bg-error-main sm:h-[100%] sm:w-[150px] sm:rounded-br-lg lg:relative lg:right-auto lg:top-auto lg:h-[30px] lg:w-[150px] lg:justify-evenly xl:m-0 xl:ml-4"
             onClick={handleOpen}
           >
             <div className="font-neue-machina text-sm uppercase text-white-primary">

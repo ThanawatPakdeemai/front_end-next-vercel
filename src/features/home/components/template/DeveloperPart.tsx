@@ -27,13 +27,15 @@ const developerPart = () => (
               <Typography
                 variant="inherit"
                 className="text-neutral-900"
-              >{`Looking for NAKA<DEVELOPERs>`}</Typography>
+              >
+                ARE YOU A DEVELOPER?
+              </Typography>
             }
             background="red"
             rightTitle={
               <ButtonLink
                 href="/joinus"
-                text="Register"
+                text="joinus"
                 icon={<AddIcon />}
                 color="error"
                 size="small"

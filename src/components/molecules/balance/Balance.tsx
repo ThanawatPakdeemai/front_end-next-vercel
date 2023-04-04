@@ -5,15 +5,12 @@ import ButtonLink from "@components/atoms/button/ButtonLink"
 import { useTranslation } from "react-i18next"
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet"
 import { useWeb3Provider } from "@providers/index"
-
 import useGlobal from "@hooks/useGlobal"
-import useChainSupport from "@stores/chainSupport"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
-import PleaseCheckWallet from "@components/atoms/PleaseCheckWallet"
 import { CHAIN_SUPPORT, IChainList } from "@configs/chain"
-import { useRouter } from "next/router"
 import INaka from "@components/icons/Naka"
 import IBusd from "@components/icons/Busd"
+import useChainSupportStore from "@stores/chainSupport"
 import TokenList from "../TokenList"
 import TokenListItem from "../TokenListItem"
 
@@ -32,19 +29,26 @@ const Balance = ({
   buyItemCoinSeleced,
   widthBalance = "w-[40px]"
 }: IProps) => {
-  const router = useRouter()
-  const { token } = router.query
   const profile = useProfileStore((state) => state.profile.data)
   const {
     address,
     handleConnectWithMetamask,
     hasMetamask,
-    statusWalletConnected
+    isConnected,
+    disabledConnectButton,
+    setDisabledConnectButton
   } = useWeb3Provider()
   const { t } = useTranslation()
-  const { chainSupport } = useChainSupport()
+  const { chainSupport, currentTokenSelected, currentChainSelected } =
+    useChainSupportStore()
   const { hydrated } = useGlobal()
-  const { chainId } = useWeb3Provider()
+
+  const handleClickConnectWallet = () => {
+    if (setDisabledConnectButton && handleConnectWithMetamask) {
+      setDisabledConnectButton(true)
+      handleConnectWithMetamask()
+    }
+  }
 
   /**
    * @description Handle display balances from balance vault
@@ -79,9 +83,13 @@ const Balance = ({
       <TokenList
         dataList={chainSupport}
         currentTabChainSelected={
-          CHAIN_SUPPORT.find((item) => item.chainId === chainId) as IChainList
+          CHAIN_SUPPORT.find(
+            (item) => item.chainId === currentChainSelected
+          ) as IChainList
         }
-        currentTokenSelected={(token as string) || chainSupport[0]?.symbol}
+        currentTokenSelected={
+          currentTokenSelected?.symbol || chainSupport[0]?.symbol
+        }
         displayBalance
         widthBalance={widthBalance}
       />
@@ -90,32 +98,26 @@ const Balance = ({
 
   return hydrated ? (
     <div>
-      {address && profile ? (
-        <>
-          <CardContent
-            className={`my-2 min-w-[200px] items-center justify-center p-0 ${className}`}
-          >
-            {statusWalletConnected?.responseStatus ? (
-              handleDisplayBalance()
-            ) : (
-              <PleaseCheckWallet size="small" />
-            )}
-          </CardContent>
-        </>
+      {isConnected && address && profile && currentChainSelected ? (
+        <CardContent
+          className={`my-2 min-w-[200px] items-center justify-center p-0 ${className}`}
+        >
+          {handleDisplayBalance()}
+        </CardContent>
       ) : (
         <div className="my-4">
-          {hasMetamask && profile && (
+          {profile && (
             <ButtonLink
-              onClick={handleConnectWithMetamask}
+              onClick={handleClickConnectWallet}
               text={t("Connect Wallet")}
               icon={<AccountBalanceWalletIcon />}
               size="medium"
               color="secondary"
               variant="contained"
               className="w-full"
+              disabled={disabledConnectButton}
             />
           )}
-
           {!hasMetamask && profile && <Metamask />}
         </div>
       )}

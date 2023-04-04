@@ -12,12 +12,10 @@ import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { useTranslation } from "next-i18next"
 import Helper from "@utils/helper"
-import { BaseToastComponent } from "@feature/toast/components"
 import Balance from "@components/molecules/balance/Balance"
-import SwitchChain from "@components/atoms/SwitchChain"
-import useSwitchNetwork from "@hooks/useSwitchNetwork"
 import CONFIGS from "@configs/index"
 import PleaseCheckWallet from "@components/atoms/PleaseCheckWallet"
+import { useWeb3Provider } from "@providers/Web3Provider"
 import useBuyGameItemController from "../containers/hooks/useBuyGameItemController"
 
 const iconmotion = {
@@ -36,7 +34,6 @@ const iconmotion = {
 const FormBuyItem = () => {
   const { t } = useTranslation()
   const {
-    MessageAlert,
     handleSubmit,
     watch,
     setValue,
@@ -54,14 +51,18 @@ const FormBuyItem = () => {
     chainSupport,
     isDisabled
   } = useBuyGameItemController()
-  const { handleSwitchNetwork, statusWalletConnected } = useSwitchNetwork()
+  // const { handleSwitchNetwork } = useSwitchNetwork()
+  const { isConnected } = useWeb3Provider()
 
   return (
     <>
       {game && (
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
-          <Box>
-            <div className=" grid grid-cols-2 justify-center gap-4">
+        <form
+          className="w-full"
+          onSubmit={handleSubmit(onSubmit, onError)}
+        >
+          <Box className="w-full">
+            <div className=" grid grid-cols-1 justify-center gap-4 md:grid-cols-2">
               <div className="flex justify-center rounded-2xl border-[1px] border-neutral-700">
                 <Image
                   src={game.item[0].image}
@@ -71,7 +72,7 @@ const FormBuyItem = () => {
                   className="w-full p-4"
                 />
               </div>
-              <div className="custom-scroll overflow-y-scroll">
+              <div className="custom-scroll w-full overflow-y-scroll">
                 <p className="text-white-default">Asset</p>
                 <p className="text-black-default">{game.item[0].name}</p>
                 <p className="text-white-default">Descriptions</p>
@@ -94,7 +95,7 @@ const FormBuyItem = () => {
                     <DropdownListItem
                       {...field}
                       list={gameItemList as IGameItemListData[]}
-                      className="w-[410px]"
+                      className="w-full lg:w-[410px]"
                       onChangeSelect={(_item) => {
                         setValue("item", _item)
                         setValue("item_id", _item.id)
@@ -118,7 +119,7 @@ const FormBuyItem = () => {
                 <DropdownListCurrency
                   {...field}
                   list={chainSupport}
-                  className="w-[410px]"
+                  className="w-full lg:w-[410px]"
                   onChangeSelect={(_item) => {
                     setValue("currency", _item)
                     setValue("currency_id", _item?.address)
@@ -135,7 +136,7 @@ const FormBuyItem = () => {
             Assets / 1 Item = {watch("nakaPerItem")}
           </p>
 
-          <div className="my-4  grid grid-cols-6  content-center gap-4">
+          <div className="my-4  grid grid-cols-6  content-center gap-2 md:gap-4">
             <div className="btn">
               <ButtonIcon
                 onClick={onQtyDown}
@@ -145,7 +146,7 @@ const FormBuyItem = () => {
                 icon={
                   <RemoveOutlinedIcon className="h-[30px] w-[30px] text-white-primary" />
                 }
-                className="ml-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-neutral-700 bg-secondary-main"
+                className="flex h-[50px] w-full items-center justify-center rounded-lg border border-neutral-700 bg-secondary-main md:ml-1 md:w-[50px]"
               />
             </div>
             <div className="input col-span-4">
@@ -165,7 +166,7 @@ const FormBuyItem = () => {
                         setValue("qty", qty)
                       }
                     }}
-                    className="hidden-input-number h-full w-[220px] bg-neutral-700 pt-2 pl-8 text-center text-neutral-500 focus-visible:bg-neutral-700 focus-visible:outline-0"
+                    className="hidden-input-number h-full w-full bg-neutral-700 pt-2 pl-8 text-center text-neutral-500 focus-visible:bg-neutral-700 focus-visible:outline-0 md:w-[220px]"
                     value={watch("qty")}
                   />
                 </div>
@@ -188,7 +189,7 @@ const FormBuyItem = () => {
                 icon={
                   <AddOutlinedIcon className="h-[30px] w-[30px] rotate-90 text-white-primary" />
                 }
-                className="ml-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-neutral-700 bg-secondary-main"
+                className="flex h-[50px] w-full items-center justify-center rounded-lg border border-neutral-700 bg-secondary-main md:ml-1 md:w-[50px]"
               />
             </div>
           </div>
@@ -228,7 +229,7 @@ const FormBuyItem = () => {
             </p>
           </div>
           <ButtonGroup className="mt-5 flex flex-col  gap-3">
-            {!statusWalletConnected.responseStatus ? (
+            {!isConnected ? (
               <PleaseCheckWallet />
             ) : (
               <ButtonLink
@@ -258,7 +259,8 @@ const FormBuyItem = () => {
             <div className="flex w-full justify-center rounded-2xl  border border-black-200">
               <ButtonLink
                 className="h-[40px] w-full text-sm"
-                href="/"
+                href={CONFIGS.BASE_URL.MARKETPLACE}
+                target="_blank"
                 text="View in Marketplace"
                 size="medium"
                 variant="contained"
@@ -266,43 +268,20 @@ const FormBuyItem = () => {
               />
             </div>
           </ButtonGroup>
-          <Box
-            sx={{
-              ".MuiTypography-root": {
-                fontSize: "90%"
-              },
-              ".MuiAlert-action": {
-                display: "none"
-              },
-              ".switch-chain--subtitle": {
-                fontSize: "80%"
-              }
-            }}
-          >
-            <BaseToastComponent
-              text={MessageAlert()}
-              status="info"
-              onClose={() => {}}
-              className="mt-10 w-full"
-            />
-            <div className="m-2 flex flex-col items-center justify-center md:col-span-5">
-              <SwitchChain
-                variant="simple"
-                chainName={watch("currency")?.tokenName}
-                handleClick={
-                  watch("currency")?.symbol === "NAKA"
-                    ? () =>
-                        handleSwitchNetwork(
-                          CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string
-                        )
-                    : () =>
-                        handleSwitchNetwork(
-                          CONFIGS.CHAIN.CHAIN_ID_HEX as string
-                        )
-                }
-              />
-            </div>
-          </Box>
+          {/* // TODO: Open after launch V2 */}
+          {/* <InformSwitchChain
+            message={MessageAlert()}
+            tokenName={watch("currency")?.tokenName}
+            handleClick={
+              watch("currency")?.symbol === "NAKA"
+                ? () =>
+                    handleSwitchNetwork(
+                      CONFIGS.CHAIN.CHAIN_ID_HEX_BNB as string
+                    )
+                : () =>
+                    handleSwitchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX as string)
+            }
+          /> */}
         </form>
       )}
     </>

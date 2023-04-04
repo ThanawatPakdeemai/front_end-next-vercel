@@ -1,53 +1,17 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { v4 as uuid } from "uuid"
 import useCategories from "@hooks/useCategories"
 import CategoryCard from "@components/molecules/cards/CategoryCard"
 import SkeletonCategoryCard from "@components/atoms/skeleton/SkeletonCategoryCard"
+// import { Box } from "@mui/material"
+// import { PaginationNaka } from "@components/atoms/pagination"
+// import DropdownLimit from "@components/atoms/DropdownLimit"
+import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 
 const CatogoriesListPage = () => {
-  const limitPage = 16
-  // const [page, setPage] = useState<number>(1)
-  // const [totalCount, setTotalCount] = useState<number>(0)
-  // const fetchRef = useRef(false)
-  // const queryClient = useQueryClient()
-  // const { select: selectHeader } = useSelectStore()
-  // const type = selectHeader
-  // const searchBlog = useSearchStore((state: any) => state.search)
-  // {
-  //   limit: limitPage,
-  //   skip: page,
-  //   search: searchBlog,
-  //   sort: type,
-  //   cate: "all"
-  // }
-  const {
-    getCategoriesAll,
-    isFetchingCategories,
-    isPreviousDataCategories,
-    onHandleClickCatogory
-  } = useCategories()
-
-  useEffect(() => {
-    if (!isFetchingCategories && getCategoriesAll) {
-      // setTotalCount(getBlogAllData.info.totalCount)
-    }
-  }, [getCategoriesAll, isFetchingCategories])
-
-  useEffect(() => {
-    if (!isPreviousDataCategories && getCategoriesAll) {
-      // queryClient.prefetchQuery({
-      //   queryKey: ["blog", type, page + 1],
-      //   queryFn: () =>
-      //     getBlogAll({
-      //       limit: limitPage,
-      //       skip: page + 1,
-      //       search: "",
-      //       sort: type,
-      //       cate: "all"
-      //     })
-      // })
-    }
-  }, [getCategoriesAll, isPreviousDataCategories])
+  // page, setPage, pager, setLimit, totalCount
+  const { limit } = useGamePageListController()
+  const { getCategoriesAll } = useCategories()
 
   return (
     <>
@@ -58,24 +22,33 @@ const CatogoriesListPage = () => {
                 key={uuid()}
                 img={item.image_list}
                 text={item.name}
-                onHandleClick={() =>
-                  onHandleClickCatogory(
-                    item.slug || item.name.toLocaleLowerCase(),
-                    item.id
-                  )
-                }
+                href={`/categories/${item.slug}?id=${item.id}`}
               />
             ))
-          : [...Array(limitPage)].map(() => (
-              <SkeletonCategoryCard key={uuid()} />
-            ))}
+          : [...Array(limit)].map(() => <SkeletonCategoryCard key={uuid()} />)}
       </div>
-      {/* <PaginationNaka
-        totalCount={totalCount}
-        limit={limitPage}
-        page={page}
-        setPage={setPage}
-      /> */}
+      {/* //TODO: Change to POST later */}
+      {/* <Box
+        className="my-2 flex w-full justify-between md:my-5"
+        sx={{
+          ".MuiPagination-ul": {
+            gap: "5px 0"
+          }
+        }}
+      >
+        <PaginationNaka
+          totalCount={totalCount}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+        <DropdownLimit
+          className="m-0 w-[160px] flex-row"
+          defaultValue={30}
+          list={pager}
+          onChangeSelect={setLimit}
+        />
+      </Box> */}
     </>
   )
 }

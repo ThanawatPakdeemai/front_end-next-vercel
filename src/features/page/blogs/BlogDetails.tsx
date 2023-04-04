@@ -12,6 +12,8 @@ import BlogContent from "@feature/blog/components/organisms/BlogContent"
 import BlogFooter from "@feature/blog/components/organisms/BlogFooter"
 import BlogReleated from "@feature/blog/components/organisms/BlogReleated"
 import { Box } from "@mui/material"
+import useCrumbStore from "@stores/crumb"
+import { BLOG_CRUMB } from "@configs/crumb"
 
 interface IProp {
   _blogId: string
@@ -19,6 +21,7 @@ interface IProp {
 
 const BlogPageDetails = ({ _blogId }: IProp) => {
   const { getBlogDetails, isLoading } = useGetBlogDetails(_blogId)
+  const { setCrumbData } = useCrumbStore()
   const { setOpen, setClose } = useLoadingStore()
   const { getBlogTagData } = useGetBlogTags({
     limit: 10,
@@ -45,14 +48,32 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
     }
   }, [isLoading, setOpen, setClose])
 
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      if (getBlogDetails) {
+        setCrumbData({
+          title: getBlogDetails.title,
+          _id: _blogId
+        })
+      }
+    }
+    return () => {
+      load = true
+    }
+  }, [getBlogDetails, setCrumbData, _blogId])
+
   return (
     <>
-      <Breadcrumb />
-      <div className="flex h-48 items-center overflow-hidden">
-        <p className="w-8/12 font-mondwest text-5xl text-neutral-400">
+      <Breadcrumb
+        isCustom
+        _breadcrumbs={BLOG_CRUMB() || ""}
+      />
+      <div className="mx-5 flex h-full flex-col  items-center md:h-48 md:flex-row md:overflow-hidden">
+        <p className="w-full text-center font-mondwest text-3xl text-neutral-400 md:w-8/12 md:text-left md:text-5xl">
           {getBlogDetails?.title}
         </p>
-        <div className="my-12 grid w-4/12 justify-items-end">
+        <div className="my-12 grid w-4/12 justify-items-center lg:justify-items-end">
           <motion.div
             animate={{ rotate: [0, -45, -90, -135, -180] }}
             transition={{
@@ -66,7 +87,7 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
           </motion.div>
         </div>
       </div>
-      <div className="grid lg:flex">
+      <div className="mx-5 grid grid-cols-1 lg:grid-cols-4 xl:flex">
         <Box
           sx={{
             "&::before": {
@@ -82,7 +103,7 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
               }
             }
           }}
-          className="relative flex h-auto w-full flex-col bg-neutral-780 lg:w-[calc(100%-512px)]"
+          className="relative col-span-3 mr-5 flex h-auto w-full flex-col bg-neutral-780 lg:w-[95%] xl:w-[calc(100%-512px)]"
         >
           <Box
             sx={{

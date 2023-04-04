@@ -30,10 +30,10 @@ const BecomeDeveloperPage = () => (
       <div className="flex items-center justify-between">
         <Jumbotron
           textTitle="nakamoto.games"
-          textTitleDark="For Game DEVELOPER_ "
-          text="We take care about all the distribution infrastructure so you can care about's next. Publish your web3 game in seconds ⚡"
+          textTitleDark="FOR GAME DEVELOPERS_"
+          text="We take care of the infrastructure and distribution so you can focus on creating games. Publish your Web3 game now ⚡"
           className="w-[620px]"
-          textButton="Submit Now"
+          textButton="Subscribe Now"
         />
         <ButtonScroll anchorLink="become-developer--section-1" />
       </div>
@@ -53,7 +53,7 @@ const BecomeDeveloperPage = () => (
         <Jumbotron
           textTitle={`Import your <br> existing `}
           textTitleDark="NFTs."
-          text="Display your in-game NFTs in the Nakamoto.Games storefront, where they’ll always be visible to browsing gamers 🎮"
+          text="Display your in-game NFTs in the Nakamoto.Games storefront. Get gamers watching your in-game assets 🎮"
           className="w-[620px]"
         />
         <CardPlatformItems
@@ -88,7 +88,7 @@ const BecomeDeveloperPage = () => (
         />
         <Jumbotron
           textTitle="Features"
-          text="We provide all web3 games need to maximize their distribution, auto-updating and accessibility, so you focus on your game."
+          text="We provide everything a Web3 game needs to maximize distribution."
           className="mb-8"
         />
         <CardFeaturedDeveloperItems items={FEATURES_DEVELOPER} />
@@ -112,9 +112,9 @@ const BecomeDeveloperPage = () => (
       >
         <div className="inner-content ml-10">
           <Jumbotron
-            textTitle="Ready to try <br> nakamoto.games"
-            textTitleDark="For Game DEVELOPER_ "
-            text="Apply to submit your game with our integration team get you game running on Nakamoto.Games now."
+            textTitle="READY TO TRY <br> NAKAMOTO.GAMES?"
+            textTitleDark="FOR GAME DEVELOPERS_"
+            text="Submit your game for assessment and be up and running in a matter of days."
             className="w-[576px] text-center"
             sxCustomStyled={{
               ".jumbotron-title--text": {
@@ -127,7 +127,7 @@ const BecomeDeveloperPage = () => (
                 justifyContent: "center"
               }
             }}
-            textButton="Submit Now"
+            textButton="Subscribe Now"
             hrefButton="/joinus"
           />
         </div>
@@ -148,7 +148,7 @@ const BecomeDeveloperPage = () => (
           />
           <Jumbotron
             textTitle="Helping <span>web3</span> games grow."
-            text="We provide all web3 games need to maximize their distribution, auto-updating and accessibility, so you focus on your game."
+            text="We provide everything a Web3 game needs to maximize distribution."
             className="mb-8"
             sxCustomStyled={{
               ".jumbotron-title span": {
@@ -189,11 +189,11 @@ const BecomeDeveloperPage = () => (
     >
       <div className="relative z-[2] flex items-center justify-center text-center">
         <Jumbotron
-          textTitle="Want to Read More?"
-          textTitleDark="For Game DEVELOPER_ "
+          textTitle="WANT TO READ MORE?"
+          textTitleDark="FOR GAME DEVELOPERS_"
           text="We love sharing stories about our development progress, mechanics, updates and much more!"
           className="w-[620px]"
-          textButton="Submit Now"
+          textButton="Subscribe Now"
           sxCustomStyled={{
             ".jumbotron-button": {
               display: "flex",

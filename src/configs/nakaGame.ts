@@ -17,15 +17,16 @@ export const NAKA_GAME = [
         path: "/story-mode-games"
       }
     ]
-  },
-  {
-    label: "EVENTS",
-    id: 2,
-    game: [
-      {
-        name: "Tournament",
-        path: "/tournament"
-      }
-    ]
   }
+  // TODO: Open after launch V2
+  // {
+  //   label: "EVENTS",
+  //   id: 2,
+  //   game: [
+  //     {
+  //       name: "Tournament",
+  //       path: "/tournament"
+  //     }
+  //   ]
+  // }
 ]

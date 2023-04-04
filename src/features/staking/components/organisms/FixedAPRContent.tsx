@@ -80,8 +80,7 @@ const FixedAPRContent = () => {
             className="mb-12"
           />
           <Typography className="mb-12 flex max-w-full justify-center text-center font-bold uppercase text-neutral-500">
-            {`Please watch our social media and you'll be`} <br />
-            {`the first to find out when it's back.`}
+            STAKING IS COMING. STAY TUNED ON SOCIAL MEDIA.
           </Typography>
         </div>
       )}

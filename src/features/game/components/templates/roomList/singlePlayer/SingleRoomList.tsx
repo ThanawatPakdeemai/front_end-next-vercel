@@ -13,9 +13,7 @@ import { unstable_batchedUpdates } from "react-dom"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
-import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
-import BuyItemBody from "@components/templates/game/BuyItemBody"
 import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGameRoomsById"
 
 /**
@@ -134,82 +132,84 @@ const GameRoomList = () => {
   }, [allGameRooms, data])
 
   return (
-    <>
-      <Box className="w-full gap-3 lg:flex">
-        <div className="relative w-full rounded-3xl border border-neutral-700">
-          {gameData && <HeaderRoomList lobby={gameData.name} />}
-          <Divider />
-          <div className="custom-scroll md:0 m-4 flex h-96 flex-col gap-[27px] overflow-y-scroll bg-room-list bg-contain md:h-[666px] md:items-center md:p-6 lg:p-[43px]">
-            {profile
-              ? allGameRooms &&
-                allGameRooms.length > 0 &&
-                allGameRooms.map((_data) => {
-                  const initEndTime = new Date(_data.end_time)
-                  return (
-                    <RoomListBar
-                      key={_data.id}
-                      timer={{
-                        time: initEndTime,
-                        onExpire: () => null
-                      }}
-                      player={{
-                        currentPlayer: _data.amount_current_player,
-                        maxPlayer: _data.max_players
-                      }}
-                      roomId={_data.room_number}
-                      roomName={`Room ${itemSelected?.item_size ?? ""}`}
-                      onClick={() => handleJoinRoom(_data)}
-                      btnText={
-                        _data?.current_player?.find(
-                          (ele) => ele.player_id === profile?.id
-                        )?.status === "played"
-                          ? "played"
-                          : _data?.amount_current_player >= _data.max_players
-                          ? "full"
-                          : "join"
-                      }
-                      path={gameData?.path}
-                      dataGoalRush={_data.data_play}
-                    />
-                  )
-                })
-              : allGameRoomsById &&
-                allGameRoomsById.length > 0 &&
-                allGameRoomsById.map((_data) => {
-                  const initEndTime = new Date(_data.end_time)
-                  return (
-                    <RoomListBar
-                      key={_data.id}
-                      timer={{
-                        time: initEndTime,
-                        onExpire: () => null
-                      }}
-                      player={{
-                        currentPlayer: _data.amount_current_player,
-                        maxPlayer: _data.max_players
-                      }}
-                      roomId={_data.room_number}
-                      roomName={`Room ${itemSelected?.item_size ?? ""}`}
-                      onClick={() => handleJoinRoom(_data)}
-                    />
-                  )
-                })}
-            <ButtonSticky
-              icon={<ReloadIcon />}
-              className="mt-10"
-              multi
-            />
-          </div>
+    <Box className="w-full gap-3 lg:flex">
+      <div className="relative w-full rounded-3xl border border-neutral-700">
+        {gameData && <HeaderRoomList lobby={gameData.name} />}
+        <Divider />
+        <div className="custom-scroll md:0 m-4 flex h-96 flex-col gap-[27px] overflow-y-scroll bg-room-list bg-contain md:h-[666px] md:items-center md:p-6 lg:p-[43px]">
+          {profile
+            ? allGameRooms &&
+              allGameRooms.length > 0 &&
+              allGameRooms.map((_data) => {
+                const initEndTime = new Date(_data.end_time)
+                return (
+                  <RoomListBar
+                    key={_data.id}
+                    timer={{
+                      time: initEndTime,
+                      onExpire: () => null
+                    }}
+                    player={{
+                      currentPlayer: _data.amount_current_player,
+                      maxPlayer: _data.max_players
+                    }}
+                    roomId={_data.room_number}
+                    roomName={`Room ${itemSelected?.item_size ?? ""}`}
+                    onClick={() => handleJoinRoom(_data)}
+                    btnText={
+                      _data?.current_player?.find(
+                        (ele) => ele.player_id === profile?.id
+                      )?.status === "played"
+                        ? "played"
+                        : _data?.amount_current_player >= _data.max_players
+                        ? "full"
+                        : "join"
+                    }
+                    path={gameData?.path}
+                    dataGoalRush={_data.data_play}
+                  />
+                )
+              })
+            : allGameRoomsById &&
+              allGameRoomsById.length > 0 &&
+              allGameRoomsById.map((_data) => {
+                const initEndTime = new Date(_data.end_time)
+                return (
+                  <RoomListBar
+                    key={_data.id}
+                    timer={{
+                      time: initEndTime,
+                      onExpire: () => null
+                    }}
+                    player={{
+                      currentPlayer: _data.amount_current_player,
+                      maxPlayer: _data.max_players
+                    }}
+                    roomId={_data.room_number}
+                    roomName={`Room ${itemSelected?.item_size ?? ""}`}
+                    onClick={() => handleJoinRoom(_data)}
+                  />
+                )
+              })}
+          <ButtonSticky
+            icon={<ReloadIcon />}
+            className="mt-10"
+            multi
+          />
         </div>
-        {gameData &&
-          gameData?.play_to_earn_status !== "free" &&
-          !gameData.tournament && (
-            <BuyItemBody>
-              <CardBuyItem gameObject={gameData} />
-            </BuyItemBody>
+      </div>
+      {/* {gameData && (
+        <BuyItemBody>
+          <OverviewContent
+            gameId={gameData.id}
+            gameType={getTypeGamePathFolder(gameData)}
+          />
+          {gameData?.play_to_earn_status !== "free" && !gameData.tournament && (
+            <CardBuyItem gameObject={gameData} />
           )}
-      </Box>
-    </>
+        </BuyItemBody>
+      )} */}
+    </Box>
   )
 }
 

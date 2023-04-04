@@ -52,7 +52,7 @@ const RoomListBar = ({
       padding: 14,
       x: -12
     }}
-    className="flex !w-full flex-col items-center justify-between gap-2 rounded-l-[16px] rounded-r-[36px] border border-neutral-700 bg-neutral-800 p-2 md:!w-auto md:min-w-[568px] md:flex-row md:gap-8 lg:hover:!w-[590px]"
+    className="flex w-fit min-w-full flex-col items-center justify-between gap-2 rounded-l-[16px] rounded-r-[36px] border border-neutral-700 bg-neutral-800 p-2 sm:min-w-[563px] sm:flex-row sm:gap-8"
   >
     <div className="flex flex-1 md:gap-2">
       <ButtonIcon
@@ -103,12 +103,14 @@ const RoomListBar = ({
           </div>
         ) : (
           <span className="font-bold uppercase text-neutral-300">
-            {roomName.length > 9 ? Helper.shortenString(roomName, 4) : roomName}
+            {roomName.length > 10
+              ? Helper.shortenString(roomName, 4)
+              : roomName}
           </span>
         )}
       </div>
     </div>
-    <div className="flex flex-col items-center gap-2 md:flex-row">
+    <div className="flex flex-col items-center gap-2 sm:flex-row">
       <RoomListBox
         type="timer"
         timer={timer}

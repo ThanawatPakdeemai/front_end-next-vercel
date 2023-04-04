@@ -19,12 +19,12 @@ export const BANNER_DATA: Banner[] = [
     path: "/",
     textColor: "red"
   },
-  {
-    title: "tournament",
-    imgSrc: "/images/banner/tournament.webp",
-    path: "/tournament",
-    textColor: "red"
-  },
+  // {
+  //   title: "tournament",
+  //   imgSrc: "/images/banner/tournament.webp",
+  //   path: "/tournament",
+  //   textColor: "red"
+  // },
   {
     title: "staking",
     imgSrc: "/images/banner/staking.webp",

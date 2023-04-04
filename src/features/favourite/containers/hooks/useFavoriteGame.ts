@@ -1,34 +1,12 @@
+import { IFilterGamesByKey } from "@feature/game/interfaces/IGameService"
 import { IInfo } from "@interfaces/IHelper"
 import { useQuery } from "@tanstack/react-query"
 import { getFavoriteGameByUser } from "../services/favourite.service"
 
-interface IGameFavoriteBody {
+interface IGameFavoriteBody extends IFilterGamesByKey {
   playerId: string
-  limit?: number
-  skip?: number
-  sort?: string
-  search?: string
-  category?: string
-  item?: string
-  device?: string
-  game_type?: string
-  tournament?: boolean
-  nftgame?: string
-  gameId?: string
 }
-const useFavoriteGame = ({
-  limit = 25,
-  skip = 1,
-  sort = "",
-  search = "",
-  category = "all",
-  item = "all",
-  device = "all",
-  game_type = "all",
-  tournament = false,
-  nftgame = "all",
-  playerId = ""
-}: IGameFavoriteBody) => {
+const useFavoriteGame = ({ playerId = "", ...props }: IGameFavoriteBody) => {
   const {
     data: gameFavourite,
     isError: isErrorGameFavourite,
@@ -36,34 +14,8 @@ const useFavoriteGame = ({
     error: errorGameFavourite,
     refetch: refetchGameFavourite
   } = useQuery({
-    queryKey: [
-      "getFavoriteGameByUser",
-      {
-        limit,
-        skip,
-        sort,
-        search,
-        category,
-        item,
-        device,
-        game_type,
-        tournament,
-        nftgame
-      }
-    ],
-    queryFn: () =>
-      getFavoriteGameByUser(
-        limit,
-        skip,
-        sort,
-        search,
-        category,
-        item,
-        device,
-        game_type,
-        tournament,
-        nftgame
-      ),
+    queryKey: ["getFavoriteGameByUser", props],
+    queryFn: () => getFavoriteGameByUser(props),
     keepPreviousData: true,
     staleTime: Infinity,
     enabled: !!playerId

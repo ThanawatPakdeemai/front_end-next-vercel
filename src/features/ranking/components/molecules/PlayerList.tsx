@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { Chip, Typography } from "@mui/material"
 import { memo } from "react"
 import { Image } from "@components/atoms/image/index"
@@ -69,7 +70,13 @@ const PlayerList = ({
       </div>
       <div className="animation-image !ml-2 h-[58px] w-[58px]">
         <Image
-          src={avatar}
+          src={
+            avatar.search("https") > -1
+              ? avatar
+              : avatar.search("/") === 0
+              ? avatar
+              : `/${avatar}`
+          }
           width="200"
           height="200"
           alt={username}

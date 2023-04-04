@@ -117,3 +117,15 @@ export const BLOG_CRUMB = () => {
     }
   ] as ICrumb[]
 }
+
+export const COMMISSION_CRUMB = () =>
+  [
+    {
+      title: "Home",
+      href: "/"
+    },
+    {
+      title: "Commission",
+      href: "/commission"
+    }
+  ] as ICrumb[]

@@ -11,7 +11,6 @@ import {
   GAME_DOWNLOAD,
   P2EHeaderMenu
 } from "@constants/gameSlide"
-import DeveloperPart from "@feature/home/components/template/DeveloperPart"
 import BannerSlide from "@feature/slider/components/templates/BannerSlide"
 import CarouselSlide from "@feature/slider/components/templates/CarouselSlide"
 import CardMarketplace from "@components/molecules/CardMarketplace"
@@ -24,9 +23,7 @@ import CardLink from "@components/molecules/CardLink"
 import INakaSwap from "@components/icons/NakaSwap"
 import IStacking from "@components/icons/Stacking"
 import IReferrals from "@components/icons/Referrals"
-import useGetHotGames from "@feature/game/containers/hooks/useGetHotGames"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
-import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { v4 as uuid } from "uuid"
 import useTweenEffect from "@hooks/useSpartFireEffect"
@@ -38,9 +35,11 @@ import CardLinkTemplate from "@components/templates/contents/CardLinkTemplate"
 import CONFIGS from "@configs/index"
 import OrionTrade from "@components/organisms/OrionTrade"
 import OnPlaying from "@feature/home/components/molecules/OnPlaying"
+import DeveloperPart from "@feature/home/components/template/DeveloperPart"
+import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 
 const Home = () => {
-  const limit = 10
+  // const limit = 10
   const { profile } = useProfileStore()
   const { clearQuestStore, setOpen, hasCompleted } = useQuestStore()
   const { hydrated } = useGlobal()
@@ -71,54 +70,58 @@ const Home = () => {
   const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-play")
 
   const [p2eGame, setP2EGame] = useState<IGame[]>()
-  const [p2eCurType, setP2ECurType] = useState<IGetType>("hot-game")
+  const [p2eCurType, setP2ECurType] = useState<IGetType>("play-to-earn-games")
 
-  const { hotGameData } = useGetHotGames()
-  const { data: p2eGameData, isFetching: p2eLoading } = useGamesByTypes({
-    _type: p2eCurType,
-    _limit: limit,
-    _page: 1
-  })
+  const getGameTypeF2EByTitleClicked = (): IGetType => {
+    switch (f2pCurType) {
+      case "free-to-play":
+        return "free-to-play-games"
+      case "story-mode":
+        return "storymode"
+      default:
+        return "free-to-play-games"
+    }
+  }
 
-  const { data: f2pGameData, isFetching: f2pLoading } = useGamesByTypes({
-    _type: f2pCurType,
-    _limit: limit,
-    _page: 1
-  })
+  const getGameTypeP2EByTitleClicked = (): IGetType => {
+    switch (p2eCurType) {
+      case "arcade-emporium":
+        // TODO: choose to change to hot-game
+        return "arcade-emporium"
+      default:
+        return "play-to-earn-games"
+    }
+  }
+
+  // const { hotGameData } = useGetHotGames()
+  const { gameFilter: dataF2pGames, loadingFilterGame: loadingDataF2pGames } =
+    useGamePageListController(getGameTypeF2EByTitleClicked())
+  const { gameFilter: dataP2eGame, loadingFilterGame: loadingDataP2eGame } =
+    useGamePageListController(getGameTypeP2EByTitleClicked())
 
   useEffect(() => {
     let load = false
 
     if (!load) {
-      if (f2pGameData) {
-        setF2PGame(f2pGameData.data)
+      if (dataF2pGames) {
+        setF2PGame(dataF2pGames)
+      }
+      if (dataP2eGame) {
+        setP2EGame(dataP2eGame)
       }
     }
 
     return () => {
       load = true
     }
-  }, [f2pCurType, f2pGameData, p2eGameData])
-
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (p2eCurType === "hot-game") {
-        if (hotGameData) {
-          setP2EGame(hotGameData.data)
-        }
-      } else if (p2eCurType === "play-to-earn") {
-        if (p2eGameData) {
-          setP2EGame(p2eGameData.data)
-        }
-      }
-    }
-
-    return () => {
-      load = true
-    }
-  }, [p2eCurType, hotGameData, p2eGameData])
+  }, [
+    dataF2pGames,
+    f2pCurType,
+    p2eCurType,
+    dataP2eGame,
+    loadingDataF2pGames,
+    loadingDataP2eGame
+  ])
 
   return hydrated ? (
     <>
@@ -215,7 +218,7 @@ const Home = () => {
       </div>
 
       <div className="my-2 h-full w-full lg:my-20">
-        {f2pGame && !f2pLoading ? (
+        {f2pGame && !loadingDataF2pGames ? (
           <GameCarousel
             menu={F2PHeaderMenu}
             list={f2pGame}
@@ -232,8 +235,8 @@ const Home = () => {
         )}
       </div>
 
-      <div className="my-2 h-full w-full lg:my-20">
-        {p2eGame && !p2eLoading ? (
+      <div className="h-loadingFreeToPlayGames my-2 w-full lg:my-20">
+        {p2eGame && !loadingDataP2eGame ? (
           <GameCarousel
             menu={P2EHeaderMenu}
             list={p2eGame}

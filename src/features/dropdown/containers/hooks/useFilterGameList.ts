@@ -1,5 +1,4 @@
 import { useMutation } from "@tanstack/react-query"
-// import useWalletStore from "@stores/wallet"
 import { getGamesByCategoryId } from "../services/dropdown.service"
 
 const useFilterGameList = () => {

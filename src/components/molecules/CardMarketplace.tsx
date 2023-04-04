@@ -17,7 +17,7 @@ interface ICardMarketplace {
 const CardMarketplace = ({
   width = 678,
   height = 238,
-  title = "MARKET PLACE",
+  title = "MARKETPLACE",
   bgImage = IMAGES.marketPlace.src,
   href = "/",
   description = "Nakamoto Games Marketplace. Your Gateway to the Web3 Economy. "

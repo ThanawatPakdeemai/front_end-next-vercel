@@ -192,7 +192,7 @@ const Howto = ({ data }: IProp) => {
               ))}
           </div>
         </div>
-        <div className="flex flex-wrap items-center justify-end lg:flex-nowrap">
+        <div className="flex items-center justify-end ">
           <Button
             className="md flex flex-[1_1_150px] items-center justify-center text-sm text-neutral-400 md:flex-none"
             onClick={() => handleOpen()}

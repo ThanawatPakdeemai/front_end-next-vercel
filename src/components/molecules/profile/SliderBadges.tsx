@@ -148,7 +148,7 @@ const SliderBadges = ({ _playerId }: IProp) => {
           <CheckBoxNaka
             value={openBadges}
             onHandle={handleOnExpandClick}
-            text={t("hide_my_emblems")}
+            text={t("hide_my_emblems")!}
             className="mr-4 items-center self-center uppercase"
             fontStyle="text-xs text-black-default"
           />

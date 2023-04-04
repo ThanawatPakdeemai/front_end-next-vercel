@@ -30,7 +30,10 @@ const GameContent = ({
   gameType,
   themeColor = "!bg-green-lemon"
 }: IGameContentProps) => {
-  const { gameDataState, gameMedia } = useGameOverview(gameId, gameType)
+  const { gameDataState, gameMedia, playCount } = useGameOverview(
+    gameId,
+    gameType
+  )
 
   return (
     <div
@@ -47,15 +50,15 @@ const GameContent = ({
           <div className="flex items-center gap-3">
             {gameType === "arcade-emporium" && <ArcadeEmporiumIcon />}
             <Chip
-              label={gameType.split("-").join(" ")}
+              label={gameType.split("-").join(" ").split("games").join("")}
               size="small"
               color="success"
               className={`${themeColor.toString()} font-bold uppercase`}
             />
             <h2>{gameDataState && gameDataState.name}</h2>
-            {gameDataState && "game_type" in gameDataState && (
+            {playCount !== undefined && (
               <div className="ml-auto">
-                <GamePlayTime playTime={gameDataState.play_total_count || 0} />
+                <GamePlayTime playTime={playCount} />
               </div>
             )}
           </div>

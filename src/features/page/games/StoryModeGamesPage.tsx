@@ -41,7 +41,7 @@ const StoryModeGamesPage = () => {
                 setCooldown={setCooldown}
                 href={gameLink(game)}
                 onHandleClick={() => onSetGameStore(game)}
-                gameType="story-mode"
+                gameType="story-mode-games"
               />
             ))}
       </div>

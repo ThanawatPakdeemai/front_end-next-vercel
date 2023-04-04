@@ -67,19 +67,17 @@ const Home = () => {
   }
 
   const [f2pGame, setF2PGame] = useState<IGame[]>()
-  const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-play")
+  const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-play-games")
 
   const [p2eGame, setP2EGame] = useState<IGame[]>()
   const [p2eCurType, setP2ECurType] = useState<IGetType>("play-to-earn-games")
 
   const getGameTypeF2EByTitleClicked = (): IGetType => {
     switch (f2pCurType) {
-      case "free-to-play":
-        return "free-to-play-games"
-      case "story-mode":
+      case "story-mode-games":
         return "storymode"
       default:
-        return "free-to-play-games"
+        return f2pCurType
     }
   }
 

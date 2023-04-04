@@ -10,6 +10,7 @@ import { IRoomAvaliableData } from "@feature/home/interfaces/IHomeService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
+import { Box } from "@mui/material"
 
 interface IProps {
   menu: IHeaderSlide
@@ -107,7 +108,23 @@ const GameCarousel = ({
         setCurType={setCurType}
         onPlaying
       />
-      <div className="overflow-hidden">
+      <Box
+        className="game-carousel-slide overflow-hidden"
+        sx={
+          list.length <= 6
+            ? {
+                "&.game-carousel-slide": {
+                  ".slick-track": {
+                    marginLeft: "0"
+                  },
+                  ".slick-slide.slick-cloned": {
+                    display: "none"
+                  }
+                }
+              }
+            : {}
+        }
+      >
         <Slider
           ref={sliderRef}
           {...settings}
@@ -146,7 +163,7 @@ const GameCarousel = ({
               />
             ))}
         </Slider>
-      </div>
+      </Box>
     </div>
   )
 }

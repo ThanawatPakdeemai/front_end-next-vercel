@@ -19,47 +19,45 @@ interface IOnPlayingStyle2 {
 
 const OnPlayingStyle2 = ({ isSlider = true }: IOnPlayingStyle2) => {
   const { gamesAvailble, isLoading } = useGetRoomAvailable()
+
   /**
    * @description Slider ref
    */
   const sliderRef = useRef<Slider>(null)
-  // const onSlideNext = () => {
-  //   sliderRef?.current?.slickNext()
-  // }
-  // const onSlidePrev = () => {
-  //   sliderRef?.current?.slickPrev()
-  // }
+
+  const onSlideNext = () => {
+    sliderRef?.current?.slickNext()
+  }
+  const onSlidePrev = () => {
+    sliderRef?.current?.slickPrev()
+  }
 
   /**
    * @description Slider settings
    */
+  const showSlide = 4
   const settings: Settings = {
-    slidesToShow: 4,
-    slidesToScroll: 1,
     dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: showSlide,
+    slidesToScroll: showSlide,
     arrows: false,
+    variableWidth: false,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          initialSlide: 1
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
           slidesToShow: 2,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: false
+        }
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
           slidesToScroll: 1
         }
       }
@@ -113,18 +111,40 @@ const OnPlayingStyle2 = ({ isSlider = true }: IOnPlayingStyle2) => {
             key={uuid()}
             id={`game-${game.chanel_type}`}
             component="section"
-            className="mb-10"
-            sx={{
-              "p": {
-                color: "#70727B"
-              },
-              ".MuiChip-label": {
-                color: "#E1E2E2"
-              },
-              ".slick-slider, .slick-list, .slick-track": {
-                width: "100%"
-              }
-            }}
+            className="on-playing-carousel-slide mb-10"
+            sx={
+              game.data.length <= 6
+                ? {
+                    "p": {
+                      color: "#70727B"
+                    },
+                    ".MuiChip-label": {
+                      color: "#E1E2E2"
+                    },
+                    ".slick-slider, .slick-list, .slick-track": {
+                      width: "100%"
+                    },
+                    "&.on-playing-carousel-slide": {
+                      ".slick-track": {
+                        marginLeft: "0"
+                      },
+                      ".slick-slide.slick-cloned": {
+                        display: "none"
+                      }
+                    }
+                  }
+                : {
+                    "p": {
+                      color: "#70727B"
+                    },
+                    ".MuiChip-label": {
+                      color: "#E1E2E2"
+                    },
+                    ".slick-slider, .slick-list, .slick-track": {
+                      width: "100%"
+                    }
+                  }
+            }
           >
             {game.data && game.data.length > 0 && (
               <GameCarouselHeader
@@ -144,10 +164,10 @@ const OnPlayingStyle2 = ({ isSlider = true }: IOnPlayingStyle2) => {
                     icon: <ControllerIcon />
                   } as IHeaderSlide
                 }
-                hideNextPrev
                 curType={getURL(game.chanel_type)}
-                // onNext={onSlideNext}
-                // onPrev={onSlidePrev}
+                onNext={onSlideNext}
+                onPrev={onSlidePrev}
+                hideNextPrev
                 // setCurType={setCurType}
                 // onPlaying={false}
               />

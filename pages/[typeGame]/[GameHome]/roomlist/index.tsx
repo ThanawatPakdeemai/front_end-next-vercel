@@ -82,10 +82,10 @@ export default function GameRoomList() {
   const renderFormBuyItem = () => {
     if (!gameData) return null
     switch (getTypeGamePathFolder(gameData)) {
-      case "story-mode":
-      case "free-to-play":
+      case "story-mode-games":
+      case "free-to-play-games":
         return null
-      default:
+      case "play-to-earn-games":
         return (
           <BuyItemBody>
             <CardBuyItem
@@ -94,6 +94,8 @@ export default function GameRoomList() {
             />
           </BuyItemBody>
         )
+      default:
+        null
     }
   }
 

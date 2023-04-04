@@ -158,7 +158,7 @@ const GameCard = ({
 
   const renderCardContent = () => (
     <motion.div
-      className="slick-card-container flex flex-col justify-center blur-none"
+      className="slick-card-container flex h-full flex-col justify-center blur-none"
       initial="init"
       whileHover="onHover"
       animate="animate"
@@ -167,7 +167,7 @@ const GameCard = ({
         if (onHandleClick) onHandleClick()
       }}
     >
-      <motion.div className="relative flex w-full items-center justify-center overflow-hidden px-1 xl:h-[218px]">
+      <motion.div className="relative flex h-full w-full items-center justify-center overflow-hidden px-1 xl:h-[218px]">
         {showNo && no && (
           <NumberRank
             index={no - 1}
@@ -180,7 +180,7 @@ const GameCard = ({
           alt="home-slide"
           width={218}
           height={218}
-          className={`slick-card-content rounded-md ${
+          className={`slick-card-content h-full rounded-md ${
             partnerdata ? " sm:h-2/4 lg:h-4/6 xl:h-full" : ""
           }`}
         />

@@ -41,7 +41,6 @@ const RoomListBar = ({
 }: IProp) => (
   <motion.div
     style={{
-      minWidth: 563,
       padding: 8
     }}
     transition={{
@@ -51,18 +50,17 @@ const RoomListBar = ({
     }}
     whileHover={{
       padding: 14,
-      x: -12,
-      width: 590
+      x: -12
     }}
-    className="flex items-center justify-between gap-8 rounded-l-[16px] rounded-r-[36px] border border-neutral-700 bg-neutral-800 p-2"
+    className="flex !w-full flex-col items-center justify-between gap-2 rounded-l-[16px] rounded-r-[36px] border border-neutral-700 bg-neutral-800 p-2 md:!w-auto md:min-w-[568px] md:flex-row md:gap-8 lg:hover:!w-[590px]"
   >
-    <div className="flex flex-1 gap-2">
+    <div className="flex flex-1 md:gap-2">
       <ButtonIcon
         // whileHover="none"
         className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-700"
         icon={<ControllerIcon stroke="#E1E2E2" />}
       />
-      <div className="flex flex-col">
+      <div className="flex flex-col text-center md:text-left">
         <span className="w-32 text-xs font-bold uppercase text-neutral-500">
           #{roomId}{" "}
           {dataGoalRush && path === "goal-rush" && (
@@ -110,7 +108,7 @@ const RoomListBar = ({
         )}
       </div>
     </div>
-    <div className="flex items-center gap-2">
+    <div className="flex flex-col items-center gap-2 md:flex-row">
       <RoomListBox
         type="timer"
         timer={timer}

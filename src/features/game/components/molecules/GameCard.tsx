@@ -62,7 +62,7 @@ const GameCard = ({
   const [theme, setTheme] = useState<string>("")
   const [lableButton, setLableButton] = useState<string>("play now")
 
-  const gameTypeSplit = gameType?.split("-").join(" ")
+  const gameTypeSplit = gameType?.split("-").join(" ").split("games").join(" ")
 
   const profile = useProfileStore((state) => state.profile.data)
   const game = useGameStore((state) => state.data)

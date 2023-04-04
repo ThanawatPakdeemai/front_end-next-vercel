@@ -78,7 +78,8 @@ const GameCarousel = ({
       }
     ]
   }
-  const { onHandleSetGameStore, getTypeGamePathFolder } = useGlobal()
+  const { onHandleSetGameStore, getTypeGamePathFolder, isRedirectRoomlist } =
+    useGlobal()
   const { onSetGameItemSelectd } = useGameStore()
   const profile = useProfileStore((state) => state.profile.data)
   const game = useGameStore((state) => state.data)
@@ -123,15 +124,9 @@ const GameCarousel = ({
                 cooldown={cooldown}
                 setCooldown={setCooldown}
                 staminaRecovery={staminaRecovery}
-                href={`/${curType}-games/${
-                  !onPlaying ? item?.path : item?.game_url?.split("/")?.[3]
-                }${
-                  item?.play_to_earn_status === "free" ||
-                  item?.tournament ||
-                  onPlaying
-                    ? "/roomlist"
-                    : ""
-                }`}
+                href={`/${getTypeGamePathFolder(item)}/${
+                  item.path
+                }${isRedirectRoomlist(item).toString()}`}
                 onPlaying={onPlaying}
                 onHandleClick={() => {
                   onHandleSetGameStore(curType, item)

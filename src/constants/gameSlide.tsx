@@ -180,16 +180,16 @@ export const GAME_COMING_SOON = [
 const p2eMenu: ISlideList[] = [
   {
     id: "11",
-    label: "hot games",
-    type: "hot-game",
-    className: "w-[110px]"
-  },
-  {
-    id: "12",
     label: "play to earn games",
     type: "play-to-earn",
     className: "w-[166px]"
   }
+  // {
+  //   id: "12",
+  //   label: "arcade emporium",
+  //   type: "arcade-emporium",
+  //   className: "w-[110px]"
+  // }
 ]
 
 const onPlayingMenu: ISlideList[] = [

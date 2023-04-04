@@ -103,7 +103,7 @@ export default function SummaryDetails() {
           <TabProvider>
             <GameTabs
               gameId={gameData.id}
-              gameType="arcade-emporium"
+              gameType={getTypeGamePathFolder(gameData)}
             />
           </TabProvider>
         </FullWidthContent>

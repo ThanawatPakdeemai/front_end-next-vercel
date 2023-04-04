@@ -13,12 +13,8 @@ import { unstable_batchedUpdates } from "react-dom"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
-import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
-import BuyItemBody from "@components/templates/game/BuyItemBody"
 import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGameRoomsById"
-import OverviewContent from "@components/organisms/OverviewContent"
-import useGlobal from "@hooks/useGlobal"
 
 /**
  *
@@ -31,7 +27,6 @@ const GameRoomList = () => {
   const router = useRouter()
   const { errorToast } = useToast()
   const [gameData, setGameData] = useState<IGame>()
-  const { getTypeGamePathFolder } = useGlobal()
 
   const item = useMemo(() => {
     if (data) {
@@ -203,17 +198,17 @@ const GameRoomList = () => {
           />
         </div>
       </div>
-      {gameData &&
-        gameData?.play_to_earn_status !== "free" &&
-        !gameData.tournament && (
-          <BuyItemBody>
-            <OverviewContent
-              gameId={gameData.id}
-              gameType={getTypeGamePathFolder(gameData)}
-            />
+      {/* {gameData && (
+        <BuyItemBody>
+          <OverviewContent
+            gameId={gameData.id}
+            gameType={getTypeGamePathFolder(gameData)}
+          />
+          {gameData?.play_to_earn_status !== "free" && !gameData.tournament && (
             <CardBuyItem gameObject={gameData} />
-          </BuyItemBody>
-        )}
+          )}
+        </BuyItemBody>
+      )} */}
     </Box>
   )
 }

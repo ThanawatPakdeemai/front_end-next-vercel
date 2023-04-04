@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react"
 import useGlobal from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
-import { IFilterGamesByKey, IGame } from "@feature/game/interfaces/IGameService"
+import {
+  IFilterGamesByKey,
+  IGame,
+  IGetType
+} from "@feature/game/interfaces/IGameService"
 import useFilterGameList from "@feature/dropdown/containers/hooks/useFilterGameList"
 import { useRouter } from "next/router"
 
-const useGamePageListController = () => {
+const useGamePageListController = (gameType?: IGetType) => {
   const router = useRouter()
   const categoryId = router.query.id
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
@@ -48,6 +52,9 @@ const useGamePageListController = () => {
     }
     if (getGameTypeByPathname() === "arcade-emporium") {
       return "play-to-earn-games"
+    }
+    if (gameType) {
+      return gameType
     }
     return getGameTypeByPathname()
   }
@@ -105,11 +112,8 @@ const useGamePageListController = () => {
     searchDropdown,
     page,
     limit,
-    mutateGetGamesByCategoryId
-    // getTypeGamePathFolder,
-    // onHandleSetGameStore
-    // getGameTypeByPathname
-    // filterGameList
+    mutateGetGamesByCategoryId,
+    gameType
   ])
 
   const onSetGameStore = (game: IGame) => {
@@ -117,9 +121,9 @@ const useGamePageListController = () => {
   }
 
   const onClickLink = (game: IGame) =>
-    `/${getTypeGamePathFolder(game)}/${game.path}${isRedirectRoomlist(
-      game
-    ).toString()}`
+    `/${game.is_NFT ? "arcade-emporium" : getTypeGamePathFolder(game)}/${
+      game.path
+    }${isRedirectRoomlist(game).toString()}`
 
   return {
     limit,

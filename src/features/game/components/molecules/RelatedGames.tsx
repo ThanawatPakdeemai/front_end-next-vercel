@@ -5,6 +5,7 @@ import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import { F2PHeaderMenu } from "@constants/gameSlide"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { useEffect, useState } from "react"
+import useGlobal from "@hooks/useGlobal"
 import GameCard from "./GameCard"
 
 interface IProps {
@@ -14,11 +15,12 @@ interface IProps {
 const ReleatedGames = ({ _gameType }: IProps) => {
   const [gamesByType, setgamesByType] = useState<IGame[]>()
   const [curType, setCurType] = useState<IGetType>("free-to-play")
+  const { page, setPage } = useGlobal()
 
   const { data: _gamesData, isFetching } = useGamesByTypes({
     _type: curType,
     _limit: 6,
-    _page: 1
+    _page: page
   })
 
   useEffect(() => {
@@ -26,11 +28,12 @@ const ReleatedGames = ({ _gameType }: IProps) => {
     if (!load) {
       setCurType(_gameType)
       setgamesByType(_gamesData?.data)
+      setPage(Math.floor(Math.random() * 3) + 1)
     }
     return () => {
       load = true
     }
-  }, [_gamesData, _gameType])
+  }, [_gamesData, _gameType, setPage])
 
   return (
     <div>
@@ -42,7 +45,7 @@ const ReleatedGames = ({ _gameType }: IProps) => {
         Related Games
       </Typography>
       <div className="overflow-hidden">
-        <div className="grid grid-flow-row grid-cols-2 gap-y-2 md:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-y-4 md:grid-cols-3 lg:grid-cols-6">
           {gamesByType && !isFetching ? (
             gamesByType?.map((game) => (
               <GameCard

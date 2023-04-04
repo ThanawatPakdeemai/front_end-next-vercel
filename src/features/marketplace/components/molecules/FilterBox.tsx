@@ -1,14 +1,19 @@
 import SearchIcon from "@components/icons/SearchIcon"
-import { InputAdornment, TextField, Typography } from "@mui/material"
+import { Collapse, InputAdornment, TextField, Typography } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import ButtonDropdown from "@feature/gameItem/atoms/ButtonDropdown"
 import INaka from "@components/icons/Naka"
 import SpeedHeight from "@components/icons/marketplace/SpeedHeight"
 import SpeedLow from "@components/icons/marketplace/SpeedLow"
 import CheckBoxNaka from "@components/atoms/checkBox/CheckBoxNaka"
 import { useRouter } from "next/router"
 import { TType } from "@feature/marketplace/interfaces/IMarketService"
+import DropdownIcon from "@components/icons/DropdownIcon"
+import MenuItemCustom from "@components/atoms/MenuItemCustom"
+import DragHandleIcon from "@mui/icons-material/DragHandle"
+import { MENU_MARKETPLACE } from "@configs/menu"
+// import useMarketFilterStore from "@stores/marketFilter"
+// import useMarketInfo from "@feature/marketplace/containers/hooks/useMarketInfo"
 
 const FilterBox = () => {
   const router = useRouter()
@@ -22,6 +27,28 @@ const FilterBox = () => {
   // const pathName = router.asPath.split("/")[1]
 
   const [marketType, setMarketType] = useState<TType>()
+  const [expanded, setExpanded] = useState<boolean>(false)
+  const [expandedPrice, setExpandedPrice] = useState<boolean>(false)
+  const [expandDate, setExpandDate] = useState<boolean>(false)
+  const [expandType, setExpandType] = useState<boolean>(false)
+  const [land, setLand] = useState<string>("Land")
+  // const [text, setText] = useState<string>("")
+  const [price, setPrice] = useState<string>("Price")
+  const [date, setDate] = useState<string>("Date")
+  const [type, setType] = useState<string>("Type")
+
+  const handleOnExpandClick = () => {
+    setExpanded(!expanded)
+  }
+  const handleOnExpandPrice = () => {
+    setExpandedPrice(!expandedPrice)
+  }
+  const handleOnExpandDate = () => {
+    setExpandDate(!expandDate)
+  }
+  const handleOnExpandType = () => {
+    setExpandType(!expandType)
+  }
 
   useEffect(() => {
     let load = false
@@ -46,6 +73,20 @@ const FilterBox = () => {
     }
   }, [router.asPath])
 
+  // console.log(land, text, pricevalue, datevalue, typevalue)
+
+  // const { filter, sort, search, onSetFilter, onSetSort, onSetSearch } =
+  //   useMarketFilterStore()
+
+  // const { search, onSetSort, onSetSearch } = useMarketFilterStore()
+
+  // console.log("search", search)
+  // console.log("sort", sort)
+  // const obj = sort.reduce((acc, curr) => Object.assign(acc, curr), {})
+  // console.log("obj", obj)
+  // const obj2 = search.reduce((acc, curr) => Object.assign(acc, curr), {})
+  // console.log("obj2", obj2)
+
   const CHIEKLIST = [
     {
       name: "Land",
@@ -60,34 +101,120 @@ const FilterBox = () => {
       img: "/images/logo/Logo-Master1.png"
     }
   ]
+  const PRICELIST = [
+    { label: "Lowest to Highest", value: 1 },
+    { label: "Highest to Lowest", value: -1 }
+  ]
+  const TYPELIST = [
+    {
+      label: "Installment",
+      value: "installment"
+    },
+    {
+      label: "Fullpayment",
+      value: "fullpayment"
+    },
+    {
+      label: "Rental",
+      value: "rental"
+    }
+  ]
+
+  const DATELIST = [
+    { label: "New", value: -1 },
+    { label: "Oldest", value: 1 }
+  ]
+
+  // const handleSortChange = (event) => {
+  //   const { value } = event.target
+  //   const selectedSort = sort.find((s) => s.key === value)
+  //   onSetSort([selectedSort])
+  // }
 
   return (
     <div className="grid gap-3">
-      <ButtonDropdown
-        className="bg-secondary-main text-white-primary"
-        leftContent={
-          <div className="flex items-center">
-            <div className="flex items-center">
-              <p className="px-2 uppercase">=</p>
+      {/* <select onChange={handleSortChange}>
+        <option value="">Sort By</option>
+        {sort.map((s) => (
+          <option
+            key={s.key}
+            value={s.key as string}
+          >
+            {s.label}
+          </option>
+        ))}
+      </select> */}
+      <button
+        type="button"
+        onClick={handleOnExpandClick}
+        className="mx-auto mb-1 flex h-[40px] w-[218px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-secondary-main px-5 text-[12px] text-white-primary text-black-default hover:text-white-primary"
+      >
+        <DragHandleIcon />
+        <span>{land}</span>
+        <div
+          className={`${
+            expanded === true
+              ? "rotate-180 transition-all duration-300"
+              : "rotate-0 transition-all duration-300"
+          }`}
+        >
+          <DropdownIcon />
+        </div>
+      </button>
+      <Collapse
+        in={expanded}
+        timeout="auto"
+        className="mt-10 w-[200px] rounded-[19px] p-2"
+        sx={{
+          backgroundColor: "#232329",
+          zIndex: 99999,
+          position: "absolute",
+          width: "218px"
+        }}
+      >
+        {MENU_MARKETPLACE &&
+          MENU_MARKETPLACE.map((menu) => (
+            <div key={menu.name}>
+              {menu.name === "NAKA Market" && (
+                <>
+                  {menu.chide?.map((item) => (
+                    <MenuItemCustom
+                      key={item.name}
+                      label={item.name}
+                      icon=""
+                      href=""
+                      id={item.name}
+                      external={false}
+                      active
+                      onClick={() => {
+                        setLand(item.name)
+                      }}
+                    />
+                  ))}
+                </>
+              )}
             </div>
-            <p className="px-2 text-white-primary">Game Asset</p>
-          </div>
-        }
-        isOpen={false}
-      />
+          ))}
+      </Collapse>
+
       {(marketType === "building" ||
         marketType === "arcade-game" ||
         marketType === "land" ||
         pathName === "marketplace") && (
         <>
           <Typography className="text-xs uppercase text-neutral-500">
-            {marketType === "land" || pathName === "land"
-              ? "NFT Token"
-              : "Land ID"}
+            {marketType === "land" || pathName === "marketplace"
+              ? "Land ID"
+              : "NFT Token"}
           </Typography>
           <TextField
             className="w-full"
             placeholder="e.g. 11900011"
+            // onKeyDown={(event) => {
+            //   if (event.key === "Enter" && text !== "") {
+            //     onSetSearch({ key: "nft_token", value: text })
+            //   }
+            // }}
             InputProps={{
               style: {
                 fontSize: "14px",
@@ -105,9 +232,10 @@ const FilterBox = () => {
                 </InputAdornment>
               )
             }}
-            onChange={(_event) => {
-              // const search = _event?.target?.value
-            }}
+            // onChange={(_event) => {
+            //   setText(_event?.target?.value)
+            //   onSetSearch({ key: "land_id", value: search })
+            // }}
           />
         </>
       )}
@@ -160,50 +288,154 @@ const FilterBox = () => {
                 </InputAdornment>
               )
             }}
-            onChange={(_event) => {
-              // const search = _event?.target?.value
-            }}
+            // onChange={(_event) => {
+            //   const search = _event?.target?.value
+            //   onSetSearch({ key: "seller_id", value: search })
+            // }}
           />
         </div>
       )}
 
-      <ButtonDropdown
-        leftContent={
-          <div className="flex items-center">
-            <div className="flex items-center">
-              <p className="px-2 uppercase">=</p>
-            </div>
-            <p className="px-2 text-[#ffffff]">price</p>
+      <div className="relative">
+        <button
+          type="button"
+          onClick={handleOnExpandPrice}
+          className="mx-auto mb-1 flex h-[40px] w-[218px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-white-primary text-black-default hover:text-white-primary"
+        >
+          <span>{price}</span>
+          <div
+            className={`${
+              expandedPrice === true
+                ? "rotate-180 transition-all duration-300"
+                : "rotate-0 transition-all duration-300"
+            }`}
+          >
+            <DropdownIcon />
           </div>
-        }
-        isOpen={false}
-      />
-      <ButtonDropdown
-        leftContent={
-          <div className="flex items-center">
-            <div className="flex items-center">
-              <p className="px-2 uppercase">=</p>
-            </div>
-            <p className="px-2 text-[#ffffff]">date</p>
+        </button>
+        <Collapse
+          in={expandedPrice}
+          timeout="auto"
+          className="absolute top-0 mt-10 w-[200px] rounded-[19px] p-2"
+          sx={{
+            backgroundColor: "#232329",
+            zIndex: 99999,
+            position: "absolute",
+            width: "218px"
+          }}
+        >
+          {PRICELIST.map((item) => (
+            <MenuItemCustom
+              key={item.label}
+              label={item.label}
+              icon=""
+              href=""
+              id=""
+              external={false}
+              active
+              onClick={() => {
+                setPrice(item.label)
+                // onSetSort({ key: "price", value: item.value })
+              }}
+            />
+          ))}
+        </Collapse>
+      </div>
+      <div className="relative">
+        <button
+          type="button"
+          onClick={handleOnExpandDate}
+          className="mx-auto mb-1 flex h-[40px] w-[218px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-white-primary text-black-default hover:text-white-primary"
+        >
+          <span>{date}</span>
+          <div
+            className={`${
+              expandDate === true
+                ? "rotate-180 transition-all duration-300"
+                : "rotate-0 transition-all duration-300"
+            }`}
+          >
+            <DropdownIcon />
           </div>
-        }
-        isOpen={false}
-      />
+        </button>
+        <Collapse
+          in={expandDate}
+          timeout="auto"
+          className="absolute top-0 mt-10 w-[200px] rounded-[19px] p-2"
+          sx={{
+            backgroundColor: "#232329",
+            zIndex: 99999,
+            position: "absolute",
+            width: "218px"
+          }}
+        >
+          {DATELIST.map((item) => (
+            <MenuItemCustom
+              key={item.label}
+              label={item.label}
+              icon=""
+              href=""
+              id=""
+              external={false}
+              active
+              onClick={() => {
+                setDate(item.label)
+                // onSetSort({ key: "created_at", value: item.value })
+              }}
+            />
+          ))}
+        </Collapse>
+      </div>
+
       {(marketType === "land" ||
         marketType === "game-item" ||
         marketType === "building" ||
         marketType === "arcade-game") && (
-        <ButtonDropdown
-          leftContent={
-            <div className="flex items-center">
-              <div className="flex items-center">
-                <p className="px-2 uppercase">=</p>
-              </div>
-              <p className="px-2 text-[#ffffff]">type</p>
+        <div className="relative">
+          <button
+            type="button"
+            onClick={handleOnExpandType}
+            className="mx-auto mb-1 flex h-[40px] w-[218px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-white-primary text-black-default hover:text-white-primary"
+          >
+            <span>{type}</span>
+            <div
+              className={`${
+                expandType === true
+                  ? "rotate-180 transition-all duration-300"
+                  : "rotate-0 transition-all duration-300"
+              }`}
+            >
+              <DropdownIcon />
             </div>
-          }
-          isOpen={false}
-        />
+          </button>
+          <Collapse
+            in={expandType}
+            timeout="auto"
+            className="absolute top-0 mt-10 w-[200px] rounded-[19px] p-2"
+            sx={{
+              backgroundColor: "#232329",
+              zIndex: 99999,
+              position: "absolute",
+              width: "218px"
+            }}
+          >
+            {TYPELIST.map((item) => (
+              <MenuItemCustom
+                key={item.label}
+                label={item.label}
+                icon=""
+                href=""
+                id=""
+                external={false}
+                active
+                onClick={() => {
+                  setType(item.label)
+                  // onSetSearch({ key: "selling_type", value: item.value })
+                }}
+              />
+            ))}
+          </Collapse>
+        </div>
       )}
 
       <Typography className="text-xs uppercase text-neutral-500">

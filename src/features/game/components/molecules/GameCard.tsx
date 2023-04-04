@@ -196,7 +196,7 @@ const GameCard = ({
           alt="home-slide"
           width={218}
           height={218}
-          className={`slick-card-content h-full rounded-md ${
+          className={`slick-card-content h-full rounded-md object-cover ${
             partnerdata ? " sm:h-2/4 lg:h-4/6 xl:h-full" : ""
           }`}
         />

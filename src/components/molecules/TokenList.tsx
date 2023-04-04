@@ -94,7 +94,7 @@ const TokenList = ({
         open={open}
         onClose={handleClose}
         title="Select Asset"
-        className="gap-3 rounded-[34px] p-[10px]"
+        className="z-[99999] w-full gap-3 rounded-[34px] p-[10px] md:w-auto"
         width={400}
       >
         <>

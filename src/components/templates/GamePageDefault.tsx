@@ -21,6 +21,7 @@ import Helper from "@utils/helper"
 import { useRouter } from "next/router"
 import Howto from "@components/molecules/HowToPlay"
 import { Box } from "@mui/material"
+import { useTranslation } from "react-i18next"
 
 interface IGamePageDefaultProps {
   component: React.ReactNode
@@ -45,6 +46,7 @@ const GamePageDefault = ({
   const [gameData, setGameData] = useState<IGame | IPartnerGameData>()
   const { statsGameById } = useGetStatisticsGameById()
   const { topPlayerGameId } = useTopPlayerByGameId()
+  const { t } = useTranslation()
 
   const getCodeShareToEarn = () => {
     const gameId = data?.id
@@ -114,7 +116,7 @@ const GamePageDefault = ({
             <Tagline
               bgColor="bg-neutral-800"
               textColor="text-neutral-500 font-bold"
-              text="Don't miss the information analysis about this game"
+              text={t("game_page_tagline_desc")}
               icon={<ShineIcon />}
             />
             <div className="flex flex-wrap gap-3 xl:flex-row xl:flex-nowrap">

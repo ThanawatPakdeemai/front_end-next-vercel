@@ -172,7 +172,7 @@ const ProfileContent = () => {
                 <ButtonToggleIcon
                   handleClick={handleOnExpandClick}
                   startIcon={<SettingIcon />}
-                  text="Edit Profile"
+                  text={t("edit_profile")}
                   className="z-[2] h-[40px] w-fit bg-neutral-900 !text-[8px] font-bold capitalize text-white-default sm:h-[50px] sm:w-[148px] sm:text-sm"
                   type="button"
                 />
@@ -244,7 +244,7 @@ const ProfileContent = () => {
       </div>
       <div className="flex w-full justify-center">
         <Typography className="text-xs font-bold uppercase text-error-main">
-          Joined : {dayjs(profileFetched.createdAt).format("MMM YYYY")}
+          {t("Joined")} : {dayjs(profileFetched.createdAt).format("MMM YYYY")}
         </Typography>
       </div>
       <div className="flex justify-center">
@@ -257,31 +257,31 @@ const ProfileContent = () => {
                 rank={false}
               />
               <TotalCardContent
-                text="Total Win rate"
+                text={t("total_win_rate")}
                 totalNumber={getProfileInfo.data.total_win_rate}
                 rank={false}
               />
               <TotalCardContent
-                text="Total rewards (naka)"
+                text={t("total_rewards")}
                 totalNumber={Helper.number4digit(
                   getProfileInfo.data.total_reward
                 )}
                 rank={false}
               />
               <TotalCardContent
-                text="Platinum"
+                text={t("platinum")}
                 totalNumber={platinumCount}
                 rank
                 icon="platinum"
               />
               <TotalCardContent
-                text="Silver"
+                text={t("silver")}
                 totalNumber={silverCount}
                 rank
                 icon="silver"
               />
               <TotalCardContent
-                text="Bronze"
+                text={t("bronze")}
                 totalNumber={bronzeCount}
                 rank
                 icon="bronze"

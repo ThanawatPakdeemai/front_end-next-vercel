@@ -44,18 +44,18 @@ const useCommissionController = () => {
   const commissionTableHeader = useMemo(
     () => [
       {
-        title: <Trans i18nKey="time">time</Trans>,
+        title: <Trans i18nKey="time" />,
         arrowIcon: false
       },
       {
-        title: <Trans i18nKey="status">status</Trans>
+        title: <Trans i18nKey="status" />
       },
       {
-        title: <Trans i18nKey="amount">amount</Trans>,
+        title: <Trans i18nKey="amount_naka" />,
         arrowIcon: false
       },
       {
-        title: <Trans i18nKey="details">details</Trans>
+        title: <Trans i18nKey="details" />
       }
     ],
     []

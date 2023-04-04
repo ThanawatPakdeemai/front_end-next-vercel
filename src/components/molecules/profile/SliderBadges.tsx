@@ -13,6 +13,7 @@ import { motion } from "framer-motion"
 import BadgesPlacrhoder from "@components/icons/Banner/BadgesPlacrhoder"
 import { IBadge } from "@src/types/profile"
 import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
+import { useTranslation } from "react-i18next"
 import ButtonSticky from "../ButtonSticky"
 
 interface IProp {
@@ -23,6 +24,7 @@ const SliderBadges = ({ _playerId }: IProp) => {
   const { getBadgeData } = useGetBadge(_playerId)
   // const { getBadgeData } = useGetBadge("61d51db5e64c9751321a8ecc")
   const [isLoading] = useState<boolean>(false)
+  const { t } = useTranslation()
 
   const handleOnExpandClick = () => {
     setOpenBadges(!openBadges)
@@ -127,15 +129,15 @@ const SliderBadges = ({ _playerId }: IProp) => {
       <div className="relative mt-[90px] grid md:flex md:items-center md:justify-between">
         <div className="flex ">
           <CrumbCustom
-            text="My emblems are more than just symbols"
+            text={t("my_emblems_are_more")}
             className="mr-4 cursor-default border border-solid border-neutral-700 p-[20px] text-neutral-400"
           />
           {getBadgeData && (
             <CrumbCustom
               text={`${
                 getBadgeData.badges.length > 1
-                  ? `${getBadgeData.badges.length} Badges`
-                  : `${getBadgeData.badges.length} Badge`
+                  ? `${getBadgeData.badges.length} ${t("Badges")}`
+                  : `${getBadgeData.badges.length} ${t("Badge")}`
               } `}
               className="cursor-default bg-error-main"
             />
@@ -146,12 +148,12 @@ const SliderBadges = ({ _playerId }: IProp) => {
           <CheckBoxNaka
             value={openBadges}
             onHandle={handleOnExpandClick}
-            text="Hide my emblems"
+            text={t("hide_my_emblems")}
             className="mr-4 items-center self-center uppercase"
             fontStyle="text-xs text-black-default"
           />
           <CrumbCustom
-            text="View Emblems info"
+            text={t("view_emblems_info")}
             className="cursor-default bg-purple-primary"
           />
         </div>

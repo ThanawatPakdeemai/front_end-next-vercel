@@ -1,6 +1,7 @@
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import FormEditProfile from "@feature/profile/components/FormEditProfile"
 import { Stack, Typography } from "@mui/material"
+import { useTranslation } from "react-i18next"
 import { ModalCustom } from "../Modal/ModalCustom"
 
 interface IProp {
@@ -26,6 +27,8 @@ const EditProfileModal = ({
     showModal()
   }
 
+  const { t } = useTranslation()
+
   return (
     <>
       <ModalCustom
@@ -41,7 +44,7 @@ const EditProfileModal = ({
           <div className="flex rounded-2xl border-[1px] border-neutral-700 bg-neutral-800 p-2">
             <div className="flex flex-1 flex-row items-center">
               <Typography className="pl-[22px] uppercase text-neutral-300">
-                Edit Profile
+                {t("edit_profile")}
               </Typography>
             </div>
             <ButtonClose onClick={handleClose} />

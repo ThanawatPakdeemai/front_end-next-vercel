@@ -28,7 +28,7 @@ const useTransactionController = () => {
   const TransactionTableHeader: Array<ITableHeader> = useMemo(
     () => [
       {
-        title: <Trans i18nKey="time">time</Trans>,
+        title: <Trans i18nKey="time" />,
         arrowIcon: true,
         keyUp: sortTime === 1,
         keyDown: sortTime === -1,
@@ -41,7 +41,7 @@ const useTransactionController = () => {
           })
       },
       {
-        title: <Trans i18nKey="type">type</Trans>,
+        title: <Trans i18nKey="type" />,
         filterIcon: true,
         child: (
           <TablePopover
@@ -53,7 +53,7 @@ const useTransactionController = () => {
         )
       },
       {
-        title: <Trans i18nKey="amount">amount</Trans>,
+        title: <Trans i18nKey="amount_naka" />,
         arrowIcon: true,
         keyUp: sortAmount === 1,
         keyDown: sortAmount === -1,
@@ -66,7 +66,7 @@ const useTransactionController = () => {
           })
       },
       {
-        title: <Trans i18nKey="fee">fee</Trans>,
+        title: <Trans i18nKey="fee_matic" />,
         className: "flex justify-end w-full"
       }
     ],
@@ -76,7 +76,7 @@ const useTransactionController = () => {
   const AllTransactionTableHeader: Array<ITableHeader> = useMemo(
     () => [
       {
-        title: <Trans i18nKey="time">time</Trans>,
+        title: <Trans i18nKey="time" />,
         arrowIcon: true,
         keyUp: sortTime === 1,
         keyDown: sortTime === -1,
@@ -89,10 +89,10 @@ const useTransactionController = () => {
           })
       },
       {
-        title: <Trans i18nKey="event">event</Trans>
+        title: <Trans i18nKey="event" />
       },
       {
-        title: <Trans i18nKey="amount">amount</Trans>,
+        title: <Trans i18nKey="amount_naka" />,
         arrowIcon: true,
         keyUp: sortAmount === 1,
         keyDown: sortAmount === -1,
@@ -105,10 +105,10 @@ const useTransactionController = () => {
           })
       },
       {
-        title: <Trans i18nKey="fee">fee</Trans>
+        title: <Trans i18nKey="fee_matic" />
       },
       {
-        title: <Trans i18nKey="view">view</Trans>,
+        title: <Trans i18nKey="view" />,
         className: "flex justify-end w-full"
       }
     ],

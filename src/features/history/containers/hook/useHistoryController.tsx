@@ -15,20 +15,20 @@ const useHistoryController = () => {
   const HistoryTableHead: Array<ITableHeader> = useMemo(
     () => [
       {
-        title: <Trans i18nKey="time">time</Trans>,
+        title: <Trans i18nKey="time" />,
         arrowIcon: false
       },
       {
-        title: <Trans i18nKey="game">game</Trans>,
+        title: <Trans i18nKey="game" />,
         filterIcon: false
       },
       {
-        title: <Trans i18nKey="type">type</Trans>,
+        title: <Trans i18nKey="type" />,
         arrowIcon: false
       },
-      { title: <Trans i18nKey="status">status</Trans> },
+      { title: <Trans i18nKey="status" /> },
       {
-        title: <Trans i18nKey="view">view</Trans>,
+        title: <Trans i18nKey="view" />,
         className: "justify-end flex w-full"
       }
     ],

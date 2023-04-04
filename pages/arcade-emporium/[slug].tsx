@@ -203,6 +203,7 @@ export default function ArcadeEmporiumGameDetails() {
               <OverviewContent
                 gameId={gameData.id}
                 gameType={getTypeGamePathFolder(gameData)}
+                gameIdNFT={gameData.NFT_Owner}
               />
               {renderFormBuyItem()}
             </Box>

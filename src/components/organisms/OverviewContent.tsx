@@ -17,9 +17,15 @@ interface IOverviewGameProps {
   gameId: string
   gameType: IGetType
   title?: string
+  gameIdNFT?: string
 }
 
-const OverviewContent = ({ gameId, gameType, title }: IOverviewGameProps) => {
+const OverviewContent = ({
+  gameId,
+  gameType,
+  title,
+  gameIdNFT
+}: IOverviewGameProps) => {
   const { t } = useTranslation()
   const { hydrated } = useGlobal()
   const {
@@ -120,6 +126,7 @@ const OverviewContent = ({ gameId, gameType, title }: IOverviewGameProps) => {
                       <TagSingular
                         title="Game Owner"
                         label={gameOwner}
+                        idNFT={gameIdNFT}
                       />
                     </div>
                   </div>

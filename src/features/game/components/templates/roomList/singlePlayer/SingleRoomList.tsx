@@ -210,6 +210,7 @@ const GameRoomList = () => {
             <OverviewContent
               gameId={gameData.id}
               gameType={getTypeGamePathFolder(gameData)}
+              gameIdNFT={gameData.NFT_Owner}
             />
             <CardBuyItem gameObject={gameData} />
           </BuyItemBody>

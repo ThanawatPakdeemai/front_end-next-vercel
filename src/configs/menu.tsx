@@ -11,7 +11,6 @@ import IconDollar from "@components/icons/dollarIcon"
 import StoryBoardIcon from "@components/icons/StoryBoardIcon"
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
 import MoneyOffIcon from "@mui/icons-material/MoneyOff"
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined"
 import Diamond from "@components/icons/Diamond"
 import GamesIcon from "@mui/icons-material/Games"
 import { IMAGES } from "@constants/images"
@@ -21,6 +20,7 @@ import MarketPlaceIcon from "@components/icons/BlogIcon/MarketPlaceIcon"
 import NakaverseIcon from "@components/icons/BlogIcon/NakaverseIcon"
 import NakapunksIcon from "@components/icons/BlogIcon/NakapunksIcon"
 import NewIcon from "@components/icons/BlogIcon/NewIcon"
+import StoryModeIcon from "@components/icons/StoryModelcon"
 import FireOutLineIcon from "@components/icons/BlogIcon/FireOutLineIcon"
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined"
 import AccessTimeIcon from "@mui/icons-material/AccessTime"
@@ -88,7 +88,7 @@ export const MENU = [
       {
         name: "Story Mode",
         link: "/story-mode-games",
-        icon: MapOutlinedIcon,
+        icon: StoryModeIcon,
         textRight: "Free"
       },
       // TODO: Open after launch V2

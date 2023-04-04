@@ -87,6 +87,7 @@ export default function SummaryDetails() {
               <OverviewContent
                 gameId={gameData.id}
                 gameType={getTypeGamePathFolder(gameData)}
+                gameIdNFT={gameData.NFT_Owner}
               />
             </Box>
           }

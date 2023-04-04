@@ -241,6 +241,7 @@ const MultiRoomList = () => {
             <OverviewContent
               gameId={data.id}
               gameType={getTypeGamePathFolder(data)}
+              gameIdNFT={data.NFT_Owner}
             />
             {data && <CardBuyItem gameObject={data} />}
           </BuyItemBody>

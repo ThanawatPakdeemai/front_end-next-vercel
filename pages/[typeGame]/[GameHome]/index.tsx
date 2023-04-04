@@ -265,6 +265,7 @@ export default function GameLobby() {
                   <OverviewContent
                     gameId={gameData.id}
                     gameType={getTypeGamePathFolder(gameData)}
+                    gameIdNFT={gameData.NFT_Owner}
                   />
                   {renderFormBuyItem()}
                 </Box>

@@ -124,12 +124,15 @@ const GameCarousel = ({
                 cooldown={cooldown}
                 setCooldown={setCooldown}
                 staminaRecovery={staminaRecovery}
-                href={`/${getTypeGamePathFolder(item)}/${
-                  item.path
-                }${isRedirectRoomlist(item).toString()}`}
+                href={`/${
+                  item.is_NFT ? "arcade-emporium" : getTypeGamePathFolder(item)
+                }/${item.path}${isRedirectRoomlist(item).toString()}`}
                 onPlaying={onPlaying}
                 onHandleClick={() => {
-                  onHandleSetGameStore(curType, item)
+                  onHandleSetGameStore(
+                    item.is_NFT ? "arcade-emporium" : curType,
+                    item
+                  )
                   if (onPlaying && item?.play_to_earn_status !== "free") {
                     const itemSelect = gameItemList?.find(
                       (ele) => ele.item_size === item.item_size
@@ -137,7 +140,9 @@ const GameCarousel = ({
                     if (itemSelect) onSetGameItemSelectd(itemSelect)
                   }
                 }}
-                gameType={getTypeGamePathFolder(item)}
+                gameType={
+                  item.is_NFT ? "arcade-emporium" : getTypeGamePathFolder(item)
+                }
               />
             ))}
         </Slider>

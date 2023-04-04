@@ -115,8 +115,8 @@ const GameCard = ({
     if (!load) {
       if (imgPartner && imgPartner !== undefined) {
         setImageSrc(imgPartner)
-      } else if ((data as IRoomAvaliableData).game_image) {
-        setImageSrc((data as IRoomAvaliableData).game_image)
+      } else if ((data as IRoomAvaliableData)?.game_image) {
+        setImageSrc((data as IRoomAvaliableData)?.game_image)
       } else if (
         !imgPartner &&
         imgPartner === undefined &&
@@ -146,7 +146,7 @@ const GameCard = ({
         setTheme(menu.theme)
       }
       if (onPlaying) {
-        if ((data as IRoomAvaliableData).game_free_play) {
+        if ((data as IRoomAvaliableData)?.game_free_play) {
           setChipLable("free to play")
           setTheme("secondary")
         } else {
@@ -221,10 +221,10 @@ const GameCard = ({
           <p className="relative truncate uppercase hover:text-clip">
             {(data as IGame)
               ? (data as IGame).story
-              : (data as IGame).story ?? (data as IGame).name}
+              : (data as IGame)?.story ?? (data as IGame)?.name}
             {(data as IRoomAvaliableData)
               ? (data as IRoomAvaliableData)?.game_name
-              : (data as IGame).name ?? partnerdata?.name}
+              : (data as IGame)?.name ?? partnerdata?.name}
           </p>
         </div>
         <div className="relative flex w-full flex-wrap items-center gap-2 text-xs uppercase">

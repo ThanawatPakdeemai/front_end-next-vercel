@@ -97,7 +97,7 @@ const HeadMenu = () => {
                 })) ?? [{ label: "", value: "", link: "/" }]
               }
               widthOption="600px"
-              title={item.name}
+              title={item.name === "NAKA Ecosystem" ? `...` : "item.name"}
               left={item.left}
               button={
                 <Button
@@ -122,14 +122,24 @@ const HeadMenu = () => {
                     invisible // ถ้ามี แจ้งเตือน false
                     // sx={{ "& .MuiBadge-badge": { margin: "9px -10px 0 0" } }}
                   >
-                    <Typography className="!whitespace-nowrap !font-neue-machina-semi !text-sm">
-                      {t(`${item.name}`)}
-                    </Typography>
+                    {item.name !== "NAKA Ecosystem" ? (
+                      <>
+                        <Typography className="!whitespace-nowrap !font-neue-machina-semi !text-sm">
+                          {t(`${item.name}`)}
+                        </Typography>
+                        <DragHandleIcon
+                          // className="ml-4"
+                          sx={styleIcon}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <Typography className="flex h-4 items-center !whitespace-nowrap !font-neue-machina-semi !text-[7px]">
+                          &#x2022; &#x2022; &#x2022;
+                        </Typography>
+                      </>
+                    )}
                   </Badge>
-                  <DragHandleIcon
-                    // className="ml-4"
-                    sx={styleIcon}
-                  />
                 </Button>
               }
             />

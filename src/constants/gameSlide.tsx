@@ -186,10 +186,16 @@ const p2eMenu: ISlideList[] = [
   },
   {
     id: "12",
-    label: "play to earn games",
-    type: "play-to-earn",
+    label: "Arcade Emporium",
+    type: "arcade-emporium",
     className: "w-[166px]"
   }
+  // {
+  //   id: "12",
+  //   label: "play to earn games",
+  //   type: "play-to-earn",
+  //   className: "w-[166px]"
+  // }
 ]
 
 const onPlayingMenu: ISlideList[] = [

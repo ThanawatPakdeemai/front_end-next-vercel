@@ -37,9 +37,33 @@ import CardLinkTemplate from "@components/templates/contents/CardLinkTemplate"
 import CONFIGS from "@configs/index"
 import OrionTrade from "@components/organisms/OrionTrade"
 import OnPlaying from "@feature/home/components/molecules/OnPlaying"
+import { useQuery } from "@tanstack/react-query"
+import { getGamesByKey } from "../game/containers/services/game.service"
 
 const Home = () => {
   const limit = 10
+  const _limit = 30
+  const _skip = 1
+  const _sort = "_id"
+  const _search = ""
+  const _item = "all"
+  const _device = "all"
+  const _gameType = "all"
+  const _tournament = false
+  const _category = "all"
+  const _nftgame = false
+  const { defaultBody } = useGlobal(
+    _limit,
+    _skip,
+    _sort,
+    _search,
+    _item,
+    _device,
+    _gameType,
+    _tournament,
+    _category,
+    _nftgame
+  )
   const { profile } = useProfileStore()
   const { clearQuestStore, setOpen, hasCompleted } = useQuestStore()
   const { hydrated } = useGlobal()
@@ -73,7 +97,7 @@ const Home = () => {
   const [p2eCurType, setP2ECurType] = useState<IGetType>("hot-game")
 
   const { hotGameData } = useGetHotGames()
-  const { data: p2eGameData, isFetching: p2eLoading } = useGamesByTypes({
+  const { data: p2eGameData } = useGamesByTypes({
     _type: p2eCurType,
     _limit: limit,
     _page: 1
@@ -83,6 +107,18 @@ const Home = () => {
     _type: f2pCurType,
     _limit: limit,
     _page: 1
+  })
+
+  const { data: arcadeGameData, isFetching: arcadeLoading } = useQuery({
+    queryKey: ["getGamesByKey", defaultBody],
+    queryFn: () =>
+      getGamesByKey({
+        ...defaultBody,
+        game_type: "all",
+        nftgame: true
+      }),
+    keepPreviousData: true,
+    staleTime: Infinity
   })
 
   useEffect(() => {
@@ -111,13 +147,17 @@ const Home = () => {
         if (p2eGameData) {
           setP2EGame(p2eGameData.data)
         }
+      } else if (p2eCurType === "arcade-emporium") {
+        if (arcadeGameData) {
+          setP2EGame(arcadeGameData.data)
+        }
       }
     }
 
     return () => {
       load = true
     }
-  }, [p2eCurType, hotGameData, p2eGameData])
+  }, [p2eCurType, hotGameData, p2eGameData, arcadeGameData])
 
   return hydrated ? (
     <>
@@ -230,15 +270,15 @@ const Home = () => {
           </div>
         )}
       </div>
-
       <div className="my-2 h-full w-full lg:my-20">
-        {p2eGame && !p2eLoading ? (
+        {p2eGame && !arcadeLoading ? (
           <GameCarousel
             menu={P2EHeaderMenu}
             list={p2eGame}
             curType={p2eCurType}
             setCurType={setP2ECurType}
             showNo
+            // showSlideCurrent={2}
           />
         ) : (
           <div className="flex gap-x-3">

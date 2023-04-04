@@ -2,7 +2,7 @@ import { Divider, Link, Typography } from "@mui/material"
 import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
 import { SOCIAL } from "@configs/socialShare"
 import { NAKA_GAME } from "@configs/nakaGame"
-import { NAKA_SERVICES } from "@configs/nakaServices"
+import { NAKA_SERVICES, NAKA_SERVICES_2 } from "@configs/nakaServices"
 import { NAKA_ECOSYSTEMSS } from "@configs/nakaEcosystems"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import WineIcon from "@components/icons/WineIcon"
@@ -121,8 +121,28 @@ const Footer = () => {
             ))}
           </div>
           <div className="flex-auto sm:flex-none md:w-48">
-            <div className="mb-4 uppercase text-white-primary">services</div>
+            <div className="mb-4 uppercase text-white-primary">
+              Products & services
+            </div>
             {NAKA_SERVICES?.map((item) => (
+              <Link
+                key={item.label}
+                href={item.path}
+              >
+                <TextLink
+                  name={item.label}
+                  initial="rest"
+                  whileHover="hover"
+                  animate="rest"
+                  variantsArrow={arrowMotion}
+                  variantsText={textMotion}
+                />
+              </Link>
+            ))}
+          </div>
+          <div className="flex-auto sm:flex-none md:w-48">
+            <div className="mb-8 uppercase text-white-primary" />
+            {NAKA_SERVICES_2?.map((item) => (
               <Link
                 key={item.label}
                 href={item.path}
@@ -140,7 +160,7 @@ const Footer = () => {
           </div>
           <div className="col-span-2 flex-auto sm:flex-none md:col-span-1 md:w-48">
             <div className="mb-4 whitespace-normal uppercase text-white-primary">
-              NAKA Ecosystem
+              About
             </div>
             {NAKA_ECOSYSTEMSS?.map((item) => (
               <Link

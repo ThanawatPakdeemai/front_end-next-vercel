@@ -25,7 +25,7 @@ const TagSingular = ({
   // mb-3
   <div className={`flex items-center gap-3 ${className}`}>
     <Typography className="font-neue-machina-semi text-xs uppercase text-neutral-600">
-      {title}
+      {title}9999
     </Typography>
     {link ? (
       <Link href={link}>

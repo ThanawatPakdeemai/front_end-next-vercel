@@ -1,5 +1,3 @@
-import CONFIGS from "@configs/index"
-
 export const NAKA_ECOSYSTEMSS = [
   {
     label: "Blog",
@@ -12,20 +10,25 @@ export const NAKA_ECOSYSTEMSS = [
     icon: true
   },
   {
-    label: "Marketplace",
-    path: `${CONFIGS.BASE_URL.MARKETPLACE}`,
-    icon: true
-  },
-  {
-    label: "Nakaverse",
-    path: `${CONFIGS.BASE_URL.NAKAVERSE}`,
-    icon: true
-  },
-  {
-    label: "Nakapunks",
-    path: `${CONFIGS.BASE_URL.MARKETPLACE}/naka-punk`,
+    label: "Documentation",
+    path: "https://docs.nakamoto.games/",
     icon: true
   }
+  // {
+  //   label: "Marketplace",
+  //   path: `${CONFIGS.BASE_URL.MARKETPLACE}`,
+  //   icon: true
+  // },
+  // {
+  //   label: "Nakaverse",
+  //   path: `${CONFIGS.BASE_URL.NAKAVERSE}`,
+  //   icon: true
+  // },
+  // {
+  //   label: "Nakapunks",
+  //   path: `${CONFIGS.BASE_URL.MARKETPLACE}/naka-punk`,
+  //   icon: true
+  // }
   // TODO: Open after launch V2
   // {
   //   label: "Become A Developer",

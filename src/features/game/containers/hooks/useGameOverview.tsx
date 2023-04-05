@@ -16,6 +16,7 @@ import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import useGameStore from "@stores/game"
 import { GAME_MOCKUP_CARD, SLIDES_GAME_MOCKUP } from "@constants/images"
 import { v4 as uuid } from "uuid"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 
 /**
  * @description Game Overview Hook functions to handle all game overview data
@@ -28,6 +29,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   const gamePartnerSocial: IMenuBase[] = []
   const gameData = useGameStore((state) => state.data)
   const partnerGames = useGameStore((state) => state.dataGamePartner)
+  const { gameItemList } = useBuyGameItemController()
 
   const [gameDataState, setGameDataState] = React.useState<IGame>()
   const [gamePartnerState, setGamePartnerState] =
@@ -421,7 +423,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
       case "arcade-emporium":
         return (gameData && gameData.item) || []
       default:
-        return []
+        return (gameData && gameData.item) || gameItemList || []
     }
   }
 

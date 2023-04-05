@@ -103,9 +103,9 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
                   />
                 </div>
               </div>
-              <div className="col-span-4 flex items-center justify-between md:col-span-3">
+              <div className="col-span-4 flex flex-col items-center justify-between md:col-span-3 md:flex-row">
                 <Image
-                  className="mr-4 h-40 w-40 rounded-[15px] object-cover"
+                  className="mb-2 h-40 w-40 rounded-[15px] object-cover md:mb-0 md:mr-4"
                   src={item.image}
                   alt={item.name}
                   width={160}

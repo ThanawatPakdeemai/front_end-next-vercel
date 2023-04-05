@@ -1,8 +1,6 @@
 import { Card, Grid, Typography } from "@mui/material"
 import { memo } from "react"
-import AddIcon from "@mui/icons-material/Add"
 import DvrIcon from "@mui/icons-material/Dvr"
-import ButtonLink from "@components/atoms/button/ButtonLink"
 import CardTitle from "@components/organisms/CardTitle"
 import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import Developer from "@feature/home/components/organisms/Developer"
@@ -33,16 +31,17 @@ const developerPart = () => (
               </Typography>
             }
             background="red"
-            rightTitle={
-              <ButtonLink
-                href="/joinus"
-                text={<Trans i18nKey="joinus" />}
-                icon={<AddIcon />}
-                color="error"
-                size="small"
-                className="button-global button-transparent !text-primary-main"
-              />
-            }
+            // TODO: Open after launch V2
+            // rightTitle={
+            //   <ButtonLink
+            //     href="/joinus"
+            //     text={<Trans i18nKey="joinus" />}
+            //     icon={<AddIcon />}
+            //     color="error"
+            //     size="small"
+            //     className="button-global button-transparent !text-primary-main"
+            //   />
+            // }
           />
           <Developer />
         </Card>

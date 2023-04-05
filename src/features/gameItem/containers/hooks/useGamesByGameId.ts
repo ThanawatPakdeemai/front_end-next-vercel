@@ -16,6 +16,7 @@ const useGamesByGameId = ({ _playerId, _gameId }: IGetGameItemsByGameId) => {
     queryFn: () => getGameItemsByGameId({ _playerId, _gameId }),
     keepPreviousData: true,
     staleTime: Infinity,
+    retry: 10,
     enabled: !!_playerId && !!_gameId
   })
 

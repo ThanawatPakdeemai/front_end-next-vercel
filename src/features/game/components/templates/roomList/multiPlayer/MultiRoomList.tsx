@@ -22,6 +22,8 @@ import React, { memo, useEffect, useMemo, useState, useCallback } from "react"
 const MultiRoomList = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
+  const { id } = router.query
+  const itemSizeId = id as string
   const { errorToast } = useToast()
   const { data, itemSelected, qtyItemOfRoom } = useGameStore()
 
@@ -38,10 +40,13 @@ const MultiRoomList = () => {
       if (itemSelected) {
         return itemSelected._id
       }
+      if (itemSizeId) {
+        return itemSizeId
+      }
     } else {
       return ""
     }
-  }, [data, itemSelected])
+  }, [data, itemSelected, itemSizeId])
 
   const propsSocketRoomlist = useMemo(
     () => ({

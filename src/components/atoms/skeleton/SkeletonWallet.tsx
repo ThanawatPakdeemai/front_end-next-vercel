@@ -5,7 +5,7 @@ import React from "react"
 import { IMAGES } from "@constants/images"
 
 const SkeletionWallet = () => (
-  <div className="SkeletionWallet relative h-full p-6">
+  <div className="SkeletionWallet relative h-full w-full  p-6">
     <div className="mb-2 flex w-full flex-row items-center justify-between gap-1 whitespace-nowrap rounded-default bg-black-100 py-4 xl:xl:max-w-[390px]">
       <Skeleton
         variant="rectangular"

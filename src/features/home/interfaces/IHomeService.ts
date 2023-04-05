@@ -53,6 +53,7 @@ export interface IRoomAvaliableItemList {
   item_image: string
   room_list: IRoomAvaliableRoomList[]
   room_list_url: string
+  room_list_url_new: string
 }
 export interface IRoomAvaliableData {
   game_id: string

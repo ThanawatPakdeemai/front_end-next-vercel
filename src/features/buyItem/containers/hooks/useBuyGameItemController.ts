@@ -19,6 +19,7 @@ import { JsonRpcSigner } from "@ethersproject/providers"
 import useSupportedChain from "@hooks/useSupportedChain"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useChainSupportStore from "@stores/chainSupport"
+import { useRouter } from "next/router"
 import useBuyGameItems from "./useBuyGameItems"
 
 const useBuyGameItemController = () => {
@@ -31,6 +32,8 @@ const useBuyGameItemController = () => {
   const { chainSupport } = useChainSupportStore()
   const { fetchNAKAToken, fetchAllTokenSupported } = useSupportedChain()
   const { price } = useNakaPriceProvider()
+  const router = useRouter()
+  const { id: itemSizeId } = router.query
 
   const game = useGameStore((state) => state.data)
   const { gameItemList, refetch } = useGamesByGameId({
@@ -191,7 +194,9 @@ const useBuyGameItemController = () => {
   const refetchItemSelected = useCallback(() => {
     refetch().then((_item: any) => {
       if (_item) {
-        const item = _item?.data?.find((ele) => ele.id === watch("item_id"))
+        const item = _item?.data?.find((ele) =>
+          ele.id === itemSizeId ? itemSizeId : watch("item_id")
+        )
 
         if (item) {
           onSetGameItemSelectd(item)
@@ -199,7 +204,7 @@ const useBuyGameItemController = () => {
         }
       }
     })
-  }, [onSetGameItemSelectd, refetch, watch])
+  }, [onSetGameItemSelectd, refetch, watch, itemSizeId])
 
   const onSubmit = (_data: IFormData) => {
     setOpen("Blockchain transaction in progress...")
@@ -320,7 +325,8 @@ const useBuyGameItemController = () => {
     isDisabled,
     chainId,
     accounts,
-    signer
+    signer,
+    refetchItemSelected
   }
 }
 

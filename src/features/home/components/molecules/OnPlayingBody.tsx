@@ -40,7 +40,9 @@ const OnPlayingBody = ({ gameItem }: IOnPlayingBodyProps) => (
               // Play to earn = /story-mode-games/${gameId}
               // Free to play = /free-to-play-games/${gameId}/roomlist
               // Story Mode = /story-mode-games/${gameId}
-              href={item.room_list_url}
+              href={item.room_list_url_new
+                .split("https://alpha.naka.im")
+                .join("")}
               itemSize={item.item_size}
               roomCount={item.room_list.length}
             />

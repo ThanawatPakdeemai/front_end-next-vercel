@@ -54,7 +54,7 @@ const HeadPrice = ({
           <span className="mr-1 text-purple-primary">Polygon : </span>
           {siteInfo.contract && (
             <Link
-              href={`${CONFIGS.CHAIN.POLYGON_SCAN}/address/${CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT}`}
+              href={`${CONFIGS.CHAIN.POLYGON_SCAN}/address/${CONFIGS.CONTRACT_ADDRESS.NAKA}`}
               target="_blank"
             >
               <Typography
@@ -62,11 +62,11 @@ const HeadPrice = ({
                 component="span"
                 variant="body1"
                 onClick={() =>
-                  Helper.copyClipboard(CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT)
+                  Helper.copyClipboard(CONFIGS.CONTRACT_ADDRESS.NAKA)
                 }
                 className="mt-4 cursor-pointer font-neue-machina text-sm uppercase text-purple-primary"
               >
-                {Helper.textWithDots(CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT, 8)}
+                {Helper.textWithDots(CONFIGS.CONTRACT_ADDRESS.NAKA, 8)}
               </Typography>
             </Link>
           )}

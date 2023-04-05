@@ -10,6 +10,7 @@ import GameCarouselHeader, {
 import ControllerIcon from "@components/icons/ControllerIcon"
 import { IRoomAvaliableData } from "@feature/home/interfaces/IHomeService"
 import Slider, { Settings } from "react-slick"
+import { useTranslation } from "react-i18next"
 import OnPlayingBody from "./OnPlayingBody"
 
 interface IOnPlayingStyle2 {
@@ -18,7 +19,7 @@ interface IOnPlayingStyle2 {
 
 const OnPlayingStyle2 = ({ isSlider = true }: IOnPlayingStyle2) => {
   const { gamesAvailble, isLoading } = useGetRoomAvailable()
-
+  const { t } = useTranslation()
   /**
    * @description Slider ref
    */
@@ -151,7 +152,7 @@ const OnPlayingStyle2 = ({ isSlider = true }: IOnPlayingStyle2) => {
                 menu={
                   {
                     sticker: <></>,
-                    title: "On Playing",
+                    title: t("On Playing"),
                     menuList: [
                       {
                         id: game.chanel_type,

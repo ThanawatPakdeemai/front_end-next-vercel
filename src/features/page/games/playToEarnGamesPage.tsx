@@ -39,6 +39,7 @@ const PlayToEarnGamesPage = () => {
                 gameType={
                   game.is_NFT ? "arcade-emporium" : "play-to-earn-games"
                 }
+                play_total_count={game?.play_total_count}
               />
             ))}
       </div>

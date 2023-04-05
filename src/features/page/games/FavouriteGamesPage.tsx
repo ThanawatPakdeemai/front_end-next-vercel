@@ -150,6 +150,7 @@ const FavouriteGamesPage = () => {
                 }
                 data={game}
                 gameType={getTypeGamePathFolder(game)}
+                play_total_count={game?.play_total_count}
               />
             )
           })

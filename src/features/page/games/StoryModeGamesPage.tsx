@@ -43,6 +43,7 @@ const StoryModeGamesPage = () => {
                 href={gameLink(game)}
                 onHandleClick={() => onSetGameStore(game)}
                 gameType="story-mode-games"
+                play_total_count={game?.play_total_count}
               />
             ))}
       </div>

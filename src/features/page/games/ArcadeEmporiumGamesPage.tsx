@@ -38,6 +38,7 @@ const ArcadeEmporiumGamesPage = () => {
                 href={`/arcade-emporium/${game.path}`}
                 onHandleClick={() => onSetGameStore(game)}
                 gameType="arcade-emporium"
+                play_total_count={game?.play_total_count}
               />
             ))}
       </div>

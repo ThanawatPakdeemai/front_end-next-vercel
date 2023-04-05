@@ -56,7 +56,11 @@ const StoryLobby = ({
         id: category.id,
         name: category.name,
         link: `/categories/${
-          category.slug ? category.slug : category.name.toLocaleLowerCase()
+          category.slug
+            ? `${category.slug}?id=${category.id}`
+            : `${category.name.toLocaleLowerCase().split(" ")[1]}?id=${
+                category.id
+              }`
         }`
       })
     )

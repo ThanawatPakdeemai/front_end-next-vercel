@@ -202,6 +202,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                 text={t("main_tagline")}
                 icon={<VectorIcon />}
                 className="!my-[2.938rem]"
+                show={false}
               />
             </Box>
           </Grid>

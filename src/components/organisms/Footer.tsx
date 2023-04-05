@@ -1,4 +1,4 @@
-import { Divider, Link, Typography } from "@mui/material"
+import { Divider, Link } from "@mui/material"
 import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
 import { SOCIAL } from "@configs/socialShare"
 import { NAKA_GAME } from "@configs/nakaGame"
@@ -94,12 +94,6 @@ const Footer = () => {
             <div className="mb-4 uppercase text-white-primary">{t("game")}</div>
             {NAKA_GAME?.map((item) => (
               <div key={`game_${item.label}`}>
-                <Typography
-                  key={`${item.label}`}
-                  className="pb-[10px] text-[10px] uppercase text-black-default"
-                >
-                  {t(item.label)}
-                </Typography>
                 {item.game.map((game) => (
                   <div
                     key={`game-${item.label}-${game.name}`}
@@ -163,7 +157,7 @@ const Footer = () => {
           </div>
           <div className="col-span-2 flex-auto sm:flex-none md:col-span-1 md:w-48">
             <div className="mb-4 whitespace-normal uppercase text-white-primary">
-              {t("NAKA Ecosystem")}
+              {t("About")}
             </div>
             {NAKA_ECOSYSTEMSS?.map((item) => (
               <Link

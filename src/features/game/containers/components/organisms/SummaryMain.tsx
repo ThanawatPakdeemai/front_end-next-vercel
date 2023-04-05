@@ -40,6 +40,7 @@ const SummaryMain = ({ summaryData }: IProp) => {
         textColor="text-error-contrastText font-bold text-[12px]"
         text="Thanks for playing Nanamoto.games with us. It was a lot of fun!"
         className="left-[200px] top-10 !my-0 hidden rotate-[30deg] overflow-hidden lg:block"
+        show={false}
       />
       <div className="m-[10px] flex flex-row lg:mt-[-23px]">
         <Typography

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { IHeaderSlide } from "@components/molecules/gameSlide/GameCarouselHeader"
 import NumberRank from "@feature/ranking/components/atoms/NumberRank"
@@ -184,6 +183,9 @@ const GameCard = ({
       }
     }
   }
+
+  // eslint-disable-next-line no-console
+  console.log("test-gameTypeSplit", gameTypeSplit)
 
   const renderCardContent = () => (
     <motion.div

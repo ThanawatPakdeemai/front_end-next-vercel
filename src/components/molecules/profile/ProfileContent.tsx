@@ -200,6 +200,7 @@ const ProfileContent = () => {
           textColor={`font-bold text-sm ${
             platinumCount === 0 ? "text-neutral-600" : "text-neutral-900"
           } `}
+          show={false}
         />
         <div className="flex w-full justify-center">
           <div className="absolute bottom-[-50px] z-10 h-[110px] w-[110px] rounded-3xl border-8 border-neutral-900 bg-neutral-700 sm:h-[150px] sm:w-[150px]">

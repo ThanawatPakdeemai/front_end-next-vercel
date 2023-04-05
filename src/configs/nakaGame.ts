@@ -9,12 +9,22 @@ export const NAKA_GAME = [
     id: 1,
     game: [
       {
-        name: "Free Mode",
+        name: "Free To Play Games",
         path: "/free-to-play-games"
       },
       {
-        name: "Story Mode",
+        name: "Story Mode Games",
         path: "/story-mode-games"
+      }
+    ]
+  },
+  {
+    label: "Arcade Emporium",
+    id: 1,
+    game: [
+      {
+        name: "Arcade Emporium",
+        path: "/arcade-emporium"
       }
     ]
   }

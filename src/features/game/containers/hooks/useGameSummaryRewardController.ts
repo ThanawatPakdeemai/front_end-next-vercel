@@ -19,13 +19,14 @@ import useNotiStore from "@stores/notification"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useState } from "react"
-import useFindGameById from "./useFindGameById"
+// import useFindGameById from "./useFindGameById"
 import useGetGameRoomById from "./useGetGameRoomById"
 import useGetSummaryGameByRoomId from "./useGetSummaryGameByRoomId"
+import useGetGameByPath from "./useFindGameByPath"
 
 const useGameSummaryRewardController = () => {
   const router = useRouter()
-  const { room_id, notification_id } = router.query
+  const { room_id, notification_id, GameHome } = router.query
 
   // Store
   const {
@@ -57,8 +58,8 @@ const useGameSummaryRewardController = () => {
   const gameIdTarget =
     (typeof notificationItem?.game_id === "string" &&
       (notificationItem?.game_id as string)) ||
-    (notificationItem?.game_id as INotificaionGameID)?.id ||
-    ""
+    (notificationItem?.game_id as INotificaionGameID)?.id
+  ;("")
   const roomIDTarget =
     (typeof notificationItem?.room_id === "string" &&
       (notificationItem?.room_id as string)) ||
@@ -142,10 +143,13 @@ const useGameSummaryRewardController = () => {
   /**
    * @description Get game data from notification game path
    */
-  // const { gameData } = useGetGameByPath(
-  //   notificationItem?.path || playHistoryItem?.path || ""
-  // )
-  const { gameData } = useFindGameById(gameIdTarget)
+  const { gameData } = useGetGameByPath(
+    notificationItem?.path ||
+      playHistoryItem?.path ||
+      (GameHome as string) ||
+      ""
+  )
+  // const { gameData } = useFindGameById(gameIdTarget)
 
   /**
    * @description Get players by notification type
@@ -229,6 +233,10 @@ const useGameSummaryRewardController = () => {
     ]
   )
 
+  /**
+   * @description Get players by notification type
+   * @returns
+   */
   const fetchPlayersList = () => {
     switch (notificationItem?.type) {
       case "REWARD_WEEKLY":

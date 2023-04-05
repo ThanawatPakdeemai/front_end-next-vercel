@@ -1,9 +1,7 @@
-import { Image } from "@components/atoms/image/index"
-import MenuItemCustom from "@components/atoms/MenuItemCustom"
+import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
 import NoData from "@components/molecules/NoData"
-
 import { IGameItemList } from "@feature/gameItem/interfaces/IGameItemService"
-import { Box, MenuList } from "@mui/material"
+import { Box } from "@mui/material"
 import React from "react"
 
 interface IProps {
@@ -18,14 +16,21 @@ const GameItemsBody = ({ gameItems }: IProps) => (
     className="mb-4 flex gap-10"
   >
     {gameItems && gameItems.length > 0 ? (
-      <MenuList className="mx-[6px] mb-[6px] mt-[6px] rounded-[13px] bg-neutral-700 px-[6px] py-[3px]">
+      <ul className="mx-[6px] mb-[6px] mt-[6px] flex flex-wrap items-center gap-3">
         {typeof gameItems !== "string" &&
           gameItems.map((item, index: number) => (
             <Box
               key={Number(index)}
               className="my-1"
             >
-              <MenuItemCustom
+              <GameItemSingleCard
+                image={item.image}
+                name={`${item.name} ${item.price.toString()}`}
+                description={`${item.name} ${item.price.toString()}$`}
+                showLink
+                itemId={item._id}
+              />
+              {/* <MenuItemCustom
                 label={`${item.name} ${item.price.toString()}`}
                 icon={
                   <Image
@@ -38,10 +43,10 @@ const GameItemsBody = ({ gameItems }: IProps) => (
                 href={item.image_icon || ""}
                 id=""
                 external={false}
-              />
+              /> */}
             </Box>
           ))}
-      </MenuList>
+      </ul>
     ) : (
       <NoData className="" />
     )}

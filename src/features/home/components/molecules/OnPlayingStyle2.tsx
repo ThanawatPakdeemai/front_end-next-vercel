@@ -10,7 +10,6 @@ import GameCarouselHeader, {
 import ControllerIcon from "@components/icons/ControllerIcon"
 import { IRoomAvaliableData } from "@feature/home/interfaces/IHomeService"
 import Slider, { Settings } from "react-slick"
-import { IGetType } from "@feature/game/interfaces/IGameService"
 import OnPlayingBody from "./OnPlayingBody"
 
 interface IOnPlayingStyle2 {
@@ -92,7 +91,8 @@ const OnPlayingStyle2 = ({ isSlider = true }: IOnPlayingStyle2) => {
     )
   }
 
-  const getURL = (_gameType: string): IGetType => {
+  // TODO: Open after launch V2
+  /* const getURL = (_gameType: string): IGetType => {
     // _gameType is chanel_type from api
     if (_gameType === "free2play") {
       return "free-to-play-games"
@@ -101,7 +101,7 @@ const OnPlayingStyle2 = ({ isSlider = true }: IOnPlayingStyle2) => {
       return "play-to-earn-games"
     }
     return "play-to-earn-games"
-  }
+  } */
 
   return (
     <div className="on-playing__content">
@@ -164,10 +164,11 @@ const OnPlayingStyle2 = ({ isSlider = true }: IOnPlayingStyle2) => {
                     icon: <ControllerIcon />
                   } as IHeaderSlide
                 }
-                curType={getURL(game.chanel_type)}
                 onNext={onSlideNext}
                 onPrev={onSlidePrev}
                 hideNextPrev
+                hideViewAll
+                // curType={getURL(game.chanel_type)}
                 // setCurType={setCurType}
                 // onPlaying={false}
               />

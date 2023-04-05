@@ -21,6 +21,7 @@ import useGlobal from "@hooks/useGlobal"
 import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
 import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
 import ButtonGame from "@feature/game/components/molecules/ButtonGame"
+import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
 
 interface ICardBuyItemProp {
   gameObject: IGame
@@ -263,16 +264,13 @@ export default function CardBuyItem({
               </div>
 
               <div className={`grid w-full grid-cols-2 gap-4 `}>
-                <div className="flex items-center justify-center rounded-xl border-[1px] border-primary-main bg-primary-main">
-                  {gameObject && (
-                    <Image
-                      src={gameObject?.item?.[0].image}
-                      alt={gameObject?.item?.[0]?.name}
-                      width="100"
-                      height="100"
-                    />
-                  )}
-                </div>
+                {gameObject && (
+                  <GameItemSingleCard
+                    image={gameObject?.item?.[0].image}
+                    name={gameObject?.item?.[0]?.name}
+                    itemId={gameObject?.item?.[0]?._id}
+                  />
+                )}
                 <div className="flex w-full flex-col justify-center">
                   <div className="mb-2 flex w-full items-center justify-between rounded-xl bg-[#E1E2E2]  p-2 text-center text-[#111111]">
                     <p>{qtyItemSelected ?? 0}</p>

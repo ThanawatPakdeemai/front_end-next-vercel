@@ -7,6 +7,7 @@ import Helper from "@utils/helper"
 import { IGoalRushData } from "@feature/game/interfaces/IGameService"
 import { FLAGS } from "@constants/flags"
 import { Image } from "@components/atoms/image/index"
+import { Box } from "@mui/material"
 import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 import RoomListBox from "./RoomListBox"
 
@@ -110,7 +111,20 @@ const RoomListBar = ({
         )}
       </div>
     </div>
-    <div className="flex flex-col items-center gap-2 sm:flex-row">
+    <Box
+      sx={
+        btnText === "played"
+          ? {
+              "svg": {
+                path: {
+                  stroke: "#ffffff"
+                }
+              }
+            }
+          : {}
+      }
+      className="flex flex-col items-center gap-2 sm:flex-row"
+    >
       <RoomListBox
         type="timer"
         timer={timer}
@@ -132,11 +146,13 @@ const RoomListBar = ({
         className={`first-letter:btn-green-rainbow z-[2] h-[40px] !w-[95px] ${
           btnText === "full" ? " bg-error-light" : "bg-green-lemon"
         } ${
-          btnText === "played" ? " bg-primary-contrastText" : "bg-green-lemon"
+          btnText === "played"
+            ? " border-[1px] border-neutral-700 bg-transparent bg-primary-contrastText !text-neutral-100"
+            : "bg-green-lemon"
         }  font-bold capitalize text-neutral-900`}
         type="button"
       />
-    </div>
+    </Box>
   </motion.div>
 )
 

@@ -61,8 +61,8 @@ const PlayerCard = ({ players }: IProps) => {
     <>
       <Box className="custom-scroll mb-5 overflow-y-auto">
         <Box
-          className={`xs:grid-cols-2 m-auto mt-2 grid h-[345px] w-max grid-cols-3 gap-3 px-4 sm:w-[520px] sm:grid-cols-3 sm:px-0 md:mt-10
-          md:grid-cols-4  ${players[0] && "pt-4"}`}
+          className={`xs:grid-cols-2 m-auto mt-2 grid h-[345px] w-max grid-cols-3 gap-[1.5vw] sm:w-[520px] sm:grid-cols-3 sm:px-0 md:mt-10 md:grid-cols-4 md:gap-3
+          md:px-4  ${players[0] && "pt-4"}`}
         >
           {players.map((item, index) =>
             item ? (

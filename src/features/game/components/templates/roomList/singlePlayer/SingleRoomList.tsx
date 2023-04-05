@@ -15,6 +15,7 @@ import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGameRoomsById"
+import useGlobal from "@hooks/useGlobal"
 
 /**
  *
@@ -22,6 +23,7 @@ import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGame
  */
 const GameRoomList = () => {
   /* mockup data */
+  const { getTypeGamePathFolder } = useGlobal()
   const profile = useProfileStore((state) => state.profile.data)
   const { data, itemSelected } = useGameStore()
   const router = useRouter()
@@ -115,6 +117,14 @@ const GameRoomList = () => {
     }
   }
 
+  const renderRoomName = (): string => {
+    if (!gameData) return "Room"
+    if (gameData && getTypeGamePathFolder(gameData) === "play-to-earn-games") {
+      return `Room ${itemSelected?.item_size}`
+    }
+    return "Room"
+  }
+
   useEffect(() => {
     let load = false
 
@@ -154,7 +164,7 @@ const GameRoomList = () => {
                       maxPlayer: _data.max_players
                     }}
                     roomId={_data.room_number}
-                    roomName={`Room ${itemSelected?.item_size ?? ""}`}
+                    roomName={renderRoomName()}
                     onClick={() => handleJoinRoom(_data)}
                     btnText={
                       _data?.current_player?.find(
@@ -186,7 +196,7 @@ const GameRoomList = () => {
                       maxPlayer: _data.max_players
                     }}
                     roomId={_data.room_number}
-                    roomName={`Room ${itemSelected?.item_size ?? ""}`}
+                    roomName={renderRoomName()}
                     onClick={() => handleJoinRoom(_data)}
                   />
                 )

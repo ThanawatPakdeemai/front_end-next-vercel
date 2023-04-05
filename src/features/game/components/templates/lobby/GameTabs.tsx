@@ -40,8 +40,8 @@ const GameTabs = ({ gameType, gameId }: IProps) => {
     component?: React.ReactNode
   } =
     gameData &&
-    (getTypeGamePathFolder(gameData) === "free-to-play" ||
-      getTypeGamePathFolder(gameData) === "story-mode")
+    (getTypeGamePathFolder(gameData) === "free-to-play-games" ||
+      getTypeGamePathFolder(gameData) === "story-mode-games")
       ? ({} as {
           id: string
           label: string

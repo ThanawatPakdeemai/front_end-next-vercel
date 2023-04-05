@@ -148,38 +148,39 @@ const Howto = ({ data }: IProp) => {
                 data.device_support.length > 0 &&
                 data.device_support.map((item: IGameDevice) => (
                   <>
-                    <TooltipsCustom
-                      id={item.key}
-                      title={item.name}
-                      color="primary"
-                      placement="top"
-                    >
-                      {item.key === "mobile" ? (
+                    {item.key === "mobile" && item.supported ? (
+                      <TooltipsCustom
+                        id={item.key}
+                        title={item.name}
+                        color="primary"
+                        placement="top"
+                      >
                         <Image
-                          src={
-                            item.supported
-                              ? "/assets/icons/social_icon/phoneNotchSuccess.svg"
-                              : "/assets/icons/social_icon/phoneNotch.svg"
-                          }
+                          src="/assets/icons/social_icon/phoneNotchSuccess.svg"
                           width={12}
                           height={20}
                           alt="mobile"
                           className="ml-3 cursor-pointer"
                         />
-                      ) : (
+                      </TooltipsCustom>
+                    ) : item.key === "desktop" && item.supported ? (
+                      <TooltipsCustom
+                        id={item.key}
+                        title={item.name}
+                        color="primary"
+                        placement="top"
+                      >
                         <Image
-                          src={
-                            item.supported
-                              ? "/assets/icons/social_icon/desktopSuccess.svg"
-                              : "/assets/icons/social_icon/desktop.svg"
-                          }
+                          src="/assets/icons/social_icon/desktopSuccess.svg"
                           width={20}
                           height={17}
                           alt="desktop"
                           className="ml-3 cursor-pointer"
                         />
-                      )}
-                    </TooltipsCustom>
+                      </TooltipsCustom>
+                    ) : (
+                      <></>
+                    )}
                   </>
                 ))}
             </div>
@@ -204,66 +205,48 @@ const Howto = ({ data }: IProp) => {
                       color="primary"
                       placement="top"
                     >
-                      {item.key === "safari" ? (
+                      {item.key === "safari" && item.supported ? (
                         <Image
-                          src={
-                            item.supported
-                              ? "/assets/icons/social_icon/safariSuccess.svg"
-                              : "/assets/icons/social_icon/safari.svg"
-                          }
+                          src="/assets/icons/social_icon/safariSuccess.svg"
                           width={18}
                           height={34}
                           alt="safari"
                           className="ml-3 cursor-pointer"
                         />
-                      ) : item.key === "chrome" ? (
+                      ) : item.key === "chrome" && item.supported ? (
                         <Image
-                          src={
-                            item.supported
-                              ? "/assets/icons/social_icon/chromeSuccess.svg"
-                              : "/assets/icons/social_icon/chrome.svg"
-                          }
+                          src="/assets/icons/social_icon/chromeSuccess.svg"
                           width={18}
                           height={34}
                           alt="chrome"
                           className="ml-3 cursor-pointer"
                         />
-                      ) : item.key === "edge" ? (
+                      ) : item.key === "edge" && item.supported ? (
                         <Image
-                          src={
-                            item.supported
-                              ? "/assets/icons/social_icon/edgeSuccess.svg"
-                              : "/assets/icons/social_icon/edge.svg"
-                          }
+                          src="/assets/icons/social_icon/edgeSuccess.svg"
                           width={18}
                           height={34}
                           alt="edge"
                           className="ml-3 cursor-pointer"
                         />
-                      ) : item.key === "firefox" ? (
+                      ) : item.key === "firefox" && item.supported ? (
                         <Image
-                          src={
-                            item.supported
-                              ? "/assets/icons/social_icon/firefoxSuccess.svg"
-                              : "/assets/icons/social_icon/firefox.svg"
-                          }
+                          src="/assets/icons/social_icon/firefoxSuccess.svg"
                           width={18}
                           height={34}
                           alt="firefox"
                           className="ml-3 cursor-pointer"
                         />
-                      ) : (
+                      ) : item.key === "opera" && item.supported ? (
                         <Image
-                          src={
-                            item.supported
-                              ? "/assets/icons/social_icon/operaSuccess.svg"
-                              : "/assets/icons/social_icon/opera.svg"
-                          }
+                          src="/assets/icons/social_icon/operaSuccess.svg"
                           width={18}
                           height={34}
                           alt="opera"
                           className="ml-3 cursor-pointer"
                         />
+                      ) : (
+                        <></>
                       )}
                     </TooltipsCustom>
                   </>

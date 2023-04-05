@@ -34,10 +34,10 @@ import useGlobal from "@hooks/useGlobal"
 import CardLinkTemplate from "@components/templates/contents/CardLinkTemplate"
 import CONFIGS from "@configs/index"
 import OrionTrade from "@components/organisms/OrionTrade"
-import OnPlaying from "@feature/home/components/molecules/OnPlaying"
 import DeveloperPart from "@feature/home/components/template/DeveloperPart"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 import { useTranslation } from "react-i18next"
+import OnPlayingStyle2 from "@feature/home/components/molecules/OnPlayingStyle2"
 
 const Home = () => {
   // const limit = 10
@@ -69,19 +69,17 @@ const Home = () => {
   }
 
   const [f2pGame, setF2PGame] = useState<IGame[]>()
-  const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-play")
+  const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-play-games")
 
   const [p2eGame, setP2EGame] = useState<IGame[]>()
   const [p2eCurType, setP2ECurType] = useState<IGetType>("play-to-earn-games")
 
   const getGameTypeF2EByTitleClicked = (): IGetType => {
     switch (f2pCurType) {
-      case "free-to-play":
-        return "free-to-play-games"
-      case "story-mode":
+      case "story-mode-games":
         return "storymode"
       default:
-        return "free-to-play-games"
+        return f2pCurType
     }
   }
 
@@ -227,6 +225,7 @@ const Home = () => {
             curType={f2pCurType}
             setCurType={setF2PCurType}
             checkTimer
+            onPlaying={false}
           />
         ) : (
           <div className="flex gap-x-3">
@@ -245,6 +244,7 @@ const Home = () => {
             curType={p2eCurType}
             setCurType={setP2ECurType}
             showNo
+            onPlaying={false}
           />
         ) : (
           <div className="flex gap-x-3">
@@ -263,7 +263,8 @@ const Home = () => {
       />
 
       <BodyCategories />
-      <OnPlaying />
+      {/* <OnPlaying /> */}
+      <OnPlayingStyle2 isSlider={false} />
       <DeveloperPart />
       <Box className="xs:flex-col mt-4 mb-10 gap-4 lg:flex">
         <Box className="flex-1 xl:flex-none">

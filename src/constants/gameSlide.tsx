@@ -180,15 +180,21 @@ export const GAME_COMING_SOON = [
 const p2eMenu: ISlideList[] = [
   {
     id: "11",
-    label: "play to earn games",
-    type: "play-to-earn",
+    label: "hot games",
+    type: "play-to-earn-games",
+    className: "w-[110px]"
+  },
+  {
+    id: "12",
+    label: "Arcade Emporium",
+    type: "arcade-emporium",
     className: "w-[166px]"
   }
   // {
   //   id: "12",
-  //   label: "arcade emporium",
-  //   type: "arcade-emporium",
-  //   className: "w-[110px]"
+  //   label: "play to earn games",
+  //   type: "play-to-earn",
+  //   className: "w-[166px]"
   // }
 ]
 
@@ -202,13 +208,13 @@ const onPlayingMenu: ISlideList[] = [
   {
     id: "14",
     label: "Play to earn",
-    type: "play-to-earn",
+    type: "play-to-earn-games",
     className: "w-[110px]"
   },
   {
     id: "13",
     label: "Free to play",
-    type: "free-to-play",
+    type: "free-to-play-games",
     className: "w-[110px]"
   }
 ]
@@ -265,15 +271,15 @@ export const onPlayingHeaderMenu: IHeaderSlide = {
 
 const f2pMenu: ISlideList[] = [
   {
-    id: "13",
+    id: "free-to-play-games",
     label: "free mode",
-    type: "free-to-play",
+    type: "free-to-play-games",
     className: "w-[110px]"
   },
   {
-    id: "14",
+    id: "story-mode-games",
     label: "story mode",
-    type: "story-mode",
+    type: "story-mode-games",
     className: "w-[166px]"
   }
   // unnessesary use

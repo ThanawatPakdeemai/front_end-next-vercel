@@ -56,8 +56,11 @@ export const MuiTextfield: Components<
         },
         input: {
           "&:-webkit-autofill": {
-            WebkitBoxShadow: `0 0 0 100px ${PaletteCustom.secondary.main} inset`,
-            WebkitTextFillColor: PaletteCustom.neutral[700]
+            WebkitBoxShadow: `0 0 0 100px ${PaletteCustom.neutral[800]} inset`,
+            WebkitTextFillColor: PaletteCustom.neutral[500],
+            caretColor: `#fff`,
+            borderRadius: `unset`,
+            height: `100%`
           }
         }
       },

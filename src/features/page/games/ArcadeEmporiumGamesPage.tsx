@@ -4,7 +4,6 @@ import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { P2EHeaderMenu } from "@constants/gameSlide"
 import GameCard from "@feature/game/components/molecules/GameCard"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
-import useGlobal from "@hooks/useGlobal"
 import { Box } from "@mui/material"
 import NoData from "@components/molecules/NoData"
 import { memo } from "react"
@@ -23,7 +22,7 @@ const ArcadeEmporiumGamesPage = () => {
     setLimit,
     onSetGameStore
   } = useGamePageListController()
-  const { getTypeGamePathFolder } = useGlobal()
+  // const { getTypeGamePathFolder } = useGlobal()
 
   return (
     <div className="flex flex-col">
@@ -36,7 +35,7 @@ const ArcadeEmporiumGamesPage = () => {
                 key={game.id}
                 menu={P2EHeaderMenu}
                 data={game}
-                href={`/${getTypeGamePathFolder(game)}/${game.path}`}
+                href={`/arcade-emporium/${game.path}`}
                 onHandleClick={() => onSetGameStore(game)}
                 gameType="arcade-emporium"
               />

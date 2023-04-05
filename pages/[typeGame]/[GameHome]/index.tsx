@@ -125,7 +125,7 @@ export default function GameLobby() {
   const renderFormBuyItem = () => {
     if (!gameData) return null
     switch (getTypeGamePathFolder(gameData)) {
-      case "story-mode":
+      case "story-mode-games":
         return (
           <Box
             className="flex w-full flex-col justify-between gap-4 uppercase"
@@ -150,7 +150,7 @@ export default function GameLobby() {
           </Box>
         )
 
-      case "free-to-play":
+      case "free-to-play-games":
         return (
           <Box
             className="flex w-full flex-col justify-between gap-4 uppercase"
@@ -213,6 +213,7 @@ export default function GameLobby() {
                   <OverviewContent
                     gameId={gameData.id}
                     gameType={getTypeGamePathFolder(gameData)}
+                    gameIdNFT={gameData.NFT_Owner}
                   />
                   {renderFormBuyItem()}
                 </Box>

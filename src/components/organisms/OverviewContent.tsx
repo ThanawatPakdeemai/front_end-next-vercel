@@ -17,9 +17,15 @@ interface IOverviewGameProps {
   gameId: string
   gameType: IGetType
   title?: string
+  gameIdNFT?: string
 }
 
-const OverviewContent = ({ gameId, gameType, title }: IOverviewGameProps) => {
+const OverviewContent = ({
+  gameId,
+  gameType,
+  title,
+  gameIdNFT
+}: IOverviewGameProps) => {
   const { t } = useTranslation()
   const { hydrated } = useGlobal()
   const {
@@ -36,7 +42,7 @@ const OverviewContent = ({ gameId, gameType, title }: IOverviewGameProps) => {
   } = useGameOverview(gameId, gameType)
 
   return (
-    <div className="relative flex w-full flex-col justify-start rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4">
+    <div className="relative flex w-full min-w-[333px] flex-col justify-start rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4">
       {hydrated && (
         <AsideLayout
           icon={<OverviewIcon />}
@@ -120,6 +126,7 @@ const OverviewContent = ({ gameId, gameType, title }: IOverviewGameProps) => {
                       <TagSingular
                         title={t("game_owner")}
                         label={gameOwner}
+                        idNFT={gameIdNFT}
                       />
                     </div>
                   </div>

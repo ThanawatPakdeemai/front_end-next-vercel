@@ -38,6 +38,7 @@ interface IProps {
   onNext?: () => void
   onPrev?: () => void
   onPlaying?: boolean
+  hideNextPrev?: boolean
 }
 
 const GameCarouselHeader = ({
@@ -46,7 +47,8 @@ const GameCarouselHeader = ({
   setCurType,
   onNext,
   onPrev,
-  onPlaying
+  onPlaying,
+  hideNextPrev
 }: IProps) => {
   const bgColor = `!bg-${menu?.theme}-main`
 
@@ -157,9 +159,21 @@ const GameCarouselHeader = ({
           </div>
         )}
         <div className="flex h-10 w-fit max-w-sm flex-auto items-center justify-between gap-4 text-[8px] lg:flex-none">
-          {!onPlaying && (
+          {!onPlaying ? (
             <Link
-              href={`/${curType}-games`}
+              href={`/${curType}`}
+              className="h-full"
+            >
+              <ButtonToggleIcon
+                startIcon={<AddIcon />}
+                text="view all"
+                className="mr-4 flex h-full w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
+                type="button"
+              />
+            </Link>
+          ) : (
+            <Link
+              href={`/${curType}`}
               className="h-full"
             >
               <ButtonToggleIcon
@@ -171,22 +185,24 @@ const GameCarouselHeader = ({
             </Link>
           )}
 
-          <div className="arrow-slick-container bg-black grid h-full w-[100px] grid-cols-2 divide-x divide-neutral-700 rounded-md border border-neutral-700 text-white-primary ">
-            <button
-              type="button"
-              className="flex h-full w-full items-center justify-center"
-              onClick={() => onClickedPrev()}
-            >
-              <IconArrowLeft />
-            </button>
-            <button
-              type="button"
-              className="flex h-full w-full items-center justify-center"
-              onClick={() => onClickedNext()}
-            >
-              <IconArrowRight />
-            </button>
-          </div>
+          {!hideNextPrev && (
+            <div className="arrow-slick-container bg-black grid h-full w-[100px] grid-cols-2 divide-x divide-neutral-700 rounded-md border border-neutral-700 text-white-primary ">
+              <button
+                type="button"
+                className="flex h-full w-full items-center justify-center"
+                onClick={() => onClickedPrev()}
+              >
+                <IconArrowLeft />
+              </button>
+              <button
+                type="button"
+                className="flex h-full w-full items-center justify-center"
+                onClick={() => onClickedNext()}
+              >
+                <IconArrowRight />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -31,8 +31,8 @@ const GameRoomLayout = ({
   const renderStatistic = () => {
     if (!gameData) return null
     switch (getTypeGamePathFolder(gameData as IGame)) {
-      case "story-mode":
-      case "free-to-play":
+      case "story-mode-games":
+      case "free-to-play-games":
         return null
       default:
         return (

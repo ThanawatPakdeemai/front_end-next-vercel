@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { IHeaderSlide } from "@components/molecules/gameSlide/GameCarouselHeader"
 import NumberRank from "@feature/ranking/components/atoms/NumberRank"
@@ -62,7 +63,7 @@ const GameCard = ({
   const [theme, setTheme] = useState<string>("")
   const [lableButton, setLableButton] = useState<string>("play now")
 
-  const gameTypeSplit = gameType?.split("-").join(" ")
+  const gameTypeSplit = gameType?.split("-").join(" ").split("games").join(" ")
 
   const profile = useProfileStore((state) => state.profile.data)
   const game = useGameStore((state) => state.data)
@@ -115,8 +116,8 @@ const GameCard = ({
     if (!load) {
       if (imgPartner && imgPartner !== undefined) {
         setImageSrc(imgPartner)
-      } else if ((data as IRoomAvaliableData).game_image) {
-        setImageSrc((data as IRoomAvaliableData).game_image)
+      } else if ((data as IRoomAvaliableData)?.game_image) {
+        setImageSrc((data as IRoomAvaliableData)?.game_image)
       } else if (
         !imgPartner &&
         imgPartner === undefined &&
@@ -146,7 +147,7 @@ const GameCard = ({
         setTheme(menu.theme)
       }
       if (onPlaying) {
-        if ((data as IRoomAvaliableData).game_free_play) {
+        if ((data as IRoomAvaliableData)?.game_free_play) {
           setChipLable("free to play")
           setTheme("secondary")
         } else {
@@ -174,7 +175,7 @@ const GameCard = ({
 
   const renderCardContent = () => (
     <motion.div
-      className="slick-card-container flex flex-col justify-center blur-none"
+      className="slick-card-container flex h-full flex-col justify-center blur-none"
       initial="init"
       whileHover="onHover"
       animate="animate"
@@ -183,7 +184,7 @@ const GameCard = ({
         if (onHandleClick) onHandleClick()
       }}
     >
-      <motion.div className="relative flex w-full items-center justify-center overflow-hidden px-1 xl:h-[218px]">
+      <motion.div className="relative flex h-full w-full items-center justify-center overflow-hidden px-1 xl:h-[218px]">
         {showNo && no && (
           <NumberRank
             index={no - 1}
@@ -196,7 +197,7 @@ const GameCard = ({
           alt="home-slide"
           width={218}
           height={218}
-          className={`slick-card-content rounded-md ${
+          className={`slick-card-content h-full rounded-md object-cover ${
             partnerdata ? " sm:h-2/4 lg:h-4/6 xl:h-full" : ""
           }`}
         />
@@ -221,60 +222,70 @@ const GameCard = ({
           <p className="relative truncate uppercase hover:text-clip">
             {(data as IGame)
               ? (data as IGame).story
-              : (data as IGame).story ?? (data as IGame).name}
+              : (data as IGame)?.story ?? (data as IGame)?.name}
             {(data as IRoomAvaliableData)
               ? (data as IRoomAvaliableData)?.game_name
-              : (data as IGame).name ?? partnerdata?.name}
+              : (data as IGame)?.name ?? partnerdata?.name}
           </p>
         </div>
         <div className="relative flex w-full flex-wrap items-center gap-2 text-xs uppercase">
           {(data as IRoomAvaliableData) &&
-          "game_free_play" in (data as IRoomAvaliableData) ? (
-            // Display for Gameroom only
-            <Chip
-              label={chipLable}
-              size="small"
-              color={onChipColor(theme)}
-              className="w-full font-bold md:w-auto"
-            />
-          ) : (
-            // Display for a;; game page list
-            <Chip
-              label={gameTypeSplit}
-              size="small"
-              className={`w-full font-bold md:w-auto ${getColorChipByGameType(
-                gameType
-              )}`}
-            />
-          )}
-          {partnerdata && (
-            <Chip
-              label={partnerdata.genres?.map((el) => `${el.name}, `)}
-              size="small"
-              // color={getColorChipByGameType("default")}
-              className={`w-full font-bold md:w-auto ${getColorChipByGameType(
-                getTypeGamePartnerPathFolder(partnerdata)
-              )}`}
-            />
-          )}
-          {onPlaying && (
-            // (data as IRoomAvaliableData)?
-            // .map(
-            // (el) =>
-            // el?.room_list?.map((ele) => (
-            <>
+          "game_free_play" in (data as IRoomAvaliableData)
+            ? // Display for Gameroom only
+              (console.log("test-1"),
+              (
+                <Chip
+                  label={chipLable}
+                  size="small"
+                  color={onChipColor(theme)}
+                  className="w-full font-bold md:w-auto"
+                />
+              ))
+            : // Display for a;; game page list
+              (console.log("test-2"),
+              (
+                <Chip
+                  label={gameTypeSplit}
+                  size="small"
+                  className={`w-full font-bold md:w-auto ${getColorChipByGameType(
+                    gameType
+                  )}`}
+                />
+              ))}
+          {partnerdata &&
+            (console.log("test-3"),
+            (
               <Chip
-                key={(data as IRoomAvaliableData)?.game_id}
-                label={`${
-                  (data as IRoomAvaliableData)?.item_list?.[0]?.item_name
-                }`}
+                label={partnerdata.genres?.map((el) => `${el.name}, `)}
                 size="small"
-                className="w-fit !bg-neutral-400 font-bold !text-neutral-700"
+                // color={getColorChipByGameType("default")}
+                className={`w-full font-bold md:w-auto ${getColorChipByGameType(
+                  getTypeGamePartnerPathFolder(partnerdata)
+                )}`}
               />
-            </>
+            ))}
+          {
+            onPlaying &&
+              (console.log("test-4"),
+              (
+                // (data as IRoomAvaliableData)?
+                // .map(
+                // (el) =>
+                // el?.room_list?.map((ele) => (
+                <>
+                  <Chip
+                    key={(data as IRoomAvaliableData)?.game_id}
+                    label={`${
+                      (data as IRoomAvaliableData)?.item_list?.[0]?.item_name
+                    }`}
+                    size="small"
+                    className="w-fit !bg-neutral-400 font-bold !text-neutral-700"
+                  />
+                </>
+              ))
             // )
             // ))
-          )}
+          }
 
           {checkTimer && staminaRecovery && cooldown && setCooldown && (
             <TimerStamina

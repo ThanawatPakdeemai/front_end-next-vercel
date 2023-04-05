@@ -171,6 +171,8 @@ export default function CardBuyItem({
   }, [gameObject, itemSelect, onSetGameItemSelectd])
 
   const buttonInToGame = useMemo(() => {
+    if (router.pathname === "/[typeGame]/[GameHome]/roomlist") return
+    if (router.pathname === "/[typeGame]/[GameHome]/roomlist/[id]") return
     if (qtyItemSelected) {
       if (qtyItemSelected > 0) {
         return buttonStyle === "green" ? (
@@ -211,37 +213,33 @@ export default function CardBuyItem({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [qtyItemSelected, router.asPath, buttonStyle, router.pathname])
 
-  const renderButton = () =>
-    router &&
-    router.pathname === "/[typeGame]/[GameHome]" && (
-      <div className="mt-4 w-full">
-        {profile ? (
-          buttonInToGame
-        ) : (
-          <RightMenuNotLogIn
-            button={
-              <ButtonLink
-                text={t("please_login")}
-                href=""
-                icon={<LogoutIcon />}
-                size="medium"
-                color="secondary"
-                className="w-full whitespace-nowrap"
-              />
-            }
-          />
-        )}
-      </div>
-    )
+  const renderButton = () => (
+    <div className="mt-4 w-full">
+      {profile ? (
+        buttonInToGame
+      ) : (
+        <RightMenuNotLogIn
+          button={
+            <ButtonLink
+              text={t("please_login")}
+              href=""
+              icon={<LogoutIcon />}
+              size="medium"
+              color="secondary"
+              className="w-full whitespace-nowrap"
+            />
+          }
+        />
+      )}
+    </div>
+  )
 
   return (
     <>
       {hydrated && (
         <>
           <div
-            className={`mt-2 flex flex-[1_1_340px] justify-center lg:mt-0 lg:flex-none ${
-              router.pathname === "/[typeGame]/[GameHome]" ? "w-full" : "w-full"
-            } rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 `}
+            className={`mt-2 flex w-full flex-[1_1_340px] justify-center rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 lg:mt-0 lg:flex-none `}
           >
             <div className="flex flex-col items-center justify-center p-4">
               {gameItemList && (
@@ -254,13 +252,7 @@ export default function CardBuyItem({
                   />
                 </>
               )}
-              <div
-                className={`${
-                  router.pathname === "/[typeGame]/[GameHome]"
-                    ? "w-full"
-                    : "w-fit"
-                } mb-1 rounded-xl border-[1px] border-primary-main bg-primary-main p-2 first-letter:my-2`}
-              >
+              <div className="mb-1 w-full rounded-xl border-[1px] border-primary-main bg-primary-main p-2 first-letter:my-2">
                 <p className="w-[285px] uppercase text-white-default">
                   {t("my")}{" "}
                   <span className="text-purple-primary]">
@@ -270,20 +262,14 @@ export default function CardBuyItem({
                 </p>
               </div>
 
-              <div
-                className={`grid ${
-                  router.pathname === "/[typeGame]/[GameHome]"
-                    ? "w-full"
-                    : " w-fit"
-                } grid-cols-2 gap-4 `}
-              >
+              <div className={`grid w-full grid-cols-2 gap-4 `}>
                 <div className="flex items-center justify-center rounded-xl border-[1px] border-primary-main bg-primary-main">
                   {gameObject && (
                     <Image
-                      src={gameObject?.item?.[0]?.image_icon_color}
+                      src={gameObject?.item?.[0].image}
                       alt={gameObject?.item?.[0]?.name}
-                      width="30"
-                      height="30"
+                      width="100"
+                      height="100"
                     />
                   )}
                 </div>

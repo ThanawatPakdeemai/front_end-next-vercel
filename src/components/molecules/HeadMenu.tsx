@@ -72,7 +72,7 @@ const HeadMenu = () => {
                 item.chide?.map((ele) => ({
                   label: ele.name,
                   value: ele.name,
-                  textEnd: ele.textRight,
+                  textEnd: t(ele.textRight),
                   link: ele.link,
                   icon:
                     typeof ele.icon === "string" ? (

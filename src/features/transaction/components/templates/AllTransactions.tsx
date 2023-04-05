@@ -6,7 +6,7 @@ const AllTransactions = () => {
   const profile = useProfileStore((state) => state.profile.data)
 
   return (
-    <div className="mx-auto max-w-[700px]">
+    <div className="mx-auto mt-5 max-w-[700px] md:mt-0">
       <AllTransactionTable profile={profile} />
     </div>
   )

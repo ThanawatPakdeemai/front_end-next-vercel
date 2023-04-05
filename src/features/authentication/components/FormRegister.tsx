@@ -33,6 +33,7 @@ import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlin
 import ICheckMark from "@components/icons/CheckMark"
 import FacebookLogin from "react-facebook-login"
 import useRegisterAvatarStore from "@stores/registerAvater"
+import { useTranslation } from "react-i18next"
 import useFormRegisterController from "../containers/hooks/useFormRegisterController"
 import useFormController from "../containers/hooks/useFormController"
 
@@ -82,6 +83,7 @@ const FormRegister = () => {
       onSubmitRegisterForm(false)
     }
   }
+  const { t } = useTranslation()
 
   return (
     <>
@@ -107,7 +109,7 @@ const FormRegister = () => {
               >
                 <div className="flex flex-1 flex-row items-center">
                   <Typography className="text-lg uppercase text-neutral-300">
-                    Register
+                    {t("register")}
                   </Typography>
                 </div>
                 <Link href="/">
@@ -134,8 +136,8 @@ const FormRegister = () => {
               <TextField
                 className="w-full"
                 type="email"
-                placeholder="Email"
-                label="Email Address"
+                placeholder={String(t("email"))}
+                label={t("email_address")}
                 onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                   isEmail(e.target.value.toString())
                 }}
@@ -211,7 +213,7 @@ const FormRegister = () => {
                 <TextField
                   className="hidden-arrow-number Mui-error mr-2 w-full pb-4 xl:w-[235px] xl:pb-0"
                   type="number"
-                  placeholder="Verification code"
+                  placeholder={String(t("verification_code"))}
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                     e.target.value = e.target.value.slice(0, 6)
                     isNumber(e.target.value.toString())
@@ -246,7 +248,7 @@ const FormRegister = () => {
                   onClick={() => onClickGetCode(watch("email"))}
                   className="btn-rainbow-theme h-[40px] w-full !min-w-[90px] rounded-lg bg-error-main text-sm text-neutral-300 "
                 >
-                  Get Code
+                  {t("get_code")}
                 </Button>
               </Grid>
             </Grid>
@@ -266,7 +268,7 @@ const FormRegister = () => {
                     severity="warning"
                     className="rounded-lg"
                   >
-                    Code is a required field
+                    {t("code_is_a_required_field")}
                   </Alert>
                 </motion.div>
               </Grid>
@@ -278,8 +280,8 @@ const FormRegister = () => {
               <TextField
                 className="w-full pt-3.5"
                 type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                label="Password"
+                placeholder={`${t("password")}`}
+                label={t("password")}
                 autoComplete="new-password'"
                 onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                   e.target.value = e.target.value.slice(0, 128)
@@ -354,7 +356,7 @@ const FormRegister = () => {
                     severity="warning"
                     className="rounded-lg"
                   >
-                    The password must contain at least 6 characters.
+                    {t("warning_6_characters")}
                   </Alert>
                 </motion.div>
               )}
@@ -370,15 +372,15 @@ const FormRegister = () => {
                     severity="warning"
                     className="rounded-lg"
                   >
-                    The password must contain at least one uppercase letter.
+                    {t("warning_uppercase_letter")}
                   </Alert>
                 </motion.div>
               )}
               <TextField
                 className="mt-[5px] w-full"
                 type={showConfirmPassword ? "text" : "password"}
-                placeholder="Confirm Password"
-                label="A Number or Symbol, at least 6 Characters"
+                placeholder={`${t("confirm_password")}`}
+                label={t("helperText_login")}
                 autoComplete="new-password'"
                 onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                   e.target.value = e.target.value.slice(0, 128)
@@ -456,7 +458,7 @@ const FormRegister = () => {
                     severity="warning"
                     className="rounded-lg"
                   >
-                    Password is incorrect
+                    {t("password_is_incorrect")}
                   </Alert>
                 </motion.div>
               )}
@@ -496,7 +498,7 @@ const FormRegister = () => {
                     {...register("subscription")}
                   />
                 }
-                label="Would you like to subscribe to Nakamoto Games Newsletter?"
+                label={t("would_you_like_to_subscribe")}
                 sx={{
                   "& .MuiTypography-root": {
                     fontSize: 10,
@@ -518,7 +520,7 @@ const FormRegister = () => {
               >
                 <ButtonLink
                   href="/"
-                  text="Login"
+                  text={t("login")}
                   icon={null}
                   size="medium"
                   disabledEndIcon
@@ -533,7 +535,7 @@ const FormRegister = () => {
                   handleClick={checkSizeFormRegister}
                   type="submit"
                   startIcon={<IEdit />}
-                  text="Register"
+                  text={t("register")}
                   className="btn-rainbow-theme h-[40px] w-full bg-secondary-main font-bold capitalize text-white-default md:!w-[209px] "
                 />
               </Grid>
@@ -546,7 +548,7 @@ const FormRegister = () => {
               className="mt-8 mb-8"
             >
               <Grid item>
-                <p className="text-xs uppercase">OR join us with</p>
+                <p className="text-xs uppercase">{t("or_join_us_with")}</p>
               </Grid>
               <Grid item>
                 <hr className="w-[208px] border border-solid border-neutral-800" />

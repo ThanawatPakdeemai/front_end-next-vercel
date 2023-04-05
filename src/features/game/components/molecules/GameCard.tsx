@@ -24,6 +24,7 @@ import useProfileStore from "@stores/profileStore"
 import useGlobal from "@hooks/useGlobal"
 import { TColor } from "@components/molecules/gameSlide/GameCarousel"
 import CountOnPlaying from "@components/atoms/CountOnPlaying"
+import { useTranslation } from "react-i18next"
 
 interface IProps {
   gameType: IGetType
@@ -65,7 +66,12 @@ const GameCard = ({
   const [theme, setTheme] = useState<string>("")
   const [lableButton, setLableButton] = useState<string>("play now")
 
-  const gameTypeSplit = gameType?.split("-").join(" ").split("games").join(" ")
+  const { t } = useTranslation()
+  const gameTypeSplit = gameType
+    ?.split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ")
+    .replace(" Games", "")
 
   const profile = useProfileStore((state) => state.profile.data)
   const game = useGameStore((state) => state.data)
@@ -150,10 +156,10 @@ const GameCard = ({
       }
       if (onPlaying) {
         if ((data as IRoomAvaliableData)?.game_free_play) {
-          setChipLable("free to play")
+          setChipLable("Free To Play")
           setTheme("secondary")
         } else {
-          setChipLable("play to earn")
+          setChipLable("Play To Earn")
           setTheme("error")
         }
       }
@@ -214,7 +220,7 @@ const GameCard = ({
             startIcon={
               cooldown ? <IconHourglass /> : <SportsEsportsOutlinedIcon />
             }
-            text={cooldown ? "cooldown..." : lableButton}
+            text={cooldown ? `${t("cooldown")}...` : t(lableButton)}
             className={`btn-rainbow-theme z-[2] w-[198px] ${
               cooldown ? "bg-error-main" : "bg-secondary-main "
             } capitalize`}
@@ -238,7 +244,7 @@ const GameCard = ({
           "game_free_play" in (data as IRoomAvaliableData) ? (
             // Display for Gameroom only
             <Chip
-              label={`${chipLable}`}
+              label={t(chipLable)}
               size="small"
               color={onChipColor(theme)}
               className="w-full font-bold md:w-auto"
@@ -246,7 +252,7 @@ const GameCard = ({
           ) : (
             // Display for a;; game page list
             <Chip
-              label={`${gameTypeSplit}`}
+              label={t(gameTypeSplit)}
               size="small"
               className={`w-full font-bold md:w-auto ${getColorChipByGameType(
                 gameType

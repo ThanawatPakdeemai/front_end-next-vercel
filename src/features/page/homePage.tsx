@@ -259,7 +259,7 @@ const Home = () => {
       <Tagline
         bgColor="bg-green-lemon"
         textColor="text-neutral-800 font-bold"
-        text="SWITCH TO GOD MODE AND UNLEASH YOUR TRUE GAMING POTENTIAL"
+        text={t("switch_to_godmode")}
         icon={<ShapeIcon />}
         show={false}
       />

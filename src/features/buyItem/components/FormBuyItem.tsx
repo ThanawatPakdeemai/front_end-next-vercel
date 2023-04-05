@@ -73,15 +73,17 @@ const FormBuyItem = () => {
                 />
               </div>
               <div className="custom-scroll w-full overflow-y-scroll">
-                <p className="text-white-default">Asset</p>
+                <p className="text-white-default">{t("assets")}</p>
                 <p className="text-black-default">{game.item[0].name}</p>
-                <p className="text-white-default">Descriptions</p>
+                <p className="text-white-default">{t("descriptions")}</p>
                 <div className="text-black-default">{game.item[0].detail}</div>
               </div>
             </div>
           </Box>
           <Box className="my-4 w-full">
-            <p className="py-2 uppercase text-black-default">Tier assets</p>
+            <p className="py-2 uppercase text-black-default">
+              {t("tier_assets")}
+            </p>
             {gameItemList &&
               gameItemList.length > 0 &&
               (gameItemList as IGameItemListData[]).sort(
@@ -110,7 +112,7 @@ const FormBuyItem = () => {
             )}
           </Box>
           <Box className="my-4 w-full">
-            <p className="py-2 uppercase text-black-default">Currency</p>
+            <p className="py-2 uppercase text-black-default">{t("currency")}</p>
             <Controller
               name="currency"
               control={control}
@@ -133,7 +135,7 @@ const FormBuyItem = () => {
             )}
           </Box>
           <p className="uppercase text-purple-primary">
-            Assets / 1 Item = {watch("nakaPerItem")} NAKA
+            {t("assets")} / 1 {t("item")} = {watch("nakaPerItem")} NAKA
           </p>
 
           <div className="my-4  grid grid-cols-6  content-center gap-2 md:gap-4">
@@ -194,15 +196,17 @@ const FormBuyItem = () => {
             </div>
           </div>
           <Box className="my-4 w-full">
-            <p className="py-2 uppercase text-black-default">Your Balance</p>
+            <p className="py-2 uppercase text-black-default">
+              {t("your_balance")}
+            </p>
             <Balance
               buyItemCoinSeleced={watch("currency")}
               widthBalance="w-full"
             />
           </Box>
-          <div className="my-2 flex w-full justify-between rounded-xl border border-neutral-700 p-4">
+          <div className="my-2 flex w-full justify-between rounded-xl border border-neutral-700 p-4 uppercase">
             <div className="">
-              <p>TOTAL PRICE:</p>
+              <p>{t("total_price")}:</p>
             </div>
             <div className="flex items-baseline text-secondary-main">
               <p className="pr-2">
@@ -260,7 +264,7 @@ const FormBuyItem = () => {
                 className="h-[40px] w-full text-sm"
                 href={CONFIGS.BASE_URL.MARKETPLACE}
                 target="_blank"
-                text="View in Marketplace"
+                text={t("view_in_marketplace")}
                 size="medium"
                 variant="contained"
                 icon={<ShoppingCartOutlinedIcon />}

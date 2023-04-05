@@ -6,6 +6,7 @@ import StatisticGameDetail from "@components/molecules/statistic/StatisticGameDe
 import Tagline from "@components/molecules/tagline/Tagline"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
+import ReleatedGames from "@feature/game/components/molecules/RelatedGames"
 import { MESSAGES } from "@constants/messages"
 import useShareToEarnTracking from "@feature/game/containers/hooks/useShareToEarnTracking"
 import { IGame } from "@feature/game/interfaces/IGameService"
@@ -213,6 +214,9 @@ const GamePageDefault = ({
       {component2 && <div className="mt-12">{component2}</div>}
       {component3 && <div className="mt-12">{component3}</div>}
       {renderStatistic()}
+      {gameData && (
+        <ReleatedGames _gameType={getTypeGamePathFolder(gameData as IGame)} />
+      )}
       <Footer />
     </div>
   )

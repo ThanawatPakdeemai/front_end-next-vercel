@@ -8,6 +8,7 @@ import useProfileStore from "@stores/profileStore"
 import useQuestStore from "@stores/quest"
 import useClaimQuestById from "@feature/quest/containers/hook/useClaimQuestById"
 import { useToast } from "@feature/toast/containers"
+import { useTranslation } from "react-i18next"
 import MissionList from "./MissionList"
 import MissionDetails from "./MissionDetails"
 
@@ -21,7 +22,7 @@ const useStyles = makeStyles({
     backgroundImage: "none",
     padding: "10px",
     maxWidth: "564px",
-    // width: "564px",
+    width: "564px",
     border: "none",
     boxShadow: "none"
   }
@@ -36,6 +37,7 @@ const MissionComponent = ({ open }: IProp) => {
   } = useQuestStore()
   const { profile } = useProfileStore()
   const { warnToast } = useToast()
+  const { t } = useTranslation()
 
   const { dataAllQuest, refetchAllQuest } = useGetAllQuest(
     profile.data ? profile.data.id : ""
@@ -107,7 +109,7 @@ const MissionComponent = ({ open }: IProp) => {
       classes={{
         paper: classes.paper
       }}
-      // className="!max-w-[564px]"
+      className="!min-w-[564px]"
     >
       <div className="flex h-full flex-col gap-5 rounded-md border-[3px] border-neutral-800 bg-neutral-900 p-4">
         {/* header */}
@@ -115,7 +117,7 @@ const MissionComponent = ({ open }: IProp) => {
           <div className="flex flex-1 flex-row items-center">
             <RocketIcon />
             <Typography className="pl-[15px] uppercase text-neutral-300">
-              mission to the mars
+              {t("mission")}
             </Typography>
           </div>
           <ButtonClose onClick={setClose} />

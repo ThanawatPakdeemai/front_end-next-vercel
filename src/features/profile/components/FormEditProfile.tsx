@@ -19,6 +19,7 @@ import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import useLoadingStore from "@stores/loading"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
+import { useTranslation } from "react-i18next"
 import useUpdateProfile from "../containers/hook/getUpdateProfile"
 import { IGeoProfile } from "../interfaces/IProfileService"
 import { getGeoInfo } from "../containers/services/profile.service"
@@ -45,6 +46,7 @@ const FormEditProfile = ({
   )
 
   const { setOpen, setClose } = useLoadingStore()
+  const { t } = useTranslation()
 
   const { errorToast, successToast, warnToast } = useToast()
   const onOpenImage = () => warnToast("Upload image is not available yet")
@@ -104,7 +106,7 @@ const FormEditProfile = ({
       {profile && (
         <form onSubmit={handleSubmit(onSubmit)}>
           <Typography className="mt-2 mb-1 font-neue-machina text-xs uppercase  text-neutral-500">
-            Banner UPload Only Rank Platinum
+            {t("banner_upload")}
           </Typography>
           <div className="flex h-[66px] items-center justify-center rounded-xl bg-neutral-700">
             <ButtonIcon
@@ -118,12 +120,12 @@ const FormEditProfile = ({
             }`}
           >
             {platinumCount === 0
-              ? "Minimum 1 Platinum Rank"
-              : "Recommendsize : W908 x H180"}
+              ? `${t("minimum_1__platinum_rank")}`
+              : `${t("recommend_size")} : W908 x H180`}
           </Typography>
           <Divider className="my-6" />
           <Typography className="mt-2 mb-1 font-neue-machina text-xs uppercase text-neutral-500">
-            display name
+            {t("display_name")}
           </Typography>
           <TextField
             className="mb-5 w-full"
@@ -141,9 +143,9 @@ const FormEditProfile = ({
               setValue("_username", value)
             }}
             id="username-create"
-            placeholder="Username"
+            placeholder={`${t("username")}`}
             size="medium"
-            helperText="Can modified later"
+            helperText={t("can_modified_later")}
             InputProps={{
               style: { fontFamily: "neueMachina" },
               startAdornment: (
@@ -166,7 +168,8 @@ const FormEditProfile = ({
               setDefaultAvatar={setDefaultAvatar}
             />
           ) : (
-            "loading..."
+            // "loading..."
+            <div>{`${t("loading")}...`}</div>
           )}
           <Box>
             <input
@@ -191,7 +194,7 @@ const FormEditProfile = ({
             />
           </Box>
           <Typography className=" font-neue-machina text-sm   text-neutral-500">
-            Avatar
+            {t("avatar")}
           </Typography>
           {avatar ? (
             <Box className="hide-scroll mt-2 flex w-[350px] items-center gap-3 overflow-x-scroll pb-3">
@@ -220,7 +223,8 @@ const FormEditProfile = ({
               ))}
             </Box>
           ) : (
-            "loading..."
+            // "loading..."
+            <div>{`${t("loading")}...`}</div>
           )}
           <Button
             sx={{ fontFamily: "neueMachina" }}
@@ -230,7 +234,7 @@ const FormEditProfile = ({
             size="large"
             type="submit"
           >
-            Save
+            {t("save")}
           </Button>
         </form>
       )}

@@ -1,6 +1,7 @@
 import React, { memo } from "react"
 import { Skeleton } from "@mui/material"
 import { INotification } from "@feature/notification/interfaces/INotificationService"
+import NoData from "@components/molecules/NoData"
 
 interface IProps {
   isLoading: boolean
@@ -66,7 +67,7 @@ const SkeletonNotification = ({ data, isLoading }: IProps) => (
       </div>
     ) : (
       <div className="mb-10 w-full rounded-2xl bg-[#101013] p-5 text-[10px] uppercase">
-        no data
+        <NoData />
       </div>
     )}
   </div>

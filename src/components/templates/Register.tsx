@@ -13,6 +13,7 @@ import { useRouter } from "next/router"
 import CreateProfile from "@feature/profile/components/createProfile/CreateProfile"
 import useRegisterAvatarStore from "@stores/registerAvater"
 import FormRegister from "@feature/authentication/components/FormRegister"
+import { useTranslation } from "react-i18next"
 
 const KeyFramesClockwise = styled("div")({
   "@keyframes rotation": {
@@ -59,6 +60,7 @@ const SignUpSchema = yup
   .required()
 
 const RegisterLayout = () => {
+  const { t } = useTranslation()
   const router = useRouter()
   const { referral } = router.query
 
@@ -107,7 +109,7 @@ const RegisterLayout = () => {
               <Tagline
                 bgColor="bg-neutral-800"
                 textColor="text-neutral-500"
-                text="SECURE. SUBLIME. SIMPLE. EARN $NAKA TODAY. "
+                text={t("main_tagline")}
                 icon={<VectorIcon />}
                 className="!my-[2.938rem]"
               />

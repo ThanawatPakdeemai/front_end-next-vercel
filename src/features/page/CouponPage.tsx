@@ -13,6 +13,7 @@ import { useToast } from "@feature/toast/containers"
 import useProfileStore from "@stores/profileStore"
 import { MESSAGES } from "@constants/messages"
 import { motion } from "framer-motion"
+import { useTranslation } from "react-i18next"
 
 interface ICharacterCoupon {
   couponLength: number
@@ -28,6 +29,8 @@ const CouponPage = () => {
   })
   const { errorToast, successImageToast } = useToast()
   const { getRedeemCode } = useGetCoupon()
+
+  const { t } = useTranslation()
 
   const handleClick = () => {
     if (coupon) {
@@ -72,11 +75,9 @@ const CouponPage = () => {
     <div className="relative z-10 w-[calc(100%)] px-[10%]">
       <div className="grid max-w-[678px] rounded-lg border border-neutral-800 bg-neutral-780 md:grid-cols-2 lg:grid-cols-2">
         <div className="p-12 sm:p-11 lg:p-11">
-          <Typography className="text-sm">
-            REDEEM AND START HAVING FUN!
-          </Typography>
+          <Typography className="text-sm">{}</Typography>
           <Typography className="mt-[20px] mb-[10px] font-neue-machina text-xs uppercase text-neutral-500">
-            enter coupon code
+            {t("coupon_code")}
           </Typography>
           <TextField
             className="mb-5 w-full"
@@ -139,7 +140,7 @@ const CouponPage = () => {
             type="submit"
             onClick={handleClick}
           >
-            Redeem
+            {t("redeem")}
           </Button>
           {!profile && (
             <Alert

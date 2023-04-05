@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react"
 import { Typography } from "@mui/material"
 import Link from "next/link"
+import { useTranslation } from "react-i18next"
 
 interface IProps {
   icon: ReactNode
@@ -19,6 +20,7 @@ const TabMenu = ({
   selected = false,
   handleClick
 }: IProps) => {
+  const { t } = useTranslation()
   const renderButton = () => (
     <button
       type="button"
@@ -34,7 +36,7 @@ const TabMenu = ({
         </Typography>
         {selected && (
           <Typography className="absolute right-2 text-xs uppercase text-purple-primary">
-            selected
+            {t("selected")}
           </Typography>
         )}
       </div>

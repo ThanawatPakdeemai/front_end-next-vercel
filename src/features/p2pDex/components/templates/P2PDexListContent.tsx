@@ -4,6 +4,7 @@ import useP2PDexController from "@feature/p2pDex/containers/hooks/useP2PDexContr
 import { PaginationNaka } from "@components/atoms/pagination"
 import HeaderP2P from "@feature/p2pDex/components/atoms/HeaderP2P"
 import DropdownLimit from "@components/atoms/DropdownLimit"
+import { useTranslation } from "react-i18next"
 import OrderList from "../organisms/OrderList"
 
 const P2PDexList = () => {
@@ -25,6 +26,7 @@ const P2PDexList = () => {
     _sort: sortName,
     _sort_value: sort
   })
+  const { t } = useTranslation()
 
   const { data: P2PDexOrderList } = dataP2p
 
@@ -37,8 +39,8 @@ const P2PDexList = () => {
           setPage(1)
         }}
         dataButton={[
-          { title: "Buy", type: "buy" },
-          { title: "Sell", type: "sell" }
+          { title: t("buy"), type: "buy" },
+          { title: t("sell"), type: "sell" }
         ]}
       />
 

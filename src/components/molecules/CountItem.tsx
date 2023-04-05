@@ -10,7 +10,7 @@ import { unstable_batchedUpdates } from "react-dom"
 
 interface IProp {
   endIcon?: React.ReactNode
-  label?: string
+  label?: string | null
   helperText?: string
   _minusItem?: () => void
   _addItem?: () => void

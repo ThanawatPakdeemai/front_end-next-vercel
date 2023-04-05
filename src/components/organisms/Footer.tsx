@@ -14,6 +14,7 @@ import { useState } from "react"
 import TextLink from "@components/atoms/TextLink"
 import { ShakeIcon } from "@components/atoms/LigthShake"
 import useGlobal from "@hooks/useGlobal"
+import { useTranslation } from "react-i18next"
 
 export const arrowMotion = {
   rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
@@ -69,6 +70,8 @@ export const iconmotion = {
 const Footer = () => {
   const { openInNewTab } = useGlobal()
 
+  const { t } = useTranslation()
+
   const [isHover, setIsHover] = useState<boolean>(false)
   const handleMouseEnter = () => {
     setIsHover(true)
@@ -88,14 +91,14 @@ const Footer = () => {
       <div className="mx-4 w-full justify-between overflow-hidden text-[12px] lg:flex">
         <div className="grid grid-cols-2 justify-center gap-3 whitespace-nowrap p-5 md:flex md:gap-0">
           <div className="flex-auto sm:flex-none md:w-48">
-            <div className="mb-4 uppercase text-white-primary">game</div>
+            <div className="mb-4 uppercase text-white-primary">{t("game")}</div>
             {NAKA_GAME?.map((item) => (
               <div key={`game_${item.label}`}>
                 <Typography
                   key={`${item.label}`}
                   className="pb-[10px] text-[10px] uppercase text-black-default"
                 >
-                  {item.label}
+                  {t(item.label)}
                 </Typography>
                 {item.game.map((game) => (
                   <div
@@ -122,7 +125,7 @@ const Footer = () => {
           </div>
           <div className="flex-auto sm:flex-none md:w-48">
             <div className="mb-4 uppercase text-white-primary">
-              Products & services
+              {t("Services")}
             </div>
             {NAKA_SERVICES?.map((item) => (
               <Link
@@ -130,7 +133,7 @@ const Footer = () => {
                 href={item.path}
               >
                 <TextLink
-                  name={item.label}
+                  name={String(t(item.label))}
                   initial="rest"
                   whileHover="hover"
                   animate="rest"
@@ -160,7 +163,7 @@ const Footer = () => {
           </div>
           <div className="col-span-2 flex-auto sm:flex-none md:col-span-1 md:w-48">
             <div className="mb-4 whitespace-normal uppercase text-white-primary">
-              About
+              {t("NAKA Ecosystem")}
             </div>
             {NAKA_ECOSYSTEMSS?.map((item) => (
               <Link
@@ -168,7 +171,7 @@ const Footer = () => {
                 key={item.label}
               >
                 <TextLink
-                  name={item.label}
+                  name={String(t(item.label))}
                   initial="rest"
                   whileHover="hover"
                   animate="rest"
@@ -185,17 +188,16 @@ const Footer = () => {
           </div>
         </div>
         <div className="flex justify-center pt-[20px] text-center md:text-left lg:justify-center lg:p-0">
-          <div className="flex flex-col items-center justify-self-end lg:w-3/4 lg:items-start">
+          <div className="flex max-w-[450px] flex-col items-center justify-self-end lg:items-start">
             <div className="mb-4 uppercase text-white-primary">
-              JOIN THE PLAY TO EARN REVOLUTION!
+              {t("be_a_part_of_the_play_to_earn_revolution")}
             </div>
-            Join the industry&apos;s first comprehensive Play to Earn ecosystem
-            and explore the many benefits it has to offer.
+            {t("footer_title")}
             <div className="my-8">
               <ButtonToggleIcon
                 handleClick={() => openInNewTab("https://t.me/NakamotoGames")}
                 startIcon={<WineIcon />}
-                text="join The Revolutions"
+                text={t("join_revolutions")}
                 className="btn-rainbow-theme b h-[50px] !w-[260px] bg-secondary-main font-bold capitalize text-white-default"
                 type="button"
               />
@@ -245,7 +247,7 @@ const Footer = () => {
             <NakaMask1 />
           )}
         </div>
-        <h4>Scure by : polygon network</h4>
+        <h4>Secure by : polygon network</h4>
       </div>
     </>
   )

@@ -101,7 +101,7 @@ const MyGamesPage = () => {
           : null}
       </div>
       {myGamesData && myGamesData.data.length === 0 && (
-        <NoData className="max-w-[300px]" />
+        <NoData className="mt-4 max-w-[300px]" />
       )}
       <PaginationNaka
         totalCount={totalCount}

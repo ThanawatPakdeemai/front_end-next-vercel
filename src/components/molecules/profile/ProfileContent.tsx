@@ -24,6 +24,7 @@ import { useRouter } from "next/router"
 import useGetProfileByEmail from "@feature/profile/containers/hook/getProfileByEmail"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
+import { useTranslation } from "react-i18next"
 import EditProfileModal from "./EditProfileModal"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
@@ -43,6 +44,8 @@ const ProfileContent = () => {
   const router = useRouter()
   const { errorToast } = useToast()
   const { player_id } = router.query
+
+  const { t } = useTranslation()
 
   const {
     getProfileInfo: profileDataFromQuery,
@@ -169,7 +172,7 @@ const ProfileContent = () => {
                 <ButtonToggleIcon
                   handleClick={handleOnExpandClick}
                   startIcon={<SettingIcon />}
-                  text="Edit Profile"
+                  text={t("edit_profile")}
                   className="z-[2] h-[40px] w-fit bg-neutral-900 !text-[8px] font-bold capitalize text-white-default sm:h-[50px] sm:w-[148px] sm:text-sm"
                   type="button"
                 />
@@ -189,7 +192,7 @@ const ProfileContent = () => {
       <div className="relative">
         <Tagline
           className="!my-2 mt-4 mb-4"
-          text="Nakamoto.Games - SECURE. SUBLIME. SIMPLE. EARN $NAKA TODAY."
+          text={t("simple_tagline")}
           bgColor={platinumCount === 0 ? `bg-neutral-800` : `bg-error-main`}
           icon={
             <ShapeIcon fill={platinumCount === 0 ? `#4E5057` : `#18181C`} />
@@ -241,7 +244,7 @@ const ProfileContent = () => {
       </div>
       <div className="flex w-full justify-center">
         <Typography className="text-xs font-bold uppercase text-error-main">
-          Joined : {dayjs(profileFetched.createdAt).format("MMM YYYY")}
+          {t("Joined")} : {dayjs(profileFetched.createdAt).format("MMM YYYY")}
         </Typography>
       </div>
       <div className="flex justify-center">
@@ -249,36 +252,36 @@ const ProfileContent = () => {
           {getProfileInfo && (
             <>
               <TotalCardContent
-                text="Total Matches"
+                text={t("total_matches")}
                 totalNumber={getProfileInfo.data.total_game_played}
                 rank={false}
               />
               <TotalCardContent
-                text="Total Win rate"
+                text={t("total_win_rate")}
                 totalNumber={getProfileInfo.data.total_win_rate}
                 rank={false}
               />
               <TotalCardContent
-                text="Total rewards (naka)"
+                text={t("total_rewards")}
                 totalNumber={Helper.number4digit(
                   getProfileInfo.data.total_reward
                 )}
                 rank={false}
               />
               <TotalCardContent
-                text="Platinum"
+                text={t("platinum")}
                 totalNumber={platinumCount}
                 rank
                 icon="platinum"
               />
               <TotalCardContent
-                text="Silver"
+                text={t("silver")}
                 totalNumber={silverCount}
                 rank
                 icon="silver"
               />
               <TotalCardContent
-                text="Bronze"
+                text={t("bronze")}
                 totalNumber={bronzeCount}
                 rank
                 icon="bronze"

@@ -11,10 +11,12 @@ import { IResponseTopScoreSummaryDataData } from "@feature/event/interface/IEven
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import { v4 as uuid } from "uuid"
 import Image from "next/image"
+import NoData from "@components/molecules/NoData"
 
 interface IEventTopScoreProps {
   users: IResponseTopScoreSummaryDataData
 }
+
 const EventsTopScore = ({ users }: IEventTopScoreProps) => (
   <div className="md:w-4/6">
     <CardContent
@@ -76,7 +78,7 @@ const EventsTopScore = ({ users }: IEventTopScoreProps) => (
                   colSpan={3}
                   className="justify-center rounded-lg border border-neutral-800 bg-neutral-700 py-3 text-center"
                 >
-                  No Data
+                  <NoData />
                 </TableCell>
               </TableRow>
             )}

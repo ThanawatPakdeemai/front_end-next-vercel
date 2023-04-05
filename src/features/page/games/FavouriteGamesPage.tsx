@@ -154,7 +154,7 @@ const FavouriteGamesPage = () => {
             )
           })
         ) : (
-          <NoData className="" />
+          <NoData className="mt-4" />
         )}
       </div>
       <Box

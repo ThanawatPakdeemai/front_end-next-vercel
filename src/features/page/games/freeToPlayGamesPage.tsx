@@ -8,6 +8,7 @@ import GameCard from "@feature/game/components/molecules/GameCard"
 import { Box } from "@mui/material"
 import DropdownLimit from "@components/atoms/DropdownLimit"
 import useGlobal from "@hooks/useGlobal"
+import NoData from "@components/molecules/NoData"
 
 const FreeToPlayGamesPage = () => {
   const {
@@ -50,7 +51,9 @@ const FreeToPlayGamesPage = () => {
       </div>
 
       {totalCount === 0 && (
-        <div className="d-flex  justify-center text-center">No data</div>
+        <div className="d-flex  justify-center text-center">
+          <NoData />
+        </div>
       )}
       <Box
         className="my-2 flex w-full justify-between md:my-5"

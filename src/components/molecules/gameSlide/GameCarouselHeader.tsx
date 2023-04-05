@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { memo, useEffect, useState } from "react"
 import AddIcon from "@mui/icons-material/Add"
 import IconArrowRight from "@components/icons/arrowRightIcon"
@@ -39,6 +40,7 @@ interface IProps {
   onPrev?: () => void
   onPlaying?: boolean
   hideNextPrev?: boolean
+  hideViewAll?: boolean
 }
 
 const GameCarouselHeader = ({
@@ -47,8 +49,9 @@ const GameCarouselHeader = ({
   setCurType,
   onNext,
   onPrev,
-  onPlaying,
-  hideNextPrev
+  onPlaying, // NOT SURE ABOUT THIS
+  hideNextPrev,
+  hideViewAll
 }: IProps) => {
   const bgColor = `!bg-${menu?.theme}-main`
 
@@ -159,7 +162,7 @@ const GameCarouselHeader = ({
           </div>
         )}
         <div className="flex h-10 w-fit max-w-sm flex-auto items-center justify-between gap-4 text-[8px] lg:flex-none">
-          {!onPlaying ? (
+          {!hideViewAll ? (
             <Link
               href={`/${curType}`}
               className="h-full"
@@ -171,19 +174,7 @@ const GameCarouselHeader = ({
                 type="button"
               />
             </Link>
-          ) : (
-            <Link
-              href={`/${curType}`}
-              className="h-full"
-            >
-              <ButtonToggleIcon
-                startIcon={<AddIcon />}
-                text="view all"
-                className="mr-4 flex h-full w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
-                type="button"
-              />
-            </Link>
-          )}
+          ) : null}
 
           {!hideNextPrev && (
             <div className="arrow-slick-container bg-black grid h-full w-[100px] grid-cols-2 divide-x divide-neutral-700 rounded-md border border-neutral-700 text-white-primary ">

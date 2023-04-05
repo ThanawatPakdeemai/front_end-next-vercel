@@ -37,9 +37,8 @@ const OnPlayingBody = ({ gameItem }: IOnPlayingBodyProps) => (
               key={uuid()}
               // TODO: Backend need to change url form
               // For example:
-              // Play to earn = /story-mode-games/${gameId}
-              // Free to play = /free-to-play-games/${gameId}/roomlist
-              // Story Mode = /story-mode-games/${gameId}
+              // Play to earn = /story-mode-games/${gamePath}/roomlist/id=?${itemId}
+              // Free to play = /free-to-play-games/${gamePath}/roomlist/id=?${itemId}
               href={item.room_list_url_new
                 .split("https://alpha.naka.im")
                 .join("")}

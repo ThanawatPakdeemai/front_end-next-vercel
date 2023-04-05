@@ -65,7 +65,7 @@ const HeadGames = ({ children }: { children: React.ReactNode }) => {
               value = value.replace(/[^A-Za-z0-9]/gi, "")
               setSearchBlog(value)
             }}
-            placeholder="Search Games..."
+            placeholder={`${t("search_games")}...`}
             InputProps={{
               startAdornment: <SearchIcon className="mr-4 lg:max-xl:mr-2" />
             }}

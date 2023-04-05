@@ -143,7 +143,7 @@ const FormEditProfile = ({
               setValue("_username", value)
             }}
             id="username-create"
-            placeholder="Username"
+            placeholder={`${t("username")}`}
             size="medium"
             helperText={t("can_modified_later")}
             InputProps={{
@@ -168,7 +168,8 @@ const FormEditProfile = ({
               setDefaultAvatar={setDefaultAvatar}
             />
           ) : (
-            "loading..."
+            // "loading..."
+            <div>{`${t("loading")}...`}</div>
           )}
           <Box>
             <input
@@ -222,8 +223,8 @@ const FormEditProfile = ({
               ))}
             </Box>
           ) : (
-            //  {`${t("loading")}...`}
-            "loading..."
+            // "loading..."
+            <div>{`${t("loading")}...`}</div>
           )}
           <Button
             sx={{ fontFamily: "neueMachina" }}

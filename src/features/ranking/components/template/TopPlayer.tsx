@@ -56,7 +56,7 @@ const TopPlayer = ({
         <CardTitle
           width="534px"
           icon={<TrackChangesIcon className="mr-2" />}
-          title="Top NAKA Players"
+          title={t("top_naka_player")}
           subtitle={subtitle}
           background={background}
           elevation={elevation}

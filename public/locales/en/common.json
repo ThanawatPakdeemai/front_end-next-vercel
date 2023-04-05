@@ -36,6 +36,7 @@
   "friend_activities": "FRIEND ACTIVITIES",
   "friend_desc1": "Sharing is caring. Invite your friends to sign up and earn 3% referral fee on every game they play. Start earning passive income.",
   "friend_desc2": "Earn 3% referral fee on every game your friends play. Enjoy lifetime passive income. Start earning!",
+  "referral": "Referral",
   "referral_link": "REFERRAL LINK",
   "date": "Date",
   "referral_earned": "Referral Earned (NAKA)",
@@ -425,5 +426,13 @@
   "select_map": "Select map",
   "room_status": "Room status",
   "public": "Public",
-  "private": "Private"
+  "private": "Private",
+  "All Publisher Categories": "All Publisher Categories",
+  "All Partner Categories": "All Partner Categories",
+  "search_games": "Search Games",
+  "simple_tagline": "Nakamoto.Games - SECURE. SUBLIME. SIMPLE. EARN $NAKA TODAY.",
+  "main_tagline": "SECURE. SUBLIME. SIMPLE. EARN $NAKA TODAY. ",
+  "naka_swap": "NAKA Swap",
+  "top_naka_player": "Top NAKA Players",
+  "are_you_a_developer?": "ARE YOU A DEVELOPER?"
 }

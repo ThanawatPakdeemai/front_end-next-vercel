@@ -422,5 +422,13 @@
   "select_map": "选择地图",
   "room_status": "房间状态",
   "public": "公开",
-  "private": "私人"
+  "private": "私人",
+  "loading": "加载中",
+  "search_games": "搜索游戏",
+  "simple_tagline": "Nakamoto.Games - 安全. 卓越. 简单. 今天赚取 $NAKA。",
+  "main_tagline": "安全。卓越。简单。今天就赚$NAKA。",
+  "naka_swap": "NAKA 交换",
+  "referral": "推荐",
+  "top_naka_player": "顶尖NAKA玩家",
+  "are_you_a_developer?": "你是开发者吗？"
 }

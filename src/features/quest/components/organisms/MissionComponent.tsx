@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     backgroundImage: "none",
     padding: "10px",
     maxWidth: "564px",
-    // width: "564px",
+    width: "564px",
     border: "none",
     boxShadow: "none"
   }
@@ -107,7 +107,7 @@ const MissionComponent = ({ open }: IProp) => {
       classes={{
         paper: classes.paper
       }}
-      // className="!max-w-[564px]"
+      className="!min-w-[564px]"
     >
       <div className="flex h-full flex-col gap-5 rounded-md border-[3px] border-neutral-800 bg-neutral-900 p-4">
         {/* header */}

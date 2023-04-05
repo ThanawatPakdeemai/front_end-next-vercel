@@ -25,14 +25,14 @@ const ButtonClaim = ({ data, variants, initial, animate }: IProp) => {
   const { clearQuestStore } = useQuestStore()
   const { setOpen, setClose } = useLoadingStore()
 
-  const handleClaim = (_questId: string) => {
+  const handleClaim = async (_questId: string) => {
     setOpen("Claim is processing...")
     mutateClaimQuestById(_questId)
       .then((res) => {
         successToast(res.message)
-        setTimeout(() => {
+        setTimeout(async () => {
           setClose()
-          refetchAllQuest()
+          await refetchAllQuest()
           clearQuestStore()
         }, 1000)
       })
@@ -45,7 +45,8 @@ const ButtonClaim = ({ data, variants, initial, animate }: IProp) => {
   if (
     data.status === "done" &&
     data.claim_reward_status === false &&
-    data.claim_reward_progress !== "claimed"
+    data.claim_reward_progress !== "claimed" &&
+    data.claim_reward_progress !== "in_progress"
   ) {
     return (
       <motion.button

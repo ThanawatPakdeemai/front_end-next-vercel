@@ -54,7 +54,7 @@ const HeadPrice = ({
           <span className="mr-1 text-purple-primary">Polygon : </span>
           {siteInfo.contract && (
             <Link
-              href={`${CONFIGS.CHAIN.POLYGON_SCAN}/address/${CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT}`}
+              href={`${CONFIGS.CHAIN.POLYGON_SCAN}/address/${CONFIGS.CONTRACT_ADDRESS.ERC20}`}
               target="_blank"
             >
               <Typography

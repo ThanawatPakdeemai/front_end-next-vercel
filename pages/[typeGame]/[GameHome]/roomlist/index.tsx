@@ -107,7 +107,7 @@ export default function GameRoomList() {
   useEffect(() => {
     refetchItemSelected()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [refetchItemSelected])
 
   useEffect(() => {
     let load = false

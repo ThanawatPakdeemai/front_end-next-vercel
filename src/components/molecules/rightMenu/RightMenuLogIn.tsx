@@ -76,16 +76,14 @@ const RightMenuLogIn = () => {
         <div>
           <TooltipsCustom
             title={
-              <p className="text-primary-main">
-                Please approve your wallet first.
-              </p>
+              <p className="text-primary-main">{t("please_approve_wallet")}</p>
             }
             color="warning"
             open={!address && !expanded && !isConnected}
           >
             <Card
               className={`${
-                expanded ? "rounded-t-[13px] rounded-b-none" : "rounded-[13px]"
+                expanded ? "rounded-b-none rounded-t-[13px]" : "rounded-[13px]"
               } relative m-auto flex items-center justify-center`}
               sx={{
                 maxWidth: 277,
@@ -201,7 +199,7 @@ const RightMenuLogIn = () => {
               backgroundColor: "#010101D9",
               maxWidth: 277,
               width: 277,
-              zIndex: 99999
+              zIndex: 9998
             }}
           >
             <>

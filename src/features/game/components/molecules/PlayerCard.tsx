@@ -5,6 +5,7 @@ import useProfileStore from "@stores/profileStore"
 import useGameStore from "@stores/game"
 import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
 import { memo } from "react"
+import { useTranslation } from "react-i18next"
 
 interface IProps {
   players: IGameCurrentPlayer[] | undefined[]
@@ -17,11 +18,12 @@ const PlayerCard = ({ players }: IProps) => {
   const { kickRoom } = useSocketProviderWaiting()
   const profile = useProfileStore((state) => state.profile.data)
   const gameData = useGameStore((state) => state.data)
+  const { t } = useTranslation()
 
   const checkText = (item: IItemPlyer) => {
     if (gameData?.game_type === "multiplayer") {
       if (item.owner) {
-        return "OWNER"
+        return t("owner")
       }
       if (!item.owner && item.player_id !== profile?.id) {
         // isn't owner and player_id != profile.id show button kick
@@ -29,23 +31,23 @@ const PlayerCard = ({ players }: IProps) => {
           // eslint-disable-next-line react/button-has-type, jsx-a11y/no-redundant-roles
           <button
             role="button"
-            className="cursor-pointer"
+            className="cursor-pointer uppercase"
             onClick={() => {
               if (item.player_id && kickRoom) {
                 kickRoom(item.player_id)
               }
             }}
           >
-            KICK
+            {t("kick")}
           </button>
         )
       }
     }
     if (profile?.id === item.player_id) {
-      return "ME"
+      return t("me")
     }
 
-    return "Player"
+    return t("player")
   }
 
   const colorsBadge = (item: IGameCurrentPlayer) => {
@@ -83,7 +85,7 @@ const PlayerCard = ({ players }: IProps) => {
                   }
                   badgeCenter={{
                     status: item.status,
-                    name: item.status ?? "Ready"
+                    name: t(item.status) ?? t("ready")
                   }}
                   badgeColor={colorsBadge(item)}
                 />

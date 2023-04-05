@@ -38,7 +38,7 @@ const HeadMenu = () => {
             >
               <Button
                 sx={styleButton}
-                className={`button-select-naka xs:mb-1 !hover:bg-error-main !hover:text-white-primary w-full !rounded-[8px] !py-[12px] !px-[23px] !text-black-default ${
+                className={`button-select-naka xs:mb-1 !hover:bg-error-main !hover:text-white-primary w-full !rounded-[8px] !px-[23px] !py-[12px] !text-black-default ${
                   router.pathname === item.link
                     ? "!bg-primary-main"
                     : "!bg-neutral-800"
@@ -72,7 +72,7 @@ const HeadMenu = () => {
                 item.chide?.map((ele) => ({
                   label: ele.name,
                   value: ele.name,
-                  textEnd: ele.textRight,
+                  textEnd: t(ele.textRight),
                   link: ele.link,
                   icon:
                     typeof ele.icon === "string" ? (
@@ -97,12 +97,12 @@ const HeadMenu = () => {
                 })) ?? [{ label: "", value: "", link: "/" }]
               }
               widthOption="600px"
-              title={item.name === "NAKA Ecosystem" ? `...` : "item.name"}
+              title={item.name === "NAKA Ecosystem" ? `...` : item.name}
               left={item.left}
               button={
                 <Button
                   sx={styleButton}
-                  className={`button-select-naka xs:mb-1 !hover:bg-error-main  !hover:text-white-primary w-full !min-w-[100px] !rounded-[8px]  px-2 !py-[12px] !text-black-default last:p-[15px_5px_13px] md:mb-0 md:w-auto ${
+                  className={`button-select-naka xs:mb-1 !hover:bg-error-main  !hover:text-white-primary w-full !min-w-[100px] !rounded-[8px]  !py-[12px] px-2 !text-black-default last:p-[15px_5px_13px] md:mb-0 md:w-auto ${
                     item.isChide &&
                     item.chide &&
                     (router.pathname ===

@@ -73,7 +73,7 @@ const MyLandPage = () => {
           </div>
           <ButtonToggleIcon
             text="Browse Image"
-            className="btn-rainbow-theme mt-[10px] h-[40px] !w-full !rounded-[24px] border border-neutral-700 bg-secondary-main bg-primary-main font-bold capitalize text-white-primary"
+            className="btn-rainbow-theme mt-[10px] h-[40px] !w-full !rounded-[24px] border border-neutral-700 bg-primary-main bg-secondary-main font-bold capitalize text-white-primary"
             startIcon={<AddIcon className="text-neutral-300" />}
             handleClick={() => {
               handleClick(handleFileChange)

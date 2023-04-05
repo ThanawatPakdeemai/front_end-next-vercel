@@ -26,12 +26,12 @@ const GameSummaryRewardPage = () => {
   const getSummaryValue = () => {
     switch (notificationItem?.type) {
       case "RETURN_ITEM":
+      case undefined:
         return summaryDataPlayerId.current_score
 
       case "REWARD_WEEKLY":
       case "REWARD_GAME_POOL":
         return summaryDataPlayerIdWeekly.reward
-
       default:
         return (
           summaryDataPlayerId.naka_for_player ||

@@ -136,7 +136,7 @@ const TransactionPage = ({ profile }: IProp) => {
             />
           </div>
           <TableContainer
-            className="w-full overflow-x-auto rounded-2xl bg-transparent px-1.5 pt-4 pb-1.5 "
+            className="w-full overflow-x-auto rounded-2xl bg-transparent px-1.5 pb-1.5 pt-4 "
             component={Paper}
           >
             <Table

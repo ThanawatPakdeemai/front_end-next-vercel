@@ -16,7 +16,7 @@ const GameItemsBody = ({ gameItems }: IProps) => (
     className="mb-4 flex gap-10"
   >
     {gameItems && gameItems.length > 0 ? (
-      <ul className="mx-[6px] mt-[6px] mb-[6px] flex flex-wrap items-center gap-3">
+      <ul className="mx-[6px] mb-[6px] mt-[6px] flex flex-wrap items-center gap-3">
         {typeof gameItems !== "string" &&
           gameItems.map((item, index: number) => (
             <Box

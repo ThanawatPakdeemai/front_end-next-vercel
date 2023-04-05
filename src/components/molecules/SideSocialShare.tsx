@@ -32,7 +32,7 @@ const SideSocialShare = ({ hidden }: IProp) => {
 
   return (
     <div className={`${hidden} sticky top-[202px]`}>
-      <div className="absolute top-0 right-[-10%] rounded-[18px] border border-neutral-800 px-2 ">
+      <div className="absolute right-[-10%] top-0 rounded-[18px] border border-neutral-800 px-2 ">
         <div className="flex flex-col items-center">
           <Typography
             sx={{

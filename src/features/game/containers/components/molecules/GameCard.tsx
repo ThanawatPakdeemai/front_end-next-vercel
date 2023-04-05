@@ -12,6 +12,7 @@ import TimerStamina from "@components/atoms/timer/TimerStamina"
 import { IGame, IGameFav } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { IMAGES } from "@constants/images"
+import { useTranslation } from "react-i18next"
 
 interface IProps {
   menu: IHeaderSlide
@@ -44,6 +45,7 @@ const GameCard = ({
   const [chipLable, setChipLable] = useState<string>("")
   const [theme, setTheme] = useState<string>("")
   const [lableButton, setLableButton] = useState<string>("play now")
+  const { t } = useTranslation()
   const btnCard = {
     init: {
       y: 40,
@@ -129,7 +131,7 @@ const GameCard = ({
           <NumberRank
             index={no - 1}
             fixColor={false}
-            className="slick-card-number absolute top-2 right-1 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
+            className="slick-card-number absolute right-1 top-2 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
           />
         ) : null}
         <Image
@@ -150,7 +152,7 @@ const GameCard = ({
             startIcon={
               cooldown ? <IconHourglass /> : <SportsEsportsOutlinedIcon />
             }
-            text={cooldown ? "cooldown..." : lableButton}
+            text={cooldown ? `${t("cooldown")}...` : t(lableButton)}
             handleClick={onHandleClick}
             className={`btn-rainbow-theme z-[2] w-[198px] ${
               cooldown ? "bg-error-main" : "bg-secondary-main "

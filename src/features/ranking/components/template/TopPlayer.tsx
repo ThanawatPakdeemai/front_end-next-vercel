@@ -93,7 +93,7 @@ const TopPlayer = ({
             ))}
           </div>
         ) : (
-          <div className="ml-auto w-full sm:flex-[0_0_100%] lg:mt-auto lg:ml-0 lg:flex-none">
+          <div className="ml-auto w-full sm:flex-[0_0_100%] lg:ml-0 lg:mt-auto lg:flex-none">
             {rank
               ? topPlayerGameId && (
                   <CardRank topPlayerGameId={topPlayerGameId} />

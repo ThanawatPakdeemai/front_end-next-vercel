@@ -49,7 +49,7 @@ const WalletBody = ({
         </span>
         <WalletAddress contractAddress={contractAddress || ""} />
       </div>
-      <div className="absolute top-2 right-2">
+      <div className="absolute right-2 top-2">
         <KeyFramesRotate>
           <IStickerSolid
             width="70"

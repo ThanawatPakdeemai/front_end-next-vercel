@@ -76,7 +76,7 @@ const CouponPage = () => {
       <div className="grid max-w-[678px] rounded-lg border border-neutral-800 bg-neutral-780 md:grid-cols-2 lg:grid-cols-2">
         <div className="p-12 sm:p-11 lg:p-11">
           <Typography className="text-sm">{}</Typography>
-          <Typography className="mt-[20px] mb-[10px] font-neue-machina text-xs uppercase text-neutral-500">
+          <Typography className="mb-[10px] mt-[20px] font-neue-machina text-xs uppercase text-neutral-500">
             {t("coupon_code")}
           </Typography>
           <TextField

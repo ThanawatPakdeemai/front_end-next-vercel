@@ -192,7 +192,7 @@ const RightDetailsMarketplace = ({
       <Typography className="text-[46px] font-bold uppercase text-neutral-300">
         {title}
       </Typography>
-      <div className="w-ful flex flex-col gap-y-6 rounded-3xl border-neutral-800 bg-neutral-780 py-7 px-[42px] uppercase">
+      <div className="w-ful flex flex-col gap-y-6 rounded-3xl border-neutral-800 bg-neutral-780 px-[42px] py-7 uppercase">
         <div className="flex items-center gap-5">
           <Typography className="text-neutral-300">{method}</Typography>
           <Chip

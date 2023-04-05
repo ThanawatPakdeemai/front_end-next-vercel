@@ -79,7 +79,7 @@ const MyGamesPage = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="mb-6 grid grid-cols-5 gap-y-4 gap-x-2">
+      <div className="mb-6 grid grid-cols-5 gap-x-2 gap-y-4">
         {myGamesIsPreviousData || myGamesIsLoading || myGamesIsFetching
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
           : null}

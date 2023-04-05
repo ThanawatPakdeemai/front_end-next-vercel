@@ -134,7 +134,7 @@ const StoryLobby = ({
                 <h1 className="font-neue-machina text-lg font-bold uppercase text-white-default">
                   {gameData?.name}
                 </h1>
-                <div className="mt-6 mb-4 border-b-[1px] border-neutral-700" />
+                <div className="mb-4 mt-6 border-b-[1px] border-neutral-700" />
               </>
             )}
 

@@ -18,7 +18,7 @@ interface IProp {
 }
 const HeaderP2P = ({ type = "buy", setType, dataButton }: IProp) => (
   <>
-    <div className=" my-2 flex items-center justify-between rounded-lg border border-neutral-700 bg-neutral-780 p-2">
+    <div className=" my-2 flex flex-col items-center justify-between gap-2 rounded-lg border border-neutral-700 bg-neutral-780 p-2 md:flex-row md:gap-0">
       <p
         className={` text-md font-neue-machina-medium uppercase  ${
           type === "sell" ? " text-error-main" : " text-varidian-default"

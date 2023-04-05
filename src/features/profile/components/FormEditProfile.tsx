@@ -105,7 +105,7 @@ const FormEditProfile = ({
     <Box className="w-[350px]">
       {profile && (
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Typography className="mt-2 mb-1 font-neue-machina text-xs uppercase  text-neutral-500">
+          <Typography className="mb-1 mt-2 font-neue-machina text-xs uppercase  text-neutral-500">
             {t("banner_upload")}
           </Typography>
           <div className="flex h-[66px] items-center justify-center rounded-xl bg-neutral-700">
@@ -124,7 +124,7 @@ const FormEditProfile = ({
               : `${t("recommend_size")} : W908 x H180`}
           </Typography>
           <Divider className="my-6" />
-          <Typography className="mt-2 mb-1 font-neue-machina text-xs uppercase text-neutral-500">
+          <Typography className="mb-1 mt-2 font-neue-machina text-xs uppercase text-neutral-500">
             {t("display_name")}
           </Typography>
           <TextField

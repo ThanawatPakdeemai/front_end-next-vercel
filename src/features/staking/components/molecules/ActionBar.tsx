@@ -193,7 +193,7 @@ const ActionBar = ({
         </div>
 
         <div className="flex items-center">
-          <div className="mr-3 ml-1 flex items-center sm:ml-5">
+          <div className="ml-1 mr-3 flex items-center sm:ml-5">
             {dayjs() < dayjs(basicStakeInfo && basicStakeInfo.startDate) && (
               <ButtonToggleIcon
                 startIcon={startIconButton}

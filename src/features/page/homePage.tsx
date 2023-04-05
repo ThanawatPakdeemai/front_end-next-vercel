@@ -136,7 +136,7 @@ const Home = () => {
         />
         {/* notification */}
         {profile && profile.data && (
-          <div className="fixed right-4 bottom-5 z-10 flex flex-col items-center justify-center">
+          <div className="fixed bottom-5 right-4 z-10 flex flex-col items-center justify-center">
             <ButtonSticky
               icon={<SupportIcon />}
               onClick={() => {
@@ -208,7 +208,7 @@ const Home = () => {
         <div className="relative flex-[1_1_100%] overflow-hidden sm:flex-[1_1_60%] xl:flex-none">
           <div
             id="spark-fire"
-            className="absolute top-0 left-0 hidden h-[calc(100%-100px)] w-full xl:block"
+            className="absolute left-0 top-0 hidden h-[calc(100%-100px)] w-full xl:block"
           />
           <CarouselSlide
             slideGames={GAME_DOWNLOAD}
@@ -258,7 +258,7 @@ const Home = () => {
       <Tagline
         bgColor="bg-green-lemon"
         textColor="text-neutral-800 font-bold"
-        text="SWITCH TO GOD MODE AND UNLEASH YOUR TRUE GAMING POTENTIAL"
+        text={t("switch_to_godmode")}
         icon={<ShapeIcon />}
       />
 
@@ -266,7 +266,7 @@ const Home = () => {
       {/* <OnPlaying /> */}
       <OnPlayingStyle2 isSlider={false} />
       <DeveloperPart />
-      <Box className="xs:flex-col mt-4 mb-10 gap-4 lg:flex">
+      <Box className="xs:flex-col mb-10 mt-4 gap-4 lg:flex">
         <Box className="flex-1 xl:flex-none">
           <Grid
             container

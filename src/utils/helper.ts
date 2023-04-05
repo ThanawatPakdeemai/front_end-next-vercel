@@ -89,7 +89,7 @@ const Helper = {
     // Check number length is not negative
     // Check number length is not zero
     // Check if address contain with space
-    return `${_string.substring(0, _length)}...${_string.substring(
+    return `${_string?.substring(0, _length)}...${_string?.substring(
       _string.length - _length,
       _string.length
     )}`

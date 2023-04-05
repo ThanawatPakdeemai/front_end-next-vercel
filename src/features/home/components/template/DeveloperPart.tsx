@@ -4,6 +4,7 @@ import DvrIcon from "@mui/icons-material/Dvr"
 import CardTitle from "@components/organisms/CardTitle"
 import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import Developer from "@feature/home/components/organisms/Developer"
+import { Trans } from "react-i18next"
 
 const developerPart = () => (
   <>
@@ -26,7 +27,7 @@ const developerPart = () => (
                 variant="inherit"
                 className="text-neutral-900"
               >
-                ARE YOU A DEVELOPER?
+                <Trans i18nKey="are_you_a_developer?" />
               </Typography>
             }
             background="red"
@@ -34,7 +35,7 @@ const developerPart = () => (
             // rightTitle={
             //   <ButtonLink
             //     href="/joinus"
-            //     text="joinus"
+            //     text={<Trans i18nKey="joinus" />}
             //     icon={<AddIcon />}
             //     color="error"
             //     size="small"

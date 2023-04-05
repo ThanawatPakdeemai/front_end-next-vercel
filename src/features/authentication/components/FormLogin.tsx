@@ -37,6 +37,7 @@ import useLoginTypeStore from "@stores/loginTypes"
 import useConnectMetamaskAction from "@utils/useConnectMetamesk"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import { useRouter } from "next/router"
+import { useTranslation } from "react-i18next"
 import useSignIn from "../containers/hooks/useSignIn"
 import { ISignIn } from "../interfaces/IAuthService"
 import useLoginProvider from "../containers/hooks/useLoginProvider"
@@ -54,6 +55,8 @@ const FormLogin = ({ href }: IProp) => {
   const web3 = new Web3(Web3.givenProvider)
   const { address: account } = useWeb3Provider()
   const { getSignature } = useConnectMetamaskAction()
+
+  const { t } = useTranslation()
 
   const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
@@ -237,7 +240,7 @@ const FormLogin = ({ href }: IProp) => {
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <Box>
           <Typography className="mb-2 font-neue-machina text-sm uppercase  text-neutral-500">
-            Email Address
+            {t("email_address")}
           </Typography>
           <TextField
             className="w-full"
@@ -250,7 +253,7 @@ const FormLogin = ({ href }: IProp) => {
             }}
             {...register("_email")}
             id="email-login"
-            placeholder="Email"
+            placeholder={`${t("email")}`}
             size="medium"
             autoComplete="email"
             InputProps={{
@@ -264,7 +267,7 @@ const FormLogin = ({ href }: IProp) => {
         </Box>
         <Box>
           <Typography className="mb-2 mt-5 font-neue-machina text-sm uppercase text-neutral-500">
-            Password
+            {t("password")}
           </Typography>
 
           <TextField
@@ -278,8 +281,8 @@ const FormLogin = ({ href }: IProp) => {
             size="medium"
             {...register("_password")}
             type={showPassword ? "text" : "password"}
-            placeholder="Password"
-            helperText="A number or symbol, at least 6 characters"
+            placeholder={`${t("password")}`}
+            helperText={t("helperText_login")}
             required
             autoComplete="current-password"
             InputProps={{
@@ -308,11 +311,11 @@ const FormLogin = ({ href }: IProp) => {
           />
         </Box>
 
-        <ButtonGroup className="mt-10  gap-3">
+        <ButtonGroup className="mt-10 w-full gap-3 md:w-auto">
           <ButtonLink
-            className="h-[40px] !min-w-[150px] text-sm"
+            className="h-[40px] w-full !min-w-[150px]  text-sm md:w-auto"
             href="/register"
-            text="Register"
+            text={t("register")}
             size="medium"
           />
           <ButtonLink
@@ -320,7 +323,7 @@ const FormLogin = ({ href }: IProp) => {
             size="medium"
             color="secondary"
             disabled={isLoading}
-            className="h-[40px] !min-w-[200px]  text-sm"
+            className="h-[40px]  text-sm  md:!min-w-[200px]"
             href=""
             onClick={() => {}}
             text={
@@ -332,7 +335,7 @@ const FormLogin = ({ href }: IProp) => {
                     size={20}
                   />
                 ) : (
-                  "Login"
+                  `{${t("login")}}`
                 )}
               </>
             }
@@ -347,10 +350,10 @@ const FormLogin = ({ href }: IProp) => {
         container
         justifyContent="space-between"
         alignItems="center"
-        className="!mt-0 !mb-0"
+        className="!mb-0 !mt-0"
       >
         <Grid item>
-          <p className="text-xs uppercase">OR join us with</p>
+          <p className="text-xs uppercase">{t("or_join_us_with")}</p>
         </Grid>
         <Grid item>
           <hr className="w-[208px] border border-solid border-neutral-800" />
@@ -361,7 +364,7 @@ const FormLogin = ({ href }: IProp) => {
         className="w-full"
         container
       >
-        <div className="flex w-full flex-row flex-wrap justify-between">
+        <div className="flex w-full flex-row flex-wrap justify-between gap-2">
           <ButtonIcon
             whileHover="hover"
             transition={{

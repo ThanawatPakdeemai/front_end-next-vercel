@@ -17,7 +17,7 @@ const MetaDate = ({ date, dateTitle = "RELEASE DATE" }: IMetaDate) => {
         </div>
       )}
 
-      <div className="date-wrapper--text px-6 pt-4 pb-2">
+      <div className="date-wrapper--text px-6 pb-2 pt-4">
         <div className="text-default text-neutral-500">
           {dayjs(date).format("DD MMMM YYYY")}
         </div>

@@ -63,10 +63,10 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
             className="w-[174px] rounded-lg"
           /> */}
           {gameData && gameData.game_type === "multiplayer" && (
-            <>
+            <div className="flex flex-col sm:flex-row">
               <TextField
                 className="w-full md:px-2"
-                placeholder="Search Room"
+                placeholder={String(t("search_room"))}
                 InputProps={{
                   style: {
                     fontSize: "14px",
@@ -80,7 +80,7 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
                 }}
               />
               <ModalCreateRoom gameData={gameData} />
-            </>
+            </div>
           )}
         </div>
       </div>

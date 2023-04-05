@@ -121,7 +121,7 @@ const SelectNaka = ({
                                 component="div"
                                 className="w-max "
                               >
-                                <ListItemText className="text-end-select-naka rounded-less border border-neutral-700 bg-primary-main py-[2px] px-2 text-center font-neue-machina-semi text-xs uppercase ">
+                                <ListItemText className="text-end-select-naka rounded-less border border-neutral-700 bg-primary-main px-2 py-[2px] text-center font-neue-machina-semi text-xs uppercase ">
                                   <Typography className="uppercase text-primary-contrastText" />
                                   {option.textEnd}
                                 </ListItemText>
@@ -131,7 +131,7 @@ const SelectNaka = ({
                         </MenuItem>
                       ))}
                     </MenuList>
-                    <div className="py-1 px-2">{imageSelectd}</div>
+                    <div className="px-2 py-1">{imageSelectd}</div>
                   </div>
                 </div>
               </div>

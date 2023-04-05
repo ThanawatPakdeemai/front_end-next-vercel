@@ -13,6 +13,11 @@ export const NAKA_ECOSYSTEMSS = [
     label: "Documentation",
     path: "https://docs.nakamoto.games/",
     icon: true
+  },
+  {
+    label: "Legacy Version",
+    path: "https://legacy.nakamoto.games",
+    icon: true
   }
   // {
   //   label: "Marketplace",

@@ -7,6 +7,7 @@ import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { Chip } from "@mui/material"
 import { IGetType } from "@feature/game/interfaces/IGameService"
 import Link from "next/link"
+import { useTranslation } from "react-i18next"
 
 export interface ISlideList extends React.HTMLAttributes<HTMLDivElement> {
   id: string
@@ -51,7 +52,7 @@ const GameCarouselHeader = ({
   hideNextPrev
 }: IProps) => {
   const bgColor = `!bg-${menu?.theme}-main`
-
+  const { t } = useTranslation()
   const animateControls = useAnimation()
   const [isHover, setIsHover] = useState<boolean>(false)
 
@@ -128,7 +129,7 @@ const GameCarouselHeader = ({
               <p
                 className={`text-${menu.theme}-main h-[10px] pl-2 pr-2 font-neue-machina-bold font-bold uppercase`}
               >
-                {menu.title}
+                {t(menu.title)}
               </p>
             </div>
             <div className="flex flex-[1_1_100%] justify-center sm:flex-none sm:justify-start ">
@@ -141,7 +142,7 @@ const GameCarouselHeader = ({
                   onClick={() => onChangeType(item.type as IGetType)}
                 >
                   <Chip
-                    label={item.label}
+                    label={t(item.label)}
                     size="medium"
                     color={curType === item.type ? menu.theme : undefined}
                     className={` h-full w-full cursor-pointer font-bold hover:bg-${
@@ -166,7 +167,7 @@ const GameCarouselHeader = ({
             >
               <ButtonToggleIcon
                 startIcon={<AddIcon />}
-                text="view all"
+                text={t("view_all")}
                 className="mr-4 flex h-full w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
                 type="button"
               />
@@ -178,7 +179,7 @@ const GameCarouselHeader = ({
             >
               <ButtonToggleIcon
                 startIcon={<AddIcon />}
-                text="view all"
+                text={t("view_all")}
                 className="mr-4 flex h-full w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
                 type="button"
               />

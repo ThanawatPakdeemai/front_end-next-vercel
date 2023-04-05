@@ -110,7 +110,7 @@ const Footer = () => {
                       href={game.path}
                     >
                       <TextLink
-                        name={game.name}
+                        name={String(t(game.name))}
                         initial="rest"
                         whileHover="hover"
                         animate="rest"
@@ -151,7 +151,7 @@ const Footer = () => {
                 href={item.path}
               >
                 <TextLink
-                  name={item.label}
+                  name={String(t(item.label))}
                   initial="rest"
                   whileHover="hover"
                   animate="rest"

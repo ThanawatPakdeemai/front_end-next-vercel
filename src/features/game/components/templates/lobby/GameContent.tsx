@@ -6,6 +6,7 @@ import HorizontalThumbSlide from "@feature/slider/components/templates/Horizonta
 import FullWidthSlide from "@feature/slider/components/templates/FullWidthSlide"
 import ArcadeEmporiumIcon from "@components/icons/ArcadeEmporiumIcon"
 import GamePlayTime from "@feature/game/components/atoms/GamePlayTime"
+import { useTranslation } from "react-i18next"
 
 export const StartButtonCustomStyle: SxProps = {
   "& > div": {
@@ -34,6 +35,7 @@ const GameContent = ({
     gameId,
     gameType
   )
+  const { t } = useTranslation()
 
   return (
     <div
@@ -50,7 +52,13 @@ const GameContent = ({
           <div className="flex items-center gap-3">
             {gameType === "arcade-emporium" && <ArcadeEmporiumIcon />}
             <Chip
-              label={gameType.split("-").join(" ").split("games").join("")}
+              label={t(
+                gameType
+                  ?.split("-")
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(" ")
+                  .replace(" Games", "")
+              )}
               size="small"
               color="success"
               className={`${themeColor.toString()} font-bold uppercase`}

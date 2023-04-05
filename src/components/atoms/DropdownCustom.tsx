@@ -16,6 +16,7 @@ import {
 } from "@feature/dropdown/interfaces/IDropdownService"
 import useFilterStore from "@stores/blogFilter"
 import { getGamePartner } from "@feature/partner/containers/services/dropdownPartner.service"
+import { useTranslation } from "react-i18next"
 import SelectDropdown from "./selectDropdown/SelectDropdown"
 
 interface IProp {
@@ -24,6 +25,7 @@ interface IProp {
   className: string
 }
 const DropdownCustom = ({ title, className }: IProp) => {
+  const { t } = useTranslation()
   const [expanded, setExpanded] = useState<boolean>(false)
   const [gameData, setGameData] = useState<
     IGameItem[] | IGameCategory[] | IDevice[]
@@ -226,7 +228,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
           >
             <AllCategoriesIcon />
             <span className="">
-              {onTitle === undefined ? textTitle : onTitle.name}
+              {t(onTitle === undefined ? textTitle : onTitle.name)}
             </span>
             <div
               className={`${

@@ -150,7 +150,7 @@ const RoomListBar = ({
             btnText === "full" ? " bg-error-light" : "bg-green-lemon"
           } ${
             btnText === "played"
-              ? " border-[1px] border-neutral-700 bg-transparent bg-primary-contrastText !text-neutral-100"
+              ? " border-[1px] border-neutral-700 bg-primary-contrastText bg-transparent !text-neutral-100"
               : "bg-green-lemon"
           } font-bold capitalize text-neutral-900`}
           type="button"

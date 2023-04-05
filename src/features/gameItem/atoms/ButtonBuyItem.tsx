@@ -1,6 +1,7 @@
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import { memo } from "react"
 import AddIcon from "@mui/icons-material/Add"
+import { Trans } from "next-i18next"
 
 interface IProp {
   handleButton: () => void
@@ -11,7 +12,7 @@ const ButtonBuyItem = ({ handleButton, disabled }: IProp) => (
     <ButtonLink
       disabled={disabled}
       onClick={() => handleButton()}
-      text="Buy Assets"
+      text={<Trans i18nKey="buy_assets" />}
       href=""
       icon={<AddIcon />}
       size="small"

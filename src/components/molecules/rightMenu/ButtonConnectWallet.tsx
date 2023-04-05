@@ -3,9 +3,11 @@ import ButtonLink from "@components/atoms/button/ButtonLink"
 import { useWeb3Provider } from "@providers/index"
 import { memo } from "react"
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet"
+import { useTranslation } from "react-i18next"
 
 const ButtonConnectWallet = () => {
   const { accounts, handleConnectWithMetamask } = useWeb3Provider()
+  const { t } = useTranslation()
 
   return (
     <>
@@ -13,7 +15,7 @@ const ButtonConnectWallet = () => {
         <ButtonLink
           onClick={handleConnectWithMetamask}
           href="/"
-          text="Connect Wallet"
+          text={t("Connect Wallet")}
           icon={<AccountBalanceWalletIcon />}
           color="secondary"
           variant="contained"

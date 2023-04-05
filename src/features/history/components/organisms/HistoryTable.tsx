@@ -24,6 +24,7 @@ import { IHistory } from "@feature/history/interfaces/IHistoryService"
 import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
 import { v4 as uuid } from "uuid"
 import { TRoomStatus } from "@feature/game/interfaces/IGameService"
+import { useTranslation } from "react-i18next"
 
 const HistoryTable = () => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -32,6 +33,7 @@ const HistoryTable = () => {
   const { HistoryTableHead, handleClickView } = useHistoryController()
   const { limit, setLimit } = useTable()
   const { getHistoryData, historyIsLoading } = useHistory()
+  const { t } = useTranslation()
 
   // States
   const [skip, setSkip] = useState<number>(1)
@@ -85,8 +87,8 @@ const HistoryTable = () => {
       {hydrated && (
         <div className="mx-auto max-w-[678px]">
           <PageHeader
-            title="PLAY HISTORY"
-            subtitle="Wallet manager for nakamoto.games world"
+            title={t("Played History")}
+            subtitle={t("history_transactions_desc")}
           />
           {/* sm:w-[380px] */}
           <TableContainer

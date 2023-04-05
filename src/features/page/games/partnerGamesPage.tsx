@@ -150,7 +150,7 @@ const PartnerGames = () => {
             />
           ))
         ) : (
-          <NoData className="w-[300px]" />
+          <NoData className="mt-4 w-[300px]" />
         )}
       </div>
       <PaginationNaka

@@ -10,13 +10,16 @@ import { Chip, Typography, Box } from "@mui/material"
 import { IPlayToEarnRewardData } from "@src/types/games"
 import useProfileStore from "@stores/profileStore"
 import React, { useEffect, useState } from "react"
+import { Trans, useTranslation } from "react-i18next"
 import { v4 as uuidv4 } from "uuid"
+import NoData from "@components/molecules/NoData"
 
 const EarnRewardPage = () => {
   const { profile } = useProfileStore()
   const [rewardList, setRewardList] = useState<IPlayToEarnRewardData[]>()
   const { allGameData, isLoading: isGameLoading } = useGetAllGames()
   const { mutateClaimReward } = useClaimReward()
+  const { t } = useTranslation()
   const { earnRewardData, refetchRewardData, isLoading } =
     useGetP2ERewardByPlayerId(profile.data ? profile.data.id : "")
   // useGetP2ERewardByPlayerId("61bc7f6be434487ef8e4a7c6")
@@ -95,7 +98,7 @@ const EarnRewardPage = () => {
   } else {
     content = (
       <div className="flex w-full justify-center rounded-lg border border-neutral-800 bg-neutral-700 py-3 text-center">
-        No data
+        <NoData />
       </div>
     )
   }
@@ -104,18 +107,18 @@ const EarnRewardPage = () => {
     <div className="grid max-w-[678px] gap-10">
       <div className="mt-6 flex items-center justify-end md:mt-0">
         <Typography className="flex-1 text-[22px] uppercase text-neutral-400">
-          item rewards
+          <Trans i18nKey="item_rewards" />
         </Typography>
         {countUnClaim > 0 && (
           <>
             <Chip
-              label={`UNCLAIM ${countUnClaim}`}
+              label={`${t("unclaimed")} ${countUnClaim}`}
               color="error"
               size="small"
             />
             {/* for claim all */}
             <ButtonToggleIcon
-              text="Claim All"
+              text={t("claim_all")}
               className="ml-4 h-[50px] !w-[135px] !rounded-[24px] border border-neutral-700 bg-primary-main font-bold capitalize text-white-primary md:ml-[30px]"
               startIcon={<CheckMarkIcon />}
               handleClick={onClaimAll}
@@ -132,8 +135,8 @@ const EarnRewardPage = () => {
           backdropFilter: "blur(2.5px)"
         }}
       >
-        <Typography className="text-shadow-red font-digital-7 text-[26px] text-error-main">
-          Earn item rewards while you play your favorite games
+        <Typography className="text-shadow-red px-4 font-digital-7 text-[26px] text-error-main">
+          {t("earn_banner_message")}
         </Typography>
       </Box>
       <div className="grid max-w-[678px] gap-[10px] !overflow-x-auto md:flex md:flex-col">

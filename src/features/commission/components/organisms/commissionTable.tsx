@@ -11,6 +11,7 @@ import DropdownLimit from "@components/atoms/DropdownLimit"
 import { v4 as uuid } from "uuid"
 import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
 import TableNodata from "@feature/transaction/components/atoms/TableNodata"
+import { useTranslation } from "react-i18next"
 
 const CommissionTable = () => {
   const {
@@ -24,12 +25,13 @@ const CommissionTable = () => {
     isLoading,
     txHistory
   } = useCommissionController()
+  const { t } = useTranslation()
 
   return (
     <div className="mx-auto max-w-[678px]">
       <PageHeader
-        title="Commission"
-        subtitle="Commission share to earn"
+        title={t("Commission")}
+        subtitle={t("commission_share_to_earn")}
       />
       <TableContainer className="rounded-[14px] border border-neutral-800 bg-neutral-780 px-1.5 pb-1.5">
         <Table>

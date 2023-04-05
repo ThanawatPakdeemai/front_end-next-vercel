@@ -3,6 +3,7 @@ import CloudIcon from "@components/icons/CloudIcon"
 import LogoIcon from "@components/icons/LogoIcon"
 import NoticeIcon from "@components/icons/NoticeBar"
 import useQuestStore from "@stores/quest"
+import { useTranslation } from "react-i18next"
 import React from "react"
 
 interface IProp {
@@ -13,6 +14,7 @@ interface IProp {
 
 const TabControl = ({ value, mainMissionCount, dailyMissionCount }: IProp) => {
   const { setMissionType } = useQuestStore()
+  const { t } = useTranslation()
 
   return (
     <div className="flex w-full gap-2">
@@ -25,7 +27,7 @@ const TabControl = ({ value, mainMissionCount, dailyMissionCount }: IProp) => {
             value === "main" ? "bg-neutral-900" : "bg-neutral-780"
           } p-2 uppercase text-error-main`}
         >
-          <span className="ml-4 text-xs font-bold">main mission</span>
+          <span className="ml-4 text-xs font-bold">{t("main_quest")}</span>
           <div className="flex items-center">
             <span className="mr-3 font-digital-7 text-[26px]">
               {mainMissionCount}
@@ -50,7 +52,7 @@ const TabControl = ({ value, mainMissionCount, dailyMissionCount }: IProp) => {
             value === "diary" ? "bg-neutral-900" : "bg-neutral-780"
           } p-2 uppercase text-secondary-main`}
         >
-          <span className="ml-4 text-xs font-bold">diary mission</span>
+          <span className="ml-4 text-xs font-bold">{t("daily_quest")}</span>
           <div className="flex items-center">
             <span className="mr-3 font-digital-7 text-[26px]">
               {dailyMissionCount}

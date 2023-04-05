@@ -56,7 +56,7 @@ const OverviewContent = ({
               />
               <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
               <TagSingular
-                title="developer"
+                title={t("developer")}
                 label={gameDeveloper}
                 link={`/publishers/${gameDeveloper.toLocaleLowerCase()}`}
               />
@@ -65,7 +65,7 @@ const OverviewContent = ({
                 <>
                   <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
                   <TagSingular
-                    title="publisher"
+                    title={t("publisher")}
                     label={gamePublisher}
                     link={`/publishers/${gamePublisher.toLocaleLowerCase()}`}
                   />
@@ -108,7 +108,7 @@ const OverviewContent = ({
                       className="overview-col"
                     >
                       <TagSingular
-                        title="Game Type"
+                        title={t("game_type")}
                         label={gameTypeCode}
                       />
                     </div>
@@ -124,7 +124,7 @@ const OverviewContent = ({
                       className="overview-col whitespace-nowrap"
                     >
                       <TagSingular
-                        title="Game Owner"
+                        title={t("game_owner")}
                         label={gameOwner}
                         idNFT={gameIdNFT}
                       />

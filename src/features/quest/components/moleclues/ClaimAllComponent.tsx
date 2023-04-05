@@ -1,6 +1,7 @@
 // import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 // import AddIcon from "@mui/icons-material/Add"
 import React from "react"
+import { Trans } from "react-i18next"
 import { motion } from "framer-motion"
 
 interface IProp {
@@ -26,7 +27,7 @@ const ClaimAllComponent = ({ count }: IProp) => (
         }}
         className="text-xs uppercase text-neutral-600"
       >
-        total mission complete
+        <Trans i18nKey="total_mission_complete" />
       </motion.span>
       <motion.span
         initial={{ scale: 0, top: 100 }}

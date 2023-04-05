@@ -128,9 +128,9 @@ export default function AllTransactionTable({ profile }: IProp) {
       <div className="flex justify-between uppercase">
         <div>
           <div className="text-[18px] text-neutral-400">
-            history tRansactions
+            {t("history_transactions")}
           </div>
-          <div className="text-xs">Wallet manager for nakamoto.games world</div>
+          <div className="text-xs">{t("history_transactions_desc")}</div>
         </div>
         <DropdownEvent
           defaultValue={Event}

@@ -80,7 +80,7 @@ const FormBuyItem = () => {
               </div>
             </div>
           </Box>
-          <Box className="my-4 w-full pr-4">
+          <Box className="my-4 w-full">
             <p className="py-2 uppercase text-black-default">Tier assets</p>
             {gameItemList &&
               gameItemList.length > 0 &&
@@ -95,7 +95,7 @@ const FormBuyItem = () => {
                     <DropdownListItem
                       {...field}
                       list={gameItemList as IGameItemListData[]}
-                      className="w-full lg:w-[410px]"
+                      className="w-full"
                       onChangeSelect={(_item) => {
                         setValue("item", _item)
                         setValue("item_id", _item.id)
@@ -109,7 +109,7 @@ const FormBuyItem = () => {
               <p className="text-sm text-error-main">{t("required")}</p>
             )}
           </Box>
-          <Box className="my-4 w-full pr-4">
+          <Box className="my-4 w-full">
             <p className="py-2 uppercase text-black-default">Currency</p>
             <Controller
               name="currency"
@@ -119,7 +119,7 @@ const FormBuyItem = () => {
                 <DropdownListCurrency
                   {...field}
                   list={chainSupport}
-                  className="w-full lg:w-[410px]"
+                  className="w-full"
                   onChangeSelect={(_item) => {
                     setValue("currency", _item)
                     setValue("currency_id", _item?.address)
@@ -133,7 +133,7 @@ const FormBuyItem = () => {
             )}
           </Box>
           <p className="uppercase text-purple-primary">
-            Assets / 1 Item = {watch("nakaPerItem")}
+            Assets / 1 Item = {watch("nakaPerItem")} NAKA
           </p>
 
           <div className="my-4  grid grid-cols-6  content-center gap-2 md:gap-4">
@@ -222,9 +222,8 @@ const FormBuyItem = () => {
             <p className="text-sm text-black-default">
               = $
               {Helper.formatNumber(
-                watch("qty") ??
-                  0 * Number((watch("item") as IGameItemListData)?.price) ??
-                  0
+                watch("qty") *
+                  Number((watch("item") as IGameItemListData)?.price) ?? 0
               )}
             </p>
           </div>

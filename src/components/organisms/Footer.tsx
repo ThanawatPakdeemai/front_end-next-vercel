@@ -163,7 +163,7 @@ const Footer = () => {
           </div>
           <div className="col-span-2 flex-auto sm:flex-none md:col-span-1 md:w-48">
             <div className="mb-4 whitespace-normal uppercase text-white-primary">
-              {t("NAKA Ecosystem")}
+              {t("About")}
             </div>
             {NAKA_ECOSYSTEMSS?.map((item) => (
               <Link

@@ -162,6 +162,7 @@ const GameCarousel = ({
                 gameType={
                   item.is_NFT ? "arcade-emporium" : getTypeGamePathFolder(item)
                 }
+                play_total_count={game?.play_total_count}
               />
             ))}
         </Slider>

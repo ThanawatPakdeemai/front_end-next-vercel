@@ -193,10 +193,9 @@ const useBuyGameItemController = () => {
 
   const refetchItemSelected = useCallback(() => {
     refetch().then((_item: any) => {
+      const _value = itemSizeId ? (itemSizeId as string) : watch("item_id")
       if (_item) {
-        const item = _item?.data?.find((ele) =>
-          ele.id === itemSizeId ? itemSizeId : watch("item_id")
-        )
+        const item = _item?.data?.find((ele) => ele.id === _value)
 
         if (item) {
           onSetGameItemSelectd(item)
@@ -204,7 +203,8 @@ const useBuyGameItemController = () => {
         }
       }
     })
-  }, [onSetGameItemSelectd, refetch, watch, itemSizeId])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onSetGameItemSelectd, refetch, watch, itemSizeId, router])
 
   const onSubmit = (_data: IFormData) => {
     setOpen("Blockchain transaction in progress...")

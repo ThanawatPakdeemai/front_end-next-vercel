@@ -308,9 +308,9 @@ const FormLogin = ({ href }: IProp) => {
           />
         </Box>
 
-        <ButtonGroup className="mt-10  gap-3">
+        <ButtonGroup className="mt-10 w-full gap-3 md:w-auto">
           <ButtonLink
-            className="h-[40px] !min-w-[150px] text-sm"
+            className="h-[40px] w-full !min-w-[150px]  text-sm md:w-auto"
             href="/register"
             text="Register"
             size="medium"
@@ -320,7 +320,7 @@ const FormLogin = ({ href }: IProp) => {
             size="medium"
             color="secondary"
             disabled={isLoading}
-            className="h-[40px] !min-w-[200px]  text-sm"
+            className="h-[40px]  text-sm  md:!min-w-[200px]"
             href=""
             onClick={() => {}}
             text={
@@ -361,7 +361,7 @@ const FormLogin = ({ href }: IProp) => {
         className="w-full"
         container
       >
-        <div className="flex w-full flex-row flex-wrap justify-between">
+        <div className="flex w-full flex-row flex-wrap justify-between gap-2">
           <ButtonIcon
             whileHover="hover"
             transition={{

@@ -111,7 +111,7 @@ const MissionComponent = ({ open }: IProp) => {
       }}
       className="!min-w-[564px]"
     >
-      <div className="flex h-full flex-col gap-5 rounded-md border-[3px] border-neutral-800 bg-neutral-900 p-4">
+      <div className="z-[999991] flex h-full flex-col gap-5 rounded-md border-[3px] border-neutral-800 bg-neutral-900 p-4">
         {/* header */}
         <div className="flex min-h-[54px] items-center rounded-lg bg-neutral-800 pl-5">
           <div className="flex flex-1 flex-row items-center">

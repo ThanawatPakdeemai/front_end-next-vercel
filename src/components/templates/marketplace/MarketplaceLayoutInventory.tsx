@@ -13,6 +13,7 @@ import useNotiStore from "@stores/notification"
 import Helper from "@utils/helper"
 import { NextRouter, useRouter } from "next/router"
 import React from "react"
+import { useTranslation } from "react-i18next"
 
 const MarketplaceLayoutInventory = ({
   children
@@ -21,6 +22,7 @@ const MarketplaceLayoutInventory = ({
   const { onResetNotification } = useNotiStore()
   const { onReset } = useProfileStore()
   const router: NextRouter = useRouter()
+  const { t } = useTranslation()
 
   return (
     <div className="main-container mx-auto">
@@ -88,7 +90,7 @@ const MarketplaceLayoutInventory = ({
           {profile && (
             <ButtonToggleIcon
               startIcon={<PlugIcon />}
-              text="Logout"
+              text={t("logout")}
               handleClick={async () => {
                 await onResetNotification()
                 await onReset()

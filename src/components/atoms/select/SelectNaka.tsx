@@ -10,7 +10,7 @@ import {
   Typography,
   Box
 } from "@mui/material"
-import { useTranslation } from "next-i18next"
+import { Trans, useTranslation } from "next-i18next"
 import { useRouter } from "next/router"
 import Link from "next/link"
 import ButtonClose from "../button/ButtonClose"
@@ -111,7 +111,9 @@ const SelectNaka = ({
                             </ListItemIcon>
                             <ListItemText className="w-50">
                               <Typography className="!font-neue-machina-semi !text-sm">
-                                {option.label}
+                                <Trans i18nKey={option.label}>
+                                  {option.label}
+                                </Trans>
                               </Typography>
                             </ListItemText>
                             {option.textEnd && (

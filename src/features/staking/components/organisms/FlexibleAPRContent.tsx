@@ -52,7 +52,7 @@ const FlexibleAPRContent = () => {
             className="mb-12"
           />
           <Typography className="mb-12 flex max-w-full justify-center text-center font-bold uppercase text-neutral-500">
-            STAKING IS COMING. STAY TUNED ON SOCIAL MEDIA.
+            {t("staking_not_avaliable_desc")}
           </Typography>
         </div>
       )}

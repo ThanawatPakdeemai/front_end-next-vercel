@@ -23,6 +23,7 @@ import useGlobal from "@hooks/useGlobal"
 import { useToast } from "@feature/toast/containers"
 import useNotiStore from "@stores/notification"
 import PlugIcon from "@components/icons/MenunIcon/PlugIcon"
+import { useTranslation } from "react-i18next"
 import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 
 const RightMenuLogIn = () => {
@@ -33,6 +34,7 @@ const RightMenuLogIn = () => {
   const { isMarketplace, isDeveloperPage, onClickLogout } = useGlobal()
   const { isConnected, address } = useWeb3Provider()
   const { successToast } = useToast()
+  const { t } = useTranslation()
 
   const iconmotion = {
     hover: {
@@ -225,7 +227,7 @@ const RightMenuLogIn = () => {
             <MenuProfile />
             <ButtonToggleIcon
               startIcon={<PlugIcon />}
-              text="Logout"
+              text={t("logout")}
               handleClick={async () => {
                 onClickLogout()
               }}

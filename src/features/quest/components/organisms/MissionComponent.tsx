@@ -8,6 +8,7 @@ import useProfileStore from "@stores/profileStore"
 import useQuestStore from "@stores/quest"
 import useClaimQuestById from "@feature/quest/containers/hook/useClaimQuestById"
 import { useToast } from "@feature/toast/containers"
+import { useTranslation } from "react-i18next"
 import MissionList from "./MissionList"
 import MissionDetails from "./MissionDetails"
 
@@ -36,6 +37,7 @@ const MissionComponent = ({ open }: IProp) => {
   } = useQuestStore()
   const { profile } = useProfileStore()
   const { warnToast } = useToast()
+  const { t } = useTranslation()
 
   const { dataAllQuest, refetchAllQuest } = useGetAllQuest(
     profile.data ? profile.data.id : ""
@@ -115,7 +117,7 @@ const MissionComponent = ({ open }: IProp) => {
           <div className="flex flex-1 flex-row items-center">
             <RocketIcon />
             <Typography className="pl-[15px] uppercase text-neutral-300">
-              mission to the mars
+              {t("mission")}
             </Typography>
           </div>
           <ButtonClose onClick={setClose} />

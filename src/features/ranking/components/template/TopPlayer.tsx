@@ -11,6 +11,7 @@ import SkeletonTopPlayer from "@components/atoms/skeleton/SkeletonTopPlayer"
 import Note from "@components/molecules/Note"
 import CardRank from "@components/organisms/CardRank"
 import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
+import { useTranslation } from "react-i18next"
 import CardBodyList from "../molecules/CardBodyList"
 
 export interface IPlayer {
@@ -36,6 +37,7 @@ const TopPlayer = ({
 }: IPlayer) => {
   const { topPlayerAllGame, isLoading } = useTopPlayer()
   const skeleton = 10
+  const { t } = useTranslation()
 
   const sumTopPlayerGameId =
     topPlayerGameId &&
@@ -54,7 +56,7 @@ const TopPlayer = ({
         <CardTitle
           width="534px"
           icon={<TrackChangesIcon className="mr-2" />}
-          title="Top NAKA Players"
+          title={t("top_naka_player")}
           subtitle={subtitle}
           background={background}
           elevation={elevation}
@@ -108,9 +110,8 @@ const TopPlayer = ({
       {note ? (
         <Note
           className="flex justify-center pt-6 uppercase xl:w-[550px] xl:justify-start"
-          textTitle=" System will distribute these rewards every Sunday 0:00 UTC and reset
-        Tier (Bronze, Silver, Gold, Platinum)"
-          subTitle=" Rank 1st - 10th from totals score."
+          textTitle={t("top_player_note_title")}
+          subTitle={t("top_player_note_subtitle")}
         />
       ) : (
         <></>

@@ -5,9 +5,12 @@ import P2PDexListMyOrderContent from "@feature/p2pDex/components/templates/P2PDe
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import { useTranslation } from "react-i18next"
 
 const P2PDexMyOrderList = () => {
   const router = useRouter()
+
+  const { t } = useTranslation()
 
   /**
    * @description Handle click button
@@ -19,7 +22,7 @@ const P2PDexMyOrderList = () => {
   return (
     <div className="p2p-dex-page">
       <PageHeader
-        title="CONNECT AND TRADE IN OUR P2P MARKETPLACE. NO INTERMEDIARY FEES."
+        title={t("connect_p2p")}
         button={
           <div className="">
             <ButtonToggleIcon

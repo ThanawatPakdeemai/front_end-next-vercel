@@ -36,6 +36,7 @@ import CONFIGS from "@configs/index"
 import OrionTrade from "@components/organisms/OrionTrade"
 import DeveloperPart from "@feature/home/components/template/DeveloperPart"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
+import { useTranslation } from "react-i18next"
 import OnPlayingStyle2 from "@feature/home/components/molecules/OnPlayingStyle2"
 
 const Home = () => {
@@ -44,6 +45,7 @@ const Home = () => {
   const { clearQuestStore, setOpen, hasCompleted } = useQuestStore()
   const { hydrated } = useGlobal()
   const [openSwap, setOpenSwap] = useState(false)
+  const { t } = useTranslation()
   /**
    * @description: Spark fire effect
    */
@@ -129,7 +131,7 @@ const Home = () => {
         <Tagline
           bgColor="bg-secondary-main"
           textColor="text-white-default"
-          text="SECURE. SUBLIME. SIMPLE. EARN $NAKA TODAY. "
+          text={t("main_tagline")}
           icon={<LogoIcon />}
         />
         {/* notification */}
@@ -162,7 +164,7 @@ const Home = () => {
                   classNameSecond="!bg-red-card"
                   imageClassNameSecond="scale-[1.35]"
                   iconBtn={<INakaSwap />}
-                  textBtn="NAKA Swap"
+                  textBtn={`${t("naka_swap")}`}
                   onClick={() => setOpenSwap(true)}
                   srcMain={IMAGES.frontNakaSwap.src}
                   altMain={IMAGES.frontNakaSwap.alt}
@@ -179,7 +181,7 @@ const Home = () => {
                   classNameSecond="!bg-warning-dark"
                   imageClassNameSecond="scale-[1.35]"
                   iconBtn={<IStacking />}
-                  textBtn="Staking"
+                  textBtn={`${t("Staking")}`}
                   href="/staking"
                   srcMain={IMAGES.frontStaking.src}
                   altMain={IMAGES.frontStaking.alt}
@@ -192,7 +194,7 @@ const Home = () => {
                   classNameSecond="bg-info-light"
                   imageClassNameSecond="scale-[1.35]"
                   iconBtn={<IReferrals />}
-                  textBtn="Referral"
+                  textBtn={`${t("referral")}`}
                   href="/referral"
                   srcMain={IMAGES.frontReferrals.src}
                   altMain={IMAGES.frontReferrals.alt}
@@ -273,7 +275,7 @@ const Home = () => {
             <CardLinkTemplate>
               <CardLink
                 classNameSecond="bg-warning-dark"
-                textBtn="Blog"
+                textBtn={`${t("Blog")}`}
                 href="/blog"
               />
             </CardLinkTemplate>
@@ -281,7 +283,7 @@ const Home = () => {
               <CardLink
                 classNameSecond="bg-secondary-light"
                 iconBtn={<ICoupon />}
-                textBtn="Coupon"
+                textBtn={`${t("Coupon")}`}
                 href="/coupon"
                 srcMain={IMAGES.frontCouponBand.src}
                 altMain={IMAGES.frontCouponBand.alt}

@@ -5,9 +5,11 @@ import React from "react"
 import { useRouter } from "next/router"
 import P2PDexListContent from "@feature/p2pDex/components/templates/P2PDexListContent"
 import ReorderIcon from "@mui/icons-material/Reorder"
+import { useTranslation } from "react-i18next"
 
 const P2PDexListPage = () => {
   const router = useRouter()
+  const { t } = useTranslation()
 
   /**
    * @description Handle click button
@@ -19,19 +21,19 @@ const P2PDexListPage = () => {
   return (
     <div className="p2p-dex-page">
       <PageHeader
-        title="CONNECT AND TRADE IN OUR P2P MARKETPLACE. NO INTERMEDIARY FEES."
+        title={t("connect_p2p")}
         button={
           <div className="">
             <ButtonToggleIcon
               startIcon={<AddIcon />}
-              text="Create Order"
+              text={t("create_order")}
               handleClick={onClickButton}
               className="mb-2 flex h-[40px] w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
               type="button"
             />
             <ButtonToggleIcon
               startIcon={<ReorderIcon />}
-              text="My Order"
+              text={t("my_order")}
               handleClick={() => router.push("/p2p-dex/my-order")}
               className="flex h-[40px] w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
               type="button"

@@ -7,6 +7,7 @@ import Helper from "@utils/helper"
 import TooltipsCustom from "@components/atoms/TooltipsCustom"
 import { motion } from "framer-motion"
 import { IPlayerInfoResponse } from "@src/types/profile"
+import { useTranslation } from "react-i18next"
 import RankIcon from "../atoms/RankIcon"
 import SliderGameStat from "./SliderGameStat"
 
@@ -21,6 +22,8 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
   const handleOnExpandClick = () => {
     setOpenBadges(!openBadges)
   }
+
+  const { t } = useTranslation()
 
   return (
     <div className="w-full">
@@ -56,8 +59,8 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
               </div>
               <div className="col-span-2 grid grid-cols-2 gap-2 md:gap-4">
                 <div>
-                  <Typography className="text-xs text-neutral-600">
-                    RANK
+                  <Typography className="text-xs uppercase text-neutral-600">
+                    {t("rank")}
                   </Typography>
                   <Chip
                     label={item.rank}
@@ -67,8 +70,8 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
                   />
                 </div>
                 <div>
-                  <Typography className="text-xs text-neutral-600">
-                    RANK SCORE
+                  <Typography className="text-xs uppercase text-neutral-600">
+                    {t("rank_score")}
                   </Typography>
                   <Chip
                     label={Helper.formatNumber(item.rankScore)}
@@ -78,8 +81,8 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
                   />
                 </div>
                 <div>
-                  <Typography className="text-xs text-neutral-600">
-                    PLAYED
+                  <Typography className="text-xs uppercase text-neutral-600">
+                    {t("played")}
                   </Typography>
                   <Chip
                     label={Helper.formatNumber(item.played)}
@@ -89,8 +92,8 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
                   />
                 </div>
                 <div>
-                  <Typography className="text-xs text-neutral-600">
-                    WINRATE
+                  <Typography className="text-xs uppercase text-neutral-600">
+                    {t("winrate")}
                   </Typography>
                   <Chip
                     label={item.winrate}

@@ -2,6 +2,7 @@ import React from "react"
 import { Box, ModalUnstyledOwnProps, Modal, Typography } from "@mui/material"
 import CircleNakaIcon from "@components/icons/CircleNakaIcon"
 import ButtonClose from "@components/atoms/button/ButtonClose"
+import { Trans } from "next-i18next"
 
 interface IProps extends ModalUnstyledOwnProps {
   bgcolor?: string
@@ -38,7 +39,7 @@ export const ModalCustom = ({ title, onClose, ...props }: IProps) => {
             <div className="flex flex-1 flex-row items-center">
               <CircleNakaIcon />
               <Typography className="pl-[15px] uppercase text-neutral-300">
-                {title}
+                <Trans i18nKey={title} />
               </Typography>
             </div>
             <ButtonClose onClick={onClose || (() => {})} />

@@ -8,19 +8,19 @@ const SkeletonRoombarItem = () => (
   >
     <Skeleton
       variant="rounded"
-      className="h-[24px] w-full rounded-[6px]"
+      className="h-[24px] w-full rounded-[6px] bg-[rgba(0,0,0,0.5)]"
     />
     <Skeleton
       variant="rounded"
-      className="h-[24px] w-full rounded-[6px]"
+      className="h-[24px] w-full rounded-[6px] bg-[rgba(0,0,0,0.5)]"
     />
     <Skeleton
       variant="rounded"
-      className="h-[24px] w-full rounded-[6px]"
+      className="h-[24px] w-full rounded-[6px] bg-[rgba(0,0,0,0.5)]"
     />
     <Skeleton
       variant="rounded"
-      className="h-[24px] w-full rounded-[6px]"
+      className="h-[24px] w-full rounded-[6px] bg-[rgba(0,0,0,0.5)]"
     />
   </Box>
 )

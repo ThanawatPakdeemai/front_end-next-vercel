@@ -88,8 +88,8 @@ const Footer = () => {
         className="my-8 md:my-16"
         sx={{ marginTop: 10, marginBottom: 10 }}
       />
-      <div className="mx-4 w-full justify-between overflow-hidden text-[12px] lg:flex">
-        <div className="grid grid-cols-2 justify-center gap-3 whitespace-nowrap p-5 md:flex md:gap-0">
+      <div className="w-full justify-between overflow-hidden text-[12px] md:mx-4 lg:flex">
+        <div className="grid grid-cols-2 justify-center gap-3 whitespace-nowrap p-5 md:flex md:gap-0 md:p-10">
           <div className="flex-auto sm:flex-none md:w-48">
             <div className="mb-4 uppercase text-white-primary">{t("game")}</div>
             {NAKA_GAME?.map((item) => (

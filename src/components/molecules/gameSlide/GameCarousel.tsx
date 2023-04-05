@@ -10,6 +10,7 @@ import { IRoomAvaliableData } from "@feature/home/interfaces/IHomeService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
+import { Box } from "@mui/material"
 
 interface IProps {
   menu: IHeaderSlide
@@ -107,7 +108,23 @@ const GameCarousel = ({
         setCurType={setCurType}
         onPlaying
       />
-      <div className="overflow-hidden">
+      <Box
+        className="game-carousel-slide overflow-hidden"
+        sx={
+          list.length <= 6
+            ? {
+                "&.game-carousel-slide": {
+                  ".slick-track": {
+                    marginLeft: "0"
+                  },
+                  ".slick-slide.slick-cloned": {
+                    display: "none"
+                  }
+                }
+              }
+            : {}
+        }
+      >
         <Slider
           ref={sliderRef}
           {...settings}
@@ -124,12 +141,15 @@ const GameCarousel = ({
                 cooldown={cooldown}
                 setCooldown={setCooldown}
                 staminaRecovery={staminaRecovery}
-                href={`/${getTypeGamePathFolder(item)}/${
-                  item.path
-                }${isRedirectRoomlist(item).toString()}`}
+                href={`/${
+                  item.is_NFT ? "arcade-emporium" : getTypeGamePathFolder(item)
+                }/${item.path}${isRedirectRoomlist(item).toString()}`}
                 onPlaying={onPlaying}
                 onHandleClick={() => {
-                  onHandleSetGameStore(curType, item)
+                  onHandleSetGameStore(
+                    item.is_NFT ? "arcade-emporium" : curType,
+                    item
+                  )
                   if (onPlaying && item?.play_to_earn_status !== "free") {
                     const itemSelect = gameItemList?.find(
                       (ele) => ele.item_size === item.item_size
@@ -137,11 +157,13 @@ const GameCarousel = ({
                     if (itemSelect) onSetGameItemSelectd(itemSelect)
                   }
                 }}
-                gameType={getTypeGamePathFolder(item)}
+                gameType={
+                  item.is_NFT ? "arcade-emporium" : getTypeGamePathFolder(item)
+                }
               />
             ))}
         </Slider>
-      </div>
+      </Box>
     </div>
   )
 }

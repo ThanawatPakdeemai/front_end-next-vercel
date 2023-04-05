@@ -27,16 +27,17 @@ const useGetGameByPath = (_gamePath: string) => {
    * @returns
    */
   const getCurrentGameData = () => {
-    if (!gameDataByPath || !gameDataByPath.data.length) return undefined
     if (gameDataByPath && gameDataByPath.data.length > 0) {
       // When API reture more than 2 values
       const _foundedGame = gameDataByPath.data.find(
         (item: IGame) => getTypeGamePathFolder(item) === typeGame
       )
-      return _foundedGame
+      if (_foundedGame) {
+        return _foundedGame
+      }
+      // When API reture only 1 value
+      return (gameDataByPath && gameDataByPath.data[0]) || undefined
     }
-    // When API reture only 1 value
-    return gameDataByPath.data[0] || undefined
   }
 
   return {

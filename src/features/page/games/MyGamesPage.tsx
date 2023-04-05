@@ -95,7 +95,9 @@ const MyGamesPage = () => {
                 onHandleClick={() =>
                   onHandleSetGameStore(getTypeGamePathFolder(game), game)
                 }
-                gameType={getTypeGamePathFolder(game)}
+                gameType={
+                  game.is_NFT ? "arcade-emporium" : getTypeGamePathFolder(game)
+                }
                 play_total_count={game?.play_total_count}
               />
             ))

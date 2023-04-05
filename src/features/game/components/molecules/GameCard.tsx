@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { IHeaderSlide } from "@components/molecules/gameSlide/GameCarouselHeader"
 import NumberRank from "@feature/ranking/components/atoms/NumberRank"
@@ -176,6 +175,9 @@ const GameCard = ({
     }
   }
 
+  // eslint-disable-next-line no-console
+  console.log("test-gameTypeSplit", gameTypeSplit)
+
   const renderCardContent = () => (
     <motion.div
       className="slick-card-container flex h-full flex-col justify-center blur-none"
@@ -236,7 +238,7 @@ const GameCard = ({
           "game_free_play" in (data as IRoomAvaliableData) ? (
             // Display for Gameroom only
             <Chip
-              label={chipLable}
+              label={`${chipLable}`}
               size="small"
               color={onChipColor(theme)}
               className="w-full font-bold md:w-auto"
@@ -244,7 +246,7 @@ const GameCard = ({
           ) : (
             // Display for a;; game page list
             <Chip
-              label={gameTypeSplit}
+              label={`${gameTypeSplit}`}
               size="small"
               className={`w-full font-bold md:w-auto ${getColorChipByGameType(
                 gameType

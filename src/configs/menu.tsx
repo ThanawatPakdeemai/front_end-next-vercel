@@ -8,10 +8,8 @@ import InventoryIcon from "@components/icons/MenunIcon/InventoryIcon"
 import ItemRewardIcon from "@components/icons/MenunIcon/ItemRewardIcon"
 import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
 import IconDollar from "@components/icons/dollarIcon"
-import StoryBoardIcon from "@components/icons/StoryBoardIcon"
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
 import MoneyOffIcon from "@mui/icons-material/MoneyOff"
-import Diamond from "@components/icons/Diamond"
 import GamesIcon from "@mui/icons-material/Games"
 import { IMAGES } from "@constants/images"
 import AboutUsIcon from "@components/icons/BlogIcon/AboutUsIcon"
@@ -200,23 +198,23 @@ export const MENU = [
 
 export const MENU_GUEST: IMenu[] = [
   {
-    id: "games",
-    label: "Play To Earn Mode",
+    id: "play-to-earn-games",
+    label: "Play To Earn Games",
     icon: <IconDollar.Ori className="stroke-neutral-300" />,
     href: "/play-to-earn-games",
     external: false
   },
   {
-    id: "free-to-earn",
-    label: "Free To Earn",
+    id: "free-to-play-games",
+    label: "Free To Play Games",
     icon: <IconDollar.Mask className="stroke-neutral-300" />,
     href: "/free-to-play-games",
     external: false
   },
   {
-    id: "free-to-play-games",
-    label: "Story Mode",
-    icon: <StoryBoardIcon className="stroke-neutral-300" />,
+    id: "story-mode-games",
+    label: "Story Mode Games",
+    icon: <StoryModeIcon stroke="#E1E2E2" />,
     href: "/story-mode-games",
     external: false
   },
@@ -238,7 +236,7 @@ export const MENU_GUEST: IMenu[] = [
   {
     id: "arcade-emporium",
     label: "Arcade Emporium",
-    icon: <Diamond stroke="#E1E2E2" />,
+    icon: <GamesIcon stroke="#E1E2E2" />,
     href: "/arcade-emporium",
     external: false
   }

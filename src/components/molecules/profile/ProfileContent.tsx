@@ -192,6 +192,7 @@ const ProfileContent = () => {
       <div className="relative">
         <Tagline
           className="!my-2 mt-4 mb-4"
+          show={false}
           text={t("simple_tagline")}
           bgColor={platinumCount === 0 ? `bg-neutral-800` : `bg-error-main`}
           icon={

@@ -17,6 +17,7 @@ const MarketplaceLayoutWithFilter = ({
       bgColor="bg-neutral-800"
       textColor="text-neutral-500 font-bold"
       text="Join the NFT revolution and become a part of the future of ownership. "
+      show={false}
     />
     <div className="flex flex-col gap-3 md:flex-row">
       {/* add filter component here */}

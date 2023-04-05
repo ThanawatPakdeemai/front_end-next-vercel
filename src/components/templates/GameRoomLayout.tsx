@@ -42,6 +42,7 @@ const GameRoomLayout = ({
               textColor="text-neutral-500 font-bold"
               text="Don't miss the information analysis about this game"
               icon={<ShineIcon />}
+              show={false}
             />
             <div className="flex flex-wrap gap-3 xl:flex-row xl:flex-nowrap">
               {/* <LikeNoLobby

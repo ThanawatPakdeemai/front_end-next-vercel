@@ -133,6 +133,7 @@ const Home = () => {
           textColor="text-white-default"
           text={t("main_tagline")}
           icon={<LogoIcon />}
+          show={false}
         />
         {/* notification */}
         {profile && profile.data && (
@@ -260,6 +261,7 @@ const Home = () => {
         textColor="text-neutral-800 font-bold"
         text="SWITCH TO GOD MODE AND UNLEASH YOUR TRUE GAMING POTENTIAL"
         icon={<ShapeIcon />}
+        show={false}
       />
 
       <BodyCategories />

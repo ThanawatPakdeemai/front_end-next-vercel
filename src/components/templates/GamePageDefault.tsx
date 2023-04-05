@@ -118,6 +118,7 @@ const GamePageDefault = ({
               textColor="text-neutral-500 font-bold"
               text={t("game_page_tagline_desc")}
               icon={<ShineIcon />}
+              show={false}
             />
             <div className="flex flex-wrap gap-3 xl:flex-row xl:flex-nowrap">
               {/* <LikeNoLobby

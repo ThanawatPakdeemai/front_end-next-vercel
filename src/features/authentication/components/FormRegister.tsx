@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { memo } from "react"
 import {
   Box,
@@ -13,7 +14,6 @@ import {
   Checkbox,
   IconButton
 } from "@mui/material"
-import _ from "lodash"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import { motion } from "framer-motion"
@@ -28,7 +28,7 @@ import ButtonLink from "@components/atoms/button/ButtonLink"
 import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import GoogleIcon from "@components/icons/SocialIcon/GoogleIcon"
-import MetaMarkIcon from "@components/icons/SocialIcon/Metamask"
+// import MetaMarkIcon from "@components/icons/SocialIcon/Metamask"
 import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlineBlankOutlined"
 import ICheckMark from "@components/icons/CheckMark"
 import FacebookLogin from "react-facebook-login"
@@ -52,7 +52,7 @@ const FormRegister = () => {
     facebookLogin,
     twitterLogin,
     googleRegister,
-    metaMarkLogin,
+    // metaMarkLogin,
     passwordCorrect,
     errors,
     watch,
@@ -69,6 +69,19 @@ const FormRegister = () => {
     getClickRegisterFacebook: toggleFacebookRegister,
     setClickRegisterFacebook: setToggleFacebookRegister
   } = useRegisterAvatarStore()
+
+  const checkSizeFormRegister = () => {
+    if (
+      errors.email === undefined ||
+      errors.password === undefined ||
+      errors.confirmPassword === undefined ||
+      errors.code === undefined
+    ) {
+      onSubmitRegisterForm(true)
+    } else {
+      onSubmitRegisterForm(false)
+    }
+  }
 
   return (
     <>
@@ -517,7 +530,7 @@ const FormRegister = () => {
                 item
               >
                 <ButtonToggleIcon
-                  handleClick={() => onSubmitRegisterForm(true)}
+                  handleClick={checkSizeFormRegister}
                   type="submit"
                   startIcon={<IEdit />}
                   text="Register"
@@ -542,6 +555,7 @@ const FormRegister = () => {
             <Grid
               item
               container
+              justifyContent="center"
             >
               <div className="flex flex-wrap">
                 <ButtonIcon
@@ -593,7 +607,7 @@ const FormRegister = () => {
                   icon={<GoogleIcon />}
                   className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                 />
-                <ButtonIcon
+                {/* <ButtonIcon
                   whileHover="hover"
                   transition={{
                     type: "spring",
@@ -603,7 +617,7 @@ const FormRegister = () => {
                   onClick={metaMarkLogin}
                   icon={<MetaMarkIcon />}
                   className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                />
+                /> */}
               </div>
             </Grid>
           </Grid>

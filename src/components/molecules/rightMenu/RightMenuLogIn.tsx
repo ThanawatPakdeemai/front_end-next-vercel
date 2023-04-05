@@ -199,7 +199,7 @@ const RightMenuLogIn = () => {
               backgroundColor: "#010101D9",
               maxWidth: 277,
               width: 277,
-              zIndex: 99999
+              zIndex: 9998
             }}
           >
             <>

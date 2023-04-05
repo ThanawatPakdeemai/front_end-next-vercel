@@ -88,9 +88,13 @@ const useGamePageListController = (gameType?: IGetType) => {
         category: categoryId || categoryDropdown,
         item: gameItemDropdown,
         device: deviceDropdown,
-        game_type: getGameTypeFilter(),
+        game_type:
+          getGameTypeFilter() === "arcade-emporium"
+            ? "all"
+            : getGameTypeFilter(),
         tournament: false,
-        nftgame: getGameTypeByPathname() === "arcade-emporium" ? true : "all"
+        // nftgame: getGameTypeByPathname() === "arcade-emporium" ? true : "all"
+        nftgame: getGameTypeFilter() === "arcade-emporium" ? true : "all"
       }
       mutateGetGamesByCategoryId(filterData).then((res) => {
         if (res) {

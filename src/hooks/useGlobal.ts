@@ -208,23 +208,23 @@ const useGlobal = (
    */
   const getTypeGamePathFolder = (_gameData: IGame): IGetType => {
     if (
-      (_gameData.game_type === "singleplayer" ||
-        _gameData.game_type === "multiplayer") &&
-      _gameData.play_to_earn_status === "in_progress"
+      (_gameData?.game_type === "singleplayer" ||
+        _gameData?.game_type === "multiplayer") &&
+      _gameData?.play_to_earn_status === "in_progress"
     ) {
       return "play-to-earn-games"
     }
     if (
-      (_gameData.game_type === "singleplayer" ||
-        _gameData.game_type === "multiplayer") &&
-      _gameData.play_to_earn_status === "free"
+      (_gameData?.game_type === "singleplayer" ||
+        _gameData?.game_type === "multiplayer") &&
+      _gameData?.play_to_earn_status === "free"
     ) {
       return "free-to-play-games"
     }
     if (_gameData.game_type === "storymode") {
       return "story-mode-games"
     }
-    if (_gameData.is_NFT) {
+    if (_gameData?.is_NFT) {
       return "arcade-emporium"
     }
     return "all"

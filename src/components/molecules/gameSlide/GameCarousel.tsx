@@ -39,11 +39,11 @@ const GameCarousel = ({
   checkTimer = false,
   curType,
   setCurType,
-  showSlideCurrent,
   onPlaying = false
 }: IProps) => {
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
-  const showSlide = showSlideCurrent ?? 6
+
+  const showSlide = list.length < 5 ? list.length : 6
   const settings: Settings = {
     dots: false,
     infinite: true,
@@ -109,7 +109,9 @@ const GameCarousel = ({
         onPlaying
       />
       <Box
-        className="game-carousel-slide overflow-hidden"
+        className={`game-carousel-slide overflow-hidden ${
+          list.length < 5 && "slick-slider-w-auto"
+        }`}
         sx={
           list.length <= 6
             ? {

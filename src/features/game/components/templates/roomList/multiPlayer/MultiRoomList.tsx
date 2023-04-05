@@ -236,6 +236,7 @@ const MultiRoomList = () => {
             <OverviewContent
               gameId={data.id}
               gameType={getTypeGamePathFolder(data)}
+              gameIdNFT={data.NFT_Owner}
             />
             {data?.play_to_earn_status !== "free" && !data.tournament && (
               <CardBuyItem gameObject={data} />

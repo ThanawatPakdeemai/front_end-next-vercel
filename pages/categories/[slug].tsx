@@ -60,7 +60,7 @@ export default function CatogoriesPageDetails() {
 
   return (
     <div className="flex w-full flex-col">
-      <div className="mx-2 mb-6 mt-6 grid w-full grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:mt-0 md:grid-cols-5">
+      <div className="mx-2 mb-6 mt-6 grid w-full grid-cols-2 gap-x-2 gap-y-4 md:mx-0 md:mt-0 md:grid-cols-5">
         {loadingFilterGame
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
           : null}

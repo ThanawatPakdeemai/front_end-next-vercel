@@ -129,7 +129,7 @@ const GameCard = ({
           <NumberRank
             index={no - 1}
             fixColor={false}
-            className="slick-card-number absolute top-2 right-1 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
+            className="slick-card-number absolute right-1 top-2 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
           />
         ) : null}
         <Image

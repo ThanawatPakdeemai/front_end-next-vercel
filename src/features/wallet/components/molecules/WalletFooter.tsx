@@ -18,7 +18,7 @@ const WalletFooter = ({ address }: IWalletFooterProps) => {
         </p>
       </div>
       <div className="col-span-5 flex  h-[35px] content-center items-center justify-between rounded-[6px] bg-black-100 px-0.5 py-2 ">
-        <div className=" border-1 mr-1 rounded-[5px] bg-neutral-800 py-2 px-0.5 ">
+        <div className=" border-1 mr-1 rounded-[5px] bg-neutral-800 px-0.5 py-2 ">
           <ILogoMaster
             width="25"
             height="12"

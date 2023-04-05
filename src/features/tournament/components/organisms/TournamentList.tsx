@@ -79,7 +79,7 @@ const TournamentList = () => {
 
   return (
     <>
-      <div className="pt-16 pb-14">
+      <div className="pb-14 pt-16">
         <div className="h-[10px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')]" />
       </div>
       <Box className="mx-auto flex items-center justify-between py-4">
@@ -113,7 +113,7 @@ const TournamentList = () => {
             <TableHead>
               <TableRow>
                 <TableCell
-                  className="w-32 border-b-0  pt-0 pb-1 pl-4 text-left font-neue-machina-bold text-xs uppercase"
+                  className="w-32 border-b-0  pb-1 pl-4 pt-0 text-left font-neue-machina-bold text-xs uppercase"
                   // onClick={() => handleSort("amount")}
                 >
                   <div className="flex">
@@ -141,7 +141,7 @@ const TournamentList = () => {
                   </div>
                 </TableCell>
                 <TableCell
-                  className="w-64 border-b-0 pt-0 pb-1 text-end font-neue-machina-bold text-xs uppercase"
+                  className="w-64 border-b-0 pb-1 pt-0 text-end font-neue-machina-bold text-xs uppercase"
                   // onClick={() => handleSort("date")}
                 >
                   <div className="flex justify-items-start">
@@ -169,7 +169,7 @@ const TournamentList = () => {
                   </div>
                 </TableCell>
                 <TableCell
-                  className="w-[25.25rem] border-b-0 pt-0 pb-1 text-start font-neue-machina-bold text-xs uppercase"
+                  className="w-[25.25rem] border-b-0 pb-1 pt-0 text-start font-neue-machina-bold text-xs uppercase"
                   // onClick={() => handleSort("username")}
                 >
                   <div className="flex">
@@ -197,7 +197,7 @@ const TournamentList = () => {
                   </div>
                 </TableCell>
                 <TableCell
-                  className="border-b-0 pt-0 pb-1 text-start font-neue-machina-bold text-xs uppercase"
+                  className="border-b-0 pb-1 pt-0 text-start font-neue-machina-bold text-xs uppercase"
                   // onClick={() => handleSort("username")}
                 >
                   <div className="flex">

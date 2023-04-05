@@ -48,7 +48,7 @@ const TournamentRegister = () => {
             <div className="rounded-[10px] border-2   border-neutral-600 bg-neutral-800 px-2 py-[4px]">
               <CloseOutlinedIcon className="text-sm" />
             </div>
-            <div className="ml-4 mb-2 rounded-[9px]  border-2   border-neutral-700 bg-neutral-900 px-2  py-[4px] text-neutral-400">
+            <div className="mb-2 ml-4 rounded-[9px]  border-2   border-neutral-700 bg-neutral-900 px-2  py-[4px] text-neutral-400">
               <p className="uppercase ">Need 20 Tickets</p>
             </div>
           </div>
@@ -56,7 +56,7 @@ const TournamentRegister = () => {
             <div className="rounded-[10px] border-2   border-neutral-600 bg-neutral-800 px-2 py-[4px]">
               <CloseOutlinedIcon className="text-sm" />
             </div>
-            <div className="ml-4 mb-2 rounded-[9px]  border-2   border-neutral-700 bg-neutral-900 px-2  py-[4px] text-neutral-400">
+            <div className="mb-2 ml-4 rounded-[9px]  border-2   border-neutral-700 bg-neutral-900 px-2  py-[4px] text-neutral-400">
               <p className="uppercase ">
                 5 transaction at any games in our system
               </p>
@@ -66,7 +66,7 @@ const TournamentRegister = () => {
             <div className="rounded-[10px] border-2   border-green-lemon bg-neutral-800 px-2 py-[4px] ">
               <CheckOutlinedIcon className="text-sm text-green-lemon" />
             </div>
-            <div className="ml-4 mb-2 rounded-[9px]  border-2   border-neutral-700 bg-green-lemon px-2  py-[4px] text-black-100">
+            <div className="mb-2 ml-4 rounded-[9px]  border-2   border-neutral-700 bg-green-lemon px-2  py-[4px] text-black-100">
               <p className="uppercase ">Separate group by time zone</p>
             </div>
           </div>
@@ -74,7 +74,7 @@ const TournamentRegister = () => {
             <div className="rounded-[10px] border-2   border-neutral-600 bg-neutral-800 px-2 py-[4px]">
               <CloseOutlinedIcon className="text-sm" />
             </div>
-            <div className="ml-4 mb-2 rounded-[9px]  border-2   border-neutral-700 bg-neutral-900 px-2  py-[4px] text-neutral-400">
+            <div className="mb-2 ml-4 rounded-[9px]  border-2   border-neutral-700 bg-neutral-900 px-2  py-[4px] text-neutral-400">
               <p className="uppercase ">Each zone can see only their rooms</p>
             </div>
           </div>

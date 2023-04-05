@@ -101,7 +101,7 @@ const FormRegister = () => {
                   <ButtonClose onClick={() => {}} />
                 </Link>
               </Box>
-              <Divider className="mx-0 mt-5 mb-8" />
+              <Divider className="mx-0 mb-8 mt-5" />
               {formSubmitErrors && (
                 <motion.div
                   animate={{
@@ -530,7 +530,7 @@ const FormRegister = () => {
               container
               justifyContent="space-between"
               alignItems="center"
-              className="mt-8 mb-8"
+              className="mb-8 mt-8"
             >
               <Grid item>
                 <p className="text-xs uppercase">OR join us with</p>

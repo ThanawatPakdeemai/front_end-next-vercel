@@ -7,7 +7,7 @@ import React from "react"
 const MarketplaceOwnerDetail = () => {
   const { ownerDetail, marketType } = useMarketOwnerDetail()
   return ownerDetail ? (
-    <div className="mt-5 flex w-full flex-col gap-y-[60px] gap-x-[120px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:py-0 sm:px-0">
+    <div className="mt-5 flex w-full flex-col gap-x-[120px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0">
       <CardContentDetails
         detail={ownerDetail.details}
         image={ownerDetail.NFT_image}

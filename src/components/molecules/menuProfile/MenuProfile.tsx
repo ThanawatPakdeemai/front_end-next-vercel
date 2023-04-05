@@ -13,7 +13,7 @@ const MenuProfile = () => {
   const menuProfile = isMarketplace ? MENU_MARKETPLACE_INVENTORY : MENU_LOGGEDIN
 
   return (
-    <MenuList className="custom-scroll mx-[6px] mt-[14px] mb-[6px] h-[250px] overflow-y-auto rounded-[13px] bg-neutral-700 p-[6px] 3xl:h-auto">
+    <MenuList className="custom-scroll mx-[6px] mb-[6px] mt-[14px] h-[250px] overflow-y-auto rounded-[13px] bg-neutral-700 p-[6px] 3xl:h-auto">
       {menuProfile.map((ele) => (
         <MenuLoggedin
           ele={ele}

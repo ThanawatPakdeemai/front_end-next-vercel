@@ -85,7 +85,7 @@ const RightMenuLogIn = () => {
           >
             <Card
               className={`${
-                expanded ? "rounded-t-[13px] rounded-b-none" : "rounded-[13px]"
+                expanded ? "rounded-b-none rounded-t-[13px]" : "rounded-[13px]"
               } relative m-auto flex items-center justify-center`}
               sx={{
                 maxWidth: 277,

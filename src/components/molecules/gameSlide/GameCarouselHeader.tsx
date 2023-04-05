@@ -104,7 +104,7 @@ const GameCarouselHeader = ({
       {menu && (
         <motion.div
           key={`sticker_${menu.title}`}
-          className="absolute top-[-80px] left-[-80px] hidden lg:block"
+          className="absolute left-[-80px] top-[-80px] hidden lg:block"
           initial={{ rotateZ: menu.stickerRotate }}
           animate={animateControls}
           whileHover={{ rotateZ: 0 }}

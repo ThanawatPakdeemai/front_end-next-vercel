@@ -34,7 +34,7 @@ const PleaseCheckWallet = ({ size }: IPleaseCheckWalletProps) => {
         <li className="relative">
           <div className="flex items-center">
             <span>3. Import token to Matamask </span>
-            <span className="mx-2 inline-block rounded-sm bg-neutral-700 px-2 pt-2 pb-1">
+            <span className="mx-2 inline-block rounded-sm bg-neutral-700 px-2 pb-1 pt-2">
               {Helper.shortenString(CONFIGS.CONTRACT_ADDRESS.ERC20 as string)}
             </span>
             <ButtonIcon
@@ -46,7 +46,7 @@ const PleaseCheckWallet = ({ size }: IPleaseCheckWalletProps) => {
               icon={<ContentCopyRoundedIcon />}
             />
           </div>
-          <div className="mt-[-10px] mb-2">
+          <div className="mb-2 mt-[-10px]">
             or click{" "}
             <button
               type="button"

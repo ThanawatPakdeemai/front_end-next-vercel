@@ -45,7 +45,7 @@ const BlogCard = ({
           <ButtonIcon
             variants={iconmotion}
             icon={<FireIcon />}
-            className="z-4 absolute top-0 right-0 m-4 flex items-center justify-center rounded-lg bg-neutral-900 p-1"
+            className="z-4 absolute right-0 top-0 m-4 flex items-center justify-center rounded-lg bg-neutral-900 p-1"
           />
           <motion.div variants={imgMotion}>
             <CardMedia
@@ -65,7 +65,7 @@ const BlogCard = ({
       <Typography className="mt-4 min-h-[65px] text-sm">
         {description}
       </Typography>
-      <motion.div className="mt-[20px] flex justify-center gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 py-[10px] px-[30px]">
+      <motion.div className="mt-[20px] flex justify-center gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 px-[30px] py-[10px]">
         {/* {blog_id} */}
         <Typography className="self-center text-sm">
           {dayjs(date_released).format("DD MMM YYYY")}

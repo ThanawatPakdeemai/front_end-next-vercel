@@ -18,7 +18,7 @@ const GameItemsBody = ({ gameItems }: IProps) => (
     className="mb-4 flex gap-10"
   >
     {gameItems && gameItems.length > 0 ? (
-      <MenuList className="mx-[6px] mt-[6px] mb-[6px] rounded-[13px] bg-neutral-700 px-[6px] py-[3px]">
+      <MenuList className="mx-[6px] mb-[6px] mt-[6px] rounded-[13px] bg-neutral-700 px-[6px] py-[3px]">
         {typeof gameItems !== "string" &&
           gameItems.map((item, index: number) => (
             <Box

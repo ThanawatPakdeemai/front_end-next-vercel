@@ -17,7 +17,7 @@ const FieldItem = ({
   statusError
 }: IInputCustom) => (
   <div className="form-control mb-4">
-    <Divider className="mx-0 mt-5 mb-8" />
+    <Divider className="mx-0 mb-8 mt-5" />
     {formSubmitErrors && (
       <motion.div
         animate={{

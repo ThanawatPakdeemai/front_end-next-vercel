@@ -39,7 +39,7 @@ const SwitchChain = ({
               className="switch-chain--subtitle text-center"
             >
               You are in the
-              <span className="mx-2 inline-block rounded-sm bg-neutral-700 px-2 pt-2 pb-1">
+              <span className="mx-2 inline-block rounded-sm bg-neutral-700 px-2 pb-1 pt-2">
                 {name ?? chainName}
               </span>
               network, please switch network
@@ -63,7 +63,7 @@ const SwitchChain = ({
                 className="switch-chain--subtitle text-center"
               >
                 You are in the
-                <span className="mx-2 inline-block rounded-sm bg-neutral-700 px-2 pt-2 pb-1">
+                <span className="mx-2 inline-block rounded-sm bg-neutral-700 px-2 pb-1 pt-2">
                   {chainName}
                 </span>
               </Typography>

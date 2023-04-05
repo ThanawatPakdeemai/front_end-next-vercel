@@ -38,7 +38,7 @@ const SkeletionWallet = () => (
         height={20}
         className="w-[100px] rounded-2xl"
       />
-      <div className="absolute top-2 right-2">
+      <div className="absolute right-2 top-2">
         <KeyFramesRotate>
           <IStickerSolid
             width="70"

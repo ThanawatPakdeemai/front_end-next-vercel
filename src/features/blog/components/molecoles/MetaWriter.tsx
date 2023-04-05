@@ -15,7 +15,7 @@ const MetaWriter = ({ writerName, writerTitle = "WRITER" }: IMetaWriter) => {
           {t(`${writerTitle}`)}
         </div>
       )}
-      <div className="writer-wrapper--text px-6 pt-4 pb-2">
+      <div className="writer-wrapper--text px-6 pb-2 pt-4">
         <div className="text-default text-neutral-500">{writerName}</div>
       </div>
     </div>

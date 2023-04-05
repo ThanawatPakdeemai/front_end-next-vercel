@@ -166,7 +166,7 @@ const FormBuyItem = () => {
                         setValue("qty", qty)
                       }
                     }}
-                    className="hidden-input-number h-full w-full bg-neutral-700 pt-2 pl-8 text-center text-neutral-500 focus-visible:bg-neutral-700 focus-visible:outline-0 md:w-[220px]"
+                    className="hidden-input-number h-full w-full bg-neutral-700 pl-8 pt-2 text-center text-neutral-500 focus-visible:bg-neutral-700 focus-visible:outline-0 md:w-[220px]"
                     value={watch("qty")}
                   />
                 </div>

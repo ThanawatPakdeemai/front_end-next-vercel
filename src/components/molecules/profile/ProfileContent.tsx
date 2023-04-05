@@ -168,7 +168,7 @@ const ProfileContent = () => {
           profile.data &&
           profile.data.id === (player_id as string) && (
             <>
-              <div className="absolute top-0 right-0 m-1 sm:m-4">
+              <div className="absolute right-0 top-0 m-1 sm:m-4">
                 <ButtonToggleIcon
                   handleClick={handleOnExpandClick}
                   startIcon={<SettingIcon />}
@@ -191,7 +191,7 @@ const ProfileContent = () => {
       </div>
       <div className="relative">
         <Tagline
-          className="!my-2 mt-4 mb-4"
+          className="!my-2 mb-4 mt-4"
           text={t("simple_tagline")}
           bgColor={platinumCount === 0 ? `bg-neutral-800` : `bg-error-main`}
           icon={
@@ -204,7 +204,7 @@ const ProfileContent = () => {
         <div className="flex w-full justify-center">
           <div className="absolute bottom-[-50px] z-10 h-[110px] w-[110px] rounded-3xl border-8 border-neutral-900 bg-neutral-700 sm:h-[150px] sm:w-[150px]">
             <div
-              className="absolute top-[-20px] right-[28px]
+              className="absolute right-[28px] top-[-20px]
    z-20"
             >
               <div className="relative">

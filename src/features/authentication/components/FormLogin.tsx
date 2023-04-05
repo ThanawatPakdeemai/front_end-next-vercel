@@ -347,7 +347,7 @@ const FormLogin = ({ href }: IProp) => {
         container
         justifyContent="space-between"
         alignItems="center"
-        className="!mt-0 !mb-0"
+        className="!mb-0 !mt-0"
       >
         <Grid item>
           <p className="text-xs uppercase">OR join us with</p>

@@ -12,6 +12,7 @@ import TimerStamina from "@components/atoms/timer/TimerStamina"
 import {
   IGame,
   IGameFav,
+  IGameRoomAvailable,
   IGetType
 } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
@@ -25,6 +26,7 @@ import useProfileStore from "@stores/profileStore"
 import useGlobal from "@hooks/useGlobal"
 import { TColor } from "@components/molecules/gameSlide/GameCarousel"
 import CountOnPlaying from "@components/atoms/CountOnPlaying"
+import { useRouter } from "next/router"
 
 interface IProps {
   gameType: IGetType
@@ -42,6 +44,7 @@ interface IProps {
   onHandleClick?: () => void
   onPlaying?: boolean
   play_total_count?: number
+  room_available?: IGameRoomAvailable[]
 }
 
 const GameCard = ({
@@ -59,8 +62,10 @@ const GameCard = ({
   setCooldown,
   onHandleClick,
   onPlaying = false,
-  play_total_count
+  play_total_count,
+  room_available
 }: IProps) => {
+  const router = useRouter()
   const [imageSrc, setImageSrc] = useState<string>(IMAGES.no_image.src)
   const [chipLable, setChipLable] = useState<string>("")
   const [theme, setTheme] = useState<string>("")
@@ -187,12 +192,12 @@ const GameCard = ({
         if (onHandleClick) onHandleClick()
       }}
     >
-      <motion.div className="relative flex h-full w-full items-center justify-center overflow-hidden px-1 xl:h-[218px]">
+      <motion.div className="relative m-auto flex max-h-[218px] max-w-[218px] items-center justify-center overflow-hidden px-1">
         {showNo && no && (
           <NumberRank
             index={no - 1}
             fixColor={false}
-            className="slick-card-number absolute top-2 right-1 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
+            className="slick-card-number absolute right-1 top-2 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
           />
         )}
         <Image
@@ -220,7 +225,7 @@ const GameCard = ({
           />
         </motion.div>
       </motion.div>
-      <div className="relative z-[3]">
+      <div className="relative z-[3] min-h-[110px]">
         <div className="slick-card-desc flex h-10 w-[95%] items-center justify-between">
           <p className="relative truncate uppercase hover:text-clip">
             {(data as IGame)
@@ -324,11 +329,24 @@ const GameCard = ({
             )}
           </div>
         )}
-        {play_total_count && <CountOnPlaying count={play_total_count} />}
+        {play_total_count && typeof play_total_count === "number" && (
+          <>
+            <CountOnPlaying count={play_total_count} />
+          </>
+        )}
+        {room_available &&
+          router?.route.includes("play-to-earn") &&
+          room_available?.map((ele) => (
+            <>
+              <CountOnPlaying
+                key={ele.item_size}
+                count={`${ele?.item_name} ${ele?.item_size}`}
+              />
+            </>
+          ))}
       </div>
     </motion.div>
   )
-
   return href ? (
     <Link href={href}>{renderCardContent()}</Link>
   ) : (

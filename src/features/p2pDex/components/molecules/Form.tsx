@@ -96,7 +96,7 @@ const Form = ({
         disabled={disableButton}
         text={`${edit ? "edit" : "create"} ${type} NAKA`}
         handleClick={() => {}}
-        className={`leading-2 mt-5 mb-5 flex h-[50px] w-full items-center  justify-center rounded-md ${
+        className={`leading-2 mb-5 mt-5 flex h-[50px] w-full items-center  justify-center rounded-md ${
           type === "buy" ? " bg-varidian-default " : " bg-error-main"
         } !fill-primary-main font-neue-machina text-sm font-bold capitalize !text-primary-main`}
         type="submit"

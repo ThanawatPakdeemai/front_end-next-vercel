@@ -93,7 +93,7 @@ const CardItemMarketPlace = ({
           label={id}
           variant="outlined"
           size="small"
-          className="pointer-events-auto absolute top-4 left-4 z-10 w-[93px] cursor-pointer truncate uppercase"
+          className="pointer-events-auto absolute left-4 top-4 z-10 w-[93px] cursor-pointer truncate uppercase"
           deleteIcon={
             <ContentCopySharpIcon
               sx={{

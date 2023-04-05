@@ -142,7 +142,7 @@ const HeadPrice = ({
           )}
           <button
             type="button"
-            className="absolute top-0 right-0 z-[51] m-auto flex w-full max-w-[150px] flex-row items-center justify-center bg-error-main sm:h-[100%] sm:w-[150px] sm:rounded-br-lg lg:relative lg:right-auto lg:top-auto lg:h-[30px] lg:w-[150px] lg:justify-evenly xl:m-0 xl:ml-4"
+            className="absolute right-0 top-0 z-[51] m-auto flex w-full max-w-[150px] flex-row items-center justify-center bg-error-main sm:h-[100%] sm:w-[150px] sm:rounded-br-lg lg:relative lg:right-auto lg:top-auto lg:h-[30px] lg:w-[150px] lg:justify-evenly xl:m-0 xl:ml-4"
             onClick={handleOpen}
           >
             <div className="font-neue-machina text-sm uppercase text-white-primary">

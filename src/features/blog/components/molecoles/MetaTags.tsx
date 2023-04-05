@@ -18,7 +18,7 @@ const MetaTags = ({ tags, titleTag = "Tags" }: IMetaTags) => {
           {t(`${titleTag}`)}
         </div>
       )}
-      <div className="px-6 pt-4 pb-2">
+      <div className="px-6 pb-2 pt-4">
         {tags &&
           tags.map((item) => (
             <Chip

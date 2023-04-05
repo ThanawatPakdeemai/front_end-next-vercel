@@ -15,7 +15,7 @@ const ProgressBarSlide = () => (
           }
         }
       }}
-      className="progress-bar-slide__bar absolute top-0 left-0 h-full w-0 bg-white-default"
+      className="progress-bar-slide__bar absolute left-0 top-0 h-full w-0 bg-white-default"
     />
   </div>
 )

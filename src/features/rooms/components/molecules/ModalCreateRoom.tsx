@@ -253,7 +253,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
               }}
             />
             <button
-              className="mr-2 ml-[10px]"
+              className="ml-[10px] mr-2"
               type="button"
               onClick={() => handleSetIsCurrent(false)}
             >

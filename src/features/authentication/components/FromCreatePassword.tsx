@@ -274,7 +274,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                           <ButtonClose onClick={() => {}} />
                         </Link>
                       </Box>
-                      <Divider className="mx-0 mt-5 mb-8" />
+                      <Divider className="mx-0 mb-8 mt-5" />
                       <>
                         {formSubmitErrors && (
                           <motion.div

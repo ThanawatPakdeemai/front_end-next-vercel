@@ -49,8 +49,8 @@ const CardNakaverse = ({
           priority
         />
 
-        <CardContent className="py-[30px] pr-0 pl-[45px] max-[480px]:p-[30px]">
-          <h6 className="relative m-0 py-[35px] px-0 font-neue-machina text-[22px] font-bold not-italic tracking-[1px] text-white-default">
+        <CardContent className="py-[30px] pl-[45px] pr-0 max-[480px]:p-[30px]">
+          <h6 className="relative m-0 px-0 py-[35px] font-neue-machina text-[22px] font-bold not-italic tracking-[1px] text-white-default">
             {title}
           </h6>
           <ButtonLink
@@ -82,7 +82,7 @@ const CardNakaverse = ({
               />
             </KeyFramesRotate>
           </div>
-          <div className="absolute right-[10%] top-[13%] max-[480px]:top-[17%] max-[480px]:right-[6%] max-[480px]:w-[80%]">
+          <div className="absolute right-[10%] top-[13%] max-[480px]:right-[6%] max-[480px]:top-[17%] max-[480px]:w-[80%]">
             <Image
               src={IMAGES.ringNakaverse.src}
               alt={IMAGES.ringNakaverse.alt}

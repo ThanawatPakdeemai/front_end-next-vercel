@@ -36,13 +36,13 @@ const CardContent = ({ ...props }: IProp) => {
               <div className="flex w-1/2 items-center px-2 text-sm uppercase">
                 <div
                   key={uuid()}
-                  className="mr-2 w-full rounded-[4px] border-[1px] border-neutral-700 bg-neutral-780 text-neutral-500 md:py-2 md:px-4"
+                  className="mr-2 w-full rounded-[4px] border-[1px] border-neutral-700 bg-neutral-780 text-neutral-500 md:px-4 md:py-2"
                 >
                   {`total paticipants: ${labels.player_count}`}
                 </div>
                 <div
                   key={uuid()}
-                  className="mr-2 w-full rounded-[4px] border-[1px] border-neutral-700 bg-neutral-780 text-neutral-500 md:py-2 md:px-4"
+                  className="mr-2 w-full rounded-[4px] border-[1px] border-neutral-700 bg-neutral-780 text-neutral-500 md:px-4 md:py-2"
                 >
                   {`total games played: ${labels.transaction_count}`}
                 </div>

@@ -19,7 +19,7 @@ const StatProfile = ({ exp, energy, className, sx, type = "col" }: IProps) => {
       {profile && (
         <CardContent
           className={`flex
-    ${type === "col" ? " p-0" : "items-center justify-center py-1 px-3"}`}
+    ${type === "col" ? " p-0" : "items-center justify-center px-3 py-1"}`}
         >
           <Card
             className={`flex items-center justify-between gap-[5px] rounded-[13px] bg-neutral-800 p-[5px] ${className} w-full ${

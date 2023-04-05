@@ -123,7 +123,7 @@ const SellActionComponent = ({
             step 2: select type you would like to sell
           </span>
           <Select
-            className="mx-[6px] mt-2 mb-2 rounded-sm bg-neutral-800 !px-2 py-1 capitalize text-white-primary"
+            className="mx-[6px] mb-2 mt-2 rounded-sm bg-neutral-800 !px-2 py-1 capitalize text-white-primary"
             value={selling}
             onChange={onSellingChange}
           >

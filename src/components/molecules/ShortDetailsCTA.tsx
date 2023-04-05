@@ -23,9 +23,9 @@ const ShortDetailsCTA = ({
 
   return (
     <CardContent
-      className={`carousel-slide__item__content absolute left-0 bottom-4 z-[1] w-full ${className}`}
+      className={`carousel-slide__item__content absolute bottom-4 left-0 z-[1] w-full ${className}`}
     >
-      <div className="flex w-full items-center justify-between gap-4 rounded-xl bg-neutral-800 py-4 px-6">
+      <div className="flex w-full items-center justify-between gap-4 rounded-xl bg-neutral-800 px-6 py-4">
         <div className="flex items-center">
           {startIcon && (startIcon as React.ReactElement)}
           <Typography

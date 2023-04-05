@@ -129,7 +129,7 @@ const ReferralProgramPage = () => {
         <div className="relative z-10 w-[calc(100%)] px-[10%]">
           <div className="sm:grid md:grid lg:flex">
             <div className="h-fit max-w-[630px] rounded-3xl border border-solid border-neutral-700 bg-neutral-800 p-2">
-              <div className="my-[30px] mr-8 ml-2 grid sm:grid md:grid-cols-3 lg:grid-cols-3">
+              <div className="my-[30px] ml-2 mr-8 grid sm:grid md:grid-cols-3 lg:grid-cols-3">
                 <div className="uppercase text-neutral-300">
                   <div className="flex pb-4 md:py-0 lg:py-0">
                     <ShareIcon className="mr-4" />
@@ -218,7 +218,7 @@ const ReferralProgramPage = () => {
                 <TableHead>
                   <TableRow>
                     <TableCell
-                      className="w-[300px] border-b-0 pt-0 pb-1 text-start font-neue-machina-bold text-xs uppercase"
+                      className="w-[300px] border-b-0 pb-1 pt-0 text-start font-neue-machina-bold text-xs uppercase"
                       onClick={() => handleSort("username")}
                     >
                       <div className="flex">
@@ -246,7 +246,7 @@ const ReferralProgramPage = () => {
                       </div>
                     </TableCell>
                     <TableCell
-                      className="border-b-0 pt-0 pb-1 text-start font-neue-machina-bold text-xs uppercase"
+                      className="border-b-0 pb-1 pt-0 text-start font-neue-machina-bold text-xs uppercase"
                       onClick={() => handleSort("amount")}
                     >
                       <div className="flex">
@@ -274,7 +274,7 @@ const ReferralProgramPage = () => {
                       </div>
                     </TableCell>
                     <TableCell
-                      className="border-b-0 pt-0 pb-1 text-end font-neue-machina-bold text-xs uppercase"
+                      className="border-b-0 pb-1 pt-0 text-end font-neue-machina-bold text-xs uppercase"
                       onClick={() => handleSort("date")}
                     >
                       <div className="flex justify-end">

@@ -37,7 +37,7 @@ const CardMarketplace = ({
               maxHeight: "40px"
             }
           }}
-          className="flex w-[50%] flex-col items-start justify-between p-4 md:absolute md:py-10 md:pr-6 md:pl-10 xl:w-full"
+          className="flex w-[50%] flex-col items-start justify-between p-4 md:absolute md:py-10 md:pl-10 md:pr-6 xl:w-full"
         >
           <h6 className="leading-7leading-7 text-[22px] font-bold uppercase text-neutral-300">
             {t(title.toLowerCase())}

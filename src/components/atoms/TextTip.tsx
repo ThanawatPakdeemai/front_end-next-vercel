@@ -16,7 +16,7 @@ const TextTip = ({
   borderColor
 }: IProps) => (
   <div
-    className={`${className} w-full rounded-sm border py-2 px-4 normal-case ${textColor} ${bgColor} ${borderColor}`}
+    className={`${className} w-full rounded-sm border px-4 py-2 normal-case ${textColor} ${bgColor} ${borderColor}`}
   >
     {text}
   </div>

@@ -25,7 +25,7 @@ const NotificationItem = ({ data, onHandleView }: IProps) => {
           label={dayjs(data.createdAt).format("DD MMM YYYY")}
           variant="outlined"
           size="small"
-          className="mr-1 mt-1 rounded pt-1 pl-0.5 text-[10px] uppercase text-grey-neutral04"
+          className="mr-1 mt-1 rounded pl-0.5 pt-1 text-[10px] uppercase text-grey-neutral04"
         />
         <div className="ml-2 pt-2 text-[10px]">
           {dayjs(data.createdAt).format("hh:mm A")}

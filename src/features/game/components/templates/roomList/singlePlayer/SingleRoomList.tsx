@@ -27,6 +27,8 @@ const GameRoomList = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { data, itemSelected } = useGameStore()
   const router = useRouter()
+  const { id } = router.query
+  const itemSizeId = id as string
   const { errorToast } = useToast()
   const [gameData, setGameData] = useState<IGame>()
 
@@ -41,15 +43,18 @@ const GameRoomList = () => {
       if (itemSelected) {
         return itemSelected._id
       }
+      if (itemSizeId) {
+        return itemSizeId
+      }
     } else {
       return ""
     }
-  }, [data, itemSelected])
+  }, [data, itemSelected, itemSizeId])
 
   const { allGameRooms } = useGetAllGameRooms({
     _gameId: data ? data._id : "",
     _email: profile ? profile.email : "",
-    _itemId: item ?? ""
+    _itemId: itemSizeId || (item ?? "")
   })
 
   const { allGameRoomsById } = useGetAllGameRoomsById({

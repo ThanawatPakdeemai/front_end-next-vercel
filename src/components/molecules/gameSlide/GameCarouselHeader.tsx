@@ -38,6 +38,7 @@ interface IProps {
   onNext?: () => void
   onPrev?: () => void
   onPlaying?: boolean
+  hideNextPrev?: boolean
 }
 
 const GameCarouselHeader = ({
@@ -46,7 +47,8 @@ const GameCarouselHeader = ({
   setCurType,
   onNext,
   onPrev,
-  onPlaying
+  onPlaying,
+  hideNextPrev
 }: IProps) => {
   const bgColor = `!bg-${menu?.theme}-main`
 
@@ -183,22 +185,24 @@ const GameCarouselHeader = ({
             </Link>
           )}
 
-          <div className="arrow-slick-container bg-black grid h-full w-[100px] grid-cols-2 divide-x divide-neutral-700 rounded-md border border-neutral-700 text-white-primary ">
-            <button
-              type="button"
-              className="flex h-full w-full items-center justify-center"
-              onClick={() => onClickedPrev()}
-            >
-              <IconArrowLeft />
-            </button>
-            <button
-              type="button"
-              className="flex h-full w-full items-center justify-center"
-              onClick={() => onClickedNext()}
-            >
-              <IconArrowRight />
-            </button>
-          </div>
+          {!hideNextPrev && (
+            <div className="arrow-slick-container bg-black grid h-full w-[100px] grid-cols-2 divide-x divide-neutral-700 rounded-md border border-neutral-700 text-white-primary ">
+              <button
+                type="button"
+                className="flex h-full w-full items-center justify-center"
+                onClick={() => onClickedPrev()}
+              >
+                <IconArrowLeft />
+              </button>
+              <button
+                type="button"
+                className="flex h-full w-full items-center justify-center"
+                onClick={() => onClickedNext()}
+              >
+                <IconArrowRight />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -24,6 +24,7 @@ import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameI
 import useProfileStore from "@stores/profileStore"
 import useGlobal from "@hooks/useGlobal"
 import { TColor } from "@components/molecules/gameSlide/GameCarousel"
+import CountOnPlaying from "@components/atoms/CountOnPlaying"
 
 interface IProps {
   gameType: IGetType
@@ -40,6 +41,7 @@ interface IProps {
   setCooldown?: (_value: boolean) => void
   onHandleClick?: () => void
   onPlaying?: boolean
+  play_total_count?: number
 }
 
 const GameCard = ({
@@ -56,7 +58,8 @@ const GameCard = ({
   staminaRecovery,
   setCooldown,
   onHandleClick,
-  onPlaying = false
+  onPlaying = false,
+  play_total_count
 }: IProps) => {
   const [imageSrc, setImageSrc] = useState<string>(IMAGES.no_image.src)
   const [chipLable, setChipLable] = useState<string>("")
@@ -322,6 +325,7 @@ const GameCard = ({
             )}
           </div>
         )}
+        <CountOnPlaying count={play_total_count} />
       </div>
     </motion.div>
   )

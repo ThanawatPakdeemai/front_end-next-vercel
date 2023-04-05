@@ -70,7 +70,7 @@ const ItemRewardDetails = ({ rewardData, onClaim }: IProp) =>
           </div>
         </TooltipsCustom>
         <div className="flex w-[130px] flex-col gap-[10px]">
-          <div className="flex h-[30px] items-center rounded-[6px] border border-neutral-700 bg-neutral-800 py-[9px] px-[10px] text-xs uppercase text-neutral-500">
+          <div className="flex h-[30px] items-center rounded-[6px] border border-neutral-700 bg-neutral-800 px-[10px] py-[9px] text-xs uppercase text-neutral-500">
             amount{" "}
             <span className="ml-2 !text-sm !text-neutral-300">
               {rewardData.item_amount}

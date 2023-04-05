@@ -131,7 +131,7 @@ const GameReviews = ({ gameType, gameId }: IGameReviewProps) => {
                 setPage={setPage}
               />
             </div>
-            <div className="relative z-10 mt-5 mb-7">
+            <div className="relative z-10 mb-7 mt-5">
               {stateProfile ? (
                 <GoogleReCaptchaProvider
                   reCaptchaKey={`${process.env.NEXT_PUBLIC_KEY_RECAPTCHA}`}

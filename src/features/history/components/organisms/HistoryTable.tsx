@@ -92,7 +92,7 @@ const HistoryTable = () => {
           />
           {/* sm:w-[380px] */}
           <TableContainer
-            className="w-full overflow-x-auto rounded-2xl bg-transparent px-1.5 pt-4 pb-1.5 md:w-[678px]"
+            className="w-full overflow-x-auto rounded-2xl bg-transparent px-1.5 pb-1.5 pt-4 md:w-[678px]"
             component={Paper}
           >
             <Table className="whitespace-nowrap rounded-2xl border-black-500 bg-neutral-780 p-5 py-1.5 text-neutral-600">

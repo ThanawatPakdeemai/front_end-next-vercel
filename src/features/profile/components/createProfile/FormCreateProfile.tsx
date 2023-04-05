@@ -115,7 +115,7 @@ const FormCreateProfile = () => {
               value={profile?.user_ip_address}
               {...register("_user_ip_address")}
             />
-            <Typography className="mt-2 mb-1 font-neue-machina text-sm uppercase  text-neutral-500">
+            <Typography className="mb-1 mt-2 font-neue-machina text-sm uppercase  text-neutral-500">
               {t("display name")}
             </Typography>
             <TextField

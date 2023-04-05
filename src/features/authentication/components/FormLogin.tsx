@@ -350,7 +350,7 @@ const FormLogin = ({ href }: IProp) => {
         container
         justifyContent="space-between"
         alignItems="center"
-        className="!mt-0 !mb-0"
+        className="!mb-0 !mt-0"
       >
         <Grid item>
           <p className="text-xs uppercase">{t("or_join_us_with")}</p>

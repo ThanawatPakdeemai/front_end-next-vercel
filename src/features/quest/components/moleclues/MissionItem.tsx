@@ -39,7 +39,7 @@ const MissionItem = ({ data }: IProps) => {
             withText
           />
         </div>
-        <div className="my-2 flex h-fit flex-wrap items-center justify-between border-t border-neutral-800 pt-2 pl-[18px]">
+        <div className="my-2 flex h-fit flex-wrap items-center justify-between border-t border-neutral-800 pl-[18px] pt-2">
           <div className="flex items-center gap-[22px]">
             {/* current mission */}
             <span className="flex items-center gap-2 uppercase">

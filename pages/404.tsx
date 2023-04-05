@@ -37,7 +37,7 @@ const CustomPage404 = () => {
               alt="404-logo"
             />
           </div>
-          <div className="mt-6 mb-4">
+          <div className="mb-4 mt-6">
             <Typography
               variant="h1"
               className="font-extrabold "

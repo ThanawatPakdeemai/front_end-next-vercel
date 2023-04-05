@@ -157,7 +157,7 @@ const SliderBadges = ({ _playerId }: IProp) => {
             className="cursor-default bg-purple-primary"
           />
         </div>
-        <div className="md: absolute top-[180%] right-[-24%] z-[5] flex hidden flex-col items-center justify-center">
+        <div className="md: absolute right-[-24%] top-[180%] z-[5] flex hidden flex-col items-center justify-center">
           <ButtonSticky icon={<SupportIcon />} />
           <ButtonSticky
             multi

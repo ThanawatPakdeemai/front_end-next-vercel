@@ -12,6 +12,7 @@ import TimerStamina from "@components/atoms/timer/TimerStamina"
 import {
   IGame,
   IGameFav,
+  IGameRoomAvailable,
   IGetType
 } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
@@ -24,8 +25,8 @@ import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameI
 import useProfileStore from "@stores/profileStore"
 import useGlobal from "@hooks/useGlobal"
 import { TColor } from "@components/molecules/gameSlide/GameCarousel"
-import CountOnPlaying from "@components/atoms/CountOnPlaying"
 import { useTranslation } from "react-i18next"
+import DetailCountGame from "@components/molecules/DetailCountGame"
 
 interface IProps {
   gameType: IGetType
@@ -43,6 +44,7 @@ interface IProps {
   onHandleClick?: () => void
   onPlaying?: boolean
   play_total_count?: number
+  room_available?: IGameRoomAvailable[]
 }
 
 const GameCard = ({
@@ -60,7 +62,8 @@ const GameCard = ({
   setCooldown,
   onHandleClick,
   onPlaying = false,
-  play_total_count
+  play_total_count,
+  room_available
 }: IProps) => {
   const [imageSrc, setImageSrc] = useState<string>(IMAGES.no_image.src)
   const [chipLable, setChipLable] = useState<string>("")
@@ -184,7 +187,7 @@ const GameCard = ({
 
   const renderCardContent = () => (
     <motion.div
-      className="slick-card-container flex h-full flex-col justify-center blur-none"
+      className="slick-card-container flex h-auto flex-col justify-center blur-none"
       initial="init"
       whileHover="onHover"
       animate="animate"
@@ -193,12 +196,12 @@ const GameCard = ({
         if (onHandleClick) onHandleClick()
       }}
     >
-      <motion.div className="relative flex h-full w-full items-center justify-center overflow-hidden px-1 xl:h-[218px]">
+      <motion.div className="relative flex h-auto  min-h-[218px] w-[218px] items-center justify-center overflow-hidden px-1 ">
         {showNo && no && (
           <NumberRank
             index={no - 1}
             fixColor={false}
-            className="slick-card-number absolute top-2 right-1 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
+            className="slick-card-number absolute right-1 top-2 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
           />
         )}
         <Image
@@ -206,7 +209,7 @@ const GameCard = ({
           alt="home-slide"
           width={218}
           height={218}
-          className={`slick-card-content h-full rounded-md object-cover ${
+          className={`slick-card-content h-auto rounded-md object-cover ${
             partnerdata ? " sm:h-2/4 lg:h-4/6 xl:h-full" : ""
           }`}
         />
@@ -226,7 +229,7 @@ const GameCard = ({
           />
         </motion.div>
       </motion.div>
-      <div className="relative z-[3]">
+      <div className=" z-[3] min-h-[110px]">
         <div className="slick-card-desc flex h-10 w-[95%] items-center justify-between">
           <p className="relative truncate uppercase hover:text-clip">
             {(data as IGame)
@@ -245,14 +248,14 @@ const GameCard = ({
               label={t(chipLable)}
               size="small"
               color={onChipColor(theme)}
-              className="w-full font-bold md:w-auto"
+              className="my-2 w-full font-bold md:w-auto"
             />
           ) : (
             // Display for a;; game page list
             <Chip
               label={t(gameTypeSplit)}
               size="small"
-              className={`w-full font-bold md:w-auto ${getColorChipByGameType(
+              className={`my-2 w-full font-bold md:w-auto ${getColorChipByGameType(
                 gameType
               )}`}
             />
@@ -297,7 +300,7 @@ const GameCard = ({
           )}
         </div>
         {onPlaying && (
-          <div className="relative mt-2 flex w-full flex-wrap items-center gap-2 text-xs uppercase">
+          <div className=" mt-2 flex w-full flex-wrap items-center gap-2 text-xs uppercase">
             <LocalActivityOutlinedIcon className=" text-[18px] font-thin" />
             {(data as IRoomAvaliableData)?.item_list?.map((el) =>
               el?.room_list?.map((room) => (
@@ -323,11 +326,13 @@ const GameCard = ({
             )}
           </div>
         )}
-        {play_total_count && <CountOnPlaying count={play_total_count} />}
+        <DetailCountGame
+          play_total_count={play_total_count}
+          room_available={room_available}
+        />
       </div>
     </motion.div>
   )
-
   return href ? (
     <Link href={href}>{renderCardContent()}</Link>
   ) : (

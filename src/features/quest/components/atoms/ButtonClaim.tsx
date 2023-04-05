@@ -53,7 +53,7 @@ const ButtonClaim = ({ data, variants, initial, animate }: IProp) => {
     return (
       <motion.button
         type="button"
-        className="w-[108px] rounded-2xl border border-neutral-800 bg-varidian-default py-[8px] px-5 text-xs uppercase text-neutral-900"
+        className="w-[108px] rounded-2xl border border-neutral-800 bg-varidian-default px-5 py-[8px] text-xs uppercase text-neutral-900"
         onClick={() => handleClaim(data.id)}
       >
         <motion.div
@@ -75,7 +75,7 @@ const ButtonClaim = ({ data, variants, initial, animate }: IProp) => {
         initial={initial}
         animate={animate}
         type="button"
-        className="w-[108px] rounded-2xl border border-neutral-800 py-[8px] px-5 text-xs text-neutral-600"
+        className="w-[108px] rounded-2xl border border-neutral-800 px-5 py-[8px] text-xs text-neutral-600"
         disabled
       >
         <motion.div

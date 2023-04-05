@@ -12,7 +12,7 @@ interface IPorp {
 const SliderGameStat = ({ openBadges, handleOnExpandClick }: IPorp) => {
   const { t } = useTranslation()
   return (
-    <div className="mt-[124px] mb-[38px] flex items-center justify-between">
+    <div className="mb-[38px] mt-[124px] flex items-center justify-between">
       <div className="flex">
         <CrumbCustom
           text={t("my_game_stats_overview")}

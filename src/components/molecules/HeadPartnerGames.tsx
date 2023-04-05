@@ -20,7 +20,7 @@ const HeadPartnerGames = ({ children }: { children: React.ReactNode }) => {
         container
         spacing={2}
         columns={15}
-        className="mt-4 mb-10 grid md:mt-[-16px] md:grid-cols-2 lg:flex"
+        className="mb-10 mt-4 grid md:mt-[-16px] md:grid-cols-2 lg:flex"
       >
         {path[1] === "publishers" ? (
           <Grid

@@ -46,6 +46,7 @@ const FreeToPlayGamesPage = () => {
                 href={gameLink(game)}
                 gameType={getTypeGamePathFolder(game)}
                 onHandleClick={() => onSetGameStore(game)}
+                play_total_count={game?.play_total_count}
               />
             ))}
       </div>

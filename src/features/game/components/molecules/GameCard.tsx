@@ -233,28 +233,27 @@ const GameCard = ({
         </div>
         <div className="relative flex w-full flex-wrap items-center gap-2 text-xs uppercase">
           {(data as IRoomAvaliableData) &&
-          "game_free_play" in (data as IRoomAvaliableData)
-            ? // Display for Gameroom only
-              (console.log("test-1"),
-              (
-                <Chip
-                  label={chipLable}
-                  size="small"
-                  color={onChipColor(theme)}
-                  className="w-full font-bold md:w-auto"
-                />
-              ))
-            : // Display for a;; game page list
-              (console.log("test-2"),
-              (
-                <Chip
-                  label={gameTypeSplit}
-                  size="small"
-                  className={`w-full font-bold md:w-auto ${getColorChipByGameType(
-                    gameType
-                  )}`}
-                />
-              ))}
+          "game_free_play" in (data as IRoomAvaliableData) ? (
+            // Display for Gameroom only
+            (console.log("test-1"),
+            (
+              <Chip
+                label={chipLable}
+                size="small"
+                color={onChipColor(theme)}
+                className="w-full font-bold md:w-auto"
+              />
+            ))
+          ) : (
+            // Display for a;; game page list
+            <Chip
+              label={gameTypeSplit}
+              size="small"
+              className={`w-full font-bold md:w-auto ${getColorChipByGameType(
+                gameType
+              )}`}
+            />
+          )}
           {partnerdata &&
             (console.log("test-3"),
             (
@@ -325,7 +324,7 @@ const GameCard = ({
             )}
           </div>
         )}
-        <CountOnPlaying count={play_total_count} />
+        {play_total_count && <CountOnPlaying count={play_total_count} />}
       </div>
     </motion.div>
   )

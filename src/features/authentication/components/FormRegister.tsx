@@ -124,7 +124,7 @@ const FormRegister = () => {
               <TextField
                 className="w-full"
                 type="email"
-                placeholder={t("email")}
+                placeholder={String(t("email"))}
                 label={t("email_address")}
                 onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                   isEmail(e.target.value.toString())
@@ -201,7 +201,7 @@ const FormRegister = () => {
                 <TextField
                   className="hidden-arrow-number Mui-error mr-2 w-full pb-4 xl:w-[235px] xl:pb-0"
                   type="number"
-                  placeholder={t("verification_code")}
+                  placeholder={String(t("verification_code"))}
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                     e.target.value = e.target.value.slice(0, 6)
                     isNumber(e.target.value.toString())

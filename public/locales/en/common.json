@@ -257,7 +257,7 @@
   "join-game": "Join Game",
   "my": "my",
   "bag": "BAG",
-  "please-select-item": "Please select Item.",
+  "Please select Item.": "Please select Item.",
   "buy-now": "Buy Now",
   "required": "Required",
   "game_overview": "Game Overview",
@@ -353,7 +353,7 @@
   "redeem": "Redeem",
   "complete" : "COMPLETE",
   "on_going" : "ON-GOING",
-  "total_mission_complete" : "总任务完成",
+  "total_mission_complete" : "Total mission completed",
   "hardware_wallet": "Hardware Wallet",
   "signal": "Signal",
   "your": "Your",
@@ -434,5 +434,8 @@
   "main_tagline": "SECURE. SUBLIME. SIMPLE. EARN $NAKA TODAY. ",
   "naka_swap": "NAKA Swap",
   "top_naka_player": "Top NAKA Players",
-  "are_you_a_developer?": "ARE YOU A DEVELOPER?"
+  "are_you_a_developer?": "ARE YOU A DEVELOPER?",
+  "buy_assets" : "Buy Assets",
+  "full" : "Full",
+  "search_room" : "Search Room"
 }

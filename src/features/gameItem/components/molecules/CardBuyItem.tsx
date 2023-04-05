@@ -200,7 +200,7 @@ export default function CardBuyItem({
     }
     return (
       <ButtonLink
-        text={MESSAGES["please_item"]}
+        text={t(MESSAGES["please_item"])}
         icon={<LogoutIcon />}
         href={`${router.asPath}`}
         size="medium"

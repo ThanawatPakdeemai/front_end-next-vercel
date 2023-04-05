@@ -12,7 +12,7 @@ const ButtonBuyItem = ({ handleButton, disabled }: IProp) => (
     <ButtonLink
       disabled={disabled}
       onClick={() => handleButton()}
-      text={<Trans i18nKey="buy_assets" />}
+      text={<Trans i18nKey="Buy Assets" />}
       href=""
       icon={<AddIcon />}
       size="small"

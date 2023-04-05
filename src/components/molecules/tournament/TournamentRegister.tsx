@@ -9,6 +9,7 @@ import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import usetournament from "@feature/tournament/containers/hooks/usetournament"
 import { Box, Stack } from "@mui/material"
 import ModalHeader from "@components/molecules/Modal/ModalHeader"
+import { useTranslation } from "react-i18next"
 
 const TournamentRegister = () => {
   const time: boolean = true
@@ -16,6 +17,7 @@ const TournamentRegister = () => {
   const [readed, setReaded] = useState(false)
   // eslint-disable-next-line no-unused-vars
   const [isOpen, setIsOpen] = useState(false)
+  const { t } = useTranslation()
 
   // When user scroll
   // const listInnerRef = useRef<HTMLDivElement>(null)
@@ -181,9 +183,7 @@ const TournamentRegister = () => {
                       checked={readed}
                     />
                   </label>
-                  <p className="text-sm">
-                    Would you like to subscribe to Nakamoto Games Newsletter?
-                  </p>
+                  <p className="text-sm">{t("nakamoto_games_newsletter")}</p>
                 </div>
                 <div className="my-4 grid w-full grid-cols-2 gap-4">
                   <button

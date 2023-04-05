@@ -76,9 +76,7 @@ const RightMenuLogIn = () => {
         <div>
           <TooltipsCustom
             title={
-              <p className="text-primary-main">
-                Please approve your wallet first.
-              </p>
+              <p className="text-primary-main">{t("please_approve_wallet")}</p>
             }
             color="warning"
             open={!address && !expanded && !isConnected}

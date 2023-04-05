@@ -16,6 +16,7 @@ import { MESSAGES } from "@constants/messages"
 import { useWeb3Provider } from "@providers/Web3Provider"
 
 import { IResGetIp } from "@interfaces/IGetIP"
+import { useTranslation } from "react-i18next"
 import ButtonGame from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 
@@ -35,6 +36,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   const { address } = useWeb3Provider()
   const [gameUrl, setGameUrl] = useState<string>("")
   const [ip, setIp] = useState("")
+  const { t } = useTranslation()
 
   useEffect(() => {
     let load = false
@@ -263,14 +265,14 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
         <Box className="mb-10  flex justify-center">
           <Box className="w-fit items-center justify-center gap-3 rounded-md border border-neutral-800 bg-primary-main p-3 md:flex md:rounded-[50px]">
             <Typography className=" mx-4 w-full font-neue-machina text-sm ">
-              {" It's time to play! Press the Start"}
+              {t("its_time")}
             </Typography>
             <ButtonGame
               startIcon={<Ellipse fill="#AOED61" />}
               handleClick={onPlayGame}
               text={
-                <Typography className="w-full font-neue-machina text-2xl text-neutral-600">
-                  START
+                <Typography className="w-full font-neue-machina text-2xl uppercase text-neutral-600">
+                  {t("start")}
                 </Typography>
               }
               className={`h-[60px] w-[194px] rounded-[50px] ${"bg-green-lemon "}${"btn-green-rainbow  "} font-bold capitalize text-neutral-900`}

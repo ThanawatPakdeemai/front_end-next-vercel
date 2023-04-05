@@ -25,6 +25,7 @@ export type IGetType =
   | "play-to-earn-games"
   | "free-to-play-games"
   | "story-mode-games"
+  | "free-to-play"
   | "storymode"
   | "must-try"
   | "hot-game"

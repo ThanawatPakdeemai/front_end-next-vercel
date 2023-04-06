@@ -49,7 +49,8 @@ const FormEditProfile = ({
   const { t } = useTranslation()
 
   const { errorToast, successToast, warnToast } = useToast()
-  const onOpenImage = () => warnToast("Upload image is not available yet")
+  const onOpenImage = () =>
+    warnToast("Image upload is not available at the moment.")
   const { mutateUpdateProfile } = useUpdateProfile()
 
   const { register, handleSubmit, watch, setValue } = useForm({

@@ -13,7 +13,7 @@ const ButtonLogin = ({ handleButton }: IProp) => {
       <ButtonLink
         onClick={() => handleButton()}
         href="/"
-        text={t("login")}
+        text={t("Log in")}
         icon={<LoginIcon />}
         variant="contained"
         // size="small"

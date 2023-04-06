@@ -6,6 +6,7 @@ import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import SubstackIcon from "@components/icons/SocialIcon/SubstackIcon"
 import MediumIcon from "@components/icons/SocialIcon/MediumIcon"
 import TiktokIcon from "@components/icons/SocialIcon/TiktokIcon"
+import YoutubeIcon from "@components/icons/SocialIcon/YoutubeIcon"
 import LinkIcon from "@mui/icons-material/Link"
 import { IMenuBase } from "@interfaces/IMenu"
 
@@ -44,6 +45,11 @@ export const SOCIAL: IMenuBase[] = [
     icon: <TiktokIcon />,
     label: "tiktok",
     href: "https://www.tiktok.com/@nakamotogames"
+  },
+  {
+    icon: <YoutubeIcon />,
+    label: "youtube",
+    href: "https://www.youtube.com/@nakamotogames"
   }
 ]
 

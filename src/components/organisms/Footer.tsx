@@ -91,7 +91,9 @@ const Footer = () => {
       <div className="w-full justify-between overflow-hidden text-[12px] md:mx-4 lg:flex">
         <div className="grid grid-cols-2 justify-center gap-3 whitespace-nowrap p-5 md:flex md:gap-0 md:p-10">
           <div className="flex-auto sm:flex-none md:w-48">
-            <div className="mb-4 uppercase text-white-primary">{t("game")}</div>
+            <div className="mb-4 uppercase text-white-primary">
+              {t("games")}
+            </div>
             {NAKA_GAME?.map((item) => (
               <div key={`game_${item.label}`}>
                 {item.game.map((game) => (
@@ -191,7 +193,7 @@ const Footer = () => {
               <ButtonToggleIcon
                 handleClick={() => openInNewTab("https://t.me/NakamotoGames")}
                 startIcon={<WineIcon />}
-                text={t("join_revolutions")}
+                text={t("Join_The_Revolution")}
                 className="btn-rainbow-theme b h-[50px] !w-[260px] bg-secondary-main font-bold capitalize text-white-default"
                 type="button"
               />
@@ -223,7 +225,7 @@ const Footer = () => {
       {/* // TODO: Open after launch V2 */}
       {/* <GameDeveloperFooter /> */}
       <div className="flex flex-col items-center justify-center text-[10px] uppercase text-neutral-600 md:flex-row md:justify-between lg:m-4 lg:py-[20px]">
-        <h4>Copyright 2022 © Nakamoto Games</h4>
+        <h4>COPYRIGHT 2023 © NAKAMOTO GAMES</h4>
         <div
           className="h-[80px] cursor-pointer"
           onMouseEnter={handleMouseEnter}

@@ -285,7 +285,7 @@ const Home = () => {
               <CardLink
                 classNameSecond="bg-secondary-light"
                 iconBtn={<ICoupon />}
-                textBtn={`${t("Coupon")}`}
+                textBtn={`${t("Coupons")}`}
                 href="/coupon"
                 srcMain={IMAGES.frontCouponBand.src}
                 altMain={IMAGES.frontCouponBand.alt}

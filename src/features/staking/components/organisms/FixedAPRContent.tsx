@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import useGlobalStaking from "@feature/staking/containers/hook/useStakingController"
 import useGlobal from "@hooks/useGlobal"
 import { Box, Typography } from "@mui/material"
@@ -85,7 +86,7 @@ const FixedAPRContent = () => {
         </div>
       )}
 
-      {stakingData && stakingStatus && (
+      {stakingData && (
         <Box component="section">
           {stakingData.dataAPI.map((item) => (
             <div key={uuid()}>

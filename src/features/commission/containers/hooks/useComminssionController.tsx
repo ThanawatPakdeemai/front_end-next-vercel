@@ -1,30 +1,32 @@
-import { ICommissionData } from "@feature/commission/interfaces/ICommission"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { Trans } from "react-i18next"
-import useGetCommission from "./useGetCommission"
+import useGetTransWallet from "@feature/transaction/containers/hooks/useGetTransWallet"
+import { ITransactionWalletData } from "@feature/transaction/interfaces/ITransaction"
 
 const useCommissionController = () => {
   const { pager, totalCount, setTotalCount, page, setPage } = useGlobal()
   const { profile } = useProfileStore()
-  const { getCommissionHistory, isLoading } = useGetCommission()
+  const { getTransHistory, isLoading } = useGetTransWallet()
   const [limit, setLimit] = useState<number>(12)
-  const [txHistory, setTxHistory] = useState<ICommissionData[]>([])
+  const [txHistory, setTxHistory] = useState<ITransactionWalletData[]>([])
 
   // need to refactor interface res.data <ICommissionService>
   const fetchCommission = useCallback(async () => {
-    if (profile.data) {
-      await getCommissionHistory({
-        _playerId: profile && profile.data.id ? profile.data.id : "",
+    if (profile) {
+      await getTransHistory({
+        _playerId: profile && profile.data ? profile.data.id : "",
+        _type: ["PayCommission", "PayOwnerCommission"],
         _limit: limit,
         _page: page
       }).then((res) => {
-        if (res.data.data) {
-          setTxHistory(res.data.data)
+        // res.status === 200 -> ok
+        if (res.data) {
+          setTxHistory(res.data)
         }
-        if (res.data.info) {
-          setTotalCount(res.data.info.totalCount)
+        if (res.info) {
+          setTotalCount(res.info.totalCount)
         }
       })
     }

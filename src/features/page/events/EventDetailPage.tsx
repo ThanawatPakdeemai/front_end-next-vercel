@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react"
 import { Box, Chip, Divider, Typography } from "@mui/material"
 import useGetEventDetail from "@feature/event/containers/hooks/useGetEventDetail"
@@ -84,6 +85,7 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
 
   useEffect(() => {
     let load = false
+
     if (!load) {
       if (eventDetailIsLoading && (topScoreIsLoading || leaderBoardIsLoading)) {
         setOpen()
@@ -234,13 +236,13 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
                 }
               }}
             >
-              <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2 md:w-4/6 md:px-16 md:py-8 md:text-center md:text-base">
+              <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2  md:px-16 md:py-8 md:text-center md:text-base">
                 {`
           COMMENT AND HASHTAG #YOUR_USERNAME #NAKARUNNER IN YOUR TWITTER SHARING
           NAKA RUNNER CHALLENGE POST TO MAKE SURE YOU ATTEND THE EVENT [FIRST 102 PEOPLE TO SCORE OVER 250,000 WILL WIN THE REWARD]
           `}
               </div>
-              <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2 md:w-4/6 md:px-16 md:py-8 md:text-center md:text-base">
+              <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2  md:px-16 md:py-8 md:text-center md:text-base">
                 <Typography className="font-dogicapixel-bold text-center  uppercase">
                   Weekly Price Pool
                 </Typography>
@@ -254,11 +256,12 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
                   users={leaderBoardData?.data as IResponseLeaderBoardData}
                 />
               ) : (
-                <EventsTopScore
-                  users={
-                    topScoreData?.data.data as IResponseTopScoreSummaryDataData
-                  }
-                />
+                // <EventsTopScore
+                //   users={
+                //     topScoreData?.data.data as IResponseTopScoreSummaryDataData
+                //   }
+                // />
+                <></>
               )}
             </FullWidthContent>
           }

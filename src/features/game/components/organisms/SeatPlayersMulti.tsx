@@ -18,7 +18,6 @@ import ButtonPlayer from "@feature/game/components/atoms/ButtonPlayer"
 import PlayerCard from "@feature/game/components/molecules/PlayerCard"
 import { IResGetIp } from "@interfaces/IGetIP"
 import { useRouter } from "next/router"
-import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 
 interface IProps {
@@ -43,7 +42,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
   const { data: gameData, itemSelected, qtyItemOfRoom } = useGameStore()
-  const { gameItemList } = useBuyGameItemController()
+  const { gameItemList, balanceofItem } = useBuyGameItemController()
   const [ownerPressPlay, setOwnPressPlay] = useState(false)
   const [playerPressReady, setPlayerPressReady] = useState(false)
   const [loading, setLoading] = useState<boolean>(false)
@@ -71,11 +70,6 @@ const SeatPlayersMulti = ({ players }: IProps) => {
       load = true
     }
   }, [])
-
-  const { balanceofItem } = useGetBalanceOf({
-    _address: profile?.address ?? "",
-    _item_id: itemSelected?.item_id_smartcontract ?? 0
-  })
 
   const playerInroom = useMemo(() => {
     if (players) {

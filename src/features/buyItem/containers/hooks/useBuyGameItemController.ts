@@ -20,6 +20,7 @@ import useSupportedChain from "@hooks/useSupportedChain"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useChainSupportStore from "@stores/chainSupport"
 import { useRouter } from "next/router"
+import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import useBuyGameItems from "./useBuyGameItems"
 
 const useBuyGameItemController = () => {
@@ -83,6 +84,11 @@ const useBuyGameItemController = () => {
     errorToast("Please fill in the required fields")
     setClose()
   }
+
+  const { balanceofItem, refetch: refetchBalanceofItem } = useGetBalanceOf({
+    _address: profile?.address ?? "",
+    _item_id: itemSelected?.item_id_smartcontract ?? 0
+  })
 
   const updatePricePerItem = useCallback(async () => {
     Helper.calculateItemPerPrice(
@@ -201,6 +207,7 @@ const useBuyGameItemController = () => {
           onSetGameItemSelectd(item)
           handleClose()
         }
+        refetchBalanceofItem()
       }
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -326,7 +333,8 @@ const useBuyGameItemController = () => {
     chainId,
     accounts,
     signer,
-    refetchItemSelected
+    refetchItemSelected,
+    balanceofItem
   }
 }
 

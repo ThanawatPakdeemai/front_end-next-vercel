@@ -11,12 +11,12 @@ import CONFIGS from "@configs/index"
 import useGameStore from "@stores/game"
 import Helper from "@utils/helper"
 import { useToast } from "@feature/toast/containers"
-import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import { MESSAGES } from "@constants/messages"
 import { useWeb3Provider } from "@providers/Web3Provider"
 
 import { IResGetIp } from "@interfaces/IGetIP"
 import { useTranslation } from "react-i18next"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import ButtonGame from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 
@@ -37,6 +37,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   const [gameUrl, setGameUrl] = useState<string>("")
   const [ip, setIp] = useState("")
   const { t } = useTranslation()
+  const { balanceofItem } = useBuyGameItemController()
 
   useEffect(() => {
     let load = false
@@ -67,24 +68,24 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
     return undefined
   }, [data, itemSelected])
 
-  const item_id_smartcontract = useMemo(() => {
-    if (data) {
-      if (data.play_to_earn || data.tournament) {
-        return Number(data?.item[0].item_id_smartcontract)
-      }
-      if (itemSelected) {
-        return Number(itemSelected.item_id_smartcontract)
-      }
-    }
-    return 0
-  }, [data, itemSelected])
+  // const item_id_smartcontract = useMemo(() => {
+  //   if (data) {
+  //     if (data.play_to_earn || data.tournament) {
+  //       return Number(data?.item[0].item_id_smartcontract)
+  //     }
+  //     if (itemSelected) {
+  //       return Number(itemSelected.item_id_smartcontract)
+  //     }
+  //   }
+  //   return 0
+  // }, [data, itemSelected])
 
   const { gameRoomById } = useGetGameRoomById(room_id)
 
-  const { balanceofItem } = useGetBalanceOf({
-    _address: address ?? "",
-    _item_id: item_id_smartcontract ?? 0
-  })
+  // const { balanceofItem } = useGetBalanceOf({
+  //   _address: address ?? "",
+  //   _item_id: item_id_smartcontract ?? 0
+  // })
 
   const playerMe = useMemo(() => {
     if (players && players.length > 0) {
@@ -133,6 +134,14 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
       }
       errorToast(MESSAGES["you-played"])
       return false
+    }
+    return false
+  }
+
+  const checkPlayerMe = () => {
+    if (playerMe) {
+      errorToast(MESSAGES["you_out_room_in_to_again"])
+      return true
     }
     return false
   }
@@ -248,7 +257,8 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
       (checkPlayerIsNotBanned() &&
         checkAccountProfile() &&
         checkBalanceOfItem() &&
-        checkReadyPlayer())
+        checkReadyPlayer() &&
+        checkPlayerMe())
     ) {
       window.location.href = gameUrl
     } else if (!item_id) {

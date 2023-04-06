@@ -4,12 +4,12 @@ import ButtonSticky from "@components/molecules/ButtonSticky"
 import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
 import { MESSAGES } from "@constants/messages"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import useSocketRoomList from "@feature/game/containers/hooks/useSocketRoomList"
 import {
   IGameRoomListSocket,
   IResSocketRoomList
 } from "@feature/game/interfaces/IGameService"
-import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import { useToast } from "@feature/toast/containers"
 import { Box, Divider } from "@mui/material"
 import SocketProviderRoom from "@providers/SocketProviderRoom"
@@ -28,6 +28,7 @@ const MultiRoomList = () => {
   const { data, itemSelected, qtyItemOfRoom } = useGameStore()
 
   const [dataRoom, setDataRoom] = useState<IGameRoomListSocket[]>()
+  const { balanceofItem } = useBuyGameItemController()
 
   const item_id = useMemo(() => {
     if (data) {
@@ -67,11 +68,6 @@ const MultiRoomList = () => {
     search
   } = useSocketRoomList({
     ...propsSocketRoomlist
-  })
-
-  const { balanceofItem } = useGetBalanceOf({
-    _address: profile?.address ?? "",
-    _item_id: itemSelected?.item_id_smartcontract ?? 0
   })
 
   useEffect(() => {

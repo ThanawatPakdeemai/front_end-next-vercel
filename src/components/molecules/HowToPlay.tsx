@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-nested-ternary */
+/* eslint-disable max-len */
 import React from "react"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import FavouriteColorIcon from "@components/icons/HowToPlayIcon/FavouriteColorIcon"
 import FavouriteIcon from "@components/icons/HowToPlayIcon/FavouriteIcon"
-import ShareIcon from "@components/icons/HowToPlayIcon/ShareIcon"
 import useFavoriteGameContoller from "@feature/favourite/containers/hooks/useFavoriteGameContoller"
 import {
   IGame,
@@ -12,7 +12,7 @@ import {
   IGameDevice
 } from "@feature/game/interfaces/IGameService"
 import { useToast } from "@feature/toast/containers"
-import { Button, Box, Stack } from "@mui/material"
+import { Box, Stack } from "@mui/material"
 import useGlobal from "@hooks/useGlobal"
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined"
 import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
@@ -38,7 +38,7 @@ const Howto = ({ data }: IProp) => {
   const router = useRouter()
   const { successToast, errorToast } = useToast()
   const { stateProfile } = useGlobal()
-  const { handleClose, handleOpen, openForm } = usetournament()
+  const { handleClose, openForm } = usetournament()
   const { mutateShareToEarn } = useShareToEarn()
   const { t } = useTranslation()
 
@@ -255,7 +255,7 @@ const Howto = ({ data }: IProp) => {
           </div>
         </div>
         <div className="flex items-center justify-end ">
-          <Button
+          {/* <Button
             className="md flex flex-[1_1_150px] items-center justify-center text-sm text-neutral-400 md:flex-none"
             onClick={() => handleOpen()}
           >
@@ -264,8 +264,8 @@ const Howto = ({ data }: IProp) => {
               className="mr-2"
             />
             {t("share")}
-          </Button>
-          <div className="mx-5 hidden h-3 border-[1px] border-solid border-neutral-600 md:block" />
+          </Button> */}
+          {/* <div className="mx-5 hidden h-3 border-[1px] border-solid border-neutral-600 md:block" /> */}
           <ButtonLink
             onClick={() => onClickFavouriteButton()}
             text={

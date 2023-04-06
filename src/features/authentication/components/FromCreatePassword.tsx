@@ -540,7 +540,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                 className="absolute bottom-32"
               >
                 <Typography className="text-sm uppercase text-neutral-700">
-                  Copyright 2022 © Nakamoto Games
+                  COPYRIGHT 2023 © NAKAMOTO GAMES
                 </Typography>
               </Grid>
             </Box>

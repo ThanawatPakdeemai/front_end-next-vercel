@@ -332,7 +332,7 @@ const FormLogin = ({ href }: IProp) => {
                     size={20}
                   />
                 ) : (
-                  "Login"
+                  "Log in"
                 )}
               </>
             }

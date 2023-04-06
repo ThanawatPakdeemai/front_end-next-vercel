@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 import { useCallback, useEffect, useState } from "react"
 import {
   FeeData,
@@ -234,42 +235,41 @@ const useCreateWeb3Provider = () => {
         _email: _profile.email,
         _address
       }
-
-      errorToast(
-        `Your are connecting ${_address}\n${MESSAGES.please_update_wallet_address}\n${MESSAGES.are_you_sure}`,
-        10000,
-        true,
-        async () => {
-          setOpen()
-          await updateWalletAddress(data)
-            .then(async (_resUpdate) => {
-              if (_resUpdate) {
-                await getProfileByEmail(_profile.email).then((_res) => {
-                  onSetProfileData(_res)
-                  onSetProfileAddress(_res.address)
-                  toast.dismiss()
-                  setClose()
-                  setTimeout(() => {
-                    successToast(MESSAGES.success)
-                  }, 500)
-                  setTimeout(() => {
-                    // eslint-disable-next-line no-use-before-define
-                    // handleConnectWithMetamask()
-                    window.location.reload()
-                  }, 1000)
-                })
-              }
-            })
-            .catch((err) => {
-              setClose()
+      setOpen()
+      await updateWalletAddress(data)
+        .then(async (_resUpdate) => {
+          if (_resUpdate) {
+            await getProfileByEmail(_profile.email).then((_res) => {
+              onSetProfileData(_res)
+              onSetProfileAddress(_res.address)
               toast.dismiss()
-              // NOTE: Not necessary to show a response when error
+              setClose()
               // setTimeout(() => {
-              //   errorToast(err.message)
-              // }, 1000)
+              //   successToast(MESSAGES.success)
+              // }, 500)
+              setTimeout(() => {
+                // eslint-disable-next-line no-use-before-define
+                // handleConnectWithMetamask()
+                window.location.reload()
+              }, 1000)
             })
-        }
-      )
+          }
+        })
+        .catch(() => {
+          setClose()
+          toast.dismiss()
+          // NOTE: Not necessary to show a response when error
+          // setTimeout(() => {
+          //   errorToast(err.message)
+          // }, 1000)
+        })
+      // errorToast(
+      //   `Your are connecting ${_address}\n${MESSAGES.please_update_wallet_address}\n${MESSAGES.are_you_sure}`,
+      //   10000,
+      //   true,
+      //   async () => {
+      //   }
+      // )
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [profile, onSetProfileData, onSetProfileAddress, successToast, errorToast]

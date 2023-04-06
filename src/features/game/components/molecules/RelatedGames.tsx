@@ -14,7 +14,7 @@ interface IProps {
 
 const ReleatedGames = ({ _gameType }: IProps) => {
   const [gamesByType, setgamesByType] = useState<IGame[]>()
-  const [curType, setCurType] = useState<IGetType>("free-to-play-games")
+  const [curType] = useState<IGetType>("free-to-play")
   const { page, setPage } = useGlobal()
 
   const { data: _gamesData, isFetching } = useGamesByTypes({
@@ -26,14 +26,16 @@ const ReleatedGames = ({ _gameType }: IProps) => {
   useEffect(() => {
     let load = false
     if (!load) {
-      setCurType(_gameType)
+      // FIXME -  บัค ลูป API game{type} ปิดไว้ก่อนนะ
+      // setCurType(_gameType)
       setgamesByType(_gamesData?.data)
       setPage(Math.floor(Math.random() * 3) + 1)
     }
     return () => {
       load = true
     }
-  }, [_gamesData, _gameType, setPage])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div>

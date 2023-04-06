@@ -184,12 +184,9 @@ const GameCard = ({
     }
   }
 
-  // eslint-disable-next-line no-console
-  console.log("test-gameTypeSplit", gameTypeSplit)
-
   const renderCardContent = () => (
     <motion.div
-      className="slick-card-container flex h-auto flex-col justify-center blur-none"
+      className="slick-card-container  flex h-auto flex-col justify-center blur-none"
       initial="init"
       whileHover="onHover"
       animate="animate"
@@ -198,7 +195,7 @@ const GameCard = ({
         if (onHandleClick) onHandleClick()
       }}
     >
-      <motion.div className="relative flex h-auto  min-h-[218px] w-[218px] items-center justify-center overflow-hidden px-1 ">
+      <motion.div className="relative flex h-auto  min-h-[138px] w-full items-center justify-center overflow-hidden px-1 md:min-h-[238px] xl:w-[218px] ">
         {showNo && no && (
           <NumberRank
             index={no - 1}
@@ -211,7 +208,7 @@ const GameCard = ({
           alt="home-slide"
           width={218}
           height={218}
-          className={`slick-card-content h-auto rounded-md object-cover ${
+          className={`slick-card-content h-full w-full rounded-md object-cover ${
             partnerdata ? " sm:h-2/4 lg:h-4/6 xl:h-full" : ""
           }`}
         />
@@ -257,7 +254,7 @@ const GameCard = ({
             <Chip
               label={t(gameTypeSplit)}
               size="small"
-              className={`my-2 w-full font-bold md:w-auto ${getColorChipByGameType(
+              className={`mx-2 my-2 w-full font-bold md:mx-0 md:w-auto ${getColorChipByGameType(
                 gameType
               )}`}
             />

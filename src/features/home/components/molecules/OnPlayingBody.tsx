@@ -16,7 +16,7 @@ interface IOnPlayingBodyProps {
 const OnPlayingBody = ({ gameItem }: IOnPlayingBodyProps) => {
   const { t } = useTranslation()
   return (
-    <div className="on-playing-body__wrapper mx-2 max-w-[333px]">
+    <div className="on-playing-body__wrapper w-full md:mx-2 md:max-w-[359px] lg:max-w-[320px]   xl:max-w-[434px]">
       <Box
         component="div"
         className="flex h-[156px] w-full flex-auto overflow-hidden rounded-2xl border-[1px] border-neutral-800 bg-neutral-780"

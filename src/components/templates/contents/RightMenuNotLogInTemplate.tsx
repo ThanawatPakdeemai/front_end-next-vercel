@@ -15,7 +15,7 @@ const RightMenuNotLogInTemplate = ({
 }) => (
   <Box
     component="div"
-    className="right-menu-noLogin__template"
+    className="right-menu-noLogin__template w-full"
   >
     {children}
     <ModalCustom

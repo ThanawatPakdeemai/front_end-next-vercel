@@ -42,7 +42,7 @@ const SummaryMain = ({ summaryData }: IProp) => {
         className="left-[200px] top-10 !my-0 hidden rotate-[30deg] overflow-hidden lg:block"
         show={false}
       />
-      <div className="m-[10px] flex flex-row lg:mt-[-23px]">
+      <div className="m-[10px] flex flex-row">
         <Typography
           className="relative flex h-[328px] rotate-180 items-center justify-between rounded border border-neutral-800 bg-transparent"
           sx={{

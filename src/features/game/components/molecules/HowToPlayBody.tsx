@@ -11,7 +11,7 @@ const HowToPlayBody = ({ text }: IProps) => (
     className="mb-4 flex gap-10"
   >
     <Typography
-      className="mb-0 text-neutral-500"
+      className="mb-0"
       variant="body1"
       dangerouslySetInnerHTML={{
         __html: text

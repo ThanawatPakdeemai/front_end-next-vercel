@@ -23,7 +23,7 @@ const P2PDexListPage = () => {
       <PageHeader
         title={t("connect_p2p")}
         button={
-          <div className="">
+          <div className="flex md:block">
             <ButtonToggleIcon
               startIcon={<AddIcon />}
               text={t("create_order")}

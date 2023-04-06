@@ -184,9 +184,6 @@ const GameCard = ({
     }
   }
 
-  // eslint-disable-next-line no-console
-  console.log("test-gameTypeSplit", gameTypeSplit)
-
   const renderCardContent = () => (
     <motion.div
       className="slick-card-container  flex h-auto flex-col justify-center blur-none"

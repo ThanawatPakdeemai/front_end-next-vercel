@@ -159,6 +159,8 @@ const MultiRoomList = () => {
       ) {
         if (player_me && player_me.status === "played") {
           errorToast(MESSAGES["you-played"])
+        } else if (router.asPath.includes("?id=")) {
+          router.push(`${router.asPath.split("?id=")[0]}/${_data._id}`)
         } else {
           router.push(`${router.asPath}/${_data._id}`)
         }

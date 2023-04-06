@@ -255,10 +255,15 @@ export default function CardBuyItem({
               )}
               <div className="mb-1 w-full rounded-xl border-[1px] border-primary-main bg-primary-main p-2 first-letter:my-2">
                 <p className="w-[285px] uppercase text-white-default">
-                  {t("my")}{" "}
-                  <span className="text-purple-primary]">
-                    {itemSelected?.name} {itemSelected?.item_size}
-                  </span>{" "}
+                  {t("my")}
+                  {itemSelected && (
+                    <span className="text-purple-primary]">
+                      {t(itemSelected.name)} {itemSelected.item_size}
+                    </span>
+                  )}
+                  {/* <span className="text-purple-primary]">
+                    {t(itemSelected?.name)} {itemSelected?.item_size}
+                  </span>{" "} */}
                   {t("bag")}
                 </p>
               </div>

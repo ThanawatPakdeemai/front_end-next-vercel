@@ -271,7 +271,7 @@ const OrderList = ({ ...props }: IProp) => {
                             (address && address.toLowerCase()) ? (
                               <Trans i18nKey="edit" />
                             ) : (
-                              <Trans i18nKey="type" />
+                              <Trans i18nKey={type} />
                             )
                           }
                           size="medium"

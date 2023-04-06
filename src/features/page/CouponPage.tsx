@@ -125,7 +125,7 @@ const CouponPage = () => {
                   severity="warning"
                   className="rounded-lg"
                 >
-                  The coupon must contain at least 6 characters.
+                  {t("coupon_warning")}
                 </Alert>
               </motion.div>
             )}
@@ -148,7 +148,7 @@ const CouponPage = () => {
               variant="filled"
               severity="error"
             >
-              {MESSAGES.please_login}
+              {t(MESSAGES.please_login)}
             </Alert>
           )}
         </div>

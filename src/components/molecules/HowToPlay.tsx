@@ -124,7 +124,7 @@ const Howto = ({ data }: IProp) => {
               <span className=" text-neutral-600">{t("assets")}: </span>
               <span className="text-neutral-400">
                 {data && data.item && data.item.length > 0
-                  ? data.item[0].name
+                  ? t(data.item[0].name)
                   : null}
               </span>
             </div>

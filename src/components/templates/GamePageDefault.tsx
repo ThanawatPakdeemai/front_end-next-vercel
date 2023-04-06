@@ -6,7 +6,7 @@ import StatisticGameDetail from "@components/molecules/statistic/StatisticGameDe
 import Tagline from "@components/molecules/tagline/Tagline"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
-import ReleatedGames from "@feature/game/components/molecules/RelatedGames"
+// import ReleatedGames from "@feature/game/components/molecules/RelatedGames"
 import { MESSAGES } from "@constants/messages"
 import useShareToEarnTracking from "@feature/game/containers/hooks/useShareToEarnTracking"
 import { IGame } from "@feature/game/interfaces/IGameService"
@@ -149,7 +149,6 @@ const GamePageDefault = ({
 
   useEffect(() => {
     let load = false
-
     if (!load) {
       if (data) {
         setGameData(data as IGame)
@@ -214,9 +213,10 @@ const GamePageDefault = ({
       {component2 && <div className="mt-12">{component2}</div>}
       {component3 && <div className="mt-12">{component3}</div>}
       {renderStatistic()}
-      {gameData && (
+      {/* //NOTE - comment ไว้ก่อน ค่อยเปิด feature นี้ทีหลัง */}
+      {/* {gameData && (
         <ReleatedGames _gameType={getTypeGamePathFolder(gameData as IGame)} />
-      )}
+      )} */}
       <Footer />
     </div>
   )

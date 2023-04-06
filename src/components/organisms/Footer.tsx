@@ -184,16 +184,16 @@ const Footer = () => {
           </div>
         </div>
         <div className="flex justify-center pt-[20px] text-center md:text-left lg:justify-center lg:p-0">
-          <div className="flex max-w-[450px] flex-col items-center justify-self-end lg:items-start">
+          <div className="flex max-w-[480px] flex-col items-center justify-self-end lg:items-start">
             <div className="mb-4 uppercase text-white-primary">
               {t("be_a_part_of_the_play_to_earn_revolution")}
             </div>
-            {t("footer_title")}
+            <div className="max-w-[400px]">{t("footer_title")}</div>
             <div className="my-8">
               <ButtonToggleIcon
                 handleClick={() => openInNewTab("https://t.me/NakamotoGames")}
                 startIcon={<WineIcon />}
-                text={t("Join_The_Revolution")}
+                text={t("join_the_revolution")}
                 className="btn-rainbow-theme b h-[50px] !w-[260px] bg-secondary-main font-bold capitalize text-white-default"
                 type="button"
               />

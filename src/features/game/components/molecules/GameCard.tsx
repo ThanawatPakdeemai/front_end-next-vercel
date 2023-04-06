@@ -254,7 +254,7 @@ const GameCard = ({
             <Chip
               label={t(gameTypeSplit)}
               size="small"
-              className={`my-2 mx-2 w-full font-bold md:mx-0 md:w-auto ${getColorChipByGameType(
+              className={`mx-2 my-2 w-full font-bold md:mx-0 md:w-auto ${getColorChipByGameType(
                 gameType
               )}`}
             />

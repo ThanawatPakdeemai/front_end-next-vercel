@@ -104,9 +104,9 @@ const GameSummaryRewardPage = () => {
       }}
       onOutRoom={() => router.push(link)}
     >
-      <div className="flex w-full justify-center gap-4">
+      <div className="flex w-full flex-col justify-center gap-4 lg:flex-row">
         <CardBodyList
-          className="mx-auto max-h-[680px] w-[362px] flex-1 lg:flex-col"
+          className="mx-auto max-h-[680px] w-[362px] flex-1 "
           width="auto"
           players={players || []}
           rewardType={notificationItem?.type}

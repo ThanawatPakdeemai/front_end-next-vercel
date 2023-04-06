@@ -105,7 +105,7 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
       )
     },
     {
-      title: `price per ${type === "sell" ? "busd" : "naka"}`,
+      title: `${t("price_per")} ${type === "sell" ? "busd" : "naka"}`,
       value: `${
         price
         // type === "sell"
@@ -119,7 +119,7 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
     }
   ]
   return (
-    <div className="flex   items-center justify-between ">
+    <div className="flex items-center justify-between">
       <div className="mt-3 h-[528px] w-[454px] flex-col items-center  justify-center rounded-lg border-2 border-neutral-780 bg-primary-main p-10">
         {dataTable.map((ele, index) => (
           <div

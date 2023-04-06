@@ -335,7 +335,7 @@ const FormLogin = ({ href }: IProp) => {
                     size={20}
                   />
                 ) : (
-                  `${t("Log in")}`
+                  `${t("login")}`
                 )}
               </>
             }

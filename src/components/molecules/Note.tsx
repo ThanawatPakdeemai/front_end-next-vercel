@@ -1,4 +1,4 @@
-import TextLink from "@components/atoms/TextLink"
+import { Chip } from "@mui/material"
 import React from "react"
 import { useTranslation } from "react-i18next"
 
@@ -12,10 +12,10 @@ const Note = ({ className, textTitle, subTitle }: INote) => {
   const { t } = useTranslation()
   return (
     <div className={` ${className}`}>
-      <TextLink
-        name={t("note")}
-        arrow={false}
-        className="h-fit w-fit rounded-[4px] border border-neutral-800 px-4 py-1  pb-1 text-[10px]"
+      <Chip
+        label={t("note")}
+        size="small"
+        variant="outlined"
       />
       <div className="pl-4 text-[10px] text-neutral-600">
         <h1>{textTitle}</h1>

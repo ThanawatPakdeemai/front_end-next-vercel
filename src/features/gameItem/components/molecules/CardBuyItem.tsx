@@ -278,7 +278,9 @@ export default function CardBuyItem({
                       <Image
                         src={gameObject.item[0].image_icon_color}
                         alt={gameObject.item[0].name}
-                        width="30"
+                        width={
+                          gameObject.item[0].name === "Bullet" ? "0" : "30"
+                        }
                         height="30"
                       />
                     )}

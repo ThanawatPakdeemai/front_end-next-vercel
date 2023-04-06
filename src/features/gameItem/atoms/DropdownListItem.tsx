@@ -84,7 +84,11 @@ const DropdownListItem = ({
                                   : ""
                               }
                               alt=""
-                              width="20"
+                              width={
+                                gameData?.item[0].name === "Bullet"
+                                  ? "10"
+                                  : "20"
+                              }
                               height="20"
                             />
                           )}

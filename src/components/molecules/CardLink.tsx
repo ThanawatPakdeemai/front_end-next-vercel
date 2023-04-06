@@ -180,7 +180,7 @@ const CardLink = ({
               alt={altSecond}
               width={123}
               height={123}
-              className={`md:max-w-[120px absolute my-auto mx-0 max-w-[80px] ${imageClassNameSecond}`}
+              className={`md:max-w-[120px absolute mx-0 my-auto max-w-[80px] ${imageClassNameSecond}`}
               style={imageStyleSecond || { transition: "0.2s" }}
               loading="eager"
               priority
@@ -194,7 +194,7 @@ const CardLink = ({
             text={textBtn}
             icon={iconBtn}
             size="medium"
-            className="button-global button-transparent absolute left-2.5 right-2.5 bottom-2.5 !h-[38px] border border-solid border-black-300 text-primary-main lg:left-0 lg:mx-2 lg:!min-w-[134px] xl:left-2.5  xl:!min-w-[154px]"
+            className="button-global button-transparent absolute bottom-2.5 left-2.5 right-2.5 !h-[38px] border border-solid border-black-300 text-primary-main lg:left-0 lg:mx-2 lg:!min-w-[134px] xl:left-2.5  xl:!min-w-[154px]"
           />
         </motion.div>
       </motion.div>

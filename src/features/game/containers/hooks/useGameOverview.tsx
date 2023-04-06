@@ -62,8 +62,10 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
               name: category.name,
               link: `/categories/${
                 category.slug
-                  ? category.slug
-                  : category.name.toLocaleLowerCase().split(" ")[1]
+                  ? `${category.slug}?id=${category._id}`
+                  : `${category.name.toLocaleLowerCase().split(" ")[1]}?id=${
+                      category._id
+                    }`
               }`
             })
           )
@@ -77,8 +79,10 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
                 name: category.name,
                 link: `/categories/${
                   category.slug
-                    ? category.slug
-                    : category.name.toLocaleLowerCase().split(" ")[1]
+                    ? `${category.slug}?id=${category.id}`
+                    : `${category.name.toLocaleLowerCase().split(" ")[1]}?id=${
+                        category.id
+                      }`
                 }`
               })
             )
@@ -88,8 +92,10 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
               name: gameData?.category.name,
               link: `/categories/${
                 gameData?.category.slug
-                  ? gameData?.category.slug
-                  : gameData?.category.name.toLocaleLowerCase().split(" ")[1]
+                  ? `${gameData?.category.slug}/?id=${gameData?.category.id}`
+                  : `${
+                      gameData?.category.name.toLocaleLowerCase().split(" ")[1]
+                    }/?id=${gameData?.category.id}`
               }`
             })
         break
@@ -369,11 +375,11 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
     if (gameData) {
       switch (gameType) {
         case "arcade-emporium":
-          return (
-            ("NFT_info" in gameData && gameData.NFT_info.NFT_token) ||
-            gameData.NFT_Owner ||
-            "-"
-          )
+          return gameData.is_NFT &&
+            "is_NFT" in gameData &&
+            gameData.NFT_info.NFT_token !== null
+            ? gameData.NFT_Owner
+            : "-"
         default:
           return gameData.developer || "-"
       }

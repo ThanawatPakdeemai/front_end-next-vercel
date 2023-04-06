@@ -453,7 +453,8 @@ const SeatPlayersMulti = ({ players }: IProps) => {
                     }}
                     endIcon={
                       isOwnerRoom ? (
-                        <HighlightOffIcon className="text-secondary-main " />
+                        // <HighlightOffIcon className="text-secondary-main " />
+                        <HourglassEmptyIcon className="text-secondary-main" />
                       ) : (
                         <HourglassEmptyIcon className="text-primary-main " />
                       )

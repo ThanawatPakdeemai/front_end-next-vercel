@@ -38,19 +38,20 @@ const OnPlayingStyle2 = ({ isSlider = true }: IOnPlayingStyle2) => {
   const showSlide = 4
   const settings: Settings = {
     dots: false,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: showSlide,
     slidesToScroll: showSlide,
     arrows: false,
     variableWidth: false,
+    autoplay: false,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
-          infinite: true,
+          infinite: false,
           dots: false
         }
       },

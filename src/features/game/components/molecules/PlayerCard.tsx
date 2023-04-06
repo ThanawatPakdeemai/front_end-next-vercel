@@ -22,23 +22,32 @@ const PlayerCard = ({ players }: IProps) => {
 
   const checkText = (item: IItemPlyer) => {
     if (gameData?.game_type === "multiplayer") {
+      const ownerMe = (players as IItemPlyer[]).find((ele) => ele.owner)
       if (item.owner) {
         return t("owner")
       }
+
       if (!item.owner && item.player_id !== profile?.id) {
         // isn't owner and player_id != profile.id show button kick
         return (
           // eslint-disable-next-line react/button-has-type, jsx-a11y/no-redundant-roles
           <button
             role="button"
-            className="cursor-pointer uppercase"
+            className={`${" cursor-pointer"}  uppercase`}
             onClick={() => {
-              if (item.player_id && kickRoom) {
+              if (
+                item.player_id &&
+                kickRoom &&
+                ownerMe &&
+                ownerMe?.player_id === profile?.id
+              ) {
                 kickRoom(item.player_id)
               }
             }}
           >
-            {t("kick")}
+            {!item.owner && ownerMe && ownerMe?.player_id === profile?.id
+              ? t("kick")
+              : t("player")}
           </button>
         )
       }

@@ -25,11 +25,11 @@ const ShortDetailsCTA = ({
     <CardContent
       className={`carousel-slide__item__content absolute bottom-4 left-0 z-[1] w-full ${className}`}
     >
-      <div className="flex w-full items-center justify-between gap-4 rounded-xl bg-neutral-800 px-6 py-4">
-        <div className="flex items-center">
+      <div className="flex w-full flex-col  items-center justify-between gap-4 rounded-xl bg-neutral-800 px-6 py-4 md:flex-row">
+        <div className="flex  items-center">
           {startIcon && (startIcon as React.ReactElement)}
           <Typography
-            className="mb-0 text-white-primary line-clamp-1"
+            className="mb-0 text-white-primary line-clamp-2 md:line-clamp-1"
             variant="body1"
             dangerouslySetInnerHTML={{
               __html: description

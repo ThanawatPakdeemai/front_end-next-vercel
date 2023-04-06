@@ -118,10 +118,10 @@ const GameCarousel = ({
                 "&.game-carousel-slide": {
                   ".slick-track": {
                     marginLeft: "0"
-                  },
-                  ".slick-slide.slick-cloned": {
-                    display: "none"
                   }
+                  // ".slick-slide.slick-cloned": {
+                  //   display: "none"
+                  // }
                 }
               }
             : {}

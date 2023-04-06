@@ -69,7 +69,7 @@ const ButtonLink = ({
         sx={sxCustomStyled}
       >
         <span
-          className={`animation-button-text flex h-fit items-center ${textColor}`}
+          className={`animation-button-text flex h-fit items-center md:mt-1 xl:mt-0 ${textColor}`}
         >
           {text}
         </span>

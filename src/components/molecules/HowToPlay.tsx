@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-nested-ternary */
+/* eslint-disable max-len */
 import React from "react"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import FavouriteColorIcon from "@components/icons/HowToPlayIcon/FavouriteColorIcon"

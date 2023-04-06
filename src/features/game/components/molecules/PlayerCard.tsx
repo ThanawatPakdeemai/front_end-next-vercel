@@ -33,9 +33,14 @@ const PlayerCard = ({ players }: IProps) => {
           // eslint-disable-next-line react/button-has-type, jsx-a11y/no-redundant-roles
           <button
             role="button"
-            className="cursor-pointer uppercase"
+            className={`${" cursor-pointer"}  uppercase`}
             onClick={() => {
-              if (item.player_id && kickRoom && item.owner) {
+              if (
+                item.player_id &&
+                kickRoom &&
+                ownerMe &&
+                ownerMe?.player_id === profile?.id
+              ) {
                 kickRoom(item.player_id)
               }
             }}

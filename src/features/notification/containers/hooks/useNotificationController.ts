@@ -23,12 +23,15 @@ const useNotificationController = () => {
 
   // Store
   const profile = useProfileStore((state) => state.profile.data)
+  const isLogin = useProfileStore((state) => state.isLogin)
+
   const {
     setNotificationItem,
     setPlayHistoryItem,
     setNotificationAll,
     setNotificationCount,
-    count
+    count,
+    onResetNotification
   } = useNotiStore()
   const { isLoadingNotification, dataNotification } = useGetNotification({
     player_id: profile?.id || "",
@@ -127,6 +130,21 @@ const useNotificationController = () => {
       load = true
     }
   }, [count])
+
+  // Check if is not login and click logout in Notification page, then reset notification store
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      if (!isLogin) {
+        onResetNotification()
+      }
+    }
+
+    return () => {
+      load = true
+    }
+  }, [isLogin, onResetNotification])
 
   return {
     onHandleView,

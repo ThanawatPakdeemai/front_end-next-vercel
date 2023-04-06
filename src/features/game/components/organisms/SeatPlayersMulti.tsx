@@ -249,9 +249,10 @@ const SeatPlayersMulti = ({ players }: IProps) => {
       if (
         dataPlayers?.room_status === "ready_play" &&
         gameUrl &&
-        playerInroom
+        playerInroom &&
+        playerReady
       ) {
-        if (playerInroom.length === dataPlayers.max_players) {
+        if (playerInroom.length === playerReady.length) {
           setTimeout(() => {
             window.location.href = gameUrl
           }, 10000)
@@ -452,7 +453,8 @@ const SeatPlayersMulti = ({ players }: IProps) => {
                     }}
                     endIcon={
                       isOwnerRoom ? (
-                        <HighlightOffIcon className="text-secondary-main " />
+                        // <HighlightOffIcon className="text-secondary-main " />
+                        <HourglassEmptyIcon className="text-secondary-main" />
                       ) : (
                         <HourglassEmptyIcon className="text-primary-main " />
                       )

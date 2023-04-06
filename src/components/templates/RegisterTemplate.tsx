@@ -170,7 +170,7 @@ const RegisterTemplate = ({ children, background }: IRegisterTemplate) => {
                 className="absolute bottom-4"
               >
                 <Typography className="text-sm uppercase text-neutral-700">
-                  Copyright 2022 © Nakamoto Games
+                  COPYRIGHT 2023 © NAKAMOTO GAMES
                 </Typography>
               </Grid>
             </Box>

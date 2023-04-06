@@ -78,7 +78,7 @@ const BlogReleated = ({
               {blogReleatedTag.map((popularItem) => (
                 <Chip
                   key={uuid()}
-                  label={popularItem.name}
+                  label={t(popularItem.name)}
                   variant="filled"
                   color="success"
                   size="small"

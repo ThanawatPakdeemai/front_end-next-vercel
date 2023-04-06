@@ -349,8 +349,8 @@ const useGlobal = (
     onResetChainStore()
     onSetGameItemSelectd({} as IGameItemListData)
     setQtyItemOfRoom(0)
-    await onResetNotification()
-    await onReset()
+    onResetNotification()
+    onReset()
     await router.push("/")
   }
 

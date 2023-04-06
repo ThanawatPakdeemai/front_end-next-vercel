@@ -72,7 +72,7 @@ const RightMenu = () => {
   }, [token, isTokenValid])
 
   return hydrated ? (
-    <Box className="mx-auto flex w-[360px] flex-1 justify-end md:order-2 xl:mx-0 xl:flex-none">
+    <Box className="absolute right-2.5 top-2 mx-auto flex w-[100px] flex-1 justify-end md:static md:order-2 md:mt-2 md:w-[360px] lg:mt-0 xl:mx-0 xl:flex-none">
       {!profile.data || !isTokenValid ? (
         <RightMenuNotLogIn />
       ) : (

@@ -15,7 +15,7 @@ const ModalHeader = ({ handleClose, title, bg }: IProp) => {
     <>
       <Box className={`flex items-center justify-between ${bg}`}>
         <Typography className="text-lg text-neutral-300">
-          {t(title as string)}
+          {typeof title === "string" ? t(title) : title}
         </Typography>
         <div
           className={`${

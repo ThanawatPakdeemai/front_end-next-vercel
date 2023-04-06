@@ -84,11 +84,17 @@ const DropdownListItem = ({
                                   : ""
                               }
                               alt=""
-                              width="20"
+                              width={
+                                gameData?.item[0].name === "Bullet"
+                                  ? "10"
+                                  : "20"
+                              }
                               height="20"
                             />
                           )}
-                          <p className="px-2 pt-1">{defaultItem?.name}</p>
+                          {defaultItem && (
+                            <p className="px-2 pt-1">{t(defaultItem.name)}</p>
+                          )}
                         </div>
 
                         <p className="px-2 text-white-default">

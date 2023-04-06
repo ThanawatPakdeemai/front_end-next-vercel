@@ -42,7 +42,7 @@ const OverviewContent = ({
   } = useGameOverview(gameId, gameType)
 
   return (
-    <div className="relative flex w-full min-w-[333px] flex-col justify-start rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4">
+    <div className="relative flex w-full flex-col justify-start rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 lg:min-w-[333px]">
       {hydrated && (
         <AsideLayout
           icon={<OverviewIcon />}

@@ -3,6 +3,7 @@ import { Box, LinearProgress, Typography } from "@mui/material"
 import Helper from "@utils/helper"
 import { unstable_batchedUpdates } from "react-dom"
 import { IEnergy, IExp } from "@interfaces/IProfileMenu"
+import { useTranslation } from "react-i18next"
 
 interface IProps {
   type: "exp" | "energy"
@@ -15,13 +16,14 @@ const InsideStatProfile = ({ type, barColor, exp, energy }: IProps) => {
   const [value, setValue] = React.useState<number>(0)
   const [max, setMax] = React.useState<number>(0)
   const [label, setLabel] = React.useState<string>("")
+  const { t } = useTranslation()
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const refetchValue = (data: any | IEnergy) => {
     unstable_batchedUpdates(() => {
       setValue("expAmount" in data ? data.expAmount : data.staminaPoint)
       setMax("maxExp" in data ? data.maxExp : data.totalStamina)
-      setLabel("level" in data ? `level ${data.level}` : "free energy")
+      setLabel("level" in data ? `${t("level")} ${data.level}` : "free energy")
     })
   }
 
@@ -39,6 +41,7 @@ const InsideStatProfile = ({ type, barColor, exp, energy }: IProps) => {
     return () => {
       load = true
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, exp, energy])
 
   const percentage = Helper.percentageCalc(value, max)
@@ -46,7 +49,7 @@ const InsideStatProfile = ({ type, barColor, exp, energy }: IProps) => {
   return (
     <div className="flex h-full w-full flex-1 flex-col rounded-[13px] bg-neutral-900 p-[10px_15px]">
       <Typography className={`text-xs font-bold uppercase ${barColor}`}>
-        {label}
+        {t(label)}
       </Typography>
       <Box
         component="div"

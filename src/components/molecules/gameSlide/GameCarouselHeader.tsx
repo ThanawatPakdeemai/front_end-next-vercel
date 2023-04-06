@@ -130,7 +130,7 @@ const GameCarouselHeader = ({
             <div className="flex flex-auto items-center justify-center whitespace-nowrap py-1 pl-4 font-bold sm:justify-start md:flex-none">
               {menu.icon}
               <p
-                className={`text-${menu.theme}-main h-[10px] pl-2 pr-2 font-neue-machina-bold font-bold uppercase`}
+                className={`text-${menu.theme}-main pl-2 pr-2 font-neue-machina-bold text-[16px] font-bold uppercase md:h-[10px] md:text-[10px]`}
               >
                 {t(menu.title)}
               </p>
@@ -162,7 +162,7 @@ const GameCarouselHeader = ({
             </div>
           </div>
         )}
-        <div className="flex h-10 w-fit max-w-sm flex-auto items-center justify-between gap-4 text-[8px] lg:flex-none">
+        <div className="h-10  w-fit max-w-sm flex-auto items-center justify-between gap-4 text-[8px] md:flex lg:flex-none">
           {!hideViewAll ? (
             <Link
               href={`/${curType}`}

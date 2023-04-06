@@ -35,7 +35,7 @@ const GameItemSingleCard = ({
       <Image
         src={image}
         alt={name}
-        width={width}
+        width={name === "Bullet" ? 35 : width}
         height={height}
       />
       {description && (

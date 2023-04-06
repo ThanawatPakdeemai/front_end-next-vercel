@@ -6,6 +6,7 @@ import useGameSummaryRewardController from "@feature/game/containers/hooks/useGa
 import CardBodyList from "@feature/ranking/components/molecules/CardBodyList"
 import useGlobal from "@hooks/useGlobal"
 import GameSummaryBodyReturnItem from "@feature/game/containers/components/organisms/GameSummaryBodyReturnItem"
+import { useRouter } from "next/router"
 
 const GameSummaryRewardPage = () => {
   const {
@@ -22,7 +23,7 @@ const GameSummaryRewardPage = () => {
     gameItemBalance
   } = useGameSummaryRewardController()
   const { hydrated } = useGlobal()
-
+  const router = useRouter()
   const getSummaryValue = () => {
     switch (notificationItem?.type) {
       case "RETURN_ITEM":
@@ -83,7 +84,7 @@ const GameSummaryRewardPage = () => {
         )
     }
   }
-
+  const link = `${router?.asPath?.split("summary")[0]}/roomlist`
   return hydrated ? (
     <GameSummaryContent
       roomTag={gameRoomById?.room_number || summaryDataPlayerId.id_room || ""}
@@ -95,6 +96,7 @@ const GameSummaryRewardPage = () => {
         currentPlayer: gameRoomById?.amount_current_player || 0,
         maxPlayer: gameRoomById?.max_players || 0
       }}
+      onOutRoom={() => router.push(link)}
     >
       <div className="flex w-full justify-center gap-4">
         <CardBodyList

@@ -35,7 +35,7 @@ export const shareToEarnActionTracking = ({
       code
     }
     services
-      .post<IShareToEarnResponse>("/share_to_earn/tracking/", { ...data })
+      .post<IShareToEarnResponse>("/share_to_earn/tracking", { ...data })
       .then((response) => {
         resolve(response.data)
       })

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import ShineIcon from "@components/icons/ShineIcon"
 import Banners from "@components/molecules/Banners"
 import BannerSingle from "@components/molecules/BannerSingle"
@@ -49,17 +49,22 @@ const GamePageDefault = ({
   const { topPlayerGameId } = useTopPlayerByGameId()
   const { t } = useTranslation()
 
-  const getCodeShareToEarn = () => {
+  const getCodeShareToEarn = useCallback(() => {
     const gameId = data?.id
-    const playerId = stateProfile?.id
     const codeId = router.asPath.substring(
       router.asPath.indexOf("?af") + 3,
       router.asPath.lastIndexOf("")
     )
 
-    if (gameId && playerId && codeId && router.asPath.includes("?af")) {
+    if (
+      gameId &&
+      stateProfile &&
+      stateProfile.id &&
+      codeId &&
+      router.asPath.includes("?af")
+    ) {
       mutateShareToEarnTracking({
-        player_id: playerId,
+        player_id: stateProfile.id,
         game_id: gameId,
         code: codeId
       })
@@ -82,7 +87,8 @@ const GamePageDefault = ({
           errorToast(MESSAGES.get_link_share_not_success)
         })
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.asPath, data, router, stateProfile])
 
   const handleTimeExpire = () => {
     const expireTimeShare = Helper.getLocalStorage(ELocalKey.shareToEarn)
@@ -188,7 +194,7 @@ const GamePageDefault = ({
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.asPath, stateProfile?.id])
+  }, [stateProfile])
 
   return (
     <div className="main-container mx-auto w-full  px-2 lg:px-0">

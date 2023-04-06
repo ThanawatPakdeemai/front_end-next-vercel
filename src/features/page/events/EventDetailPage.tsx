@@ -82,38 +82,71 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
     eventDetailData?.data[0].event_type === "share_and_play"
   )
 
-  useEffect(() => {
-    let load = false
-    if (!load) {
-      if (eventDetailIsLoading && (topScoreIsLoading || leaderBoardIsLoading)) {
-        setOpen()
-      } else {
-        setCrumbData({ _id: _eventId, title: eventDetailData?.data[0].name })
-        setClose()
-      }
-
-      const _currentEvent = eventDetailData?.data.find(
-        (event) => event._id === currentEventId
+  // TODO: Refactor later
+  const renderPlayerContent = () => {
+    if (
+      eventDetailData?.data[0] &&
+      eventDetailData?.data[0].event_type === "share_and_play"
+    ) {
+      return (
+        <EventsShareToPlay
+          users={leaderBoardData?.data as IResponseLeaderBoardData}
+        />
       )
+    }
+    if (
+      topScoreData?.data &&
+      topScoreData?.data.data &&
+      topScoreData?.data.data.data &&
+      topScoreData?.data.data.data.length > 0
+    ) {
+      return (
+        <EventsTopScore
+          users={topScoreData?.data.data as IResponseTopScoreSummaryDataData}
+        />
+      )
+    }
+    return <></>
+  }
 
-      if (_currentEvent) {
-        setCurrentEvent(_currentEvent)
+  useEffect(
+    () => {
+      let load = false
+      if (!load) {
+        if (
+          eventDetailIsLoading &&
+          (topScoreIsLoading || leaderBoardIsLoading)
+        ) {
+          setOpen()
+        } else {
+          setCrumbData({ _id: _eventId, title: eventDetailData?.data[0].name })
+          setClose()
+        }
+
+        const _currentEvent = eventDetailData?.data.find(
+          (event) => event._id === currentEventId
+        )
+
+        if (_currentEvent) {
+          setCurrentEvent(_currentEvent)
+        }
       }
-    }
-    return () => {
-      load = true
-    }
-  }, [
-    _eventId,
-    eventDetailData?.data,
-    eventDetailIsLoading,
-    leaderBoardIsLoading,
-    setClose,
-    setCrumbData,
-    setOpen,
-    topScoreIsLoading,
-    currentEventId
-  ])
+      return () => {
+        load = true
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      // topScoreData,
+      // topScoreIsLoading
+      // _eventId,
+      eventDetailData?.data
+      // eventDetailIsLoading,
+      // leaderBoardIsLoading,
+      // topScoreIsLoading,
+      // currentEventId
+    ]
+  )
 
   return (
     <>
@@ -235,10 +268,10 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
               }}
             >
               <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2 md:w-4/6 md:px-16 md:py-8 md:text-center md:text-base">
-                {`
-          COMMENT AND HASHTAG #YOUR_USERNAME #NAKARUNNER IN YOUR TWITTER SHARING
-          NAKA RUNNER CHALLENGE POST TO MAKE SURE YOU ATTEND THE EVENT [FIRST 102 PEOPLE TO SCORE OVER 250,000 WILL WIN THE REWARD]
-          `}
+                COMMENT AND HASHTAG #YOUR_USERNAME #NAKARUNNER IN YOUR TWITTER
+                SHARING NAKA RUNNER CHALLENGE POST TO MAKE SURE YOU ATTEND THE
+                EVENT [FIRST 102 PEOPLE TO SCORE OVER 250,000 WILL WIN THE
+                REWARD]
               </div>
               <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2 md:w-4/6 md:px-16 md:py-8 md:text-center md:text-base">
                 <Typography className="font-dogicapixel-bold text-center  uppercase">
@@ -248,18 +281,7 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
                   {eventDetailData?.data[0].reward}
                 </Typography>
               </div>
-              {eventDetailData?.data[0] &&
-              eventDetailData?.data[0].event_type === "share_and_play" ? (
-                <EventsShareToPlay
-                  users={leaderBoardData?.data as IResponseLeaderBoardData}
-                />
-              ) : (
-                <EventsTopScore
-                  users={
-                    topScoreData?.data.data as IResponseTopScoreSummaryDataData
-                  }
-                />
-              )}
+              {renderPlayerContent()}
             </FullWidthContent>
           }
         />

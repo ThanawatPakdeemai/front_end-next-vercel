@@ -101,7 +101,7 @@ const GameSummaryRewardPage = () => {
     >
       <div className="flex w-full justify-center gap-4">
         <CardBodyList
-          className="mx-auto max-h-[680px] w-[362px] flex-1"
+          className="mx-auto max-h-[680px] w-[362px] flex-1 lg:flex-col"
           width="auto"
           players={players || []}
           rewardType={notificationItem?.type}

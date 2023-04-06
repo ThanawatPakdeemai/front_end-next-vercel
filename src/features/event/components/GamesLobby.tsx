@@ -1,60 +1,33 @@
 import React, { memo } from "react"
-import { Image } from "@components/atoms/image"
-import { Button, Chip } from "@mui/material"
-import { v4 as uuid } from "uuid"
-import { IGamesToPlay } from "../interface/IEventsService"
+import GameCard from "@feature/game/components/molecules/GameCard"
+import { P2EHeaderMenu } from "@constants/gameSlide"
+import useGlobal from "@hooks/useGlobal"
+import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
+import { IGame } from "@feature/game/interfaces/IGameService"
 
 interface IGamesLobbyProps {
-  _gameData: IGamesToPlay[] | undefined
+  _gameData: IGame[] | undefined
 }
 
-const GamesLobby = ({ _gameData }: IGamesLobbyProps) => (
-  <div className="flex h-full items-center justify-center gap-4 lg:gap-16">
-    <div className="mx-auto md:w-[578px]">
-      {_gameData?.map((game) => (
-        <div
-          key={uuid()}
-          className="mb-4 flex flex-wrap gap-4 sm:flex-nowrap"
-        >
-          <div className="h-[230px] w-full justify-center overflow-hidden rounded-3xl border-[1px] border-neutral-700 border-opacity-80 sm:w-[230px] md:justify-start">
-            <Image
-              src={
-                game
-                  ? game.image_category_list
-                  : "/images/gameDetails/nakamoto-wars.webp"
-              }
-              alt={game ? game.name : "nakamoto-wars"}
-              width={230}
-              height={230}
-              className="h-full w-full object-cover object-center"
-            />
-          </div>
-          <div className="w-full rounded-3xl border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 sm:w-[calc(100%-230px)]">
-            <Chip
-              label={game.game_type}
-              size="small"
-              color="info"
-              className="mb-4 font-bold uppercase"
-            />
-            <h1 className="font-neue-machina text-lg font-bold uppercase text-white-default">
-              {game.name}
-            </h1>
-            {game && (
-              <div className="flex justify-center">
-                <Button
-                  className="bg-green-card"
-                  variant="contained"
-                  href={game.game_url}
-                >
-                  Play
-                </Button>
-              </div>
-            )}
-          </div>
-        </div>
-      ))}
+const GamesLobby = ({ _gameData }: IGamesLobbyProps) => {
+  const { getTypeGamePathFolder } = useGlobal()
+  const { onSetGameStore } = useGamePageListController()
+
+  return (
+    <div className="mx-2 mb-6 flex flex-wrap">
+      {_gameData &&
+        _gameData.map((game) => (
+          <GameCard
+            key={game._id}
+            menu={P2EHeaderMenu}
+            data={game}
+            href={`/${getTypeGamePathFolder(game)}/${game.path}`}
+            onHandleClick={() => onSetGameStore(game)}
+            gameType={getTypeGamePathFolder(game)}
+          />
+        ))}
     </div>
-  </div>
-)
+  )
+}
 
 export default memo(GamesLobby)

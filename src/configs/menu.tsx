@@ -42,6 +42,7 @@ import DollarIcon from "@components/icons/Referral/DollarIcon"
 import ProcessPaymentIcon from "@components/icons/Inventory/ProcessPaymentIcon"
 import { TType } from "@feature/marketplace/interfaces/IMarketService"
 import CommissionIcon from "@components/icons/MenunIcon/CommissionIcon"
+import CalenderIcon from "@components/icons/CalenderIcon"
 
 // TODO: Open after launch V2
 // import GlobalIcon from "@components/icons/GlobalIcon"
@@ -106,6 +107,11 @@ export const MENU = [
         name: "Arcade Emporium",
         link: "/arcade-emporium",
         icon: GamesIcon
+      },
+      {
+        name: "Events",
+        link: "/events",
+        icon: CalenderIcon
       }
       // TODO: Open after launch V2
       // {
@@ -238,6 +244,13 @@ export const MENU_GUEST: IMenu[] = [
     label: "Arcade Emporium",
     icon: <GamesIcon stroke="#E1E2E2" />,
     href: "/arcade-emporium",
+    external: false
+  },
+  {
+    id: "events",
+    label: "Events",
+    icon: <CalenderIcon stroke="#E1E2E2" />,
+    href: "/events",
     external: false
   }
   // TODO: Open after launch V2

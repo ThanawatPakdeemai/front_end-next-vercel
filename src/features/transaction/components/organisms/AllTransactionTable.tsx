@@ -49,6 +49,7 @@ export default function AllTransactionTable({ profile }: IProp) {
     "MintLand",
     "MultiChainSubmitSellNaka",
     "PayCommission",
+    "PayOwnerCommission",
     "TransferNFTGameOwner",
     "WithdrawNaka",
     "WithdrawMaterial"
@@ -103,26 +104,18 @@ export default function AllTransactionTable({ profile }: IProp) {
   }
 
   const formatNumber = (num: number): string => {
-    if (num < 1000) {
-      return num.toFixed(2)
-    }
-    if (num >= 1000 && num < 1000000) {
-      return `${(num / 1000).toFixed(2)}K`
-    }
-    if (num >= 1000000 && num < 1000000000) {
-      return `${(num / 1000000).toFixed(2)}M`
-    }
-    if (num >= 1000000000 && num < 1000000000000) {
-      return `${(num / 1000000000).toFixed(2)}B`
-    }
-    if (num >= 1000000000000 && num < 1000000000000000) {
-      return `${(num / 1000000000000).toFixed(2)}T`
-    }
-    if (num >= 1000000000000000 && num < 1000000000000000000) {
-      return `${(num / 1000000000000000).toFixed(2)}Q`
-    }
-    return `${(num / 1000000000000000000).toFixed(2)}Qi`
+    const units = ["", "K", "M", "B", "T", "Q", "Qi"]
+    let i = 0
+    const result = units.map((unit) => {
+      if (num >= 1000 && i < units.length - 1) {
+        num /= 1000
+        i += 1
+      }
+      return `${num.toFixed(2)}${unit}`
+    })
+    return result[i]
   }
+
   return (
     <>
       <div className="flex justify-between uppercase">
@@ -236,7 +229,7 @@ export default function AllTransactionTable({ profile }: IProp) {
                                 //   onHandleView(item)
                                 // }}
                               >
-                                {t("view_Transaction")}
+                                {t("view_transaction")}
                               </Button>
                             </Link>
                           </div>

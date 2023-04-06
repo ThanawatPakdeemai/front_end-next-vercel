@@ -94,7 +94,7 @@ const HeadLogo = () => {
           {scrollPage < 100 && (
             <Link
               href="/"
-              className="col-span-3 mx-auto md:col-span-1"
+              className="col-span-3 mx-auto w-full md:col-span-1"
             >
               <LogoNaka />
             </Link>

@@ -26,7 +26,7 @@ const HeadMenu = () => {
   return (
     <Box
       component="div"
-      className="xs:my-5 m-auto my-2 grid max-w-[505px] flex-[1_1_100%] grid-cols-2 items-center justify-center gap-1 overflow-hidden rounded-[8px] bg-neutral-700 p-1 md:order-1 md:flex md:!h-[50px] lg:my-0 lg:flex-none"
+      className="xs:my-5 m-auto my-2 mb-[50px] grid max-w-[505px] flex-[1_1_100%] grid-cols-2 items-center justify-center gap-1 overflow-hidden rounded-[8px] bg-neutral-700 p-1 md:order-1 md:mb-0 md:flex md:!h-[50px] lg:my-0 lg:flex-none"
     >
       {MENU_DATA.map((item) => {
         if (!item.isChide && item.chide === undefined) {

@@ -9,7 +9,7 @@
     "build:tailwind": "tailwindcss -i ./src/styles/globals.css -o ./src/styles/output.css --watch",
     "build:sass-watch": "sass --no-source-map ./src/styles/scss:./src/styles/css --watch",
     "build:sass": "sass --no-source-map ./src/styles/scss:./src/styles/css",
-    "start": "next start -p 80808",
+    "start": "next start -p 40004",
     "uat": "next start -p 4008",
     "build:dev": "env-cmd -f ./.env.development yarn build",
     "build:uat": "env-cmd -f ./.env.uat yarn build",

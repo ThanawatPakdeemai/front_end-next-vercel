@@ -17,7 +17,7 @@ interface IEventShareAndPlayProps {
   users: IResponseLeaderBoardData
 }
 const EventsShareAndPlay = ({ users }: IEventShareAndPlayProps) => (
-  <div className="md:w-4/6">
+  <div className="w-full">
     <EventCardContent
       title="Share and Play"
       icon={<TwitterIcon />}

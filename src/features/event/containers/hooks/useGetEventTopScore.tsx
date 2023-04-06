@@ -11,7 +11,7 @@ const useGetEventTopScore = (event_id: string, isTopScore: boolean) => {
     queryKey: ["getEventTopScore", event_id],
     queryFn: () => getEventTopScore(event_id),
     enabled: isTopScore,
-    staleTime: Infinity
+    retry: 3
   })
   return {
     topScoreData,

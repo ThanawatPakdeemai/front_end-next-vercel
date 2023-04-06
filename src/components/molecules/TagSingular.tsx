@@ -7,10 +7,11 @@ import Helper from "@utils/helper"
 import { ImageProps } from "next/image"
 import Link from "next/link"
 import CopyIcon from "@components/icons/CopyIcon"
+import React from "react"
 
 interface ITagSingular {
   title: string
-  label: string
+  label: string | React.ReactNode
   link?: string
   icon?: string
   width?: ImageProps["width"]
@@ -37,12 +38,19 @@ const TagSingular = ({
     successToast(MESSAGES.copy)
   }
 
-  return (
+  return typeof label !== "string" ? (
+    <div className={`flex gap-3 ${className}`}>
+      <Typography className="mt-[2px] font-neue-machina-semi text-xs uppercase text-neutral-600">
+        {title}
+      </Typography>
+      {label}
+    </div>
+  ) : (
     <div className={`flex items-center gap-3 ${className}`}>
       <Typography className="font-neue-machina-semi text-xs uppercase text-neutral-600">
         {title}
       </Typography>
-      {link ? (
+      {link && typeof label === "string" ? (
         <Link href={link}>
           {icon && icon !== "-" && icon !== "" && (
             <ImageCustom

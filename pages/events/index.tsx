@@ -6,18 +6,16 @@ const EventLayout = dynamic(
   () => import("@components/templates/EventsListLayout"),
   { suspense: true, ssr: false }
 )
-const EventListPage = dynamic(
+const EventsListPage = dynamic(
   () => import("@feature/page/events/EventsListPage"),
   { suspense: true, ssr: false }
 )
 
 export default function Events() {
   return (
-    <>
-      <article className="h-full w-full">
-        <EventListPage />
-      </article>
-    </>
+    <article className="h-full w-full">
+      <EventsListPage />
+    </article>
   )
 }
 

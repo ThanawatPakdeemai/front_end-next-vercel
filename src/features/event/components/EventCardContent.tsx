@@ -29,7 +29,7 @@ const CardContent = ({ ...props }: IProp) => {
         className={`h-fit ${className} rounded-3xl border border-solid border-neutral-700 bg-neutral-800 p-2`}
       >
         <div className="h-[50px] w-full rounded-2xl border border-solid border-neutral-680 bg-neutral-700">
-          <div className="flex h-full items-center pl-[26px]">
+          <div className="flex h-full w-full items-center justify-between pl-[26px]">
             {icon}
             <div className={`ml-4 uppercase ${textColor}`}>{title}</div>
             {labels ? (

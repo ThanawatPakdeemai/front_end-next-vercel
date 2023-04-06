@@ -18,7 +18,7 @@ interface IEventTopScoreProps {
 }
 
 const EventsTopScore = ({ users }: IEventTopScoreProps) => (
-  <div className="md:w-4/6">
+  <div>
     <CardContent
       title="Top Score"
       icon={<TwitterIcon />}

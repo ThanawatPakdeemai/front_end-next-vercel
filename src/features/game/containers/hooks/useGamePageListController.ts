@@ -50,9 +50,6 @@ const useGamePageListController = (gameType?: IGetType) => {
     if (categoryId) {
       return "all"
     }
-    if (getGameTypeByPathname() === "arcade-emporium") {
-      return "play-to-earn-games"
-    }
     if (gameType) {
       return gameType
     }

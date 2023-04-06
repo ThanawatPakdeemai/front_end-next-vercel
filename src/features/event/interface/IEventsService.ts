@@ -1,3 +1,5 @@
+import { IGame } from "@feature/game/interfaces/IGameService"
+
 export interface IGetAllEventsProps {
   limit: number
   skip: number
@@ -28,7 +30,7 @@ export interface IGetEventResponseData {
   status: string
   reward_share_rate: number[]
   score_rank?: number[]
-  games_to_play: IGamesToPlay[]
+  games_to_play: IGame[]
   createdAt: Date
   updatedAt: Date
   name: string

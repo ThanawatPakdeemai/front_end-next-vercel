@@ -26,12 +26,13 @@ import useGlobal from "@hooks/useGlobal"
 import { TColor } from "@components/molecules/gameSlide/GameCarousel"
 import { useTranslation } from "react-i18next"
 import DetailCountGame from "@components/molecules/DetailCountGame"
+import { IGamesToPlay } from "@feature/event/interface/IEventsService"
 
 interface IProps {
   gameType: IGetType
   href?: string
   menu: IHeaderSlide
-  data?: IGame | IGameFav | IPartnerGameData | IRoomAvaliableData
+  data?: IGame | IGameFav | IPartnerGameData | IRoomAvaliableData | IGamesToPlay
   partnerdata?: IPartnerGameData
   imgPartner?: string | undefined
   showNo?: boolean
@@ -186,7 +187,7 @@ const GameCard = ({
 
   const renderCardContent = () => (
     <motion.div
-      className="slick-card-container  flex h-auto flex-col justify-center blur-none"
+      className="slick-card-container flex h-auto max-w-[218px] flex-col justify-center blur-none"
       initial="init"
       whileHover="onHover"
       animate="animate"
@@ -195,7 +196,7 @@ const GameCard = ({
         if (onHandleClick) onHandleClick()
       }}
     >
-      <motion.div className="relative flex h-auto  min-h-[138px] w-full items-center justify-center overflow-hidden px-1 md:min-h-[238px] xl:w-[218px] ">
+      <motion.div className="relative flex h-auto  min-h-[138px] w-full items-center justify-center overflow-hidden px-1 md:min-h-[238px] xl:w-[218px]">
         {showNo && no && (
           <NumberRank
             index={no - 1}

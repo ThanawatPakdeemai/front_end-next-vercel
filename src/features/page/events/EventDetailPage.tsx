@@ -138,14 +138,14 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
-      // topScoreData,
-      // topScoreIsLoading
-      // _eventId,
-      eventDetailData?.data
-      // eventDetailIsLoading,
-      // leaderBoardIsLoading,
-      // topScoreIsLoading,
-      // currentEventId
+      topScoreData,
+      topScoreIsLoading,
+      _eventId,
+      eventDetailData?.data,
+      eventDetailIsLoading,
+      leaderBoardIsLoading,
+      topScoreIsLoading,
+      currentEventId
     ]
   )
 

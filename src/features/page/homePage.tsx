@@ -229,7 +229,7 @@ const Home = () => {
             onPlaying={false}
           />
         ) : (
-          <div className="flex gap-x-3">
+          <div className="grid grid-cols-2 gap-x-3 lg:flex">
             {[...Array(6)].map(() => (
               <SkeletonCard key={uuid()} />
             ))}
@@ -248,7 +248,7 @@ const Home = () => {
             onPlaying={false}
           />
         ) : (
-          <div className="flex gap-x-3">
+          <div className="grid grid-cols-2 gap-x-3 md:grid-cols-3 lg:flex lg:grid-cols-4 ">
             {[...Array(6)].map(() => (
               <SkeletonCard key={uuid()} />
             ))}

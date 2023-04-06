@@ -108,12 +108,24 @@ const GameRoomList = () => {
       } else if (new Date() > new Date(_dataRoom.end_time)) {
         errorToast(MESSAGES["room-timeout"])
       } else if (_dataRoom.amount_current_player >= _dataRoom.max_players) {
-        errorToast(MESSAGES["room-full"])
+        if (data && data_player_me && data_player_me.status === "played") {
+          router.push(
+            `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
+          )
+        } else {
+          errorToast(MESSAGES["room-full"])
+        }
       } else if (
         (balanceofItem && balanceofItem?.data < 1) ||
         balanceofItem === undefined
       ) {
-        errorToast(MESSAGES["you-don't-have-item"])
+        if (data && data_player_me && data_player_me.status === "played") {
+          router.push(
+            `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
+          )
+        } else {
+          errorToast(MESSAGES["you-don't-have-item"])
+        }
       } else {
         errorToast(MESSAGES["error-something"])
       }

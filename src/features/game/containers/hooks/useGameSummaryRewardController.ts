@@ -74,7 +74,9 @@ const useGameSummaryRewardController = () => {
     profile?.id
 
   // Hooks
-  const { gameRoomById } = useGetGameRoomById(roomIDTarget)
+
+  const { gameRoomById } = useGetGameRoomById((room_id as string) ?? "")
+
   const { summaryGameData } = useGetSummaryGameByRoomId(roomIDTarget)
   const { balanceofItem } = useGetBalanceOf({
     _address: profile?.address || "",
@@ -145,6 +147,7 @@ const useGameSummaryRewardController = () => {
   // const { gameData } = useGetGameByPath(
   //   notificationItem?.path || playHistoryItem?.path || ""
   // )
+
   const { gameData } = useFindGameById(gameIdTarget)
 
   /**
@@ -234,6 +237,8 @@ const useGameSummaryRewardController = () => {
       case "REWARD_WEEKLY":
       case "REWARD_GAME_POOL":
         return playerWeekly
+      case undefined:
+        return gameRoomById?.current_player ?? []
       default:
         return playerSummary
     }
@@ -372,7 +377,7 @@ const useGameSummaryRewardController = () => {
             gameData.path
           }`
         )
-      }
+      } else if (dataGameStore) setGameDataState(dataGameStore)
     }
 
     return () => {

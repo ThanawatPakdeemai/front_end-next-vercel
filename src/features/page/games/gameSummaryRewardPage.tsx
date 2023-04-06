@@ -84,7 +84,10 @@ const GameSummaryRewardPage = () => {
         )
     }
   }
-  const link = `${router?.asPath?.split("summary")[0]}/roomlist`
+
+  const link = router.asPath.includes("summary")
+    ? `${router?.asPath?.split("summary")[0]}roomlist`
+    : "/"
   return hydrated ? (
     <GameSummaryContent
       roomTag={gameRoomById?.room_number || summaryDataPlayerId.id_room || ""}

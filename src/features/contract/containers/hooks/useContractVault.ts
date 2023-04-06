@@ -179,7 +179,8 @@ const useContractVault = () => {
         const namePromise = await tokenContract.name()
         const decimalsPromise = await tokenContract.decimals()
         const walletBalancePromise = await tokenContract.balanceOf(_userAddress)
-        const [tokenSymbol, totalSupply, tokenName] = await Promise.all([
+        // tokenName
+        const [tokenSymbol, totalSupply] = await Promise.all([
           symbolPromise,
           totalSupplyPromise,
           namePromise,
@@ -187,10 +188,10 @@ const useContractVault = () => {
           walletBalancePromise
         ])
 
+        // tokenName.toString() === "NK" ? "NAKA" : tokenName.toString()
         resolve({
           symbol: tokenSymbol.toString(),
-          tokenName:
-            tokenName.toString() === "NK" ? "NAKA" : tokenName.toString(),
+          tokenName: "NAKA",
           totolSupply: totalSupply,
           decimals: decimalsPromise,
           address: _tokenAddress,

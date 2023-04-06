@@ -48,7 +48,7 @@ const CardTournamentNewsSlide = ({
       md={3.5}
       className="hidden lg:block"
     >
-      <div className="relative pt-4 pl-8">
+      <div className="relative pl-8 pt-4">
         <Image
           src={image}
           width={280}

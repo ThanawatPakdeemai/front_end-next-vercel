@@ -4,6 +4,7 @@ import React from "react"
 import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
 import { useRouter } from "next/router"
 import Link from "next/link"
+import { Trans } from "react-i18next"
 
 interface IProp extends IMenu {
   active?: boolean
@@ -47,7 +48,11 @@ const MenuItemCustom = ({
       >
         <ListItemIcon>{icon}</ListItemIcon>
         <div className="flex w-full items-center justify-between">
-          <ListItemText className="w-full">{props.label}</ListItemText>
+          <ListItemText className="w-full">
+            <Trans i18nKey={props.label as string}>
+              {props.label as string}
+            </Trans>
+          </ListItemText>
           <ListItemText className="mr-3">{endText}</ListItemText>
         </div>
         {endIcon && <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />}

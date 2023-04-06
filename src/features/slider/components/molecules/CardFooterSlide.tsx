@@ -7,6 +7,7 @@ import { Box } from "@mui/material"
 import useGlobal from "@hooks/useGlobal"
 import useFavoriteGameContoller from "@feature/favourite/containers/hooks/useFavoriteGameContoller"
 import { useTranslation } from "react-i18next"
+import { useRouter } from "next/router"
 
 interface IContentFooterBannerSlide {
   gameData: IGame
@@ -17,9 +18,14 @@ const CardFooterSlide = ({
   gameData,
   text = "play_now"
 }: IContentFooterBannerSlide) => {
+  const router = useRouter()
   const { t } = useTranslation()
-  const { onHandleSetGameStore, getTypeGamePathFolder, stateProfile } =
-    useGlobal()
+  const {
+    onHandleSetGameStore,
+    getTypeGamePathFolder,
+    stateProfile,
+    isRedirectRoomlist
+  } = useGlobal()
   const { onClickFavouriteButton, favouriteStatus } = useFavoriteGameContoller({
     playerId: stateProfile?.id ?? "",
     gameId: gameData.id
@@ -43,9 +49,16 @@ const CardFooterSlide = ({
           color="secondary"
           variant="contained"
           className="w-full"
-          href={`/${getTypeGamePathFolder(gameData)}/${gameData.path}`}
+          // href={`/${getTypeGamePathFolder(gameData)}/${
+          //   gameData.path
+          // }${isRedirectRoomlist(gameData).toString()}`}
           onClick={() => {
             onHandleSetGameStore(getTypeGamePathFolder(gameData), gameData)
+            router.push(
+              `/${getTypeGamePathFolder(gameData)}/${
+                gameData.path
+              }${isRedirectRoomlist(gameData).toString()}`
+            )
           }}
         />
       </Box>

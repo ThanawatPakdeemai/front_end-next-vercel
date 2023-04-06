@@ -57,7 +57,7 @@ const HeroSection = ({
       />
     )}
     <div
-      className={`absolute top-0 left-0 z-[2] flex h-full w-full items-center justify-center px-6 ${className}`}
+      className={`absolute left-0 top-0 z-[2] flex h-full w-full items-center justify-center px-6 ${className}`}
     >
       <div className="container mx-auto">
         <Box className="relative">{children}</Box>

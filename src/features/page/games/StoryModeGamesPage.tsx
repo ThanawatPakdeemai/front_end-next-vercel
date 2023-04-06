@@ -7,6 +7,7 @@ import { v4 as uuid } from "uuid"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 import { Box } from "@mui/material"
 import DropdownLimit from "@components/atoms/DropdownLimit"
+import NoData from "@components/molecules/NoData"
 
 const StoryModeGamesPage = () => {
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
@@ -26,7 +27,7 @@ const StoryModeGamesPage = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="mx-2 mb-6 grid grid-cols-2 gap-x-2 gap-y-4 md:mx-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {loadingFilterGame
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
           : gameFilter &&
@@ -41,13 +42,16 @@ const StoryModeGamesPage = () => {
                 setCooldown={setCooldown}
                 href={gameLink(game)}
                 onHandleClick={() => onSetGameStore(game)}
-                gameType="story-mode"
+                gameType="story-mode-games"
+                play_total_count={game?.play_total_count}
               />
             ))}
       </div>
 
       {totalCount === 0 && (
-        <div className="d-flex justify-center text-center">No data</div>
+        <div className="d-flex justify-center text-center">
+          <NoData />
+        </div>
       )}
 
       <Box

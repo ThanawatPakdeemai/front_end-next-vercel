@@ -22,11 +22,10 @@ export type TTypeCode =
   | "survival_01"
 
 export type IGetType =
-  | "play-to-earn"
   | "play-to-earn-games"
-  | "free-to-play"
   | "free-to-play-games"
-  | "story-mode"
+  | "story-mode-games"
+  | "free-to-play"
   | "storymode"
   | "must-try"
   | "hot-game"
@@ -133,6 +132,31 @@ export interface IGameArcadeEmporium {
   animation_nft_arcade_game: string
 }
 
+export interface IGameRoomList {
+  amount_current_player: number
+  game_free_to_earn: boolean
+  game_id: string
+  game_name: string
+  game_path: string
+  game_type: string
+  game_type_code: string
+  game_url: string
+  image_category_list: string
+  item_id: string
+  item_image: string
+  item_name: string
+  item_size: string
+  room_number: number
+  _id: string
+}
+export interface IGameRoomAvailable {
+  item_image: string
+  item_name: string
+  item_size: string
+  room_list: IGameRoomList[]
+  room_list_url: string
+}
+
 export interface IGame extends IGameArcadeEmporium {
   _id: string
   howto: IGameHowTo
@@ -193,6 +217,7 @@ export interface IGame extends IGameArcadeEmporium {
 
   // When is_NFT: true
   NFT_info: INFTInfo
+  game_room_available?: IGameRoomAvailable[]
 }
 
 interface IGameHowto {

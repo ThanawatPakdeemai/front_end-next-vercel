@@ -5,12 +5,17 @@ import { IGameReward } from "@src/types/games"
 import { IRewardWeeklyData } from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
 import { RewardType } from "@feature/notification/interfaces/INotificationService"
 import NoData from "@components/molecules/NoData"
+import { IGameCurrentPlayer } from "@feature/game/interfaces/IGameService"
 import NumberRank from "../atoms/NumberRank"
 import PlayerList from "./PlayerList"
 
 interface IProp {
   width: string
-  players: IPlayerRanking[] | IGameReward[] | IRewardWeeklyData[]
+  players:
+    | IPlayerRanking[]
+    | IGameReward[]
+    | IRewardWeeklyData[]
+    | IGameCurrentPlayer[]
   className?: string
   rewardType?: RewardType
 }

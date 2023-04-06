@@ -13,7 +13,7 @@ import PleaseLogin from "@components/atoms/PleaseLogin"
 import useGlobal from "@hooks/useGlobal"
 
 const NakaPassPage = () => {
-  const [f2pCurType, setF2PCurType] = useState<IGetType>("story-mode")
+  const [f2pCurType, setF2PCurType] = useState<IGetType>("story-mode-games")
   const [page] = useState<number>(1)
   const profile = useProfileStore((state) => state.profile.data)
   const { hydrated } = useGlobal()
@@ -32,6 +32,7 @@ const NakaPassPage = () => {
         bgColor="bg-neutral-800"
         icon={<ShapeIcon fill="#4E5057" />}
         textColor="font-bold text-sm text-neutral-600"
+        show={false}
       />
       <div className="my-4 h-full w-full lg:my-20 lg:max-w-[1158px]">
         <div>

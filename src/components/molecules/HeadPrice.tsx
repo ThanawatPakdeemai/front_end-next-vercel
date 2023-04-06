@@ -54,7 +54,7 @@ const HeadPrice = ({
           <span className="mr-1 text-purple-primary">Polygon : </span>
           {siteInfo.contract && (
             <Link
-              href={`${CONFIGS.CHAIN.POLYGON_SCAN}/address/${CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT}`}
+              href={`${CONFIGS.CHAIN.POLYGON_SCAN}/address/${CONFIGS.CONTRACT_ADDRESS.NAKA}`}
               target="_blank"
             >
               <Typography
@@ -62,11 +62,11 @@ const HeadPrice = ({
                 component="span"
                 variant="body1"
                 onClick={() =>
-                  Helper.copyClipboard(CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT)
+                  Helper.copyClipboard(CONFIGS.CONTRACT_ADDRESS.NAKA)
                 }
                 className="mt-4 cursor-pointer font-neue-machina text-sm uppercase text-purple-primary"
               >
-                {Helper.textWithDots(CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT, 8)}
+                {Helper.textWithDots(CONFIGS.CONTRACT_ADDRESS.NAKA, 8)}
               </Typography>
             </Link>
           )}
@@ -142,7 +142,7 @@ const HeadPrice = ({
           )}
           <button
             type="button"
-            className="absolute top-0 right-0 z-[51] m-auto flex w-full max-w-[150px] flex-row items-center justify-center bg-error-main sm:h-[100%] sm:w-[150px] sm:rounded-br-lg lg:relative lg:right-auto lg:top-auto lg:h-[30px] lg:w-[150px] lg:justify-evenly xl:m-0 xl:ml-4"
+            className="absolute right-0 top-0 z-[51] m-auto flex w-full max-w-[150px] flex-row items-center justify-center bg-error-main sm:h-[100%] sm:w-[150px] sm:rounded-br-lg lg:relative lg:right-auto lg:top-auto lg:h-[30px] lg:w-[150px] lg:justify-evenly xl:m-0 xl:ml-4"
             onClick={handleOpen}
           >
             <div className="font-neue-machina text-sm uppercase text-white-primary">

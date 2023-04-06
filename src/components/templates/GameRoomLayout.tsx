@@ -31,8 +31,8 @@ const GameRoomLayout = ({
   const renderStatistic = () => {
     if (!gameData) return null
     switch (getTypeGamePathFolder(gameData as IGame)) {
-      case "story-mode":
-      case "free-to-play":
+      case "story-mode-games":
+      case "free-to-play-games":
         return null
       default:
         return (
@@ -42,6 +42,7 @@ const GameRoomLayout = ({
               textColor="text-neutral-500 font-bold"
               text="Don't miss the information analysis about this game"
               icon={<ShineIcon />}
+              show={false}
             />
             <div className="flex flex-wrap gap-3 xl:flex-row xl:flex-nowrap">
               {/* <LikeNoLobby

@@ -29,6 +29,7 @@ const GameSummaryBodyReturnItem = ({
       textColor="text-error-contrastText font-bold text-[12px]"
       text={text}
       className="left-[200px] top-10 !my-0 hidden rotate-[30deg] overflow-hidden lg:block"
+      show={false}
     />
     <CardSummaryMain
       title="Return Used Item"

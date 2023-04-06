@@ -81,7 +81,7 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
       <Typography className="mb-6 font-neue-machina-bold text-xl uppercase">
         {`Event : ${eventDetailData?.data[0].name}`}
       </Typography>
-      <div className="flex items-center justify-between rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 font-neue-machina-bold md:mb-4 md:w-full md:py-8 md:px-4">
+      <div className="flex items-center justify-between rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 font-neue-machina-bold md:mb-4 md:w-full md:px-4 md:py-8">
         <Typography className="uppercase">
           {`Event start : ${dayjs(eventDetailData?.data[0].date_start).format(
             "DD MMM YYYY"
@@ -108,13 +108,13 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
         }
         aside={eventDetailData?.data[0].event_detail}
       />
-      <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2 md:w-4/6 md:py-8 md:px-16 md:text-center md:text-base">
+      <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2 md:w-4/6 md:px-16 md:py-8 md:text-center md:text-base">
         {`
           COMMENT AND HASHTAG #YOUR_USERNAME #NAKARUNNER IN YOUR TWITTER SHARING
           NAKA RUNNER CHALLENGE POST TO MAKE SURE YOU ATTEND THE EVENT [FIRST 102 PEOPLE TO SCORE OVER 250,000 WILL WIN THE REWARD]
           `}
       </div>
-      <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2 md:w-4/6 md:py-8 md:px-16 md:text-center md:text-base">
+      <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2 md:w-4/6 md:px-16 md:py-8 md:text-center md:text-base">
         <Typography className="font-dogicapixel-bold text-center  uppercase">
           Weekly Price Pool
         </Typography>

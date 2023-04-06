@@ -140,7 +140,7 @@ module.exports = {
         transparent: "transparent"
       },
       screens: {
-        "3xl": "1600px"
+        "3xl": "1601px"
       },
       borderRadius: {
         less: "4px",

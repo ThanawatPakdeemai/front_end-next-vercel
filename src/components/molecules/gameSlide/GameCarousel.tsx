@@ -10,6 +10,7 @@ import { IRoomAvaliableData } from "@feature/home/interfaces/IHomeService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
+import { Box } from "@mui/material"
 
 interface IProps {
   menu: IHeaderSlide
@@ -38,11 +39,11 @@ const GameCarousel = ({
   checkTimer = false,
   curType,
   setCurType,
-  showSlideCurrent,
   onPlaying = false
 }: IProps) => {
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
-  const showSlide = showSlideCurrent ?? 6
+
+  const showSlide = list.length < 5 ? list.length : 6
   const settings: Settings = {
     dots: false,
     infinite: true,
@@ -78,7 +79,8 @@ const GameCarousel = ({
       }
     ]
   }
-  const { onHandleSetGameStore, getTypeGamePathFolder } = useGlobal()
+  const { onHandleSetGameStore, getTypeGamePathFolder, isRedirectRoomlist } =
+    useGlobal()
   const { onSetGameItemSelectd } = useGameStore()
   const profile = useProfileStore((state) => state.profile.data)
   const game = useGameStore((state) => state.data)
@@ -106,7 +108,25 @@ const GameCarousel = ({
         setCurType={setCurType}
         onPlaying
       />
-      <div className="overflow-hidden">
+      <Box
+        className={`game-carousel-slide overflow-hidden ${
+          list.length < 5 && "slick-slider-w-auto"
+        }`}
+        sx={
+          list.length <= 6
+            ? {
+                "&.game-carousel-slide": {
+                  ".slick-track": {
+                    marginLeft: "0"
+                  }
+                  // ".slick-slide.slick-cloned": {
+                  //   display: "none"
+                  // }
+                }
+              }
+            : {}
+        }
+      >
         <Slider
           ref={sliderRef}
           {...settings}
@@ -123,18 +143,15 @@ const GameCarousel = ({
                 cooldown={cooldown}
                 setCooldown={setCooldown}
                 staminaRecovery={staminaRecovery}
-                href={`/${curType}-games/${
-                  !onPlaying ? item?.path : item?.game_url?.split("/")?.[3]
-                }${
-                  item?.play_to_earn_status === "free" ||
-                  item?.tournament ||
-                  onPlaying
-                    ? "/roomlist"
-                    : ""
-                }`}
+                href={`/${
+                  item.is_NFT ? "arcade-emporium" : getTypeGamePathFolder(item)
+                }/${item.path}${isRedirectRoomlist(item).toString()}`}
                 onPlaying={onPlaying}
                 onHandleClick={() => {
-                  onHandleSetGameStore(curType, item)
+                  onHandleSetGameStore(
+                    item.is_NFT ? "arcade-emporium" : curType,
+                    item
+                  )
                   if (onPlaying && item?.play_to_earn_status !== "free") {
                     const itemSelect = gameItemList?.find(
                       (ele) => ele.item_size === item.item_size
@@ -142,11 +159,15 @@ const GameCarousel = ({
                     if (itemSelect) onSetGameItemSelectd(itemSelect)
                   }
                 }}
-                gameType={getTypeGamePathFolder(item)}
+                gameType={
+                  item.is_NFT ? "arcade-emporium" : getTypeGamePathFolder(item)
+                }
+                play_total_count={game?.play_total_count}
+                room_available={game?.game_room_available}
               />
             ))}
         </Slider>
-      </div>
+      </Box>
     </div>
   )
 }

@@ -18,10 +18,12 @@ import SlideAvatar from "@feature/avatar/components/molecules/SlideAvatar"
 import useGetAvatar from "@feature/avatar/containers/hook/useGetAvatar"
 import { MESSAGES } from "@constants/messages"
 import { useRouter } from "next/router"
+import { useTranslation } from "react-i18next"
 
 const FormCreateProfile = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { onSetProfileData } = useProfileStore()
+  const { t } = useTranslation()
 
   const [defaultAvatar, setDefaultAvatar] = useState<string>(
     profile ? profile?.avatar : ""
@@ -90,7 +92,7 @@ const FormCreateProfile = () => {
               setDefaultAvatar={setDefaultAvatar}
             />
           ) : (
-            "loading..."
+            `{${t("loading")}}`
           )}
           <Box>
             <input
@@ -113,8 +115,8 @@ const FormCreateProfile = () => {
               value={profile?.user_ip_address}
               {...register("_user_ip_address")}
             />
-            <Typography className="mt-2 mb-1 font-neue-machina text-sm uppercase  text-neutral-500">
-              display name
+            <Typography className="mb-1 mt-2 font-neue-machina text-sm uppercase  text-neutral-500">
+              {t("display name")}
             </Typography>
             <TextField
               className="mb-5 w-full"
@@ -145,7 +147,7 @@ const FormCreateProfile = () => {
             />
           </Box>
           <Typography className=" font-neue-machina text-sm   text-neutral-500">
-            Avatar
+            {t("avatar")}
           </Typography>
           {avatar ? (
             <Box className="hide-scroll mt-2 flex w-[350px] items-center gap-3 overflow-x-scroll pb-3">
@@ -176,7 +178,8 @@ const FormCreateProfile = () => {
               ))}
             </Box>
           ) : (
-            "loading..."
+            // "loading..."
+            `{${t("loading")}}`
           )}
 
           <CheckBoxNaka

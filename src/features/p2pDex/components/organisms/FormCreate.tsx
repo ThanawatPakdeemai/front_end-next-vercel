@@ -9,6 +9,7 @@ import useLoadingStore from "@stores/loading"
 import { MESSAGES } from "@constants/messages"
 import { useToast } from "@feature/toast/containers"
 import Balance from "@components/molecules/balance/Balance"
+import { useTranslation } from "react-i18next"
 import Form from "../molecules/Form"
 
 interface IProp {
@@ -27,6 +28,7 @@ const FormCreate = ({ type = "buy" }: IProp) => {
   const formData = useForm({
     defaultValues: { price: "", amount: "" }
   })
+  const { t } = useTranslation()
 
   // useEffect(() => {
   //   nakaVaultBalance
@@ -95,12 +97,12 @@ const FormCreate = ({ type = "buy" }: IProp) => {
         />
       </div>
       <div className="flex   justify-center">
-        <div className="mt-10 flex w-[454px] items-center  justify-center rounded-lg bg-neutral-780 p-10">
+        <div className="mt-10 flex w-full items-center justify-center  rounded-lg bg-neutral-780 p-10 md:w-[454px]">
           <div className="flex w-full items-center justify-center">
             <div className=" m-auto w-full flex-row  gap-y-3 rounded-[13px]  px-[5px] py-[5px]">
               <div className="my-5 flex items-center">
                 <Typography className="mr-3 whitespace-nowrap font-neue-machina text-sm uppercase text-neutral-500">
-                  your wallet balance
+                  {t("your_wallet_balance")}
                 </Typography>
                 <HrLine className="" />
               </div>

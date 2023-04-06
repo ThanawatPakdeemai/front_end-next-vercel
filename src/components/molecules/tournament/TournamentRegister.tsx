@@ -9,6 +9,7 @@ import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import usetournament from "@feature/tournament/containers/hooks/usetournament"
 import { Box, Stack } from "@mui/material"
 import ModalHeader from "@components/molecules/Modal/ModalHeader"
+import { useTranslation } from "react-i18next"
 
 const TournamentRegister = () => {
   const time: boolean = true
@@ -16,6 +17,7 @@ const TournamentRegister = () => {
   const [readed, setReaded] = useState(false)
   // eslint-disable-next-line no-unused-vars
   const [isOpen, setIsOpen] = useState(false)
+  const { t } = useTranslation()
 
   // When user scroll
   // const listInnerRef = useRef<HTMLDivElement>(null)
@@ -48,7 +50,7 @@ const TournamentRegister = () => {
             <div className="rounded-[10px] border-2   border-neutral-600 bg-neutral-800 px-2 py-[4px]">
               <CloseOutlinedIcon className="text-sm" />
             </div>
-            <div className="ml-4 mb-2 rounded-[9px]  border-2   border-neutral-700 bg-neutral-900 px-2  py-[4px] text-neutral-400">
+            <div className="mb-2 ml-4 rounded-[9px]  border-2   border-neutral-700 bg-neutral-900 px-2  py-[4px] text-neutral-400">
               <p className="uppercase ">Need 20 Tickets</p>
             </div>
           </div>
@@ -56,7 +58,7 @@ const TournamentRegister = () => {
             <div className="rounded-[10px] border-2   border-neutral-600 bg-neutral-800 px-2 py-[4px]">
               <CloseOutlinedIcon className="text-sm" />
             </div>
-            <div className="ml-4 mb-2 rounded-[9px]  border-2   border-neutral-700 bg-neutral-900 px-2  py-[4px] text-neutral-400">
+            <div className="mb-2 ml-4 rounded-[9px]  border-2   border-neutral-700 bg-neutral-900 px-2  py-[4px] text-neutral-400">
               <p className="uppercase ">
                 5 transaction at any games in our system
               </p>
@@ -66,7 +68,7 @@ const TournamentRegister = () => {
             <div className="rounded-[10px] border-2   border-green-lemon bg-neutral-800 px-2 py-[4px] ">
               <CheckOutlinedIcon className="text-sm text-green-lemon" />
             </div>
-            <div className="ml-4 mb-2 rounded-[9px]  border-2   border-neutral-700 bg-green-lemon px-2  py-[4px] text-black-100">
+            <div className="mb-2 ml-4 rounded-[9px]  border-2   border-neutral-700 bg-green-lemon px-2  py-[4px] text-black-100">
               <p className="uppercase ">Separate group by time zone</p>
             </div>
           </div>
@@ -74,7 +76,7 @@ const TournamentRegister = () => {
             <div className="rounded-[10px] border-2   border-neutral-600 bg-neutral-800 px-2 py-[4px]">
               <CloseOutlinedIcon className="text-sm" />
             </div>
-            <div className="ml-4 mb-2 rounded-[9px]  border-2   border-neutral-700 bg-neutral-900 px-2  py-[4px] text-neutral-400">
+            <div className="mb-2 ml-4 rounded-[9px]  border-2   border-neutral-700 bg-neutral-900 px-2  py-[4px] text-neutral-400">
               <p className="uppercase ">Each zone can see only their rooms</p>
             </div>
           </div>
@@ -181,9 +183,7 @@ const TournamentRegister = () => {
                       checked={readed}
                     />
                   </label>
-                  <p className="text-sm">
-                    Would you like to subscribe to Nakamoto Games Newsletter?
-                  </p>
+                  <p className="text-sm">{t("nakamoto_games_newsletter")}</p>
                 </div>
                 <div className="my-4 grid w-full grid-cols-2 gap-4">
                   <button

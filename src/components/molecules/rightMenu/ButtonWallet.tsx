@@ -1,6 +1,7 @@
 import { memo } from "react"
 import { Image } from "@components/atoms/image"
 import { Box } from "@mui/material"
+import { Trans } from "react-i18next"
 
 interface IProp {
   handleButton: () => void
@@ -30,7 +31,9 @@ const ButtonWallet = ({ handleButton, title }: IProp) => (
         width={20}
         height={20}
       />
-      <p className="ml-4 mr-2 font-bold uppercase">{title}</p>
+      <p className="ml-4 mr-2 font-bold uppercase">
+        <Trans i18nKey={title} />
+      </p>
     </Box>
   </>
 )

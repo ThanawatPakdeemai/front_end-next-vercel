@@ -18,10 +18,10 @@ const Header = () => {
   return (
     <>
       {showHeadPrice && <HeadPrice />}
-      <header className="header top-10 z-[999] lg:sticky">
+      <header className="header relative top-10 z-[999] lg:sticky">
         <Box
           component="div"
-          className="flex flex-wrap items-center justify-between lg:my-10 xl:flex-nowrap"
+          className="flex flex-wrap items-center justify-between md:my-10 xl:flex-nowrap"
         >
           <HeadLogo />
           {showHeadMenu && <HeadMenu />}

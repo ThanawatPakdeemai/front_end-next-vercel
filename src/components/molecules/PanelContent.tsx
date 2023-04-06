@@ -19,7 +19,7 @@ const PanelContent = ({
 }: IPanelContentProps) => (
   <Box
     sx={sxCustomStyled}
-    className={`panel-content relative ${height}`}
+    className={`panel-content relative text-neutral-500 ${height}`}
   >
     <div className="custom-scroll h-[90%] overflow-y-scroll pr-4">
       {children}

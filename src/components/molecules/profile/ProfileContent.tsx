@@ -24,6 +24,7 @@ import { useRouter } from "next/router"
 import useGetProfileByEmail from "@feature/profile/containers/hook/getProfileByEmail"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
+import { useTranslation } from "react-i18next"
 import EditProfileModal from "./EditProfileModal"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
@@ -43,6 +44,8 @@ const ProfileContent = () => {
   const router = useRouter()
   const { errorToast } = useToast()
   const { player_id } = router.query
+
+  const { t } = useTranslation()
 
   const {
     getProfileInfo: profileDataFromQuery,
@@ -165,11 +168,11 @@ const ProfileContent = () => {
           profile.data &&
           profile.data.id === (player_id as string) && (
             <>
-              <div className="absolute top-0 right-0 m-1 sm:m-4">
+              <div className="absolute right-0 top-0 m-1 sm:m-4">
                 <ButtonToggleIcon
                   handleClick={handleOnExpandClick}
                   startIcon={<SettingIcon />}
-                  text="Edit Profile"
+                  text={t("edit_profile")}
                   className="z-[2] h-[40px] w-fit bg-neutral-900 !text-[8px] font-bold capitalize text-white-default sm:h-[50px] sm:w-[148px] sm:text-sm"
                   type="button"
                 />
@@ -188,8 +191,8 @@ const ProfileContent = () => {
       </div>
       <div className="relative">
         <Tagline
-          className="!my-2 mt-4 mb-4"
-          text="Nakamoto.Games - SECURE. SUBLIME. SIMPLE. EARN $NAKA TODAY."
+          className="!my-2 mb-4 mt-4"
+          text={t("simple_tagline")}
           bgColor={platinumCount === 0 ? `bg-neutral-800` : `bg-error-main`}
           icon={
             <ShapeIcon fill={platinumCount === 0 ? `#4E5057` : `#18181C`} />
@@ -197,11 +200,12 @@ const ProfileContent = () => {
           textColor={`font-bold text-sm ${
             platinumCount === 0 ? "text-neutral-600" : "text-neutral-900"
           } `}
+          show={false}
         />
         <div className="flex w-full justify-center">
           <div className="absolute bottom-[-50px] z-10 h-[110px] w-[110px] rounded-3xl border-8 border-neutral-900 bg-neutral-700 sm:h-[150px] sm:w-[150px]">
             <div
-              className="absolute top-[-20px] right-[28px]
+              className="absolute right-[28px] top-[-20px]
    z-20"
             >
               <div className="relative">
@@ -241,7 +245,7 @@ const ProfileContent = () => {
       </div>
       <div className="flex w-full justify-center">
         <Typography className="text-xs font-bold uppercase text-error-main">
-          Joined : {dayjs(profileFetched.createdAt).format("MMM YYYY")}
+          {t("Joined")} : {dayjs(profileFetched.createdAt).format("MMM YYYY")}
         </Typography>
       </div>
       <div className="flex justify-center">
@@ -249,36 +253,36 @@ const ProfileContent = () => {
           {getProfileInfo && (
             <>
               <TotalCardContent
-                text="Total Matches"
+                text={t("total_matches")}
                 totalNumber={getProfileInfo.data.total_game_played}
                 rank={false}
               />
               <TotalCardContent
-                text="Total Win rate"
+                text={t("total_win_rate")}
                 totalNumber={getProfileInfo.data.total_win_rate}
                 rank={false}
               />
               <TotalCardContent
-                text="Total rewards (naka)"
+                text={t("total_rewards")}
                 totalNumber={Helper.number4digit(
                   getProfileInfo.data.total_reward
                 )}
                 rank={false}
               />
               <TotalCardContent
-                text="Platinum"
+                text={t("platinum")}
                 totalNumber={platinumCount}
                 rank
                 icon="platinum"
               />
               <TotalCardContent
-                text="Silver"
+                text={t("silver")}
                 totalNumber={silverCount}
                 rank
                 icon="silver"
               />
               <TotalCardContent
-                text="Bronze"
+                text={t("bronze")}
                 totalNumber={bronzeCount}
                 rank
                 icon="bronze"

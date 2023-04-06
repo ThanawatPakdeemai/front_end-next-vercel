@@ -11,6 +11,7 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import { Typography } from "@mui/material"
 import useChainSupportStore from "@stores/chainSupport"
 import WalletAddress from "@feature/wallet/components/atoms/WalletAddress"
+import { useTranslation } from "react-i18next"
 import BalanceWallet from "./BalanceWallet"
 
 interface IProp {
@@ -31,7 +32,7 @@ const MetamaskWallet = ({
 }: IProp) => {
   const { onAddToken, isConnected } = useWeb3Provider()
   const { currentChainSelected, currentTokenSelected } = useChainSupportStore()
-
+  const { t } = useTranslation()
   /**
    * @description Handle display balances from wallet
    */
@@ -54,7 +55,7 @@ const MetamaskWallet = ({
     ) : (
       <ButtonToggleIcon
         startIcon={null}
-        text="Connect Wallet"
+        text={t("Connect Wallet")}
         type="button"
         className="min-h-[40px] bg-secondary-main text-sm text-white-primary"
         handleClick={handleConnectWallet}
@@ -80,21 +81,21 @@ const MetamaskWallet = ({
         <div className="my-6 flex flex-col items-center gap-4">
           <span className="text-[14px] uppercase text-neutral-300">
             {isConnected
-              ? "connected with metamask"
-              : "not connected with metamask"}
+              ? t("connected_with_metamask")
+              : t("not_connected_with_metamask")}
           </span>
           <Typography
             variant="h3"
             className="import-token--title my-4 text-center text-sm"
           >
-            {`Don't see your token on Metamask?`}
+            {t("dont_see_token_on_metamask")}
             <span className="block">
               <button
                 type="button"
                 onClick={onAddToken}
                 className="mt-1 text-sm underline hover:no-underline"
               >
-                Import NAKA Token
+                {t("import_NAKA_token")}
               </button>
             </span>
           </Typography>
@@ -104,7 +105,7 @@ const MetamaskWallet = ({
           {isConnected ? (
             <div className="flex gap-2">
               <TextLink
-                name={`${currentTokenSelected?.symbol} Scan`}
+                name={`${currentTokenSelected?.symbol} ${t("scan")}`}
                 className="!pb-0 capitalize"
                 onClick={() =>
                   window.open(
@@ -115,7 +116,7 @@ const MetamaskWallet = ({
               />
               <span className="text-neutral-700">|</span>
               <TextLink
-                name="Disconnect"
+                name={t("disconnect")}
                 className="!pb-0 capitalize"
                 icon={<CloseIcon sx={{ height: 14 }} />}
                 onClick={handleOnDisconnectWallet}
@@ -123,7 +124,7 @@ const MetamaskWallet = ({
             </div>
           ) : (
             <TextLink
-              name="What is metamask ?"
+              name={t("what_is_metamask")}
               className="!pb-0 capitalize"
               href="https://metamask.io/"
               target="_blank"

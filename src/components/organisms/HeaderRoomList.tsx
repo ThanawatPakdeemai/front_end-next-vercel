@@ -8,6 +8,7 @@ import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import ModalCreateRoom from "@feature/rooms/components/molecules/ModalCreateRoom"
 import { useSocketProviderRoom } from "@providers/SocketProviderRoom"
+import { useTranslation } from "react-i18next"
 
 export interface IHeaderRoomList {
   lobby: string
@@ -18,6 +19,7 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
   const { data, itemSelected } = useGameStore()
   const { searchRoom } = useSocketProviderRoom()
   const [gameData, setGameData] = useState<IGame>()
+  const { t } = useTranslation()
 
   useEffect(() => {
     let load = false
@@ -45,7 +47,7 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
             />
           </div>
           <h1 className="text-white-defzault self-center uppercase">
-            Lobby :{lobby}
+            {t("lobby")} :{lobby}
             {gameData?.play_to_earn || gameData?.tournament ? (
               ""
             ) : (
@@ -61,10 +63,10 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
             className="w-[174px] rounded-lg"
           /> */}
           {gameData && gameData.game_type === "multiplayer" && (
-            <>
+            <div className="flex flex-col sm:flex-row">
               <TextField
                 className="w-full md:px-2"
-                placeholder="Search Room"
+                placeholder={String(t("search_room"))}
                 InputProps={{
                   style: {
                     fontSize: "14px",
@@ -78,7 +80,7 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
                 }}
               />
               <ModalCreateRoom gameData={gameData} />
-            </>
+            </div>
           )}
         </div>
       </div>

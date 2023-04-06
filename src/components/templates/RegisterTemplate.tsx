@@ -11,6 +11,7 @@ import Tagline from "@components/molecules/tagline/Tagline"
 import VectorIcon from "@components/icons/VectorIcon"
 import { useRouter } from "next/router"
 import useRegisterAvatarStore from "@stores/registerAvater"
+import { useTranslation } from "react-i18next"
 
 const KeyFramesClockwise = styled("div")({
   "@keyframes rotation": {
@@ -64,6 +65,7 @@ interface IRegisterTemplate {
 const RegisterTemplate = ({ children, background }: IRegisterTemplate) => {
   const router = useRouter()
   const { referral } = router.query
+  const { t } = useTranslation()
 
   const {
     formState: { errors }
@@ -110,9 +112,10 @@ const RegisterTemplate = ({ children, background }: IRegisterTemplate) => {
               <Tagline
                 bgColor="bg-neutral-800"
                 textColor="text-neutral-500"
-                text="SECURE. SUBLIME. SIMPLE. EARN $NAKA TODAY. "
+                text={t("main_tagline")}
                 icon={<VectorIcon />}
                 className="!my-[2.938rem]"
+                show={false}
               />
             </Box>
           </Grid>

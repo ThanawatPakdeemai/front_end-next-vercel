@@ -1,14 +1,13 @@
 import styled from "@emotion/styled"
 import { TableCell, TableRow } from "@mui/material"
 import React, { memo } from "react"
-import { useTranslation } from "react-i18next"
+import NoData from "@components/molecules/NoData"
 
 interface IProps {
   className?: string
 }
 
 const TableNoData = ({ className }: IProps) => {
-  const { t } = useTranslation()
   /**
    * @description This is the table row style
    */
@@ -28,7 +27,7 @@ const TableNoData = ({ className }: IProps) => {
   return (
     <TableRowStyle className={`${className} bg-neutral-900 px-3.5`}>
       <TableCellStyle className="font-neue-machina-bold uppercase text-neutral-400">
-        {t("no_data")}
+        <NoData />
       </TableCellStyle>
     </TableRowStyle>
   )

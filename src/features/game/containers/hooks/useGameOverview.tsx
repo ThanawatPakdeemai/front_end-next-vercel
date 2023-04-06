@@ -14,8 +14,9 @@ import { IVerticalThumbSlide } from "@feature/slider/interfaces/ISlides"
 import { IGameItemList } from "@feature/gameItem/interfaces/IGameItemService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import useGameStore from "@stores/game"
-import { SLIDES_GAME_MOCKUP } from "@constants/images"
+import { GAME_MOCKUP_CARD, SLIDES_GAME_MOCKUP } from "@constants/images"
 import { v4 as uuid } from "uuid"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 
 /**
  * @description Game Overview Hook functions to handle all game overview data
@@ -28,6 +29,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   const gamePartnerSocial: IMenuBase[] = []
   const gameData = useGameStore((state) => state.data)
   const partnerGames = useGameStore((state) => state.dataGamePartner)
+  const { gameItemList } = useBuyGameItemController()
 
   const [gameDataState, setGameDataState] = React.useState<IGame>()
   const [gamePartnerState, setGamePartnerState] =
@@ -60,8 +62,10 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
               name: category.name,
               link: `/categories/${
                 category.slug
-                  ? category.slug
-                  : category.name.toLocaleLowerCase()
+                  ? `${category.slug}?id=${category._id}`
+                  : `${category.name.toLocaleLowerCase().split(" ")[1]}?id=${
+                      category._id
+                    }`
               }`
             })
           )
@@ -75,8 +79,10 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
                 name: category.name,
                 link: `/categories/${
                   category.slug
-                    ? category.slug
-                    : category.name.toLocaleLowerCase()
+                    ? `${category.slug}?id=${category.id}`
+                    : `${category.name.toLocaleLowerCase().split(" ")[1]}?id=${
+                        category.id
+                      }`
                 }`
               })
             )
@@ -86,8 +92,10 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
               name: gameData?.category.name,
               link: `/categories/${
                 gameData?.category.slug
-                  ? gameData?.category.slug
-                  : gameData?.category.name.toLocaleLowerCase().split(" ")[1]
+                  ? `${gameData?.category.slug}/?id=${gameData?.category.id}`
+                  : `${
+                      gameData?.category.name.toLocaleLowerCase().split(" ")[1]
+                    }/?id=${gameData?.category.id}`
               }`
             })
         break
@@ -255,32 +263,42 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
             {
               id: uuid(),
               type: "image",
-              src: gameData ? gameData.image_banner : ""
+              src: gameData ? gameData.image_banner : GAME_MOCKUP_CARD[0].src
             },
             {
               id: uuid(),
               type: "video",
-              src: gameData ? gameData.animation_nft_arcade_game : ""
+              src: gameData
+                ? gameData.animation_nft_arcade_game
+                : GAME_MOCKUP_CARD[1].src
             },
             {
               id: uuid(),
               type: "image",
-              src: gameData ? gameData.image_nft_arcade_game : ""
+              src: gameData
+                ? gameData.image_nft_arcade_game
+                : GAME_MOCKUP_CARD[2].src
             },
             {
               id: uuid(),
               type: "image",
-              src: gameData ? gameData.image_background : ""
+              src: gameData
+                ? gameData.image_background
+                : GAME_MOCKUP_CARD[3].src
             },
             {
               id: uuid(),
               type: "image",
-              src: gameData ? gameData.image_category_list : ""
+              src: gameData
+                ? gameData.image_category_list
+                : GAME_MOCKUP_CARD[4].src
             },
             {
               id: uuid(),
               type: "image",
-              src: gameData ? gameData.image_background : ""
+              src: gameData
+                ? gameData.image_background
+                : GAME_MOCKUP_CARD[5].src
             }
           )
         }
@@ -298,7 +316,10 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
           {
             id: uuid(),
             type: "image",
-            src: gameData ? gameData.image_background : ""
+            src:
+              gameData && gameData.image_background
+                ? gameData.image_background
+                : GAME_MOCKUP_CARD[0].src
           }
           // TODO: uncomment when game data is ready
           // {
@@ -354,11 +375,11 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
     if (gameData) {
       switch (gameType) {
         case "arcade-emporium":
-          return (
-            ("NFT_info" in gameData && gameData.NFT_info.NFT_token) ||
-            gameData.NFT_Owner ||
-            "-"
-          )
+          return gameData.is_NFT &&
+            "is_NFT" in gameData &&
+            gameData.NFT_info.NFT_token !== null
+            ? gameData.NFT_Owner
+            : "-"
         default:
           return gameData.developer || "-"
       }
@@ -408,7 +429,20 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
       case "arcade-emporium":
         return (gameData && gameData.item) || []
       default:
-        return []
+        return (gameData && gameData.item) || gameItemList || []
+    }
+  }
+
+  const getPlayingCount = (): number | undefined => {
+    if (gameDataState && "game_type" in gameDataState) {
+      switch (gameType) {
+        case "story-mode-games":
+          return gameDataState.play_total_count
+        default:
+          return undefined
+      }
+    } else {
+      return undefined
     }
   }
 
@@ -429,7 +463,8 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
     gameOwner: setGameOwner(),
     singleVersion: setSingleVersion(),
     gameHowToPlay: setGameHowToPlay(),
-    gameItems: setGameItems()
+    gameItems: setGameItems(),
+    playCount: getPlayingCount()
   }
 }
 

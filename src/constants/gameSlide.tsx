@@ -180,16 +180,22 @@ export const GAME_COMING_SOON = [
 const p2eMenu: ISlideList[] = [
   {
     id: "11",
-    label: "hot games",
-    type: "hot-game",
+    label: "Hot Games",
+    type: "play-to-earn-games",
     className: "w-[110px]"
   },
   {
     id: "12",
-    label: "play to earn games",
-    type: "play-to-earn",
+    label: "Arcade Emporium",
+    type: "arcade-emporium",
     className: "w-[166px]"
   }
+  // {
+  //   id: "12",
+  //   label: "play to earn games",
+  //   type: "play-to-earn",
+  //   className: "w-[166px]"
+  // }
 ]
 
 const onPlayingMenu: ISlideList[] = [
@@ -202,13 +208,13 @@ const onPlayingMenu: ISlideList[] = [
   {
     id: "14",
     label: "Play to earn",
-    type: "play-to-earn",
+    type: "play-to-earn-games",
     className: "w-[110px]"
   },
   {
     id: "13",
     label: "Free to play",
-    type: "free-to-play",
+    type: "free-to-play-games",
     className: "w-[110px]"
   }
 ]
@@ -219,7 +225,7 @@ export const P2EHeaderMenu: IHeaderSlide = {
       height={125}
     />
   ),
-  title: "play to earn",
+  title: "Play To Earn",
   menuList: p2eMenu,
   theme: "error",
   stickerRotate: 15,
@@ -233,7 +239,7 @@ export const StoryModeHeaderMenu: IHeaderSlide = {
       height={125}
     />
   ),
-  title: "story mode",
+  title: "Story Mode",
   menuList: p2eMenu,
   theme: "success",
   stickerRotate: 15,
@@ -265,15 +271,15 @@ export const onPlayingHeaderMenu: IHeaderSlide = {
 
 const f2pMenu: ISlideList[] = [
   {
-    id: "13",
-    label: "free mode",
-    type: "free-to-play",
+    id: "free-to-play-games",
+    label: "Free Mode",
+    type: "free-to-play-games",
     className: "w-[110px]"
   },
   {
-    id: "14",
-    label: "story mode",
-    type: "story-mode",
+    id: "story-mode-games",
+    label: "Story Mode",
+    type: "story-mode-games",
     className: "w-[166px]"
   }
   // unnessesary use
@@ -293,7 +299,7 @@ export const F2PHeaderMenu: IHeaderSlide = {
     />
   ),
   icon: <IconDollar.Not className="slick-header-secondary-icon" />,
-  title: "free to earn",
+  title: "Free To Earn",
   menuList: f2pMenu,
   theme: "secondary",
   stickerRotate: -15
@@ -302,7 +308,7 @@ export const F2PHeaderMenu: IHeaderSlide = {
 export const HeaderMenuSeasonPass: IHeaderSlide = {
   sticker: <></>,
   icon: <MapOutlinedIcon className="" />,
-  title: "story mode",
+  title: "Story Mode",
   menuList: [],
   theme: "info",
   stickerRotate: 0

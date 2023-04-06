@@ -1,5 +1,6 @@
 import { Skeleton } from "@mui/material"
 import React, { memo } from "react"
+import { v4 as uuid } from "uuid"
 
 const SkeletonCardPlayers = () => (
   <div
@@ -7,7 +8,7 @@ const SkeletonCardPlayers = () => (
           md:grid-cols-4 ${""}`}
   >
     {[...Array(8)].map((ele) => (
-      <>
+      <div key={uuid()}>
         <div key={ele}>
           <Skeleton
             variant="rectangular"
@@ -22,7 +23,7 @@ const SkeletonCardPlayers = () => (
             className="mt-3 rounded-md"
           />
         </div>
-      </>
+      </div>
     ))}
   </div>
 )

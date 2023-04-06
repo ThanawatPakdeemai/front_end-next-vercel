@@ -22,6 +22,8 @@ import React, { memo, useEffect, useMemo, useState, useCallback } from "react"
 const MultiRoomList = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
+  const { id } = router.query
+  const itemSizeId = id as string
   const { errorToast } = useToast()
   const { data, itemSelected, qtyItemOfRoom } = useGameStore()
 
@@ -38,10 +40,13 @@ const MultiRoomList = () => {
       if (itemSelected) {
         return itemSelected._id
       }
+      if (itemSizeId) {
+        return itemSizeId
+      }
     } else {
       return ""
     }
-  }, [data, itemSelected])
+  }, [data, itemSelected, itemSizeId])
 
   const propsSocketRoomlist = useMemo(
     () => ({
@@ -154,6 +159,8 @@ const MultiRoomList = () => {
       ) {
         if (player_me && player_me.status === "played") {
           errorToast(MESSAGES["you-played"])
+        } else if (router.asPath.includes("?id=")) {
+          router.push(`${router.asPath.split("?id=")[0]}/${_data._id}`)
         } else {
           router.push(`${router.asPath}/${_data._id}`)
         }
@@ -236,6 +243,7 @@ const MultiRoomList = () => {
             <OverviewContent
               gameId={data.id}
               gameType={getTypeGamePathFolder(data)}
+              gameIdNFT={data.NFT_Owner}
             />
             {data?.play_to_earn_status !== "free" && !data.tournament && (
               <CardBuyItem gameObject={data} />

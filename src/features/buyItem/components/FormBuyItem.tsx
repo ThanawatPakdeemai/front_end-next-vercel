@@ -67,21 +67,23 @@ const FormBuyItem = () => {
                 <Image
                   src={game.item[0].image}
                   alt={game.item[0].name}
-                  width={100}
-                  height={100}
-                  className="w-full p-4"
+                  width={500}
+                  height={500}
+                  className="w-[80%] object-contain p-4"
                 />
               </div>
               <div className="custom-scroll w-full overflow-y-scroll">
-                <p className="text-white-default">Asset</p>
+                <p className="text-white-default">{t("assets")}</p>
                 <p className="text-black-default">{game.item[0].name}</p>
-                <p className="text-white-default">Descriptions</p>
+                <p className="text-white-default">{t("descriptions")}</p>
                 <div className="text-black-default">{game.item[0].detail}</div>
               </div>
             </div>
           </Box>
-          <Box className="my-4 w-full pr-4">
-            <p className="py-2 uppercase text-black-default">Tier assets</p>
+          <Box className="my-4 w-full">
+            <p className="py-2 uppercase text-black-default">
+              {t("tier_assets")}
+            </p>
             {gameItemList &&
               gameItemList.length > 0 &&
               (gameItemList as IGameItemListData[]).sort(
@@ -95,7 +97,7 @@ const FormBuyItem = () => {
                     <DropdownListItem
                       {...field}
                       list={gameItemList as IGameItemListData[]}
-                      className="w-full lg:w-[410px]"
+                      className="w-full"
                       onChangeSelect={(_item) => {
                         setValue("item", _item)
                         setValue("item_id", _item.id)
@@ -109,8 +111,8 @@ const FormBuyItem = () => {
               <p className="text-sm text-error-main">{t("required")}</p>
             )}
           </Box>
-          <Box className="my-4 w-full pr-4">
-            <p className="py-2 uppercase text-black-default">Currency</p>
+          <Box className="my-4 w-full">
+            <p className="py-2 uppercase text-black-default">{t("currency")}</p>
             <Controller
               name="currency"
               control={control}
@@ -119,7 +121,7 @@ const FormBuyItem = () => {
                 <DropdownListCurrency
                   {...field}
                   list={chainSupport}
-                  className="w-full lg:w-[410px]"
+                  className="w-full"
                   onChangeSelect={(_item) => {
                     setValue("currency", _item)
                     setValue("currency_id", _item?.address)
@@ -133,7 +135,7 @@ const FormBuyItem = () => {
             )}
           </Box>
           <p className="uppercase text-purple-primary">
-            Assets / 1 Item = {watch("nakaPerItem")}
+            {t("assets")} / 1 {t("item")} = {watch("nakaPerItem")} NAKA
           </p>
 
           <div className="my-4  grid grid-cols-6  content-center gap-2 md:gap-4">
@@ -166,7 +168,7 @@ const FormBuyItem = () => {
                         setValue("qty", qty)
                       }
                     }}
-                    className="hidden-input-number h-full w-full bg-neutral-700 pt-2 pl-8 text-center text-neutral-500 focus-visible:bg-neutral-700 focus-visible:outline-0 md:w-[220px]"
+                    className="hidden-input-number h-full w-full bg-neutral-700 pl-8 pt-2 text-center text-neutral-500 focus-visible:bg-neutral-700 focus-visible:outline-0 md:w-[220px]"
                     value={watch("qty")}
                   />
                 </div>
@@ -194,15 +196,17 @@ const FormBuyItem = () => {
             </div>
           </div>
           <Box className="my-4 w-full">
-            <p className="py-2 uppercase text-black-default">Your Balance</p>
+            <p className="py-2 uppercase text-black-default">
+              {t("your_balance")}
+            </p>
             <Balance
               buyItemCoinSeleced={watch("currency")}
               widthBalance="w-full"
             />
           </Box>
-          <div className="my-2 flex w-full justify-between rounded-xl border border-neutral-700 p-4">
+          <div className="my-2 flex w-full justify-between rounded-xl border border-neutral-700 p-4 uppercase">
             <div className="">
-              <p>TOTAL PRICE:</p>
+              <p>{t("total_price")}:</p>
             </div>
             <div className="flex items-baseline text-secondary-main">
               <p className="pr-2">
@@ -222,9 +226,8 @@ const FormBuyItem = () => {
             <p className="text-sm text-black-default">
               = $
               {Helper.formatNumber(
-                watch("qty") ??
-                  0 * Number((watch("item") as IGameItemListData)?.price) ??
-                  0
+                watch("qty") *
+                  Number((watch("item") as IGameItemListData)?.price) ?? 0
               )}
             </p>
           </div>
@@ -261,7 +264,7 @@ const FormBuyItem = () => {
                 className="h-[40px] w-full text-sm"
                 href={CONFIGS.BASE_URL.MARKETPLACE}
                 target="_blank"
-                text="View in Marketplace"
+                text={t("view_in_marketplace")}
                 size="medium"
                 variant="contained"
                 icon={<ShoppingCartOutlinedIcon />}

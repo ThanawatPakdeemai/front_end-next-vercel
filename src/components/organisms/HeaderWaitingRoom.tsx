@@ -48,7 +48,11 @@ const HeaderWaitingRoom = ({
           {isSummaryPage ? (
             <ButtonClose
               onClick={() => {
-                router.push("/")
+                if (onOutRoom) {
+                  onOutRoom()
+                } else {
+                  router.push("/")
+                }
               }}
             />
           ) : (

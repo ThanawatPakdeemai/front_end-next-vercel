@@ -33,10 +33,13 @@ import { useQueryClient } from "@tanstack/react-query"
 import { PaginationNaka } from "@components/atoms/pagination"
 import { getReferrals } from "@feature/referral/containers/services/referral.service"
 import { ISortReferrals } from "@feature/referral/interface/IReferralService"
+import NoData from "@components/molecules/NoData"
+import { useTranslation } from "react-i18next"
 
 const ReferralProgramPage = () => {
   const { hydrated, pager, page, setPage } = useGlobal()
   const queryClient = useQueryClient()
+  const { t } = useTranslation()
   const [limitPage, setlimitPage] = useState(12)
   const [totalCount, setTotalCount] = useState<number>(0)
   const [sortType, setSortType] = useState<ISortReferrals>({
@@ -126,24 +129,22 @@ const ReferralProgramPage = () => {
         <div className="relative z-10 w-[calc(100%)] px-[10%]">
           <div className="sm:grid md:grid lg:flex">
             <div className="h-fit max-w-[630px] rounded-3xl border border-solid border-neutral-700 bg-neutral-800 p-2">
-              <div className="my-[30px] mr-8 ml-2 grid sm:grid md:grid-cols-3 lg:grid-cols-3">
+              <div className="my-[30px] ml-2 mr-8 grid sm:grid md:grid-cols-3 lg:grid-cols-3">
                 <div className="uppercase text-neutral-300">
                   <div className="flex pb-4 md:py-0 lg:py-0">
                     <ShareIcon className="mr-4" />
-                    <div>Share 2 Earn</div>
+                    <div>{t("share_2_earn")}</div>
                   </div>
                 </div>
                 <div className="col-span-2 text-sm text-black-default">
-                  Sharing is caring. Invite your friends to sign up and earn 3%
-                  referral fee on every game they play. Start earning passive
-                  income.
+                  {t("shere_title")}
                 </div>
               </div>
               {profile && (
                 <div className="relative h-[50px] w-full rounded-2xl border border-solid border-neutral-700 bg-primary-main">
                   <div className="ml-[15px] flex h-full items-center">
                     <Chip
-                      label="Referral Link"
+                      label={t("referral_link")}
                       variant="outlined"
                       size="small"
                       className="cursor-pointer uppercase"
@@ -166,7 +167,7 @@ const ReferralProgramPage = () => {
             {getReferralsData && (
               <CardContent
                 className="mt-4 max-w-[284px] lg:ml-3 lg:mt-0"
-                title="Your earnings"
+                title={t("your_earnings")}
                 icon={<DollarIcon />}
               >
                 <BoxContent
@@ -186,18 +187,18 @@ const ReferralProgramPage = () => {
             {getReferralsData && (
               <CardContent
                 className="col-span-2"
-                title="FRIEND REFERRALS"
+                title={t("friend_referrals")}
                 icon={<IReferrals stroke="#E1E2E2" />}
               >
                 <div className="gap-2 uppercase sm:grid md:flex lg:flex">
                   <BoxContent
                     textColor="text-secondary-main"
-                    title="total friends"
+                    title={t("total_friend")}
                     total={getReferralsData.data.data.countReferral}
                   />
                   <BoxContent
                     textColor="text-secondary-main"
-                    title="Total played games"
+                    title={t("total_played_games")}
                     total={getReferralsData.data.data.gameCountReferralPlay}
                   />
                 </div>
@@ -209,7 +210,7 @@ const ReferralProgramPage = () => {
           </div>
           <CardContent
             className="mt-8 max-w-[630px]"
-            title="REFERRALS HISTORICAL ACTIVITY"
+            title={t("referral_historical")}
             icon={<FriendsActivitiesIcon />}
           >
             <TableContainer className="mt-4">
@@ -217,12 +218,12 @@ const ReferralProgramPage = () => {
                 <TableHead>
                   <TableRow>
                     <TableCell
-                      className="w-[300px] border-b-0 pt-0 pb-1 text-start font-neue-machina-bold text-xs uppercase"
+                      className="w-[300px] border-b-0 pb-1 pt-0 text-start font-neue-machina-bold text-xs uppercase"
                       onClick={() => handleSort("username")}
                     >
                       <div className="flex">
-                        <div className="flex cursor-pointer">
-                          <p>FRIEND’S </p>
+                        <div className="flex cursor-pointer uppercase">
+                          <p>{t("friends")}</p>
                           <div className="ml-1 flex flex-col pt-0.5">
                             <KeyboardArrowUp
                               className={`mb-[-6px] text-sm ${
@@ -245,12 +246,12 @@ const ReferralProgramPage = () => {
                       </div>
                     </TableCell>
                     <TableCell
-                      className="border-b-0 pt-0 pb-1 text-start font-neue-machina-bold text-xs uppercase"
+                      className="border-b-0 pb-1 pt-0 text-start font-neue-machina-bold text-xs uppercase"
                       onClick={() => handleSort("amount")}
                     >
                       <div className="flex">
                         <div className="flex cursor-pointer">
-                          <p>REFERRAL EARNED NAKA</p>
+                          <p>{t("referral_earned_NAKA")}</p>
                           <div className="ml-1 flex flex-col pt-0.5">
                             <KeyboardArrowUp
                               className={`mb-[-6px] text-sm ${
@@ -273,12 +274,12 @@ const ReferralProgramPage = () => {
                       </div>
                     </TableCell>
                     <TableCell
-                      className="border-b-0 pt-0 pb-1 text-end font-neue-machina-bold text-xs uppercase"
+                      className="border-b-0 pb-1 pt-0 text-end font-neue-machina-bold text-xs uppercase"
                       onClick={() => handleSort("date")}
                     >
                       <div className="flex justify-end">
                         <div className="flex cursor-pointer">
-                          <p>DATE</p>
+                          <p>{t("date")}</p>
                           <div className="ml-1 flex flex-col pt-0.5">
                             <KeyboardArrowUp
                               className={`mb-[-6px] text-sm ${
@@ -371,7 +372,7 @@ const ReferralProgramPage = () => {
                         colSpan={3}
                         className="justify-center rounded-lg border border-neutral-800 bg-neutral-700 py-3 text-center"
                       >
-                        No Data
+                        <NoData />
                       </TableCell>
                     </TableRow>
                   )}

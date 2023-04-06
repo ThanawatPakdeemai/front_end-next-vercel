@@ -41,7 +41,6 @@ const BlogListPage = () => {
   const fetchRef = useRef(false)
   const queryClient = useQueryClient()
   const { select: selectHeader } = useSelectStore()
-  // const type = "date_released"
   const type = selectHeader
   const searchBlog = useSearchStore((state: any) => state.search)
 

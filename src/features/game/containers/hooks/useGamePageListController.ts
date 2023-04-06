@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react"
 import useGlobal from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
-import { IFilterGamesByKey, IGame } from "@feature/game/interfaces/IGameService"
+import {
+  IFilterGamesByKey,
+  IGame,
+  IGetType
+} from "@feature/game/interfaces/IGameService"
 import useFilterGameList from "@feature/dropdown/containers/hooks/useFilterGameList"
 import { useRouter } from "next/router"
 
-const useGamePageListController = () => {
+const useGamePageListController = (gameType?: IGetType) => {
   const router = useRouter()
   const categoryId = router.query.id
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
@@ -49,6 +53,9 @@ const useGamePageListController = () => {
     if (getGameTypeByPathname() === "arcade-emporium") {
       return "play-to-earn-games"
     }
+    if (gameType) {
+      return gameType
+    }
     return getGameTypeByPathname()
   }
 
@@ -81,9 +88,13 @@ const useGamePageListController = () => {
         category: categoryId || categoryDropdown,
         item: gameItemDropdown,
         device: deviceDropdown,
-        game_type: getGameTypeFilter(),
+        game_type:
+          getGameTypeFilter() === "arcade-emporium"
+            ? "all"
+            : getGameTypeFilter(),
         tournament: false,
-        nftgame: getGameTypeByPathname() === "arcade-emporium" ? true : "all"
+        // nftgame: getGameTypeByPathname() === "arcade-emporium" ? true : "all"
+        nftgame: getGameTypeFilter() === "arcade-emporium" ? true : "all"
       }
       mutateGetGamesByCategoryId(filterData).then((res) => {
         if (res) {
@@ -105,11 +116,8 @@ const useGamePageListController = () => {
     searchDropdown,
     page,
     limit,
-    mutateGetGamesByCategoryId
-    // getTypeGamePathFolder,
-    // onHandleSetGameStore
-    // getGameTypeByPathname
-    // filterGameList
+    mutateGetGamesByCategoryId,
+    gameType
   ])
 
   const onSetGameStore = (game: IGame) => {

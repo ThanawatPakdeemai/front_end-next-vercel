@@ -23,9 +23,7 @@ import CardLink from "@components/molecules/CardLink"
 import INakaSwap from "@components/icons/NakaSwap"
 import IStacking from "@components/icons/Stacking"
 import IReferrals from "@components/icons/Referrals"
-import useGetHotGames from "@feature/game/containers/hooks/useGetHotGames"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
-import useGamesByTypes from "@feature/game/containers/hooks/useGamesByTypes"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { v4 as uuid } from "uuid"
 import useTweenEffect from "@hooks/useSpartFireEffect"
@@ -36,15 +34,18 @@ import useGlobal from "@hooks/useGlobal"
 import CardLinkTemplate from "@components/templates/contents/CardLinkTemplate"
 import CONFIGS from "@configs/index"
 import OrionTrade from "@components/organisms/OrionTrade"
-import OnPlaying from "@feature/home/components/molecules/OnPlaying"
 import DeveloperPart from "@feature/home/components/template/DeveloperPart"
+import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
+import { useTranslation } from "react-i18next"
+import OnPlayingStyle2 from "@feature/home/components/molecules/OnPlayingStyle2"
 
 const Home = () => {
-  const limit = 10
+  // const limit = 10
   const { profile } = useProfileStore()
   const { clearQuestStore, setOpen, hasCompleted } = useQuestStore()
   const { hydrated } = useGlobal()
   const [openSwap, setOpenSwap] = useState(false)
+  const { t } = useTranslation()
   /**
    * @description: Spark fire effect
    */
@@ -68,57 +69,59 @@ const Home = () => {
   }
 
   const [f2pGame, setF2PGame] = useState<IGame[]>()
-  const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-play")
+  const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-play-games")
 
   const [p2eGame, setP2EGame] = useState<IGame[]>()
-  const [p2eCurType, setP2ECurType] = useState<IGetType>("hot-game")
+  const [p2eCurType, setP2ECurType] = useState<IGetType>("play-to-earn-games")
 
-  const { hotGameData } = useGetHotGames()
-  const { data: p2eGameData, isFetching: p2eLoading } = useGamesByTypes({
-    _type: p2eCurType,
-    _limit: limit,
-    _page: 1
-  })
+  const getGameTypeF2EByTitleClicked = (): IGetType => {
+    switch (f2pCurType) {
+      case "story-mode-games":
+        return "storymode"
+      default:
+        return f2pCurType
+    }
+  }
 
-  const { data: f2pGameData, isFetching: f2pLoading } = useGamesByTypes({
-    _type: f2pCurType,
-    _limit: limit,
-    _page: 1
-  })
+  const getGameTypeP2EByTitleClicked = (): IGetType => {
+    switch (p2eCurType) {
+      case "arcade-emporium":
+        // TODO: choose to change to hot-game
+        return "arcade-emporium"
+      default:
+        return "play-to-earn-games"
+    }
+  }
+
+  // const { hotGameData } = useGetHotGames()
+  const { gameFilter: dataF2pGames, loadingFilterGame: loadingDataF2pGames } =
+    useGamePageListController(getGameTypeF2EByTitleClicked())
+  const { gameFilter: dataP2eGame, loadingFilterGame: loadingDataP2eGame } =
+    useGamePageListController(getGameTypeP2EByTitleClicked())
 
   useEffect(() => {
     let load = false
 
     if (!load) {
-      if (f2pGameData) {
-        setF2PGame(f2pGameData.data)
+      if (dataF2pGames) {
+        setF2PGame(dataF2pGames)
+      }
+      if (dataP2eGame) {
+        setP2EGame(dataP2eGame)
       }
     }
 
     return () => {
       load = true
     }
-  }, [f2pCurType, f2pGameData, p2eGameData])
-
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (p2eCurType === "hot-game") {
-        if (hotGameData) {
-          setP2EGame(hotGameData.data)
-        }
-      } else if (p2eCurType === "play-to-earn") {
-        if (p2eGameData) {
-          setP2EGame(p2eGameData.data)
-        }
-      }
-    }
-
-    return () => {
-      load = true
-    }
-  }, [p2eCurType, hotGameData, p2eGameData])
+  }, [
+    dataF2pGames,
+    f2pCurType,
+    p2eCurType,
+    dataP2eGame,
+    loadingDataF2pGames,
+    loadingDataP2eGame
+  ])
 
   return hydrated ? (
     <>
@@ -128,12 +131,13 @@ const Home = () => {
         <Tagline
           bgColor="bg-secondary-main"
           textColor="text-white-default"
-          text="SECURE. SUBLIME. SIMPLE. EARN $NAKA TODAY. "
+          text={t("main_tagline")}
           icon={<LogoIcon />}
+          show={false}
         />
         {/* notification */}
         {profile && profile.data && (
-          <div className="fixed right-4 bottom-5 z-10 flex flex-col items-center justify-center">
+          <div className="fixed bottom-5 right-4 z-10 flex flex-col items-center justify-center">
             <ButtonSticky
               icon={<SupportIcon />}
               onClick={() => {
@@ -161,7 +165,7 @@ const Home = () => {
                   classNameSecond="!bg-red-card"
                   imageClassNameSecond="scale-[1.35]"
                   iconBtn={<INakaSwap />}
-                  textBtn="NAKA Swap"
+                  textBtn={`${t("naka_swap")}`}
                   onClick={() => setOpenSwap(true)}
                   srcMain={IMAGES.frontNakaSwap.src}
                   altMain={IMAGES.frontNakaSwap.alt}
@@ -178,7 +182,7 @@ const Home = () => {
                   classNameSecond="!bg-warning-dark"
                   imageClassNameSecond="scale-[1.35]"
                   iconBtn={<IStacking />}
-                  textBtn="Staking"
+                  textBtn={`${t("Staking")}`}
                   href="/staking"
                   srcMain={IMAGES.frontStaking.src}
                   altMain={IMAGES.frontStaking.alt}
@@ -191,7 +195,7 @@ const Home = () => {
                   classNameSecond="bg-info-light"
                   imageClassNameSecond="scale-[1.35]"
                   iconBtn={<IReferrals />}
-                  textBtn="Referral"
+                  textBtn={`${t("referral")}`}
                   href="/referral"
                   srcMain={IMAGES.frontReferrals.src}
                   altMain={IMAGES.frontReferrals.alt}
@@ -205,7 +209,7 @@ const Home = () => {
         <div className="relative flex-[1_1_100%] overflow-hidden sm:flex-[1_1_60%] xl:flex-none">
           <div
             id="spark-fire"
-            className="absolute top-0 left-0 hidden h-[calc(100%-100px)] w-full xl:block"
+            className="absolute left-0 top-0 hidden h-[calc(100%-100px)] w-full xl:block"
           />
           <CarouselSlide
             slideGames={GAME_DOWNLOAD}
@@ -215,16 +219,17 @@ const Home = () => {
       </div>
 
       <div className="my-2 h-full w-full lg:my-20">
-        {f2pGame && !f2pLoading ? (
+        {f2pGame && !loadingDataF2pGames ? (
           <GameCarousel
             menu={F2PHeaderMenu}
             list={f2pGame}
             curType={f2pCurType}
             setCurType={setF2PCurType}
             checkTimer
+            onPlaying={false}
           />
         ) : (
-          <div className="flex gap-x-3">
+          <div className="grid grid-cols-2 gap-x-3 lg:flex">
             {[...Array(6)].map(() => (
               <SkeletonCard key={uuid()} />
             ))}
@@ -232,17 +237,18 @@ const Home = () => {
         )}
       </div>
 
-      <div className="my-2 h-full w-full lg:my-20">
-        {p2eGame && !p2eLoading ? (
+      <div className="h-loadingFreeToPlayGames my-2 w-full lg:my-20">
+        {p2eGame && !loadingDataP2eGame ? (
           <GameCarousel
             menu={P2EHeaderMenu}
             list={p2eGame}
             curType={p2eCurType}
             setCurType={setP2ECurType}
             showNo
+            onPlaying={false}
           />
         ) : (
-          <div className="flex gap-x-3">
+          <div className="grid grid-cols-2 gap-x-3 md:grid-cols-3 lg:flex lg:grid-cols-4 ">
             {[...Array(6)].map(() => (
               <SkeletonCard key={uuid()} />
             ))}
@@ -253,14 +259,16 @@ const Home = () => {
       <Tagline
         bgColor="bg-green-lemon"
         textColor="text-neutral-800 font-bold"
-        text="SWITCH TO GOD MODE AND UNLEASH YOUR TRUE GAMING POTENTIAL"
+        text={t("switch_to_godmode")}
         icon={<ShapeIcon />}
+        show={false}
       />
 
       <BodyCategories />
-      <OnPlaying />
+      {/* <OnPlaying /> */}
+      <OnPlayingStyle2 isSlider={false} />
       <DeveloperPart />
-      <Box className="xs:flex-col mt-4 mb-10 gap-4 lg:flex">
+      <Box className="xs:flex-col mb-10 mt-4 gap-4 lg:flex">
         <Box className="flex-1 xl:flex-none">
           <Grid
             container
@@ -269,7 +277,7 @@ const Home = () => {
             <CardLinkTemplate>
               <CardLink
                 classNameSecond="bg-warning-dark"
-                textBtn="Blog"
+                textBtn={`${t("Blog")}`}
                 href="/blog"
               />
             </CardLinkTemplate>
@@ -277,7 +285,7 @@ const Home = () => {
               <CardLink
                 classNameSecond="bg-secondary-light"
                 iconBtn={<ICoupon />}
-                textBtn="Coupons"
+                textBtn={`${t("Coupons")}`}
                 href="/coupon"
                 srcMain={IMAGES.frontCouponBand.src}
                 altMain={IMAGES.frontCouponBand.alt}

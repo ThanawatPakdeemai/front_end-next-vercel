@@ -4,6 +4,7 @@ import { Chip } from "@mui/material"
 import useQuestStore from "@stores/quest"
 import { v4 as uuidv4 } from "uuid"
 import React, { useState } from "react"
+import { useTranslation } from "react-i18next"
 import { motion } from "framer-motion"
 import ClaimOnDetail from "../moleclues/ClaimOnDetail"
 import CountWithProgressBar from "../moleclues/CountWithProgressBar"
@@ -13,6 +14,7 @@ import RewardList from "../moleclues/RewardList"
 const MissionDetails = () => {
   const { data: dataQuestDetails, clearQuestStore } = useQuestStore()
   const [value, setValue] = useState<string>("mission")
+  const { t } = useTranslation()
 
   return dataQuestDetails ? (
     <div className="relative h-full">
@@ -20,21 +22,21 @@ const MissionDetails = () => {
         <div className="flex flex-col justify-start gap-2">
           <div className="flex gap-[6px]">
             <Chip
-              label="main mission"
+              label={t("main_quest")}
               variant="filled"
               color="error"
               size="small"
               className="!max-w-[103px] uppercase"
             />
             <Chip
-              label={`${dataQuestDetails.task_list.length} mission`}
+              label={`${dataQuestDetails.task_list.length} ${t("mission")}`}
               variant="outlined"
               color="primary"
               size="small"
               className="!max-w-[103px] uppercase"
             />
             <Chip
-              label={`${dataQuestDetails.rewards.length} rewards`}
+              label={`${dataQuestDetails.rewards.length} ${t("rewards")}`}
               variant="outlined"
               color="primary"
               size="small"
@@ -60,7 +62,7 @@ const MissionDetails = () => {
             value === "mission" ? "bg-neutral-900" : "bg-neutral-800"
           }  p-2 capitalize text-white-default`}
         >
-          mission
+          {t("mission")}
         </button>
         <button
           type="button"
@@ -69,7 +71,7 @@ const MissionDetails = () => {
             value === "rewards" ? "bg-neutral-900" : "bg-neutral-800"
           }  p-2 capitalize text-white-default`}
         >
-          rewards
+          {t("rewards")}
         </button>
       </div>
       {value === "mission" ? (
@@ -125,7 +127,7 @@ const MissionDetails = () => {
       />
     </div>
   ) : (
-    <>Loading..</>
+    <>{t("loading")}..</>
   )
 }
 

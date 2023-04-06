@@ -114,7 +114,7 @@ const Jumbotron = ({
         )}
       </div>
       {text && (
-        <div className="jumbotron-text mt-4 mb-8 text-neutral-400">{text}</div>
+        <div className="jumbotron-text mb-8 mt-4 text-neutral-400">{text}</div>
       )}
       {textButton && (
         <div className="jumbotron-button">

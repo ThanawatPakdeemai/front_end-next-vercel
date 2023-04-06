@@ -15,6 +15,7 @@ import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGameRoomsById"
+import useGlobal from "@hooks/useGlobal"
 
 /**
  *
@@ -22,9 +23,12 @@ import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGame
  */
 const GameRoomList = () => {
   /* mockup data */
+  const { getTypeGamePathFolder } = useGlobal()
   const profile = useProfileStore((state) => state.profile.data)
   const { data, itemSelected } = useGameStore()
   const router = useRouter()
+  const { id } = router.query
+  const itemSizeId = id as string
   const { errorToast } = useToast()
   const [gameData, setGameData] = useState<IGame>()
 
@@ -39,15 +43,18 @@ const GameRoomList = () => {
       if (itemSelected) {
         return itemSelected._id
       }
+      if (itemSizeId) {
+        return itemSizeId
+      }
     } else {
       return ""
     }
-  }, [data, itemSelected])
+  }, [data, itemSelected, itemSizeId])
 
   const { allGameRooms } = useGetAllGameRooms({
     _gameId: data ? data._id : "",
     _email: profile ? profile.email : "",
-    _itemId: item ?? ""
+    _itemId: itemSizeId || (item ?? "")
   })
 
   const { allGameRoomsById } = useGetAllGameRoomsById({
@@ -95,24 +102,46 @@ const GameRoomList = () => {
           } else {
             errorToast(MESSAGES["error-something"])
           }
+        } else if (router.asPath.includes("?id=")) {
+          router.push(`${router.asPath.split("?id=")[0]}/${_roomId}`)
         } else {
           router.push(`${router.asPath}/${_roomId}`)
         }
       } else if (new Date() > new Date(_dataRoom.end_time)) {
         errorToast(MESSAGES["room-timeout"])
       } else if (_dataRoom.amount_current_player >= _dataRoom.max_players) {
-        errorToast(MESSAGES["room-full"])
+        if (data && data_player_me && data_player_me.status === "played") {
+          router.push(
+            `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
+          )
+        } else {
+          errorToast(MESSAGES["room-full"])
+        }
       } else if (
         (balanceofItem && balanceofItem?.data < 1) ||
         balanceofItem === undefined
       ) {
-        errorToast(MESSAGES["you-don't-have-item"])
+        if (data && data_player_me && data_player_me.status === "played") {
+          router.push(
+            `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
+          )
+        } else {
+          errorToast(MESSAGES["you-don't-have-item"])
+        }
       } else {
         errorToast(MESSAGES["error-something"])
       }
     } else {
       errorToast(MESSAGES["please_login"])
     }
+  }
+
+  const renderRoomName = (): string => {
+    if (!gameData) return "Room"
+    if (gameData && getTypeGamePathFolder(gameData) === "play-to-earn-games") {
+      return `Room ${itemSelected?.item_size}`
+    }
+    return "Room"
   }
 
   useEffect(() => {
@@ -154,7 +183,7 @@ const GameRoomList = () => {
                       maxPlayer: _data.max_players
                     }}
                     roomId={_data.room_number}
-                    roomName={`Room ${itemSelected?.item_size ?? ""}`}
+                    roomName={renderRoomName()}
                     onClick={() => handleJoinRoom(_data)}
                     btnText={
                       _data?.current_player?.find(
@@ -186,7 +215,7 @@ const GameRoomList = () => {
                       maxPlayer: _data.max_players
                     }}
                     roomId={_data.room_number}
-                    roomName={`Room ${itemSelected?.item_size ?? ""}`}
+                    roomName={renderRoomName()}
                     onClick={() => handleJoinRoom(_data)}
                   />
                 )

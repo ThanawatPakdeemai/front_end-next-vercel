@@ -28,6 +28,7 @@ import { MESSAGES } from "@constants/messages"
 import useShareToEarn from "@feature/game/containers/hooks/useShareToEarn"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import { iconmotion } from "@components/organisms/Footer"
+import { useTranslation } from "react-i18next"
 
 interface IProp {
   data: IGame
@@ -39,6 +40,7 @@ const Howto = ({ data }: IProp) => {
   const { stateProfile } = useGlobal()
   const { handleClose, handleOpen, openForm } = usetournament()
   const { mutateShareToEarn } = useShareToEarn()
+  const { t } = useTranslation()
 
   const uniqueId = Math.random().toString(36).substring(2, 9)
   const linkUrl = `${process.env.NEXT_PUBLIC_FRONTEND_URL}${router.asPath}?af${uniqueId}`
@@ -114,12 +116,12 @@ const Howto = ({ data }: IProp) => {
         <div className="mb-2 flex flex-col items-center gap-2 md:flex-row md:gap-0 xl:mb-0">
           <div className="xs:mb-[20px] flex items-center justify-center p-2 md:p-0">
             <div className="text-sm uppercase">
-              <span className=" text-neutral-600">Game: </span>
+              <span className=" text-neutral-600">{t("game")}: </span>
               <span className="text-neutral-400">{data && data.name}</span>
             </div>
             <div className="mx-2 h-3 border-[1px] border-solid border-neutral-600" />
             <div className="text-sm uppercase">
-              <span className=" text-neutral-600">Assets: </span>
+              <span className=" text-neutral-600">{t("assets")}: </span>
               <span className="text-neutral-400">
                 {data && data.item && data.item.length > 0
                   ? data.item[0].name
@@ -131,9 +133,11 @@ const Howto = ({ data }: IProp) => {
           <div className="xs:mb-[20px] flex flex-col items-center justify-center gap-2 sm:flex-row">
             <div className="text-sm">
               <span className="uppercase text-neutral-600">
-                {data.device_support &&
+                {`${
+                  data.device_support &&
                   data.device_support.length > 0 &&
-                  "devices:"}
+                  t("devices")
+                }:`}
               </span>
             </div>
             <div
@@ -144,47 +148,50 @@ const Howto = ({ data }: IProp) => {
                 data.device_support.length > 0 &&
                 data.device_support.map((item: IGameDevice) => (
                   <>
-                    <TooltipsCustom
-                      id={item.key}
-                      title={item.name}
-                      color="primary"
-                      placement="top"
-                    >
-                      {item.key === "mobile" ? (
+                    {item.key === "mobile" && item.supported ? (
+                      <TooltipsCustom
+                        id={item.key}
+                        title={item.name}
+                        color="primary"
+                        placement="top"
+                      >
                         <Image
-                          src={
-                            item.supported
-                              ? "/assets/icons/social_icon/phoneNotchSuccess.svg"
-                              : "/assets/icons/social_icon/phoneNotch.svg"
-                          }
+                          src="/assets/icons/social_icon/phoneNotchSuccess.svg"
                           width={12}
                           height={20}
                           alt="mobile"
                           className="ml-3 cursor-pointer"
                         />
-                      ) : (
+                      </TooltipsCustom>
+                    ) : item.key === "desktop" && item.supported ? (
+                      <TooltipsCustom
+                        id={item.key}
+                        title={item.name}
+                        color="primary"
+                        placement="top"
+                      >
                         <Image
-                          src={
-                            item.supported
-                              ? "/assets/icons/social_icon/desktopSuccess.svg"
-                              : "/assets/icons/social_icon/desktop.svg"
-                          }
+                          src="/assets/icons/social_icon/desktopSuccess.svg"
                           width={20}
                           height={17}
                           alt="desktop"
                           className="ml-3 cursor-pointer"
                         />
-                      )}
-                    </TooltipsCustom>
+                      </TooltipsCustom>
+                    ) : (
+                      <></>
+                    )}
                   </>
                 ))}
             </div>
             <div className="mx-2 hidden h-3 border-[1px] border-solid border-neutral-600 sm:block" />
             <div className="text-sm">
               <span className="uppercase text-neutral-600">
-                {data.browser_support &&
+                {`${
+                  data.browser_support &&
                   data.browser_support.length > 0 &&
-                  "browsers:"}
+                  t("browsers")
+                }:`}
               </span>
             </div>
             <div className="flex">
@@ -198,66 +205,48 @@ const Howto = ({ data }: IProp) => {
                       color="primary"
                       placement="top"
                     >
-                      {item.key === "safari" ? (
+                      {item.key === "safari" && item.supported ? (
                         <Image
-                          src={
-                            item.supported
-                              ? "/assets/icons/social_icon/safariSuccess.svg"
-                              : "/assets/icons/social_icon/safari.svg"
-                          }
+                          src="/assets/icons/social_icon/safariSuccess.svg"
                           width={18}
                           height={34}
                           alt="safari"
                           className="ml-3 cursor-pointer"
                         />
-                      ) : item.key === "chrome" ? (
+                      ) : item.key === "chrome" && item.supported ? (
                         <Image
-                          src={
-                            item.supported
-                              ? "/assets/icons/social_icon/chromeSuccess.svg"
-                              : "/assets/icons/social_icon/chrome.svg"
-                          }
+                          src="/assets/icons/social_icon/chromeSuccess.svg"
                           width={18}
                           height={34}
                           alt="chrome"
                           className="ml-3 cursor-pointer"
                         />
-                      ) : item.key === "edge" ? (
+                      ) : item.key === "edge" && item.supported ? (
                         <Image
-                          src={
-                            item.supported
-                              ? "/assets/icons/social_icon/edgeSuccess.svg"
-                              : "/assets/icons/social_icon/edge.svg"
-                          }
+                          src="/assets/icons/social_icon/edgeSuccess.svg"
                           width={18}
                           height={34}
                           alt="edge"
                           className="ml-3 cursor-pointer"
                         />
-                      ) : item.key === "firefox" ? (
+                      ) : item.key === "firefox" && item.supported ? (
                         <Image
-                          src={
-                            item.supported
-                              ? "/assets/icons/social_icon/firefoxSuccess.svg"
-                              : "/assets/icons/social_icon/firefox.svg"
-                          }
+                          src="/assets/icons/social_icon/firefoxSuccess.svg"
                           width={18}
                           height={34}
                           alt="firefox"
                           className="ml-3 cursor-pointer"
                         />
-                      ) : (
+                      ) : item.key === "opera" && item.supported ? (
                         <Image
-                          src={
-                            item.supported
-                              ? "/assets/icons/social_icon/operaSuccess.svg"
-                              : "/assets/icons/social_icon/opera.svg"
-                          }
+                          src="/assets/icons/social_icon/operaSuccess.svg"
                           width={18}
                           height={34}
                           alt="opera"
                           className="ml-3 cursor-pointer"
                         />
+                      ) : (
+                        <></>
                       )}
                     </TooltipsCustom>
                   </>
@@ -274,12 +263,14 @@ const Howto = ({ data }: IProp) => {
               color="#FFFFFF"
               className="mr-2"
             />
-            Share
+            {t("share")}
           </Button>
           <div className="mx-5 hidden h-3 border-[1px] border-solid border-neutral-600 md:block" />
           <ButtonLink
             onClick={() => onClickFavouriteButton()}
-            text={favouriteStatus ? "Delete Favourite" : "Add to Favourite"}
+            text={
+              favouriteStatus ? t("delete_favourite") : t("add_to_favourite")
+            }
             icon={
               favouriteStatus ? (
                 <FavouriteColorIcon className="mr-2" />
@@ -313,10 +304,10 @@ const Howto = ({ data }: IProp) => {
           spacing={3}
           className="md:p-5"
         >
-          <div className="rounded-2xl border-[1px] border-neutral-700 bg-neutral-800 p-2">
+          <div className="rounded-2xl border-[1px] border-neutral-700 bg-neutral-800 p-2 uppercase">
             <ModalHeader
               handleClose={handleClose}
-              title="SHARE"
+              title={t("share")}
             />
           </div>
           <Box className="hide-scroll flex h-[220px] w-full flex-col overflow-y-scroll ">
@@ -344,10 +335,7 @@ const Howto = ({ data }: IProp) => {
                 </TwitterShareButton>
               )}
             </div>
-            <p className="mt-5 text-sm">
-              You can share on any social media to invite friends to buy items
-              and get the commission!
-            </p>
+            <p className="mt-5 text-sm">{t("share_desc")}</p>
             <div className="my-4 flex flex-col items-center justify-center text-center">
               <div className="my-4 flex w-full items-center justify-center border-t-2 border-[#252525] pt-2 text-center ">
                 <p className="text-sm">{Helper.textWithDots(linkUrl, 25)}</p>

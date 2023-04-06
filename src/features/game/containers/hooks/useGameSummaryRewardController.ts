@@ -75,10 +75,11 @@ const useGameSummaryRewardController = () => {
     profile?.id
 
   // Hooks
-
+  const idRoom = router.asPath.includes("summary") ? room_id : roomIDTarget
   const { gameRoomById } = useGetGameRoomById((room_id as string) ?? "")
-
-  const { summaryGameData } = useGetSummaryGameByRoomId(roomIDTarget)
+  const { summaryGameData } = useGetSummaryGameByRoomId(
+    (idRoom as string) ?? ""
+  )
   const { balanceofItem } = useGetBalanceOf({
     _address: profile?.address || "",
     _item_id:
@@ -244,8 +245,8 @@ const useGameSummaryRewardController = () => {
       case "REWARD_WEEKLY":
       case "REWARD_GAME_POOL":
         return playerWeekly
-      case undefined:
-        return gameRoomById?.current_player ?? []
+      // case undefined:
+      //   return gameRoomById?.current_player ?? []
       default:
         return playerSummary
     }

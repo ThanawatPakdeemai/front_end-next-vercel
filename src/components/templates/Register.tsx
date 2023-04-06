@@ -64,9 +64,8 @@ const RegisterLayout = () => {
   const router = useRouter()
   const { referral } = router.query
 
-  const {
-    formState: { errors }
-  } = useForm<TFormData>({
+  // eslint-disable-next-line no-unused-vars
+  const { formState } = useForm<TFormData>({
     resolver: yupResolver(SignUpSchema),
     defaultValues: {
       referralId: referral || ""
@@ -84,9 +83,7 @@ const RegisterLayout = () => {
           container
           component="div"
           className={`min-h-[790px] rounded-3xl border border-solid border-neutral-800 p-[20px] md:p-[50px] lg:p-2.5 ${
-            !_.isEmpty({ errors }.errors) && submitRegisterForm
-              ? "h-[135vh]"
-              : "h-[95vh]"
+            submitRegisterForm ? "h-[135vh]" : "h-[95vh]"
           }`}
         >
           <Grid
@@ -112,6 +109,7 @@ const RegisterLayout = () => {
                 text={t("main_tagline")}
                 icon={<VectorIcon />}
                 className="!my-[2.938rem]"
+                show={false}
               />
             </Box>
           </Grid>

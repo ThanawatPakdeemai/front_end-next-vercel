@@ -13,7 +13,7 @@ interface IOnPlayingBodyProps {
 }
 
 const OnPlayingBody = ({ gameItem }: IOnPlayingBodyProps) => (
-  <div className="on-playing-body__wrapper mx-2 max-w-[333px]">
+  <div className="on-playing-body__wrapper w-full md:mx-2 md:max-w-[359px] lg:max-w-[320px]   xl:max-w-[434px]">
     <Box
       component="div"
       className="flex h-[156px] w-full flex-auto overflow-hidden rounded-2xl border-[1px] border-neutral-800 bg-neutral-780"
@@ -39,9 +39,13 @@ const OnPlayingBody = ({ gameItem }: IOnPlayingBodyProps) => (
               // For example:
               // Play to earn = /story-mode-games/${gamePath}/roomlist/id=?${itemId}
               // Free to play = /free-to-play-games/${gamePath}/roomlist/id=?${itemId}
-              href={item.room_list_url_new
-                .split("https://alpha.naka.im")
-                .join("")}
+              href={
+                item.room_list_url_new && "room_list_url_new" in item
+                  ? item.room_list_url_new
+                      .split("https://alpha.naka.im")
+                      .join("")
+                  : item.room_list_url_new ?? item.room_list_url
+              }
               itemSize={item.item_size}
               roomCount={item.room_list.length}
             />

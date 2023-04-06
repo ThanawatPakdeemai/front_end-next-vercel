@@ -102,6 +102,8 @@ const GameRoomList = () => {
           } else {
             errorToast(MESSAGES["error-something"])
           }
+        } else if (router.asPath.includes("?id=")) {
+          router.push(`${router.asPath.split("?id=")[0]}/${_roomId}`)
         } else {
           router.push(`${router.asPath}/${_roomId}`)
         }

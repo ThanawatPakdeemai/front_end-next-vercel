@@ -20,6 +20,7 @@ const TournamentLayout = ({
         textColor="text-neutral-500 font-bold"
         text={String(t("christmas_gift"))}
         icon={<ShapeIcon fill="#4E5057" />}
+        show={false}
       />
       <Banners />
       {/* <div className="flex flex-row gap-3">{children}</div> */}

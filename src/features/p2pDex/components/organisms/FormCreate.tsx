@@ -97,7 +97,7 @@ const FormCreate = ({ type = "buy" }: IProp) => {
         />
       </div>
       <div className="flex   justify-center">
-        <div className="mt-10 flex w-[454px] items-center  justify-center rounded-lg bg-neutral-780 p-10">
+        <div className="mt-10 flex w-full items-center justify-center  rounded-lg bg-neutral-780 p-10 md:w-[454px]">
           <div className="flex w-full items-center justify-center">
             <div className=" m-auto w-full flex-row  gap-y-3 rounded-[13px]  px-[5px] py-[5px]">
               <div className="my-5 flex items-center">

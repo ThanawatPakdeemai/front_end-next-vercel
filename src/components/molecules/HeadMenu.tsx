@@ -97,7 +97,7 @@ const HeadMenu = () => {
                 })) ?? [{ label: "", value: "", link: "/" }]
               }
               widthOption="600px"
-              title={item.name === "NAKA Ecosystem" ? `...` : item.name}
+              title={item.name === "NAKA Ecosystem" ? "Others" : item.name}
               left={item.left}
               button={
                 <Button

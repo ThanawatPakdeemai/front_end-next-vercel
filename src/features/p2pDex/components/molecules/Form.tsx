@@ -157,12 +157,12 @@ const Form = ({
   return (
     <form onSubmit={dataForm["handleSubmit"](onSubmit)}>
       <div className=" flex items-center justify-center">
-        <div className=" flex w-[454px] items-center justify-center rounded-lg bg-neutral-780 p-10">
-          <div>
+        <div className=" flex w-full items-center justify-center rounded-lg bg-neutral-780 p-2 md:w-[454px] md:p-10">
+          <div className="w-full md:w-auto">
             <Typography className=" font-neue-machina text-sm uppercase text-neutral-500">
               {t("create_order_buy_naka")}
             </Typography>
-            <HrLine className="my-3 " />
+            <HrLine className="my-3 w-full " />
             <Typography className="font-neue-machina text-sm uppercase text-neutral-500">
               {t("enter_price_naka_busd")}
             </Typography>

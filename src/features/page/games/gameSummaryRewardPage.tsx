@@ -34,7 +34,10 @@ const GameSummaryRewardPage = () => {
       case "REWARD_GAME_POOL":
         return summaryDataPlayerIdWeekly.reward
       default:
-        return summaryDataPlayerId.naka_for_player
+        return (
+          summaryDataPlayerId.naka_for_player ||
+          summaryDataPlayerId.current_score
+        )
     }
   }
 
@@ -44,7 +47,7 @@ const GameSummaryRewardPage = () => {
         return (
           <GameSummaryBodyReturnItem
             text={notificationItem.detail}
-            gameImage={gameDataState?.image_list || ""}
+            gameImage={gameDataState?.image_category_list || ""}
             gameName={gameDataState?.name || ""}
             date={notificationItem?.createdAt || ""}
             itemImage={usedItem.images}
@@ -61,7 +64,7 @@ const GameSummaryRewardPage = () => {
               notificationItem?.createdAt || playHistoryItem?.createdAt || ""
             }
             gameRaward={totalGameReward || 0}
-            gameImage={gameDataState?.image_list || ""}
+            gameImage={gameDataState?.image_category_list || ""}
             gameName={gameDataState?.name || ""}
             value={getSummaryValue()}
             hash={

@@ -21,7 +21,7 @@ const CardSummaryMain = ({
   gameURLtoShare,
   value
 }: IGameCardSummaryMainProps) => (
-  <div className="m-[10px] flex flex-row lg:mt-[-23px]">
+  <div className="m-[10px] flex flex-row lg:mt-0">
     <Typography
       className="relative flex h-[328px] rotate-180 items-center justify-between rounded border border-neutral-800 bg-transparent"
       sx={{

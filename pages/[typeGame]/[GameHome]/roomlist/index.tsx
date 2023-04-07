@@ -72,7 +72,7 @@ const GameTabs = dynamic(
 
 export default function GameRoomList() {
   const router = useRouter()
-  const { GameHome } = router.query
+  const { GameHome, id } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
   const { onSetGameData } = useGameStore()
   const { getTypeGamePathFolder } = useGlobal()
@@ -105,9 +105,15 @@ export default function GameRoomList() {
    * @description Refetch Item Selected when click link from Discord
    */
   useEffect(() => {
-    refetchItemSelected()
+    let load = false
+    if (!load) {
+      refetchItemSelected()
+    }
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refetchItemSelected])
+  }, [id])
 
   useEffect(() => {
     let load = false

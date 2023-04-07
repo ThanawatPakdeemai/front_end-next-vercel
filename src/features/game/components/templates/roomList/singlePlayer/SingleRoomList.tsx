@@ -13,9 +13,9 @@ import { unstable_batchedUpdates } from "react-dom"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
-import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGameRoomsById"
 import useGlobal from "@hooks/useGlobal"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 
 /**
  *
@@ -31,7 +31,7 @@ const GameRoomList = () => {
   const itemSizeId = id as string
   const { errorToast } = useToast()
   const [gameData, setGameData] = useState<IGame>()
-
+  const { balanceofItem } = useBuyGameItemController()
   const item = useMemo(() => {
     if (data) {
       if (
@@ -59,11 +59,6 @@ const GameRoomList = () => {
 
   const { allGameRoomsById } = useGetAllGameRoomsById({
     _gameId: !profile && data ? data._id : ""
-  })
-
-  const { balanceofItem } = useGetBalanceOf({
-    _address: profile?.address ?? "",
-    _item_id: itemSelected?.item_id_smartcontract ?? 0
   })
 
   const handleJoinRoom = (_dataRoom: IGameRoomDetail) => {

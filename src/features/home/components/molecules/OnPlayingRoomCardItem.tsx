@@ -10,6 +10,7 @@ interface IOnPlayingRoomCardItemProps {
   roomCount: number
   className?: string
   sxCustomStyled?: SxProps<Theme>
+  onClick?: () => void
 }
 
 const OnPlayingRoomCardItem = ({

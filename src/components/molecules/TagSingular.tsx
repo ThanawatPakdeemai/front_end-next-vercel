@@ -39,8 +39,8 @@ const TagSingular = ({
   }
 
   return typeof label !== "string" ? (
-    <div className={`flex gap-3 ${className}`}>
-      <Typography className="mt-[2px] font-neue-machina-semi text-xs uppercase text-neutral-600">
+    <div className={`gap-3 ${className}`}>
+      <Typography className="mb-4 mt-[2px] font-neue-machina-semi text-lg uppercase text-neutral-600">
         {title}
       </Typography>
       {label}

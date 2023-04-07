@@ -219,7 +219,8 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
                           <TagSingular
                             title="Rules"
                             label={
-                              <p
+                              <pre
+                                className="whitespace-pre-wrap break-keep leading-6"
                                 dangerouslySetInnerHTML={{
                                   __html:
                                     eventDetailData?.data[0].event_detail || ""
@@ -268,15 +269,19 @@ const EventDetailPage = ({ _eventId }: IEventDetailProps) => {
                 }
               }}
             >
-              <div className="w-full rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2 md:px-16 md:py-8 md:text-center md:text-base">
-                COMMENT AND HASHTAG #YOUR_USERNAME #NAKARUNNER IN YOUR TWITTER
-                SHARING NAKA RUNNER CHALLENGE POST TO MAKE SURE YOU ATTEND THE
-                EVENT [FIRST 102 PEOPLE TO SCORE OVER 250,000 WILL WIN THE
-                REWARD]
-              </div>
+              {/* <div 
+                className="w-full rounded-md border-[1px] 
+                border-neutral-700 border-opacity-80
+                bg-neutral-780 p-4 font-neue-machina-bold 
+                md:my-2 md:px-16 md:py-8 md:text-center md:text-base">
+                  COMMENT AND HASHTAG #YOUR_USERNAME #NAKARUNNER IN YOUR TWITTER
+                  SHARING NAKA RUNNER CHALLENGE POST TO MAKE SURE YOU ATTEND THE
+                  EVENT [FIRST 102 PEOPLE TO SCORE OVER 250,000 WILL WIN THE
+                  REWARD]
+              </div> */}
               <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2  md:px-16 md:py-8 md:text-center md:text-base">
                 <Typography className="font-dogicapixel-bold text-center  uppercase">
-                  Weekly Price Pool
+                  Reward Pool
                 </Typography>
                 <Typography className=" text-green-default font-dogicapixel-bold text-center text-[15px] uppercase">
                   {eventDetailData?.data[0].reward}

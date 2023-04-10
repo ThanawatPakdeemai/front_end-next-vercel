@@ -74,10 +74,10 @@ export const GAME_PLAY_HISTORY = () => {
   ] as ICrumb[]
 }
 
-export const EVENT_CRUMB = () => {
-  const { crumb: eventCrumb } = useCrumbStore()
+export const EVENT_CRUMB = ({ title, id }: { title: string; id: string }) =>
+  // const { crumb: eventCrumb } = useCrumbStore()
 
-  return [
+  [
     {
       title: "Home",
       href: "/"
@@ -87,14 +87,13 @@ export const EVENT_CRUMB = () => {
       href: "/events"
     },
     {
-      title: `${eventCrumb?.title}`,
-      href: `/events/${eventCrumb?.title}`,
+      title: `${title}`,
+      href: `/events/${title}`,
       onClick: () => {
-        window.location.href = `/events/${eventCrumb._id}`
+        window.location.href = `/events/${id}`
       }
     }
   ] as ICrumb[]
-}
 
 export const BLOG_CRUMB = () => {
   const { crumb: blogCrumb } = useCrumbStore()

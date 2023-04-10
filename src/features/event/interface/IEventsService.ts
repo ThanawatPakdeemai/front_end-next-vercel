@@ -25,6 +25,8 @@ export interface IGamesToPlay {
   image_room: string
 }
 
+export type EventType = "share_and_play" | "top_score_championship"
+
 export interface IGetEventResponseData {
   _id: string
   status: string
@@ -41,7 +43,7 @@ export interface IGetEventResponseData {
   date_end?: Date
   banner_image: string
   __v?: number
-  event_type: "share_and_play" | "top_score_championship"
+  event_type: EventType
   date_end1?: Date
   min_score?: number
 }

@@ -18,6 +18,8 @@ interface ITagSingular {
   height?: ImageProps["height"]
   className?: string
   idNFT?: string
+  color?: "primary" | "secondary" | "success" | "error" | "info" | "warning"
+  variant?: "outlined" | "filled"
 }
 
 const TagSingular = ({
@@ -28,7 +30,9 @@ const TagSingular = ({
   icon,
   width,
   height,
-  idNFT = "naka"
+  idNFT = "naka",
+  color,
+  variant = "outlined"
 }: ITagSingular) => {
   // mb-3
   const { successToast } = useToast()
@@ -38,19 +42,9 @@ const TagSingular = ({
     successToast(MESSAGES.copy)
   }
 
-  return typeof label !== "string" ? (
-    <div className={`gap-3 ${className}`}>
-      <Typography className="mb-4 mt-[2px] font-neue-machina-semi text-lg uppercase text-neutral-600">
-        {title}
-      </Typography>
-      {label}
-    </div>
-  ) : (
-    <div className={`flex items-center gap-3 ${className}`}>
-      <Typography className="font-neue-machina-semi text-xs uppercase text-neutral-600">
-        {title}
-      </Typography>
-      {link && typeof label === "string" ? (
+  const renderContent = () => {
+    if (link && typeof label === "string") {
+      return (
         <Link href={link}>
           {icon && icon !== "-" && icon !== "" && (
             <ImageCustom
@@ -67,35 +61,63 @@ const TagSingular = ({
             className="cursor-pointer uppercase"
           />
         </Link>
-      ) : (
-        <>
-          {icon && icon !== "-" && icon !== "" && (
-            <ImageCustom
-              src={icon}
-              alt={title}
-              width={width}
-              height={height}
+      )
+    }
+    if (link === undefined) {
+      return (
+        <Chip
+          label={label}
+          variant={variant}
+          size="small"
+          className="cursor-default uppercase"
+          color={color}
+        />
+      )
+    }
+    return (
+      <>
+        {icon && icon !== "-" && icon !== "" && (
+          <ImageCustom
+            src={icon}
+            alt={title}
+            width={width}
+            height={height}
+          />
+        )}
+        {label === "naka" && idNFT === "naka" ? (
+          <Chip
+            label={label}
+            variant="outlined"
+            size="small"
+            className="cursor-pointer uppercase"
+          />
+        ) : (
+          <div className="flex w-auto items-center rounded-less border border-solid border-neutral-700 bg-primary-main p-1 text-neutral-500">
+            {Helper.textWithDots(idNFT, 7)}
+            <ButtonIcon
+              onClick={copyClipboard}
+              className="relative ml-2 flex h-8 w-8 items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+              icon={<CopyIcon />}
             />
-          )}
-          {label === "naka" && idNFT === "naka" ? (
-            <Chip
-              label={label}
-              variant="outlined"
-              size="small"
-              className="cursor-pointer uppercase"
-            />
-          ) : (
-            <div className="flex w-auto items-center rounded-less border border-solid border-neutral-700 bg-primary-main p-1 text-neutral-500">
-              {Helper.textWithDots(idNFT, 7)}
-              <ButtonIcon
-                onClick={copyClipboard}
-                className="relative ml-2 flex h-8 w-8 items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-                icon={<CopyIcon />}
-              />
-            </div>
-          )}
-        </>
-      )}
+          </div>
+        )}
+      </>
+    )
+  }
+
+  return typeof label !== "string" ? (
+    <div className={`gap-3 ${className}`}>
+      <Typography className="mb-4 mt-[2px] font-neue-machina-semi text-lg uppercase text-neutral-600">
+        {title}
+      </Typography>
+      {label}
+    </div>
+  ) : (
+    <div className={`flex items-center gap-3 ${className}`}>
+      <Typography className="font-neue-machina-semi text-xs uppercase text-neutral-600">
+        {title}
+      </Typography>
+      {renderContent()}
     </div>
   )
 }

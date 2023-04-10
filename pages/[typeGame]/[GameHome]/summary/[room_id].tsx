@@ -77,7 +77,7 @@ export default function SummaryDetails() {
     return () => {
       load = true
     }
-  }, [gameData, onSetGameData])
+  }, [gameData, onSetGameData, GameHome])
 
   return gameData ? (
     <GamePageDefault

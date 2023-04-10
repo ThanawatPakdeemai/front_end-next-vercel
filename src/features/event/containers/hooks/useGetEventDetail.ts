@@ -10,10 +10,15 @@ const useGetEventDetail = (event_id: string) => {
   } = useQuery({
     queryKey: ["getEventDetail", event_id],
     queryFn: () => getEventDetail(event_id),
-    staleTime: Infinity
+    keepPreviousData: true,
+    staleTime: Infinity,
+    enabled: event_id !== ""
   })
   return {
-    eventDetailData,
+    eventDetailData:
+      eventDetailData && eventDetailData.data && eventDetailData.data.length > 0
+        ? eventDetailData.data[0]
+        : undefined,
     error,
     eventDetailIsLoading,
     isError

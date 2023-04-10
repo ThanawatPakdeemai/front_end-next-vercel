@@ -1,6 +1,6 @@
 import ButtonLink from "@components/atoms/button/ButtonLink"
+import dynamic from "next/dynamic"
 import { memo } from "react"
-import LoginIcon from "@mui/icons-material/Login"
 import { useTranslation } from "react-i18next"
 
 interface IProp {
@@ -8,17 +8,24 @@ interface IProp {
 }
 const ButtonLogin = ({ handleButton }: IProp) => {
   const { t } = useTranslation()
+  const IconArrowRight = dynamic(
+    () => import("@components/icons/arrowRightIcon"),
+    {
+      suspense: true,
+      ssr: false
+    }
+  )
   return (
     <>
       <ButtonLink
         onClick={() => handleButton()}
         href="/"
-        text={t("Log in")}
-        icon={<LoginIcon />}
+        text={t("Login")}
+        icon={<IconArrowRight />}
         variant="contained"
         // size="small"
         size="medium"
-        className=" m-auto h-[40px] w-full !min-w-0 rounded-xl  p-0 md:h-[50px] md:!min-w-[164px] md:p-1  " // lg:h-auto
+        className=" m-auto h-[40px] w-full !min-w-[121px] !rounded-[20px] !bg-secondary-main !p-[15px_25px_13px] text-[12px] md:h-[40px]" // lg:h-auto
       />
     </>
   )

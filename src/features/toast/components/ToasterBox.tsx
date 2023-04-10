@@ -5,6 +5,7 @@ const toastOptions: DefaultToastOptions = {
   duration: 5000,
   style: {
     maxWidth: "564px",
+    width: "max-content",
     background: "transparent",
     borderRadius: "8px",
     padding: 0,

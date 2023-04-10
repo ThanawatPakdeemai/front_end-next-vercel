@@ -7,6 +7,7 @@ import { MESSAGES } from "@constants/messages"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import useSocketRoomList from "@feature/game/containers/hooks/useSocketRoomList"
 import {
+  CurrentPlayer,
   IGameRoomListSocket,
   IResSocketRoomList
 } from "@feature/game/interfaces/IGameService"
@@ -141,6 +142,20 @@ const MultiRoomList = () => {
     }
   }, [fetchRoom, fetchRoomFromSearch, isConnected, search])
 
+  const intoRoomGame = (player_me: CurrentPlayer, _roomId: string) => {
+    if (data) {
+      if (player_me && player_me.status === "played") {
+        router.push(
+          `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
+        )
+        errorToast(MESSAGES["you-played"])
+      } else if (router.asPath.includes("?id=")) {
+        router.push(`${router.asPath.split("?id=")[0]}/${_roomId}`)
+      } else {
+        router.push(`${router.asPath}/${_roomId}`)
+      }
+    }
+  }
   const handleJoinRoom = (_data: IGameRoomListSocket) => {
     if (profile) {
       const player_me = _data.current_player.find(
@@ -151,21 +166,16 @@ const MultiRoomList = () => {
         new Date() < new Date(_data.end_time) &&
         itemSelected &&
         balanceofItem &&
-        balanceofItem?.data >= qtyItemOfRoom
+        balanceofItem?.data >= qtyItemOfRoom &&
+        data
       ) {
-        if (player_me && player_me.status === "played") {
-          errorToast(MESSAGES["you-played"])
-        } else if (router.asPath.includes("?id=")) {
-          router.push(`${router.asPath.split("?id=")[0]}/${_data._id}`)
-        } else {
-          router.push(`${router.asPath}/${_data._id}`)
-        }
+        intoRoomGame(player_me as CurrentPlayer, _data._id)
       } else if (
         data &&
         ((data.play_to_earn && data.play_to_earn_status === "free") ||
           data.tournament)
       ) {
-        router.push(`${router.asPath}/${_data.id}`)
+        intoRoomGame(player_me as CurrentPlayer, _data._id)
       } else if (new Date() > new Date(_data.end_time)) {
         errorToast(MESSAGES["room-timeout"])
       } else if (!balanceofItem || balanceofItem?.data < qtyItemOfRoom) {

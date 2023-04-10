@@ -2,11 +2,10 @@ import useGetGameByPath from "@feature/game/containers/hooks/useFindGameByPath"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
 import useGlobal from "@hooks/useGlobal"
 import { Box } from "@mui/material"
-import useGameStore from "@stores/game"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
-import React, { ReactElement, useEffect } from "react"
+import React, { ReactElement } from "react"
 
 const GameSummaryRewardPage = dynamic(
   () => import("@feature/page/games/gameSummaryRewardPage"),
@@ -63,21 +62,8 @@ const GameTabs = dynamic(
 export default function SummaryDetails() {
   const { getTypeGamePathFolder } = useGlobal()
   const router = useRouter()
-  const { onSetGameData } = useGameStore()
   const { GameHome } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
-
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (!gameData) return
-      onSetGameData(gameData)
-    }
-    return () => {
-      load = true
-    }
-  }, [gameData, onSetGameData, GameHome])
 
   return gameData ? (
     <GamePageDefault

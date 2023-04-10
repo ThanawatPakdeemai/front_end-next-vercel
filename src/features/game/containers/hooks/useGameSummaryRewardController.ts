@@ -147,11 +147,11 @@ const useGameSummaryRewardController = () => {
    * @description Get game data from notification game path
    */
   const { gameData } = useGetGameByPath(
-    notificationItem?.path ||
-      playHistoryItem?.path ||
-      (GameHome as string) ||
-      ""
+    notificationItem?.path ??
+      playHistoryItem?.path ??
+      ((GameHome as string) || "")
   )
+
   // const { gameData } = useFindGameById(gameIdTarget)
 
   /**
@@ -385,7 +385,9 @@ const useGameSummaryRewardController = () => {
             gameData.path
           }`
         )
-      } else if (dataGameStore) setGameDataState(dataGameStore)
+      } else {
+        setGameDataState(dataGameStore as IGame)
+      }
     }
 
     return () => {

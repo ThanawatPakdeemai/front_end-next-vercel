@@ -5,10 +5,11 @@ import React from "react"
 
 interface IOverviewProps extends IPanelHeaderProps {
   children: React.ReactNode
+  className?: string
 }
 
-const AsideLayout = ({ children, ...props }: IOverviewProps) => (
-  <div className="panel-overview">
+const AsideLayout = ({ children, className, ...props }: IOverviewProps) => (
+  <div className={`panel-overview ${className}`}>
     <PanelHeader
       title={props.title}
       icon={props.icon}

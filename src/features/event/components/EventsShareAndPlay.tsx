@@ -7,23 +7,29 @@ import {
   TableHead
 } from "@mui/material"
 import EventCardContent from "@feature/event/components/EventCardContent"
-import { IResponseLeaderBoardData } from "@feature/event/interface/IEventsService"
+import { INewDataPlayerScore } from "@feature/event/interface/IEventsService"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import { v4 as uuid } from "uuid"
 import Image from "next/image"
 import NoData from "@components/molecules/NoData"
 
 interface IEventShareAndPlayProps {
-  users: IResponseLeaderBoardData
+  users: INewDataPlayerScore[]
+  playerCount: number
+  transactionCount: number
 }
-const EventsShareAndPlay = ({ users }: IEventShareAndPlayProps) => (
+const EventsShareAndPlay = ({
+  users,
+  playerCount,
+  transactionCount
+}: IEventShareAndPlayProps) => (
   <div className="w-full">
     <EventCardContent
       title="Share and Play"
       icon={<TwitterIcon />}
       labels={{
-        player_count: users?.player_count,
-        transaction_count: users?.transaction_count
+        player_count: playerCount,
+        transaction_count: transactionCount
       }}
     >
       <TableContainer>
@@ -31,26 +37,26 @@ const EventsShareAndPlay = ({ users }: IEventShareAndPlayProps) => (
           <TableHead>
             <TableRow>
               <TableCell>Rank</TableCell>
-              <TableCell>Score Event</TableCell>
-              <TableCell>Reward</TableCell>
+              {/* <TableCell>Score Event</TableCell>
+              <TableCell className="w-[125px]">Reward</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
-            {users && users.new_data_player_score.length > 0 ? (
-              users.new_data_player_score.map((user, index) => (
+            {users && users.length > 0 ? (
+              users.map((user, index) => (
                 <TableRow
                   key={uuid()}
                   className="rounded-xl border-b-[6px] border-neutral-800 bg-primary-main"
                 >
                   <TableCell className="w-[300px] rounded-l-xl p-1 text-end font-neue-machina-bold text-xs uppercase">
                     <div className="flex items-center">
-                      <div className="mr-2 flex h-[50px] w-[50px] items-center rounded-xl bg-neutral-800">
+                      <div className="mr-2 flex items-center rounded-xl border-[1px] border-neutral-800 bg-neutral-800">
                         <div className="w-[50px] text-center font-neue-machina-bold text-[16px] text-white-primary">
                           {index + 1}
                         </div>
                       </div>
                       {user.country && (
-                        <div className="mr-2 flex items-center rounded-xl bg-neutral-800">
+                        <div className="mr-2 flex items-center rounded-xl border-[1px] border-neutral-800 bg-neutral-800">
                           <Image
                             src={`/assets/flags/4x3/${user.country}.svg`}
                             alt={user.country}
@@ -64,12 +70,12 @@ const EventsShareAndPlay = ({ users }: IEventShareAndPlayProps) => (
                     </div>
                   </TableCell>
                   <TableCell className="text-end font-neue-machina-bold text-xs uppercase">
-                    <div className="text-start text-[12px] text-varidian-default">
+                    <div className="text-start text-[12px]">
                       {user.score_event}
                     </div>
                   </TableCell>
                   <TableCell className="rounded-r-xl text-end font-neue-machina-bold text-xs uppercase">
-                    <div className="text-start text-[12px] text-varidian-default">
+                    <div className="text-start text-[12px] text-warning-dark">
                       {user.reward_for_player}
                     </div>
                   </TableCell>

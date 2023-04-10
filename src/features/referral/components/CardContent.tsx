@@ -1,4 +1,6 @@
 import DollarIcon from "@components/icons/Referral/DollarIcon"
+import { EventType } from "@feature/event/interface/IEventsService"
+import { Box } from "@mui/material"
 import React from "react"
 
 interface IProp {
@@ -7,6 +9,7 @@ interface IProp {
   children: React.ReactNode
   icon?: React.ReactNode
   textColor?: string
+  eventType: EventType
 }
 
 const CardContent = ({ ...props }: IProp) => {
@@ -24,8 +27,15 @@ const CardContent = ({ ...props }: IProp) => {
       >
         <div className="h-[50px] w-full rounded-2xl border border-solid border-neutral-680 bg-neutral-700">
           <div className="flex h-full items-center pl-[26px]">
-            {icon}
-            <div className={`ml-4 uppercase ${textColor}`}>{title}</div>
+            {props.eventType === "top_score_championship" && (
+              <Box
+                component="i"
+                className="mr-4"
+              >
+                {icon}
+              </Box>
+            )}
+            <div className={`uppercase ${textColor}`}>{title}</div>
           </div>
         </div>
         {children}

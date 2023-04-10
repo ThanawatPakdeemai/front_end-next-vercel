@@ -140,9 +140,9 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
 
   const checkPlayerMe = () => {
     if (playerMe) {
-      errorToast(MESSAGES["you_out_room_in_to_again"])
       return true
     }
+    errorToast(MESSAGES["you_out_room_in_to_again"])
     return false
   }
 

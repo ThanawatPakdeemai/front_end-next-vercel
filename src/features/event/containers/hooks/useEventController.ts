@@ -114,7 +114,11 @@ const useEventController = () => {
           ) {
             setLeaderBardDataState(leaderBoardData)
             setClose()
+          } else {
+            setClose()
           }
+        } else {
+          setClose()
         }
       }
       return () => {

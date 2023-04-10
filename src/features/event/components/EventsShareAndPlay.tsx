@@ -58,7 +58,7 @@ const EventsShareAndPlay = ({
                       {user.country && (
                         <div className="mr-2 flex items-center rounded-xl border-[1px] border-neutral-800 bg-neutral-800">
                           <Image
-                            src={`/assets/flags/4x3/${user.country}.svg`}
+                            src={`/assets/flags/4x3/${user.country.toLocaleLowerCase()}.svg`}
                             alt={user.country}
                             width={50}
                             height={50}

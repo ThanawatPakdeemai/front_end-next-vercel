@@ -377,25 +377,20 @@ const useGameSummaryRewardController = () => {
     let load = false
 
     if (!load) {
-      if (gameData) {
-        onSetGameData(gameData)
-        setGameDataState(gameData)
-        setShareURL(
-          `${CONFIGS.BASE_URL.FRONTEND}/${getTypeGamePathFolder(gameData)}/${
-            gameData.path
-          }`
-        )
-      } else {
-        setGameDataState(dataGameStore as IGame)
-        onSetGameData(dataGameStore as IGame)
-      }
+      onSetGameData(gameData as IGame)
+      setGameDataState(gameData as IGame)
+      setShareURL(
+        `${CONFIGS.BASE_URL.FRONTEND}/${getTypeGamePathFolder(
+          gameData as IGame
+        )}/${(gameData as IGame).path}`
+      )
     }
 
     return () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameData, onSetGameData, GameHome])
+  }, [gameData, GameHome])
 
   useEffect(() => {
     let load = false

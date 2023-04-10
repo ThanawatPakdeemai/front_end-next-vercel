@@ -18,7 +18,7 @@ const ButtonLogin = ({ handleButton }: IProp) => {
         variant="contained"
         // size="small"
         size="medium"
-        className=" m-auto h-[30px] w-full !min-w-0 rounded-xl  p-0 md:h-[40px] md:!min-w-[164px] md:p-1  lg:h-auto"
+        className=" m-auto h-[40px] w-full !min-w-0 rounded-xl  p-0 md:h-[50px] md:!min-w-[164px] md:p-1  " // lg:h-auto
       />
     </>
   )

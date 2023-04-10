@@ -147,11 +147,11 @@ const useGameSummaryRewardController = () => {
    * @description Get game data from notification game path
    */
   const { gameData } = useGetGameByPath(
-    notificationItem?.path ||
-      playHistoryItem?.path ||
-      (GameHome as string) ||
-      ""
+    notificationItem?.path ??
+      playHistoryItem?.path ??
+      ((GameHome as string) || "")
   )
+
   // const { gameData } = useFindGameById(gameIdTarget)
 
   /**
@@ -377,22 +377,20 @@ const useGameSummaryRewardController = () => {
     let load = false
 
     if (!load) {
-      if (gameData) {
-        onSetGameData(gameData)
-        setGameDataState(gameData)
-        setShareURL(
-          `${CONFIGS.BASE_URL.FRONTEND}/${getTypeGamePathFolder(gameData)}/${
-            gameData.path
-          }`
-        )
-      } else if (dataGameStore) setGameDataState(dataGameStore)
+      onSetGameData(gameData as IGame)
+      setGameDataState(gameData as IGame)
+      setShareURL(
+        `${CONFIGS.BASE_URL.FRONTEND}/${getTypeGamePathFolder(
+          gameData as IGame
+        )}/${(gameData as IGame).path}`
+      )
     }
 
     return () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameData, onSetGameData])
+  }, [gameData, GameHome])
 
   useEffect(() => {
     let load = false

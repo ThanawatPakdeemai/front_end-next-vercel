@@ -76,6 +76,12 @@ const Howto = ({ data }: IProp) => {
   //     })
   //   }
   // }
+
+  const onCloseModalCustom = () => {
+    handleClose()
+    setShowCopy(false)
+  }
+
   const handleShareToEarnLink = (
     _playerId: string,
     _gameId: string,
@@ -306,7 +312,7 @@ const Howto = ({ data }: IProp) => {
       </div>
       <ModalCustom
         open={openForm}
-        onClose={handleClose}
+        onClose={onCloseModalCustom}
         className="m-auto gap-3 rounded-[34px] p-[10px] max-[420px]:w-[370px]"
         width={515}
       >
@@ -316,7 +322,7 @@ const Howto = ({ data }: IProp) => {
         >
           <div className="rounded-2xl border-[1px] border-neutral-700 bg-neutral-800 p-2 uppercase">
             <ModalHeader
-              handleClose={handleClose}
+              handleClose={onCloseModalCustom}
               title={t("share")}
             />
           </div>

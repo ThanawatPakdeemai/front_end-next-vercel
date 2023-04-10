@@ -387,6 +387,7 @@ const useGameSummaryRewardController = () => {
         )
       } else {
         setGameDataState(dataGameStore as IGame)
+        onSetGameData(dataGameStore as IGame)
       }
     }
 
@@ -394,7 +395,7 @@ const useGameSummaryRewardController = () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameData, onSetGameData])
+  }, [gameData, onSetGameData, GameHome])
 
   useEffect(() => {
     let load = false

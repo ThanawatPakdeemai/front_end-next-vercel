@@ -44,7 +44,7 @@ const EventsTopScore = ({ users }: IEventTopScoreProps) => {
       return `${MOCKUP_REWARD[6].reward}$`
     }
     if (_index >= 41 && _index <= 50) {
-      return `${MOCKUP_REWARD[5].reward}$`
+      return `${MOCKUP_REWARD[7].reward}$`
     }
     if (_index >= 51) {
       return "-"
@@ -92,7 +92,7 @@ const EventsTopScore = ({ users }: IEventTopScoreProps) => {
                       {user.country && (
                         <div className="mr-2 flex h-[50px] w-[50px] items-center rounded-[4px] border-[1px] border-neutral-800 bg-neutral-780 p-[4px_14px]">
                           <Image
-                            src={`/assets/flags/4x3/${user.country.toLocaleLowerCase()}.svg`}
+                            src={`/assets/flags/4x3/${user.country}.svg`}
                             alt={user.country}
                             width={50}
                             height={50}

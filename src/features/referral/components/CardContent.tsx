@@ -9,7 +9,7 @@ interface IProp {
   children: React.ReactNode
   icon?: React.ReactNode
   textColor?: string
-  eventType: EventType
+  eventType?: EventType
 }
 
 const CardContent = ({ ...props }: IProp) => {
@@ -27,14 +27,15 @@ const CardContent = ({ ...props }: IProp) => {
       >
         <div className="h-[50px] w-full rounded-2xl border border-solid border-neutral-680 bg-neutral-700">
           <div className="flex h-full items-center pl-[26px]">
-            {props.eventType === "top_score_championship" && (
-              <Box
-                component="i"
-                className="mr-4"
-              >
-                {icon}
-              </Box>
-            )}
+            {props.eventType &&
+              props.eventType === "top_score_championship" && (
+                <Box
+                  component="i"
+                  className="mr-4"
+                >
+                  {icon}
+                </Box>
+              )}
             <div className={`uppercase ${textColor}`}>{title}</div>
           </div>
         </div>

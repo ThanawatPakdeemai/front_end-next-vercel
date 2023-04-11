@@ -1,11 +1,13 @@
 import React, { memo } from "react"
-import { Card } from "@mui/material"
+import { Card, Typography } from "@mui/material"
 import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
 import { IGameReward } from "@src/types/games"
 import { IRewardWeeklyData } from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
 import { RewardType } from "@feature/notification/interfaces/INotificationService"
 import NoData from "@components/molecules/NoData"
 import { IGameCurrentPlayer } from "@feature/game/interfaces/IGameService"
+import useProfileStore from "@stores/profileStore"
+import { useTranslation } from "react-i18next"
 import NumberRank from "../atoms/NumberRank"
 import PlayerList from "./PlayerList"
 
@@ -20,6 +22,9 @@ interface IProp {
   rewardType?: RewardType
 }
 const CardBodyList = ({ width, players, className, rewardType }: IProp) => {
+  const { profile } = useProfileStore()
+  const { t } = useTranslation()
+
   const renderContent = () => {
     // When data is empty
     if (players.length === 0 || !players.length)
@@ -59,31 +64,37 @@ const CardBodyList = ({ width, players, className, rewardType }: IProp) => {
         ))
 
       default:
-        return players.map((item, index: number) => (
-          <Card
-            key={item._id}
-            sx={{
-              maxWidth: width ?? "auto",
-              backgroundImage: "none !important"
-            }}
-            className={`!shadow-none ${
-              index > 2 ? "!bg-neutral-780" : "!bg-neutral-900"
-            } !border-1 top-player !mb-3 !rounded-default !border-neutral-900`}
-          >
-            <div className="flex max-w-[370px] items-center justify-between p-2">
-              <NumberRank index={index} />
-              <PlayerList
-                avatar={item.avatar}
-                username={item.username || item.user_name}
-                index={index}
-                className="mr-[10px]"
-                score={item.current_score}
-                reward={item.naka_for_player}
-                id={item._id}
-              />
-            </div>
-          </Card>
-        ))
+        return profile.data ? (
+          players.map((item, index: number) => (
+            <Card
+              key={item._id}
+              sx={{
+                maxWidth: width ?? "auto",
+                backgroundImage: "none !important"
+              }}
+              className={`!shadow-none ${
+                index > 2 ? "!bg-neutral-780" : "!bg-neutral-900"
+              } !border-1 top-player !mb-3 !rounded-default !border-neutral-900`}
+            >
+              <div className="flex max-w-[370px] items-center justify-between p-2">
+                <NumberRank index={index} />
+                <PlayerList
+                  avatar={item.avatar}
+                  username={item.username || item.user_name}
+                  index={index}
+                  className="mr-[10px]"
+                  score={item.current_score}
+                  reward={item.naka_for_player}
+                  id={item._id}
+                />
+              </div>
+            </Card>
+          ))
+        ) : (
+          <Typography className="rounded-[14px] border border-neutral-800 p-4 text-center text-default uppercase text-neutral-200">
+            {t("please_login")}
+          </Typography>
+        )
     }
   }
 

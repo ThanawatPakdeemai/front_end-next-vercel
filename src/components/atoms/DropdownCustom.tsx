@@ -184,8 +184,8 @@ const DropdownCustom = ({ title, className }: IProp) => {
     if (!load) {
       if (onTitle && textTitle) {
         if (textTitle === "All Categories") {
-          if (onTitle._id) {
-            setCategoryDropdown(onTitle._id)
+          if (onTitle.id) {
+            setCategoryDropdown(onTitle.id)
           } else if (title === "All Partner Categories") {
             if (onTitle.name === "All Categories") {
               setCategoryDropdown("")

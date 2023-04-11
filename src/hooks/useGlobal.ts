@@ -378,36 +378,6 @@ const useGlobal = (
     }
   }, [router.asPath])
 
-  /**
-   * @description Fetch all token supported
-   */
-  useEffect(() => {
-    let load = false
-    if (!isLogin) return
-    if (!isConnected) return
-    if (!load) {
-      if (signer && address) {
-        if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
-          fetchAllTokenSupported()
-        } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
-          fetchNAKAToken()
-        }
-      }
-    }
-
-    return () => {
-      load = true
-    }
-  }, [
-    address,
-    isLogin,
-    isConnected,
-    chainId,
-    signer,
-    fetchAllTokenSupported,
-    fetchNAKAToken
-  ])
-
   const fetchChainData = async () => {
     if (!isLogin) return
     if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
@@ -421,9 +391,39 @@ const useGlobal = (
    * @description Fetch all token supported
    */
   useEffect(() => {
-    fetchChainData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLogin, currentChainSelected])
+    let load = false
+    if (!isLogin) return
+    if (!isConnected) return
+    if (!load) {
+      if (signer && address) {
+        // if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+        //   fetchAllTokenSupported()
+        // } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
+        //   fetchNAKAToken()
+        // }
+      }
+    }
+
+    return () => {
+      load = true
+    }
+  }, [
+    address,
+    isLogin,
+    isConnected,
+    chainId,
+    signer
+    // fetchAllTokenSupported,
+    // fetchNAKAToken
+  ])
+
+  /**
+   * @description Fetch all token supported
+   */
+  // useEffect(() => {
+  //   fetchChainData()
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [isLogin, currentChainSelected])
 
   return {
     onHandleClick,

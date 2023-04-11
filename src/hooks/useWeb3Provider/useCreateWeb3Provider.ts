@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
+/* eslint-disable no-use-before-define */
 import { useCallback, useEffect, useState } from "react"
 import {
   FeeData,
@@ -23,9 +24,10 @@ import {
 import { DEFAULT_STATUS_WALLET } from "@constants/defaultValues"
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useChainSupportStore from "@stores/chainSupport"
-import useSupportedChain from "@hooks/useSupportedChain"
+// import useSupportedChain from "@hooks/useSupportedChain"
 import toast from "react-hot-toast"
 import useLoadingStore from "@stores/loading"
+import useGlobal from "@hooks/useGlobal"
 
 const useCreateWeb3Provider = () => {
   const [signer, setSigner] = useState<JsonRpcSigner | undefined>(undefined)
@@ -45,7 +47,8 @@ const useCreateWeb3Provider = () => {
   const [statusWalletConnected, setStatusWalletConnected] =
     useState<IErrorMessage>(DEFAULT_STATUS_WALLET)
 
-  const { fetchAllTokenSupported, fetchNAKAToken } = useSupportedChain()
+  // const { fetchAllTokenSupported, fetchNAKAToken } = useSupportedChain()
+  const { fetchChainData } = useGlobal()
   const profile = useProfileStore((state) => state.profile.data)
   const { onSetProfileData, onSetProfileAddress, isLogin } = useProfileStore()
   const {
@@ -103,14 +106,6 @@ const useCreateWeb3Provider = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorToast, successToast])
 
-  const fetchChainData = useCallback(async () => {
-    if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
-      await fetchAllTokenSupported()
-    } else if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX) {
-      await fetchNAKAToken()
-    }
-  }, [currentChainSelected, fetchAllTokenSupported, fetchNAKAToken])
-
   const onWalletLocked = useCallback(() => {
     // NOTE: Not necessary to show a response when error
     // errorToast(`${MESSAGES.wallet_is_locked}`)
@@ -146,12 +141,13 @@ const useCreateWeb3Provider = () => {
           errorMsg: `${_accounts[0]} ${MESSAGES.wallet_is_correct}`,
           type: "success"
         })
-        // await fetchChainData()
+        await fetchChainData()
 
         if (!isLogin) return
         if (isCorrectWallet) return
         setIsCorrectWallet(true)
-        successToast(`${_accounts[0]} ${MESSAGES.wallet_is_correct}`)
+        // Hide success popup
+        // successToast(`${_accounts[0]} ${MESSAGES.wallet_is_correct}`)
       } else {
         setStatusWalletConnected({
           responseStatus: false,
@@ -178,12 +174,15 @@ const useCreateWeb3Provider = () => {
       if (_provider === undefined || _provider.request === undefined) {
         return
       }
+
       if (_provider && _provider.request) {
         try {
           await _provider.request({
             method: "wallet_addEthereumChain",
             params: [Helper.getNetwork(_chainId)]
           })
+          setChainId(_chainId)
+          switchNetwork(_chainId)
           return {
             responseStatus: true,
             errorMsg: MESSAGES.wallet_addEthereumChain,
@@ -192,6 +191,8 @@ const useCreateWeb3Provider = () => {
         } catch (error: any) {
           // NOTE: Not necessary to show a response when error
           // errorToast(error.message)
+
+          handleDisconnectWallet()
           return {
             responseStatus: false,
             errorMsg: (error as Error).message,
@@ -209,7 +210,7 @@ const useCreateWeb3Provider = () => {
       // errorToast
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [chainId]
   )
 
   const onSetAddress = useCallback((_address: string | undefined) => {
@@ -286,6 +287,7 @@ const useCreateWeb3Provider = () => {
     if (window.ethereum === undefined) return
 
     if (!chainIdIsSupported()) {
+      // If not supported, reset chain id to default Polygon
       resetChainId(CONFIGS.CHAIN.CHAIN_ID_HEX)
     }
 
@@ -355,11 +357,11 @@ const useCreateWeb3Provider = () => {
       })
 
     // Subscribe to session disconnection
-    if (window.ethereum && window.ethereum.on) {
-      window.ethereum.on("disconnect", (/* code: number, reason: string */) => {
-        handleDisconnectWallet()
-      })
-    }
+    // if (window.ethereum && window.ethereum.on) {
+    //   window.ethereum.on("disconnect", (/* code: number, reason: string */) => {
+    //     handleDisconnectWallet()
+    //   })
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     onSetAddress,
@@ -425,17 +427,29 @@ const useCreateWeb3Provider = () => {
             // chainId must be in hexadecimal numbers
             params: [{ chainId: _chainId }]
           })
+          // 🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩
           await fetchChainData()
+          // 🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩
           const _resetProvider = new providers.Web3Provider(_provider)
           const _signer = _resetProvider.getSigner()
           if (_signer) {
             handleConnectWithMetamask()
+            setTimeout(() => {
+              // eslint-disable-next-line no-use-before-define
+              window.location.reload()
+            }, 1000)
           }
         } catch (error: Error | any) {
           // This error code indicates that the chain has not been added to MetaMask
           // if it is not, then install it into the user MetaMask
           if (error.code === 4902 || error.code === -32602) {
             resetChainId(_chainId)
+          } else {
+            setTimeout(() => {
+              // eslint-disable-next-line no-use-before-define
+              // handleConnectWithMetamask()
+              window.location.reload()
+            }, 1000)
           }
         }
       } else {
@@ -531,12 +545,19 @@ const useCreateWeb3Provider = () => {
 
   // Subscribe to accounts change
   useEffect(() => {
-    const _provider = window.ethereum as any
-    if (_provider !== undefined) {
-      _provider.on("accountsChanged", handleAccountsChanged)
-      return () => {
-        _provider.removeListener("accountsChanged", handleAccountsChanged)
+    let load = false
+
+    if (!load) {
+      const _provider = window.ethereum as any
+      if (_provider !== undefined) {
+        _provider.on("accountsChanged", handleAccountsChanged)
+        return () => {
+          _provider.removeListener("accountsChanged", handleAccountsChanged)
+        }
       }
+    }
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

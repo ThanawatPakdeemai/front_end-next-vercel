@@ -10,7 +10,6 @@ import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import { MESSAGES } from "@constants/messages"
 import { IGame, IGameMap } from "@feature/game/interfaces/IGameService"
-import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useCreateRoom from "@feature/rooms/hooks/useCreateRoom"
 import { useToast } from "@feature/toast/containers"
@@ -31,6 +30,8 @@ import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { unstable_batchedUpdates } from "react-dom"
+import { Image } from "@components/atoms/image/index"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 
 interface IProp {
   gameData: IGame
@@ -62,18 +63,23 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
 
   const { mutateCreateRoom, isLoading } = useCreateRoom()
   const { t } = useTranslation()
-
-  const { gameItemList } = useGamesByGameId({
-    _playerId: profile ? profile.id : "",
-    _gameId: gameData ? gameData._id : ""
-  })
+  const { gameItemList, balanceofItem } = useBuyGameItemController()
+  // const { gameItemList } = useGamesByGameId({
+  //   _playerId: profile ? profile.id : "",
+  //   _gameId: gameData ? gameData._id : ""
+  // })
 
   const handleSetIsCurrent = (status: boolean) => {
     setIsPublicRoom(status)
   }
 
   const handleSubmit = () => {
-    if (gameItemList) {
+    if (
+      gameItemList &&
+      balanceofItem &&
+      balanceofItem.data > 0 &&
+      balanceofItem.data >= itemUse
+    ) {
       const gameItem = gameItemList.find((ele) => ele._id === itemSelected?._id)
       if (
         gameData.play_to_earn_status === "free" ||
@@ -122,6 +128,8 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
       } else {
         errorToast(MESSAGES["you-not-enough"])
       }
+    } else {
+      errorToast(MESSAGES["you-not-enough"])
     }
   }
 
@@ -198,6 +206,20 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
               )
             }}
           /> */}
+          <CountItem
+            _item={itemUse}
+            _addItem={() => setItemUse(itemUse > 9 ? 10 : itemUse + 1)}
+            _minusItem={() => setItemUse(itemUse < 2 ? 1 : itemUse - 1)}
+            endIcon={
+              <Image
+                src={gameItemList?.[0]?.image_icon ?? ""}
+                width={15}
+                height={15}
+                alt={gameItemList?.[0]?.item_size ?? ""}
+              />
+            }
+            label={t("number_of_items")}
+          />
           <CountItem
             endIcon={<PlayersIcon />}
             label={t("number_of_players")}

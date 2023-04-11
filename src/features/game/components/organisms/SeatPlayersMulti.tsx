@@ -267,7 +267,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
         (playerMe &&
           itemSelected &&
           balanceofItem &&
-          balanceofItem.data >= qtyItemOfRoom &&
+          // balanceofItem.data >= qtyItemOfRoom &&
           dataPlayers &&
           balanceofItem.data >=
             dataPlayers?.create_room_detail.number_of_item &&
@@ -289,16 +289,17 @@ const SeatPlayersMulti = ({ players }: IProps) => {
         errorToast(MESSAGES["no-player"])
       } else if (
         !balanceofItem ||
-        (balanceofItem &&
-          balanceofItem.data < qtyItemOfRoom &&
-          dataPlayers &&
+        (balanceofItem && balanceofItem.data < qtyItemOfRoom) ||
+        (dataPlayers &&
           balanceofItem.data <
             dataPlayers?.create_room_detail.number_of_item) ||
         dataPlayers?.item_id !== itemSelected?._id
       ) {
         if (
           !balanceofItem ||
-          (balanceofItem && balanceofItem.data < qtyItemOfRoom)
+          (balanceofItem &&
+            dataPlayers &&
+            balanceofItem.data < dataPlayers?.create_room_detail.number_of_item)
         ) {
           errorToast(MESSAGES["you-not-enough"])
         } else if (
@@ -334,7 +335,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
           itemSelected &&
           playerAllReady &&
           balanceofItem &&
-          balanceofItem.data >= qtyItemOfRoom &&
+          // balanceofItem.data >= qtyItemOfRoom &&
           dataPlayers &&
           balanceofItem.data >=
             dataPlayers?.create_room_detail.number_of_item &&
@@ -349,7 +350,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
         setOwnPressPlay(false)
         errorToast(MESSAGES["no-player"])
       } else if (
-        qtyItemOfRoom < 1 ||
+        // qtyItemOfRoom < 1 ||
         !itemSelected ||
         !balanceofItem ||
         (dataPlayers &&

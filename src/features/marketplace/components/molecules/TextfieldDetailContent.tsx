@@ -38,7 +38,10 @@ const TextfieldDetailContent = ({
     : 0
 
   return (
-    <div className="flex w-full items-center justify-between">
+    <div
+      className="flex w-full items-center justify-between"
+      data-testid={type}
+    >
       {count && type !== "nft_land" && type !== "nft_building" && (
         <CountItem
           endIcon={<NumpadIcon />}

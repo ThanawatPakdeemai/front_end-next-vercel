@@ -1,3 +1,5 @@
+import { useGetBuildingById } from "@feature/building/containers/hooks/useGetMyBuilding"
+import { IMyBuildData } from "@feature/building/interfaces/IBuildingService"
 import { useGetLandById } from "@feature/land/containers/hooks/useGetMyLand"
 import { ILandData } from "@feature/land/interfaces/ILandService"
 import useGlobal from "@hooks/useGlobal"
@@ -6,10 +8,11 @@ import { useEffect, useState } from "react"
 
 const useMarketOwnerDetail = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [ownerDetail, setOwnerDetail] = useState<ILandData>()
+  const [ownerDetail, setOwnerDetail] = useState<ILandData | IMyBuildData>()
 
   const { marketType } = useGlobal()
   const { mutateGetLandById } = useGetLandById()
+  const { mutateGetBuildingById } = useGetBuildingById()
 
   const router = useRouter()
   const id = router.query.id as string
@@ -20,7 +23,14 @@ const useMarketOwnerDetail = () => {
       case "nft_land":
         mutateGetLandById({ _id: id })
           .then((_res) => {
-            setOwnerDetail(_res[0])
+            setOwnerDetail(_res)
+          })
+          .finally(() => setIsLoading(false))
+        break
+      case "nft_building":
+        mutateGetBuildingById({ _id: id })
+          .then((_res) => {
+            setOwnerDetail(_res)
           })
           .finally(() => setIsLoading(false))
         break

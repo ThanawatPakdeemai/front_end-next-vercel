@@ -7,6 +7,7 @@ import { Chip } from "@mui/material"
 import useGameStore from "@stores/game"
 import { useRouter } from "next/dist/client/router"
 import React from "react"
+import { useTranslation } from "react-i18next"
 
 export interface IHeaderWaitingRoomProp {
   roomTag: string | number
@@ -39,6 +40,8 @@ const HeaderWaitingRoom = ({
 }: IHeaderWaitingRoomProp) => {
   const router = useRouter()
   const game = useGameStore((state) => state.data)
+  const { t } = useTranslation()
+
   return (
     <div
       className={`flex flex-wrap items-center gap-5 border-b border-neutral-800 p-2 lg:h-[72px] ${className}`}
@@ -48,7 +51,11 @@ const HeaderWaitingRoom = ({
           {isSummaryPage ? (
             <ButtonClose
               onClick={() => {
-                router.push("/")
+                if (onOutRoom) {
+                  onOutRoom()
+                } else {
+                  router.push("/")
+                }
               }}
             />
           ) : (
@@ -75,7 +82,7 @@ const HeaderWaitingRoom = ({
             className="summary-page__roomName text-default uppercase text-neutral-300"
             aria-label="room-nam"
           >
-            ROOM : {roomName}
+            {t("room")} : {roomName}
           </span>
         )}
         {rankName && (

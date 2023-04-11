@@ -4,29 +4,31 @@ import { Button, Grid } from "@mui/material"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import React from "react"
+import { Trans, useTranslation } from "react-i18next"
 
 const HeadStaking = ({ children }: { children: React.ReactNode }) => {
   const { handleChangeTab, tabValue } = useTab()
   const router = useRouter()
   const { pathname } = router
   const path = pathname.split("/")
+  const { t } = useTranslation()
 
   /**
    * @description Tab Content Partner Game
    */
   const STAKING_TAB_CONTENT: {
     id: "1" | "2"
-    label: string
+    label: React.ReactNode | string
     icon: React.ReactNode
   }[] = [
     {
       id: "1",
-      label: "Variable APR",
+      label: <Trans i18nKey="variable_APR">variable_APR</Trans>,
       icon: <IconBarGraphOne stroke="#E1E2E2" />
     },
     {
       id: "2",
-      label: "Fixed APR",
+      label: <Trans i18nKey="fixed_APR">fixed_APR</Trans>,
       icon: <IconBarGraphOne stroke="#E1E2E2" />
     }
   ]
@@ -43,8 +45,8 @@ const HeadStaking = ({ children }: { children: React.ReactNode }) => {
           xs={6}
           className="max-w-full font-bold uppercase"
         >
-          Unlock the power of staking <br />
-          and earn passive income
+          {t("head_staking_desc_1")} <br />
+          {t("head_staking_desc_2")}
         </Grid>
         <Grid
           item
@@ -56,7 +58,7 @@ const HeadStaking = ({ children }: { children: React.ReactNode }) => {
               className="flex h-full items-center justify-end"
               href="/staking"
             >
-              <span className="ml-3">Back to Staking</span>
+              <span className="ml-3">{t("back_to_staking")}</span>
             </Link>
           ) : (
             <div

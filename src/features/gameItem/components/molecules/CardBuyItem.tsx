@@ -21,6 +21,7 @@ import useGlobal from "@hooks/useGlobal"
 import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
 import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
 import ButtonGame from "@feature/game/components/molecules/ButtonGame"
+import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
 
 interface ICardBuyItemProp {
   gameObject: IGame
@@ -200,7 +201,7 @@ export default function CardBuyItem({
     }
     return (
       <ButtonLink
-        text={MESSAGES["please_item"]}
+        text={t(MESSAGES["please_item"])}
         icon={<LogoutIcon />}
         href={`${router.asPath}`}
         size="medium"
@@ -254,25 +255,27 @@ export default function CardBuyItem({
               )}
               <div className="mb-1 w-full rounded-xl border-[1px] border-primary-main bg-primary-main p-2 first-letter:my-2">
                 <p className="w-[285px] uppercase text-white-default">
-                  {t("my")}{" "}
-                  <span className="text-purple-primary]">
-                    {itemSelected?.name} {itemSelected?.item_size}
-                  </span>{" "}
+                  {t("my")}
+                  {itemSelected && (
+                    <span className="text-purple-primary]">
+                      {t(itemSelected.name)} {itemSelected.item_size}
+                    </span>
+                  )}
+                  {/* <span className="text-purple-primary]">
+                    {t(itemSelected?.name)} {itemSelected?.item_size}
+                  </span>{" "} */}
                   {t("bag")}
                 </p>
               </div>
 
               <div className={`grid w-full grid-cols-2 gap-4 `}>
-                <div className="flex items-center justify-center rounded-xl border-[1px] border-primary-main bg-primary-main">
-                  {gameObject && (
-                    <Image
-                      src={gameObject?.item?.[0].image}
-                      alt={gameObject?.item?.[0]?.name}
-                      width="100"
-                      height="100"
-                    />
-                  )}
-                </div>
+                {gameObject && (
+                  <GameItemSingleCard
+                    image={gameObject?.item?.[0].image}
+                    name={gameObject?.item?.[0]?.name}
+                    itemId={gameObject?.item?.[0]?._id}
+                  />
+                )}
                 <div className="flex w-full flex-col justify-center">
                   <div className="mb-2 flex w-full items-center justify-between rounded-xl bg-[#E1E2E2]  p-2 text-center text-[#111111]">
                     <p>{qtyItemSelected ?? 0}</p>
@@ -280,7 +283,9 @@ export default function CardBuyItem({
                       <Image
                         src={gameObject.item[0].image_icon_color}
                         alt={gameObject.item[0].name}
-                        width="30"
+                        width={
+                          gameObject.item[0].name === "Bullet" ? "0" : "30"
+                        }
                         height="30"
                       />
                     )}

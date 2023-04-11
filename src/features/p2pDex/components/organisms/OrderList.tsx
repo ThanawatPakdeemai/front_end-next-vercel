@@ -18,6 +18,7 @@ import { useToast } from "@feature/toast/containers"
 import useP2PDexCancel from "@feature/p2pDex/containers/hooks/useP2PDexCancel"
 import useContractMultichain from "@feature/contract/containers/hooks/useContractMultichain"
 import useLoadingStore from "@stores/loading"
+import { Trans } from "next-i18next"
 import FormEdit from "./FormEdit"
 import FormEx from "./FormEx"
 
@@ -51,8 +52,8 @@ const OrderList = ({ ...props }: IProp) => {
   const { data, isLoading, isFetching, type, sort, setSort, setSortName } =
     props
   const title = [
-    { title: "order id" },
-    { title: "seller address" },
+    { title: <Trans i18nKey="order_id" /> },
+    { title: <Trans i18nKey="seller_address" /> },
     {
       title: `price per ${type === "buy" ? "naka" : "busd"}`,
       arrowIcon: true,
@@ -69,7 +70,7 @@ const OrderList = ({ ...props }: IProp) => {
       }
     },
     {
-      title: "available",
+      title: <Trans i18nKey="available" />,
       arrowIcon: true,
       keyUp: sort === 1,
       keyDown: sort === -1,
@@ -79,7 +80,11 @@ const OrderList = ({ ...props }: IProp) => {
       }
     },
     {
-      title: <div className="flex w-full items-center justify-end">{type}</div>
+      title: (
+        <div className="flex w-full items-center justify-end">
+          <Trans i18nKey={type} />
+        </div>
+      )
     }
   ]
 
@@ -242,7 +247,9 @@ const OrderList = ({ ...props }: IProp) => {
                     </>,
                     <>
                       <div className="flex w-full items-center justify-between">
-                        <div className="mr-2">AVAILABLE</div>
+                        <div className="mr-2">
+                          <Trans i18nKey="available" />
+                        </div>
                         {Helper.formatNumber(order.naka_amount, {
                           maximumFractionDigits: 4
                         })}
@@ -261,9 +268,11 @@ const OrderList = ({ ...props }: IProp) => {
                           }}
                           text={
                             order.wallet_address.toLowerCase() ===
-                            (address && address.toLowerCase())
-                              ? "edit"
-                              : type
+                            (address && address.toLowerCase()) ? (
+                              <Trans i18nKey="edit" />
+                            ) : (
+                              <Trans i18nKey={type} />
+                            )
                           }
                           size="medium"
                           className={`h-[30px] !min-w-[60px] max-w-[60px]  font-neue-machina-bold   text-xs capitalize text-neutral-800   ${
@@ -289,7 +298,9 @@ const OrderList = ({ ...props }: IProp) => {
                 />
               ))
             ) : (
-              <p className="text-center">loading</p>
+              <p className="text-center">
+                <Trans i18nKey="loading" />
+              </p>
             )}
           </TableBody>
         </Table>

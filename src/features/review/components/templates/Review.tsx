@@ -22,7 +22,7 @@ const Review = ({ children, average }: IReviewProps) => {
         adornmentButton={
           <ButtonLink
             href="#"
-            text="View All"
+            text={t("view_all")}
             icon={<AddIcon />}
             color="secondary"
             size="small"

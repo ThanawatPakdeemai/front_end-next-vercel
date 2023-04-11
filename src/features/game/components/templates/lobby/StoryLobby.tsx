@@ -56,7 +56,11 @@ const StoryLobby = ({
         id: category.id,
         name: category.name,
         link: `/categories/${
-          category.slug ? category.slug : category.name.toLocaleLowerCase()
+          category.slug
+            ? `${category.slug}?id=${category.id}`
+            : `${category.name.toLocaleLowerCase().split(" ")[1]}?id=${
+                category.id
+              }`
         }`
       })
     )
@@ -134,7 +138,7 @@ const StoryLobby = ({
                 <h1 className="font-neue-machina text-lg font-bold uppercase text-white-default">
                   {gameData?.name}
                 </h1>
-                <div className="mt-6 mb-4 border-b-[1px] border-neutral-700" />
+                <div className="mb-4 mt-6 border-b-[1px] border-neutral-700" />
               </>
             )}
 

@@ -8,6 +8,7 @@ import GameCard from "@feature/game/components/molecules/GameCard"
 import { Box } from "@mui/material"
 import DropdownLimit from "@components/atoms/DropdownLimit"
 import useGlobal from "@hooks/useGlobal"
+import NoData from "@components/molecules/NoData"
 
 const FreeToPlayGamesPage = () => {
   const {
@@ -29,7 +30,7 @@ const FreeToPlayGamesPage = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="mx-2 mb-6 grid grid-cols-2 gap-y-4 gap-x-2 md:mx-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="mx-2 mb-6 grid grid-cols-2 gap-x-2 gap-y-4 md:mx-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {loadingFilterGame
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
           : gameFilter &&
@@ -45,12 +46,15 @@ const FreeToPlayGamesPage = () => {
                 href={gameLink(game)}
                 gameType={getTypeGamePathFolder(game)}
                 onHandleClick={() => onSetGameStore(game)}
+                play_total_count={game?.play_total_count}
               />
             ))}
       </div>
 
       {totalCount === 0 && (
-        <div className="d-flex  justify-center text-center">No data</div>
+        <div className="d-flex  justify-center text-center">
+          <NoData />
+        </div>
       )}
       <Box
         className="my-2 flex w-full justify-between md:my-5"

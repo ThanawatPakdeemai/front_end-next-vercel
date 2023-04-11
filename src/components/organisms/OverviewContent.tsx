@@ -17,9 +17,15 @@ interface IOverviewGameProps {
   gameId: string
   gameType: IGetType
   title?: string
+  gameIdNFT?: string
 }
 
-const OverviewContent = ({ gameId, gameType, title }: IOverviewGameProps) => {
+const OverviewContent = ({
+  gameId,
+  gameType,
+  title,
+  gameIdNFT
+}: IOverviewGameProps) => {
   const { t } = useTranslation()
   const { hydrated } = useGlobal()
   const {
@@ -36,21 +42,21 @@ const OverviewContent = ({ gameId, gameType, title }: IOverviewGameProps) => {
   } = useGameOverview(gameId, gameType)
 
   return (
-    <div className="relative flex w-full min-w-[333px] flex-col justify-start rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4">
+    <div className="relative flex w-full flex-col justify-start rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 lg:min-w-[333px]">
       {hydrated && (
         <AsideLayout
           icon={<OverviewIcon />}
           title={title || t("game_overview")}
         >
           <PanelContent height="h-[500px]">
-            <div className="text-start text-sm text-neutral-500 lg:pl-6 lg:pt-3 lg:pr-3">
+            <div className="text-start text-sm text-neutral-500 lg:pl-6 lg:pr-3 lg:pt-3">
               <TagMultiple
                 title={`${t("genre")}`}
                 tags={gameTags}
               />
               <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
               <TagSingular
-                title="developer"
+                title={t("developer")}
                 label={gameDeveloper}
                 link={`/publishers/${gameDeveloper.toLocaleLowerCase()}`}
               />
@@ -59,7 +65,7 @@ const OverviewContent = ({ gameId, gameType, title }: IOverviewGameProps) => {
                 <>
                   <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
                   <TagSingular
-                    title="publisher"
+                    title={t("publisher")}
                     label={gamePublisher}
                     link={`/publishers/${gamePublisher.toLocaleLowerCase()}`}
                   />
@@ -102,29 +108,31 @@ const OverviewContent = ({ gameId, gameType, title }: IOverviewGameProps) => {
                       className="overview-col"
                     >
                       <TagSingular
-                        title="Game Type"
+                        title={t("game_type")}
                         label={gameTypeCode}
                       />
                     </div>
                   </div>
                 </>
               )}
-              {gameOwner !== "-" && (
-                <>
-                  <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-                  <div className="overview-row grid gap-2 lg:grid-cols-2">
-                    <div
-                      id="overview-game-owner"
-                      className="overview-col whitespace-nowrap"
-                    >
-                      <TagSingular
-                        title="Game Owner"
-                        label={gameOwner}
-                      />
+              {gameOwner !== "-" ||
+                (gameOwner !== undefined && (
+                  <>
+                    <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+                    <div className="overview-row grid gap-2 lg:grid-cols-2">
+                      <div
+                        id="overview-game-owner"
+                        className="overview-col whitespace-nowrap"
+                      >
+                        <TagSingular
+                          title={t("game_owner")}
+                          label={gameOwner}
+                          idNFT={gameIdNFT}
+                        />
+                      </div>
                     </div>
-                  </div>
-                </>
-              )}
+                  </>
+                ))}
               {/* {singleVersion !== "-" && (
                 <>
                   <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />

@@ -7,7 +7,7 @@ const useGetRoomAvailable = () => {
     ["getRoomAvailable"],
     getGameRoomAvailable,
     {
-      staleTime: Infinity
+      staleTime: 1
     }
   )
 

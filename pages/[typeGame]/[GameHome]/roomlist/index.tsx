@@ -8,6 +8,7 @@ import { TabProvider } from "@feature/tab/contexts/TabProvider"
 import { Box } from "@mui/material"
 import useGlobal from "@hooks/useGlobal"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 
 const BuyItemBody = dynamic(
   () => import("@components/templates/game/BuyItemBody"),
@@ -71,10 +72,11 @@ const GameTabs = dynamic(
 
 export default function GameRoomList() {
   const router = useRouter()
-  const { GameHome } = router.query
+  const { GameHome, id } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
   const { onSetGameData } = useGameStore()
   const { getTypeGamePathFolder } = useGlobal()
+  const { refetchItemSelected } = useBuyGameItemController()
 
   /**
    * @description Render Form Buy Item
@@ -98,6 +100,20 @@ export default function GameRoomList() {
         null
     }
   }
+
+  /**
+   * @description Refetch Item Selected when click link from Discord
+   */
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      refetchItemSelected()
+    }
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id])
 
   useEffect(() => {
     let load = false

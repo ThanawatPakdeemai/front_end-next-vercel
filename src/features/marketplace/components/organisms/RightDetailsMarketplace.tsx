@@ -30,6 +30,7 @@ import { motion } from "framer-motion"
 import useProfileStore from "@stores/profileStore"
 import { MESSAGES } from "@constants/messages"
 import PlusIcon from "@components/icons/CountIcon/PlusIcon"
+import { useTranslation } from "react-i18next"
 import TextfieldDetailContent from "../molecules/TextfieldDetailContent"
 import ChipsLink from "../molecules/ChipsLink"
 
@@ -168,6 +169,8 @@ const RightDetailsMarketplace = ({
     }
   }))
 
+  const { t } = useTranslation()
+
   return (
     <div className="flex w-full flex-col gap-y-5">
       {token && (
@@ -192,7 +195,7 @@ const RightDetailsMarketplace = ({
       <Typography className="text-[46px] font-bold uppercase text-neutral-300">
         {title}
       </Typography>
-      <div className="w-ful flex flex-col gap-y-6 rounded-3xl border-neutral-800 bg-neutral-780 py-7 px-[42px] uppercase">
+      <div className="w-ful flex flex-col gap-y-6 rounded-3xl border-neutral-800 bg-neutral-780 px-[42px] py-7 uppercase">
         <div className="flex items-center gap-5">
           <Typography className="text-neutral-300">{method}</Typography>
           <Chip
@@ -346,7 +349,7 @@ const RightDetailsMarketplace = ({
                     severity="warning"
                     className="rounded-lg"
                   >
-                    The coupon must contain at least 6 characters.
+                    {t("coupon_warning")}
                   </Alert>
                 </motion.div>
               )}

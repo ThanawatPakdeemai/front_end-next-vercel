@@ -237,6 +237,20 @@ body {
   }
 }
 
+.slick-slider-w-auto {
+  .slick-slider {
+    .slick {
+      &-slide {
+        &.slick-active {
+          position: relative;
+          z-index: 1;
+          width: auto !important;
+        }
+      }
+    }
+  }
+}
+
 .progress-bar-energy {
   background: rgb(35, 35, 41) !important;
   background: linear-gradient(

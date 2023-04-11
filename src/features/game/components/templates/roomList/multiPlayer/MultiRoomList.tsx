@@ -4,12 +4,13 @@ import ButtonSticky from "@components/molecules/ButtonSticky"
 import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
 import { MESSAGES } from "@constants/messages"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import useSocketRoomList from "@feature/game/containers/hooks/useSocketRoomList"
 import {
+  CurrentPlayer,
   IGameRoomListSocket,
   IResSocketRoomList
 } from "@feature/game/interfaces/IGameService"
-import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import { useToast } from "@feature/toast/containers"
 import { Box, Divider } from "@mui/material"
 import SocketProviderRoom from "@providers/SocketProviderRoom"
@@ -22,10 +23,13 @@ import React, { memo, useEffect, useMemo, useState, useCallback } from "react"
 const MultiRoomList = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
+  const { id } = router.query
+  const itemSizeId = id as string
   const { errorToast } = useToast()
   const { data, itemSelected, qtyItemOfRoom } = useGameStore()
 
   const [dataRoom, setDataRoom] = useState<IGameRoomListSocket[]>()
+  const { balanceofItem } = useBuyGameItemController()
 
   const item_id = useMemo(() => {
     if (data) {
@@ -38,10 +42,13 @@ const MultiRoomList = () => {
       if (itemSelected) {
         return itemSelected._id
       }
+      if (itemSizeId) {
+        return itemSizeId
+      }
     } else {
       return ""
     }
-  }, [data, itemSelected])
+  }, [data, itemSelected, itemSizeId])
 
   const propsSocketRoomlist = useMemo(
     () => ({
@@ -62,11 +69,6 @@ const MultiRoomList = () => {
     search
   } = useSocketRoomList({
     ...propsSocketRoomlist
-  })
-
-  const { balanceofItem } = useGetBalanceOf({
-    _address: profile?.address ?? "",
-    _item_id: itemSelected?.item_id_smartcontract ?? 0
   })
 
   useEffect(() => {
@@ -140,6 +142,20 @@ const MultiRoomList = () => {
     }
   }, [fetchRoom, fetchRoomFromSearch, isConnected, search])
 
+  const intoRoomGame = (player_me: CurrentPlayer, _roomId: string) => {
+    if (data) {
+      if (player_me && player_me.status === "played") {
+        router.push(
+          `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
+        )
+        errorToast(MESSAGES["you-played"])
+      } else if (router.asPath.includes("?id=")) {
+        router.push(`${router.asPath.split("?id=")[0]}/${_roomId}`)
+      } else {
+        router.push(`${router.asPath}/${_roomId}`)
+      }
+    }
+  }
   const handleJoinRoom = (_data: IGameRoomListSocket) => {
     if (profile) {
       const player_me = _data.current_player.find(
@@ -150,19 +166,16 @@ const MultiRoomList = () => {
         new Date() < new Date(_data.end_time) &&
         itemSelected &&
         balanceofItem &&
-        balanceofItem?.data >= qtyItemOfRoom
+        balanceofItem?.data >= qtyItemOfRoom &&
+        data
       ) {
-        if (player_me && player_me.status === "played") {
-          errorToast(MESSAGES["you-played"])
-        } else {
-          router.push(`${router.asPath}/${_data._id}`)
-        }
+        intoRoomGame(player_me as CurrentPlayer, _data._id)
       } else if (
         data &&
         ((data.play_to_earn && data.play_to_earn_status === "free") ||
           data.tournament)
       ) {
-        router.push(`${router.asPath}/${_data.id}`)
+        intoRoomGame(player_me as CurrentPlayer, _data._id)
       } else if (new Date() > new Date(_data.end_time)) {
         errorToast(MESSAGES["room-timeout"])
       } else if (!balanceofItem || balanceofItem?.data < qtyItemOfRoom) {
@@ -236,6 +249,7 @@ const MultiRoomList = () => {
             <OverviewContent
               gameId={data.id}
               gameType={getTypeGamePathFolder(data)}
+              gameIdNFT={data.NFT_Owner}
             />
             {data?.play_to_earn_status !== "free" && !data.tournament && (
               <CardBuyItem gameObject={data} />

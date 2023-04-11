@@ -19,9 +19,9 @@ const PanelContent = ({
 }: IPanelContentProps) => (
   <Box
     sx={sxCustomStyled}
-    className={`panel-content relative ${height}`}
+    className={`panel-content relative text-neutral-500 ${height}`}
   >
-    <div className="custom-scroll h-[90%] overflow-y-scroll pr-4">
+    <div className="custom-scroll h-[90%] !overflow-y-scroll pr-4">
       {children}
     </div>
     <div className="absolute bottom-0 left-0 h-20 w-full bg-gradient-to-b from-neutral-780/0 to-neutral-780" />

@@ -2,6 +2,7 @@ import NoticeIcon from "@components/icons/NoticeBar"
 import { IQuestData } from "@feature/quest/interfaces/IQuestService"
 import useQuestStore from "@stores/quest"
 import React from "react"
+import { useTranslation } from "react-i18next"
 import ButtonClaim from "../atoms/ButtonClaim"
 import CountWithProgressBar from "./CountWithProgressBar"
 
@@ -11,6 +12,7 @@ interface IProps {
 
 const MissionItem = ({ data }: IProps) => {
   const { setQuestStore } = useQuestStore()
+  const { t } = useTranslation()
 
   const countTotal = data.task_list.length
   const countReward = data.rewards.length
@@ -37,7 +39,7 @@ const MissionItem = ({ data }: IProps) => {
             withText
           />
         </div>
-        <div className="my-2 flex h-fit flex-wrap items-center justify-between border-t border-neutral-800 pt-2 pl-[18px]">
+        <div className="my-2 flex h-fit flex-wrap items-center justify-between border-t border-neutral-800 pl-[18px] pt-2">
           <div className="flex items-center gap-[22px]">
             {/* current mission */}
             <span className="flex items-center gap-2 uppercase">
@@ -50,14 +52,14 @@ const MissionItem = ({ data }: IProps) => {
               >
                 {countTotal}
               </span>
-              <span className="text-xs">missions</span>
+              <span className="text-xs">{t("mission")}</span>
             </span>
             {/* rewards */}
             <span className="flex items-center gap-2 uppercase">
               <span className="text-green-with-shadow font-digital-7 text-[26px]">
                 {countReward}
               </span>
-              <span className="text-xs">rewards</span>
+              <span className="text-xs">{t("rewards")}</span>
             </span>
           </div>
           <div className="mr-2 flex gap-3">
@@ -66,7 +68,7 @@ const MissionItem = ({ data }: IProps) => {
               className="w-[108px] rounded-2xl border border-neutral-700 py-[8px] text-xs text-neutral-200"
               onClick={() => setQuestStore(data)}
             >
-              View Details
+              {t("view_details")}
             </button>
             {/* check is claim */}
             <ButtonClaim data={data} />

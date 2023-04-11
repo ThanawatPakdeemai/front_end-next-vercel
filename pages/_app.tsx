@@ -57,6 +57,10 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
           href="favicon.ico"
           type="image/x-icon"
         />
+        <link
+          rel="icon"
+          href="https://files.naka.im/seo/favicon.png"
+        />
       </Head>
       <Meta />
       <Loading />

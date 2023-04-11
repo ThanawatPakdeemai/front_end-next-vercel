@@ -5,7 +5,7 @@ import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
 import Link from "next/link"
 
 export interface ITextLink {
-  name?: string
+  name?: string | null
   initial?: string
   whileHover?: string
   animate?: string

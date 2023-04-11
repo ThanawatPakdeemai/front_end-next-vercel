@@ -2,6 +2,7 @@ import React from "react"
 import { motion } from "framer-motion"
 import { Grid } from "@mui/material"
 import { Image } from "@components/atoms/image/index"
+import { useTranslation } from "react-i18next"
 import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 
 export interface ICategoryCard {
@@ -19,6 +20,7 @@ const CategoryCard = ({
   href,
   onHandleClick
 }: ICategoryCard) => {
+  const { t } = useTranslation()
   const cardImg = {
     init: {
       scale: 1
@@ -84,7 +86,7 @@ const CategoryCard = ({
                 ) : null
               }
               type="button"
-              text={text}
+              text={t(text)}
               href={href}
               handleClick={onHandleClick}
               className="z-[2] h-[50px] w-full bg-primary-main capitalize "

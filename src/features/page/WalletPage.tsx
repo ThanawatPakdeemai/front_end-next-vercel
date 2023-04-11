@@ -87,7 +87,7 @@ export default function WalletPage() {
         </div>
       </div>
       <div className="flex flex-wrap gap-2 lg:flex-nowrap">
-        <div className="flex flex-1 flex-wrap justify-center gap-4 lg:max-w-[570px] xl:w-full xl:justify-end">
+        <div className="flex w-full flex-1 flex-wrap justify-center gap-4 lg:max-w-[570px] xl:w-full xl:justify-end">
           <div className="my-2 h-full flex-[1_1_calc(100%-200px)] items-center justify-center rounded-default bg-neutral-800 p-2 md:my-0 md:min-h-[360px] md:p-0 xl:w-[570px]">
             <WalletContent
               handleConnectWithMetamask={handleConnectWithMetamask}
@@ -105,7 +105,7 @@ export default function WalletPage() {
             />
           </div>
         </div>
-        <div className="flex flex-col gap-1 rounded-default bg-neutral-800">
+        <div className="flex w-full flex-col gap-1 rounded-default bg-neutral-800 md:w-auto">
           <Gas type={tabChainList?.link} />
         </div>
         <MetamaskWallet

@@ -180,15 +180,21 @@ export const GAME_COMING_SOON = [
 const p2eMenu: ISlideList[] = [
   {
     id: "11",
-    label: "play to earn games",
+    label: "Hot Games",
     type: "play-to-earn-games",
+    className: "w-[110px]"
+  },
+  {
+    id: "12",
+    label: "Arcade Emporium",
+    type: "arcade-emporium",
     className: "w-[166px]"
   }
   // {
   //   id: "12",
-  //   label: "arcade emporium",
-  //   type: "arcade-emporium",
-  //   className: "w-[110px]"
+  //   label: "play to earn games",
+  //   type: "play-to-earn",
+  //   className: "w-[166px]"
   // }
 ]
 
@@ -219,7 +225,7 @@ export const P2EHeaderMenu: IHeaderSlide = {
       height={125}
     />
   ),
-  title: "play to earn",
+  title: "Play To Earn",
   menuList: p2eMenu,
   theme: "error",
   stickerRotate: 15,
@@ -233,7 +239,7 @@ export const StoryModeHeaderMenu: IHeaderSlide = {
       height={125}
     />
   ),
-  title: "story mode",
+  title: "Story Mode",
   menuList: p2eMenu,
   theme: "success",
   stickerRotate: 15,
@@ -266,13 +272,13 @@ export const onPlayingHeaderMenu: IHeaderSlide = {
 const f2pMenu: ISlideList[] = [
   {
     id: "free-to-play-games",
-    label: "free mode",
+    label: "Free Mode",
     type: "free-to-play-games",
     className: "w-[110px]"
   },
   {
     id: "story-mode-games",
-    label: "story mode",
+    label: "Story Mode",
     type: "story-mode-games",
     className: "w-[166px]"
   }
@@ -293,7 +299,7 @@ export const F2PHeaderMenu: IHeaderSlide = {
     />
   ),
   icon: <IconDollar.Not className="slick-header-secondary-icon" />,
-  title: "free to earn",
+  title: "Free To Earn",
   menuList: f2pMenu,
   theme: "secondary",
   stickerRotate: -15
@@ -302,7 +308,7 @@ export const F2PHeaderMenu: IHeaderSlide = {
 export const HeaderMenuSeasonPass: IHeaderSlide = {
   sticker: <></>,
   icon: <MapOutlinedIcon className="" />,
-  title: "story mode",
+  title: "Story Mode",
   menuList: [],
   theme: "info",
   stickerRotate: 0

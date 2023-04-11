@@ -5,7 +5,7 @@ import React from "react"
 import { IMAGES } from "@constants/images"
 
 const SkeletionWallet = () => (
-  <div className="SkeletionWallet relative h-full p-6">
+  <div className="SkeletionWallet relative h-full w-full  p-6">
     <div className="mb-2 flex w-full flex-row items-center justify-between gap-1 whitespace-nowrap rounded-default bg-black-100 py-4 xl:xl:max-w-[390px]">
       <Skeleton
         variant="rectangular"
@@ -38,7 +38,7 @@ const SkeletionWallet = () => (
         height={20}
         className="w-[100px] rounded-2xl"
       />
-      <div className="absolute top-2 right-2">
+      <div className="absolute right-2 top-2">
         <KeyFramesRotate>
           <IStickerSolid
             width="70"

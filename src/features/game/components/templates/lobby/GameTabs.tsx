@@ -107,7 +107,7 @@ const GameTabs = ({ gameType, gameId }: IProps) => {
 
   return hydrated ? (
     <Box className="relative h-full">
-      <div className="absolute top-[-80px] left-[-30px] flex w-full flex-wrap overflow-hidden sm:w-auto">
+      <div className="absolute left-[-30px] top-[-80px] flex w-full flex-wrap overflow-hidden sm:w-auto">
         <div className="flex w-full items-center justify-between gap-2 rounded-xl bg-neutral-700 bg-opacity-40 px-1 capitalize sm:w-auto">
           {GAME_TAB_CONTENT.map((item) =>
             _.isEmpty(item) ? null : (

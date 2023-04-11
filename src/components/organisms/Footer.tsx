@@ -1,8 +1,8 @@
-import { Divider, Link, Typography } from "@mui/material"
+import { Divider, Link } from "@mui/material"
 import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
 import { SOCIAL } from "@configs/socialShare"
 import { NAKA_GAME } from "@configs/nakaGame"
-import { NAKA_SERVICES } from "@configs/nakaServices"
+import { NAKA_SERVICES, NAKA_SERVICES_2 } from "@configs/nakaServices"
 import { NAKA_ECOSYSTEMSS } from "@configs/nakaEcosystems"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import WineIcon from "@components/icons/WineIcon"
@@ -14,6 +14,7 @@ import { useState } from "react"
 import TextLink from "@components/atoms/TextLink"
 import { ShakeIcon } from "@components/atoms/LigthShake"
 import useGlobal from "@hooks/useGlobal"
+import { useTranslation } from "react-i18next"
 
 export const arrowMotion = {
   rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
@@ -69,6 +70,8 @@ export const iconmotion = {
 const Footer = () => {
   const { openInNewTab } = useGlobal()
 
+  const { t } = useTranslation()
+
   const [isHover, setIsHover] = useState<boolean>(false)
   const handleMouseEnter = () => {
     setIsHover(true)
@@ -85,18 +88,14 @@ const Footer = () => {
         className="my-8 md:my-16"
         sx={{ marginTop: 10, marginBottom: 10 }}
       />
-      <div className="mx-4 w-full justify-between overflow-hidden text-[12px] lg:flex">
-        <div className="grid grid-cols-2 justify-center gap-3 whitespace-nowrap p-5 md:flex md:gap-0">
+      <div className="w-full justify-between overflow-hidden text-[12px] md:mx-4 lg:flex">
+        <div className="grid grid-cols-2 justify-center gap-3 whitespace-nowrap p-5 md:flex md:gap-0 md:p-10">
           <div className="flex-auto sm:flex-none md:w-48">
-            <div className="mb-4 uppercase text-white-primary">game</div>
+            <div className="mb-4 uppercase text-white-primary">
+              {t("games")}
+            </div>
             {NAKA_GAME?.map((item) => (
               <div key={`game_${item.label}`}>
-                <Typography
-                  key={`${item.label}`}
-                  className="pb-[10px] text-[10px] uppercase text-black-default"
-                >
-                  {item.label}
-                </Typography>
                 {item.game.map((game) => (
                   <div
                     key={`game-${item.label}-${game.name}`}
@@ -107,7 +106,7 @@ const Footer = () => {
                       href={game.path}
                     >
                       <TextLink
-                        name={game.name}
+                        name={String(t(game.name))}
                         initial="rest"
                         whileHover="hover"
                         animate="rest"
@@ -121,14 +120,34 @@ const Footer = () => {
             ))}
           </div>
           <div className="flex-auto sm:flex-none md:w-48">
-            <div className="mb-4 uppercase text-white-primary">services</div>
+            <div className="mb-4 uppercase text-white-primary">
+              {t("Services")}
+            </div>
             {NAKA_SERVICES?.map((item) => (
               <Link
                 key={item.label}
                 href={item.path}
               >
                 <TextLink
-                  name={item.label}
+                  name={String(t(item.label))}
+                  initial="rest"
+                  whileHover="hover"
+                  animate="rest"
+                  variantsArrow={arrowMotion}
+                  variantsText={textMotion}
+                />
+              </Link>
+            ))}
+          </div>
+          <div className="flex-auto sm:flex-none md:w-48">
+            <div className="mb-8 uppercase text-white-primary" />
+            {NAKA_SERVICES_2?.map((item) => (
+              <Link
+                key={item.label}
+                href={item.path}
+              >
+                <TextLink
+                  name={String(t(item.label))}
                   initial="rest"
                   whileHover="hover"
                   animate="rest"
@@ -140,7 +159,7 @@ const Footer = () => {
           </div>
           <div className="col-span-2 flex-auto sm:flex-none md:col-span-1 md:w-48">
             <div className="mb-4 whitespace-normal uppercase text-white-primary">
-              NAKA Ecosystem
+              {t("About")}
             </div>
             {NAKA_ECOSYSTEMSS?.map((item) => (
               <Link
@@ -148,7 +167,7 @@ const Footer = () => {
                 key={item.label}
               >
                 <TextLink
-                  name={item.label}
+                  name={String(t(item.label))}
                   initial="rest"
                   whileHover="hover"
                   animate="rest"
@@ -165,17 +184,16 @@ const Footer = () => {
           </div>
         </div>
         <div className="flex justify-center pt-[20px] text-center md:text-left lg:justify-center lg:p-0">
-          <div className="flex flex-col items-center justify-self-end lg:w-3/4 lg:items-start">
+          <div className="flex max-w-[480px] flex-col items-center justify-self-end lg:items-start">
             <div className="mb-4 uppercase text-white-primary">
-              JOIN THE PLAY TO EARN REVOLUTION!
+              {t("be_a_part_of_the_play_to_earn_revolution")}
             </div>
-            Join the industry&apos;s first comprehensive Play to Earn ecosystem
-            and explore the many benefits it has to offer.
+            <div className="max-w-[400px]">{t("footer_title")}</div>
             <div className="my-8">
               <ButtonToggleIcon
                 handleClick={() => openInNewTab("https://t.me/NakamotoGames")}
                 startIcon={<WineIcon />}
-                text="join The Revolutions"
+                text={t("join_the_revolution")}
                 className="btn-rainbow-theme b h-[50px] !w-[260px] bg-secondary-main font-bold capitalize text-white-default"
                 type="button"
               />
@@ -207,7 +225,7 @@ const Footer = () => {
       {/* // TODO: Open after launch V2 */}
       {/* <GameDeveloperFooter /> */}
       <div className="flex flex-col items-center justify-center text-[10px] uppercase text-neutral-600 md:flex-row md:justify-between lg:m-4 lg:py-[20px]">
-        <h4>Copyright 2022 © Nakamoto Games</h4>
+        <h4>COPYRIGHT 2023 © NAKAMOTO GAMES</h4>
         <div
           className="h-[80px] cursor-pointer"
           onMouseEnter={handleMouseEnter}
@@ -225,7 +243,7 @@ const Footer = () => {
             <NakaMask1 />
           )}
         </div>
-        <h4>Scure by : polygon network</h4>
+        <h4>Secure by : polygon network</h4>
       </div>
     </>
   )

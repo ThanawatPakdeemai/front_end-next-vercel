@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 import { useCallback, useEffect, useState } from "react"
 import {
   FeeData,
@@ -88,13 +90,17 @@ const useCreateWeb3Provider = () => {
       })
       if (wasAdded) {
         successToast(MESSAGES.success)
-      } else {
-        errorToast(MESSAGES["error-something"])
       }
+      // NOTE: Not necessary to show a response when error
+      /* else {
+        errorToast(MESSAGES["error-something"])
+      } */
     } catch (error: any) {
+      // NOTE: Not necessary to show a response when error
       // User rejected the request
-      if (error.code === 4001) errorToast(error.message)
+      // if (error.code === 4001) errorToast(error.message)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorToast, successToast])
 
   const fetchChainData = useCallback(async () => {
@@ -106,13 +112,15 @@ const useCreateWeb3Provider = () => {
   }, [currentChainSelected, fetchAllTokenSupported, fetchNAKAToken])
 
   const onWalletLocked = useCallback(() => {
-    errorToast(`${MESSAGES.wallet_is_locked}`)
+    // NOTE: Not necessary to show a response when error
+    // errorToast(`${MESSAGES.wallet_is_locked}`)
     setStatusWalletConnected({
       responseStatus: false,
       errorMsg: `${MESSAGES.wallet_is_locked}`,
       type: "error"
     })
-  }, [errorToast])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   /**
    * @description Check if current account matches with the one we need
@@ -151,9 +159,10 @@ const useCreateWeb3Provider = () => {
           type: "error"
         })
         setIsCorrectWallet(false)
-        if (!isLogin) return
-        if (profile?.address === "" || !profile?.address) return
-        errorToast(`${_accounts[0]} ${MESSAGES.wallet_is_incorrect}`)
+        // NOTE: Not necessary to show a response when error
+        // if (!isLogin) return
+        // if (profile?.address === "" || !profile?.address) return
+        // errorToast(`${_accounts[0]} ${MESSAGES.wallet_is_incorrect}`)
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -181,7 +190,8 @@ const useCreateWeb3Provider = () => {
             type: "success"
           }
         } catch (error: any) {
-          errorToast(error.message)
+          // NOTE: Not necessary to show a response when error
+          // errorToast(error.message)
           return {
             responseStatus: false,
             errorMsg: (error as Error).message,
@@ -196,8 +206,10 @@ const useCreateWeb3Provider = () => {
           type: "failed"
         }
       }
+      // errorToast
     },
-    [errorToast]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   )
 
   const onSetAddress = useCallback((_address: string | undefined) => {
@@ -223,41 +235,41 @@ const useCreateWeb3Provider = () => {
         _email: _profile.email,
         _address
       }
-
-      errorToast(
-        `Your are connecting ${_address}\n${MESSAGES.please_update_wallet_address}\n${MESSAGES.are_you_sure}`,
-        10000,
-        true,
-        async () => {
-          setOpen()
-          await updateWalletAddress(data)
-            .then(async (_resUpdate) => {
-              if (_resUpdate) {
-                await getProfileByEmail(_profile.email).then((_res) => {
-                  onSetProfileData(_res)
-                  onSetProfileAddress(_res.address)
-                  toast.dismiss()
-                  setClose()
-                  setTimeout(() => {
-                    successToast(MESSAGES.success)
-                  }, 500)
-                  setTimeout(() => {
-                    // eslint-disable-next-line no-use-before-define
-                    // handleConnectWithMetamask()
-                    window.location.reload()
-                  }, 1000)
-                })
-              }
-            })
-            .catch((err) => {
-              setClose()
+      setOpen()
+      await updateWalletAddress(data)
+        .then(async (_resUpdate) => {
+          if (_resUpdate) {
+            await getProfileByEmail(_profile.email).then((_res) => {
+              onSetProfileData(_res)
+              onSetProfileAddress(_res.address)
               toast.dismiss()
+              setClose()
+              // setTimeout(() => {
+              //   successToast(MESSAGES.success)
+              // }, 500)
               setTimeout(() => {
-                errorToast(err.message)
+                // eslint-disable-next-line no-use-before-define
+                // handleConnectWithMetamask()
+                window.location.reload()
               }, 1000)
             })
-        }
-      )
+          }
+        })
+        .catch(() => {
+          setClose()
+          toast.dismiss()
+          // NOTE: Not necessary to show a response when error
+          // setTimeout(() => {
+          //   errorToast(err.message)
+          // }, 1000)
+        })
+      // errorToast(
+      //   `Your are connecting ${_address}\n${MESSAGES.please_update_wallet_address}\n${MESSAGES.are_you_sure}`,
+      //   10000,
+      //   true,
+      //   async () => {
+      //   }
+      // )
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [profile, onSetProfileData, onSetProfileAddress, successToast, errorToast]
@@ -330,7 +342,8 @@ const useCreateWeb3Provider = () => {
       .catch((err) => {
         setAccounts(undefined)
         onSetAddress(undefined)
-        if (err.code === 4001) {
+        // NOTE: Not necessary to show a response when error
+        /* if (err.code === 4001) {
           // EIP-1193 userRejectedRequest error
           // If this happens, the user rejected the connection request.
           errorToast(`Error code: ${err.code}\n${MESSAGES.user_reject_request}`)
@@ -338,7 +351,7 @@ const useCreateWeb3Provider = () => {
           errorToast(
             `Error code: ${err.code}\n${err.message}\n${MESSAGES.please_connect_metamask}`
           )
-        }
+        } */
       })
 
     // Subscribe to session disconnection
@@ -427,7 +440,8 @@ const useCreateWeb3Provider = () => {
         }
       } else {
         // if no window.ethereum then MetaMask is not installed
-        errorToast(MESSAGES.install_wallet)
+        // NOTE: Not necessary to show a response when error
+        // errorToast(MESSAGES.install_wallet)
         return {
           responseStatus: false,
           errorMsg: MESSAGES.install_wallet,

@@ -14,11 +14,13 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
 import { useToast } from "@feature/toast/containers"
 import { useForm } from "react-hook-form"
 import { MESSAGES } from "@constants/messages"
+import { useTranslation } from "react-i18next"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import useResetPassword from "../containers/hooks/useResetPassword"
 
 const FromForgotPassword = () => {
   const [open, setOpen] = useState<boolean>(false)
+  const { t } = useTranslation()
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -53,7 +55,7 @@ const FromForgotPassword = () => {
         className="cursor-pointer text-right text-sm text-neutral-500"
         onClick={handleOpen}
       >
-        Forget Password?
+        {t("forgot_password")}
       </Typography>
       <Box className="m-auto w-max p-1">
         <Box className="xs:flex-col items-center justify-between gap-1 lg:flex">

@@ -87,6 +87,7 @@ export default function Notification_id() {
               <OverviewContent
                 gameId={gameData.id}
                 gameType={getTypeGamePathFolder(gameData)}
+                gameIdNFT={gameData.NFT_Owner}
               />
               {/* {renderFormBuyItem()} */}
             </Box>

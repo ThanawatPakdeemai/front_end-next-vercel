@@ -10,7 +10,7 @@ import {
   Typography,
   Box
 } from "@mui/material"
-import { useTranslation } from "next-i18next"
+import { Trans, useTranslation } from "next-i18next"
 import { useRouter } from "next/router"
 import Link from "next/link"
 import ButtonClose from "../button/ButtonClose"
@@ -111,7 +111,9 @@ const SelectNaka = ({
                             </ListItemIcon>
                             <ListItemText className="w-50">
                               <Typography className="!font-neue-machina-semi !text-sm">
-                                {option.label}
+                                <Trans i18nKey={option.label}>
+                                  {option.label}
+                                </Trans>
                               </Typography>
                             </ListItemText>
                             {option.textEnd && (
@@ -119,7 +121,7 @@ const SelectNaka = ({
                                 component="div"
                                 className="w-max "
                               >
-                                <ListItemText className="text-end-select-naka rounded-less border border-neutral-700 bg-primary-main py-[2px] px-2 text-center font-neue-machina-semi text-xs uppercase ">
+                                <ListItemText className="text-end-select-naka rounded-less border border-neutral-700 bg-primary-main px-2 py-[2px] text-center font-neue-machina-semi text-xs uppercase ">
                                   <Typography className="uppercase text-primary-contrastText" />
                                   {option.textEnd}
                                 </ListItemText>
@@ -129,7 +131,7 @@ const SelectNaka = ({
                         </MenuItem>
                       ))}
                     </MenuList>
-                    <div className="py-1 px-2">{imageSelectd}</div>
+                    <div className="px-2 py-1">{imageSelectd}</div>
                   </div>
                 </div>
               </div>

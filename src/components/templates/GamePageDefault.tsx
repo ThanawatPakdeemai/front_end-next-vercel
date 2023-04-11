@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import ShineIcon from "@components/icons/ShineIcon"
 import Banners from "@components/molecules/Banners"
 import BannerSingle from "@components/molecules/BannerSingle"
@@ -6,6 +6,7 @@ import StatisticGameDetail from "@components/molecules/statistic/StatisticGameDe
 import Tagline from "@components/molecules/tagline/Tagline"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
+// import ReleatedGames from "@feature/game/components/molecules/RelatedGames"
 import { MESSAGES } from "@constants/messages"
 import useShareToEarnTracking from "@feature/game/containers/hooks/useShareToEarnTracking"
 import { IGame } from "@feature/game/interfaces/IGameService"
@@ -21,6 +22,7 @@ import Helper from "@utils/helper"
 import { useRouter } from "next/router"
 import Howto from "@components/molecules/HowToPlay"
 import { Box } from "@mui/material"
+import { useTranslation } from "react-i18next"
 
 interface IGamePageDefaultProps {
   component: React.ReactNode
@@ -45,18 +47,24 @@ const GamePageDefault = ({
   const [gameData, setGameData] = useState<IGame | IPartnerGameData>()
   const { statsGameById } = useGetStatisticsGameById()
   const { topPlayerGameId } = useTopPlayerByGameId()
+  const { t } = useTranslation()
 
-  const getCodeShareToEarn = () => {
+  const getCodeShareToEarn = useCallback(() => {
     const gameId = data?.id
-    const playerId = stateProfile?.id
     const codeId = router.asPath.substring(
       router.asPath.indexOf("?af") + 3,
       router.asPath.lastIndexOf("")
     )
 
-    if (gameId && playerId && codeId && router.asPath.includes("?af")) {
+    if (
+      gameId &&
+      stateProfile &&
+      stateProfile.id &&
+      codeId &&
+      router.asPath.includes("?af")
+    ) {
       mutateShareToEarnTracking({
-        player_id: playerId,
+        player_id: stateProfile.id,
         game_id: gameId,
         code: codeId
       })
@@ -79,7 +87,8 @@ const GamePageDefault = ({
           errorToast(MESSAGES.get_link_share_not_success)
         })
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.asPath, data, router, stateProfile])
 
   const handleTimeExpire = () => {
     const expireTimeShare = Helper.getLocalStorage(ELocalKey.shareToEarn)
@@ -114,8 +123,9 @@ const GamePageDefault = ({
             <Tagline
               bgColor="bg-neutral-800"
               textColor="text-neutral-500 font-bold"
-              text="Don't miss the information analysis about this game"
+              text={t("game_page_tagline_desc")}
               icon={<ShineIcon />}
+              show={false}
             />
             <div className="flex flex-wrap gap-3 xl:flex-row xl:flex-nowrap">
               {/* <LikeNoLobby
@@ -145,7 +155,6 @@ const GamePageDefault = ({
 
   useEffect(() => {
     let load = false
-
     if (!load) {
       if (data) {
         setGameData(data as IGame)
@@ -185,7 +194,7 @@ const GamePageDefault = ({
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.asPath, stateProfile?.id])
+  }, [stateProfile])
 
   return (
     <div className="main-container mx-auto w-full  px-2 lg:px-0">
@@ -200,9 +209,7 @@ const GamePageDefault = ({
         <Banners />
       )}
 
-      {gameData && "device_support" in gameData && (
-        <Howto data={gameData as IGame} />
-      )}
+      {gameData && <Howto data={gameData as IGame} />}
       {component}
       {/**
        * @description In case there is a need to add another component
@@ -210,6 +217,10 @@ const GamePageDefault = ({
       {component2 && <div className="mt-12">{component2}</div>}
       {component3 && <div className="mt-12">{component3}</div>}
       {renderStatistic()}
+      {/* //NOTE - comment ไว้ก่อน ค่อยเปิด feature นี้ทีหลัง */}
+      {/* {gameData && (
+        <ReleatedGames _gameType={getTypeGamePathFolder(gameData as IGame)} />
+      )} */}
       <Footer />
     </div>
   )

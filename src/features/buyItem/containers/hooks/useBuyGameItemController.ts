@@ -19,6 +19,8 @@ import { JsonRpcSigner } from "@ethersproject/providers"
 import useSupportedChain from "@hooks/useSupportedChain"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useChainSupportStore from "@stores/chainSupport"
+import { useRouter } from "next/router"
+import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
 import useBuyGameItems from "./useBuyGameItems"
 
 const useBuyGameItemController = () => {
@@ -31,6 +33,8 @@ const useBuyGameItemController = () => {
   const { chainSupport } = useChainSupportStore()
   const { fetchNAKAToken, fetchAllTokenSupported } = useSupportedChain()
   const { price } = useNakaPriceProvider()
+  const router = useRouter()
+  const { id: itemSizeId } = router.query
 
   const game = useGameStore((state) => state.data)
   const { gameItemList, refetch } = useGamesByGameId({
@@ -80,6 +84,11 @@ const useBuyGameItemController = () => {
     errorToast("Please fill in the required fields")
     setClose()
   }
+
+  const { balanceofItem, refetch: refetchBalanceofItem } = useGetBalanceOf({
+    _address: profile?.address ?? "",
+    _item_id: itemSelected?.item_id_smartcontract ?? 0
+  })
 
   const updatePricePerItem = useCallback(async () => {
     Helper.calculateItemPerPrice(
@@ -190,16 +199,19 @@ const useBuyGameItemController = () => {
 
   const refetchItemSelected = useCallback(() => {
     refetch().then((_item: any) => {
+      const _value = itemSizeId ? (itemSizeId as string) : watch("item_id")
       if (_item) {
-        const item = _item?.data?.find((ele) => ele.id === watch("item_id"))
+        const item = _item?.data?.find((ele) => ele.id === _value)
 
         if (item) {
           onSetGameItemSelectd(item)
           handleClose()
         }
+        refetchBalanceofItem()
       }
     })
-  }, [onSetGameItemSelectd, refetch, watch])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onSetGameItemSelectd, refetch, watch, itemSizeId, router])
 
   const onSubmit = (_data: IFormData) => {
     setOpen("Blockchain transaction in progress...")
@@ -320,7 +332,9 @@ const useBuyGameItemController = () => {
     isDisabled,
     chainId,
     accounts,
-    signer
+    signer,
+    refetchItemSelected,
+    balanceofItem
   }
 }
 

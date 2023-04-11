@@ -25,7 +25,7 @@ const SelectDropdownGameType = ({
   onChange
 }: IProp) => (
   <MenuList
-    className={`${className} mx-[6px] mt-[6px] mb-[6px] rounded-[13px] bg-neutral-700 px-[6px] py-[3px]`}
+    className={`${className} mx-[6px] mb-[6px] mt-[6px] rounded-[13px] bg-neutral-700 px-[6px] py-[3px]`}
   >
     {details.map((item, index: number) => (
       <Box

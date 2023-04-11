@@ -15,6 +15,7 @@ import { Box, Typography } from "@mui/material"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import Helper from "@utils/helper"
 import { ReactNode, useMemo } from "react"
+import { Trans, useTranslation } from "react-i18next"
 
 interface IPropContent {
   title: string | ReactNode
@@ -33,6 +34,7 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
   // const { balanceValutNaka, balanceValutBusd } = useAllBalances()
   const { shortenString, copyClipboard } = Helper
   const chainRequired = signer ? signer?.provider?._network?.chainId : 0
+  const { t } = useTranslation()
 
   const isSwitchChain = useMemo(() => {
     if (chain === "polygon") {
@@ -57,7 +59,7 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
 
   const dataTable: IPropContent[] = [
     {
-      title: "SELLER ADDRESS",
+      title: <Trans i18nKey="seller_address" />,
       value: (
         <>
           {dataInfo && (
@@ -80,7 +82,7 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
       )
     },
     {
-      title: "Order ID ",
+      title: <Trans i18nKey="order_id" />,
       value: (
         <>
           {dataInfo && (
@@ -103,7 +105,7 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
       )
     },
     {
-      title: `price per ${type === "sell" ? "busd" : "naka"}`,
+      title: `${t("price_per")} ${type === "sell" ? "busd" : "naka"}`,
       value: `${
         price
         // type === "sell"
@@ -112,12 +114,12 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
       } ${type === "sell" ? "busd" : "naka"}`
     },
     {
-      title: "Available",
+      title: <Trans i18nKey="available" />,
       value: dataInfo ? `${dataInfo.naka_amount} NAKA` : ""
     }
   ]
   return (
-    <div className="flex   items-center justify-between ">
+    <div className="flex items-center justify-between">
       <div className="mt-3 h-[528px] w-[454px] flex-col items-center  justify-center rounded-lg border-2 border-neutral-780 bg-primary-main p-10">
         {dataTable.map((ele, index) => (
           <div
@@ -137,7 +139,7 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
           <div className=" m-auto w-full flex-row  gap-y-3 rounded-[13px]  px-[5px] py-[5px]">
             <div className="my-5 flex items-center">
               <Typography className="mr-3 whitespace-nowrap font-neue-machina text-sm uppercase text-neutral-500">
-                your wallet balance
+                <Trans i18nKey="your_wallet_balance" />
               </Typography>
               <HrLine className="" />
             </div>
@@ -148,9 +150,9 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
           <ButtonToggleIcon
             startIcon=""
             endIcon=""
-            text="cancel order"
+            text={t("cancel_order")}
             handleClick={cancelOrder}
-            className={`leading-2 mt-5 mb-5 flex h-[50px] w-full items-center  justify-center rounded-md ${" bg-secondary-main"} !fill-primary-main font-neue-machina text-sm font-bold capitalize !text-primary-main`}
+            className={`leading-2 mb-5 mt-5 flex h-[50px] w-full items-center  justify-center rounded-md ${" bg-secondary-main"} !fill-primary-main font-neue-machina text-sm font-bold capitalize !text-primary-main`}
             type="button"
           />
         )}

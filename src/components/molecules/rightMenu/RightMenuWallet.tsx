@@ -15,6 +15,7 @@ import { ITokenContract } from "@feature/contract/containers/hooks/useContractVa
 import useWalletContoller, {
   Method
 } from "@feature/wallet/containers/hooks/useWalletContoller"
+import { Trans } from "next-i18next"
 import { ModalCustom } from "../Modal/ModalCustom"
 import ButtonWallet from "./ButtonWallet"
 import ModalHeader from "../Modal/ModalHeader"
@@ -133,7 +134,7 @@ const RightMenuWallet = ({
             {title === "withdraw" ? (
               <ButtonToggleIcon
                 startIcon={<Withdraw />}
-                text={title}
+                text={<Trans i18nKey={title} />}
                 handleClick={() => onSubmit("withdraw")}
                 className="flex h-[50px] w-full items-center justify-center rounded-md bg-red-default font-neue-machina text-sm font-bold capitalize leading-3 text-neutral-900 disabled:bg-neutral-800 disabled:text-neutral-600"
                 type="button"
@@ -143,7 +144,7 @@ const RightMenuWallet = ({
               <ButtonToggleIcon
                 startIcon={<Deposit />}
                 endIcon={<IconArrowRight stroke="#010101" />}
-                text={title}
+                text={<Trans i18nKey={title} />}
                 handleClick={() => onSubmit("deposit")}
                 className="flex h-[50px] w-full items-center justify-center rounded-md bg-varidian-default font-neue-machina text-sm font-bold capitalize leading-3 text-neutral-900 disabled:bg-neutral-800 disabled:text-neutral-600"
                 type="button"

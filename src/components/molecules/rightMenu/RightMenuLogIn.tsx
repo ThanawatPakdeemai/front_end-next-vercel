@@ -23,6 +23,7 @@ import useGlobal from "@hooks/useGlobal"
 import { useToast } from "@feature/toast/containers"
 import useNotiStore from "@stores/notification"
 import PlugIcon from "@components/icons/MenunIcon/PlugIcon"
+import { useTranslation } from "react-i18next"
 import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 
 const RightMenuLogIn = () => {
@@ -33,6 +34,7 @@ const RightMenuLogIn = () => {
   const { isMarketplace, isDeveloperPage, onClickLogout } = useGlobal()
   const { isConnected, address } = useWeb3Provider()
   const { successToast } = useToast()
+  const { t } = useTranslation()
 
   const iconmotion = {
     hover: {
@@ -74,16 +76,14 @@ const RightMenuLogIn = () => {
         <div>
           <TooltipsCustom
             title={
-              <p className="text-primary-main">
-                Please approve your wallet first.
-              </p>
+              <p className="text-primary-main">{t("please_approve_wallet")}</p>
             }
             color="warning"
             open={!address && !expanded && !isConnected}
           >
             <Card
               className={`${
-                expanded ? "rounded-t-[13px] rounded-b-none" : "rounded-[13px]"
+                expanded ? "rounded-b-none rounded-t-[13px]" : "rounded-[13px]"
               } relative m-auto flex items-center justify-center`}
               sx={{
                 maxWidth: 277,
@@ -199,7 +199,7 @@ const RightMenuLogIn = () => {
               backgroundColor: "#010101D9",
               maxWidth: 277,
               width: 277,
-              zIndex: 99999
+              zIndex: 9998
             }}
           >
             <>
@@ -225,7 +225,7 @@ const RightMenuLogIn = () => {
             <MenuProfile />
             <ButtonToggleIcon
               startIcon={<PlugIcon />}
-              text="Logout"
+              text={t("logout")}
               handleClick={async () => {
                 onClickLogout()
               }}

@@ -8,12 +8,9 @@ import InventoryIcon from "@components/icons/MenunIcon/InventoryIcon"
 import ItemRewardIcon from "@components/icons/MenunIcon/ItemRewardIcon"
 import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
 import IconDollar from "@components/icons/dollarIcon"
-import StoryBoardIcon from "@components/icons/StoryBoardIcon"
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
 import MoneyOffIcon from "@mui/icons-material/MoneyOff"
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined"
-import DiamondIcon from "@mui/icons-material/Diamond"
-import Diamond from "@components/icons/Diamond"
+import GamesIcon from "@mui/icons-material/Games"
 import { IMAGES } from "@constants/images"
 import AboutUsIcon from "@components/icons/BlogIcon/AboutUsIcon"
 import Campfire from "@components/icons/Campfire"
@@ -21,6 +18,7 @@ import MarketPlaceIcon from "@components/icons/BlogIcon/MarketPlaceIcon"
 import NakaverseIcon from "@components/icons/BlogIcon/NakaverseIcon"
 import NakapunksIcon from "@components/icons/BlogIcon/NakapunksIcon"
 import NewIcon from "@components/icons/BlogIcon/NewIcon"
+import StoryModeIcon from "@components/icons/StoryModelcon"
 import FireOutLineIcon from "@components/icons/BlogIcon/FireOutLineIcon"
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined"
 import AccessTimeIcon from "@mui/icons-material/AccessTime"
@@ -44,6 +42,7 @@ import DollarIcon from "@components/icons/Referral/DollarIcon"
 import ProcessPaymentIcon from "@components/icons/Inventory/ProcessPaymentIcon"
 import { TType } from "@feature/marketplace/interfaces/IMarketService"
 import CommissionIcon from "@components/icons/MenunIcon/CommissionIcon"
+import CalenderIcon from "@components/icons/CalenderIcon"
 
 // TODO: Open after launch V2
 // import GlobalIcon from "@components/icons/GlobalIcon"
@@ -76,20 +75,20 @@ export const MENU = [
     },
     chide: [
       {
-        name: "Play To Earn Mode",
+        name: "Play To Earn Games",
         link: "/play-to-earn-games",
         icon: AttachMoneyIcon
       },
       {
-        name: "Free To Earn",
+        name: "Free To Earn Games",
         link: "/free-to-play-games",
         icon: MoneyOffIcon,
         textRight: "Free"
       },
       {
-        name: "Story Mode",
+        name: "Story Mode Games",
         link: "/story-mode-games",
-        icon: MapOutlinedIcon,
+        icon: StoryModeIcon,
         textRight: "Free"
       },
       // TODO: Open after launch V2
@@ -107,7 +106,12 @@ export const MENU = [
       {
         name: "Arcade Emporium",
         link: "/arcade-emporium",
-        icon: DiamondIcon
+        icon: GamesIcon
+      },
+      {
+        name: "Events",
+        link: "/events",
+        icon: CalenderIcon
       }
       // TODO: Open after launch V2
       // {
@@ -164,16 +168,6 @@ export const MENU = [
     },
     chide: [
       {
-        name: "Blog",
-        link: "/blog",
-        icon: BlogIcon
-      },
-      {
-        name: "About Us",
-        link: "https://main.nakamoto.games",
-        icon: AboutUsIcon
-      },
-      {
         name: "Marketplace",
         link: `${CONFIGS.BASE_URL.MARKETPLACE}`,
         icon: MarketPlaceIcon
@@ -187,6 +181,16 @@ export const MENU = [
         name: "Nakapunks",
         link: `${CONFIGS.BASE_URL.MARKETPLACE}/naka-punk`,
         icon: NakapunksIcon
+      },
+      {
+        name: "Blog",
+        link: "/blog",
+        icon: BlogIcon
+      },
+      {
+        name: "About Us",
+        link: "https://main.nakamoto.games",
+        icon: AboutUsIcon
       }
       // TODO: Open after launch V2
       // {
@@ -200,23 +204,23 @@ export const MENU = [
 
 export const MENU_GUEST: IMenu[] = [
   {
-    id: "games",
-    label: "Play To Earn Mode",
+    id: "play-to-earn-games",
+    label: "Play To Earn Games",
     icon: <IconDollar.Ori className="stroke-neutral-300" />,
     href: "/play-to-earn-games",
     external: false
   },
   {
-    id: "free-to-earn",
-    label: "Free To Earn",
+    id: "free-to-play-games",
+    label: "Free To Play Games",
     icon: <IconDollar.Mask className="stroke-neutral-300" />,
     href: "/free-to-play-games",
     external: false
   },
   {
-    id: "free-to-play-games",
-    label: "Story Mode",
-    icon: <StoryBoardIcon className="stroke-neutral-300" />,
+    id: "story-mode-games",
+    label: "Story Mode Games",
+    icon: <StoryModeIcon stroke="#E1E2E2" />,
     href: "/story-mode-games",
     external: false
   },
@@ -238,8 +242,15 @@ export const MENU_GUEST: IMenu[] = [
   {
     id: "arcade-emporium",
     label: "Arcade Emporium",
-    icon: <Diamond stroke="#E1E2E2" />,
+    icon: <GamesIcon stroke="#E1E2E2" />,
     href: "/arcade-emporium",
+    external: false
+  },
+  {
+    id: "events",
+    label: "Events",
+    icon: <CalenderIcon stroke="#E1E2E2" />,
+    href: "/events",
     external: false
   }
   // TODO: Open after launch V2
@@ -290,7 +301,7 @@ export const MENU_LOGGEDIN: IMenu[] = [
   },
   {
     id: "play-history",
-    label: "Play History",
+    label: "Played History",
     href: "/history",
     icon: <PlayHistoryIcon />,
     external: false

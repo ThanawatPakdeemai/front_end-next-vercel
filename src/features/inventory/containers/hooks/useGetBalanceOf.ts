@@ -9,7 +9,8 @@ const useGetBalanceOf = ({ _address, _item_id }: IGetBalanceOf) => {
     isFetching,
     isPreviousData,
     isError,
-    error
+    error,
+    refetch
   } = useQuery({
     queryKey: ["getBalanceOf", _address, _item_id],
     queryFn: () => getBalanceOf({ _address, _item_id }),
@@ -24,7 +25,8 @@ const useGetBalanceOf = ({ _address, _item_id }: IGetBalanceOf) => {
     isFetching,
     isPreviousData,
     isError,
-    error
+    error,
+    refetch
   }
 }
 

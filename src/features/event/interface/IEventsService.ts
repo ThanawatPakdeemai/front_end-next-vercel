@@ -1,3 +1,5 @@
+import { IGame } from "@feature/game/interfaces/IGameService"
+
 export interface IGetAllEventsProps {
   limit: number
   skip: number
@@ -23,12 +25,14 @@ export interface IGamesToPlay {
   image_room: string
 }
 
+export type EventType = "share_and_play" | "top_score_championship"
+
 export interface IGetEventResponseData {
   _id: string
   status: string
   reward_share_rate: number[]
   score_rank?: number[]
-  games_to_play: IGamesToPlay[]
+  games_to_play: IGame[]
   createdAt: Date
   updatedAt: Date
   name: string
@@ -39,7 +43,7 @@ export interface IGetEventResponseData {
   date_end?: Date
   banner_image: string
   __v?: number
-  event_type: "share_and_play" | "top_score_championship"
+  event_type: EventType
   date_end1?: Date
   min_score?: number
 }

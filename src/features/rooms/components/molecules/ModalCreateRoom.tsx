@@ -10,7 +10,6 @@ import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import { MESSAGES } from "@constants/messages"
 import { IGame, IGameMap } from "@feature/game/interfaces/IGameService"
-import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useCreateRoom from "@feature/rooms/hooks/useCreateRoom"
 import { useToast } from "@feature/toast/containers"
@@ -29,7 +28,10 @@ import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 import { unstable_batchedUpdates } from "react-dom"
+import { Image } from "@components/atoms/image/index"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 
 interface IProp {
   gameData: IGame
@@ -60,18 +62,24 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
   const handleClose = () => setOpen(false)
 
   const { mutateCreateRoom, isLoading } = useCreateRoom()
-
-  const { gameItemList } = useGamesByGameId({
-    _playerId: profile ? profile.id : "",
-    _gameId: gameData ? gameData._id : ""
-  })
+  const { t } = useTranslation()
+  const { gameItemList, balanceofItem } = useBuyGameItemController()
+  // const { gameItemList } = useGamesByGameId({
+  //   _playerId: profile ? profile.id : "",
+  //   _gameId: gameData ? gameData._id : ""
+  // })
 
   const handleSetIsCurrent = (status: boolean) => {
     setIsPublicRoom(status)
   }
 
   const handleSubmit = () => {
-    if (gameItemList) {
+    if (
+      gameItemList &&
+      balanceofItem &&
+      balanceofItem.data > 0 &&
+      balanceofItem.data >= itemUse
+    ) {
       const gameItem = gameItemList.find((ele) => ele._id === itemSelected?._id)
       if (
         gameData.play_to_earn_status === "free" ||
@@ -120,6 +128,8 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
       } else {
         errorToast(MESSAGES["you-not-enough"])
       }
+    } else {
+      errorToast(MESSAGES["you-not-enough"])
     }
   }
 
@@ -163,7 +173,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
       <ButtonToggleIcon
         handleClick={handleOpen}
         startIcon={<PlusIcon />}
-        text="Create Room"
+        text={t("create_room")}
         className="btn-rainbow-theme z-[2] w-[156px] bg-secondary-main font-bold capitalize text-white-primary"
         type="button"
       />
@@ -179,7 +189,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
           >
             <div className="flex flex-1 flex-row items-center">
               <Typography className="pl-[22px] uppercase text-neutral-300">
-                Create Room
+                {t("create_room")}
               </Typography>
             </div>
             <ButtonClose onClick={handleClose} />
@@ -197,14 +207,28 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
             }}
           /> */}
           <CountItem
+            _item={itemUse}
+            _addItem={() => setItemUse(itemUse > 9 ? 10 : itemUse + 1)}
+            _minusItem={() => setItemUse(itemUse < 2 ? 1 : itemUse - 1)}
+            endIcon={
+              <Image
+                src={gameItemList?.[0]?.image_icon ?? ""}
+                width={15}
+                height={15}
+                alt={gameItemList?.[0]?.item_size ?? ""}
+              />
+            }
+            label={t("number_of_items")}
+          />
+          <CountItem
             endIcon={<PlayersIcon />}
-            label="number of players"
+            label={t("number_of_players")}
           />
           {gameData && gameData.type_code === "multi_02" && (
             <TextField
-              label="select map"
+              label={t("select_map")}
               select
-              placeholder="select map..."
+              placeholder={`${t("select_map")}...`}
               value={map}
               InputProps={{
                 startAdornment: (
@@ -230,14 +254,14 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
             </TextField>
           )}
           <div className="flex text-sm text-neutral-500">
-            <span>Room status :</span>
+            <span>{t("room_status")} :</span>
             <button
               className="ml-2 mr-[10px]"
               type="button"
               onClick={() => handleSetIsCurrent(true)}
             >
               <span className={isPublicRoom ? "!text-neutral-300" : ""}>
-                Public
+                {t("public")}
               </span>
             </button>
             <SwitchCustom
@@ -251,12 +275,12 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
               }}
             />
             <button
-              className="mr-2 ml-[10px]"
+              className="ml-[10px] mr-2"
               type="button"
               onClick={() => handleSetIsCurrent(false)}
             >
               <span className={!isPublicRoom ? "!text-neutral-300" : ""}>
-                Private
+                {t("private")}
               </span>
             </button>
           </div>
@@ -282,7 +306,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
                   size={20}
                 />
               ) : (
-                "Create"
+                t("create")
               )
             }
             handleClick={handleSubmit}

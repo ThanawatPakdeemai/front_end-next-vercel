@@ -13,6 +13,7 @@ import { useRouter } from "next/router"
 import CreateProfile from "@feature/profile/components/createProfile/CreateProfile"
 import useRegisterAvatarStore from "@stores/registerAvater"
 import FormRegister from "@feature/authentication/components/FormRegister"
+import { useTranslation } from "react-i18next"
 
 const KeyFramesClockwise = styled("div")({
   "@keyframes rotation": {
@@ -59,12 +60,12 @@ const SignUpSchema = yup
   .required()
 
 const RegisterLayout = () => {
+  const { t } = useTranslation()
   const router = useRouter()
   const { referral } = router.query
 
-  const {
-    formState: { errors }
-  } = useForm<TFormData>({
+  // eslint-disable-next-line no-unused-vars
+  const { formState } = useForm<TFormData>({
     resolver: yupResolver(SignUpSchema),
     defaultValues: {
       referralId: referral || ""
@@ -82,9 +83,7 @@ const RegisterLayout = () => {
           container
           component="div"
           className={`min-h-[790px] rounded-3xl border border-solid border-neutral-800 p-[20px] md:p-[50px] lg:p-2.5 ${
-            !_.isEmpty({ errors }.errors) && submitRegisterForm
-              ? "h-[135vh]"
-              : "h-[95vh]"
+            submitRegisterForm ? "h-[135vh]" : "h-[95vh]"
           }`}
         >
           <Grid
@@ -107,9 +106,10 @@ const RegisterLayout = () => {
               <Tagline
                 bgColor="bg-neutral-800"
                 textColor="text-neutral-500"
-                text="SECURE. SUBLIME. SIMPLE. EARN $NAKA TODAY. "
+                text={t("main_tagline")}
                 icon={<VectorIcon />}
                 className="!my-[2.938rem]"
+                show={false}
               />
             </Box>
           </Grid>
@@ -167,7 +167,7 @@ const RegisterLayout = () => {
                 className="absolute bottom-4 my-2"
               >
                 <Typography className="text-sm uppercase text-neutral-700">
-                  Copyright 2022 © Nakamoto Games
+                  COPYRIGHT 2023 © NAKAMOTO GAMES
                 </Typography>
               </Grid>
             </Box>

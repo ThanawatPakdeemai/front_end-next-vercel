@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import useGlobalStaking from "@feature/staking/containers/hook/useStakingController"
 import React, { useEffect, useRef, useState } from "react"
 import { v4 as uuid } from "uuid"
@@ -9,6 +10,7 @@ import StakingDetails from "./StakingDetails"
 import RedBanner from "./RedBanner"
 
 const FlexibleAPRContent = () => {
+  // TODO: Refactor this component
   const [stakingStatus, setStakingStatus] = useState<boolean | undefined>(false)
   const fetchRef = useRef(false)
   const { flexibleStaking, userStakedInfo, fetchStakingInfo } =
@@ -52,11 +54,11 @@ const FlexibleAPRContent = () => {
             className="mb-12"
           />
           <Typography className="mb-12 flex max-w-full justify-center text-center font-bold uppercase text-neutral-500">
-            STAKING IS COMING. STAY TUNED ON SOCIAL MEDIA.
+            {t("staking_not_avaliable_desc")}
           </Typography>
         </div>
       )}
-      {flexibleStaking && stakingStatus && (
+      {flexibleStaking && (
         <Box component="section">
           {flexibleStaking.map((_item) =>
             _item.dataAPI.map((item) => (

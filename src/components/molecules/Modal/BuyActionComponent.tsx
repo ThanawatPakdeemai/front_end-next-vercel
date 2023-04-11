@@ -115,7 +115,7 @@ const BuyActionComponent = ({
         <>
           <span className="text-xs uppercase">Payment Type</span>
           <Select
-            className="mx-[6px] mt-2 mb-2 rounded-sm bg-neutral-800 !px-2 py-1 capitalize text-white-primary"
+            className="mx-[6px] mb-2 mt-2 rounded-sm bg-neutral-800 !px-2 py-1 capitalize text-white-primary"
             value={selling}
             disabled
           >

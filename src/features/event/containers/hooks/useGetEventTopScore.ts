@@ -10,11 +10,12 @@ const useGetEventTopScore = (event_id: string, isTopScore: boolean) => {
   } = useQuery({
     queryKey: ["getEventTopScore", event_id],
     queryFn: () => getEventTopScore(event_id),
-    enabled: isTopScore,
+    enabled: isTopScore && event_id !== "",
+    keepPreviousData: true,
     staleTime: Infinity
   })
   return {
-    topScoreData,
+    topScoreData: topScoreData && topScoreData.data && topScoreData.data.data,
     error,
     topScoreIsLoading,
     isError

@@ -79,7 +79,7 @@ const MyGamesPage = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="mb-6 grid grid-cols-5 gap-y-4 gap-x-2">
+      <div className="mb-6 grid grid-cols-5 gap-x-2 gap-y-4">
         {myGamesIsPreviousData || myGamesIsLoading || myGamesIsFetching
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
           : null}
@@ -95,13 +95,16 @@ const MyGamesPage = () => {
                 onHandleClick={() =>
                   onHandleSetGameStore(getTypeGamePathFolder(game), game)
                 }
-                gameType={getTypeGamePathFolder(game)}
+                gameType={
+                  game.is_NFT ? "arcade-emporium" : getTypeGamePathFolder(game)
+                }
+                play_total_count={game?.play_total_count}
               />
             ))
           : null}
       </div>
       {myGamesData && myGamesData.data.length === 0 && (
-        <NoData className="max-w-[300px]" />
+        <NoData className="mt-4 max-w-[300px]" />
       )}
       <PaginationNaka
         totalCount={totalCount}

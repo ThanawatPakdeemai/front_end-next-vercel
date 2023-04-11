@@ -11,6 +11,7 @@ import DropdownLimit from "@components/atoms/DropdownLimit"
 import { v4 as uuid } from "uuid"
 import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
 import TableNodata from "@feature/transaction/components/atoms/TableNodata"
+import { useTranslation } from "react-i18next"
 
 const CommissionTable = () => {
   const {
@@ -24,12 +25,13 @@ const CommissionTable = () => {
     isLoading,
     txHistory
   } = useCommissionController()
+  const { t } = useTranslation()
 
   return (
     <div className="mx-auto max-w-[678px]">
       <PageHeader
-        title="Commission"
-        subtitle="Commission share to earn"
+        title={t("Commission")}
+        subtitle={t("commission_share_to_earn")}
       />
       <TableContainer className="rounded-[14px] border border-neutral-800 bg-neutral-780 px-1.5 pb-1.5">
         <Table>
@@ -64,12 +66,11 @@ const CommissionTable = () => {
                       </div>,
                       <div key={item.id}>
                         <Chip
-                          label={item.transaction_status.split("_").join(" ")}
+                          label={item.type.split("_").join(" ")}
                           size="small"
                           variant="outlined"
                           className={`max-w-[120px] truncate font-neue-machina-bold uppercase ${
-                            item.transaction_status &&
-                            item.transaction_status === "complete"
+                            item.type && item.type === "PayCommission"
                               ? "!bg-varidian-default !text-neutral-900"
                               : "!bg-neutral-900 !text-neutral-400"
                           }`}
@@ -78,21 +79,22 @@ const CommissionTable = () => {
                       <div key={item.id}>
                         <div
                           className={`flex items-center font-neue-machina-bold text-sm ${
-                            item.transaction_status &&
-                            item.transaction_status === "complete"
+                            item.type && item.type === "PayCommission"
                               ? "text-varidian-default"
                               : "text-neutral-600"
                           }`}
                         >
                           <IconArrowTop className="mr-[8.35px] rotate-180" />
-                          {item.naka_for_player.toFixed(4)}
+                          {item.amount.toFixed(4)}
                         </div>
                       </div>,
                       <div
                         key={item.id}
                         className="uppercase"
                       >
-                        {item.type.split("_").join(" ")}
+                        {item.type === "PayCommission"
+                          ? "Share to earn commission"
+                          : "Game Commission"}
                       </div>
                     ]}
                   />

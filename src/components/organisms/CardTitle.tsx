@@ -4,6 +4,7 @@ import { Card, CardHeader, Divider } from "@mui/material"
 import Helper from "@utils/helper"
 import dayjs from "dayjs"
 import duration from "dayjs/plugin/duration"
+import { useTranslation } from "react-i18next"
 
 dayjs.extend(duration)
 
@@ -33,6 +34,7 @@ const CardTitle = ({
 
   const formattedWeek = week.format("DD MMM YYYY")
   const formattedEndWeek = week.endOf("week").format("DD MMM YYYY")
+  const { t } = useTranslation()
 
   return (
     <>
@@ -50,7 +52,7 @@ const CardTitle = ({
             <div className="flex w-full justify-center rounded-2xl bg-neutral-800 p-4 lg:justify-between">
               <div className="uppercase">
                 <h1 className="col-span-2 text-[14px]">
-                  weekly prize pool :{" "}
+                  {t("weekly_prize_pool")} :{" "}
                   <span className="text-info-main">
                     {sumTotal &&
                       Helper.formatNumber(sumTotal, {
@@ -87,11 +89,11 @@ const CardTitle = ({
       {subtitle ? (
         <>
           <div className="grid w-full flex-[1_1_calc(100%-250px)] grid-cols-8 gap-1 p-4 text-[10px] uppercase lg:flex-none">
-            <h1 className="col-span-1">Rank</h1>
-            <h1 className="col-span-3">Player</h1>
-            <h1 className="col-span-2">Prize pool EST. %</h1>
+            <h1 className="col-span-1">{t("rank")}</h1>
+            <h1 className="col-span-3">{t("player")}</h1>
+            <h1 className="col-span-2">{t("prize_pool")} EST. %</h1>
             <h1 className="col-span-2">
-              Total naka :{" "}
+              {t("total")} naka :{" "}
               <span className="text-info-main">
                 {sumTotal &&
                   Helper.formatNumber(sumTotal, {

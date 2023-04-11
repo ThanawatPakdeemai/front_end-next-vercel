@@ -1,8 +1,8 @@
 import React from "react"
 
 interface IPageHeaderTableProps {
-  title?: string
-  subtitle?: string
+  title?: string | null
+  subtitle?: string | null
   children?: React.ReactNode
   button?: React.ReactNode
 }
@@ -13,7 +13,7 @@ const PageHeader = ({
   children,
   button
 }: IPageHeaderTableProps) => (
-  <div className="page-header my-2 flex items-center justify-center md:my-0 md:mb-8 md:justify-between">
+  <div className="page-header my-2 flex flex-col items-center justify-center md:my-0 md:mb-8 md:flex-row md:justify-between">
     <div className="page-header__title max-w-md">
       {title && (
         <h2 className="my-1 font-neue-machina text-default uppercase text-primary-contrastText">

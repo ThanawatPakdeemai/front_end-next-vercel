@@ -21,6 +21,7 @@ import { chainIdConfig } from "@configs/sites"
 import SwitchChain from "@components/atoms/SwitchChain"
 import useSwitchNetwork from "@hooks/useSwitchNetwork"
 import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
+import { useTranslation } from "next-i18next"
 import Input from "../atoms/Input"
 
 interface IProp {
@@ -43,6 +44,7 @@ const Form = ({
   const { nakaCurrentPrice, fee } = useContractMultichain()
   const { handleSwitchNetwork } = useSwitchNetwork()
   const { formatNumber } = Helper
+  const { t } = useTranslation()
 
   const chainRequired = signer?.provider?._network?.chainId ?? 0
 
@@ -94,7 +96,7 @@ const Form = ({
         disabled={disableButton}
         text={`${edit ? "edit" : "create"} ${type} NAKA`}
         handleClick={() => {}}
-        className={`leading-2 mt-5 mb-5 flex h-[50px] w-full items-center  justify-center rounded-md ${
+        className={`leading-2 mb-5 mt-5 flex h-[50px] w-full items-center  justify-center rounded-md ${
           type === "buy" ? " bg-varidian-default " : " bg-error-main"
         } !fill-primary-main font-neue-machina text-sm font-bold capitalize !text-primary-main`}
         type="submit"
@@ -155,25 +157,24 @@ const Form = ({
   return (
     <form onSubmit={dataForm["handleSubmit"](onSubmit)}>
       <div className=" flex items-center justify-center">
-        <div className=" flex w-[454px] items-center justify-center rounded-lg bg-neutral-780 p-10">
-          <div>
+        <div className=" flex w-full items-center justify-center rounded-lg bg-neutral-780 p-2 md:w-[454px] md:p-10">
+          <div className="w-full md:w-auto">
             <Typography className=" font-neue-machina text-sm uppercase text-neutral-500">
-              CREATE AN ORDER IN WHICH YOU WOULD LIKE TO BUY NAKA. PEOPLE WHO
-              ARE INTERESTED IN YOUR PRICE WILL TAKE YOUR ORDER.
+              {t("create_order_buy_naka")}
             </Typography>
-            <HrLine className="my-3 " />
+            <HrLine className="my-3 w-full " />
             <Typography className="font-neue-machina text-sm uppercase text-neutral-500">
-              enter price naka/busd
+              {t("enter_price_naka_busd")}
             </Typography>
             <Input
               name="price"
               endIcon={type === "buy" ? <IBusd /> : <INaka />}
-              placeholder="Enter price"
+              placeholder={String(t("enter_price_naka_busd"))}
               {...dataForm}
             />
 
             <Typography className="font-neue-machina text-sm uppercase text-neutral-600">
-              reference price
+              {t("reference_price")}
               <span className="ml-2 uppercase text-neutral-300">
                 {nakaCurrentPrice !== undefined
                   ? Helper.formatNumber(Number(nakaCurrentPrice.last), {
@@ -195,17 +196,17 @@ const Form = ({
               </div>
             </div>
             <Typography className="font-neue-machina text-sm uppercase text-neutral-500">
-              You will {type === "sell" ? "pay" : "recieve"}
+              {t("you_will")} {type === "sell" ? "pay" : "recieve"}
             </Typography>
             <Input
               name="amount"
               endIcon={<INaka />}
-              placeholder="Enter The amount of NAKA"
+              placeholder={String("enter_amount_naka")}
               {...dataForm}
             />
 
             <Typography className="font-neue-machina text-sm uppercase text-neutral-600">
-              you will {type === "buy" ? "pay" : "recieve"}
+              {t("you_will")} {type === "buy" ? "pay" : "recieve"}
               <span className="ml-2 text-neutral-300">
                 {formatNumber(total, {
                   maximumFractionDigits: 4
@@ -222,7 +223,7 @@ const Form = ({
             )}
             {!edit && (
               <Typography className="my-2 text-center font-neue-machina text-sm uppercase text-neutral-500">
-                fee {formatEther(fee)} busd
+                {t("fee")} {formatEther(fee)} busd
               </Typography>
             )}
             {disableButton && (

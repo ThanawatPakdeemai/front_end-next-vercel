@@ -7,9 +7,9 @@ export const MESSAGES = {
   "logged_in_successfully": "Logged in successfully",
   "logged_in_unsuccessfully": "Logged in unsuccessfully",
   "sign_in_success": "Sign in successfully",
-  "success_get_code": "Success get code",
+  "success_get_code": "Codes sent to your email. Please check and fill in.",
   "code_number_not_expired": "Code number not expired",
-  "edit_profile_success": "Edit Profile successfully",
+  "edit_profile_success": "Updated",
   "please_fill": "Please fill completely",
   "cant_update_data": "Cannot Update Data",
   "you-can't-play-game": "You can't play game.",
@@ -70,5 +70,6 @@ export const MESSAGES = {
   "wallet_is_not_correct_network": "Wallet is not correct network",
   "user_reject_request": "User rejected request",
   "please_update_wallet_address": "Please update wallet address",
-  "are_you_sure": "Are you sure to do this?"
+  "are_you_sure": "Are you sure to do this?",
+  "you_out_room_in_to_again": "Please into room again?"
 }

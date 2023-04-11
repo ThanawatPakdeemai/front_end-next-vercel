@@ -30,6 +30,7 @@ import { useForm } from "react-hook-form"
 import IEdit from "@components/icons/Edit"
 import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import ModalHeader from "@components/molecules/Modal/ModalHeader"
+import { useTranslation } from "react-i18next"
 import useCreateNewPassword from "../containers/hooks/useCreateNewPassword"
 import FormLogin from "./FormLogin"
 
@@ -63,6 +64,7 @@ interface IProp {
 }
 
 const FromCreatePassword = ({ email, token }: IProp) => {
+  const { t } = useTranslation()
   const [showPassword, setShowPassword] = useState(false)
   const [characterUppercase, setCharacterUppercase] = useState(true)
   const [characterPasswordLength, setCharacterPasswordLength] = useState(true)
@@ -197,9 +199,10 @@ const FromCreatePassword = ({ email, token }: IProp) => {
               <Tagline
                 bgColor="bg-neutral-800"
                 textColor="text-neutral-500"
-                text="SECURE. SUBLIME. SIMPLE. EARN $NAKA TODAY. "
+                text={t("main_tagline")}
                 icon={<VectorIcon />}
                 className="!my-[2.938rem]"
+                show={false}
               />
             </Box>
           </Grid>
@@ -271,7 +274,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                           <ButtonClose onClick={() => {}} />
                         </Link>
                       </Box>
-                      <Divider className="mx-0 mt-5 mb-8" />
+                      <Divider className="mx-0 mb-8 mt-5" />
                       <>
                         {formSubmitErrors && (
                           <motion.div
@@ -540,7 +543,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                 className="absolute bottom-32"
               >
                 <Typography className="text-sm uppercase text-neutral-700">
-                  Copyright 2022 © Nakamoto Games
+                  COPYRIGHT 2023 © NAKAMOTO GAMES
                 </Typography>
               </Grid>
             </Box>

@@ -53,7 +53,7 @@ const DropdownEvent = ({
                         <div className="flex items-center">
                           <p className="px-2 uppercase">{t("event")}</p>
                         </div>
-                        <p className="px-2 text-[#ffffff]">{`${event}`}</p>
+                        <p className="px-2 text-[#ffffff]">{`${t(event)}`}</p>
                       </div>
                     }
                   />
@@ -84,7 +84,7 @@ const DropdownEvent = ({
                       list.map((m) => ({
                         label: (
                           <div className="flex items-center justify-center">
-                            <p>{`${m}`}</p>
+                            <p>{`${t(m)}`}</p>
                           </div>
                         ),
                         data: m,

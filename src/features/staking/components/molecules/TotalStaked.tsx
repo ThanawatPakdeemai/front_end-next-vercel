@@ -2,6 +2,7 @@ import { Box, LinearProgress, Skeleton, Typography } from "@mui/material"
 import { TStaking } from "@src/types/staking"
 import Helper from "@utils/helper"
 import React from "react"
+import { useTranslation } from "react-i18next"
 
 interface ITotalStaked {
   totalPoolStake: number
@@ -27,6 +28,8 @@ const TotalStaked = ({
     }
     return 0
   }
+
+  const { t } = useTranslation()
 
   return (
     <div
@@ -88,7 +91,9 @@ const TotalStaked = ({
       )}
 
       <div className="flex items-center justify-center font-neue-machina-semi sm:w-[calc(100%-200px)] sm:justify-end sm:whitespace-nowrap sm:pl-5">
-        <span className="mr-2 text-neutral-600">total naka staked : </span>
+        <span className="mr-2 text-neutral-600">
+          {t("total_NAKA_staked")} :
+        </span>
         {totalPoolStake !== -1 && poolLimit !== -1 ? (
           <>
             <span className="text-neutral-300">

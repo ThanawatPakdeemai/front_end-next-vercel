@@ -1,7 +1,7 @@
 import { Button, SxProps, Theme } from "@mui/material"
 import Link from "next/link"
 import React, { ReactNode, useMemo } from "react"
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
+import dynamic from "next/dynamic"
 
 export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   text?: string | ReactNode
@@ -40,6 +40,13 @@ const ButtonLink = ({
   sxCustomStyled = {},
   target = "_self"
 }: IButtonLink) => {
+  const IconArrowRight = dynamic(
+    () => import("@components/icons/arrowRightIcon"),
+    {
+      suspense: true,
+      ssr: false
+    }
+  )
   const ButtonSelf = useMemo(
     () => (
       <Button
@@ -62,14 +69,14 @@ const ButtonLink = ({
         endIcon={
           !disabledEndIcon && (
             <div className="button-arrow animation-arrow">
-              <ArrowForwardIcon className={arrowColor} />
+              <IconArrowRight className={arrowColor} />
             </div>
           )
         }
         sx={sxCustomStyled}
       >
         <span
-          className={`animation-button-text flex h-fit items-center ${textColor}`}
+          className={`animation-button-text flex h-fit items-center xl:mt-0 ${textColor}`}
         >
           {text}
         </span>

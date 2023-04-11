@@ -6,6 +6,7 @@ import useGameSummaryRewardController from "@feature/game/containers/hooks/useGa
 import CardBodyList from "@feature/ranking/components/molecules/CardBodyList"
 import useGlobal from "@hooks/useGlobal"
 import GameSummaryBodyReturnItem from "@feature/game/containers/components/organisms/GameSummaryBodyReturnItem"
+import { useRouter } from "next/router"
 
 const GameSummaryRewardPage = () => {
   const {
@@ -22,18 +23,21 @@ const GameSummaryRewardPage = () => {
     gameItemBalance
   } = useGameSummaryRewardController()
   const { hydrated } = useGlobal()
-
+  const router = useRouter()
   const getSummaryValue = () => {
     switch (notificationItem?.type) {
       case "RETURN_ITEM":
+      case undefined:
         return summaryDataPlayerId.current_score
 
       case "REWARD_WEEKLY":
       case "REWARD_GAME_POOL":
         return summaryDataPlayerIdWeekly.reward
-
       default:
-        return summaryDataPlayerId.naka_for_player
+        return (
+          summaryDataPlayerId.naka_for_player ||
+          summaryDataPlayerId.current_score
+        )
     }
   }
 
@@ -43,7 +47,7 @@ const GameSummaryRewardPage = () => {
         return (
           <GameSummaryBodyReturnItem
             text={notificationItem.detail}
-            gameImage={gameDataState?.image_list || ""}
+            gameImage={gameDataState?.image_category_list || ""}
             gameName={gameDataState?.name || ""}
             date={notificationItem?.createdAt || ""}
             itemImage={usedItem.images}
@@ -60,7 +64,7 @@ const GameSummaryRewardPage = () => {
               notificationItem?.createdAt || playHistoryItem?.createdAt || ""
             }
             gameRaward={totalGameReward || 0}
-            gameImage={gameDataState?.image_list || ""}
+            gameImage={gameDataState?.image_category_list || ""}
             gameName={gameDataState?.name || ""}
             value={getSummaryValue()}
             hash={
@@ -84,6 +88,9 @@ const GameSummaryRewardPage = () => {
     }
   }
 
+  const link = router.asPath.includes("summary")
+    ? `${router?.asPath?.split("summary")[0]}roomlist`
+    : "/"
   return hydrated ? (
     <GameSummaryContent
       roomTag={gameRoomById?.room_number || summaryDataPlayerId.id_room || ""}
@@ -95,10 +102,11 @@ const GameSummaryRewardPage = () => {
         currentPlayer: gameRoomById?.amount_current_player || 0,
         maxPlayer: gameRoomById?.max_players || 0
       }}
+      onOutRoom={() => router.push(link)}
     >
-      <div className="flex w-full justify-center gap-4">
+      <div className="flex w-full flex-col justify-center gap-4 lg:flex-row">
         <CardBodyList
-          className="mx-auto max-h-[680px] w-[362px] flex-1"
+          className="mx-auto max-h-[680px] w-[362px] flex-1 "
           width="auto"
           players={players || []}
           rewardType={notificationItem?.type}

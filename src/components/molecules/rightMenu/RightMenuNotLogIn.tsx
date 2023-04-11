@@ -24,10 +24,12 @@ const RightMenuNotLogIn = ({ button }: IProps) => {
           {button}
         </Box>
       ) : (
-        <Box className="w-max rounded-xl bg-neutral-700 p-1">
+        <Box className="!rounded-[29px] !bg-[#FFFFFF20] !p-[6px]">
+          {/* <Box className="w-full rounded-xl bg-neutral-700 !p-[5px] md:w-max"> */}
           <Box className="xs:flex-col items-center justify-between gap-1 lg:flex">
             <ButtonLogin handleButton={handleOpen} />
           </Box>
+          {/* </Box> */}
         </Box>
       )}
     </RightMenuNotLogInTemplate>

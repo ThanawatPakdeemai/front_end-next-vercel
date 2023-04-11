@@ -17,7 +17,7 @@ const WalletLightAnimation = () => (
         </div>
       </div>
     </Box>
-    <div className="absolute top-[75px] left-[-16px] hidden sm:block">
+    <div className="absolute left-[-16px] top-[75px] hidden sm:block">
       <Image
         src={IMAGES.RectangleRed.src}
         alt=""

@@ -17,6 +17,7 @@ import LinkIcon from "@components/icons/LinkIcon"
 import TelegramIcon from "@components/icons/SocialIcon/TelegramIcon"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
+import { useTranslation } from "react-i18next"
 
 interface IProp {
   hidden?: string
@@ -24,22 +25,23 @@ interface IProp {
 
 const SideSocialShare = ({ hidden }: IProp) => {
   const router = useRouter()
+  const { t } = useTranslation()
   const { successToast } = useToast()
   const classStyle =
     "my-2 flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-red-card/20"
 
   return (
     <div className={`${hidden} sticky top-[202px]`}>
-      <div className="absolute top-0 right-[-10%] rounded-[18px] border border-neutral-800 px-2 ">
+      <div className="absolute right-[-10%] top-0 rounded-[18px] border border-neutral-800 px-2 ">
         <div className="flex flex-col items-center">
           <Typography
             sx={{
               textOrientation: "sideways",
               writingMode: "vertical-lr"
             }}
-            className="my-6 font-bold text-red-card"
+            className="my-6 font-bold uppercase text-red-card"
           >
-            SHARE PLAYER CARD
+            {t("share_player_card")}
           </Typography>
           <div className="grid">
             <TelegramShareButton

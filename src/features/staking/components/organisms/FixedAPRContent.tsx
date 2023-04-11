@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import useGlobalStaking from "@feature/staking/containers/hook/useStakingController"
 import useGlobal from "@hooks/useGlobal"
 import { Box, Typography } from "@mui/material"
@@ -80,12 +81,12 @@ const FixedAPRContent = () => {
             className="mb-12"
           />
           <Typography className="mb-12 flex max-w-full justify-center text-center font-bold uppercase text-neutral-500">
-            STAKING IS COMING. STAY TUNED ON SOCIAL MEDIA.
+            {t("staking_not_avaliable_desc")}
           </Typography>
         </div>
       )}
 
-      {stakingData && stakingStatus && (
+      {stakingData && (
         <Box component="section">
           {stakingData.dataAPI.map((item) => (
             <div key={uuid()}>

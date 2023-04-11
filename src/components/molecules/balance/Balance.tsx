@@ -114,7 +114,7 @@ const Balance = ({
               size="medium"
               color="secondary"
               variant="contained"
-              className="w-full"
+              className="min-h-[57px] w-full"
               disabled={disabledConnectButton}
             />
           )}

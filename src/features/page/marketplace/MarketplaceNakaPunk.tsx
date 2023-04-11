@@ -100,7 +100,10 @@ const MarketplaceNakaPunk = () => {
                     </div>
                   )}
                   <div
-                    className={metaData && "max-h-[100px] overflow-y-scroll"}
+                    className={
+                      metaData &&
+                      "custom-scroll max-h-[100px] overflow-y-scroll"
+                    }
                   >
                     {metaData.map((_data) => (
                       <GotNaKAPunk

@@ -9,7 +9,9 @@ const MarketplaceOwnerDetail = () => {
   return ownerDetail ? (
     <div className="mt-5 flex w-full flex-col gap-x-[120px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0">
       <CardContentDetails
-        detail={ownerDetail.details}
+        detail={
+          "details" in ownerDetail ? ownerDetail.details : ownerDetail.detail
+        }
         image={ownerDetail.NFT_image}
         video={ownerDetail.NFT_video}
         poster={ownerDetail.NFT_image}
@@ -20,11 +22,15 @@ const MarketplaceOwnerDetail = () => {
       <div className="flex h-full w-full flex-col">
         <RightDetailsMarketplace
           type={marketType as TNFTType}
-          id={ownerDetail.land_id}
+          id={ownerDetail.NFT_token}
           // token={tokenNFT}
           title={ownerDetail.name}
-          position={ownerDetail.position}
-          qrCode={ownerDetail.qrcode_image}
+          position={
+            "position" in ownerDetail ? ownerDetail.position : undefined
+          }
+          qrCode={
+            "qrcode_image" in ownerDetail ? ownerDetail.qrcode_image : undefined
+          }
           // count={{
           //   // helperText: `Total supply : ${count}`,
           //   label: "Supply in market",

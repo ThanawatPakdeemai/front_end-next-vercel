@@ -49,8 +49,8 @@ const RoomListBar = ({
       }}
       transition={{
         type: "spring",
-        stiffness: 300,
-        damping: 4
+        stiffness: 100,
+        damping: 6
       }}
       whileHover={{
         padding: 14,

@@ -6,6 +6,9 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true"
 })
 
+// eslint-disable-next-line import/no-extraneous-dependencies
+const withTM = require("next-transpile-modules")(["three"])
+
 const { i18n } = require("./next-i18next.config")
 
 const nextConfig = {
@@ -57,4 +60,4 @@ const nextConfig = {
   }
 }
 
-module.exports = withBundleAnalyzer({ ...nextConfig })
+module.exports = withBundleAnalyzer({ ...nextConfig }, withTM())

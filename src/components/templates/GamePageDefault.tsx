@@ -209,9 +209,7 @@ const GamePageDefault = ({
         <Banners />
       )}
 
-      {gameData && "device_support" in gameData && (
-        <Howto data={gameData as IGame} />
-      )}
+      {gameData && <Howto data={gameData as IGame} />}
       {component}
       {/**
        * @description In case there is a need to add another component

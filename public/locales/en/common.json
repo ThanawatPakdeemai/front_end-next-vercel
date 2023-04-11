@@ -429,6 +429,7 @@
   "fee_matic": "Fee (MATIC)",
   "create_room": "Create Room",
   "number_of_players": "Number of players",
+  "number_of_items": "Items use",
   "select_map": "Select map",
   "room_status": "Room status",
   "public": "Public",

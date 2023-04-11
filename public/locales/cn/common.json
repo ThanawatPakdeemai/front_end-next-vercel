@@ -424,6 +424,7 @@
   "fee_matic": "费用 (MATIC)",
   "create_room": "创建房间",
   "number_of_players": "玩家数量",
+  "number_of_items": "東西的個數",
   "select_map": "选择地图",
   "room_status": "房间状态",
   "public": "公开",

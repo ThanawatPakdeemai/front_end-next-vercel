@@ -454,7 +454,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
                         <HourglassEmptyIcon className="text-primary-main " />
                       )
                     }
-                    className={`h-[60px]  !w-[45%] rounded-full ${
+                    className={`h-[60px]  !w-[22%] rounded-full ${
                       isOwnerRoom
                         ? "!w-[30%] border border-secondary-main bg-neutral-900 text-secondary-main"
                         : "!w-[45%] bg-secondary-main text-neutral-900"

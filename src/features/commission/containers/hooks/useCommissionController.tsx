@@ -2,36 +2,38 @@ import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { Trans } from "react-i18next"
-import useGetTransWallet from "@feature/transaction/containers/hooks/useGetTransWallet"
-import { ITransactionWalletData } from "@feature/transaction/interfaces/ITransaction"
+import { ICommissionData } from "@feature/commission/interfaces/ICommission"
+import useGetCommission from "./useGetCommission"
 
 const useCommissionController = () => {
-  const { pager, totalCount, setTotalCount, page, setPage } = useGlobal()
+  const { pager, totalCount, setTotalCount, page, setPage, limit, setLimit } =
+    useGlobal()
   const { profile } = useProfileStore()
-  const { getTransHistory, isLoading } = useGetTransWallet()
-  const [limit, setLimit] = useState<number>(12)
-  const [txHistory, setTxHistory] = useState<ITransactionWalletData[]>([])
+  const { commissionHistoryData, isLoadingCommissionHistory } =
+    useGetCommission({
+      _playerId: profile && profile.data ? profile.data.id : "",
+      _limit: limit,
+      _page: page
+    })
+  const [commissionHistory, setCommissionHistory] = useState<ICommissionData[]>(
+    []
+  )
 
   // need to refactor interface res.data <ICommissionService>
   const fetchCommission = useCallback(async () => {
     if (profile) {
-      await getTransHistory({
-        _playerId: profile && profile.data ? profile.data.id : "",
-        _type: ["PayCommission", "PayOwnerCommission"],
-        _limit: limit,
-        _page: page
-      }).then((res) => {
-        // res.status === 200 -> ok
-        if (res.data) {
-          setTxHistory(res.data)
-        }
-        if (res.info) {
-          setTotalCount(res.info.totalCount)
-        }
-      })
+      if (
+        commissionHistoryData &&
+        commissionHistoryData.data &&
+        commissionHistoryData.data.length > 0
+      ) {
+        setCommissionHistory(commissionHistoryData.data)
+        setTotalCount(commissionHistoryData.info.totalCount)
+        setLimit(commissionHistoryData.info.limit)
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [limit, page])
+  }, [limit, page, profile, commissionHistoryData])
 
   useEffect(() => {
     let load = false
@@ -63,15 +65,15 @@ const useCommissionController = () => {
     []
   )
   return {
+    commissionHistoryState: commissionHistory,
     commissionTableHeader,
     pager,
     totalCount,
     limit,
-    setLimit,
     page,
     setPage,
-    isLoading,
-    txHistory
+    setLimit,
+    isLoadingCommissionHistory
   }
 }
 

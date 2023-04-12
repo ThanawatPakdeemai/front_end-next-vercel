@@ -38,7 +38,7 @@ const GamePageDefault = ({
 }: IGamePageDefaultProps) => {
   const router = useRouter()
   const { mutateShareToEarnTracking } = useShareToEarnTracking()
-  const { successToast, errorToast } = useToast()
+  const { errorToast } = useToast()
   const { getTypeGamePathFolder } = useGlobal()
 
   const data = useGameStore((state) => state.data)
@@ -75,7 +75,8 @@ const GamePageDefault = ({
               key: ELocalKey.shareToEarn,
               value: expireTime
             })
-            successToast(MESSAGES.get_link_share_success)
+            // Hide toast share success
+            // successToast(MESSAGES.get_link_share_success)
           }
         })
         .catch(() => {
@@ -104,9 +105,11 @@ const GamePageDefault = ({
           router.push(href)
 
           errorToast(MESSAGES.commission_expired)
-        } else {
-          successToast(MESSAGES.commission_not_expired)
         }
+        // Hide toast commission not expired
+        /* else {
+          successToast(MESSAGES.commission_not_expired)
+        } */
       }
     }
   }

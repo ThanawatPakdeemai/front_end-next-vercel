@@ -1,6 +1,6 @@
 import Link from "next/link"
 import dayjs from "dayjs"
-import { CardMedia, Typography } from "@mui/material"
+import { CardMedia, Chip, Typography } from "@mui/material"
 
 interface IEventCardProps {
   event_id: string
@@ -8,6 +8,9 @@ interface IEventCardProps {
   image: string
   date_start: Date
   date_end?: Date
+  status: string
+  color?: "primary" | "secondary" | "success" | "error" | "info" | "warning"
+  variant?: "outlined" | "filled"
 }
 
 const EventCard = ({
@@ -15,7 +18,10 @@ const EventCard = ({
   title,
   image,
   date_start,
-  date_end
+  date_end,
+  status,
+  variant = "filled",
+  color = "primary"
 }: IEventCardProps) => (
   <div className="mx-auto w-[265px] md:mx-0 lg:w-[250px] 2xl:w-[272px]">
     <Link
@@ -46,6 +52,19 @@ const EventCard = ({
       >
         <Typography className="flex text-sm">Here for more</Typography>
       </Link>
+    </div>
+    <div className="mt-2 flex justify-center gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 py-[10px]">
+      {/* ${status} */}
+      <Typography className="flex items-center gap-2 text-xs">
+        Status:
+        <Chip
+          label={status}
+          variant={variant}
+          size="small"
+          className="cursor-default uppercase"
+          color={color}
+        />
+      </Typography>
     </div>
   </div>
 )

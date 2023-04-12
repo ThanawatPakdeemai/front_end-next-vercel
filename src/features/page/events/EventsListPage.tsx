@@ -72,6 +72,9 @@ const EventsListPage = () => {
                 image={item.banner_image}
                 date_start={item.date_start}
                 date_end={item.date_end}
+                status={item.status}
+                color={item.status === "on going" ? "success" : "error"}
+                variant="filled"
               />
             ))
           : [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)}

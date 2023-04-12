@@ -6,7 +6,6 @@ import {
   TableCell,
   TableHead
 } from "@mui/material"
-import CardContent from "@feature/referral/components/CardContent"
 import { IResponseSummaryData } from "@feature/event/interface/IEventsService"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import { v4 as uuid } from "uuid"

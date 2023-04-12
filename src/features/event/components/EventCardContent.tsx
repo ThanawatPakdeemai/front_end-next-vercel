@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import DollarIcon from "@components/icons/Referral/DollarIcon"
 import { v4 as uuid } from "uuid"
 import React from "react"

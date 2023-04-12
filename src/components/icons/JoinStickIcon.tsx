@@ -3,7 +3,6 @@ import React from "react"
 function JoinStickIcon({
   width = 24,
   height = 24,
-  className,
   stroke = "#70727B"
 }: React.SVGProps<SVGSVGElement>) {
   return (

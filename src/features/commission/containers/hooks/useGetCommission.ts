@@ -1,25 +1,32 @@
-import { useMutation } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
+import { IGetCommission } from "@feature/commission/interfaces/ICommission"
 import { getCommission } from "../services/commission.service"
 
-const useGetCommission = () => {
+const useGetCommission = ({ _playerId, _limit, _page }: IGetCommission) => {
   const {
-    mutateAsync: getCommissionHistory,
     data: commissionHistoryData,
-    error,
-    isLoading,
-    isError,
-    isSuccess
-  } = useMutation(getCommission, {
-    mutationKey: ["getCommission"],
-    retry: false
+    error: errorCommissionHistory,
+    isLoading: isLoadingCommissionHistory,
+    isError: isErrorCommissionHistory,
+    isSuccess: isSuccessCommissionHistory
+  } = useQuery({
+    queryKey: ["getCommission"],
+    queryFn: () =>
+      getCommission({
+        _playerId,
+        _limit,
+        _page
+      }),
+    keepPreviousData: true,
+    staleTime: Infinity,
+    enabled: !!_playerId
   })
   return {
-    getCommissionHistory,
-    commissionHistoryData,
-    error,
-    isLoading,
-    isError,
-    isSuccess
+    commissionHistoryData: commissionHistoryData && commissionHistoryData.data,
+    errorCommissionHistory,
+    isLoadingCommissionHistory,
+    isErrorCommissionHistory,
+    isSuccessCommissionHistory
   }
 }
 

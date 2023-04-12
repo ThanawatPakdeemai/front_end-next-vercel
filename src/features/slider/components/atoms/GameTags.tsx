@@ -16,7 +16,6 @@ const GameTags = ({ gameTags }: ICardGameTag) => (
           className="relative z-[1] flex items-center justify-center"
         >
           <Chip
-            key={`${`tag--${index}`}`}
             id={`${`tag--${index}`}`}
             label={gameTag.name}
             variant="outlined"

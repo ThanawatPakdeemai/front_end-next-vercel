@@ -55,28 +55,6 @@ const Howto = ({ data }: IProp) => {
 
   const [showCopy, setShowCopy] = useState(false)
 
-  // const getData = async () => {
-  //   if (stateProfile && data) {
-  //     await getFavoriteGameByUser(
-  //       10000,
-  //       1,
-  //       "",
-  //       "",
-  //       "",
-  //       "",
-  //       "",
-  //       "",
-  //       false,
-  //       ""
-  //     ).then((res) => {
-  //       const { status } = res
-  //       if (status) {
-  //         setActive(status)
-  //       }
-  //     })
-  //   }
-  // }
-
   const onCloseModalCustom = () => {
     handleClose()
     setShowCopy(false)
@@ -106,25 +84,6 @@ const Howto = ({ data }: IProp) => {
         errorToast(MESSAGES.share_not_success)
       })
   }
-
-  // const onFavouriteGame = (id: string) => {
-  //   if (stateProfile && id) {
-  //     saveFavoriteGame(stateProfile.id, id)
-  //       .then((res) => {
-  //         const { status } = res
-  //         if (status) {
-  //           // if (getFavoriteGame) saveFavoriteGame()
-  //           setActive(!active)
-  //           successToast(MESSAGES.success)
-  //         }
-  //       })
-  //       .catch((error: { message: string }) => {
-  //         errorToast(error.message)
-  //       })
-  //   } else {
-  //     errorToast(MESSAGES.please_login)
-  //   }
-  // }
 
   return (
     <>

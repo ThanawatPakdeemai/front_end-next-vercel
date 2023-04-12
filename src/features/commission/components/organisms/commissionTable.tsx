@@ -1,29 +1,26 @@
 import React from "react"
-import useCommissionController from "@feature/commission/containers/hooks/useComminssionController"
 import PageHeader from "@feature/table/components/molecules/PageHeader"
 import TableHeader from "@feature/table/components/molecules/TableHeader"
 import TableRowData from "@feature/table/components/molecules/TableRowData"
-import { Chip, Table, TableBody, TableContainer } from "@mui/material"
+import { Box, Chip, Table, TableBody, TableContainer } from "@mui/material"
 import dayjs from "dayjs"
 import IconArrowTop from "@components/icons/arrowTopIcon"
 import { PaginationNaka } from "@components/atoms/pagination"
-import DropdownLimit from "@components/atoms/DropdownLimit"
 import { v4 as uuid } from "uuid"
 import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
 import TableNodata from "@feature/transaction/components/atoms/TableNodata"
 import { useTranslation } from "react-i18next"
+import useCommissionController from "@feature/commission/containers/hooks/useCommissionController"
 
 const CommissionTable = () => {
   const {
     commissionTableHeader,
-    pager,
     totalCount,
     limit,
-    setLimit,
     page,
     setPage,
-    isLoading,
-    txHistory
+    isLoadingCommissionHistory,
+    commissionHistoryState
   } = useCommissionController()
   const { t } = useTranslation()
 
@@ -39,7 +36,7 @@ const CommissionTable = () => {
             thead={commissionTableHeader}
             gridTemplateColumns="180px 130px 150px 1fr"
           />
-          {isLoading ? (
+          {isLoadingCommissionHistory ? (
             [...Array(limit)].map(() => <SkeletonTableWallet key={uuid()} />)
           ) : (
             <TableBody
@@ -50,8 +47,8 @@ const CommissionTable = () => {
                 "tr:last-of-type td": { borderBottom: 0 }
               }}
             >
-              {txHistory && txHistory.length > 0 ? (
-                txHistory.map((item) => (
+              {commissionHistoryState && commissionHistoryState.length > 0 ? (
+                commissionHistoryState.map((item) => (
                   <TableRowData
                     key={item.id}
                     gridTemplateColumns="180px 130px 150px 1fr"
@@ -85,7 +82,7 @@ const CommissionTable = () => {
                           }`}
                         >
                           <IconArrowTop className="mr-[8.35px] rotate-180" />
-                          {item.amount.toFixed(4)}
+                          {/* {item.amount.toFixed(4)} */}
                         </div>
                       </div>,
                       <div
@@ -106,21 +103,27 @@ const CommissionTable = () => {
           )}
         </Table>
       </TableContainer>
-      {txHistory && txHistory.length > 0 && (
-        <div className="my-5 flex justify-between">
-          <PaginationNaka
-            totalCount={totalCount}
-            limit={limit}
-            page={page}
-            setPage={setPage}
-          />
-          <DropdownLimit
-            defaultValue={12}
-            list={pager}
-            onChangeSelect={setLimit}
-          />
-        </div>
-      )}
+      <Box
+        className="my-2 flex w-full justify-between md:my-5"
+        sx={{
+          ".MuiPagination-ul": {
+            gap: "5px 0"
+          }
+        }}
+      >
+        <PaginationNaka
+          totalCount={totalCount}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
+        {/* <DropdownLimit
+          className="m-0 w-[160px] flex-row"
+          defaultValue={30}
+          list={pager}
+          onChangeSelect={setLimit}
+        /> */}
+      </Box>
     </div>
   )
 }

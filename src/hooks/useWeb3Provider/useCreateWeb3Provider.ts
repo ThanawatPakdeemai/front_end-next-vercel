@@ -505,8 +505,6 @@ const useCreateWeb3Provider = () => {
         const walletAccounts = await provider?.listAccounts()
         if (walletAccounts) {
           setAddress(walletAccounts[0])
-        } else {
-          setAccounts(undefined)
         }
       }
       getWalletAccount()

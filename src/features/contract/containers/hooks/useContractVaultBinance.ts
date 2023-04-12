@@ -29,7 +29,10 @@ export interface ITokenContract {
 const useContractVaultBinance = () => {
   const { signer, address: account } = useWeb3Provider()
   const [isLoading, setIsLoading] = useState(false)
-  const bep20Contract = useBEP20(signer, CONFIGS.CONTRACT_ADDRESS.BEP20)
+  const bep20Contract = useBEP20(
+    signer,
+    CONFIGS.CONTRACT_ADDRESS && (CONFIGS.CONTRACT_ADDRESS.BEP20 as string)
+  )
   const balanceVaultContract = useBalanceVaultBinance(
     signer,
     CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE

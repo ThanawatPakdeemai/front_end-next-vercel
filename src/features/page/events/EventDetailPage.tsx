@@ -8,6 +8,7 @@ import useEventController from "@feature/event/containers/hooks/useEventControll
 import EventContent from "@feature/event/components/organisms/EventContent"
 import EventSidebar from "@feature/event/components/organisms/EventSidebar"
 import { EVENT_CRUMB } from "@configs/crumb"
+import EventMessages from "@feature/event/components/molecules/EventMessages"
 
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
@@ -44,6 +45,8 @@ const EventDetailPage = () => {
       return (
         <EventsTopScore
           users={topScoreDataState.data as IResponseSummaryData[]}
+          playerCount={topScoreDataState.player_count}
+          transactionCount={topScoreDataState.transaction_count}
         />
       )
     }
@@ -61,6 +64,24 @@ const EventDetailPage = () => {
       )
     }
     return <></>
+  }
+
+  /**
+   * @description Render messages by event type
+   */
+  const renderMessages = () => {
+    if (currentEventData && currentEventData.event_type === "share_and_play") {
+      return (
+        <EventMessages messages="Tweet a short video (20-40 seconds) of your gameplay with the hashtag #FunWheels on Twitter." />
+      )
+    }
+    return (
+      <EventMessages
+        messages={`Comment and hashtag #your_username #NakaRunner in your twitter sharing NAKA Runner challenge post
+              to make sure you attend the event [First 102 people to score over 250,000 will win the
+              reward]`}
+      />
+    )
   }
 
   return (
@@ -88,6 +109,7 @@ const EventDetailPage = () => {
                 }
               }}
             >
+              {renderMessages()}
               <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2  md:px-16 md:py-8 md:text-center md:text-base">
                 <Typography className="font-dogicapixel-bold text-center  uppercase">
                   Reward Pool

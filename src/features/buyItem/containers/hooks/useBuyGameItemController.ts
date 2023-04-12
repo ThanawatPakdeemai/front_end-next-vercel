@@ -21,10 +21,16 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import useChainSupportStore from "@stores/chainSupport"
 import { useRouter } from "next/router"
 import useGetBalanceOf from "@feature/inventory/containers/hooks/useGetBalanceOf"
+import { ELocalKey } from "@interfaces/ILocal"
+import { MESSAGES } from "@constants/messages"
+import useGlobal from "@hooks/useGlobal"
+import useShareToEarnTracking from "@feature/game/containers/hooks/useShareToEarnTracking"
 import useBuyGameItems from "./useBuyGameItems"
 
 const useBuyGameItemController = () => {
   const profile = useProfileStore((state) => state.profile.data)
+  const { mutateShareToEarnTracking } = useShareToEarnTracking()
+  const { stateProfile } = useGlobal()
   const { mutateBuyItems, mutateBuyItemsBSC, isLoading } = useBuyGameItems()
   const { setOpen, setClose } = useLoadingStore()
   const { errorToast, successToast } = useToast()
@@ -213,8 +219,24 @@ const useBuyGameItemController = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onSetGameItemSelectd, refetch, watch, itemSizeId, router])
 
+  /**
+   * Get code from local storage
+   */
+  const getCodeFromLocalStorage = (): string => {
+    // Check has share to earn code in local storage
+    const shareToEarnCodeLocal = Helper.getLocalStorage(
+      ELocalKey.shareToEarnCode
+    )
+    if (shareToEarnCodeLocal) {
+      return shareToEarnCodeLocal
+    }
+    return ""
+  }
+
   const onSubmit = (_data: IFormData) => {
     setOpen("Blockchain transaction in progress...")
+
+    // console.log("code", code)
     // const coinName = (): string => {
     //   switch (
     //     _data.currency.symbol &&
@@ -235,7 +257,8 @@ const useBuyGameItemController = () => {
           _qty: Number(_data.qty),
           _tokenAddress: _data.currency.address,
           _symbol:
-            _data.currency.symbol === "BNBT" ? "BNB" : _data.currency.symbol // coinName()
+            _data.currency.symbol === "BNBT" ? "BNB" : _data.currency.symbol, // coinName()
+          _code: getCodeFromLocalStorage()
         })
           .then(async (res) => {
             // res && _data.currency.balanceVault.digit
@@ -258,7 +281,8 @@ const useBuyGameItemController = () => {
         mutateBuyItems({
           _player_id: _data.player_id,
           _item_id: _data.item_id,
-          _qty: Number(_data.qty)
+          _qty: Number(_data.qty),
+          _code: getCodeFromLocalStorage()
         })
           .then(async (res) => {
             // res && balanceVaultNaka && balanceVaultNaka.data
@@ -277,6 +301,76 @@ const useBuyGameItemController = () => {
             setClose()
           })
         break
+    }
+  }
+
+  const getCodeShareToEarn = useCallback(() => {
+    const gameId = data?.id
+    const codeId = router.asPath.substring(
+      router.asPath.indexOf("?af") + 3,
+      router.asPath.lastIndexOf("")
+    )
+
+    if (
+      gameId &&
+      stateProfile &&
+      stateProfile.id &&
+      codeId &&
+      router.asPath.includes("?af")
+    ) {
+      mutateShareToEarnTracking({
+        player_id: stateProfile.id,
+        game_id: gameId,
+        code: codeId
+      })
+        .then((_res) => {
+          if (_res) {
+            const expireTime = _res.data.time_expires
+            Helper.setLocalStorage({
+              key: ELocalKey.shareToEarn,
+              value: expireTime
+            })
+            Helper.setLocalStorage({
+              key: ELocalKey.shareToEarnCode,
+              value: codeId
+            })
+            // Hide toast share success
+            // successToast(MESSAGES.get_link_share_success)
+          }
+        })
+        .catch(() => {
+          const str = router.asPath
+          const index = str.indexOf("?af")
+          const href = index !== -1 ? str.substring(0, index) : str
+          Helper.removeLocalStorage(ELocalKey.shareToEarn)
+          router.push(href)
+          errorToast(MESSAGES.get_link_share_not_success)
+        })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.asPath, data, router, stateProfile])
+
+  const handleTimeExpire = () => {
+    const expireTimeShare = Helper.getLocalStorage(ELocalKey.shareToEarn)
+    if (expireTimeShare && expireTimeShare !== "") {
+      const timeStampNow = Date.now()
+      const timeStampExp = Number(expireTimeShare)
+      if (timeStampExp) {
+        if (timeStampExp <= timeStampNow) {
+          const str = router.asPath
+          const index = str.indexOf("?af")
+          const href = index !== -1 ? str.substring(0, index) : str
+          Helper.removeLocalStorage(ELocalKey.shareToEarn)
+          Helper.removeLocalStorage(ELocalKey.shareToEarnCode)
+          router.push(href)
+
+          errorToast(MESSAGES.commission_expired)
+        }
+        // Hide toast commission not expired
+        /* else {
+          successToast(MESSAGES.commission_not_expired)
+        } */
+      }
     }
   }
 
@@ -334,7 +428,9 @@ const useBuyGameItemController = () => {
     accounts,
     signer,
     refetchItemSelected,
-    balanceofItem
+    balanceofItem,
+    handleTimeExpire,
+    getCodeShareToEarn
   }
 }
 

@@ -16,19 +16,20 @@ export const getAllNotification = (_limit: number, _skip: number) =>
       .catch((error) => reject(error))
   })
 
-export const getNotificationById = (_notificationId: string) =>
-  new Promise<INotificationResponse>((resolve, reject) => {
+export const getNotificationById = (_notificationId: string) => {
+  if (!_notificationId) return
+  return new Promise<INotificationResponse>((resolve, reject) => {
     services
-      .get<INotificationResponse>(
-        `/notification/get-data/640339430f143a2247061981`
-      )
+      .get<INotificationResponse>(`/notification/get-data/${_notificationId}`)
       .then((reponse) => resolve(reponse.data))
       .catch((error) => reject(error))
   })
+}
 
 // return true
-export const updateNotiStatusById = (_notiId: string) =>
-  new Promise((resolve, reject) => {
+export const updateNotiStatusById = (_notiId: string) => {
+  if (!_notiId) return
+  return new Promise((resolve, reject) => {
     const data = {
       noti_id: _notiId
     }
@@ -37,10 +38,12 @@ export const updateNotiStatusById = (_notiId: string) =>
       .then((reponse) => resolve(reponse.data))
       .catch((error) => reject(error))
   })
+}
 
 // return true
-export const updateAllNotiStatus = (_playerId: string) =>
-  new Promise((resolve, reject) => {
+export const updateAllNotiStatus = (_playerId: string) => {
+  if (!_playerId) return
+  return new Promise((resolve, reject) => {
     const data = {
       player_id: _playerId
     }
@@ -49,3 +52,4 @@ export const updateAllNotiStatus = (_playerId: string) =>
       .then((reponse) => resolve(reponse.data))
       .catch((error) => reject(error))
   })
+}

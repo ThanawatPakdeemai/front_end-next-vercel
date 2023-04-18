@@ -6,10 +6,10 @@ import { useEffect, useState } from "react"
 import _ from "lodash"
 // import { IBlogDetail } from "@feature/blog/interfaces/IBlogService"
 import useMetaDataByPath from "@feature/metaData/containers/hooks/useMetaDataByPath"
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { NextSeo } from "next-seo"
+// import { NextSeo } from "next-seo"
 // import MetaDataTag from "./MetaDataTag"
 
+// eslint-disable-next-line no-unused-vars
 const metaData = {
   meta_description:
     "Get started in minutes with our free-to-play games. The best collection of play-to-earn crypto games featuring action, arcade, and more. Powered by $NAKA.",
@@ -70,7 +70,7 @@ const Meta = ({ path }: IProps) => {
 
   return (
     <>
-      <NextSeo
+      {/* <NextSeo
         title={metaData.meta_title}
         description={metaData.meta_description}
         openGraph={{
@@ -84,7 +84,7 @@ const Meta = ({ path }: IProps) => {
           site: "@NakamotoGames",
           cardType: "summary_large_image"
         }}
-      />
+      /> */}
       {/* {router.route !== "/blog/[id]" ? ( */}
       <>
         {/* {meta ? (

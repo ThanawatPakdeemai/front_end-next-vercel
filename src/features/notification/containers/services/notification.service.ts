@@ -19,9 +19,7 @@ export const getAllNotification = (_limit: number, _skip: number) =>
 export const getNotificationById = (_notificationId: string) =>
   new Promise<INotificationResponse>((resolve, reject) => {
     services
-      .get<INotificationResponse>(
-        `/notification/get-data/640339430f143a2247061981`
-      )
+      .get<INotificationResponse>(`/notification/get-data/${_notificationId}`)
       .then((reponse) => resolve(reponse.data))
       .catch((error) => reject(error))
   })

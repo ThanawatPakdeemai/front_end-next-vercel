@@ -1,7 +1,7 @@
+import useGameSummaryRewardController from "@feature/game/containers/hooks/useGameSummaryRewardController"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
 import useGlobal from "@hooks/useGlobal"
 import { Box } from "@mui/material"
-import useGameStore from "@stores/game"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 import React, { ReactElement } from "react"
@@ -59,10 +59,10 @@ const GameTabs = dynamic(
 )
 
 export default function Notification_id() {
-  const { data: gameData } = useGameStore()
+  const { gameDataState } = useGameSummaryRewardController()
   const { getTypeGamePathFolder } = useGlobal()
 
-  return gameData ? (
+  return gameDataState ? (
     <GamePageDefault
       component={
         <RightSidebarContent
@@ -85,11 +85,10 @@ export default function Notification_id() {
               }}
             >
               <OverviewContent
-                gameId={gameData.id}
-                gameType={getTypeGamePathFolder(gameData)}
-                gameIdNFT={gameData.NFT_Owner}
+                gameId={gameDataState.id}
+                gameType={getTypeGamePathFolder(gameDataState)}
+                gameIdNFT={gameDataState.NFT_Owner}
               />
-              {/* {renderFormBuyItem()} */}
             </Box>
           }
         />
@@ -104,7 +103,7 @@ export default function Notification_id() {
         >
           <TabProvider>
             <GameTabs
-              gameId={gameData.id}
+              gameId={gameDataState.id}
               gameType="arcade-emporium"
             />
           </TabProvider>

@@ -21,6 +21,7 @@ export const ModalCustom = ({ title, onClose, ...props }: IProps) => {
       {...props}
     >
       <Box
+        component="div"
         sx={{
           position: "absolute" as "absolute",
           top: "50%",
@@ -33,6 +34,7 @@ export const ModalCustom = ({ title, onClose, ...props }: IProps) => {
       >
         {title && (
           <Box
+            component="div"
             className="flex items-center rounded-lg rounded-b-none bg-neutral-800 pl-5"
             sx={{ height: "54px" }}
           >
@@ -47,6 +49,7 @@ export const ModalCustom = ({ title, onClose, ...props }: IProps) => {
         )}
 
         <Box
+          component="div"
           className={`rounded-md ${
             title === "orion trade" ? "rounded-t-none" : ""
           }  bg-neutral-900 p-4  focus:border-none focus:outline-none focus-visible:outline-none`}

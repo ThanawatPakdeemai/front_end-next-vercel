@@ -76,8 +76,11 @@ const RegisterLayout = () => {
     useRegisterAvatarStore()
 
   return (
-    <Box>
-      <Box className="p-5">
+    <Box component="div">
+      <Box
+        component="div"
+        className="p-5"
+      >
         <Grid
           item
           container
@@ -102,7 +105,10 @@ const RegisterLayout = () => {
             >
               <HeadLogo />
             </Box>
-            <Box className="container absolute bottom-0 overflow-hidden">
+            <Box
+              component="div"
+              className="container absolute bottom-0 overflow-hidden"
+            >
               <Tagline
                 bgColor="bg-neutral-800"
                 textColor="text-neutral-500"
@@ -147,6 +153,7 @@ const RegisterLayout = () => {
               </div>
             </Box>
             <Box
+              component="div"
               sx={{
                 height: "auto",
                 width: { xs: "100%", lg: "auto" },

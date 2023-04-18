@@ -74,6 +74,7 @@ const SlideAvatar = ({
     prevArrow: (
       <>
         <Box
+          component="div"
           onClick={() => onSlidePrev()}
           className="cursor-pointer rounded-xl !border-neutral-700 !bg-neutral-800 p-3"
         >
@@ -84,6 +85,7 @@ const SlideAvatar = ({
     nextArrow: (
       <>
         <Box
+          component="div"
           onClick={() => onSlideNext()}
           className="cursor-pointer rounded-xl !border-neutral-700 !bg-neutral-800 p-3"
         >

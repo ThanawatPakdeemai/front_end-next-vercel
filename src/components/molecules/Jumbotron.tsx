@@ -87,6 +87,7 @@ const Jumbotron = ({
 
   return (
     <Box
+      component="div"
       sx={sxCustomStyled}
       className={`jumbotron ${className}`}
     >

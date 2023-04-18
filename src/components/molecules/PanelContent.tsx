@@ -18,6 +18,7 @@ const PanelContent = ({
   sxCustomStyled = {}
 }: IPanelContentProps) => (
   <Box
+    component="div"
     sx={sxCustomStyled}
     className={`panel-content relative text-neutral-500 ${height}`}
   >

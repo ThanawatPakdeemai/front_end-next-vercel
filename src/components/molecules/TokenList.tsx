@@ -100,6 +100,7 @@ const TokenList = ({
         <>
           {dataList.map((token) => (
             <Box
+              component="div"
               key={token.address}
               onClick={handleClose}
             >

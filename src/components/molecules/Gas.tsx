@@ -54,9 +54,15 @@ const Gas = ({ type }) => {
   }, [type])
 
   return (
-    <Box className="p-[8px]">
+    <Box
+      component="div"
+      className="p-[8px]"
+    >
       <div className="grid h-full w-full gap-2 !rounded-[14px]">
-        <Box className="flex justify-center">
+        <Box
+          component="div"
+          className="flex justify-center"
+        >
           <Card className="Cardtext h-full w-full !rounded-lg bg-black-100">
             <div className="mx-auto flex items-center justify-between p-[8px]">
               <div>

@@ -89,6 +89,7 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
       </div>
       <div className="mx-5 grid grid-cols-1 lg:grid-cols-4 xl:flex">
         <Box
+          component="div"
           sx={{
             "&::before": {
               content: "''",
@@ -106,6 +107,7 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
           className="relative col-span-3 mr-5 flex h-auto w-full flex-col bg-neutral-780 lg:w-[95%] xl:w-[calc(100%-512px)]"
         >
           <Box
+            component="div"
             sx={{
               "&::before": {
                 content: "''",

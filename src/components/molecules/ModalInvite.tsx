@@ -58,6 +58,7 @@ const ModalInvite = () => {
       >
         <div className="flex w-full flex-col gap-y-[20px]">
           <Box
+            component="div"
             className="flex items-center rounded-lg bg-neutral-800 pr-[7px]"
             sx={{ height: "54px" }}
           >
@@ -73,6 +74,7 @@ const ModalInvite = () => {
               Invite Link
             </Typography>
             <Box
+              component="div"
               className="flex items-center overflow-hidden rounded-lg bg-neutral-800 pr-[7px]"
               sx={{ height: "40px" }}
             >

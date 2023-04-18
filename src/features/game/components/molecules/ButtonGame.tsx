@@ -23,7 +23,10 @@ const ButtonGame = ({
   const router = useRouter()
   return (
     <>
-      <Box className="w-fit items-center justify-center gap-3 rounded-[50px] border border-neutral-800 bg-primary-main  p-3 text-neutral-300 md:flex">
+      <Box
+        component="div"
+        className="w-fit items-center justify-center gap-3 rounded-[50px] border border-neutral-800 bg-primary-main  p-3 text-neutral-300 md:flex"
+      >
         {description && (
           <Typography className="mx-4 text-default">{description}</Typography>
         )}

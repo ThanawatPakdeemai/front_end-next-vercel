@@ -82,7 +82,10 @@ const TournamentList = () => {
       <div className="pb-14 pt-16">
         <div className="h-[10px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')]" />
       </div>
-      <Box className="mx-auto flex items-center justify-between py-4">
+      <Box
+        component="div"
+        className="mx-auto flex items-center justify-between py-4"
+      >
         <p className="text-lg font-bold uppercase">Past tournaments</p>
         <div className="flex max-[390px]:grid">
           <Button

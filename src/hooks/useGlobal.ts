@@ -10,7 +10,6 @@ import {
 } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
-import { useWeb3Provider } from "@providers/Web3Provider"
 import CONFIGS from "@configs/index"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import useChainSupportStore from "@stores/chainSupport"
@@ -57,7 +56,6 @@ const useGlobal = (
   const profile = useProfileStore((state) => state.profile.data)
   const { isLogin, onReset } = useProfileStore()
   const { fetchNAKAToken, fetchAllTokenSupported } = useSupportedChain()
-  const { chainId, signer, address, isConnected } = useWeb3Provider()
 
   // States
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
@@ -418,7 +416,6 @@ const useGlobal = (
     getColorChipByGameType,
     getGameStoryModeURL,
     getGameTypeByPathname
-    // getGameFreeToPlayURL
   }
 }
 

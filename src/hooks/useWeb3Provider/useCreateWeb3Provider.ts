@@ -24,7 +24,6 @@ import {
 import { DEFAULT_STATUS_WALLET } from "@constants/defaultValues"
 import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useChainSupportStore from "@stores/chainSupport"
-// import useSupportedChain from "@hooks/useSupportedChain"
 import toast from "react-hot-toast"
 import useLoadingStore from "@stores/loading"
 import useGlobal from "@hooks/useGlobal"
@@ -47,7 +46,6 @@ const useCreateWeb3Provider = () => {
   const [statusWalletConnected, setStatusWalletConnected] =
     useState<IErrorMessage>(DEFAULT_STATUS_WALLET)
 
-  // const { fetchAllTokenSupported, fetchNAKAToken } = useSupportedChain()
   const { fetchChainData } = useGlobal()
   const profile = useProfileStore((state) => state.profile.data)
   const { onSetProfileData, onSetProfileAddress, isLogin } = useProfileStore()
@@ -357,11 +355,11 @@ const useCreateWeb3Provider = () => {
       })
 
     // Subscribe to session disconnection
-    // if (window.ethereum && window.ethereum.on) {
-    //   window.ethereum.on("disconnect", (/* code: number, reason: string */) => {
-    //     handleDisconnectWallet()
-    //   })
-    // }
+    if (window.ethereum && window.ethereum.on) {
+      window.ethereum.on("disconnect", (/* code: number, reason: string */) => {
+        handleDisconnectWallet()
+      })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     onSetAddress,
@@ -427,9 +425,7 @@ const useCreateWeb3Provider = () => {
             // chainId must be in hexadecimal numbers
             params: [{ chainId: _chainId }]
           })
-          // 🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩
           await fetchChainData()
-          // 🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩🤩
           const _resetProvider = new providers.Web3Provider(_provider)
           const _signer = _resetProvider.getSigner()
           if (_signer) {

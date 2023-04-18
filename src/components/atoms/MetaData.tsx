@@ -17,10 +17,13 @@ const metaData = {
     "Nakamoto Games - Get Started with the Best Play and Earn Crypto Platform",
   image: "https://files.naka.im/seo/homepage.png"
 }
-const Meta = () => {
+interface IProps {
+  path: string
+}
+const Meta = ({ path }: IProps) => {
   // const [blogDetails] = useState<IBlogDetail>()
   const [meta, setMeta] = useState<ISeoData>()
-  const { data } = useMetaDataByPath({ _path: "/" })
+  const { data } = useMetaDataByPath({ _path: path })
 
   const router = useRouter()
   // const pathActive = router.asPath

@@ -299,7 +299,7 @@ const useGameSummaryRewardController = () => {
    */
   const onUpdateReadNotification = useCallback(
     (_notificationItem: INotification) => {
-      if (_notificationItem?.read === true) return
+      if (_notificationItem && _notificationItem.read) return
       mutateUpdateNotiStatusById()
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -324,7 +324,7 @@ const useGameSummaryRewardController = () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [notification])
+  }, [])
 
   useEffect(() => {
     let load = false
@@ -377,12 +377,13 @@ const useGameSummaryRewardController = () => {
     let load = false
 
     if (!load) {
-      onSetGameData(gameData as IGame)
-      setGameDataState(gameData as IGame)
+      if (!gameData) return
+      onSetGameData(gameData)
+      setGameDataState(gameData)
       setShareURL(
-        `${CONFIGS.BASE_URL.FRONTEND}/${getTypeGamePathFolder(
-          gameData as IGame
-        )}/${(gameData as IGame).path}`
+        `${CONFIGS.BASE_URL.FRONTEND}/${getTypeGamePathFolder(gameData)}/${
+          gameData.path
+        }`
       )
     }
 

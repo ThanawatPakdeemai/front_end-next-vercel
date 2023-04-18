@@ -6,7 +6,6 @@ import {
   TableCell,
   TableHead
 } from "@mui/material"
-import CardContent from "@feature/referral/components/CardContent"
 import { IResponseSummaryData } from "@feature/event/interface/IEventsService"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import { v4 as uuid } from "uuid"
@@ -14,12 +13,19 @@ import Image from "next/image"
 import NoData from "@components/molecules/NoData"
 import { numberWithCommas } from "@src/helpers/addComma"
 import useEventController from "../containers/hooks/useEventController"
+import EventCardContent from "./EventCardContent"
 
 interface IEventTopScoreProps {
   users: IResponseSummaryData[]
+  playerCount: number
+  transactionCount: number
 }
 
-const EventsTopScore = ({ users }: IEventTopScoreProps) => {
+const EventsTopScore = ({
+  users,
+  playerCount,
+  transactionCount
+}: IEventTopScoreProps) => {
   const { MOCKUP_REWARD } = useEventController()
   const renderRewardByRank = (_index: number) => {
     if (_index === 1) {
@@ -52,10 +58,13 @@ const EventsTopScore = ({ users }: IEventTopScoreProps) => {
   }
 
   return (
-    <CardContent
-      title="Top Score"
+    <EventCardContent
+      title="Top score"
       icon={<TwitterIcon />}
-      eventType="share_and_play"
+      labels={{
+        player_count: playerCount,
+        transaction_count: transactionCount
+      }}
     >
       <TableContainer>
         <Table>
@@ -134,7 +143,7 @@ const EventsTopScore = ({ users }: IEventTopScoreProps) => {
           </TableBody>
         </Table>
       </TableContainer>
-    </CardContent>
+    </EventCardContent>
   )
 }
 

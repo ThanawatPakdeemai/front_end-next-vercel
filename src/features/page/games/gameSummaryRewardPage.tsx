@@ -24,6 +24,11 @@ const GameSummaryRewardPage = () => {
   } = useGameSummaryRewardController()
   const { hydrated } = useGlobal()
   const router = useRouter()
+
+  /**
+   * @description get summary value
+   * @returns
+   */
   const getSummaryValue = () => {
     switch (notificationItem?.type) {
       case "RETURN_ITEM":

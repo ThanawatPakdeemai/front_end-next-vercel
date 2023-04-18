@@ -30,7 +30,7 @@ import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { unstable_batchedUpdates } from "react-dom"
-import { Image } from "@components/atoms/image/index"
+// import { Image } from "@components/atoms/image/index"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 
 interface IProp {
@@ -206,7 +206,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
               )
             }}
           /> */}
-          <CountItem
+          {/* <CountItem
             _item={itemUse}
             _addItem={() => setItemUse(itemUse > 9 ? 10 : itemUse + 1)}
             _minusItem={() => setItemUse(itemUse < 2 ? 1 : itemUse - 1)}
@@ -219,7 +219,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
               />
             }
             label={t("number_of_items")}
-          />
+          /> */}
           <CountItem
             endIcon={<PlayersIcon />}
             label={t("number_of_players")}

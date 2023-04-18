@@ -6,7 +6,9 @@ import { useEffect, useState } from "react"
 import _ from "lodash"
 // import { IBlogDetail } from "@feature/blog/interfaces/IBlogService"
 import useMetaDataByPath from "@feature/metaData/containers/hooks/useMetaDataByPath"
-import MetaDataTag from "./MetaDataTag"
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { NextSeo } from "next-seo"
+// import MetaDataTag from "./MetaDataTag"
 
 const metaData = {
   meta_description:
@@ -15,7 +17,8 @@ const metaData = {
     "nakamoto games, play2earn, game crypto platform, Blockchain games, Free to play, NFT game, Crypto games, P2E, Gamefi, Browser Games, Cryptocurrency, Play to Earn, Blockchain Games, Gamefi,  Web3 games, Digital platform, 3D games, Polygon, Games platform, Free nft games, Top NFT Games, best NFT games, top cryoto game, top tier games 2022, the best 2022 games, y8, Free online games, unity, unreal engine, games coin crypto, where to play crypto games, play to earn games crypto, play to earn games crypto list,make money,free time,passive income,bullish project, bullish",
   meta_title:
     "Nakamoto Games - Get Started with the Best Play and Earn Crypto Platform",
-  image: "https://files.naka.im/seo/homepage.png"
+  image: "https://files.naka.im/seo/homepage.png",
+  url: CONFIGS.BASE_URL.FRONTEND
 }
 interface IProps {
   path: string
@@ -67,6 +70,20 @@ const Meta = ({ path }: IProps) => {
 
   return (
     <>
+      <NextSeo
+        title={metaData.meta_title}
+        description={metaData.meta_description}
+        openGraph={{
+          title: metaData.meta_title,
+          url: metaData.image,
+          description: metaData.meta_description
+        }}
+        twitter={{
+          handle: "@handle",
+          site: "@site",
+          cardType: "summary_large_image"
+        }}
+      />
       {/* {router.route !== "/blog/[id]" ? ( */}
       <>
         {/* {meta ? (
@@ -78,13 +95,13 @@ const Meta = ({ path }: IProps) => {
             og_image={meta.og_image}
           />
         ) : ( */}
-        <MetaDataTag
+        {/* <MetaDataTag
           meta_description={metaData.meta_description}
           meta_keyword={metaData.meta_keyword}
           meta_title={metaData.meta_title}
           meta_url={CONFIGS.BASE_URL.FRONTEND + router.asPath}
           og_image={metaData.image}
-        />
+        /> */}
         {/* )} */}
       </>
       {/* ) : (

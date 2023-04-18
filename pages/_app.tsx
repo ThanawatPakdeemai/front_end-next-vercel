@@ -23,11 +23,6 @@ const Loading = dynamic(() => import("@components/molecules/Loading"), {
   ssr: false
 })
 
-const Meta = dynamic(() => import("@components/atoms/MetaData"), {
-  suspense: true,
-  ssr: false
-})
-
 dayjs.extend(rt)
 
 const clientSideEmotionCache = createEmotionCache()
@@ -62,7 +57,6 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
           href="https://files.naka.im/seo/favicon.png"
         />
       </Head>
-      <Meta />
       <Loading />
       <QueryClientProvider client={queryClient}>
         <Web3Provider>

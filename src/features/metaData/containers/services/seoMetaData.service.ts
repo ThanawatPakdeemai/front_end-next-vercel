@@ -17,7 +17,7 @@ const getSeoAll = () =>
 const getSeoByPath = (path) =>
   new Promise((resolve, reject) => {
     services
-      .post<ISeoResponse>(`${CONFIGS.BASE_URL.API}/seo/url`, path)
+      .post<ISeoResponse>(`${CONFIGS.BASE_URL.API}/seo/url`, { url: path })
       .then((res) => {
         resolve(res.data)
       })

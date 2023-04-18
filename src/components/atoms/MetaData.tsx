@@ -1,11 +1,11 @@
 /* eslint-disable no-nested-ternary */
 import CONFIGS from "@configs/index"
-import { getSeoAll } from "@feature/metaData/containers/services/seoMetaData.service"
-import { ISeoData, ISeoResponse } from "@feature/metaData/interfaces/ISeoData"
+import { ISeoData } from "@feature/metaData/interfaces/ISeoData"
 import { useRouter } from "next/router"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import _ from "lodash"
 // import { IBlogDetail } from "@feature/blog/interfaces/IBlogService"
+import useMetaDataByPath from "@feature/metaData/containers/hooks/useMetaDataByPath"
 import MetaDataTag from "./MetaDataTag"
 
 const metaData = {
@@ -20,77 +20,59 @@ const metaData = {
 }
 const Meta = () => {
   // const [blogDetails] = useState<IBlogDetail>()
-  const [meta, setMeta] = useState<ISeoData[]>([])
+  const [meta, setMeta] = useState<ISeoData>()
+  const { data } = useMetaDataByPath({ _path: "/" })
 
   const router = useRouter()
-  const pathActive = router.asPath
+  // const pathActive = router.asPath
   const { id } = router.query
 
   useEffect(() => {
     let load = false
 
     if (!load) {
+      if (data) setMeta(data[0])
       //   if (router?.route === "/blog/[id]" && id) {
       //     getBlogDetail((id as string) ?? "").then((_result) => {
       //       if (_result) setBlogDetails(_result?.data)
       //     })
       //   } else {
-      getSeoAll().then((_result) => {
-        const { data } = _result as ISeoResponse
-        setMeta(data)
-      })
       //   }
     }
 
     return () => {
       load = true
     }
-  }, [id, router?.route])
+  }, [data, id, router.route])
 
-  const metaHome = useMemo(() => _.find(meta, { url: "/" }), [meta])
-  const metaPage = useMemo(
-    () =>
-      meta.find(
-        (_data) => _data.url.replace("/", "") === pathActive.replace("/", "")
-      ),
-    [meta, pathActive]
-  )
+  // const metaHome = useMemo(() => _.find(meta, { url: "/" }), [meta])
+  // const metaPage = useMemo(
+  //   () =>
+  //     meta.find(
+  //       (_data) => _data.url.replace("/", "") === pathActive.replace("/", "")
+  //     ),
+  //   [meta, pathActive]
+  // )
 
-  const metaGame = useMemo(
-    () =>
-      meta.find(
-        (_data) => _data.url.replace("/", "") === router.query.GameHome
-      ),
-    [meta, router.query.GameHome]
-  )
+  // const metaGame = useMemo(
+  //   () =>
+  //     meta.find(
+  //       (_data) => _data.url.replace("/", "") === router.query.GameHome
+  //     ),
+  //   [meta, router.query.GameHome]
+  // )
 
   return (
     <>
       {/* {router.route !== "/blog/[id]" ? ( */}
       <>
-        {metaPage ? (
+        {meta ? (
           <MetaDataTag
-            meta_description={metaPage.meta_description}
-            meta_keyword={metaPage.meta_keyword}
-            meta_title={metaPage.meta_title}
+            meta_description={meta.meta_description}
+            meta_keyword={meta.meta_keyword}
+            meta_title={meta.meta_title}
             meta_url={CONFIGS.BASE_URL.FRONTEND + router.asPath}
-            og_image={metaPage.og_image}
-          />
-        ) : metaGame ? (
-          <MetaDataTag
-            meta_description={metaGame.meta_description}
-            meta_keyword={metaGame.meta_keyword}
-            meta_title={metaGame.meta_title}
-            meta_url={CONFIGS.BASE_URL.FRONTEND + router.asPath}
-            og_image={metaGame.og_image}
-          />
-        ) : metaHome ? (
-          <MetaDataTag
-            meta_description={metaHome.meta_description}
-            meta_keyword={metaHome.meta_keyword}
-            meta_title={metaHome.meta_title}
-            meta_url={CONFIGS.BASE_URL.FRONTEND + router.asPath}
-            og_image={metaHome.og_image}
+            og_image={meta.og_image}
           />
         ) : (
           <MetaDataTag

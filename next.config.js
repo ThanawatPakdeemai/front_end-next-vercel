@@ -57,7 +57,8 @@ const nextConfig = {
       }
     ]
     // domains: ["nakamoto-prod-new.s3.eu-central-1.amazonaws.com"]
-  }
+  },
+  distDir: process.env.BUILD_DIR || ".next"
 }
 
 module.exports = withBundleAnalyzer({ ...nextConfig }, withTM())

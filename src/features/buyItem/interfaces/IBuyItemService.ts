@@ -17,6 +17,7 @@ export interface IBuyItems {
   _qty: number
   _tokenAddress?: string
   _symbol?: string
+  _code: string
 }
 
 interface IBuyItem {

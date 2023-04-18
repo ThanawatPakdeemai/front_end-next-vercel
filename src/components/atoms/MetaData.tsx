@@ -4,12 +4,11 @@ import { ISeoData, ISeoResponse } from "@feature/metaData/interfaces/ISeoData"
 import { useRouter } from "next/router"
 import { useEffect, useMemo, useState } from "react"
 import _ from "lodash"
-import { getBlogDetail } from "@feature/blog/containers/services/blog.service"
-import { IBlogDetail } from "@feature/blog/interfaces/IBlogService"
+// import { IBlogDetail } from "@feature/blog/interfaces/IBlogService"
 import MetaDataTag from "./MetaDataTag"
 
 const Meta = () => {
-  const [blogDetails, setBlogDetails] = useState<IBlogDetail>()
+  // const [blogDetails] = useState<IBlogDetail>()
   const [meta, setMeta] = useState<ISeoData[]>([])
 
   const router = useRouter()
@@ -20,16 +19,16 @@ const Meta = () => {
     let load = false
 
     if (!load) {
-      if (router?.route === "/blog/[id]" && id) {
-        getBlogDetail((id as string) ?? "").then((_result) => {
-          if (_result) setBlogDetails(_result?.data)
-        })
-      } else {
-        getSeoAll().then((_result) => {
-          const { data } = _result as ISeoResponse
-          setMeta(data)
-        })
-      }
+      //   if (router?.route === "/blog/[id]" && id) {
+      //     getBlogDetail((id as string) ?? "").then((_result) => {
+      //       if (_result) setBlogDetails(_result?.data)
+      //     })
+      //   } else {
+      getSeoAll().then((_result) => {
+        const { data } = _result as ISeoResponse
+        setMeta(data)
+      })
+      //   }
     }
 
     return () => {
@@ -56,37 +55,37 @@ const Meta = () => {
 
   return (
     <>
-      {router.route !== "/blog/[id]" ? (
-        <>
-          {metaPage && (
-            <MetaDataTag
-              meta_description={metaPage.meta_description}
-              meta_keyword={metaPage.meta_keyword}
-              meta_title={metaPage.meta_title}
-              meta_url={CONFIGS.BASE_URL.FRONTEND + metaPage.url}
-              og_image={metaPage.og_image}
-            />
-          )}
-          {metaGame && (
-            <MetaDataTag
-              meta_description={metaGame.meta_description}
-              meta_keyword={metaGame.meta_keyword}
-              meta_title={metaGame.meta_title}
-              meta_url={CONFIGS.BASE_URL.FRONTEND + metaGame.url}
-              og_image={metaGame.og_image}
-            />
-          )}
-          {!metaPage && !metaGame && metaHome && (
-            <MetaDataTag
-              meta_description={metaHome.meta_description}
-              meta_keyword={metaHome.meta_keyword}
-              meta_title={metaHome.meta_title}
-              meta_url={CONFIGS.BASE_URL.FRONTEND + metaHome.url}
-              og_image={metaHome.og_image}
-            />
-          )}
-        </>
-      ) : (
+      {/* {router.route !== "/blog/[id]" ? ( */}
+      <>
+        {metaPage && (
+          <MetaDataTag
+            meta_description={metaPage.meta_description}
+            meta_keyword={metaPage.meta_keyword}
+            meta_title={metaPage.meta_title}
+            meta_url={CONFIGS.BASE_URL.FRONTEND + router.asPath}
+            og_image={metaPage.og_image}
+          />
+        )}
+        {metaGame && (
+          <MetaDataTag
+            meta_description={metaGame.meta_description}
+            meta_keyword={metaGame.meta_keyword}
+            meta_title={metaGame.meta_title}
+            meta_url={CONFIGS.BASE_URL.FRONTEND + router.asPath}
+            og_image={metaGame.og_image}
+          />
+        )}
+        {metaHome && (
+          <MetaDataTag
+            meta_description={metaHome.meta_description}
+            meta_keyword={metaHome.meta_keyword}
+            meta_title={metaHome.meta_title}
+            meta_url={CONFIGS.BASE_URL.FRONTEND + router.asPath}
+            og_image={metaHome.og_image}
+          />
+        )}
+      </>
+      {/* ) : (
         <>
           {blogDetails && (
             <MetaDataTag
@@ -98,7 +97,7 @@ const Meta = () => {
             />
           )}
         </>
-      )}
+      )} */}
     </>
   )
 }

@@ -75,8 +75,9 @@ const Meta = ({ path }: IProps) => {
         description={metaData.meta_description}
         openGraph={{
           title: metaData.meta_title,
-          url: metaData.image,
-          description: metaData.meta_description
+          url: metaData.url + router.asPath,
+          description: metaData.meta_description,
+          images: [{ url: metaData.image }]
         }}
         twitter={{
           handle: "@handle",

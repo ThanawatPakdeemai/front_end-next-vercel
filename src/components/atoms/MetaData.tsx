@@ -80,8 +80,8 @@ const Meta = ({ path }: IProps) => {
           images: [{ url: metaData.image }]
         }}
         twitter={{
-          handle: "@handle",
-          site: "@site",
+          handle: "@NakamotoGames",
+          site: "@NakamotoGames",
           cardType: "summary_large_image"
         }}
       />

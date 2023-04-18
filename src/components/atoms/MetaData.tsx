@@ -15,8 +15,7 @@ const metaData = {
     "nakamoto games, play2earn, game crypto platform, Blockchain games, Free to play, NFT game, Crypto games, P2E, Gamefi, Browser Games, Cryptocurrency, Play to Earn, Blockchain Games, Gamefi,  Web3 games, Digital platform, 3D games, Polygon, Games platform, Free nft games, Top NFT Games, best NFT games, top cryoto game, top tier games 2022, the best 2022 games, y8, Free online games, unity, unreal engine, games coin crypto, where to play crypto games, play to earn games crypto, play to earn games crypto list,make money,free time,passive income,bullish project, bullish",
   meta_title:
     "Nakamoto Games - Get Started with the Best Play and Earn Crypto Platform",
-  image:
-    "https://nakamoto-prod-new.s3.eu-central-1.amazonaws.com/seo/ec3631e3dda381dc3202e128d23400a0/og/homepage.png"
+  image: "https://files.naka.im/seo/homepage.png"
 }
 const Meta = () => {
   // const [blogDetails] = useState<IBlogDetail>()

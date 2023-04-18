@@ -28,6 +28,10 @@ const MetaDataTag = ({
       />
       {/* facebook */}
       <meta
+        name="og:locale"
+        content="en_US"
+      />
+      <meta
         property="og:url"
         content={meta_url}
       />

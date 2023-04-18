@@ -2,7 +2,7 @@ import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import {
   IFilterGamesByKey,
   IGame,
@@ -378,52 +378,18 @@ const useGlobal = (
     }
   }, [router.asPath])
 
-  const fetchChainData = async () => {
+  /**
+   * @description Fetch all token supported
+   */
+  const fetchChainData = useCallback(async () => {
     if (!isLogin) return
     if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
       await fetchAllTokenSupported()
     } else if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX) {
       await fetchNAKAToken()
     }
-  }
-
-  /**
-   * @description Fetch all token supported
-   */
-  useEffect(() => {
-    let load = false
-    if (!isLogin) return
-    if (!isConnected) return
-    if (!load) {
-      if (signer && address) {
-        // if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
-        //   fetchAllTokenSupported()
-        // } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
-        //   fetchNAKAToken()
-        // }
-      }
-    }
-
-    return () => {
-      load = true
-    }
-  }, [
-    address,
-    isLogin,
-    isConnected,
-    chainId,
-    signer
-    // fetchAllTokenSupported,
-    // fetchNAKAToken
-  ])
-
-  /**
-   * @description Fetch all token supported
-   */
-  // useEffect(() => {
-  //   fetchChainData()
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isLogin, currentChainSelected])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return {
     onHandleClick,

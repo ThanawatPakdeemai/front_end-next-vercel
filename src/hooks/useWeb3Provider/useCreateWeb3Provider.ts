@@ -589,7 +589,8 @@ const useCreateWeb3Provider = () => {
     // isWrongNetwork,
     onAddToken,
     disabledConnectButton,
-    setDisabledConnectButton
+    setDisabledConnectButton,
+    onUpdateWallet
   }
 }
 

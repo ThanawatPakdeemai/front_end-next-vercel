@@ -1,61 +1,113 @@
-import { act, renderHook } from "@testing-library/react"
-import Config from "@src/configs/index"
+import { renderHook, act } from "@testing-library/react"
+import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useCreateWeb3Provider from "./useCreateWeb3Provider"
 
-// Mock resolve from env file.
-jest.mock("../../configs/index.ts", () => ({
-  get NEXT_PUBLIC_MATIC_RPC_URL() {
-    return "https://rpc.ankr.com/polygon"
-  },
-  get NEXT_PUBLIC_RPC_POLYGON() {
-    return "https://polygon-rpc.com/"
-  }
-}))
+// jest.mock("./getProfileByEmail", () => ({
+//   __esModule: true,
+//   default: jest.fn()
+// }))
 
-jest.clearAllMocks()
+jest.mock(
+  "@src/features/profile/containers/services/profile.service.ts",
+  () => ({
+    __esModule: true,
+    default: jest.fn(),
+    getProfileByEmail: jest.fn(() => Promise.resolve({})),
+    updateWalletAddress: jest.fn(() => Promise.resolve(true))
+  })
+)
 
-// Mock next router.
-const mockedRouter = {
-  push: jest.fn(),
-  pathname: "/",
-  query: {},
-  asPath: "/",
-  route: "/",
-  events: {
-    on: jest.fn(),
-    off: jest.fn(),
-    emit: jest.fn()
-  }
-}
-jest.mock("next/router", () => ({
-  useRouter() {
-    return mockedRouter
-  }
-}))
+describe("useCreateWeb3Provider", () => {
+  // Set up mock functions
+  const mockUpdateWalletAddress = jest.fn(() => Promise.resolve(true))
+  const mockGetProfileByEmail = jest.fn(() => Promise.resolve({}))
 
-describe("Should useWeb3provider", () => {
-  jest.spyOn(Config, "NEXT_PUBLIC_MATIC_RPC_URL", "get")
-  jest.spyOn(Config, "NEXT_PUBLIC_RPC_POLYGON", "get")
-
-  test("should connect metamask success", () => {
-    const { result } = renderHook(() => useCreateWeb3Provider())
-    act(() => {
-      result.current.handleConnectWithMetamask()
-    })
-    expect(result.current.address).toBeUndefined()
-    expect(result.current.provider).toBeUndefined()
-    expect(result.current.chainId).toBeUndefined()
-    expect(result.current.accounts).toBeUndefined()
+  beforeAll(() => {
+    jest.spyOn(window, "location", "get").mockReturnValue({
+      reload: jest.fn()
+    } as unknown as Location)
   })
 
-  // test("should connect wallet connect success", () => {
-  //   const { result } = renderHook(() => useCreateWeb3Provider())
-  //   act(() => {
-  //     result.current.handleConnectWithWalletConnect()
-  //   })
-  //   expect(result.current.address).toBeUndefined()
-  //   expect(result.current.provider).toBeUndefined()
-  //   expect(result.current.chainId).toBeUndefined()
-  //   expect(result.current.accounts).toBeUndefined()
-  // })
+  afterAll(() => {
+    jest.restoreAllMocks()
+  })
+
+  it("should call updateWalletAddress and getProfileByEmail when onUpdateWallet is called", async () => {
+    // Render the hook
+    const { result } = renderHook(() => useCreateWeb3Provider())
+
+    const mockAddress = "0x456"
+    const mockProfile: IProfile = {
+      email: "test@example.com",
+      address: "0x123",
+      updatedAt: new Date(),
+      banned: [],
+      ban_time: new Date(),
+      friend: [],
+      nonce: 0,
+      ranks: [],
+      jwtToken: "",
+      stamina_point: 0,
+      total_stamina: 0,
+      recovery_stamina_time: new Date(),
+      country: "",
+      user_ip_address: "",
+      max_exp: 0,
+      exp: 0,
+      level: 0,
+      status: 0,
+      createdAt: new Date(),
+      role: "",
+      is_active: false,
+      avatar: "",
+      username: "",
+      id: "",
+      subscription: false
+    }
+
+    // Call the onUpdateWallet function
+    const { onUpdateWallet } = result.current
+    await act(async () => {
+      await onUpdateWallet(mockProfile, mockAddress)
+    })
+
+    // Assert that the mock functions were called with the correct arguments
+    expect(mockUpdateWalletAddress).toHaveBeenCalledWith({
+      _email: mockProfile.email,
+      _address: mockAddress
+    })
+    expect(mockGetProfileByEmail).toHaveBeenCalledWith(mockProfile.email)
+  })
+
+  /* it("should reload the page after successfully updating the wallet address", async () => {
+    const { result } = renderHook(() => useCreateWeb3Provider())
+
+    const mockAddress = "0x456"
+    const { onUpdateWallet } = result.current
+
+    mockUpdateWalletAddress.mockResolvedValue(true)
+
+    await act(async () => {
+      await onUpdateWallet(mockProfile, mockAddress)
+    })
+
+    expect(window.location.reload).toHaveBeenCalled()
+  })
+
+  it("should not reload the page if there was an error updating the wallet address", async () => {
+    const { result } = renderHook(() => useCreateWeb3Provider())
+
+    const mockAddress = "0x456"
+    const { onUpdateWallet } = result.current
+
+    mockUpdateWalletAddress.mockRejectedValue(
+      new Error("Failed to update wallet")
+    )
+
+    await act(async () => {
+      await onUpdateWallet(mockProfile, mockAddress)
+    })
+
+    expect(window.location.reload).not.toHaveBeenCalled()
+  }) */
 })

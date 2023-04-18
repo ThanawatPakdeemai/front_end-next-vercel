@@ -22,6 +22,7 @@ interface IProps {
 }
 const Meta = ({ path }: IProps) => {
   // const [blogDetails] = useState<IBlogDetail>()
+  // eslint-disable-next-line no-unused-vars
   const [meta, setMeta] = useState<ISeoData>()
   const { data } = useMetaDataByPath({ _path: path })
 
@@ -68,7 +69,7 @@ const Meta = ({ path }: IProps) => {
     <>
       {/* {router.route !== "/blog/[id]" ? ( */}
       <>
-        {meta ? (
+        {/* {meta ? (
           <MetaDataTag
             meta_description={meta.meta_description}
             meta_keyword={meta.meta_keyword}
@@ -76,15 +77,15 @@ const Meta = ({ path }: IProps) => {
             meta_url={CONFIGS.BASE_URL.FRONTEND + router.asPath}
             og_image={meta.og_image}
           />
-        ) : (
-          <MetaDataTag
-            meta_description={metaData.meta_description}
-            meta_keyword={metaData.meta_keyword}
-            meta_title={metaData.meta_title}
-            meta_url={CONFIGS.BASE_URL.FRONTEND + router.asPath}
-            og_image={metaData.image}
-          />
-        )}
+        ) : ( */}
+        <MetaDataTag
+          meta_description={metaData.meta_description}
+          meta_keyword={metaData.meta_keyword}
+          meta_title={metaData.meta_title}
+          meta_url={CONFIGS.BASE_URL.FRONTEND + router.asPath}
+          og_image={metaData.image}
+        />
+        {/* )} */}
       </>
       {/* ) : (
         <>

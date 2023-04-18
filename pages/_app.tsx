@@ -17,7 +17,6 @@ import dynamic from "next/dynamic"
 import dayjs from "dayjs"
 import rt from "dayjs/plugin/relativeTime"
 import createEmotionCache from "@utils/createEmotionCache"
-import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import MetaDataTag from "@components/atoms/MetaDataTag"
 import CONFIGS from "@configs/index"
 
@@ -37,9 +36,17 @@ type NextPageWithLayout = NextPage & {
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
-
+const metaData = {
+  meta_description:
+    "Get started in minutes with our free-to-play games. The best collection of play-to-earn crypto games featuring action, arcade, and more. Powered by $NAKA.",
+  meta_keyword:
+    "nakamoto games, play2earn, game crypto platform, Blockchain games, Free to play, NFT game, Crypto games, P2E, Gamefi, Browser Games, Cryptocurrency, Play to Earn, Blockchain Games, Gamefi,  Web3 games, Digital platform, 3D games, Polygon, Games platform, Free nft games, Top NFT Games, best NFT games, top cryoto game, top tier games 2022, the best 2022 games, y8, Free online games, unity, unreal engine, games coin crypto, where to play crypto games, play to earn games crypto, play to earn games crypto list,make money,free time,passive income,bullish project, bullish",
+  meta_title:
+    "Nakamoto Games - Get Started with the Best Play and Earn Crypto Platform",
+  image: "https://files.naka.im/seo/homepage.png",
+  url: CONFIGS.BASE_URL.FRONTEND
+}
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
-  const { openGraphData } = pageProps
   const getLayout = Component.getLayout ?? ((page) => page)
   const emotionCache: EmotionCache = clientSideEmotionCache
   const queryClient = new QueryClient()
@@ -63,11 +70,11 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         />
       </Head>
       <MetaDataTag
-        meta_description={openGraphData?.description ?? ""}
-        meta_keyword={openGraphData?.keywords ?? ""}
-        meta_title={openGraphData?.title ?? ""}
-        meta_url={openGraphData?.url ?? ""}
-        og_image={openGraphData?.image ?? ""}
+        meta_description={metaData.meta_description}
+        meta_keyword={metaData.meta_keyword}
+        meta_title={metaData.meta_title}
+        meta_url={metaData.url}
+        og_image={metaData.image}
       />
       <Loading />
       <QueryClientProvider client={queryClient}>
@@ -85,29 +92,5 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
     </>
   )
 }
-const metaData = {
-  meta_description:
-    "Get started in minutes with our free-to-play games. The best collection of play-to-earn crypto games featuring action, arcade, and more. Powered by $NAKA.",
-  meta_keyword:
-    "nakamoto games, play2earn, game crypto platform, Blockchain games, Free to play, NFT game, Crypto games, P2E, Gamefi, Browser Games, Cryptocurrency, Play to Earn, Blockchain Games, Gamefi,  Web3 games, Digital platform, 3D games, Polygon, Games platform, Free nft games, Top NFT Games, best NFT games, top cryoto game, top tier games 2022, the best 2022 games, y8, Free online games, unity, unreal engine, games coin crypto, where to play crypto games, play to earn games crypto, play to earn games crypto list,make money,free time,passive income,bullish project, bullish",
-  meta_title:
-    "Nakamoto Games - Get Started with the Best Play and Earn Crypto Platform",
-  image: "https://files.naka.im/seo/homepage.png",
-  url: CONFIGS.BASE_URL.FRONTEND
-}
 
-export async function getStaticProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-      openGraphData: {
-        title: metaData.meta_title,
-        description: metaData.meta_description,
-        image: metaData.image,
-        url: metaData.url,
-        keywords: metaData.meta_keyword
-      }
-    }
-  }
-}
 export default appWithTranslation(MyApp)

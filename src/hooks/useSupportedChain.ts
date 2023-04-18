@@ -22,9 +22,7 @@ const useSupportedChain = () => {
     useContractVaultBinance()
   const { getAllTokenInfoByContractAddress } = useContractVaultBinance()
   const {
-    currentTokenSelected,
     currentChainSelected,
-    chainSupport,
     setChainSupport,
     setContractBNB,
     setCurrentTokenSelected
@@ -91,7 +89,7 @@ const useSupportedChain = () => {
   }, [])
 
   /**
-   * @description Get all token supported
+   * @description Get all token supported BSC only
    */
   const fetchAllTokenSupported = useCallback(async () => {
     const { ethereum }: any = window
@@ -100,10 +98,14 @@ const useSupportedChain = () => {
     const _address = await _signer.getAddress()
     const allContract: Contract[] = []
     const allTokenSupported: ITokenContract[] = []
-    // TODO: Open after launch V2
-    const tokens = await getAllTokenAddressInContract()
-    // ONLY FOR BUSD TOKEN
-    // const tokens = [CONFIGS.CONTRACT_ADDRESS.BEP20]
+
+    // TODO: Open after binance smart chain is ready
+    // const tokens = await getAllTokenAddressInContract()
+    // TODO: Delete this after binance smart chain is ready
+    const tokens =
+      currentChainSelected === "0x61"
+        ? await getAllTokenAddressInContract()
+        : [CONFIGS.CONTRACT_ADDRESS.BEP20]
     for (let index = 0; index < tokens.length; index += 1) {
       const contract = new ethers.Contract(
         tokens[index],
@@ -123,6 +125,7 @@ const useSupportedChain = () => {
           allTokenSupported.push(result)
         })
       )
+
     const allTokenSupportedSorted = allTokenSupported.sort((a, b) => {
       if (a.symbol < b.symbol) {
         return -1
@@ -133,8 +136,6 @@ const useSupportedChain = () => {
       return 0
     })
     setChainSupport(allTokenSupportedSorted)
-    if (currentTokenSelected && currentTokenSelected?.address !== "") return
-    if (currentTokenSelected !== chainSupport[0]) return
     setCurrentTokenSelected(
       allTokenSupportedSorted.find(
         (item) => item.symbol === "BUSD"

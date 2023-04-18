@@ -387,7 +387,7 @@ const useGlobal = (
       await fetchNAKAToken()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [currentChainSelected, fetchAllTokenSupported, fetchNAKAToken])
 
   return {
     onHandleClick,

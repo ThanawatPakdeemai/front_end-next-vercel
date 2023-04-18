@@ -41,12 +41,15 @@ const useWalletContoller = () => {
   const { setOpen, setClose } = useLoadingStore()
   const { profile } = useProfileStore()
   const { successToast, errorToast } = useToast()
-  const { getTokenAddress, fetchAllTokenSupported, fetchNAKAToken } =
-    useSupportedChain()
-  const { address, handleConnectWithMetamask, signer, statusWalletConnected } =
-    useWeb3Provider()
-  const { chainSupport, currentTokenSelected, currentChainSelected } =
-    useChainSupportStore()
+  const { getTokenAddress } = useSupportedChain()
+  const {
+    address,
+    handleConnectWithMetamask,
+    signer,
+    statusWalletConnected,
+    setDisabledConnectButton
+  } = useWeb3Provider()
+  const { currentTokenSelected, currentChainSelected } = useChainSupportStore()
   const { fetchChainData } = useGlobal()
 
   const {
@@ -91,22 +94,18 @@ const useWalletContoller = () => {
     if (_method === "deposit") setOpenDeposit(false)
     else if (_method === "withdraw") setOpenWithDraw(false)
     setValue(0)
-    onResetBalance()
   }
 
   /**
    * @description When connect wallet
    */
-  const handleConnectWallet = () => {
+  const handleConnectWallet = async () => {
     if (profile.data && handleConnectWithMetamask) {
       handleConnectWithMetamask()
-      if (chainSupport && chainSupport.length === 0) {
-        fetchChainData()
-        // if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
-        //   fetchAllTokenSupported()
-        // } else if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX) {
-        //   fetchNAKAToken()
-        // }
+      if (setDisabledConnectButton && handleConnectWithMetamask) {
+        setDisabledConnectButton(true)
+        handleConnectWithMetamask()
+        await fetchChainData()
       }
     } else {
       errorToast("Please login first")
@@ -184,14 +183,10 @@ const useWalletContoller = () => {
       /* Wait for transaction data */
       const resData = await res.wait()
       if (resData) {
+        await fetchChainData()
         setClose()
         successToast("Transaction success")
         handleClose(_method)
-        if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
-          fetchAllTokenSupported()
-        } else {
-          fetchNAKAToken()
-        }
       }
     } catch (error) {
       errorToast((error as IMessage).message)

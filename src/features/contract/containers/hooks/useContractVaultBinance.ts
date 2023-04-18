@@ -194,8 +194,9 @@ const useContractVaultBinance = () => {
         const _signer = _provider.getSigner()
         const _network = await _provider.getNetwork()
         const _balance = await _signer.getBalance()
-        // const _address = await _signer.getAddress()
-        const _balanceVaultContract = new ethers.Contract(
+
+        // TODO: Open after binance smart chain is ready
+        /* const _balanceVaultContract = new ethers.Contract(
           CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE,
           BinanceBalanceVaultAbi.abi,
           _signer
@@ -203,8 +204,27 @@ const useContractVaultBinance = () => {
         const vaultBalancePromise = await _balanceVaultContract.getBalanceOf(
           _userAddress,
           _tokenAddress
-        )
+        ) */
+        // TODO: Delete this after binance smart chain is ready
+        const _balanceVaultTemporary =
+          process.env.NEXT_PUBLIC_MODE === "development"
+            ? new ethers.Contract(
+                CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE,
+                BinanceBalanceVaultAbi.abi,
+                _signer
+              )
+            : null
+
         if (_tokenAddress === CONFIGS.CONTRACT_ADDRESS.BNB_CONTRACT) {
+          const vaultBalancePromise =
+            process.env.NEXT_PUBLIC_MODE === "development" &&
+            _balanceVaultTemporary
+              ? await _balanceVaultTemporary.getBalanceOf(
+                  _userAddress,
+                  _tokenAddress
+                )
+              : ethers.BigNumber.from(0)
+
           resolve({
             symbol: _network.name.toLocaleUpperCase() || "BNB",
             tokenName: _network.name || "BNB",
@@ -232,6 +252,15 @@ const useContractVaultBinance = () => {
           const walletBalancePromise = await tokenContract.balanceOf(
             _userAddress
           )
+          // TODO: Delete this after binance smart chain is ready
+          const vaultBalancePromise =
+            process.env.NEXT_PUBLIC_MODE === "development" &&
+            _balanceVaultTemporary
+              ? await _balanceVaultTemporary.getBalanceOf(
+                  _userAddress,
+                  _tokenAddress
+                )
+              : walletBalancePromise
           const [tokenSymbol, totalSupply, tokenName] = await Promise.all([
             symbolPromise,
             totalSupplyPromise,

@@ -1,41 +1,41 @@
-# #!/usr/bin/env sh
-# . "$(dirname -- "$0")/_/husky.sh"
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
-# # pawaox4th@gmail.con
+# pawaox4th@gmail.con
 
-# echo "⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼"
-# echo "🧐🧐🧐 RUN AS : $(date +%d/%m/%Y-%H:%M:%S) 🧐🧐🧐"
-# echo "⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼"
-# echo "Styling, linting, testing and building your project before committing [Pre-Push]
-# ";
+echo "⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼"
+echo "🧐🧐🧐 RUN AS : $(date +%d/%m/%Y-%H:%M:%S) 🧐🧐🧐"
+echo "⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼"
+echo "Styling, linting, testing and building your project before committing [Pre-Push]
+";
 
-# # Check tsconfig standards
-# yarn check-types ||
-# (
-#   echo '❌❌❌ Failed Type check. ❌❌❌
-#     Are you seriously trying to write that? Make the changes required above.'
-#   false;
-# )
+# Check tsconfig standards
+yarn check-types ||
+(
+  echo '❌❌❌ Failed Type check. ❌❌❌
+    Are you seriously trying to write that? Make the changes required above.'
+  false;
+)
 
-# yarn check-lint ||
-# (
-#   echo '🙅‍♀️🙅‍♀️🙅‍♀️ Get that weak shit out of here! 🙅‍♀️🙅‍♀️🙅‍♀️
-#     ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
-#   false; 
-# )
+yarn check-lint ||
+(
+  echo '🙅‍♀️🙅‍♀️🙅‍♀️ Get that weak shit out of here! 🙅‍♀️🙅‍♀️🙅‍♀️
+    ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
+  false; 
+)
+
+# If everything passes... Now we can commit
+echo '👍👍👍 Your code is passed! I am building. 👍👍👍'
+echo 'Please waiting, take a sip of coffee and relax...'
+
+yarn build ||
+(
+  echo '😲😲😲 Oops!! Failed building 😲😲😲
+    Next build failed: View the errors above to see why.'
+  false;
+)
 
 # # If everything passes... Now we can commit
-# echo '👍👍👍 Your code is passed! I am building. 👍👍👍'
-# echo 'Please waiting, take a sip of coffee and relax...'
-
-# yarn build ||
-# (
-#   echo '😲😲😲 Oops!! Failed building 😲😲😲
-#     Next build failed: View the errors above to see why.'
-#   false;
-# )
-
-# # # If everything passes... Now we can commit
-# echo '🚀🚀 You win this time... I am pushed this now. 🚀🚀'
-# echo "🎉🎉🎉 FINISH AT : $(date +%d/%m/%Y-%H:%M:%S) 🎉🎉🎉"
-# echo "⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼"
+echo '🚀🚀 You win this time... I am pushed this now. 🚀🚀'
+echo "🎉🎉🎉 FINISH AT : $(date +%d/%m/%Y-%H:%M:%S) 🎉🎉🎉"
+echo "⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼"

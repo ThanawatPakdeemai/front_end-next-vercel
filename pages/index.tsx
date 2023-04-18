@@ -4,10 +4,10 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 
 const HomePage = dynamic(() => import("@feature/page/homePage"))
-const Meta = dynamic(() => import("@components/atoms/MetaData"), {
-  suspense: true,
-  ssr: false
-})
+// const Meta = dynamic(() => import("@components/atoms/MetaData"), {
+//   suspense: true,
+//   ssr: false
+// })
 export default function Home() {
   return (
     <article className="h-full w-full">
@@ -19,7 +19,7 @@ export default function Home() {
 Home.getLayout = function getLayout(page: ReactElement) {
   return (
     <Layout>
-      <Meta path="/" />
+      {/* <Meta path="/" /> */}
       {page}
     </Layout>
   )

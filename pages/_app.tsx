@@ -19,8 +19,13 @@ import rt from "dayjs/plugin/relativeTime"
 import createEmotionCache from "@utils/createEmotionCache"
 import MetaDataTag from "@components/atoms/MetaDataTag"
 import CONFIGS from "@configs/index"
+import { useRouter } from "next/router"
 
 const Loading = dynamic(() => import("@components/molecules/Loading"), {
+  suspense: true,
+  ssr: false
+})
+const Meta = dynamic(() => import("@components/atoms/MetaData"), {
   suspense: true,
   ssr: false
 })
@@ -36,7 +41,7 @@ type NextPageWithLayout = NextPage & {
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
-const metaData = {
+export const metaData = {
   meta_description:
     "Get started in minutes with our free-to-play games. The best collection of play-to-earn crypto games featuring action, arcade, and more. Powered by $NAKA.",
   meta_keyword:
@@ -49,8 +54,30 @@ const metaData = {
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? ((page) => page)
   const emotionCache: EmotionCache = clientSideEmotionCache
+  const router = useRouter()
   const queryClient = new QueryClient()
   const customTheme = createTheme(theme as ThemeOptions)
+  const getHead = () => {
+    if (router.pathname === "/[typeGame]/[GameHome]") {
+      // console.log("1")
+      return <Meta path={`/${router.asPath.split("/")[2]}`} />
+    }
+    if (router.asPath !== "/" && router.pathname !== "/[typeGame]/[GameHome]") {
+      // console.log("2")
+      return <Meta path={`${router.asPath}`} />
+    }
+    // console.log("3")
+    return (
+      <MetaDataTag
+        meta_description={metaData.meta_description}
+        meta_keyword={metaData.meta_keyword}
+        meta_title={metaData.meta_title}
+        meta_url={metaData.url}
+        og_image={metaData.image}
+      />
+    )
+  }
+
   return (
     <>
       <Head>
@@ -69,13 +96,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
           href="https://files.naka.im/seo/favicon.png"
         />
       </Head>
-      <MetaDataTag
-        meta_description={metaData.meta_description}
-        meta_keyword={metaData.meta_keyword}
-        meta_title={metaData.meta_title}
-        meta_url={metaData.url}
-        og_image={metaData.image}
-      />
+      {getHead()}
       <Loading />
       <QueryClientProvider client={queryClient}>
         <Web3Provider>

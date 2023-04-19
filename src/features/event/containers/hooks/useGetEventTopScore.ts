@@ -15,7 +15,9 @@ const useGetEventTopScore = (event_id: string, isTopScore: boolean) => {
     staleTime: Infinity
   })
   return {
-    topScoreData: topScoreData && topScoreData.data && topScoreData.data.data,
+    // TODO: Refactor this after backend fix data.data
+    topScoreData:
+      topScoreData && topScoreData.data && topScoreData.data.data[0],
     error,
     topScoreIsLoading,
     isError

@@ -17,7 +17,7 @@ const LogoNaka = () => {
   }
 
   return (
-    <Box className="logo-naka-icon group w-[180px] transition-all hover:w-auto hover:ease-linear">
+    <Box className="logo-naka-icon group w-auto transition-all ease-linear">
       <LogoNakaIcon fill={themeColor().toString()} />
     </Box>
   )

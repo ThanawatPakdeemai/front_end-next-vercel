@@ -51,15 +51,6 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const emotionCache: EmotionCache = clientSideEmotionCache
   const queryClient = new QueryClient()
   const customTheme = createTheme(theme as ThemeOptions)
-  const getHead = () => (
-    <MetaDataTag
-      meta_description={metaData.meta_description}
-      meta_keyword={metaData.meta_keyword}
-      meta_title={metaData.meta_title}
-      meta_url={metaData.url}
-      og_image={metaData.image}
-    />
-  )
 
   return (
     <>
@@ -79,7 +70,13 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
           href="https://files.naka.im/seo/favicon.png"
         />
       </Head>
-      {getHead()}
+      <MetaDataTag
+        meta_description={metaData.meta_description}
+        meta_keyword={metaData.meta_keyword}
+        meta_title={metaData.meta_title}
+        meta_url={metaData.url}
+        og_image={metaData.image}
+      />
       <Loading />
       <QueryClientProvider client={queryClient}>
         <Web3Provider>

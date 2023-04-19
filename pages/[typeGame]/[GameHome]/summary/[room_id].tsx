@@ -6,6 +6,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
 import React, { ReactElement } from "react"
+import { getSeoByPath } from "@feature/metaData/containers/services/seoMetaData.service"
+import MetaDataTag from "@components/atoms/MetaDataTag"
 
 const GameSummaryRewardPage = dynamic(
   () => import("@feature/page/games/gameSummaryRewardPage"),
@@ -59,62 +61,73 @@ const GameTabs = dynamic(
   }
 )
 
-export default function SummaryDetails() {
+export default function SummaryDetails(props) {
   const { getTypeGamePathFolder } = useGlobal()
   const router = useRouter()
   const { GameHome } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
 
-  return gameData ? (
-    <GamePageDefault
-      component={
-        <RightSidebarContent
-          className="mb-24"
-          content={<GameSummaryRewardPage />}
-          aside={
-            <Box
-              component="div"
-              className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
-              sx={{
-                ".panel-content": {
-                  maxHeight: "270px",
-                  ".custom-scroll": {
-                    overflow: "hidden"
-                  }
-                },
-                ".like-no_score": {
-                  margin: "0"
+  return (
+    <>
+      <MetaDataTag
+        meta_description={props?.meta?.data?.[0]?.meta_description}
+        meta_keyword={props?.meta?.data?.[0]?.meta_keyword}
+        meta_title={props?.meta?.data?.[0]?.meta_title}
+        meta_url={props?.meta?.data?.[0]?.url}
+        og_image={props?.meta?.data?.[0]?.image}
+      />
+      {gameData ? (
+        <GamePageDefault
+          component={
+            <RightSidebarContent
+              className="mb-24"
+              content={<GameSummaryRewardPage />}
+              aside={
+                <Box
+                  component="div"
+                  className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
+                  sx={{
+                    ".panel-content": {
+                      maxHeight: "270px",
+                      ".custom-scroll": {
+                        overflow: "hidden"
+                      }
+                    },
+                    ".like-no_score": {
+                      margin: "0"
+                    }
+                  }}
+                >
+                  <OverviewContent
+                    gameId={gameData.id}
+                    gameType={getTypeGamePathFolder(gameData)}
+                    gameIdNFT={gameData.NFT_Owner}
+                  />
+                </Box>
+              }
+            />
+          }
+          component2={
+            <FullWidthContent
+              sxCustomStyled={{
+                "&.container": {
+                  maxWidth: "100%!important"
                 }
               }}
             >
-              <OverviewContent
-                gameId={gameData.id}
-                gameType={getTypeGamePathFolder(gameData)}
-                gameIdNFT={gameData.NFT_Owner}
-              />
-            </Box>
+              <TabProvider>
+                <GameTabs
+                  gameId={gameData.id}
+                  gameType={getTypeGamePathFolder(gameData)}
+                />
+              </TabProvider>
+            </FullWidthContent>
           }
         />
-      }
-      component2={
-        <FullWidthContent
-          sxCustomStyled={{
-            "&.container": {
-              maxWidth: "100%!important"
-            }
-          }}
-        >
-          <TabProvider>
-            <GameTabs
-              gameId={gameData.id}
-              gameType={getTypeGamePathFolder(gameData)}
-            />
-          </TabProvider>
-        </FullWidthContent>
-      }
-    />
-  ) : (
-    <GamePageDefault component={<SkeletonBanner />} />
+      ) : (
+        <GamePageDefault component={<SkeletonBanner />} />
+      )}
+    </>
   )
 }
 
@@ -122,9 +135,18 @@ SummaryDetails.getLayout = function getLayout(page: ReactElement) {
   return page
 }
 
-export async function getServerSideProps({ locale }: { locale: string }) {
+export async function getServerSideProps({
+  locale,
+  params
+}: {
+  locale: string
+  params: any
+}) {
+  const _seo = await getSeoByPath(`/${params?.GameHome}` as string)
+
   return {
     props: {
+      meta: _seo,
       ...(await serverSideTranslations(locale, ["common"]))
     }
   }

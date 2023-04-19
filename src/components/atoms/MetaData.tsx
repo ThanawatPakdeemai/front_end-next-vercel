@@ -14,10 +14,11 @@ import MetaDataTag from "./MetaDataTag"
 
 // eslint-disable-next-line no-unused-vars
 
+// eslint-disable-next-line no-unused-vars
 interface IProps {
   path?: string
 }
-const Meta = ({ path }: IProps) => {
+const Meta = () => {
   // const [blogDetails] = useState<IBlogDetail>()
   // eslint-disable-next-line no-unused-vars
   const [meta, setMeta] = useState<ISeoData>()
@@ -30,7 +31,7 @@ const Meta = ({ path }: IProps) => {
   useEffect(() => {
     let load = false
     if (!load) {
-      getSeoByPath(path ?? "/").then((res) => {
+      getSeoByPath("/").then((res) => {
         if (res) setMeta((res as ISeoResponse)?.data?.[0])
       })
       //   if (router?.route === "/blog/[id]" && id) {
@@ -44,7 +45,7 @@ const Meta = ({ path }: IProps) => {
     return () => {
       load = true
     }
-  }, [id, path, router.route])
+  }, [id, router.route])
 
   return (
     <>
@@ -65,55 +66,6 @@ const Meta = ({ path }: IProps) => {
           og_image={metaData.image}
         />
       )}
-
-      {/* <NextSeo
-        title={metaData.meta_title}
-        description={metaData.meta_description}
-        openGraph={{
-          title: metaData.meta_title,
-          url: metaData.url + router.asPath,
-          description: metaData.meta_description,
-          images: [{ url: metaData.image }]
-        }}
-        twitter={{
-          handle: "@NakamotoGames",
-          site: "@NakamotoGames",
-          cardType: "summary_large_image"
-        }}
-      /> */}
-      {/* {router.route !== "/blog/[id]" ? ( */}
-      <>
-        {/* {meta ? (
-          <MetaDataTag
-            meta_description={meta.meta_description}
-            meta_keyword={meta.meta_keyword}
-            meta_title={meta.meta_title}
-            meta_url={CONFIGS.BASE_URL.FRONTEND + router.asPath}
-            og_image={meta.og_image}
-          />
-        ) : ( */}
-        {/* <MetaDataTag
-          meta_description={metaData.meta_description}
-          meta_keyword={metaData.meta_keyword}
-          meta_title={metaData.meta_title}
-          meta_url={CONFIGS.BASE_URL.FRONTEND + router.asPath}
-          og_image={metaData.image}
-        /> */}
-        {/* )} */}
-      </>
-      {/* ) : (
-        <>
-          {blogDetails && (
-            <MetaDataTag
-              meta_description={blogDetails?.description}
-              meta_keyword=""
-              meta_title={blogDetails?.title}
-              meta_url=""
-              og_image={blogDetails?.image_list}
-            />
-          )}
-        </>
-      )} */}
     </>
   )
 }

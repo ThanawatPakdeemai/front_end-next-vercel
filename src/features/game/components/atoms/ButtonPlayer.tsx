@@ -6,8 +6,15 @@ interface IProp {
   handleClick: () => void
   text: ReactNode | string
   className?: string
+  disabled?: boolean
 }
-const ButtonGame = ({ startIcon, handleClick, text, className }: IProp) => {
+const ButtonGame = ({
+  startIcon,
+  handleClick,
+  text,
+  className,
+  disabled = false
+}: IProp) => {
   const stiffValue = 300
 
   const iconStart = {
@@ -42,10 +49,13 @@ const ButtonGame = ({ startIcon, handleClick, text, className }: IProp) => {
   return (
     <>
       <motion.button
-        className={`btn-icon-container m-auto mt-5 flex h-10 w-full items-center md:mt-0 ${className}`}
+        className={`btn-icon-container m-auto mt-5 flex h-10 w-full items-center md:mt-0 ${className} ${
+          disabled ? " !bg-neutral-800 " : ""
+        }`}
         initial="rest"
         whileHover="hover"
         type="button"
+        disabled={disabled}
         onClick={handleClick}
       >
         <motion.span

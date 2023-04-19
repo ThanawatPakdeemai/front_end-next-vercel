@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
+/* eslint-disable no-use-before-define */
 import { useCallback, useEffect, useState } from "react"
 import {
   FeeData,
@@ -16,16 +17,10 @@ import Helper from "@utils/helper"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import { IErrorMessage } from "@interfaces/IErrorMessage"
-import {
-  getProfileByEmail,
-  updateWalletAddress
-} from "@feature/profile/containers/services/profile.service"
 import { DEFAULT_STATUS_WALLET } from "@constants/defaultValues"
-import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useChainSupportStore from "@stores/chainSupport"
-import useSupportedChain from "@hooks/useSupportedChain"
-import toast from "react-hot-toast"
-import useLoadingStore from "@stores/loading"
+import useProfileController from "@feature/profile/containers/hook/useProfileController"
+import useGlobal from "@hooks/useGlobal"
 
 const useCreateWeb3Provider = () => {
   const [signer, setSigner] = useState<JsonRpcSigner | undefined>(undefined)
@@ -45,9 +40,9 @@ const useCreateWeb3Provider = () => {
   const [statusWalletConnected, setStatusWalletConnected] =
     useState<IErrorMessage>(DEFAULT_STATUS_WALLET)
 
-  const { fetchAllTokenSupported, fetchNAKAToken } = useSupportedChain()
+  const { fetchChainData } = useGlobal()
   const profile = useProfileStore((state) => state.profile.data)
-  const { onSetProfileData, onSetProfileAddress, isLogin } = useProfileStore()
+  const { isLogin } = useProfileStore()
   const {
     setChainSupport,
     setCurrentChainConnected,
@@ -59,7 +54,7 @@ const useCreateWeb3Provider = () => {
     currentChainSelected
   } = useChainSupportStore()
   const { successToast, errorToast } = useToast()
-  const { setClose, setOpen } = useLoadingStore()
+  const { onUpdateWallet } = useProfileController()
 
   /**
    * @description Disconnect wallet
@@ -103,14 +98,6 @@ const useCreateWeb3Provider = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorToast, successToast])
 
-  const fetchChainData = useCallback(async () => {
-    if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
-      await fetchAllTokenSupported()
-    } else if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX) {
-      await fetchNAKAToken()
-    }
-  }, [currentChainSelected, fetchAllTokenSupported, fetchNAKAToken])
-
   const onWalletLocked = useCallback(() => {
     // NOTE: Not necessary to show a response when error
     // errorToast(`${MESSAGES.wallet_is_locked}`)
@@ -146,12 +133,13 @@ const useCreateWeb3Provider = () => {
           errorMsg: `${_accounts[0]} ${MESSAGES.wallet_is_correct}`,
           type: "success"
         })
-        // await fetchChainData()
+        await fetchChainData()
 
         if (!isLogin) return
         if (isCorrectWallet) return
         setIsCorrectWallet(true)
-        successToast(`${_accounts[0]} ${MESSAGES.wallet_is_correct}`)
+        // Hide success popup
+        // successToast(`${_accounts[0]} ${MESSAGES.wallet_is_correct}`)
       } else {
         setStatusWalletConnected({
           responseStatus: false,
@@ -169,44 +157,60 @@ const useCreateWeb3Provider = () => {
     [profile, isLogin, isCorrectWallet, setIsCorrectWallet, successToast]
   )
 
-  /**
-   * @description Adding chain
-   */
-  const resetChainId = useCallback(
+  const switchNetwork = useCallback(
     async (_chainId: string) => {
+      handleDisconnectWallet()
       const _provider = window.ethereum
       if (_provider === undefined || _provider.request === undefined) {
         return
       }
       if (_provider && _provider.request) {
         try {
+          // check if the chain to connect to is installed
           await _provider.request({
-            method: "wallet_addEthereumChain",
-            params: [Helper.getNetwork(_chainId)]
+            method: "wallet_switchEthereumChain",
+            // chainId must be in hexadecimal numbers
+            params: [{ chainId: _chainId }]
           })
-          return {
-            responseStatus: true,
-            errorMsg: MESSAGES.wallet_addEthereumChain,
-            type: "success"
+          // await fetchChainData()
+          const _resetProvider = new providers.Web3Provider(_provider)
+          const _signer = _resetProvider.getSigner()
+          if (_signer) {
+            handleConnectWithMetamask()
+            setTimeout(() => {
+              // eslint-disable-next-line no-use-before-define
+              window.location.reload()
+            }, 1000)
           }
-        } catch (error: any) {
-          // NOTE: Not necessary to show a response when error
-          // errorToast(error.message)
-          return {
-            responseStatus: false,
-            errorMsg: (error as Error).message,
-            type: "failed"
+        } catch (error: Error | any) {
+          // This error code indicates that the chain has not been added to MetaMask
+          // if it is not, then install it into the user MetaMask
+          if (error.code === 4902) {
+            try {
+              await _provider.request({
+                method: "wallet_addEthereumChain",
+                params: [Helper.getNetwork(_chainId)]
+              })
+            } catch (addError) {
+              console.error(addError)
+            }
           }
+          setTimeout(() => {
+            // eslint-disable-next-line no-use-before-define
+            // handleConnectWithMetamask()
+            window.location.reload()
+          }, 1000)
         }
       } else {
+        // if no window.ethereum then MetaMask is not installed
+        // NOTE: Not necessary to show a response when error
+        // errorToast(MESSAGES.install_wallet)
         return {
           responseStatus: false,
-          errorMsg:
-            "Can't setup the MATIC network on metamask because window.ethereum is undefined",
+          errorMsg: MESSAGES.install_wallet,
           type: "failed"
         }
       }
-      // errorToast
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -222,58 +226,9 @@ const useCreateWeb3Provider = () => {
     }
   }, [])
 
-  const chainIdIsSupported = () =>
+  const chainIdIsSupported = (_chainIdHex: string) =>
     window.ethereum?.chainId === CONFIGS.CHAIN.CHAIN_ID_HEX ||
     window.ethereum?.chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB
-
-  /**
-   * @description Update wallet address if it's empty
-   */
-  const onUpdateWallet = useCallback(
-    async (_profile: IProfile, _address: string) => {
-      const data = {
-        _email: _profile.email,
-        _address
-      }
-      setOpen()
-      await updateWalletAddress(data)
-        .then(async (_resUpdate) => {
-          if (_resUpdate) {
-            await getProfileByEmail(_profile.email).then((_res) => {
-              onSetProfileData(_res)
-              onSetProfileAddress(_res.address)
-              toast.dismiss()
-              setClose()
-              // setTimeout(() => {
-              //   successToast(MESSAGES.success)
-              // }, 500)
-              setTimeout(() => {
-                // eslint-disable-next-line no-use-before-define
-                // handleConnectWithMetamask()
-                window.location.reload()
-              }, 1000)
-            })
-          }
-        })
-        .catch(() => {
-          setClose()
-          toast.dismiss()
-          // NOTE: Not necessary to show a response when error
-          // setTimeout(() => {
-          //   errorToast(err.message)
-          // }, 1000)
-        })
-      // errorToast(
-      //   `Your are connecting ${_address}\n${MESSAGES.please_update_wallet_address}\n${MESSAGES.are_you_sure}`,
-      //   10000,
-      //   true,
-      //   async () => {
-      //   }
-      // )
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [profile, onSetProfileData, onSetProfileAddress, successToast, errorToast]
-  )
 
   /**
    * @description Connect with metamask
@@ -285,10 +240,12 @@ const useCreateWeb3Provider = () => {
 
     if (window.ethereum === undefined) return
 
-    if (!chainIdIsSupported()) {
-      resetChainId(CONFIGS.CHAIN.CHAIN_ID_HEX)
+    // This code effect when user switch network on metamask
+    if (window.ethereum.chainId === undefined) return
+    if (!chainIdIsSupported(window.ethereum.chainId)) {
+      // If not supported, reset chain id to default Polygon
+      switchNetwork(CONFIGS.CHAIN.CHAIN_ID_HEX)
     }
-
     setCurrentChainConnected(window.ethereum?.chainId as string)
 
     Helper.setLocalStorage({
@@ -343,15 +300,20 @@ const useCreateWeb3Provider = () => {
         setAccounts(undefined)
         onSetAddress(undefined)
         // NOTE: Not necessary to show a response when error
-        /* if (err.code === 4001) {
+        if (err.code === 4001) {
           // EIP-1193 userRejectedRequest error
           // If this happens, the user rejected the connection request.
-          errorToast(`Error code: ${err.code}\n${MESSAGES.user_reject_request}`)
+          // errorToast(`Error code: ${err.code}\n${MESSAGES.user_reject_request}`)
+          console.error(
+            `Error code: ${err.code}\n${MESSAGES.user_reject_request}`
+          )
         } else {
-          errorToast(
+          console.error(
             `Error code: ${err.code}\n${err.message}\n${MESSAGES.please_connect_metamask}`
           )
-        } */
+          // errorToast(
+          //   `Error code: ${err.code}\n${err.message}\n${MESSAGES.please_connect_metamask}`)
+        }
       })
 
     // Subscribe to session disconnection
@@ -370,86 +332,12 @@ const useCreateWeb3Provider = () => {
     chainIdIsSupported
   ])
 
-  /**
-   * @description Check if current chain matches with the one we need
-   * @returns
-   */
-  // const checkNetwork = useCallback(async () => {
-  //   const _provider = window.ethereum
-  //   if (_provider === undefined || _provider.request === undefined) {
-  //     return
-  //   }
-  //   if (_provider && _provider.request) {
-  //     try {
-  //       const currentChainId = await _provider.request({
-  //         method: "eth_chainId"
-  //       })
-  //       setChainId(currentChainId)
-  //       return {
-  //         responseStatus: true,
-  //         errorMsg: `You are connected to ${currentChainId}`,
-  //         type: "success"
-  //       }
-  //     } catch (error) {
-  //       return {
-  //         responseStatus: false,
-  //         errorMsg: (error as Error).message,
-  //         type: "failed"
-  //       }
-  //     }
-  //   }
-  // }, [])
-
   const handleSignMessage = useCallback(
     async (
       _provider: Web3Provider,
       _address: string,
       _message: string
     ): Promise<string> => _provider.getSigner(_address).signMessage(_message),
-    []
-  )
-
-  const switchNetwork = useCallback(
-    async (_chainId: string) => {
-      handleDisconnectWallet()
-      // handleConnectWithMetamask()
-      const _provider = window.ethereum
-      if (_provider === undefined || _provider.request === undefined) {
-        return
-      }
-      if (_provider && _provider.request) {
-        try {
-          // check if the chain to connect to is installed
-          await _provider.request({
-            method: "wallet_switchEthereumChain",
-            // chainId must be in hexadecimal numbers
-            params: [{ chainId: _chainId }]
-          })
-          await fetchChainData()
-          const _resetProvider = new providers.Web3Provider(_provider)
-          const _signer = _resetProvider.getSigner()
-          if (_signer) {
-            handleConnectWithMetamask()
-          }
-        } catch (error: Error | any) {
-          // This error code indicates that the chain has not been added to MetaMask
-          // if it is not, then install it into the user MetaMask
-          if (error.code === 4902 || error.code === -32602) {
-            resetChainId(_chainId)
-          }
-        }
-      } else {
-        // if no window.ethereum then MetaMask is not installed
-        // NOTE: Not necessary to show a response when error
-        // errorToast(MESSAGES.install_wallet)
-        return {
-          responseStatus: false,
-          errorMsg: MESSAGES.install_wallet,
-          type: "failed"
-        }
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
@@ -491,8 +379,6 @@ const useCreateWeb3Provider = () => {
         const walletAccounts = await provider?.listAccounts()
         if (walletAccounts) {
           setAddress(walletAccounts[0])
-        } else {
-          setAccounts(undefined)
         }
       }
       getWalletAccount()
@@ -531,12 +417,19 @@ const useCreateWeb3Provider = () => {
 
   // Subscribe to accounts change
   useEffect(() => {
-    const _provider = window.ethereum as any
-    if (_provider !== undefined) {
-      _provider.on("accountsChanged", handleAccountsChanged)
-      return () => {
-        _provider.removeListener("accountsChanged", handleAccountsChanged)
+    let load = false
+
+    if (!load) {
+      const _provider = window.ethereum as any
+      if (_provider !== undefined) {
+        _provider.on("accountsChanged", handleAccountsChanged)
+        return () => {
+          _provider.removeListener("accountsChanged", handleAccountsChanged)
+        }
       }
+    }
+    return () => {
+      load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

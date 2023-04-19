@@ -19,6 +19,7 @@ import { CHAIN_SUPPORT, IChainList } from "@configs/chain"
 import { IMessage } from "@feature/multichain/interfaces/IMultichain"
 import useSupportedChain from "@hooks/useSupportedChain"
 import useChainSupportStore from "@stores/chainSupport"
+import useGlobal from "@hooks/useGlobal"
 
 export type Method = "deposit" | "withdraw"
 
@@ -40,12 +41,16 @@ const useWalletContoller = () => {
   const { setOpen, setClose } = useLoadingStore()
   const { profile } = useProfileStore()
   const { successToast, errorToast } = useToast()
-  const { getTokenAddress, fetchAllTokenSupported, fetchNAKAToken } =
-    useSupportedChain()
-  const { address, handleConnectWithMetamask, signer, statusWalletConnected } =
-    useWeb3Provider()
-  const { chainSupport, currentTokenSelected, currentChainSelected } =
-    useChainSupportStore()
+  const { getTokenAddress } = useSupportedChain()
+  const {
+    address,
+    handleConnectWithMetamask,
+    signer,
+    statusWalletConnected,
+    setDisabledConnectButton
+  } = useWeb3Provider()
+  const { currentTokenSelected, currentChainSelected } = useChainSupportStore()
+  const { fetchChainData } = useGlobal()
 
   const {
     refetchBalanceVaultBSC,
@@ -89,21 +94,18 @@ const useWalletContoller = () => {
     if (_method === "deposit") setOpenDeposit(false)
     else if (_method === "withdraw") setOpenWithDraw(false)
     setValue(0)
-    onResetBalance()
   }
 
   /**
    * @description When connect wallet
    */
-  const handleConnectWallet = () => {
+  const handleConnectWallet = async () => {
     if (profile.data && handleConnectWithMetamask) {
       handleConnectWithMetamask()
-      if (chainSupport && chainSupport.length === 0) {
-        if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
-          fetchAllTokenSupported()
-        } else if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX) {
-          fetchNAKAToken()
-        }
+      if (setDisabledConnectButton && handleConnectWithMetamask) {
+        setDisabledConnectButton(true)
+        handleConnectWithMetamask()
+        await fetchChainData()
       }
     } else {
       errorToast("Please login first")
@@ -181,14 +183,10 @@ const useWalletContoller = () => {
       /* Wait for transaction data */
       const resData = await res.wait()
       if (resData) {
+        await fetchChainData()
         setClose()
         successToast("Transaction success")
         handleClose(_method)
-        if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
-          fetchAllTokenSupported()
-        } else {
-          fetchNAKAToken()
-        }
       }
     } catch (error) {
       errorToast((error as IMessage).message)
@@ -276,12 +274,13 @@ const useWalletContoller = () => {
    * @param _balance
    */
   const onClickMaxValue = (_balance: number | string, _method?: Method) => {
-    if (_method === "deposit") {
-      setValue(_balance)
-    } else {
-      setValue(Number(_balance) - 0.00001)
-    }
-
+    // Maybe no need to minus fee
+    setValue(_balance)
+    // if (_method === "deposit") {
+    //   setValue(_balance)
+    // } else {
+    //   setValue(Number(_balance) - 0.00001)
+    // }
     setDisabled(false)
   }
 

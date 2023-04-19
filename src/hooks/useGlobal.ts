@@ -2,7 +2,7 @@ import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import {
   IFilterGamesByKey,
   IGame,
@@ -10,7 +10,6 @@ import {
 } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
-import { useWeb3Provider } from "@providers/Web3Provider"
 import CONFIGS from "@configs/index"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import useChainSupportStore from "@stores/chainSupport"
@@ -57,7 +56,6 @@ const useGlobal = (
   const profile = useProfileStore((state) => state.profile.data)
   const { isLogin, onReset } = useProfileStore()
   const { fetchNAKAToken, fetchAllTokenSupported } = useSupportedChain()
-  const { chainId, signer, address, isConnected } = useWeb3Provider()
 
   // States
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
@@ -381,49 +379,15 @@ const useGlobal = (
   /**
    * @description Fetch all token supported
    */
-  useEffect(() => {
-    let load = false
-    if (!isLogin) return
-    if (!isConnected) return
-    if (!load) {
-      if (signer && address) {
-        if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
-          fetchAllTokenSupported()
-        } else if (chainId === CONFIGS.CHAIN.CHAIN_ID_HEX) {
-          fetchNAKAToken()
-        }
-      }
-    }
-
-    return () => {
-      load = true
-    }
-  }, [
-    address,
-    isLogin,
-    isConnected,
-    chainId,
-    signer,
-    fetchAllTokenSupported,
-    fetchNAKAToken
-  ])
-
-  const fetchChainData = async () => {
+  const fetchChainData = useCallback(async () => {
     if (!isLogin) return
     if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
       await fetchAllTokenSupported()
     } else if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX) {
       await fetchNAKAToken()
     }
-  }
-
-  /**
-   * @description Fetch all token supported
-   */
-  useEffect(() => {
-    fetchChainData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLogin, currentChainSelected])
+  }, [currentChainSelected, fetchAllTokenSupported, fetchNAKAToken])
 
   return {
     onHandleClick,
@@ -452,7 +416,6 @@ const useGlobal = (
     getColorChipByGameType,
     getGameStoryModeURL,
     getGameTypeByPathname
-    // getGameFreeToPlayURL
   }
 }
 

@@ -45,8 +45,10 @@ const FullMap = () => {
   useEffect(() => {
     let load = false
 
-    if (!load && loadingStatus) {
-      setOpen()
+    if (!load) {
+      if (loadingStatus) {
+        setOpen()
+      }
     }
     setClose()
 
@@ -87,12 +89,12 @@ const FullMap = () => {
   }, [currentLand])
 
   return (
-    <div className="map-content relative flex h-screen w-screen flex-col bg-secondary-light">
+    <div className="map-content relative flex h-full w-screen flex-col overflow-y-hidden bg-secondary-light">
       <Canvas
         gl={{ antialias: true, toneMapping: THREE.NoToneMapping }}
         linear
         camera={{
-          position: [0, 0, cameraSetting.maxDis * 3]
+          position: [0, 0, cameraSetting.maxDis * 3.5]
         }}
       >
         <Suspense fallback={null}>

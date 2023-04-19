@@ -40,6 +40,7 @@ export const ModalCustom = ({ title, onClose, ...props }: IProps) => {
         >
           {title && (
             <Box
+              component="div"
               className="flex items-center rounded-lg border-[1px] border-neutral-700 bg-neutral-800 pl-5"
               sx={{ height: "54px" }}
             >

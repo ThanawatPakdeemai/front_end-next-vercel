@@ -72,6 +72,7 @@ const ChainList = () => {
         <>
           {CHAIN_SUPPORT.map((ele) => (
             <Box
+              component="div"
               key={ele.title}
               onClick={handleClose}
             >

@@ -44,7 +44,10 @@ const RightMenuWallet = ({
     useWalletContoller()
   return (
     <>
-      <Box className="xs:flex-col items-center justify-between gap-1 lg:flex">
+      <Box
+        component="div"
+        className="xs:flex-col items-center justify-between gap-1 lg:flex"
+      >
         <ButtonWallet
           title={title}
           handleButton={() => handleOpen(tokenSelected)}

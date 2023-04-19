@@ -41,6 +41,7 @@ const InventoryPage = () => {
           </motion.div>
         )}
         <Box
+          component="div"
           // sx={{ backgroundColor }}
           className="grid h-[40px] w-[40px] cursor-pointer items-center justify-items-center rounded-r-lg bg-error-main"
           onClick={() => {

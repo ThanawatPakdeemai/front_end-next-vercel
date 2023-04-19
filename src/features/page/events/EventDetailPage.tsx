@@ -103,6 +103,7 @@ const EventDetailPage = () => {
           }
           component2={
             <Box
+              component="div"
               sx={{
                 "&.container": {
                   maxWidth: "100%!important"

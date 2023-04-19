@@ -14,7 +14,7 @@ const BannerCardSlide = ({ slide, ...props }: IBannerCardSlide) => {
   const { getTypeGamePathFolder, onHandleSetGameStore, isRedirectRoomlist } =
     useGlobal()
   return (
-    <Box>
+    <Box component="div">
       <Grid
         container
         component="main"

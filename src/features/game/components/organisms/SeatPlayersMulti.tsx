@@ -391,11 +391,15 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   return (
     <>
       {/* <Link href={gameUrl}>GO</Link> */}
-      <Box>
+      <Box component="div">
         <PlayerCard players={players} />
-        <Box className="mb-10  flex justify-center">
+        <Box
+          component="div"
+          className="mb-10  flex justify-center"
+        >
           {players.length > 0 && (
             <Box
+              component="div"
               className={` ${
                 ownerPressPlay &&
                 playerAllBurnItem &&

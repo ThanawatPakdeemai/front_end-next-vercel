@@ -61,7 +61,10 @@ const FormBuyItem = () => {
           className="w-full"
           onSubmit={handleSubmit(onSubmit, onError)}
         >
-          <Box className="w-full">
+          <Box
+            component="div"
+            className="w-full"
+          >
             <div className=" grid grid-cols-1 justify-center gap-4 md:grid-cols-2">
               <div className="flex justify-center rounded-2xl border-[1px] border-neutral-700">
                 <Image
@@ -80,7 +83,10 @@ const FormBuyItem = () => {
               </div>
             </div>
           </Box>
-          <Box className="my-4 w-full">
+          <Box
+            component="div"
+            className="my-4 w-full"
+          >
             <p className="py-2 uppercase text-black-default">
               {t("tier_assets")}
             </p>
@@ -111,7 +117,10 @@ const FormBuyItem = () => {
               <p className="text-sm text-error-main">{t("required")}</p>
             )}
           </Box>
-          <Box className="my-4 w-full">
+          <Box
+            component="div"
+            className="my-4 w-full"
+          >
             <p className="py-2 uppercase text-black-default">{t("currency")}</p>
             <Controller
               name="currency"
@@ -195,7 +204,10 @@ const FormBuyItem = () => {
               />
             </div>
           </div>
-          <Box className="my-4 w-full">
+          <Box
+            component="div"
+            className="my-4 w-full"
+          >
             <p className="py-2 uppercase text-black-default">
               {t("your_balance")}
             </p>

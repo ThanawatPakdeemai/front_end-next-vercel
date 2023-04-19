@@ -37,7 +37,10 @@ const HeadPrice = ({
   const handleClose = () => setOpen(false)
 
   return (
-    <Box className="relative mb-2 flex w-[100%] flex-row flex-wrap rounded-b-lg bg-neutral-800 sm:mb-0 lg:h-[30px] lg:flex-nowrap">
+    <Box
+      component="div"
+      className="relative mb-2 flex w-[100%] flex-row flex-wrap rounded-b-lg bg-neutral-800 sm:mb-0 lg:h-[30px] lg:flex-nowrap"
+    >
       <Typography className="text-black-01 flex h-full w-full max-w-[150px] flex-1 items-center justify-center whitespace-nowrap bg-secondary-main md:absolute md:rounded-bl-lg  lg:static lg:w-[15%] lg:flex-none">
         <span className="font-neue-machina text-sm uppercase text-primary-main">
           TOKENS INFO =
@@ -73,7 +76,10 @@ const HeadPrice = ({
         </div>
       </Box>
       {price ? (
-        <Box className="flex w-full flex-wrap items-center justify-center md:px-[170px] lg:ml-auto lg:w-auto lg:flex-nowrap lg:px-0">
+        <Box
+          component="div"
+          className="flex w-full flex-wrap items-center justify-center md:px-[170px] lg:ml-auto lg:w-auto lg:flex-nowrap lg:px-0"
+        >
           {showTime && (
             <Typography
               variant="body1"
@@ -166,6 +172,7 @@ const HeadPrice = ({
       >
         <>
           <Box
+            component="div"
             className="flex items-center rounded-lg bg-neutral-800 pl-5"
             sx={{ height: "54px" }}
           >

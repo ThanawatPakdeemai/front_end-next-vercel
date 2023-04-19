@@ -286,6 +286,7 @@ const Howto = ({ data }: IProp) => {
             />
           </div>
           <Box
+            component="div"
             className={`hide-scroll flex  w-full flex-col overflow-y-scroll ${
               showCopy ? "h-[220px]" : "h-[115px]"
             }`}

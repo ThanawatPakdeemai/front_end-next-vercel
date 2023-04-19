@@ -697,3 +697,7 @@ body {
     margin: 0;
   }
 }
+
+.page-full-map {
+  height: calc(var(--vh, 1vh) * 100);
+}

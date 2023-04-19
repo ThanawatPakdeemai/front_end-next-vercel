@@ -32,6 +32,7 @@ const CardMarketplace = ({
         className="relative flex w-full border border-solid border-neutral-700 bg-primary-main md:w-auto"
       >
         <Box
+          component="div"
           sx={{
             "button": {
               maxHeight: "40px"

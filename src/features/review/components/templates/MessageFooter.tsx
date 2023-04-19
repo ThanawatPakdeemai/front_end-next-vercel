@@ -14,7 +14,10 @@ const MessageFooter = ({ onSubmit }: IMessageFooter) => {
   const { message, setMessage } = useReviewContext()
 
   return (
-    <Box className="message-input relative flex w-full items-center">
+    <Box
+      component="div"
+      className="message-input relative flex w-full items-center"
+    >
       <TextField
         className="w-full"
         required

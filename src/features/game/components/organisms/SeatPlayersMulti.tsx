@@ -504,7 +504,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
                         : errorToast(MESSAGES["please-wait-player-all-ready"])
                     }}
                     text={
-                      <Typography className="flex w-full items-center font-neue-machina text-2xl uppercase text-primary-main">
+                      <Typography className="flex w-full items-center justify-center font-neue-machina text-2xl uppercase text-primary-main">
                         START
                         {loading && (
                           <CircularProgress

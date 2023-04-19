@@ -22,15 +22,18 @@ const getWeb3WithArchivedNodeProvider = () => {
 }
 
 export const ethHttpRpcProvider = new ethers.providers.JsonRpcProvider(
-  CONFIGS.CHAIN.POLYGON_RPC_URL
+  (CONFIGS.CHAIN && CONFIGS.CHAIN.POLYGON_RPC_URL) ||
+    process.env.NEXT_PUBLIC_POLYGON_RPC_URL
 )
 
 const simpleRpcProvider = new providers.JsonRpcProvider(
-  CONFIGS.CHAIN.POLYGON_RPC_URL
+  (CONFIGS.CHAIN && CONFIGS.CHAIN.POLYGON_RPC_URL) ||
+    process.env.NEXT_PUBLIC_POLYGON_RPC_URL
 )
 
 export const bnbRpcProvider = new providers.JsonRpcProvider(
-  CONFIGS.CHAIN.BNB_RPC_URL
+  (CONFIGS.CHAIN && CONFIGS.CHAIN.BNB_RPC_URL) ||
+    process.env.NEXT_PUBLIC_BNB_RPC_URL
 )
 export { getWeb3NoAccount, getWeb3WithArchivedNodeProvider, web3NoAccount }
 export default simpleRpcProvider

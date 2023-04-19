@@ -60,7 +60,12 @@ const HeroSection = ({
       className={`absolute left-0 top-0 z-[2] flex h-full w-full items-center justify-center px-6 ${className}`}
     >
       <div className="container mx-auto">
-        <Box className="relative">{children}</Box>
+        <Box
+          component="div"
+          className="relative"
+        >
+          {children}
+        </Box>
       </div>
     </div>
   </Box>

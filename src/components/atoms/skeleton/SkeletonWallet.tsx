@@ -73,6 +73,7 @@ const SkeletionWallet = () => (
     </div>
 
     <Box
+      component="div"
       className="absolute bottom-[10px] right-[12px] col-span-2 hidden h-[calc(100%-20px)] w-[137px] xl:flex"
       sx={{
         backgroundImage: `url(${IMAGES.Frame.src})`

@@ -165,7 +165,10 @@ const GameRoomList = () => {
   }, [allGameRooms, data])
 
   return (
-    <Box className="w-full gap-3 lg:flex">
+    <Box
+      component="div"
+      className="w-full gap-3 lg:flex"
+    >
       <div className="relative w-full rounded-3xl border border-neutral-700">
         {gameData && <HeaderRoomList lobby={gameData.name} />}
         <Divider />

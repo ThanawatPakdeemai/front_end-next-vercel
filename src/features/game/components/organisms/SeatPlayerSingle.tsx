@@ -270,10 +270,16 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
 
   return (
     <>
-      <Box>
+      <Box component="div">
         <PlayerCard players={players} />
-        <Box className="mb-10  flex justify-center">
-          <Box className="w-fit items-center justify-center gap-3 rounded-md border border-neutral-800 bg-primary-main p-3 md:flex md:rounded-[50px]">
+        <Box
+          component="div"
+          className="mb-10  flex justify-center"
+        >
+          <Box
+            component="div"
+            className="w-fit items-center justify-center gap-3 rounded-md border border-neutral-800 bg-primary-main p-3 md:flex md:rounded-[50px]"
+          >
             <Typography className=" mx-4 w-full font-neue-machina text-sm ">
               {t("its_time")}
             </Typography>

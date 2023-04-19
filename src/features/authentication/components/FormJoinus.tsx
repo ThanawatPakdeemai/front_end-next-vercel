@@ -132,6 +132,7 @@ const FormJoinus = () => {
     <form onSubmit={handleSubmit(onSubmitGenaralReview)}>
       <Box style={{ width: 423, height: 638 }}>
         <Box
+          component="div"
           className="flex rounded-lg"
           sx={{ height: "54px" }}
         >

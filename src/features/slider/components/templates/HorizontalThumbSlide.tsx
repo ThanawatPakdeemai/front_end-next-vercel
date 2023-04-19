@@ -117,7 +117,10 @@ const HorizontalThumbSlide = ({ items }: IHorizontalThumbSlideProps) => {
     rows: 1,
     variableWidth: true,
     prevArrow: (
-      <Box sx={StyleArrow}>
+      <Box
+        component="div"
+        sx={StyleArrow}
+      >
         <ButtonIcon
           variants={iconmotion}
           whileHover="hover"
@@ -132,7 +135,10 @@ const HorizontalThumbSlide = ({ items }: IHorizontalThumbSlideProps) => {
       </Box>
     ),
     nextArrow: (
-      <Box sx={StyleArrow}>
+      <Box
+        component="div"
+        sx={StyleArrow}
+      >
         <ButtonIcon
           variants={iconmotion}
           whileHover="hover"
@@ -151,6 +157,7 @@ const HorizontalThumbSlide = ({ items }: IHorizontalThumbSlideProps) => {
   return (
     <div className="horizontal-thumb-slide my-4 flex w-full flex-col items-center justify-between gap-4">
       <Box
+        component="div"
         sx={SlickMainSlideCSS}
         className="flex h-[60vw] w-full flex-col justify-center overflow-hidden rounded-2xl md:h-[479px] lg:max-w-[852px]"
       >
@@ -171,6 +178,7 @@ const HorizontalThumbSlide = ({ items }: IHorizontalThumbSlideProps) => {
         </Slider>
       </Box>
       <Box
+        component="div"
         sx={SlickThumbnailSlideCSS}
         className="relative mt-4 flex w-full max-w-[613px] justify-center"
       >

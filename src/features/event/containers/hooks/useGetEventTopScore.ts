@@ -16,8 +16,7 @@ const useGetEventTopScore = (event_id: string, isTopScore: boolean) => {
   })
   return {
     // TODO: Refactor this after backend fix data.data
-    topScoreData:
-      topScoreData && topScoreData.data && topScoreData.data.data[0],
+    topScoreData,
     error,
     topScoreIsLoading,
     isError

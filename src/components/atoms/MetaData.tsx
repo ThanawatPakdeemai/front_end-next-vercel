@@ -6,13 +6,9 @@ import _ from "lodash"
 // import { IBlogDetail } from "@feature/blog/interfaces/IBlogService"
 // import useMetaDataByPath from "@feature/metaData/containers/hooks/useMetaDataByPath"
 import CONFIGS from "@configs/index"
-import { metaData } from "@pages/_app"
 import { getSeoByPath } from "@feature/metaData/containers/services/seoMetaData.service"
+import { metaData } from "@src/meta/meta"
 import MetaDataTag from "./MetaDataTag"
-// import { NextSeo } from "next-seo"
-// import MetaDataTag from "./MetaDataTag"
-
-// eslint-disable-next-line no-unused-vars
 
 // eslint-disable-next-line no-unused-vars
 interface IProps {

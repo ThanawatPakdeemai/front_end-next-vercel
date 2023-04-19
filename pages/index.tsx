@@ -2,6 +2,8 @@ import { Layout } from "@components/templates"
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
+import { metaData } from "@src/meta/meta"
+import MetaDataTag from "@components/atoms/MetaDataTag"
 
 const HomePage = dynamic(() => import("@feature/page/homePage"))
 // const Meta = dynamic(() => import("@components/atoms/MetaData"), {
@@ -19,7 +21,13 @@ export default function Home() {
 Home.getLayout = function getLayout(page: ReactElement) {
   return (
     <Layout>
-      {/* <Meta path="/" /> */}
+      <MetaDataTag
+        meta_description={metaData.meta_description}
+        meta_keyword={metaData.meta_keyword}
+        meta_title={metaData.meta_title}
+        meta_url={metaData.url}
+        og_image={metaData.image}
+      />
       {page}
     </Layout>
   )

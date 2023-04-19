@@ -5,7 +5,6 @@ import React, { useEffect, useMemo, useRef, useState } from "react"
 import * as THREE from "three"
 import { ColorRepresentation } from "three"
 import { ILandMap } from "@feature/land/interfaces/ILandService"
-import { useToast } from "@feature/toast/containers"
 
 interface IMeshMaterialBox {
   color: THREE.ColorRepresentation
@@ -49,7 +48,6 @@ const BoxElement = ({
   const targetBox = useRef<THREE.Mesh>(null!)
   const [hovered, sethovered] = useState<boolean>(false)
   const [thisCurrent, setThisCurrent] = useState<boolean>(false)
-  const { successToast } = useToast()
 
   function renderColor() {
     if (color !== colorThree.disable) {
@@ -88,9 +86,6 @@ const BoxElement = ({
       setCurrentLand
     ) {
       setCurrentLand(land)
-      successToast(
-        `You selected ${land.name} : ${land.position.x}, ${land.position.y}`
-      )
     }
   }
 

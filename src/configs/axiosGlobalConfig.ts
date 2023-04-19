@@ -8,7 +8,8 @@ import { refreshProfileToken } from "@feature/authentication/containers/services
 import { ELocalKey } from "@interfaces/ILocal"
 import CONFIGS from "."
 
-const baseUrl = CONFIGS.BASE_URL.API
+const baseUrl =
+  (CONFIGS.BASE_URL && CONFIGS.BASE_URL.API) || process.env.NEXT_PUBLIC_API_URL
 const isServer = () => typeof window === "undefined"
 
 const services = Axios.create({

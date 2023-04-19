@@ -38,14 +38,18 @@ const WalletBody = ({
       </p>
       <div className="mb-4 flex w-[250px] items-center uppercase">
         {tokenSymbol}
-        <p className={`font-digital ml-2 text-2xl uppercase ${className}`}>
-          {`${balance && balance.digit} ${tokenSymbol}`}
+        <p
+          className={`font-digital ml-2 whitespace-nowrap text-2xl uppercase ${className}`}
+        >
+          {`${balance && balance.text}`}
+          {/* ${tokenSymbol} */}
         </p>
       </div>
       <div className="h-[10px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')]" />
       <div className="flex items-center">
-        <span className="text-xl uppercase text-neutral-600">
-          {tokenSymbol}
+        <span className="font-neue-machina-semi text-sm uppercase text-neutral-600">
+          {`Contract `}
+          {/* {`${tokenSymbol}`} */}
         </span>
         <WalletAddress contractAddress={contractAddress || ""} />
       </div>

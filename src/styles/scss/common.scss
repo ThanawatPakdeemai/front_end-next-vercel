@@ -686,18 +686,97 @@ body {
 }
 
 .hidden-input-number {
+  appearance: textfield;
   -moz-appearance: textfield;
+  -webkit-appearance: textfield;
+  /* Set the appearance to "textfield" to remove the default spinner */
+
+  /* Hide the inner spin button for webkit-based browsers */
   &::-webkit-inner-spin-button {
     display: none;
-    -webkit-appearance: none;
-    margin: 0;
   }
+
+  /* Hide the outer spin button for webkit-based browsers */
   &::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+    display: none;
   }
 }
 
 .page-full-map {
   height: calc(var(--vh, 1vh) * 100);
+}
+
+.card-land-panel-wrapper {
+  position: relative;
+  display: flex;
+  height: auto;
+  width: 240px;
+  flex-direction: column;
+  overflow: auto;
+  border-top-left-radius: 0.75rem;
+  border-bottom-left-radius: 0.75rem;
+  background-color: #18181c;
+  padding-top: 1rem;
+  padding-right: 1.5rem;
+  padding-bottom: 1rem;
+  padding-left: 1.5rem;
+  @media (min-width: 768px) {
+    width: 280px;
+  }
+  #_card-land-map-btn-close {
+    padding: 0;
+    .MuiSvgIcon-root {
+      font-size: 2rem;
+    }
+  }
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.3);
+  }
+  @media screen and (max-height: 575px) {
+    height: 100% !important;
+    width: 240px;
+    white-space: nowrap;
+  }
+}
+
+.card-land-map-panel {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  color: #a6a9ae;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-transform: uppercase;
+    color: #a6a9ae;
+  }
+  p {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .MuiTypography-body1,
+  .MuiTypography-body2 {
+    color: #a6a9ae;
+  }
+  @media screen and (max-height: 767px) {
+    height: 100%;
+    top: 0 !important;
+  }
 }

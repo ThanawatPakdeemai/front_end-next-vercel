@@ -6,10 +6,6 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
 import React, { ReactElement } from "react"
-import { getSeoByPath } from "@feature/metaData/containers/services/seoMetaData.service"
-import MetaDataTag from "@components/atoms/MetaDataTag"
-import { ISeoResponse } from "@feature/metaData/interfaces/ISeoData"
-import { metaData } from "@src/meta/meta"
 
 const GameSummaryRewardPage = dynamic(
   () => import("@feature/page/games/gameSummaryRewardPage"),
@@ -63,7 +59,7 @@ const GameTabs = dynamic(
   }
 )
 
-export default function SummaryDetails(props) {
+export default function SummaryDetails() {
   const { getTypeGamePathFolder } = useGlobal()
   const router = useRouter()
   const { GameHome } = router.query
@@ -71,13 +67,6 @@ export default function SummaryDetails(props) {
 
   return (
     <>
-      <MetaDataTag
-        meta_description={props?.meta?.meta_description}
-        meta_keyword={props?.meta?.meta_keyword}
-        meta_title={props?.meta?.meta_title}
-        meta_url={props?.meta?.url}
-        og_image={props?.meta?.og_image}
-      />
       {gameData ? (
         <GamePageDefault
           component={
@@ -137,21 +126,9 @@ SummaryDetails.getLayout = function getLayout(page: ReactElement) {
   return page
 }
 
-export async function getServerSideProps({
-  locale,
-  params
-}: {
-  locale: string
-  params: any
-}) {
-  const _seo = await getSeoByPath(`/${params?.GameHome}` as string)
-
+export async function getServerSideProps({ locale }: { locale: string }) {
   return {
     props: {
-      meta:
-        _seo && (_seo as ISeoResponse)?.data?.length > 0
-          ? (_seo as ISeoResponse)?.data?.[0]
-          : metaData,
       ...(await serverSideTranslations(locale, ["common"]))
     }
   }

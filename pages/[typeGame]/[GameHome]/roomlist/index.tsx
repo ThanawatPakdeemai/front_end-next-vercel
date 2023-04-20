@@ -9,10 +9,6 @@ import { Box } from "@mui/material"
 import useGlobal from "@hooks/useGlobal"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
-import MetaDataTag from "@components/atoms/MetaDataTag"
-import { ISeoResponse } from "@feature/metaData/interfaces/ISeoData"
-import { getSeoByPath } from "@feature/metaData/containers/services/seoMetaData.service"
-import { metaData } from "@src/meta/meta"
 
 const BuyItemBody = dynamic(
   () => import("@components/templates/game/BuyItemBody"),
@@ -74,7 +70,7 @@ const GameTabs = dynamic(
   }
 )
 
-export default function GameRoomList(props) {
+export default function GameRoomList() {
   const router = useRouter()
   const { GameHome, id } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
@@ -134,13 +130,6 @@ export default function GameRoomList(props) {
 
   return (
     <>
-      <MetaDataTag
-        meta_description={props?.meta?.meta_description}
-        meta_keyword={props?.meta?.meta_keyword}
-        meta_title={props?.meta?.meta_title}
-        meta_url={props?.meta?.url}
-        og_image={props?.meta?.og_image}
-      />
       {gameData ? (
         <GamePageDefault
           component={
@@ -202,15 +191,9 @@ GameRoomList.getLayout = function getLayout(page: ReactElement) {
   return page
 }
 
-export async function getServerSideProps({ locale, params }) {
-  const _seo = await getSeoByPath(`/${params?.GameHome}` as string)
-
+export async function getServerSideProps({ locale }) {
   return {
     props: {
-      meta:
-        _seo && (_seo as ISeoResponse)?.data?.length > 0
-          ? (_seo as ISeoResponse)?.data?.[0]
-          : metaData,
       ...(await serverSideTranslations(locale, ["common"]))
     }
   }

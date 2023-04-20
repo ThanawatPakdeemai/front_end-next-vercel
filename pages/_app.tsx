@@ -17,12 +17,19 @@ import dynamic from "next/dynamic"
 import dayjs from "dayjs"
 import rt from "dayjs/plugin/relativeTime"
 import createEmotionCache from "@utils/createEmotionCache"
+import { getSeoByPath } from "@feature/metaData/containers/services/seoMetaData.service"
+import { ISeoResponse } from "@feature/metaData/interfaces/ISeoData"
+import { metaData } from "@src/meta/meta"
 
 const Loading = dynamic(() => import("@components/molecules/Loading"), {
   suspense: true,
   ssr: false
 })
-
+// eslint-disable-next-line no-unused-vars
+const MetaDataTag = dynamic(() => import("@components/atoms/MetaDataTag"), {
+  suspense: true,
+  ssr: false
+})
 dayjs.extend(rt)
 
 const clientSideEmotionCache = createEmotionCache()
@@ -35,7 +42,9 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
+const MyApp = (props) => {
+  // { Component, pageProps }: AppPropsWithLayout
+  const { Component, pageProps }: AppPropsWithLayout = props
   const getLayout = Component.getLayout ?? ((page) => page)
   const emotionCache: EmotionCache = clientSideEmotionCache
   const queryClient = new QueryClient()
@@ -76,4 +85,17 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   )
 }
 
+export async function getStaticProps(ctx) {
+  const _seo = await getSeoByPath(`/`)
+  return {
+    props: {
+      ctx,
+      meta:
+        _seo && (_seo as ISeoResponse)?.data?.length > 0
+          ? (_seo as ISeoResponse)?.data?.[0]
+          : metaData
+      // Will be passed to the page component as props
+    }
+  }
+}
 export default appWithTranslation(MyApp)

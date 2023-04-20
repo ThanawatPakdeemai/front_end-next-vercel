@@ -12,11 +12,6 @@ import { Box } from "@mui/material"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
 import { useTranslation } from "react-i18next"
-import { getSeoByPath } from "@feature/metaData/containers/services/seoMetaData.service"
-import MetaDataTag from "@components/atoms/MetaDataTag"
-import { metaData } from "@src/meta/meta"
-import { ISeoResponse } from "@feature/metaData/interfaces/ISeoData"
-// import { ISeoResponse } from "@feature/metaData/interfaces/ISeoData"
 
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
@@ -79,7 +74,7 @@ const ButtonGame = dynamic(
   }
 )
 
-export default function GameLobby(props) {
+export default function GameLobby() {
   const router = useRouter()
   const { onSetGameData } = useGameStore()
   const { GameHome } = router.query
@@ -198,13 +193,6 @@ export default function GameLobby(props) {
 
   return (
     <>
-      <MetaDataTag
-        meta_description={props?.meta?.meta_description}
-        meta_keyword={props?.meta?.meta_keyword}
-        meta_title={props?.meta?.meta_title}
-        meta_url={props?.meta?.url}
-        og_image={props?.meta?.og_image}
-      />
       {gameData ? (
         <GamePageDefault
           component={
@@ -263,17 +251,12 @@ export default function GameLobby(props) {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const _gameData = await getGameByPath((ctx?.params?.GameHome as string) || "")
-  const _seo = await getSeoByPath(`/${ctx?.params?.GameHome}` as string)
 
   const _redirect = _gameData
     ? false
     : { destination: "/404", permanent: false }
   return {
     props: {
-      meta:
-        _seo && (_seo as ISeoResponse)?.data?.length > 0
-          ? (_seo as ISeoResponse)?.data?.[0]
-          : metaData, //
       ...(await serverSideTranslations(ctx.locale!, ["common"]))
     },
     redirect: _redirect

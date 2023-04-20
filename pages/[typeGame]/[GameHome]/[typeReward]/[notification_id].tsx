@@ -1,9 +1,7 @@
-import MetaDataTag from "@components/atoms/MetaDataTag"
 import useGameSummaryRewardController from "@feature/game/containers/hooks/useGameSummaryRewardController"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
 import useGlobal from "@hooks/useGlobal"
 import { Box } from "@mui/material"
-import { metaData } from "@src/meta/meta"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 import React, { ReactElement } from "react"
@@ -66,13 +64,6 @@ export default function Notification_id() {
 
   return (
     <>
-      <MetaDataTag
-        meta_description={metaData.meta_description}
-        meta_keyword={metaData.meta_keyword}
-        meta_title={metaData.meta_title}
-        meta_url={metaData.url}
-        og_image={metaData.og_image}
-      />
       {gameDataState ? (
         <GamePageDefault
           component={

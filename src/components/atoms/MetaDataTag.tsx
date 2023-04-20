@@ -17,6 +17,20 @@ const MetaDataTag = ({
 }: IProp) => (
   <>
     <Head>
+      <meta charSet="utf-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+      />
+      <link
+        rel="shortcut icon"
+        href="favicon.ico"
+        type="image/x-icon"
+      />
+      <link
+        rel="icon"
+        href="https://files.naka.im/seo/favicon.png"
+      />
       <title>{meta_title}</title>
       <meta
         name="title"

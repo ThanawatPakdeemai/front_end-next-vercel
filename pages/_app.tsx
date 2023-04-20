@@ -12,7 +12,6 @@ import { ProviderApp, Web3Provider } from "@providers/index"
 import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material"
 import { theme } from "@styles/themes/darkTheme"
 import { CacheProvider, EmotionCache } from "@emotion/react"
-import Head from "next/head"
 import dynamic from "next/dynamic"
 import dayjs from "dayjs"
 import rt from "dayjs/plugin/relativeTime"
@@ -48,23 +47,6 @@ const MyApp = (props) => {
 
   return (
     <>
-      <Head>
-        <meta charSet="utf-8" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1"
-        />
-        <link
-          rel="shortcut icon"
-          href="favicon.ico"
-          type="image/x-icon"
-        />
-        <link
-          rel="icon"
-          href="https://files.naka.im/seo/favicon.png"
-        />
-      </Head>
-
       <Loading />
       <QueryClientProvider client={queryClient}>
         <Web3Provider>

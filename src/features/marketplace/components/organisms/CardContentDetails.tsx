@@ -9,10 +9,20 @@ import { v4 as uuidv4 } from "uuid"
 import React, { useState } from "react"
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined"
 import useGlobal from "@hooks/useGlobal"
+import dynamic from "next/dynamic"
+
+const Gltf3dModel = dynamic(
+  () => import("@feature/building/components/atoms/Gltf3dModel"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 
 interface IProp {
   detail?: string
   image?: string
+  model?: string
   children: React.ReactNode
   video?: string
   alt?: string
@@ -26,6 +36,7 @@ const CardContentDetails = ({ ...props }: IProp) => {
     children,
     detail = "-",
     image,
+    model,
     alt,
     video,
     poster,
@@ -50,27 +61,27 @@ const CardContentDetails = ({ ...props }: IProp) => {
               controls
             />
           )}
-          {marketType !== "nft_land" && image && (
-            <Image
-              // src="/images/not_found.webp"
-              src={image as string}
-              alt={alt as string}
-              width={
-                marketType === "nft_building" || marketType === "game_item"
-                  ? 400
-                  : 563
-              }
-              height={
-                marketType === "nft_building" || marketType === "game_item"
-                  ? 400
-                  : 563
-              }
-              className={
-                marketType === "nft_building" || marketType === "game_item"
-                  ? "m-4 rounded-2xl"
-                  : "rounded-2xl"
-              }
-            />
+          {marketType !== "nft_land" &&
+            marketType !== "nft_building" &&
+            image && (
+              <Image
+                // src="/images/not_found.webp"
+                src={image as string}
+                alt={alt as string}
+                width={marketType === "game_item" ? 400 : 563}
+                height={marketType === "game_item" ? 400 : 563}
+                className={
+                  marketType === "game_item" ? "m-4 rounded-2xl" : "rounded-2xl"
+                }
+              />
+            )}
+          {marketType === "nft_building" && poster && model && (
+            <div className="h-[250px] w-full sm:!h-[500px] sm:!w-[500px]">
+              <Gltf3dModel
+                poster={poster}
+                model={model}
+              />
+            </div>
           )}
           {meta_data && meta_data.length > 4 ? (
             <div className="grid grid-cols-2 gap-[10px]">

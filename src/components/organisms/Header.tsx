@@ -23,13 +23,13 @@ const Header = () => {
       <header
         className={`header ${
           asPath.includes("map")
-            ? "w-full bg-primary-main lg:fixed"
-            : "lg:sticky"
+            ? "top-0 w-full bg-primary-main lg:fixed"
+            : "lg:sticky lg:top-10"
         } relative z-[999]`}
       >
         <Box
           component="div"
-          className="flex flex-wrap items-center justify-between md:my-10 lg:flex-nowrap"
+          className="flex flex-wrap items-center justify-center md:my-10 md:justify-between xl:flex-nowrap"
         >
           <HeadLogo />
           {showHeadMenu && <HeadMenu />}

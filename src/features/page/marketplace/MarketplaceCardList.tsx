@@ -44,10 +44,10 @@ const MarketplaceCardList = () => {
                 itemTotal={_data.building_data ? _data.item_total : undefined}
                 itemImage={
                   _data.building_data && {
-                    src: _data.building_data.image,
+                    src: _data.building_data.NFT_image,
                     alt: _data.building_data.name,
-                    width: 250,
-                    height: 250
+                    width: 500,
+                    height: 500
                   }
                 }
                 itemVideo={

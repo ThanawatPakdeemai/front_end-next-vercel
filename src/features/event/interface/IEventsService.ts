@@ -27,6 +27,12 @@ export interface IGamesToPlay {
 
 export type EventType = "share_and_play" | "top_score_championship"
 
+export interface IFixedReward {
+  reward: string
+  rank: string
+  statusRead: boolean
+}
+
 export interface IGetEventResponseData {
   _id: string
   status: string
@@ -46,6 +52,9 @@ export interface IGetEventResponseData {
   event_type: EventType
   date_end1?: Date
   min_score?: number
+  fixed_rewards: IFixedReward[]
+  shot_detail: string
+  user_limit: number
 }
 
 export interface IGetEventResponseInfo {

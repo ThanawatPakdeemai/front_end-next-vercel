@@ -126,7 +126,8 @@ const FullMap = () => {
   }, [router.query, allLand])
 
   return (
-    <div className="map-content relative flex h-full w-screen flex-col overflow-y-hidden bg-secondary-light">
+    <div className="map-content relative flex h-full w-screen flex-col overflow-y-hidden bg-[#0165B6]">
+      {/* ---------- map ---------- */}
       <Canvas
         gl={{ antialias: true, toneMapping: THREE.NoToneMapping }}
         linear
@@ -147,8 +148,8 @@ const FullMap = () => {
             pos={calculatePosition(cameraPos)}
             full
           />
-          {/* <primitive object={new THREE.AxesHelper(10)} /> */}
           {allLandData && allLandData.length > 0 && <MapScene />}
+          {isLoading && <MapScene />}
           {allLand &&
             allLand.length > 0 &&
             allLand.map((element, index) => (
@@ -163,9 +164,9 @@ const FullMap = () => {
                 setLoading={setLoadingStatus}
               />
             ))}
-          {/* </Suspense> */}
         </Suspense>
       </Canvas>
+      {/* ---------- card ---------- */}
       <div>
         {currentLand && (
           <div className="card-land-map-panel animate__fadeInRight">
@@ -191,6 +192,7 @@ const FullMap = () => {
           </div>
         )}
       </div>
+      {/* ---------- info ---------- */}
       <MapInfo />
     </div>
   )

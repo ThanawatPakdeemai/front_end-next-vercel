@@ -49,17 +49,16 @@ const BoxElement = ({
   const [hovered, sethovered] = useState<boolean>(false)
   const [thisCurrent, setThisCurrent] = useState<boolean>(false)
 
-  function renderColor() {
-    if (color !== colorThree.disable) {
-      if (currentLand && land && currentLand._id === land._id) {
-        setThisCurrent(true)
-        return colorThree.currentLand
-      }
+  const renderColor = () => {
+    const isCurrent = currentLand && land && currentLand._id === land._id
+
+    if (color === colorThree.disable) {
       setThisCurrent(false)
       return color
     }
-    setThisCurrent(false)
-    return color
+
+    setThisCurrent(isCurrent)
+    return isCurrent ? colorThree.currentLand : color
   }
 
   const memoColor = useMemo(
@@ -107,7 +106,7 @@ const BoxElement = ({
         <mesh
           position={[pos.px, pos.py, 0.024]}
           scale={new THREE.Vector3(0.99, 0.99, 0.5)}
-          onClick={() => handleClick()}
+          onClick={handleClick}
         >
           <planeGeometry args={[0.99, 0.99, 1, 1]} />
           <meshStandardMaterial
@@ -139,7 +138,7 @@ const BoxElement = ({
         }
         onPointerOver={onhoveredOver}
         onPointerOut={onhoveredOut}
-        onClick={() => handleClick()}
+        onClick={handleClick}
       >
         <planeGeometry args={[0.99, 0.99, 1, 1]} />
         {land && land.logo_in_map ? (

@@ -16,8 +16,6 @@ const MapScene = () => {
 
   return (
     <>
-      {/* <gridHelper />
-          <axesHelper />  */}
       <color
         attach="background"
         args={[colorOfBackground]}

@@ -17,17 +17,17 @@ import dynamic from "next/dynamic"
 import dayjs from "dayjs"
 import rt from "dayjs/plugin/relativeTime"
 import createEmotionCache from "@utils/createEmotionCache"
+import { metaData } from "@src/meta/meta"
 
 const Loading = dynamic(() => import("@components/molecules/Loading"), {
   suspense: true,
   ssr: false
 })
-
-const Meta = dynamic(() => import("@components/atoms/MetaData"), {
+// eslint-disable-next-line no-unused-vars
+const MetaDataTag = dynamic(() => import("@components/atoms/MetaDataTag"), {
   suspense: true,
   ssr: false
 })
-
 dayjs.extend(rt)
 
 const clientSideEmotionCache = createEmotionCache()
@@ -40,17 +40,20 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
+const MyApp = (props) => {
+  const { Component, pageProps }: AppPropsWithLayout = props
   const getLayout = Component.getLayout ?? ((page) => page)
   const emotionCache: EmotionCache = clientSideEmotionCache
   const queryClient = new QueryClient()
   const customTheme = createTheme(theme as ThemeOptions)
+
   return (
     <>
       <Head>
+        <meta charSet="utf-8" />
         <meta
           name="viewport"
-          content="initial-scale=1.0, width=device-width"
+          content="width=device-width, initial-scale=1"
         />
         <link
           rel="shortcut icon"
@@ -62,7 +65,13 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
           href="https://files.naka.im/seo/favicon.png"
         />
       </Head>
-      <Meta />
+      <MetaDataTag
+        meta_description={metaData.meta_description}
+        meta_keyword={metaData.meta_keyword}
+        meta_title={metaData.meta_title}
+        meta_url={metaData.url}
+        og_image={metaData.og_image}
+      />
       <Loading />
       <QueryClientProvider client={queryClient}>
         <Web3Provider>

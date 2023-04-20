@@ -19,12 +19,21 @@ const MetaDataTag = ({
     <Head>
       <title>{meta_title}</title>
       <meta
-        name="keywords"
-        content={meta_keyword}
+        name="title"
+        content={meta_title}
       />
       <meta
         name="description"
         content={meta_description}
+      />
+      {/* facebook */}
+      <meta
+        property="fb:app_id"
+        content="364510622370887"
+      />
+      <meta
+        property="og:locale"
+        content="en_US"
       />
       <meta
         property="og:url"
@@ -40,7 +49,7 @@ const MetaDataTag = ({
       />
       <meta
         property="og:site_name"
-        content={meta_url}
+        content="NakamotoGames"
       />
       <meta
         property="og:description"
@@ -55,40 +64,43 @@ const MetaDataTag = ({
         content="2400"
       />
       <meta
-        property="og:width"
-        content="2400"
-      />
-      <meta
         property="og:height"
         content="1260"
       />
+      {/* twitter */}
+
       <meta
-        name="twitter:card"
+        property="twitter:card"
         content="summary_large_image"
       />
       <meta
-        name="twitter:label1"
+        property="twitter:label1"
         content="Est. reading time"
       />
       <meta
-        name="twitter:data1"
+        property="twitter:data1"
         content="10 minutes"
       />
       <meta
-        name="twitter:image"
+        property="twitter:image"
         content={og_image}
       />
       <meta
-        name="site"
+        property="site"
         content="@NakamotoGames"
       />
       <meta
-        name="twitter:title"
+        property="twitter:title"
         content={meta_title}
       />
       <meta
-        name="twitter:description"
+        property="twitter:description"
         content={meta_description}
+      />
+
+      <meta
+        name="keywords"
+        content={meta_keyword}
       />
     </Head>
   </>

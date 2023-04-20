@@ -29,7 +29,8 @@ PlayToEarnGames.getLayout = function getLayout(page: ReactElement) {
   return <GamePageLayout>{page}</GamePageLayout>
 }
 
-export async function getStaticProps({ locale }) {
+// eslint-disable-next-line no-unused-vars
+export async function getStaticProps({ locale, params }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"]))

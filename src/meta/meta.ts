@@ -1,9 +1,21 @@
 import { useRouter } from "next/router"
+import CONFIGS from "@configs/index"
 
 interface PageMeta {
   title: string
   description: string
   image: string
+}
+
+export const metaData = {
+  meta_description:
+    "Get started in minutes with our free-to-play games. The best collection of play-to-earn crypto games featuring action, arcade, and more. Powered by $NAKA.",
+  meta_keyword:
+    "nakamoto games, play2earn, game crypto platform, Blockchain games, Free to play, NFT game, Crypto games, P2E, Gamefi, Browser Games, Cryptocurrency, Play to Earn, Blockchain Games, Gamefi,  Web3 games, Digital platform, 3D games, Polygon, Games platform, Free nft games, Top NFT Games, best NFT games, top cryoto game, top tier games 2022, the best 2022 games, y8, Free online games, unity, unreal engine, games coin crypto, where to play crypto games, play to earn games crypto, play to earn games crypto list,make money,free time,passive income,bullish project, bullish",
+  meta_title:
+    "Nakamoto Games - Get Started with the Best Play and Earn Crypto Platform",
+  og_image: "https://files.naka.im/seo/homepage.png",
+  url: CONFIGS.BASE_URL.FRONTEND
 }
 
 export const DEFAULT_META: PageMeta = {

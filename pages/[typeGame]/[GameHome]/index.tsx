@@ -78,6 +78,7 @@ export default function GameLobby() {
   const router = useRouter()
   const { onSetGameData } = useGameStore()
   const { GameHome } = router.query
+
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
   const {
     getTypeGamePathFolder,
@@ -249,7 +250,8 @@ export default function GameLobby() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const _gameData = await getGameByPath((ctx.params?.GameHome as string) || "")
+  const _gameData = await getGameByPath((ctx?.params?.GameHome as string) || "")
+
   const _redirect = _gameData
     ? false
     : { destination: "/404", permanent: false }

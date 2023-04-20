@@ -1,7 +1,23 @@
 import { IGameCategory } from "@feature/dropdown/interfaces/IDropdownService"
-
 import { Box, ListItemText, MenuItem, MenuList } from "@mui/material"
 import React from "react"
+import { UseFormRegister } from "react-hook-form"
+
+export interface IProfileSubmitShort {
+  developer_name: string
+  developer_email: string
+  publisher: string
+}
+export interface IFormJoinUsData {
+  name: string
+  player_type: string
+  categories: Array<string>
+  description: string
+  short_detail: IProfileSubmitShort
+  game_play_url: string
+  how_to_play: string
+  gameStatus: boolean
+}
 
 interface IProp {
   className?: string
@@ -9,8 +25,8 @@ interface IProp {
   setOnTitle?: (_value: IGameCategory) => void
   setExpanded?: (_value: boolean) => void
   title?: string
-  onChange?: any
-  register: any
+  register: UseFormRegister<IFormJoinUsData>
+  onChange: (_value: IGameCategory) => void
 }
 
 const SelectDropdownCategories = ({

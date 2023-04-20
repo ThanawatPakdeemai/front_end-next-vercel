@@ -1,5 +1,6 @@
 import Head from "next/head"
 import _ from "lodash"
+import CONFIGS from "@configs/index"
 
 interface IProp {
   meta_title: string
@@ -51,7 +52,7 @@ const MetaDataTag = ({
       />
       <meta
         property="og:url"
-        content={meta_url}
+        content={CONFIGS.BASE_URL.FRONTEND + meta_url}
       />
       <meta
         property="og:type"

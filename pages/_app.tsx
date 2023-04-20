@@ -17,10 +17,7 @@ import dynamic from "next/dynamic"
 import dayjs from "dayjs"
 import rt from "dayjs/plugin/relativeTime"
 import createEmotionCache from "@utils/createEmotionCache"
-import { getSeoByPath } from "@feature/metaData/containers/services/seoMetaData.service"
-import { ISeoResponse } from "@feature/metaData/interfaces/ISeoData"
 import { metaData } from "@src/meta/meta"
-import App from "next/app"
 
 const Loading = dynamic(() => import("@components/molecules/Loading"), {
   suspense: true,
@@ -68,13 +65,13 @@ const MyApp = (props) => {
           href="https://files.naka.im/seo/favicon.png"
         />
       </Head>
-      {/* <MetaDataTag
+      <MetaDataTag
         meta_description={metaData.meta_description}
         meta_keyword={metaData.meta_keyword}
         meta_title={metaData.meta_title}
         meta_url={metaData.url}
         og_image={metaData.og_image}
-      /> */}
+      />
       <Loading />
       <QueryClientProvider client={queryClient}>
         <Web3Provider>
@@ -92,21 +89,4 @@ const MyApp = (props) => {
   )
 }
 
-export const metadata = {
-  title: "My Page Title"
-}
-
-MyApp.getInitialProps = async (context) => {
-  const pageProps = await App.getInitialProps(context)
-
-  const _seo = await getSeoByPath(`/`)
-  return {
-    ...pageProps,
-    meta:
-      _seo && (_seo as ISeoResponse)?.data?.length > 0
-        ? (_seo as ISeoResponse)?.data?.[0]
-        : metaData
-    // Will be passed to the page component as props
-  }
-}
 export default appWithTranslation(MyApp)

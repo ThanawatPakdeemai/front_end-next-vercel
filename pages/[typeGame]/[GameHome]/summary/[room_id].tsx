@@ -8,6 +8,8 @@ import { useRouter } from "next/router"
 import React, { ReactElement } from "react"
 import { getSeoByPath } from "@feature/metaData/containers/services/seoMetaData.service"
 import MetaDataTag from "@components/atoms/MetaDataTag"
+import { ISeoResponse } from "@feature/metaData/interfaces/ISeoData"
+import { metaData } from "@src/meta/meta"
 
 const GameSummaryRewardPage = dynamic(
   () => import("@feature/page/games/gameSummaryRewardPage"),
@@ -70,11 +72,11 @@ export default function SummaryDetails(props) {
   return (
     <>
       <MetaDataTag
-        meta_description={props?.meta?.data?.[0]?.meta_description}
-        meta_keyword={props?.meta?.data?.[0]?.meta_keyword}
-        meta_title={props?.meta?.data?.[0]?.meta_title}
-        meta_url={props?.meta?.data?.[0]?.url}
-        og_image={props?.meta?.data?.[0]?.image}
+        meta_description={props?.meta?.meta_description}
+        meta_keyword={props?.meta?.meta_keyword}
+        meta_title={props?.meta?.meta_title}
+        meta_url={props?.meta?.url}
+        og_image={props?.meta?.og_image}
       />
       {gameData ? (
         <GamePageDefault
@@ -146,7 +148,10 @@ export async function getServerSideProps({
 
   return {
     props: {
-      meta: _seo,
+      meta:
+        _seo && (_seo as ISeoResponse)?.data?.length > 0
+          ? (_seo as ISeoResponse)?.data?.[0]
+          : metaData,
       ...(await serverSideTranslations(locale, ["common"]))
     }
   }

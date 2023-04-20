@@ -1,7 +1,9 @@
+import MetaDataTag from "@components/atoms/MetaDataTag"
 import useGameSummaryRewardController from "@feature/game/containers/hooks/useGameSummaryRewardController"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
 import useGlobal from "@hooks/useGlobal"
 import { Box } from "@mui/material"
+import { metaData } from "@src/meta/meta"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 import React, { ReactElement } from "react"
@@ -62,56 +64,67 @@ export default function Notification_id() {
   const { gameDataState } = useGameSummaryRewardController()
   const { getTypeGamePathFolder } = useGlobal()
 
-  return gameDataState ? (
-    <GamePageDefault
-      component={
-        <RightSidebarContent
-          className="mb-24"
-          content={<GameSummaryRewardPage />}
-          aside={
-            <Box
-              component="div"
-              className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
-              sx={{
-                ".panel-content": {
-                  maxHeight: "270px",
-                  ".custom-scroll": {
-                    overflow: "hidden"
-                  }
-                },
-                ".like-no_score": {
-                  margin: "0"
+  return (
+    <>
+      <MetaDataTag
+        meta_description={metaData.meta_description}
+        meta_keyword={metaData.meta_keyword}
+        meta_title={metaData.meta_title}
+        meta_url={metaData.url}
+        og_image={metaData.og_image}
+      />
+      {gameDataState ? (
+        <GamePageDefault
+          component={
+            <RightSidebarContent
+              className="mb-24"
+              content={<GameSummaryRewardPage />}
+              aside={
+                <Box
+                  component="div"
+                  className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
+                  sx={{
+                    ".panel-content": {
+                      maxHeight: "270px",
+                      ".custom-scroll": {
+                        overflow: "hidden"
+                      }
+                    },
+                    ".like-no_score": {
+                      margin: "0"
+                    }
+                  }}
+                >
+                  <OverviewContent
+                    gameId={gameDataState.id}
+                    gameType={getTypeGamePathFolder(gameDataState)}
+                    gameIdNFT={gameDataState.NFT_Owner}
+                  />
+                </Box>
+              }
+            />
+          }
+          component2={
+            <FullWidthContent
+              sxCustomStyled={{
+                "&.container": {
+                  maxWidth: "100%!important"
                 }
               }}
             >
-              <OverviewContent
-                gameId={gameDataState.id}
-                gameType={getTypeGamePathFolder(gameDataState)}
-                gameIdNFT={gameDataState.NFT_Owner}
-              />
-            </Box>
+              <TabProvider>
+                <GameTabs
+                  gameId={gameDataState.id}
+                  gameType="arcade-emporium"
+                />
+              </TabProvider>
+            </FullWidthContent>
           }
         />
-      }
-      component2={
-        <FullWidthContent
-          sxCustomStyled={{
-            "&.container": {
-              maxWidth: "100%!important"
-            }
-          }}
-        >
-          <TabProvider>
-            <GameTabs
-              gameId={gameDataState.id}
-              gameType="arcade-emporium"
-            />
-          </TabProvider>
-        </FullWidthContent>
-      }
-    />
-  ) : (
-    <GamePageDefault component={<SkeletonBanner />} />
+      ) : (
+        <GamePageDefault component={<SkeletonBanner />} />
+      )}
+    </>
   )
 }
 

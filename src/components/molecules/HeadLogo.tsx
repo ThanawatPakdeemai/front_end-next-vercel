@@ -88,9 +88,7 @@ const HeadLogo = () => {
           isMarketplace ? "lg:w-[500px]" : "lg:w-[360px]"
         } lg:flex-none ${scrollPage < 100 ? "opacity-100" : "opacity-0"}`}
       >
-        <div
-          className={`ml-2 grid w-full grid-cols-3  grid-rows-2 items-center md:flex md:w-auto md:justify-center lg:ml-0 ${""}`}
-        >
+        <div className="ml-2 flex w-full items-center md:w-auto md:justify-center lg:ml-0">
           {scrollPage < 100 && (
             <Link
               href="/"

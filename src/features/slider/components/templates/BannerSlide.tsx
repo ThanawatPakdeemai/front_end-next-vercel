@@ -36,7 +36,7 @@ const BannerSlide = () => {
   }
 
   return (
-    <section className="relative w-full overflow-hidden">
+    <section className="relative mb-10 w-full overflow-hidden">
       <div className="absolute left-4 top-4 z-10">
         <TagCircle
           color="secondary"

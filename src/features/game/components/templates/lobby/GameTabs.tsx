@@ -106,7 +106,10 @@ const GameTabs = ({ gameType, gameId }: IProps) => {
   }, [setTabValue])
 
   return hydrated ? (
-    <Box className="relative h-full">
+    <Box
+      component="div"
+      className="relative h-full"
+    >
       <div className="absolute left-[-30px] top-[-80px] flex w-full flex-wrap overflow-hidden sm:w-auto">
         <div className="flex w-full items-center justify-between gap-2 rounded-xl bg-neutral-700 bg-opacity-40 px-1 capitalize sm:w-auto">
           {GAME_TAB_CONTENT.map((item) =>
@@ -141,6 +144,7 @@ const GameTabs = ({ gameType, gameId }: IProps) => {
           {GAME_TAB_CONTENT.map((item) =>
             item.id === tabValue ? (
               <Box
+                component="div"
                 role="tabpanel"
                 key={item.id}
               >

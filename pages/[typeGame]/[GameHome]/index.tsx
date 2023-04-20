@@ -132,6 +132,7 @@ export default function GameLobby(props) {
       case "story-mode-games":
         return (
           <Box
+            component="div"
             className="flex w-full flex-col justify-between gap-4 uppercase"
             sx={{
               ".like-no_wrapper": {
@@ -143,6 +144,7 @@ export default function GameLobby(props) {
             }}
           >
             <Box
+              component="div"
               sx={StartButtonCustomStyle}
               className="flex w-full justify-center uppercase"
             >
@@ -157,6 +159,7 @@ export default function GameLobby(props) {
       case "free-to-play-games":
         return (
           <Box
+            component="div"
             className="flex w-full flex-col justify-between gap-4 uppercase"
             sx={{
               ".like-no_wrapper": {
@@ -168,6 +171,7 @@ export default function GameLobby(props) {
             }}
           >
             <Box
+              component="div"
               sx={StartButtonCustomStyle}
               className="flex w-full justify-center uppercase"
             >

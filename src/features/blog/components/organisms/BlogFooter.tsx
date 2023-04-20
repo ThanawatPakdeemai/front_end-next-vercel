@@ -14,6 +14,7 @@ export interface IBlogFooterProps extends ISocialShareProps {
 
 const BlogFooter = ({ view, shared, like, ...props }: IBlogFooterProps) => (
   <Box
+    component="div"
     sx={{
       "&::before": {
         content: "''",

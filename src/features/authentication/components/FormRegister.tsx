@@ -92,6 +92,7 @@ const FormRegister = () => {
         onSubmit={handleSubmit(onSubmitRegister)}
       >
         <Box
+          component="div"
           className="w-full xl:w-[353px]"
           style={{ height: 638 }}
         >
@@ -104,6 +105,7 @@ const FormRegister = () => {
               xs={12}
             >
               <Box
+                component="div"
                 className="flex w-full items-center rounded-lg md:w-auto"
                 sx={{ height: "54px" }}
               >

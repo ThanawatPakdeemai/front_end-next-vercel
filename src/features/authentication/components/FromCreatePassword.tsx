@@ -171,8 +171,11 @@ const FromCreatePassword = ({ email, token }: IProp) => {
   }, [watch("password"), watch("confirmPassword")])
 
   return (
-    <Box>
-      <Box className="py-5">
+    <Box component="div">
+      <Box
+        component="div"
+        className="py-5"
+      >
         <Grid
           item
           container
@@ -195,7 +198,10 @@ const FromCreatePassword = ({ email, token }: IProp) => {
             >
               <HeadLogo />
             </Box>
-            <Box className="container absolute bottom-0 overflow-hidden">
+            <Box
+              component="div"
+              className="container absolute bottom-0 overflow-hidden"
+            >
               <Tagline
                 bgColor="bg-neutral-800"
                 textColor="text-neutral-500"
@@ -240,6 +246,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
               </div>
             </Box>
             <Box
+              component="div"
               sx={{
                 my: 8,
                 mx: 4,
@@ -252,7 +259,10 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                 className="h-full"
                 onSubmit={handleSubmit(onSubmitConfirm)}
               >
-                <Box className="flex h-[600px] w-[333px] items-center">
+                <Box
+                  component="div"
+                  className="flex h-[600px] w-[333px] items-center"
+                >
                   <Grid
                     container
                     spacing={2.25}
@@ -262,6 +272,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                       xs={12}
                     >
                       <Box
+                        component="div"
                         className="flex items-center rounded-lg"
                         sx={{ height: "54px" }}
                       >

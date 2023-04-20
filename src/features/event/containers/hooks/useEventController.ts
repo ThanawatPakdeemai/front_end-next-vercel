@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
 import useLoadingStore from "@stores/loading"
 import {
+  IFixedReward,
   IGetEventResponseData,
   IResponseLeaderBoardData,
   IResponseTopScoreSummaryDataData
@@ -71,6 +72,7 @@ const useEventController = () => {
   const [sortAmount, setSortAmount] = useState<number | undefined>(undefined)
   const [currentEventData, setCurrentEventData] =
     useState<IGetEventResponseData>()
+  const [fixedRewardState, setFixedRewardState] = useState<IFixedReward[]>([])
   const [topScoreDataState, setTopScoreDataState] =
     useState<IResponseTopScoreSummaryDataData>()
   const [leaderBoardDataState, setLeaderBardDataState] =
@@ -82,6 +84,7 @@ const useEventController = () => {
   const router = useRouter()
   const { id } = router.query
   const eventId = id as string
+  const newFixedRewardArray: IFixedReward[] = []
 
   const { eventDetailData, eventDetailIsLoading } = useGetEventDetail(eventId)
   const { topScoreData, topScoreIsLoading } = useGetEventTopScore(
@@ -100,6 +103,33 @@ const useEventController = () => {
         setOpen()
         if (eventDetailData) {
           setCurrentEventData(eventDetailData)
+          if (
+            eventDetailData.fixed_rewards &&
+            eventDetailData.fixed_rewards.length > 0
+          ) {
+            fixedRewardState.forEach((item) => {
+              if (item.rank.includes("-")) {
+                const rank = item.rank.split("-")
+                const start = Number(rank[0])
+                const end = Number(rank[1])
+                const arr: IFixedReward[] = []
+                for (let i = start; i <= end; i += 1) {
+                  arr.push({
+                    ...item,
+                    rank: i.toString()
+                  })
+                }
+                newFixedRewardArray.push(...arr)
+              } else {
+                newFixedRewardArray.push({
+                  ...item,
+                  rank: item.rank
+                })
+              }
+            })
+            setFixedRewardState(newFixedRewardArray)
+          }
+
           if (
             eventDetailData &&
             eventDetailData.event_type === "share_and_play" &&
@@ -166,6 +196,7 @@ const useEventController = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [sortTime, sortAmount]
   )
+
   return {
     sortTime,
     sortAmount,
@@ -182,7 +213,8 @@ const useEventController = () => {
     leaderBoardIsLoading,
     eventDetailIsLoading,
     eventId,
-    MOCKUP_REWARD
+    MOCKUP_REWARD,
+    fixedRewardState
   }
 }
 

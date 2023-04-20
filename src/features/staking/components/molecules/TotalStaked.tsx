@@ -39,6 +39,7 @@ const TotalStaked = ({
         <div className="h-[50px] w-full py-2 sm:w-[200px]">
           <div className="relative flex h-full w-full flex-col justify-center overflow-hidden rounded-[2px] bg-neutral-780 py-1">
             <Box
+              component="div"
               className="absolute h-full w-full rounded-[2px]"
               sx={{
                 backgroundColor: "#101013",
@@ -73,6 +74,7 @@ const TotalStaked = ({
               value={Number(totalNAKAStaked())}
             />
             <Box
+              component="div"
               className="absolute"
               sx={{
                 transform: `translateX(calc(${Number(totalNAKAStaked())}%))`

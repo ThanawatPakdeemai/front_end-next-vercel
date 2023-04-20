@@ -115,6 +115,7 @@ const RoomListBar = ({
         </div>
       </div>
       <Box
+        component="div"
         sx={
           btnText === "played"
             ? {

@@ -26,7 +26,7 @@ const SidebarStaking = () => {
             )
           })}
       </MenuList>
-      <Balance />
+      <Balance widthBalance="w-[calc(100%-70px)]" />
     </div>
   )
 }

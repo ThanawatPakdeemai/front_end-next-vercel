@@ -57,8 +57,14 @@ const FromForgotPassword = () => {
       >
         {t("forgot_password")}
       </Typography>
-      <Box className="m-auto w-max p-1">
-        <Box className="xs:flex-col items-center justify-between gap-1 lg:flex">
+      <Box
+        component="div"
+        className="m-auto w-max p-1"
+      >
+        <Box
+          component="div"
+          className="xs:flex-col items-center justify-between gap-1 lg:flex"
+        >
           {/* <ButtonLogin handleButton={handleOpen} /> */}
         </Box>
         <ModalCustom
@@ -76,7 +82,7 @@ const FromForgotPassword = () => {
               title="Forget Password"
             />
             <form onSubmit={handleSubmit(onSubmit, onError)}>
-              <Box>
+              <Box component="div">
                 <Typography className="mb-2 font-neue-machina text-sm uppercase  text-neutral-500">
                   Email Address
                 </Typography>

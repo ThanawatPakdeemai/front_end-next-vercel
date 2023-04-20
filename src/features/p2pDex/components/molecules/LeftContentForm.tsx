@@ -68,6 +68,7 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
                 {shortenString(dataInfo.wallet_address)}
               </div>
               <Box
+                component="div"
                 className=" cursor-pointer rounded border border-neutral-800 bg-neutral-780 px-1 py-1"
                 onClick={() => {
                   copyClipboard(dataInfo.wallet_address)
@@ -91,6 +92,7 @@ const HeaderFormEx = ({ dataInfo, type, edit, cancelOrder, chain }: IProp) => {
                 {shortenString(dataInfo?.order_id)}
               </div>
               <Box
+                component="div"
                 className=" cursor-pointer rounded border border-neutral-800 bg-neutral-780 px-1 py-1"
                 onClick={() => {
                   copyClipboard(dataInfo?.order_id)

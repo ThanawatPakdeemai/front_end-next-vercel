@@ -17,7 +17,7 @@ function TransactionIconMKP({
       <path
         d="M2 7H14M2 11H14M2 15H10M12.5 15L16 18.5L22 12.5"
         stroke="#E1E2E2"
-        stroke-width="1.2"
+        strokeWidth="1.2"
       />
     </svg>
   )

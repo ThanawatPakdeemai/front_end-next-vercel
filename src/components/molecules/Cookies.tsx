@@ -14,7 +14,7 @@ const Cookies: React.FC = () => {
   const _txt = "cookies"
 
   return (
-    <Box>{_txt}</Box>
+    <Box component="div">{_txt}</Box>
     /*
      * <ContentMiddle
      *   style={

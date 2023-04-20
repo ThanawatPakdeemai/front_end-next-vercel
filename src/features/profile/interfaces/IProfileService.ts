@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define */
+
 import { IInfo } from "@interfaces/IHelper"
 
 export interface IProfileRank {
@@ -43,6 +45,22 @@ export interface IProfile extends IProfileMain {
   exp: number
   level: number
   message?: string
+}
+
+export interface IProfileSubmit {
+  name: string
+  player_type: string
+  categories: Array<string>
+  description: string
+  short_detail: IProfileSubmitShort
+  game_play_url: string
+  how_to_play: string
+}
+
+export interface IProfileSubmitShort {
+  developer_name: string
+  developer_email: string
+  publisher: string
 }
 
 export interface IGetProfileResponse extends IProfileMain {

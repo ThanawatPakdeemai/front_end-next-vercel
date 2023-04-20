@@ -46,6 +46,7 @@ const Home = () => {
   const { hydrated } = useGlobal()
   const [openSwap, setOpenSwap] = useState(false)
   const { t } = useTranslation()
+
   /**
    * @description: Spark fire effect
    */
@@ -86,7 +87,6 @@ const Home = () => {
   const getGameTypeP2EByTitleClicked = (): IGetType => {
     switch (p2eCurType) {
       case "arcade-emporium":
-        // TODO: choose to change to hot-game
         return "arcade-emporium"
       default:
         return "play-to-earn-games"
@@ -126,7 +126,6 @@ const Home = () => {
   return hydrated ? (
     <>
       <BannerSlide />
-      {/* Testing display a CarouselSlide component, waiting to merge with team */}
       <div className="relative">
         <Tagline
           bgColor="bg-secondary-main"

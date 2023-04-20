@@ -26,11 +26,11 @@ const HeadMenu = () => {
   return (
     <Box
       component="div"
-      className="!rounded-[19px] !bg-[#01010120] !p-[6px]"
+      className="order-3 w-full !rounded-[19px] !bg-[#01010120] !p-[6px] sm:order-2 sm:w-auto"
     >
       <Box
         component="div"
-        className="xs:my-5 !md:h-[50px] m-auto my-2 mb-[50px] grid max-w-[505px] flex-[1_1_100%] grid-cols-2 items-center justify-center gap-1 overflow-hidden rounded-[13px] bg-neutral-700 p-1 md:order-1 md:mb-0 md:flex lg:my-0 lg:flex-none"
+        className="xs:my-5 m-auto grid max-w-[505px] flex-[1_1_100%] grid-cols-2 items-center justify-center gap-1 overflow-hidden rounded-[13px] bg-neutral-700 p-1 sm:flex md:order-1 md:mb-0 lg:my-0 lg:flex-none"
       >
         {MENU_DATA.map((item) => {
           if (!item.isChide && item.chide === undefined) {

@@ -6,9 +6,11 @@ import HeadPrice from "@components/molecules/HeadPrice"
 import { RightMenu } from "@components/molecules/rightMenu"
 import useGlobal from "@hooks/useGlobal"
 import RightMenuDeveloper from "@components/molecules/rightMenu/RightMenuDeveloper"
+import { useRouter } from "next/router"
 
 const Header = () => {
   const { isMarketplace, isDeveloperPage } = useGlobal()
+  const { asPath } = useRouter()
 
   const showHeadPrice = !isMarketplace && !isDeveloperPage
   const showHeadMenu = !isDeveloperPage
@@ -18,7 +20,13 @@ const Header = () => {
   return (
     <>
       {showHeadPrice && <HeadPrice />}
-      <header className="header relative top-10 z-[999] lg:sticky">
+      <header
+        className={`header ${
+          asPath.includes("map")
+            ? "top-0 w-full bg-primary-main lg:fixed"
+            : "top-10 lg:sticky"
+        } relative z-[999]`}
+      >
         <Box
           component="div"
           className="flex flex-wrap items-center justify-between md:my-10 xl:flex-nowrap"

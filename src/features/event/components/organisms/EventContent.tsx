@@ -10,7 +10,7 @@ const EventContent = () => {
   const { limit, currentEventData, getTypeGamePathFolder, onSetGameStore } =
     useEventController()
   return (
-    <Box>
+    <Box component="div">
       <div className="relative z-[1] w-full rounded-2xl border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 uppercase text-neutral-300">
         <div className="flex items-center gap-3">
           <Chip

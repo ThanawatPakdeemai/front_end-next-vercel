@@ -24,15 +24,15 @@ MarketplaceHome.getLayout = function getLayout(page: ReactElement) {
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {
-  const mode = process.env.NEXT_PUBLIC_MODE
+  // const mode = process.env.NEXT_PUBLIC_MODE
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"]))
-    },
-    // remove below if marketplace launch on frontend v2
-    redirect: {
-      destination: mode === "production" ? "/" : "/marketplace"
     }
+    // remove below if marketplace launch on frontend v2
+    // redirect: {
+    //   destination: mode === "production" ? "/" : "/marketplace"
+    // }
   }
 }
 

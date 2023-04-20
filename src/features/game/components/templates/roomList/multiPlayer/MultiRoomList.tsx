@@ -194,11 +194,17 @@ const MultiRoomList = () => {
 
   return (
     <>
-      <Box className=" block gap-3 lg:flex">
+      <Box
+        component="div"
+        className=" block gap-3 lg:flex"
+      >
         <SocketProviderRoom
           propsSocket={{ getRoomListMultiPlayer, fetchRoom, searchRoom }}
         >
-          <Box className="relative w-full rounded-3xl border border-neutral-700">
+          <Box
+            component="div"
+            className="relative w-full rounded-3xl border border-neutral-700"
+          >
             {data && <HeaderRoomList lobby={data.name} />}
             <Divider />
 

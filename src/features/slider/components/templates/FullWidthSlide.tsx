@@ -52,6 +52,7 @@ const FullWidthSlide = ({ items }: IFullWidthSlideProps) => {
 
   return (
     <Box
+      component="div"
       sx={{
         "&.fullwidth-slide": {
           position: "absolute",
@@ -65,6 +66,7 @@ const FullWidthSlide = ({ items }: IFullWidthSlideProps) => {
       className="fullwidth-slide my-4 flex w-full flex-col items-center justify-between gap-4"
     >
       <Box
+        component="div"
         sx={SlickMainSlideCSS}
         className="flex h-full w-full flex-col justify-center overflow-hidden rounded-2xl"
       >

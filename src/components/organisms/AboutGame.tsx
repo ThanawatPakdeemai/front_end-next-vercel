@@ -9,7 +9,7 @@ interface IAboutGameProps {
 const AboutGame = ({ text, title }: IAboutGameProps) => {
   const { t } = useTranslation()
   return (
-    <Box>
+    <Box component="div">
       {title && (
         <Typography
           variant="h2"

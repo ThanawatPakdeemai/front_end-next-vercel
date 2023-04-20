@@ -20,6 +20,7 @@ const GameItemsBody = ({ gameItems }: IProps) => (
         {typeof gameItems !== "string" &&
           gameItems.map((item, index: number) => (
             <Box
+              component="div"
               key={Number(index)}
               className="my-1"
             >

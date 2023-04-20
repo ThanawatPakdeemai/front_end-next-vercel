@@ -202,9 +202,7 @@ const RightMenuLogIn = () => {
               zIndex: 9998
             }}
           >
-            <>
-              <Balance />
-            </>
+            <Balance widthBalance="w-[calc(100%-70px)]" />
             <StatProfile
               exp={{
                 level: profile?.level ?? 0,

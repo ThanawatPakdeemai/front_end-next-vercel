@@ -31,18 +31,26 @@ const CheckBoxNaka = ({
           onHandle(_event)
         }}
         icon={
-          <Box className=" h-[20px] w-[20px]  rounded-[6px] border-2 border-neutral-600  ">
-            <Box className=" m-[2px] h-[12px] w-[12px]  rounded-[2px]  bg-neutral-700" />
+          <Box
+            component="div"
+            className=" h-[20px] w-[20px]  rounded-[6px] border-2 border-neutral-600  "
+          >
+            <Box
+              component="div"
+              className=" m-[2px] h-[12px] w-[12px]  rounded-[2px]  bg-neutral-700"
+            />
           </Box>
         }
         color={color}
         checkedIcon={
           <Box
+            component="div"
             className={` h-[20px] w-[20px]  rounded-[6px] border-2 ${
               color === "error" ? "border-error-main" : "border-neutral-600"
             }`}
           >
             <Box
+              component="div"
               className={`m-[2px] h-[12px] w-[12px]  rounded-[2px]  ${
                 color === "error" ? "bg-error-main" : "bg-secondary-main"
               }`}

@@ -238,7 +238,7 @@ const FormLogin = ({ href }: IProp) => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <Box>
+        <Box component="div">
           <Typography className="mb-2 font-neue-machina text-sm uppercase  text-neutral-500">
             {t("email_address")}
           </Typography>
@@ -265,7 +265,7 @@ const FormLogin = ({ href }: IProp) => {
             }}
           />
         </Box>
-        <Box>
+        <Box component="div">
           <Typography className="mb-2 mt-5 font-neue-machina text-sm uppercase text-neutral-500">
             {t("password")}
           </Typography>

@@ -30,7 +30,7 @@ const MetamaskWallet = ({
   handleOnDisconnectWallet,
   blockExplorerUrls
 }: IProp) => {
-  const { onAddToken, isConnected } = useWeb3Provider()
+  const { onAddToken, isConnected, disabledConnectButton } = useWeb3Provider()
   const { currentChainSelected, currentTokenSelected } = useChainSupportStore()
   const { t } = useTranslation()
   /**
@@ -59,6 +59,7 @@ const MetamaskWallet = ({
         type="button"
         className="min-h-[40px] bg-secondary-main text-sm text-white-primary"
         handleClick={handleConnectWallet}
+        disabled={disabledConnectButton}
       />
     )
 

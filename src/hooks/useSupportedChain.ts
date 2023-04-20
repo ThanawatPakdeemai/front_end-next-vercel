@@ -18,7 +18,8 @@ import useProfileStore from "@stores/profileStore"
 
 const useSupportedChain = () => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { getBNBContract } = useContractVaultBinance()
+  const { getBNBContract, getAllTokenAddressInContract } =
+    useContractVaultBinance()
   const { getAllTokenInfoByContractAddress } = useContractVaultBinance()
   const {
     currentChainSelected,
@@ -88,7 +89,7 @@ const useSupportedChain = () => {
   }, [])
 
   /**
-   * @description Get all token supported
+   * @description Get all token supported BSC only
    */
   const fetchAllTokenSupported = useCallback(async () => {
     const { ethereum }: any = window
@@ -97,10 +98,14 @@ const useSupportedChain = () => {
     const _address = await _signer.getAddress()
     const allContract: Contract[] = []
     const allTokenSupported: ITokenContract[] = []
-    // TODO: Open after launch V2
+
+    // TODO: Open after binance smart chain is ready
     // const tokens = await getAllTokenAddressInContract()
-    // ONLY FOR BUSD TOKEN
-    const tokens = [CONFIGS.CONTRACT_ADDRESS.BEP20]
+    // TODO: Delete this after binance smart chain is ready
+    const tokens =
+      currentChainSelected === "0x61"
+        ? await getAllTokenAddressInContract()
+        : [CONFIGS.CONTRACT_ADDRESS.BEP20]
     for (let index = 0; index < tokens.length; index += 1) {
       const contract = new ethers.Contract(
         tokens[index],
@@ -120,6 +125,7 @@ const useSupportedChain = () => {
           allTokenSupported.push(result)
         })
       )
+
     const allTokenSupportedSorted = allTokenSupported.sort((a, b) => {
       if (a.symbol < b.symbol) {
         return -1

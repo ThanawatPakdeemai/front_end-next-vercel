@@ -12,7 +12,10 @@ const OrionTrade = ({ open, setClose }: IProps) => (
     onClose={setClose}
     width="500px"
   >
-    <Box className="orion-trade--block rounded-xl p-5">
+    <Box
+      component="div"
+      className="orion-trade--block rounded-xl p-5"
+    >
       <div className="orion-trade--iframe relative min-h-[270px] overflow-hidden rounded-3xl">
         <iframe
           id="orion-widget"

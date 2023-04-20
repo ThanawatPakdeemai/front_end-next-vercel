@@ -16,6 +16,7 @@ const CardPlatformItems = ({
   items
 }: ICardPlatformItemsProps) => (
   <Box
+    component="div"
     sx={sxCustomStyled}
     className={`card-platform-list flex flex-wrap gap-5 ${className}`}
   >

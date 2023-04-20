@@ -87,8 +87,12 @@ const FormJoinus = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmitRegister)}>
-      <Box style={{ width: 423, height: 638 }}>
+      <Box
+        component="div"
+        style={{ width: 423, height: 638 }}
+      >
         <Box
+          component="div"
           className="flex rounded-lg"
           sx={{ height: "54px" }}
         >

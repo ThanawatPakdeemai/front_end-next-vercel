@@ -17,6 +17,7 @@ const BlogHeader = ({ className, ...props }: IBlogHeaderProps) => (
       <MetaWriter writerName={props.writerName} />
     </div>
     <Box
+      component="div"
       className="relative flex flex-1 items-center justify-end"
       sx={{
         "&::before": {

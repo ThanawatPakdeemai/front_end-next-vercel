@@ -9,7 +9,7 @@ import { metaData } from "@src/meta/meta"
 const HomePage = dynamic(() => import("@feature/page/homePage"))
 const MetaDataTag = dynamic(() => import("@components/atoms/MetaDataTag"), {
   suspense: true,
-  ssr: false
+  ssr: true
 })
 export default function Home({ meta }) {
   return (

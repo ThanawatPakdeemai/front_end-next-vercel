@@ -33,16 +33,21 @@ const GameSummaryRewardPage = () => {
     switch (notificationItem?.type) {
       case "RETURN_ITEM":
       case undefined:
+        if (summaryDataPlayerId.naka_for_player) {
+          // This code will display when
+          // 1. Opened url as /[typeGame]/[GameHome]/summary/[room_id]
+          // 2. The game already close room and sent reward
+          return summaryDataPlayerId.naka_for_player
+        }
         return summaryDataPlayerId.current_score
 
       case "REWARD_WEEKLY":
       case "REWARD_GAME_POOL":
         return summaryDataPlayerIdWeekly.reward
       default:
-        return (
-          summaryDataPlayerId.naka_for_player ||
-          summaryDataPlayerId.current_score
-        )
+        return summaryDataPlayerId.naka_for_player
+          ? summaryDataPlayerId.naka_for_player
+          : summaryDataPlayerId.current_score
     }
   }
 

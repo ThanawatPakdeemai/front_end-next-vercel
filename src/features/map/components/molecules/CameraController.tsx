@@ -78,14 +78,6 @@ const CameraController = ({
       }
       setUpdated(false)
     }
-    // controls.polarAngle = -20 * delta * THREE.MathUtils.DEG2RAD
-
-    //   controls.enabled = false // if (dismove && camera.position.z > maxDis) {
-    //   setDismove(false)
-    // } else {
-    //   controls.enabled = true
-    //   setDismove(true)
-    // }
     state.camera.updateProjectionMatrix()
 
     controls.update(delta)

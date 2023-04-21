@@ -1,6 +1,7 @@
 import { useTexture } from "@react-three/drei"
 import { ThreeEvent } from "@react-three/fiber"
 import { colorThree } from "@constants/map"
+import { useRouter } from "next/router"
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import * as THREE from "three"
 import { ColorRepresentation } from "three"
@@ -48,6 +49,7 @@ const BoxElement = ({
   const targetBox = useRef<THREE.Mesh>(null!)
   const [hovered, sethovered] = useState<boolean>(false)
   const [thisCurrent, setThisCurrent] = useState<boolean>(false)
+  const router = useRouter()
 
   const renderColor = () => {
     const isCurrent = currentLand && land && currentLand._id === land._id
@@ -85,6 +87,13 @@ const BoxElement = ({
       setCurrentLand
     ) {
       setCurrentLand(land)
+      router.push(
+        {
+          query: { x: land.position.x, y: land.position.y }
+        },
+        undefined,
+        { shallow: true }
+      )
     }
   }
 

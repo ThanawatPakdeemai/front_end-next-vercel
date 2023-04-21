@@ -30,6 +30,7 @@ import useProfileStore from "@stores/profileStore"
 import { MESSAGES } from "@constants/messages"
 import PlusIcon from "@components/icons/CountIcon/PlusIcon"
 import { useTranslation } from "react-i18next"
+import MiniMap from "@feature/map/components/organisms/MiniMap"
 import TextfieldDetailContent from "../molecules/TextfieldDetailContent"
 import ChipsLink from "../molecules/ChipsLink"
 
@@ -219,10 +220,15 @@ const RightDetailsMarketplace = ({
           price={price}
           count={count}
         />
-        {qrCode && id && (
+        {qrCode && id && position && (
           <>
             <div className="flex h-[158px] w-full gap-1 rounded-lg bg-primary-main p-1">
-              <div className="w-3/4">map</div>
+              <div className="w-3/4">
+                <MiniMap
+                  pos={position}
+                  className="rounded"
+                />
+              </div>
               <div className="relative flex w-1/4 items-center justify-center rounded bg-neutral-800">
                 <Image
                   src={qrCode}

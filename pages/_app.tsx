@@ -16,16 +16,13 @@ import dynamic from "next/dynamic"
 import dayjs from "dayjs"
 import rt from "dayjs/plugin/relativeTime"
 import createEmotionCache from "@utils/createEmotionCache"
+import MetaDataTag from "@components/atoms/MetaDataTag"
 
 const Loading = dynamic(() => import("@components/molecules/Loading"), {
   suspense: true,
   ssr: false
 })
-// eslint-disable-next-line no-unused-vars
-const MetaDataTag = dynamic(() => import("@components/atoms/MetaDataTag"), {
-  suspense: true,
-  ssr: false
-})
+
 dayjs.extend(rt)
 
 const clientSideEmotionCache = createEmotionCache()
@@ -47,6 +44,7 @@ const MyApp = (props) => {
 
   return (
     <>
+      <MetaDataTag />
       <Loading />
       <QueryClientProvider client={queryClient}>
         <Web3Provider>

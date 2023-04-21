@@ -14,11 +14,11 @@ const MetaTags = ({ tags, titleTag = "Tags" }: IMetaTags) => {
   return (
     <div className="grid h-full w-full grid-rows-2 flex-wrap">
       {titleTag && (
-        <div className="items-middle flex  px-6 pt-4 font-neue-machina text-sm uppercase text-white-default">
+        <div className="flex items-center font-neue-machina text-sm uppercase text-white-default">
           {t(`${titleTag}`)}
         </div>
       )}
-      <div className="px-6 pb-2 pt-4">
+      <div className="">
         {tags &&
           tags.map((item) => (
             <Chip

@@ -58,14 +58,14 @@ const BlogCard = ({
           </motion.div>
         </div>
 
-        <Typography className="mt-4 min-h-[65px] text-default uppercase">
+        <Typography className="mt-4 min-h-[40px] text-default uppercase text-neutral-400 line-clamp-2">
           {title}
         </Typography>
       </Link>
-      <Typography className="mt-4 min-h-[65px] text-sm">
+      <Typography className="my-4 min-h-[40px] text-sm text-neutral-500">
         {description}
       </Typography>
-      <motion.div className="mt-[20px] flex justify-center gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 px-[30px] py-[10px]">
+      <motion.div className="mb-4 flex justify-center gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 px-[30px] py-[10px]">
         {/* {blog_id} */}
         <Typography className="self-center text-sm">
           {dayjs(date_released).format("DD MMM YYYY")}

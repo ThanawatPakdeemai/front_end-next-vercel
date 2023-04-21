@@ -70,7 +70,7 @@ const BlogPageDetails = ({ _blogId }: IProp) => {
         _breadcrumbs={BLOG_CRUMB() || ""}
       />
       <div className="mx-5 flex h-full flex-col  items-center md:h-48 md:flex-row md:overflow-hidden">
-        <p className="w-full text-center font-mondwest text-3xl text-neutral-400 md:w-8/12 md:text-left md:text-5xl">
+        <p className="w-full text-center font-mondwest text-3xl text-neutral-400 md:w-8/12 md:text-left md:text-6xl">
           {getBlogDetails?.title}
         </p>
         <div className="my-12 grid w-4/12 justify-items-center lg:justify-items-end">

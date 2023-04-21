@@ -5,6 +5,7 @@ import useGetAllLand from "@feature/land/containers/hooks/useGetAllLand"
 import { cameraSetting, colorThree } from "@constants/map"
 import { ILandMap } from "@feature/land/interfaces/ILandService"
 import useLoadingStore from "@stores/loading"
+import { calculatePosition } from "@utils/map"
 import { AnimatePresence, motion } from "framer-motion"
 import { useRouter } from "next/router"
 import BoxElement from "../molecules/BoxElement"
@@ -12,11 +13,6 @@ import CameraController from "../molecules/CameraController"
 import MapScene from "../molecules/MapScene"
 import CardLandMap from "./CardLandMap"
 import MapInfo from "../molecules/MapInfo"
-
-const calculatePosition = ({ x, y }: { x: string; y: string }) => ({
-  px: Number(x) - 173.5,
-  py: Number(y) - 1.5
-})
 
 const containerVariants = {
   initial: { x: "100vw", opacity: 0 },

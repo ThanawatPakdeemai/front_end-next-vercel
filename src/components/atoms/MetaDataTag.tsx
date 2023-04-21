@@ -1,30 +1,35 @@
 import Head from "next/head"
 import _ from "lodash"
+import CONFIGS from "@configs/index"
+import { metaData } from "@src/meta/meta"
+import { ReactElement } from "react"
 
 interface IProp {
-  meta_title: string
-  meta_keyword: string
-  meta_description: string
-  meta_url: string
-  og_image: string
+  meta_title?: string
+  meta_keyword?: string
+  meta_description?: string
+  meta_url?: string
+  og_image?: string
 }
-const MetaDataTag = ({
-  meta_title,
-  meta_keyword,
-  meta_description,
-  meta_url,
-  og_image
-}: IProp) => (
-  <>
+const MetaDataTag = (props) => {
+  const {
+    meta_title,
+    meta_keyword,
+    meta_description,
+    meta_url,
+    og_image
+  }: IProp = props
+
+  return (
     <Head>
-      <title>{meta_title}</title>
-      <meta
-        name="title"
-        content={meta_title}
-      />
+      <title>{meta_title ?? metaData.meta_title}</title>
       <meta
         name="description"
-        content={meta_description}
+        content={meta_description ?? metaData.meta_description}
+      />
+      <link
+        rel="icon"
+        href="https://files.naka.im/seo/favicon.png"
       />
       {/* facebook */}
       <meta
@@ -37,7 +42,7 @@ const MetaDataTag = ({
       />
       <meta
         property="og:url"
-        content={meta_url}
+        content={CONFIGS.BASE_URL.FRONTEND + meta_url}
       />
       <meta
         property="og:type"
@@ -45,19 +50,19 @@ const MetaDataTag = ({
       />
       <meta
         property="og:title"
-        content={meta_title}
+        content={meta_title ?? metaData.meta_title}
       />
       <meta
         property="og:site_name"
-        content="NakamotoGames"
+        content="NAKAMOTO Games"
       />
       <meta
         property="og:description"
-        content={meta_description}
+        content={meta_description ?? metaData.meta_description}
       />
       <meta
         property="og:image"
-        content={og_image}
+        content={og_image ?? metaData.og_image}
       />
       <meta
         property="og:width"
@@ -67,8 +72,8 @@ const MetaDataTag = ({
         property="og:height"
         content="1260"
       />
-      {/* twitter */}
 
+      {/* twitter */}
       <meta
         property="twitter:card"
         content="summary_large_image"
@@ -83,7 +88,7 @@ const MetaDataTag = ({
       />
       <meta
         property="twitter:image"
-        content={og_image}
+        content={og_image ?? metaData.og_image}
       />
       <meta
         property="site"
@@ -91,19 +96,22 @@ const MetaDataTag = ({
       />
       <meta
         property="twitter:title"
-        content={meta_title}
+        content={meta_title ?? metaData.meta_title}
       />
       <meta
         property="twitter:description"
-        content={meta_description}
+        content={meta_description ?? metaData.meta_description}
       />
 
       <meta
         name="keywords"
-        content={meta_keyword}
+        content={meta_keyword ?? metaData.meta_keyword}
       />
     </Head>
-  </>
-)
+  )
+}
+MetaDataTag.getLayout = function getLayout(page: ReactElement) {
+  return <>{page}</>
+}
 
 export default MetaDataTag

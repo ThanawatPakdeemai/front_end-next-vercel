@@ -12,22 +12,17 @@ import { ProviderApp, Web3Provider } from "@providers/index"
 import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material"
 import { theme } from "@styles/themes/darkTheme"
 import { CacheProvider, EmotionCache } from "@emotion/react"
-import Head from "next/head"
 import dynamic from "next/dynamic"
 import dayjs from "dayjs"
 import rt from "dayjs/plugin/relativeTime"
 import createEmotionCache from "@utils/createEmotionCache"
-import { metaData } from "@src/meta/meta"
+import MetaDataTag from "@components/atoms/MetaDataTag"
 
 const Loading = dynamic(() => import("@components/molecules/Loading"), {
   suspense: true,
   ssr: false
 })
-// eslint-disable-next-line no-unused-vars
-const MetaDataTag = dynamic(() => import("@components/atoms/MetaDataTag"), {
-  suspense: true,
-  ssr: false
-})
+
 dayjs.extend(rt)
 
 const clientSideEmotionCache = createEmotionCache()
@@ -49,29 +44,7 @@ const MyApp = (props) => {
 
   return (
     <>
-      <Head>
-        <meta charSet="utf-8" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1"
-        />
-        <link
-          rel="shortcut icon"
-          href="favicon.ico"
-          type="image/x-icon"
-        />
-        <link
-          rel="icon"
-          href="https://files.naka.im/seo/favicon.png"
-        />
-      </Head>
-      <MetaDataTag
-        meta_description={metaData.meta_description}
-        meta_keyword={metaData.meta_keyword}
-        meta_title={metaData.meta_title}
-        meta_url={metaData.url}
-        og_image={metaData.og_image}
-      />
+      <MetaDataTag />
       <Loading />
       <QueryClientProvider client={queryClient}>
         <Web3Provider>

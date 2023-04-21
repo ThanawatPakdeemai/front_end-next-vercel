@@ -21,7 +21,7 @@ export interface ISocialShareProps {
 }
 
 const SocialShare = ({
-  shareHeading = "",
+  shareHeading = "Share :",
   shareTitle,
   shareURL,
   hideTwitter = false,
@@ -39,7 +39,7 @@ const SocialShare = ({
   return (
     <div className="mx-12 flex items-center">
       {shareHeading && (
-        <Typography className="font-neue-machina text-default text-neutral-100">
+        <Typography className="mr-4 font-neue-machina text-default text-neutral-100">
           {shareHeading}
         </Typography>
       )}

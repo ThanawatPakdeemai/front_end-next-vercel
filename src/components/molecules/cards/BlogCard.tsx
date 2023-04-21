@@ -4,20 +4,23 @@ import { motion, Variants } from "framer-motion"
 import { v4 as uuid } from "uuid"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import FireIcon from "@components/icons/BlogIcon/FireIcon"
-import { CardMedia, Typography } from "@mui/material"
+import { Typography } from "@mui/material"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 import Link from "next/link"
+import { ImageCustom } from "@components/atoms/image/Image"
+import { Tag } from "@feature/blog/interfaces/IBlogTagsService"
 
 export interface IBlogCard {
   iconmotion?: Variants
   arrowMotion?: Variants
   imgMotion?: Variants
-  image: any
-  title: any
-  description: any
-  date_released: any
+  image: string
+  title: string
+  description: string
+  date_released: Date | string
   blog_id: string
   className?: string
+  tags?: Tag[]
 }
 
 const BlogCard = ({
@@ -47,13 +50,17 @@ const BlogCard = ({
             icon={<FireIcon />}
             className="z-4 absolute right-0 top-0 m-4 flex items-center justify-center rounded-lg bg-neutral-900 p-1"
           />
-          <motion.div variants={imgMotion}>
-            <CardMedia
-              image={image}
-              sx={{
-                height: "238px",
-                borderRadius: "24px"
-              }}
+
+          <motion.div
+            variants={imgMotion}
+            className="overflow-hidden rounded-md"
+          >
+            <ImageCustom
+              src={image}
+              alt={title}
+              width={300}
+              height={300}
+              className="h-full min-h-[190px] w-full object-cover object-center"
             />
           </motion.div>
         </div>

@@ -12,7 +12,7 @@ export interface IMetaTags {
 const MetaTags = ({ tags, titleTag = "Tags" }: IMetaTags) => {
   const { t } = useTranslation()
   return (
-    <div className="grid h-full w-full grid-rows-2 flex-wrap">
+    <div className="tags-wrapper flex h-full w-full flex-col justify-center gap-2">
       {titleTag && (
         <div className="flex items-center font-neue-machina text-sm uppercase text-white-default">
           {t(`${titleTag}`)}

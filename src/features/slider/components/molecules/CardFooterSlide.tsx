@@ -34,6 +34,7 @@ const CardFooterSlide = ({
   return (
     <footer className="slide-item--footer relative mt-4 flex items-center justify-between md:mt-auto">
       <Box
+        component="div"
         sx={{
           "button": {
             maxHeight: "50px",

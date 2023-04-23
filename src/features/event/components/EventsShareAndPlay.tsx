@@ -37,8 +37,8 @@ const EventsShareAndPlay = ({
           <TableHead>
             <TableRow>
               <TableCell>Rank</TableCell>
-              {/* <TableCell>Score Event</TableCell>
-              <TableCell className="w-[125px]">Reward</TableCell> */}
+              <TableCell>Score Event</TableCell>
+              <TableCell className="w-[125px]">Reward</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

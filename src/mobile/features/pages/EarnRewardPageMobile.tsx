@@ -7,7 +7,7 @@ import useClaimReward from "@feature/game/containers/hooks/useClaimEarnedRewardB
 import useGetAllGames from "@feature/game/containers/hooks/useGetAllGame"
 import useGetP2ERewardByPlayerId from "@feature/game/containers/hooks/useGetP2ERewardByPlayerId"
 import { useToast } from "@feature/toast/containers"
-import { Chip, Typography, Box } from "@mui/material"
+import { Chip, Typography } from "@mui/material"
 import { IPlayToEarnRewardData } from "@src/types/games"
 import useProfileStore from "@stores/profileStore"
 import React, { useEffect, useState } from "react"
@@ -139,19 +139,11 @@ const EarnRewardPageMobile = () => {
           </>
         )}
       </div>
-      <Box
-        className="flex h-[100px] w-full items-center justify-center rounded-[13px] text-center text-[26px] uppercase"
-        sx={{
-          backgroundColor: "#2C0909",
-          backgroundImage:
-            "repeating-linear-gradient(0deg, #e1e2e20A 4%, #2c0909 8%)",
-          backdropFilter: "blur(2.5px)"
-        }}
-      >
+      <div className="flex h-[100px] w-full items-center justify-center rounded-[13px] text-center text-[26px] uppercase">
         <Typography className="text-shadow-red px-4 font-digital-7 text-[26px] text-error-main">
           {t("earn_banner_message")}
         </Typography>
-      </Box>
+      </div>
       <div className="grid max-w-[678px] gap-[10px] !overflow-x-auto md:flex md:flex-col">
         {content}
       </div>

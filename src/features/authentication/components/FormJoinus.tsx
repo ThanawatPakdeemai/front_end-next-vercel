@@ -1,4 +1,5 @@
-import React, { memo } from "react"
+import React, { memo, useEffect, useState } from "react"
+
 import {
   Box,
   Typography,
@@ -19,17 +20,19 @@ import FieldItem from "@components/molecules/FieldItem"
 import PortraitIcon from "@components/icons/PortraitIcon"
 import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import EnvelopeIcon from "@components/icons/EnvelopeIcon"
-import { CHAIN_LIST } from "@configs/chain"
-import DropdownListChainList from "@feature/dropdown/components/molecules/DropdownListChainList"
+import DropdownListGameType from "@feature/dropdown/components/molecules/DropdownListGameType"
 import { DROPDOWN_GAMETYPE } from "@configs/gameType"
-import DropdownListGameType, {
+import DropdownListCategories, {
   StyledFormLabel
-} from "@feature/dropdown/components/molecules/DropdownListGameType"
+} from "@feature/dropdown/components/molecules/DropdownListCategories"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import IEdit from "@components/icons/Edit"
 import InsertLinkIcon from "@mui/icons-material/InsertLink"
-import useFormController from "../containers/hooks/useFormController"
+import { getCategories } from "@feature/dropdown/containers/services/dropdown.service"
+import { IGameCategory } from "@feature/dropdown/interfaces/IDropdownService"
+import { useToast } from "@feature/toast/containers"
 import useFormJoinUsController from "../containers/hooks/useFormJoinUsController"
+import useFormController from "../containers/hooks/useFormController"
 
 export const StyledTextField = {
   "& .MuiOutlinedInput-root": {
@@ -74,8 +77,12 @@ const StyledRadio = {
 
 const FormJoinus = () => {
   const { isEmail, isName } = useFormController()
+  const [gameCategoriesData, setGameCategoriesData] = useState<IGameCategory[]>(
+    []
+  )
+  const { errorToast } = useToast()
   const {
-    onSubmitRegister,
+    onSubmitGenaralReview,
     valueRadio,
     handleChangeRadio,
     handleSubmit,
@@ -85,10 +92,50 @@ const FormJoinus = () => {
     errors
   } = useFormJoinUsController()
 
+  const onCategories = () => {
+    getCategories()
+      .then((res) => {
+        res.splice(0, 0, {
+          id: "",
+          name: "Select...",
+          createdAt: "",
+          updatedAt: "",
+          detail: "",
+          slug: "",
+          color_code: "",
+          image_list: "",
+          image_banner: "",
+          is_active: true,
+          _id: ""
+        })
+        setGameCategoriesData(res)
+      })
+      .catch((error) => {
+        errorToast(error.message)
+      })
+  }
+
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      onCategories()
+    }
+
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
-    <form onSubmit={handleSubmit(onSubmitRegister)}>
-      <Box style={{ width: 423, height: 638 }}>
+    <form onSubmit={handleSubmit(onSubmitGenaralReview)}>
+      <Box
+        component="div"
+        style={{ width: 423, height: 638 }}
+      >
         <Box
+          component="div"
           className="flex rounded-lg"
           sx={{ height: "54px" }}
         >
@@ -115,12 +162,13 @@ const FormJoinus = () => {
                   className="w-full"
                   type="name"
                   placeholder="Name..."
-                  label="Game developer name"
+                  label="Developer name"
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                     isName(e.target.value.toString())
-                    setValue("name", e.target.value)
+                    setValue("short_detail.developer_name", e.target.value)
                   }}
-                  {...(register("name"), { required: true })}
+                  {...(register("short_detail.developer_name"),
+                  { required: true })}
                   sx={StyledTextField}
                   id="name"
                   size="medium"
@@ -145,12 +193,13 @@ const FormJoinus = () => {
                   className="w-full"
                   type="email"
                   placeholder="Email..."
-                  label="Game developer email"
+                  label="Developer email"
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                     isEmail(e.target.value.toString())
-                    setValue("email", e.target.value)
+                    setValue("short_detail.developer_email", e.target.value)
                   }}
-                  {...(register("email"), { required: true })}
+                  {...(register("short_detail.developer_email"),
+                  { required: true })}
                   sx={StyledTextField}
                   id="email"
                   size="medium"
@@ -182,10 +231,9 @@ const FormJoinus = () => {
                   placeholder="Game Name..."
                   label="Game Name"
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    isName(e.target.value.toString())
-                    setValue("gameName", e.target.value)
+                    setValue("name", e.target.value)
                   }}
-                  {...(register("gameName"), { required: true })}
+                  {...(register("name"), { required: true })}
                   sx={StyledTextField}
                   id="gameName"
                   size="medium"
@@ -198,11 +246,80 @@ const FormJoinus = () => {
                   }}
                 />
               }
-              formSubmitErrors={false}
-              error={errors.name}
-              statusError={errors.name?.message}
             />
           </Grid>
+
+          <Grid
+            item
+            xs={6}
+          >
+            <FieldItem
+              fieldType={
+                <TextField
+                  className="w-full"
+                  type="text"
+                  placeholder="Publisher..."
+                  label="Developer publisher"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setValue("short_detail.publisher", e.target.value)
+                  }}
+                  {...(register("short_detail.publisher"), { required: true })}
+                  sx={StyledTextField}
+                  id="publisher"
+                  size="medium"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <PortraitIcon />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              }
+            />
+          </Grid>
+
+          <Grid
+            item
+            xs={6}
+          >
+            <FieldItem
+              fieldType={
+                <>
+                  {gameCategoriesData && gameCategoriesData.length > 0 && (
+                    <>
+                      <Controller
+                        name="categories"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { ...field } }) => (
+                          <>
+                            <DropdownListCategories
+                              {...field}
+                              list={gameCategoriesData}
+                              label="Game categories"
+                              onChangeSelect={(_item) => {
+                                if (_item.id) {
+                                  setValue("categories", [`${_item.id}`])
+                                } else {
+                                  setValue("categories", [])
+                                }
+                              }}
+                              register={register}
+                            />
+                            {errors.categories && (
+                              <span>{errors.categories.message}</span>
+                            )}
+                          </>
+                        )}
+                      />
+                    </>
+                  )}
+                </>
+              }
+            />
+          </Grid>
+
           <Grid
             item
             xs={6}
@@ -212,7 +329,7 @@ const FormJoinus = () => {
                 <>
                   {DROPDOWN_GAMETYPE && DROPDOWN_GAMETYPE.length > 0 && (
                     <Controller
-                      name="chain"
+                      name="player_type"
                       control={control}
                       rules={{ required: true }}
                       render={({ field: { ...field } }) => (
@@ -221,8 +338,7 @@ const FormJoinus = () => {
                           list={DROPDOWN_GAMETYPE}
                           label="Game type"
                           onChangeSelect={(_item) => {
-                            setValue("gameType", _item.title)
-                            // updatePricePerItem()
+                            setValue("player_type", _item.title)
                           }}
                         />
                       )}
@@ -233,40 +349,7 @@ const FormJoinus = () => {
             />
           </Grid>
         </Grid>
-        <Grid
-          container
-          spacing={2.25}
-        >
-          <Grid
-            item
-            xs={12}
-          >
-            <FieldItem
-              fieldType={
-                <>
-                  {CHAIN_LIST && CHAIN_LIST.length > 0 && (
-                    <Controller
-                      name="chain"
-                      control={control}
-                      rules={{ required: true }}
-                      render={({ field: { ...field } }) => (
-                        <DropdownListChainList
-                          {...field}
-                          list={CHAIN_LIST}
-                          label="Blockchain"
-                          onChangeSelect={(_item) => {
-                            setValue("chain", _item)
-                            // updatePricePerItem()
-                          }}
-                        />
-                      )}
-                    />
-                  )}
-                </>
-              }
-            />
-          </Grid>
-        </Grid>
+
         <Grid
           container
           spacing={2.25}
@@ -323,9 +406,9 @@ const FormJoinus = () => {
                   placeholder="Game Link..."
                   label="Game Link"
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setValue("link", e.target.value)
+                    setValue("game_play_url", e.target.value)
                   }}
-                  {...(register("link"), { required: true })}
+                  {...(register("game_play_url"), { required: true })}
                   sx={StyledTextField}
                   id="link"
                   size="medium"
@@ -341,6 +424,37 @@ const FormJoinus = () => {
             />
           </Grid>
         </Grid>
+
+        <Grid
+          container
+          spacing={2.25}
+        >
+          <Grid
+            item
+            xs={12}
+          >
+            <FieldItem
+              fieldType={
+                <TextField
+                  className="w-full"
+                  type="text"
+                  placeholder="how to play..."
+                  label="Game how to play"
+                  rows={4}
+                  multiline
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setValue("how_to_play", e.target.value)
+                  }}
+                  {...(register("how_to_play"), { required: true })}
+                  sx={StyledTextField2}
+                  id="how_to_play"
+                  size="medium"
+                />
+              }
+            />
+          </Grid>
+        </Grid>
+
         <Grid
           container
           spacing={2.25}
@@ -359,9 +473,9 @@ const FormJoinus = () => {
                   rows={4}
                   multiline
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setValue("gameDescription", e.target.value)
+                    setValue("description", e.target.value)
                   }}
-                  {...(register("gameDescription"), { required: true })}
+                  {...(register("description"), { required: true })}
                   sx={StyledTextField2}
                   id="gameDescription"
                   size="medium"
@@ -369,19 +483,19 @@ const FormJoinus = () => {
               }
             />
           </Grid>
-          <Grid container>
-            <Grid
-              item
-              xs={12}
-              className="flex justify-center"
-            >
-              <ButtonToggleIcon
-                type="submit"
-                startIcon={<IEdit />}
-                text="Regiter"
-                className="btn-rainbow-theme h-[40px] !w-[209px] bg-secondary-main font-bold capitalize text-white-default"
-              />
-            </Grid>
+        </Grid>
+        <Grid container>
+          <Grid
+            item
+            xs={12}
+            className="flex justify-center"
+          >
+            <ButtonToggleIcon
+              type="submit"
+              startIcon={<IEdit />}
+              text="Regiter"
+              className="btn-rainbow-theme h-[40px] !w-[209px] bg-secondary-main font-bold capitalize text-white-default"
+            />
           </Grid>
         </Grid>
       </Box>

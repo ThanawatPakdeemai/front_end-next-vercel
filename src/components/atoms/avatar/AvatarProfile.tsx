@@ -24,6 +24,7 @@ const AvatarProfile = ({
 }: IProp) => (
   <div className="flex justify-center	">
     <Box
+      component="div"
       className={` flex ${height} items-center justify-center
         ${border.width}  ${border.height}] 
         rounded-xl border-2 ${borderColor}`}
@@ -52,7 +53,10 @@ const AvatarProfile = ({
         >
           {src && (
             <>
-              <Box className=" relative w-full">
+              <Box
+                component="div"
+                className=" relative w-full"
+              >
                 <Image
                   src={src ?? "/images/mocks/free2playGames/camoratuc_game.png"}
                   width={88}

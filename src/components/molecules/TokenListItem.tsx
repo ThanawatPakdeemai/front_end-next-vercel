@@ -44,6 +44,7 @@ const TokenListItem = ({
   return (
     <div className="token--list-item__wrapper">
       <Box
+        component="div"
         sx={{
           boxShadow: shadow
             ? "0px 1px 1px rgba(0, 0, 0, 0.25), inset 0px 1px 1px rgba(255, 255, 255, 0.05), inset 0px -1px 1px rgba(0, 0, 0, 0.25)"

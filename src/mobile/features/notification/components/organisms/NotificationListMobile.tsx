@@ -2,7 +2,6 @@ import React, { memo } from "react"
 import useNotificationController from "@feature/notification/containers/hooks/useNotificationController"
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonNotification from "@components/atoms/skeleton/SkeletonNotification"
-import { Box } from "@mui/material"
 import useNotiStore from "@stores/notification"
 import useGlobal from "@hooks/useGlobal"
 import DropdownLimit from "@components/atoms/DropdownLimit"
@@ -54,14 +53,7 @@ const NotificationListMobile = () => {
       ) : (
         <NoData />
       )}
-      <Box
-        className="my-2 flex justify-between md:my-5 md:w-[678px]"
-        sx={{
-          ".MuiPagination-ul": {
-            gap: "5px 0"
-          }
-        }}
-      >
+      <div className="my-2 flex justify-between md:my-5 md:w-[678px]">
         <PaginationNaka
           totalCount={totalCount}
           limit={limit}
@@ -74,7 +66,7 @@ const NotificationListMobile = () => {
           list={pager}
           onChangeSelect={setLimit}
         />
-      </Box>
+      </div>
       <div className="header fixed inset-x-0 bottom-0 z-[99]  flex flex-row items-center gap-4 bg-neutral-800 p-2">
         <div className="w-[160%] rounded bg-neutral-900 p-2.5">
           <p className="my-2 pl-2 text-sm font-bold uppercase text-[#ffffff]">

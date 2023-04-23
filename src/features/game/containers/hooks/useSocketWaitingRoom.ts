@@ -270,10 +270,11 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
             resolve(false)
           }
         })
+      } else {
+        transactionAction(false)
+        waitingRoomItemBurnAction(player_id, true)
+        resolve(true)
       }
-      transactionAction(false)
-      waitingRoomItemBurnAction(player_id, true)
-      resolve(true)
     })
 
   const getPlayersCheckItemOfPlayerListen = useCallback(

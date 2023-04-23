@@ -4,7 +4,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-console */
 import React, { useEffect, useState } from "react"
-import { Table, TableContainer, Box } from "@mui/material"
+import { Table, TableContainer } from "@mui/material"
 import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import useHistory from "@feature/history/containers/hook/useHistory"
 import dayjs from "dayjs"
@@ -37,6 +37,7 @@ const HistoryTableMobile = () => {
   const [playtoearn, setPlaytoearn] = useState<any[]>([])
   const [freetoplay, setFreetoplay] = useState<any[]>([])
   const [gametype, setGametype] = useState<string>("playtoearn")
+  console.log("playtoearn", playtoearn)
 
   useEffect(() => {
     let load = false
@@ -216,14 +217,7 @@ const HistoryTableMobile = () => {
             <NoData />
           )}
 
-          <Box
-            className="my-2 flex justify-between md:my-5 md:w-[678px]"
-            sx={{
-              ".MuiPagination-ul": {
-                gap: "5px 0"
-              }
-            }}
-          >
+          <div className="my-2 flex justify-between md:my-5 md:w-[678px]">
             <PaginationNaka
               totalCount={totalCount}
               limit={limit}
@@ -236,7 +230,7 @@ const HistoryTableMobile = () => {
               list={pager}
               onChangeSelect={setLimit}
             />
-          </Box>
+          </div>
         </div>
       )}
     </>

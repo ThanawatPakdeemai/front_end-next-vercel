@@ -42,7 +42,10 @@ export default function WalletPage() {
    */
   const isDisabledButton = (): boolean => {
     if (value === 0) return true
-    if (value <= (currentTokenSelected as ITokenContract).balanceWallet.digit)
+    if (
+      Number(value) <=
+      Number((currentTokenSelected as ITokenContract).balanceWallet.digit)
+    )
       return false
     return true
   }
@@ -73,6 +76,7 @@ export default function WalletPage() {
         <div className="md:min-w-[224px]">
           {isConnected && currentTokenSelected?.address !== "" && (
             <TokenList
+              widthBalance="w-[calc(100%-70px)]"
               dataList={chainSupport}
               currentTabChainSelected={
                 CHAIN_SUPPORT.find(

@@ -70,14 +70,19 @@ const PlayerCard = ({ players }: IProps) => {
   }
   return (
     <>
-      <Box className="custom-scroll mb-5 overflow-y-auto">
+      <Box
+        component="div"
+        className="custom-scroll mb-5 overflow-y-auto"
+      >
         <Box
+          component="div"
           className={`xs:grid-cols-2 m-auto mt-2 grid h-[345px] w-max grid-cols-3 gap-[1.5vw] sm:w-[520px] sm:grid-cols-3 sm:px-0 md:mt-10 md:grid-cols-4 md:gap-3
           md:px-4  ${players[0] && "pt-4"}`}
         >
           {players.map((item, index) =>
             item ? (
               <Box
+                component="div"
                 className="m-auto w-fit"
                 key={item._id}
               >
@@ -98,7 +103,10 @@ const PlayerCard = ({ players }: IProps) => {
                   }}
                   badgeColor={colorsBadge(item)}
                 />
-                <Box className="m-auto w-[92px] py-3">
+                <Box
+                  component="div"
+                  className="m-auto w-[92px] py-3"
+                >
                   <Typography className="text-center font-neue-machina text-sm uppercase text-[700] text-neutral-300">
                     {item.username}
                   </Typography>
@@ -115,6 +123,7 @@ const PlayerCard = ({ players }: IProps) => {
               </Box>
             ) : (
               <Box
+                component="div"
                 className="m-auto  rounded-3xl"
                 key={Number(index)}
               >
@@ -127,7 +136,10 @@ const PlayerCard = ({ players }: IProps) => {
                   borderColor=" border-neutral-800"
                   src="/images/home/logoNakaMaster.svg"
                 />
-                <Box className="h-[57px] py-3" />
+                <Box
+                  component="div"
+                  className="h-[57px] py-3"
+                />
               </Box>
             )
           )}

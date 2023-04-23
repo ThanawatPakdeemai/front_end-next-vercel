@@ -109,6 +109,7 @@ const GameCarousel = ({
         onPlaying
       />
       <Box
+        component="div"
         className={`game-carousel-slide overflow-hidden ${
           list.length < 5 && "slick-slider-w-auto"
         }`}

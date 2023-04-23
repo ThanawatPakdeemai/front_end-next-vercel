@@ -46,6 +46,7 @@ const Home = () => {
   const { hydrated } = useGlobal()
   const [openSwap, setOpenSwap] = useState(false)
   const { t } = useTranslation()
+
   /**
    * @description: Spark fire effect
    */
@@ -86,7 +87,6 @@ const Home = () => {
   const getGameTypeP2EByTitleClicked = (): IGetType => {
     switch (p2eCurType) {
       case "arcade-emporium":
-        // TODO: choose to change to hot-game
         return "arcade-emporium"
       default:
         return "play-to-earn-games"
@@ -126,7 +126,6 @@ const Home = () => {
   return hydrated ? (
     <>
       <BannerSlide />
-      {/* Testing display a CarouselSlide component, waiting to merge with team */}
       <div className="relative">
         <Tagline
           bgColor="bg-secondary-main"
@@ -153,7 +152,10 @@ const Home = () => {
         )}
       </div>
       <div className="flex grid-cols-1 flex-wrap gap-6 lg:grid lg:grid-cols-2">
-        <Box className="flex-[1_1_100%] sm:flex-[1_1_60%] xl:flex-none">
+        <Box
+          component="div"
+          className="flex-[1_1_100%] sm:flex-[1_1_60%] xl:flex-none"
+        >
           <CardMarketplace href={CONFIGS.BASE_URL.MARKETPLACE} />
           <div className="mt-4">
             <Grid
@@ -268,8 +270,14 @@ const Home = () => {
       {/* <OnPlaying /> */}
       <OnPlayingStyle2 isSlider={false} />
       <DeveloperPart />
-      <Box className="xs:flex-col mb-10 mt-4 gap-4 lg:flex">
-        <Box className="flex-1 xl:flex-none">
+      <Box
+        component="div"
+        className="xs:flex-col mb-10 mt-4 gap-4 lg:flex"
+      >
+        <Box
+          component="div"
+          className="flex-1 xl:flex-none"
+        >
           <Grid
             container
             spacing={2}
@@ -308,7 +316,10 @@ const Home = () => {
             </CardLinkTemplate>
           </Grid>
         </Box>
-        <Box className="mt-2 flex-1 sm:mt-4 md:max-w-full lg:mt-0 lg:max-w-[33.33%] xl:flex-none">
+        <Box
+          component="div"
+          className="mt-2 flex-1 sm:mt-4 md:max-w-full lg:mt-0 lg:max-w-[33.33%] xl:flex-none"
+        >
           <CardNakaverse href={CONFIGS.BASE_URL.NAKAVERSE} />
         </Box>
       </Box>

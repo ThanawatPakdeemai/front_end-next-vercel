@@ -178,6 +178,7 @@ export default function CardBuyItem({
       if (qtyItemSelected > 0) {
         return buttonStyle === "green" ? (
           <Box
+            component="div"
             sx={StartButtonCustomStyle}
             className="flex w-full justify-center uppercase"
           >

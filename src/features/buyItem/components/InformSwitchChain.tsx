@@ -14,6 +14,7 @@ const InformSwitchChain = ({
   handleClick
 }: IInformSwitchChainProps) => (
   <Box
+    component="div"
     sx={{
       ".MuiTypography-root": {
         fontSize: "90%"

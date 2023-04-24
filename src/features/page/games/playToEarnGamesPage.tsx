@@ -51,6 +51,7 @@ const PlayToEarnGamesPage = () => {
       )}
 
       <Box
+        component="div"
         className="my-2 flex w-full justify-between md:my-5"
         sx={{
           ".MuiPagination-ul": {

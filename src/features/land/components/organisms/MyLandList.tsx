@@ -7,7 +7,8 @@ import {
   TableContainer,
   TableHead
 } from "@mui/material"
-import React, { useEffect, useState } from "react"
+import React from "react"
+import { useRouter } from "next/router"
 import { IconVerify } from "@components/icons/Icons"
 import CopyButton from "@components/atoms/CopyButton"
 import { useGetMyLand } from "@feature/land/containers/hooks/useGetMyLand"
@@ -15,65 +16,42 @@ import { IMarketLandData } from "@feature/land/interfaces/ILandService"
 import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
 import DropdownLimit from "@components/atoms/DropdownLimit"
 import useGlobal from "@hooks/useGlobal"
-import useProfileStore from "@stores/profileStore"
 import useMyLandController from "@feature/land/containers/hooks/useMyLandController"
 import TableNodata from "@feature/transaction/components/atoms/TableNodata"
 import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
 import { v4 as uuid } from "uuid"
 
-const MyLandList = () => {
-  const { profile } = useProfileStore()
-  const [totalCount, setTotalCount] = useState<number>(0)
-  const [limit, setLimit] = useState<number>(6)
-  const [page, setPage] = useState<number>(1)
-  const [txHistory, setTxHistory] = useState<IMarketLandData[]>([])
+interface IProp {
+  landData: IMarketLandData[]
+  totolCount: number
+  limit: number
+  setLimit: any
+  page: number
+  setPage: any
+}
 
-  const { mutateGetMyLand, isLoading } = useGetMyLand()
+const MyLandList = ({
+  landData,
+  totolCount = 0,
+  limit,
+  setLimit,
+  page,
+  setPage
+}: IProp) => {
+  const { isLoading } = useGetMyLand()
+  const router = useRouter()
   const { hydrated, pager } = useGlobal()
-  const { sortLandId, sortBlockPoint, landListHeader } = useMyLandController()
+  const { landListHeader } = useMyLandController()
 
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      const fetchHistory = async () => {
-        if (profile.data) {
-          await mutateGetMyLand({
-            _limit: limit,
-            _page: page,
-            _search: {
-              player_id: profile.data && profile.data.id ? profile.data.id : "",
-              isRent: false,
-              type: "nft_land"
-            },
-            _sort:
-              sortLandId || sortBlockPoint
-                ? {
-                    land_id: sortLandId,
-                    position: sortBlockPoint,
-                    created_at: -1
-                  }
-                : { created_at: -1 },
-            _landList: []
-          }).then((res) => {
-            // res.status === 200 -> ok
-            if (res.data) {
-              setTxHistory(res.data)
-            }
-            if (res.info) {
-              setTotalCount(res.info.totalCount)
-            }
-          })
-        }
-      }
-      fetchHistory()
-    }
-
-    return () => {
-      load = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [limit, page, sortLandId, sortBlockPoint])
+  const handleViewClick = (x: string, y: string) => {
+    router.push(
+      {
+        query: { x, y }
+      },
+      undefined,
+      { shallow: true }
+    )
+  }
 
   return (
     <>
@@ -104,8 +82,8 @@ const MyLandList = () => {
                   "tr:last-of-type": { marginBottom: 0 }
                 }}
               >
-                {txHistory && txHistory.length > 0 ? (
-                  txHistory.map((item) => (
+                {landData && landData.length > 0 ? (
+                  landData.map((item) => (
                     <TableRowData
                       key={item.land_id}
                       className="mb-1.5 !rounded-[9px]"
@@ -153,7 +131,9 @@ const MyLandList = () => {
                             color="default"
                             variant="outlined"
                             className="!h-[30px] w-[67px] !rounded-default"
-                            onClick={() => {}}
+                            onClick={() =>
+                              handleViewClick(item.position.x, item.position.y)
+                            }
                           />
                         </div>
                       ]}
@@ -168,10 +148,10 @@ const MyLandList = () => {
           </Table>
         </TableContainer>
       )}
-      {txHistory && txHistory.length > 0 && (
+      {landData && landData.length > 0 && (
         <div className="justify-between md:my-5 md:flex xl:w-[457px]">
           <PaginationNaka
-            totalCount={totalCount}
+            totalCount={totolCount}
             limit={limit}
             page={page}
             setPage={setPage}

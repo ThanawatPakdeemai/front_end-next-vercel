@@ -24,7 +24,7 @@ const EventDetailLayout = ({
   component2,
   component3
 }: IEventDetailLayoutProps) => (
-  <div className="main-container mx-auto w-full  px-2 lg:px-0">
+  <div className="main-container mx-auto w-full px-2 lg:px-0">
     <Header />
     {bannerImage ? (
       <BannerSingle
@@ -43,17 +43,12 @@ const EventDetailLayout = ({
         _breadcrumbs={breadcrumbs}
       />
     )}
-
-    {/* {gameData && "device_support" in gameData && (
-        <Howto data={gameData as IGame} />
-      )} */}
     {component}
     {/**
      * @description In case there is a need to add another component
      */}
     {component2 && <div className="mt-12">{component2}</div>}
     {component3 && <div className="mt-12">{component3}</div>}
-    {/* {renderStatistic()} */}
     <Footer />
   </div>
 )

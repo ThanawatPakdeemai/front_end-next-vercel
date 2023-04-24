@@ -15,7 +15,10 @@ const RightMenuBuyItem = ({ disabled }: IProp) => {
 
   return (
     <>
-      <Box className="xs:flex-col items-center justify-between gap-1 lg:flex">
+      <Box
+        component="div"
+        className="xs:flex-col items-center justify-between gap-1 lg:flex"
+      >
         <ButtonBuyItem
           handleButton={handleOpen}
           disabled={disabled}
@@ -37,7 +40,10 @@ const RightMenuBuyItem = ({ disabled }: IProp) => {
               title="Buy Assets"
             />
           </div>
-          <Box className="hide-scroll h-[480px] w-full overflow-y-scroll ">
+          <Box
+            component="div"
+            className="hide-scroll h-[480px] w-full overflow-y-scroll "
+          >
             <FormBuyItem />
           </Box>
         </Stack>

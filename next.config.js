@@ -6,6 +6,9 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true"
 })
 
+// eslint-disable-next-line import/no-extraneous-dependencies
+// const withTM = require("next-transpile-modules")(["three"])
+
 const { i18n } = require("./next-i18next.config")
 
 const nextConfig = {
@@ -54,7 +57,8 @@ const nextConfig = {
       }
     ]
     // domains: ["nakamoto-prod-new.s3.eu-central-1.amazonaws.com"]
-  }
+  },
+  distDir: process.env.BUILD_DIR || ".next"
 }
 
 module.exports = withBundleAnalyzer({ ...nextConfig })

@@ -13,7 +13,7 @@ const useGetPopularTags = () => {
     staleTime: Infinity
   })
   return {
-    getPopularTagsData,
+    popularTagsData: getPopularTagsData?.data,
     error,
     isLoading,
     isError

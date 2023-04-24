@@ -25,6 +25,7 @@ const SelectDropdownCurrency = ({
   >
     {details.map((item, index: number) => (
       <Box
+        component="div"
         key={Number(index)}
         className="my-1 uppercase"
         onClick={() => {

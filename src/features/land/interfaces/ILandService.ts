@@ -5,6 +5,7 @@ import {
 } from "@feature/marketplace/interfaces/IMarketService"
 import { IMaterialData } from "@feature/material/marketplace/interfaces/IMaterialService"
 import { IFormatService, IInfoFormatServ } from "@interfaces/IHelper"
+import * as THREE from "three"
 
 export type TLand =
   | "copper"
@@ -70,4 +71,29 @@ export interface ILandServ extends IFormatService {
 
 export interface IRedeemServ extends IInfoFormatServ {
   data: string
+}
+
+interface IMarketData {
+  is_active: boolean
+  seller_type: "system" | "user"
+  _id: string
+}
+
+export interface ILandMap {
+  image: string
+  land_id: string
+  logo_in_map: string | null
+  marketplaces_data: IMarketData | null
+  name: string
+  player_id: string
+  position: { x: string; y: string }
+  qrcode_image: string
+  type: string
+  wallet_address: string
+  _id: string
+  color?: THREE.ColorRepresentation | null
+}
+
+export interface IAllLand extends IFormatService {
+  data: ILandMap[]
 }

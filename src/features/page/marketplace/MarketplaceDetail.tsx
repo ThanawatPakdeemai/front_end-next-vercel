@@ -47,9 +47,11 @@ const MarketplaceDetail = () => {
         }
         image={imageNFT}
         video={vdoNFT}
+        model={detailData.building_data?.model_3d}
         poster={
           detailData.land_data?.NFT_image ??
-          detailData.game_data?.image_nft_arcade_game
+          detailData.game_data?.image_nft_arcade_game ??
+          detailData.building_data?.NFT_image
         }
         alt={detailData.land_data?.type}
       >

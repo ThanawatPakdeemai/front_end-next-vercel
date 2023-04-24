@@ -16,7 +16,6 @@ import {
 } from "@mui/material"
 // import MuiAccordionDetails from "@mui/material/AccordionDetails"
 import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
-import Helper from "@utils/helper"
 import { Image } from "@components/atoms/image"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import CONFIGS from "@configs/index"
@@ -31,6 +30,7 @@ import useProfileStore from "@stores/profileStore"
 import { MESSAGES } from "@constants/messages"
 import PlusIcon from "@components/icons/CountIcon/PlusIcon"
 import { useTranslation } from "react-i18next"
+import MiniMap from "@feature/map/components/organisms/MiniMap"
 import TextfieldDetailContent from "../molecules/TextfieldDetailContent"
 import ChipsLink from "../molecules/ChipsLink"
 
@@ -93,7 +93,6 @@ const RightDetailsMarketplace = ({
 }: IProp) => {
   const router = useRouter()
   const profile = useProfileStore((state) => state.profile.data)
-  const { shortenString } = Helper
   const getPathnameType = router.pathname.split("/")[2]
   const [expanded, setExpanded] = React.useState<string | false>("")
   const handleChange =
@@ -177,7 +176,7 @@ const RightDetailsMarketplace = ({
         <div className="flex w-full items-center justify-between">
           <div className="flex gap-[6px]">
             <Chip
-              label={`TOKEN ID : ${shortenString(String(token))}`}
+              label={`TOKEN ID : ${String(token)}`}
               size="small"
               variant="outlined"
             />
@@ -221,10 +220,15 @@ const RightDetailsMarketplace = ({
           price={price}
           count={count}
         />
-        {qrCode && id && (
+        {qrCode && id && position && (
           <>
             <div className="flex h-[158px] w-full gap-1 rounded-lg bg-primary-main p-1">
-              <div className="w-3/4">map</div>
+              <div className="w-3/4">
+                <MiniMap
+                  pos={position}
+                  className="rounded"
+                />
+              </div>
               <div className="relative flex w-1/4 items-center justify-center rounded bg-neutral-800">
                 <Image
                   src={qrCode}

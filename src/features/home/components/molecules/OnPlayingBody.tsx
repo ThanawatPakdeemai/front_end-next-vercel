@@ -49,7 +49,7 @@ const OnPlayingBody = ({ gameItem }: IOnPlayingBodyProps) => {
                         .join("")
                     : item.room_list_url_new ?? item.room_list_url
                 }
-                itemSize={item.item_size}
+                itemSize={gameItem?.game_free_play ? "Free" : item.item_size}
                 roomCount={item.room_list.length}
               />
             ))}
@@ -61,12 +61,14 @@ const OnPlayingBody = ({ gameItem }: IOnPlayingBodyProps) => {
         <span className="text-xs uppercase text-neutral-500">
           {gameItem.game_name}
         </span>
-        <Chip
-          variant="outlined"
-          color="primary"
-          size="small"
-          label={t(gameItem.item_list[0].item_name)}
-        />
+        {!gameItem?.game_free_play && (
+          <Chip
+            variant="outlined"
+            color="primary"
+            size="small"
+            label={t(gameItem.item_list[0].item_name)}
+          />
+        )}
       </div>
     </div>
   )

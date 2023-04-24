@@ -196,6 +196,7 @@ const HistoryTable = () => {
             </Table>
           </TableContainer>
           <Box
+            component="div"
             className="my-2 flex justify-between md:my-5 md:w-[678px]"
             sx={{
               ".MuiPagination-ul": {

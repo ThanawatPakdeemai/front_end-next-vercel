@@ -37,7 +37,6 @@ const HistoryTableMobile = () => {
   const [playtoearn, setPlaytoearn] = useState<any[]>([])
   const [freetoplay, setFreetoplay] = useState<any[]>([])
   const [gametype, setGametype] = useState<string>("playtoearn")
-  console.log("playtoearn", playtoearn)
 
   useEffect(() => {
     let load = false

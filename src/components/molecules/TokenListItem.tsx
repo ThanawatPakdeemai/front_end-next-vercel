@@ -52,7 +52,9 @@ const TokenListItem = ({
         }}
         className="token--list-item !mb-[5px] flex items-center  justify-between rounded-sm bg-neutral-700 p-[3px]"
       >
-        <div className="token--list-item__text flex h-[40px] flex-1 items-center rounded-lg border border-neutral-700 bg-neutral-900 px-3">
+        <div
+          className={`${widthBalance} token--list-item__text flex h-[40px] flex-1 items-center rounded-lg border border-neutral-700 bg-neutral-900 px-3`}
+        >
           {icon || <></>}
           {title ? (
             <span className="ml-3 text-xs uppercase text-neutral-500">

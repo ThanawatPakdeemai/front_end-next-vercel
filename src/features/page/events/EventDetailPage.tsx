@@ -108,7 +108,16 @@ const EventDetailPage = () => {
                   {currentEventData.reward}
                 </Typography>
               </div>
-              {renderPlayerContent()}
+              {/* TODO YUI remove when flow events success */}
+              <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2  md:px-16 md:py-8 md:text-center md:text-base">
+                <Typography className="font-dogicapixel-bold text-center  uppercase">
+                  Event Status
+                </Typography>
+                <Typography className=" text-green-default font-dogicapixel-bold text-center text-[15px] uppercase !text-error-main">
+                  [ {currentEventData.status} ]
+                </Typography>
+              </div>
+              {currentEventData.status !== "end" && renderPlayerContent()}
             </Box>
           }
         />

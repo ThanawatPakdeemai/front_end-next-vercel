@@ -93,12 +93,15 @@ const RightDetailsMarketplace = ({
 }: IProp) => {
   const router = useRouter()
   const profile = useProfileStore((state) => state.profile.data)
-  const getPathnameType = router.pathname.split("/")[2]
+  const getPathnameType = router.pathname.includes("inventory")
+    ? router.asPath.split("/")[3]
+    : router.asPath.split("/")[2]
   const [expanded, setExpanded] = React.useState<string | false>("")
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false)
     }
+
   const handleType = () => {
     const pathMap = {
       building: "building",

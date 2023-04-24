@@ -79,7 +79,7 @@ export default function SummaryDetails() {
                   className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
                   sx={{
                     ".panel-content": {
-                      maxHeight: "270px",
+                      maxHeight: "200px",
                       ".custom-scroll": {
                         overflow: "hidden"
                       }

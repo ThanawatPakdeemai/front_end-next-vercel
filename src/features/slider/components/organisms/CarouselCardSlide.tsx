@@ -2,6 +2,7 @@ import ShortDetailsCTA from "@components/molecules/ShortDetailsCTA"
 import React from "react"
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined"
 import { CardMedia } from "@mui/material"
+import { ImageCustom } from "@components/atoms/image/Image"
 
 export interface CarouselCardSlideProps {
   video?: boolean
@@ -29,15 +30,24 @@ const CarouselCardSlide = ({
       } ${isActive ? "carousel-slide__item--active" : ""}`}
     >
       <div className="carousel-slide__item__image">
-        <CardMedia
-          className="h-[30vh] md:h-[472px]"
-          component={video ? "video" : "img"}
-          alt={name}
-          height={468}
-          src={src}
-          autoPlay
-          controls
-        />
+        {video ? (
+          <CardMedia
+            className="h-[30vh] md:h-[472px]"
+            component={video ? "video" : "img"}
+            alt={name}
+            height={468}
+            src={src}
+            autoPlay
+            controls
+          />
+        ) : (
+          <ImageCustom
+            src={src}
+            alt={name}
+            width={678}
+            height={678}
+          />
+        )}
       </div>
       <ShortDetailsCTA
         description={description}

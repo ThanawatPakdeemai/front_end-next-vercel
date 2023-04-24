@@ -1,8 +1,9 @@
 import { IGame } from "@feature/game/interfaces/IGameService"
 import React from "react"
-import { Box, CardMedia, Grid } from "@mui/material"
+import { Box, Grid } from "@mui/material"
 import useGlobal from "@hooks/useGlobal"
 import Link from "next/link"
+import { ImageCustom } from "@components/atoms/image/Image"
 import CardContentSlide from "../molecules/CardContentSlide"
 import CardNextSlide, { ICardNextSlide } from "../molecules/CardNextSlide"
 
@@ -38,10 +39,10 @@ const BannerCardSlide = ({ slide, ...props }: IBannerCardSlide) => {
                   onHandleSetGameStore(getTypeGamePathFolder(slide), slide)
                 }
               >
-                <CardMedia
-                  component="img"
+                <ImageCustom
                   height={1080}
-                  image={slide.image_home_banner}
+                  width={1920}
+                  src={slide.image_home_banner}
                   alt={slide.name}
                   className="h-full w-full object-cover"
                 />

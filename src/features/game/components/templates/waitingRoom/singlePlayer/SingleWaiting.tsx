@@ -208,7 +208,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
             className="flex flex-col gap-3 rounded-3xl lg:w-[333px]"
             sx={{
               ".panel-content": {
-                maxHeight: "270px",
+                maxHeight: "200px",
                 ".custom-scroll": {
                   overflow: "hidden"
                 }

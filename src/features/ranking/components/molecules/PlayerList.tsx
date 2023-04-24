@@ -80,7 +80,7 @@ const PlayerList = ({
           width="200"
           height="200"
           alt={username}
-          className="h-[58px] w-full rounded-sm object-fill object-center"
+          className="h-[58px] w-full rounded-sm object-cover object-center"
         />
       </div>
       <div className="show-arrow ml-3 hidden">

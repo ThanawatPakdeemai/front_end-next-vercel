@@ -8,7 +8,6 @@ import { Alert, Typography } from "@mui/material"
 import React, { useEffect, useMemo } from "react"
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward"
 
-import useAllBalances from "@hooks/useAllBalances"
 import { useForm } from "react-hook-form"
 import useContractMultichain from "@feature/contract/containers/hooks/useContractMultichain"
 import { formatEther } from "ethers/lib/utils"
@@ -33,6 +32,8 @@ import SwitchChain from "@components/atoms/SwitchChain"
 import { chainIdConfig } from "@configs/sites"
 import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
 import { Trans, useTranslation } from "react-i18next"
+import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
+import useChainSupportStore from "@stores/chainSupport"
 import Input from "../atoms/Input"
 import LeftContentForm from "../molecules/LeftContentForm"
 
@@ -58,7 +59,7 @@ const FormEx = ({
 }: IProp) => {
   const profile = useProfileStore((state) => state.profile.data)
   const { address, signer } = useWeb3Provider()
-  const { balanceValutNaka, balanceValutBusd } = useAllBalances()
+  // const { balanceValutNaka, balanceValutBusd } = useAllBalances()
   const { setClose, setOpen } = useLoadingStore()
   const { handleSwitchNetwork } = useSwitchNetwork()
 
@@ -70,18 +71,27 @@ const FormEx = ({
     sendAllowBinance,
     saveRequestNaka
   } = useContractMultichain()
+  const { chainSupport } = useChainSupportStore()
 
   const { errorToast } = useToast()
   const { t } = useTranslation()
 
   const { formatNumber } = Helper
 
-  const balance = useMemo(() => {
-    if (chain === "polygon") {
-      return Number(balanceValutNaka?.digit)
-    }
-    return Number(balanceValutBusd?.digit)
-  }, [balanceValutBusd, balanceValutNaka])
+  // const balance = useMemo(() => {
+  //   if (chain === "polygon") {
+  //     return Number(balanceValutNaka?.digit)
+  //   }
+  //   return Number(balanceValutBusd?.digit)
+  // }, [balanceValutBusd, balanceValutNaka])
+
+  const balance = useMemo(
+    () =>
+      Number(
+        (chainSupport as unknown as ITokenContract)?.[0]?.balanceVault?.digit
+      ),
+    [chainSupport]
+  )
 
   const priceBusdDefault = useMemo(() => dataEdit?.busd_price, [dataEdit])
   const priceNakaDefault = useMemo(() => dataEdit?.naka_price, [dataEdit])

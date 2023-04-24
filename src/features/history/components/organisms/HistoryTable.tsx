@@ -139,7 +139,7 @@ const HistoryTable = () => {
                             key={row._id}
                             className="history--gameName truncate"
                           >
-                            {row.game_name}
+                            {row.game_detail.name}
                           </div>,
                           <div
                             key={row._id}

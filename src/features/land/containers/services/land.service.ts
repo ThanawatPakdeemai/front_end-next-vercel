@@ -131,7 +131,11 @@ export const updateLandBanner = ({
     data.append("image", _img)
 
     services
-      .put<ILandServ>(`/nakaverse-land/update-logo-land`, { ...data })
+      .put<ILandServ>(`/nakaverse-land/update-logo-land`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      })
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

@@ -25,11 +25,11 @@ const CarouselCardSlide = ({
   const isActive = index === activeIndex
   return (
     <div
-      className={`carousel-slide__item relative overflow-hidden rounded-2xl  ${
+      className={`carousel-slide__item relative h-full overflow-hidden rounded-2xl ${
         video ? "border border-neutral-800 " : ""
       } ${isActive ? "carousel-slide__item--active" : ""}`}
     >
-      <div className="carousel-slide__item__image">
+      <div className="carousel-slide__item__image h-full">
         {video ? (
           <CardMedia
             className="h-[30vh] md:h-[472px]"
@@ -46,6 +46,7 @@ const CarouselCardSlide = ({
             alt={name}
             width={678}
             height={678}
+            className="h-full w-full object-cover object-center"
           />
         )}
       </div>

@@ -7,12 +7,12 @@ const SkeletonCard = () => (
       variant="rectangular"
       width="100%"
       height={218}
-      className="rounded-md"
+      className="rounded-sm"
     />
-    <Skeleton />
-    <div className="grid grid-cols-2 gap-4">
-      <Skeleton />
-      <Skeleton />
+    <Skeleton className="mb-0 h-[50px] rounded-sm" />
+    <div className="grid grid-cols-2 gap-2">
+      <Skeleton className="h-[50px] rounded-sm" />
+      <Skeleton className="h-[50px] rounded-sm" />
     </div>
   </div>
 )

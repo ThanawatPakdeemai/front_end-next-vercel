@@ -2,8 +2,6 @@ import React, { memo } from "react"
 import { Box, ButtonGroup, CircularProgress } from "@mui/material"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
-import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined"
 import { Controller } from "react-hook-form"
 import DropdownListCurrency from "@feature/gameItem/atoms/DropdownListCurrency"
 import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
@@ -14,11 +12,13 @@ import Balance from "@components/molecules/balance/Balance"
 import CONFIGS from "@configs/index"
 import PleaseCheckWallet from "@components/atoms/PleaseCheckWallet"
 import { useWeb3Provider } from "@providers/Web3Provider"
-import useBuyGameItemController from "../containers/hooks/useBuyGameItemController"
 import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
 import { ImageCustom } from "@components/atoms/image/Image"
 import INaka from "@components/icons/Naka"
 import IShoppingCart from "@components/icons/ShoppingCart"
+import MinusIcon from "@components/icons/CountIcon/MinusIcon"
+import PlusIcon from "@components/icons/CountIcon/PlusIcon"
+import useBuyGameItemController from "../containers/hooks/useBuyGameItemController"
 
 const iconmotion = {
   hover: {
@@ -55,7 +55,7 @@ const FormBuyItem = () => {
   } = useBuyGameItemController()
   // const { handleSwitchNetwork } = useSwitchNetwork()
   const { isConnected } = useWeb3Provider()
-  const titleText = "font-neue-machina-semi text-xs uppercase"
+  const titleText = "text-xs uppercase"
   const buttonIncreaseDecrease =
     "flex h-10 w-10 items-center justify-center rounded-lg bg-secondary-main"
 
@@ -117,6 +117,7 @@ const FormBuyItem = () => {
                         setValue("item_id", _item.id)
                         updatePricePerItem()
                       }}
+                      hideIcon
                     />
                   )}
                 />
@@ -162,9 +163,7 @@ const FormBuyItem = () => {
               variants={iconmotion}
               whileHover="hover"
               transition={{ type: "spring", stiffness: 400, damping: 4 }}
-              icon={
-                <RemoveOutlinedIcon className="h-[30px] w-[30px] text-white-primary" />
-              }
+              icon={<MinusIcon />}
               className={buttonIncreaseDecrease.toString()}
             />
             <div className="form-buy-item__value flex h-10 flex-1 items-center justify-between rounded-lg border-[1px] border-solid border-neutral-700 bg-neutral-800 p-3 text-neutral-500">
@@ -191,7 +190,7 @@ const FormBuyItem = () => {
                   alt={game.item[0].name}
                   width={20}
                   height={20}
-                  className="h-full w-full object-contain"
+                  className="h-full w-full object-contain opacity-40"
                 />
               </div>
             </div>
@@ -200,9 +199,7 @@ const FormBuyItem = () => {
               variants={iconmotion}
               whileHover="hover"
               transition={{ type: "spring", stiffness: 400, damping: 4 }}
-              icon={
-                <AddOutlinedIcon className="h-[30px] w-[30px] rotate-90 text-white-primary" />
-              }
+              icon={<PlusIcon />}
               className={buttonIncreaseDecrease.toString()}
             />
           </div>

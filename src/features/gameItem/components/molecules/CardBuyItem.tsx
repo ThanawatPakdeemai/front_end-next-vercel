@@ -47,6 +47,11 @@ export default function CardBuyItem({
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
 
+  const isHideOnWaitingRoom =
+    router.pathname !== "/[typeGame]/[GameHome]/roomlist/[id]"
+  const isWaitingRoom =
+    router.pathname === "/[typeGame]/[GameHome]/roomlist/[id]"
+
   const { gameItemList } = useGamesByGameId({
     _playerId: profile ? profile.id : "",
     _gameId: gameObject ? gameObject._id : ""
@@ -253,15 +258,17 @@ export default function CardBuyItem({
                   image={itemSelected.image_icon}
                   name={itemSelected.name}
                   itemSize={itemSelected.item_size}
+                  title={isWaitingRoom ? " " : ""}
                 />
               )}
               <div className="flex w-full flex-col gap-3 rounded-2xl border-[1px] border-neutral-700 bg-primary-main p-3">
-                {gameItemList && (
+                {gameItemList && isHideOnWaitingRoom && (
                   <>
                     <DropdownListItem
                       isCheck
                       list={gameItemList?.sort((a, b) => a.price - b.price)}
                       onChangeSelect={onChangeSelectItem}
+                      hideDropdownIcon
                     />
                   </>
                 )}
@@ -285,8 +292,9 @@ export default function CardBuyItem({
                           <ImageCustom
                             src={gameObject.item[0].image_icon}
                             alt={gameObject.item[0].name}
-                            height="30"
-                            className="h-full w-full object-contain"
+                            width={20}
+                            height={20}
+                            className="h-full w-full object-contain opacity-40"
                           />
                         </div>
                       )}
@@ -300,17 +308,21 @@ export default function CardBuyItem({
                       </p>
                       <DollarSolidIcon />
                     </div>
-                    <div className="card-buy-item__buyButton w-full">
-                      <RightMenuBuyItem
-                        disabled={!!(profile === undefined || profile === null)}
-                        className="!bg-info-main !text-sm"
-                        disabledStartIcon
-                      />
-                    </div>
+                    {isHideOnWaitingRoom && (
+                      <div className="card-buy-item__buyButton w-full">
+                        <RightMenuBuyItem
+                          disabled={
+                            !!(profile === undefined || profile === null)
+                          }
+                          className="!bg-info-main !text-sm"
+                          disabledStartIcon
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-              {!hideButtonPlay && renderButton()}
+              {!hideButtonPlay && buttonStyle === "purple" && renderButton()}
             </div>
           </div>
           {!hideButtonPlay && buttonStyle === "green" && renderButton()}

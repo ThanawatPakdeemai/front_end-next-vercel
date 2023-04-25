@@ -6,11 +6,13 @@ interface ICardBuyItemHeaderProps {
   image: string
   name: string
   itemSize: string
+  title?: string
 }
 const CardBuyItemHeader = ({
   image,
   name,
-  itemSize
+  itemSize,
+  title
 }: ICardBuyItemHeaderProps) => {
   const { t } = useTranslation()
 
@@ -22,12 +24,12 @@ const CardBuyItemHeader = ({
           alt={name}
           width={60}
           height={60}
-          className="h-full w-full object-contain"
+          className="h-full w-full object-contain opacity-50"
         />
       </div>
-      <div className="h-10 w-[calc(100%-66px)] flex-1 rounded-xl bg-primary-main first-letter:my-2">
+      <div className="h-10 w-[calc(100%-50px)] flex-1 rounded-xl bg-primary-main first-letter:my-2">
         <div className="flex w-[285px] items-center gap-1 p-[10px_14px] font-neue-machina-semi text-[14px] uppercase text-white-default">
-          {t("my")}
+          {title || t("my")}
           <div className="flex items-center text-purple-primary">
             <span className="ml-1">{itemSize}</span>
             <span className="ml-1">{t(name)}</span>

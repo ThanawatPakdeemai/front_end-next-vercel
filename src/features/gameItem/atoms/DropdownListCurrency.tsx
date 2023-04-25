@@ -103,14 +103,16 @@ IProp) => {
                     isOpen={popupState.isOpen}
                     leftContent={
                       <>
-                        <div className="flex items-start">
+                        <div className="flex items-start opacity-40">
                           <IconToken tokenName={defaultItem?.tokenName ?? ""} />
                         </div>
-
-                        <div className="flex items-start">
-                          <p className="px-2">{defaultItem?.symbol ?? ""}</p>
+                        <div className="flex items-start font-neue-machina-semi text-xs uppercase">
+                          <p className="px-2">Currency</p>
                         </div>
-                        <p className="px-2 text-white-default">
+                        {/* <div className="flex items-start">
+                          <p className="px-2">{defaultItem?.symbol ?? ""}</p>
+                        </div> */}
+                        <p className="text-white-default">
                           {defaultItem?.tokenName ?? ""}
                         </p>
                       </>
@@ -132,7 +134,7 @@ IProp) => {
                     "& .MuiPaper-root": {
                       background: "#010101",
                       borderRadius: "15px",
-                      width: "300px"
+                      width: "290px"
                     }
                   }}
                 >

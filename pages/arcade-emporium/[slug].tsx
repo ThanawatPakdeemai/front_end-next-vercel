@@ -157,7 +157,11 @@ export default function ArcadeEmporiumGameDetails() {
       default:
         return (
           <CardBuyItem
-            buttonStyle="green"
+            buttonStyle={
+              getTypeGamePathFolder(gameData) !== "storymode"
+                ? "purple"
+                : "green"
+            }
             gameObject={gameData}
           />
         )

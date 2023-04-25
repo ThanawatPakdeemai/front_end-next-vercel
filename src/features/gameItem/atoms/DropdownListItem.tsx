@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useState } from "react"
-import { Chip, Popover } from "@mui/material"
+import { Popover } from "@mui/material"
 import { Image } from "@components/atoms/image"
 
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
@@ -9,9 +9,10 @@ import PopupState, { bindPopover, bindTrigger } from "material-ui-popup-state"
 import { useTranslation } from "next-i18next"
 import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
 import useGameStore from "@stores/game"
-import ButtonDropdown from "./ButtonDropdown"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import SycnIcon from "@components/icons/SycnIcon"
+import { ImageCustom } from "@components/atoms/image/Image"
+import ButtonDropdown from "./ButtonDropdown"
 
 interface IProp {
   icon?: React.ReactNode
@@ -19,16 +20,22 @@ interface IProp {
   className?: string
   isCheck?: boolean
   onChangeSelect?: (_item: IGameItemListData) => void
+  hideIcon?: boolean
+  hideDropdownIcon?: boolean
+  hideStartIcon?: boolean
 }
 
 const DropdownListItem = ({
   list,
   className,
   onChangeSelect,
-  isCheck = false
+  isCheck = false,
+  hideIcon = false,
+  hideDropdownIcon = false,
+  hideStartIcon = false
 }: IProp) => {
   const { t } = useTranslation()
-  const { itemSelected } = useGameStore()
+  const { itemSelected, onSetGameItemSelectd } = useGameStore()
   // const { errorToast } = useToast()
 
   const [defaultItem, setDefaultItem] = useState<IGameItemListData | null>(
@@ -37,9 +44,13 @@ const DropdownListItem = ({
 
   const onChangeItem = (_item: IGameItemListData) => {
     if (isCheck) {
-      if (_item.qty > 0) setDefaultItem(_item)
+      if (_item.qty > 0) {
+        setDefaultItem(_item)
+        onSetGameItemSelectd(_item)
+      }
     } else {
       setDefaultItem(_item)
+      onSetGameItemSelectd(_item)
     }
     if (_item && onChangeSelect) onChangeSelect(_item)
   }
@@ -70,16 +81,30 @@ const DropdownListItem = ({
               <div className="relative">
                 <div
                   {...bindTrigger(popupState)}
-                  className={`flex items-center gap-3 font-neue-machina-semi ${className}`} // m-auto block
+                  className={`flex items-center gap-3 ${className}`} // m-auto block
                 >
                   <ButtonDropdown
-                    className={`${className} w-[calc(100%-52px)]`}
+                    className={`${className} w-[calc(100%-52px)] ${
+                      !hideStartIcon ? "pl-10" : ""
+                    }`}
                     isOpen={popupState.isOpen}
-                    hideIcon={true}
                     leftContent={
                       <>
+                        {!hideStartIcon && (
+                          <div className="absolute left-0 flex h-10 w-10 flex-1 items-center justify-center rounded-lg p-[10px]">
+                            <ImageCustom
+                              src={defaultItem?.image_icon || ""}
+                              alt={defaultItem?.name || ""}
+                              width={60}
+                              height={60}
+                              className="h-full w-full object-contain opacity-40"
+                            />
+                          </div>
+                        )}
                         <div className="flex items-start">
-                          <p className="text-xs uppercase">Size</p>
+                          <p className="font-neue-machina-semi text-xs uppercase">
+                            Size
+                          </p>
                         </div>
                         <p className="px-2 text-sm text-white-default">
                           {defaultItem?.price
@@ -89,17 +114,28 @@ const DropdownListItem = ({
                       </>
                     }
                     rightContent={
-                      <span className="ml-auto text-xs uppercase text-green-lemon">
-                        {`${itemSelected?.qty} ${itemSelected?.name}`}
-                      </span>
+                      !hideIcon ? (
+                        <span className="ml-auto font-neue-machina-semi text-xs uppercase text-green-lemon">
+                          {`${itemSelected?.qty} ${itemSelected?.name}`}
+                        </span>
+                      ) : (
+                        <></>
+                      )
                     }
+                    hideDropdownIcon={hideDropdownIcon}
                   />
-                  <ButtonIcon
-                    whileHover="hover"
-                    transition={{ type: "spring", stiffness: 400, damping: 4 }}
-                    icon={<SycnIcon />}
-                    className="flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-red-card"
-                  />
+                  {!hideIcon && (
+                    <ButtonIcon
+                      whileHover="hover"
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 4
+                      }}
+                      icon={<SycnIcon />}
+                      className="flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-red-card"
+                    />
+                  )}
                 </div>
 
                 <Popover
@@ -116,7 +152,7 @@ const DropdownListItem = ({
                     "& .MuiPaper-root": {
                       background: "#010101",
                       borderRadius: "15px",
-                      width: "300px"
+                      width: "290px"
                     }
                   }}
                 >
@@ -126,12 +162,14 @@ const DropdownListItem = ({
                     setOnTitle={setDefaultItem}
                     title="GameItem"
                     icon={
-                      <Image
-                        src={list && list?.[0]?.image_icon}
-                        alt={list && list?.[0]?.name}
-                        width="20"
-                        height="20"
-                      />
+                      <div className="opacity-40">
+                        <Image
+                          src={list && list?.[0]?.image_icon}
+                          alt={list && list?.[0]?.name}
+                          width="20"
+                          height="20"
+                        />
+                      </div>
                     }
                     onChange={(_item) => {
                       popupState.close()

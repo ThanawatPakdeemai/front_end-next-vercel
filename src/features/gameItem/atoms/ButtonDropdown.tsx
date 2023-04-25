@@ -18,7 +18,7 @@ const ButtonDropdown = ({
   <>
     <button
       type="button"
-      className={`flex h-[40px] w-full flex-row items-center justify-between rounded-lg border-[1px] border-solid border-neutral-700 bg-neutral-800 p-3 text-[12px] text-black-default hover:text-white-primary ${className}`}
+      className={`flex h-[40px] flex-1 flex-row items-center justify-between rounded-lg border-[1px] border-solid border-neutral-700 bg-neutral-800 p-3 text-[12px] text-black-default hover:text-white-primary ${className}`}
     >
       <div className="flex w-full items-center justify-between">
         {leftContent}

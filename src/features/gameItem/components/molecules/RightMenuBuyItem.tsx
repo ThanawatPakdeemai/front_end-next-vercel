@@ -37,7 +37,7 @@ const RightMenuBuyItem = ({ disabled, ...props }: IProp) => {
           spacing={3}
           className="p-0"
         >
-          <div className="h-[54px] rounded-lg border-[1px] border-neutral-700 bg-neutral-800 p-[15px_7px_15px_22px]">
+          <div className="h-full w-full rounded-lg border-[1px] border-neutral-700 bg-neutral-800 p-[5px_7px_5px_22px]">
             <ModalHeader
               handleClose={handleClose}
               title="Buy Assets"

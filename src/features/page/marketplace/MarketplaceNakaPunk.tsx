@@ -140,11 +140,12 @@ const MarketplaceNakaPunk = () => {
         price={priceNP * count}
         count={{
           helperText: `1 NFT = ${priceNP} NAKA`,
-          label: "Quantity",
+          label: "Quantity (Max : 10)",
           min: 1,
           max: 10,
           count: 1
         }}
+        redemption
       >
         <div className="flex justify-between">
           <Typography className="text-xs uppercase text-neutral-500">

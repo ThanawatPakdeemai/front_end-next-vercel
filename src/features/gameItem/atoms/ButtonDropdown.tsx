@@ -1,5 +1,6 @@
 import { ReactNode, memo } from "react"
 import DropdownIcon from "@components/icons/DropdownIcon"
+import { isMobile } from "react-device-detect"
 
 interface IProps {
   isOpen: boolean
@@ -18,7 +19,9 @@ const ButtonDropdown = ({
   <>
     <button
       type="button"
-      className={`flex h-[40px] flex-1 flex-row items-center rounded-lg border-[1px] border-solid border-neutral-700 bg-neutral-800 p-3 text-[12px] text-black-default hover:text-white-primary ${className}`}
+      className={`flex h-[40px] flex-1 flex-row items-center rounded-lg border-[1px] border-solid border-neutral-700 bg-neutral-800 p-3 text-[12px] text-black-default hover:text-white-primary ${className} ${
+        isMobile ? "px-4" : "px-5"
+      }`}
     >
       <div className="flex w-full items-center">
         {leftContent}

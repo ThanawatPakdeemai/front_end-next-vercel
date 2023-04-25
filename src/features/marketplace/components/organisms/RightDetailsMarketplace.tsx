@@ -274,6 +274,9 @@ const RightDetailsMarketplace = ({
           expanded={expanded === "panel1"}
           onChange={handleChange("panel1")}
           className="static rounded-md border-neutral-800 bg-neutral-780 px-[26px]"
+          sx={{
+            backgroundImage: "none"
+          }}
         >
           <AccordionSummary
             aria-controls="panel1d-content"

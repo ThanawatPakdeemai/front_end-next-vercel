@@ -2,6 +2,9 @@ import { Layout } from "@components/templates"
 import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
+import useProfileStore from "@stores/profileStore"
+import SignInLayout from "@src/mobile/templates/SignInLayout"
+import { isMobile } from "react-device-detect"
 
 const HomePage = dynamic(() => import("@feature/page/homePage"))
 const Home = () => (
@@ -11,7 +14,9 @@ const Home = () => (
 )
 
 Home.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const profile = useProfileStore((state) => state.profile.data)
+  return !profile && isMobile ? <SignInLayout /> : <Layout>{page}</Layout>
 }
 
 export async function getStaticProps({ locale }) {

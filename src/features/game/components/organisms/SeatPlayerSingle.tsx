@@ -246,6 +246,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
       setGameUrl("")
       load = true
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     data,
     gameRoomById,

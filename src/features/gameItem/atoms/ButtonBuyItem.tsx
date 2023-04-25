@@ -6,8 +6,9 @@ import { Trans } from "next-i18next"
 interface IProp {
   handleButton: () => void
   disabled: boolean
+  className?: string
 }
-const ButtonBuyItem = ({ handleButton, disabled }: IProp) => (
+const ButtonBuyItem = ({ handleButton, disabled, className }: IProp) => (
   <>
     <ButtonLink
       disabled={disabled}
@@ -18,7 +19,7 @@ const ButtonBuyItem = ({ handleButton, disabled }: IProp) => (
       size="small"
       color="error"
       variant="contained"
-      className=" !w-[146px] !text-neutral-300"
+      className={`!w-[146px] !text-neutral-300 ${className}`}
     />
   </>
 )

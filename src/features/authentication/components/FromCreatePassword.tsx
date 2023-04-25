@@ -538,7 +538,7 @@ const FromCreatePassword = ({ email, token }: IProp) => {
                               title="Login"
                             />
 
-                            <FormLogin href="/" />
+                            <FormLogin />
                           </Stack>
                         </ModalCustom>
                       </Grid>

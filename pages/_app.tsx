@@ -16,6 +16,7 @@ import dynamic from "next/dynamic"
 import dayjs from "dayjs"
 import rt from "dayjs/plugin/relativeTime"
 import createEmotionCache from "@utils/createEmotionCache"
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { BrowserView, MobileView } from "react-device-detect"
 import MetaDataTag from "@components/atoms/MetaDataTag"
 

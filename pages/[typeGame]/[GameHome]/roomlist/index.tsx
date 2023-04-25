@@ -9,6 +9,8 @@ import { Box } from "@mui/material"
 import useGlobal from "@hooks/useGlobal"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { isMobile } from "react-device-detect"
 
 const BuyItemBody = dynamic(
   () => import("@components/templates/game/BuyItemBody"),
@@ -64,6 +66,14 @@ const OverviewContent = dynamic(
 
 const GameTabs = dynamic(
   () => import("@feature/game/components/templates/lobby/GameTabs"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const RoomListLayout = dynamic(
+  () => import("@src/mobile/templates/RoomListLayout"),
   {
     suspense: true,
     ssr: false
@@ -130,56 +140,64 @@ export default function GameRoomList() {
 
   return (
     <>
-      {gameData ? (
-        <GamePageDefault
-          component={
-            <RightSidebarContent
-              className="mb-24"
-              content={<GameRoomListPage />}
-              aside={
-                <Box
-                  component="div"
-                  className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
-                  sx={{
-                    ".panel-content": {
-                      maxHeight: "200px",
-                      ".custom-scroll": {
-                        overflow: "hidden"
-                      }
-                    },
-                    ".like-no_score": {
-                      margin: "0"
+      {isMobile ? (
+        <>
+          <RoomListLayout />
+        </>
+      ) : (
+        <>
+          {gameData ? (
+            <GamePageDefault
+              component={
+                <RightSidebarContent
+                  className="mb-24"
+                  content={<GameRoomListPage />}
+                  aside={
+                    <Box
+                      component="div"
+                      className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
+                      sx={{
+                        ".panel-content": {
+                          maxHeight: "200px",
+                          ".custom-scroll": {
+                            overflow: "hidden"
+                          }
+                        },
+                        ".like-no_score": {
+                          margin: "0"
+                        }
+                      }}
+                    >
+                      <OverviewContent
+                        gameId={gameData.id}
+                        gameType={getTypeGamePathFolder(gameData)}
+                      />
+                      {renderFormBuyItem()}
+                    </Box>
+                  }
+                />
+              }
+              component2={
+                <FullWidthContent
+                  sxCustomStyled={{
+                    "&.container": {
+                      maxWidth: "100%!important"
                     }
                   }}
                 >
-                  <OverviewContent
-                    gameId={gameData.id}
-                    gameType={getTypeGamePathFolder(gameData)}
-                  />
-                  {renderFormBuyItem()}
-                </Box>
+                  <TabProvider>
+                    <GameTabs
+                      gameId={gameData.id}
+                      gameType={getTypeGamePathFolder(gameData)}
+                    />
+                  </TabProvider>
+                </FullWidthContent>
               }
             />
-          }
-          component2={
-            <FullWidthContent
-              sxCustomStyled={{
-                "&.container": {
-                  maxWidth: "100%!important"
-                }
-              }}
-            >
-              <TabProvider>
-                <GameTabs
-                  gameId={gameData.id}
-                  gameType={getTypeGamePathFolder(gameData)}
-                />
-              </TabProvider>
-            </FullWidthContent>
-          }
-        />
-      ) : (
-        <GamePageDefault component={<SkeletonBanner />} />
+          ) : (
+            <GamePageDefault component={<SkeletonBanner />} />
+          )}
+        </>
       )}
     </>
   )

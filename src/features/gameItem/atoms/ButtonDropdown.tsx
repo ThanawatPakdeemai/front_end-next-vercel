@@ -6,31 +6,35 @@ interface IProps {
   leftContent: string | ReactNode
   rightContent?: string | ReactNode
   className?: string
+  hideIcon?: boolean
 }
 const ButtonDropdown = ({
   isOpen,
   className,
   leftContent,
-  rightContent
+  rightContent,
+  hideIcon = false
 }: IProps) => (
   <>
     <button
       type="button"
-      className={`${className} mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary`}
+      className={`flex h-[40px] w-full flex-row items-center justify-between rounded-lg border-[1px] border-solid border-neutral-700 bg-neutral-800 p-3 text-[12px] text-black-default hover:text-white-primary ${className}`}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex w-full items-center justify-between">
         {leftContent}
         {rightContent}
       </div>
-      <div
-        className={`${
-          isOpen
-            ? "rotate-180 transition-all duration-300"
-            : "rotate-0 transition-all duration-300"
-        }`}
-      >
-        <DropdownIcon />
-      </div>
+      {!hideIcon && (
+        <div
+          className={`${
+            isOpen
+              ? "rotate-180 transition-all duration-300"
+              : "rotate-0 transition-all duration-300"
+          }`}
+        >
+          <DropdownIcon />
+        </div>
+      )}
     </button>
   </>
 )

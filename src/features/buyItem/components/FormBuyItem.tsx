@@ -17,6 +17,7 @@ import CONFIGS from "@configs/index"
 import PleaseCheckWallet from "@components/atoms/PleaseCheckWallet"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useBuyGameItemController from "../containers/hooks/useBuyGameItemController"
+import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
 
 const iconmotion = {
   hover: {
@@ -63,9 +64,30 @@ const FormBuyItem = () => {
         >
           <Box
             component="div"
-            className="w-full"
+            className="flex w-full flex-col gap-3"
           >
-            <div className=" grid grid-cols-1 justify-center gap-4 md:grid-cols-2">
+            <div className="flex w-full flex-wrap gap-3">
+              {game.item && game.item.length > 0 && (
+                <div className="flex-1">
+                  <GameItemSingleCard
+                    image={game.item[0].image}
+                    name={game.item[0].name}
+                    itemId={game.item[0]._id}
+                  />
+                </div>
+              )}
+              <div className="flex w-[calc(100%-164px)] flex-1 flex-col justify-center gap-3">
+                <div className="custom-scroll w-full overflow-y-scroll">
+                  <p className="text-white-default">{t("assets")}</p>
+                  <p className="text-black-default">{game.item[0].name}</p>
+                  <p className="text-white-default">{t("descriptions")}</p>
+                  <div className="text-black-default">
+                    {game.item[0].detail}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* <div className="grid grid-cols-1 justify-center gap-4 md:grid-cols-2">
               <div className="flex justify-center rounded-2xl border-[1px] border-neutral-700">
                 <Image
                   src={game.item[0].image}
@@ -75,13 +97,8 @@ const FormBuyItem = () => {
                   className="object-contain p-4"
                 />
               </div>
-              <div className="custom-scroll w-full overflow-y-scroll">
-                <p className="text-white-default">{t("assets")}</p>
-                <p className="text-black-default">{game.item[0].name}</p>
-                <p className="text-white-default">{t("descriptions")}</p>
-                <div className="text-black-default">{game.item[0].detail}</div>
-              </div>
-            </div>
+              
+            </div> */}
           </Box>
           <Box
             component="div"

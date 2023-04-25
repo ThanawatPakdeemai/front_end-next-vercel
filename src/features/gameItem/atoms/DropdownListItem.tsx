@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useState } from "react"
-import { Popover } from "@mui/material"
+import { Chip, Popover } from "@mui/material"
 import { Image } from "@components/atoms/image"
 
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
@@ -10,6 +10,8 @@ import { useTranslation } from "next-i18next"
 import SelectDropdown from "@components/atoms/selectDropdown/SelectDropdown"
 import useGameStore from "@stores/game"
 import ButtonDropdown from "./ButtonDropdown"
+import ButtonIcon from "@components/atoms/button/ButtonIcon"
+import SycnIcon from "@components/icons/SycnIcon"
 
 interface IProp {
   icon?: React.ReactNode
@@ -26,7 +28,7 @@ const DropdownListItem = ({
   isCheck = false
 }: IProp) => {
   const { t } = useTranslation()
-  const { data: gameData, itemSelected } = useGameStore()
+  const { itemSelected } = useGameStore()
   // const { errorToast } = useToast()
 
   const [defaultItem, setDefaultItem] = useState<IGameItemListData | null>(
@@ -65,45 +67,38 @@ const DropdownListItem = ({
             popupId="demo-popup-popover"
           >
             {(popupState) => (
-              <>
+              <div className="relative">
                 <div
                   {...bindTrigger(popupState)}
-                  className={` ${className}`} // m-auto block
+                  className={`flex items-center gap-3 font-neue-machina-semi ${className}`} // m-auto block
                 >
                   <ButtonDropdown
-                    className={`${className} `}
+                    className={`${className} w-[calc(100%-52px)]`}
                     isOpen={popupState.isOpen}
+                    hideIcon={true}
                     leftContent={
                       <>
                         <div className="flex items-start">
-                          {defaultItem?.image_icon && (
-                            <Image
-                              src={
-                                defaultItem?.image_icon && gameData
-                                  ? gameData?.item?.[0]?.image_icon
-                                  : ""
-                              }
-                              alt=""
-                              width={
-                                gameData?.item[0].name === "Bullet"
-                                  ? "10"
-                                  : "20"
-                              }
-                              height="20"
-                            />
-                          )}
-                          {defaultItem && (
-                            <p className="px-2 pt-1">{t(defaultItem.name)}</p>
-                          )}
+                          <p className="text-xs uppercase">Size</p>
                         </div>
-
-                        <p className="px-2 text-white-default">
+                        <p className="px-2 text-sm text-white-default">
                           {defaultItem?.price
                             ? `${defaultItem?.price ?? 0} USD`
                             : t(`Please select Item.`)}
                         </p>
                       </>
                     }
+                    rightContent={
+                      <span className="ml-auto text-xs uppercase text-green-lemon">
+                        {`${itemSelected?.qty} ${itemSelected?.name}`}
+                      </span>
+                    }
+                  />
+                  <ButtonIcon
+                    whileHover="hover"
+                    transition={{ type: "spring", stiffness: 400, damping: 4 }}
+                    icon={<SycnIcon />}
+                    className="flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-red-card"
                   />
                 </div>
 
@@ -120,7 +115,8 @@ const DropdownListItem = ({
                   sx={{
                     "& .MuiPaper-root": {
                       background: "#010101",
-                      borderRadius: "15px "
+                      borderRadius: "15px",
+                      width: "300px"
                     }
                   }}
                 >
@@ -143,7 +139,7 @@ const DropdownListItem = ({
                     }}
                   />
                 </Popover>
-              </>
+              </div>
             )}
           </PopupState>
         </>

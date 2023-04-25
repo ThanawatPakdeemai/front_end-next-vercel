@@ -23,7 +23,7 @@ const ModalHeader = ({ handleClose, title, bg }: IProp) => {
         <div
           className={`${
             title === "Buy Assets"
-              ? "rounded-xl border border-neutral-700 py-2 "
+              ? "flex h-10 w-10 items-center justify-center rounded-xl border border-neutral-700 py-2"
               : ""
           }`}
         >

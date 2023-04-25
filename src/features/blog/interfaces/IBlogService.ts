@@ -1,13 +1,11 @@
+import { Tag } from "./IBlogTagsService"
+
 export interface Blog {
   limit: number
   skip: number
   search: string
   cate: string
   sort: string
-}
-
-export interface Tag {
-  tags_id: string
 }
 
 interface IInfo {

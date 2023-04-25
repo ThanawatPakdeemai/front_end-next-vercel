@@ -20,30 +20,35 @@ const BlogFooter = ({ view, shared, like, ...props }: IBlogFooterProps) => (
         content: "''",
         position: "absolute",
         width: "100%",
-        height: "80px",
+        height: "81px",
         left: "-100%",
         borderTop: "1px solid #101013",
-        borderBottom: "1px solid #101013",
+        borderBottom: "1px solid #18181C",
         "@media (max-width: 1023px)": {
           display: "none"
         }
       }
     }}
-    className="relative flex h-[80px] w-full flex-col items-center border-b-[1px] border-t-[1px] border-neutral-780 bg-primary-main px-12 md:flex-row"
+    className="relative flex h-[80px] w-full flex-col items-center border-b-[1px] border-neutral-800 bg-primary-main px-12 md:flex-row"
   >
     <div className="count-wrapper flex flex-1 gap-3">
       <ViewCount
         icon={<ViewIcon />}
         count={view || 0}
       />
-      <ViewCount
-        icon={<ShareIcon />}
-        count={shared || 0}
-      />
-      <ViewCount
-        icon={<ThumbUpRoundedIcon />}
-        count={like || 0}
-      />
+      {shared ? (
+        <ViewCount
+          icon={<ShareIcon />}
+          count={shared || 0}
+        />
+      ) : null}
+
+      {like ? (
+        <ViewCount
+          icon={<ThumbUpRoundedIcon />}
+          count={like || 0}
+        />
+      ) : null}
     </div>
 
     <div className="flex-1">

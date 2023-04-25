@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define */
+
 import { IInfo } from "@interfaces/IHelper"
 
 interface ICreateNewPasswordData {
@@ -29,6 +31,22 @@ export interface ISignUp extends ISignIn {
   _verifycode: number | string
   _referral: string | string[]
   _subscription: boolean
+}
+
+export interface ISubmit {
+  _name: string
+  _player_type: string
+  _categories: Array<string>
+  _description: string
+  _short_detail: ISubmitShort
+  _game_play_url: string
+  _how_to_play: string
+}
+
+export interface ISubmitShort {
+  developer_name: string
+  developer_email: string
+  publisher: string
 }
 
 export interface IShareToEarnAction {

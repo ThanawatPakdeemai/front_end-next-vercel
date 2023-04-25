@@ -9,14 +9,14 @@ export interface IMetaWriter {
 const MetaWriter = ({ writerName, writerTitle = "WRITER" }: IMetaWriter) => {
   const { t } = useTranslation()
   return (
-    <div className="writer-wrapper grid h-full w-full grid-rows-2">
+    <div className="writer-wrapper flex h-full w-full flex-col justify-center gap-2">
       {writerTitle && (
-        <div className="writer-wrapper--title items-middle flex px-6 pt-4 font-neue-machina text-sm text-white-default ">
+        <div className="writer-wrapper--title font-neue-machina text-sm text-white-default">
           {t(`${writerTitle}`)}
         </div>
       )}
-      <div className="writer-wrapper--text px-6 pb-2 pt-4">
-        <div className="text-default text-neutral-500">{writerName}</div>
+      <div className="writer-wrapper--text">
+        <div className="text-neutral-500">{writerName}</div>
       </div>
     </div>
   )

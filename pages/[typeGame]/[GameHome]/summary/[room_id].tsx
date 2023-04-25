@@ -65,56 +65,60 @@ export default function SummaryDetails() {
   const { GameHome } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
 
-  return gameData ? (
-    <GamePageDefault
-      component={
-        <RightSidebarContent
-          className="mb-24"
-          content={<GameSummaryRewardPage />}
-          aside={
-            <Box
-              component="div"
-              className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
-              sx={{
-                ".panel-content": {
-                  maxHeight: "270px",
-                  ".custom-scroll": {
-                    overflow: "hidden"
-                  }
-                },
-                ".like-no_score": {
-                  margin: "0"
+  return (
+    <>
+      {gameData ? (
+        <GamePageDefault
+          component={
+            <RightSidebarContent
+              className="mb-24"
+              content={<GameSummaryRewardPage />}
+              aside={
+                <Box
+                  component="div"
+                  className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
+                  sx={{
+                    ".panel-content": {
+                      maxHeight: "200px",
+                      ".custom-scroll": {
+                        overflow: "hidden"
+                      }
+                    },
+                    ".like-no_score": {
+                      margin: "0"
+                    }
+                  }}
+                >
+                  <OverviewContent
+                    gameId={gameData.id}
+                    gameType={getTypeGamePathFolder(gameData)}
+                    gameIdNFT={gameData.NFT_Owner}
+                  />
+                </Box>
+              }
+            />
+          }
+          component2={
+            <FullWidthContent
+              sxCustomStyled={{
+                "&.container": {
+                  maxWidth: "100%!important"
                 }
               }}
             >
-              <OverviewContent
-                gameId={gameData.id}
-                gameType={getTypeGamePathFolder(gameData)}
-                gameIdNFT={gameData.NFT_Owner}
-              />
-            </Box>
+              <TabProvider>
+                <GameTabs
+                  gameId={gameData.id}
+                  gameType={getTypeGamePathFolder(gameData)}
+                />
+              </TabProvider>
+            </FullWidthContent>
           }
         />
-      }
-      component2={
-        <FullWidthContent
-          sxCustomStyled={{
-            "&.container": {
-              maxWidth: "100%!important"
-            }
-          }}
-        >
-          <TabProvider>
-            <GameTabs
-              gameId={gameData.id}
-              gameType={getTypeGamePathFolder(gameData)}
-            />
-          </TabProvider>
-        </FullWidthContent>
-      }
-    />
-  ) : (
-    <GamePageDefault component={<SkeletonBanner />} />
+      ) : (
+        <GamePageDefault component={<SkeletonBanner />} />
+      )}
+    </>
   )
 }
 

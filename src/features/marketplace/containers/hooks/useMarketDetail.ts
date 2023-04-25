@@ -28,6 +28,7 @@ const useMarketDetail = () => {
     let _nameNFT: string = "NFT-Name"
     let _imageNFT: string = "/images/gameDetails/nakamoto-wars.webp"
     let _vdoNFT: string | undefined
+
     switch (_type) {
       case "game_item":
         if (_data.item_data) {
@@ -55,7 +56,7 @@ const useMarketDetail = () => {
         if (_data.building_data && _data.building_data.NFT_token) {
           _tokenId = _data.building_data.NFT_token
           _nameNFT = _data.building_data.name
-          _imageNFT = _data.building_data.image
+          _imageNFT = _data.building_data.NFT_image
           _vdoNFT = _data.building_data.NFT_video
         }
         break

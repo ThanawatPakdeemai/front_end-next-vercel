@@ -29,15 +29,15 @@ const HeadBlog = ({ children }: { children: React.ReactNode }) => {
   }, [router.pathname])
 
   return (
-    <div className="mx-auto xl:mx-0">
+    <div className="mx-auto w-full max-w-[1140px] xl:mx-0">
       {/* {selectHeader} */}
       <div className="justify-between max-md:my-[30px] md:flex">
-        <div className="mx-auto mb-[30px] flex h-full w-full max-w-xs justify-between gap-1 rounded-2xl bg-neutral-700 p-1 md:mx-0 md:w-[230px]">
+        <div className="mx-auto mb-[30px] flex h-full w-full max-w-xs justify-between gap-1 rounded-lg bg-neutral-700 p-1 md:mx-0 md:w-[230px]">
           {MENU_BLOG_HEADER.map((item) => (
             <Button
               key={item.name}
               sx={styleButton}
-              className={`button-select-naka xs:mb-1 !hover:bg-error-main !hover:text-white-primary group h-[32px] w-full !text-black-default  ${
+              className={`button-select-naka xs:mb-1 !hover:bg-error-main !hover:text-white-primary group h-[40px] w-full !rounded-lg !text-black-default ${
                 selectHeader === item.link
                   ? "!bg-primary-main"
                   : "!bg-neutral-800"

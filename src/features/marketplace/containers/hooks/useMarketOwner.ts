@@ -106,7 +106,7 @@ const useMartketOwner = () => {
           })
             .then((_res) => {
               const dumpData: IOwnerData[] = _res.data.map((_data) => ({
-                type: "land",
+                type: "naka-punk",
                 id: _data._id,
                 tokenId: _data.NFT_token,
                 image: _data.image,

@@ -22,6 +22,8 @@ import SwitchChain from "@components/atoms/SwitchChain"
 import useSwitchNetwork from "@hooks/useSwitchNetwork"
 import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
 import { useTranslation } from "next-i18next"
+import useChainSupportStore from "@stores/chainSupport"
+import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
 import Input from "../atoms/Input"
 
 interface IProp {
@@ -45,15 +47,24 @@ const Form = ({
   const { handleSwitchNetwork } = useSwitchNetwork()
   const { formatNumber } = Helper
   const { t } = useTranslation()
+  const { chainSupport } = useChainSupportStore()
 
   const chainRequired = signer?.provider?._network?.chainId ?? 0
 
-  const balance = useMemo(() => {
-    if (chain === "polygon") {
-      return Number(balanceValutNaka?.digit)
-    }
-    return Number(balanceValutBusd?.digit)
-  }, [balanceValutNaka, balanceValutBusd, chain])
+  // const balance = useMemo(() => {
+  //   if (chain === "polygon") {
+  //     return Number(balanceValutNaka?.digit)
+  //   }
+  //   return Number(balanceValutBusd?.digit)
+  // }, [balanceValutNaka, balanceValutBusd, chain])
+
+  const balance = useMemo(
+    () =>
+      Number(
+        (chainSupport as unknown as ITokenContract)?.[0]?.balanceVault?.digit
+      ),
+    [chainSupport]
+  )
 
   const total = useMemo(
     () =>

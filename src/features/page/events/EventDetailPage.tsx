@@ -1,7 +1,6 @@
 import React from "react"
 import { Box, Typography } from "@mui/material"
-import { IResponseSummaryData } from "@feature/event/interface/IEventsService"
-import EventsShareToPlay from "@feature/event/components/EventsShareAndPlay"
+import EventsShareAndPlay from "@feature/event/components/EventsShareAndPlay"
 import EventsTopScore from "@feature/event/components/EventsTopScore"
 import dynamic from "next/dynamic"
 import useEventController from "@feature/event/containers/hooks/useEventController"
@@ -44,7 +43,7 @@ const EventDetailPage = () => {
     ) {
       return (
         <EventsTopScore
-          users={topScoreDataState.data as IResponseSummaryData[]}
+          users={topScoreDataState.data}
           playerCount={topScoreDataState.player_count}
           transactionCount={topScoreDataState.transaction_count}
         />
@@ -56,32 +55,22 @@ const EventDetailPage = () => {
       currentEventData.event_type === "top_score_championship"
     ) {
       return (
-        <EventsShareToPlay
+        <EventsShareAndPlay
           users={leaderBoardDataState.new_data_player_score}
           playerCount={leaderBoardDataState.player_count}
           transactionCount={leaderBoardDataState.transaction_count}
         />
       )
     }
-    return <></>
   }
 
   /**
    * @description Render messages by event type
    */
   const renderMessages = () => {
-    if (currentEventData && currentEventData.event_type === "share_and_play") {
-      return (
-        <EventMessages messages="Tweet a short video (20-40 seconds) of your gameplay with the hashtag #FunWheels on Twitter." />
-      )
+    if (currentEventData && currentEventData.shot_detail) {
+      return <EventMessages messages={currentEventData.shot_detail} />
     }
-    return (
-      <EventMessages
-        messages={`Comment and hashtag #your_username #NakaRunner in your twitter sharing NAKA Runner challenge post
-              to make sure you attend the event [First 102 people to score over 250,000 will win the
-              reward]`}
-      />
-    )
   }
 
   return (
@@ -119,7 +108,16 @@ const EventDetailPage = () => {
                   {currentEventData.reward}
                 </Typography>
               </div>
-              {renderPlayerContent()}
+              {/* TODO YUI remove when flow events success */}
+              <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2  md:px-16 md:py-8 md:text-center md:text-base">
+                <Typography className="font-dogicapixel-bold text-center  uppercase">
+                  Event Status
+                </Typography>
+                <Typography className=" text-green-default font-dogicapixel-bold text-center text-[15px] uppercase !text-error-main">
+                  [ {currentEventData.status} ]
+                </Typography>
+              </div>
+              {currentEventData.status !== "end" && renderPlayerContent()}
             </Box>
           }
         />

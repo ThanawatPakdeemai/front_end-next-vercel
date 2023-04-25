@@ -5,25 +5,34 @@ import useGetAllLand from "@feature/land/containers/hooks/useGetAllLand"
 import { cameraSetting, colorThree } from "@constants/map"
 import { ILandMap } from "@feature/land/interfaces/ILandService"
 import useLoadingStore from "@stores/loading"
+import { calculatePosition } from "@utils/map"
+import { AnimatePresence, motion } from "framer-motion"
+import { useRouter } from "next/router"
 import BoxElement from "../molecules/BoxElement"
 import CameraController from "../molecules/CameraController"
 import MapScene from "../molecules/MapScene"
+import CardLandMap from "./CardLandMap"
+import MapInfo from "../molecules/MapInfo"
 
-const calculatePosition = ({ x, y }: { x: string; y: string }) => ({
-  px: Number(x) - 173.5,
-  py: Number(y) - 1.5
-})
+const containerVariants = {
+  initial: { x: "100vw", opacity: 0 },
+  enter: { x: 0, opacity: 1, duration: 0.5, ease: "easeInOut" },
+  exit: { x: 0, opacity: 0, duration: 0.5, ease: "easeInOut" }
+}
 
 const FullMap = () => {
   // hook
   const { setOpen, setClose } = useLoadingStore()
+  const router = useRouter()
 
-  // stage
-  const { allLand: allLandData, isSuccess } = useGetAllLand()
+  // state
+  const { allLand: allLandData, isSuccess, isLoading } = useGetAllLand()
   const [currentLand, setCurrentLand] = useState<ILandMap | null>(null)
   const [loadingStatus, setLoadingStatus] = useState<boolean>(true)
   const [disable, setDisable] = useState<boolean>(true)
   const [allLand, setAllLand] = useState<ILandMap[]>([])
+  const [showCardLand, setShowCardLand] = useState<boolean>(false)
+  // const [text, setText] = useState<string | undefined>(undefined)
 
   // three stage
   const [focus, setFocus] = useState<boolean>(false)
@@ -32,6 +41,7 @@ const FullMap = () => {
   const [cameraPos, setCameraPos] = useState({ x: "175", y: "1" })
 
   const fetchAllLandToPlot = async () => {
+    setOpen()
     if (isSuccess && allLandData) {
       const newData: ILandMap[] = allLandData.map((item: ILandMap) => {
         item.color = colorThree.land
@@ -39,14 +49,20 @@ const FullMap = () => {
       })
       setAllLand(newData)
       setDisable(!disable)
+      setClose()
     }
+  }
+
+  const handleCloseCardLandMap = async () => {
+    setCurrentLand(null)
+    setShowCardLand(false)
   }
 
   useEffect(() => {
     let load = false
 
     if (!load) {
-      if (loadingStatus) {
+      if (isLoading || loadingStatus) {
         setOpen()
       }
     }
@@ -56,7 +72,7 @@ const FullMap = () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadingStatus])
+  }, [isLoading])
 
   useEffect(() => {
     let load = false
@@ -71,25 +87,43 @@ const FullMap = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allLandData])
 
+  // handle click on map
   useMemo(() => {
     if (currentLand) {
       setCameraPos(currentLand.position)
-      // setShowCardLand(true)
+      setShowCardLand(true)
       setFocus(!focus)
       setUpdateZoom(true)
-      // router.push(
-      //   {
-      //     query: { x: currentLand.position.x, y: currentLand.position.y }
-      //   },
-      //   undefined,
-      //   { shallow: true }
-      // )
+      router.push(
+        {
+          query: { x: currentLand.position.x, y: currentLand.position.y }
+        },
+        undefined,
+        { shallow: true }
+      )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLand])
 
+  useMemo(() => {
+    if (allLand && allLand.length > 0 && router.query) {
+      if (router.query.x && router.query.y) {
+        const landByXY = allLand.find(
+          (element) =>
+            element.position.x === router.query.x &&
+            element.position.y === router.query.y
+        )
+        if (landByXY) {
+          setCurrentLand(landByXY)
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.query, allLand])
+
   return (
-    <div className="map-content relative flex h-full w-screen flex-col overflow-y-hidden bg-secondary-light">
+    <div className="map-content relative flex h-full w-screen flex-col overflow-y-hidden bg-[#0165B6]">
+      {/* ---------- map ---------- */}
       <Canvas
         gl={{ antialias: true, toneMapping: THREE.NoToneMapping }}
         linear
@@ -110,8 +144,8 @@ const FullMap = () => {
             pos={calculatePosition(cameraPos)}
             full
           />
-          {/* <primitive object={new THREE.AxesHelper(10)} /> */}
           {allLandData && allLandData.length > 0 && <MapScene />}
+          {isLoading && <MapScene />}
           {allLand &&
             allLand.length > 0 &&
             allLand.map((element, index) => (
@@ -126,9 +160,36 @@ const FullMap = () => {
                 setLoading={setLoadingStatus}
               />
             ))}
-          {/* </Suspense> */}
         </Suspense>
       </Canvas>
+      {/* ---------- card ---------- */}
+      <div>
+        {currentLand && (
+          <div className="card-land-map-panel animate__fadeInRight">
+            <AnimatePresence
+              exitBeforeEnter
+              initial={false}
+            >
+              {showCardLand && (
+                <motion.div
+                  variants={containerVariants}
+                  initial="exit"
+                  animate="enter"
+                  exit="exit"
+                  className="relative flex h-full flex-col items-center justify-center"
+                >
+                  <CardLandMap
+                    land={currentLand}
+                    onClose={handleCloseCardLandMap}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
+      </div>
+      {/* ---------- info ---------- */}
+      <MapInfo />
     </div>
   )
 }

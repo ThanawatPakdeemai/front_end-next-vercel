@@ -6,14 +6,11 @@ import { isMobile } from "react-device-detect"
 import SignInLayout from "@src/mobile/templates/SignInLayout"
 
 const HomePage = dynamic(() => import("@feature/page/homePage"))
-
-export default function Home() {
-  return (
-    <article className="h-full w-full">
-      <HomePage />
-    </article>
-  )
-}
+const Home = () => (
+  <article className="h-full w-full">
+    <HomePage />
+  </article>
+)
 
 Home.getLayout = function getLayout(page: ReactElement) {
   if (isMobile) {
@@ -22,10 +19,18 @@ Home.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>
 }
 
-export async function getServerSideProps({ locale }: { locale: string }) {
+export async function getStaticProps({ locale }) {
+  // const _seo = await getSeoByPath(`/` as string)
+
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"]))
+      // meta:
+      //   _seo && (_seo as ISeoResponse)?.data?.length > 0
+      //     ? (_seo as ISeoResponse)?.data?.[0]
+      //     : metaData,
     }
   }
 }
+
+export default Home

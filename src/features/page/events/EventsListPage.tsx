@@ -62,7 +62,7 @@ const EventsListPage = () => {
 
   return (
     <>
-      <div className="lg: mb-6 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="mb-6 flex w-full gap-6">
         {eventListData
           ? eventListData.data.map((item: IGetEventResponseData) => (
               <EventsCard

@@ -65,7 +65,7 @@ const MarketplaceDetail = () => {
           {detailData.seller_id && (
             <CardWriterDetails
               textHead="Owned by"
-              name="XXXXXXXXXXXXX"
+              name={detailData.land_data?.name}
               date={String(detailData.created_at)}
               link={detailData.seller_id}
               image={detailData.land_data?.image}
@@ -105,6 +105,7 @@ const MarketplaceDetail = () => {
               detailData.selling_type as TSellingType
             )
           }}
+          redemption
         >
           <ButtonMarket
             nftType={detailData.type}

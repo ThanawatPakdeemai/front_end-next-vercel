@@ -8,9 +8,10 @@ import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGa
 
 interface IProp {
   disabled: boolean
+  classNameBtn?: string
 }
 
-const RightMenuBuyItem = ({ disabled }: IProp) => {
+const RightMenuBuyItem = ({ disabled, classNameBtn }: IProp) => {
   const { handleClose, handleOpen, openForm } = useBuyGameItemController()
 
   return (
@@ -22,6 +23,7 @@ const RightMenuBuyItem = ({ disabled }: IProp) => {
         <ButtonBuyItem
           handleButton={handleOpen}
           disabled={disabled}
+          className={classNameBtn}
         />
       </Box>
       <ModalCustom

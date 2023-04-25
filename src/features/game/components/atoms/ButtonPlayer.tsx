@@ -1,5 +1,6 @@
 import { motion } from "framer-motion"
 import { ReactNode, memo } from "react"
+import { isMobile } from "react-device-detect"
 
 interface IProp {
   startIcon: ReactNode
@@ -42,7 +43,9 @@ const ButtonGame = ({ startIcon, handleClick, text, className }: IProp) => {
   return (
     <>
       <motion.button
-        className={`btn-icon-container m-auto mt-5 flex h-10 w-full items-center md:mt-0 ${className}`}
+        className={`btn-icon-container m-auto flex h-10 items-center md:mt-0 ${className} ${
+          !isMobile && "w-full"
+        }`}
         initial="rest"
         whileHover="hover"
         type="button"

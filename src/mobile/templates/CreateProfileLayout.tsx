@@ -5,17 +5,13 @@ import FormCreateProfile from "@feature/profile/components/createProfile/FormCre
 
 const CreateProfileLayout = () => {
   const { t } = useTranslation()
-
   return (
     <>
       <Box
         component="div"
         className="w-auto p-[1.875rem]"
       >
-        <Grid
-          container
-          spacing={2.25}
-        >
+        <Grid container>
           <Grid
             item
             xs={12}

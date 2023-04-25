@@ -17,9 +17,6 @@ import dynamic from "next/dynamic"
 import dayjs from "dayjs"
 import rt from "dayjs/plugin/relativeTime"
 import createEmotionCache from "@utils/createEmotionCache"
-import { BrowserView, MobileView } from "react-device-detect"
-// import SignInLayout from "@src/mobile/templates/SignInLayout"
-import CreateProfileLayout from "@src/mobile/templates/CreateProfileLayout"
 
 const Loading = dynamic(() => import("@components/molecules/Loading"), {
   suspense: true,
@@ -71,16 +68,20 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         <Web3Provider>
           <CacheProvider value={emotionCache}>
             <ThemeProvider theme={customTheme}>
-              <BrowserView>
+              {/* <BrowserView>
                 <ProviderApp>
                   {getLayout(<Component {...pageProps} />)}
                 </ProviderApp>
               </BrowserView>
               <MobileView>
-                {/* <SignInLayout /> */}
+                <SignInLayout />
+                <GameDetailLayout />
                 <CreateProfileLayout />
-                {/* {getLayout(<Component {...pageProps} />)} */}
-              </MobileView>
+                {getLayout(<Component {...pageProps} />)}
+              </MobileView> */}
+              <ProviderApp>
+                {getLayout(<Component {...pageProps} />)}
+              </ProviderApp>
             </ThemeProvider>
           </CacheProvider>
         </Web3Provider>

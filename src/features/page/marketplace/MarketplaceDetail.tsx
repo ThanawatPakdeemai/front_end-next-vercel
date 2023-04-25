@@ -105,7 +105,7 @@ const MarketplaceDetail = () => {
               detailData.selling_type as TSellingType
             )
           }}
-          redemption
+          redemption={!detailData.seller_id}
         >
           <ButtonMarket
             nftType={detailData.type}

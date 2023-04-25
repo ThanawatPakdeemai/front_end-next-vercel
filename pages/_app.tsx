@@ -17,7 +17,9 @@ import dynamic from "next/dynamic"
 import dayjs from "dayjs"
 import rt from "dayjs/plugin/relativeTime"
 import createEmotionCache from "@utils/createEmotionCache"
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { BrowserView, MobileView } from "react-device-detect"
+import Home from "@src/mobile/home"
 
 const Loading = dynamic(() => import("@components/molecules/Loading"), {
   suspense: true,
@@ -75,8 +77,8 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
                 </ProviderApp>
               </BrowserView>
               <MobileView>
-                {/* <SignInLayout /> */}
-                {getLayout(<Component {...pageProps} />)}
+                <Home />
+                {/* {getLayout(<Component {...pageProps} />)} */}
               </MobileView>
             </ThemeProvider>
           </CacheProvider>

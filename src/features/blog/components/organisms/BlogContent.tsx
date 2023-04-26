@@ -1,5 +1,5 @@
 import React from "react"
-import Image from "next/image"
+import { Image } from "@components/atoms/image/index"
 
 export interface IBlogBodyProps {
   image?: string

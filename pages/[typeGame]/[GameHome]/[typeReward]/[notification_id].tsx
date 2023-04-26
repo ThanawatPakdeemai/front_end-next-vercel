@@ -76,7 +76,7 @@ export default function Notification_id() {
                   className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
                   sx={{
                     ".panel-content": {
-                      maxHeight: "200px",
+                      maxHeight: "270px",
                       ".custom-scroll": {
                         overflow: "hidden"
                       }

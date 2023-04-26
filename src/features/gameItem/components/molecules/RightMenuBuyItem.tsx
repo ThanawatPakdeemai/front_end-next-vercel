@@ -1,16 +1,19 @@
 import React, { memo } from "react"
 import { Box, Stack } from "@mui/material"
-import ButtonBuyItem from "@feature/gameItem/atoms/ButtonBuyItem"
+import ButtonBuyItem, {
+  IButtonBuyItemProps
+} from "@feature/gameItem/atoms/ButtonBuyItem"
 import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import FormBuyItem from "@feature/buyItem/components/FormBuyItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 
-interface IProp {
+interface IProp extends IButtonBuyItemProps {
   disabled: boolean
+  classNameBtn?: string
 }
 
-const RightMenuBuyItem = ({ disabled }: IProp) => {
+const RightMenuBuyItem = ({ disabled, classNameBtn, ...props }: IProp) => {
   const { handleClose, handleOpen, openForm } = useBuyGameItemController()
 
   return (
@@ -22,19 +25,21 @@ const RightMenuBuyItem = ({ disabled }: IProp) => {
         <ButtonBuyItem
           handleButton={handleOpen}
           disabled={disabled}
+          {...props}
+          className={classNameBtn}
         />
       </Box>
       <ModalCustom
         open={openForm}
         onClose={handleClose}
-        className="w-full gap-3 rounded-[34px] p-[10px] md:m-auto md:w-[550px] lg:min-w-[515px]"
-        width={400}
+        // className="w-full gap-3 rounded-[34px] p-[10px] md:m-auto md:w-[550px] lg:min-w-[515px]"
+        className="w-full max-w-[333px] gap-3 rounded-3xl md:m-auto"
       >
         <Stack
           spacing={3}
-          className="md:p-5"
+          className="p-0"
         >
-          <div className="rounded-2xl border-[1px] border-neutral-700 bg-neutral-800 p-2">
+          <div className="h-full w-full rounded-lg border-[1px] border-neutral-700 bg-neutral-800 p-[5px_7px_5px_22px]">
             <ModalHeader
               handleClose={handleClose}
               title="Buy Assets"

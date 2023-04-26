@@ -23,7 +23,7 @@ const MarketplaceOwnerDetail = () => {
         <RightDetailsMarketplace
           type={marketType as TNFTType}
           id={ownerDetail.tokenId}
-          // token={tokenNFT}
+          token={ownerDetail.tokenId}
           title={ownerDetail.name}
           position={ownerDetail.pos}
           qrCode={ownerDetail.qrcode}

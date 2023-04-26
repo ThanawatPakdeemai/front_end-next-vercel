@@ -49,7 +49,7 @@ const OverviewContent = ({
           title={title || t("game_overview")}
         >
           <PanelContent height="h-[500px]">
-            <div className="text-start text-sm text-neutral-500 lg:pl-6 lg:pr-3 lg:pt-3">
+            <div className="text-start text-sm text-neutral-500 lg:pl-4 lg:pr-3 lg:pt-3">
               <TagMultiple
                 title={`${t("genre")}`}
                 tags={gameTags}

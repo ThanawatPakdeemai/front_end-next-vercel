@@ -1,24 +1,30 @@
 import { useGetBuildingById } from "@feature/building/containers/hooks/useGetMyBuilding"
+import useInvenGameItem from "@feature/gameItem/inventory/containers/hooks/useInvenGameItem"
 import { useGetLandById } from "@feature/land/containers/hooks/useGetMyLand"
 import { IOwnerDetailsData } from "@feature/marketplace/interfaces/IMarketService"
+import useInvenMaterial from "@feature/material/inventory/containers/hooks/useInvenMaterial"
 import { useGetNakPunkById } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import useGlobal from "@hooks/useGlobal"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 const useMarketOwnerDetail = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [ownerDetail, setOwnerDetail] = useState<IOwnerDetailsData>()
 
+  const loadRef = useRef(false)
   const { marketType } = useGlobal()
   const { mutateGetLandById } = useGetLandById()
   const { mutateGetBuildingById } = useGetBuildingById()
   const { mutateGetNakapunkById } = useGetNakPunkById()
+  const { gameItemList } = useInvenGameItem()
+  const { materialList } = useInvenMaterial()
 
   const router = useRouter()
   const id = router.query.id as string
 
   const fetchOwnerDetail = () => {
+    setOwnerDetail(undefined)
     setIsLoading(false)
     switch (marketType) {
       case "nft_land":
@@ -72,6 +78,47 @@ const useMarketOwnerDetail = () => {
     }
   }
 
+  const fetchWithContract = useCallback(() => {
+    setOwnerDetail(undefined)
+    switch (marketType) {
+      case "game_item":
+        if (gameItemList) {
+          const findId =
+            gameItemList && gameItemList.find((_item) => _item._id === id)
+          if (findId) {
+            setOwnerDetail({
+              type: "naka-punk",
+              id: findId.id,
+              tokenId: String(findId.item_id_smartcontract),
+              image: findId.image,
+              name: findId.name,
+              desc: findId.detail
+            })
+          }
+        }
+        break
+      case "nft_material":
+        // eslint-disable-next-line no-case-declarations
+        if (materialList) {
+          const findMatID =
+            materialList && materialList.find((_item) => _item.id === id)
+          if (findMatID) {
+            setOwnerDetail({
+              type: "material",
+              id: findMatID.id,
+              tokenId: String(findMatID.material_id_smartcontract),
+              image: findMatID.image,
+              name: findMatID.name,
+              desc: findMatID.detail
+            })
+          }
+        }
+        break
+      default:
+        break
+    }
+  }, [gameItemList, materialList, id, marketType])
+
   useEffect(() => {
     let load = false
 
@@ -82,6 +129,24 @@ const useMarketOwnerDetail = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [marketType])
+
+  useEffect(() => {
+    if (
+      (marketType === "game_item" || marketType === "nft_material") &&
+      gameItemList &&
+      !loadRef.current
+    ) {
+      fetchWithContract()
+      loadRef.current = true
+    }
+  }, [marketType, gameItemList, materialList, fetchWithContract])
+
+  useEffect(
+    () => () => {
+      loadRef.current = false
+    },
+    []
+  )
 
   return { isLoading, ownerDetail, marketType }
 }

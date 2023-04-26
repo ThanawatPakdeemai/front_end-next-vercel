@@ -12,7 +12,7 @@ import { useRouter } from "next/router"
 import { BrowserView, MobileView } from "react-device-detect"
 import { Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
-import Image from "next/image"
+import { Image } from "@components/atoms/image/index"
 
 const GameSummaryRewardPage = () => {
   const {

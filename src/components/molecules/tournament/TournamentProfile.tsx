@@ -6,7 +6,7 @@ import React, { memo } from "react"
 // import { useRouter } from "next/router"
 // import { IResponseGameById } from "@src/types/response"
 // import { getGameById } from "@feature/game/containers/services/game.service"
-import Image from "next/image"
+import { Image } from "@components/atoms/image/index"
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward"
 // import TournamentReward from "./TournamentReward"
 

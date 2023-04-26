@@ -255,7 +255,8 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
     item_id,
     profile,
     room_id,
-    router?.query?.typeGame
+    router?.query?.typeGame,
+    detectDevice
   ])
 
   const onPlayGame = () => {

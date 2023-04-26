@@ -1,11 +1,7 @@
 import React, { memo } from "react"
 import { Box, ButtonGroup, CircularProgress } from "@mui/material"
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
-import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined"
-import { Image } from "@components/atoms/image"
 import { Controller } from "react-hook-form"
 import DropdownListCurrency from "@feature/gameItem/atoms/DropdownListCurrency"
 import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
@@ -16,6 +12,12 @@ import Balance from "@components/molecules/balance/Balance"
 import CONFIGS from "@configs/index"
 import PleaseCheckWallet from "@components/atoms/PleaseCheckWallet"
 import { useWeb3Provider } from "@providers/Web3Provider"
+import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
+import { ImageCustom } from "@components/atoms/image/Image"
+import INaka from "@components/icons/Naka"
+import IShoppingCart from "@components/icons/ShoppingCart"
+import MinusIcon from "@components/icons/CountIcon/MinusIcon"
+import PlusIcon from "@components/icons/CountIcon/PlusIcon"
 import useBuyGameItemController from "../containers/hooks/useBuyGameItemController"
 
 const iconmotion = {
@@ -53,41 +55,47 @@ const FormBuyItem = () => {
   } = useBuyGameItemController()
   // const { handleSwitchNetwork } = useSwitchNetwork()
   const { isConnected } = useWeb3Provider()
+  const titleText = "text-xs uppercase"
+  const buttonIncreaseDecrease =
+    "flex h-10 w-10 items-center justify-center rounded-lg bg-secondary-main"
 
   return (
     <>
       {game && (
         <form
-          className="w-full"
+          className="flex w-full flex-col gap-4"
           onSubmit={handleSubmit(onSubmit, onError)}
         >
-          <Box
-            component="div"
-            className="w-full"
-          >
-            <div className=" grid grid-cols-1 justify-center gap-4 md:grid-cols-2">
-              <div className="flex justify-center rounded-2xl border-[1px] border-neutral-700">
-                <Image
-                  src={game.item[0].image}
-                  alt={game.item[0].name}
-                  width={game.item[0].name === "Bullet" ? 100 : 500}
-                  height={game.item[0].name === "Bullet" ? 100 : 500}
-                  className="object-contain p-4"
+          <div className="form-buy-item__gameItem-image flex w-full flex-wrap items-start gap-3">
+            {game.item && game.item.length > 0 && (
+              <div className="flex-1">
+                <GameItemSingleCard
+                  image={game.item[0].image}
+                  name={game.item[0].name}
+                  itemId={game.item[0]._id}
                 />
               </div>
-              <div className="custom-scroll w-full overflow-y-scroll">
-                <p className="text-white-default">{t("assets")}</p>
+            )}
+            <div className="flex w-[calc(100%-164px)] flex-1 flex-col justify-center gap-3 text-sm">
+              <div className="flex w-full flex-col gap-2">
+                <p className={`${titleText} text-white-default`}>
+                  {t("assets")}
+                </p>
                 <p className="text-black-default">{game.item[0].name}</p>
-                <p className="text-white-default">{t("descriptions")}</p>
-                <div className="text-black-default">{game.item[0].detail}</div>
+                <p className={`${titleText} text-white-default`}>
+                  {t("descriptions")}
+                </p>
+                <div className="overflow-hidden text-black-default line-clamp-3">
+                  {game.item[0].detail}
+                </div>
               </div>
             </div>
-          </Box>
+          </div>
           <Box
             component="div"
-            className="my-4 w-full"
+            className="form-buy-item__gameItem-asset flex w-full flex-col gap-2"
           >
-            <p className="py-2 uppercase text-black-default">
+            <p className={`${titleText} text-black-default`}>
               {t("tier_assets")}
             </p>
             {gameItemList &&
@@ -109,6 +117,7 @@ const FormBuyItem = () => {
                         setValue("item_id", _item.id)
                         updatePricePerItem()
                       }}
+                      hideIcon
                     />
                   )}
                 />
@@ -119,9 +128,9 @@ const FormBuyItem = () => {
           </Box>
           <Box
             component="div"
-            className="my-4 w-full"
+            className="form-buy-item__currency flex w-full flex-col gap-2"
           >
-            <p className="py-2 uppercase text-black-default">{t("currency")}</p>
+            <p className={`${titleText} text-black-default`}>{t("currency")}</p>
             <Controller
               name="currency"
               control={control}
@@ -142,73 +151,63 @@ const FormBuyItem = () => {
             {"currency" in errors && (
               <p className="text-sm text-error-main">{t("required")}</p>
             )}
+            <p className={`${titleText} text-purple-primary`}>
+              {/* {t("assets")} / 1 {t("item")} = {watch("nakaPerItem")} NAKA */}
+              {`1 ${game.item[0].name} = ${watch("nakaPerItem")} NAKA`}
+            </p>
           </Box>
-          <p className="uppercase text-purple-primary">
-            {t("assets")} / 1 {t("item")} = {watch("nakaPerItem")} NAKA
-          </p>
 
-          <div className="my-4  grid grid-cols-6  content-center gap-2 md:gap-4">
-            <div className="btn">
-              <ButtonIcon
-                onClick={onQtyDown}
-                variants={iconmotion}
-                whileHover="hover"
-                transition={{ type: "spring", stiffness: 400, damping: 4 }}
-                icon={
-                  <RemoveOutlinedIcon className="h-[30px] w-[30px] text-white-primary" />
-                }
-                className="flex h-[50px] w-full items-center justify-center rounded-lg border border-neutral-700 bg-secondary-main md:ml-1 md:w-[50px]"
+          <div className="flex justify-between gap-2">
+            <ButtonIcon
+              onClick={onQtyDown}
+              variants={iconmotion}
+              whileHover="hover"
+              transition={{ type: "spring", stiffness: 400, damping: 4 }}
+              icon={<MinusIcon />}
+              className={buttonIncreaseDecrease.toString()}
+            />
+            <div className="form-buy-item__value flex h-10 flex-1 items-center justify-between rounded-lg border-[1px] border-solid border-neutral-700 bg-neutral-800 p-3 text-neutral-500">
+              <input
+                type="number"
+                {...register("qty", { required: true })}
+                onChange={(event: any) => {
+                  event.preventDefault()
+                  const qty = Number(event.target.value)
+                  if (qty <= 1) {
+                    setValue("qty", 1)
+                  } else if (qty >= 99) {
+                    setValue("qty", 99)
+                  } else {
+                    setValue("qty", qty)
+                  }
+                }}
+                className="hidden-input-number w-[calc(100%-20px)] bg-transparent text-center text-[14px] text-neutral-500 focus-visible:bg-transparent focus-visible:outline-0"
+                value={watch("qty")}
               />
-            </div>
-            <div className="input col-span-4">
-              <div className="flex h-full w-full items-center justify-between rounded-xl bg-neutral-700  p-2 text-neutral-500">
-                <div className="text-center">
-                  <input
-                    type="number"
-                    {...register("qty", { required: true })}
-                    onChange={(event: any) => {
-                      event.preventDefault()
-                      const qty = Number(event.target.value)
-                      if (qty <= 1) {
-                        setValue("qty", 1)
-                      } else if (qty >= 99) {
-                        setValue("qty", 99)
-                      } else {
-                        setValue("qty", qty)
-                      }
-                    }}
-                    className="hidden-input-number h-full w-full bg-neutral-700 pl-8 pt-2 text-center text-neutral-500 focus-visible:bg-neutral-700 focus-visible:outline-0 md:w-[220px]"
-                    value={watch("qty")}
-                  />
-                </div>
-                <div className="flex items-start">
-                  <Image
-                    src={game.item[0].image_icon}
-                    alt={game.item[0].name}
-                    width={20}
-                    height={20}
-                  />
-                </div>
+              <div className="game-item-image h-6 w-6 p-[4px]">
+                <ImageCustom
+                  src={game.item[0].image_icon}
+                  alt={game.item[0].name}
+                  width={20}
+                  height={20}
+                  className="h-full w-full object-contain opacity-40"
+                />
               </div>
             </div>
-            <div className="btn">
-              <ButtonIcon
-                onClick={onQtyUp}
-                variants={iconmotion}
-                whileHover="hover"
-                transition={{ type: "spring", stiffness: 400, damping: 4 }}
-                icon={
-                  <AddOutlinedIcon className="h-[30px] w-[30px] rotate-90 text-white-primary" />
-                }
-                className="flex h-[50px] w-full items-center justify-center rounded-lg border border-neutral-700 bg-secondary-main md:ml-1 md:w-[50px]"
-              />
-            </div>
+            <ButtonIcon
+              onClick={onQtyUp}
+              variants={iconmotion}
+              whileHover="hover"
+              transition={{ type: "spring", stiffness: 400, damping: 4 }}
+              icon={<PlusIcon />}
+              className={buttonIncreaseDecrease.toString()}
+            />
           </div>
           <Box
             component="div"
-            className="my-4 w-full"
+            className="flex w-full flex-col"
           >
-            <p className="py-2 uppercase text-black-default">
+            <p className={`${titleText} text-black-default`}>
               {t("your_balance")}
             </p>
             <Balance
@@ -216,22 +215,19 @@ const FormBuyItem = () => {
               widthBalance="w-full"
             />
           </Box>
-          <div className="my-2 flex w-full justify-between rounded-xl border border-neutral-700 p-4 uppercase">
-            <div className="">
+          <div className="flex h-[52px] w-full items-center justify-between rounded-lg border border-neutral-700 p-4 uppercase">
+            <div className={`${titleText} text-white-primary`}>
               <p>{t("total_price")}:</p>
             </div>
-            <div className="flex items-baseline text-secondary-main">
-              <p className="pr-2">
+            <div className="flex items-baseline gap-2 font-neue-machina-semi text-[14px] text-secondary-main">
+              <p>
                 {Helper.formatNumber(watch("nakaPerItem") * watch("qty") ?? 0, {
                   maximumFractionDigits: 4
                 })}
               </p>
-              <Image
-                src="/images/logo/Logo-Master2.png"
-                alt="Master2"
-                width="30"
-                height="30"
-              />
+              <div className="game-item-image flex h-9 w-6 items-center p-0">
+                <INaka color="#7B5BE6" />
+              </div>
             </div>
           </div>
           <div className="w-full text-end">
@@ -243,7 +239,7 @@ const FormBuyItem = () => {
               )}
             </p>
           </div>
-          <ButtonGroup className="mt-5 flex flex-col  gap-3">
+          <ButtonGroup className="flex flex-col gap-3">
             {!isConnected ? (
               <PleaseCheckWallet />
             ) : (
@@ -271,7 +267,7 @@ const FormBuyItem = () => {
               />
             )}
 
-            <div className="flex w-full justify-center rounded-2xl  border border-black-200">
+            <div className="flex w-full justify-center rounded-3xl border border-black-200">
               <ButtonLink
                 className="h-[40px] w-full text-sm"
                 href={CONFIGS.BASE_URL.MARKETPLACE}
@@ -279,7 +275,7 @@ const FormBuyItem = () => {
                 text={t("view_in_marketplace")}
                 size="medium"
                 variant="contained"
-                icon={<ShoppingCartOutlinedIcon />}
+                icon={<IShoppingCart />}
               />
             </div>
           </ButtonGroup>

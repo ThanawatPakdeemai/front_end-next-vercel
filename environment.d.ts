@@ -72,6 +72,7 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_FIREBASE_APPID: string
     readonly NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: string
     readonly NEXT_PUBLIC_ICON_NAKA: string
+    readonly NEXT_PUBLIC_CONTRACT_REEF_PAY: string
   }
 }
 

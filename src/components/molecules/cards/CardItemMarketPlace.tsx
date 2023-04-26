@@ -149,7 +149,7 @@ const CardItemMarketPlace = ({
                   <Image
                     src={itemImage.src}
                     alt={itemImage.alt}
-                    className={`"object-contain  ${
+                    className={`object-contain ${
                       cardType === "naka-punk"
                         ? "rounded-lg"
                         : cardType === "building" && "image-building"
@@ -166,7 +166,11 @@ const CardItemMarketPlace = ({
                 <Video
                   src={itemVideo.src}
                   poster={itemVideo.poster}
-                  className="rounded-2xl"
+                  className={`rounded-2xl ${
+                    cardType === "avatar-reef"
+                      ? "h-full w-full object-cover"
+                      : ""
+                  }`}
                 />
               </div>
             )}

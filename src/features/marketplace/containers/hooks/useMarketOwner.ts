@@ -1,4 +1,5 @@
 import CONFIGS from "@configs/index"
+import useAvatarReefServ from "@feature/avatarReef/containers/hook/useAvatarReefServ"
 import { useGetMyBuilding } from "@feature/building/containers/hooks/useGetMyBuilding"
 import { useGetMyArcGame } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
 import useInvenGameItem from "@feature/gameItem/inventory/containers/hooks/useInvenGameItem"
@@ -31,6 +32,7 @@ const useMartketOwner = () => {
   const { mutateGetOwnerBuilding } = useGetMyBuilding()
   const { mutateGetMyNakaPunk } = useGetMyNakaPunk()
   const { mutateGeyMyArcGame } = useGetMyArcGame()
+  const { mutateGetMyAvatarReef } = useAvatarReefServ()
 
   const fetchOwnerDataList = async () => {
     setOwnerData([])
@@ -106,7 +108,7 @@ const useMartketOwner = () => {
           })
             .then((_res) => {
               const dumpData: IOwnerData[] = _res.data.map((_data) => ({
-                type: "land",
+                type: "naka-punk",
                 id: _data._id,
                 tokenId: _data.NFT_token,
                 image: _data.image,
@@ -129,6 +131,28 @@ const useMartketOwner = () => {
                 id: _data._id,
                 tokenId: _data.NFT_info.NFT_token,
                 image: _data.image_nft_arcade_game,
+                name: _data.name
+              }))
+              setOwnerData(dumpData)
+              setTotalCount(_res.info.totalCount)
+            })
+            .finally(() => setIsLoading(false))
+          break
+        case "nft_avatar":
+          mutateGetMyAvatarReef({
+            _limit: limit,
+            _active: true,
+            _page: currentPage,
+            _search: {
+              type_marketplace: marketType
+            }
+          })
+            .then((_res) => {
+              const dumpData: IOwnerData[] = _res.data.map((_data) => ({
+                type: "avatar-reef",
+                id: _data._id,
+                tokenId: _data.NFT_token,
+                image: _data.image,
                 name: _data.name
               }))
               setOwnerData(dumpData)

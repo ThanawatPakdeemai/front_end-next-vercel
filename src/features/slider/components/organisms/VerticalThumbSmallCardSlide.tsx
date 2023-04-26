@@ -2,6 +2,7 @@ import React from "react"
 import { IVerticalThumbCardSlideProps } from "@feature/slider/interfaces/ISlides"
 import { CardMedia } from "@mui/material"
 import PlayArrowIcon from "@mui/icons-material/PlayArrow"
+import { ImageCustom } from "@components/atoms/image/Image"
 
 const VerticalThumbSmallCardSlide = ({
   item
@@ -15,14 +16,24 @@ const VerticalThumbSmallCardSlide = ({
           </span>
         </div>
       )}
-      <CardMedia
-        className="card-media block h-[70px] w-[70px] overflow-hidden rounded-sm border-2 border-neutral-700 object-cover object-center transition-all"
-        component={item.type === "video" ? "video" : "img"}
-        alt="Slide"
-        src={item.src}
-        autoPlay={false}
-        controls={false}
-      />
+      {item.type === "video" ? (
+        <CardMedia
+          className="card-media block h-[70px] w-[70px] overflow-hidden rounded-sm border-2 border-neutral-700 object-cover object-center transition-all"
+          component={item.type === "video" ? "video" : "img"}
+          alt="Slide"
+          src={item.src}
+          autoPlay={false}
+          controls={false}
+        />
+      ) : (
+        <ImageCustom
+          src={item.src}
+          alt="Slide"
+          width={200}
+          height={200}
+          className="h-full w-full overflow-hidden rounded-sm border-2 border-neutral-700 object-cover object-center transition-all"
+        />
+      )}
     </div>
   </div>
 )

@@ -73,8 +73,8 @@ const SelectNaka = ({
             >
               <div className="bg-primary-main p-[6px]">
                 <div className="rounded-default bg-neutral-700 p-[3px]">
-                  <div className="flex items-center justify-between">
-                    <div className="m-[3px] w-full rounded-[8px] bg-primary-main px-4 py-[7px]">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="m-[3px] w-[calc(100%-60px)] rounded-[8px] bg-primary-main px-4 py-[7px]">
                       <ListItemText>
                         <Typography className="overflow-hidden !truncate !font-neue-machina-semi !text-sm">
                           {t(`${title}`)}

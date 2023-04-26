@@ -1,5 +1,5 @@
-import React from "react"
-import { Box, Button, Typography } from "@mui/material"
+import React, { useState } from "react"
+import { Box, Button, Stack, Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
 import CardNoReward from "@feature/game/containers/components/atoms/CardNoReward"
 import ButtonLink from "@components/atoms/button/ButtonLink"
@@ -7,9 +7,18 @@ import DraftsOutlinedIcon from "@mui/icons-material/DraftsOutlined"
 import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import GoogleIcon from "@components/icons/SocialIcon/GoogleIcon"
+import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
+import ModalHeader from "@components/molecules/Modal/ModalHeader"
+import FormLogin from "@feature/authentication/components/FormLogin"
 
 const SignInLayout = () => {
   const { t } = useTranslation()
+
+  const [open, setOpen] = useState<boolean>(false)
+
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
+
   return (
     <>
       <Box
@@ -25,6 +34,7 @@ const SignInLayout = () => {
             variant="contained"
             className="mb-[1.125rem] h-[50px] w-[293px] rounded-lg border border-solid border-neutral-700
 !bg-neutral-800 text-xs uppercase hover:border-secondary-main"
+            onClick={handleOpen}
           >
             <div className="flex items-center font-neue-machina text-sm font-bold">
               <span className="absolute left-[15px]">
@@ -93,6 +103,24 @@ const SignInLayout = () => {
           />
         </Box>
       </Box>
+      <ModalCustom
+        open={open}
+        onClose={handleClose}
+        className="w-full gap-3 rounded-[34px] p-[10px] md:w-auto"
+        width="auto"
+      >
+        <Stack
+          spacing={3}
+          className="md:p-5"
+        >
+          <ModalHeader
+            handleClose={handleClose}
+            title="Login"
+          />
+
+          <FormLogin />
+        </Stack>
+      </ModalCustom>
     </>
   )
 }

@@ -1,6 +1,7 @@
 import Link from "next/link"
 import dayjs from "dayjs"
-import { CardMedia, Chip, Typography } from "@mui/material"
+import { Chip, Typography } from "@mui/material"
+import { ImageCustom } from "@components/atoms/image/Image"
 
 interface IEventCardProps {
   event_id: string
@@ -23,20 +24,25 @@ const EventCard = ({
   variant = "filled",
   color = "primary"
 }: IEventCardProps) => (
-  <div className="mx-auto w-[265px] md:mx-0 lg:w-[250px] 2xl:w-[272px]">
+  <div className="mx-auto w-[218px] md:mx-0">
     <Link
       href={`/events/${event_id}`}
       className="cursor-pointer"
     >
-      <CardMedia
-        image={image}
-        sx={{ height: "218px", borderRadius: "24px" }}
-      />
+      <div className="h-[218px] overflow-hidden rounded-3xl">
+        <ImageCustom
+          src={image}
+          alt={title}
+          className="h-full w-full object-cover"
+          width={372}
+          height={372}
+        />
+      </div>
     </Link>
     <Typography className="truncate text-default uppercase md:my-[20px]">
       {title}
     </Typography>
-    <div className="flex justify-center gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 py-[10px]">
+    <div className="flex justify-center gap-2 rounded-lg border-[1px] border-neutral-700 border-opacity-80 py-[10px]">
       <div className="flex flex-col">
         <Typography className="flex text-xs">
           {`Start: ${dayjs(date_start).format("DD MMM YYYY")}`}
@@ -53,7 +59,7 @@ const EventCard = ({
         <Typography className="flex text-sm">Here for more</Typography>
       </Link>
     </div>
-    <div className="mt-2 flex justify-center gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 py-[10px]">
+    <div className="mt-2 flex justify-center gap-2 rounded-lg border-[1px] border-neutral-700 border-opacity-80 py-[10px]">
       {/* ${status} */}
       <Typography className="flex items-center gap-2 text-xs">
         Status:

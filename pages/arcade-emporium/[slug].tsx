@@ -222,7 +222,10 @@ export default function ArcadeEmporiumGameDetails() {
         <FullWidthContent
           sxCustomStyled={{
             "&.container": {
-              maxWidth: "100%!important"
+              maxWidth: "100%!important",
+              "&.container-fullWidth": {
+                padding: "49px"
+              }
             }
           }}
         >

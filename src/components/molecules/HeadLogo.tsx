@@ -2,7 +2,6 @@ import LogoNaka from "@components/atoms/logo/LogoNaka"
 import SelectNaka from "@components/atoms/select/SelectNaka"
 import { Button, Divider, Typography, Box } from "@mui/material"
 import { memo, useCallback, useEffect, useState } from "react"
-import DragHandleIcon from "@mui/icons-material/DragHandle"
 import { useRouter } from "next/router"
 import { Image } from "@components/atoms/image/index"
 import { FLAGS } from "@constants/flags"
@@ -11,7 +10,7 @@ import Link from "next/link"
 import MarketplaceTextIcon from "@components/icons/marketplace/MarketplaceTextIcon"
 import GameDeveloperIcon from "@components/icons/GameDeveloperIcon"
 import GlobalIcon from "@components/icons/GlobalIcon"
-import { styleIcon } from "./HeadMenu"
+import HamburgerIcon from "@components/icons/HamburgerIcon"
 
 const HeadLogo = () => {
   const router = useRouter()
@@ -122,7 +121,7 @@ const HeadLogo = () => {
           />
           <Box
             component="div"
-            className="ms:ml-0 col-span-1 ml-auto flex h-auto items-center "
+            className="ms:ml-0 ml-auto flex h-auto items-center gap-3"
           >
             <GlobalIcon className={themeColor().toString()} />
             <SelectNaka
@@ -162,16 +161,13 @@ const HeadLogo = () => {
               button={
                 <Button
                   sx={{ minWidth: "10px !important" }}
-                  className={`!rounded-[8px] ${themeColor().toString()}`}
+                  className={`flex items-center gap-[6px] !rounded-[8px] p-0 ${themeColor().toString()}`}
                   variant={renderVariant()}
                 >
                   <Typography className="!font-neue-machina-semi !text-sm !uppercase">
                     {router.locale}
                   </Typography>
-                  <DragHandleIcon
-                    className="!ml-2"
-                    sx={styleIcon}
-                  />
+                  <HamburgerIcon />
                 </Button>
               }
             />

@@ -104,12 +104,14 @@ const RightDetailsMarketplace = ({
 
   const handleType = () => {
     const pathMap = {
+      land: "land",
       building: "building",
       game: "game assets",
       material: "material",
       "naka-punk": "nft",
       "arcade-game": "arcade game",
-      default: "land"
+      "avatar-reef": "nft",
+      default: "nft"
     }
     return pathMap[getPathnameType] || pathMap["default"]
   }

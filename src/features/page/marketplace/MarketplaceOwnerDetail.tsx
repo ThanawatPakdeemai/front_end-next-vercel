@@ -1,3 +1,4 @@
+import CardDetailSkeleton from "@feature/marketplace/components/molecules/CardDetailSkeleton"
 import CardContentDetails from "@feature/marketplace/components/organisms/CardContentDetails"
 import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
 import useMarketOwnerDetail from "@feature/marketplace/containers/hooks/useMarketOwnerDetail"
@@ -55,7 +56,9 @@ const MarketplaceOwnerDetail = () => {
         </RightDetailsMarketplace>
       </div>
     </div>
-  ) : null
+  ) : (
+    <CardDetailSkeleton />
+  )
 }
 
 export default MarketplaceOwnerDetail

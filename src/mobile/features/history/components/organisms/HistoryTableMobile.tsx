@@ -19,7 +19,7 @@ import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined"
 import Link from "next/link"
 import SearchIcon from "@mui/icons-material/Search"
 import NoData from "@components/molecules/NoData"
-import Image from "next/image"
+import { Image } from "@components/atoms/image/index"
 
 const HistoryTableMobile = () => {
   const profile = useProfileStore((state) => state.profile.data)

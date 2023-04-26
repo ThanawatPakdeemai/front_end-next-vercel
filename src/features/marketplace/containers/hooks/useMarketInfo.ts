@@ -6,6 +6,7 @@ import {
   TType
 } from "@feature/marketplace/interfaces/IMarketService"
 import useGlobal from "@hooks/useGlobal"
+import useMarketFilterStore from "@stores/marketFilter"
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useState } from "react"
 
@@ -21,6 +22,16 @@ const useMarketInfo = () => {
   const { marketType } = useGlobal()
   const { getMarketOrderAsnyc, isLoading } = useGetMarketOrder()
   const limit = 15
+  const {
+    sort,
+    search: searchText,
+    filter: filterItem
+  } = useMarketFilterStore()
+  const sortData = sort.reduce((acc, curr) => Object.assign(acc, curr), {})
+  const searchData = searchText.reduce(
+    (acc, curr) => Object.assign(acc, curr),
+    {}
+  )
 
   // all fetch info lsit
   const handleSearch = useCallback(async () => {
@@ -53,14 +64,34 @@ const useMarketInfo = () => {
     const marketplace = marketplaceMap[_type] ?? marketplaceMap.land
     const sellerType = router.pathname.includes("p2p") ? "user" : "system"
 
-    return {
-      type: _type ?? "land",
-      search: {
-        type_marketplace: marketplace.type_marketplace,
-        seller_type: marketplace.seller_type ?? sellerType
+    const search: any = {
+      type_marketplace: marketplace.type_marketplace,
+      seller_type: marketplace.seller_type ?? sellerType,
+      ...searchData
+    }
+
+    if (filterItem.length > 0) {
+      switch (marketType) {
+        case "nft_land":
+          search.type_land = filterItem
+          break
+        case "nft_building":
+          search.type_building = filterItem
+          break
+        case "game_item":
+          search.item_id = filterItem
+          break
+        case "nft_material":
+          search.type_material = filterItem
+          break
+        default:
+          break
       }
     }
-  }, [router.pathname])
+
+    return search
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.pathname, searchText, filterItem])
 
   const handleImage = (_data: IMarketDetail) => {
     if (marketType === "game_item" && _data.item_data) {
@@ -110,12 +141,14 @@ const useMarketInfo = () => {
     getMarketOrderAsnyc({
       _limit: limit,
       _page: currentPage,
-      _search: search.search
+      _search: search,
+      _sort: sortData
     } as IMarketServForm).then((_res) => {
       setOrderData(_res)
       setTotalCount(_res.info.totalCount)
     })
-  }, [currentPage, getMarketOrderAsnyc, handleSearch, limit])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, getMarketOrderAsnyc, handleSearch, limit, sort])
 
   useEffect(() => {
     let load = false

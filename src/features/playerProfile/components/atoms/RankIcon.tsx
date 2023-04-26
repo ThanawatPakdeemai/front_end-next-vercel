@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import Image from "next/image"
+import { Image } from "@components/atoms/image/index"
 import BadgesPlacrhoder from "@components/icons/Banner/BadgesPlacrhoder"
 import { v4 as uuid } from "uuid"
 

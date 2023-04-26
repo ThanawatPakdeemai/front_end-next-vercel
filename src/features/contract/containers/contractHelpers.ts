@@ -30,6 +30,8 @@ import NFTPunk from "@configs/abi/marketplace/NFTNakapunk.json"
 import GetAllGameItem from "@configs/abi/GetAddressItems.json"
 import GetAllLand from "@configs/abi/GetAllLandsOfAddress.json"
 
+import ReefPaymentAbi from "@configs/abi/marketplace/ReefPayment.json"
+
 import { Web3Provider } from "@ethersproject/providers"
 
 export const getContract = (
@@ -250,3 +252,11 @@ export const getAllLandContract = (
     | ethers.providers.JsonRpcProvider
     | ethers.providers.JsonRpcSigner
 ) => getContract(GetAllLand.abi, address, web3)
+
+export const getReefPaymentContract = (
+  address: string,
+  web3?:
+    | Web3Provider
+    | ethers.providers.JsonRpcProvider
+    | ethers.providers.JsonRpcSigner
+) => getContract(ReefPaymentAbi.abi, address, web3)

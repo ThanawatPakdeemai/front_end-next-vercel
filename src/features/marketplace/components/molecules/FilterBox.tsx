@@ -19,15 +19,10 @@ import useGetBuilding from "@feature/gameItem/marketplace/containers/hooks/useGe
 
 const FilterBox = () => {
   const router = useRouter()
-  // const { marketType } = useGlobal()
-
-  // const pathName = router.asPath.includes("land")
 
   const pathName = router.asPath.split("/").pop()
   const isP2P = router.asPath.includes("p2p")
-
-  // const [marketType, setMarketType] = useState<TNFTType>()
-  // const pathName = router.asPath.split("/")[1]
+  const isInventory = router.asPath.search("inventory")
 
   const [marketType, setMarketType] = useState<TType>()
   const [expanded, setExpanded] = useState<boolean>(false)
@@ -36,11 +31,12 @@ const FilterBox = () => {
   const [expandType, setExpandType] = useState<boolean>(false)
   const [land, setLand] = useState<string>("Land")
   const [text, setText] = useState<string>("")
+  const [wallet, setWallet] = useState<string>("")
   const [price, setPrice] = useState<string>("Price")
   const [date, setDate] = useState<string>("Date")
   const [type, setType] = useState<string>("Type")
   const [isCheck, setIsCheck] = useState<boolean>(false)
-  const [checkBoxKey, setCheckBoxKey] = useState<number>(0)
+  // const [checkBoxKey, setCheckBoxKey] = useState<number>(0)
 
   const { materialTypes } = useGetMaterialTypes()
   const { gameItemTypes } = useGetGameItems()
@@ -65,11 +61,29 @@ const FilterBox = () => {
     if (!load) {
       if (router.asPath.includes("p2p/land")) {
         setMarketType("land")
+      } else if (router.asPath.includes("inventory/land")) {
+        setMarketType("land")
+      } else if (router.asPath.includes("forsale/land")) {
+        setMarketType("land")
+      } else if (router.asPath.includes("process-payment/land")) {
+        setMarketType("land")
       } else if (router.asPath.includes("p2p/building")) {
+        setMarketType("building")
+      } else if (router.asPath.includes("inventory/building")) {
+        setMarketType("building")
+      } else if (router.asPath.includes("forsale/building")) {
+        setMarketType("building")
+      } else if (router.asPath.includes("process-payment/building")) {
         setMarketType("building")
       } else if (router.asPath.includes("p2p/naka-punk")) {
         setMarketType("naka-punk")
       } else if (router.asPath.includes("p2p/material")) {
+        setMarketType("material")
+      } else if (router.asPath.includes("inventory/material")) {
+        setMarketType("material")
+      } else if (router.asPath.includes("forsale/material")) {
+        setMarketType("material")
+      } else if (router.asPath.includes("process-payment/material")) {
         setMarketType("material")
       } else if (router.asPath.includes("game-item")) {
         setMarketType("game-item")
@@ -101,18 +115,31 @@ const FilterBox = () => {
 
   const listFilter = isP2P ? "P2P Market" : "NAKA Market"
 
+  //  const handleResetSearch = () => {
+  //    onResetSort()
+  //    onResetSearch()
+  //    setText("")
+  //  }
+
+  // useEffect(() => {
+  //   setIsCheck(filter.length > 0)
+  // }, [filter])
+
+  // useEffect(() => {
+  //   setIsCheck(false)
+  // }, [isCheck])
+
   // console.log("sort", obj)
   // console.log("search", obj2)
   // console.log("filter", filter)
+  // console.log("isCheck", isCheck)
+  // console.log("checkBoxKey", checkBoxKey)
 
   const handleCheckboxChange = (filterValue) => {
     const updatedFilter = [...filter, filterValue]
     onSetFilter(updatedFilter)
+    setIsCheck(!isCheck)
   }
-
-  useEffect(() => {
-    setIsCheck(false)
-  }, [isCheck])
 
   const PRICELIST = [
     { label: "Lowest to Highest", value: 1 },
@@ -139,105 +166,115 @@ const FilterBox = () => {
 
   return (
     <div className="grid gap-3">
-      <button
-        type="button"
-        onClick={handleOnExpandClick}
-        className="mx-auto mb-1 flex h-[40px] w-[218px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-secondary-main px-5 text-[12px] text-white-primary"
-      >
-        <DragHandleIcon />
-        <span>{land}</span>
-        <div
-          className={`${
-            expanded === true
-              ? "rotate-180 transition-all duration-300"
-              : "rotate-0 transition-all duration-300"
-          }`}
-        >
-          <DropdownIcon />
-        </div>
-      </button>
-      <Collapse
-        in={expanded}
-        timeout="auto"
-        className="mt-10 w-[200px] rounded-[19px] p-2"
-        sx={{
-          backgroundColor: "#232329",
-          zIndex: 99999,
-          position: "absolute",
-          width: "218px"
-        }}
-      >
-        {MENU_MARKETPLACE &&
-          MENU_MARKETPLACE.map((menu) => (
-            <div key={menu.name}>
-              {menu.name === listFilter && (
-                <>
-                  {menu.chide?.map((item) => (
-                    <MenuItemCustom
-                      key={item.name}
-                      label={item.name}
-                      icon=""
-                      href=""
-                      id={item.name}
-                      external={false}
-                      active
-                      onClick={() => {
-                        setLand(item.name)
-                        setExpanded(!expanded)
-                      }}
-                    />
-                  ))}
-                </>
-              )}
-            </div>
-          ))}
-      </Collapse>
-
-      {(marketType === "building" ||
-        marketType === "arcade-game" ||
-        marketType === "land" ||
-        pathName === "marketplace") && (
+      {isInventory !== -1 ? null : (
         <>
-          <Typography className="text-xs uppercase text-neutral-500">
-            {marketType === "land" || pathName === "marketplace"
-              ? "Land ID"
-              : "NFT Token"}
-          </Typography>
-          <TextField
-            className="w-full"
-            placeholder="e.g. 11900011"
-            onKeyDown={(event) => {
-              if (event.key === "Enter" && text !== "") {
-                pathName === "marketplace" || marketType === "land"
-                  ? onSetSearch({ key: "land_id", value: text })
-                  : onSetSearch({ key: "nft_token", value: text })
-              }
+          <button
+            type="button"
+            onClick={handleOnExpandClick}
+            className="mx-auto mb-1 flex h-[40px] w-[218px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-secondary-main px-5 text-[12px] text-white-primary"
+          >
+            <DragHandleIcon />
+            <span>
+              {pathName === "marketplace" ? land : pathName?.toString()}
+            </span>
+            <div
+              className={`${
+                expanded === true
+                  ? "rotate-180 transition-all duration-300"
+                  : "rotate-0 transition-all duration-300"
+              }`}
+            >
+              <DropdownIcon />
+            </div>
+          </button>
+          <Collapse
+            in={expanded}
+            timeout="auto"
+            className="mt-10 w-[200px] rounded-[19px] p-2"
+            sx={{
+              backgroundColor: "#232329",
+              zIndex: 99999,
+              position: "absolute",
+              width: "218px"
             }}
-            InputProps={{
-              style: {
-                fontSize: "14px",
-                fontFamily: "neueMachina",
-                width: "100%",
-                padding: 8
-              },
-              endAdornment: (
-                <InputAdornment
-                  position="end"
-                  className="cursor-pointer"
-                  onClick={() => {}}
-                >
-                  <SearchIcon />
-                </InputAdornment>
-              )
-            }}
-            onChange={(_event) => {
-              setText(_event?.target?.value)
-              // onSetSearch({ key: "land_id", value: text })
-              pathName === "marketplace" || marketType === "land"
-                ? onSetSearch({ key: "land_id", value: text })
-                : onSetSearch({ key: "nft_token", value: text })
-            }}
-          />
+          >
+            {MENU_MARKETPLACE &&
+              MENU_MARKETPLACE.map((menu) => (
+                <div key={menu.name}>
+                  {menu.name === listFilter && (
+                    <>
+                      {menu.chide?.map((item) => {
+                        const active = router.asPath.includes(item.link)
+                        return (
+                          <MenuItemCustom
+                            key={item.name}
+                            label={item.name}
+                            icon=""
+                            href={item.link}
+                            id={item.name}
+                            external={false}
+                            active={active}
+                            onClick={() => {
+                              setLand(item.name)
+                              setExpanded(!expanded)
+                            }}
+                          />
+                        )
+                      })}
+                    </>
+                  )}
+                </div>
+              ))}
+          </Collapse>
+
+          {(marketType === "building" ||
+            marketType === "arcade-game" ||
+            marketType === "land" ||
+            pathName === "marketplace") && (
+            <>
+              <Typography className="text-xs uppercase text-neutral-500">
+                {marketType === "land" || pathName === "marketplace"
+                  ? "Land ID"
+                  : "NFT Token"}
+              </Typography>
+              <TextField
+                className="w-full"
+                placeholder="e.g. 11900011"
+                // onKeyDown={(event) => {
+                //   if (event.key === "Enter" && text !== "") {
+                //     pathName === "marketplace" || marketType === "land"
+                //       ? onSetSearch({ key: "land_id", value: text })
+                //       : onSetSearch({ key: "nft_token", value: text })
+                //   }
+                // }}
+                InputProps={{
+                  style: {
+                    fontSize: "14px",
+                    fontFamily: "neueMachina",
+                    width: "100%",
+                    padding: 8
+                  },
+                  endAdornment: (
+                    <InputAdornment
+                      position="end"
+                      className="cursor-pointer"
+                      onClick={() => {}}
+                    >
+                      <SearchIcon />
+                    </InputAdornment>
+                  )
+                }}
+                onChange={(_event) => {
+                  setText(_event.target.value)
+                  // onSetSearch({ key: "land_id", value: text })
+                  pathName === "marketplace" || marketType === "land"
+                    ? onSetSearch({ key: "land_id", value: text })
+                    : onSetSearch({ key: "nft_token", value: text })
+                }}
+                value={text}
+              />
+            </>
+          )}
         </>
       )}
 
@@ -256,6 +293,11 @@ const FilterBox = () => {
             onClick={() => {
               onResetSort()
               onResetSearch()
+              setText("")
+              setWallet("")
+              setPrice("Price")
+              setDate("Date")
+              setType("Type")
             }}
             className="ml-2 cursor-pointer self-center text-xs uppercase text-secondary-main"
           >
@@ -266,6 +308,7 @@ const FilterBox = () => {
       {(marketType === "land" ||
         marketType === "game-item" ||
         marketType === "material" ||
+        marketType === "building" ||
         marketType === "naka-punk" ||
         marketType === "arcade-game") && (
         <div>
@@ -293,14 +336,16 @@ const FilterBox = () => {
               )
             }}
             onChange={(_event) => {
-              const searchWallet = _event?.target?.value
-              if (searchWallet) {
-                onSetSearch({ key: "seller_id", value: searchWallet })
-                onSetSearch({ key: "seller_type", value: "user" })
-                onSetSearch({ key: "type_marketplace", value: "nft_land" })
+              setWallet(_event.target.value)
+              if (wallet) {
+                onSetSearch({ key: "seller_id", value: wallet })
               }
-              // onSetSearch({ key: "seller_id", value: searchWallet })
+              // const searchWallet = _event?.target?.value
+              // if (searchWallet) {
+              //   onSetSearch({ key: "seller_id", value: searchWallet })
+              // }
             }}
+            value={wallet}
           />
         </div>
       )}
@@ -530,9 +575,11 @@ const FilterBox = () => {
           <Typography
             component="button"
             onClick={() => {
-              setIsCheck(isCheck)
-              setCheckBoxKey((prevKey) => prevKey + 1)
+              // setIsCheck(!isCheck)
+              // setCheckBoxKey((prevKey) => prevKey + 1)
+              // setCheckBoxKey(checkBoxKey + 1)
               onResetFilter()
+              setIsCheck(false)
             }}
             className="corsor-pointer ml-2 self-center text-xs uppercase text-secondary-main"
           >
@@ -542,25 +589,31 @@ const FilterBox = () => {
       </div>
       <div>
         {pathName === "material" ||
+        pathName === "marketplace" ||
         marketType === "material" ||
         marketType === "land"
           ? materialTypes &&
             materialTypes
-              .filter(
-                (item, index, self) =>
-                  self.findIndex((t) => t.name === item.name) === index
-              )
+              // .filter(
+              //   (item, index, self) =>
+              //     self.findIndex((t) => t.name_type === item.name_type) ===
+              //     index
+              // )
               // .filter((ele) => ele.name !== `${ele.name}`)
               .map((item) => {
-                if (item.type === "land" && marketType === "land") {
+                if (
+                  (item.type === "land" && pathName === "marketplace") ||
+                  (item.type === "land" && marketType === "land")
+                ) {
                   return (
                     <CheckBoxNaka
-                      key={checkBoxKey}
+                      // key={checkBoxKey}
+                      key={item.name}
                       value={isCheck}
                       onHandle={() =>
                         handleCheckboxChange({
                           name: item.name,
-                          value: item.name
+                          value: item.name_type
                         })
                       }
                       text={item.name}
@@ -573,12 +626,13 @@ const FilterBox = () => {
                 if (item.type === "material" && marketType === "material") {
                   return (
                     <CheckBoxNaka
-                      key={checkBoxKey}
+                      // key={checkBoxKey}
+                      key={item.name}
                       value={isCheck}
                       onHandle={() =>
                         handleCheckboxChange({
                           name: item.name,
-                          value: item.name
+                          value: item.name_type
                         })
                       }
                       text={item.name}
@@ -594,20 +648,21 @@ const FilterBox = () => {
         {pathName === "building" &&
           buildingTypes &&
           buildingTypes
-            // .filter(
-            //   (item, index, self) =>
-            //     self.findIndex((t) => t.name === item.name) === index
-            // )
+            .filter(
+              (item, index, self) =>
+                self.findIndex((t) => t.name === item.name) === index
+            )
             .map((item) => (
               <CheckBoxNaka
-                key={checkBoxKey}
+                // key={checkBoxKey}
+                key={item.name}
                 value={isCheck}
-                onHandle={() =>
+                onHandle={() => {
                   handleCheckboxChange({
                     name: item.name,
-                    value: item.name
+                    value: item.model_id.toString()
                   })
-                }
+                }}
                 text={item.name}
                 className="mr-4 items-center self-center uppercase"
                 fontStyle="text-xs text-black-default"
@@ -623,7 +678,8 @@ const FilterBox = () => {
             )
             .map((item) => (
               <CheckBoxNaka
-                key={checkBoxKey}
+                // key={checkBoxKey}
+                key={item.name}
                 value={isCheck}
                 onHandle={() =>
                   handleCheckboxChange({

@@ -115,7 +115,10 @@ export default function SummaryDetails() {
                 <FullWidthContent
                   sxCustomStyled={{
                     "&.container": {
-                      maxWidth: "100%!important"
+                      maxWidth: "100%!important",
+                      "&.container-fullWidth": {
+                        padding: "49px"
+                      }
                     }
                   }}
                 >

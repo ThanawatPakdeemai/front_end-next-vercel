@@ -123,7 +123,10 @@ const GameRoomLayout = ({
         sxCustomStyled={{
           "&.container": {
             maxWidth: "100%!important",
-            marginTop: "90px!important"
+            marginTop: "90px!important",
+            "&.container-fullWidth": {
+              padding: "49px"
+            }
           }
         }}
       >

@@ -6,6 +6,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
 import React, { ReactElement } from "react"
+import { BrowserView, MobileView } from "react-device-detect"
 
 const GameSummaryRewardPage = dynamic(
   () => import("@feature/page/games/gameSummaryRewardPage"),
@@ -70,49 +71,79 @@ export default function SummaryDetails() {
       {gameData ? (
         <GamePageDefault
           component={
-            <RightSidebarContent
-              className="mb-24"
-              content={<GameSummaryRewardPage />}
-              aside={
-                <Box
-                  component="div"
-                  className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
-                  sx={{
-                    ".panel-content": {
-                      maxHeight: "270px",
-                      ".custom-scroll": {
-                        overflow: "hidden"
-                      }
-                    },
-                    ".like-no_score": {
-                      margin: "0"
+            <>
+              <BrowserView>
+                <RightSidebarContent
+                  className="mb-24"
+                  content={<GameSummaryRewardPage />}
+                  aside={
+                    <Box
+                      component="div"
+                      className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
+                      sx={{
+                        ".panel-content": {
+                          maxHeight: "270px",
+                          ".custom-scroll": {
+                            overflow: "hidden"
+                          }
+                        },
+                        ".like-no_score": {
+                          margin: "0"
+                        }
+                      }}
+                    >
+                      <OverviewContent
+                        gameId={gameData.id}
+                        gameType={getTypeGamePathFolder(gameData)}
+                        gameIdNFT={gameData.NFT_Owner}
+                      />
+                    </Box>
+                  }
+                />
+              </BrowserView>
+              <MobileView>
+                <RightSidebarContent
+                  content={<GameSummaryRewardPage />}
+                  aside={null}
+                />
+              </MobileView>
+            </>
+          }
+          component2={
+            <>
+              <BrowserView>
+                <FullWidthContent
+                  sxCustomStyled={{
+                    "&.container": {
+                      maxWidth: "100%!important"
                     }
                   }}
                 >
-                  <OverviewContent
-                    gameId={gameData.id}
-                    gameType={getTypeGamePathFolder(gameData)}
-                    gameIdNFT={gameData.NFT_Owner}
-                  />
-                </Box>
-              }
-            />
-          }
-          component2={
-            <FullWidthContent
-              sxCustomStyled={{
-                "&.container": {
-                  maxWidth: "100%!important"
-                }
-              }}
-            >
-              <TabProvider>
-                <GameTabs
-                  gameId={gameData.id}
-                  gameType={getTypeGamePathFolder(gameData)}
-                />
-              </TabProvider>
-            </FullWidthContent>
+                  <TabProvider>
+                    <GameTabs
+                      gameId={gameData.id}
+                      gameType={getTypeGamePathFolder(gameData)}
+                    />
+                  </TabProvider>
+                </FullWidthContent>
+              </BrowserView>
+              <MobileView>
+                {/* <FullWidthContent
+                  sxCustomStyled={{
+                    "&.container": {
+                      maxWidth: "100%!important"
+                    }
+                  }}
+                >
+                  <TabProvider>
+                    <GameTabs
+                      gameId={gameData.id}
+                      gameType={getTypeGamePathFolder(gameData)}
+                    />
+                  </TabProvider>
+                </FullWidthContent> */}
+              </MobileView>
+            </>
           }
         />
       ) : (

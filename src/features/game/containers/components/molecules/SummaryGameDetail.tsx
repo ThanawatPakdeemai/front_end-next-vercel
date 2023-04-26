@@ -1,4 +1,5 @@
 import React from "react"
+import { BrowserView, MobileView } from "react-device-detect"
 
 interface IProp {
   title: string
@@ -6,10 +7,20 @@ interface IProp {
 }
 
 const SummaryGameDetail = ({ title, value }: IProp) => (
-  <div className="flex w-[260px] border-b border-neutral-800 py-[10px]">
-    <span className="flex-1 uppercase text-neutral-500">{title}</span>
-    <span className="uppercase text-neutral-300">{value}</span>
-  </div>
+  <>
+    <BrowserView>
+      <div className="flex w-[260px] border-b border-neutral-800 py-[10px]">
+        <span className="flex-1 uppercase text-neutral-500">{title}</span>
+        <span className="uppercase text-neutral-300">{value}</span>
+      </div>
+    </BrowserView>
+    <MobileView>
+      <div className="flex w-full justify-between  border-b border-neutral-800 py-[10px]">
+        <span className="flex-1 uppercase text-neutral-500">{title}</span>
+        <span className="uppercase text-neutral-300">{value}</span>
+      </div>
+    </MobileView>
+  </>
 )
 
 export default SummaryGameDetail

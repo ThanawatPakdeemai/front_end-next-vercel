@@ -1,7 +1,8 @@
 import { useMutation } from "@tanstack/react-query"
 import {
   getMyForSaleNakapunk,
-  getMyNakapunk
+  getMyNakapunk,
+  getNakapunkById
 } from "../services/nakapunk.service"
 
 export const useGetMyNakaPunk = () => {
@@ -22,4 +23,14 @@ export const useGetMyForSaleNakaPunk = () => {
     cacheTime: Infinity
   })
   return { mutateGetMyForsaleNakaPunk, isLoading }
+}
+
+export const useGetNakPunkById = () => {
+  const { mutateAsync: mutateGetNakapunkById, isLoading } = useMutation({
+    mutationKey: ["getNakapunkById"],
+    mutationFn: getNakapunkById,
+    retry: false,
+    cacheTime: Infinity
+  })
+  return { mutateGetNakapunkById, isLoading }
 }

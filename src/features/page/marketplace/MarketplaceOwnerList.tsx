@@ -30,7 +30,7 @@ const MarketplaceOwnerList = () => {
               itemImage={
                 _data.type === "game-item"
                   ? {
-                      src: _data.image,
+                      src: String(_data.image),
                       alt: _data.name,
                       width: _data.name.includes("Bullet") ? 40 : 100
                     }
@@ -40,7 +40,7 @@ const MarketplaceOwnerList = () => {
                 _data.type !== "game-item"
                   ? {
                       src: _data.video as string,
-                      poster: _data.image
+                      poster: String(_data.image)
                     }
                   : undefined
               }

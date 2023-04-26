@@ -93,12 +93,15 @@ const RightDetailsMarketplace = ({
 }: IProp) => {
   const router = useRouter()
   const profile = useProfileStore((state) => state.profile.data)
-  const getPathnameType = router.pathname.split("/")[2]
+  const getPathnameType = router.pathname.includes("inventory")
+    ? router.asPath.split("/")[3]
+    : router.asPath.split("/")[2]
   const [expanded, setExpanded] = React.useState<string | false>("")
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false)
     }
+
   const handleType = () => {
     const pathMap = {
       building: "building",
@@ -271,6 +274,9 @@ const RightDetailsMarketplace = ({
           expanded={expanded === "panel1"}
           onChange={handleChange("panel1")}
           className="static rounded-md border-neutral-800 bg-neutral-780 px-[26px]"
+          sx={{
+            backgroundImage: "none"
+          }}
         >
           <AccordionSummary
             aria-controls="panel1d-content"

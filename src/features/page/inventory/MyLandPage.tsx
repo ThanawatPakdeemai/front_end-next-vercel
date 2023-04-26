@@ -11,12 +11,15 @@ import useGetAllLand from "@feature/land/containers/hooks/useGetAllLand"
 import useMyLandController from "@feature/land/containers/hooks/useMyLandController"
 import { useGetMyLand } from "@feature/land/containers/hooks/useGetMyLand"
 import useProfileStore from "@stores/profileStore"
+import IconArrowRight from "@components/icons/arrowRightIcon"
 import {
   IMarketLandData,
   ILandMap
 } from "@feature/land/interfaces/ILandService"
 import { colorThree } from "@constants/map"
 import useLoadingStore from "@stores/loading"
+import { useToast } from "@feature/toast/containers"
+import useUpdateLand from "@feature/land/containers/hooks/useUpdateLand"
 import UploadImag from "../../../components/icons/marketplace/UploadImag"
 
 const MyLandPage = () => {
@@ -26,7 +29,7 @@ const MyLandPage = () => {
   const [limit, setLimit] = useState<number>(6)
   const [page, setPage] = useState<number>(1)
   const [landData, setLandData] = useState<IMarketLandData[]>([])
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [selectedFile, setSelectedFile] = useState<string | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const { setOpen, setClose } = useLoadingStore()
 
@@ -36,8 +39,10 @@ const MyLandPage = () => {
   const [pos, setPos] = useState<{ x: string; y: string }>({ x: "175", y: "1" })
 
   const { mutateGetMyLand } = useGetMyLand()
+  const { mutateUpdateLandBanner } = useUpdateLand()
   const { allLand: allLandData } = useGetAllLand()
   const { sortLandId, sortBlockPoint } = useMyLandController()
+  const { errorToast, successToast } = useToast()
   const { query } = useRouter()
 
   const { x, y } = query
@@ -136,21 +141,15 @@ const MyLandPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, page, sortLandId, sortBlockPoint])
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files ? event.target.files[0] : null
-    setSelectedFile(file)
-
-    if (file) {
-      // create a file reader object to read the contents of the file
-      const reader = new FileReader()
-
-      reader.onloadend = () => {
-        // set the image preview state to the base64-encoded string
-        setImagePreview(reader.result as string)
+  async function handleFileChange(e: any, setPreview: any, setFileImage: any) {
+    if (e.target.files.length) {
+      e.preventDefault()
+      const maxFile: number = 2000 * 1024
+      if (e.target.files[0].size <= maxFile) {
+        const file = e.target.files[0]
+        setFileImage(file)
+        setPreview(URL.createObjectURL(file))
       }
-
-      // read the file as a data URL (base64-encoded string)
-      reader.readAsDataURL(file)
     }
   }
 
@@ -158,6 +157,41 @@ const MyLandPage = () => {
   const handleClick = (_event: any) => {
     if (hiddenImage.current !== null) {
       hiddenImage.current.click()
+    }
+  }
+
+  const onReset = () => {
+    const inputFile = document.getElementById("file-upload") as HTMLInputElement
+    if (inputFile.value !== null) {
+      inputFile.value = ""
+      setSelectedFile(null)
+      setImagePreview(null)
+    }
+  }
+
+  const onSubmit = async () => {
+    if (selectedFile && imagePreview && currentLand) {
+      setOpen("Uploading...")
+      const data: any = {
+        _landId: currentLand._id,
+        _img: selectedFile
+      }
+
+      mutateUpdateLandBanner(data, {
+        onSuccess(_res) {
+          successToast(
+            "The banner has been uploaded successfully. Please wait for the image to be reviewed before it is displayed."
+          )
+          onReset()
+          setClose()
+        },
+        onError(err) {
+          errorToast((err as Error).message)
+          setClose()
+        }
+      })
+    } else {
+      errorToast("Please select land or upload image first")
     }
   }
 
@@ -217,14 +251,28 @@ const MyLandPage = () => {
             className="btn-rainbow-theme mt-[10px] h-[40px] !w-full !rounded-[24px] border border-neutral-700 bg-secondary-main font-bold capitalize text-white-primary"
             startIcon={<AddIcon className="text-neutral-300" />}
             handleClick={() => {
-              handleClick(handleFileChange)
+              handleClick((e) =>
+                handleFileChange(e, setImagePreview, setSelectedFile)
+              )
             }}
           />
+          {selectedFile && (
+            <ButtonToggleIcon
+              text="Upload banner"
+              className="mt-[10px] h-[40px] !w-full !rounded-[24px] border border-neutral-700 bg-success-main font-bold capitalize text-success-contrastText"
+              startIcon={null}
+              endIcon={<IconArrowRight stroke="#010101" />}
+              handleClick={onSubmit}
+            />
+          )}
           <input
             type="file"
             className="hidden"
-            onChange={handleFileChange}
+            onChange={(e) =>
+              handleFileChange(e, setImagePreview, setSelectedFile)
+            }
             ref={hiddenImage}
+            id="file-upload"
           />
         </CardMyLandContent>
         <div className="flex w-[333px] justify-center">
@@ -232,11 +280,11 @@ const MyLandPage = () => {
             The banner will show on the map of the assets you hold.
           </Typography>
         </div>
-        {selectedFile && (
+        {/* {selectedFile && (
           <Typography className="w-[230px] text-center text-sm text-neutral-500">
-            {String(selectedFile.name)}
+            {String(selectedFile.string)}
           </Typography>
-        )}
+        )} */}
       </div>
     </div>
   )

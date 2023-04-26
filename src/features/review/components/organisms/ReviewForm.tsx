@@ -40,10 +40,10 @@ const ReviewForm = ({ avatar, username }: IReviewFormProps) => {
           width="200"
           height="200"
           alt={username}
-          className="h-[58px] w-full rounded-sm object-fill object-center"
+          className="h-[58px] w-full rounded-sm object-cover object-center"
         />
       </div>
-      <div className="review--item__content__header mb-2 flex w-full w-full items-center justify-center lg:justify-between">
+      <div className="review--item__content__header mb-2 flex w-full items-center justify-center lg:justify-between">
         <div className="review--item__content-username">{username}</div>
         <div className="review--item__content-rating flex-row">
           <Stack spacing={1}>

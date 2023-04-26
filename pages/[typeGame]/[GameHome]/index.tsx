@@ -184,7 +184,11 @@ export default function GameLobby() {
       default:
         return (
           <CardBuyItem
-            buttonStyle="green"
+            buttonStyle={
+              getTypeGamePathFolder(gameData) !== "storymode"
+                ? "purple"
+                : "green"
+            }
             gameObject={gameData}
           />
         )

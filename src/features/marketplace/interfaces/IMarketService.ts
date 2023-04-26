@@ -292,7 +292,7 @@ export interface IOwnerData {
   type: TType
   id: string
   tokenId?: string
-  image: string
+  image?: string
   video?: string
   name: string
   price?: number
@@ -301,6 +301,16 @@ export interface IOwnerData {
   level?: string | number
   size?: string | number
   amount?: string | number
+}
+
+export interface IOwnerDetailsData extends IOwnerData {
+  desc?: string
+  model?: string
+  pos?: {
+    x: string
+    y: string
+  }
+  qrcode?: string
 }
 
 export interface IPayBillInstallServ extends IFormatMessageService {

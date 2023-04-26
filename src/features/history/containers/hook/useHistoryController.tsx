@@ -46,7 +46,7 @@ const useHistoryController = () => {
     setPlayHistoryItem(_historyItem)
     onHandleView(
       `/${validTypeGames.find((res) => res.includes(_historyItem.game_mode))}/${
-        _historyItem.path
+        _historyItem.game_detail.path
       }`,
       _historyItem.room_id
     )

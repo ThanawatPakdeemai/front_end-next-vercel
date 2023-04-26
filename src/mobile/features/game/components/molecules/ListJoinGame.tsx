@@ -23,7 +23,7 @@ const ListJoinGame = ({
   <>
     <div className="max-h-[393px] w-full border-b border-neutral-700">
       <div className="m-[16px]">
-        <div className="mb-[10px] flex items-center justify-between">
+        <div className="mb-[10px] flex items-center justify-between gap-2">
           <div className="w-[55px] flex-none">
             <Image
               src={image || ""}

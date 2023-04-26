@@ -1,7 +1,7 @@
 import useRoomSingle from "@feature/game/containers/hooks/useRoomSingle"
 import ListJoinGame from "../../molecules/ListJoinGame"
 
-const SingleRoom = () => {
+const MultiRoom = () => {
   const { roomData, gameData, itemSelected, handleJoinRoom } = useRoomSingle()
   return (
     <>
@@ -23,4 +23,4 @@ const SingleRoom = () => {
   )
 }
 
-export default SingleRoom
+export default MultiRoom

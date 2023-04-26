@@ -30,14 +30,14 @@ const ListJoinGame = ({
               width={52}
               height={52}
               alt="image-list-room"
-              className="h-[52px] w-[52px] rounded-sm border border-success-contrastText bg-success-contrastText"
+              className="h-[52px] w-[52px] rounded-sm border border-success-contrastText  bg-success-contrastText object-cover"
             />
           </div>
           <div className="grow">
-            <p className=" font-neue-machina text-xs text-secondary-main">
+            <p className=" font-neue-machina text-xs capitalize text-secondary-main">
               {name}
             </p>
-            <p className=" font-neue-machina text-sm text-neutral-300">
+            <p className=" font-neue-machina text-sm capitalize text-neutral-300">
               {desc}
             </p>
           </div>
@@ -45,12 +45,12 @@ const ListJoinGame = ({
             <ButtonJoin onClick={onClick} />
           </div>
         </div>
-        <div className=" flex h-[36px] items-center gap-[16px] rounded-[12px] border border-neutral-800 bg-neutral-780 p-[8px]">
+        <div className=" flex h-[36px] items-center gap-[16px] overflow-hidden rounded-[12px] border border-neutral-800 bg-neutral-780 p-[8px]">
           <Chip
             color="error"
             label={textChip}
             size="small"
-            className="!h-[20px]"
+            className="!h-[20px] capitalize"
           />
           <p className=" font-neue-machina text-sm text-secondary-main">
             {descChip1}

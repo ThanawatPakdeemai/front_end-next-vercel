@@ -123,13 +123,20 @@ const useRoomSingle = () => {
     }
   }
 
+  const roomData = useMemo(() => {
+    if (profile) {
+      return allGameRooms
+    }
+    return allGameRoomsById
+  }, [allGameRooms, allGameRoomsById, profile])
   return {
     allGameRooms,
     allGameRoomsById,
     profile,
     gameData: data,
     itemSelected,
-    handleJoinRoom
+    handleJoinRoom,
+    roomData
   }
 }
 

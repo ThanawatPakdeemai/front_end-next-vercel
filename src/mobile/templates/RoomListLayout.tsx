@@ -5,12 +5,12 @@ import RoomListPage from "@src/mobile/features/pages/game/RoomListPage"
 
 const RoomListLayout = () => (
   <>
-    <div>
+    <div className="mb-[80px]">
       {/* content */}
       <RoomListPage />
       {/* footer */}
-      <Header />
     </div>
+    <Header />
   </>
 )
 

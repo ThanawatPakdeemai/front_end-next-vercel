@@ -647,6 +647,7 @@ const FilterBox = () => {
           : null}
         {pathName === "building" &&
           buildingTypes &&
+          filter &&
           buildingTypes
             .filter(
               (item, index, self) =>
@@ -656,7 +657,9 @@ const FilterBox = () => {
               <CheckBoxNaka
                 // key={checkBoxKey}
                 key={item.name}
-                value={isCheck}
+                value={
+                  !!filter.find((check) => check === item.model_id.toString())
+                }
                 onHandle={() => {
                   handleCheckboxChange({
                     name: item.name,

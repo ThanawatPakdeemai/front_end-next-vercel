@@ -184,7 +184,11 @@ export default function GameLobby() {
       default:
         return (
           <CardBuyItem
-            buttonStyle="green"
+            buttonStyle={
+              getTypeGamePathFolder(gameData) !== "storymode"
+                ? "purple"
+                : "green"
+            }
             gameObject={gameData}
           />
         )
@@ -205,7 +209,7 @@ export default function GameLobby() {
                   className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
                   sx={{
                     ".panel-content": {
-                      maxHeight: "200px",
+                      maxHeight: "270px",
                       ".custom-scroll": {
                         overflow: "hidden"
                       }

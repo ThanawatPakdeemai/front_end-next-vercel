@@ -13,21 +13,19 @@ const ButtonClose = ({ onClick, className, insideClassName }: IProps) => {
   return (
     <Box
       component="div"
-      className={`button-close mr-2 cursor-pointer ${className}`}
+      className={`button-close m-auto cursor-pointer ${className}`}
       onClick={onClick}
     >
       <Box
         component="div"
-        className={`group ml-2 flex
-            h-8 w-8 rotate-45
-             items-center rounded-[8px] ${
-               isMarketplace
-                 ? "bg-secondary-main hover:bg-secondary-main"
-                 : "bg-error-main hover:bg-error-main"
-             } ${insideClassName} duration-150 ease-bounce hover:rotate-0`}
+        className={`group flex h-6 w-6 rotate-45 items-center rounded ${
+          isMarketplace
+            ? "bg-secondary-main hover:bg-secondary-main"
+            : "bg-error-main hover:bg-error-main"
+        } ${insideClassName} duration-150 ease-bounce hover:rotate-0`}
       >
         <Divider
-          className="m-auto mx-2 w-[16px] origin-center  rotate-[315deg] !border !border-neutral-200 group-hover:rotate-0"
+          className="m-auto w-[16px] origin-center rotate-[315deg] !border !border-neutral-200 group-hover:rotate-0"
           orientation="vertical"
           flexItem
         />

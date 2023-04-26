@@ -201,7 +201,7 @@ export default function GameLobby() {
         <GamePageDefault
           component={
             <RightSidebarContentEffect
-              className="mb-24 lg:mb-[164px]"
+              className="mb-[64px]"
               content={getTemplateLobby()}
               aside={
                 <Box

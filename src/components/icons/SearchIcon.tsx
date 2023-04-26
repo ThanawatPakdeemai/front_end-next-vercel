@@ -17,14 +17,14 @@ function SearchIcon({
     >
       <path
         d="M14 14L20 20"
-        stroke={"#70727B" || stroke}
+        stroke={stroke || "#70727B"}
         strokeWidth={1.2}
       />
       <circle
         cx={9.5}
         cy={9.5}
         r={5.9}
-        stroke="#70727B"
+        stroke={stroke || "#70727B"}
         strokeWidth={1.2}
       />
     </svg>

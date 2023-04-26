@@ -9,6 +9,9 @@ import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import { Image } from "@components/atoms/image"
 import Video from "@components/atoms/Video"
+import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt"
+import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied"
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied"
 import Link from "next/link"
 import { TType } from "@feature/marketplace/interfaces/IMarketService"
 
@@ -52,6 +55,7 @@ interface IProp {
   itemName?: string
   itemSize?: string
   itemLevel?: string | number
+  percentage?: number
   sellingType?: {
     title?: string
     color?:
@@ -78,6 +82,7 @@ const CardItemMarketPlace = ({
   itemName,
   itemSize,
   itemLevel,
+  percentage,
   sellingType,
   price,
   nakaPrice,
@@ -85,6 +90,30 @@ const CardItemMarketPlace = ({
 }: IProp) => {
   const { copyClipboard, formatNumber } = Helper
   const { successToast } = useToast()
+  // "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning"
+  const handleColor = () => {
+    if (percentage)
+      switch (true) {
+        case percentage >= 80:
+          return "success"
+        case percentage >= 40:
+          return "warning"
+        default:
+          return "error"
+      }
+  }
+
+  const handleIcon = () => {
+    if (percentage)
+      switch (true) {
+        case percentage >= 80:
+          return <SentimentSatisfiedAltIcon sx={{ color: "#3DCD95" }} />
+        case percentage >= 40:
+          return <SentimentDissatisfiedIcon sx={{ color: "#E1D35A" }} />
+        default:
+          return <SentimentVeryDissatisfiedIcon sx={{ color: "#F42728" }} />
+      }
+  }
 
   return (
     <div className="relative">
@@ -132,6 +161,33 @@ const CardItemMarketPlace = ({
                     />
                   }
                 />
+              )}
+              {itemLevel && percentage && (
+                <div className="flex w-[190px] justify-between">
+                  <Chip
+                    label={`LV. : ${itemLevel}`}
+                    variant="outlined"
+                    size="small"
+                    className="cursor-pointer uppercase"
+                    icon={
+                      <GridViewRoundedIcon
+                        sx={{
+                          width: 16,
+                          height: 16
+                        }}
+                        className="pb-[2px] !text-neutral-400"
+                      />
+                    }
+                  />
+                  <Chip
+                    label={`${percentage} %`}
+                    variant="filled"
+                    size="small"
+                    className="cursor-pointer uppercase"
+                    color={handleColor()}
+                    icon={handleIcon()}
+                  />
+                </div>
               )}
             </div>
 
@@ -185,15 +241,7 @@ const CardItemMarketPlace = ({
                   color="error"
                 />
               )}
-              {itemLevel && (
-                <Chip
-                  label={`level : ${itemLevel}`}
-                  variant="filled"
-                  size="small"
-                  className="cursor-pointer uppercase"
-                  color="error"
-                />
-              )}
+
               {sellingType &&
                 (cardType === "land" ||
                   cardType === "building" ||

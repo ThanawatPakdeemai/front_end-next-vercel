@@ -101,7 +101,10 @@ const TournamentRegister = () => {
                 title="Tournament Terms & Conditions"
               />
             </div>
-            <Box className="hide-scroll flex h-[580px] w-full flex-col overflow-y-scroll ">
+            <Box
+              component="div"
+              className="hide-scroll flex h-[580px] w-full flex-col overflow-y-scroll "
+            >
               <div className="relative my-2 flex flex-col overflow-hidden rounded-2xl bg-primary-main  p-2 sm:m-0">
                 <div className="panel-content relative h-[400px]">
                   <div className="custom-scroll h-[90%] overflow-y-scroll pr-4">

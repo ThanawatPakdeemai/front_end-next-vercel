@@ -47,9 +47,11 @@ const MarketplaceDetail = () => {
         }
         image={imageNFT}
         video={vdoNFT}
+        model={detailData.building_data?.model_3d}
         poster={
           detailData.land_data?.NFT_image ??
-          detailData.game_data?.image_nft_arcade_game
+          detailData.game_data?.image_nft_arcade_game ??
+          detailData.building_data?.NFT_image
         }
         alt={detailData.land_data?.type}
       >
@@ -63,7 +65,7 @@ const MarketplaceDetail = () => {
           {detailData.seller_id && (
             <CardWriterDetails
               textHead="Owned by"
-              name="XXXXXXXXXXXXX"
+              name={detailData.land_data?.name}
               date={String(detailData.created_at)}
               link={detailData.seller_id}
               image={detailData.land_data?.image}
@@ -103,6 +105,7 @@ const MarketplaceDetail = () => {
               detailData.selling_type as TSellingType
             )
           }}
+          redemption={!detailData.seller_id}
         >
           <ButtonMarket
             nftType={detailData.type}

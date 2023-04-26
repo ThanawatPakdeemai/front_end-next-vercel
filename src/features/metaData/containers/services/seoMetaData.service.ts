@@ -15,15 +15,18 @@ const getSeoAll = () =>
   })
 
 const getSeoByPath = (path) =>
+  // eslint-disable-next-line no-unused-vars
   new Promise((resolve, reject) => {
     services
-      .post<ISeoResponse>(`${CONFIGS.BASE_URL.API}/seo/url`, path)
+      .post<ISeoResponse>(`${CONFIGS.BASE_URL.API}/seo/url`, { url: path })
       .then((res) => {
         resolve(res.data)
       })
-      .catch((error: Error) => {
-        reject(error)
-      })
+      .catch(
+        // eslint-disable-next-line no-unused-vars
+        (error: Error) => ({ data: null, message: "error", status: false })
+        // reject(error)
+      )
   })
 
 export { getSeoAll, getSeoByPath }

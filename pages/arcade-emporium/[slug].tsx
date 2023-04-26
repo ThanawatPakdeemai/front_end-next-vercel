@@ -94,6 +94,7 @@ export default function ArcadeEmporiumGameDetails() {
       case "story-mode-games":
         return (
           <Box
+            component="div"
             className="flex w-full flex-col justify-between gap-4 uppercase"
             sx={{
               ".like-no_wrapper": {
@@ -109,6 +110,7 @@ export default function ArcadeEmporiumGameDetails() {
               hideImage
             />
             <Box
+              component="div"
               sx={StartButtonCustomStyle}
               className="flex w-full justify-center uppercase"
             >
@@ -123,6 +125,7 @@ export default function ArcadeEmporiumGameDetails() {
       case "free-to-play-games":
         return (
           <Box
+            component="div"
             className="flex w-full flex-col justify-between gap-4 uppercase"
             sx={{
               ".like-no_wrapper": {
@@ -138,6 +141,7 @@ export default function ArcadeEmporiumGameDetails() {
               value={0}
             /> */}
             <Box
+              component="div"
               sx={StartButtonCustomStyle}
               className="flex w-full justify-center uppercase"
             >
@@ -190,7 +194,7 @@ export default function ArcadeEmporiumGameDetails() {
               className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
               sx={{
                 ".panel-content": {
-                  maxHeight: "270px",
+                  maxHeight: "200px",
                   ".custom-scroll": {
                     overflow: "hidden"
                   }

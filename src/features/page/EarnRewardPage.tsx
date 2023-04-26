@@ -127,6 +127,7 @@ const EarnRewardPage = () => {
         )}
       </div>
       <Box
+        component="div"
         className="flex h-[100px] w-full items-center justify-center rounded-[13px] text-center text-[26px] uppercase"
         sx={{
           backgroundColor: "#2C0909",

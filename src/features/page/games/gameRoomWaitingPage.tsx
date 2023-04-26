@@ -47,7 +47,10 @@ const GameRoomWaitingPage = ({ _roomId }: IProp) => {
         //   return <StoryWaiting />
         default:
           return (
-            <Box className="m-auto block">
+            <Box
+              component="div"
+              className="m-auto block"
+            >
               <NoData />
             </Box>
           )

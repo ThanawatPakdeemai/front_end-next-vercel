@@ -50,7 +50,10 @@ const FormStaking = ({ userName, onCloseModal }: IProp) => {
   }
 
   return (
-    <Box className="h-auto max-h-[644px] overflow-y-auto">
+    <Box
+      component="div"
+      className="h-auto max-h-[644px] overflow-y-auto"
+    >
       {profile && (
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-x-[25px] max-sm:gap-y-[25px] sm:grid-cols-2">
@@ -178,7 +181,7 @@ const FormStaking = ({ userName, onCloseModal }: IProp) => {
             </div>
           </div>
 
-          <div className="mt-6 rounded-[13px] border border-purple-primary bg-[#110A1C] px-4 py-2 font-neue-machina text-sm uppercase text-neutral-500 text-purple-primary shadow-[0px_4px_4px_rgba(0,0,0,0.18)]">
+          <div className="mt-6 rounded-[13px] border border-purple-primary bg-[#110A1C] px-4 py-2 font-neue-machina text-sm uppercase text-neutral-500 shadow-[0px_4px_4px_rgba(0,0,0,0.18)]">
             The NAKA Coins that staked by players will be obtained from
             Metamask. If players need to check whether NAKA is successfully
             staking. please check the Metamask

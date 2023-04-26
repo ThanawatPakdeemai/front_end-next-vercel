@@ -72,10 +72,10 @@ const useMarketInfo = () => {
     }
     if (marketType === "nft_building" && _data.building_data) {
       return {
-        src: _data.building_data.image,
+        src: _data.building_data.NFT_image,
         alt: _data.building_data.name,
-        width: 200,
-        height: 200
+        width: 500,
+        height: 500
       }
     }
     if (marketType === "nft_material" && _data.material_data) {

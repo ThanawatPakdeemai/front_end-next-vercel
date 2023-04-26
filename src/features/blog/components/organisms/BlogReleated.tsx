@@ -1,11 +1,11 @@
 import React from "react"
 import { iconmotion } from "@components/organisms/Footer"
-import BlogCard from "@components/molecules/cards/BlogCard"
 import { v4 as uuid } from "uuid"
 import { IBlogData } from "@feature/blog/interfaces/IBlogService"
 import { Chip, Typography } from "@mui/material"
 import { IPopularTags } from "@feature/blog/interfaces/IBlogPopularTags"
 import { useTranslation } from "react-i18next"
+import BlogCardHorizontal from "@components/molecules/cards/BlogCardHorizontal"
 
 export interface IBlogReleatedProps {
   blogReleatedItems: IBlogData[]
@@ -44,16 +44,14 @@ const BlogReleated = ({
 }: IBlogReleatedProps) => {
   const { t } = useTranslation()
   return (
-    <div className="relative flex w-full flex-col  xl:w-[512px]">
-      <div className="h-[100px] bg-neutral-780">
-        <div className="px-6 py-12 text-center font-neue-machina text-sm uppercase text-white-default">
-          {t("Relate Blog")}
-        </div>
+    <div className="relative flex w-full flex-col border-[1px] border-neutral-800 xl:w-[512px]">
+      <div className="flex h-[100px] items-center justify-center bg-neutral-780 p-6 text-center font-neue-machina text-sm uppercase text-white-default">
+        {t("Relate Blog")}
       </div>
-      <div className="w-full border-[1px] border-neutral-780  ">
+      <div className="w-full border-[1px] border-neutral-800 bg-neutral-800">
         <div className="flex flex-wrap justify-center gap-3 lg:grid lg:flex-nowrap">
           {blogReleatedItems.map((item) => (
-            <BlogCard
+            <BlogCardHorizontal
               key={uuid()}
               image={item.image_list}
               title={item.title}
@@ -63,29 +61,29 @@ const BlogReleated = ({
               arrowMotion={arrowMotion}
               imgMotion={imgMotion}
               blog_id={item._id}
-              className="m-6"
+              tags={item.tags}
             />
           ))}
         </div>
-        <div className="flex h-auto w-full items-center border-t-[1px] border-neutral-780 xl:h-[80px] ">
-          <div className=" mx-auto h-auto w-full justify-center xl:flex  xl:w-full xl:flex-wrap">
-            {blogReleatedTitle && (
-              <Typography className="mx-2 my-2 flex items-center justify-center text-sm uppercase text-white-default xl:my-0">
-                {t(`${blogReleatedTitle}`)}
-              </Typography>
-            )}
-            <div className="m-4 grid w-full grid-cols-3 gap-2 md:grid-cols-4 xl:flex xl:h-[35px] xl:overflow-x-auto">
-              {blogReleatedTag.map((popularItem) => (
-                <Chip
-                  key={uuid()}
-                  label={t(popularItem.name)}
-                  variant="filled"
-                  color="success"
-                  size="small"
-                  className="!bg-neutral-600 uppercase"
-                />
-              ))}
-            </div>
+      </div>
+      <div className="flex h-auto min-h-[80px] w-full items-center p-14">
+        <div className="mx-auto h-auto w-full">
+          {blogReleatedTitle && (
+            <Typography className="my-2 text-sm uppercase text-white-default xl:my-0">
+              {t(`${blogReleatedTitle}`)}
+            </Typography>
+          )}
+          <div className="my-4 flex min-h-[35px] w-full flex-wrap gap-2">
+            {blogReleatedTag.map((popularItem) => (
+              <Chip
+                key={uuid()}
+                label={t(popularItem.name)}
+                variant="filled"
+                color="success"
+                size="small"
+                className="!bg-neutral-500 uppercase"
+              />
+            ))}
           </div>
         </div>
       </div>

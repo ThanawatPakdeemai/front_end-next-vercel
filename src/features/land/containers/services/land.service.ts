@@ -1,6 +1,7 @@
 import services from "@configs/axiosGlobalConfig"
 import { IMarketServForm } from "@feature/marketplace/interfaces/IMarketService"
 import {
+  IAllLand,
   ILandData,
   ILandServ,
   IMyLandListServ,
@@ -130,7 +131,19 @@ export const updateLandBanner = ({
     data.append("image", _img)
 
     services
-      .put<ILandServ>(`/nakaverse-land/update-logo-land`, { ...data })
+      .put<ILandServ>(`/nakaverse-land/update-logo-land`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      })
+      .then((response) => resolve(response.data))
+      .catch((error) => reject(error))
+  })
+
+export const getAllLand = () =>
+  new Promise<IAllLand>((resolve, reject) => {
+    services
+      .get<IAllLand>(`/market-place/land-all`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

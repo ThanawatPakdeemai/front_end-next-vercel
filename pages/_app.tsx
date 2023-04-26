@@ -12,7 +12,6 @@ import { ProviderApp, Web3Provider } from "@providers/index"
 import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material"
 import { theme } from "@styles/themes/darkTheme"
 import { CacheProvider, EmotionCache } from "@emotion/react"
-import Head from "next/head"
 import dynamic from "next/dynamic"
 import dayjs from "dayjs"
 import rt from "dayjs/plugin/relativeTime"
@@ -20,13 +19,9 @@ import createEmotionCache from "@utils/createEmotionCache"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { BrowserView, MobileView } from "react-device-detect"
 import Home from "@src/mobile/home"
+import MetaDataTag from "@components/atoms/MetaDataTag"
 
 const Loading = dynamic(() => import("@components/molecules/Loading"), {
-  suspense: true,
-  ssr: false
-})
-
-const Meta = dynamic(() => import("@components/atoms/MetaData"), {
   suspense: true,
   ssr: false
 })
@@ -43,29 +38,16 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
+const MyApp = (props) => {
+  const { Component, pageProps }: AppPropsWithLayout = props
   const getLayout = Component.getLayout ?? ((page) => page)
   const emotionCache: EmotionCache = clientSideEmotionCache
   const queryClient = new QueryClient()
   const customTheme = createTheme(theme as ThemeOptions)
+
   return (
     <>
-      <Head>
-        <meta
-          name="viewport"
-          content="initial-scale=1.0, width=device-width"
-        />
-        <link
-          rel="shortcut icon"
-          href="favicon.ico"
-          type="image/x-icon"
-        />
-        <link
-          rel="icon"
-          href="https://files.naka.im/seo/favicon.png"
-        />
-      </Head>
-      <Meta />
+      <MetaDataTag />
       <Loading />
       <QueryClientProvider client={queryClient}>
         <Web3Provider>
@@ -78,8 +60,14 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
               </BrowserView>
               <MobileView>
                 <Home />
-                {/* {getLayout(<Component {...pageProps} />)} */}
+                {/* <SignInLayout />
+                <GameDetailLayout />
+                <CreateProfileLayout />
+                {getLayout(<Component {...pageProps} />)} */}
               </MobileView>
+              {/* <ProviderApp>
+                {getLayout(<Component {...pageProps} />)}
+              </ProviderApp> */}
             </ThemeProvider>
           </CacheProvider>
         </Web3Provider>

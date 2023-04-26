@@ -10,29 +10,18 @@ export interface IMetaDate {
 const MetaDate = ({ date, dateTitle = "RELEASE DATE" }: IMetaDate) => {
   const { t } = useTranslation()
   return (
-    <div className="date-wrapper grid grid-rows-2">
+    <div className="date-wrapper flex h-full w-full grid-rows-2 flex-col justify-center gap-2 pl-10">
       {dateTitle && (
-        <div className="date-wrapper--title items-middle flex px-6 pt-4 font-neue-machina text-sm text-white-default">
+        <div className="date-wrapper--title font-neue-machina text-sm text-white-default">
           {t(`${dateTitle}`)}
         </div>
       )}
-
-      <div className="date-wrapper--text px-6 pb-2 pt-4">
+      <div className="date-wrapper--text">
         <div className="text-default text-neutral-500">
           {dayjs(date).format("DD MMMM YYYY")}
         </div>
       </div>
     </div>
-    // <div className=" max-h-32 w-full border-t-2 border-r-2 border-neutral-780 lg:w-2/12">
-    //     <div className=" px-6 pt-4 font-neue-machina text-sm text-white-default">
-    //       DATE
-    //     </div>
-    //     <div className="border-l-2 border-neutral-780 px-6 pt-4 pb-2">
-    //       <span className="text-default text-neutral-500">
-    //         {dayjs(getBlogDetails.data?.date_released).format("DD MMM YYYY")}
-    //       </span>
-    //     </div>
-    //   </div>
   )
 }
 

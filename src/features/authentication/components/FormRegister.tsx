@@ -7,7 +7,6 @@ import {
   Typography,
   Grid,
   Link,
-  Divider,
   Alert,
   Button,
   FormControlLabel,
@@ -34,6 +33,7 @@ import ICheckMark from "@components/icons/CheckMark"
 import FacebookLogin from "react-facebook-login"
 import useRegisterAvatarStore from "@stores/registerAvater"
 import { useTranslation } from "react-i18next"
+import { isMobile } from "react-device-detect"
 import useFormRegisterController from "../containers/hooks/useFormRegisterController"
 import useFormController from "../containers/hooks/useFormController"
 
@@ -92,6 +92,7 @@ const FormRegister = () => {
         onSubmit={handleSubmit(onSubmitRegister)}
       >
         <Box
+          component="div"
           className="w-full xl:w-[353px]"
           style={{ height: 638 }}
         >
@@ -103,20 +104,29 @@ const FormRegister = () => {
               item
               xs={12}
             >
-              <Box
-                className="flex w-full items-center rounded-lg md:w-auto"
-                sx={{ height: "54px" }}
-              >
-                <div className="flex flex-1 flex-row items-center">
-                  <Typography className="text-lg uppercase text-neutral-300">
-                    {t("register")}
+              {!isMobile ? (
+                <Box
+                  component="div"
+                  className="flex w-full items-center rounded-lg md:w-auto"
+                  sx={{ height: "54px" }}
+                >
+                  <div className="flex flex-1 flex-row items-center">
+                    <Typography className="text-lg uppercase text-neutral-300">
+                      {t("register")}
+                    </Typography>
+                  </div>
+                  <Link href="/">
+                    <ButtonClose onClick={() => {}} />
+                  </Link>
+                </Box>
+              ) : (
+                <Box component="div">
+                  <Typography className="text-[14px] font-bold uppercase text-neutral-300">
+                    {t("sign_up_with_email")}
                   </Typography>
-                </div>
-                <Link href="/">
-                  <ButtonClose onClick={() => {}} />
-                </Link>
-              </Box>
-              <Divider className="mx-0 mb-8 mt-5" />
+                </Box>
+              )}
+              <hr className="mx-0 mb-8 mt-5 text-neutral-800" />
               {formSubmitErrors && (
                 <motion.div
                   animate={{
@@ -133,6 +143,7 @@ const FormRegister = () => {
                   </Alert>
                 </motion.div>
               )}
+
               <TextField
                 className="w-full"
                 type="email"
@@ -211,7 +222,7 @@ const FormRegister = () => {
                 item
               >
                 <TextField
-                  className="hidden-arrow-number Mui-error mr-2 w-full pb-4 xl:w-[235px] xl:pb-0"
+                  className="hidden-arrow-number Mui-error w-full pr-2 xl:w-[235px] xl:pb-0"
                   type="number"
                   placeholder={String(t("verification_code"))}
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -545,7 +556,7 @@ const FormRegister = () => {
               container
               justifyContent="space-between"
               alignItems="center"
-              className="mb-8 mt-8"
+              className={`${!isMobile && "mb-8 mt-8"}`}
             >
               <Grid item>
                 <p className="text-xs uppercase">{t("or_join_us_with")}</p>
@@ -559,7 +570,7 @@ const FormRegister = () => {
               container
               justifyContent="center"
             >
-              <div className="flex flex-wrap">
+              <div className={`flex flex-wrap ${isMobile && "mb-[-0.75rem]"}}`}>
                 <ButtonIcon
                   whileHover="hover"
                   transition={{
@@ -620,8 +631,28 @@ const FormRegister = () => {
                   icon={<MetaMarkIcon />}
                   className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                 /> */}
+                {isMobile && (
+                  <div className="absolute pt-14">
+                    <Typography className="text-sm uppercase text-neutral-700">
+                      COPYRIGHT 2023 © NAKAMOTO GAMES
+                    </Typography>
+                  </div>
+                )}
               </div>
             </Grid>
+            {!isMobile && (
+              <Grid
+                item
+                container
+                justifyContent="center"
+                alignItems="center"
+                className="absolute bottom-4 my-2"
+              >
+                <Typography className="text-sm uppercase text-neutral-700">
+                  COPYRIGHT 2023 © NAKAMOTO GAMES
+                </Typography>
+              </Grid>
+            )}
           </Grid>
         </Box>
       </form>

@@ -143,6 +143,7 @@ const MyOrderList = ({ ...props }: IProp) => {
                         {Helper.shortenString(order.id)}
                       </div>
                       <Box
+                        component="div"
                         className="cursor-pointer rounded border border-neutral-800 bg-neutral-780 px-1 py-1"
                         onClick={() => {
                           Helper.copyClipboard(order.id)
@@ -161,6 +162,7 @@ const MyOrderList = ({ ...props }: IProp) => {
                         {Helper.shortenString(order.wallet_address)}
                       </div>
                       <Box
+                        component="div"
                         className=" cursor-pointer rounded border border-neutral-800 bg-neutral-780 px-1 py-1"
                         onClick={() => {
                           Helper.copyClipboard(order.wallet_address)

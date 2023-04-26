@@ -103,7 +103,10 @@ const FormEditProfile = ({
   const slideTo = () => {}
 
   return (
-    <Box className="w-[350px]">
+    <Box
+      component="div"
+      className="w-[350px]"
+    >
       {profile && (
         <form onSubmit={handleSubmit(onSubmit)}>
           <Typography className="mb-1 mt-2 font-neue-machina text-xs uppercase  text-neutral-500">
@@ -172,7 +175,7 @@ const FormEditProfile = ({
             // "loading..."
             <div>{`${t("loading")}...`}</div>
           )}
-          <Box>
+          <Box component="div">
             <input
               hidden
               value={profile?.country}
@@ -198,9 +201,13 @@ const FormEditProfile = ({
             {t("avatar")}
           </Typography>
           {avatar ? (
-            <Box className="hide-scroll mt-2 flex w-[350px] items-center gap-3 overflow-x-scroll pb-3">
+            <Box
+              component="div"
+              className="hide-scroll mt-2 flex w-[350px] items-center gap-3 overflow-x-scroll pb-3"
+            >
               {avatar.map((item, index) => (
                 <Box
+                  component="div"
                   id={item.name}
                   key={Number(index)}
                   className="cursor-pointer"

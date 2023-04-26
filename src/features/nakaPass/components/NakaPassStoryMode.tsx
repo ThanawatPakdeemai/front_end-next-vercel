@@ -26,7 +26,10 @@ const NakaPassStoryMode = () => (
   <>
     <div className="mb-3 mt-4 flex w-full flex-wrap items-center gap-[10px] rounded-2xl bg-neutral-780 p-2 md:mt-0 md:flex-row md:gap-0 lg:h-[148px] lg:max-w-full lg:flex-nowrap">
       <div className="flex h-[100px] flex-[1_1_100%] items-center rounded-2xl border border-neutral-700 bg-primary-main sm:h-[132px]  lg:basis-8/12">
-        <Box className="bg-line-linear-gradient flex h-full w-full  items-center justify-center rounded-[13px] text-center uppercase">
+        <Box
+          component="div"
+          className="bg-line-linear-gradient flex h-full w-full  items-center justify-center rounded-[13px] text-center uppercase"
+        >
           <Typography className="text-shadow-red font-neue-machina-semi text-[26px] text-error-main md:text-[56px]">
             NAKA PASS SS II
           </Typography>

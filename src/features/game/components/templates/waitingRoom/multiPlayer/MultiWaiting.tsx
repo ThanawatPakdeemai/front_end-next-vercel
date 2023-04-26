@@ -298,11 +298,20 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
           getChat
         }}
       >
-        <Box className="block gap-3 lg:flex ">
+        <Box
+          component="div"
+          className="block gap-3 lg:flex "
+        >
           {/* <Box className=" block gap-3 lg:grid lg:grid-flow-col"> */}
           {/* <Box className=" block gap-3 lg:grid lg:grid-flow-col"> */}
-          <Box className="w-full gap-3 md:flex">
-            <Box className="w-full shrink rounded-3xl border border-neutral-800">
+          <Box
+            component="div"
+            className="w-full gap-3 md:flex"
+          >
+            <Box
+              component="div"
+              className="w-full shrink rounded-3xl border border-neutral-800"
+            >
               {dataPlayers && gameData && (
                 <>
                   <HeaderWaitingRoom

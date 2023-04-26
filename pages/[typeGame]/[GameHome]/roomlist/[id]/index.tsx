@@ -50,7 +50,7 @@ GameRoomList.getLayout = function getLayout(page: ReactElement) {
   return <GameRoomLayout>{page}</GameRoomLayout>
 }
 
-export async function getServerSideProps({ locale }: { locale: string }) {
+export async function getServerSideProps({ locale }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"]))

@@ -11,6 +11,7 @@ import { CHAIN_SUPPORT, IChainList } from "@configs/chain"
 import INaka from "@components/icons/Naka"
 import IBusd from "@components/icons/Busd"
 import useChainSupportStore from "@stores/chainSupport"
+import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContoller"
 import TokenList from "../TokenList"
 import TokenListItem from "../TokenListItem"
 
@@ -30,25 +31,21 @@ const Balance = ({
   widthBalance = "w-[40px]"
 }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const {
-    address,
-    handleConnectWithMetamask,
-    hasMetamask,
-    isConnected,
-    disabledConnectButton,
-    setDisabledConnectButton
-  } = useWeb3Provider()
+  const { address, hasMetamask, isConnected, disabledConnectButton } =
+    useWeb3Provider()
   const { t } = useTranslation()
   const { chainSupport, currentTokenSelected, currentChainSelected } =
     useChainSupportStore()
   const { hydrated } = useGlobal()
+  const { handleConnectWallet } = useWalletContoller()
 
-  const handleClickConnectWallet = () => {
-    if (setDisabledConnectButton && handleConnectWithMetamask) {
-      setDisabledConnectButton(true)
-      handleConnectWithMetamask()
-    }
-  }
+  // const handleClickConnectWallet = async () => {
+  //   if (setDisabledConnectButton && handleConnectWithMetamask) {
+  //     setDisabledConnectButton(true)
+  //     handleConnectWithMetamask()
+  //     await fetchChainData()
+  //   }
+  // }
 
   /**
    * @description Handle display balances from balance vault
@@ -108,7 +105,7 @@ const Balance = ({
         <div className="my-4">
           {profile && (
             <ButtonLink
-              onClick={handleClickConnectWallet}
+              onClick={handleConnectWallet}
               text={t("Connect Wallet")}
               icon={<AccountBalanceWalletIcon />}
               size="medium"

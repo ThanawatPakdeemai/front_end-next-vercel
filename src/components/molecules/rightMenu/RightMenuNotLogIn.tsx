@@ -18,15 +18,22 @@ const RightMenuNotLogIn = ({ button }: IProps) => {
     >
       {button ? (
         <Box
+          component="div"
           className="w-full"
           onClick={handleOpen}
         >
           {button}
         </Box>
       ) : (
-        <Box className="!rounded-[29px] !bg-[#FFFFFF20] !p-[6px]">
+        <Box
+          component="div"
+          className="!rounded-[29px] !bg-[#FFFFFF20] !p-[6px]"
+        >
           {/* <Box className="w-full rounded-xl bg-neutral-700 !p-[5px] md:w-max"> */}
-          <Box className="xs:flex-col items-center justify-between gap-1 lg:flex">
+          <Box
+            component="div"
+            className="xs:flex-col items-center justify-between gap-1 lg:flex"
+          >
             <ButtonLogin handleButton={handleOpen} />
           </Box>
           {/* </Box> */}

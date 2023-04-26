@@ -142,7 +142,7 @@ export default function GameRoomList() {
                   className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
                   sx={{
                     ".panel-content": {
-                      maxHeight: "270px",
+                      maxHeight: "200px",
                       ".custom-scroll": {
                         overflow: "hidden"
                       }
@@ -191,7 +191,7 @@ GameRoomList.getLayout = function getLayout(page: ReactElement) {
   return page
 }
 
-export async function getServerSideProps({ locale }: { locale: string }) {
+export async function getServerSideProps({ locale }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"]))

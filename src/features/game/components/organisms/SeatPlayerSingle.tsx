@@ -17,6 +17,7 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import { IResGetIp } from "@interfaces/IGetIP"
 import { useTranslation } from "react-i18next"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
+import { isMobile } from "react-device-detect"
 import ButtonGame from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 
@@ -38,6 +39,9 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   const [ip, setIp] = useState("")
   const { t } = useTranslation()
   const { balanceofItem } = useBuyGameItemController()
+
+  // TODO: Refactor later
+  const detectDevice = isMobile ? "mobile" : "desktop"
 
   useEffect(() => {
     let load = false
@@ -202,7 +206,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
             }:|:${profile.email}:|:${Helper.getLocalStorage(
               "token"
             )}:|:${frontendUrl}:|:${CONFIGS.BASE_URL.API}:|:${
-              gameRoomById.rank_name
+              isMobile ? detectDevice : gameRoomById.rank_name
             }:|:${gameRoomById.room_number}:|:${new Date(
               gameRoomById.start_time
             ).getTime()}:|:${profile.username}:|:${
@@ -220,9 +224,11 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
             profile.email
           }:|:${Helper.getLocalStorage(
             "token"
-          )}:|:${frontendUrl}:|:${baseUrlApi}:|:${gameRoomById.rank_name}:|:${
-            gameRoomById.room_number
-          }:|:${new Date(gameRoomById.start_time).getTime()}${
+          )}:|:${frontendUrl}:|:${baseUrlApi}:|:${
+            isMobile ? detectDevice : gameRoomById.rank_name
+          }:|:${gameRoomById.room_number}:|:${new Date(
+            gameRoomById.start_time
+          ).getTime()}${
             gameRoomById.stage_id !== undefined
               ? `:|:${gameRoomById.stage_id}`
               : ":|:0"
@@ -240,6 +246,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
       setGameUrl("")
       load = true
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     data,
     gameRoomById,
@@ -270,10 +277,16 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
 
   return (
     <>
-      <Box>
+      <Box component="div">
         <PlayerCard players={players} />
-        <Box className="mb-10  flex justify-center">
-          <Box className="w-fit items-center justify-center gap-3 rounded-md border border-neutral-800 bg-primary-main p-3 md:flex md:rounded-[50px]">
+        <Box
+          component="div"
+          className="mb-10  flex justify-center"
+        >
+          <Box
+            component="div"
+            className="w-fit items-center justify-center gap-3 rounded-md border border-neutral-800 bg-primary-main p-3 md:flex md:rounded-[50px]"
+          >
             <Typography className=" mx-4 w-full font-neue-machina text-sm ">
               {t("its_time")}
             </Typography>

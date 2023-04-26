@@ -44,11 +44,7 @@ import useLoginProvider from "../containers/hooks/useLoginProvider"
 import useLoginMetamask from "../containers/hooks/useLoginMetamask"
 import FromForgotPassword from "./FromForgotPassword"
 
-interface IProp {
-  href?: string
-}
-
-const FormLogin = ({ href }: IProp) => {
+const FormLogin = () => {
   const { mutateLoginProvider } = useLoginProvider()
   const { mutateLoginMetamask } = useLoginMetamask()
 
@@ -95,9 +91,8 @@ const FormLogin = ({ href }: IProp) => {
       .then((_profile) => {
         if (_profile) {
           successToast(MESSAGES.sign_in_success)
-          if (href) {
-            return router.push("/")
-          }
+          // return isMobile ? router.push("/") : router.push("/")
+          return router.push("/")
         }
       })
       .catch(() => {})
@@ -238,7 +233,7 @@ const FormLogin = ({ href }: IProp) => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <Box>
+        <Box component="div">
           <Typography className="mb-2 font-neue-machina text-sm uppercase  text-neutral-500">
             {t("email_address")}
           </Typography>
@@ -265,7 +260,7 @@ const FormLogin = ({ href }: IProp) => {
             }}
           />
         </Box>
-        <Box>
+        <Box component="div">
           <Typography className="mb-2 mt-5 font-neue-machina text-sm uppercase text-neutral-500">
             {t("password")}
           </Typography>

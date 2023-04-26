@@ -81,7 +81,10 @@ const FormCreateProfile = () => {
   }
 
   return (
-    <Box className="w-[350px]">
+    <Box
+      component="div"
+      className="w-[350px]"
+    >
       {profile && (
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           {avatar ? (
@@ -94,7 +97,7 @@ const FormCreateProfile = () => {
           ) : (
             `{${t("loading")}}`
           )}
-          <Box>
+          <Box component="div">
             <input
               hidden
               value={profile?.country}
@@ -150,9 +153,13 @@ const FormCreateProfile = () => {
             {t("avatar")}
           </Typography>
           {avatar ? (
-            <Box className="hide-scroll mt-2 flex w-[350px] items-center gap-3 overflow-x-scroll pb-3">
+            <Box
+              component="div"
+              className="hide-scroll mt-2 flex w-[350px] items-center gap-3 overflow-x-scroll pb-3"
+            >
               {avatar.map((item, index) => (
                 <Box
+                  component="div"
                   id={item.name}
                   key={Number(index)}
                   onClick={() => {

@@ -137,11 +137,17 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
 
   return (
     <>
-      <Box className="block w-full gap-3 lg:flex">
+      <Box
+        component="div"
+        className="block w-full gap-3 lg:flex"
+      >
         {_roomId &&
           (data ? (
             <>
-              <Box className="relative w-full rounded-3xl border border-neutral-700">
+              <Box
+                component="div"
+                className="relative w-full rounded-3xl border border-neutral-700"
+              >
                 {isLoading && (
                   <HeaderWaitingRoom
                     roomTag={playerGameSingle?.room_number ?? ""}
@@ -198,10 +204,11 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
           ))}
         {data && (
           <Box
+            component="div"
             className="flex flex-col gap-3 rounded-3xl lg:w-[333px]"
             sx={{
               ".panel-content": {
-                maxHeight: "270px",
+                maxHeight: "200px",
                 ".custom-scroll": {
                   overflow: "hidden"
                 }

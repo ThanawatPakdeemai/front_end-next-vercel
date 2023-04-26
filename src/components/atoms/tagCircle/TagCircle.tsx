@@ -20,6 +20,7 @@ const TagCircle = ({
   }
   return (
     <Box
+      component="div"
       role="status"
       aria-label=""
       className={`${hasColor[color]} relative flex h-20 w-20 items-center justify-center rounded-full border-2 border-white-default`}

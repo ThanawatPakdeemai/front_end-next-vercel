@@ -139,7 +139,7 @@ const HistoryTable = () => {
                             key={row._id}
                             className="history--gameName truncate"
                           >
-                            {row.game_name}
+                            {row.game_detail.name}
                           </div>,
                           <div
                             key={row._id}
@@ -196,6 +196,7 @@ const HistoryTable = () => {
             </Table>
           </TableContainer>
           <Box
+            component="div"
             className="my-2 flex justify-between md:my-5 md:w-[678px]"
             sx={{
               ".MuiPagination-ul": {

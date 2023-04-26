@@ -34,14 +34,7 @@ const Header = () => {
         </header>
       </BrowserView>
       <MobileView>
-        <header className="header fixed inset-x-0 bottom-4 z-[999] ">
-          <Box
-            component="div"
-            className="flex content-center items-center justify-center "
-          >
-            <HeadMenuMobile />
-          </Box>
-        </header>
+        <HeadMenuMobile />
       </MobileView>
     </>
   )

@@ -53,21 +53,21 @@ const MyApp = (props) => {
         <Web3Provider>
           <CacheProvider value={emotionCache}>
             <ThemeProvider theme={customTheme}>
-              <BrowserView>
+              {/* <BrowserView>
                 <ProviderApp>
                   {getLayout(<Component {...pageProps} />)}
                 </ProviderApp>
               </BrowserView>
               <MobileView>
                 <Home />
-                {/* <SignInLayout />
+                <SignInLayout />
                 <GameDetailLayout />
                 <CreateProfileLayout />
-                {getLayout(<Component {...pageProps} />)} */}
-              </MobileView>
-              {/* <ProviderApp>
                 {getLayout(<Component {...pageProps} />)}
-              </ProviderApp> */}
+              </MobileView> */}
+              <ProviderApp>
+                {getLayout(<Component {...pageProps} />)}
+              </ProviderApp>
             </ThemeProvider>
           </CacheProvider>
         </Web3Provider>

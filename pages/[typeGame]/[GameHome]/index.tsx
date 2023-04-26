@@ -58,8 +58,8 @@ const OverviewContent = dynamic(
   }
 )
 
-const GameTabs = dynamic(
-  () => import("@feature/game/components/templates/lobby/GameTabs"),
+const GameTabsVertical = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameTabsVertical"),
   {
     suspense: true,
     ssr: false
@@ -201,7 +201,7 @@ export default function GameLobby() {
         <GamePageDefault
           component={
             <RightSidebarContentEffect
-              className="mb-24"
+              className="mb-24 lg:mb-[164px]"
               content={getTemplateLobby()}
               aside={
                 <Box
@@ -233,15 +233,22 @@ export default function GameLobby() {
             <FullWidthContent
               sxCustomStyled={{
                 "&.container": {
-                  maxWidth: "100%!important"
+                  maxWidth: "100%!important",
+                  "&.container-fullWidth": {
+                    padding: "49px"
+                  }
                 }
               }}
             >
               <TabProvider>
-                <GameTabs
+                <GameTabsVertical
                   gameId={gameData.id}
                   gameType="arcade-emporium"
                 />
+                {/* <GameTabs
+                  gameId={gameData.id}
+                  gameType="arcade-emporium"
+                /> */}
               </TabProvider>
             </FullWidthContent>
           }

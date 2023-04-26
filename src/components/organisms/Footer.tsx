@@ -106,12 +106,11 @@ const Footer = () => {
                       href={game.path}
                     >
                       <TextLink
-                        name={String(t(game.name))}
+                        name={item.label}
                         initial="rest"
                         whileHover="hover"
-                        animate="rest"
-                        variantsArrow={arrowMotion}
                         variantsText={textMotion}
+                        variantsArrow={arrowMotion}
                       />
                     </Link>
                   </div>

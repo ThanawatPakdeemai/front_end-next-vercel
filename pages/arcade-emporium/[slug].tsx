@@ -64,8 +64,8 @@ const OverviewContent = dynamic(
   }
 )
 
-const GameTabs = dynamic(
-  () => import("@feature/game/components/templates/lobby/GameTabs"),
+const GameTabsVertical = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameTabsVertical"),
   {
     suspense: true,
     ssr: false
@@ -227,10 +227,14 @@ export default function ArcadeEmporiumGameDetails() {
           }}
         >
           <TabProvider>
-            <GameTabs
+            <GameTabsVertical
               gameId={gameData.id}
               gameType="arcade-emporium"
             />
+            {/* <GameTabs
+              gameId={gameData.id}
+              gameType="arcade-emporium"
+            /> */}
           </TabProvider>
         </FullWidthContent>
       }

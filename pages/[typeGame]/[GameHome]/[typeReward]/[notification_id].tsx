@@ -50,14 +50,13 @@ const OverviewContent = dynamic(
   }
 )
 
-const GameTabs = dynamic(
-  () => import("@feature/game/components/templates/lobby/GameTabs"),
+const GameTabsVertical = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameTabsVertical"),
   {
     suspense: true,
     ssr: false
   }
 )
-
 export default function Notification_id() {
   const { gameDataState } = useGameSummaryRewardController()
   const { getTypeGamePathFolder } = useGlobal()
@@ -104,7 +103,7 @@ export default function Notification_id() {
               }}
             >
               <TabProvider>
-                <GameTabs
+                <GameTabsVertical
                   gameId={gameDataState.id}
                   gameType="arcade-emporium"
                 />

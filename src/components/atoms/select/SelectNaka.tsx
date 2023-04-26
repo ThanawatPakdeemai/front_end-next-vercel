@@ -81,7 +81,10 @@ const SelectNaka = ({
                         </Typography>
                       </ListItemText>
                     </div>
-                    <ButtonClose onClick={() => popupState.close()} />
+                    <ButtonClose
+                      className="right-[22px]"
+                      onClick={() => popupState.close()}
+                    />
                   </div>
                 </div>
                 <div className="flex items-center justify-between bg-primary-main pt-2 ">

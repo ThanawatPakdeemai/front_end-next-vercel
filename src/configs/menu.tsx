@@ -600,6 +600,11 @@ export const MENU_MARKETPLACE = [
         name: "NAKA Punks",
         link: "/marketplace/naka-punk",
         icon: MarketPlaceIcon
+      },
+      {
+        name: "Avatar Reef",
+        link: "/marketplace/avatar-reef",
+        icon: MarketPlaceIcon
       }
     ]
   },
@@ -730,6 +735,10 @@ export const INVENTORY_DROPDOWN = [
   {
     label: "Arcade Game",
     href: "/marketplace/inventory/arcade-game"
+  },
+  {
+    label: "Avatar Reef",
+    href: "/marketplace/inventory/avatar-reef"
   }
 ]
 

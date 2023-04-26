@@ -368,6 +368,8 @@ const useGlobal = (
         setMarketType("game_item")
       } else if (router.asPath.includes("arcade-game")) {
         setMarketType("nft_game")
+      } else if (router.asPath.includes("avatar-reef")) {
+        setMarketType("nft_avatar")
       }
     }
 

@@ -10,6 +10,7 @@ import {
   TNFTType,
   TSellingType
 } from "@feature/marketplace/interfaces/IMarketService"
+import CardDetailSkeleton from "@feature/marketplace/components/molecules/CardDetailSkeleton"
 
 const ButtonMarket = dynamic(
   () => import("@components/atoms/button/ButtonMarket"),
@@ -127,7 +128,9 @@ const MarketplaceDetail = () => {
         </RightDetailsMarketplace>
       </div>
     </div>
-  ) : null
+  ) : (
+    <CardDetailSkeleton />
+  )
 }
 
 export default MarketplaceDetail

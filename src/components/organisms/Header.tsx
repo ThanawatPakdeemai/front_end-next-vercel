@@ -6,7 +6,7 @@ import HeadPrice from "@components/molecules/HeadPrice"
 import { RightMenu } from "@components/molecules/rightMenu"
 import useGlobal from "@hooks/useGlobal"
 import RightMenuDeveloper from "@components/molecules/rightMenu/RightMenuDeveloper"
-import HeadMenuMobile from "@src/mobile/molecules/HeadMenuMobile"
+import HeadMenuMobile from "@src/mobile/headerMenu/HeadMenuMobile"
 import { BrowserView, MobileView } from "react-device-detect"
 
 const Header = () => {

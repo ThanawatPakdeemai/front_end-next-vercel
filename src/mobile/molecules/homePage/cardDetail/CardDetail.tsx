@@ -33,20 +33,20 @@ const CardDetail = ({ type, title, detail, time, image }: any) => {
     (filter) => filter.type === "daily"
   ).length
 
-  const questDetail = dataAllQuest?.data.filter(
-    (filter) => filter.type === "daily"
-  )
-
-  const questNotDone = dataAllQuest?.data.filter(
+  const questDone = dataAllQuest?.data.filter(
     (filter) => filter.type === "daily" && filter.status === "done"
   ).length
 
+  const questNotDone = dataAllQuest?.data.filter(
+    (filter) => filter.type === "daily" && filter.status === "in_progress"
+  ).length
+
   useEffect(() => {
-    if (questNotDone !== undefined && dailyCount !== undefined) {
-      setValue(questNotDone)
+    if (questDone !== undefined && dailyCount !== undefined) {
+      setValue(questDone)
       setMax(dailyCount)
     }
-  }, [dailyCount, questNotDone])
+  }, [dailyCount, questDone])
 
   return (
     <>
@@ -79,7 +79,7 @@ const CardDetail = ({ type, title, detail, time, image }: any) => {
           </div>
           {type === "quest" ? (
             <Typography className="text-[12px] uppercase text-white-primary">
-              {questDetail && questDetail[0].name}
+              {questNotDone && questNotDone[0]?.name}
             </Typography>
           ) : (
             <Typography className="text-[12px] text-neutral-500">
@@ -93,10 +93,10 @@ const CardDetail = ({ type, title, detail, time, image }: any) => {
                 count={value}
                 countMax={max}
               />
-              {questDetail && (
+              {questNotDone && (
                 <Typography className="text-[10px] uppercase text-neutral-500">
-                  Rewards : {questDetail[0].rewards[0].amount}{" "}
-                  {questDetail[0].rewards[0].type}
+                  Rewards : {questNotDone[0]?.rewards[0].amount}{" "}
+                  {questNotDone[0]?.rewards[0].type}
                 </Typography>
               )}
             </div>

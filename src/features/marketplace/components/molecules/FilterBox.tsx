@@ -171,7 +171,7 @@ const FilterBox = () => {
           <button
             type="button"
             onClick={handleOnExpandClick}
-            className="mx-auto mb-1 flex h-[40px] w-[218px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-secondary-main px-5 text-[12px] text-white-primary"
+            className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-secondary-main px-5 text-[12px] text-white-primary"
           >
             <DragHandleIcon />
             <span>
@@ -354,7 +354,7 @@ const FilterBox = () => {
         <button
           type="button"
           onClick={handleOnExpandPrice}
-          className="mx-auto mb-1 flex h-[40px] w-[218px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
+          className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
         >
           <span>{price}</span>
           <div
@@ -400,7 +400,7 @@ const FilterBox = () => {
         <button
           type="button"
           onClick={handleOnExpandDate}
-          className="mx-auto mb-1 flex h-[40px] w-[218px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
+          className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
         >
           <span>{date}</span>
           <div
@@ -451,7 +451,7 @@ const FilterBox = () => {
           <button
             type="button"
             onClick={handleOnExpandType}
-            className="mx-auto mb-1 flex h-[40px] w-[218px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
+            className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
           >
             <span>{type}</span>
             <div

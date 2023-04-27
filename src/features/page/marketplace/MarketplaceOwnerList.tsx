@@ -28,16 +28,24 @@ const MarketplaceOwnerList = () => {
               cardType={_data.type}
               id={_data.tokenId}
               itemImage={
+                // eslint-disable-next-line no-nested-ternary
                 _data.type === "game-item"
                   ? {
                       src: String(_data.image),
                       alt: _data.name,
                       width: _data.name.includes("Bullet") ? 40 : 100
                     }
+                  : _data.type !== "land"
+                  ? {
+                      src: String(_data.image),
+                      alt: _data.name,
+                      width: 200,
+                      height: 200
+                    }
                   : undefined
               }
               itemVideo={
-                _data.type !== "game-item"
+                _data.type === "land"
                   ? {
                       src: _data.video as string,
                       poster: String(_data.image)

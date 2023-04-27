@@ -43,12 +43,12 @@ const HeadLogo = () => {
    */
   const themeColor = (): string => {
     if (isMarketplace) {
-      return "!text-secondary-main"
+      return "!text-secondary-main !stroke-secondary-main"
     }
     if (isDeveloperPage) {
-      return "!text-green-lemon"
+      return "!text-green-lemon !stroke-green-lemon"
     }
-    return "text-error-main"
+    return "text-error-main !stroke-error-main"
   }
 
   /**

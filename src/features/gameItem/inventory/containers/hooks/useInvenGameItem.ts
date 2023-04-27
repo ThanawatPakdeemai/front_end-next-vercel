@@ -6,6 +6,7 @@ import useGetGameItems from "@feature/gameItem/marketplace/containers/hooks/useG
 import { TInvenVaultAction } from "@feature/inventory/interfaces/IInventoryItem"
 import useLoadingStore from "@stores/loading"
 import useProfileStore from "@stores/profileStore"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
 const useInvenGameItem = () => {
@@ -18,6 +19,7 @@ const useInvenGameItem = () => {
   const [gameItemList, setGameItemList] = useState<
     Array<IGameItemListData & { amount: number }> | undefined
   >(undefined)
+  const { pathname } = useRouter()
 
   // update gameItemList
   const updateGameItemList = (
@@ -82,7 +84,7 @@ const useInvenGameItem = () => {
     let load = false
 
     if (!load) {
-      if (profile && profile.data) {
+      if (profile && profile.data && pathname.includes("inventory")) {
         onFetchInvenGameItem(profile.data.address)
       }
     }

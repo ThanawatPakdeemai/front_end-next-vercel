@@ -46,8 +46,8 @@ const MarketplaceCardList = () => {
                   _data.building_data && {
                     src: _data.building_data.NFT_image,
                     alt: _data.building_data.name,
-                    width: 500,
-                    height: 500
+                    width: 300,
+                    height: 300
                   }
                 }
                 itemVideo={

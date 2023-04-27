@@ -8,9 +8,6 @@ import InventoryIcon from "@components/icons/MenunIcon/InventoryIcon"
 import ItemRewardIcon from "@components/icons/MenunIcon/ItemRewardIcon"
 import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
 import IconDollar from "@components/icons/dollarIcon"
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
-import MoneyOffIcon from "@mui/icons-material/MoneyOff"
-import GamesIcon from "@mui/icons-material/Games"
 import { IMAGES } from "@constants/images"
 import AboutUsIcon from "@components/icons/BlogIcon/AboutUsIcon"
 import Campfire from "@components/icons/Campfire"
@@ -18,7 +15,6 @@ import MarketPlaceIcon from "@components/icons/BlogIcon/MarketPlaceIcon"
 import NakaverseIcon from "@components/icons/BlogIcon/NakaverseIcon"
 import NakapunksIcon from "@components/icons/BlogIcon/NakapunksIcon"
 import NewIcon from "@components/icons/BlogIcon/NewIcon"
-import StoryModeIcon from "@components/icons/StoryModelcon"
 import FireOutLineIcon from "@components/icons/BlogIcon/FireOutLineIcon"
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined"
 import AccessTimeIcon from "@mui/icons-material/AccessTime"
@@ -42,7 +38,9 @@ import DollarIcon from "@components/icons/Referral/DollarIcon"
 import ProcessPaymentIcon from "@components/icons/Inventory/ProcessPaymentIcon"
 import { TType } from "@feature/marketplace/interfaces/IMarketService"
 import CommissionIcon from "@components/icons/MenunIcon/CommissionIcon"
-import CalenderIcon from "@components/icons/CalenderIcon"
+import IDiamond from "@components/icons/Diamond"
+import CalendarSolidIcon from "@components/icons/CalendarSolidIcon"
+import GameStoryIcon from "@components/icons/GameStoryIcon"
 
 // TODO: Open after launch V2
 // import GlobalIcon from "@components/icons/GlobalIcon"
@@ -77,18 +75,18 @@ export const MENU = [
       {
         name: "Play To Earn Games",
         link: "/play-to-earn-games",
-        icon: AttachMoneyIcon
+        icon: <IconDollar.Ori className="stroke-neutral-300" />
       },
       {
         name: "Free To Earn Games",
         link: "/free-to-play-games",
-        icon: MoneyOffIcon,
+        icon: <IconDollar.Mask className="stroke-neutral-300" />,
         textRight: "Free"
       },
       {
         name: "Story Mode Games",
         link: "/story-mode-games",
-        icon: StoryModeIcon,
+        icon: <GameStoryIcon stroke="#E1E2E2" />,
         textRight: "Free"
       },
       // TODO: Open after launch V2
@@ -106,12 +104,12 @@ export const MENU = [
       {
         name: "Arcade Emporium",
         link: "/arcade-emporium",
-        icon: GamesIcon
+        icon: IDiamond
       },
       {
         name: "Events",
         link: "/events",
-        icon: CalenderIcon
+        icon: CalendarSolidIcon
       }
       // TODO: Open after launch V2
       // {
@@ -220,7 +218,7 @@ export const MENU_GUEST: IMenu[] = [
   {
     id: "story-mode-games",
     label: "Story Mode Games",
-    icon: <StoryModeIcon stroke="#E1E2E2" />,
+    icon: <GameStoryIcon stroke="#E1E2E2" />,
     href: "/story-mode-games",
     external: false
   },
@@ -242,14 +240,14 @@ export const MENU_GUEST: IMenu[] = [
   {
     id: "arcade-emporium",
     label: "Arcade Emporium",
-    icon: <GamesIcon stroke="#E1E2E2" />,
+    icon: <IDiamond stroke="#E1E2E2" />,
     href: "/arcade-emporium",
     external: false
   },
   {
     id: "events",
     label: "Events",
-    icon: <CalenderIcon stroke="#E1E2E2" />,
+    icon: <CalendarSolidIcon stroke="#E1E2E2" />,
     href: "/events",
     external: false
   }

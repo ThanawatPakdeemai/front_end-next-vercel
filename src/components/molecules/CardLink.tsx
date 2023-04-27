@@ -136,7 +136,7 @@ const CardLink = ({
   return (
     <>
       <motion.div
-        className={`card-link relative h-[40vw] max-h-[218px] w-full overflow-hidden rounded-3xl lg:h-[218px] xl:w-[218px] ${classNameMain}`}
+        className={`card-link relative h-[26.625vw] max-h-[218px] w-full overflow-hidden rounded-3xl ${classNameMain}`}
         style={styleMain}
         onHoverStart={onHoverCard}
         onHoverEnd={onHoverCard}

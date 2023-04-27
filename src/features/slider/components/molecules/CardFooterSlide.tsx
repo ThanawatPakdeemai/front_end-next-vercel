@@ -1,5 +1,4 @@
 import React from "react"
-import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import ButtonFavourite from "@components/atoms/button/ButtonFavourite"
 import { IGame } from "@feature/game/interfaces/IGameService"
@@ -8,6 +7,7 @@ import useGlobal from "@hooks/useGlobal"
 import useFavoriteGameContoller from "@feature/favourite/containers/hooks/useFavoriteGameContoller"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
+import SportEsportIcon from "@components/icons/SportEsportIcon"
 
 interface IContentFooterBannerSlide {
   gameData: IGame
@@ -45,7 +45,7 @@ const CardFooterSlide = ({
       >
         <ButtonLink
           text={t(text)}
-          icon={<SportsEsportsOutlinedIcon />}
+          icon={<SportEsportIcon />}
           size="large"
           color="secondary"
           variant="contained"

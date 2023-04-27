@@ -62,7 +62,7 @@ const CardNakaverse = ({
             size="medium"
             color="secondary"
             variant="contained"
-            className="h-9"
+            className="h-10 font-neue-machina"
           />
         </CardContent>
         <CardContent className="relative hidden w-full sm:block">

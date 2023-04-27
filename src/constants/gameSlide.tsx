@@ -181,14 +181,12 @@ const p2eMenu: ISlideList[] = [
   {
     id: "11",
     label: "Hot Games",
-    type: "play-to-earn-games",
-    className: "w-[110px]"
+    type: "play-to-earn-games"
   },
   {
     id: "12",
     label: "Arcade Emporium",
-    type: "arcade-emporium",
-    className: "w-[166px]"
+    type: "arcade-emporium"
   }
   // {
   //   id: "12",
@@ -273,14 +271,12 @@ const f2pMenu: ISlideList[] = [
   {
     id: "free-to-play-games",
     label: "Free Mode",
-    type: "free-to-play-games",
-    className: "w-[110px]"
+    type: "free-to-play-games"
   },
   {
     id: "story-mode-games",
     label: "Story Mode",
-    type: "story-mode-games",
-    className: "w-[166px]"
+    type: "story-mode-games"
   }
   // unnessesary use
   // {

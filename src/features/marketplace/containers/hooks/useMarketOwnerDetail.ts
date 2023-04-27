@@ -139,7 +139,8 @@ const useMarketOwnerDetail = () => {
       fetchWithContract()
       loadRef.current = true
     }
-  }, [marketType, gameItemList, materialList, fetchWithContract])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [marketType, gameItemList, materialList])
 
   useEffect(
     () => () => {

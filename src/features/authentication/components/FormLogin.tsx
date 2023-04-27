@@ -38,6 +38,7 @@ import useConnectMetamaskAction from "@utils/useConnectMetamesk"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import { useRouter } from "next/router"
 import { useTranslation } from "react-i18next"
+import { isMobile } from "react-device-detect"
 import useSignIn from "../containers/hooks/useSignIn"
 import { ISignIn } from "../interfaces/IAuthService"
 import useLoginProvider from "../containers/hooks/useLoginProvider"
@@ -92,7 +93,7 @@ const FormLogin = () => {
         if (_profile) {
           successToast(MESSAGES.sign_in_success)
           // return isMobile ? router.push("/") : router.push("/")
-          return router.push("/")
+          isMobile && router.push("/")
         }
       })
       .catch(() => {})

@@ -11,7 +11,7 @@ import MobileGameCard from "@components/molecules/cards/MobileGameCard"
 import dayjs from "dayjs"
 import MuiToggleButton from "@mui/material/ToggleButton"
 import { styled } from "@mui/material/styles"
-import CardDetail from "./molecules/homePage/cardDetail/CardDetail"
+import CardDetail from "./components/molecules/homePage/cardDetail/CardDetail"
 
 const Home = () => {
   const profile = useProfileStore((state) => state.profile.data)

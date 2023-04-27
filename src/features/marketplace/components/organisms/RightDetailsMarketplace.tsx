@@ -142,6 +142,14 @@ const RightDetailsMarketplace = ({
     })
   }
 
+  const handleRouter = () => {
+    if (router.asPath.includes("inventory")) {
+      router.push("/marketplace/inventory")
+    } else {
+      router.back()
+    }
+  }
+
   const isCharactersCoupon = (_CharactersCoupon: string) => {
     if (_CharactersCoupon.length < 6) {
       setCharacterCoupon({
@@ -191,7 +199,7 @@ const RightDetailsMarketplace = ({
             />
           </div>
           <ButtonClose
-            onClick={() => router.back()}
+            onClick={handleRouter}
             insideClassName="!bg-error-main hover:bg-error-main"
           />
         </div>

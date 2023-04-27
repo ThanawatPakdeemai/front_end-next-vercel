@@ -24,6 +24,7 @@ import CONFIGS from "@configs/index"
 import { IProfile } from "@src/types/profile"
 import { gameItemType, landType, nakaType } from "@constants/historyTransaction"
 import Link from "next/link"
+import TooltipsCustom from "@components/atoms/TooltipsCustom"
 import ReloadIcon from "../../../components/icons/ReloadIcon"
 
 interface IProp {
@@ -53,6 +54,17 @@ const TransactionPage = ({ profile }: IProp) => {
   const [txHistory, setTxHistory] = useState<ITransactionWalletData[]>([])
 
   const baseUrl = CONFIGS.CHAIN.POLYGON_SCAN
+
+  const insertSpaces = (str: string) => {
+    const regex = /([a-z])([A-Z])/g
+    const result = str.replace(regex, "$1 $2")
+    const words = result.split(" ")
+    const capitalizedWords = words.map(
+      (word) => word.charAt(0).toUpperCase() + word.slice(1)
+    )
+
+    return capitalizedWords.join(" ")
+  }
 
   const onHandleEvent = (_event: string) => {
     setEvent(_event)
@@ -178,21 +190,27 @@ const TransactionPage = ({ profile }: IProp) => {
                           </span>
                         </div>,
                         <div key={item.id}>
-                          <Chip
-                            label={item.type}
-                            size="small"
-                            className={`max-w-[120px] font-neue-machina-bold uppercase !text-neutral-900 ${
-                              item.type && item.type === "DepositNaka"
-                                ? "!bg-varidian-default"
-                                : "!bg-red-card"
-                            }`}
-                          />
+                          <TooltipsCustom
+                            color="secondary"
+                            title={insertSpaces(item.type)}
+                            placement="left"
+                          >
+                            <Chip
+                              label={insertSpaces(item.type)}
+                              size="small"
+                              className={`max-w-[120px] font-neue-machina-bold uppercase !text-neutral-900 ${
+                                item.type && item.type === "DepositNaka"
+                                  ? "!bg-varidian-default"
+                                  : "!bg-red-card"
+                              }`}
+                            />
+                          </TooltipsCustom>
                         </div>,
                         <div key={item.id}>
-                          {item.amount === 0 ? "-" : item.amount.toFixed(4)}
+                          {item.amount ? item.amount.toFixed(2) : "-"}
                         </div>,
                         <div key={item.id}>
-                          {item.fee === 0 ? "-" : item.fee.toFixed(4)}
+                          {item.fee ? item.fee.toFixed(2) : "-"}
                         </div>,
                         <Link
                           key={item.id}
@@ -201,7 +219,7 @@ const TransactionPage = ({ profile }: IProp) => {
                           <Chip
                             component="button"
                             variant="outlined"
-                            label="view transaction"
+                            label="View transaction"
                             size="small"
                           />
                         </Link>

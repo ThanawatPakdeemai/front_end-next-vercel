@@ -38,15 +38,16 @@ const useRoomSingle = () => {
       return ""
     }
   }, [data, itemSelected, itemSizeId])
-  const { allGameRooms } = useGetAllGameRooms({
+  const { allGameRooms, isLoading: loadingAllroom } = useGetAllGameRooms({
     _gameId: data ? data._id : "",
     _email: profile ? profile.email : "",
     _itemId: itemSizeId || (item ?? "")
   })
 
-  const { allGameRoomsById } = useGetAllGameRoomsById({
-    _gameId: !profile && data ? data._id : ""
-  })
+  const { allGameRoomsById, isLoading: loadingAllroomById } =
+    useGetAllGameRoomsById({
+      _gameId: !profile && data ? data._id : ""
+    })
 
   const intoRoomGame = (
     data_player_me: IGameCurrentPlayer,
@@ -129,6 +130,14 @@ const useRoomSingle = () => {
     }
     return allGameRoomsById
   }, [allGameRooms, allGameRoomsById, profile])
+
+  const loadRoom = useMemo(() => {
+    if (profile) {
+      return loadingAllroom
+    }
+    return loadingAllroomById
+  }, [loadingAllroom, loadingAllroomById, profile])
+
   return {
     allGameRooms,
     allGameRoomsById,
@@ -136,7 +145,10 @@ const useRoomSingle = () => {
     gameData: data,
     itemSelected,
     handleJoinRoom,
-    roomData
+    roomData,
+    loadingAllroomById,
+    loadingAllroom,
+    loadRoom
   }
 }
 

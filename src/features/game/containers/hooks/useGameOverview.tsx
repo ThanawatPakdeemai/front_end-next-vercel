@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { IGameTag } from "@feature/slider/interfaces/IGameTags"
 import dayjs from "dayjs"
 import GlobalIcon from "@components/icons/GlobalIcon"
@@ -17,6 +17,8 @@ import useGameStore from "@stores/game"
 import { GAME_MOCKUP_CARD, SLIDES_GAME_MOCKUP } from "@constants/images"
 import { v4 as uuid } from "uuid"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
+import useGetReward from "@feature/rewardWeekly/containers/hooks/useGetReward"
+import { IWeeklyPoolByGameIdData } from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
 
 /**
  * @description Game Overview Hook functions to handle all game overview data
@@ -34,6 +36,21 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   const [gameDataState, setGameDataState] = React.useState<IGame>()
   const [gamePartnerState, setGamePartnerState] =
     React.useState<IPartnerGameData>()
+
+  const [weeklyPoolByGameId, setWeeklyPoolByGameId] =
+    useState<IWeeklyPoolByGameIdData>()
+  const [poolId, setPoolId] = useState<string>("")
+
+  // Get weekly pool data any weeks
+  const {
+    dataWeeklyPoolByGameId,
+    refetchWeeklyPoolByGameId,
+    isFetchingWeeklyPoolByGameId
+  } = useGetReward({
+    _gameId: gameId,
+    _type: "REWARD_WEEKLY",
+    _poolId: poolId
+  })
 
   useEffect(() => {
     let load = false
@@ -446,6 +463,23 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
     }
   }
 
+  useEffect(() => {
+    if (dataWeeklyPoolByGameId) {
+      setWeeklyPoolByGameId(dataWeeklyPoolByGameId)
+    }
+  }, [dataWeeklyPoolByGameId])
+
+  useEffect(() => {
+    refetchWeeklyPoolByGameId()
+  }, [poolId, refetchWeeklyPoolByGameId])
+
+  const onClickedPrevWeeklyPrizePoolByGameId = (_previousId: string) => {
+    setPoolId(_previousId)
+  }
+  const onClickedNextWeeklyPoolByGameId = (_nextId: string) => {
+    setPoolId(_nextId)
+  }
+
   return {
     gameTags: setGameTags(),
     gameDeveloper: setGameDeveloper(),
@@ -464,7 +498,11 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
     singleVersion: setSingleVersion(),
     gameHowToPlay: setGameHowToPlay(),
     gameItems: setGameItems(),
-    playCount: getPlayingCount()
+    playCount: getPlayingCount(),
+    onClickedNext: onClickedNextWeeklyPoolByGameId,
+    onClickedPrev: onClickedPrevWeeklyPrizePoolByGameId,
+    weeklyPoolByGameId,
+    isLoadingWeeklyPoolByGameId: isFetchingWeeklyPoolByGameId
   }
 }
 

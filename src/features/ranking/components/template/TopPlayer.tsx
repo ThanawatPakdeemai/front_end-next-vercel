@@ -1,17 +1,17 @@
-import { Card } from "@mui/material"
-import { memo } from "react"
-// import AddIcon from "@mui/icons-material/Add"
+import React, { memo } from "react"
 import TrackChangesIcon from "@mui/icons-material/TrackChanges"
-// import ButtonLink from "@components/atoms/button/ButtonLink"
 import CardTitle from "@components/organisms/CardTitle"
 import useTopPlayer from "@feature/ranking/containers/hook/useTopPlayer"
 import { v4 as uuid } from "uuid"
 import SkeletonTopPlayer from "@components/atoms/skeleton/SkeletonTopPlayer"
-// import Dropdown from "@components/atoms/DropdownCustom"
 import Note from "@components/molecules/Note"
-import CardRank from "@components/organisms/CardRank"
 import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
 import { useTranslation } from "react-i18next"
+import NoData from "@components/molecules/NoData"
+import { useRouter } from "next/router"
+import { IWeeklyPoolByGameIdDataRecord } from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
+import { Box } from "@mui/material"
+import CardRank from "@components/organisms/CardRank"
 import CardBodyList from "../molecules/CardBodyList"
 
 export interface IPlayer {
@@ -22,7 +22,9 @@ export interface IPlayer {
   subtitle?: boolean
   elevation?: number
   background?: "purple" | "red" | "neutral"
-  topPlayerGameId?: IPlayerRanking[]
+  topPlayerGameId?: IPlayerRanking[] | IWeeklyPoolByGameIdDataRecord[]
+  isFetching?: boolean
+  rightContent?: React.ReactNode
 }
 
 const TopPlayer = ({
@@ -33,25 +35,96 @@ const TopPlayer = ({
   subtitle,
   elevation,
   background,
-  topPlayerGameId
+  topPlayerGameId,
+  rightContent,
+  isFetching = false
 }: IPlayer) => {
   const { topPlayerAllGame, isLoading } = useTopPlayer()
   const skeleton = 10
   const { t } = useTranslation()
+  const route = useRouter()
+  const { pathname } = route
 
-  const sumTopPlayerGameId =
-    topPlayerGameId &&
-    topPlayerGameId.reduce((_acc, _curr) => _acc + _curr.naka_earn, 0)
+  /**
+   * @description sum top player game id (weekly prize pool only)
+   */
+  const sumTopPlayerGameId = (): number => {
+    if (topPlayerGameId && topPlayerGameId.length === 0) return 0
+    if (topPlayerGameId === undefined) return 0
+
+    return (
+      (topPlayerGameId as IWeeklyPoolByGameIdDataRecord[]).reduce(
+        (_acc, _curr) => _acc + _curr.reward,
+        0
+      ) ||
+      (topPlayerGameId as IPlayerRanking[]).reduce(
+        (_acc, _curr) => _acc + _curr.naka_earn,
+        0
+      )
+    )
+  }
 
   const sumTopPlayerAllGame =
     topPlayerAllGame &&
     topPlayerAllGame.reduce((_acc, curr) => _acc + curr.naka_earn, 0)
 
+  const renderRankContent = () => {
+    if (!rank) {
+      return <NoData />
+    }
+
+    if (topPlayerGameId && topPlayerGameId.length > 0) {
+      return (
+        <div className="top-player__content h-[calc(100%-136px)] w-[calc(100%-20px)] p-[14px_0px_0px_10px]">
+          <CardRank topPlayerGameId={topPlayerGameId} />
+        </div>
+      )
+    }
+
+    if (
+      topPlayerAllGame &&
+      topPlayerAllGame.length > 0 &&
+      pathname !== "/[typeGame]/[GameHome]"
+    ) {
+      return (
+        <div className="top-player__content h-[calc(100%-136px)] w-[calc(100%-20px)] p-[14px_0px_0px_10px]">
+          <CardBodyList
+            width="433px"
+            players={topPlayerAllGame}
+          />
+        </div>
+      )
+    }
+
+    return (
+      <div className="top-player__content h-[calc(100%-136px)] w-[calc(100%-20px)] p-[14px_0px_0px_30px]">
+        <NoData />
+      </div>
+    )
+  }
+
   return (
-    <div className="flex w-full flex-col">
-      <Card
-        sx={{ maxWidth: "550px" }}
-        className={`${className} flex h-full flex-wrap rounded-md !p-2 lg:h-auto`}
+    <Box
+      component="div"
+      className="top-player__wrapper relative flex w-full flex-col"
+      sx={{
+        ".top-player__wrapper-inner": {
+          position: "relative",
+          "&:before": {
+            content: '""',
+            position: "absolute",
+            bottom: "0",
+            left: "0",
+            height: "74px",
+            width: "100%",
+            background:
+              "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%)"
+          }
+        }
+      }}
+    >
+      <div
+        className={`${className} top-player__wrapper-inner flex h-full flex-wrap overflow-hidden rounded-md lg:h-auto`}
       >
         <CardTitle
           width="534px"
@@ -61,30 +134,13 @@ const TopPlayer = ({
           background={background}
           elevation={elevation}
           sumTotal={
-            rank
-              ? (sumTopPlayerGameId as number)
-              : (sumTopPlayerAllGame as number)
+            rank ? sumTopPlayerGameId() : (sumTopPlayerAllGame as number)
           }
-          // rightTitle={
-          //   element === "button" ? (
-          //     <ButtonLink
-          //       href="/"
-          //       text="View All"
-          //       icon={<AddIcon />}
-          //       color="secondary"
-          //       size="small"
-          //       className="button-global button-transparent"
-          //     />
-          //   ) : (
-          //     <Dropdown
-          //       title="Currently Week"
-          //       className=""
-          //     />
-          //   )
-          // }
+          rightContent={rightContent}
         />
-        {isLoading && topPlayerAllGame === undefined ? (
-          <div className="custom-scroll h-[375px] w-full overflow-y-scroll pr-4">
+
+        {(isLoading && topPlayerAllGame === undefined) || isFetching ? (
+          <div className="custom-scroll mx-[30px] my-3 h-[270px] w-full overflow-y-scroll">
             {[...Array(skeleton)].map((item, index) => (
               <SkeletonTopPlayer
                 key={uuid()}
@@ -93,20 +149,9 @@ const TopPlayer = ({
             ))}
           </div>
         ) : (
-          <div className="ml-auto w-full sm:flex-[0_0_100%] lg:ml-0 lg:mt-auto lg:flex-none">
-            {rank
-              ? topPlayerGameId && (
-                  <CardRank topPlayerGameId={topPlayerGameId} />
-                )
-              : topPlayerAllGame && (
-                  <CardBodyList
-                    width="433px"
-                    players={topPlayerAllGame}
-                  />
-                )}
-          </div>
+          renderRankContent()
         )}
-      </Card>
+      </div>
       {note ? (
         <Note
           className="flex justify-center pt-6 uppercase xl:w-[550px] xl:justify-start"
@@ -116,7 +161,7 @@ const TopPlayer = ({
       ) : (
         <></>
       )}
-    </div>
+    </Box>
   )
 }
 

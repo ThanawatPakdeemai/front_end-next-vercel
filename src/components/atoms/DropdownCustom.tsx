@@ -21,7 +21,13 @@ import SelectDropdown from "./selectDropdown/SelectDropdown"
 
 interface IProp {
   icon?: React.ReactNode
-  title: string
+  title:
+    | "All Categories"
+    | "All Game Assets"
+    | "All Devices"
+    | "All Publisher Categories"
+    | "Currently Week"
+    | "All Partner Categories"
   className: string
 }
 const DropdownCustom = ({ title, className }: IProp) => {
@@ -32,12 +38,16 @@ const DropdownCustom = ({ title, className }: IProp) => {
   >([])
   const [onTitle, setOnTitle] = useState<IDropdownAll>()
   const { errorToast } = useToast()
+
   const {
     setCategory: setCategoryDropdown,
     setGameItem: setGameItemDropdown,
     setDevice: setDeviceDropdown
   } = useFilterStore()
+
   const [textTitle, setTextTitle] = useState<string>("")
+
+  const showIcon = title !== "Currently Week"
 
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
@@ -220,13 +230,13 @@ const DropdownCustom = ({ title, className }: IProp) => {
   return (
     <>
       {gameData && (
-        <div className="flex w-full justify-center">
+        <div className="dropdown-custom__wrapper flex w-full justify-center">
           <button
             type="button"
             onClick={handleOnExpandClick}
             className={`${className} mb-1 flex h-[40px] w-[218px] flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary`}
           >
-            <AllCategoriesIcon />
+            {showIcon && <AllCategoriesIcon />}
             <span className="">
               {t(onTitle === undefined ? textTitle : onTitle.name)}
             </span>

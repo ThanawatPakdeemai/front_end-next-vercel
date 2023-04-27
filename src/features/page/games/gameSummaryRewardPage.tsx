@@ -125,7 +125,7 @@ const GameSummaryRewardPage = () => {
       <div className="flex w-full flex-col justify-center gap-4 lg:flex-row">
         <BrowserView>
           <CardBodyList
-            className="mx-auto max-h-[680px] w-[362px] flex-1 "
+            className="custom-scroll mx-auto flex max-h-[680px] w-[362px] flex-1 flex-col gap-2 overflow-y-scroll"
             width="auto"
             players={players || []}
             rewardType={notificationItem?.type}

@@ -151,7 +151,7 @@ const Home = () => {
           </div>
         )}
       </div>
-      <div className="flex gap-3">
+      <div className="flex flex-wrap gap-3 md:flex-nowrap">
         <Box
           component="div"
           className="flex flex-[1_1_100%] flex-col gap-3 sm:flex-[1_1_60%] xl:flex-1"

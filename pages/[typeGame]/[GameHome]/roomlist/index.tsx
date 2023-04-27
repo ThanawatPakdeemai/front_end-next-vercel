@@ -73,7 +73,7 @@ const GameTabsVertical = dynamic(
 )
 
 const RoomListLayout = dynamic(
-  () => import("@src/mobile/templates/RoomListLayout"),
+  () => import("@src/mobile/components/templates/RoomListLayout"),
   {
     suspense: true,
     ssr: false

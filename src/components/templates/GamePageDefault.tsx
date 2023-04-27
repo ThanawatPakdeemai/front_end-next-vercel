@@ -146,8 +146,8 @@ const GamePageDefault = ({
                       />
                     </div>
                   </div>
-                  <div className="col-span-2 my-4 flex grid w-full flex-auto grid-cols-3 flex-col justify-evenly gap-2 ">
-                    <div className="flex grid w-full flex-auto gap-2 ">
+                  <div className="col-span-2 my-4 flex w-full flex-auto grid-cols-3 flex-col justify-evenly gap-2 ">
+                    <div className="flex w-full flex-auto gap-2 ">
                       <StatsDetail
                         icon={<ControllerIcon />}
                         title={t("games_per_day")}
@@ -256,12 +256,12 @@ const GamePageDefault = ({
 
           {gameData && <Howto data={gameData as IGame} />}
           {component}
+          {renderStatistic()}
           {/**
            * @description In case there is a need to add another component
            */}
           {component2 && <div className="mt-12">{component2}</div>}
           {component3 && <div className="mt-12">{component3}</div>}
-          {renderStatistic()}
           {/* //NOTE - comment ไว้ก่อน ค่อยเปิด feature นี้ทีหลัง */}
           {/* {gameData && (
         <ReleatedGames _gameType={getTypeGamePathFolder(gameData as IGame)} />

@@ -1,30 +1,40 @@
 import SearchIcon from "@components/icons/SearchIcon"
 import { Collapse, InputAdornment, TextField, Typography } from "@mui/material"
-import React, { useEffect, useState } from "react"
+import React, { memo, useMemo, useState } from "react"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import INaka from "@components/icons/Naka"
 import SpeedHeight from "@components/icons/marketplace/SpeedHeight"
 import SpeedLow from "@components/icons/marketplace/SpeedLow"
 import CheckBoxNaka from "@components/atoms/checkBox/CheckBoxNaka"
-import { useRouter } from "next/router"
-import { TType } from "@feature/marketplace/interfaces/IMarketService"
+import { NextRouter, useRouter } from "next/router"
 import DropdownIcon from "@components/icons/DropdownIcon"
 import MenuItemCustom from "@components/atoms/MenuItemCustom"
 import DragHandleIcon from "@mui/icons-material/DragHandle"
 import { MENU_MARKETPLACE } from "@configs/menu"
 import useMarketFilterStore from "@stores/marketFilter"
-import useGetMaterialTypes from "@feature/material/marketplace/containers/hooks/useGetTypeMaterial"
-import useGetGameItems from "@feature/gameItem/marketplace/containers/hooks/useGetGameItem"
-import useGetBuilding from "@feature/gameItem/marketplace/containers/hooks/useGetBuilding"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
+import { ITypeBuild } from "@feature/building/interfaces/IBuildingService"
+import useMarketCategTypes, { TCategory } from "@stores/marketCategTypes"
+import { ITypeMaterials } from "@feature/material/marketplace/interfaces/IMaterialService"
 
 const FilterBox = () => {
-  const router = useRouter()
-
+  const router: NextRouter = useRouter()
   const pathName = router.asPath.split("/").pop()
   const isP2P = router.asPath.includes("p2p")
   const isInventory = router.asPath.search("inventory")
 
-  const [marketType, setMarketType] = useState<TType>()
+  const {
+    search,
+    sort,
+    filter,
+    onSetSearch,
+    onSetSort,
+    onSetFilter,
+    onResetSort,
+    onResetSearch,
+    onResetFilter
+  } = useMarketFilterStore()
+
   const [expanded, setExpanded] = useState<boolean>(false)
   const [expandedPrice, setExpandedPrice] = useState<boolean>(false)
   const [expandDate, setExpandDate] = useState<boolean>(false)
@@ -35,12 +45,8 @@ const FilterBox = () => {
   const [price, setPrice] = useState<string>("Price")
   const [date, setDate] = useState<string>("Date")
   const [type, setType] = useState<string>("Type")
-  const [isCheck, setIsCheck] = useState<boolean>(false)
-  // const [checkBoxKey, setCheckBoxKey] = useState<number>(0)
 
-  const { materialTypes } = useGetMaterialTypes()
-  const { gameItemTypes } = useGetGameItems()
-  const { buildingTypes } = useGetBuilding()
+  const { category, fetchStatus, getCurrentTypes } = useMarketCategTypes()
 
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
@@ -55,58 +61,80 @@ const FilterBox = () => {
     setExpandType(!expandType)
   }
 
-  useEffect(() => {
-    let load = false
+  const onFilterChange = (
+    _category: TCategory,
+    _value: IGameItemListData | ITypeMaterials | ITypeBuild
+  ) => {
+    let _checked: boolean = false
+    switch (_category) {
+      case "game_item":
+        _checked = !!filter.find((f) => f === _value.id)
+        break
+      case "nft_land":
+        _checked =
+          "name_type" in _value
+            ? !!filter.find((f) => f === _value.name_type)
+            : false
+        break
+      case "nft_building":
+        _checked =
+          "model_id" in _value
+            ? !!filter.find((f) => f === _value.model_id.toString())
+            : false
+        break
+      case "nft_material":
+        _checked =
+          "name_type" in _value
+            ? !!filter.find((f) => f === _value.name_type)
+            : false
+        break
+      default:
+        _checked = false
+        break
+    }
+    return _checked
+  }
 
-    if (!load) {
-      if (router.asPath.includes("p2p/land")) {
-        setMarketType("land")
-      } else if (router.asPath.includes("inventory/land")) {
-        setMarketType("land")
-      } else if (router.asPath.includes("forsale/land")) {
-        setMarketType("land")
-      } else if (router.asPath.includes("process-payment/land")) {
-        setMarketType("land")
-      } else if (router.asPath.includes("p2p/building")) {
-        setMarketType("building")
-      } else if (router.asPath.includes("inventory/building")) {
-        setMarketType("building")
-      } else if (router.asPath.includes("forsale/building")) {
-        setMarketType("building")
-      } else if (router.asPath.includes("process-payment/building")) {
-        setMarketType("building")
-      } else if (router.asPath.includes("p2p/naka-punk")) {
-        setMarketType("naka-punk")
-      } else if (router.asPath.includes("p2p/material")) {
-        setMarketType("material")
-      } else if (router.asPath.includes("inventory/material")) {
-        setMarketType("material")
-      } else if (router.asPath.includes("forsale/material")) {
-        setMarketType("material")
-      } else if (router.asPath.includes("process-payment/material")) {
-        setMarketType("material")
-      } else if (router.asPath.includes("game-item")) {
-        setMarketType("game-item")
-      } else if (router.asPath.includes("arcade-game")) {
-        setMarketType("arcade-game")
+  const onSelectedFilterValue = (
+    _category: TCategory,
+    _value: IGameItemListData | ITypeMaterials | ITypeBuild
+  ) => {
+    let _data: string = ""
+    switch (_category) {
+      case "game_item":
+        _data = _value.id
+        break
+      case "nft_land":
+        _data = "name_type" in _value ? _value.name_type : ""
+        break
+      case "nft_building":
+        _data = "model_id" in _value ? _value.model_id.toString() : ""
+        break
+      case "nft_material":
+        _data = "name_type" in _value ? _value.name_type : ""
+        break
+      default:
+        break
+    }
+    return _data
+  }
+
+  const FilterData = useMemo(() => {
+    let _arr: Array<
+      (IGameItemListData | ITypeMaterials | ITypeBuild) & { checked: boolean }
+    > = []
+    if (fetchStatus) {
+      const _curTypes = getCurrentTypes(category)
+      if (_curTypes) {
+        _arr = _curTypes.map((i) => ({
+          ...i,
+          checked: onFilterChange(category, i)
+        }))
       }
     }
-    return () => {
-      load = true
-    }
-  }, [router.asPath])
-
-  const {
-    search,
-    sort,
-    filter,
-    onSetSearch,
-    onSetSort,
-    onSetFilter,
-    onResetSort,
-    onResetSearch,
-    onResetFilter
-  } = useMarketFilterStore()
+    return _arr
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filter, category, fetchStatus])
 
   // eslint-disable-next-line no-unused-vars
   const obj = sort.reduce((acc, curr) => Object.assign(acc, curr), {})
@@ -121,24 +149,15 @@ const FilterBox = () => {
   //    setText("")
   //  }
 
-  // useEffect(() => {
-  //   setIsCheck(filter.length > 0)
-  // }, [filter])
-
-  // useEffect(() => {
-  //   setIsCheck(false)
-  // }, [isCheck])
-
-  // console.log("sort", obj)
-  // console.log("search", obj2)
-  // console.log("filter", filter)
-  // console.log("isCheck", isCheck)
-  // console.log("checkBoxKey", checkBoxKey)
-
-  const handleCheckboxChange = (filterValue) => {
-    const updatedFilter = [...filter, filterValue]
-    onSetFilter(updatedFilter)
-    setIsCheck(!isCheck)
+  const handleCheckboxChange = ({
+    _value,
+    _checked
+  }: {
+    _value: string
+    _checked: boolean
+  }) => {
+    const updatedFilter = { value: _value, checked: _checked }
+    onSetFilter([updatedFilter])
   }
 
   const PRICELIST = [
@@ -171,7 +190,7 @@ const FilterBox = () => {
           <button
             type="button"
             onClick={handleOnExpandClick}
-            className="mx-auto mb-1 flex h-[40px] w-[218px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-secondary-main px-5 text-[12px] text-white-primary"
+            className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-secondary-main px-5 text-[12px] text-white-primary"
           >
             <DragHandleIcon />
             <span>
@@ -227,13 +246,13 @@ const FilterBox = () => {
               ))}
           </Collapse>
 
-          {(marketType === "building" ||
-            marketType === "arcade-game" ||
-            marketType === "land" ||
+          {(category === "nft_building" ||
+            category === "nft_game" ||
+            category === "nft_land" ||
             pathName === "marketplace") && (
             <>
               <Typography className="text-xs uppercase text-neutral-500">
-                {marketType === "land" || pathName === "marketplace"
+                {category === "nft_land" || pathName === "marketplace"
                   ? "Land ID"
                   : "NFT Token"}
               </Typography>
@@ -242,7 +261,7 @@ const FilterBox = () => {
                 placeholder="e.g. 11900011"
                 // onKeyDown={(event) => {
                 //   if (event.key === "Enter" && text !== "") {
-                //     pathName === "marketplace" || marketType === "land"
+                //     pathName === "marketplace" || category === "nft_land"
                 //       ? onSetSearch({ key: "land_id", value: text })
                 //       : onSetSearch({ key: "nft_token", value: text })
                 //   }
@@ -267,7 +286,7 @@ const FilterBox = () => {
                 onChange={(_event) => {
                   setText(_event.target.value)
                   // onSetSearch({ key: "land_id", value: text })
-                  pathName === "marketplace" || marketType === "land"
+                  pathName === "marketplace" || category === "nft_land"
                     ? onSetSearch({ key: "land_id", value: text })
                     : onSetSearch({ key: "nft_token", value: text })
                 }}
@@ -305,12 +324,12 @@ const FilterBox = () => {
           </Typography>
         </div>
       </div>
-      {(marketType === "land" ||
-        marketType === "game-item" ||
-        marketType === "material" ||
-        marketType === "building" ||
-        marketType === "naka-punk" ||
-        marketType === "arcade-game") && (
+      {(category === "nft_land" ||
+        category === "game_item" ||
+        category === "nft_material" ||
+        category === "nft_building" ||
+        category === "nft_naka_punk" ||
+        category === "nft_game") && (
         <div>
           <Typography className="text-xs uppercase text-neutral-500">
             Wallet address
@@ -354,7 +373,7 @@ const FilterBox = () => {
         <button
           type="button"
           onClick={handleOnExpandPrice}
-          className="mx-auto mb-1 flex h-[40px] w-[218px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
+          className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
         >
           <span>{price}</span>
           <div
@@ -400,7 +419,7 @@ const FilterBox = () => {
         <button
           type="button"
           onClick={handleOnExpandDate}
-          className="mx-auto mb-1 flex h-[40px] w-[218px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
+          className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
         >
           <span>{date}</span>
           <div
@@ -443,15 +462,15 @@ const FilterBox = () => {
         </Collapse>
       </div>
 
-      {(marketType === "land" ||
-        marketType === "game-item" ||
-        marketType === "building" ||
-        marketType === "arcade-game") && (
+      {(category === "nft_land" ||
+        category === "game_item" ||
+        category === "nft_building" ||
+        category === "nft_game") && (
         <div className="relative">
           <button
             type="button"
             onClick={handleOnExpandType}
-            className="mx-auto mb-1 flex h-[40px] w-[218px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
+            className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
           >
             <span>{type}</span>
             <div
@@ -579,7 +598,6 @@ const FilterBox = () => {
               // setCheckBoxKey((prevKey) => prevKey + 1)
               // setCheckBoxKey(checkBoxKey + 1)
               onResetFilter()
-              setIsCheck(false)
             }}
             className="corsor-pointer ml-2 self-center text-xs uppercase text-secondary-main"
           >
@@ -588,117 +606,30 @@ const FilterBox = () => {
         </div>
       </div>
       <div>
-        {pathName === "material" ||
-        pathName === "marketplace" ||
-        marketType === "material" ||
-        marketType === "land"
-          ? materialTypes &&
-            materialTypes
-              // .filter(
-              //   (item, index, self) =>
-              //     self.findIndex((t) => t.name_type === item.name_type) ===
-              //     index
-              // )
-              // .filter((ele) => ele.name !== `${ele.name}`)
-              .map((item) => {
-                if (
-                  (item.type === "land" && pathName === "marketplace") ||
-                  (item.type === "land" && marketType === "land")
-                ) {
-                  return (
-                    <CheckBoxNaka
-                      // key={checkBoxKey}
-                      key={item.name}
-                      value={isCheck}
-                      onHandle={() =>
-                        handleCheckboxChange({
-                          name: item.name,
-                          value: item.name_type
-                        })
-                      }
-                      text={item.name}
-                      className="mr-4 items-center self-center uppercase"
-                      fontStyle="text-xs text-black-default"
-                      img={item.image}
-                    />
-                  )
-                }
-                if (item.type === "material" && marketType === "material") {
-                  return (
-                    <CheckBoxNaka
-                      // key={checkBoxKey}
-                      key={item.name}
-                      value={isCheck}
-                      onHandle={() =>
-                        handleCheckboxChange({
-                          name: item.name,
-                          value: item.name_type
-                        })
-                      }
-                      text={item.name}
-                      className="mr-4 items-center self-center uppercase"
-                      fontStyle="text-xs text-black-default"
-                      img={item.image}
-                    />
-                  )
-                }
-                return null
-              })
-          : null}
-        {pathName === "building" &&
-          buildingTypes &&
-          filter &&
-          buildingTypes
-            .filter(
-              (item, index, self) =>
-                self.findIndex((t) => t.name === item.name) === index
-            )
-            .map((item) => (
-              <CheckBoxNaka
-                // key={checkBoxKey}
-                key={item.name}
-                value={
-                  !!filter.find((check) => check === item.model_id.toString())
-                }
-                onHandle={() => {
-                  handleCheckboxChange({
-                    name: item.name,
-                    value: item.model_id.toString()
-                  })
-                }}
-                text={item.name}
-                className="mr-4 items-center self-center uppercase"
-                fontStyle="text-xs text-black-default"
-                img={item.image}
-              />
-            ))}
-        {pathName === "game-item" &&
-          gameItemTypes &&
-          gameItemTypes
-            .filter(
-              (item, index, self) =>
-                self.findIndex((t) => t.name === item.name) === index
-            )
-            .map((item) => (
-              <CheckBoxNaka
-                // key={checkBoxKey}
-                key={item.name}
-                value={isCheck}
-                onHandle={() =>
-                  handleCheckboxChange({
-                    name: item.name,
-                    value: item.name
-                  })
-                }
-                text={item.name}
-                className="mr-4 items-center self-center uppercase"
-                fontStyle="text-xs text-black-default"
-                img={item.image}
-              />
-            ))}
+        {FilterData &&
+          FilterData.filter(
+            (item, index, self) =>
+              self.findIndex((t) => t.name === item.name) === index
+          ).map((item) => (
+            <CheckBoxNaka
+              // key={checkBoxKey}
+              key={item.name}
+              value={item.checked}
+              onHandle={() => {
+                handleCheckboxChange({
+                  _value: onSelectedFilterValue(category, item),
+                  _checked: onFilterChange(category, item)
+                })
+              }}
+              text={item.name}
+              className="mr-4 items-center self-center uppercase"
+              fontStyle="text-xs text-black-default"
+              img={item.image}
+            />
+          ))}
       </div>
     </div>
   )
 }
 
-export default FilterBox
+export default memo(FilterBox)

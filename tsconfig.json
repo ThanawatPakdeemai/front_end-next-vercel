@@ -39,7 +39,7 @@
     "**/*.ts",
     "**/*.tsx",
     "environment.d.ts",
-    "src/mobile/molecules/homePage/cardDetail"
+    "src/mobile/components/molecules/homePage/cardDetail"
   ],
   "exclude": ["node_modules"]
 }

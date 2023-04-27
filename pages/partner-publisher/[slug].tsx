@@ -18,8 +18,8 @@ const GameContent = dynamic(
     ssr: false
   }
 )
-const GameTabs = dynamic(
-  () => import("@feature/game/components/templates/lobby/GameTabs"),
+const GameTabsVertical = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameTabsVertical"),
   {
     suspense: true,
     ssr: false
@@ -82,10 +82,14 @@ export default function GamePartnerDetails() {
         <RightSidebarContent
           content={
             <TabProvider>
-              <GameTabs
+              <GameTabsVertical
                 gameId={gameId}
                 gameType="partner-game"
               />
+              {/* <GameTabs
+                gameId={gameId}
+                gameType="partner-game"
+              /> */}
             </TabProvider>
           }
           aside={

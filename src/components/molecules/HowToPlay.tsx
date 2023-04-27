@@ -12,7 +12,7 @@ import {
   IGameDevice
 } from "@feature/game/interfaces/IGameService"
 import useGlobal from "@hooks/useGlobal"
-import Image from "next/image"
+import { Image } from "@components/atoms/image/index"
 import TooltipsCustom from "@components/atoms/TooltipsCustom"
 import { useTranslation } from "react-i18next"
 import ShareToEarn from "@components/atoms/ShareToEarn"

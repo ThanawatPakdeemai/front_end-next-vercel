@@ -58,8 +58,8 @@ const OverviewContent = dynamic(
   }
 )
 
-const GameTabs = dynamic(
-  () => import("@feature/game/components/templates/lobby/GameTabs"),
+const GameTabsVertical = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameTabsVertical"),
   {
     suspense: true,
     ssr: false
@@ -184,7 +184,11 @@ export default function GameLobby() {
       default:
         return (
           <CardBuyItem
-            buttonStyle="green"
+            buttonStyle={
+              getTypeGamePathFolder(gameData) !== "storymode"
+                ? "purple"
+                : "green"
+            }
             gameObject={gameData}
           />
         )
@@ -197,7 +201,7 @@ export default function GameLobby() {
         <GamePageDefault
           component={
             <RightSidebarContentEffect
-              className="mb-24"
+              className="mb-[64px]"
               content={getTemplateLobby()}
               aside={
                 <Box
@@ -205,7 +209,7 @@ export default function GameLobby() {
                   className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
                   sx={{
                     ".panel-content": {
-                      maxHeight: "200px",
+                      maxHeight: "270px",
                       ".custom-scroll": {
                         overflow: "hidden"
                       }
@@ -229,15 +233,22 @@ export default function GameLobby() {
             <FullWidthContent
               sxCustomStyled={{
                 "&.container": {
-                  maxWidth: "100%!important"
+                  maxWidth: "100%!important",
+                  "&.container-fullWidth": {
+                    padding: "49px"
+                  }
                 }
               }}
             >
               <TabProvider>
-                <GameTabs
+                <GameTabsVertical
                   gameId={gameData.id}
                   gameType="arcade-emporium"
                 />
+                {/* <GameTabs
+                  gameId={gameData.id}
+                  gameType="arcade-emporium"
+                /> */}
               </TabProvider>
             </FullWidthContent>
           }

@@ -12,6 +12,7 @@ export type TNFTType =
   | "nft_material"
   | "game_item"
   | "nft_game"
+  | "nft_avatar"
 
 export type TType =
   | "land"
@@ -20,6 +21,7 @@ export type TType =
   | "material"
   | "game-item"
   | "arcade-game"
+  | "avatar-reef"
 
 export type TSellingType = "fullpayment" | "installment" | "rental"
 

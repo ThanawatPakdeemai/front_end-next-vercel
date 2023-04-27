@@ -9,6 +9,8 @@ import { Box } from "@mui/material"
 import useGlobal from "@hooks/useGlobal"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { isMobile } from "react-device-detect"
 
 const BuyItemBody = dynamic(
   () => import("@components/templates/game/BuyItemBody"),
@@ -62,8 +64,16 @@ const OverviewContent = dynamic(
   }
 )
 
-const GameTabs = dynamic(
-  () => import("@feature/game/components/templates/lobby/GameTabs"),
+const GameTabsVertical = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameTabsVertical"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const RoomListLayout = dynamic(
+  () => import("@src/mobile/templates/RoomListLayout"),
   {
     suspense: true,
     ssr: false
@@ -165,15 +175,22 @@ export default function GameRoomList() {
             <FullWidthContent
               sxCustomStyled={{
                 "&.container": {
-                  maxWidth: "100%!important"
+                  maxWidth: "100%!important",
+                  "&.container-fullWidth": {
+                    padding: "49px"
+                  }
                 }
               }}
             >
               <TabProvider>
-                <GameTabs
+                <GameTabsVertical
                   gameId={gameData.id}
                   gameType={getTypeGamePathFolder(gameData)}
                 />
+                {/* <GameTabs
+                  gameId={gameData.id}
+                  gameType={getTypeGamePathFolder(gameData)}
+                /> */}
               </TabProvider>
             </FullWidthContent>
           }
@@ -183,12 +200,10 @@ export default function GameRoomList() {
       )}
     </>
   )
-
-  // return <GameRoomListPage />
 }
 
 GameRoomList.getLayout = function getLayout(page: ReactElement) {
-  return page
+  return isMobile ? <RoomListLayout /> : page
 }
 
 export async function getServerSideProps({ locale }) {

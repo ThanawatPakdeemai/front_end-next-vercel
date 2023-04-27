@@ -15,7 +15,7 @@ import Banners from "@components/molecules/Banners"
 import { Box } from "@mui/material"
 import useGlobal from "@hooks/useGlobal"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
-import GameTabs from "@feature/game/components/templates/lobby/GameTabs"
+import GameTabsVertical from "@feature/game/components/templates/lobby/GameTabsVertical"
 import FullWidthContent from "./contents/FullWidthContent"
 
 const GameRoomLayout = ({
@@ -123,16 +123,23 @@ const GameRoomLayout = ({
         sxCustomStyled={{
           "&.container": {
             maxWidth: "100%!important",
-            marginTop: "90px!important"
+            marginTop: "90px!important",
+            "&.container-fullWidth": {
+              padding: "49px"
+            }
           }
         }}
       >
         {gameData ? (
           <TabProvider>
-            <GameTabs
+            <GameTabsVertical
               gameId={gameData.id}
               gameType={getTypeGamePathFolder(gameData)}
             />
+            {/* <GameTabs
+              gameId={gameData.id}
+              gameType={getTypeGamePathFolder(gameData)}
+            /> */}
           </TabProvider>
         ) : null}
       </FullWidthContent>

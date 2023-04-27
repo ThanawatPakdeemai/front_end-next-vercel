@@ -1,7 +1,7 @@
 import React from "react"
 import { Canvas, extend } from "@react-three/fiber"
 import { OrbitControls, Stage, Gltf } from "@react-three/drei"
-import Image from "next/image"
+import { Image } from "@components/atoms/image/index"
 
 extend({ Image })
 

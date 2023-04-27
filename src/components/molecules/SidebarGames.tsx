@@ -1,19 +1,68 @@
 import MenuItemCustom from "@components/atoms/MenuItemCustom"
 import { MENU_GUEST } from "@configs/menu"
 // import { PROFILE_MOCKUP } from "@constants/profileMockup"
-import { MenuList } from "@mui/material"
+import { MenuList, SxProps, Theme } from "@mui/material"
 import { NextRouter, useRouter } from "next/router"
 import useProfileStore from "@stores/profileStore"
 import Balance from "./balance/Balance"
 import StatProfile from "./statProfile/StatProfile"
+
+export const StyledMenuItemCustom: SxProps<Theme> = {
+  "&.MuiList-root": {
+    background: "#18181C",
+    display: "flex",
+    flexDirection: "column",
+    gap: "5px",
+    ".MuiMenuItem-root": {
+      display: "flex",
+      alignItems: "center",
+      padding: "10px 10px 9px",
+      gap: "16px",
+      borderRadius: "8px",
+      height: "40px",
+      margin: "0",
+      background: "transparent",
+      transition: "backgroundColor 0.3s ease",
+      boxShadow: "none!important",
+      "&.Mui-selected": {},
+      "&:hover": {
+        backgroundColor: "#010101",
+        "a .MuiTypography-root": {
+          color: "#E1E2E2"
+        }
+      },
+      "a": {
+        display: "flex",
+        alignItems: "center",
+        gap: "16px",
+        ".MuiListItemIcon-root": {
+          minWidth: "auto"
+        },
+        ".MuiTypography-root": {
+          fontSize: "12px",
+          color: "#70727B",
+          transition: "color 0.3s ease"
+        },
+        "&.active": {
+          ".MuiTypography-root": {
+            color: "#E1E2E2"
+          }
+        }
+      }
+    }
+  }
+}
 
 const SidebarGames = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const router: NextRouter = useRouter()
 
   return (
-    <div className="mx-auto w-full max-w-xs gap-5 md:mx-0 md:flex md:w-[200px] md:flex-col">
-      <MenuList className="rounded-[13px] bg-neutral-700 p-[6px]">
+    <div className="mx-auto flex w-full max-w-xs flex-col gap-[10px] md:mx-0 md:w-[200px]">
+      <MenuList
+        className="flex flex-col gap-[5px] rounded-[13px]"
+        sx={StyledMenuItemCustom}
+      >
         {MENU_GUEST.map((ele) => {
           const active = router.asPath.includes(ele.href)
           return (

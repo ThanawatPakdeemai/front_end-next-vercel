@@ -104,12 +104,14 @@ const RightDetailsMarketplace = ({
 
   const handleType = () => {
     const pathMap = {
+      land: "land",
       building: "building",
       game: "game assets",
       material: "material",
       "naka-punk": "nft",
       "arcade-game": "arcade game",
-      default: "land"
+      "avatar-reef": "nft",
+      default: "nft"
     }
     return pathMap[getPathnameType] || pathMap["default"]
   }
@@ -138,6 +140,14 @@ const RightDetailsMarketplace = ({
       couponLength: 0,
       disableCoupon: true
     })
+  }
+
+  const handleRouter = () => {
+    if (router.asPath.includes("inventory")) {
+      router.push("/marketplace/inventory")
+    } else {
+      router.back()
+    }
   }
 
   const isCharactersCoupon = (_CharactersCoupon: string) => {
@@ -189,7 +199,7 @@ const RightDetailsMarketplace = ({
             />
           </div>
           <ButtonClose
-            onClick={() => router.back()}
+            onClick={handleRouter}
             insideClassName="!bg-error-main hover:bg-error-main"
           />
         </div>

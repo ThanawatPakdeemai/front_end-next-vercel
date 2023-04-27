@@ -1,14 +1,11 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react"
 import ButtonLink from "@components/atoms/button/ButtonLink"
-import LogoutIcon from "@mui/icons-material/Logout"
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
 import { Box } from "@mui/material"
 import useProfileStore from "@stores/profileStore/index"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import RightMenuBuyItem from "@feature/gameItem/components/molecules/RightMenuBuyItem"
 import { useRouter } from "next/router"
-import { Image } from "@components/atoms/image"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import { MESSAGES } from "@constants/messages"
 import Helper from "@utils/helper"
@@ -22,6 +19,10 @@ import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn
 import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
 import ButtonGame from "@feature/game/components/molecules/ButtonGame"
 import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
+import { ImageCustom } from "@components/atoms/image/Image"
+import CardBuyItemHeader from "@feature/gameItem/molecules/CardBuyItemHeader"
+import DollarSolidIcon from "@components/icons/DollarSolidIcon"
+import ArrowJoinIcon from "@components/icons/ArrowJoinIcon"
 
 interface ICardBuyItemProp {
   gameObject: IGame
@@ -45,6 +46,11 @@ export default function CardBuyItem({
 
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
+
+  const isHideOnWaitingRoom =
+    router.pathname !== "/[typeGame]/[GameHome]/roomlist/[id]"
+  const isWaitingRoom =
+    router.pathname === "/[typeGame]/[GameHome]/roomlist/[id]"
 
   const { gameItemList } = useGamesByGameId({
     _playerId: profile ? profile.id : "",
@@ -191,11 +197,11 @@ export default function CardBuyItem({
           <ButtonLink
             text={t("join-game")}
             href={`${router.asPath}/roomlist`}
-            icon={<LogoutIcon />}
+            icon={<ArrowJoinIcon />}
             size="medium"
             color="secondary"
             variant="contained"
-            className="w-full"
+            className="h-[50px] w-full"
           />
         )
       }
@@ -203,7 +209,7 @@ export default function CardBuyItem({
     return (
       <ButtonLink
         text={t(MESSAGES["please_item"])}
-        icon={<LogoutIcon />}
+        icon={<ArrowJoinIcon />}
         href={`${router.asPath}`}
         size="medium"
         color="secondary"
@@ -216,7 +222,7 @@ export default function CardBuyItem({
   }, [qtyItemSelected, router.asPath, buttonStyle, router.pathname])
 
   const renderButton = () => (
-    <div className="mt-4 w-full">
+    <div className="w-full">
       {profile ? (
         buttonInToGame
       ) : (
@@ -225,7 +231,7 @@ export default function CardBuyItem({
             <ButtonLink
               text={t("please_login")}
               href=""
-              icon={<LogoutIcon />}
+              icon={<ArrowJoinIcon />}
               size="medium"
               color="secondary"
               className="w-full whitespace-nowrap"
@@ -236,6 +242,9 @@ export default function CardBuyItem({
     </div>
   )
 
+  const inputClasses =
+    "flex h-10 items-center justify-between rounded-xl border-[1px] p-[10px] text-center font-neue-machina-semi text-sm"
+
   return (
     <>
       {hydrated && (
@@ -243,72 +252,77 @@ export default function CardBuyItem({
           <div
             className={`mt-2 flex w-full flex-[1_1_340px] justify-center rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 lg:mt-0 lg:flex-none `}
           >
-            <div className="flex flex-col items-center justify-center p-4">
-              {gameItemList && (
-                <>
-                  <DropdownListItem
-                    isCheck
-                    list={gameItemList?.sort((a, b) => a.price - b.price)}
-                    className="w-[300px]"
-                    onChangeSelect={onChangeSelectItem}
-                  />
-                </>
+            <div className="flex flex-col items-center justify-center gap-3 p-4">
+              {itemSelected && (
+                <CardBuyItemHeader
+                  image={itemSelected.image_icon}
+                  name={itemSelected.name}
+                  itemSize={itemSelected.item_size}
+                  title={isWaitingRoom ? " " : ""}
+                />
               )}
-              <div className="mb-1 w-full rounded-xl border-[1px] border-primary-main bg-primary-main p-2 first-letter:my-2">
-                <p className="w-[285px] uppercase text-white-default">
-                  {t("my")}
-                  {itemSelected && (
-                    <span className="text-purple-primary]">
-                      {t(itemSelected.name)} {itemSelected.item_size}
-                    </span>
-                  )}
-                  {/* <span className="text-purple-primary]">
-                    {t(itemSelected?.name)} {itemSelected?.item_size}
-                  </span>{" "} */}
-                  {t("bag")}
-                </p>
-              </div>
-
-              <div className={`grid w-full grid-cols-2 gap-4 `}>
-                {gameObject && (
-                  <GameItemSingleCard
-                    image={gameObject?.item?.[0].image}
-                    name={gameObject?.item?.[0]?.name}
-                    itemId={gameObject?.item?.[0]?._id}
-                  />
-                )}
-                <div className="flex w-full flex-col justify-center">
-                  <div className="mb-2 flex w-full items-center justify-between rounded-xl bg-[#E1E2E2]  p-2 text-center text-[#111111]">
-                    <p>{qtyItemSelected ?? 0}</p>
-                    {gameObject && (
-                      <Image
-                        src={gameObject.item[0].image_icon_color}
-                        alt={gameObject.item[0].name}
-                        width={
-                          gameObject.item[0].name === "Bullet" ? "0" : "30"
-                        }
-                        height="30"
-                      />
-                    )}
-                  </div>
-                  <div className="mb-2 flex w-full justify-between rounded-xl bg-neutral-700 p-2 text-center text-black-default">
-                    <p>= {totalPrice}</p>
-                    {/* <Input
-                      defaultValue=" 0.00"
-                      inputProps={ariaLabel}
-                    /> */}
-                    <AttachMoneyIcon />
-                  </div>
-                  <div className="w-full">
-                    <RightMenuBuyItem
-                      disabled={!!(profile === undefined || profile === null)}
+              <div className="flex w-full flex-col gap-3 rounded-2xl border-[1px] border-neutral-700 bg-primary-main p-3">
+                {gameItemList && isHideOnWaitingRoom && (
+                  <>
+                    <DropdownListItem
+                      isCheck
+                      list={gameItemList?.sort((a, b) => a.price - b.price)}
+                      onChangeSelect={onChangeSelectItem}
+                      hideDropdownIcon
                     />
+                  </>
+                )}
+                <div className="flex w-full flex-wrap gap-3">
+                  {gameObject && (
+                    <div className="flex-1">
+                      <GameItemSingleCard
+                        image={gameObject?.item?.[0].image}
+                        name={gameObject?.item?.[0]?.name}
+                        itemId={gameObject?.item?.[0]?._id}
+                      />
+                    </div>
+                  )}
+                  <div className="flex w-[calc(100%-164px)] flex-1 flex-col justify-center gap-3">
+                    <div
+                      className={`${inputClasses} border-neutral-700 bg-neutral-800 text-white-primary`}
+                    >
+                      <p>{qtyItemSelected ?? 0}</p>
+                      {gameObject && (
+                        <div className="game-item-image h-6 w-6 p-[4px]">
+                          <ImageCustom
+                            src={gameObject.item[0].image_icon}
+                            alt={gameObject.item[0].name}
+                            width={20}
+                            height={20}
+                            className="h-full w-full object-contain opacity-40"
+                          />
+                        </div>
+                      )}
+                    </div>
+                    <div
+                      className={`${inputClasses} border-neutral-800 bg-neutral-780 text-neutral-500`}
+                    >
+                      <p className="flex items-center gap-1 p-[10px]">
+                        <span>=</span>
+                        <span className="total-price">{totalPrice}</span>
+                      </p>
+                      <DollarSolidIcon />
+                    </div>
+                    {isHideOnWaitingRoom && (
+                      <div className="card-buy-item__buyButton w-full">
+                        <RightMenuBuyItem
+                          disabled={
+                            !!(profile === undefined || profile === null)
+                          }
+                          className="!bg-info-main !text-sm"
+                          disabledStartIcon
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-              {/* {buttonStyle === "purple" && (
-                <div className="mt-4">{renderButton()}</div>
-              )} */}
+              {!hideButtonPlay && buttonStyle === "purple" && renderButton()}
             </div>
           </div>
           {!hideButtonPlay && buttonStyle === "green" && renderButton()}

@@ -6,7 +6,7 @@ import HeadPrice from "@components/molecules/HeadPrice"
 import { RightMenu } from "@components/molecules/rightMenu"
 import useGlobal from "@hooks/useGlobal"
 import RightMenuDeveloper from "@components/molecules/rightMenu/RightMenuDeveloper"
-import HeadMenuMobile from "@src/mobile/molecules/HeadMenuMobile"
+import HeadMenuMobile from "@src/mobile/headerMenu/HeadMenuMobile"
 import { BrowserView, MobileView } from "react-device-detect"
 
 const Header = () => {
@@ -34,14 +34,7 @@ const Header = () => {
         </header>
       </BrowserView>
       <MobileView>
-        <header className="header fixed inset-x-0 bottom-4 z-[999] ">
-          <Box
-            component="div"
-            className="flex content-center items-center justify-center "
-          >
-            <HeadMenuMobile />
-          </Box>
-        </header>
+        <HeadMenuMobile />
       </MobileView>
     </>
   )

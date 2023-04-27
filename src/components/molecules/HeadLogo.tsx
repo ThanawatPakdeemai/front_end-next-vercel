@@ -2,7 +2,6 @@ import LogoNaka from "@components/atoms/logo/LogoNaka"
 import SelectNaka from "@components/atoms/select/SelectNaka"
 import { Button, Divider, Typography, Box } from "@mui/material"
 import { memo, useCallback, useEffect, useState } from "react"
-import LanguageIcon from "@mui/icons-material/Language"
 import DragHandleIcon from "@mui/icons-material/DragHandle"
 import { useRouter } from "next/router"
 import { Image } from "@components/atoms/image/index"
@@ -11,6 +10,7 @@ import useGlobal from "@hooks/useGlobal"
 import Link from "next/link"
 import MarketplaceTextIcon from "@components/icons/marketplace/MarketplaceTextIcon"
 import GameDeveloperIcon from "@components/icons/GameDeveloperIcon"
+import GlobalIcon from "@components/icons/GlobalIcon"
 import { styleIcon } from "./HeadMenu"
 
 const HeadLogo = () => {
@@ -124,7 +124,7 @@ const HeadLogo = () => {
             component="div"
             className="ms:ml-0 col-span-1 ml-auto flex h-auto items-center "
           >
-            <LanguageIcon className={themeColor().toString()} />
+            <GlobalIcon className={themeColor().toString()} />
             <SelectNaka
               imageSelectd={
                 <Image

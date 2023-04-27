@@ -1,4 +1,5 @@
 import useRoomSingle from "@feature/game/containers/hooks/useRoomSingle"
+import Preload from "@src/mobile/components/atoms/Preload"
 import ListJoinGame from "../../molecules/ListJoinGame"
 
 const SingleRoom = () => {
@@ -25,7 +26,7 @@ const SingleRoom = () => {
             ))}
         </>
       ) : (
-        <p className="text-center">Loading...</p>
+        <Preload />
       )}
     </>
   )

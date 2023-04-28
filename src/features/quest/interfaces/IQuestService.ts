@@ -28,6 +28,7 @@ export interface IQuestData {
   started_at: Date | null
   ended_at: Date | null
   claim_reward_status: boolean
+  hot_quest: boolean
 }
 
 export interface IQuestService extends IFormatMessageService {

@@ -30,7 +30,9 @@ const MissionList = ({
       dailyMissionCount={dailyCount || 0}
     />
     {/* main content */}
-    <div className="custom-scroll mt-5 flex h-full flex-col gap-5 overflow-y-auto">
+    <div
+      className={`custom-scroll mt-5 flex h-full flex-col gap-5 overflow-y-auto pr-2 `}
+    >
       {value === "main"
         ? dataAllQuest &&
           dataAllQuest.data

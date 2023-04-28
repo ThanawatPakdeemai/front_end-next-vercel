@@ -464,8 +464,16 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   }
 
   useEffect(() => {
-    if (dataWeeklyPoolByGameId) {
-      setWeeklyPoolByGameId(dataWeeklyPoolByGameId)
+    let load = false
+
+    if (!load) {
+      if (dataWeeklyPoolByGameId) {
+        setWeeklyPoolByGameId(dataWeeklyPoolByGameId)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [dataWeeklyPoolByGameId])
 

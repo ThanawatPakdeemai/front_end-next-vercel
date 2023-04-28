@@ -20,7 +20,15 @@ const MissionItem = ({ data }: IProps) => {
   return (
     <div className="flex w-full flex-row items-center">
       <NoticeIcon.Left fill={data.type === "main" ? "#F42728" : "#7B5BE6"} />
-      <div className="h-fit w-full rounded-md border border-neutral-800 bg-neutral-780">
+      <div
+        className={`h-fit w-full rounded-md border bg-neutral-780  ${
+          data.type === "main" && data.hot_quest ? "border-error-main" : ""
+        } ${
+          data.type === "daily" && data.hot_quest
+            ? " border-secondary-main"
+            : ""
+        } ${!data.hot_quest ? "border-neutral-800" : ""}`}
+      >
         <div className="flex flex-row items-center p-2">
           <div className="ml-4 flex flex-1 flex-col pr-5">
             {/* quest title */}

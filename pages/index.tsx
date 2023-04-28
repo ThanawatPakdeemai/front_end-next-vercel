@@ -3,7 +3,7 @@ import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 import useProfileStore from "@stores/profileStore"
-import SignInLayout from "@src/mobile/templates/SignInLayout"
+import SignInLayout from "@src/mobile/components/templates/SignInLayout"
 import { isMobile } from "react-device-detect"
 
 const HomePage = dynamic(() => import("@feature/page/homePage"))

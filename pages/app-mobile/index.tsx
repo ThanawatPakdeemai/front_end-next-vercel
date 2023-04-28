@@ -3,7 +3,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 
 const HomeMobile = dynamic(
-  () => import("src/mobile/templates/GameDetailLayout")
+  () => import("@src/mobile/components/templates/GameDetailLayout")
 )
 
 const AppMobilePage = () => <HomeMobile />

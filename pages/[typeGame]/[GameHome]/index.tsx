@@ -195,68 +195,60 @@ export default function GameLobby() {
     }
   }
 
-  return (
-    <>
-      {gameData ? (
-        <GamePageDefault
-          component={
-            <RightSidebarContentEffect
-              className="mb-[64px]"
-              content={getTemplateLobby()}
-              aside={
-                <Box
-                  component="div"
-                  className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
-                  sx={{
-                    ".panel-content": {
-                      maxHeight: "270px",
-                      ".custom-scroll": {
-                        overflow: "hidden"
-                      }
-                    },
-                    ".like-no_score": {
-                      margin: "0"
-                    }
-                  }}
-                >
-                  <OverviewContent
-                    gameId={gameData.id}
-                    gameType={getTypeGamePathFolder(gameData)}
-                    gameIdNFT={gameData.NFT_Owner}
-                  />
-                  {renderFormBuyItem()}
-                </Box>
-              }
-            />
-          }
-          component2={
-            <FullWidthContent
-              sxCustomStyled={{
-                "&.container": {
-                  maxWidth: "100%!important",
-                  "&.container-fullWidth": {
-                    padding: "49px"
+  return gameData ? (
+    <GamePageDefault
+      component={
+        <RightSidebarContentEffect
+          className="mb-[64px]"
+          content={getTemplateLobby()}
+          aside={
+            <Box
+              component="div"
+              className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
+              sx={{
+                ".panel-content": {
+                  maxHeight: "270px",
+                  ".custom-scroll": {
+                    overflow: "hidden"
                   }
+                },
+                ".like-no_score": {
+                  margin: "0"
                 }
               }}
             >
-              <TabProvider>
-                <GameTabsVertical
-                  gameId={gameData.id}
-                  gameType="arcade-emporium"
-                />
-                {/* <GameTabs
-                  gameId={gameData.id}
-                  gameType="arcade-emporium"
-                /> */}
-              </TabProvider>
-            </FullWidthContent>
+              <OverviewContent
+                gameId={gameData.id}
+                gameType={getTypeGamePathFolder(gameData)}
+                gameIdNFT={gameData.NFT_Owner}
+              />
+              {renderFormBuyItem()}
+            </Box>
           }
         />
-      ) : (
-        <GamePageDefault component={<SkeletonBanner />} />
-      )}
-    </>
+      }
+      component2={
+        <FullWidthContent
+          sxCustomStyled={{
+            "&.container": {
+              maxWidth: "100%!important",
+              "&.container-fullWidth": {
+                padding: "49px"
+              }
+            }
+          }}
+        >
+          <TabProvider>
+            <GameTabsVertical
+              gameId={gameData.id}
+              gameType="arcade-emporium"
+            />
+          </TabProvider>
+        </FullWidthContent>
+      }
+    />
+  ) : (
+    <GamePageDefault component={<SkeletonBanner />} />
   )
 }
 

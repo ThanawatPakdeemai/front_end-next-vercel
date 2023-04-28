@@ -52,7 +52,7 @@ const CardTitle = ({
   return (
     <div className="card-title__wrapper flex w-full flex-col">
       <div
-        className={`card-title-page m-2 mb-0 flex max-w-full items-center p-[10px_10px_10px_20px] sm:flex-[1_1_100%] lg:flex-1 ${elevation} ${className} ${
+        className={`card-title-page m-2 mb-0 flex h-[50px] max-w-full items-center overflow-hidden rounded-2xl p-[10px_10px_10px_20px] sm:flex-[1_1_100%] lg:flex-none ${elevation} ${className} ${
           background === "purple" && "!bg-purple-primary"
         } ${background === "red" && "!bg-red-card"}
        ${background === "neutral" && "!bg-neutral-800"}

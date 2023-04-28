@@ -7,6 +7,7 @@ import SkeletonCategoryCard from "@components/atoms/skeleton/SkeletonCategoryCar
 // import { PaginationNaka } from "@components/atoms/pagination"
 // import DropdownLimit from "@components/atoms/DropdownLimit"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
+import { CATEGORY_ICON } from "@constants/categoryIcon"
 
 const CatogoriesListPage = () => {
   // page, setPage, pager, setLimit, totalCount
@@ -23,6 +24,10 @@ const CatogoriesListPage = () => {
                 img={item.image_list}
                 text={item.name}
                 href={`/categories/${item.slug}?id=${item.id}`}
+                icon={
+                  CATEGORY_ICON.find((_item) => _item.id === item.slug)?.icon ||
+                  ""
+                }
               />
             ))
           : [...Array(limit)].map(() => <SkeletonCategoryCard key={uuid()} />)}

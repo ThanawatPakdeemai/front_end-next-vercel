@@ -4,6 +4,7 @@ import useReview from "@feature/review/containers/hook/useReview"
 import { Rating, Stack } from "@mui/material"
 import useReviewContext from "@feature/review/containers/contexts/useReviewContext"
 import useLoadingStore from "@stores/loading"
+import Helper from "@utils/helper"
 import MessageFooter from "../templates/MessageFooter"
 
 interface IReviewFormProps {
@@ -36,7 +37,7 @@ const ReviewForm = ({ avatar, username }: IReviewFormProps) => {
     <div className="review-form mb-3 flex grid-flow-col flex-wrap items-center justify-between rounded-2xl border border-neutral-800 bg-neutral-900 p-2 lg:grid lg:min-h-[68px]">
       <div className="review--item__avatar animation-image row-span-2 flex h-[58px] w-[58px] max-w-[58px] flex-auto items-center sm:mx-auto sm:flex-none lg:mx-0">
         <Image
-          src={avatar}
+          src={Helper.convertAvatar(avatar)}
           width="200"
           height="200"
           alt={username}

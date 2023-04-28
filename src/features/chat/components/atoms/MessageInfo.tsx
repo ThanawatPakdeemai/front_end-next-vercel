@@ -1,5 +1,6 @@
 import React from "react"
 import { Image } from "@components/atoms/image"
+import Helper from "@utils/helper"
 
 interface IMessageInfoProps {
   avatar: string
@@ -15,7 +16,7 @@ const MessageInfo = ({ avatar, username, time, isMe }: IMessageInfoProps) => (
     }`}
   >
     <Image
-      src={avatar}
+      src={Helper.convertAvatar(avatar)}
       alt="avatar"
       width={30}
       height={30}

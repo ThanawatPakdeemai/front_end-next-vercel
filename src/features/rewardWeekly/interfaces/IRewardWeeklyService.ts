@@ -36,3 +36,23 @@ export interface IGetWeeklyReward {
   game_id: string
   weeklyId: string
 }
+
+export interface IWeeklyPoolByGameIdDataRecord {
+  player_id: string
+  avatar: string
+  username: string
+  percent: number
+  reward: number
+}
+
+export interface IWeeklyPoolByGameIdData {
+  previous: string
+  next: string
+  started_at: string
+  ended_at: string
+  record: IWeeklyPoolByGameIdDataRecord[]
+}
+
+export interface IWeeklyPoolByGameIdResponse {
+  data: IWeeklyPoolByGameIdData
+}

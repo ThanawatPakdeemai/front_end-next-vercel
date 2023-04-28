@@ -15,6 +15,7 @@ interface IProp {
   reward?: number
   rate?: number
   id?: string
+  naka_earn?: number
 }
 
 const PlayerList = ({
@@ -25,13 +26,14 @@ const PlayerList = ({
   score,
   reward,
   rate,
-  id
+  id,
+  naka_earn
 }: IProp) => {
   const { formatNumber } = Helper
   return (
     <div className={`${className} flex items-center player-item__${index}`}>
-      <div>
-        <Typography className="!text-right !font-neue-machina !text-sm !uppercase !text-white-primary">
+      <div className="flex flex-col items-center gap-1">
+        <Typography className="!text-right !font-neue-machina-semi !text-sm !uppercase !text-white-primary">
           {username}
         </Typography>
         <div className="flex items-center gap-2 whitespace-nowrap uppercase">
@@ -63,6 +65,16 @@ const PlayerList = ({
               size="small"
               variant="outlined"
               label={`Rate ${rate}%`}
+              className="text-xs text-neutral-400"
+            />
+          ) : null}
+          {naka_earn ? (
+            <Chip
+              size="small"
+              variant="outlined"
+              label={`${formatNumber(naka_earn, {
+                maximumFractionDigits: 4
+              })}`}
               className="text-xs text-neutral-400"
             />
           ) : null}

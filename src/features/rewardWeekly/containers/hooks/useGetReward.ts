@@ -2,7 +2,8 @@ import { RewardType } from "@feature/notification/interfaces/INotificationServic
 import { useQuery } from "@tanstack/react-query"
 import {
   getGamePoolRewardByPoolId,
-  getRewardByWeeklyPoolId
+  getRewardByWeeklyPoolId,
+  getWeeklyPoolByGameId
 } from "../services/rewardWeekly.service"
 
 interface IUseGetReward {
@@ -42,6 +43,25 @@ const useGetReward = ({ _poolId, _gameId, _type }: IUseGetReward) => {
     enabled: !!_poolId && _type === "REWARD_WEEKLY"
   })
 
+  const {
+    data: dataWeeklyPoolByGameId,
+    error: errorWeeklyPoolByGameId,
+    isLoading: isLoadingWeeklyPoolByGameId,
+    isPreviousData: isPreviousDataWeeklyPoolByGameId,
+    isError: isErrorWeeklyPoolByGameId,
+    isSuccess: isSuccessWeeklyPoolByGameId,
+    refetch: refetchWeeklyPoolByGameId,
+    isFetching: isFetchingWeeklyPoolByGameId
+  } = useQuery({
+    queryKey: ["getWeeklyPoolByGameId", _gameId, _poolId],
+    queryFn: () => getWeeklyPoolByGameId(_gameId, _poolId),
+    keepPreviousData: true,
+    staleTime: Infinity,
+    enabled:
+      (_gameId !== undefined || _gameId !== "" || _poolId !== undefined) &&
+      _type === "REWARD_WEEKLY"
+  })
+
   return {
     dataGamePoolReward: dataGamePoolReward?.data,
     errorGamePoolReward,
@@ -54,7 +74,15 @@ const useGetReward = ({ _poolId, _gameId, _type }: IUseGetReward) => {
     isLoadingWeeklyPool,
     isPreviousDataWeeklyPool,
     isErrorWeeklyPool,
-    isSuccessWeeklyPool
+    isSuccessWeeklyPool,
+    dataWeeklyPoolByGameId: dataWeeklyPoolByGameId?.data,
+    errorWeeklyPoolByGameId,
+    isLoadingWeeklyPoolByGameId,
+    isPreviousDataWeeklyPoolByGameId,
+    isErrorWeeklyPoolByGameId,
+    isSuccessWeeklyPoolByGameId,
+    refetchWeeklyPoolByGameId,
+    isFetchingWeeklyPoolByGameId
   }
 }
 export default useGetReward

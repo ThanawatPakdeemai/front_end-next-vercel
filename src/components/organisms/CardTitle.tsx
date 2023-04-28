@@ -1,6 +1,5 @@
 import React, { memo } from "react"
-import { Card, CardHeader, Divider } from "@mui/material"
-// import Dropdown from "@components/atoms/DropdownCustom"
+import { Box, CardHeader, SxProps, Theme } from "@mui/material"
 import Helper from "@utils/helper"
 import dayjs from "dayjs"
 import duration from "dayjs/plugin/duration"
@@ -18,9 +17,21 @@ interface Iprop {
   elevation?: number
   sumTotal?: number
   className?: string
+  rightContent?: React.ReactNode
 }
+
+const StyledCardTitle: SxProps<Theme> = {
+  ".dropdown-custom__wrapper": {
+    width: "auto",
+    flex: "1",
+    justifyContent: "flex-end",
+    "button": {
+      width: "190px"
+    }
+  }
+}
+
 const CardTitle = ({
-  width,
   icon,
   title,
   rightTitle,
@@ -28,52 +39,48 @@ const CardTitle = ({
   subtitle = false,
   elevation,
   sumTotal,
-  className
+  className,
+  rightContent
 }: Iprop) => {
   const week = dayjs().startOf("week")
-
   const formattedWeek = week.format("DD MMM YYYY")
   const formattedEndWeek = week.endOf("week").format("DD MMM YYYY")
   const { t } = useTranslation()
 
+  const rankTitle = "font-neue-machina-semi text-neutral-500"
+
   return (
-    <>
-      <Card
-        elevation={elevation}
-        sx={{ maxWidth: width ?? "auto" }}
-        className={`card-title-page mb-3 w-full max-w-full sm:flex-[1_1_100%] lg:flex-none ${className} ${
+    <div className="card-title__wrapper flex w-full flex-col">
+      <div
+        className={`card-title-page m-2 mb-0 flex max-w-full items-center p-[10px_10px_10px_20px] sm:flex-[1_1_100%] lg:flex-1 ${elevation} ${className} ${
           background === "purple" && "!bg-purple-primary"
         } ${background === "red" && "!bg-red-card"}
        ${background === "neutral" && "!bg-neutral-800"}
       `}
       >
         {subtitle ? (
-          <>
-            <div className="flex w-full justify-center rounded-2xl bg-neutral-800 p-4 lg:justify-between">
-              <div className="uppercase">
-                <h1 className="col-span-2 text-[14px]">
-                  {t("weekly_prize_pool")} :{" "}
-                  <span className="text-info-main">
-                    {sumTotal &&
-                      Helper.formatNumber(sumTotal, {
-                        maximumFractionDigits: 2
-                      })}{" "}
-                    naka
-                  </span>
-                </h1>
-                <h1 className="pt-2 text-[10px] text-neutral-600">
-                  {formattedWeek} - {formattedEndWeek}
-                </h1>
-              </div>
-              <div>
-                {/* may be wait for weekly pool */}
-                {/* <Dropdown
-                  title="Currently Week"
-                  className=""
-                /> */}
-              </div>
+          <Box
+            component="div"
+            className="flex w-full items-center justify-between lg:justify-between"
+            sx={StyledCardTitle}
+          >
+            <div className="flex-1 uppercase">
+              <h1 className="col-span-2 font-neue-machina-semi text-[14px] text-neutral-300">
+                {t("weekly_prize_pool")} :{" "}
+                <span className="text-info-main">
+                  {sumTotal &&
+                    Helper.formatNumber(sumTotal, {
+                      maximumFractionDigits: 2
+                    })}{" "}
+                  naka
+                </span>
+              </h1>
+              <h1 className="font-neue-machina-semi text-[10px] text-neutral-600">
+                {formattedWeek} - {formattedEndWeek}
+              </h1>
             </div>
-          </>
+            {rightContent}
+          </Box>
         ) : (
           <CardHeader
             title={
@@ -83,31 +90,30 @@ const CardTitle = ({
               </div>
             }
             action={rightTitle ?? ""}
+            className="!p-0"
           />
         )}
-      </Card>
+      </div>
       {subtitle ? (
-        <>
-          <div className="grid w-full flex-[1_1_calc(100%-250px)] grid-cols-8 gap-1 p-4 text-[10px] uppercase lg:flex-none">
-            <h1 className="col-span-1">{t("rank")}</h1>
-            <h1 className="col-span-3">{t("player")}</h1>
-            <h1 className="col-span-2">{t("prize_pool")} EST. %</h1>
-            <h1 className="col-span-2">
-              {t("total")} naka :{" "}
-              <span className="text-info-main">
-                {sumTotal &&
-                  Helper.formatNumber(sumTotal, {
+        <div className="grid grid-cols-[35px_165px_1fr_1fr] gap-1 border-b-[1px] border-neutral-800 p-[15px_10px_15px_30px] text-[10px] uppercase">
+          <h1 className={`${rankTitle}`}>{t("rank")}</h1>
+          <h1 className={`${rankTitle}`}>{t("player")}</h1>
+          <h1 className={`${rankTitle}`}>{t("prize_pool")} EST. %</h1>
+          <h1 className={`${rankTitle}`}>
+            {t("total")} naka :{" "}
+            <span className="text-info-main">
+              {sumTotal
+                ? Helper.formatNumber(sumTotal, {
                     maximumFractionDigits: 2
-                  })}
-              </span>
-            </h1>
-          </div>
-          <Divider />
-        </>
+                  })
+                : "-"}
+            </span>
+          </h1>
+        </div>
       ) : (
         <></>
       )}
-    </>
+    </div>
   )
 }
 

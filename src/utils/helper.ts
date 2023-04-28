@@ -326,6 +326,12 @@ const Helper = {
         image: CONFIGS.CHAIN.ICON_NAKA
       }
     }
+  },
+  convertAvatar(avatar: string): string {
+    if (avatar.search("https") > -1 || avatar.search("/") === 0) {
+      return avatar
+    }
+    return `/${avatar}`
   }
 }
 

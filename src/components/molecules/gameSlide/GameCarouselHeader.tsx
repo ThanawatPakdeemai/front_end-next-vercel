@@ -56,7 +56,7 @@ const GameCarouselHeader = ({
 }: IProps) => {
   const bgColor = `bg-${menu?.theme}-main`
   const bgColorHover = `hover:bg-${menu?.theme}-main`
-  const titleIcon = `flex w-[142px] flex-auto items-center justify-center whitespace-nowrap font-bold md:flex-none`
+  const titleIcon = `flex w-[142px] flex-auto items-center justify-center whitespace-nowrap font-bold md:flex-none gap-2`
 
   const { t } = useTranslation()
   const animateControls = useAnimation()
@@ -133,7 +133,7 @@ const GameCarouselHeader = ({
             <div className={titleIcon}>
               {menu.icon}
               <p
-                className={`text-${menu.theme}-main font-neue-machina-bold text-[16px] font-bold uppercase md:h-[10px] md:text-[10px]`}
+                className={`text-${menu.theme}-main text-[16px] font-bold uppercase md:h-[10px] md:text-[10px]`}
               >
                 {t(menu.title)}
               </p>

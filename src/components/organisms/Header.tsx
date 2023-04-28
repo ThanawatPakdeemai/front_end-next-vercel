@@ -18,7 +18,7 @@ const Header = () => {
   const showRightMenuDeveloper = isDeveloperPage
 
   return (
-    <>
+    <div className="header-wrapper">
       <BrowserView>
         {showHeadPrice && <HeadPrice />}
         <header className="header relative top-10 z-[999] lg:sticky">
@@ -36,7 +36,7 @@ const Header = () => {
       <MobileView>
         <HeadMenuMobile />
       </MobileView>
-    </>
+    </div>
   )
 }
 

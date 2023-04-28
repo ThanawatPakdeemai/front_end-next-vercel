@@ -353,6 +353,9 @@ const useGlobal = (
     await router.push("/")
   }
 
+  /**
+   * @description Get market type
+   */
   useEffect(() => {
     let load = false
 

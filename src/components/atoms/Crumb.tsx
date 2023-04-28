@@ -12,7 +12,7 @@ const Crumb = ({ title, href, last = false }: IProp) => {
   if (last) {
     return (
       <Typography className="cursor-pointer rounded bg-error-main px-[10px] py-[5px] text-xs font-bold text-error-contrastText">
-        {title}
+        {title.split(/[_-]/).join(" ")}
       </Typography>
     )
   }
@@ -24,7 +24,7 @@ const Crumb = ({ title, href, last = false }: IProp) => {
       }}
       className="cursor-pointer rounded border border-neutral-700 px-[10px] py-[5px] text-xs font-bold"
     >
-      {title}
+      {title.split(/[_-]/).join(" ")}
     </Typography>
   )
 }

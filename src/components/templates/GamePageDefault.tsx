@@ -31,6 +31,7 @@ import StatEstimatedProfit from "@components/molecules/statistic/StatEstimatedPr
 import IconArrowLeft from "@components/icons/arrowLeftIcon"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
+import Breadcrumb from "@components/molecules/Breadcrumb"
 
 interface IGamePageDefaultProps {
   component: React.ReactNode
@@ -62,10 +63,17 @@ const GamePageDefault = ({
     getTypeGamePathFolder(gameData as IGame)
   )
 
+  const containerClasses = "main-container mx-auto w-full  px-2 lg:px-0"
+
+  /**
+   * @description Render statistic
+   * @returns
+   */
   const renderStatistic = () => {
     const shop = true
     const buttonArrow =
       "flex flex-1 items-center justify-center p-[0_10px_0_15px] h-full"
+
     if (!gameData) return null
 
     switch (getTypeGamePathFolder(gameData as IGame)) {
@@ -74,7 +82,7 @@ const GamePageDefault = ({
         return null
       default:
         return (
-          <>
+          <div className="game-page-default">
             <BrowserView>
               <Box component="section">
                 {/* <Tagline
@@ -249,7 +257,7 @@ const GamePageDefault = ({
                 </div>
               </Box>
             </MobileView>
-          </>
+          </div>
         )
     }
   }
@@ -298,10 +306,11 @@ const GamePageDefault = ({
   }, [stateProfile])
 
   return (
-    <>
+    <div className="game-page-default">
       <BrowserView>
-        <div className="main-container mx-auto w-full  px-2 lg:px-0">
+        <div className={containerClasses}>
           <Header />
+          <Breadcrumb />
           {gameData && "image_banner" in gameData ? (
             <BannerSingle
               src={gameData.image_banner}
@@ -328,7 +337,7 @@ const GamePageDefault = ({
         </div>
       </BrowserView>
       <MobileView>
-        <div className="main-container mx-auto w-full  px-2 lg:px-0">
+        <div className={containerClasses}>
           {component}
           {/**
            * @description In case there is a need to add another component
@@ -338,7 +347,7 @@ const GamePageDefault = ({
           {renderStatistic()}
         </div>
       </MobileView>
-    </>
+    </div>
   )
 }
 export default GamePageDefault

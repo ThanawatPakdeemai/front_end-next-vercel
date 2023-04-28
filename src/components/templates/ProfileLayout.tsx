@@ -24,7 +24,7 @@ const ProfileLayout = ({ _breadcrumb, children }: IProp) => (
             _breadcrumbs={_breadcrumb || PROFILE_CRUMB()}
           />
         </div>
-        <div className="flex-row gap-3 md:flex">
+        <div className="flex-row gap-[30px] md:flex">
           <SidebarProfile />
           {children}
         </div>

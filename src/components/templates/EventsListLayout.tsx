@@ -8,7 +8,7 @@ const EventLayout = ({
 }: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) => (
   <div className="main-container mx-auto px-2 lg:px-0">
     <Header />
-    <div className="flex-row gap-3 md:flex">
+    <div className="flex-row gap-[30px] md:flex">
       <SidebarGames />
       {children}
     </div>

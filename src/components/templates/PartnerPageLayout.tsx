@@ -28,7 +28,7 @@ const GamePageLayout = ({
         show={false}
       />
       <Banners />
-      <div className="flex-row gap-3 md:flex">
+      <div className="flex-row gap-[30px] md:flex">
         <SidebarGames />
         {path.length === 2 && path[1] === "publishers" ? (
           children

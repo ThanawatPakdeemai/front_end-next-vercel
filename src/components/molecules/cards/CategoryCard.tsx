@@ -8,7 +8,7 @@ import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 export interface ICategoryCard {
   img: string
   text: string
-  icon?: string
+  icon?: string | React.ReactNode
   href?: string
   onHandleClick?: (_link?: string) => void
 }
@@ -21,6 +21,24 @@ const CategoryCard = ({
   onHandleClick
 }: ICategoryCard) => {
   const { t } = useTranslation()
+
+  const renderIcon = () => {
+    if (icon && typeof icon === "string") {
+      return (
+        <Image
+          src={icon}
+          width={18}
+          height={18}
+          alt={text}
+        />
+      )
+    }
+    if (React.isValidElement(icon)) {
+      return icon
+    }
+    return null
+  }
+
   const cardImg = {
     init: {
       scale: 1
@@ -60,7 +78,7 @@ const CategoryCard = ({
         animate="animate"
       >
         <motion.div
-          className="xs:h-[35vw] group relative flex h-[180px] w-full md:h-[324px]"
+          className="xs:h-[35vw] group relative flex h-[180px] w-full overflow-hidden rounded-md md:h-[324px]"
           variants={cardImg}
         >
           <Image
@@ -75,16 +93,7 @@ const CategoryCard = ({
             className="absolute bottom-0 flex w-full rounded-[25px]  border-[1px] border-solid border-neutral-700 text-white-primary  md:max-w-[260px]"
           >
             <ButtonToggleIcon
-              startIcon={
-                icon ? (
-                  <Image
-                    src={icon}
-                    width={18}
-                    height={18}
-                    alt={text}
-                  />
-                ) : null
-              }
+              startIcon={renderIcon()}
               type="button"
               text={t(text)}
               href={href}

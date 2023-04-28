@@ -17,27 +17,35 @@ import {
 import useFilterStore from "@stores/blogFilter"
 import { getGamePartner } from "@feature/partner/containers/services/dropdownPartner.service"
 import { useTranslation } from "react-i18next"
+import AllGamesIcon from "@components/icons/AllGamesIcon"
+import AllDevicesIcon from "@components/icons/AllDevicesIcon"
+import MobileIcon from "@components/icons/HowToPlayIcon/MobileIcon"
+import DesktopIcon from "@components/icons/DesktopIcon"
 import SelectDropdown from "./selectDropdown/SelectDropdown"
+
+export type IDropdownCustomSelect =
+  | "All Categories"
+  | "All Game Assets"
+  | "All Devices"
+  | "All Publisher Categories"
+  | "Currently Week"
+  | "All Partner Categories"
+  | "GameItem"
 
 interface IProp {
   icon?: React.ReactNode
-  title:
-    | "All Categories"
-    | "All Game Assets"
-    | "All Devices"
-    | "All Publisher Categories"
-    | "Currently Week"
-    | "All Partner Categories"
+  title: IDropdownCustomSelect
   className: string
 }
 const DropdownCustom = ({ title, className }: IProp) => {
   const { t } = useTranslation()
   const [expanded, setExpanded] = useState<boolean>(false)
-  const [gameData, setGameData] = useState<
+  const [listSelect, setListSelect] = useState<
     IGameItem[] | IGameCategory[] | IDevice[]
   >([])
   const [onTitle, setOnTitle] = useState<IDropdownAll>()
   const { errorToast } = useToast()
+  // const [height, setHeight] = useState<number | undefined>(0)
 
   const {
     setCategory: setCategoryDropdown,
@@ -48,6 +56,24 @@ const DropdownCustom = ({ title, className }: IProp) => {
   const [textTitle, setTextTitle] = useState<string>("")
 
   const showIcon = title !== "Currently Week"
+
+  const getDropdownIconByTitleName = () => {
+    switch (title) {
+      case "All Categories":
+        return <AllCategoriesIcon />
+      case "GameItem":
+      case "All Game Assets":
+        return <AllGamesIcon />
+      case "All Devices":
+        return <AllDevicesIcon />
+      default:
+        return <AllCategoriesIcon />
+    }
+  }
+
+  // Check div height
+  // const divHeight: number | undefined =
+  //   document.getElementById("collapse-wrapper")?.clientHeight
 
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
@@ -80,7 +106,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
           slug: "",
           updated_at: ""
         })
-        setGameData(res.data.data)
+        setListSelect(res.data.data)
       })
       .catch((error) => {
         errorToast(error.message)
@@ -112,7 +138,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
           index: 0,
           qty: 0
         })
-        setGameData(res)
+        setListSelect(res)
       })
       .catch((error) => {
         errorToast(error.message)
@@ -135,7 +161,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
           is_active: true,
           _id: "all"
         })
-        setGameData(res)
+        setListSelect(res)
       })
       .catch((error) => {
         errorToast(error.message)
@@ -146,17 +172,20 @@ const DropdownCustom = ({ title, className }: IProp) => {
     {
       _id: "all",
       name: "All Devices",
-      supported: true
+      supported: true,
+      icon: <AllDevicesIcon />
     },
     {
       _id: "mobile",
       name: "Mobile and Tablet",
-      supported: true
+      supported: true,
+      icon: <MobileIcon />
     },
     {
       _id: "desktop",
       name: "Desktop",
-      supported: true
+      supported: true,
+      icon: <DesktopIcon />
     }
   ]
 
@@ -171,7 +200,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
         onGameAssets()
         setTextTitle("All Game Assets")
       } else if (title === "All Devices") {
-        setGameData(device)
+        setListSelect(device)
         setTextTitle("All Devices")
       } else if (title === "All Partner Categories") {
         onGamePartner()
@@ -228,15 +257,16 @@ const DropdownCustom = ({ title, className }: IProp) => {
   }, [onTitle])
 
   return (
-    <>
-      {gameData && (
+    <div className="dropdown-custom">
+      {listSelect && (
         <div className="dropdown-custom__wrapper flex w-full justify-center">
           <button
             type="button"
             onClick={handleOnExpandClick}
             className={`${className} mb-1 flex h-[40px] w-[218px] flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary`}
           >
-            {showIcon && <AllCategoriesIcon />}
+            {/* {showIcon && <AllCategoriesIcon />} */}
+            {showIcon && getDropdownIconByTitleName()}
             <span className="">
               {t(onTitle === undefined ? textTitle : onTitle.name)}
             </span>
@@ -253,24 +283,45 @@ const DropdownCustom = ({ title, className }: IProp) => {
           <Collapse
             in={expanded}
             timeout="auto"
-            className={`${className} mt-10 rounded-[19px]`}
+            id="collapse-wrapper"
+            className={`${className} ${
+              title === "All Categories"
+                ? "custom-scroll max-h-[420px] overflow-y-scroll"
+                : ""
+            } mt-10 rounded-[19px]`}
             sx={{
-              backgroundColor: "#010101D9",
+              background: "rgba(1, 1, 1, 0.85)",
+              backdropFilter: "blur(15px)",
+              borderRadius: "19px",
               zIndex: 99999,
               position: "absolute",
-              width: "218px"
+              width: "218px",
+              padding: "5px",
+              ".MuiList-root": {
+                background: "#18181C",
+                borderRadius: "13px"
+              },
+              "svg path": {
+                stroke: "#70727B"
+              },
+              ".MuiMenuItem-root:hover": {
+                "svg path": {
+                  stroke: "#E1E2E2"
+                }
+              }
             }}
           >
             <SelectDropdown
               // className={className}
-              details={gameData}
+              details={listSelect}
               setOnTitle={setOnTitle}
               setExpanded={setExpanded}
+              title={title}
             />
           </Collapse>
         </div>
       )}
-    </>
+    </div>
   )
 }
 export default DropdownCustom

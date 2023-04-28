@@ -21,14 +21,21 @@ const StyledLogoReset = {
   }
 }
 
-const CardNoReward = () => (
-  <Box
-    component="div"
-    className="flex h-full w-full flex-col items-center justify-center rounded border border-neutral-800 bg-neutral-800 p-[10px]"
-    sx={StyledLogoReset}
-  >
-    <LogoNaka />
-  </Box>
-)
+interface IProps {
+  className?: string
+}
+
+const CardNoReward = (props: IProps) => {
+  const { className } = props
+  return (
+    <Box
+      component="div"
+      className={`flex h-full w-full flex-col items-center justify-center rounded border border-neutral-800 bg-neutral-800 p-[10px] ${className}`}
+      sx={StyledLogoReset}
+    >
+      <LogoNaka />
+    </Box>
+  )
+}
 
 export default CardNoReward

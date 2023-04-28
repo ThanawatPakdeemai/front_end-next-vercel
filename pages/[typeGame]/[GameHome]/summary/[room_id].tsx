@@ -6,6 +6,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
 import React, { ReactElement } from "react"
+import { BrowserView, MobileView } from "react-device-detect"
 
 const GameSummaryRewardPage = dynamic(
   () => import("@feature/page/games/gameSummaryRewardPage"),
@@ -51,8 +52,8 @@ const OverviewContent = dynamic(
   }
 )
 
-const GameTabs = dynamic(
-  () => import("@feature/game/components/templates/lobby/GameTabs"),
+const GameTabsVertical = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameTabsVertical"),
   {
     suspense: true,
     ssr: false
@@ -65,56 +66,93 @@ export default function SummaryDetails() {
   const { GameHome } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
 
-  return gameData ? (
-    <GamePageDefault
-      component={
-        <RightSidebarContent
-          className="mb-24"
-          content={<GameSummaryRewardPage />}
-          aside={
-            <Box
-              component="div"
-              className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
-              sx={{
-                ".panel-content": {
-                  maxHeight: "270px",
-                  ".custom-scroll": {
-                    overflow: "hidden"
+  return (
+    <>
+      {gameData ? (
+        <GamePageDefault
+          component={
+            <>
+              <BrowserView>
+                <RightSidebarContent
+                  className="mb-24"
+                  content={<GameSummaryRewardPage />}
+                  aside={
+                    <Box
+                      component="div"
+                      className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
+                      sx={{
+                        ".panel-content": {
+                          maxHeight: "270px",
+                          ".custom-scroll": {
+                            overflow: "hidden"
+                          }
+                        },
+                        ".like-no_score": {
+                          margin: "0"
+                        }
+                      }}
+                    >
+                      <OverviewContent
+                        gameId={gameData.id}
+                        gameType={getTypeGamePathFolder(gameData)}
+                        gameIdNFT={gameData.NFT_Owner}
+                      />
+                    </Box>
                   }
-                },
-                ".like-no_score": {
-                  margin: "0"
-                }
-              }}
-            >
-              <OverviewContent
-                gameId={gameData.id}
-                gameType={getTypeGamePathFolder(gameData)}
-                gameIdNFT={gameData.NFT_Owner}
-              />
-            </Box>
+                />
+              </BrowserView>
+              <MobileView>
+                <RightSidebarContent
+                  content={<GameSummaryRewardPage />}
+                  aside={null}
+                />
+              </MobileView>
+            </>
+          }
+          component2={
+            <>
+              <BrowserView>
+                <FullWidthContent
+                  sxCustomStyled={{
+                    "&.container": {
+                      maxWidth: "100%!important",
+                      "&.container-fullWidth": {
+                        padding: "49px"
+                      }
+                    }
+                  }}
+                >
+                  <TabProvider>
+                    <GameTabsVertical
+                      gameId={gameData.id}
+                      gameType={getTypeGamePathFolder(gameData)}
+                    />
+                  </TabProvider>
+                </FullWidthContent>
+              </BrowserView>
+              <MobileView>
+                {/* <FullWidthContent
+                  sxCustomStyled={{
+                    "&.container": {
+                      maxWidth: "100%!important"
+                    }
+                  }}
+                >
+                  <TabProvider>
+                    <GameTabs
+                      gameId={gameData.id}
+                      gameType={getTypeGamePathFolder(gameData)}
+                    />
+                  </TabProvider>
+                </FullWidthContent> */}
+              </MobileView>
+            </>
           }
         />
-      }
-      component2={
-        <FullWidthContent
-          sxCustomStyled={{
-            "&.container": {
-              maxWidth: "100%!important"
-            }
-          }}
-        >
-          <TabProvider>
-            <GameTabs
-              gameId={gameData.id}
-              gameType={getTypeGamePathFolder(gameData)}
-            />
-          </TabProvider>
-        </FullWidthContent>
-      }
-    />
-  ) : (
-    <GamePageDefault component={<SkeletonBanner />} />
+      ) : (
+        <GamePageDefault component={<SkeletonBanner />} />
+      )}
+    </>
   )
 }
 

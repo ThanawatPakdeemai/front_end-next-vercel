@@ -16,7 +16,7 @@ const BlogLayout = ({
 }: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) => {
   const { t } = useTranslation()
   return (
-    <div className="main-container mx-auto px-2 lg:px-0">
+    <div className="main-container mx-auto w-full px-2 lg:px-0">
       <Header />
       <Tagline
         bgColor="bg-neutral-800"
@@ -26,27 +26,25 @@ const BlogLayout = ({
         show={false}
       />
       <Banners />
-      <div className="flex-row gap-3 md:flex">
+      <div className="flex-row justify-between gap-3 md:flex">
         <MenuList className="mx-auto h-fit w-full max-w-xs rounded-[13px] bg-neutral-800 p-[6px] md:mx-0 md:w-[200px]">
-          <div>
-            <div className="mb-1 flex h-[40px] items-center rounded-xl bg-black-100">
-              <BlogIcon className="ml-1 mr-[12px] stroke-neutral-300 text-white-default" />
-              <Typography className="text-[14px] text-white-default">
-                {t("Blog")}
-              </Typography>
-            </div>
-            {MENU_BLOG.map((ele) => (
-              <MenuItemCustom
-                key={ele.id}
-                id={ele.id}
-                label={ele.label}
-                icon={ele.icon}
-                href={ele.href}
-                external={ele.external}
-                endIcon
-              />
-            ))}
+          <div className="mb-1 flex h-[40px] items-center rounded-xl bg-black-100">
+            <BlogIcon className="ml-1 mr-[12px] stroke-neutral-300 text-white-default" />
+            <Typography className="text-[14px] text-white-default">
+              {t("Blog")}
+            </Typography>
           </div>
+          {MENU_BLOG.map((ele) => (
+            <MenuItemCustom
+              key={ele.id}
+              id={ele.id}
+              label={ele.label}
+              icon={ele.icon}
+              href={ele.href}
+              external={ele.external}
+              endIcon
+            />
+          ))}
         </MenuList>
         <HeadBlog>{children}</HeadBlog>
       </div>

@@ -2,8 +2,6 @@ import LogoNaka from "@components/atoms/logo/LogoNaka"
 import SelectNaka from "@components/atoms/select/SelectNaka"
 import { Button, Divider, Typography, Box } from "@mui/material"
 import { memo, useCallback, useEffect, useState } from "react"
-import LanguageIcon from "@mui/icons-material/Language"
-import DragHandleIcon from "@mui/icons-material/DragHandle"
 import { useRouter } from "next/router"
 import { Image } from "@components/atoms/image/index"
 import { FLAGS } from "@constants/flags"
@@ -11,7 +9,8 @@ import useGlobal from "@hooks/useGlobal"
 import Link from "next/link"
 import MarketplaceTextIcon from "@components/icons/marketplace/MarketplaceTextIcon"
 import GameDeveloperIcon from "@components/icons/GameDeveloperIcon"
-import { styleIcon } from "./HeadMenu"
+import GlobalIcon from "@components/icons/GlobalIcon"
+import HamburgerIcon from "@components/icons/HamburgerIcon"
 
 const HeadLogo = () => {
   const router = useRouter()
@@ -44,12 +43,12 @@ const HeadLogo = () => {
    */
   const themeColor = (): string => {
     if (isMarketplace) {
-      return "!text-secondary-main"
+      return "!text-secondary-main !stroke-secondary-main"
     }
     if (isDeveloperPage) {
-      return "!text-green-lemon"
+      return "!text-green-lemon !stroke-green-lemon"
     }
-    return "text-error-main"
+    return "text-error-main !stroke-error-main"
   }
 
   /**
@@ -84,21 +83,20 @@ const HeadLogo = () => {
     <>
       <Box
         component="div"
-        className={`head-logo mt-2 flex w-full flex-1 items-center justify-center transition-all duration-75 sm:justify-start lg:mt-0 ${
+        className={`head-logo mt-2 flex w-full items-center justify-center transition-all duration-75 sm:justify-start md:flex-1 lg:mt-0 ${
           isMarketplace ? "lg:w-[500px]" : "lg:w-[360px]"
         } lg:flex-none ${scrollPage < 100 ? "opacity-100" : "opacity-0"}`}
       >
-        <div
-          className={`ml-2 grid w-full grid-cols-3  grid-rows-2 items-center md:flex md:w-auto md:justify-center lg:ml-0 ${""}`}
-        >
-          {scrollPage < 100 && (
-            <Link
-              href="/"
-              className="col-span-3 mx-auto w-full md:col-span-1"
-            >
-              <LogoNaka />
-            </Link>
-          )}
+        <div className="ml-2 flex w-full items-center md:w-auto md:justify-center lg:ml-0">
+          <Link
+            href="/"
+            className="col-span-3 mx-auto w-full md:col-span-1"
+          >
+            <LogoNaka />
+          </Link>
+          {/* {scrollPage < 100 && (
+            
+          )} */}
 
           {isDeveloperPage && (
             <Box
@@ -123,9 +121,9 @@ const HeadLogo = () => {
           />
           <Box
             component="div"
-            className="ms:ml-0 col-span-1 ml-auto flex h-auto items-center "
+            className="ms:ml-0 ml-auto flex h-auto items-center gap-3"
           >
-            <LanguageIcon className={themeColor().toString()} />
+            <GlobalIcon className={themeColor().toString()} />
             <SelectNaka
               imageSelectd={
                 <Image
@@ -163,16 +161,13 @@ const HeadLogo = () => {
               button={
                 <Button
                   sx={{ minWidth: "10px !important" }}
-                  className={`!rounded-[8px] ${themeColor().toString()}`}
+                  className={`flex items-center gap-[6px] !rounded-[8px] p-0 ${themeColor().toString()}`}
                   variant={renderVariant()}
                 >
                   <Typography className="!font-neue-machina-semi !text-sm !uppercase">
                     {router.locale}
                   </Typography>
-                  <DragHandleIcon
-                    className="!ml-2"
-                    sx={styleIcon}
-                  />
+                  <HamburgerIcon />
                 </Button>
               }
             />

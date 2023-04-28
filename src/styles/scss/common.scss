@@ -817,3 +817,12 @@ body {
   border-radius: 4px !important;
   outline: none !important;
 }
+
+.map-button {
+  width: 40px !important;
+  height: 40px !important;
+  background: rgba(24, 24, 28, 0.2);
+  backdrop-filter: blur(15px);
+  border-radius: 8px;
+  @apply flex items-center justify-center;
+}

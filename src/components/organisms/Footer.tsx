@@ -85,7 +85,7 @@ const Footer = () => {
     <>
       <div className="mx-2 flex items-center sm:flex" />
       <Divider
-        className="my-8 md:my-16"
+        className="footer-divider my-8 md:my-16"
         sx={{ marginTop: 10, marginBottom: 10 }}
       />
       <div className="w-full justify-between overflow-hidden text-[12px] md:px-4 lg:flex">
@@ -106,12 +106,11 @@ const Footer = () => {
                       href={game.path}
                     >
                       <TextLink
-                        name={String(t(game.name))}
+                        name={item.label}
                         initial="rest"
                         whileHover="hover"
-                        animate="rest"
-                        variantsArrow={arrowMotion}
                         variantsText={textMotion}
+                        variantsArrow={arrowMotion}
                       />
                     </Link>
                   </div>

@@ -3,7 +3,7 @@ import {
   IGetAllEventsProps,
   IGetEventResponse,
   IResponseLeaderBoard,
-  IResponseTopScoreSummary
+  IResponseTopScoreSummaryDataData
 } from "../../interface/IEventsService"
 
 export const getEventList = async ({
@@ -42,9 +42,9 @@ export const getEventLeaderBoard = async (_id: string) =>
   })
 
 export const getEventTopScore = async (_id: string) =>
-  new Promise<IResponseTopScoreSummary>((resolve, reject) => {
+  new Promise<IResponseTopScoreSummaryDataData>((resolve, reject) => {
     services
-      .get<IResponseTopScoreSummary>(`/event/summary/${_id}`)
+      .get<IResponseTopScoreSummaryDataData>(`/event/summary/${_id}`)
       .then((res) => resolve(res.data))
       .catch((error) => reject(error))
   })

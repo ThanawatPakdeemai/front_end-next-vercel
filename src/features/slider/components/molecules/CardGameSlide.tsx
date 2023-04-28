@@ -1,8 +1,8 @@
-import { CardMedia } from "@mui/material"
 import React from "react"
 import { Image } from "@components/atoms/image"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { motion } from "framer-motion"
+import { ImageCustom } from "@components/atoms/image/Image"
 
 export const iconmotion = {
   hover: {
@@ -30,11 +30,10 @@ export default function CardGameSlide({
   return (
     <div className=" rounded-3xl border-[1px] border-neutral-800 ">
       <div className="relative flex justify-between px-4">
-        <CardMedia
-          component="img"
+        <ImageCustom
           width={200}
           height={200}
-          image="/images/gamePage/game1.png"
+          src="/images/gamePage/game1.png"
           alt={slideNext?.name}
         />
         <div className="absolute bottom-0 m-4 flex w-72 justify-between">

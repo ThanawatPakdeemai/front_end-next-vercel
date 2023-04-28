@@ -1,8 +1,7 @@
+import React, { memo } from "react"
 import { Badge, Box, Button, Typography } from "@mui/material"
-import { memo } from "react"
 import { Image } from "@components/atoms/image"
 import SelectNaka from "@components/atoms/select/SelectNaka"
-import DragHandleIcon from "@mui/icons-material/DragHandle"
 import { useTranslation } from "next-i18next"
 import Link from "next/link"
 import { IMAGES } from "@constants/images"
@@ -10,27 +9,62 @@ import { useRouter } from "next/router"
 import { MENU, MENU_MARKETPLACE } from "@configs/menu"
 import tailwindResolver from "tailwindResolver"
 import useGlobal from "@hooks/useGlobal"
+import HamburgerIcon from "@components/icons/HamburgerIcon"
 
-export const styleIcon = {
-  fontSize: "20px !important"
-}
 const HeadMenu = () => {
   const { t } = useTranslation()
   const router = useRouter()
   const styleButton = {
     minWidth: "10px !important",
-    borderRadius: "15px !important"
+    borderRadius: "15px !important",
+    "&:hover": {
+      boxShadow: "none !important",
+      "svg rect": {
+        fill: "#E1E2E2 !important"
+      }
+    }
   }
   const { isMarketplace } = useGlobal()
   const MENU_DATA = isMarketplace ? MENU_MARKETPLACE : MENU
+
+  const renderIcon = (ele) => {
+    if (typeof ele.icon === "string") {
+      return (
+        <Image
+          src={ele.icon}
+          alt={ele.name}
+          width="20"
+        />
+      )
+    }
+    if (React.isValidElement(ele.icon)) {
+      return ele.icon
+    }
+    return (
+      <ele.icon
+        className="!hover:text-neutral-300 !text-primary-contrastText"
+        stroke={
+          tailwindResolver
+            ? tailwindResolver?.theme?.colors?.["primary"]["contrastText"]
+            : "#E1E2E2"
+        }
+        strokeWidth="0.1"
+      />
+    )
+  }
+
   return (
     <Box
       component="div"
-      className="!rounded-[19px] !bg-[#01010120] !p-[6px]"
+      className="order-3 w-full rounded-[19px] p-[6px] sm:order-2 sm:w-auto"
+      sx={{
+        background: "rgba(1, 1, 1, 0.2)",
+        backdropFilter: "blur(15px)"
+      }}
     >
       <Box
         component="div"
-        className="xs:my-5 !md:h-[50px] m-auto my-2 mb-[50px] grid max-w-[505px] flex-[1_1_100%] grid-cols-2 items-center justify-center gap-1 overflow-hidden rounded-[13px] bg-neutral-700 p-1 md:order-1 md:mb-0 md:flex lg:my-0 lg:flex-none"
+        className="xs:my-5 m-auto grid max-w-[505px] flex-[1_1_100%] grid-cols-2 items-center justify-center gap-1 overflow-hidden rounded-[13px] bg-neutral-700 p-[5px] sm:flex md:order-1 md:mb-0 lg:my-0 lg:flex-none"
       >
         {MENU_DATA.map((item) => {
           if (!item.isChide && item.chide === undefined) {
@@ -50,7 +84,11 @@ const HeadMenu = () => {
                   variant="contained"
                   size="large"
                 >
-                  <Typography className="!font-neue-machina-semi !text-sm">
+                  <Typography
+                    className={`!font-neue-machina-semi !text-sm ${
+                      router.pathname === item.link ? "!text-neutral-300" : ""
+                    }`}
+                  >
                     {t(`${item.name}`)}
                   </Typography>
                 </Button>
@@ -78,26 +116,7 @@ const HeadMenu = () => {
                     value: ele.name,
                     textEnd: t(ele.textRight),
                     link: ele.link,
-                    icon:
-                      typeof ele.icon === "string" ? (
-                        <Image
-                          src={ele.icon}
-                          alt={ele.name}
-                          width="20"
-                        />
-                      ) : (
-                        <ele.icon
-                          className="!hover:text-neutral-300 !text-primary-contrastText"
-                          stroke={
-                            tailwindResolver
-                              ? tailwindResolver?.theme?.colors?.["primary"][
-                                  "contrastText"
-                                ]
-                              : "#E1E2E2"
-                          }
-                          strokeWidth="0.1"
-                        />
-                      )
+                    icon: renderIcon(ele)
                   })) ?? [{ label: "", value: "", link: "/" }]
                 }
                 widthOption="600px"
@@ -106,7 +125,7 @@ const HeadMenu = () => {
                 button={
                   <Button
                     sx={styleButton}
-                    className={`button-select-naka xs:mb-1 !hover:bg-error-main  !hover:text-white-primary w-full !min-w-[100px] !rounded-[8px]  !py-[12px] px-2 !text-black-default last:p-[15px_5px_13px] md:mb-0 md:w-auto ${
+                    className={`button-select-naka xs:mb-1 !hover:bg-error-main  !hover:text-white-primary group w-full !min-w-[100px]  !rounded-[8px] !py-[12px] px-2 !text-black-default last:p-[15px_5px_13px] md:mb-0 md:w-auto ${
                       item.isChide &&
                       item.chide &&
                       (router.pathname ===
@@ -127,15 +146,25 @@ const HeadMenu = () => {
                       // sx={{ "& .MuiBadge-badge": { margin: "9px -10px 0 0" } }}
                     >
                       {item.name !== "NAKA Ecosystem" ? (
-                        <>
-                          <Typography className="!whitespace-nowrap !font-neue-machina-semi !text-sm">
+                        <div className="flex items-center gap-1">
+                          <Typography
+                            className={`!whitespace-nowrap !font-neue-machina-semi !text-sm ${
+                              router.pathname ===
+                              [...item.chide].find(
+                                (ele) => ele.link === router.pathname
+                              )?.link
+                                ? "!text-neutral-300"
+                                : ""
+                            }`}
+                          >
                             {t(`${item.name}`)}
                           </Typography>
-                          <DragHandleIcon
+                          <HamburgerIcon fill="#70727B" />
+                          {/* <DragHandleIcon
                             // className="ml-4"
                             sx={styleIcon}
-                          />
-                        </>
+                          /> */}
+                        </div>
                       ) : (
                         <>
                           <Typography className="flex h-4 items-center !whitespace-nowrap !font-neue-machina-semi !text-[7px]">

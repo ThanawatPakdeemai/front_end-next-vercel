@@ -16,7 +16,7 @@ const useGetNotificationById = (_notificationId: string) => {
     queryFn: () => getNotificationById(_notificationId),
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: !!profile,
+    enabled: !!profile && !!_notificationId,
     retry: 3
   })
 

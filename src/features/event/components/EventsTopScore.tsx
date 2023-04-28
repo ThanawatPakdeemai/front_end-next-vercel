@@ -6,10 +6,13 @@ import {
   TableCell,
   TableHead
 } from "@mui/material"
-import { IResponseSummaryData } from "@feature/event/interface/IEventsService"
+import {
+  IFixedReward,
+  IResponseSummaryData
+} from "@feature/event/interface/IEventsService"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import { v4 as uuid } from "uuid"
-import Image from "next/image"
+import { Image } from "@components/atoms/image/index"
 import NoData from "@components/molecules/NoData"
 import { numberWithCommas } from "@src/helpers/addComma"
 import useEventController from "../containers/hooks/useEventController"
@@ -26,33 +29,53 @@ const EventsTopScore = ({
   playerCount,
   transactionCount
 }: IEventTopScoreProps) => {
-  const { MOCKUP_REWARD } = useEventController()
+  const { fixedRewardState, MOCKUP_REWARD } = useEventController()
+
+  /**
+   * @description Find reward by rank
+   * @param _index
+   * @returns
+   */
   const renderRewardByRank = (_index: number) => {
-    if (_index === 1) {
-      return `${MOCKUP_REWARD[0].reward}$`
-    }
-    if (_index === 2) {
-      return `${MOCKUP_REWARD[1].reward}$`
-    }
-    if (_index === 3) {
-      return `${MOCKUP_REWARD[2].reward}$`
-    }
-    if (_index >= 4 && _index <= 10) {
-      return `${MOCKUP_REWARD[3].reward}$`
-    }
-    if (_index >= 11 && _index <= 20) {
-      return `${MOCKUP_REWARD[4].reward}$`
-    }
-    if (_index >= 21 && _index <= 30) {
-      return `${MOCKUP_REWARD[5].reward}$`
-    }
-    if (_index >= 31 && _index <= 40) {
-      return `${MOCKUP_REWARD[6].reward}$`
-    }
-    if (_index >= 41 && _index <= 50) {
-      return `${MOCKUP_REWARD[7].reward}$`
-    }
-    if (_index >= 51) {
+    if (fixedRewardState.length === 0) {
+      if (_index === 1) {
+        return `${MOCKUP_REWARD[0].reward}$`
+      }
+      if (_index === 2) {
+        return `${MOCKUP_REWARD[1].reward}$`
+      }
+      if (_index === 3) {
+        return `${MOCKUP_REWARD[2].reward}$`
+      }
+      if (_index >= 4 && _index <= 10) {
+        return `${MOCKUP_REWARD[3].reward}$`
+      }
+      if (_index >= 11 && _index <= 20) {
+        return `${MOCKUP_REWARD[4].reward}$`
+      }
+      if (_index >= 21 && _index <= 30) {
+        return `${MOCKUP_REWARD[5].reward}$`
+      }
+      if (_index >= 31 && _index <= 40) {
+        return `${MOCKUP_REWARD[6].reward}$`
+      }
+      if (_index >= 41 && _index <= 50) {
+        return `${MOCKUP_REWARD[7].reward}$`
+      }
+      if (_index >= 51) {
+        return "-"
+      }
+    } else {
+      fixedRewardState.sort(
+        (a: IFixedReward, b: IFixedReward) =>
+          Number(b.reward) - Number(a.reward)
+      )
+      const reward = fixedRewardState.find(
+        (item) => Number(item.rank) === _index
+      )
+      if (reward) {
+        return `${reward.reward}$`
+      }
       return "-"
     }
   }

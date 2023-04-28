@@ -38,17 +38,14 @@ import useConnectMetamaskAction from "@utils/useConnectMetamesk"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import { useRouter } from "next/router"
 import { useTranslation } from "react-i18next"
+import { isMobile } from "react-device-detect"
 import useSignIn from "../containers/hooks/useSignIn"
 import { ISignIn } from "../interfaces/IAuthService"
 import useLoginProvider from "../containers/hooks/useLoginProvider"
 import useLoginMetamask from "../containers/hooks/useLoginMetamask"
 import FromForgotPassword from "./FromForgotPassword"
 
-interface IProp {
-  href?: string
-}
-
-const FormLogin = ({ href }: IProp) => {
+const FormLogin = () => {
   const { mutateLoginProvider } = useLoginProvider()
   const { mutateLoginMetamask } = useLoginMetamask()
 
@@ -95,9 +92,8 @@ const FormLogin = ({ href }: IProp) => {
       .then((_profile) => {
         if (_profile) {
           successToast(MESSAGES.sign_in_success)
-          if (href) {
-            return router.push("/")
-          }
+          // return isMobile ? router.push("/") : router.push("/")
+          isMobile && router.push("/")
         }
       })
       .catch(() => {})

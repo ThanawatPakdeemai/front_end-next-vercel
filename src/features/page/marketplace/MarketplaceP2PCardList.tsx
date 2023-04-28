@@ -71,6 +71,13 @@ const MarketplaceP2PCardList = () => {
                   _data.nakapunk_data?.name
                 }
                 itemLevel={_data.building_data?.level}
+                percentage={
+                  100 -
+                  Number(
+                    _data.building_data?.deteriorate_building?.rate_deteriorate
+                      .percentage
+                  )
+                }
                 price={_data.price}
                 itemSize={_data.item_data?.item_size}
                 sellingType={{

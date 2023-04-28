@@ -10,7 +10,7 @@ import EventCardContent from "@feature/event/components/EventCardContent"
 import { INewDataPlayerScore } from "@feature/event/interface/IEventsService"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import { v4 as uuid } from "uuid"
-import Image from "next/image"
+import { Image } from "@components/atoms/image/index"
 import NoData from "@components/molecules/NoData"
 
 interface IEventShareAndPlayProps {
@@ -37,8 +37,8 @@ const EventsShareAndPlay = ({
           <TableHead>
             <TableRow>
               <TableCell>Rank</TableCell>
-              {/* <TableCell>Score Event</TableCell>
-              <TableCell className="w-[125px]">Reward</TableCell> */}
+              <TableCell>Score Event</TableCell>
+              <TableCell className="w-[125px]">Reward</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

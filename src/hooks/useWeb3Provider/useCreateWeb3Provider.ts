@@ -177,10 +177,10 @@ const useCreateWeb3Provider = () => {
           const _signer = _resetProvider.getSigner()
           if (_signer) {
             handleConnectWithMetamask()
-            setTimeout(() => {
+            /* setTimeout(() => {
               // eslint-disable-next-line no-use-before-define
               window.location.reload()
-            }, 1000)
+            }, 1000) */
           }
         } catch (error: Error | any) {
           // This error code indicates that the chain has not been added to MetaMask
@@ -191,15 +191,15 @@ const useCreateWeb3Provider = () => {
                 method: "wallet_addEthereumChain",
                 params: [Helper.getNetwork(_chainId)]
               })
+              setTimeout(() => {
+                // eslint-disable-next-line no-use-before-define
+                // handleConnectWithMetamask()
+                window.location.reload()
+              }, 1000)
             } catch (addError) {
               console.error(addError)
             }
           }
-          setTimeout(() => {
-            // eslint-disable-next-line no-use-before-define
-            // handleConnectWithMetamask()
-            window.location.reload()
-          }, 1000)
         }
       } else {
         // if no window.ethereum then MetaMask is not installed

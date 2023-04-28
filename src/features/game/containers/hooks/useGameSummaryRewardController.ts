@@ -147,9 +147,9 @@ const useGameSummaryRewardController = () => {
    * @description Get game data from notification game path
    */
   const { gameData } = useGetGameByPath(
-    notificationItem?.path ??
-      playHistoryItem?.path ??
-      ((GameHome as string) || "")
+    router.asPath.includes("summary")
+      ? (GameHome as string)
+      : notificationItem?.path || "" || playHistoryItem?.game_detail.path || ""
   )
 
   // const { gameData } = useFindGameById(gameIdTarget)

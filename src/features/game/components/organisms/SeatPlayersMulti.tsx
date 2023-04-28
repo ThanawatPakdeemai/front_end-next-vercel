@@ -166,7 +166,12 @@ const SeatPlayersMulti = ({ players }: IProps) => {
   }, [playerInroom])
 
   const playerAllBurnItem = useMemo(() => {
-    if (playerBurnItem && playerInroom && playerInroom.length > 1) {
+    if (
+      playerBurnItem &&
+      playerInroom &&
+      playerInroom.length > 1 &&
+      playerBurnItem.length > 0
+    ) {
       return playerBurnItem.length === playerInroom?.length
     }
   }, [playerBurnItem, playerInroom])
@@ -187,13 +192,13 @@ const SeatPlayersMulti = ({ players }: IProps) => {
     if (playerInroom && playerInroom.length > 0) {
       if (isOwnerRoom) {
         //  owner
-        if (playerNotReady) {
+        if (playerNotReady && playerInroom.length < 2) {
           return "The game will begin as soon as all players are ready"
         }
         if (playerAllReady && playerAllBurnItem) {
-          return "Everyone's here and we're ready to go. Let's start the game!"
+          return `Everyone's here and we're ready to go. Let's start the game!`
         }
-        return "The game will begin as soon as all players are ready"
+        return "The game will begin as soon as all players are ready..."
       }
 
       // player
@@ -244,7 +249,8 @@ const SeatPlayersMulti = ({ players }: IProps) => {
         dataPlayers?.room_status === "ready_play" &&
         gameUrl &&
         playerInroom &&
-        playerReady
+        playerReady &&
+        playerAllBurnItem
       ) {
         if (playerInroom.length === playerReady.length) {
           setTimeout(() => {
@@ -274,15 +280,19 @@ const SeatPlayersMulti = ({ players }: IProps) => {
           dataPlayers.item_id === itemSelected._id)
       ) {
         setLoading(true)
-
-        if (playerMe && itemSelected) {
-          await onReadyPlayerBurnItem(
-            playerMe?.item_burn,
-            itemSelected._id,
-            qtyItemOfRoom
-          )
+        if (playerMe && itemSelected && dataPlayers) {
+          try {
+            await onReadyPlayerBurnItem(
+              playerMe?.item_burn,
+              itemSelected._id,
+              (dataPlayers?.create_room_detail?.number_of_item as number) ?? 1
+            )
+            await setPlayerPressReady(true)
+          } catch (err) {
+            setLoading(false)
+            setPlayerPressReady(false)
+          }
         }
-        await setPlayerPressReady(true)
         await setLoading(false)
       } else if (!playerMe) {
         setPlayerPressReady(false)
@@ -327,7 +337,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
     setLoading(false)
   }
 
-  const onPlayGame = () => {
+  const onPlayGame = async () => {
     if (profile) {
       if (
         (gameData && gameData?.play_to_earn_status === "free") ||
@@ -341,11 +351,21 @@ const SeatPlayersMulti = ({ players }: IProps) => {
             dataPlayers?.create_room_detail.number_of_item &&
           dataPlayers.item_id === itemSelected._id)
       ) {
-        if (playerMe && itemSelected) {
-          onOwnerBurnItem(playerMe.item_burn, itemSelected?._id, qtyItemOfRoom)
+        if (playerMe && itemSelected && dataPlayers) {
+          try {
+            await setLoading(true)
+            await onOwnerBurnItem(
+              playerMe.item_burn,
+              itemSelected?._id,
+              (dataPlayers?.create_room_detail?.number_of_item as number) ?? 1
+            )
+            await setLoading(false)
+            await setOwnPressPlay(true)
+            await startGame()
+          } catch (err) {
+            await setLoading(false)
+          }
         }
-        setOwnPressPlay(true)
-        startGame()
       } else if (!playerMe) {
         setOwnPressPlay(false)
         errorToast(MESSAGES["no-player"])
@@ -431,19 +451,20 @@ const SeatPlayersMulti = ({ players }: IProps) => {
 
               {/* owner */}
               {playerAllReady &&
+                playerAllBurnItem &&
                 playerMe?.status === "ready" &&
                 // play &&
                 dataPlayers?.room_status === "ready_play" && (
                   <ButtonCountdown
                     time
                     endTime={
-                      playerAllReady
+                      playerAllReady && playerAllBurnItem
                         ? new Date(time.setSeconds(time.getSeconds() + 10))
                         : new Date()
                     }
                     handleClick={() => {
                       isOwnerRoom &&
-                        (playerAllReady && !ownerPressPlay
+                        (playerAllReady && !ownerPressPlay && playerAllBurnItem
                           ? onPlayGame()
                           : !ownerPressPlay &&
                             errorToast(
@@ -476,14 +497,22 @@ const SeatPlayersMulti = ({ players }: IProps) => {
                     startIcon={
                       <Ellipse fill={playerAllReady ? "#A0ED61" : "#F42728"} />
                     }
+                    disabled={loading}
                     handleClick={() => {
                       playerAllReady
                         ? onPlayGame()
                         : errorToast(MESSAGES["please-wait-player-all-ready"])
                     }}
                     text={
-                      <Typography className="w-full font-neue-machina text-2xl uppercase text-primary-main">
+                      <Typography className="flex w-full items-center justify-center font-neue-machina text-2xl uppercase text-primary-main">
                         START
+                        {loading && (
+                          <CircularProgress
+                            color="primary"
+                            className="ml-2"
+                            size={25}
+                          />
+                        )}
                       </Typography>
                     }
                     className={`h-[60px] w-[194px] rounded-[50px] ${
@@ -500,6 +529,7 @@ const SeatPlayersMulti = ({ players }: IProps) => {
                   <ButtonPlayer
                     startIcon={<Ellipse fill="#A0ED61" />}
                     handleClick={onReady}
+                    disabled={loading}
                     text={
                       loading ? (
                         <CircularProgress

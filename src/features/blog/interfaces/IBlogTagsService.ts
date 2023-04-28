@@ -1,3 +1,5 @@
+import { IPopularTags } from "./IBlogPopularTags"
+
 export interface BlogTagsPayload {
   limit: number
   skip: number
@@ -18,7 +20,7 @@ export interface CategoryData {
   id: string
 }
 
-export interface Tag {
+export interface Tag extends IPopularTags {
   name: string
   slug: string
   is_active: boolean

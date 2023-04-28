@@ -464,13 +464,29 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   }
 
   useEffect(() => {
-    if (dataWeeklyPoolByGameId) {
-      setWeeklyPoolByGameId(dataWeeklyPoolByGameId)
+    let load = false
+
+    if (!load) {
+      if (dataWeeklyPoolByGameId) {
+        setWeeklyPoolByGameId(dataWeeklyPoolByGameId)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [dataWeeklyPoolByGameId])
 
   useEffect(() => {
-    refetchWeeklyPoolByGameId()
+    let load = false
+
+    if (!load) {
+      refetchWeeklyPoolByGameId()
+    }
+
+    return () => {
+      load = true
+    }
   }, [poolId, refetchWeeklyPoolByGameId])
 
   const onClickedPrevWeeklyPrizePoolByGameId = (_previousId: string) => {

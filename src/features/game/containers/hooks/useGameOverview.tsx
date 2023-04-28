@@ -478,7 +478,15 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   }, [dataWeeklyPoolByGameId])
 
   useEffect(() => {
-    refetchWeeklyPoolByGameId()
+    let load = false
+
+    if (!load) {
+      refetchWeeklyPoolByGameId()
+    }
+
+    return () => {
+      load = true
+    }
   }, [poolId, refetchWeeklyPoolByGameId])
 
   const onClickedPrevWeeklyPrizePoolByGameId = (_previousId: string) => {

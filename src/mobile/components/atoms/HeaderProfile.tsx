@@ -15,9 +15,9 @@ const HeaderProfile = ({ title }: IProp) => {
         <div className="flex max-w-[239px] flex-wrap items-center font-neue-machina text-xs uppercase leading-[30px] text-neutral-600">
           <p>{today}</p>
           <p
-            className={`before:d-inline text-green-lemon before:mx-2 before:h-[6px] before:w-[6px] before:rounded-full ${
+            className={`before:d-inline text-green-lemon before:mx-2 before:h-[6px] before:w-[6px] before:rounded-full after:text-xs ${
               profile ? " before:bg-green-lemon " : " before:bg-error-main "
-            }before:content-['**']
+            } before:content-['**']
             `}
           >
             LV. {profile?.level}{" "}
@@ -31,14 +31,15 @@ const HeaderProfile = ({ title }: IProp) => {
             {title}
           </p>
         </div>
-        <div className=" flex w-auto max-w-fit items-center  justify-end rounded-[14px] border-[2px]  border-neutral-700 p-[6px]">
+        <div className=" relative flex w-auto  max-w-fit items-center justify-end  rounded-[14px] border-[2px] border-neutral-700 p-[6px]">
+          <div className="before:d-inline text-error-main after:absolute after:right-[7px] after:top-[7px] after:h-[12px] after:w-[12px] after:rounded-full after:bg-error-main after:text-xs after:content-['**']" />
           <Image
             src={profile?.avatar || ""}
             alt={profile?.username || "avatar profile"}
             width={40}
             height={40}
             loading="lazy"
-            className=" rounded-[14px] object-cover object-center"
+            className=" rounded-[14px] object-cover object-center "
           />
         </div>
       </div>

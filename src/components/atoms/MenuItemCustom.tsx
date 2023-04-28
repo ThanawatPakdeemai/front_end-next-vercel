@@ -39,12 +39,12 @@ const MenuItemCustom = ({
       }}
       sx={{
         color: active ? "#E1E2E2" : null,
-        backgroundColor: active ? "#010101" : null
+        backgroundColor: active ? "#010101!important" : null
       }}
     >
       <Link
         href={props.href ?? ""}
-        className="flex w-full items-center"
+        className={`flex w-full items-center ${active ? "active" : ""}`}
       >
         <ListItemIcon>{icon}</ListItemIcon>
         <div className="flex w-full items-center justify-between">

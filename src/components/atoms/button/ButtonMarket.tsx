@@ -66,8 +66,8 @@ const ButtonMarket = ({
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const {
     address: account,
-    handleConnectWithMetamask,
-    handleDisconnectWallet
+    handleConnectWithMetamask
+    // handleDisconnectWallet
   } = useWeb3Provider()
 
   const actionValue = useMemo(() => {
@@ -153,7 +153,7 @@ const ButtonMarket = ({
           </span>
         </Button>
       </div>
-      <Button
+      {/* <Button
         type="button"
         variant="contained"
         color="error"
@@ -161,7 +161,7 @@ const ButtonMarket = ({
         onClick={handleDisconnectWallet}
       >
         disconnect wallet
-      </Button>
+      </Button> */}
       <ModalMarketplace
         nftType={nftType}
         open={isOpen}

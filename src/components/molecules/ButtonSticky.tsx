@@ -1,4 +1,4 @@
-import YourMissionIcon from "@components/icons/MenunIcon/YourMissionIcon"
+import RocketIcon from "@components/icons/RocketIcon"
 import React, { ReactNode } from "react"
 
 interface IProps {
@@ -10,7 +10,7 @@ interface IProps {
 }
 
 const ButtonSticky = ({
-  icon = <YourMissionIcon />,
+  icon = <RocketIcon />,
   notify = false,
   multi = false,
   className,

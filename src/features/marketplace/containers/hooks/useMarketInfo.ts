@@ -139,6 +139,29 @@ const useMarketInfo = () => {
       }
     }
 
+    switch (marketType) {
+      case "game_item":
+        search.type = "game-item"
+        break
+      case "nft_building":
+        search.type = "building"
+        break
+      case "nft_naka_punk":
+        search.type = "naka-punk"
+        break
+      case "nft_material":
+        search.type = "material"
+        break
+      case "nft_game":
+        search.type = "arcade-game"
+        break
+      case "nft_avatar":
+        search.type = "arcade-game"
+        break
+      default:
+        search.type = "land"
+    }
+
     return search
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.pathname, searchData, filterItem])

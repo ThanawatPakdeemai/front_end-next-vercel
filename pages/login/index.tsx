@@ -2,7 +2,9 @@ import React, { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 
-const LoginMobile = dynamic(() => import("src/mobile/templates/SignInLayout"))
+const LoginMobile = dynamic(
+  () => import("@src/mobile/components/templates/SignInLayout")
+)
 
 const LoginMobilePage = () => <LoginMobile />
 

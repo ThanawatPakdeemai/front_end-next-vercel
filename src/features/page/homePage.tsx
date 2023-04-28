@@ -15,7 +15,7 @@ import BannerSlide from "@feature/slider/components/templates/BannerSlide"
 import CarouselSlide from "@feature/slider/components/templates/CarouselSlide"
 import CardMarketplace from "@components/molecules/CardMarketplace"
 import CardNakaverse from "@components/molecules/CardNakaverse"
-import { Box, Grid } from "@mui/material"
+import { Box } from "@mui/material"
 import ICoupon from "@components/icons/Coupon"
 import IDiamond from "@components/icons/Diamond"
 import { IMAGES } from "@constants/images"
@@ -151,64 +151,59 @@ const Home = () => {
           </div>
         )}
       </div>
-      <div className="flex grid-cols-1 flex-wrap gap-6 lg:grid lg:grid-cols-2">
+      <div className="flex flex-wrap gap-3 md:flex-nowrap">
         <Box
           component="div"
-          className="flex-[1_1_100%] sm:flex-[1_1_60%] xl:flex-none"
+          className="flex flex-[1_1_100%] flex-col gap-3 sm:flex-[1_1_60%] xl:flex-1"
         >
           <CardMarketplace href={CONFIGS.BASE_URL.MARKETPLACE} />
-          <div className="mt-4">
-            <Grid
-              container
-              spacing={2}
-            >
-              <CardLinkTemplate>
-                <CardLink
-                  classNameSecond="!bg-red-card"
-                  imageClassNameSecond="scale-[1.35]"
-                  iconBtn={<INakaSwap />}
-                  textBtn={`${t("naka_swap")}`}
-                  onClick={() => setOpenSwap(true)}
-                  srcMain={IMAGES.frontNakaSwap.src}
-                  altMain={IMAGES.frontNakaSwap.alt}
-                  srcSecond={IMAGES.backNakaSwap.src}
-                  altSecond={IMAGES.backNakaSwap.alt}
-                />
-                <OrionTrade
-                  open={openSwap}
-                  setClose={() => setOpenSwap(false)}
-                />
-              </CardLinkTemplate>
-              <CardLinkTemplate>
-                <CardLink
-                  classNameSecond="!bg-warning-dark"
-                  imageClassNameSecond="scale-[1.35]"
-                  iconBtn={<IStacking />}
-                  textBtn={`${t("Staking")}`}
-                  href="/staking"
-                  srcMain={IMAGES.frontStaking.src}
-                  altMain={IMAGES.frontStaking.alt}
-                  srcSecond={IMAGES.backStaking.src}
-                  altSecond={IMAGES.backStaking.alt}
-                />
-              </CardLinkTemplate>
-              <CardLinkTemplate>
-                <CardLink
-                  classNameSecond="bg-info-light"
-                  imageClassNameSecond="scale-[1.35]"
-                  iconBtn={<IReferrals />}
-                  textBtn={`${t("referral")}`}
-                  href="/referral"
-                  srcMain={IMAGES.frontReferrals.src}
-                  altMain={IMAGES.frontReferrals.alt}
-                  srcSecond={IMAGES.backReferrals.src}
-                  altSecond={IMAGES.backReferrals.alt}
-                />
-              </CardLinkTemplate>
-            </Grid>
+          <div className="flex justify-between gap-3">
+            <CardLinkTemplate>
+              <CardLink
+                classNameSecond="!bg-red-card"
+                imageClassNameSecond="scale-[1.35]"
+                iconBtn={<INakaSwap />}
+                textBtn={`${t("naka_swap")}`}
+                onClick={() => setOpenSwap(true)}
+                srcMain={IMAGES.frontNakaSwap.src}
+                altMain={IMAGES.frontNakaSwap.alt}
+                srcSecond={IMAGES.backNakaSwap.src}
+                altSecond={IMAGES.backNakaSwap.alt}
+              />
+              <OrionTrade
+                open={openSwap}
+                setClose={() => setOpenSwap(false)}
+              />
+            </CardLinkTemplate>
+            <CardLinkTemplate>
+              <CardLink
+                classNameSecond="!bg-warning-dark"
+                imageClassNameSecond="scale-[1.35]"
+                iconBtn={<IStacking />}
+                textBtn={`${t("Staking")}`}
+                href="/staking"
+                srcMain={IMAGES.frontStaking.src}
+                altMain={IMAGES.frontStaking.alt}
+                srcSecond={IMAGES.backStaking.src}
+                altSecond={IMAGES.backStaking.alt}
+              />
+            </CardLinkTemplate>
+            <CardLinkTemplate>
+              <CardLink
+                classNameSecond="bg-info-light"
+                imageClassNameSecond="scale-[1.35]"
+                iconBtn={<IReferrals />}
+                textBtn={`${t("referral")}`}
+                href="/referral"
+                srcMain={IMAGES.frontReferrals.src}
+                altMain={IMAGES.frontReferrals.alt}
+                srcSecond={IMAGES.backReferrals.src}
+                altSecond={IMAGES.backReferrals.alt}
+              />
+            </CardLinkTemplate>
           </div>
         </Box>
-        <div className="relative flex-[1_1_100%] overflow-hidden sm:flex-[1_1_60%] xl:flex-none">
+        <div className="relative flex-[1_1_100%] overflow-hidden sm:flex-[1_1_60%] xl:flex-1">
           <div
             id="spark-fire"
             className="absolute left-0 top-0 hidden h-[calc(100%-100px)] w-full xl:block"
@@ -220,7 +215,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="my-2 h-full w-full lg:my-20">
+      <div className="my-2 h-full w-full lg:mt-10 xl:mt-[140px]">
         {f2pGame && !loadingDataF2pGames ? (
           <GameCarousel
             menu={F2PHeaderMenu}
@@ -239,7 +234,7 @@ const Home = () => {
         )}
       </div>
 
-      <div className="h-loadingFreeToPlayGames my-2 w-full lg:my-20">
+      <div className="h-loadingFreeToPlayGames my-2 w-full lg:mt-10 xl:mt-[100px]">
         {p2eGame && !loadingDataP2eGame ? (
           <GameCarousel
             menu={P2EHeaderMenu}
@@ -272,53 +267,45 @@ const Home = () => {
       <DeveloperPart />
       <Box
         component="div"
-        className="xs:flex-col mb-10 mt-4 gap-4 lg:flex"
+        className="xs:flex-col mb-10 mt-4 gap-3 lg:flex"
       >
-        <Box
-          component="div"
-          className="flex-1 xl:flex-none"
-        >
-          <Grid
-            container
-            spacing={2}
-          >
-            <CardLinkTemplate>
-              <CardLink
-                classNameSecond="bg-warning-dark"
-                textBtn={`${t("Blog")}`}
-                href="/blog"
-              />
-            </CardLinkTemplate>
-            <CardLinkTemplate>
-              <CardLink
-                classNameSecond="bg-secondary-light"
-                iconBtn={<ICoupon />}
-                textBtn={`${t("Coupons")}`}
-                href="/coupon"
-                srcMain={IMAGES.frontCouponBand.src}
-                altMain={IMAGES.frontCouponBand.alt}
-                srcSecond={IMAGES.backCouponBand.src}
-                altSecond={IMAGES.backCouponBand.alt}
-              />
-            </CardLinkTemplate>
+        <div className="flex flex-1 justify-between gap-3">
+          <CardLinkTemplate>
+            <CardLink
+              classNameSecond="bg-warning-dark"
+              textBtn={`${t("Blog")}`}
+              href="/blog"
+            />
+          </CardLinkTemplate>
+          <CardLinkTemplate>
+            <CardLink
+              classNameSecond="bg-secondary-light"
+              iconBtn={<ICoupon />}
+              textBtn={`${t("Coupons")}`}
+              href="/coupon"
+              srcMain={IMAGES.frontCouponBand.src}
+              altMain={IMAGES.frontCouponBand.alt}
+              srcSecond={IMAGES.backCouponBand.src}
+              altSecond={IMAGES.backCouponBand.alt}
+            />
+          </CardLinkTemplate>
 
-            <CardLinkTemplate>
-              <CardLink
-                classNameSecond="bg-info-light"
-                iconBtn={<IDiamond />}
-                textBtn="NAKA NFT"
-                href="/arcade-emporium"
-                srcMain={IMAGES.homeNakaNFT.src}
-                altMain={IMAGES.homeNakaNFT.alt}
-                srcSecond={IMAGES.backHomeNakaNFT.src}
-                altSecond={IMAGES.backHomeNakaNFT.alt}
-              />
-            </CardLinkTemplate>
-          </Grid>
-        </Box>
+          <CardLinkTemplate>
+            <CardLink
+              classNameSecond="bg-info-light"
+              iconBtn={<IDiamond />}
+              textBtn="NAKA NFT"
+              href="/arcade-emporium"
+              srcMain={IMAGES.homeNakaNFT.src}
+              altMain={IMAGES.homeNakaNFT.alt}
+              srcSecond={IMAGES.backHomeNakaNFT.src}
+              altSecond={IMAGES.backHomeNakaNFT.alt}
+            />
+          </CardLinkTemplate>
+        </div>
         <Box
           component="div"
-          className="mt-2 flex-1 sm:mt-4 md:max-w-full lg:mt-0 lg:max-w-[33.33%] xl:flex-none"
+          className="mt-2 flex-1 sm:mt-4 md:max-w-full lg:mt-0"
         >
           <CardNakaverse href={CONFIGS.BASE_URL.NAKAVERSE} />
         </Box>

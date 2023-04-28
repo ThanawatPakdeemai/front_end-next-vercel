@@ -32,7 +32,7 @@ const GameSummaryContent = ({
       isSummaryPage
     />
     <BrowserView>
-      <div className="game-summar--wrapper__content bg-neutral-700 p-4">
+      <div className="game-summar--wrapper__content bg-neutral-800 p-4">
         {children}
       </div>
     </BrowserView>

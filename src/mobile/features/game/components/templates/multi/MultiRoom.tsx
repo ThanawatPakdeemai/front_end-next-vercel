@@ -1,5 +1,6 @@
 import useRoomMulti from "@feature/game/containers/hooks/useRoomMulti"
 import ModalCreateRoom from "@feature/rooms/components/molecules/ModalCreateRoom"
+import Preload from "@src/mobile/components/atoms/Preload"
 import ListJoinGame from "../../molecules/ListJoinGame"
 
 const MultiRoom = () => {
@@ -9,8 +10,7 @@ const MultiRoom = () => {
       {data && (
         <>
           <ModalCreateRoom gameData={data} />
-          {dataRoom &&
-            dataRoom &&
+          {dataRoom && dataRoom?.length > 0 ? (
             dataRoom?.map((item) => (
               <ListJoinGame
                 key={item._id}
@@ -18,11 +18,14 @@ const MultiRoom = () => {
                 name={data.game_type}
                 desc={data.name}
                 onClick={() => handleJoinRoom(item)}
-                textChip={`#${item?.room_number?.toString()}`}
+                textChip={`#${item?.create_room_detail?.no_room?.toString()}`}
                 descChip1={`${itemSelected?.name} / ${itemSelected?.item_size}`}
-                descChip2={`${item.amount_played} / ${item.max_players}`}
+                descChip2={`${item.amount_current_player} / ${item.max_players}`}
               />
-            ))}
+            ))
+          ) : (
+            <Preload />
+          )}
         </>
       )}
     </>

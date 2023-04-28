@@ -51,8 +51,19 @@ const developerPart = () => (
         xs={12}
         md={4}
         className="flex-1"
+        sx={{
+          ".card-title-page": {
+            padding: "13px 10px 13px 20px"
+          },
+          ".card-content__wrapper": {
+            padding: "14px 0px 0px 10px"
+          }
+        }}
       >
-        <TopPlayer className="!md:h-[465px] ml-auto w-full !bg-neutral-800 !p-2 xl:w-[449px]" />
+        <TopPlayer
+          rank
+          className="!md:h-[465px] ml-auto w-full !bg-neutral-800 xl:w-[449px]"
+        />
       </Grid>
     </Grid>
   </>

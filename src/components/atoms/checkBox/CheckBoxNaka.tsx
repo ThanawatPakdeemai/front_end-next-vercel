@@ -26,7 +26,8 @@ const CheckBoxNaka = ({
     <label className={`${className} flex`}>
       <Checkbox
         id={text}
-        defaultChecked={value}
+        checked={value}
+        defaultChecked={false}
         onChange={(_event?: React.ChangeEvent<HTMLInputElement>) => {
           onHandle(_event)
         }}
@@ -73,4 +74,5 @@ const CheckBoxNaka = ({
     </label>
   </>
 )
+
 export default memo(CheckBoxNaka)

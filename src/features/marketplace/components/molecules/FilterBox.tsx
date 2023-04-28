@@ -1,6 +1,6 @@
 import SearchIcon from "@components/icons/SearchIcon"
 import { Collapse, InputAdornment, TextField, Typography } from "@mui/material"
-import React, { memo, useMemo, useState } from "react"
+import React, { memo, useEffect, useMemo, useState } from "react"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import INaka from "@components/icons/Naka"
 import SpeedHeight from "@components/icons/marketplace/SpeedHeight"
@@ -25,7 +25,6 @@ const FilterBox = () => {
 
   const {
     search,
-    sort,
     filter,
     onSetSearch,
     onSetSort,
@@ -39,6 +38,7 @@ const FilterBox = () => {
   const [expandedPrice, setExpandedPrice] = useState<boolean>(false)
   const [expandDate, setExpandDate] = useState<boolean>(false)
   const [expandType, setExpandType] = useState<boolean>(false)
+  /* eslint-disable no-unused-vars */
   const [land, setLand] = useState<string>("Land")
   const [text, setText] = useState<string>("")
   const [wallet, setWallet] = useState<string>("")
@@ -47,6 +47,10 @@ const FilterBox = () => {
   const [type, setType] = useState<string>("Type")
 
   const { category, fetchStatus, getCurrentTypes } = useMarketCategTypes()
+
+  // const sortvalue = sort.reduce((acc, curr) => Object.assign(acc, curr), {})
+  const searchvalue = search.reduce((acc, curr) => Object.assign(acc, curr), {})
+  const typeOfsearch = pathName === "marketplace" ? "land_id" : "nft_token"
 
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
@@ -136,11 +140,6 @@ const FilterBox = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter, category, fetchStatus])
 
-  // eslint-disable-next-line no-unused-vars
-  const obj = sort.reduce((acc, curr) => Object.assign(acc, curr), {})
-  // eslint-disable-next-line no-unused-vars
-  const obj2 = search.reduce((acc, curr) => Object.assign(acc, curr), {})
-
   const listFilter = isP2P ? "P2P Market" : "NAKA Market"
 
   //  const handleResetSearch = () => {
@@ -182,6 +181,16 @@ const FilterBox = () => {
     { label: "New", value: -1 },
     { label: "Oldest", value: 1 }
   ]
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      onResetSort()
+      onResetSearch()
+      onResetFilter()
+    }, 0)
+
+    return () => clearTimeout(timeoutId)
+  }, [router.asPath, onResetSort, onResetSearch, onResetFilter])
 
   return (
     <div className="grid gap-3">
@@ -284,13 +293,18 @@ const FilterBox = () => {
                   )
                 }}
                 onChange={(_event) => {
-                  setText(_event.target.value)
-                  // onSetSearch({ key: "land_id", value: text })
+                  // setText(_event.target.value)
+                  let { value } = _event.target
+                  value = value.replace(/[^A-Za-z0-9]/gi, "")
                   pathName === "marketplace" || category === "nft_land"
-                    ? onSetSearch({ key: "land_id", value: text })
-                    : onSetSearch({ key: "nft_token", value: text })
+                    ? onSetSearch({ key: "land_id", value })
+                    : onSetSearch({ key: "nft_token", value })
                 }}
-                value={text}
+                value={
+                  searchvalue[typeOfsearch] !== undefined
+                    ? searchvalue[typeOfsearch]
+                    : ""
+                }
               />
             </>
           )}
@@ -355,16 +369,22 @@ const FilterBox = () => {
               )
             }}
             onChange={(_event) => {
-              setWallet(_event.target.value)
-              if (wallet) {
-                onSetSearch({ key: "seller_id", value: wallet })
+              // setWallet(_event.target.value)
+              let { value } = _event.target
+              value = value.replace(/[^A-Za-z0-9]/gi, "")
+              if (value) {
+                onSetSearch({ key: "seller_id", value })
               }
               // const searchWallet = _event?.target?.value
               // if (searchWallet) {
               //   onSetSearch({ key: "seller_id", value: searchWallet })
               // }
             }}
-            value={wallet}
+            value={
+              searchvalue["seller_id"] !== undefined
+                ? searchvalue["seller_id"]
+                : ""
+            }
           />
         </div>
       )}

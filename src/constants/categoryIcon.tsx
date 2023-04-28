@@ -23,7 +23,7 @@ import Diamond from "@components/icons/Diamond"
 
 export interface ICategoryIcon {
   id: string
-  icon: React.ReactNode
+  icon: string | React.ReactElement
 }
 
 /**

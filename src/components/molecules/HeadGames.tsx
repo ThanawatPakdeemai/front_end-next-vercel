@@ -16,7 +16,10 @@ const HeadGames = ({ children }: { children: React.ReactNode }) => {
         container
         spacing={2}
         columns={15}
-        className="mb-10 mt-4 grid md:mt-[-16px] md:grid-cols-2 lg:flex"
+        className="mb-[30px] mt-4 grid md:mt-[-16px] md:grid-cols-2 lg:flex"
+        sx={{
+          padding: 0
+        }}
       >
         <Grid
           item

@@ -10,7 +10,7 @@ interface IChecked {
   checked: boolean
 }
 
-type TKey = {
+export type TKey = {
   [key: string]: string | number | null
 }
 

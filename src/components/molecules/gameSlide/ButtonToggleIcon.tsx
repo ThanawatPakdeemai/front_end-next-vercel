@@ -81,7 +81,7 @@ const ButtonToggleIcon = ({
 
   const renderContent = () => (
     <motion.button
-      className={`btn-icon-container flex h-10 w-full  items-center justify-center rounded-md ${className} ${
+      className={`btn-icon-container flex h-10 w-full  items-center justify-center gap-[18px] rounded-md ${className} ${
         disabled && " !bg-neutral-680"
       }`}
       style={style}
@@ -98,7 +98,7 @@ const ButtonToggleIcon = ({
         {startIcon}
       </motion.span>
       <motion.p
-        className={`${textClassName} mx-1 min-w-[40%] font-neue-machina text-sm`}
+        className={`${textClassName} font-neue-machina text-sm`}
         variants={textBtn}
       >
         {dropColor ? (

@@ -73,7 +73,7 @@ const GameTabsVertical = dynamic(
 )
 
 const RoomListLayout = dynamic(
-  () => import("@src/mobile/templates/RoomListLayout"),
+  () => import("@src/mobile/components/templates/RoomListLayout"),
   {
     suspense: true,
     ssr: false
@@ -138,67 +138,63 @@ export default function GameRoomList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameData])
 
-  return (
-    <>
-      {gameData ? (
-        <GamePageDefault
-          component={
-            <RightSidebarContent
-              className="mb-24"
-              content={<GameRoomListPage />}
-              aside={
-                <Box
-                  component="div"
-                  className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
-                  sx={{
-                    ".panel-content": {
-                      maxHeight: "200px",
-                      ".custom-scroll": {
-                        overflow: "hidden"
-                      }
-                    },
-                    ".like-no_score": {
-                      margin: "0"
-                    }
-                  }}
-                >
-                  <OverviewContent
-                    gameId={gameData.id}
-                    gameType={getTypeGamePathFolder(gameData)}
-                  />
-                  {renderFormBuyItem()}
-                </Box>
-              }
-            />
-          }
-          component2={
-            <FullWidthContent
-              sxCustomStyled={{
-                "&.container": {
-                  maxWidth: "100%!important",
-                  "&.container-fullWidth": {
-                    padding: "49px"
+  return gameData ? (
+    <GamePageDefault
+      component={
+        <RightSidebarContent
+          className="mb-24"
+          content={<GameRoomListPage />}
+          aside={
+            <Box
+              component="div"
+              className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
+              sx={{
+                ".panel-content": {
+                  maxHeight: "200px",
+                  ".custom-scroll": {
+                    overflow: "hidden"
                   }
+                },
+                ".like-no_score": {
+                  margin: "0"
                 }
               }}
             >
-              <TabProvider>
-                <GameTabsVertical
-                  gameId={gameData.id}
-                  gameType={getTypeGamePathFolder(gameData)}
-                />
-                {/* <GameTabs
+              <OverviewContent
+                gameId={gameData.id}
+                gameType={getTypeGamePathFolder(gameData)}
+              />
+              {renderFormBuyItem()}
+            </Box>
+          }
+        />
+      }
+      component2={
+        <FullWidthContent
+          sxCustomStyled={{
+            "&.container": {
+              maxWidth: "100%!important",
+              "&.container-fullWidth": {
+                padding: "49px"
+              }
+            }
+          }}
+        >
+          <TabProvider>
+            <GameTabsVertical
+              gameId={gameData.id}
+              gameType={getTypeGamePathFolder(gameData)}
+            />
+            {/* <GameTabs
                   gameId={gameData.id}
                   gameType={getTypeGamePathFolder(gameData)}
                 /> */}
-              </TabProvider>
-            </FullWidthContent>
-          }
-        />
-      ) : (
-        <GamePageDefault component={<SkeletonBanner />} />
-      )}
-    </>
+          </TabProvider>
+        </FullWidthContent>
+      }
+    />
+  ) : (
+    <GamePageDefault component={<SkeletonBanner />} />
   )
 }
 

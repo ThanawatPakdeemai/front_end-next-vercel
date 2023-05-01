@@ -9,8 +9,8 @@ export const IMAGES: {
   [key: string]: IImageProps
 } = {
   nakaLogo: {
-    src: "/images/home/naka-logo.svg",
-    blurDataURL: "/images/home/naka-logo.svg",
+    src: "/images/home/logo_naka_red.webp",
+    blurDataURL: "/images/home/logo_naka_red.webp",
     width: 120,
     height: 37,
     alt: "naka-logo"
@@ -322,6 +322,13 @@ export const IMAGES: {
     width: 1000,
     height: 1000,
     alt: "READY TO TRY NAKAMOTO.GAMES?"
+  },
+  noDataImage: {
+    src: "/images/sticker.png",
+    blurDataURL: "/images/sticker.png",
+    width: 1000,
+    height: 1000,
+    alt: "NodataImage"
   }
 }
 

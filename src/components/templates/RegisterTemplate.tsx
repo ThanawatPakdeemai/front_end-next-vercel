@@ -91,8 +91,8 @@ const RegisterTemplate = ({ children, background }: IRegisterTemplate) => {
           component="div"
           className={`min-h-[790px] rounded-3xl border border-solid border-neutral-800 p-2.5 ${
             !_.isEmpty({ errors }.errors) && submitRegisterForm
-              ? "h-[135vh]"
-              : "h-[95vh]"
+              ? "h-auto"
+              : "h-auto"
           }`}
         >
           <Grid

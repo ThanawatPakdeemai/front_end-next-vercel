@@ -13,7 +13,6 @@ import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import useGlobal from "@hooks/useGlobal"
 import useGetStatisticsGameById from "@feature/game/containers/hooks/useGetStatisticsGameById"
 import TopPlayer from "@feature/ranking/components/template/TopPlayer"
-import useTopPlayerByGameId from "@feature/ranking/containers/hook/useTopPlayerByGameId"
 import useGameStore from "@stores/game"
 import Howto from "@components/molecules/HowToPlay"
 import { Box } from "@mui/material"
@@ -29,6 +28,10 @@ import StatsDetail from "@components/molecules/statistic/StatsDetail"
 import BankIcon from "@components/icons/BankIcon"
 import ControllerIcon from "@components/icons/ControllerIcon"
 import StatEstimatedProfit from "@components/molecules/statistic/StatEstimatedProfit"
+import IconArrowLeft from "@components/icons/arrowLeftIcon"
+import IconArrowRight from "@components/icons/arrowRightIcon"
+import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
+import Breadcrumb from "@components/molecules/Breadcrumb"
 
 interface IGamePageDefaultProps {
   component: React.ReactNode
@@ -42,26 +45,44 @@ const GamePageDefault = ({
   component2,
   component3
 }: IGamePageDefaultProps) => {
-  const { getTypeGamePathFolder } = useGlobal()
+  const { getTypeGamePathFolder, stateProfile } = useGlobal()
   const { handleTimeExpire, getCodeShareToEarn } = useBuyGameItemController()
   const data = useGameStore((state) => state.data)
-  const { stateProfile } = useGlobal()
   const gamePartnerData = useGameStore((state) => state.dataGamePartner)
   const [gameData, setGameData] = useState<IGame | IPartnerGameData>()
   const { statsGameById } = useGetStatisticsGameById()
-  const { topPlayerGameId } = useTopPlayerByGameId()
   const { t } = useTranslation()
 
+  const {
+    onClickedPrev,
+    onClickedNext,
+    weeklyPoolByGameId,
+    isLoadingWeeklyPoolByGameId
+  } = useGameOverview(
+    gameData?.id as string,
+    getTypeGamePathFolder(gameData as IGame)
+  )
+
+  const containerClasses = "main-container mx-auto w-full  px-2 lg:px-0"
+
+  /**
+   * @description Render statistic
+   * @returns
+   */
   const renderStatistic = () => {
     const shop = true
+    const buttonArrow =
+      "flex flex-1 items-center justify-center p-[0_10px_0_15px] h-full"
+
     if (!gameData) return null
+
     switch (getTypeGamePathFolder(gameData as IGame)) {
       case "story-mode-games":
       case "free-to-play-games":
         return null
       default:
         return (
-          <>
+          <div className="game-page-default">
             <BrowserView>
               <Box component="section">
                 {/* <Tagline
@@ -87,9 +108,32 @@ const GamePageDefault = ({
                     background="neutral"
                     note
                     elevation={0}
-                    className="lg:max-w-auto max-w-full border border-neutral-900 border-opacity-80 !bg-warning-contrastText lg:!h-[424px] xl:!w-[100%]"
+                    className="border border-neutral-800 bg-primary-main lg:!h-[424px]"
                     rank
-                    topPlayerGameId={topPlayerGameId && topPlayerGameId}
+                    topPlayerGameId={weeklyPoolByGameId?.record || []}
+                    isFetching={isLoadingWeeklyPoolByGameId}
+                    rightContent={
+                      <div className="flex h-10 items-center rounded-[20px] border-[1px] border-neutral-700">
+                        <button
+                          type="button"
+                          className={buttonArrow}
+                          onClick={() =>
+                            onClickedPrev(weeklyPoolByGameId?.previous || "")
+                          }
+                        >
+                          <IconArrowLeft />
+                        </button>
+                        <button
+                          type="button"
+                          className={`${buttonArrow} border-l-[1px] border-neutral-700`}
+                          onClick={() =>
+                            onClickedNext(weeklyPoolByGameId?.next || "")
+                          }
+                        >
+                          <IconArrowRight />
+                        </button>
+                      </div>
+                    }
                   />
                 </div>
               </Box>
@@ -185,13 +229,35 @@ const GamePageDefault = ({
                       elevation={0}
                       className="h-auto w-full border border-neutral-900 border-opacity-80 !bg-warning-contrastText "
                       rank
-                      topPlayerGameId={topPlayerGameId && topPlayerGameId}
+                      topPlayerGameId={weeklyPoolByGameId?.record || []}
+                      rightContent={
+                        <div className="flex h-10 items-center rounded-[20px] border-[1px] border-neutral-700">
+                          <button
+                            type="button"
+                            className={buttonArrow}
+                            onClick={() =>
+                              onClickedPrev(weeklyPoolByGameId?.previous || "")
+                            }
+                          >
+                            <IconArrowLeft />
+                          </button>
+                          <button
+                            type="button"
+                            className={`${buttonArrow} border-l-[1px] border-neutral-700`}
+                            onClick={() =>
+                              onClickedNext(weeklyPoolByGameId?.next || "")
+                            }
+                          >
+                            <IconArrowRight />
+                          </button>
+                        </div>
+                      }
                     />
                   </div>
                 </div>
               </Box>
             </MobileView>
-          </>
+          </div>
         )
     }
   }
@@ -240,10 +306,11 @@ const GamePageDefault = ({
   }, [stateProfile])
 
   return (
-    <>
+    <div className="game-page-default">
       <BrowserView>
-        <div className="main-container mx-auto w-full  px-2 lg:px-0">
+        <div className={containerClasses}>
           <Header />
+          <Breadcrumb />
           {gameData && "image_banner" in gameData ? (
             <BannerSingle
               src={gameData.image_banner}
@@ -270,7 +337,7 @@ const GamePageDefault = ({
         </div>
       </BrowserView>
       <MobileView>
-        <div className="main-container mx-auto w-full  px-2 lg:px-0">
+        <div className={containerClasses}>
           {component}
           {/**
            * @description In case there is a need to add another component
@@ -280,7 +347,7 @@ const GamePageDefault = ({
           {renderStatistic()}
         </div>
       </MobileView>
-    </>
+    </div>
   )
 }
 export default GamePageDefault

@@ -31,6 +31,7 @@ import InsertLinkIcon from "@mui/icons-material/InsertLink"
 import { getCategories } from "@feature/dropdown/containers/services/dropdown.service"
 import { IGameCategory } from "@feature/dropdown/interfaces/IDropdownService"
 import { useToast } from "@feature/toast/containers"
+import Editor from "@components/molecules/Editor"
 import useFormJoinUsController from "../containers/hooks/useFormJoinUsController"
 import useFormController from "../containers/hooks/useFormController"
 
@@ -132,7 +133,10 @@ const FormJoinus = () => {
     <form onSubmit={handleSubmit(onSubmitGenaralReview)}>
       <Box
         component="div"
-        style={{ width: 423, height: 638 }}
+        style={{
+          width: 423,
+          height: "auto"
+        }}
       >
         <Box
           component="div"
@@ -308,7 +312,9 @@ const FormJoinus = () => {
                               register={register}
                             />
                             {errors.categories && (
-                              <span>{errors.categories.message}</span>
+                              <span className="text-sm text-error-main">
+                                * {errors.categories.message}
+                              </span>
                             )}
                           </>
                         )}
@@ -435,21 +441,34 @@ const FormJoinus = () => {
           >
             <FieldItem
               fieldType={
-                <TextField
-                  className="w-full"
-                  type="text"
-                  placeholder="how to play..."
-                  label="Game how to play"
-                  rows={4}
-                  multiline
-                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setValue("how_to_play", e.target.value)
-                  }}
-                  {...(register("how_to_play"), { required: true })}
-                  sx={StyledTextField2}
-                  id="how_to_play"
-                  size="medium"
-                />
+                <>
+                  <Controller
+                    name="how_to_play"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field: { ...field } }) => (
+                      <>
+                        <Editor
+                          {...field}
+                          placeholder="How To Play..."
+                          className="h-[180px] !pt-[70px]"
+                          toolbarClassName="top-1 max-w-[415px] left-0 right-0 mx-auto"
+                          id="how_to_play"
+                          label="Game how to play *"
+                          onChangeInput={(_value: string) =>
+                            setValue("how_to_play", _value)
+                          }
+                          {...(register("how_to_play"), { required: true })}
+                        />
+                        {errors.how_to_play && (
+                          <span className="text-sm text-error-main">
+                            * {errors.how_to_play.message}
+                          </span>
+                        )}
+                      </>
+                    )}
+                  />
+                </>
               }
             />
           </Grid>
@@ -465,21 +484,34 @@ const FormJoinus = () => {
           >
             <FieldItem
               fieldType={
-                <TextField
-                  className="w-full"
-                  type="text"
-                  placeholder="Description..."
-                  label="Game description"
-                  rows={4}
-                  multiline
-                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setValue("description", e.target.value)
-                  }}
-                  {...(register("description"), { required: true })}
-                  sx={StyledTextField2}
-                  id="gameDescription"
-                  size="medium"
-                />
+                <>
+                  <Controller
+                    name="description"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field: { ...field } }) => (
+                      <>
+                        <Editor
+                          {...field}
+                          placeholder="Description..."
+                          className="h-[180px] !pt-[70px]"
+                          toolbarClassName="top-1 max-w-[415px] left-0 right-0 mx-auto"
+                          id="gameDescription"
+                          label="Game description *"
+                          onChangeInput={(_value: string) =>
+                            setValue("description", _value)
+                          }
+                          {...(register("description"), { required: true })}
+                        />
+                        {errors.description && (
+                          <span className="text-sm text-error-main">
+                            * {errors.description.message}
+                          </span>
+                        )}
+                      </>
+                    )}
+                  />
+                </>
               }
             />
           </Grid>

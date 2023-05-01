@@ -66,72 +66,70 @@ export default function SummaryDetails() {
   const { GameHome } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
 
-  return (
-    <>
-      {gameData ? (
-        <GamePageDefault
-          component={
-            <>
-              <BrowserView>
-                <RightSidebarContent
-                  className="mb-24"
-                  content={<GameSummaryRewardPage />}
-                  aside={
-                    <Box
-                      component="div"
-                      className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
-                      sx={{
-                        ".panel-content": {
-                          maxHeight: "270px",
-                          ".custom-scroll": {
-                            overflow: "hidden"
-                          }
-                        },
-                        ".like-no_score": {
-                          margin: "0"
-                        }
-                      }}
-                    >
-                      <OverviewContent
-                        gameId={gameData.id}
-                        gameType={getTypeGamePathFolder(gameData)}
-                        gameIdNFT={gameData.NFT_Owner}
-                      />
-                    </Box>
-                  }
-                />
-              </BrowserView>
-              <MobileView>
-                <RightSidebarContent
-                  content={<GameSummaryRewardPage />}
-                  aside={null}
-                />
-              </MobileView>
-            </>
-          }
-          component2={
-            <>
-              <BrowserView>
-                <FullWidthContent
-                  sxCustomStyled={{
-                    "&.container": {
-                      maxWidth: "100%!important",
-                      "&.container-fullWidth": {
-                        padding: "49px"
+  return gameData ? (
+    <GamePageDefault
+      component={
+        <>
+          <BrowserView>
+            <RightSidebarContent
+              className="mb-24"
+              content={<GameSummaryRewardPage />}
+              aside={
+                <Box
+                  component="div"
+                  className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
+                  sx={{
+                    ".panel-content": {
+                      maxHeight: "270px",
+                      ".custom-scroll": {
+                        overflow: "hidden"
                       }
+                    },
+                    ".like-no_score": {
+                      margin: "0"
                     }
                   }}
                 >
-                  <TabProvider>
-                    <GameTabsVertical
-                      gameId={gameData.id}
-                      gameType={getTypeGamePathFolder(gameData)}
-                    />
-                  </TabProvider>
-                </FullWidthContent>
-              </BrowserView>
-              <MobileView>
-                {/* <FullWidthContent
+                  <OverviewContent
+                    gameId={gameData.id}
+                    gameType={getTypeGamePathFolder(gameData)}
+                    gameIdNFT={gameData.NFT_Owner}
+                  />
+                </Box>
+              }
+            />
+          </BrowserView>
+          <MobileView>
+            <RightSidebarContent
+              content={<GameSummaryRewardPage />}
+              aside={null}
+            />
+          </MobileView>
+        </>
+      }
+      component2={
+        <>
+          <BrowserView>
+            <FullWidthContent
+              sxCustomStyled={{
+                "&.container": {
+                  maxWidth: "100%!important",
+                  "&.container-fullWidth": {
+                    padding: "49px"
+                  }
+                }
+              }}
+            >
+              <TabProvider>
+                <GameTabsVertical
+                  gameId={gameData.id}
+                  gameType={getTypeGamePathFolder(gameData)}
+                />
+              </TabProvider>
+            </FullWidthContent>
+          </BrowserView>
+          <MobileView>
+            {/* <FullWidthContent
                   sxCustomStyled={{
                     "&.container": {
                       maxWidth: "100%!important"
@@ -145,14 +143,12 @@ export default function SummaryDetails() {
                     />
                   </TabProvider>
                 </FullWidthContent> */}
-              </MobileView>
-            </>
-          }
-        />
-      ) : (
-        <GamePageDefault component={<SkeletonBanner />} />
-      )}
-    </>
+          </MobileView>
+        </>
+      }
+    />
+  ) : (
+    <GamePageDefault component={<SkeletonBanner />} />
   )
 }
 

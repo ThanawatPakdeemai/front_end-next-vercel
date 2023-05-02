@@ -4,6 +4,9 @@ import { useRouter } from "next/router"
 import dynamic from "next/dynamic"
 import useGetGameByPath from "@feature/game/containers/hooks/useFindGameByPath"
 import useGameStore from "@stores/game"
+import CONFIGS from "@configs/index"
+import { isMobile } from "react-device-detect"
+import WaitingLayout from "@src/mobile/components/templates/WaitingLayout"
 
 const GameRoomLayout = dynamic(
   () => import("@components/templates/GameRoomLayout"),
@@ -47,7 +50,11 @@ export default function GameRoomList() {
 }
 
 GameRoomList.getLayout = function getLayout(page: ReactElement) {
-  return <GameRoomLayout>{page}</GameRoomLayout>
+  return isMobile && CONFIGS.DISPLAY_MOBILE_MODE ? (
+    <WaitingLayout />
+  ) : (
+    <GameRoomLayout>{page}</GameRoomLayout>
+  )
 }
 
 export async function getServerSideProps({ locale }) {

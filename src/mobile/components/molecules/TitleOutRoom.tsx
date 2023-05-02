@@ -9,7 +9,7 @@ const TitleOutRoom = (props: IProps) => {
   const { name, onOutRoom } = props
   const router = useRouter()
   return (
-    <div className="mx-[16px] my-[17.1px] flex items-center gap-1">
+    <div className=" my-[17.1px] flex items-center gap-1">
       <ButtonClose
         insideClassName="!w-[23px] !h-[23px]"
         className="!mx-2"

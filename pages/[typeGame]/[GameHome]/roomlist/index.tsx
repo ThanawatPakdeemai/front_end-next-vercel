@@ -11,6 +11,7 @@ import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { isMobile } from "react-device-detect"
+import CONFIGS from "@configs/index"
 
 const BuyItemBody = dynamic(
   () => import("@components/templates/game/BuyItemBody"),
@@ -199,7 +200,7 @@ export default function GameRoomList() {
 }
 
 GameRoomList.getLayout = function getLayout(page: ReactElement) {
-  return isMobile ? <RoomListLayout /> : page
+  return isMobile && CONFIGS.DISPLAY_MOBILE_MODE ? <RoomListLayout /> : page
 }
 
 export async function getServerSideProps({ locale }) {

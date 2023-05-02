@@ -15,7 +15,7 @@ const DownloadIcons = ({
     <path
       d="M8 0V14M8 14L3 9M8 14L13 9M0 16H16"
       stroke={color}
-      stroke-width="1.2"
+      strokeWidth="1.2"
     />
   </svg>
 )

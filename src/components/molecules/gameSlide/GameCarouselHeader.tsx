@@ -54,7 +54,10 @@ const GameCarouselHeader = ({
   hideNextPrev,
   hideViewAll
 }: IProps) => {
-  const bgColor = `!bg-${menu?.theme}-main`
+  const bgColor = `bg-${menu?.theme}-main`
+  const bgColorHover = `hover:bg-${menu?.theme}-main`
+  const titleIcon = `flex w-[142px] flex-auto items-center justify-center whitespace-nowrap font-bold md:flex-none gap-2`
+
   const { t } = useTranslation()
   const animateControls = useAnimation()
   const [isHover, setIsHover] = useState<boolean>(false)
@@ -104,7 +107,7 @@ const GameCarouselHeader = ({
   }, [isHover])
 
   return (
-    <div className="slick-header-container relative mb-4 w-full md:h-[50px]">
+    <div className="slick-header-container relative mb-[30px] w-full">
       {menu && (
         <motion.div
           key={`sticker_${menu.title}`}
@@ -124,38 +127,42 @@ const GameCarouselHeader = ({
         </motion.div>
       )}
 
-      <div className="flex h-full w-full flex-wrap items-center justify-between gap-2 sm:flex-nowrap">
+      <div className="flex h-full w-full flex-wrap items-center justify-between gap-[5px] sm:flex-nowrap">
         {menu && (
-          <div className="relative flex h-full w-fit max-w-[424px] flex-auto flex-wrap items-center justify-between rounded-lg border-2 border-neutral-800 bg-neutral-900 bg-opacity-40 px-1 text-[10px] capitalize backdrop-blur-[25px] sm:flex-nowrap lg:flex-none">
-            <div className="flex flex-auto items-center justify-center whitespace-nowrap py-1 pl-4 font-bold sm:justify-start md:flex-none">
+          <div className="relative flex h-full w-fit flex-auto flex-wrap items-center justify-between rounded-xl border-2 border-neutral-800 bg-neutral-900 bg-opacity-40 p-[5px] text-[10px] capitalize backdrop-blur-[25px] sm:flex-nowrap lg:flex-none">
+            <div className={titleIcon}>
               {menu.icon}
               <p
-                className={`text-${menu.theme}-main pl-2 pr-2 font-neue-machina-bold text-[16px] font-bold uppercase md:h-[10px] md:text-[10px]`}
+                className={`text-${menu.theme}-main text-[16px] font-bold uppercase md:h-[10px] md:text-[10px]`}
               >
                 {t(menu.title)}
               </p>
             </div>
-            <div className="flex flex-[1_1_100%] justify-center sm:flex-none sm:justify-start ">
+            <div className="flex flex-[1_1_100%] justify-center gap-1 sm:flex-none sm:justify-start">
               {" "}
               {menu.menuList.map((item) => (
                 <button
                   type="button"
                   key={item.id}
-                  className={`${item.className} ml-1 !cursor-pointer`}
+                  className={`!cursor-pointer ${
+                    item.className ? item.className : ""
+                  }`}
                   onClick={() => onChangeType(item.type as IGetType)}
                 >
                   <Chip
                     label={t(item.label)}
                     size="medium"
                     color={curType === item.type ? menu.theme : undefined}
-                    className={` h-full w-full cursor-pointer font-bold hover:bg-${
-                      menu.theme
-                    }-main !hover:text-white-primary capitalize ${
+                    className={`!hover:text-white-primary ${bgColorHover} h-full w-full cursor-pointer ${bgColorHover} !p-[9px_20px] font-bold capitalize ${
                       curType === item.type
-                        ? `!text-white-primary ${bgColor}`
-                        : "text-black-default hover:text-white-primary"
+                        ? `!text-white-primary !${bgColor}`
+                        : `hover:text-white-primary ${bgColorHover}`
                     }`}
-                    sx={{ background: "red" }}
+                    sx={{
+                      "&.MuiChip-filled": {
+                        background: "#18181C"
+                      }
+                    }}
                   />
                 </button>
               ))}

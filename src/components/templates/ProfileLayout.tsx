@@ -6,6 +6,7 @@ import Header from "@components/organisms/Header"
 import { PROFILE_CRUMB } from "@configs/crumb"
 import { ICrumb } from "@interfaces/IMenu"
 import { BrowserView, MobileView } from "react-device-detect"
+import CONFIGS from "@configs/index"
 
 interface IProp
   extends React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">> {
@@ -24,14 +25,16 @@ const ProfileLayout = ({ _breadcrumb, children }: IProp) => (
             _breadcrumbs={_breadcrumb || PROFILE_CRUMB()}
           />
         </div>
-        <div className="flex-row gap-3 md:flex">
+        <div className="flex-row gap-[30px] md:flex">
           <SidebarProfile />
           {children}
         </div>
         <Footer />
       </div>
     </BrowserView>
-    <MobileView>{children}</MobileView>
+    {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+      <MobileView>{children}</MobileView>
+    )}
   </>
 )
 

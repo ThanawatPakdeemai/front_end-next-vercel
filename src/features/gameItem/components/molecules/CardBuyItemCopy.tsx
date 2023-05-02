@@ -275,7 +275,7 @@ export default function CardBuyItemCopy({
                   <div className="w-full">
                     <RightMenuBuyItem
                       disabled={!!(profile === undefined || profile === null)}
-                      classNameBtn="!w-[7.375rem] !min-w-[7.375rem]"
+                      className="!w-[7.375rem] !min-w-[7.375rem]"
                     />
                   </div>
                 </div>

@@ -1,8 +1,8 @@
 import React, { ReactNode } from "react"
 import IconArrowRight from "@components/icons/arrowRightIcon"
-import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import { motion } from "framer-motion"
 import Link from "next/link"
+import SportEsportIcon from "@components/icons/SportEsportIcon"
 
 type TTypeButton = "submit" | "reset" | "button" | undefined
 interface IProps {
@@ -21,7 +21,7 @@ interface IProps {
 
 const ButtonToggleIcon = ({
   href,
-  startIcon = <SportsEsportsOutlinedIcon />,
+  startIcon = <SportEsportIcon />,
   endIcon = <IconArrowRight />,
   text,
   handleClick,
@@ -81,7 +81,7 @@ const ButtonToggleIcon = ({
 
   const renderContent = () => (
     <motion.button
-      className={`btn-icon-container flex h-10 w-full  items-center justify-center rounded-md ${className} ${
+      className={`btn-icon-container flex h-10 w-full  items-center justify-center gap-[18px] rounded-md ${className} ${
         disabled && " !bg-neutral-680"
       }`}
       style={style}
@@ -98,7 +98,7 @@ const ButtonToggleIcon = ({
         {startIcon}
       </motion.span>
       <motion.p
-        className={`${textClassName} mx-1 min-w-[40%] font-neue-machina text-sm`}
+        className={`${textClassName} font-neue-machina text-sm`}
         variants={textBtn}
       >
         {dropColor ? (

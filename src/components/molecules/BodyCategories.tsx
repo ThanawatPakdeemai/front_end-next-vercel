@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react"
 import Slider, { Settings } from "react-slick"
 import useCategories from "@hooks/useCategories"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
+import { CATEGORY_ICON } from "@constants/categoryIcon"
 import CategoryCard from "./cards/CategoryCard"
 
 const BodyCategories = () => {
@@ -74,6 +75,10 @@ const BodyCategories = () => {
                 img={item.image_list}
                 text={item.name}
                 href={onHandleClickCatogory(item.slug, item.id)}
+                icon={
+                  CATEGORY_ICON.find((_item) => _item.id === item.slug)?.icon ||
+                  ""
+                }
               />
             ))
           : [...Array(limitPage)].map(() => <SkeletonCard key={uuid()} />)}

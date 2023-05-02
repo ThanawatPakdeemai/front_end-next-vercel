@@ -10,8 +10,8 @@ import { useTranslation } from "react-i18next"
 import { BrowserView, MobileView } from "react-device-detect"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import HeadMenuMobile from "@src/mobile/headerMenu/HeadMenuMobile"
 import { Box } from "@mui/material"
+import HeadMenuMobile from "@src/mobile/headerMenu/HeadMenuMobile"
 
 const GamePageLayout = ({
   children

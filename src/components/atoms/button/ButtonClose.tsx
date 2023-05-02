@@ -13,7 +13,7 @@ const ButtonClose = ({ onClick, className, insideClassName }: IProps) => {
   return (
     <Box
       component="div"
-      className={`button-close m-auto cursor-pointer ${className}`}
+      className={`button-close m-auto flex w-12 cursor-pointer justify-center ${className}`}
       onClick={onClick}
     >
       <Box

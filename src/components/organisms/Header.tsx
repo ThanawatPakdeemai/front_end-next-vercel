@@ -8,6 +8,7 @@ import useGlobal from "@hooks/useGlobal"
 import RightMenuDeveloper from "@components/molecules/rightMenu/RightMenuDeveloper"
 import HeadMenuMobile from "@src/mobile/headerMenu/HeadMenuMobile"
 import { BrowserView, MobileView } from "react-device-detect"
+import CONFIGS from "@configs/index"
 
 const Header = () => {
   const { isMarketplace, isDeveloperPage } = useGlobal()
@@ -18,7 +19,7 @@ const Header = () => {
   const showRightMenuDeveloper = isDeveloperPage
 
   return (
-    <>
+    <div className="header-wrapper">
       <BrowserView>
         {showHeadPrice && <HeadPrice />}
         <header className="header relative top-10 z-[999] lg:sticky">
@@ -33,17 +34,12 @@ const Header = () => {
           </Box>
         </header>
       </BrowserView>
-      <MobileView>
-        <header className="header fixed inset-x-0 bottom-4 z-[999] ">
-          <Box
-            component="div"
-            className="flex content-center items-center justify-center "
-          >
-            <HeadMenuMobile />
-          </Box>
-        </header>
-      </MobileView>
-    </>
+      {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+        <MobileView>
+          <HeadMenuMobile />
+        </MobileView>
+      )}
+    </div>
   )
 }
 

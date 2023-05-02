@@ -205,6 +205,7 @@ const useGlobal = (
    * @description Get type game path folder
    */
   const getTypeGamePathFolder = (_gameData: IGame): IGetType => {
+    if (!_gameData) return "play-to-earn-games"
     if (
       (_gameData?.game_type === "singleplayer" ||
         _gameData?.game_type === "multiplayer") &&
@@ -352,6 +353,9 @@ const useGlobal = (
     await router.push("/")
   }
 
+  /**
+   * @description Get market type
+   */
   useEffect(() => {
     let load = false
 
@@ -368,6 +372,8 @@ const useGlobal = (
         setMarketType("game_item")
       } else if (router.asPath.includes("arcade-game")) {
         setMarketType("nft_game")
+      } else if (router.asPath.includes("avatar-reef")) {
+        setMarketType("nft_avatar")
       }
     }
 

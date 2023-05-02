@@ -13,7 +13,6 @@ import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import useGlobal from "@hooks/useGlobal"
 import useGetStatisticsGameById from "@feature/game/containers/hooks/useGetStatisticsGameById"
 import TopPlayer from "@feature/ranking/components/template/TopPlayer"
-import useTopPlayerByGameId from "@feature/ranking/containers/hook/useTopPlayerByGameId"
 import useGameStore from "@stores/game"
 import Howto from "@components/molecules/HowToPlay"
 import { Box } from "@mui/material"
@@ -29,6 +28,11 @@ import StatsDetail from "@components/molecules/statistic/StatsDetail"
 import BankIcon from "@components/icons/BankIcon"
 import ControllerIcon from "@components/icons/ControllerIcon"
 import StatEstimatedProfit from "@components/molecules/statistic/StatEstimatedProfit"
+import IconArrowLeft from "@components/icons/arrowLeftIcon"
+import IconArrowRight from "@components/icons/arrowRightIcon"
+import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
+import Breadcrumb from "@components/molecules/Breadcrumb"
+import CONFIGS from "@configs/index"
 
 interface IGamePageDefaultProps {
   component: React.ReactNode
@@ -42,26 +46,44 @@ const GamePageDefault = ({
   component2,
   component3
 }: IGamePageDefaultProps) => {
-  const { getTypeGamePathFolder } = useGlobal()
+  const { getTypeGamePathFolder, stateProfile } = useGlobal()
   const { handleTimeExpire, getCodeShareToEarn } = useBuyGameItemController()
   const data = useGameStore((state) => state.data)
-  const { stateProfile } = useGlobal()
   const gamePartnerData = useGameStore((state) => state.dataGamePartner)
   const [gameData, setGameData] = useState<IGame | IPartnerGameData>()
   const { statsGameById } = useGetStatisticsGameById()
-  const { topPlayerGameId } = useTopPlayerByGameId()
   const { t } = useTranslation()
 
+  const {
+    onClickedPrev,
+    onClickedNext,
+    weeklyPoolByGameId,
+    isLoadingWeeklyPoolByGameId
+  } = useGameOverview(
+    gameData?.id as string,
+    getTypeGamePathFolder(gameData as IGame)
+  )
+
+  const containerClasses = "main-container mx-auto w-full  px-2 lg:px-0"
+
+  /**
+   * @description Render statistic
+   * @returns
+   */
   const renderStatistic = () => {
     const shop = true
+    const buttonArrow =
+      "flex flex-1 items-center justify-center p-[0_10px_0_15px] h-full"
+
     if (!gameData) return null
+
     switch (getTypeGamePathFolder(gameData as IGame)) {
       case "story-mode-games":
       case "free-to-play-games":
         return null
       default:
         return (
-          <>
+          <div className="game-page-default">
             <BrowserView>
               <Box component="section">
                 {/* <Tagline
@@ -87,111 +109,160 @@ const GamePageDefault = ({
                     background="neutral"
                     note
                     elevation={0}
-                    className="lg:max-w-auto max-w-full border border-neutral-900 border-opacity-80 !bg-warning-contrastText lg:!h-[424px] xl:!w-[100%]"
+                    className="border border-neutral-800 bg-primary-main lg:!h-[424px]"
                     rank
-                    topPlayerGameId={topPlayerGameId && topPlayerGameId}
+                    topPlayerGameId={weeklyPoolByGameId?.record || []}
+                    isFetching={isLoadingWeeklyPoolByGameId}
+                    rightContent={
+                      <div className="flex h-10 items-center rounded-[20px] border-[1px] border-neutral-700">
+                        <button
+                          type="button"
+                          className={buttonArrow}
+                          onClick={() =>
+                            onClickedPrev(weeklyPoolByGameId?.previous || "")
+                          }
+                        >
+                          <IconArrowLeft />
+                        </button>
+                        <button
+                          type="button"
+                          className={`${buttonArrow} border-l-[1px] border-neutral-700`}
+                          onClick={() =>
+                            onClickedNext(weeklyPoolByGameId?.next || "")
+                          }
+                        >
+                          <IconArrowRight />
+                        </button>
+                      </div>
+                    }
                   />
                 </div>
               </Box>
             </BrowserView>
-            <MobileView>
-              <Box component="section">
-                <Tagline
-                  bgColor="bg-neutral-800"
-                  textColor="text-neutral-500 font-bold"
-                  text={t("game_page_tagline_desc")}
-                  icon={<ShineIcon />}
-                  show={shop}
-                />
-                <div className="mb-12 grid grid-cols-2 gap-2">
-                  <LikeNoLobby
-                    imgSrc={
-                      gameData && "image_category_list" in gameData
-                        ? gameData.image_category_list
-                        : ""
-                    }
-                    value={78.34}
+            {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+              <MobileView>
+                <Box component="section">
+                  <Tagline
+                    bgColor="bg-neutral-800"
+                    textColor="text-neutral-500 font-bold"
+                    text={t("game_page_tagline_desc")}
+                    icon={<ShineIcon />}
+                    show={shop}
                   />
-                  <div className="flex flex-col gap-2 ">
-                    <div className=" flex flex-auto flex-col justify-between gap-2 ">
-                      <StatWithIcon
-                        icon={
-                          <PlayersIcon className="h-[60px] w-[60px] rotate-0" />
-                        }
-                        className="bg-error-main"
-                        textColor="text-error-main"
-                        title={t("players_today")}
-                        amount={statsGameById?.data.player_number || 0}
-                        unit={t("people")}
-                      />
-                      <StatWithIcon
-                        icon={
-                          <InvestIcon className="h-[60px] w-[60px] rotate-0" />
-                        }
-                        className="bg-secondary-main"
-                        textColor="text-secondary-main"
-                        title={t("invest_today")}
-                        amount={statsGameById?.data.invest || 0}
-                        unit="naka"
-                      />
-                      <StatWithIcon
-                        icon={
-                          <RewardIcon className="h-[60px] w-[60px] rotate-0" />
-                        }
-                        className="bg-varidian-default"
-                        textColor="text-varidian-default"
-                        title={t("reward_today")}
-                        amount={statsGameById?.data.reward_naka || 0}
-                        unit="naka"
-                      />
+                  <div className="mb-12 grid grid-cols-2 gap-2">
+                    <LikeNoLobby
+                      imgSrc={
+                        gameData && "image_category_list" in gameData
+                          ? gameData.image_category_list
+                          : ""
+                      }
+                      value={78.34}
+                    />
+                    <div className="flex flex-col gap-2 ">
+                      <div className=" flex flex-auto flex-col justify-between gap-2 ">
+                        <StatWithIcon
+                          icon={
+                            <PlayersIcon className="h-[60px] w-[60px] rotate-0" />
+                          }
+                          className="bg-error-main"
+                          textColor="text-error-main"
+                          title={t("players_today")}
+                          amount={statsGameById?.data.player_number || 0}
+                          unit={t("people")}
+                        />
+                        <StatWithIcon
+                          icon={
+                            <InvestIcon className="h-[60px] w-[60px] rotate-0" />
+                          }
+                          className="bg-secondary-main"
+                          textColor="text-secondary-main"
+                          title={t("invest_today")}
+                          amount={statsGameById?.data.invest || 0}
+                          unit="naka"
+                        />
+                        <StatWithIcon
+                          icon={
+                            <RewardIcon className="h-[60px] w-[60px] rotate-0" />
+                          }
+                          className="bg-varidian-default"
+                          textColor="text-varidian-default"
+                          title={t("reward_today")}
+                          amount={statsGameById?.data.reward_naka || 0}
+                          unit="naka"
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-span-2 my-4 flex grid w-full flex-auto grid-cols-3 flex-col justify-evenly gap-2 ">
-                    <div className="flex grid w-full flex-auto gap-2 ">
-                      <StatsDetail
-                        icon={<ControllerIcon />}
-                        title={t("games_per_day")}
-                        type="normal"
-                        amount={statsGameById?.data.numnber_game_play || 0}
-                        unit={t("Games")}
-                      />
-                      <StatsDetail
-                        icon={<BankIcon />}
-                        title={t("costs_per_game")}
-                        type="range"
-                        amount={statsGameById?.data.cost_per_game_doller || 0}
-                        unit={`= ${
-                          statsGameById?.data.cost_per_game_naka || 0
-                        }`}
-                      />
+                    <div className="col-span-2 my-4 flex w-full flex-auto grid-cols-3 flex-col justify-evenly gap-2 ">
+                      <div className="flex w-full flex-auto gap-2 ">
+                        <StatsDetail
+                          icon={<ControllerIcon />}
+                          title={t("games_per_day")}
+                          type="normal"
+                          amount={statsGameById?.data.numnber_game_play || 0}
+                          unit={t("Games")}
+                        />
+                        <StatsDetail
+                          icon={<BankIcon />}
+                          title={t("costs_per_game")}
+                          type="range"
+                          amount={statsGameById?.data.cost_per_game_doller || 0}
+                          unit={`= ${
+                            statsGameById?.data.cost_per_game_naka || 0
+                          }`}
+                        />
+                      </div>
+                      <div className="col-span-2">
+                        <StatEstimatedProfit
+                          minValue={`+${
+                            statsGameById?.data.profit_potential_min || 0
+                          }%`}
+                          maxValue={`+${
+                            statsGameById?.data.profit_potential_max || 0
+                          }%`}
+                        />
+                      </div>
                     </div>
                     <div className="col-span-2">
-                      <StatEstimatedProfit
-                        minValue={`+${
-                          statsGameById?.data.profit_potential_min || 0
-                        }%`}
-                        maxValue={`+${
-                          statsGameById?.data.profit_potential_max || 0
-                        }%`}
+                      <TopPlayer
+                        element="select"
+                        subtitle
+                        background="neutral"
+                        note
+                        elevation={0}
+                        className="h-auto w-full border border-neutral-900 border-opacity-80 !bg-warning-contrastText "
+                        rank
+                        topPlayerGameId={weeklyPoolByGameId?.record || []}
+                        rightContent={
+                          <div className="flex h-10 items-center rounded-[20px] border-[1px] border-neutral-700">
+                            <button
+                              type="button"
+                              className={buttonArrow}
+                              onClick={() =>
+                                onClickedPrev(
+                                  weeklyPoolByGameId?.previous || ""
+                                )
+                              }
+                            >
+                              <IconArrowLeft />
+                            </button>
+                            <button
+                              type="button"
+                              className={`${buttonArrow} border-l-[1px] border-neutral-700`}
+                              onClick={() =>
+                                onClickedNext(weeklyPoolByGameId?.next || "")
+                              }
+                            >
+                              <IconArrowRight />
+                            </button>
+                          </div>
+                        }
                       />
                     </div>
                   </div>
-                  <div className="col-span-2">
-                    <TopPlayer
-                      element="select"
-                      subtitle
-                      background="neutral"
-                      note
-                      elevation={0}
-                      className="h-auto w-full border border-neutral-900 border-opacity-80 !bg-warning-contrastText "
-                      rank
-                      topPlayerGameId={topPlayerGameId && topPlayerGameId}
-                    />
-                  </div>
-                </div>
-              </Box>
-            </MobileView>
-          </>
+                </Box>
+              </MobileView>
+            )}
+          </div>
         )
     }
   }
@@ -240,10 +311,11 @@ const GamePageDefault = ({
   }, [stateProfile])
 
   return (
-    <>
+    <div className="game-page-default">
       <BrowserView>
-        <div className="main-container mx-auto w-full  px-2 lg:px-0">
+        <div className={containerClasses}>
           <Header />
+          <Breadcrumb />
           {gameData && "image_banner" in gameData ? (
             <BannerSingle
               src={gameData.image_banner}
@@ -256,12 +328,12 @@ const GamePageDefault = ({
 
           {gameData && <Howto data={gameData as IGame} />}
           {component}
+          {renderStatistic()}
           {/**
            * @description In case there is a need to add another component
            */}
           {component2 && <div className="mt-12">{component2}</div>}
           {component3 && <div className="mt-12">{component3}</div>}
-          {renderStatistic()}
           {/* //NOTE - comment ไว้ก่อน ค่อยเปิด feature นี้ทีหลัง */}
           {/* {gameData && (
         <ReleatedGames _gameType={getTypeGamePathFolder(gameData as IGame)} />
@@ -269,18 +341,20 @@ const GamePageDefault = ({
           <Footer />
         </div>
       </BrowserView>
-      <MobileView>
-        <div className="main-container mx-auto w-full  px-2 lg:px-0">
-          {component}
-          {/**
-           * @description In case there is a need to add another component
-           */}
-          {component2 && <div className="mt-4">{component2}</div>}
-          {component3 && <div className="mt-4">{component3}</div>}
-          {renderStatistic()}
-        </div>
-      </MobileView>
-    </>
+      {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+        <MobileView>
+          <div className={containerClasses}>
+            {component}
+            {/**
+             * @description In case there is a need to add another component
+             */}
+            {component2 && <div className="mt-4">{component2}</div>}
+            {component3 && <div className="mt-4">{component3}</div>}
+            {renderStatistic()}
+          </div>
+        </MobileView>
+      )}
+    </div>
   )
 }
 export default GamePageDefault

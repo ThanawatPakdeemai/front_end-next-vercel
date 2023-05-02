@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid"
 import Balance from "./balance/Balance"
 import StatProfile from "./statProfile/StatProfile"
 import MenuLoggedin from "./menuProfile/MenuLoggedin"
+import { StyledMenuItemCustom } from "./SidebarGames"
 
 const SidebarProfile = () => {
   const { profile } = useProfileStore()
@@ -28,7 +29,10 @@ const SidebarProfile = () => {
 
   return (
     <div className="mx-auto w-full max-w-xs gap-5 md:mx-0 md:flex md:w-[200px] md:flex-col">
-      <MenuList className="rounded-[13px] bg-neutral-700 p-[6px]">
+      <MenuList
+        sx={StyledMenuItemCustom}
+        className="rounded-[13px] bg-neutral-700 p-[6px]"
+      >
         {MENU_LOGGEDIN.map((ele) => (
           <MenuLoggedin
             ele={ele}

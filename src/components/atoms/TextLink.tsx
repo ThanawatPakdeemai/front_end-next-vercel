@@ -1,8 +1,7 @@
 import React, { ReactNode } from "react"
 import { motion, Variants } from "framer-motion"
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
-import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
 import Link from "next/link"
+import ArrowOutwardIcon from "@components/icons/ArrowOutwardIcon"
 
 export interface ITextLink {
   name?: string | null
@@ -11,13 +10,13 @@ export interface ITextLink {
   animate?: string
   variantsArrow?: Variants
   variantsText?: Variants
-  icon?: ReactNode
+  icon?: ReactNode | null
   arrow?: boolean
-  arrowHeight?: number
   className?: string
   onClick?: () => void
   href?: string
   target?: string
+  active?: boolean
 }
 
 const TextLink = ({
@@ -27,10 +26,10 @@ const TextLink = ({
   icon,
   arrow = true,
   className,
-  arrowHeight,
   onClick,
   href,
-  target
+  target,
+  active
 }: ITextLink) => {
   const arrowMotion = {
     rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
@@ -89,29 +88,30 @@ const TextLink = ({
     <motion.div
       initial="rest"
       whileHover="hover"
-      animate="rest"
+      animate={active ? "hover" : "rest"}
       className="relative max-w-[200px] cursor-pointer"
       onClick={onClick}
     >
       <motion.div
-        className="opacity-1 absolute left-0 translate-y-[-30%]"
+        className="opacity-1 icon-arrow__start absolute left-0 top-[2px] translate-y-[-30%] transition-all"
         variants={variantsArrow || arrowMotion}
       >
-        {arrow ? (
-          <ArrowForwardIcon sx={{ height: arrowHeight || 14 }} />
-        ) : (
-          <></>
-        )}
+        {arrow ? <ArrowOutwardIcon /> : <></>}
       </motion.div>
-      <div className="flex max-w-[120px] text-center">
+      <div className="text-link__text-wrapper flex max-w-[120px] text-center">
         <motion.div
-          className={`pb-[14px]  ${className}`}
+          className={`flex items-center pb-[14px] ${className}`}
           variants={variantsText || textMotion}
         >
           {name}
-          <motion.span variants={iconEnd}>
-            {icon || <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />}
-          </motion.span>
+          {icon && (
+            <motion.span
+              variants={iconEnd}
+              className="icon-arrow__end"
+            >
+              {icon || <ArrowOutwardIcon />}
+            </motion.span>
+          )}
         </motion.div>
       </div>
     </motion.div>

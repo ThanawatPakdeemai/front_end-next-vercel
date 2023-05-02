@@ -24,7 +24,7 @@ const TournamentLayout = ({
       />
       <Banners />
       {/* <div className="flex flex-row gap-3">{children}</div> */}
-      <div className="flex-row gap-3 md:flex">
+      <div className="flex-row gap-[30px] md:flex">
         <SidebarGames />
         {children}
       </div>

@@ -120,11 +120,15 @@ const GameStatOverview = ({ data, limit, page }: IProp) => {
                       damping: 4
                     }}
                   >
-                    <RankIcon
-                      width={70}
-                      height={70}
-                      icon={item.rank}
-                    />
+                    {item.rank === "-" ? (
+                      "-"
+                    ) : (
+                      <RankIcon
+                        width={70}
+                        height={70}
+                        icon={item.rank}
+                      />
+                    )}
                   </motion.div>
                 </div>
               </div>

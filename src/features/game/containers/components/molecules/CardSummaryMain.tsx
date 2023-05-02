@@ -1,5 +1,6 @@
 import SaveIcon from "@components/icons/SaveIcon"
 import TableIcon from "@components/icons/TableIcon"
+import CONFIGS from "@configs/index"
 import SocialShare from "@feature/blog/components/organisms/SocialShare"
 import { Typography } from "@mui/material"
 import Helper from "@utils/helper"
@@ -64,33 +65,35 @@ const CardSummaryMain = ({
         </div>
       </div>
     </BrowserView>
-    <MobileView>
-      <div className="mt-4 flex w-full  flex-col items-center justify-center text-error-main">
-        <TableIcon className="absolute z-[1] block" />
-        <span className="mb-4 text-sm font-bold uppercase">{title}</span>
-        <span className="text-neon font-mondwest text-[50px] ">
-          {value &&
-            Helper.formatNumber(value, {
-              maximumFractionDigits: 4
-            })}
-          ✨
-        </span>
-        {gameURLtoShare && (
-          <div className="my-2 flex w-full  flex-col items-center justify-center ">
-            <span className="mb-1 text-xs font-bold uppercase ">
-              Send to friends
-            </span>
-            <div className="flex">
-              <SocialShare
-                variant="large"
-                shareTitle={gameName || "Nanamoto.games"}
-                shareURL={gameURLtoShare}
-              />
+    {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+      <MobileView>
+        <div className="mt-4 flex w-full  flex-col items-center justify-center text-error-main">
+          <TableIcon className="absolute z-[1] block" />
+          <span className="mb-4 text-sm font-bold uppercase">{title}</span>
+          <span className="text-neon font-mondwest text-[50px] ">
+            {value &&
+              Helper.formatNumber(value, {
+                maximumFractionDigits: 4
+              })}
+            ✨
+          </span>
+          {gameURLtoShare && (
+            <div className="my-2 flex w-full  flex-col items-center justify-center ">
+              <span className="mb-1 text-xs font-bold uppercase ">
+                Send to friends
+              </span>
+              <div className="flex">
+                <SocialShare
+                  variant="large"
+                  shareTitle={gameName || "Nanamoto.games"}
+                  shareURL={gameURLtoShare}
+                />
+              </div>
             </div>
-          </div>
-        )}
-      </div>
-    </MobileView>
+          )}
+        </div>
+      </MobileView>
+    )}
   </>
 )
 

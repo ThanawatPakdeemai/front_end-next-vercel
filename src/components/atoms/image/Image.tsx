@@ -16,18 +16,24 @@ export const ImageCustom = ({
   const imgSrc = src || ""
 
   return (
-    <Image
-      src={imgSrc}
-      width={width || 0}
-      height={height || 0}
-      style={style}
-      blurDataURL={blurDataURL}
-      className={className}
-      placeholder={placeholder}
-      fill={fill}
-      alt={alt || ""}
-      onClick={onClick}
-    />
+    <picture>
+      <source
+        type="image/webp"
+        srcSet={imgSrc as string}
+      />
+      <Image
+        src={imgSrc}
+        width={width || 0}
+        height={height || 0}
+        style={style}
+        blurDataURL={blurDataURL}
+        className={className}
+        placeholder={placeholder}
+        fill={fill}
+        alt={alt || ""}
+        onClick={onClick}
+      />
+    </picture>
   )
 }
 

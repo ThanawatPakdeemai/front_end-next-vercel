@@ -6,6 +6,7 @@ import Header from "@components/organisms/Header"
 import { PROFILE_CRUMB } from "@configs/crumb"
 import { ICrumb } from "@interfaces/IMenu"
 import { BrowserView, MobileView } from "react-device-detect"
+import CONFIGS from "@configs/index"
 
 interface IProp
   extends React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">> {
@@ -31,7 +32,9 @@ const ProfileLayout = ({ _breadcrumb, children }: IProp) => (
         <Footer />
       </div>
     </BrowserView>
-    <MobileView>{children}</MobileView>
+    {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+      <MobileView>{children}</MobileView>
+    )}
   </>
 )
 

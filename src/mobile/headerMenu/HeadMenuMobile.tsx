@@ -35,7 +35,7 @@ const HeadMenuMobile = () => {
       component="div"
       className="bg-white/30 border-slate-50 w-[80%]  rounded-full border border-neutral-800 text-white-default backdrop-blur-md"
     >
-      <div className="m-2 mx-[10px] grid grid-cols-5  items-center justify-items-center gap-4 rounded-full">
+      <div className="m-2 mx-[10px] grid grid-cols-5 items-center  justify-center justify-items-center gap-4 rounded-full">
         <Link
           href="/"
           className="static"
@@ -48,18 +48,23 @@ const HeadMenuMobile = () => {
           )}
         </Link>
         <ShoppingCartOutlinedIcon sx={{ fontSize: 25 }} />
-        <IconButtonCustom
-          aria-label="expanded-menu-profile"
-          className=" h-10 w-10 rotate-45 rounded-[13px] border-[2px] border-neutral-700 bg-error-main duration-100 "
+        <Link
+          href="/"
+          className="static"
         >
-          <div className="rotate-[-45deg] text-white-default">
-            <INaka
-              width="29"
-              hanging="16"
-              color="#ffffff"
-            />
-          </div>
-        </IconButtonCustom>
+          <IconButtonCustom
+            aria-label="expanded-menu-profile"
+            className=" h-10 w-10 rotate-45 rounded-[13px] border-[2px] border-neutral-700 bg-error-main duration-100 "
+          >
+            <div className="rotate-[-45deg] text-white-default">
+              <INaka
+                width="29"
+                hanging="16"
+                color="#ffffff"
+              />
+            </div>
+          </IconButtonCustom>
+        </Link>
         <Link
           href="/notification"
           className="static"

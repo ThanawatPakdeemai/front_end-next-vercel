@@ -14,12 +14,9 @@ import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
 import useTable from "@feature/table/containers/hooks/useTable"
 import { IHistory } from "@feature/history/interfaces/IHistoryService"
-import { useTranslation } from "react-i18next"
-import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined"
-import Link from "next/link"
-import SearchIcon from "@mui/icons-material/Search"
 import NoData from "@components/molecules/NoData"
 import { Image } from "@components/atoms/image/index"
+import Headerbackpage from "@src/mobile/features/Headerbackpage"
 
 const HistoryTableMobile = () => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -28,7 +25,6 @@ const HistoryTableMobile = () => {
   const { handleClickView } = useHistoryController()
   const { limit, setLimit } = useTable()
   const { getHistoryData } = useHistory()
-  const { t } = useTranslation()
 
   // States
   const [skip, setSkip] = useState<number>(1)
@@ -81,15 +77,7 @@ const HistoryTableMobile = () => {
     <>
       {hydrated && (
         <div className="mx-auto max-w-[678px]">
-          <div className="mt-4 flex flex-1 items-center justify-between border-b-2 border-[#161616be] text-white-default md:mt-0 md:flex">
-            <Link href="/">
-              <ArrowBackOutlinedIcon />
-            </Link>
-            <h1 className="flex-auto py-2 text-center text-base uppercase sm:mr-3 sm:flex-none sm:text-left">
-              {t("Played History")}
-            </h1>
-            <SearchIcon />
-          </div>
+          <Headerbackpage text="Played History" />
           <div className="grid h-full w-full grid-cols-2 content-center justify-items-center gap-4">
             <div
               className={`flex w-full justify-center p-2 ${

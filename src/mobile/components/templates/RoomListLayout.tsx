@@ -3,16 +3,26 @@ import React, { ReactElement } from "react"
 import Header from "@components/organisms/Header"
 import RoomListPage from "@src/mobile/features/pages/game/RoomListPage"
 import useGameStore from "@stores/game"
-import { MENU } from "@configs/menu"
+// import { MENU } from "@configs/menu"
+import { useRouter } from "next/router"
 import HeaderProfile from "../atoms/HeaderProfile"
-import HeaderMenu from "../atoms/HeaderMenu"
+import BannerGame from "../atoms/BannerGame"
+import TitleOutRoom from "../molecules/TitleOutRoom"
+// import HeaderMenu from "../atoms/HeaderMenu"
 
 const RoomListLayout = () => {
   const { data } = useGameStore()
+  const router = useRouter()
+
   return (
     <>
       <HeaderProfile title={data?.name || "Game"} />
-      <HeaderMenu menu={MENU[1].chide || []} />
+      <BannerGame imageBanner={data?.image_banner || ""} />
+      <TitleOutRoom
+        name={data?.name || "Game"}
+        onOutRoom={() => router.push(router?.asPath?.replace("/roomlist", ""))}
+      />
+      {/* <HeaderMenu menu={MENU[1].chide || []} /> */}
       <div className="mb-[80px]">
         {/* content */}
         <RoomListPage />

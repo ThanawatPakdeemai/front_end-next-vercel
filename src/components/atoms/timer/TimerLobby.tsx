@@ -6,6 +6,7 @@ interface IProp {
   time: Date
   initTheme: string
   onExpire?: () => void
+  classNameText?: string
 }
 
 /**
@@ -16,7 +17,7 @@ interface IProp {
  * @param shade is child key in tailwind.config.js
  */
 
-const TimerLobby = ({ time, onExpire, initTheme }: IProp) => {
+const TimerLobby = ({ time, onExpire, initTheme, classNameText }: IProp) => {
   const { hours, minutes, seconds } = useTimer({
     autoStart: true,
     expiryTimestamp: time as Date,
@@ -32,18 +33,21 @@ const TimerLobby = ({ time, onExpire, initTheme }: IProp) => {
   }
 
   return (
-    <div className="relative top-[2px] flex font-normal">
+    <div className={`relative top-[2px] flex font-normal `}>
       <Typography
+        className={`${classNameText}`}
         sx={{
           color: hours > 0 ? initTheme : "#4E5057"
         }}
       >{`${initTimer.h}:`}</Typography>
       <Typography
+        className={`${classNameText}`}
         sx={{
           color: minutes > 0 || hours > 0 ? initTheme : "#4E5057"
         }}
       >{`${initTimer.m}:`}</Typography>
       <Typography
+        className={`${classNameText}`}
         sx={{
           color: seconds > 0 || minutes > 0 || hours > 0 ? initTheme : "#4E5057"
         }}

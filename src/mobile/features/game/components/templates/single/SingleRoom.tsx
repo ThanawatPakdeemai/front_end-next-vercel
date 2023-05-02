@@ -14,6 +14,7 @@ const SingleRoom = () => {
             gameData &&
             roomData?.map((item) => (
               <ListJoinGame
+                time={item.end_time as unknown as string}
                 key={item._id}
                 image={gameData.image_room}
                 name={gameData.game_type}

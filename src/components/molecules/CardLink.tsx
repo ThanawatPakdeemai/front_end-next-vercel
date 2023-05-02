@@ -134,72 +134,70 @@ const CardLink = ({
   }
 
   return (
-    <>
+    <motion.div
+      className={`card-link relative h-[26.625vw] max-h-[218px] w-full overflow-hidden rounded-3xl ${classNameMain}`}
+      style={styleMain}
+      onHoverStart={onHoverCard}
+      onHoverEnd={onHoverCard}
+    >
       <motion.div
-        className={`card-link relative h-[26.625vw] max-h-[218px] w-full overflow-hidden rounded-3xl ${classNameMain}`}
-        style={styleMain}
-        onHoverStart={onHoverCard}
-        onHoverEnd={onHoverCard}
+        className="md card-link absolute flex h-full w-full flex-col items-center justify-center rounded-3xl lg:h-[218px] xl:w-[218px]"
+        style={styleSecond || { backgroundColor: `${bgMain}` }}
+        whileHover="hover"
+        variants={cardLinkMotion}
+        initial="rest"
+        animate="rest"
       >
         <motion.div
-          className="md card-link absolute flex h-full w-full flex-col items-center justify-center rounded-3xl lg:h-[218px] xl:w-[218px]"
+          className={`image--bg absolute h-full w-full rounded-3xl ${classNameSecond}`}
           style={styleSecond || { backgroundColor: `${bgMain}` }}
-          whileHover="hover"
-          variants={cardLinkMotion}
-          initial="rest"
-          animate="rest"
+          variants={slideBottomMotion}
+        />
+        <motion.div
+          className="image--object absolute flex h-full w-full flex-col items-center justify-center pb-[48px]"
+          style={styleSecond || { backgroundColor: `${bgMain}` }}
+          variants={zoomInMotion}
         >
-          <motion.div
-            className={`image--bg absolute h-full w-full rounded-3xl ${classNameSecond}`}
-            style={styleSecond || { backgroundColor: `${bgMain}` }}
-            variants={slideBottomMotion}
-          />
-          <motion.div
-            className="image--object absolute flex h-full w-full flex-col items-center justify-center pb-[48px]"
-            style={styleSecond || { backgroundColor: `${bgMain}` }}
-            variants={zoomInMotion}
-          >
-            <Image
-              src={srcMain}
-              alt={altMain}
-              width={123}
-              height={123}
-              className={`absolute z-[1] max-w-[80px] md:max-w-[120px] ${imageClassNameMain}`}
-              style={imageStyleMain || { transition: "all 0.2s ease-in" }}
-              loading="eager"
-              priority
-            />
-          </motion.div>
-          <motion.div
-            className="image--objectBg absolute flex h-full w-full flex-col items-center justify-center pb-[48px]"
-            style={styleSecond || { backgroundColor: `${bgMain}` }}
-            variants={zoomOutMotion}
-          >
-            <Image
-              src={srcSecond}
-              alt={altSecond}
-              width={123}
-              height={123}
-              className={`md:max-w-[120px absolute mx-0 my-auto max-w-[80px] ${imageClassNameSecond}`}
-              style={imageStyleSecond || { transition: "0.2s" }}
-              loading="eager"
-              priority
-            />
-          </motion.div>
-          <ButtonLink
-            href={href}
-            onClick={() => {
-              onClick ? onClick() : router.push(href)
-            }}
-            text={textBtn}
-            icon={iconBtn}
-            size="medium"
-            className="button-global button-transparent absolute bottom-2.5 left-2.5 right-2.5 !h-[38px] border border-solid border-black-300 text-primary-main lg:left-0 lg:mx-2 lg:!min-w-[134px] xl:left-2.5  xl:!min-w-[154px]"
-            stroke="#010101"
+          <Image
+            src={srcMain}
+            alt={altMain}
+            width={123}
+            height={123}
+            className={`absolute z-[1] max-w-[80px] md:max-w-[120px] ${imageClassNameMain}`}
+            style={imageStyleMain || { transition: "all 0.2s ease-in" }}
+            loading="eager"
+            priority
           />
         </motion.div>
+        <motion.div
+          className="image--objectBg absolute flex h-full w-full flex-col items-center justify-center pb-[48px]"
+          style={styleSecond || { backgroundColor: `${bgMain}` }}
+          variants={zoomOutMotion}
+        >
+          <Image
+            src={srcSecond}
+            alt={altSecond}
+            width={123}
+            height={123}
+            className={`md:max-w-[120px absolute mx-0 my-auto max-w-[80px] ${imageClassNameSecond}`}
+            style={imageStyleSecond || { transition: "0.2s" }}
+            loading="eager"
+            priority
+          />
+        </motion.div>
+        <ButtonLink
+          href={href}
+          onClick={() => {
+            onClick ? onClick() : router.push(href)
+          }}
+          text={textBtn}
+          icon={iconBtn}
+          size="medium"
+          className="button-global button-transparent absolute bottom-2.5 left-2.5 right-2.5 !h-[38px] border border-solid border-black-300 text-primary-main lg:left-0 lg:mx-2 lg:!min-w-[134px] xl:left-2.5  xl:!min-w-[154px]"
+          stroke="#010101"
+        />
       </motion.div>
-    </>
+    </motion.div>
   )
 }
 

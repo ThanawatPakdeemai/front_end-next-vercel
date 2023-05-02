@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next"
 import { BrowserView, MobileView } from "react-device-detect"
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined"
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined"
+import CONFIGS from "@configs/index"
 
 export interface IHeaderWaitingRoomProp {
   roomTag: string | number
@@ -141,108 +142,110 @@ const HeaderWaitingRoom = ({
       /> */}
         </div>
       </BrowserView>
-      <MobileView>
-        <div
-          className={`flex flex-wrap items-center gap-3 border-b border-neutral-800 p-2 ${className}`}
-        >
-          <div className="flex flex-auto items-center justify-between gap-2">
-            <div className="summary-page__button flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800">
-              {isSummaryPage ? (
-                <ButtonClose
-                  onClick={() => {
-                    if (onOutRoom) {
-                      onOutRoom()
-                    } else {
-                      router.push("/")
-                    }
-                  }}
-                />
-              ) : (
-                <ButtonClose
-                  onClick={() => {
-                    onOutRoom ? onOutRoom() : router.back()
-                  }}
+      {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+        <MobileView>
+          <div
+            className={`flex flex-wrap items-center gap-3 border-b border-neutral-800 p-2 ${className}`}
+          >
+            <div className="flex flex-auto items-center justify-between gap-2">
+              <div className="summary-page__button flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800">
+                {isSummaryPage ? (
+                  <ButtonClose
+                    onClick={() => {
+                      if (onOutRoom) {
+                        onOutRoom()
+                      } else {
+                        router.push("/")
+                      }
+                    }}
+                  />
+                ) : (
+                  <ButtonClose
+                    onClick={() => {
+                      onOutRoom ? onOutRoom() : router.back()
+                    }}
+                  />
+                )}
+              </div>
+
+              {roomTag ? (
+                <span
+                  className="summary-page__roomNo text-xs text-neutral-500 "
+                  aria-label="room-tag"
+                >
+                  #{roomTag}
+                </span>
+              ) : null}
+
+              <LockIcon />
+              {roomName && (
+                <span
+                  className="summary-page__roomName text-default uppercase text-neutral-300"
+                  aria-label="room-nam"
+                >
+                  {t("room")} : {roomName}
+                </span>
+              )}
+              {rankName && (
+                <span
+                  className="summary-page__rankName text-default uppercase text-neutral-300"
+                  aria-label="room-nam"
+                >
+                  Rank : {rankName}
+                </span>
+              )}
+
+              {isSummaryPage && (
+                <Chip
+                  label="FINISHED GAME"
+                  variant="filled"
+                  color="success"
+                  size="small"
+                  className="!bg-green-lemon"
                 />
               )}
             </div>
-
-            {roomTag ? (
-              <span
-                className="summary-page__roomNo text-xs text-neutral-500 "
-                aria-label="room-tag"
-              >
-                #{roomTag}
-              </span>
-            ) : null}
-
-            <LockIcon />
-            {roomName && (
-              <span
-                className="summary-page__roomName text-default uppercase text-neutral-300"
-                aria-label="room-nam"
-              >
-                {t("room")} : {roomName}
-              </span>
-            )}
-            {rankName && (
-              <span
-                className="summary-page__rankName text-default uppercase text-neutral-300"
-                aria-label="room-nam"
-              >
-                Rank : {rankName}
-              </span>
-            )}
-
-            {isSummaryPage && (
-              <Chip
-                label="FINISHED GAME"
-                variant="filled"
-                color="success"
-                size="small"
-                className="!bg-green-lemon"
-              />
-            )}
-          </div>
-          <div className="flex flex-auto items-center justify-between gap-2">
-            <RoomListBox
-              type="timer"
-              timer={timer}
-              color="green"
-              shade="lemon"
-            />
-            {player && (
-              <div className="flex rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-[6px] text-black-default">
-                <PeopleAltOutlinedIcon />
-                <p className="border-r border-black-default px-4">
-                  {player.currentPlayer}
-                </p>
-                <p className="pl-4 text-white-default">{player.maxPlayer}</p>
-              </div>
-            )}
-            <div className="flex rounded-lg border border-neutral-700 bg-neutral-900 p-[6px] px-2 text-white-default">
-              <SettingsOutlinedIcon />
-            </div>
-            {game && game?.game_type === "multiplayer" && (
+            <div className="flex flex-auto items-center justify-between gap-2">
               <RoomListBox
-                type="player"
-                player={player}
-                // for invite button
-                icon={
-                  !isSummaryPage ? (
-                    <>
-                      <ModalInvite />
-                    </>
-                  ) : null
-                }
-                onClick={onClick}
-                //
-                color="neutral"
-                shade="500"
+                type="timer"
+                timer={timer}
+                color="green"
+                shade="lemon"
               />
-            )}
+              {player && (
+                <div className="flex rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-[6px] text-black-default">
+                  <PeopleAltOutlinedIcon />
+                  <p className="border-r border-black-default px-4">
+                    {player.currentPlayer}
+                  </p>
+                  <p className="pl-4 text-white-default">{player.maxPlayer}</p>
+                </div>
+              )}
+              <div className="flex rounded-lg border border-neutral-700 bg-neutral-900 p-[6px] px-2 text-white-default">
+                <SettingsOutlinedIcon />
+              </div>
+              {game && game?.game_type === "multiplayer" && (
+                <RoomListBox
+                  type="player"
+                  player={player}
+                  // for invite button
+                  icon={
+                    !isSummaryPage ? (
+                      <>
+                        <ModalInvite />
+                      </>
+                    ) : null
+                  }
+                  onClick={onClick}
+                  //
+                  color="neutral"
+                  shade="500"
+                />
+              )}
+            </div>
           </div>
-        </div>
-      </MobileView>
+        </MobileView>
+      )}
     </>
   )
 }

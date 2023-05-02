@@ -1,7 +1,6 @@
 import React, { memo } from "react"
 import useNotificationController from "@feature/notification/containers/hooks/useNotificationController"
 import { PaginationNaka } from "@components/atoms/pagination"
-import SkeletonNotification from "@components/atoms/skeleton/SkeletonNotification"
 import { Box } from "@mui/material"
 import useNotiStore from "@stores/notification"
 import useGlobal from "@hooks/useGlobal"

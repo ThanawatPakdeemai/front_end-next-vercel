@@ -2,6 +2,7 @@ import React from "react"
 import { Image } from "@components/atoms/image"
 import { Skeleton } from "@mui/material"
 import { BrowserView, MobileView } from "react-device-detect"
+import CONFIGS from "@configs/index"
 
 interface IGameSummaryRewardFooterProps {
   gameImage: string
@@ -33,26 +34,28 @@ const GameSummaryRewardFooter = ({
         {children}
       </div>
     </BrowserView>
-    <MobileView>
-      <div className="mx-auto grid grid-cols-3 items-center gap-2">
-        <div className="rounded-md border border-neutral-800 ">
-          {gameImage ? (
-            <div className="overflow-hidden rounded-2xl">
-              <Image
-                width={300}
-                height={300}
-                src={gameImage}
-                alt="img-profile"
-                className="h-full w-full object-cover object-center"
-              />
-            </div>
-          ) : (
-            <Skeleton className="h-[240px] w-[250px] rounded-2xl" />
-          )}
+    {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+      <MobileView>
+        <div className="mx-auto grid grid-cols-3 items-center gap-2">
+          <div className="rounded-md border border-neutral-800 ">
+            {gameImage ? (
+              <div className="overflow-hidden rounded-2xl">
+                <Image
+                  width={300}
+                  height={300}
+                  src={gameImage}
+                  alt="img-profile"
+                  className="h-full w-full object-cover object-center"
+                />
+              </div>
+            ) : (
+              <Skeleton className="h-[240px] w-[250px] rounded-2xl" />
+            )}
+          </div>
+          <div className="col-span-2 ">{children}</div>
         </div>
-        <div className="col-span-2 ">{children}</div>
-      </div>
-    </MobileView>
+      </MobileView>
+    )}
   </div>
 )
 

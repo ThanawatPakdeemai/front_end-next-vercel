@@ -36,13 +36,9 @@ const NotificationList = () => {
         onHandleClick={() => onHandleClick()}
         disabled={buttonStatus}
       />
-      {isLoadingNotification && (
-        <SkeletonNotification
-          data={[]}
-          isLoading={isLoadingNotification}
-        />
-      )}
-      {notificationAll && notificationAll.length > 0 ? (
+      {notificationAll &&
+      notificationAll.length > 0 &&
+      !isLoadingNotification ? (
         <NotificationTable
           data={notificationAll}
           page={page}

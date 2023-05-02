@@ -32,11 +32,11 @@ const Howto = ({ data }: IProp) => {
   })
 
   return (
-    <div className="game-mini__navbar mb-3 flex flex-col items-center justify-between  rounded-2xl border-[1px] border-neutral-800 bg-neutral-780 p-2 md:p-5 xl:flex-row">
+    <div className="game-mini__navbar mb-3 flex max-h-[52px] flex-col items-center  justify-between rounded-2xl border-[1px] border-neutral-800 bg-neutral-780 p-2 md:p-5 xl:flex-row">
       <div className="mb-2 flex flex-col items-center gap-2 md:flex-row md:gap-0 xl:mb-0">
         <div className="xs:mb-[20px] flex items-center justify-center p-2  md:p-0">
           <div className="text-sm uppercase">
-            <span className=" text-neutral-600">{t("game")}: </span>
+            <span className="text-neutral-600">{t("game")}: </span>
             <span className="text-neutral-400">{data && data.name}</span>
           </div>
           <div className="mx-2 h-3 border-[1px] border-solid border-neutral-600" />

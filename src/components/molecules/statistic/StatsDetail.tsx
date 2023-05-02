@@ -1,3 +1,4 @@
+import CONFIGS from "@configs/index"
 import { Typography } from "@mui/material"
 import Helper from "@utils/helper"
 import React from "react"
@@ -25,20 +26,22 @@ const StatsDetail = ({ icon, title, type, amount, unit }: IProp) => (
         <Typography className="text-xs font-bold">{unit}</Typography>
       </div>
     </BrowserView>
-    <MobileView>
-      <div className="grid w-full grid-cols-3 items-center gap-2 rounded-2xl bg-neutral-800 p-4 uppercase  text-neutral-500">
-        {icon}
-        <div className="col-span-2">
-          <Typography className="text-[8px] font-bold">{title}</Typography>
-          <Typography className="text-default font-bold">
-            {type === "normal"
-              ? Helper.formatNumber(amount as number)
-              : `${amount}`}
-          </Typography>
-          <Typography className="text-xs font-bold">{unit}</Typography>
+    {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+      <MobileView>
+        <div className="grid w-full grid-cols-3 items-center gap-2 rounded-2xl bg-neutral-800 p-4 uppercase  text-neutral-500">
+          {icon}
+          <div className="col-span-2">
+            <Typography className="text-[8px] font-bold">{title}</Typography>
+            <Typography className="text-default font-bold">
+              {type === "normal"
+                ? Helper.formatNumber(amount as number)
+                : `${amount}`}
+            </Typography>
+            <Typography className="text-xs font-bold">{unit}</Typography>
+          </div>
         </div>
-      </div>
-    </MobileView>
+      </MobileView>
+    )}
   </>
 )
 

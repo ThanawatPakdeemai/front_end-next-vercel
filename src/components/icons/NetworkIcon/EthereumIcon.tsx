@@ -12,14 +12,14 @@ function EthereumIcon({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_8252_36419)">
+      <g clipPath="url(#clip0_8252_36419)">
         <rect
           width="24"
           height="24"
           rx="4"
           fill="#627EEA"
         />
-        <g clip-path="url(#clip1_8252_36419)">
+        <g clipPath="url(#clip1_8252_36419)">
           <path
             d="M12 24C18.6275 24 24 18.6275 24 12C24 5.37258 18.6275 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6275 5.37258 24 12 24Z"
             fill="#627EEA"

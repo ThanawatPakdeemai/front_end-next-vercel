@@ -3,6 +3,7 @@ import { ITEM_REWARD_CRUMB } from "@configs/crumb"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 import { BrowserView, MobileView } from "react-device-detect"
+import CONFIGS from "@configs/index"
 
 const ProfileLayout = dynamic(
   () => import("@components/templates/ProfileLayout"),
@@ -30,9 +31,11 @@ export default function EarnReward() {
         <BrowserView>
           <EarnRewardPage />
         </BrowserView>
-        <MobileView>
-          <EarnRewardPageMobile />
-        </MobileView>
+        {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+          <MobileView>
+            <EarnRewardPageMobile />
+          </MobileView>
+        )}
       </article>
     </>
   )

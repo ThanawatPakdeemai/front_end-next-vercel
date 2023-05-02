@@ -1,3 +1,4 @@
+import CONFIGS from "@configs/index"
 import useGetGameByPath from "@feature/game/containers/hooks/useFindGameByPath"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
 import useGlobal from "@hooks/useGlobal"
@@ -99,12 +100,14 @@ export default function SummaryDetails() {
               }
             />
           </BrowserView>
-          <MobileView>
-            <RightSidebarContent
-              content={<GameSummaryRewardPage />}
-              aside={null}
-            />
-          </MobileView>
+          {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+            <MobileView>
+              <RightSidebarContent
+                content={<GameSummaryRewardPage />}
+                aside={null}
+              />
+            </MobileView>
+          )}
         </>
       }
       component2={

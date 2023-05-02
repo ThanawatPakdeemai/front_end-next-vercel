@@ -4,6 +4,7 @@ import React from "react"
 import { BrowserView, MobileView } from "react-device-detect"
 import GaugeCustom from "@components/atoms/GaugeCustom"
 import IconLiker from "@components/icons/LikeIcon"
+import CONFIGS from "@configs/index"
 import GaugeStats from "./GaugeStats"
 
 interface IProp {
@@ -63,62 +64,64 @@ const LikeNoLobby = ({
         )}
       </div>
     </BrowserView>
-    <MobileView>
-      <div className="flex flex-col gap-2 ">
-        <div className="grid grid-cols-3 items-center justify-center gap-2">
-          <div className="h-[30px] w-[60px] ">
-            <GaugeCustom
-              value={value}
-              maxValue={maxValue}
-            />
-          </div>
-          <div className="col-span-2 flex flex-col items-center text-center text-[8px]">
-            <span className="w-[60%] rounded-[8px] border-[1px]  border-neutral-700 bg-black-100  text-[10px] text-neutral-300">
-              {value} %
-            </span>
-            <span className="w-full  text-white-default">
-              Did you like this game ?
-            </span>
-            <div className="flex w-full flex-row justify-center gap-2">
-              <button
-                type="button"
-                className="flex h-5 min-w-[30px] items-center justify-center rounded-[8px] border-[1px]  border-neutral-700   bg-neutral-700 p-[6px] font-neue-machina  capitalize text-neutral-500"
-              >
-                <IconLiker.Like
-                  width={12}
-                  height={12}
-                  className="mr-2 fill-neutral-500"
-                />
-                <p>yes</p>
-              </button>
+    {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+      <MobileView>
+        <div className="flex flex-col gap-2 ">
+          <div className="grid grid-cols-3 items-center justify-center gap-2">
+            <div className="h-[30px] w-[60px] ">
+              <GaugeCustom
+                value={value}
+                maxValue={maxValue}
+              />
+            </div>
+            <div className="col-span-2 flex flex-col items-center text-center text-[8px]">
+              <span className="w-[60%] rounded-[8px] border-[1px]  border-neutral-700 bg-black-100  text-[10px] text-neutral-300">
+                {value} %
+              </span>
+              <span className="w-full  text-white-default">
+                Did you like this game ?
+              </span>
+              <div className="flex w-full flex-row justify-center gap-2">
+                <button
+                  type="button"
+                  className="flex h-5 min-w-[30px] items-center justify-center rounded-[8px] border-[1px]  border-neutral-700   bg-neutral-700 p-[6px] font-neue-machina  capitalize text-neutral-500"
+                >
+                  <IconLiker.Like
+                    width={12}
+                    height={12}
+                    className="mr-2 fill-neutral-500"
+                  />
+                  <p>yes</p>
+                </button>
 
-              <button
-                type="button"
-                className="flex h-5 min-w-[30px] items-center justify-center rounded-[8px] border-[1px]  border-neutral-700   bg-neutral-700 p-[6px] font-neue-machina  capitalize text-neutral-500"
-              >
-                <IconLiker.UnLike
-                  width={12}
-                  height={12}
-                  className="mr-2 fill-neutral-500"
-                />
-                <p>no</p>
-              </button>
+                <button
+                  type="button"
+                  className="flex h-5 min-w-[30px] items-center justify-center rounded-[8px] border-[1px]  border-neutral-700   bg-neutral-700 p-[6px] font-neue-machina  capitalize text-neutral-500"
+                >
+                  <IconLiker.UnLike
+                    width={12}
+                    height={12}
+                    className="mr-2 fill-neutral-500"
+                  />
+                  <p>no</p>
+                </button>
+              </div>
             </div>
           </div>
+          {!hideImage && (
+            <div className="p-4">
+              <Image
+                src={imgSrc || "/images/gameDetails/nakamoto-wars.webp"}
+                alt={imgAlt || "nakamoto-wars"}
+                width={186}
+                height={186}
+                className="object-contain"
+              />
+            </div>
+          )}
         </div>
-        {!hideImage && (
-          <div className="p-4">
-            <Image
-              src={imgSrc || "/images/gameDetails/nakamoto-wars.webp"}
-              alt={imgAlt || "nakamoto-wars"}
-              width={186}
-              height={186}
-              className="object-contain"
-            />
-          </div>
-        )}
-      </div>
-    </MobileView>
+      </MobileView>
+    )}
   </>
 )
 

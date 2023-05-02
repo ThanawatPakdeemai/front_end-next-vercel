@@ -14,7 +14,7 @@ function SpeedLow({
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <g clip-path="url(#clip0_8846_56010)">
+      <g clipPath="url(#clip0_8846_56010)">
         <mask
           id="mask0_8846_56010"
           // style="mask-type:alpha"

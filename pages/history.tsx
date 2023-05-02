@@ -3,6 +3,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { GAME_PLAY_HISTORY } from "@configs/crumb"
 import dynamic from "next/dynamic"
 import { BrowserView, MobileView } from "react-device-detect"
+import CONFIGS from "@configs/index"
 
 const ProfileLayout = dynamic(
   () => import("@components/templates/ProfileLayout"),
@@ -34,9 +35,11 @@ const HistoryPage = () => (
     <BrowserView>
       <HistoryTable />
     </BrowserView>
-    <MobileView>
-      <HistoryTableMobile />
-    </MobileView>
+    {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+      <MobileView>
+        <HistoryTableMobile />
+      </MobileView>
+    )}
   </article>
 )
 

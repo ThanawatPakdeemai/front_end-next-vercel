@@ -18,7 +18,6 @@ import { Controller } from "react-hook-form"
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import FieldItem from "@components/molecules/FieldItem"
 import PortraitIcon from "@components/icons/PortraitIcon"
-import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import EnvelopeIcon from "@components/icons/EnvelopeIcon"
 import DropdownListGameType from "@feature/dropdown/components/molecules/DropdownListGameType"
 import { DROPDOWN_GAMETYPE } from "@configs/gameType"
@@ -34,6 +33,7 @@ import { useToast } from "@feature/toast/containers"
 import Editor from "@components/molecules/Editor"
 import useFormJoinUsController from "../containers/hooks/useFormJoinUsController"
 import useFormController from "../containers/hooks/useFormController"
+import SportEsportIcon from "@components/icons/SportEsportIcon"
 
 export const StyledTextField = {
   "& .MuiOutlinedInput-root": {
@@ -244,7 +244,7 @@ const FormJoinus = () => {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <SportsEsportsOutlinedIcon />
+                        <SportEsportIcon />
                       </InputAdornment>
                     )
                   }}

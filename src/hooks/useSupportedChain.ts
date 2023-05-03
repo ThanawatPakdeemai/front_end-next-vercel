@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import CONFIGS from "@configs/index"
 import useContractVaultBinance, {
   ITokenContract
@@ -146,7 +146,15 @@ const useSupportedChain = () => {
 
   const fetchNAKAToken = useCallback(async () => {
     const { ethereum }: any = window
+    // console.log(nodesRPCPolygon[random(0, nodesRPCPolygon.length - 1)])
+    // const _provider = new ethers.providers.Web3Provider(
+    //   ethereum,
+    //   nodesRPCPolygon[random(0, nodesRPCPolygon.length - 1)]
+    // )
+    // const _address = await provider.send("eth_accounts")
     const _provider = new ethers.providers.Web3Provider(ethereum)
+    // console.log("_provider1", _provider1)
+    // console.log("_provider", _provider)
     const _signer = _provider.getSigner()
     const _address = await _signer.getAddress()
     const allContract: Contract[] = []

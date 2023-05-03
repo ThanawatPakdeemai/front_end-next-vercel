@@ -4,6 +4,7 @@
 import { useCallback, useEffect, useState } from "react"
 import {
   FeeData,
+  JsonRpcProvider,
   JsonRpcSigner,
   Network,
   Web3Provider
@@ -11,7 +12,7 @@ import {
 import CONFIGS from "@configs/index"
 import { WALLET_CONNECTOR_TYPES } from "@configs/walletConnect"
 import useProfileStore from "@stores/profileStore"
-import { BigNumber, providers, utils } from "ethers"
+import { BigNumber, ethers, providers, utils } from "ethers"
 import { ELocalKey } from "@interfaces/ILocal"
 import Helper from "@utils/helper"
 import { useToast } from "@feature/toast/containers"
@@ -25,7 +26,9 @@ import useGlobal from "@hooks/useGlobal"
 const useCreateWeb3Provider = () => {
   const [signer, setSigner] = useState<JsonRpcSigner | undefined>(undefined)
   const [address, setAddress] = useState<string | undefined>(undefined)
-  const [provider, setProvider] = useState<Web3Provider | undefined>(undefined)
+  const [provider, setProvider] = useState<
+    Web3Provider | JsonRpcProvider | undefined
+  >(undefined)
   const [chainId, setChainId] = useState<string | undefined>(undefined)
   const [accounts, setAccounts] = useState<string[] | undefined>(undefined)
   const [hasMetamask, setHasMetamask] = useState<boolean>(false)
@@ -41,6 +44,7 @@ const useCreateWeb3Provider = () => {
     useState<IErrorMessage>(DEFAULT_STATUS_WALLET)
 
   const { fetchChainData } = useGlobal()
+
   const profile = useProfileStore((state) => state.profile.data)
   const { isLogin } = useProfileStore()
   const {
@@ -252,7 +256,11 @@ const useCreateWeb3Provider = () => {
       key: ELocalKey.walletConnector,
       value: WALLET_CONNECTOR_TYPES.injected
     })
+
     const _provider = new providers.Web3Provider(window.ethereum)
+    // const _provider = new ethers.providers.JsonRpcProvider(
+    //   nodesRPCPolygon[random(0, nodesRPCPolygon.length - 1)]
+    // )
     const walletAccounts = await _provider?.listAccounts()
     if (walletAccounts === undefined) setAccounts(undefined)
 

@@ -33,6 +33,7 @@ import IconArrowRight from "@components/icons/arrowRightIcon"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
 import Breadcrumb from "@components/molecules/Breadcrumb"
 import CONFIGS from "@configs/index"
+import { useRouter } from "next/router"
 
 interface IGamePageDefaultProps {
   component: React.ReactNode
@@ -53,6 +54,10 @@ const GamePageDefault = ({
   const [gameData, setGameData] = useState<IGame | IPartnerGameData>()
   const { statsGameById } = useGetStatisticsGameById()
   const { t } = useTranslation()
+  const router = useRouter()
+  const isReward =
+    router.pathname &&
+    router.pathname === "/[typeGame]/[GameHome]/[typeReward]/[notification_id]"
 
   const {
     onClickedPrev,
@@ -315,7 +320,10 @@ const GamePageDefault = ({
       <BrowserView>
         <div className={containerClasses}>
           <Header />
-          <Breadcrumb />
+
+          {/* Not show on reward page */}
+          {!isReward && <Breadcrumb />}
+
           {gameData && "image_banner" in gameData ? (
             <BannerSingle
               src={gameData.image_banner}

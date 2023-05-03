@@ -49,7 +49,7 @@ const PlayerCardMobile = ({ players }: IProps) => {
                     {player?.status || ""}
                   </div>
                 </div>
-                <div className="m-auto mb-4 mt-3 h-8 w-[55px]">
+                <div className="m-auto mb-1 mt-3 h-8 w-[55px]">
                   <p className=" truncate text-center text-sm uppercase text-neutral-300">
                     {player?.username}
                   </p>
@@ -81,7 +81,7 @@ const PlayerCardMobile = ({ players }: IProps) => {
                     />
                   </div>
                 </div>
-                <div className="mb-4 mt-3 h-8" />
+                <div className="mb-1 mt-3 h-8" />
               </div>
             )
           )}

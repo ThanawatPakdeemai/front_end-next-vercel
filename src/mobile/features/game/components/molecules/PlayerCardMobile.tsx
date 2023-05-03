@@ -63,27 +63,29 @@ const PlayerCardMobile = ({ players }: IProps) => {
                   <p className=" truncate text-center text-sm uppercase text-neutral-300">
                     {player?.username}
                   </p>
-                  <p
-                    className={`${
-                      profile && profile?.id === player?.player_id
-                        ? " text-secondary-main "
-                        : " text-error-main "
-                    } truncate  text-center text-xs uppercase `}
-                  >
-                    {checkTextCard(player as CurrentPlayer) === "kick" ? (
-                      <button
-                        role="button"
-                        className={`${" cursor-pointer"}  uppercase`}
-                        onClick={() => {
-                          kickRoom(player.player_id)
-                        }}
-                      >
-                        {t("kick")}
-                      </button>
-                    ) : (
-                      t(checkTextCard(player as CurrentPlayer))
-                    )}
-                  </p>
+                  {checkTextCard && (
+                    <p
+                      className={`${
+                        profile && profile?.id === player?.player_id
+                          ? " text-secondary-main "
+                          : " text-error-main "
+                      } truncate  text-center text-xs uppercase `}
+                    >
+                      {checkTextCard(player as CurrentPlayer) === "kick" ? (
+                        <button
+                          role="button"
+                          className={`${" cursor-pointer"}  uppercase`}
+                          onClick={() => {
+                            kickRoom(player.player_id)
+                          }}
+                        >
+                          {t("kick")}
+                        </button>
+                      ) : (
+                        t(checkTextCard(player as CurrentPlayer))
+                      )}
+                    </p>
+                  )}
                 </div>
               </div>
             ) : (

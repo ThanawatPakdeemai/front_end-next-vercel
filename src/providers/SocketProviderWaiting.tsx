@@ -20,7 +20,7 @@ interface IPropSocket {
   waitingRoomPlay: () => void
   startGame: () => void
   getChat?: () => void
-  checkTextCard: (_data: CurrentPlayer) => string
+  checkTextCard?: (_data: CurrentPlayer) => string
 }
 interface IProp {
   propsSocket: IPropSocket

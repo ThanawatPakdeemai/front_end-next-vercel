@@ -1,22 +1,20 @@
 import { useQuery } from "@tanstack/react-query"
 import { getMarketOrderById } from "../containers/services/marketplace.service"
-import { TNFTType } from "../interfaces/IMarketService"
+import { TUrlNFT } from "../interfaces/IMarketService"
 
 const useGetMarketOrderById = ({
   _id,
-  _type,
-  _isActive
+  _urlNFT
 }: {
   _id: string
-  _type: TNFTType | undefined
-  _isActive: boolean
+  _urlNFT: TUrlNFT
 }) => {
   const { data: orderData, isLoading } = useQuery({
-    queryKey: ["getMarketOrderById", _id],
-    queryFn: () => getMarketOrderById({ _id, _type, _isActive }),
+    queryKey: ["getMarketOrderById", _id, _urlNFT],
+    queryFn: () => getMarketOrderById({ _id, _urlNFT }),
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: !!_id && !!_type
+    enabled: !!_id && !!_urlNFT
   })
 
   return {

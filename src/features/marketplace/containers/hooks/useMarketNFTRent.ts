@@ -35,7 +35,7 @@ interface IGetRentById {
 
 const useMarketNFTRent = () => {
   const { utils } = ethers
-  const { toWei, WeiToNumber } = Helper
+  const { toWei, WeiToNumber, convertNFTTypeToUrl } = Helper
   const { setOpen, setClose } = useLoadingStore()
   const { signer, address } = useWeb3Provider()
   const marketNFTRentContract = useMarketplaceNFTRent(
@@ -48,7 +48,7 @@ const useMarketNFTRent = () => {
   const {
     mutateMarketCreateOrder,
     mutateMarketCancelOrder,
-    mutateMarketPurcOrder,
+    // mutateMarketPurcOrder,
     mutateClaimRentNFT
   } = useMutateMarketplace()
   const {
@@ -119,6 +119,7 @@ const useMarketNFTRent = () => {
               _log.data
             )
             const data: ICreateOrderParams = {
+              _urlNFT: convertNFTTypeToUrl(_NFTtype),
               _orderId: _resultEvent[0],
               _itemId: _id,
               _itemAmount: _amount,
@@ -177,6 +178,7 @@ const useMarketNFTRent = () => {
               _log.data
             )
             const data: ICancelOrderParams = {
+              _urlNFT: convertNFTTypeToUrl(_NFTtype),
               _orderId: _resultEvent[0],
               _txHash: _res.transactionHash
             }
@@ -238,7 +240,7 @@ const useMarketNFTRent = () => {
               ],
               _log.data
             )
-            const data: IPurchOrderParams = {
+            const _data: IPurchOrderParams = {
               _marketplaceId: _marketId,
               _itemId: _itemID,
               _itemAmount: _amountItem,
@@ -253,7 +255,7 @@ const useMarketNFTRent = () => {
                 period: Number(_resultEvent[3].toString())
               }
             }
-            await mutateMarketPurcOrder(data)
+            // await mutateMarketPurcOrder(data)
           }
         })
         .catch((error) => console.error(error))

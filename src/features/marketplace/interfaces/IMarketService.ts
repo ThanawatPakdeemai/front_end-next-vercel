@@ -27,15 +27,25 @@ export type TSellingType = "fullpayment" | "installment" | "rental"
 
 export type TSellerType = "system" | "user"
 
+export type TUrlNFT =
+  | "NFT-As-Game"
+  | "NFT-NakaPunk"
+  | "NFT-Building"
+  | "NFT-Land"
+  | "NFT-Avatar"
+  | "NFT-Game-Item"
+  | "NFT-Material"
+
 export interface ICreateOrderParams {
-  _orderId: string
+  _urlNFT: TUrlNFT
   _itemId: string
   _itemAmount: number
   _price: number
+  _orderId: string
   _type: TNFTType
-  _txHash: string
   _sellerType: TSellerType
   _sellingType?: TSellingType
+  _txHash: string
   _periodAmount?: number
 }
 
@@ -78,6 +88,7 @@ export interface IPurchOrderParams {
 }
 
 export interface ICancelOrderParams {
+  _urlNFT: TUrlNFT
   _orderId: string
   _txHash: string
 }
@@ -147,6 +158,7 @@ export interface IMarketServForm {
     _id?: number
   }
   _active?: boolean
+  _urlNFT?: TUrlNFT
 }
 
 export interface IMarketArcadeServForm extends IMarketServForm {

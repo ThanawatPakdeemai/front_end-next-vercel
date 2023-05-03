@@ -71,7 +71,7 @@ const ModalMarket = ({
   vdo,
   priceValue = 0,
   periodValue = 0,
-  amount = 0,
+  amount = 1,
   maxPeriod = 1,
   // maxAmount = 0,
   tokenId,

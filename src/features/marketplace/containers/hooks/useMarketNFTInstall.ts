@@ -36,7 +36,7 @@ interface IGetBillByBillId {
 
 const useMarketNFTInstall = () => {
   const { utils } = ethers
-  const { toWei, WeiToNumber } = Helper
+  const { toWei, WeiToNumber, convertNFTTypeToUrl } = Helper
   const { setOpen, setClose } = useLoadingStore()
   const { signer, address } = useWeb3Provider()
   const marketNFTInstallContract = useMarketplaceNFTInstall(
@@ -49,7 +49,7 @@ const useMarketNFTInstall = () => {
   const {
     mutateMarketCreateOrder,
     mutateMarketCancelOrder,
-    mutateMarketPurcOrder,
+    // mutateFullPayment,
     mutatePayBillInstallNFT
   } = useMutateMarketplace()
   const {
@@ -110,6 +110,7 @@ const useMarketNFTInstall = () => {
               _log.data
             )
             const data: ICreateOrderParams = {
+              _urlNFT: convertNFTTypeToUrl(_NFTtype),
               _orderId: _resultEvent[0],
               _itemId: _id,
               _itemAmount: _amount,
@@ -170,6 +171,7 @@ const useMarketNFTInstall = () => {
               _log.data
             )
             const data: ICancelOrderParams = {
+              _urlNFT: convertNFTTypeToUrl(_NFTtype),
               _orderId: _resultEvent[0],
               _txHash: _res.transactionHash
             }
@@ -234,7 +236,7 @@ const useMarketNFTInstall = () => {
               ],
               _log.data
             )
-            const data: IPurchOrderParams = {
+            const _data: IPurchOrderParams = {
               _marketplaceId: _marketId,
               _itemId: _itemID,
               _itemAmount: _amountItem,
@@ -252,7 +254,7 @@ const useMarketNFTInstall = () => {
                 item_id: _itemID
               }
             }
-            await mutateMarketPurcOrder(data)
+            // await mutateFullPayment(data)
           }
         })
         .catch((error) => console.error(error))

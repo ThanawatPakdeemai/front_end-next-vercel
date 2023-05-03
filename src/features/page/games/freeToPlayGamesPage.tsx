@@ -9,6 +9,9 @@ import { Box } from "@mui/material"
 import DropdownLimit from "@components/atoms/DropdownLimit"
 import useGlobal from "@hooks/useGlobal"
 import NoData from "@components/molecules/NoData"
+import BodyCategories from "@src/mobile/molecules/BodyCategories"
+import CardGameSlider from "@src/mobile/molecules/CardGameSlider"
+import { MobileView } from "react-device-detect"
 
 const FreeToPlayGamesPage = () => {
   const {
@@ -30,6 +33,15 @@ const FreeToPlayGamesPage = () => {
 
   return (
     <div className="flex flex-col">
+      <MobileView className="MobileSlider mb-4">
+        <CardGameSlider games={gameFilter} />
+        {!loadingFilterGame && (
+          <div className="mt-4 w-full">
+            <p className="uppercase text-white-default">POPULAR GAMES</p>
+            <BodyCategories games={gameFilter} />
+          </div>
+        )}
+      </MobileView>
       <div className="mx-2 mb-6 grid grid-cols-2 gap-x-2 gap-y-4 md:mx-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {loadingFilterGame
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import ToolbarCustom, { formats } from "@components/atoms/ToolbarCustom"
 import React, { useEffect, useState } from "react"
 import "react-quill/dist/quill.snow.css"

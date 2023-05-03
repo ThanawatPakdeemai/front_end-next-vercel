@@ -299,3 +299,7 @@ input:checked {
   height: 200px;
   min-width: 368px;
 }
+
+.MobileSlider .slick-dots {
+  justify-content: flex-start;
+}

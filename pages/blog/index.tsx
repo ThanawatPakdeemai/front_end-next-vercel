@@ -13,11 +13,9 @@ const BlogListPage = dynamic(() => import("@feature/page/BlogListPage"), {
 
 export default function BlogPage() {
   return (
-    <>
-      <article className="h-full w-full">
-        <BlogListPage />
-      </article>
-    </>
+    <article className="h-full w-full">
+      <BlogListPage />
+    </article>
   )
 }
 

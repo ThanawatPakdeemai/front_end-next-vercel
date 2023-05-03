@@ -30,6 +30,7 @@ import useProfileStore from "@stores/profileStore"
 import { MESSAGES } from "@constants/messages"
 import PlusIcon from "@components/icons/CountIcon/PlusIcon"
 import { useTranslation } from "react-i18next"
+import MiniMap from "@feature/map/components/organisms/MiniMap"
 import TextfieldDetailContent from "../molecules/TextfieldDetailContent"
 import ChipsLink from "../molecules/ChipsLink"
 
@@ -92,20 +93,25 @@ const RightDetailsMarketplace = ({
 }: IProp) => {
   const router = useRouter()
   const profile = useProfileStore((state) => state.profile.data)
-  const getPathnameType = router.pathname.split("/")[2]
+  const getPathnameType = router.pathname.includes("inventory")
+    ? router.asPath.split("/")[3]
+    : router.asPath.split("/")[2]
   const [expanded, setExpanded] = React.useState<string | false>("")
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false)
     }
+
   const handleType = () => {
     const pathMap = {
+      land: "land",
       building: "building",
       game: "game assets",
       material: "material",
       "naka-punk": "nft",
       "arcade-game": "arcade game",
-      default: "land"
+      "avatar-reef": "nft",
+      default: "nft"
     }
     return pathMap[getPathnameType] || pathMap["default"]
   }
@@ -134,6 +140,14 @@ const RightDetailsMarketplace = ({
       couponLength: 0,
       disableCoupon: true
     })
+  }
+
+  const handleRouter = () => {
+    if (router.asPath.includes("inventory")) {
+      router.push("/marketplace/inventory")
+    } else {
+      router.back()
+    }
   }
 
   const isCharactersCoupon = (_CharactersCoupon: string) => {
@@ -185,7 +199,7 @@ const RightDetailsMarketplace = ({
             />
           </div>
           <ButtonClose
-            onClick={() => router.back()}
+            onClick={handleRouter}
             insideClassName="!bg-error-main hover:bg-error-main"
           />
         </div>
@@ -219,10 +233,15 @@ const RightDetailsMarketplace = ({
           price={price}
           count={count}
         />
-        {qrCode && id && (
+        {qrCode && id && position && (
           <>
             <div className="flex h-[158px] w-full gap-1 rounded-lg bg-primary-main p-1">
-              <div className="w-3/4">map</div>
+              <div className="w-3/4">
+                <MiniMap
+                  pos={position}
+                  className="rounded"
+                />
+              </div>
               <div className="relative flex w-1/4 items-center justify-center rounded bg-neutral-800">
                 <Image
                   src={qrCode}
@@ -265,6 +284,9 @@ const RightDetailsMarketplace = ({
           expanded={expanded === "panel1"}
           onChange={handleChange("panel1")}
           className="static rounded-md border-neutral-800 bg-neutral-780 px-[26px]"
+          sx={{
+            backgroundImage: "none"
+          }}
         >
           <AccordionSummary
             aria-controls="panel1d-content"

@@ -1,7 +1,9 @@
 import * as React from "react"
 import MenuList from "@mui/material/MenuList"
-import { Box, ListItemIcon, ListItemText, MenuItem } from "@mui/material"
+import { Box } from "@mui/material"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
+import ButtonDropdown from "@feature/gameItem/atoms/ButtonDropdown"
+import INaka from "@components/icons/Naka"
 
 interface IProp {
   className?: string
@@ -21,13 +23,12 @@ const SelectDropdownCurrency = ({
   onChange
 }: IProp) => (
   <MenuList
-    className={`${className} mx-[6px] mb-[6px] mt-[6px] rounded-[13px] bg-neutral-700 px-[6px] py-[3px]`}
+    className={`${className} flex flex-col gap-3 rounded-[13px] bg-primary-main p-2`}
   >
     {details.map((item, index: number) => (
       <Box
         component="div"
         key={Number(index)}
-        className="my-1 uppercase"
         onClick={() => {
           if (onChange) {
             onChange(item)
@@ -40,18 +41,31 @@ const SelectDropdownCurrency = ({
           }
         }}
       >
-        <MenuItem
+        <ButtonDropdown
+          className="relative w-full pl-10 font-neue-machina-semi"
+          leftContent={
+            <div className="game-item__image">
+              {item.tokenName.toLocaleUpperCase() === "NAKA" && (
+                <div className="absolute left-0 top-0 flex h-10 w-10 flex-1 items-center justify-center rounded-lg p-[10px]">
+                  <INaka />
+                </div>
+              )}
+              <p className="text-sm text-white-default">{item.tokenName}</p>
+            </div>
+          }
+          isOpen
+          hideDropdownIcon
+        />
+        {/* <MenuItem
           key={item.address}
           aria-label={item.address}
           sx={{
             alignItems: "baseline"
-            // color: active ? "#E1E2E2" : null,
-            // backgroundColor: active ? "#010101" : null
           }}
         >
           <ListItemIcon className="text-center">{item.symbol}</ListItemIcon>
           <ListItemText className="ml-2">{item.tokenName}</ListItemText>
-        </MenuItem>
+        </MenuItem> */}
       </Box>
     ))}
   </MenuList>

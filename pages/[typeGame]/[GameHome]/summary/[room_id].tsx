@@ -1,3 +1,4 @@
+import CONFIGS from "@configs/index"
 import useGetGameByPath from "@feature/game/containers/hooks/useFindGameByPath"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
 import useGlobal from "@hooks/useGlobal"
@@ -6,6 +7,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
 import React, { ReactElement } from "react"
+import { BrowserView, MobileView } from "react-device-detect"
 
 const GameSummaryRewardPage = dynamic(
   () => import("@feature/page/games/gameSummaryRewardPage"),
@@ -51,8 +53,8 @@ const OverviewContent = dynamic(
   }
 )
 
-const GameTabs = dynamic(
-  () => import("@feature/game/components/templates/lobby/GameTabs"),
+const GameTabsVertical = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameTabsVertical"),
   {
     suspense: true,
     ssr: false
@@ -65,11 +67,11 @@ export default function SummaryDetails() {
   const { GameHome } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
 
-  return (
-    <>
-      {gameData ? (
-        <GamePageDefault
-          component={
+  return gameData ? (
+    <GamePageDefault
+      component={
+        <>
+          <BrowserView>
             <RightSidebarContent
               className="mb-24"
               content={<GameSummaryRewardPage />}
@@ -97,28 +99,59 @@ export default function SummaryDetails() {
                 </Box>
               }
             />
-          }
-          component2={
+          </BrowserView>
+          {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+            <MobileView>
+              <RightSidebarContent
+                content={<GameSummaryRewardPage />}
+                aside={null}
+              />
+            </MobileView>
+          )}
+        </>
+      }
+      component2={
+        <>
+          <BrowserView>
             <FullWidthContent
               sxCustomStyled={{
                 "&.container": {
-                  maxWidth: "100%!important"
+                  maxWidth: "100%!important",
+                  "&.container-fullWidth": {
+                    padding: "49px"
+                  }
                 }
               }}
             >
               <TabProvider>
-                <GameTabs
+                <GameTabsVertical
                   gameId={gameData.id}
                   gameType={getTypeGamePathFolder(gameData)}
                 />
               </TabProvider>
             </FullWidthContent>
-          }
-        />
-      ) : (
-        <GamePageDefault component={<SkeletonBanner />} />
-      )}
-    </>
+          </BrowserView>
+          <MobileView>
+            {/* <FullWidthContent
+                  sxCustomStyled={{
+                    "&.container": {
+                      maxWidth: "100%!important"
+                    }
+                  }}
+                >
+                  <TabProvider>
+                    <GameTabs
+                      gameId={gameData.id}
+                      gameType={getTypeGamePathFolder(gameData)}
+                    />
+                  </TabProvider>
+                </FullWidthContent> */}
+          </MobileView>
+        </>
+      }
+    />
+  ) : (
+    <GamePageDefault component={<SkeletonBanner />} />
   )
 }
 

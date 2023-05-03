@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-nested-ternary */
 import React from "react"
 import GameSummaryBody from "@feature/game/containers/components/organisms/GameSummaryBody"
 import SkeletonSummaryRaward from "@components/atoms/skeleton/SkeletonSummaryRaward"
@@ -7,6 +9,11 @@ import CardBodyList from "@feature/ranking/components/molecules/CardBodyList"
 import useGlobal from "@hooks/useGlobal"
 import GameSummaryBodyReturnItem from "@feature/game/containers/components/organisms/GameSummaryBodyReturnItem"
 import { useRouter } from "next/router"
+import { BrowserView, MobileView } from "react-device-detect"
+import { Typography } from "@mui/material"
+import { useTranslation } from "react-i18next"
+import { Image } from "@components/atoms/image/index"
+import CONFIGS from "@configs/index"
 
 const GameSummaryRewardPage = () => {
   const {
@@ -24,6 +31,7 @@ const GameSummaryRewardPage = () => {
   } = useGameSummaryRewardController()
   const { hydrated } = useGlobal()
   const router = useRouter()
+  const { t } = useTranslation()
 
   /**
    * @description get summary value
@@ -101,6 +109,7 @@ const GameSummaryRewardPage = () => {
   const link = router.asPath.includes("summary")
     ? `${router?.asPath?.split("summary")[0]}roomlist`
     : "/"
+
   return hydrated ? (
     <GameSummaryContent
       roomTag={gameRoomById?.room_number || summaryDataPlayerId.id_room || ""}
@@ -115,14 +124,71 @@ const GameSummaryRewardPage = () => {
       onOutRoom={() => router.push(link)}
     >
       <div className="flex w-full flex-col justify-center gap-4 lg:flex-row">
-        <CardBodyList
-          className="mx-auto max-h-[680px] w-[362px] flex-1 "
-          width="auto"
-          players={players || []}
-          rewardType={notificationItem?.type}
-          // maxPlayer={gameRoomById?.max_players || 0}
-        />
+        <BrowserView>
+          <CardBodyList
+            className="custom-scroll mx-auto flex max-h-[680px] w-[362px] flex-1 flex-col gap-2 overflow-y-scroll"
+            width="auto"
+            players={players || []}
+            rewardType={notificationItem?.type}
+            // maxPlayer={gameRoomById?.max_players || 0}
+          />
+        </BrowserView>
         {renderContent()}
+        {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+          <MobileView>
+            <div className="grid grid-cols-2 gap-2">
+              {players ? (
+                players.map((data, index) => (
+                  <div
+                    className="flex items-center justify-between rounded-sm bg-[#151515] p-2 text-xs"
+                    key={index}
+                  >
+                    <div
+                      className={`rounded-sm px-[14px] py-[12px] text-xs text-white-default ${
+                        index === 0
+                          ? "bg-red-card text-black-100"
+                          : index === 1
+                          ? "bg-secondary-main"
+                          : index === 2
+                          ? "bg-varidian-default  text-black-100"
+                          : "bg-[#404040]"
+                      }`}
+                    >
+                      <p>{index + 1}</p>
+                    </div>
+                    <div className="mx-2 flex flex-col items-center justify-center text-[8px] text-white-default">
+                      <p>NAKAMOTO 0{index}</p>
+                      <p
+                        className={`rounded-[6px] border p-2  uppercase ${
+                          index === 0
+                            ? "border-red-card"
+                            : index === 1
+                            ? "border-secondary-main"
+                            : index === 2
+                            ? "border-varidian-default"
+                            : "border-[#404040]"
+                        }`}
+                      >
+                        SCPRE {data.current_score}
+                      </p>
+                    </div>
+                    <Image
+                      src={data.avatar}
+                      width="20"
+                      height="20"
+                      alt={data.user_name}
+                      className="h-[40px] w-[40px] rounded-sm "
+                    />
+                  </div>
+                ))
+              ) : (
+                <Typography className="rounded-[14px] border border-neutral-800 p-4 text-center text-default uppercase text-neutral-200">
+                  {t("please_login")}
+                </Typography>
+              )}
+            </div>
+          </MobileView>
+        )}
       </div>
     </GameSummaryContent>
   ) : (

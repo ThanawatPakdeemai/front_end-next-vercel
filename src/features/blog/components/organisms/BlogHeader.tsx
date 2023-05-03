@@ -9,7 +9,7 @@ interface IBlogHeaderProps extends IMetaTags, IMetaWriter, IMetaDate {
 }
 
 const BlogHeader = ({ className, ...props }: IBlogHeaderProps) => (
-  <div className={`flex w-full max-w-[678px] lg:h-[100px] ${className || ""}`}>
+  <div className={`flex h-[100px] w-full max-w-[678px] ${className || ""}`}>
     <div className="flex flex-1 items-center">
       <MetaTags tags={props.tags} />
     </div>
@@ -26,7 +26,7 @@ const BlogHeader = ({ className, ...props }: IBlogHeaderProps) => (
           width: "1px",
           height: "50px",
           left: "0",
-          backgroundColor: "#101013",
+          backgroundColor: "#18181C",
           "@media (max-width: 1023px)": {
             display: "none"
           }

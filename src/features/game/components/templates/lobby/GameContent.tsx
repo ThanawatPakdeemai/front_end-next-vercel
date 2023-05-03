@@ -48,7 +48,7 @@ const GameContent = ({
         id={`${gameType}-overview`}
         className="w-full"
       >
-        <div className="relative z-[1] w-full rounded-2xl border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 uppercase text-neutral-300">
+        <div className="relative z-[1] w-full rounded-2xl border-[1px] border-neutral-700 border-opacity-80 bg-neutral-800 p-4 uppercase text-neutral-300">
           <div className="flex items-center gap-3">
             {gameType === "arcade-emporium" && <ArcadeEmporiumIcon />}
             <Chip

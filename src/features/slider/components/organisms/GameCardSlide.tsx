@@ -1,9 +1,9 @@
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { CardMedia } from "@mui/material"
 import React from "react"
 import useGameStore from "@src/stores/game/index"
+import { ImageCustom } from "@components/atoms/image/Image"
+import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import CardGameSlide, { ICardNextSlide } from "../molecules/CardGameSlide"
-import CardButItem from "../../../gameItem/components/molecules/CardBuyItem"
 
 export interface IBannerCardSlide extends ICardNextSlide {
   slide: IGame
@@ -17,12 +17,12 @@ const GameCardSlide = ({ slide, ...props }: IBannerCardSlide) => {
     <div className="slide-item relative h-full gap-4 align-middle text-white-default md:flex">
       <div className="slide-item--image h-full w-full overflow-hidden rounded-2xl md:w-3/5 xl:w-3/4">
         {datagame && (
-          <CardMedia
-            component="img"
-            height={1080}
-            image={datagame.image_background}
+          <ImageCustom
+            width={300}
+            height={300}
+            src={datagame.image_background}
             // image="/images/gamePage/Image.png"
-            alt=""
+            alt={datagame.name}
           />
         )}
       </div>
@@ -33,7 +33,7 @@ const GameCardSlide = ({ slide, ...props }: IBannerCardSlide) => {
           gotoPrev={props.gotoPrev}
         />
 
-        <CardButItem gameObject={datagame as IGame} />
+        <CardBuyItem gameObject={datagame as IGame} />
       </div>
     </div>
   )

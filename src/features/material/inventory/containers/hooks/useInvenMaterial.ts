@@ -12,6 +12,7 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
 import useProfileStore from "@stores/profileStore"
 import { ethers } from "ethers"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
 const useInvenMaterial = () => {
@@ -30,6 +31,8 @@ const useInvenMaterial = () => {
   const [materialList, setMaterialList] = useState<
     Array<ITypeMaterials & { amount: number }> | undefined
   >(undefined)
+  const { pathname } = useRouter()
+
   // update materialList
   const updateMaterialList = (
     _type: TInvenVaultAction,
@@ -143,7 +146,7 @@ const useInvenMaterial = () => {
     let load = false
 
     if (!load) {
-      if (profile && profile.data) {
+      if (profile && profile.data && pathname.includes("inventory")) {
         onFetchInvenMaterial(profile.data.address)
       }
     }

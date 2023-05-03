@@ -25,9 +25,9 @@ const CardMyLandContent = ({
       <Typography className="!font-neueMachinaSemiBold text-sm uppercase text-white-default">
         {title}
       </Typography>
-      {map && (
+      {map && x !== "undefined" && y !== "undefined" && (
         <Chip
-          label={`X${x}, Y${y}`}
+          label={`Currently at : X${x}, Y${y}`}
           color="secondary"
           variant="filled"
           size="small"

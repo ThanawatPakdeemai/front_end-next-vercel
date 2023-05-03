@@ -6,6 +6,7 @@ import {
   TType
 } from "@feature/marketplace/interfaces/IMarketService"
 import useGlobal from "@hooks/useGlobal"
+import useMarketFilterStore, { TKey } from "@stores/marketFilter"
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useState } from "react"
 
@@ -16,11 +17,71 @@ const useMarketInfo = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [type, setType] = useState<TType>("land")
   const [totalCount, setTotalCount] = useState<number>(0)
+  const [searchData, setSearchData] = useState<TKey>()
 
   const router = useRouter()
   const { marketType } = useGlobal()
   const { getMarketOrderAsnyc, isLoading } = useGetMarketOrder()
   const limit = 15
+  const {
+    sort,
+    search: searchText,
+    filter: filterItem
+  } = useMarketFilterStore()
+
+  const sortData = sort.reduce((acc, curr) => Object.assign(acc, curr), {})
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setSearchData(
+        searchText.reduce((acc, curr) => Object.assign(acc, curr), {})
+      )
+    }, 1000)
+
+    return () => clearTimeout(timeoutId)
+  }, [searchText])
+
+  const handleImage = (_data: IMarketDetail) => {
+    if (marketType === "game_item" && _data.item_data) {
+      return {
+        src: _data.item_data.image,
+        alt: _data.item_data.name,
+        width: _data.item_data.name.includes("Bullet") ? 40 : 100
+      }
+    }
+    if (marketType === "nft_building" && _data.building_data) {
+      return {
+        src: _data.building_data.NFT_image,
+        alt: _data.building_data.name,
+        width: 500,
+        height: 500
+      }
+    }
+    if (marketType === "nft_material" && _data.material_data) {
+      return {
+        src: _data.material_data.image,
+        alt: _data.material_data.name,
+        width: 200,
+        height: 200
+      }
+    }
+    if (marketType === "nft_naka_punk" && _data.nakapunk_data) {
+      return {
+        src: _data.nakapunk_data.image,
+        alt: _data.nakapunk_data.name,
+        width: 200,
+        height: 200
+      }
+    }
+    if (marketType === "nft_game" && _data.game_data) {
+      return {
+        src: _data.game_data.image_nft_arcade_game,
+        alt: _data.game_data.name,
+        width: 200,
+        height: 200
+      }
+    }
+  }
 
   // all fetch info lsit
   const handleSearch = useCallback(async () => {
@@ -53,56 +114,57 @@ const useMarketInfo = () => {
     const marketplace = marketplaceMap[_type] ?? marketplaceMap.land
     const sellerType = router.pathname.includes("p2p") ? "user" : "system"
 
-    return {
-      type: _type ?? "land",
-      search: {
-        type_marketplace: marketplace.type_marketplace,
-        seller_type: marketplace.seller_type ?? sellerType
-      }
+    const search: any = {
+      type_marketplace: marketplace.type_marketplace,
+      seller_type: marketplace.seller_type ?? sellerType,
+      ...searchData
     }
-  }, [router.pathname])
 
-  const handleImage = (_data: IMarketDetail) => {
-    if (marketType === "game_item" && _data.item_data) {
-      return {
-        src: _data.item_data.image,
-        alt: _data.item_data.name,
-        width: _data.item_data.name.includes("Bullet") ? 40 : 100
+    if (filterItem.length > 0) {
+      switch (marketType) {
+        case "nft_land":
+          search.type_land = filterItem
+          break
+        case "nft_building":
+          search.type_building = filterItem
+          break
+        case "game_item":
+          search.item_id = filterItem
+          break
+        case "nft_material":
+          search.type_material = filterItem
+          break
+        default:
+          break
       }
     }
-    if (marketType === "nft_building" && _data.building_data) {
-      return {
-        src: _data.building_data.image,
-        alt: _data.building_data.name,
-        width: 200,
-        height: 200
-      }
+
+    switch (marketType) {
+      case "game_item":
+        search.type = "game-item"
+        break
+      case "nft_building":
+        search.type = "building"
+        break
+      case "nft_naka_punk":
+        search.type = "naka-punk"
+        break
+      case "nft_material":
+        search.type = "material"
+        break
+      case "nft_game":
+        search.type = "arcade-game"
+        break
+      case "nft_avatar":
+        search.type = "arcade-game"
+        break
+      default:
+        search.type = "land"
     }
-    if (marketType === "nft_material" && _data.material_data) {
-      return {
-        src: _data.material_data.image,
-        alt: _data.material_data.name,
-        width: 200,
-        height: 200
-      }
-    }
-    if (marketType === "nft_naka_punk" && _data.nakapunk_data) {
-      return {
-        src: _data.nakapunk_data.image,
-        alt: _data.nakapunk_data.name,
-        width: 200,
-        height: 200
-      }
-    }
-    if (marketType === "nft_game" && _data.game_data) {
-      return {
-        src: _data.game_data.image_nft_arcade_game,
-        alt: _data.game_data.name,
-        width: 200,
-        height: 200
-      }
-    }
-  }
+
+    return search
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.pathname, searchData, filterItem])
 
   const fetchOrderList = useCallback(async () => {
     const search = await handleSearch()
@@ -110,12 +172,14 @@ const useMarketInfo = () => {
     getMarketOrderAsnyc({
       _limit: limit,
       _page: currentPage,
-      _search: search.search
+      _search: search,
+      _sort: sortData
     } as IMarketServForm).then((_res) => {
       setOrderData(_res)
       setTotalCount(_res.info.totalCount)
     })
-  }, [currentPage, getMarketOrderAsnyc, handleSearch, limit])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, getMarketOrderAsnyc, handleSearch, limit, sort])
 
   useEffect(() => {
     let load = false

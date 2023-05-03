@@ -12,6 +12,7 @@ export type TNFTType =
   | "nft_material"
   | "game_item"
   | "nft_game"
+  | "nft_avatar"
 
 export type TType =
   | "land"
@@ -20,6 +21,7 @@ export type TType =
   | "material"
   | "game-item"
   | "arcade-game"
+  | "avatar-reef"
 
 export type TSellingType = "fullpayment" | "installment" | "rental"
 
@@ -292,7 +294,7 @@ export interface IOwnerData {
   type: TType
   id: string
   tokenId?: string
-  image: string
+  image?: string
   video?: string
   name: string
   price?: number
@@ -301,6 +303,16 @@ export interface IOwnerData {
   level?: string | number
   size?: string | number
   amount?: string | number
+}
+
+export interface IOwnerDetailsData extends IOwnerData {
+  desc?: string
+  model?: string
+  pos?: {
+    x: string
+    y: string
+  }
+  qrcode?: string
 }
 
 export interface IPayBillInstallServ extends IFormatMessageService {

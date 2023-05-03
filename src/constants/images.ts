@@ -9,8 +9,8 @@ export const IMAGES: {
   [key: string]: IImageProps
 } = {
   nakaLogo: {
-    src: "/images/home/naka-logo.svg",
-    blurDataURL: "/images/home/naka-logo.svg",
+    src: "/images/home/logo_naka_red.webp",
+    blurDataURL: "/images/home/logo_naka_red.webp",
     width: 120,
     height: 37,
     alt: "naka-logo"
@@ -156,8 +156,8 @@ export const IMAGES: {
     alt: "naka-referrals"
   },
   marketPlace: {
-    src: "/images/home/marketplace.png",
-    blurDataURL: "/images/home/marketplace_blur.png",
+    src: "/images/home/marketplace.webp",
+    blurDataURL: "/images/home/marketplace_blur.webp",
     width: 678,
     height: 218,
     alt: "marketPlace"
@@ -240,8 +240,8 @@ export const IMAGES: {
     alt: "vectorWorld"
   },
   no_image: {
-    src: "/images/common/no_image.png",
-    blurDataURL: "/images/common/no_image.png",
+    src: "/images/common/no_image.webp",
+    blurDataURL: "/images/common/no_image.webp",
     width: 218,
     height: 218,
     alt: "no_image"
@@ -254,8 +254,8 @@ export const IMAGES: {
     alt: "meta_maskds"
   },
   Frame: {
-    src: "/images/Profile/Wallet/Frame.png",
-    blurDataURL: "/images/Profile/Wallet/Frame.png",
+    src: "/images/Profile/Wallet/Frame.webp",
+    blurDataURL: "/images/Profile/Wallet/Frame.webp",
     width: 120,
     height: 80,
     alt: "frame"
@@ -282,81 +282,88 @@ export const IMAGES: {
     alt: "naka-coin"
   },
   featureImgVersion: {
-    src: "/images/features/feature_01.png",
-    blurDataURL: "/images/features/feature_01.png",
+    src: "/images/features/feature_01.webp",
+    blurDataURL: "/images/features/feature_01.webp",
     width: 200,
     height: 200,
     alt: "featureImgVersion"
   },
   featureImgAmpiply: {
-    src: "/images/features/feature_02.png",
-    blurDataURL: "/images/features/feature_02.png",
+    src: "/images/features/feature_02.webp",
+    blurDataURL: "/images/features/feature_02.webp",
     width: 200,
     height: 200,
     alt: "featureImgAmpiply"
   },
   featureImgSocial: {
-    src: "/images/features/feature_03.png",
-    blurDataURL: "/images/features/feature_03.png",
+    src: "/images/features/feature_03.webp",
+    blurDataURL: "/images/features/feature_03.webp",
     width: 200,
     height: 200,
     alt: "featureImgSocial"
   },
   featureImgSecure: {
-    src: "/images/features/feature_04.png",
-    blurDataURL: "/images/features/feature_04.png",
+    src: "/images/features/feature_04.webp",
+    blurDataURL: "/images/features/feature_04.webp",
     width: 200,
     height: 200,
     alt: "featureImgSecure"
   },
   becomeDeveloperSection1: {
-    src: "/images/becomeDeveloper/become_developer_01.png",
-    blurDataURL: "/images/becomeDeveloper/become_developer_01.png",
+    src: "/images/becomeDeveloper/become_developer_01.webp",
+    blurDataURL: "/images/becomeDeveloper/become_developer_01.webp",
     width: 1000,
     height: 1000,
     alt: "Import your existing NFTs."
   },
   becomeDeveloperSection2: {
-    src: "/images/becomeDeveloper/become_developer_02.png",
-    blurDataURL: "/images/becomeDeveloper/become_developer_02.png",
+    src: "/images/becomeDeveloper/become_developer_02.webp",
+    blurDataURL: "/images/becomeDeveloper/become_developer_02.webp",
     width: 1000,
     height: 1000,
     alt: "READY TO TRY NAKAMOTO.GAMES?"
+  },
+  noDataImage: {
+    src: "/images/sticker.webp",
+    blurDataURL: "/images/sticker.webp",
+    width: 1000,
+    height: 1000,
+    alt: "NodataImage"
   }
 }
 
 export const SLIDES_GAME_MOCKUP: IImageProps[] = [
   {
-    src: "/images/mocks/gameSlide/demo_slide_01.jpg",
-    blurDataURL: "/images/mocks/gameSlide/demo_slide_01.jpg",
+    src: "/images/mocks/gameSlide/demo_slide_01.webp",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_01.webp",
     width: 852,
     height: 479,
     alt: "slide1"
   },
   {
-    src: "/images/mocks/gameSlide/demo_slide_02.jpg",
-    blurDataURL: "/images/mocks/gameSlide/demo_slide_02.jpg",
+    src: "/images/mocks/gameSlide/demo_slide_02.webp",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_02.webp",
     width: 852,
     height: 479,
     alt: "slide2"
   },
   {
-    src: "/images/mocks/gameSlide/demo_slide_03.png",
-    blurDataURL: "/images/mocks/gameSlide/demo_slide_03.png",
+    src: "/images/mocks/gameSlide/demo_slide_03.webp",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_03.webp",
     width: 852,
     height: 479,
     alt: "slide3"
   },
   {
-    src: "/images/mocks/gameSlide/demo_slide_04.jpg",
-    blurDataURL: "/images/mocks/gameSlide/demo_slide_04.jpg",
+    src: "/images/mocks/gameSlide/demo_slide_04.webp",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_04.webp",
     width: 852,
     height: 479,
     alt: "slide4"
   },
   {
-    src: "/images/mocks/gameSlide/demo_slide_05.jpg",
-    blurDataURL: "/images/mocks/gameSlide/demo_slide_05.jpg",
+    src: "/images/mocks/gameSlide/demo_slide_05.webp",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_05.webp",
     width: 852,
     height: 479,
     alt: "slide5"
@@ -365,64 +372,64 @@ export const SLIDES_GAME_MOCKUP: IImageProps[] = [
 
 export const GAME_MOCKUP_CARD: IImageProps[] = [
   {
-    src: "/images/mocks/gameSlide/demo_slide_06.jpg",
-    blurDataURL: "/images/mocks/gameSlide/demo_slide_06.jpg",
+    src: "/images/mocks/gameSlide/demo_slide_06.webp",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_06.webp",
     width: 852,
     height: 479,
     alt: "slide6"
   },
   {
-    src: "/images/mocks/gameSlide/demo_slide_07.jpg",
-    blurDataURL: "/images/mocks/gameSlide/demo_slide_07.jpg",
+    src: "/images/mocks/gameSlide/demo_slide_07.webp",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_07.webp",
     width: 852,
     height: 479,
     alt: "slide7"
   },
   {
-    src: "/images/mocks/gameSlide/demo_slide_08.jpg",
-    blurDataURL: "/images/mocks/gameSlide/demo_slide_08.jpg",
+    src: "/images/mocks/gameSlide/demo_slide_08.webp",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_08.webp",
     width: 852,
     height: 479,
     alt: "slide8"
   },
   {
-    src: "/images/mocks/gameSlide/demo_slide_09.jpg",
-    blurDataURL: "/images/mocks/gameSlide/demo_slide_09.jpg",
+    src: "/images/mocks/gameSlide/demo_slide_09.webp",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_09.webp",
     width: 852,
     height: 479,
     alt: "slide9"
   },
   {
-    src: "/images/mocks/gameSlide/demo_slide_10.jpg",
-    blurDataURL: "/images/mocks/gameSlide/demo_slide_10.jpg",
+    src: "/images/mocks/gameSlide/demo_slide_10.webp",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_10.webp",
     width: 852,
     height: 479,
     alt: "slide10"
   },
   {
-    src: "/images/mocks/gameSlide/demo_slide_11.png",
-    blurDataURL: "/images/mocks/gameSlide/demo_slide_11.png",
+    src: "/images/mocks/gameSlide/demo_slide_11.webp",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_11.webp",
     width: 852,
     height: 479,
     alt: "slide11"
   },
   {
-    src: "/images/mocks/gameSlide/demo_slide_12.jpg",
-    blurDataURL: "/images/mocks/gameSlide/demo_slide_12.jpg",
+    src: "/images/mocks/gameSlide/demo_slide_12.webp",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_12.webp",
     width: 852,
     height: 479,
     alt: "slide12"
   },
   {
-    src: "/images/mocks/gameSlide/demo_slide_13.jpg",
-    blurDataURL: "/images/mocks/gameSlide/demo_slide_13.jpg",
+    src: "/images/mocks/gameSlide/demo_slide_13.webp",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_13.webp",
     width: 852,
     height: 479,
     alt: "slide13"
   },
   {
-    src: "/images/mocks/gameSlide/demo_slide_14.jpg",
-    blurDataURL: "/images/mocks/gameSlide/demo_slide_14.jpg",
+    src: "/images/mocks/gameSlide/demo_slide_14.webp",
+    blurDataURL: "/images/mocks/gameSlide/demo_slide_14.webp",
     width: 852,
     height: 479,
     alt: "slide14"

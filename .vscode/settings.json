@@ -84,5 +84,7 @@
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "i18n-ally.localesPaths": ["public/locales"]
+  "i18n-ally.localesPaths": ["public/locales"],
+  "cSpell.words": ["Headerbackpage"],
+  "vue.features.codeActions.enable": false
 }

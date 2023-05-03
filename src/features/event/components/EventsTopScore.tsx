@@ -12,7 +12,7 @@ import {
 } from "@feature/event/interface/IEventsService"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import { v4 as uuid } from "uuid"
-import Image from "next/image"
+import { Image } from "@components/atoms/image/index"
 import NoData from "@components/molecules/NoData"
 import { numberWithCommas } from "@src/helpers/addComma"
 import useEventController from "../containers/hooks/useEventController"

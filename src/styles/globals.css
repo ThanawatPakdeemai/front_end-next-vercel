@@ -183,8 +183,8 @@ h6 {
 }
 
 .text-neon {
-  text-shadow: 0 0 5px #ea0000, 0 0 10px #ea0000, 0 0 15px #ea0000;
-  /* ,0 0 20px #ea0000, 0 0 25px #ea0000; */
+  text-shadow: 0 0 15px #ea0000, 0 0 20px #ea0000;
+  /* 0 0 20px #ea0000, 0 0 25px #ea0000; */
 }
 
 .checkbox {
@@ -298,4 +298,8 @@ input:checked {
 .image-building {
   height: 200px;
   min-width: 368px;
+}
+
+.MobileSlider .slick-dots {
+  justify-content: flex-start;
 }

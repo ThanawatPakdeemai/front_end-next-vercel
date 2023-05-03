@@ -1,8 +1,8 @@
 import React from "react"
 
 function INaka({
-  width = 24,
-  height = 11,
+  width = "24",
+  height = "11",
   className,
   color
 }: React.SVGProps<SVGSVGElement>) {

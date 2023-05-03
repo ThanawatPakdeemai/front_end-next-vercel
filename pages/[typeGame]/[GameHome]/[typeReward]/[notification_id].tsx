@@ -50,72 +50,70 @@ const OverviewContent = dynamic(
   }
 )
 
-const GameTabs = dynamic(
-  () => import("@feature/game/components/templates/lobby/GameTabs"),
+const GameTabsVertical = dynamic(
+  () => import("@feature/game/components/templates/lobby/GameTabsVertical"),
   {
     suspense: true,
     ssr: false
   }
 )
-
 export default function Notification_id() {
   const { gameDataState } = useGameSummaryRewardController()
   const { getTypeGamePathFolder } = useGlobal()
 
-  return (
-    <>
-      {gameDataState ? (
-        <GamePageDefault
-          component={
-            <RightSidebarContent
-              className="mb-24"
-              content={<GameSummaryRewardPage />}
-              aside={
-                <Box
-                  component="div"
-                  className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
-                  sx={{
-                    ".panel-content": {
-                      maxHeight: "270px",
-                      ".custom-scroll": {
-                        overflow: "hidden"
-                      }
-                    },
-                    ".like-no_score": {
-                      margin: "0"
-                    }
-                  }}
-                >
-                  <OverviewContent
-                    gameId={gameDataState.id}
-                    gameType={getTypeGamePathFolder(gameDataState)}
-                    gameIdNFT={gameDataState.NFT_Owner}
-                  />
-                </Box>
-              }
-            />
-          }
-          component2={
-            <FullWidthContent
-              sxCustomStyled={{
-                "&.container": {
-                  maxWidth: "100%!important"
+  return gameDataState ? (
+    <GamePageDefault
+      component={
+        <RightSidebarContent
+          className="mb-24"
+          content={<GameSummaryRewardPage />}
+          aside={
+            <Box
+              component="div"
+              className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
+              sx={{
+                ".panel-content": {
+                  maxHeight: "270px",
+                  ".custom-scroll": {
+                    overflow: "hidden"
+                  }
+                },
+                ".like-no_score": {
+                  margin: "0"
                 }
               }}
             >
-              <TabProvider>
-                <GameTabs
-                  gameId={gameDataState.id}
-                  gameType="arcade-emporium"
-                />
-              </TabProvider>
-            </FullWidthContent>
+              <OverviewContent
+                gameId={gameDataState.id}
+                gameType={getTypeGamePathFolder(gameDataState)}
+                gameIdNFT={gameDataState.NFT_Owner}
+              />
+            </Box>
           }
         />
-      ) : (
-        <GamePageDefault component={<SkeletonBanner />} />
-      )}
-    </>
+      }
+      component2={
+        <FullWidthContent
+          sxCustomStyled={{
+            "&.container": {
+              maxWidth: "100%!important",
+              "&.container-fullWidth": {
+                padding: "49px"
+              }
+            }
+          }}
+        >
+          <TabProvider>
+            <GameTabsVertical
+              gameId={gameDataState.id}
+              gameType="arcade-emporium"
+            />
+          </TabProvider>
+        </FullWidthContent>
+      }
+    />
+  ) : (
+    <GamePageDefault component={<SkeletonBanner />} />
   )
 }
 

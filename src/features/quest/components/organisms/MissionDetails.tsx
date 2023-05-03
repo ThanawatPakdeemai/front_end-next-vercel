@@ -79,8 +79,10 @@ const MissionDetails = () => {
           <div className="mb-[14px] flex items-center gap-5">
             <CountWithProgressBar data={dataQuestDetails} />
             <span className="max-w-[339px] text-sm">
-              Exploration of Mars to study its geology, climate, and potential
-              for past or present life and prepare for human settlement.
+              Explore Mars and study its geology, climate, and life - past and
+              present. Prepare the planet for human settlement.
+              {/* Exploration of Mars to study its geology, climate, and potential
+              for past or present life and prepare for human settlement. */}
             </span>
           </div>
           <motion.div

@@ -6,7 +6,6 @@ import { motion } from "framer-motion"
 import React, { memo, useEffect, useState } from "react"
 import { Image } from "@components/atoms/image"
 import IconHourglass from "@components/icons/hourglassIcon"
-import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import TimerStamina from "@components/atoms/timer/TimerStamina"
 import {
   IGame,
@@ -27,6 +26,7 @@ import { TColor } from "@components/molecules/gameSlide/GameCarousel"
 import { useTranslation } from "react-i18next"
 import DetailCountGame from "@components/molecules/DetailCountGame"
 import { IGamesToPlay } from "@feature/event/interface/IEventsService"
+import SportEsportIcon from "@components/icons/SportEsportIcon"
 
 interface IProps {
   gameType: IGetType
@@ -196,7 +196,7 @@ const GameCard = ({
         if (onHandleClick) onHandleClick()
       }}
     >
-      <motion.div className="relative flex h-auto  min-h-[138px] w-full items-center justify-center overflow-hidden px-1 md:min-h-[238px] xl:w-[218px]">
+      <motion.div className="relative flex h-auto  min-h-[138px] w-full items-center justify-center overflow-hidden md:min-h-[238px] xl:w-[218px]">
         {showNo && no && (
           <NumberRank
             index={no - 1}
@@ -204,23 +204,23 @@ const GameCard = ({
             className="slick-card-number absolute right-1 top-2 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
           />
         )}
-        <Image
-          src={imageSrc}
-          alt="home-slide"
-          width={218}
-          height={218}
-          className={`slick-card-content h-full w-full rounded-md object-cover ${
-            partnerdata ? " sm:h-2/4 lg:h-4/6 xl:h-full" : ""
-          }`}
-        />
+        <div className="h-[218px] overflow-hidden rounded-3xl">
+          <Image
+            src={imageSrc}
+            alt="home-slide"
+            width={218}
+            height={218}
+            className={`slick-card-content h-full w-full overflow-hidden rounded-md object-cover ${
+              partnerdata ? "sm:h-2/4 lg:h-4/6 xl:h-full" : ""
+            }`}
+          />
+        </div>
         <motion.div
           variants={btnCard}
           className="absolute bottom-0 flex w-full justify-center text-white-primary"
         >
           <ButtonToggleIcon
-            startIcon={
-              cooldown ? <IconHourglass /> : <SportsEsportsOutlinedIcon />
-            }
+            startIcon={cooldown ? <IconHourglass /> : <SportEsportIcon />}
             text={cooldown ? `${t("cooldown")}...` : t(lableButton)}
             className={`btn-rainbow-theme z-[2] w-[198px] ${
               cooldown ? "bg-error-main" : "bg-secondary-main "
@@ -264,7 +264,6 @@ const GameCard = ({
             <Chip
               label={partnerdata.genres?.map((el) => `${el.name}, `)}
               size="small"
-              // color={getColorChipByGameType("default")}
               className={`w-full font-bold md:w-auto ${getColorChipByGameType(
                 getTypeGamePartnerPathFolder(partnerdata)
               )}`}
@@ -276,16 +275,14 @@ const GameCard = ({
               // .map(
               // (el) =>
               // el?.room_list?.map((ele) => (
-              <>
-                <Chip
-                  key={(data as IRoomAvaliableData)?.game_id}
-                  label={`${
-                    (data as IRoomAvaliableData)?.item_list?.[0]?.item_name
-                  }`}
-                  size="small"
-                  className="w-fit !bg-neutral-400 font-bold !text-neutral-700"
-                />
-              </>
+              <Chip
+                key={(data as IRoomAvaliableData)?.game_id}
+                label={`${
+                  (data as IRoomAvaliableData)?.item_list?.[0]?.item_name
+                }`}
+                size="small"
+                className="w-fit !bg-neutral-400 font-bold !text-neutral-700"
+              />
             )
             // )
             // ))
@@ -300,7 +297,7 @@ const GameCard = ({
           )}
         </div>
         {onPlaying && (
-          <div className=" mt-2 flex w-full flex-wrap items-center gap-2 text-xs uppercase">
+          <div className="mt-2 flex w-full flex-wrap items-center gap-2 text-xs uppercase">
             <LocalActivityOutlinedIcon className=" text-[18px] font-thin" />
             {(data as IRoomAvaliableData)?.item_list?.map((el) =>
               el?.room_list?.map((room) => (

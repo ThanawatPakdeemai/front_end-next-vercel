@@ -1,8 +1,10 @@
 import HeaderWaitingRoom, {
   IHeaderWaitingRoomProp
 } from "@components/organisms/HeaderWaitingRoom"
+import CONFIGS from "@configs/index"
 import { Box } from "@mui/material"
 import React from "react"
+import { BrowserView, MobileView } from "react-device-detect"
 
 export interface IGameSummaryContentProps extends IHeaderWaitingRoomProp {
   children: React.ReactNode
@@ -30,9 +32,16 @@ const GameSummaryContent = ({
       onOutRoom={props.onOutRoom}
       isSummaryPage
     />
-    <div className="game-summar--wrapper__content bg-neutral-700 p-4">
-      {children}
-    </div>
+    <BrowserView>
+      <div className="game-summar--wrapper__content bg-neutral-800 p-4">
+        {children}
+      </div>
+    </BrowserView>
+    {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+      <MobileView>
+        <div className="w-full">{children}</div>
+      </MobileView>
+    )}
   </Box>
 )
 

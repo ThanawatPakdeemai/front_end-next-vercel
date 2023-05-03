@@ -6,11 +6,12 @@ import HeadPrice from "@components/molecules/HeadPrice"
 import { RightMenu } from "@components/molecules/rightMenu"
 import useGlobal from "@hooks/useGlobal"
 import RightMenuDeveloper from "@components/molecules/rightMenu/RightMenuDeveloper"
-import { useRouter } from "next/router"
+import HeadMenuMobile from "@src/mobile/headerMenu/HeadMenuMobile"
+import { BrowserView, MobileView } from "react-device-detect"
+import CONFIGS from "@configs/index"
 
 const Header = () => {
   const { isMarketplace, isDeveloperPage } = useGlobal()
-  const { asPath } = useRouter()
 
   const showHeadPrice = !isMarketplace && !isDeveloperPage
   const showHeadMenu = !isDeveloperPage
@@ -18,26 +19,27 @@ const Header = () => {
   const showRightMenuDeveloper = isDeveloperPage
 
   return (
-    <>
-      {showHeadPrice && <HeadPrice />}
-      <header
-        className={`header ${
-          asPath.includes("map")
-            ? "top-0 w-full bg-primary-main lg:fixed"
-            : "lg:sticky lg:top-10"
-        } relative z-[999]`}
-      >
-        <Box
-          component="div"
-          className="flex flex-wrap items-center justify-center md:my-10 md:justify-between xl:flex-nowrap"
-        >
-          <HeadLogo />
-          {showHeadMenu && <HeadMenu />}
-          {showRightMenu && <RightMenu />}
-          {showRightMenuDeveloper && <RightMenuDeveloper />}
-        </Box>
-      </header>
-    </>
+    <div className="header-wrapper">
+      <BrowserView>
+        {showHeadPrice && <HeadPrice />}
+        <header className="header relative top-10 z-[999] lg:sticky">
+          <Box
+            component="div"
+            className="flex flex-wrap items-center justify-between md:my-10 xl:flex-nowrap"
+          >
+            <HeadLogo />
+            {showHeadMenu && <HeadMenu />}
+            {showRightMenu && <RightMenu />}
+            {showRightMenuDeveloper && <RightMenuDeveloper />}
+          </Box>
+        </header>
+      </BrowserView>
+      {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+        <MobileView>
+          <HeadMenuMobile />
+        </MobileView>
+      )}
+    </div>
   )
 }
 

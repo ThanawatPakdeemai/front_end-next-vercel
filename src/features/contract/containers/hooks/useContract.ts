@@ -23,6 +23,7 @@ import {
   getP2PBinanceMumbaiContract,
   getP2PPolygonContract,
   getP2PPolygonMumbaiContract,
+  getReefPaymentContract,
   getShopContract,
   getStakingContract,
   getUserGameItemsContract
@@ -263,3 +264,14 @@ export const useGetAllGameItemofAddrs = (_address: string) =>
   useMemo(() => getAllGameItemContract(_address, web3NoAccount), [_address])
 export const useGetAllLandofAddrs = (_address: string) =>
   useMemo(() => getAllLandContract(_address, web3NoAccount), [_address])
+
+export const useReefPayment = (
+  _provider: Web3Provider | JsonRpcSigner | undefined,
+  _address: string
+) =>
+  useMemo(
+    () => getReefPaymentContract(_address, _provider),
+    [_address, _provider]
+  )
+export const useReefPaymentNoAccount = (_address: string) =>
+  useMemo(() => getReefPaymentContract(_address, web3NoAccount), [_address])

@@ -1,3 +1,4 @@
+import CardDetailSkeleton from "@feature/marketplace/components/molecules/CardDetailSkeleton"
 import CardContentDetails from "@feature/marketplace/components/organisms/CardContentDetails"
 import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
 import useMarketOwnerDetail from "@feature/marketplace/containers/hooks/useMarketOwnerDetail"
@@ -6,31 +7,27 @@ import React from "react"
 
 const MarketplaceOwnerDetail = () => {
   const { ownerDetail, marketType } = useMarketOwnerDetail()
+
   return ownerDetail ? (
     <div className="mt-5 flex w-full flex-col gap-x-[120px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0">
       <CardContentDetails
-        detail={
-          "details" in ownerDetail ? ownerDetail.details : ownerDetail.detail
-        }
-        image={ownerDetail.NFT_image}
-        video={ownerDetail.NFT_video}
-        poster={ownerDetail.NFT_image}
+        detail={ownerDetail.desc}
+        image={ownerDetail.image}
+        video={ownerDetail.video}
+        poster={ownerDetail.image}
         alt={ownerDetail.type}
+        model={ownerDetail.model}
       >
         <div className="grid grid-cols-2 px-8 py-6">{/* transfer */}</div>
       </CardContentDetails>
       <div className="flex h-full w-full flex-col">
         <RightDetailsMarketplace
           type={marketType as TNFTType}
-          id={ownerDetail.NFT_token}
-          // token={tokenNFT}
+          id={ownerDetail.tokenId}
+          token={ownerDetail.tokenId}
           title={ownerDetail.name}
-          position={
-            "position" in ownerDetail ? ownerDetail.position : undefined
-          }
-          qrCode={
-            "qrcode_image" in ownerDetail ? ownerDetail.qrcode_image : undefined
-          }
+          position={ownerDetail.pos}
+          qrCode={ownerDetail.qrcode}
           // count={{
           //   // helperText: `Total supply : ${count}`,
           //   label: "Supply in market",
@@ -59,7 +56,9 @@ const MarketplaceOwnerDetail = () => {
         </RightDetailsMarketplace>
       </div>
     </div>
-  ) : null
+  ) : (
+    <CardDetailSkeleton />
+  )
 }
 
 export default MarketplaceOwnerDetail

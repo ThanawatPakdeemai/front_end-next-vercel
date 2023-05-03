@@ -1,6 +1,6 @@
-import React, { Fragment } from "react"
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
+import React from "react"
 import { useTranslation } from "react-i18next"
+import IconArrowRight from "@components/icons/arrowRightIcon"
 
 interface INextButtonSlide {
   icon?: React.ReactNode
@@ -16,7 +16,7 @@ const NextButtonSlide = ({ icon, text = "next" }: INextButtonSlide) => {
       </p>
       <span className="absolute right-0 top-0">
         {icon || (
-          <ArrowForwardIcon
+          <IconArrowRight
             fontSize="small"
             className="opacity-50"
           />

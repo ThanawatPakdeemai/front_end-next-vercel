@@ -23,7 +23,8 @@ export const StyledFormLabel = {
     position: "relative",
     display: "block",
     fontSize: "12px",
-    marginTop: "5px"
+    marginTop: "5px",
+    fontWeight: "bold"
   }
 }
 

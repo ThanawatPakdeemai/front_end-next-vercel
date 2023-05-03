@@ -10,7 +10,7 @@ interface IChecked {
   checked: boolean
 }
 
-type TKey = {
+export type TKey = {
   [key: string]: string | number | null
 }
 
@@ -100,7 +100,12 @@ const useMarketFilterStore = create<IuseMarketFilterStore>()(
         )
       },
       onResetFilter: () => {
-        set(() => ({ filter: [] }), false, "MarketFilterStore/onResetFilter")
+        const setFilter = []
+        set(
+          () => ({ filter: setFilter }),
+          false,
+          "MarketFilterStore/onResetFilter"
+        )
       },
       onResetSort: () => {
         set(() => ({ sort: [] }), false, "MarketFilterStore/onResetSort")

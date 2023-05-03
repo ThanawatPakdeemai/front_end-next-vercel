@@ -1,5 +1,8 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
-import { IGameRoomListSocket } from "@feature/game/interfaces/IGameService"
+import {
+  CurrentPlayer,
+  IGameRoomListSocket
+} from "@feature/game/interfaces/IGameService"
 import { ReactNode, createContext, useContext, useMemo } from "react"
 
 interface IPropSocket {
@@ -17,6 +20,7 @@ interface IPropSocket {
   waitingRoomPlay: () => void
   startGame: () => void
   getChat?: () => void
+  checkTextCard: (_data: CurrentPlayer) => string
 }
 interface IProp {
   propsSocket: IPropSocket
@@ -33,7 +37,8 @@ const SocketContext = createContext<IPropSocket>({
   dataPlayers: undefined,
   waitingRoomPlay: () => {},
   startGame: () => {},
-  getChat: () => {}
+  getChat: () => {},
+  checkTextCard: () => ""
 })
 
 function SocketProvider({ propsSocket, children }: IProp) {

@@ -12,16 +12,18 @@ import { MESSAGES } from "@constants/messages"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import helper from "@utils/helper"
 import useSocketRoomList from "./useSocketRoomList"
+import useGetGameByPath from "./useFindGameByPath"
 
 const useRoomMulti = () => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { data, itemSelected } = useGameStore()
+  const { data, itemSelected, onSetGameData } = useGameStore()
   const router = useRouter()
-  const { id } = router.query
+  const { id, GameHome } = router.query
   const itemSizeId = id as string
   const { errorToast } = useToast()
   const { balanceofItem } = useBuyGameItemController()
   const [dataRoom, setDataRoom] = useState<IGameRoomListSocket[]>()
+  const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
 
   const item_id = useMemo(() => {
     if (data) {
@@ -41,6 +43,19 @@ const useRoomMulti = () => {
       return ""
     }
   }, [data, itemSelected, itemSizeId])
+
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      if (gameData) onSetGameData(gameData)
+    }
+
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameData])
 
   const propsSocketRoomlist = useMemo(
     () => ({

@@ -5,6 +5,7 @@ import RoomListPage from "@src/mobile/features/pages/game/RoomListPage"
 import useGameStore from "@stores/game"
 // import { MENU } from "@configs/menu"
 import { useRouter } from "next/router"
+import ModalCreateRoom from "@feature/rooms/components/molecules/ModalCreateRoom"
 import HeaderProfile from "../atoms/HeaderProfile"
 import BannerGame from "../atoms/BannerGame"
 import TitleOutRoom from "../molecules/TitleOutRoom"
@@ -18,10 +19,20 @@ const RoomListLayout = () => {
     <>
       <HeaderProfile title={data?.name || "Game"} />
       <BannerGame imageBanner={data?.image_banner || ""} />
-      <TitleOutRoom
-        name={data?.name || "Game"}
-        onOutRoom={() => router.push(router?.asPath?.replace("/roomlist", ""))}
-      />
+
+      <div className="flex items-center justify-between">
+        <TitleOutRoom
+          name={data?.name || "Game"}
+          onOutRoom={() =>
+            router.push(router?.asPath?.replace("/roomlist", ""))
+          }
+        />
+        {data && (
+          <div className="mr-2 w-[162px]">
+            <ModalCreateRoom gameData={data} />
+          </div>
+        )}
+      </div>
       {/* <HeaderMenu menu={MENU[1].chide || []} /> */}
       <div className="mb-[80px]">
         {/* content */}

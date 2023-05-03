@@ -20,7 +20,9 @@ const WaitingLayout = () => {
       <BannerGame imageBanner={data?.image_banner || ""} />
       <TitleOutRoom
         name={data?.name || "Game"}
-        onOutRoom={() => router.push(router?.asPath?.replace("/roomlist", ""))}
+        onOutRoom={() =>
+          router.push(router?.asPath?.split("/")?.slice(0, -1).join("/"))
+        }
       />
       {/* <HeaderMenu menu={MENU[1].chide || []} /> */}
       <div className="mb-[80px]">

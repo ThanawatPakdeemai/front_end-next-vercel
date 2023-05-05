@@ -43,6 +43,7 @@ interface IProps {
   onPlaying?: boolean
   hideNextPrev?: boolean
   hideViewAll?: boolean
+  showTitle?: boolean
 }
 
 const GameCarouselHeaderMobileSite = ({
@@ -53,7 +54,8 @@ const GameCarouselHeaderMobileSite = ({
   onPrev,
   onPlaying, // NOT SURE ABOUT THIS
   hideNextPrev,
-  hideViewAll
+  hideViewAll,
+  showTitle
 }: IProps) => {
   const bgColor = `bg-${menu?.theme}-main`
   const bgColorHover = `hover:bg-${menu?.theme}-main`
@@ -110,7 +112,7 @@ const GameCarouselHeaderMobileSite = ({
   return (
     <div
       className={`slick-header-container relative w-full ${
-        isMobile ? "w-[0.938rem]" : "w-[1.875rem]"
+        isMobile ? "mb-[0.938rem]" : "mb-[1.875rem]"
       }`}
     >
       {menu && (
@@ -136,10 +138,10 @@ const GameCarouselHeaderMobileSite = ({
         {menu && (
           <div
             className={`relative flex h-full w-fit flex-wrap items-center justify-between rounded-xl border-2 border-neutral-800 bg-neutral-900 bg-opacity-40 p-[5px] text-[10px] capitalize backdrop-blur-[25px] sm:flex-nowrap lg:flex-none ${
-              isMobile ? "flex-initial" : "flex-auto"
+              isMobile ? "flex-nowrap" : "flex-auto"
             }`}
           >
-            {!isMobile && (
+            {showTitle && (
               <div className={titleIcon}>
                 {menu.icon}
                 <p
@@ -149,6 +151,7 @@ const GameCarouselHeaderMobileSite = ({
                 </p>
               </div>
             )}
+
             <div className="flex flex-[1_1_100%] justify-center gap-1 sm:flex-none sm:justify-start">
               {" "}
               {menu.menuList.map((item) => (

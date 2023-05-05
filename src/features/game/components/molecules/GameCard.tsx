@@ -27,6 +27,7 @@ import { TColor } from "@components/molecules/gameSlide/GameCarousel"
 import { useTranslation } from "react-i18next"
 import DetailCountGame from "@components/molecules/DetailCountGame"
 import { IGamesToPlay } from "@feature/event/interface/IEventsService"
+import { isMobile } from "react-device-detect"
 
 interface IProps {
   gameType: IGetType
@@ -204,15 +205,15 @@ const GameCard = ({
             className="slick-card-number absolute right-1 top-2 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
           />
         )}
-        <div className="h-[218px] overflow-hidden rounded-3xl">
+        <div className={`${!isMobile && "overflow-hidden rounded-3xl"}`}>
           <Image
             src={imageSrc}
             alt="home-slide"
             width={218}
             height={218}
-            className={`slick-card-content h-full w-full overflow-hidden rounded-md object-cover ${
+            className={`slick-card-content h-full overflow-hidden rounded-md object-cover ${
               partnerdata ? "sm:h-2/4 lg:h-4/6 xl:h-full" : ""
-            }`}
+            } ${isMobile ? "w-[6.875rem]" : "w-full"}`}
           />
         </div>
         <motion.div

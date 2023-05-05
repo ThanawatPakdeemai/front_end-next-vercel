@@ -11,6 +11,7 @@ import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import { Box } from "@mui/material"
+import { isMobile } from "react-device-detect"
 
 interface IProps {
   menu: IHeaderSlide
@@ -43,6 +44,68 @@ const GameCarousel = ({
 }: IProps) => {
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
 
+  const breakPointMobileSite = isMobile
+    ? [
+        {
+          breakpoint: 1280,
+          settings: {
+            slidesToShow: 8,
+            slidesToScroll: 8,
+            infinite: true,
+            dots: false
+          }
+        },
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 6,
+            slidesToScroll: 6,
+            infinite: true,
+            dots: false
+          }
+        },
+        {
+          breakpoint: 640,
+          settings: {
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            initialSlide: 2
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3
+          }
+        }
+      ]
+    : [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            infinite: true,
+            dots: false
+          }
+        },
+        {
+          breakpoint: 640,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            initialSlide: 2
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        }
+      ]
   const showSlide = list.length < 5 ? list.length : 6
   const settings: Settings = {
     dots: false,
@@ -52,32 +115,7 @@ const GameCarousel = ({
     slidesToScroll: showSlide,
     arrows: false,
     variableWidth: false,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 4,
-          infinite: true,
-          dots: false
-        }
-      },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          initialSlide: 2
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2
-        }
-      }
-    ]
+    responsive: breakPointMobileSite
   }
   const { onHandleSetGameStore, getTypeGamePathFolder, isRedirectRoomlist } =
     useGlobal()
@@ -107,6 +145,8 @@ const GameCarousel = ({
         onPrev={onSlidePrev}
         setCurType={setCurType}
         onPlaying
+        // hideNextPrev={isMobile && true}
+        // hideViewAll={isMobile && true}
       />
       <Box
         component="div"

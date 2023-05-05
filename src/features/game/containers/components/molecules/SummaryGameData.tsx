@@ -1,6 +1,7 @@
 import Helper from "@utils/helper"
 import React from "react"
 import { BrowserView, MobileView } from "react-device-detect"
+import CONFIGS from "@configs/index"
 import SummaryGameDetail from "./SummaryGameDetail"
 
 export interface ISummaryGameDataProps {
@@ -39,36 +40,38 @@ const SummaryGameData = ({
         ) : null}
       </div>
     </BrowserView>
-    <MobileView>
-      <div className="flex w-full flex-col items-center justify-center rounded border border-neutral-800 px-[26px]  text-sm">
-        {gameName && (
-          <div className="w-full px-[10px]">
-            <SummaryGameDetail
-              title="game:"
-              value={gameName}
-            />
-          </div>
-        )}
-        {itemName && (
-          <div className="w-full px-[10px]">
-            <SummaryGameDetail
-              title="asset:"
-              value={itemName}
-            />
-          </div>
-        )}
-        {gameRaward && gameRaward !== 0 ? (
-          <div className="w-full px-[10px]">
-            <SummaryGameDetail
-              title="game reward:"
-              value={`${Helper.formatNumber(gameRaward, {
-                maximumFractionDigits: 4
-              })} Naka`}
-            />
-          </div>
-        ) : null}
-      </div>
-    </MobileView>
+    {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+      <MobileView>
+        <div className="flex w-full flex-col items-center justify-center rounded border border-neutral-800 px-[26px]  text-sm">
+          {gameName && (
+            <div className="w-full px-[10px]">
+              <SummaryGameDetail
+                title="game:"
+                value={gameName}
+              />
+            </div>
+          )}
+          {itemName && (
+            <div className="w-full px-[10px]">
+              <SummaryGameDetail
+                title="asset:"
+                value={itemName}
+              />
+            </div>
+          )}
+          {gameRaward && gameRaward !== 0 ? (
+            <div className="w-full px-[10px]">
+              <SummaryGameDetail
+                title="game reward:"
+                value={`${Helper.formatNumber(gameRaward, {
+                  maximumFractionDigits: 4
+                })} Naka`}
+              />
+            </div>
+          ) : null}
+        </div>
+      </MobileView>
+    )}
   </>
 )
 

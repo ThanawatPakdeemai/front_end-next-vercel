@@ -14,9 +14,7 @@ import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { v4 as uuidv4 } from "uuid"
 import NoData from "@components/molecules/NoData"
-import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined"
-import Link from "next/link"
-import SearchIcon from "@mui/icons-material/Search"
+import Headerbackpage from "@src/mobile/features/Headerbackpage"
 
 const EarnRewardPageMobile = () => {
   const { profile } = useProfileStore()
@@ -113,15 +111,7 @@ const EarnRewardPageMobile = () => {
         {/* <Typography className="flex-1 text-[22px] uppercase text-neutral-400">
           <Trans i18nKey="item_rewards" />
         </Typography> */}
-        <div className="mb-6 mt-4 flex flex-1 items-center justify-between border-b-2 border-[#161616be] pb-2 text-white-default md:mt-0 md:flex">
-          <Link href="/">
-            <ArrowBackOutlinedIcon />
-          </Link>
-          <h1 className="flex-auto py-2 text-center text-base uppercase sm:mr-3 sm:flex-none sm:text-left">
-            {t("item_rewards")}
-          </h1>
-          <SearchIcon />
-        </div>
+        <Headerbackpage text="item_rewards" />
         {countUnClaim > 0 && (
           <>
             <Chip

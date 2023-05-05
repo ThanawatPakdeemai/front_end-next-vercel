@@ -1,8 +1,8 @@
 import React, { ReactNode } from "react"
 import IconArrowRight from "@components/icons/arrowRightIcon"
-import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import { motion } from "framer-motion"
 import Link from "next/link"
+import SportEsportIcon from "@components/icons/SportEsportIcon"
 
 type TTypeButton = "submit" | "reset" | "button" | undefined
 interface IProps {
@@ -21,7 +21,7 @@ interface IProps {
 
 const ButtonToggleIcon = ({
   href,
-  startIcon = <SportsEsportsOutlinedIcon />,
+  startIcon = <SportEsportIcon />,
   endIcon = <IconArrowRight />,
   text,
   handleClick,

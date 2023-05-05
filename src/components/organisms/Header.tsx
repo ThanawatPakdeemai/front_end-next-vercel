@@ -9,6 +9,7 @@ import RightMenuDeveloper from "@components/molecules/rightMenu/RightMenuDevelop
 import HeadMenuMobile from "@src/mobile/headerMenu/HeadMenuMobile"
 import { BrowserView, MobileView } from "react-device-detect"
 import HeadProfileMobile from "@src/mobile/headerMenu/HeadProfileMobile"
+import CONFIGS from "@configs/index"
 
 const Header = () => {
   const { isMarketplace, isDeveloperPage } = useGlobal()
@@ -34,10 +35,12 @@ const Header = () => {
           </Box>
         </header>
       </BrowserView>
-      <MobileView>
-        <HeadProfileMobile />
-        <HeadMenuMobile />
-      </MobileView>
+      {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+        <MobileView>
+          <HeadProfileMobile />
+          <HeadMenuMobile />
+        </MobileView>
+      )}
     </div>
   )
 }

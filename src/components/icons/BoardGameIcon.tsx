@@ -14,7 +14,7 @@ const BoardGameIcon = ({
     xmlns="http://www.w3.org/2000/svg"
     className={className}
   >
-    <g clip-path="url(#clip0_10019_40549)">
+    <g clipPath="url(#clip0_10019_40549)">
       <path
         d="M1.40521 22.595V1.40527H22.595V22.595H1.40521Z"
         stroke={stroke}

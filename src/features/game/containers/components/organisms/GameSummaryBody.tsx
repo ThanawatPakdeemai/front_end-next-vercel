@@ -3,6 +3,7 @@ import React from "react"
 import dayjs from "dayjs"
 import _ from "lodash"
 import { BrowserView, MobileView } from "react-device-detect"
+import CONFIGS from "@configs/index"
 import SummaryItemUsed, {
   ISummaryItemUsedProps
 } from "../molecules/SummaryItemUsed"
@@ -83,32 +84,34 @@ const GameSummaryBody = ({
           </GameSummaryRewardFooter>
         </div>
       </BrowserView>
-      <MobileView>
-        <div className="flex w-full flex-col items-center px-2">
-          <Tagline
-            icon={null}
-            bgColor="bg-error-main"
-            textColor="text-error-contrastText font-bold text-[12px]"
-            text="Thanks for playing Nanamoto.games with us. It was a lot of fun!"
-            className="block overflow-hidden"
-            show={show}
-          />
-          <CardSummaryMain
-            value={value}
-            date={dayjs(date).format("DD MMM YYYY")}
-            gameName={gameName}
-            gameURLtoShare={gameURLtoShare}
-            title={title}
-          />
-          <GameSummaryRewardFooter gameImage={gameImage}>
-            <SummaryGameData
-              gameName={gameName}
-              gameRaward={gameRaward}
-              itemName={props.itemName}
+      {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+        <MobileView>
+          <div className="flex w-full flex-col items-center px-2">
+            <Tagline
+              icon={null}
+              bgColor="bg-error-main"
+              textColor="text-error-contrastText font-bold text-[12px]"
+              text="Thanks for playing Nanamoto.games with us. It was a lot of fun!"
+              className="block overflow-hidden"
+              show={show}
             />
-          </GameSummaryRewardFooter>
-        </div>
-      </MobileView>
+            <CardSummaryMain
+              value={value}
+              date={dayjs(date).format("DD MMM YYYY")}
+              gameName={gameName}
+              gameURLtoShare={gameURLtoShare}
+              title={title}
+            />
+            <GameSummaryRewardFooter gameImage={gameImage}>
+              <SummaryGameData
+                gameName={gameName}
+                gameRaward={gameRaward}
+                itemName={props.itemName}
+              />
+            </GameSummaryRewardFooter>
+          </div>
+        </MobileView>
+      )}
     </>
   )
 }

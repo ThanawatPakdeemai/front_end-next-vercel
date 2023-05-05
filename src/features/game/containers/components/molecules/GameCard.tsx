@@ -7,12 +7,12 @@ import { motion } from "framer-motion"
 import React, { memo, useEffect, useState } from "react"
 import { Image } from "@components/atoms/image"
 import IconHourglass from "@components/icons/hourglassIcon"
-import SportsEsportsOutlinedIcon from "@mui/icons-material/SportsEsportsOutlined"
 import TimerStamina from "@components/atoms/timer/TimerStamina"
 import { IGame, IGameFav } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { IMAGES } from "@constants/images"
 import { useTranslation } from "react-i18next"
+import SportEsportIcon from "@components/icons/SportEsportIcon"
 
 interface IProps {
   menu: IHeaderSlide
@@ -149,9 +149,7 @@ const GameCard = ({
           className="absolute bottom-0 flex w-full justify-center text-white-primary"
         >
           <ButtonToggleIcon
-            startIcon={
-              cooldown ? <IconHourglass /> : <SportsEsportsOutlinedIcon />
-            }
+            startIcon={cooldown ? <IconHourglass /> : <SportEsportIcon />}
             text={cooldown ? `${t("cooldown")}...` : t(lableButton)}
             handleClick={onHandleClick}
             className={`btn-rainbow-theme z-[2] w-[198px] ${

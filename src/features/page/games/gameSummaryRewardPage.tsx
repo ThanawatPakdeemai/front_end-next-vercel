@@ -13,6 +13,7 @@ import { BrowserView, MobileView } from "react-device-detect"
 import { Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
 import { Image } from "@components/atoms/image/index"
+import CONFIGS from "@configs/index"
 
 const GameSummaryRewardPage = () => {
   const {
@@ -133,59 +134,61 @@ const GameSummaryRewardPage = () => {
           />
         </BrowserView>
         {renderContent()}
-        <MobileView>
-          <div className="grid grid-cols-2 gap-2">
-            {players ? (
-              players.map((data, index) => (
-                <div
-                  className="flex items-center justify-between rounded-sm bg-[#151515] p-2 text-xs"
-                  key={index}
-                >
+        {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+          <MobileView>
+            <div className="grid grid-cols-2 gap-2">
+              {players ? (
+                players.map((data, index) => (
                   <div
-                    className={`rounded-sm px-[14px] py-[12px] text-xs text-white-default ${
-                      index === 0
-                        ? "bg-red-card text-black-100"
-                        : index === 1
-                        ? "bg-secondary-main"
-                        : index === 2
-                        ? "bg-varidian-default  text-black-100"
-                        : "bg-[#404040]"
-                    }`}
+                    className="flex items-center justify-between rounded-sm bg-[#151515] p-2 text-xs"
+                    key={index}
                   >
-                    <p>{index + 1}</p>
-                  </div>
-                  <div className="mx-2 flex flex-col items-center justify-center text-[8px] text-white-default">
-                    <p>NAKAMOTO 0{index}</p>
-                    <p
-                      className={`rounded-[6px] border p-2  uppercase ${
+                    <div
+                      className={`rounded-sm px-[14px] py-[12px] text-xs text-white-default ${
                         index === 0
-                          ? "border-red-card"
+                          ? "bg-red-card text-black-100"
                           : index === 1
-                          ? "border-secondary-main"
+                          ? "bg-secondary-main"
                           : index === 2
-                          ? "border-varidian-default"
-                          : "border-[#404040]"
+                          ? "bg-varidian-default  text-black-100"
+                          : "bg-[#404040]"
                       }`}
                     >
-                      SCPRE {data.current_score}
-                    </p>
+                      <p>{index + 1}</p>
+                    </div>
+                    <div className="mx-2 flex flex-col items-center justify-center text-[8px] text-white-default">
+                      <p>NAKAMOTO 0{index}</p>
+                      <p
+                        className={`rounded-[6px] border p-2  uppercase ${
+                          index === 0
+                            ? "border-red-card"
+                            : index === 1
+                            ? "border-secondary-main"
+                            : index === 2
+                            ? "border-varidian-default"
+                            : "border-[#404040]"
+                        }`}
+                      >
+                        SCPRE {data.current_score}
+                      </p>
+                    </div>
+                    <Image
+                      src={data.avatar}
+                      width="20"
+                      height="20"
+                      alt={data.user_name}
+                      className="h-[40px] w-[40px] rounded-sm "
+                    />
                   </div>
-                  <Image
-                    src={data.avatar}
-                    width="20"
-                    height="20"
-                    alt={data.user_name}
-                    className="h-[40px] w-[40px] rounded-sm "
-                  />
-                </div>
-              ))
-            ) : (
-              <Typography className="rounded-[14px] border border-neutral-800 p-4 text-center text-default uppercase text-neutral-200">
-                {t("please_login")}
-              </Typography>
-            )}
-          </div>
-        </MobileView>
+                ))
+              ) : (
+                <Typography className="rounded-[14px] border border-neutral-800 p-4 text-center text-default uppercase text-neutral-200">
+                  {t("please_login")}
+                </Typography>
+              )}
+            </div>
+          </MobileView>
+        )}
       </div>
     </GameSummaryContent>
   ) : (

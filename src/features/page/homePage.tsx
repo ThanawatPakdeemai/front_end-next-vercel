@@ -1,5 +1,4 @@
 import React, { memo, useEffect, useState } from "react"
-import { BrowserView, MobileView } from "react-device-detect"
 import LogoIcon from "@components/icons/LogoIcon"
 import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
 import ShapeIcon from "@components/icons/ShapeIcon"
@@ -39,6 +38,7 @@ import DeveloperPart from "@feature/home/components/template/DeveloperPart"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 import { useTranslation } from "react-i18next"
 import OnPlayingStyle2 from "@feature/home/components/molecules/OnPlayingStyle2"
+import { BrowserView, MobileView } from "react-device-detect"
 
 const Home = () => {
   // const limit = 10
@@ -159,7 +159,17 @@ const Home = () => {
             className="flex flex-[1_1_100%] flex-col gap-3 sm:flex-[1_1_60%] xl:flex-1"
           >
             <CardMarketplace href={CONFIGS.BASE_URL.MARKETPLACE} />
-            <div className="flex justify-between gap-3">
+            <Box
+              component="div"
+              className="flex justify-between gap-3"
+              sx={{
+                "picture": {
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }
+              }}
+            >
               <CardLinkTemplate>
                 <CardLink
                   classNameSecond="!bg-red-card"
@@ -203,7 +213,7 @@ const Home = () => {
                   altSecond={IMAGES.backReferrals.alt}
                 />
               </CardLinkTemplate>
-            </div>
+            </Box>
           </Box>
           <div className="relative flex-[1_1_100%] overflow-hidden sm:flex-[1_1_60%] xl:flex-1">
             <div
@@ -271,7 +281,17 @@ const Home = () => {
           component="div"
           className="xs:flex-col mb-10 mt-4 gap-3 lg:flex"
         >
-          <div className="flex flex-1 justify-between gap-3">
+          <Box
+            component="div"
+            className="flex w-full flex-wrap justify-between gap-3"
+            sx={{
+              "picture": {
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+              }
+            }}
+          >
             <CardLinkTemplate>
               <CardLink
                 classNameSecond="bg-warning-dark"
@@ -304,7 +324,7 @@ const Home = () => {
                 altSecond={IMAGES.backHomeNakaNFT.alt}
               />
             </CardLinkTemplate>
-          </div>
+          </Box>
           <Box
             component="div"
             className="mt-2 flex-1 sm:mt-4 md:max-w-full lg:mt-0"

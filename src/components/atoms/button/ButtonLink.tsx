@@ -20,6 +20,7 @@ export interface IButtonLink extends React.HTMLAttributes<HTMLDivElement> {
   disabledEndIcon?: boolean
   sxCustomStyled?: SxProps<Theme>
   target?: "_blank" | "_self" | "_parent" | "_top"
+  stroke?: string
 }
 
 const ButtonLink = ({
@@ -38,7 +39,8 @@ const ButtonLink = ({
   disabledStartIcon = false,
   disabledEndIcon = false,
   sxCustomStyled = {},
-  target = "_self"
+  target = "_self",
+  stroke
 }: IButtonLink) => {
   const IconArrowRight = dynamic(
     () => import("@components/icons/arrowRightIcon"),
@@ -69,7 +71,10 @@ const ButtonLink = ({
         endIcon={
           !disabledEndIcon && (
             <div className="button-arrow animation-arrow">
-              <IconArrowRight className={arrowColor} />
+              <IconArrowRight
+                stroke={stroke}
+                className={arrowColor}
+              />
             </div>
           )
         }

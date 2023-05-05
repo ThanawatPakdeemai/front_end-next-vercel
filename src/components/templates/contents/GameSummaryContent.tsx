@@ -1,6 +1,7 @@
 import HeaderWaitingRoom, {
   IHeaderWaitingRoomProp
 } from "@components/organisms/HeaderWaitingRoom"
+import CONFIGS from "@configs/index"
 import { Box } from "@mui/material"
 import React from "react"
 import { BrowserView, MobileView } from "react-device-detect"
@@ -36,9 +37,11 @@ const GameSummaryContent = ({
         {children}
       </div>
     </BrowserView>
-    <MobileView>
-      <div className="w-full">{children}</div>
-    </MobileView>
+    {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+      <MobileView>
+        <div className="w-full">{children}</div>
+      </MobileView>
+    )}
   </Box>
 )
 

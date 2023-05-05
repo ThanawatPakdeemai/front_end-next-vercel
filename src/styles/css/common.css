@@ -29,26 +29,32 @@ body {
   animation-timing-function: linear;
   animation-duration: 0.5s;
 }
+
 .button-global .button-arrow {
   display: none;
 }
+
 .button-global .animation-button-text {
   animation: mymove-button-text 0.5s;
   animation-timing-function: linear;
   animation-duration: 0.5s;
   white-space: nowrap;
 }
+
 .button-global:hover .button-icon {
   display: none;
 }
+
 .button-global:hover .button-arrow {
   display: block;
 }
+
 .button-global:hover .animation-arrow {
   animation: mymove-image-icon-arrow 0.5;
   animation-timing-function: linear;
   animation-duration: 0.5s;
 }
+
 .button-global:hover .animation-button-text {
   animation: mymove-image-button-text 0.5s;
   animation-timing-function: linear;
@@ -121,18 +127,22 @@ body {
   background-color: theme("colors.error.main") !important;
   color: theme("colors.white.default") !important;
 }
+
 .menu-select-naka.active .MuiSvgIcon-root {
   color: theme("colors.white.primary") !important;
 }
+
 .menu-select-naka .text-end-select-naka .MuiTypography-root {
   color: theme("colors.neutral.300") !important;
   font-family: theme("fontFamily.neue-machina-semi") !important;
   font-size: theme("fontSize.xs") !important;
 }
+
 .menu-select-naka:hover .text-end-select-naka {
   border: theme("colors.white.primary") !important;
   background-color: theme("colors.white.primary") !important;
 }
+
 .menu-select-naka:hover .text-end-select-naka .MuiTypography-root {
   color: theme("colors.primary.main") !important;
   font-family: theme("fontFamily.neue-machina-semi") !important;
@@ -148,10 +158,12 @@ body {
   animation: mymove-global-square-not 1s;
   animation-duration: 0.5s;
 }
+
 .image-square .select-global-square:hover {
   animation: mymove-global-square 1s;
   animation-duration: 0.5s;
 }
+
 .image-square:hover + .select-square {
   left: 16px !important;
   bottom: 16px !important;
@@ -177,6 +189,7 @@ body {
   position: relative;
   z-index: 1;
 }
+
 .slick-slider .slick-dots {
   position: relative;
   bottom: 0;
@@ -184,12 +197,14 @@ body {
   align-items: center;
   justify-content: flex-end;
 }
+
 .slick-slider .slick-dots li {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 3px;
 }
+
 .slick-slider .slick-dots li button {
   background-color: #f1f4f4;
   width: 14px;
@@ -197,6 +212,7 @@ body {
   text-indent: -9999px;
   padding: 0;
 }
+
 .slick-slider .slick-dots li.slick-active button {
   background-color: #f42728;
 }
@@ -520,11 +536,12 @@ body {
 .bg-line-linear-gradient {
   background-color: #010101;
   background-image: repeating-linear-gradient(
-    hsla(54deg, 0%, 88%, 0.05) 0px,
-    hsla(54deg, 0%, 88%, 0.05) 2px,
+    hsla(54, 0%, 88%, 0.05) 0px,
+    hsla(54, 0%, 88%, 0.05) 2px,
     rgba(1, 1, 1, 0.2) 2px,
     rgba(1, 1, 1, 0.2) 4px
   );
+  -webkit-backdrop-filter: blur(2.5px);
   backdrop-filter: blur(2.5px);
 }
 
@@ -545,6 +562,7 @@ body {
   height: 4px;
   border-radius: 4px;
   box-shadow: 0 0 10px #f42728;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
@@ -655,10 +673,10 @@ body {
     width: -webkit-fill-available;
   }
 }
-
 .toast {
   max-width: 400px;
 }
+
 .toast > div {
   width: 100%;
 }
@@ -671,9 +689,11 @@ body {
   /* Hide the inner spin button for webkit-based browsers */
   /* Hide the outer spin button for webkit-based browsers */
 }
+
 .hidden-input-number::-webkit-inner-spin-button {
   display: none;
 }
+
 .hidden-input-number::-webkit-outer-spin-button {
   display: none;
 }
@@ -697,6 +717,7 @@ body {
   padding-bottom: 1rem;
   padding-left: 1.5rem;
 }
+
 @media (min-width: 768px) {
   .card-land-panel-wrapper {
     width: 280px;
@@ -705,20 +726,25 @@ body {
 .card-land-panel-wrapper #_card-land-map-btn-close {
   padding: 0;
 }
+
 .card-land-panel-wrapper #_card-land-map-btn-close .MuiSvgIcon-root {
   font-size: 2rem;
 }
+
 .card-land-panel-wrapper::-webkit-scrollbar {
   width: 5px;
 }
+
 .card-land-panel-wrapper::-webkit-scrollbar-track {
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 0;
 }
+
 .card-land-panel-wrapper::-webkit-scrollbar-thumb {
   border-radius: 0;
   background: rgba(0, 0, 0, 0.3);
 }
+
 @media screen and (max-height: 575px) {
   .card-land-panel-wrapper {
     height: 100% !important;
@@ -726,7 +752,6 @@ body {
     white-space: nowrap;
   }
 }
-
 .card-land-map-panel {
   position: absolute;
   right: 0;
@@ -739,6 +764,7 @@ body {
   font-weight: 500;
   color: #a6a9ae;
 }
+
 .card-land-map-panel h1,
 .card-land-map-panel h2,
 .card-land-map-panel h3,
@@ -748,21 +774,23 @@ body {
   text-transform: uppercase;
   color: #a6a9ae;
 }
+
 .card-land-map-panel p {
   font-size: 14px;
   font-weight: 500;
 }
+
 .card-land-map-panel .MuiTypography-body1,
 .card-land-map-panel .MuiTypography-body2 {
   color: #a6a9ae;
 }
+
 @media screen and (max-height: 767px) {
   .card-land-map-panel {
     height: 100%;
     top: 0 !important;
   }
 }
-
 .ql-container.ql-snow {
   border: none !important;
   font-family: neueMachina !important;
@@ -811,7 +839,8 @@ body {
   width: 40px !important;
   height: 40px !important;
   background: rgba(24, 24, 28, 0.2);
+  -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
   border-radius: 8px;
   @apply flex items-center justify-center;
-}
+} /*# sourceMappingURL=common.css.map */

@@ -1,7 +1,7 @@
+import React from "react"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
 import { Box } from "@mui/material"
-import React from "react"
 import { BrowserView } from "react-device-detect"
 
 export default function Layout({

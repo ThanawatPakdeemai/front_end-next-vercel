@@ -314,65 +314,70 @@ const Home = () => {
         </Box>
       </BrowserView>
       <MobileView>
-        <BannerSlide />
-        <div className="my-2 h-full w-full lg:mt-10 xl:mt-[140px]">
-          {f2pGame && !loadingDataF2pGames ? (
-            <>
-              <Typography
-                variant="body2"
-                className="py-[1.125rem] uppercase text-neutral-300"
-              >
-                Free to Play
-              </Typography>
-              <GameCarousel
-                menu={F2PHeaderMenu}
-                list={f2pGame}
-                curType={f2pCurType}
-                setCurType={setF2PCurType}
-                checkTimer
-                onPlaying={false}
-              />
-            </>
-          ) : (
-            <div className="grid grid-cols-2 gap-x-3 lg:flex">
-              {[...Array(6)].map(() => (
-                <SkeletonCard key={uuid()} />
-              ))}
-            </div>
-          )}
-        </div>
-        <div className="h-loadingFreeToPlayGames mb-2 mt-[-2rem] w-full">
-          {p2eGame && !loadingDataP2eGame ? (
-            <>
-              <Typography
-                variant="body2"
-                className="py-[1.125rem] uppercase text-neutral-300"
-              >
-                Play to Earn
-              </Typography>
-              <GameCarousel
-                menu={P2EHeaderMenu}
-                list={p2eGame}
-                curType={p2eCurType}
-                setCurType={setP2ECurType}
-                showNo
-                onPlaying={false}
-              />
-            </>
-          ) : (
-            <div className="grid grid-cols-2 gap-x-3 md:grid-cols-3 lg:flex lg:grid-cols-4 ">
-              {[...Array(6)].map(() => (
-                <SkeletonCard key={uuid()} />
-              ))}
-            </div>
-          )}
-        </div>
-        <div className="mt-[-3rem]">
-          <OnPlayingStyle2
-            isSlider={false}
-            showTitle
-          />
-        </div>
+        <Box
+          component="div"
+          className="pt-20"
+        >
+          <BannerSlide />
+          <div className="my-2 h-full w-full lg:mt-10 xl:mt-[140px]">
+            {f2pGame && !loadingDataF2pGames ? (
+              <>
+                <Typography
+                  variant="body2"
+                  className="py-[1.125rem] uppercase text-neutral-300"
+                >
+                  Free to Play
+                </Typography>
+                <GameCarousel
+                  menu={F2PHeaderMenu}
+                  list={f2pGame}
+                  curType={f2pCurType}
+                  setCurType={setF2PCurType}
+                  checkTimer
+                  onPlaying={false}
+                />
+              </>
+            ) : (
+              <div className="grid grid-cols-2 gap-x-3 lg:flex">
+                {[...Array(6)].map(() => (
+                  <SkeletonCard key={uuid()} />
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="h-loadingFreeToPlayGames mb-2 mt-[-2rem] w-full">
+            {p2eGame && !loadingDataP2eGame ? (
+              <>
+                <Typography
+                  variant="body2"
+                  className="py-[1.125rem] uppercase text-neutral-300"
+                >
+                  Play to Earn
+                </Typography>
+                <GameCarousel
+                  menu={P2EHeaderMenu}
+                  list={p2eGame}
+                  curType={p2eCurType}
+                  setCurType={setP2ECurType}
+                  showNo
+                  onPlaying={false}
+                />
+              </>
+            ) : (
+              <div className="grid grid-cols-2 gap-x-3 md:grid-cols-3 lg:flex lg:grid-cols-4 ">
+                {[...Array(6)].map(() => (
+                  <SkeletonCard key={uuid()} />
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="mt-[-3rem]">
+            <OnPlayingStyle2
+              isSlider={false}
+              showTitle
+            />
+          </div>
+        </Box>
       </MobileView>
     </>
   ) : (

@@ -51,7 +51,7 @@ const CardContent = ({ ...props }: IProp) => {
                   key={uuid()}
                   className="mr-2 flex w-full items-center rounded-lg border-[1px] border-neutral-700 bg-neutral-780 font-neue-machina-semi text-neutral-500 md:px-4 md:py-2"
                 >
-                  <JoinStickIcon />
+                  <JoinStickIcon stroke="#70727B" />
                   <span>total games played:</span>
                   <span className="ml-2 text-neutral-200">{`${labels.transaction_count}`}</span>
                 </div>

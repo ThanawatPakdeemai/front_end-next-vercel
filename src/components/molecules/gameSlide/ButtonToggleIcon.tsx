@@ -2,7 +2,7 @@ import React, { ReactNode } from "react"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import SportEsportIcon from "@components/icons/SportEsportIcon"
+import JoinStickIcon from "@components/icons/JoinStickIcon"
 
 type TTypeButton = "submit" | "reset" | "button" | undefined
 interface IProps {
@@ -21,7 +21,7 @@ interface IProps {
 
 const ButtonToggleIcon = ({
   href,
-  startIcon = <SportEsportIcon />,
+  startIcon = <JoinStickIcon />,
   endIcon = <IconArrowRight />,
   text,
   handleClick,

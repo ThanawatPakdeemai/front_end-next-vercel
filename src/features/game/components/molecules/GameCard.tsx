@@ -27,7 +27,7 @@ import { useTranslation } from "react-i18next"
 import DetailCountGame from "@components/molecules/DetailCountGame"
 import { IGamesToPlay } from "@feature/event/interface/IEventsService"
 import { isMobile } from "react-device-detect"
-import SportEsportIcon from "@components/icons/SportEsportIcon"
+import JoinStickIcon from "@components/icons/JoinStickIcon"
 
 interface IProps {
   gameType: IGetType
@@ -221,7 +221,7 @@ const GameCard = ({
           className="absolute bottom-0 flex w-full justify-center text-white-primary"
         >
           <ButtonToggleIcon
-            startIcon={cooldown ? <IconHourglass /> : <SportEsportIcon />}
+            startIcon={cooldown ? <IconHourglass /> : <JoinStickIcon />}
             text={cooldown ? `${t("cooldown")}...` : t(lableButton)}
             className={`btn-rainbow-theme z-[2] w-[198px] ${
               cooldown ? "bg-error-main" : "bg-secondary-main "

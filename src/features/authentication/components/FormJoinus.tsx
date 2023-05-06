@@ -31,7 +31,7 @@ import { getCategories } from "@feature/dropdown/containers/services/dropdown.se
 import { IGameCategory } from "@feature/dropdown/interfaces/IDropdownService"
 import { useToast } from "@feature/toast/containers"
 import Editor from "@components/molecules/Editor"
-import SportEsportIcon from "@components/icons/SportEsportIcon"
+import JoinStickIcon from "@components/icons/JoinStickIcon"
 import useFormJoinUsController from "../containers/hooks/useFormJoinUsController"
 import useFormController from "../containers/hooks/useFormController"
 
@@ -244,7 +244,7 @@ const FormJoinus = () => {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <SportEsportIcon />
+                        <JoinStickIcon />
                       </InputAdornment>
                     )
                   }}

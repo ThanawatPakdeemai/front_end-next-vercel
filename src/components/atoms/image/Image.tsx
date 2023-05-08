@@ -16,7 +16,7 @@ export const ImageCustom = ({
   const imgSrc = src || ""
 
   return (
-    <picture>
+    <picture className="h-full w-full">
       <source
         type="image/webp"
         srcSet={imgSrc as string}

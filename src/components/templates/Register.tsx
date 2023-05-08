@@ -15,6 +15,7 @@ import useRegisterAvatarStore from "@stores/registerAvater"
 import FormRegister from "@feature/authentication/components/FormRegister"
 import { useTranslation } from "react-i18next"
 import { isMobile } from "react-device-detect"
+import CONFIGS from "@configs/index"
 
 const KeyFramesClockwise = styled("div")({
   "@keyframes rotation": {
@@ -82,7 +83,7 @@ const RegisterLayout = () => {
         component="div"
         className="p-5"
       >
-        {isMobile ? (
+        {isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true" ? (
           <Grid
             item
             container

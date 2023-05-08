@@ -4,6 +4,7 @@ import Ellipse from "@components/icons/Ellipse/Ellipse"
 import { useRouter } from "next/router"
 import ButtonPlayer from "@feature/game/components/atoms/ButtonPlayer"
 import { isMobile } from "react-device-detect"
+import CONFIGS from "@configs/index"
 
 interface IProp {
   description?: string
@@ -43,7 +44,9 @@ const ButtonGame = ({
           text={
             <Typography
               className={`w-full font-neue-machina uppercase text-primary-main ${
-                isMobile ? "text-sm" : "text-2xl"
+                isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true"
+                  ? "text-sm"
+                  : "text-2xl"
               }`}
             >
               {textButton}
@@ -51,7 +54,9 @@ const ButtonGame = ({
           }
           // className={`h-[60px] w-[194px] rounded-[50px] ${classCssButton} font-bold capitalize`}
           className={`rounded-[50px] ${classCssButton} font-bold capitalize ${
-            isMobile ? "h-[44px] w-[130px]" : "h-[60px] w-[194px]"
+            isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true"
+              ? "h-[44px] w-[130px]"
+              : "h-[60px] w-[194px]"
           }`}
         />
       </Box>

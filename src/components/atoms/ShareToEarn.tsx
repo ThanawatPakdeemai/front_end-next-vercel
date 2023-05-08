@@ -16,6 +16,7 @@ import { MESSAGES } from "@constants/messages"
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined"
 import LinkIcon from "@components/icons/LinkIcon"
 import { isMobile } from "react-device-detect"
+import CONFIGS from "@configs/index"
 import ButtonIcon from "./button/ButtonIcon"
 
 interface IProps {
@@ -69,7 +70,7 @@ const ShareToEarn = (props: IProps) => {
 
   return (
     <>
-      {isMobile ? (
+      {isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true" ? (
         <ShareIcon onClick={handleOpen} />
       ) : (
         <div className="flex items-center justify-end ">

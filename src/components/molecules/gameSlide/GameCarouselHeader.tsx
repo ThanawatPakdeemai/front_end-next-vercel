@@ -169,7 +169,7 @@ const GameCarouselHeader = ({
             </div>
           </div>
         )}
-        <div className="h-10  w-fit max-w-sm flex-auto items-center justify-between gap-4 text-[8px] md:flex lg:flex-none">
+        <div className="flex w-fit max-w-sm flex-auto items-center justify-between gap-4 text-[8px] lg:flex-none xl:h-10">
           {!hideViewAll ? (
             <Link
               href={`/${curType}`}
@@ -178,14 +178,14 @@ const GameCarouselHeader = ({
               <ButtonToggleIcon
                 startIcon={<AddIcon />}
                 text={t("view_all")}
-                className="mr-4 flex h-full w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
+                className="mr-4 flex h-10 w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
                 type="button"
               />
             </Link>
           ) : null}
 
           {!hideNextPrev && (
-            <div className="arrow-slick-container bg-black grid h-full w-[100px] grid-cols-2 divide-x divide-neutral-700 rounded-md border border-neutral-700 text-white-primary ">
+            <div className="arrow-slick-container bg-black grid h-10 w-[100px] grid-cols-2 divide-x divide-neutral-700 rounded-md border border-neutral-700 text-white-primary ">
               <button
                 type="button"
                 className="flex h-full w-full items-center justify-center"

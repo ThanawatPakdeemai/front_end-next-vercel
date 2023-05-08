@@ -39,6 +39,7 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import { useRouter } from "next/router"
 import { useTranslation } from "react-i18next"
 import { isMobile } from "react-device-detect"
+import CONFIGS from "@configs/index"
 import useSignIn from "../containers/hooks/useSignIn"
 import { ISignIn } from "../interfaces/IAuthService"
 import useLoginProvider from "../containers/hooks/useLoginProvider"
@@ -93,7 +94,7 @@ const FormLogin = () => {
         if (_profile) {
           successToast(MESSAGES.sign_in_success)
           // return isMobile ? router.push("/") : router.push("/")
-          isMobile && router.push("/")
+          isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true" && router.push("/")
         }
       })
       .catch(() => {})

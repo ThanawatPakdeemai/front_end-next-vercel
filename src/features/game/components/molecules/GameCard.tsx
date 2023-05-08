@@ -204,7 +204,7 @@ const GameCard = ({
             className="slick-card-number absolute right-1 top-2 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
           />
         )}
-        <div className="h-[218px] overflow-hidden rounded-3xl">
+        <div className="h-[45vh] max-h-[158px] overflow-hidden rounded-3xl xl:h-[218px] xl:max-h-[218px]">
           <Image
             src={imageSrc}
             alt="home-slide"

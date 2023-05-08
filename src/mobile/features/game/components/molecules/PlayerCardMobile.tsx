@@ -1,16 +1,13 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/no-redundant-roles */
 import { Image } from "@components/atoms/image"
+import { IPropsPlayerMulti } from "@feature/game/components/organisms/SeatPlayersMulti"
 import { CurrentPlayer } from "@feature/game/interfaces/IGameService"
 import { useSocketProviderWaiting } from "@providers/SocketProviderWaiting"
 import useProfileStore from "@stores/profileStore"
 import { useTranslation } from "next-i18next"
 
-interface IProps {
-  players: CurrentPlayer[]
-}
-
-const PlayerCardMobile = ({ players }: IProps) => {
+const PlayerCardMobile = ({ players }: IPropsPlayerMulti) => {
   const profile = useProfileStore((state) => state.profile.data)
   const { t } = useTranslation()
   const { checkTextCard, kickRoom } = useSocketProviderWaiting()
@@ -19,7 +16,7 @@ const PlayerCardMobile = ({ players }: IProps) => {
     <>
       <div className=" custom-scroll grid w-full grid-cols-4 flex-wrap items-center justify-center overflow-y-auto px-[20px]">
         {players &&
-          players.map((player: CurrentPlayer, index) =>
+          players.map((player, index) =>
             player ? (
               <div
                 key={player?._id}
@@ -54,7 +51,7 @@ const PlayerCardMobile = ({ players }: IProps) => {
                       player.status === "inroom" ? " bg-warning-light" : ""
                     } ${player.status === "ready" ? " bg-green-lemon" : ""} ${
                       player.status === "playing" ? " bg-error-light" : ""
-                    } absolute bottom-[55px] flex h-[16px] items-center justify-center rounded bg-info-main px-1 font-neue-machina text-[8px] uppercase  text-primary-main`}
+                    } absolute bottom-[55px] flex h-[16px] items-center justify-center rounded  px-1 font-neue-machina text-[8px] uppercase  text-primary-main`}
                   >
                     {player?.status || ""}
                   </div>

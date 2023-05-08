@@ -32,6 +32,7 @@ const useWaitingMulti = () => {
   const [playerPressReady, setPlayerPressReady] = useState(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [ip, setIp] = useState("")
+  const [modalChat, setModalChat] = useState(false)
 
   const { errorToast } = useToast()
   const [gameUrl, setGameUrl] = useState<string>("")
@@ -50,7 +51,7 @@ const useWaitingMulti = () => {
   useEffect(() => {
     let load = false
 
-    if (!load) {
+    if (!load || ip === "") {
       Helper.getIP().then((res) => {
         setIp((res as IResGetIp).ip)
       })
@@ -60,6 +61,7 @@ const useWaitingMulti = () => {
       setIp("")
       load = true
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const checkItemSelected = useCallback(() => {
@@ -439,6 +441,76 @@ const useWaitingMulti = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataPlayers])
 
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      if (
+        gameData &&
+        itemSelected &&
+        profile &&
+        gameData.game_type === "multiplayer" &&
+        playerInroom &&
+        dataPlayers &&
+        ip
+      ) {
+        const frontendUrl = `${baseUrlFront}/${router.query.typeGame}/${gameData.path}/summary/${room_id}`
+
+        let gameURL = ""
+        if (gameData.type_code === "multi_02" && ip) {
+          const dataLinkGame = `${room_id}:|:${profile?.id}:|:${
+            itemSelected._id
+          }:|:${profile?.email}:|:${Helper.getLocalStorage(
+            "token"
+          )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
+            start_time
+          ).getTime()}:|:${profile?.username}:|:${playerInroom?.length}:|:${
+            dataPlayers?.map_id
+          }:|:${ip}`
+          // console.log("1>>", dataLinkGame)
+          gameURL = `${baseUrlGame}/${gameData.id}/?query=${Helper.makeID(
+            8
+          )}${btoa(dataLinkGame)}`
+        } else {
+          const dataLinkGame = `${room_id}:|:${profile?.id}:|:${
+            itemSelected._id
+          }:|:${profile?.email}:|:${Helper.getLocalStorage(
+            "token"
+          )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
+            start_time
+          ).getTime()}:|:${profile?.username}:|:${playerInroom?.length}:|:${
+            dataPlayers?.map_id
+          }:|:${ip}`
+          // console.log("2>>", dataLinkGame)
+          // console.log(ip)
+
+          gameURL = `${gameData.game_url}/${gameData.id}/?query=${Helper.makeID(
+            8
+          )}${btoa(dataLinkGame)}`
+        }
+        setGameUrl(gameURL)
+      }
+    }
+
+    return () => {
+      setGameUrl("")
+      load = true
+    }
+  }, [
+    dataPlayers,
+    dataPlayers?.map_id,
+    gameData,
+    ip,
+    itemSelected,
+    playerInroom,
+    profile,
+    rank_name,
+    room_id,
+    room_number,
+    router.query.typeGame,
+    start_time
+  ])
+
   const onReady = async () => {
     if (profile) {
       if (
@@ -468,6 +540,7 @@ const useWaitingMulti = () => {
         }
         await setLoading(false)
       } else if (!playerMe) {
+        setLoading(false)
         setPlayerPressReady(false)
         errorToast(MESSAGES["no-player"])
       } else if (
@@ -488,6 +561,7 @@ const useWaitingMulti = () => {
             balanceofItem.data < dataPlayers?.create_room_detail.number_of_item)
         ) {
           errorToast(MESSAGES["you-not-enough"])
+          setLoading(false)
         } else if (
           dataPlayers &&
           itemSelected &&
@@ -499,11 +573,14 @@ const useWaitingMulti = () => {
           errorToast(
             `${MESSAGES["please_item"]} for ${item?.name} ${item?.item_size}`
           )
+          setLoading(false)
         } else {
+          setLoading(false)
           errorToast(MESSAGES["please_item"])
         }
         setPlayerPressReady(false)
       } else {
+        setLoading(false)
         errorToast(MESSAGES["error-something"])
       }
     } else {
@@ -543,6 +620,7 @@ const useWaitingMulti = () => {
           }
         }
       } else if (!playerMe) {
+        setLoading(false)
         setOwnPressPlay(false)
         errorToast(MESSAGES["no-player"])
       } else if (
@@ -584,97 +662,39 @@ const useWaitingMulti = () => {
       setOwnPressPlay(false)
       errorToast(MESSAGES["please_login"])
     }
+    await setLoading(false)
   }
 
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (
-        gameData &&
-        itemSelected &&
-        profile &&
-        gameData.game_type === "multiplayer"
-      ) {
-        const frontendUrl = `${baseUrlFront}/${router.query.typeGame}/${gameData.path}/summary/${room_id}`
-
-        let gameURL = ""
-        if (gameData.type_code === "multi_02" && ip) {
-          const dataLinkGame = `${room_id}:|:${profile?.id}:|:${
-            itemSelected._id
-          }:|:${profile?.email}:|:${Helper.getLocalStorage(
-            "token"
-          )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
-            start_time
-          ).getTime()}:|:${profile?.username}:|:${playerInroom?.length}:|:${
-            dataPlayers?.map_id
-          }:|:${ip}`
-
-          gameURL = `${baseUrlGame}/${gameData.id}/?query=${Helper.makeID(
-            8
-          )}${btoa(dataLinkGame)}`
-        } else {
-          const dataLinkGame = `${room_id}:|:${profile?.id}:|:${
-            itemSelected._id
-          }:|:${profile?.email}:|:${Helper.getLocalStorage(
-            "token"
-          )}:|:${frontendUrl}:|:${baseUrlApi}:|:${rank_name}:|:${room_number}:|:${new Date(
-            start_time
-          ).getTime()}:|:${profile?.username}:|:${playerInroom?.length}:|:${
-            dataPlayers?.map_id
-          }:|:${ip}`
-          gameURL = `${gameData.game_url}/${gameData.id}/?query=${Helper.makeID(
-            8
-          )}${btoa(dataLinkGame)}`
-        }
-        setGameUrl(gameURL)
-      }
-    }
-
-    return () => {
-      setGameUrl("")
-      load = true
-    }
-  }, [
-    dataPlayers?.map_id,
-    gameData,
-    ip,
-    itemSelected,
-    playerInroom,
-    profile,
-    rank_name,
-    room_id,
-    room_number,
-    router.query.typeGame,
-    start_time
-  ])
-
-  const checkTextCard = (item: CurrentPlayer) => {
-    if (gameData?.game_type === "multiplayer" && dataPlayers) {
-      const ownerMe = (dataPlayers?.current_player as CurrentPlayer[])?.find(
-        (ele) =>
-          ele.player_id === dataPlayers?.create_room_detail?.player_create
-      )
-      if (item.owner) {
-        return "owner"
-      }
-
-      if (!item.owner && item.player_id !== profile?.id) {
-        // isn't owner and player_id != profile.id show button kick
-        return (
-          // eslint-disable-next-line react/button-has-type, jsx-a11y/no-redundant-roles
-          !item.owner && ownerMe && ownerMe?.player_id === profile?.id
-            ? "kick"
-            : "player"
+  const checkTextCard = useCallback(
+    (item: CurrentPlayer) => {
+      if (gameData?.game_type === "multiplayer" && dataPlayers) {
+        const ownerMe = (dataPlayers?.current_player as CurrentPlayer[])?.find(
+          (ele) =>
+            ele?.player_id === dataPlayers?.create_room_detail?.player_create
         )
-      }
-    }
-    if (profile?.id === item.player_id) {
-      return "me"
-    }
 
-    return "player"
-  }
+        if (item.owner) {
+          return "owner"
+        }
+
+        if (!item.owner && item.player_id !== profile?.id) {
+          // isn't owner and player_id != profile.id show button kick
+          return (
+            // eslint-disable-next-line react/button-has-type, jsx-a11y/no-redundant-roles
+            !item.owner && ownerMe && ownerMe?.player_id === profile?.id
+              ? "kick"
+              : "player"
+          )
+        }
+      }
+      if (profile?.id === item?.player_id) {
+        return "me"
+      }
+
+      return "player"
+    },
+    [dataPlayers, gameData?.game_type, profile?.id]
+  )
 
   return {
     isConnected,
@@ -701,7 +721,16 @@ const useWaitingMulti = () => {
     checkItemSelected,
     getPlayersMulti,
     mapPlayer,
-    checkTextCard
+    checkTextCard,
+    isOwnerRoom,
+    ownerPressPlay,
+    playerMe,
+    playerPressReady,
+    playerAllReady,
+    playerAllBurnItem,
+    setPlayerPressReady,
+    modalChat,
+    setModalChat
   }
 }
 

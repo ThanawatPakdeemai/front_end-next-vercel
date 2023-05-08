@@ -200,7 +200,11 @@ export default function GameRoomList() {
 }
 
 GameRoomList.getLayout = function getLayout(page: ReactElement) {
-  return isMobile && CONFIGS.DISPLAY_MOBILE_MODE ? <RoomListLayout /> : page
+  return isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true" ? (
+    <RoomListLayout />
+  ) : (
+    page
+  )
 }
 
 export async function getServerSideProps({ locale }) {

@@ -1,8 +1,9 @@
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import { useRouter } from "next/router"
+import { ReactNode } from "react"
 
 interface IProps {
-  name: string
+  name: string | ReactNode
   onOutRoom?: () => void
 }
 const TitleOutRoom = (props: IProps) => {
@@ -15,9 +16,9 @@ const TitleOutRoom = (props: IProps) => {
         className="!mx-2"
         onClick={() => (onOutRoom ? onOutRoom() : router.push("/"))}
       />
-      <p className=" font-neue-machina text-xs uppercase text-neutral-500">
+      <div className=" font-neue-machina text-xs uppercase text-neutral-500">
         {name}
-      </p>
+      </div>
     </div>
   )
 }

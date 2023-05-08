@@ -125,7 +125,8 @@ const useRoomSingle = () => {
         }
       } else if (
         (balanceofItem && balanceofItem?.data < 1) ||
-        balanceofItem === undefined
+        balanceofItem === undefined ||
+        !balanceofItem?.status
       ) {
         if (data && data_player_me && data_player_me.status === "played") {
           router.push(

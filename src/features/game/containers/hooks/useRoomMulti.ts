@@ -185,10 +185,7 @@ const useRoomMulti = () => {
         intoRoomGame(player_me as CurrentPlayer, _data._id)
       } else if (new Date() > new Date(_data.end_time)) {
         errorToast(MESSAGES["room-timeout"])
-      } else if (
-        !balanceofItem ||
-        balanceofItem?.data < _data.create_room_detail.number_of_item
-      ) {
+      } else if (!balanceofItem?.status) {
         errorToast(MESSAGES["you-don't-have-item"])
       } else if (player_me && player_me.status === "played") {
         errorToast(MESSAGES["you-played"])

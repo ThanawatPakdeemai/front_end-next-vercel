@@ -7,7 +7,7 @@ import { ReactNode, createContext, useContext, useMemo } from "react"
 
 interface IPropSocket {
   kickRoom: (_player_id: string) => void
-  onSendMessage: () => void
+  onSendMessage: (_message?: string) => void
   cancelReadyPlayer: () => void
   onReadyPlayerBurnItem: (
     _itemBurn: boolean,

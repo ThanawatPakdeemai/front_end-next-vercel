@@ -21,12 +21,11 @@ import LocalActivityOutlinedIcon from "@mui/icons-material/LocalActivityOutlined
 import useGameStore from "@stores/game"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import useProfileStore from "@stores/profileStore"
-import useGlobal from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import { TColor } from "@components/molecules/gameSlide/GameCarousel"
 import { useTranslation } from "react-i18next"
 import DetailCountGame from "@components/molecules/DetailCountGame"
 import { IGamesToPlay } from "@feature/event/interface/IEventsService"
-import { isMobile } from "react-device-detect"
 import JoinStickIcon from "@components/icons/JoinStickIcon"
 
 interface IProps {

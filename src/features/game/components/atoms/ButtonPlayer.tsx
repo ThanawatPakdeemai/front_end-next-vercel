@@ -1,7 +1,6 @@
-import CONFIGS from "@configs/index"
+import { isMobile } from "@hooks/useGlobal"
 import { motion } from "framer-motion"
 import { ReactNode, memo } from "react"
-import { isMobile } from "react-device-detect"
 
 interface IProp {
   startIcon: ReactNode
@@ -53,9 +52,7 @@ const ButtonGame = ({
       <motion.button
         className={`btn-icon-container m-auto flex h-10 w-full items-center md:mt-0 ${className} ${
           disabled ? " !hover:bg-neutral-800 !bg-neutral-800" : ""
-        } ${
-          !isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true" && "mt-5 w-full"
-        }`}
+        } ${!isMobile && "mt-5 w-full"}`}
         initial="rest"
         whileHover="hover"
         type="button"

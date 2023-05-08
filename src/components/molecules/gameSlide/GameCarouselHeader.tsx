@@ -9,7 +9,7 @@ import { Chip } from "@mui/material"
 import { IGetType } from "@feature/game/interfaces/IGameService"
 import Link from "next/link"
 import { useTranslation } from "react-i18next"
-import { isMobile } from "react-device-detect"
+import { isMobile } from "@hooks/useGlobal"
 
 export interface ISlideList extends React.HTMLAttributes<HTMLDivElement> {
   id: string

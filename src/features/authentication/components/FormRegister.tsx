@@ -33,8 +33,7 @@ import ICheckMark from "@components/icons/CheckMark"
 import FacebookLogin from "react-facebook-login"
 import useRegisterAvatarStore from "@stores/registerAvater"
 import { useTranslation } from "react-i18next"
-import { isMobile } from "react-device-detect"
-import CONFIGS from "@configs/index"
+import { isMobile } from "@hooks/useGlobal"
 import useFormRegisterController from "../containers/hooks/useFormRegisterController"
 import useFormController from "../containers/hooks/useFormController"
 
@@ -105,7 +104,7 @@ const FormRegister = () => {
               item
               xs={12}
             >
-              {!isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true" ? (
+              {!isMobile ? (
                 <Box
                   component="div"
                   className="flex w-full items-center rounded-lg md:w-auto"
@@ -571,13 +570,7 @@ const FormRegister = () => {
               container
               justifyContent="center"
             >
-              <div
-                className={`flex flex-wrap ${
-                  isMobile &&
-                  CONFIGS.DISPLAY_MOBILE_MODE === "true" &&
-                  "mb-[-0.75rem]"
-                }}`}
-              >
+              <div className={`flex flex-wrap ${isMobile && "mb-[-0.75rem]"}}`}>
                 <ButtonIcon
                   whileHover="hover"
                   transition={{
@@ -638,7 +631,7 @@ const FormRegister = () => {
                   icon={<MetaMarkIcon />}
                   className="m-1 flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
                 /> */}
-                {isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+                {isMobile && (
                   <div className="absolute pt-14">
                     <Typography className="text-sm uppercase text-neutral-700">
                       COPYRIGHT 2023 © NAKAMOTO GAMES
@@ -647,7 +640,7 @@ const FormRegister = () => {
                 )}
               </div>
             </Grid>
-            {!isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+            {!isMobile && (
               <Grid
                 item
                 container

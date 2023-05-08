@@ -3,7 +3,7 @@ import { IVerticalThumbCardSlideProps } from "@feature/slider/interfaces/ISlides
 import { CardMedia } from "@mui/material"
 import PlayArrowIcon from "@mui/icons-material/PlayArrow"
 import { ImageCustom } from "@components/atoms/image/Image"
-import { isMobile } from "react-device-detect"
+import { isMobile } from "@hooks/useGlobal"
 
 const VerticalThumbSmallCardSlide = ({
   item

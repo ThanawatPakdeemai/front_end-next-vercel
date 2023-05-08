@@ -6,12 +6,9 @@ import useGameStore from "@stores/game"
 import { useRouter } from "next/router"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
 import { Box } from "@mui/material"
-import useGlobal from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { isMobile } from "react-device-detect"
-import CONFIGS from "@configs/index"
 
 const BuyItemBody = dynamic(
   () => import("@components/templates/game/BuyItemBody"),
@@ -196,11 +193,7 @@ export default function GameRoomList() {
 }
 
 GameRoomList.getLayout = function getLayout(page: ReactElement) {
-  return isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true" ? (
-    <RoomListLayout />
-  ) : (
-    page
-  )
+  return isMobile ? <RoomListLayout /> : page
 }
 
 export async function getServerSideProps({ locale }) {

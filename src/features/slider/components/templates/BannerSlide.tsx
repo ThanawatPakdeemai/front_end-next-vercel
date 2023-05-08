@@ -4,8 +4,9 @@ import { TagCircle } from "@components/atoms/tagCircle"
 import NewGameIcon from "@components/icons/NewGameIcon"
 import useGetGames from "@feature/home/containers/hook/useGetGames"
 import Slider, { Settings } from "react-slick"
-import { BrowserView, isMobile } from "react-device-detect"
+import { BrowserView } from "react-device-detect"
 import { Box } from "@mui/material"
+import { isMobile } from "@hooks/useGlobal"
 import BannerCardSlide from "../organisms/BannerCardSlide"
 
 const BannerSlide = () => {

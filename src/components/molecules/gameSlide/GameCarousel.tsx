@@ -5,13 +5,12 @@ import GameCarouselHeader, {
 } from "@components/molecules/gameSlide/GameCarouselHeader"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import GameCard from "@feature/game/components/molecules/GameCard"
-import useGlobal from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import { IRoomAvaliableData } from "@feature/home/interfaces/IHomeService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import { Box } from "@mui/material"
-import { isMobile } from "react-device-detect"
 
 interface IProps {
   menu: IHeaderSlide
@@ -145,8 +144,6 @@ const GameCarousel = ({
         onPrev={onSlidePrev}
         setCurType={setCurType}
         onPlaying
-        // hideNextPrev={isMobile && true}
-        // hideViewAll={isMobile && true}
       />
       <Box
         component="div"

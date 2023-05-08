@@ -487,7 +487,6 @@ const ProfileContent = () => {
                   variant="contained"
                   className="mb-[1.125rem] h-[50px] w-[293px] rounded-lg border border-solid border-neutral-700
 !bg-neutral-800 text-xs uppercase hover:border-secondary-main"
-                  // onClick={handleOpen}
                 >
                   <div className="flex items-center font-neue-machina text-sm font-bold">
                     <span className="absolute left-[15px]">
@@ -504,7 +503,6 @@ const ProfileContent = () => {
                   variant="contained"
                   className="mb-[1.125rem] h-[50px] w-[293px] rounded-lg border border-solid border-neutral-700
 !bg-neutral-800 text-xs uppercase hover:border-secondary-main"
-                  // onClick={handleOpen}
                 >
                   <div className="flex items-center font-neue-machina text-sm font-bold">
                     <span className="absolute left-[15px]">

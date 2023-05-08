@@ -207,6 +207,10 @@ body {
   width: auto !important;
 }
 
+.slick-slider-dot-right .slick-slider .slick-dots {
+  justify-content: flex-start;
+}
+
 .progress-bar-energy {
   background: rgb(35, 35, 41) !important;
   background: linear-gradient(

@@ -8,7 +8,7 @@ import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
-import useGlobal from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import useGetStatisticsGameById from "@feature/game/containers/hooks/useGetStatisticsGameById"
 import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import useGameStore from "@stores/game"
@@ -16,7 +16,7 @@ import Howto from "@components/molecules/HowToPlay"
 import { Box } from "@mui/material"
 import { useTranslation } from "react-i18next"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
-import { BrowserView, MobileView, isMobile } from "react-device-detect"
+import { BrowserView, MobileView } from "react-device-detect"
 import LikeNoLobby from "@components/molecules/LikeNoLobby"
 import InvestIcon from "@components/icons/Stats/InvestIcon"
 import PlayersIcon from "@components/icons/Stats/PlayersIcon"
@@ -313,7 +313,7 @@ const GamePageDefault = ({
       {/* This code is not working for PC */}
       {/* <BrowserView></BrowserView> */}
 
-      {isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true" ? (
+      {isMobile ? (
         <MobileView>
           <div className={containerClasses}>
             {component}

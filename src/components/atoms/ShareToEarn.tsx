@@ -8,15 +8,13 @@ import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import { iconmotion } from "@components/organisms/Footer"
 import { useRouter } from "next/router"
 import { useToast } from "@feature/toast/containers"
-import useGlobal from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import useShareToEarn from "@feature/game/containers/hooks/useShareToEarn"
 import Helper from "@utils/helper"
 import { ELocalKey } from "@interfaces/ILocal"
 import { MESSAGES } from "@constants/messages"
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined"
 import LinkIcon from "@components/icons/LinkIcon"
-import { isMobile } from "react-device-detect"
-import CONFIGS from "@configs/index"
 import ButtonIcon from "./button/ButtonIcon"
 
 interface IProps {
@@ -70,7 +68,7 @@ const ShareToEarn = (props: IProps) => {
 
   return (
     <>
-      {isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true" ? (
+      {isMobile ? (
         <ShareIcon onClick={handleOpen} />
       ) : (
         <div className="flex items-center justify-end ">

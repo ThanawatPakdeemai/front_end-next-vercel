@@ -5,7 +5,7 @@ import GameCarouselHeader, {
 } from "@components/molecules/gameSlide/GameCarouselHeader"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import GameCard from "@feature/game/components/molecules/GameCard"
-import useGlobal from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import { IRoomAvaliableData } from "@feature/home/interfaces/IHomeService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
@@ -43,6 +43,68 @@ const GameCarousel = ({
 }: IProps) => {
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
 
+  const breakPointMobileSite = isMobile
+    ? [
+        {
+          breakpoint: 1280,
+          settings: {
+            slidesToShow: 8,
+            slidesToScroll: 8,
+            infinite: true,
+            dots: false
+          }
+        },
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 6,
+            slidesToScroll: 6,
+            infinite: true,
+            dots: false
+          }
+        },
+        {
+          breakpoint: 640,
+          settings: {
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            initialSlide: 2
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3
+          }
+        }
+      ]
+    : [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            infinite: true,
+            dots: false
+          }
+        },
+        {
+          breakpoint: 640,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            initialSlide: 2
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        }
+      ]
   const showSlide = list.length < 5 ? list.length : 6
   const settings: Settings = {
     dots: false,
@@ -52,32 +114,7 @@ const GameCarousel = ({
     slidesToScroll: showSlide,
     arrows: false,
     variableWidth: false,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 4,
-          infinite: true,
-          dots: false
-        }
-      },
-      {
-        breakpoint: 640,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          initialSlide: 2
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2
-        }
-      }
-    ]
+    responsive: breakPointMobileSite
   }
   const { onHandleSetGameStore, getTypeGamePathFolder, isRedirectRoomlist } =
     useGlobal()

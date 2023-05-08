@@ -21,12 +21,12 @@ import LocalActivityOutlinedIcon from "@mui/icons-material/LocalActivityOutlined
 import useGameStore from "@stores/game"
 import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import useProfileStore from "@stores/profileStore"
-import useGlobal from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import { TColor } from "@components/molecules/gameSlide/GameCarousel"
 import { useTranslation } from "react-i18next"
 import DetailCountGame from "@components/molecules/DetailCountGame"
 import { IGamesToPlay } from "@feature/event/interface/IEventsService"
-import SportEsportIcon from "@components/icons/SportEsportIcon"
+import JoinStickIcon from "@components/icons/JoinStickIcon"
 
 interface IProps {
   gameType: IGetType
@@ -204,15 +204,15 @@ const GameCard = ({
             className="slick-card-number absolute right-1 top-2 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
           />
         )}
-        <div className="h-[45vh] max-h-[158px] overflow-hidden rounded-3xl xl:h-[218px] xl:max-h-[218px]">
+        <div className={`${!isMobile && "overflow-hidden rounded-3xl"}`}>
           <Image
             src={imageSrc}
             alt="home-slide"
             width={218}
             height={218}
-            className={`slick-card-content h-full w-full overflow-hidden rounded-md object-cover ${
+            className={`slick-card-content h-full overflow-hidden rounded-md object-cover ${
               partnerdata ? "sm:h-2/4 lg:h-4/6 xl:h-full" : ""
-            }`}
+            } ${isMobile ? "w-[6.875rem]" : "w-full"}`}
           />
         </div>
         <motion.div
@@ -220,7 +220,7 @@ const GameCard = ({
           className="absolute bottom-0 flex w-full justify-center text-white-primary"
         >
           <ButtonToggleIcon
-            startIcon={cooldown ? <IconHourglass /> : <SportEsportIcon />}
+            startIcon={cooldown ? <IconHourglass /> : <JoinStickIcon />}
             text={cooldown ? `${t("cooldown")}...` : t(lableButton)}
             className={`btn-rainbow-theme z-[2] w-[198px] ${
               cooldown ? "bg-error-main" : "bg-secondary-main "

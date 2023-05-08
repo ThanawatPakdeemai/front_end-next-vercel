@@ -17,7 +17,7 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import { IResGetIp } from "@interfaces/IGetIP"
 import { useTranslation } from "react-i18next"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
-import { isMobile } from "react-device-detect"
+import { isMobile } from "@hooks/useGlobal"
 import ButtonGame from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 
@@ -206,9 +206,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
             }:|:${profile.email}:|:${Helper.getLocalStorage(
               "token"
             )}:|:${frontendUrl}:|:${CONFIGS.BASE_URL.API}:|:${
-              isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true"
-                ? detectDevice
-                : gameRoomById.rank_name
+              isMobile ? detectDevice : gameRoomById.rank_name
             }:|:${gameRoomById.room_number}:|:${new Date(
               gameRoomById.start_time
             ).getTime()}:|:${profile.username}:|:${
@@ -227,9 +225,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
           }:|:${Helper.getLocalStorage(
             "token"
           )}:|:${frontendUrl}:|:${baseUrlApi}:|:${
-            isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true"
-              ? detectDevice
-              : gameRoomById.rank_name
+            isMobile ? detectDevice : gameRoomById.rank_name
           }:|:${gameRoomById.room_number}:|:${new Date(
             gameRoomById.start_time
           ).getTime()}${

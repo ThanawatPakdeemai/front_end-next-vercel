@@ -9,6 +9,7 @@ import { Box } from "@mui/material"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
+import CONFIGS from "@configs/index"
 
 const BuyItemBody = dynamic(
   () => import("@components/templates/game/BuyItemBody"),
@@ -193,7 +194,11 @@ export default function GameRoomList() {
 }
 
 GameRoomList.getLayout = function getLayout(page: ReactElement) {
-  return isMobile ? <RoomListLayout /> : page
+  return isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true" ? (
+    <RoomListLayout />
+  ) : (
+    page
+  )
 }
 
 export async function getServerSideProps({ locale }) {

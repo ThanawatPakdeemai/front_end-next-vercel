@@ -1,5 +1,4 @@
 import useRoomMulti from "@feature/game/containers/hooks/useRoomMulti"
-import ModalCreateRoom from "@feature/rooms/components/molecules/ModalCreateRoom"
 import Preload from "@src/mobile/components/atoms/Preload"
 import ListJoinGame from "../../molecules/ListJoinGame"
 
@@ -9,10 +8,10 @@ const MultiRoom = () => {
     <>
       {data && (
         <>
-          <ModalCreateRoom gameData={data} />
           {dataRoom && dataRoom?.length > 0 ? (
             dataRoom?.map((item) => (
               <ListJoinGame
+                time={item.end_time as unknown as string}
                 key={item._id}
                 image={data.image_room}
                 name={data.game_type}

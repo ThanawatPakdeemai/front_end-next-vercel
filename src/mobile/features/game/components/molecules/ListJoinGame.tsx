@@ -1,5 +1,7 @@
 import { Image } from "@components/atoms/image/index"
 import { Chip } from "@mui/material"
+import RoomListBox from "@components/molecules/roomList/RoomListBox"
+import StopwatchIcon from "@components/icons/StopwatchIcon"
 import ButtonJoin from "../atoms/ButtonJoin"
 
 interface IProps {
@@ -10,6 +12,7 @@ interface IProps {
   textChip?: string
   descChip1?: string
   descChip2?: string
+  time?: string
 }
 const ListJoinGame = ({
   image,
@@ -18,7 +21,8 @@ const ListJoinGame = ({
   onClick,
   textChip,
   descChip1,
-  descChip2
+  descChip2,
+  time
 }: IProps) => (
   <>
     <div className="max-h-[393px] w-full border-b border-neutral-700">
@@ -35,7 +39,27 @@ const ListJoinGame = ({
           </div>
           <div className="grow">
             <p className=" font-neue-machina text-xs capitalize text-secondary-main">
-              {name}
+              {time ? (
+                <RoomListBox
+                  type="timer"
+                  timer={{
+                    time: new Date(time),
+                    onExpire: () => null
+                  }}
+                  color="green"
+                  shade="lemon"
+                  borderColor="border-0 !p-0 !h-[20px]"
+                  classNameText=" text-xs"
+                  showClock={
+                    <StopwatchIcon
+                      stroke="#A0ED61"
+                      className="mr-[-7px] w-[12px]"
+                    />
+                  }
+                />
+              ) : (
+                name
+              )}
             </p>
             <p className=" font-neue-machina text-sm capitalize text-neutral-300">
               {desc}

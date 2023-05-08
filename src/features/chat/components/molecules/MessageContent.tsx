@@ -6,13 +6,14 @@ import MessageBody from "./MessageBody"
 
 interface IProps {
   height?: string
+  heightParent?: string
 }
-const MessageContent = ({ height }: IProps) => {
+const MessageContent = ({ height, heightParent }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
   const { chat } = useChatContext()
 
   return (
-    <div className="messages-list relative h-full">
+    <div className={`messages-list relative ${heightParent}`}>
       <div
         className={`custom-scroll flex ${
           height || "h-[347px]"

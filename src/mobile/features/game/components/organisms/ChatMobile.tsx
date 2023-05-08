@@ -40,7 +40,10 @@ const ChatMobile = ({ modalChat, setModalChat }: IProps) => {
                 </>
               }
             />
-            <MessageContent height="!h-[calc(100%-120px)] " />
+            <MessageContent
+              height="!h-[calc(100%-120px)] "
+              heightParent="h-full"
+            />
             <div className=" absolute bottom-0 w-full">
               <MessageFooter />
             </div>

@@ -27,14 +27,14 @@ const RoomListLayout = () => {
             router.push(router?.asPath?.replace("/roomlist", ""))
           }
         />
-        {data && (
+        {data && data.game_type === "multiplayer" && (
           <div className="mr-2 w-[162px]">
             <ModalCreateRoom gameData={data} />
           </div>
         )}
       </div>
       {/* <HeaderMenu menu={MENU[1].chide || []} /> */}
-      <div className="mb-[80px]">
+      <div className="mb-[80px] mt-3">
         {/* content */}
         <RoomListPage />
         {/* footer */}

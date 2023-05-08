@@ -206,7 +206,9 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
             }:|:${profile.email}:|:${Helper.getLocalStorage(
               "token"
             )}:|:${frontendUrl}:|:${CONFIGS.BASE_URL.API}:|:${
-              isMobile ? detectDevice : gameRoomById.rank_name
+              isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true"
+                ? detectDevice
+                : gameRoomById.rank_name
             }:|:${gameRoomById.room_number}:|:${new Date(
               gameRoomById.start_time
             ).getTime()}:|:${profile.username}:|:${
@@ -225,7 +227,9 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
           }:|:${Helper.getLocalStorage(
             "token"
           )}:|:${frontendUrl}:|:${baseUrlApi}:|:${
-            isMobile ? detectDevice : gameRoomById.rank_name
+            isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true"
+              ? detectDevice
+              : gameRoomById.rank_name
           }:|:${gameRoomById.room_number}:|:${new Date(
             gameRoomById.start_time
           ).getTime()}${

@@ -43,11 +43,11 @@ const GameTabsVertical = ({ gameType, gameId }: IGameTabsProps) => {
   return (
     <div
       id="game-tab-vertical__wrapper"
-      className="mb-4 flex gap-10"
+      className="mb-4 flex flex-col gap-10 lg:flex-row"
     >
       <aside
         id="game-tab-vertical__aside"
-        className="mt-[-15px] flex w-[170px] flex-col items-start"
+        className="mt-[-15px] flex flex-col items-start lg:w-[170px]"
       >
         {GAME_TAB_CONTENT.map((item) =>
           _.isEmpty(item) ? null : (
@@ -74,7 +74,7 @@ const GameTabsVertical = ({ gameType, gameId }: IGameTabsProps) => {
       </aside>
       <div
         id="game-tab-vertical__content"
-        className="w-[calc(100%-150px)] flex-1"
+        className="flex-1 lg:w-[calc(100%-150px)]"
       >
         {GAME_TAB_CONTENT.map((item) =>
           item.id === tabValue ? (

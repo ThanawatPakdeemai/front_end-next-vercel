@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React from "react"
-import Image from "next/image"
+import { Image } from "@components/atoms/image/index"
 import DieplayerIcon from "@components/icons/Tournament/DieplayerIcon"
 import NakaIcon from "@components/icons/Tournament/NakaIcon"
 

@@ -1,5 +1,5 @@
 import React, { useRef } from "react"
-import Image from "next/image"
+import { Image } from "@components/atoms/image/index"
 import Slider, { Settings } from "react-slick"
 
 const CardGameSlider = ({ games }: any) => {

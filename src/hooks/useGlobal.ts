@@ -15,6 +15,7 @@ import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService
 import useChainSupportStore from "@stores/chainSupport"
 import useNotiStore from "@stores/notification"
 import Helper from "@utils/helper"
+import { isMobile as detectMobile } from "react-device-detect"
 import useSupportedChain from "./useSupportedChain"
 
 const useGlobal = (
@@ -354,6 +355,10 @@ const useGlobal = (
   }
 
   /**
+   * @description check device mobile
+   */
+
+  /**
    * @description Get market type
    */
   useEffect(() => {
@@ -426,3 +431,7 @@ const useGlobal = (
 }
 
 export default useGlobal
+
+export const isMobile = !!(
+  detectMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true"
+)

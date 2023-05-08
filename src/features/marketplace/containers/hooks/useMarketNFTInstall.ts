@@ -9,9 +9,10 @@ import {
   ICancelOrderParams,
   ICreateOrderParams,
   IPayBillParams,
-  IPurchOrderParams,
+  IPayOrderParams,
   TNFTType
 } from "@feature/marketplace/interfaces/IMarketService"
+import useGlobal from "@hooks/useGlobal"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
 import Helper from "@utils/helper"
@@ -36,9 +37,10 @@ interface IGetBillByBillId {
 
 const useMarketNFTInstall = () => {
   const { utils } = ethers
-  const { toWei, WeiToNumber } = Helper
+  const { toWei, WeiToNumber, convertNFTTypeToUrl } = Helper
   const { setOpen, setClose } = useLoadingStore()
   const { signer, address } = useWeb3Provider()
+  const { marketType } = useGlobal()
   const marketNFTInstallContract = useMarketplaceNFTInstall(
     signer,
     CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_INSTALL
@@ -49,7 +51,7 @@ const useMarketNFTInstall = () => {
   const {
     mutateMarketCreateOrder,
     mutateMarketCancelOrder,
-    mutateMarketPurcOrder,
+    mutatePayInstallment,
     mutatePayBillInstallNFT
   } = useMutateMarketplace()
   const {
@@ -110,6 +112,7 @@ const useMarketNFTInstall = () => {
               _log.data
             )
             const data: ICreateOrderParams = {
+              _urlNFT: convertNFTTypeToUrl(_NFTtype),
               _orderId: _resultEvent[0],
               _itemId: _id,
               _itemAmount: _amount,
@@ -170,6 +173,7 @@ const useMarketNFTInstall = () => {
               _log.data
             )
             const data: ICancelOrderParams = {
+              _urlNFT: convertNFTTypeToUrl(_NFTtype),
               _orderId: _resultEvent[0],
               _txHash: _res.transactionHash
             }
@@ -234,7 +238,10 @@ const useMarketNFTInstall = () => {
               ],
               _log.data
             )
-            const data: IPurchOrderParams = {
+            const _data: IPayOrderParams = {
+              _urlNFT: marketType
+                ? convertNFTTypeToUrl(marketType)
+                : "NFT-Land",
               _marketplaceId: _marketId,
               _itemId: _itemID,
               _itemAmount: _amountItem,
@@ -252,7 +259,7 @@ const useMarketNFTInstall = () => {
                 item_id: _itemID
               }
             }
-            await mutateMarketPurcOrder(data)
+            await mutatePayInstallment(_data)
           }
         })
         .catch((error) => console.error(error))

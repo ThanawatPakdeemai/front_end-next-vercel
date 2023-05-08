@@ -6,7 +6,7 @@ import Link from "next/link"
 const Header = () => {
   const { t } = useTranslation()
   return (
-    <div className="mb-6 mt-4 flex flex-wrap items-center justify-between border-b-2 border-[#161616be] pb-2 text-white-default md:mt-0 md:flex">
+    <div className="m-4 flex flex-wrap items-center justify-between border-b-2 border-[#161616be] pb-2 text-white-default md:mt-0 md:flex">
       <Link href="/">
         <ArrowBackOutlinedIcon />
       </Link>

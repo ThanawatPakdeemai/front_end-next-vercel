@@ -5,8 +5,8 @@ import dynamic from "next/dynamic"
 import useGetGameByPath from "@feature/game/containers/hooks/useFindGameByPath"
 import useGameStore from "@stores/game"
 import CONFIGS from "@configs/index"
-import { isMobile } from "react-device-detect"
 import WaitingLayout from "@src/mobile/components/templates/WaitingLayout"
+import { isMobile } from "@hooks/useGlobal"
 
 const GameRoomLayout = dynamic(
   () => import("@components/templates/GameRoomLayout"),

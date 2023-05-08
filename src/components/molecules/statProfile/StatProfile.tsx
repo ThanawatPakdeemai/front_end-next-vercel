@@ -10,16 +10,26 @@ interface IProps {
   className?: string
   sx?: SxProps<Theme> | undefined
   type?: string
+  classNameCardContent?: string
 }
 
-const StatProfile = ({ exp, energy, className, sx, type = "col" }: IProps) => {
+const StatProfile = ({
+  exp,
+  energy,
+  className,
+  sx,
+  type = "col",
+  classNameCardContent
+}: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
   return (
     <>
       {profile && (
         <CardContent
           className={`flex
-    ${type === "col" ? " p-0" : "items-center justify-center px-3 py-1"}`}
+    ${
+      type === "col" ? " p-0" : "items-center justify-center px-3 py-1"
+    } ${classNameCardContent}`}
         >
           <Card
             className={`flex items-center justify-between gap-[5px] rounded-[13px] bg-neutral-800 p-[5px] ${className} w-full ${

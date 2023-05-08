@@ -1,5 +1,7 @@
 import React from "react"
-import { Avatar, Box, Chip, Grid, Typography } from "@mui/material"
+import { Image } from "@components/atoms/image/index"
+import { Box, Chip, Grid, Typography } from "@mui/material"
+import Slider from "react-slick"
 import { useTranslation } from "react-i18next"
 import SearchIcon from "@components/icons/SearchIcon"
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined"
@@ -12,6 +14,7 @@ import CardBuyItemCopy from "@feature/gameItem/components/molecules/CardBuyItemC
 import StatEstimatedProfit from "@components/molecules/statistic/StatEstimatedProfit"
 import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import useTopPlayerByGameId from "@feature/ranking/containers/hook/useTopPlayerByGameId"
+import VerticalThumbSmallCardSlide from "@feature/slider/components/organisms/VerticalThumbSmallCardSlide"
 
 // FIXME Boy: เดี๋ยวกลับมาทำ ขอเอาขึ้นก่อน
 
@@ -410,6 +413,53 @@ const GameDetailLayout = () => {
     "media_list": []
   }
 
+  const slickNextData: any = [
+    {
+      "id": "66d950b6-ecc8-441d-912a-b8c6af04dabc",
+      "type": "image",
+      "src":
+        "https://nakamoto-prod-new.s3.eu-central-1.amazonaws.com/game/c5810353206f5d2256e4a3a56bfce64f/banner/1368_180.png"
+    },
+    {
+      "id": "389c5d17-d6bd-4c70-8230-c7ffbafb69a1",
+      "type": "video",
+      "src":
+        "https://nakamoto-prod-new.s3.eu-central-1.amazonaws.com/MintArcadeGamesNFT/341757fc69a1b6bd24a33156c61180ce/video/mp4/341757fc69a1b6bd24a33156c61180ce.goalrush VDO.mp4"
+    },
+    {
+      "id": "feb5fda3-f008-490f-89e6-2e875b8b3b41",
+      "type": "image",
+      "src":
+        "https://nakamoto-prod-new.s3.eu-central-1.amazonaws.com/MintArcadeGamesNFT/eb460c1d512647ff288baedc33c02506/image/png/f43efca5ca06e0f62055e668e4c9ce34.goalrush pic.png"
+    },
+    {
+      "id": "ba1037c4-0b77-4d83-a906-f1016eecb4b2",
+      "type": "image",
+      "src":
+        "https://nakamoto-prod-new.s3.eu-central-1.amazonaws.com/game/c5810353206f5d2256e4a3a56bfce64f/background/1023_468.png"
+    },
+    {
+      "id": "bbd441cc-3882-403f-aad4-7ef260f1ab53",
+      "type": "image",
+      "src":
+        "https://nakamoto-prod-new.s3.eu-central-1.amazonaws.com/game/c5810353206f5d2256e4a3a56bfce64f/category_list/B2.png"
+    },
+    {
+      "id": "e1e03abf-286b-42a9-99c0-d1bf42c4a394",
+      "type": "image",
+      "src":
+        "https://nakamoto-prod-new.s3.eu-central-1.amazonaws.com/game/c5810353206f5d2256e4a3a56bfce64f/background/1023_468.png"
+    }
+  ]
+
+  const settings = {
+    dots: true,
+    arrows: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1
+  }
+
   const { topPlayerGameId } = useTopPlayerByGameId()
 
   return (
@@ -436,20 +486,14 @@ const GameDetailLayout = () => {
             <hr className="mx-0 mb-8 mt-5 text-neutral-800" />
             <Box
               component="div"
-              className="flex justify-center"
+              className="mx-auto my-0 flex h-[6.813rem] w-[6.813rem] justify-center rounded-[13px] border border-solid border-neutral-800"
             >
-              <Avatar
-                sx={{
-                  bgcolor: "#008000",
-                  width: 109,
-                  height: 109,
-                  border: "1px solid #18181C",
-                  borderRadius: "13px"
-                }}
-                variant="square"
-              >
-                <SearchIcon stroke="#E1E2E2" />
-              </Avatar>
+              <Image
+                src={slickNextData[4].src}
+                alt="gameDetail"
+                width={109}
+                height={109}
+              />
             </Box>
             <Typography className="py-[9px] text-center text-[16px] font-bold uppercase text-white-default">
               {t("NAKAMOTO WAR")}
@@ -488,6 +532,18 @@ const GameDetailLayout = () => {
               </Box>
             </Box>
             <hr className="mx-0 mb-8 mt-5 text-neutral-800" />
+            <Box component="div">
+              <Slider {...settings}>
+                {slickNextData &&
+                  slickNextData.map((item, index) => (
+                    <VerticalThumbSmallCardSlide
+                      item={item}
+                      key={item.id}
+                      index={index}
+                    />
+                  ))}
+              </Slider>
+            </Box>
             <Grid
               container
               spacing={2}

@@ -1,6 +1,7 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"
 import dynamic from "next/dynamic"
+import Headerbackpage from "@src/mobile/features/Headerbackpage"
 
 const ReferralProgramPage = dynamic(
   () => import("@feature/page/ReferralProgramPage"),
@@ -21,6 +22,7 @@ export default function Referral() {
   return (
     <>
       <article className="h-full w-full">
+        <Headerbackpage text="Referral" />
         <ReferralProgramPage />
       </article>
     </>

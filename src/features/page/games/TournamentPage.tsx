@@ -9,6 +9,8 @@ import TournamentNewsSlide from "@feature/slider/components/templates/Tournament
 import CardTournamentSlider from "@feature/slider/components/molecules/CardTournamentSlider"
 import useGlobal from "@hooks/useGlobal"
 import TournamentList from "@feature/tournament/components/organisms/TournamentList"
+import TournamentStatusPlayer from "@components/molecules/tournament/TournamentStatusPlayer"
+
 // import { Trans, useTranslation } from "react-i18next"
 // import { ITournamentData, ITournamentRound } from "@src/types/tournament"
 // import { IGame } from "@src/types/games"
@@ -158,6 +160,7 @@ const TournamentPage = () => {
         <QualifyingRound />
         <TournamentNewsSlide />
         <TournamentList />
+        <TournamentStatusPlayer />
       </div>
     </div>
   ) : (

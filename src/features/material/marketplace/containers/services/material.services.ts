@@ -4,7 +4,7 @@ import { ITypesMaterialServ } from "@feature/material/marketplace/interfaces/IMa
 export const getTypesMaterial = () =>
   new Promise<ITypesMaterialServ>((resolve, reject) => {
     services
-      .get<ITypesMaterialServ>(`/market-place/materials`)
+      .get<ITypesMaterialServ>(`/market-place/NFT-Material/materials`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

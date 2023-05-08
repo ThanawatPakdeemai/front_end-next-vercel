@@ -9,6 +9,7 @@ import { Chip } from "@mui/material"
 import { IGetType } from "@feature/game/interfaces/IGameService"
 import Link from "next/link"
 import { useTranslation } from "react-i18next"
+import { isMobile } from "@hooks/useGlobal"
 
 export interface ISlideList extends React.HTMLAttributes<HTMLDivElement> {
   id: string
@@ -42,9 +43,10 @@ interface IProps {
   onPlaying?: boolean
   hideNextPrev?: boolean
   hideViewAll?: boolean
+  showTitle?: boolean
 }
 
-const GameCarouselHeader = ({
+const GameCarouselHeaderMobileSite = ({
   menu,
   curType,
   setCurType,
@@ -52,7 +54,8 @@ const GameCarouselHeader = ({
   onPrev,
   onPlaying, // NOT SURE ABOUT THIS
   hideNextPrev,
-  hideViewAll
+  hideViewAll,
+  showTitle
 }: IProps) => {
   const bgColor = `bg-${menu?.theme}-main`
   const bgColorHover = `hover:bg-${menu?.theme}-main`
@@ -107,7 +110,11 @@ const GameCarouselHeader = ({
   }, [isHover])
 
   return (
-    <div className="slick-header-container relative mb-[30px] w-full">
+    <div
+      className={`slick-header-container relative w-full ${
+        isMobile ? "mb-[0.938rem]" : "mb-[1.875rem]"
+      }`}
+    >
       {menu && (
         <motion.div
           key={`sticker_${menu.title}`}
@@ -129,15 +136,22 @@ const GameCarouselHeader = ({
 
       <div className="flex h-full w-full flex-wrap items-center justify-between gap-[5px] sm:flex-nowrap">
         {menu && (
-          <div className="relative flex h-full w-fit flex-auto flex-wrap items-center justify-between rounded-xl border-2 border-neutral-800 bg-neutral-900 bg-opacity-40 p-[5px] text-[10px] capitalize backdrop-blur-[25px] sm:flex-nowrap lg:flex-none">
-            <div className={titleIcon}>
-              {menu.icon}
-              <p
-                className={`text-${menu.theme}-main text-[16px] font-bold uppercase md:h-[10px] md:text-[10px]`}
-              >
-                {t(menu.title)}
-              </p>
-            </div>
+          <div
+            className={`relative flex h-full w-fit flex-wrap items-center justify-between rounded-xl border-2 border-neutral-800 bg-neutral-900 bg-opacity-40 p-[5px] text-[10px] capitalize backdrop-blur-[25px] sm:flex-nowrap lg:flex-none ${
+              isMobile ? "flex-nowrap" : "flex-auto"
+            }`}
+          >
+            {showTitle && (
+              <div className={titleIcon}>
+                {menu.icon}
+                <p
+                  className={`text-${menu.theme}-main text-[16px] font-bold uppercase md:h-[10px] md:text-[10px]`}
+                >
+                  {t(menu.title)}
+                </p>
+              </div>
+            )}
+
             <div className="flex flex-[1_1_100%] justify-center gap-1 sm:flex-none sm:justify-start">
               {" "}
               {menu.menuList.map((item) => (
@@ -169,42 +183,44 @@ const GameCarouselHeader = ({
             </div>
           </div>
         )}
-        <div className="h-10  w-fit max-w-sm flex-auto items-center justify-between gap-4 text-[8px] md:flex lg:flex-none">
-          {!hideViewAll ? (
-            <Link
-              href={`/${curType}`}
-              className="h-full"
-            >
-              <ButtonToggleIcon
-                startIcon={<AddIcon />}
-                text={t("view_all")}
-                className="mr-4 flex h-full w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
-                type="button"
-              />
-            </Link>
-          ) : null}
+        {!isMobile && (
+          <div className="h-10  w-fit max-w-sm flex-auto items-center justify-between gap-4 text-[8px] md:flex lg:flex-none">
+            {!hideViewAll ? (
+              <Link
+                href={`/${curType}`}
+                className="h-full"
+              >
+                <ButtonToggleIcon
+                  startIcon={<AddIcon />}
+                  text={t("view_all")}
+                  className="mr-4 flex h-full w-36 items-center justify-center rounded-md border border-neutral-700 font-neue-machina text-sm font-bold capitalize leading-3 text-white-primary"
+                  type="button"
+                />
+              </Link>
+            ) : null}
 
-          {!hideNextPrev && (
-            <div className="arrow-slick-container bg-black grid h-full w-[100px] grid-cols-2 divide-x divide-neutral-700 rounded-md border border-neutral-700 text-white-primary ">
-              <button
-                type="button"
-                className="flex h-full w-full items-center justify-center"
-                onClick={() => onClickedPrev()}
-              >
-                <IconArrowLeft />
-              </button>
-              <button
-                type="button"
-                className="flex h-full w-full items-center justify-center"
-                onClick={() => onClickedNext()}
-              >
-                <IconArrowRight />
-              </button>
-            </div>
-          )}
-        </div>
+            {!hideNextPrev && (
+              <div className="arrow-slick-container bg-black grid h-full w-[100px] grid-cols-2 divide-x divide-neutral-700 rounded-md border border-neutral-700 text-white-primary ">
+                <button
+                  type="button"
+                  className="flex h-full w-full items-center justify-center"
+                  onClick={() => onClickedPrev()}
+                >
+                  <IconArrowLeft />
+                </button>
+                <button
+                  type="button"
+                  className="flex h-full w-full items-center justify-center"
+                  onClick={() => onClickedNext()}
+                >
+                  <IconArrowRight />
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   )
 }
-export default memo(GameCarouselHeader)
+export default memo(GameCarouselHeaderMobileSite)

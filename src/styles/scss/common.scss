@@ -251,6 +251,14 @@ body {
   }
 }
 
+.slick-slider-dot-right {
+  .slick-slider {
+    .slick-dots {
+      justify-content: flex-start;
+    }
+  }
+}
+
 .progress-bar-energy {
   background: rgb(35, 35, 41) !important;
   background: linear-gradient(
@@ -702,9 +710,9 @@ body {
   }
 }
 
-.page-full-map {
-  height: calc(var(--vh, 1vh) * 100);
-}
+// .page-full-map {
+//   height: calc(var(--vh, 1vh) * 85);
+// }
 
 .card-land-panel-wrapper {
   position: relative;

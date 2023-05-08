@@ -1,6 +1,6 @@
 import { ReactNode, memo } from "react"
 import DropdownIcon from "@components/icons/DropdownIcon"
-import { isMobile } from "react-device-detect"
+import { isMobile } from "@hooks/useGlobal"
 
 interface IProps {
   isOpen: boolean

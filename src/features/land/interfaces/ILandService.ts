@@ -1,4 +1,5 @@
 import {
+  IInstallData,
   IMarketForm,
   INFTInitial,
   TNFTType
@@ -44,6 +45,7 @@ interface ILand extends Omit<INFTInitial, "detail"> {
 export interface ILandData extends ILand {
   history?: IHistory[]
   type: TNFTType
+  installments_data?: IInstallData[]
 }
 
 export interface IMarketLandData extends ILand, IMarketForm {

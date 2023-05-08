@@ -33,7 +33,7 @@ import ICheckMark from "@components/icons/CheckMark"
 import FacebookLogin from "react-facebook-login"
 import useRegisterAvatarStore from "@stores/registerAvater"
 import { useTranslation } from "react-i18next"
-import { isMobile } from "react-device-detect"
+import { isMobile } from "@hooks/useGlobal"
 import useFormRegisterController from "../containers/hooks/useFormRegisterController"
 import useFormController from "../containers/hooks/useFormController"
 

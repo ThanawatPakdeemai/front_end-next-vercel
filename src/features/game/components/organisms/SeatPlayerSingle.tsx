@@ -17,7 +17,7 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import { IResGetIp } from "@interfaces/IGetIP"
 import { useTranslation } from "react-i18next"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
-import { isMobile } from "react-device-detect"
+import { isMobile } from "@hooks/useGlobal"
 import ButtonGame from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 

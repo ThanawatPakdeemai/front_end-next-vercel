@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-no-undef */
-/* eslint-disable no-undef */
 import React, { useEffect, useState } from "react"
 import ShineIcon from "@components/icons/ShineIcon"
 import Banners from "@components/molecules/Banners"
@@ -10,7 +8,7 @@ import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
-import useGlobal from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import useGetStatisticsGameById from "@feature/game/containers/hooks/useGetStatisticsGameById"
 import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import useGameStore from "@stores/game"
@@ -312,7 +310,22 @@ const GamePageDefault = ({
 
   return (
     <div className="game-page-default">
-      <BrowserView>
+      {/* This code is not working for PC */}
+      {/* <BrowserView></BrowserView> */}
+
+      {isMobile ? (
+        <MobileView>
+          <div className={containerClasses}>
+            {component}
+            {/**
+             * @description In case there is a need to add another component
+             */}
+            {component2 && <div className="mt-4">{component2}</div>}
+            {component3 && <div className="mt-4">{component3}</div>}
+            {renderStatistic()}
+          </div>
+        </MobileView>
+      ) : (
         <div className={containerClasses}>
           <Header />
           <Breadcrumb />
@@ -322,7 +335,6 @@ const GamePageDefault = ({
               alt={gameData.name}
             />
           ) : (
-            // eslint-disable-next-line react/jsx-no-undef
             <Banners />
           )}
 
@@ -336,23 +348,10 @@ const GamePageDefault = ({
           {component3 && <div className="mt-12">{component3}</div>}
           {/* //NOTE - comment ไว้ก่อน ค่อยเปิด feature นี้ทีหลัง */}
           {/* {gameData && (
-        <ReleatedGames _gameType={getTypeGamePathFolder(gameData as IGame)} />
-      )} */}
+            <ReleatedGames _gameType={getTypeGamePathFolder(gameData as IGame)} />
+          )} */}
           <Footer />
         </div>
-      </BrowserView>
-      {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
-        <MobileView>
-          <div className={containerClasses}>
-            {component}
-            {/**
-             * @description In case there is a need to add another component
-             */}
-            {component2 && <div className="mt-4">{component2}</div>}
-            {component3 && <div className="mt-4">{component3}</div>}
-            {renderStatistic()}
-          </div>
-        </MobileView>
       )}
     </div>
   )

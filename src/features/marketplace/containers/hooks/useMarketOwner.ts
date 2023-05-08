@@ -4,7 +4,7 @@ import { useGetMyBuilding } from "@feature/building/containers/hooks/useGetMyBui
 import { useGetMyArcGame } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
 import useInvenGameItem from "@feature/gameItem/inventory/containers/hooks/useInvenGameItem"
 import { useGetMyLand } from "@feature/land/containers/hooks/useGetMyLand"
-import useNFTLand from "@feature/land/containers/services/hooks/useNFTLand"
+import useNFTLand from "@feature/land/containers/hooks/useNFTLand"
 import { IOwnerData } from "@feature/marketplace/interfaces/IMarketService"
 import useInvenMaterial from "@feature/material/inventory/containers/hooks/useInvenMaterial"
 import { useGetMyNakaPunk } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
@@ -48,6 +48,7 @@ const useMartketOwner = () => {
       switch (marketType) {
         case "nft_land":
           mutateGetMyLand({
+            _urlNFT: "NFT-Land",
             _limit: limit,
             _page: currentPage,
             _search: {
@@ -74,6 +75,7 @@ const useMartketOwner = () => {
           break
         case "nft_building":
           mutateGetOwnerBuilding({
+            _urlNFT: "NFT-Building",
             _limit: limit,
             _page: currentPage,
             _search: {
@@ -99,6 +101,7 @@ const useMartketOwner = () => {
           break
         case "nft_naka_punk":
           mutateGetMyNakaPunk({
+            _urlNFT: "NFT-NakaPunk",
             _limit: limit,
             _active: true,
             _page: currentPage,
@@ -121,6 +124,7 @@ const useMartketOwner = () => {
           break
         case "nft_game":
           mutateGeyMyArcGame({
+            _urlNFT: "NFT-As-Game",
             _limit: limit,
             _page: currentPage,
             _search: {}
@@ -140,6 +144,7 @@ const useMartketOwner = () => {
           break
         case "nft_avatar":
           mutateGetMyAvatarReef({
+            _urlNFT: "NFT-Avatar",
             _limit: limit,
             _active: true,
             _page: currentPage,

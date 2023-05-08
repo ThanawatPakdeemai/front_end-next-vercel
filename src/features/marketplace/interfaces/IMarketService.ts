@@ -58,21 +58,12 @@ export interface IPayBillParams {
   _roundPayedAmount: number
 }
 
-export interface IPurchOrderParams {
+export interface IPayOrderParams {
+  _urlNFT: TUrlNFT
   _marketplaceId: string
   _itemId: string
   _itemAmount: number
   _txHash?: string
-  _smcAmount?: number
-  _rentalData?: {
-    orderId: string
-    totalPrice: string
-    rentStart: string
-    rentEnd: string
-    marketplaceId: string
-    itemId: string
-    period: number
-  }
   _installment_data?: {
     bill_id: string
     price: number
@@ -84,6 +75,15 @@ export interface IPurchOrderParams {
     payByperiod: number
     marketplace_id: string
     item_id: string
+  }
+  _rental_data?: {
+    order_id: string
+    total_price: number
+    rent_start: string
+    rent_end: string
+    marketplace_id: string
+    item_id: string
+    type: string
   }
 }
 
@@ -325,6 +325,7 @@ export interface IOwnerDetailsData extends IOwnerData {
     y: string
   }
   qrcode?: string
+  installments_data?: IInstallData
 }
 
 export interface IPayBillInstallServ extends IFormatMessageService {

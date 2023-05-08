@@ -8,7 +8,7 @@ import {
   IMarketServForm,
   IPayBillInstallServ,
   IPayBillParams,
-  IPurchOrderParams,
+  IPayOrderParams,
   IPutOrderServ,
   TUrlNFT
 } from "@feature/marketplace/interfaces/IMarketService"
@@ -83,32 +83,62 @@ export const createMarketOrder = ({
       .catch((error) => reject(error))
   })
 
-export const purchaseMarketOrder = ({
+/**
+ * @description Installment
+ * @param _urlNFT is used for NFT-Building & NFT-Land only!
+ */
+export const payInstallment = ({
+  _urlNFT,
   _marketplaceId,
   _itemId,
   _itemAmount = 1,
   _txHash,
-  _smcAmount,
-  _rentalData,
   _installment_data
-}: IPurchOrderParams) =>
+}: IPayOrderParams) =>
   new Promise<IPutOrderServ>((resolve, reject) => {
     const data = {
       marketplace_id: _marketplaceId,
-      item_amount: _itemAmount,
       item_id: _itemId,
+      item_amount: _itemAmount,
       transaction_hash: _txHash,
-      smc_amount: _smcAmount,
-      rental_data: _rentalData,
       installment_data: _installment_data
     }
     services
-      .put<IPutOrderServ>(`/market-place/sell-item`, { ...data })
+      .put<IPutOrderServ>(`/market-place/${_urlNFT}/installment`, { ...data })
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })
 
-// for land and building
+/**
+ * @description Installment
+ * @param _urlNFT is used for NFT-Building & NFT-Land only!
+ */
+export const payRental = ({
+  _urlNFT,
+  _marketplaceId,
+  _itemId,
+  _itemAmount = 1,
+  _txHash,
+  _rental_data
+}: IPayOrderParams) =>
+  new Promise<IPutOrderServ>((resolve, reject) => {
+    const data = {
+      marketplace_id: _marketplaceId,
+      item_id: _itemId,
+      item_amount: _itemAmount,
+      transaction_hash: _txHash,
+      rental_data: _rental_data
+    }
+    services
+      .put<IPutOrderServ>(`/market-place/${_urlNFT}/rental`, { ...data })
+      .then((response) => resolve(response.data))
+      .catch((error) => reject(error))
+  })
+
+/**
+ * @description Mint
+ * @param _urlNFT is used for NFT-Building & NFT-Land only!
+ */
 export const mintNFT = ({
   _urlNFT,
   _marketplaceId,
@@ -130,7 +160,10 @@ export const mintNFT = ({
       .catch((error) => reject(error))
   })
 
-// p2p
+/**
+ * @description P2P
+ * @param _smcAmount is amount of item in smartcontract
+ */
 export const purchaseOrderFullpayment = ({
   _urlNFT,
   _marketplaceId,

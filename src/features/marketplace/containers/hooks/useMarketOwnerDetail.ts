@@ -39,7 +39,10 @@ const useMarketOwnerDetail = () => {
               name: _res.name,
               desc: _res.details,
               pos: _res.position,
-              qrcode: _res.qrcode_image
+              qrcode: _res.qrcode_image,
+              installments_data: _res.installments_data
+                ? _res.installments_data[0]
+                : undefined
             })
           })
           .finally(() => setIsLoading(false))
@@ -54,7 +57,10 @@ const useMarketOwnerDetail = () => {
               image: _res.NFT_image,
               name: _res.name,
               desc: _res.detail,
-              model: _res.model_3d
+              model: _res.model_3d,
+              installments_data: _res.installments_data
+                ? _res.installments_data[0]
+                : undefined
             })
           })
           .finally(() => setIsLoading(false))

@@ -9,9 +9,10 @@ import {
   ICancelOrderParams,
   ICreateOrderParams,
   IPayBillParams,
-  IPurchOrderParams,
+  IPayOrderParams,
   TNFTType
 } from "@feature/marketplace/interfaces/IMarketService"
+import useGlobal from "@hooks/useGlobal"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
 import Helper from "@utils/helper"
@@ -39,6 +40,7 @@ const useMarketNFTInstall = () => {
   const { toWei, WeiToNumber, convertNFTTypeToUrl } = Helper
   const { setOpen, setClose } = useLoadingStore()
   const { signer, address } = useWeb3Provider()
+  const { marketType } = useGlobal()
   const marketNFTInstallContract = useMarketplaceNFTInstall(
     signer,
     CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_INSTALL
@@ -49,7 +51,7 @@ const useMarketNFTInstall = () => {
   const {
     mutateMarketCreateOrder,
     mutateMarketCancelOrder,
-    // mutateFullPayment,
+    mutatePayInstallment,
     mutatePayBillInstallNFT
   } = useMutateMarketplace()
   const {
@@ -236,7 +238,10 @@ const useMarketNFTInstall = () => {
               ],
               _log.data
             )
-            const _data: IPurchOrderParams = {
+            const _data: IPayOrderParams = {
+              _urlNFT: marketType
+                ? convertNFTTypeToUrl(marketType)
+                : "NFT-Land",
               _marketplaceId: _marketId,
               _itemId: _itemID,
               _itemAmount: _amountItem,
@@ -254,7 +259,7 @@ const useMarketNFTInstall = () => {
                 item_id: _itemID
               }
             }
-            // await mutateFullPayment(data)
+            await mutatePayInstallment(_data)
           }
         })
         .catch((error) => console.error(error))

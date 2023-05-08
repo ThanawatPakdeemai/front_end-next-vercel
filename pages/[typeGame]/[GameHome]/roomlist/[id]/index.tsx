@@ -50,7 +50,7 @@ export default function GameRoomList() {
 }
 
 GameRoomList.getLayout = function getLayout(page: ReactElement) {
-  return isMobile && CONFIGS.DISPLAY_MOBILE_MODE ? (
+  return isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true" ? (
     <WaitingLayout />
   ) : (
     <GameRoomLayout>{page}</GameRoomLayout>

@@ -8,9 +8,10 @@ import {
 import {
   ICancelOrderParams,
   ICreateOrderParams,
-  IPurchOrderParams,
+  IPayOrderParams,
   TNFTType
 } from "@feature/marketplace/interfaces/IMarketService"
+import useGlobal from "@hooks/useGlobal"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
 import Helper from "@utils/helper"
@@ -35,9 +36,10 @@ interface IGetRentById {
 
 const useMarketNFTRent = () => {
   const { utils } = ethers
-  const { toWei, WeiToNumber } = Helper
+  const { toWei, WeiToNumber, convertNFTTypeToUrl } = Helper
   const { setOpen, setClose } = useLoadingStore()
   const { signer, address } = useWeb3Provider()
+  const { marketType } = useGlobal()
   const marketNFTRentContract = useMarketplaceNFTRent(
     signer,
     CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_RENTAL
@@ -48,7 +50,7 @@ const useMarketNFTRent = () => {
   const {
     mutateMarketCreateOrder,
     mutateMarketCancelOrder,
-    mutateMarketPurcOrder,
+    mutatePayRetal,
     mutateClaimRentNFT
   } = useMutateMarketplace()
   const {
@@ -119,6 +121,7 @@ const useMarketNFTRent = () => {
               _log.data
             )
             const data: ICreateOrderParams = {
+              _urlNFT: convertNFTTypeToUrl(_NFTtype),
               _orderId: _resultEvent[0],
               _itemId: _id,
               _itemAmount: _amount,
@@ -177,6 +180,7 @@ const useMarketNFTRent = () => {
               _log.data
             )
             const data: ICancelOrderParams = {
+              _urlNFT: convertNFTTypeToUrl(_NFTtype),
               _orderId: _resultEvent[0],
               _txHash: _res.transactionHash
             }
@@ -238,22 +242,25 @@ const useMarketNFTRent = () => {
               ],
               _log.data
             )
-            const data: IPurchOrderParams = {
+            const _data: IPayOrderParams = {
+              _urlNFT: marketType
+                ? convertNFTTypeToUrl(marketType)
+                : "NFT-Land",
               _marketplaceId: _marketId,
               _itemId: _itemID,
               _itemAmount: _amountItem,
               _txHash: _res.transactionHash,
-              _rentalData: {
-                orderId: _resultEvent[0],
-                totalPrice: _resultEvent[7].toString(),
-                rentStart: _resultEvent[5].toString(),
-                rentEnd: _resultEvent[6].toString(),
-                marketplaceId: _marketId,
-                itemId: _itemID,
-                period: Number(_resultEvent[3].toString())
+              _rental_data: {
+                order_id: _resultEvent[0],
+                total_price: _resultEvent[7].toString(),
+                rent_start: _resultEvent[5].toString(),
+                rent_end: _resultEvent[6].toString(),
+                marketplace_id: _marketId,
+                item_id: _itemID,
+                type: marketType || "nft_land"
               }
             }
-            await mutateMarketPurcOrder(data)
+            await mutatePayRetal(_data)
           }
         })
         .catch((error) => console.error(error))

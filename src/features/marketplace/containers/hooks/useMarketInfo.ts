@@ -3,11 +3,13 @@ import {
   IMarketDetail,
   IMarketOrderServ,
   IMarketServForm,
+  TNFTType,
   TType
 } from "@feature/marketplace/interfaces/IMarketService"
 import useGlobal from "@hooks/useGlobal"
 import useMarketFilterStore, { TKey } from "@stores/marketFilter"
 import { useRouter } from "next/router"
+import Helper from "@utils/helper"
 import { useCallback, useEffect, useState } from "react"
 
 const useMarketInfo = () => {
@@ -19,6 +21,7 @@ const useMarketInfo = () => {
   const [totalCount, setTotalCount] = useState<number>(0)
   const [searchData, setSearchData] = useState<TKey>()
 
+  const { convertNFTTypeToUrl } = Helper
   const router = useRouter()
   const { marketType } = useGlobal()
   const { getMarketOrderAsnyc, isLoading } = useGetMarketOrder()
@@ -170,6 +173,7 @@ const useMarketInfo = () => {
     const search = await handleSearch()
     setType(search.type as TType)
     getMarketOrderAsnyc({
+      _urlNFT: convertNFTTypeToUrl(search.type_marketplace as TNFTType),
       _limit: limit,
       _page: currentPage,
       _search: search,

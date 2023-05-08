@@ -6,7 +6,7 @@ import {
   useERC20NoAcc
 } from "@feature/contract/containers/hooks/useContract"
 import useNFTArcGame from "@feature/game/marketplace/containers/hooks/useNFTArcGame"
-import useNFTLand from "@feature/land/containers/services/hooks/useNFTLand"
+import useNFTLand from "@feature/land/containers/hooks/useNFTLand"
 import {
   TNFTType,
   TSellerType,

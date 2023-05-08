@@ -674,10 +674,6 @@ body {
   display: none;
 }
 
-.page-full-map {
-  height: calc(var(--vh, 1vh) * 100);
-}
-
 .card-land-panel-wrapper {
   position: relative;
   display: flex;

@@ -4,6 +4,7 @@ import {
   TNFTType
 } from "@feature/marketplace/interfaces/IMarketService"
 import useGlobal from "@hooks/useGlobal"
+import Helper from "@utils/helper"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
@@ -16,6 +17,7 @@ const useMarketDetail = () => {
 
   const router = useRouter()
   const { marketType } = useGlobal()
+  const { convertNFTTypeToUrl } = Helper
 
   const id = router.query.id as string
   const limit = 15
@@ -86,8 +88,7 @@ const useMarketDetail = () => {
 
   const { orderData: detailOrder } = useGetMarketOrderById({
     _id: id,
-    _type: marketType,
-    _isActive: true
+    _urlNFT: convertNFTTypeToUrl(marketType || "nft_land")
   })
 
   useEffect(() => {

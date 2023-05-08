@@ -5,9 +5,10 @@ import { useMarketplaceNFT } from "@feature/contract/containers/hooks/useContrac
 import {
   ICancelOrderParams,
   ICreateOrderParams,
-  IPurchOrderParams,
-  TNFTType
+  TNFTType,
+  TUrlNFT
 } from "@feature/marketplace/interfaces/IMarketService"
+import useGlobal from "@hooks/useGlobal"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
 import Helper from "@utils/helper"
@@ -17,9 +18,10 @@ import useMutateMarketplace from "./useMutateMarketplace"
 
 const useMarketNFT = () => {
   const { utils } = ethers
-  const { toWei, WeiToNumber } = Helper
+  const { toWei, WeiToNumber, convertNFTTypeToUrl } = Helper
   const { setOpen, setClose } = useLoadingStore()
   const { signer, address } = useWeb3Provider()
+  const { marketType } = useGlobal()
   const marketNFTContract = useMarketplaceNFT(
     signer,
     CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT
@@ -27,7 +29,7 @@ const useMarketNFT = () => {
   const {
     mutateMarketCreateOrder,
     mutateMarketCancelOrder,
-    mutateMarketPurcOrder
+    mutateFullPayment
   } = useMutateMarketplace()
   const {
     checkAllowanceNaka,
@@ -87,6 +89,7 @@ const useMarketNFT = () => {
               _log.data
             )
             const data: ICreateOrderParams = {
+              _urlNFT: convertNFTTypeToUrl(_NFTtype),
               _orderId: _resultEvent[0],
               _itemId: _id,
               _itemAmount: _amount,
@@ -149,6 +152,7 @@ const useMarketNFT = () => {
               _log.data
             )
             const data: ICancelOrderParams = {
+              _urlNFT: convertNFTTypeToUrl(_NFTtype),
               _orderId: _resultEvent[0],
               _txHash: _res.transactionHash
             }
@@ -199,13 +203,18 @@ const useMarketNFT = () => {
               ["bytes32", "bytes32", "bytes32"],
               _log.data
             )
-            const data: IPurchOrderParams = {
+            const data: {
+              _urlNFT: TUrlNFT
+              _marketplaceId: string
+              _itemAmount: number
+              _txHash: string
+            } = {
+              _urlNFT: convertNFTTypeToUrl(marketType || "nft_land"),
               _marketplaceId: _marketId,
-              _itemId: _itemID,
               _itemAmount: _amountItem,
               _txHash: _res.transactionHash
             }
-            await mutateMarketPurcOrder(data)
+            await mutateFullPayment(data)
           }
         })
         .catch((error) => console.error(error))

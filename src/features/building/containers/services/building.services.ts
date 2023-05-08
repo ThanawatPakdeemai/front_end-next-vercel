@@ -12,7 +12,7 @@ import {
 export const getTypesBuilding = () =>
   new Promise<ITypesBuildServ>((resolve, reject) => {
     services
-      .get<ITypesBuildServ>(`/market-place/building`)
+      .get<ITypesBuildServ>(`/market-place/NFT-Building/building`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

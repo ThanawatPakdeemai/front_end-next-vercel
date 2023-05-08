@@ -7,7 +7,7 @@ import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutat
 import {
   ICancelOrderParams,
   ICreateOrderParams,
-  IPurchOrderParams
+  TUrlNFT
 } from "@feature/marketplace/interfaces/IMarketService"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
@@ -21,12 +21,12 @@ const useMarketGameItem = () => {
     signer,
     CONFIGS.CONTRACT_ADDRESS.MARKETPLACE
   )
-  const { WeiToNumber, toWei } = Helper
+  const { WeiToNumber, toWei, convertNFTTypeToUrl } = Helper
   const { setOpen, setClose } = useLoadingStore()
   const {
     mutateMarketCreateOrder,
     mutateMarketCancelOrder,
-    mutateMarketPurcOrder
+    mutateFullPayment
   } = useMutateMarketplace()
   const { updateGameItemList } = useInvenGameItem()
 
@@ -49,12 +49,13 @@ const useMarketGameItem = () => {
 
   const onCreateGameItemOrder = async (
     _itemId: string,
+    _tokenId: string,
     _itemAmount: number,
     _nakaAmount: number
   ) => {
     setOpen(MESSAGES.transaction_processing_order)
     await createGameItemOrder(
-      _itemId,
+      _tokenId,
       _itemAmount,
       toWei(_nakaAmount.toString())
     )
@@ -72,8 +73,9 @@ const useMarketGameItem = () => {
             _log.data
           )
           const data: ICreateOrderParams = {
+            _urlNFT: convertNFTTypeToUrl("game_item"),
             _orderId: _resultEvent[0],
-            _itemId: _resultEvent[1].toString(),
+            _itemId,
             _itemAmount: _resultEvent[2].toString(),
             _price: WeiToNumber(_resultEvent[3]),
             _type: "game_item",
@@ -123,6 +125,7 @@ const useMarketGameItem = () => {
             _log.data
           )
           const data: ICancelOrderParams = {
+            _urlNFT: convertNFTTypeToUrl("game_item"),
             _orderId: _resultEvent[0],
             _txHash: _res.transactionHash
           }
@@ -177,9 +180,15 @@ const useMarketGameItem = () => {
             ["bytes32", "uint256", "uint256", "uint256", "uint256", "uint256"],
             _log.data
           )
-          const data: IPurchOrderParams = {
+          const data: {
+            _urlNFT: TUrlNFT
+            _marketplaceId: string
+            _itemAmount: number
+            _smcAmount: number
+            _txHash: string
+          } = {
+            _urlNFT: convertNFTTypeToUrl("game_item"),
             _marketplaceId: _marketId,
-            _itemId: _itemID,
             _itemAmount: _amountItem,
             _smcAmount: Number(_resultEvent[2].toString()),
             _txHash: _res.transactionHash
@@ -189,7 +198,7 @@ const useMarketGameItem = () => {
             _resultEvent[1].toString(),
             Number(_resultEvent[3].toString())
           )
-          await mutateMarketPurcOrder(data)
+          await mutateFullPayment(data)
         }
       })
       .catch((error) => console.error(error))

@@ -13,6 +13,10 @@ import {
   AddEthereumChainParameter,
   WatchAssetParams
 } from "@interfaces/IMetamask"
+import {
+  TNFTType,
+  TUrlNFT
+} from "@feature/marketplace/interfaces/IMarketService"
 
 const names = ["wei", "kwei", "mwei", "gwei", "szabo", "finney", "ether"]
 
@@ -332,6 +336,26 @@ const Helper = {
       return avatar
     }
     return `/${avatar}`
+  },
+  convertNFTTypeToUrl(_NFTtype: TNFTType): TUrlNFT {
+    switch (_NFTtype) {
+      case "nft_land":
+        return "NFT-Land"
+      case "nft_building":
+        return "NFT-Building"
+      case "nft_naka_punk":
+        return "NFT-NakaPunk"
+      case "nft_material":
+        return "NFT-Material"
+      case "game_item":
+        return "NFT-Game-Item"
+      case "nft_game":
+        return "NFT-As-Game"
+      case "nft_avatar":
+        return "NFT-Avatar"
+      default:
+        throw new Error(`Invalid NFT type: ${_NFTtype}`)
+    }
   }
 }
 

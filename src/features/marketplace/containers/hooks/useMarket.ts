@@ -6,6 +6,7 @@ import {
 } from "@feature/marketplace/interfaces/IMarketService"
 import useMarketMaterial from "@feature/material/marketplace/containers/hooks/useMarketMaterial"
 import useLoadingStore from "@stores/loading"
+import Helper from "@utils/helper"
 import useMarketNFT from "./useMarketNFT"
 import useMarketNFTInstall from "./useMarketNFTInstall"
 import useMarketNFTRent from "./useMarketNFTRent"
@@ -13,8 +14,7 @@ import useMutateMarketplace from "./useMutateMarketplace"
 
 const useMarket = () => {
   const { setOpen, setClose } = useLoadingStore()
-  const { mutateMarketPurcOrder, mutateMarketPurcPunkOrder } =
-    useMutateMarketplace()
+  const { mutateMintNFT, mutateMarketPurcPunkOrder } = useMutateMarketplace()
   const {
     onCreateGameItemOrder,
     onCancelGameItemOrder,
@@ -34,6 +34,7 @@ const useMarket = () => {
   } = useMarketNFTInstall()
   const { onCreateNFTRentOrder, onCancelNFTRentOrder, onExecuteNFTRentOrder } =
     useMarketNFTRent()
+  const { convertNFTTypeToUrl } = Helper
 
   const onCreateBySelling = async (
     _type: TNFTType,
@@ -78,10 +79,10 @@ const useMarket = () => {
     const periodValue = _period || 0
     switch (_type) {
       case "game_item":
-        await await onCreateGameItemOrder(_tokenId, _amount, _price)
+        await onCreateGameItemOrder(_itemId, _tokenId, _amount, _price)
         break
       case "nft_material":
-        await onCreateMaterialOrder(_tokenId, _amount, _price)
+        await onCreateMaterialOrder(_itemId, _tokenId, _amount, _price)
         break
       case "nft_land":
         await onCreateBySelling(
@@ -239,9 +240,9 @@ const useMarket = () => {
         setClose()
       )
     } else {
-      await mutateMarketPurcOrder({
+      await mutateMintNFT({
+        _urlNFT: convertNFTTypeToUrl(_type),
         _marketplaceId: _marketId,
-        _itemId: _itemID,
         _itemAmount: _amount
       }).finally(() => setClose())
     }

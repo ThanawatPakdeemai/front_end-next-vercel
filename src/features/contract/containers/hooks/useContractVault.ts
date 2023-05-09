@@ -11,8 +11,8 @@ import Helper from "@utils/helper"
 import BalanceVaultAbi from "@configs/abi/BalanceVault.json"
 import { DEFAULT_TOKEN_INFO } from "@constants/defaultValues"
 import useProfileStore from "@stores/profileStore"
-import { nodesRPCPolygon } from "@constants/rpcUrls"
-import { random } from "lodash"
+// import { nodesRPCPolygon } from "@constants/rpcUrls"
+// import { random } from "lodash"
 import { ITokenContract } from "./useContractVaultBinance"
 
 const useContractVault = () => {

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useMemo } from "react"
 import CONFIGS from "@configs/index"
 import useContractVaultBinance, {
   ITokenContract

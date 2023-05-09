@@ -39,7 +39,10 @@ const useMarketOwnerDetail = () => {
               name: _res.name,
               desc: _res.details,
               pos: _res.position,
-              qrcode: _res.qrcode_image
+              qrcode: _res.qrcode_image,
+              installments_data: _res.installments_data
+                ? _res.installments_data[0]
+                : undefined
             })
           })
           .finally(() => setIsLoading(false))
@@ -54,7 +57,10 @@ const useMarketOwnerDetail = () => {
               image: _res.NFT_image,
               name: _res.name,
               desc: _res.detail,
-              model: _res.model_3d
+              model: _res.model_3d,
+              installments_data: _res.installments_data
+                ? _res.installments_data[0]
+                : undefined
             })
           })
           .finally(() => setIsLoading(false))
@@ -87,12 +93,13 @@ const useMarketOwnerDetail = () => {
             gameItemList && gameItemList.find((_item) => _item._id === id)
           if (findId) {
             setOwnerDetail({
-              type: "naka-punk",
+              type: "game-item",
               id: findId.id,
               tokenId: String(findId.item_id_smartcontract),
               image: findId.image,
               name: findId.name,
-              desc: findId.detail
+              desc: findId.detail,
+              amount: findId.amount
             })
           }
         }
@@ -109,7 +116,8 @@ const useMarketOwnerDetail = () => {
               tokenId: String(findMatID.material_id_smartcontract),
               image: findMatID.image,
               name: findMatID.name,
-              desc: findMatID.detail
+              desc: findMatID.detail,
+              amount: findMatID.amount
             })
           }
         }

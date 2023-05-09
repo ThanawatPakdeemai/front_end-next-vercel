@@ -1,7 +1,7 @@
 import Helper from "@utils/helper"
 import React from "react"
-import { BrowserView, MobileView } from "react-device-detect"
-import CONFIGS from "@configs/index"
+import { MobileView } from "react-device-detect"
+import { isMobile } from "@hooks/useGlobal"
 import SummaryGameDetail from "./SummaryGameDetail"
 
 export interface ISummaryGameDataProps {
@@ -16,31 +16,7 @@ const SummaryGameData = ({
   gameRaward
 }: ISummaryGameDataProps) => (
   <>
-    <BrowserView>
-      <div className="flex w-full flex-col items-center justify-center rounded border border-neutral-800 px-[26px] py-5 text-sm">
-        {gameName && (
-          <SummaryGameDetail
-            title="game:"
-            value={gameName}
-          />
-        )}
-        {itemName && (
-          <SummaryGameDetail
-            title="asset:"
-            value={itemName}
-          />
-        )}
-        {gameRaward && gameRaward !== 0 ? (
-          <SummaryGameDetail
-            title="game reward:"
-            value={`${Helper.formatNumber(gameRaward, {
-              maximumFractionDigits: 4
-            })} Naka`}
-          />
-        ) : null}
-      </div>
-    </BrowserView>
-    {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+    {isMobile ? (
       <MobileView>
         <div className="flex w-full flex-col items-center justify-center rounded border border-neutral-800 px-[26px]  text-sm">
           {gameName && (
@@ -71,6 +47,29 @@ const SummaryGameData = ({
           ) : null}
         </div>
       </MobileView>
+    ) : (
+      <div className="flex w-full flex-col items-center justify-center rounded border border-neutral-800 px-[26px] py-5 text-sm">
+        {gameName && (
+          <SummaryGameDetail
+            title="game:"
+            value={gameName}
+          />
+        )}
+        {itemName && (
+          <SummaryGameDetail
+            title="asset:"
+            value={itemName}
+          />
+        )}
+        {gameRaward && gameRaward !== 0 ? (
+          <SummaryGameDetail
+            title="game reward:"
+            value={`${Helper.formatNumber(gameRaward, {
+              maximumFractionDigits: 4
+            })} Naka`}
+          />
+        ) : null}
+      </div>
     )}
   </>
 )

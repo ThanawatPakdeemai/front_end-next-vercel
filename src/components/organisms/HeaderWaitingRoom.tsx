@@ -8,10 +8,10 @@ import useGameStore from "@stores/game"
 import { useRouter } from "next/dist/client/router"
 import React from "react"
 import { useTranslation } from "react-i18next"
-import { BrowserView, MobileView } from "react-device-detect"
+import { MobileView } from "react-device-detect"
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined"
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined"
-import CONFIGS from "@configs/index"
+import { isMobile } from "@hooks/useGlobal"
 
 export interface IHeaderWaitingRoomProp {
   roomTag: string | number
@@ -47,102 +47,7 @@ const HeaderWaitingRoom = ({
   const { t } = useTranslation()
   return (
     <>
-      <BrowserView>
-        <div
-          className={`flex flex-wrap items-center gap-5 border-b border-neutral-800 p-2 lg:h-[72px] ${className}`}
-        >
-          <div className="flex flex-auto items-center gap-2 md:flex-none md:gap-5 xl:ml-4">
-            <div className="summary-page__button flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800">
-              {isSummaryPage ? (
-                <ButtonClose
-                  onClick={() => {
-                    if (onOutRoom) {
-                      onOutRoom()
-                    } else {
-                      router.push("/")
-                    }
-                  }}
-                />
-              ) : (
-                <ButtonClose
-                  onClick={() => {
-                    onOutRoom ? onOutRoom() : router.back()
-                  }}
-                />
-              )}
-            </div>
-
-            {roomTag ? (
-              <span
-                className="summary-page__roomNo text-xs text-neutral-500 "
-                aria-label="room-tag"
-              >
-                #{roomTag}
-              </span>
-            ) : null}
-
-            <LockIcon />
-            {roomName && (
-              <span
-                className="summary-page__roomName text-default uppercase text-neutral-300"
-                aria-label="room-nam"
-              >
-                {t("room")} : {roomName}
-              </span>
-            )}
-            {rankName && (
-              <span
-                className="summary-page__rankName text-default uppercase text-neutral-300"
-                aria-label="room-nam"
-              >
-                Rank : {rankName}
-              </span>
-            )}
-
-            {isSummaryPage && (
-              <Chip
-                label="FINISHED GAME"
-                variant="filled"
-                color="success"
-                size="small"
-                className="!bg-green-lemon"
-              />
-            )}
-          </div>
-          <div className="ml-auto flex items-center gap-2">
-            <RoomListBox
-              type="timer"
-              timer={timer}
-              color="green"
-              shade="lemon"
-            />
-            {game && game?.game_type === "multiplayer" && (
-              <RoomListBox
-                type="player"
-                player={player}
-                // for invite button
-                icon={
-                  !isSummaryPage ? (
-                    <>
-                      <ModalInvite />
-                    </>
-                  ) : null
-                }
-                onClick={onClick}
-                //
-                color="neutral"
-                shade="500"
-              />
-            )}
-          </div>
-          {/* <ButtonIcon
-        type="square"
-        icon={<SettingIcon />}
-        className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800 xl:mr-4"
-      /> */}
-        </div>
-      </BrowserView>
-      {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+      {isMobile ? (
         <MobileView>
           <div
             className={`flex flex-wrap items-center gap-3 border-b border-neutral-800 p-2 ${className}`}
@@ -245,6 +150,95 @@ const HeaderWaitingRoom = ({
             </div>
           </div>
         </MobileView>
+      ) : (
+        <div
+          className={`flex flex-wrap items-center gap-5 border-b border-neutral-800 p-2 lg:h-[72px] ${className}`}
+        >
+          <div className="flex flex-auto items-center gap-2 md:flex-none md:gap-5 xl:ml-4">
+            <div className="summary-page__button flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800">
+              {isSummaryPage ? (
+                <ButtonClose
+                  onClick={() => {
+                    if (onOutRoom) {
+                      onOutRoom()
+                    } else {
+                      router.push("/")
+                    }
+                  }}
+                />
+              ) : (
+                <ButtonClose
+                  onClick={() => {
+                    onOutRoom ? onOutRoom() : router.back()
+                  }}
+                />
+              )}
+            </div>
+
+            {roomTag ? (
+              <span
+                className="summary-page__roomNo text-xs text-neutral-500 "
+                aria-label="room-tag"
+              >
+                #{roomTag}
+              </span>
+            ) : null}
+
+            <LockIcon />
+            {roomName && (
+              <span
+                className="summary-page__roomName text-default uppercase text-neutral-300"
+                aria-label="room-nam"
+              >
+                {t("room")} : {roomName}
+              </span>
+            )}
+            {rankName && (
+              <span
+                className="summary-page__rankName text-default uppercase text-neutral-300"
+                aria-label="room-nam"
+              >
+                Rank : {rankName}
+              </span>
+            )}
+
+            {isSummaryPage && (
+              <Chip
+                label="FINISHED GAME"
+                variant="filled"
+                color="success"
+                size="small"
+                className="!bg-green-lemon"
+              />
+            )}
+          </div>
+          <div className="ml-auto flex items-center gap-2">
+            <RoomListBox
+              type="timer"
+              timer={timer}
+              color="green"
+              shade="lemon"
+            />
+            {game && game?.game_type === "multiplayer" && (
+              <RoomListBox
+                type="player"
+                player={player}
+                // for invite button
+                icon={
+                  !isSummaryPage ? (
+                    <>
+                      <ModalInvite />
+                    </>
+                  ) : null
+                }
+                onClick={onClick}
+                //
+                color="neutral"
+                shade="500"
+              />
+            )}
+          </div>
+        </div>
       )}
     </>
   )

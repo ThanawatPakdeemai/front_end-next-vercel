@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
+import useChainSupportStore from "@stores/chainSupport"
 import {
   currencyBSC,
   currencyBSCTestnet,
@@ -6,7 +7,8 @@ import {
   currencyPolygonTestnet
 } from "../services/checkRPC.services"
 
-const useCurrencyCheck = (_symbol: string) => {
+const useCurrencyCheck = (_symbol?: string) => {
+  const { currentChainSelected } = useChainSupportStore()
   const {
     data: dataCurrentRpcBSC,
     isFetching: isFetchingCurrencyBSC,
@@ -17,7 +19,8 @@ const useCurrencyCheck = (_symbol: string) => {
     queryKey: ["currencyBSC"],
     queryFn: () => currencyBSC(),
     keepPreviousData: true,
-    staleTime: Infinity
+    staleTime: Infinity,
+    enabled: currentChainSelected === "0x38"
   })
 
   const {
@@ -30,7 +33,8 @@ const useCurrencyCheck = (_symbol: string) => {
     queryKey: ["currencyBSCTestnet"],
     queryFn: () => currencyBSCTestnet(),
     keepPreviousData: true,
-    staleTime: Infinity
+    staleTime: Infinity,
+    enabled: currentChainSelected === "0x61"
   })
 
   const {
@@ -43,7 +47,8 @@ const useCurrencyCheck = (_symbol: string) => {
     queryKey: ["currencyPolygon"],
     queryFn: () => currencyPolygon(),
     keepPreviousData: true,
-    staleTime: Infinity
+    staleTime: Infinity,
+    enabled: currentChainSelected === "0x89"
   })
 
   const {
@@ -56,7 +61,8 @@ const useCurrencyCheck = (_symbol: string) => {
     queryKey: ["currencyPolygonTestnet"],
     queryFn: () => currencyPolygonTestnet(),
     keepPreviousData: true,
-    staleTime: Infinity
+    staleTime: Infinity,
+    enabled: currentChainSelected === "0x13881"
   })
 
   return {

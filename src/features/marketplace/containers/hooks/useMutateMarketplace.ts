@@ -6,8 +6,11 @@ import {
   cancelMarketOrder,
   claimRent,
   createMarketOrder,
+  mintNFT,
   payBillInstallNFT,
-  purchaseMarketOrder
+  payInstallment,
+  payRental,
+  purchaseOrderFullpayment
 } from "../services/marketplace.service"
 
 const useMutateMarketplace = () => {
@@ -40,10 +43,44 @@ const useMutateMarketplace = () => {
     }
   )
 
-  const { mutateAsync: mutateMarketPurcOrder } = useMutation(
-    purchaseMarketOrder,
+  // new
+  const { mutateAsync: mutatePayInstallment } = useMutation(payInstallment, {
+    mutationKey: ["useMarkPayInstallment"],
+    retry: false,
+    onSuccess: (_response) => {
+      successToast(_response.data)
+    },
+    onError: (_response) => {
+      errorToast((_response as IMessage)?.message ?? "Transaction fail")
+    }
+  })
+
+  const { mutateAsync: mutatePayRetal } = useMutation(payRental, {
+    mutationKey: ["useMarKPayRental"],
+    retry: false,
+    onSuccess: (_response) => {
+      successToast(_response.data)
+    },
+    onError: (_response) => {
+      errorToast((_response as IMessage)?.message ?? "Transaction fail")
+    }
+  })
+
+  const { mutateAsync: mutateMintNFT } = useMutation(mintNFT, {
+    mutationKey: ["mintNFT"],
+    retry: false,
+    onSuccess: (_response) => {
+      successToast(_response.data)
+    },
+    onError: (_response) => {
+      errorToast((_response as IMessage)?.message ?? "Transaction fail")
+    }
+  })
+
+  const { mutateAsync: mutateFullPayment } = useMutation(
+    purchaseOrderFullpayment,
     {
-      mutationKey: ["useMarKPurchOrder"],
+      mutationKey: ["mintNFT"],
       retry: false,
       onSuccess: (_response) => {
         successToast(_response.data)
@@ -98,7 +135,10 @@ const useMutateMarketplace = () => {
   return {
     mutateMarketCreateOrder,
     mutateMarketCancelOrder,
-    mutateMarketPurcOrder,
+    mutatePayInstallment,
+    mutatePayRetal,
+    mutateMintNFT,
+    mutateFullPayment,
     mutateMarketPurcPunkOrder,
     mutatePayBillInstallNFT,
     mutateClaimRentNFT

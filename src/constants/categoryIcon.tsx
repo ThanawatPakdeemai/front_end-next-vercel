@@ -16,10 +16,10 @@ import TraviaGameIcon from "@components/icons/TraviaGameIcon"
 import PuzzleGameIcon from "@components/icons/PuzzleGameIcon"
 import CasualGameIcon from "@components/icons/CasualGameIcon"
 import FightingGameIcon from "@components/icons/FightingGameIcon"
-import JoinStickIcon from "@components/icons/JoinStickIcon"
 import ShootingGameIcon from "@components/icons/ShootingGameIcon"
 import SportGameIcon from "@components/icons/SportGameIcon"
 import Diamond from "@components/icons/Diamond"
+import JoinStickIcon from "@components/icons/JoinStickIcon"
 
 export interface ICategoryIcon {
   id: string
@@ -108,7 +108,7 @@ export const CATEGORY_ICON: ICategoryIcon[] = [
   },
   {
     id: "others",
-    icon: <JoinStickIcon stroke="#E1E2E2" />
+    icon: <JoinStickIcon />
   },
   {
     id: "shooting",

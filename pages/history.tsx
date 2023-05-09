@@ -2,8 +2,8 @@ import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { GAME_PLAY_HISTORY } from "@configs/crumb"
 import dynamic from "next/dynamic"
-import { BrowserView, MobileView } from "react-device-detect"
-import CONFIGS from "@configs/index"
+import { MobileView } from "react-device-detect"
+import { isMobile } from "@hooks/useGlobal"
 
 const ProfileLayout = dynamic(
   () => import("@components/templates/ProfileLayout"),
@@ -32,13 +32,12 @@ const HistoryTableMobile = dynamic(
 
 const HistoryPage = () => (
   <article className="h-full w-full">
-    <BrowserView>
-      <HistoryTable />
-    </BrowserView>
-    {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+    {isMobile ? (
       <MobileView>
         <HistoryTableMobile />
       </MobileView>
+    ) : (
+      <HistoryTable />
     )}
   </article>
 )

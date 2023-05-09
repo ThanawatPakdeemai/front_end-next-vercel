@@ -162,7 +162,7 @@ const useTweenEffect = (
     for (let i = 0; i < density; i += 1) {
       const particleSpark = document.createElement("div")
       particleSpark.classList.add("spark")
-      targetElement.appendChild(particleSpark)
+      targetElement?.appendChild(particleSpark)
       spawn(particleSpark)
     }
     // density, start, mid, end, range, randomEase, spawn,

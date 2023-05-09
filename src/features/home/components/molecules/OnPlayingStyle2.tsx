@@ -15,9 +15,13 @@ import OnPlayingBody from "./OnPlayingBody"
 
 interface IOnPlayingStyle2 {
   isSlider?: boolean
+  showTitle?: boolean
 }
 
-const OnPlayingStyle2 = ({ isSlider = true }: IOnPlayingStyle2) => {
+const OnPlayingStyle2 = ({
+  isSlider = true,
+  showTitle = true
+}: IOnPlayingStyle2) => {
   const { gamesAvailble, isLoading } = useGetRoomAvailable()
   const { t } = useTranslation()
   /**
@@ -170,6 +174,7 @@ const OnPlayingStyle2 = ({ isSlider = true }: IOnPlayingStyle2) => {
                 onPrev={onSlidePrev}
                 hideNextPrev
                 hideViewAll
+                showTitle={showTitle}
                 // curType={getURL(game.chanel_type)}
                 // setCurType={setCurType}
                 // onPlaying={false}

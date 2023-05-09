@@ -19,7 +19,6 @@ import FireOutLineIcon from "@components/icons/BlogIcon/FireOutLineIcon"
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined"
 import AccessTimeIcon from "@mui/icons-material/AccessTime"
 import Inventory from "@components/icons/Inventory"
-import ItemReward from "@components/icons/ItemReward"
 import Support from "@components/icons/Support"
 import Profile from "@components/icons/Profile"
 import ICoupon from "@components/icons/Coupon"
@@ -420,7 +419,7 @@ export const MENU_PROFILE_Datell: IMenu[] = [
   {
     id: "item reward",
     label: "Item Reward",
-    icon: <ItemReward className="stroke-neutral-300" />,
+    icon: <ItemRewardIcon />,
     href: "/item-reward",
     external: false
   },

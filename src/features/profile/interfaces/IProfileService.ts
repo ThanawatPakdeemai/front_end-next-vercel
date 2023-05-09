@@ -90,6 +90,11 @@ export interface IProfileResponse {
   status: boolean
   data: IProfile | undefined
   message: string | null
+  level?: number
+  exp?: number
+  max_exp?: number
+  stamina_point?: number
+  total_stamina?: number
 }
 
 export interface IGetUserById {

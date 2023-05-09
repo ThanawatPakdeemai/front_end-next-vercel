@@ -6,14 +6,13 @@ import SkeletonSummaryRaward from "@components/atoms/skeleton/SkeletonSummaryRaw
 import GameSummaryContent from "@components/templates/contents/GameSummaryContent"
 import useGameSummaryRewardController from "@feature/game/containers/hooks/useGameSummaryRewardController"
 import CardBodyList from "@feature/ranking/components/molecules/CardBodyList"
-import useGlobal from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import GameSummaryBodyReturnItem from "@feature/game/containers/components/organisms/GameSummaryBodyReturnItem"
 import { useRouter } from "next/router"
-import { BrowserView, MobileView } from "react-device-detect"
+import { MobileView } from "react-device-detect"
 import { Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
 import { Image } from "@components/atoms/image/index"
-import CONFIGS from "@configs/index"
 
 const GameSummaryRewardPage = () => {
   const {
@@ -124,7 +123,7 @@ const GameSummaryRewardPage = () => {
       onOutRoom={() => router.push(link)}
     >
       <div className="flex w-full flex-col justify-center gap-4 lg:flex-row">
-        <BrowserView>
+        {!isMobile && (
           <CardBodyList
             className="custom-scroll mx-auto flex max-h-[680px] w-[362px] flex-1 flex-col gap-2 overflow-y-scroll"
             width="auto"
@@ -132,9 +131,9 @@ const GameSummaryRewardPage = () => {
             rewardType={notificationItem?.type}
             // maxPlayer={gameRoomById?.max_players || 0}
           />
-        </BrowserView>
+        )}
         {renderContent()}
-        {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+        {isMobile && (
           <MobileView>
             <div className="grid grid-cols-2 gap-2">
               {players ? (

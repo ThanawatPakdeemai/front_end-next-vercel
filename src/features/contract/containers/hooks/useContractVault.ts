@@ -11,6 +11,8 @@ import Helper from "@utils/helper"
 import BalanceVaultAbi from "@configs/abi/BalanceVault.json"
 import { DEFAULT_TOKEN_INFO } from "@constants/defaultValues"
 import useProfileStore from "@stores/profileStore"
+// import { nodesRPCPolygon } from "@constants/rpcUrls"
+// import { random } from "lodash"
 import { ITokenContract } from "./useContractVaultBinance"
 
 const useContractVault = () => {
@@ -164,6 +166,10 @@ const useContractVault = () => {
         return
       try {
         const { ethereum }: any = window
+        // const _provider = new ethers.providers.Web3Provider(
+        //   ethereum,
+        //   nodesRPCPolygon[random(0, nodesRPCPolygon.length - 1)]
+        // )
         const _provider = new ethers.providers.Web3Provider(ethereum)
         const _signer = _provider.getSigner()
         const _balanceVaultContract = new ethers.Contract(

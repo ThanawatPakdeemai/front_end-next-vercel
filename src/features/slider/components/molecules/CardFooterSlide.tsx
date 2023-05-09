@@ -7,7 +7,7 @@ import useGlobal from "@hooks/useGlobal"
 import useFavoriteGameContoller from "@feature/favourite/containers/hooks/useFavoriteGameContoller"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "next/router"
-import SportEsportIcon from "@components/icons/SportEsportIcon"
+import JoinStickIcon from "@components/icons/JoinStickIcon"
 
 interface IContentFooterBannerSlide {
   gameData: IGame
@@ -45,7 +45,7 @@ const CardFooterSlide = ({
       >
         <ButtonLink
           text={t(text)}
-          icon={<SportEsportIcon />}
+          icon={<JoinStickIcon />}
           size="large"
           color="secondary"
           variant="contained"

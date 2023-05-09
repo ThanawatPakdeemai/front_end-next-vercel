@@ -1,9 +1,9 @@
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
-import CONFIGS from "@configs/index"
+import { isMobile } from "@hooks/useGlobal"
 import { Typography } from "@mui/material"
 import Helper from "@utils/helper"
 import React from "react"
-import { BrowserView, MobileView } from "react-device-detect"
+import { MobileView } from "react-device-detect"
 
 interface IProp {
   icon: React.ReactNode
@@ -45,23 +45,7 @@ const StatWithIcon = ({
 
   return (
     <>
-      <BrowserView>
-        <div className="flex items-center rounded-lg border-[1px] border-neutral-700 border-opacity-80 p-2">
-          <ButtonIcon
-            variants={iconmotion}
-            icon={icon}
-            className={`rounded-lg ${className}`}
-          />
-          <div className={`ml-5 mr-14 uppercase ${textColor}`}>
-            <Typography className="mb-6 text-xs font-bold">{title}</Typography>
-            <Typography className="text-default font-bold">
-              {Helper.formatNumber(amount as number)}
-            </Typography>
-            <Typography className="text-xs font-bold">{unit}</Typography>
-          </div>
-        </div>
-      </BrowserView>
-      {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+      {isMobile ? (
         <MobileView>
           <div className="flex items-center rounded-lg border-[1px] border-neutral-700 border-opacity-80 ">
             <ButtonIcon
@@ -80,6 +64,21 @@ const StatWithIcon = ({
             </div>
           </div>
         </MobileView>
+      ) : (
+        <div className="flex items-center rounded-lg border-[1px] border-neutral-700 border-opacity-80 p-2">
+          <ButtonIcon
+            variants={iconmotion}
+            icon={icon}
+            className={`rounded-lg ${className}`}
+          />
+          <div className={`ml-5 mr-14 uppercase ${textColor}`}>
+            <Typography className="mb-6 text-xs font-bold">{title}</Typography>
+            <Typography className="text-default font-bold">
+              {Helper.formatNumber(amount as number)}
+            </Typography>
+            <Typography className="text-xs font-bold">{unit}</Typography>
+          </div>
+        </div>
       )}
     </>
   )

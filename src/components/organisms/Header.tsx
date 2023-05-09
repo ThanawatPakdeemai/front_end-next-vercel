@@ -7,7 +7,7 @@ import { RightMenu } from "@components/molecules/rightMenu"
 import useGlobal from "@hooks/useGlobal"
 import RightMenuDeveloper from "@components/molecules/rightMenu/RightMenuDeveloper"
 import HeadMenuMobile from "@src/mobile/headerMenu/HeadMenuMobile"
-import { MobileView } from "react-device-detect"
+import { MobileView, isBrowser } from "react-device-detect"
 import HeadProfileMobile from "@src/mobile/headerMenu/HeadProfileMobile"
 import CONFIGS from "@configs/index"
 
@@ -21,7 +21,7 @@ const Header = () => {
 
   return (
     <div className="header-wrapper">
-      {CONFIGS.DISPLAY_MOBILE_MODE === "true" ? (
+      {CONFIGS.DISPLAY_MOBILE_MODE === "true" && !isBrowser ? (
         <MobileView>
           <HeadProfileMobile />
           <HeadMenuMobile />

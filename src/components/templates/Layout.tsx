@@ -2,7 +2,7 @@ import React from "react"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
 import { Box } from "@mui/material"
-import { BrowserView } from "react-device-detect"
+import { isMobile } from "@hooks/useGlobal"
 
 export default function Layout({
   children
@@ -19,9 +19,7 @@ export default function Layout({
     >
       <Header />
       {children}
-      <BrowserView>
-        <Footer />
-      </BrowserView>
+      {!isMobile && <Footer />}
     </Box>
   )
 }

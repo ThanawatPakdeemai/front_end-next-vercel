@@ -16,7 +16,7 @@ import Howto from "@components/molecules/HowToPlay"
 import { Box } from "@mui/material"
 import { useTranslation } from "react-i18next"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
-import { BrowserView, MobileView } from "react-device-detect"
+import { MobileView } from "react-device-detect"
 import LikeNoLobby from "@components/molecules/LikeNoLobby"
 import InvestIcon from "@components/icons/Stats/InvestIcon"
 import PlayersIcon from "@components/icons/Stats/PlayersIcon"
@@ -30,7 +30,6 @@ import IconArrowLeft from "@components/icons/arrowLeftIcon"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
 import Breadcrumb from "@components/molecules/Breadcrumb"
-import CONFIGS from "@configs/index"
 import { useRouter } from "next/router"
 
 interface IGamePageDefaultProps {
@@ -87,62 +86,7 @@ const GamePageDefault = ({
       default:
         return (
           <div className="game-page-default">
-            <BrowserView>
-              <Box component="section">
-                {/* <Tagline
-                  bgColor="bg-neutral-800"
-                  textColor="text-neutral-500 font-bold"
-                  text={t("game_page_tagline_desc")}
-                  icon={<ShineIcon />}
-                  show={false}
-                /> */}
-                <div className="flex flex-wrap gap-3 xl:flex-row xl:flex-nowrap">
-                  <LikeNoLobby
-                    imgSrc={
-                      gameData && "image_category_list" in gameData
-                        ? gameData.image_category_list
-                        : ""
-                    }
-                    value={78.34}
-                  />
-                  <StatisticGameDetail statsGameById={statsGameById} />
-                  <TopPlayer
-                    element="select"
-                    subtitle
-                    background="neutral"
-                    note
-                    elevation={0}
-                    className="border border-neutral-800 bg-primary-main lg:!h-[424px]"
-                    rank
-                    topPlayerGameId={weeklyPoolByGameId?.record || []}
-                    isFetching={isLoadingWeeklyPoolByGameId}
-                    rightContent={
-                      <div className="flex h-10 items-center rounded-[20px] border-[1px] border-neutral-700">
-                        <button
-                          type="button"
-                          className={buttonArrow}
-                          onClick={() =>
-                            onClickedPrev(weeklyPoolByGameId?.previous || "")
-                          }
-                        >
-                          <IconArrowLeft />
-                        </button>
-                        <button
-                          type="button"
-                          className={`${buttonArrow} border-l-[1px] border-neutral-700`}
-                          onClick={() =>
-                            onClickedNext(weeklyPoolByGameId?.next || "")
-                          }
-                        >
-                          <IconArrowRight />
-                        </button>
-                      </div>
-                    }
-                  />
-                </div>
-              </Box>
-            </BrowserView>
-            {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+            {isMobile ? (
               <MobileView>
                 <Box component="section">
                   <Tagline
@@ -264,6 +208,60 @@ const GamePageDefault = ({
                   </div>
                 </Box>
               </MobileView>
+            ) : (
+              <Box component="section">
+                {/* <Tagline
+                  bgColor="bg-neutral-800"
+                  textColor="text-neutral-500 font-bold"
+                  text={t("game_page_tagline_desc")}
+                  icon={<ShineIcon />}
+                  show={false}
+                /> */}
+                <div className="flex flex-wrap gap-3 xl:flex-row xl:flex-nowrap">
+                  <LikeNoLobby
+                    imgSrc={
+                      gameData && "image_category_list" in gameData
+                        ? gameData.image_category_list
+                        : ""
+                    }
+                    value={78.34}
+                  />
+                  <StatisticGameDetail statsGameById={statsGameById} />
+                  <TopPlayer
+                    element="select"
+                    subtitle
+                    background="neutral"
+                    note
+                    elevation={0}
+                    className="border border-neutral-800 bg-primary-main lg:!h-[424px]"
+                    rank
+                    topPlayerGameId={weeklyPoolByGameId?.record || []}
+                    isFetching={isLoadingWeeklyPoolByGameId}
+                    rightContent={
+                      <div className="flex h-10 items-center rounded-[20px] border-[1px] border-neutral-700">
+                        <button
+                          type="button"
+                          className={buttonArrow}
+                          onClick={() =>
+                            onClickedPrev(weeklyPoolByGameId?.previous || "")
+                          }
+                        >
+                          <IconArrowLeft />
+                        </button>
+                        <button
+                          type="button"
+                          className={`${buttonArrow} border-l-[1px] border-neutral-700`}
+                          onClick={() =>
+                            onClickedNext(weeklyPoolByGameId?.next || "")
+                          }
+                        >
+                          <IconArrowRight />
+                        </button>
+                      </div>
+                    }
+                  />
+                </div>
+              </Box>
             )}
           </div>
         )
@@ -315,9 +313,6 @@ const GamePageDefault = ({
 
   return (
     <div className="game-page-default">
-      {/* This code is not working for PC */}
-      {/* <BrowserView></BrowserView> */}
-
       {isMobile ? (
         <MobileView>
           <div className={containerClasses}>

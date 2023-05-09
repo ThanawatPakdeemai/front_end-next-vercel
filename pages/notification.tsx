@@ -2,8 +2,8 @@ import { ReactElement } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { Box } from "@mui/material"
 import dynamic from "next/dynamic"
-import { BrowserView, MobileView } from "react-device-detect"
-import CONFIGS from "@configs/index"
+import { MobileView } from "react-device-detect"
+import { isMobile } from "@hooks/useGlobal"
 
 const NotificationList = dynamic(
   () => import("@feature/notification/components/organisms/NotificationList"),
@@ -36,13 +36,12 @@ export default function Notification() {
       component="article"
       className="h-full w-full"
     >
-      <BrowserView>
-        <NotificationList />
-      </BrowserView>
-      {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+      {isMobile ? (
         <MobileView>
           <NotificationListMobile />
         </MobileView>
+      ) : (
+        <NotificationList />
       )}
     </Box>
   )
@@ -51,11 +50,10 @@ export default function Notification() {
 Notification.getLayout = function getLayout(page: ReactElement) {
   return (
     <>
-      <BrowserView>
-        <ProfileLayout>{page}</ProfileLayout>
-      </BrowserView>
-      {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+      {isMobile ? (
         <MobileView>{page}</MobileView>
+      ) : (
+        <ProfileLayout>{page}</ProfileLayout>
       )}
     </>
   )

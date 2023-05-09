@@ -4,7 +4,6 @@ import { TagCircle } from "@components/atoms/tagCircle"
 import NewGameIcon from "@components/icons/NewGameIcon"
 import useGetGames from "@feature/home/containers/hook/useGetGames"
 import Slider, { Settings } from "react-slick"
-import { BrowserView } from "react-device-detect"
 import { Box } from "@mui/material"
 import { isMobile } from "@hooks/useGlobal"
 import BannerCardSlide from "../organisms/BannerCardSlide"
@@ -42,14 +41,14 @@ const BannerSlide = () => {
     <section
       className={`relative w-full overflow-hidden ${!isMobile && "mb-10"}`}
     >
-      <BrowserView>
+      {!isMobile && (
         <div className="absolute left-4 top-4 z-10">
           <TagCircle
             color="secondary"
             icon={<NewGameIcon />}
           />
         </div>
-      </BrowserView>
+      )}
       {isLoading ? (
         <SkeletonBanner />
       ) : (

@@ -178,8 +178,10 @@ const Home = () => {
                   textBtn={`${t("naka_swap")}`}
                   onClick={() => setOpenSwap(true)}
                   srcMain={IMAGES.frontNakaSwap.src}
+                  srcMainWebp={IMAGES.frontNakaSwap.srcWebp}
                   altMain={IMAGES.frontNakaSwap.alt}
                   srcSecond={IMAGES.backNakaSwap.src}
+                  srcSecondWebp={IMAGES.backNakaSwap.srcWebp}
                   altSecond={IMAGES.backNakaSwap.alt}
                 />
                 <OrionTrade
@@ -195,8 +197,10 @@ const Home = () => {
                   textBtn={`${t("Staking")}`}
                   href="/staking"
                   srcMain={IMAGES.frontStaking.src}
+                  srcMainWebp={IMAGES.frontStaking.srcWebp}
                   altMain={IMAGES.frontStaking.alt}
                   srcSecond={IMAGES.backStaking.src}
+                  srcSecondWebp={IMAGES.backStaking.srcWebp}
                   altSecond={IMAGES.backStaking.alt}
                 />
               </CardLinkTemplate>
@@ -208,8 +212,10 @@ const Home = () => {
                   textBtn={`${t("referral")}`}
                   href="/referral"
                   srcMain={IMAGES.frontReferrals.src}
+                  srcMainWebp={IMAGES.frontReferrals.srcWebp}
                   altMain={IMAGES.frontReferrals.alt}
                   srcSecond={IMAGES.backReferrals.src}
+                  srcSecondWebp={IMAGES.backReferrals.srcWebp}
                   altSecond={IMAGES.backReferrals.alt}
                 />
               </CardLinkTemplate>
@@ -306,8 +312,10 @@ const Home = () => {
                 textBtn={`${t("Coupons")}`}
                 href="/coupon"
                 srcMain={IMAGES.frontCouponBand.src}
+                srcMainWebp={IMAGES.frontCouponBand.srcWebp}
                 altMain={IMAGES.frontCouponBand.alt}
                 srcSecond={IMAGES.backCouponBand.src}
+                srcSecondWebp={IMAGES.backCouponBand.srcWebp}
                 altSecond={IMAGES.backCouponBand.alt}
               />
             </CardLinkTemplate>
@@ -319,8 +327,10 @@ const Home = () => {
                 textBtn="NAKA NFT"
                 href="/arcade-emporium"
                 srcMain={IMAGES.homeNakaNFT.src}
+                srcMainWebp={IMAGES.homeNakaNFT.srcWebp}
                 altMain={IMAGES.homeNakaNFT.alt}
                 srcSecond={IMAGES.backHomeNakaNFT.src}
+                srcSecondWebp={IMAGES.backHomeNakaNFT.srcWebp}
                 altSecond={IMAGES.backHomeNakaNFT.alt}
               />
             </CardLinkTemplate>

@@ -1,6 +1,10 @@
 import { memo } from "react"
 import Image, { ImageProps } from "next/image"
 
+interface ImageCustomProps extends ImageProps {
+  srcWebp?: string
+}
+
 export const ImageCustom = ({
   src,
   width,
@@ -11,15 +15,17 @@ export const ImageCustom = ({
   className,
   blurDataURL,
   fill,
-  onClick = () => {}
-}: ImageProps) => {
+  onClick = () => {},
+  srcWebp
+}: ImageCustomProps) => {
   const imgSrc = src || ""
+  const imgSrcWebp = srcWebp || ""
 
   return (
     <picture>
       <source
         type="image/webp"
-        srcSet={imgSrc as string}
+        srcSet={imgSrcWebp as string}
       />
       <Image
         src={imgSrc}

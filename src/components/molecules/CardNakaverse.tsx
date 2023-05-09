@@ -73,19 +73,23 @@ const CardNakaverse = ({
               className="h-full w-full"
             />
           </div>
-          <div className="absolute right-[12%] top-[15%] max-[480px]:top-[20%] max-[480px]:w-[70%]">
+          <div className="absolute right-[12%] top-[15%] w-[171px] max-[480px]:top-[20%] max-[480px]:w-[70%]">
             <KeyFramesRotate>
               <Image
                 src={IMAGES.worldNakaverse.src}
                 alt={IMAGES.worldNakaverse.alt}
+                width={IMAGES.worldNakaverse.width}
+                height={IMAGES.worldNakaverse.height}
                 className="relative h-full w-full"
               />
             </KeyFramesRotate>
           </div>
-          <div className="absolute right-[10%] top-[13%] max-[480px]:right-[6%] max-[480px]:top-[17%] max-[480px]:w-[80%]">
+          <div className="absolute right-[10%] top-[13%] w-[195px] max-[480px]:right-[6%] max-[480px]:top-[17%] max-[480px]:w-[80%]">
             <Image
               src={IMAGES.ringNakaverse.src}
               alt={IMAGES.ringNakaverse.alt}
+              width={IMAGES.ringNakaverse.width}
+              height={IMAGES.ringNakaverse.height}
               className="h-full w-full"
             />
           </div>

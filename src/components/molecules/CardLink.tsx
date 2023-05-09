@@ -13,8 +13,10 @@ interface ICardLink {
   classNameSecond?: string
   styleSecond?: React.CSSProperties
   srcMain?: string
+  srcMainWebp?: string
   altMain?: string
   srcSecond?: string
+  srcSecondWebp?: string
   altSecond?: string
   imageClassNameMain?: string
   imageStyleMain?: React.CSSProperties
@@ -34,8 +36,10 @@ const CardLink = ({
   classNameSecond,
   styleSecond,
   srcMain = IMAGES.frontBlogBand.src,
+  srcMainWebp = IMAGES.frontBlogBand.srcWebp,
   altMain = IMAGES.frontBlogBand.alt,
   srcSecond = IMAGES.backBlogBand.src,
+  srcSecondWebp = IMAGES.backBlogBand.srcWebp,
   altSecond = IMAGES.backBlogBand.alt,
   imageClassNameMain,
   imageStyleMain,
@@ -160,6 +164,7 @@ const CardLink = ({
         >
           <Image
             src={srcMain}
+            srcWebp={srcMainWebp}
             alt={altMain}
             width={123}
             height={123}
@@ -176,10 +181,11 @@ const CardLink = ({
         >
           <Image
             src={srcSecond}
+            srcWebp={srcSecondWebp}
             alt={altSecond}
             width={123}
             height={123}
-            className={`md:max-w-[120px absolute mx-0 my-auto max-w-[80px] ${imageClassNameSecond}`}
+            className={`absolute mx-0 my-auto max-w-[80px] md:max-w-[120px] ${imageClassNameSecond}`}
             style={imageStyleSecond || { transition: "0.2s" }}
             loading="eager"
             priority

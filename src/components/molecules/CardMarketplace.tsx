@@ -9,18 +9,12 @@ import { ImageCustom } from "@components/atoms/image/Image"
 
 interface ICardMarketplace {
   title?: string
-  bgImage?: string
   href?: string
   description?: string
-  width?: string | number
-  height?: string | number
 }
 
 const CardMarketplace = ({
-  width = 1356,
-  height = 476,
   title = "MARKETPLACE",
-  bgImage = IMAGES.marketPlace.src,
   href = "/",
   description = "market_des_card"
 }: ICardMarketplace) => {
@@ -58,10 +52,11 @@ const CardMarketplace = ({
       <div className="hidden flex-auto overflow-hidden sm:block md:pl-[46%]">
         <ImageCustom
           className="h-full w-full object-cover object-center"
-          src={bgImage}
+          src={IMAGES.marketPlace.src}
           alt="green iguana"
-          width={(width as number) || 1356}
-          height={(height as number) || 476}
+          width={IMAGES.marketPlace.width || 393}
+          height={IMAGES.marketPlace.height || 238}
+          srcWebp={IMAGES.marketPlace.srcWebp}
         />
       </div>
     </div>

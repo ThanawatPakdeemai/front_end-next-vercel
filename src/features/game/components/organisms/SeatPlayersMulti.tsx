@@ -20,7 +20,7 @@ import { IResGetIp } from "@interfaces/IGetIP"
 import { useRouter } from "next/router"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 
-interface IProps {
+export interface IPropsPlayerMulti {
   players: IGameCurrentPlayerMulti[] | undefined[]
 }
 
@@ -28,7 +28,7 @@ const baseUrlGame = CONFIGS.BASE_URL.GAME
 const baseUrlApi = CONFIGS.BASE_URL.API
 const baseUrlFront = CONFIGS.BASE_URL.FRONTEND
 
-const SeatPlayersMulti = ({ players }: IProps) => {
+const SeatPlayersMulti = ({ players }: IPropsPlayerMulti) => {
   const {
     onReadyPlayerBurnItem,
     cancelReadyPlayer,

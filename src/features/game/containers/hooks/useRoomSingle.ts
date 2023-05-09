@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import useGetAllGameRooms from "@feature/game/containers/hooks/useGetAllGameRooms"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/dist/client/router"
@@ -11,22 +11,26 @@ import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGameRoomsById"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
+import useGetGameByPath from "./useFindGameByPath"
 
 const useRoomSingle = () => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { data, itemSelected } = useGameStore()
+
   const router = useRouter()
-  const { id } = router.query
+  const { id, GameHome } = router.query
+  const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
+  const { data, itemSelected, onSetGameData } = useGameStore()
+
   const itemSizeId = id as string
   const { errorToast } = useToast()
   const { balanceofItem } = useBuyGameItemController()
   const item = useMemo(() => {
-    if (data) {
+    if (gameData) {
       if (
-        (data.play_to_earn && data.play_to_earn_status === "free") ||
-        data.tournament
+        (gameData.play_to_earn && gameData.play_to_earn_status === "free") ||
+        gameData.tournament
       ) {
-        return data.item[0]._id
+        return gameData.item[0]._id
       }
       if (itemSelected) {
         return itemSelected._id
@@ -37,17 +41,31 @@ const useRoomSingle = () => {
     } else {
       return ""
     }
-  }, [data, itemSelected, itemSizeId])
+  }, [gameData, itemSelected, itemSizeId])
+
   const { allGameRooms, isLoading: loadingAllroom } = useGetAllGameRooms({
-    _gameId: data ? data._id : "",
+    _gameId: gameData ? gameData._id : "",
     _email: profile ? profile.email : "",
     _itemId: itemSizeId || (item ?? "")
   })
 
   const { allGameRoomsById, isLoading: loadingAllroomById } =
     useGetAllGameRoomsById({
-      _gameId: !profile && data ? data._id : ""
+      _gameId: !profile && gameData ? gameData._id : ""
     })
+
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      if (gameData) onSetGameData(gameData)
+    }
+
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameData])
 
   const intoRoomGame = (
     data_player_me: IGameCurrentPlayer,
@@ -107,7 +125,8 @@ const useRoomSingle = () => {
         }
       } else if (
         (balanceofItem && balanceofItem?.data < 1) ||
-        balanceofItem === undefined
+        balanceofItem === undefined ||
+        !balanceofItem?.status
       ) {
         if (data && data_player_me && data_player_me.status === "played") {
           router.push(

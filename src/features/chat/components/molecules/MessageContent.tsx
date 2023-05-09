@@ -4,12 +4,21 @@ import React from "react"
 import { v4 as uuidv4 } from "uuid"
 import MessageBody from "./MessageBody"
 
-const MessageContent = () => {
+interface IProps {
+  height?: string
+  heightParent?: string
+}
+const MessageContent = ({ height, heightParent }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
   const { chat } = useChatContext()
+
   return (
-    <div className="messages-list relative">
-      <div className="custom-scroll flex h-[347px] flex-col-reverse overflow-y-scroll pr-4">
+    <div className={`messages-list relative ${heightParent}`}>
+      <div
+        className={`custom-scroll flex ${
+          height || "h-[347px]"
+        } flex-col-reverse overflow-y-scroll pr-4`}
+      >
         {chat.map((data) => (
           <MessageBody
             message={data.message}

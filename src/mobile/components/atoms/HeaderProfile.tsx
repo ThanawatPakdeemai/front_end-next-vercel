@@ -15,8 +15,10 @@ const HeaderProfile = ({ title }: IProp) => {
         <div className="flex max-w-[239px] flex-wrap items-center font-neue-machina text-xs uppercase leading-[30px] text-neutral-600">
           <p>{today}</p>
           <p
-            className={`before:d-inline text-green-lemon before:mx-2 before:h-[6px] before:w-[6px] before:rounded-full after:text-xs ${
-              profile ? " before:bg-green-lemon " : " before:bg-error-main "
+            className={`before:d-inline  before:mx-2 before:h-[6px] before:w-[6px] before:rounded-full after:text-xs ${
+              profile
+                ? " text-green-lemon before:bg-green-lemon"
+                : " text-error-main before:bg-error-main"
             } before:content-['**']
             `}
           >
@@ -27,7 +29,7 @@ const HeaderProfile = ({ title }: IProp) => {
               <span className=" text-error-main">Offline</span>
             )}
           </p>
-          <p className=" font-mondwest text-[20px] capitalize text-neutral-300">
+          <p className=" truncate whitespace-nowrap font-mondwest text-[20px] normal-case  text-neutral-300">
             {title}
           </p>
         </div>

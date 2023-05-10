@@ -73,10 +73,13 @@ const useWalletContoller = () => {
   const isAllowance = (_currentAllowed: BigNumber): boolean => {
     const _inputAmount = BigNumber.from(toWei(value.toString()))
 
+    const _currentAllowedNumber = Helper.BNToNumber(_currentAllowed.toString())
+    const _inputAmountNumber = Helper.BNToNumber(_inputAmount.toString())
+
     if (_currentAllowed.toString() === "0") {
       return false
     }
-    if (_currentAllowed <= _inputAmount) {
+    if (_currentAllowedNumber < _inputAmountNumber) {
       return false
     }
     return true

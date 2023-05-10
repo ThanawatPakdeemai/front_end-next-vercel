@@ -187,7 +187,7 @@ const GameCard = ({
 
   const renderCardContent = () => (
     <motion.div
-      className="slick-card-container flex h-auto max-w-[218px] flex-col justify-center blur-none"
+      className="slick-card-container flex h-auto flex-col justify-center blur-none"
       initial="init"
       whileHover="onHover"
       animate="animate"
@@ -196,7 +196,9 @@ const GameCard = ({
         if (onHandleClick) onHandleClick()
       }}
     >
-      <motion.div className="relative flex h-auto  min-h-[138px] w-full items-center justify-center overflow-hidden md:min-h-[238px] xl:w-[218px]">
+      {/* eslint-disable-next-line max-len */}
+      {/* relative flex h-auto  min-h-[138px] w-full flex-1 items-center justify-center overflow-hidden md:min-h-[238px] xl:w-[218px] */}
+      <motion.div className="game-card__wrapper relative flex-1">
         {showNo && no && (
           <NumberRank
             index={no - 1}
@@ -204,7 +206,11 @@ const GameCard = ({
             className="slick-card-number absolute right-1 top-2 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
           />
         )}
-        <div className={`${!isMobile && "overflow-hidden rounded-3xl"}`}>
+        <div
+          className={`${
+            !isMobile && "game-card__image overflow-hidden rounded-3xl"
+          }`}
+        >
           <Image
             src={imageSrc}
             alt="home-slide"

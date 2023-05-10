@@ -20,6 +20,7 @@ import { IMessage } from "@feature/multichain/interfaces/IMultichain"
 import useSupportedChain from "@hooks/useSupportedChain"
 import useChainSupportStore from "@stores/chainSupport"
 import useGlobal from "@hooks/useGlobal"
+import { BigNumber } from "ethers"
 
 export type Method = "deposit" | "withdraw"
 
@@ -62,6 +63,24 @@ const useWalletContoller = () => {
     getTokenAddress(currentChainSelected as string) as string,
     isConnected
   )
+
+  /**
+   * @description Checking allowance token if token is not approved then approve
+   * @param _allowanceToken - Amount current allowance token
+   * @param _balance - Amount current balance
+   * @returns
+   */
+  const isAllowance = (_currentAllowed: BigNumber): boolean => {
+    const _inputAmount = BigNumber.from(toWei(value.toString()))
+
+    if (_currentAllowed.toString() === "0") {
+      return false
+    }
+    if (_currentAllowed <= _inputAmount) {
+      return false
+    }
+    return true
+  }
 
   /**
    * @description Check metamask
@@ -209,6 +228,7 @@ const useWalletContoller = () => {
       }
 
       if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
+        // ----- FOR BNB
         const bep20Contract = getBEP20Contract(
           currentTokenSelected.address,
           signer
@@ -220,9 +240,8 @@ const useWalletContoller = () => {
             bep20Contract,
             CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT_BINANCE
           )
-          // const allowanceToken = await allowanceToken
-
-          if ((allowanceToken as string).toString() === "0") {
+          // if ((allowanceToken as string).toString() === "0") {
+          if (isAllowance(allowanceToken as BigNumber) === false) {
             allowToken(
               bep20Contract,
               // currentChainSelected.address, // spender
@@ -240,18 +259,18 @@ const useWalletContoller = () => {
           await handleWalletProcess(_method, currentTokenSelected.address)
         }
       } else if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX) {
+        // ----- FOR NAKA
         const erc20Contract = getERC20Contract(
           currentTokenSelected.address,
           signer
         )
-        // FOR NAKA
         const allowanceToken = await checkAllowToken(
           erc20Contract,
           CONFIGS.CONTRACT_ADDRESS.BALANCE_VAULT
         )
         // const allowanceToken = await checkAllowNaka
 
-        if ((allowanceToken as string).toString() === "0") {
+        if (isAllowance(allowanceToken as BigNumber) === false) {
           allowNaka(currentTokenSelected.totolSupply as string).then(
             async (_res) => {
               await successToast(_res as string)

@@ -173,7 +173,10 @@ const ProfileContent = () => {
       {isMobile ? (
         <MobileView>
           <div className="w-full">
-            <HeaderForWardBackWardMobile label="MY Profile" />
+            <HeaderForWardBackWardMobile
+              label="MY Profile"
+              onClickBackWard={() => router.back()}
+            />
             <div className="relative">
               <Box
                 component="img"

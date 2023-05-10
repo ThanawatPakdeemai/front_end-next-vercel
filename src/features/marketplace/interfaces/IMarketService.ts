@@ -335,6 +335,7 @@ export interface IOwnerDetailsData extends IOwnerData {
   }
   qrcode?: string
   installments_data?: IInstallData
+  history?: IHistory[]
 }
 
 export interface IMarketTypes {

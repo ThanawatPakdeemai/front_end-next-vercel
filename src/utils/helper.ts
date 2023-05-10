@@ -403,6 +403,26 @@ const Helper = {
       default:
         return "nft_land"
     }
+  },
+  convertMarketTypeToTType(_marketType?: TNFTType): TType {
+    switch (_marketType) {
+      case "game_item":
+        return "game-item"
+      case "nft_building":
+        return "building"
+      case "nft_naka_punk":
+        return "naka-punk"
+      case "nft_material":
+        return "material"
+      case "nft_game":
+        return "arcade-game"
+      case "nft_avatar":
+        return "arcade-game"
+      case "nft_land":
+        return "land"
+      default:
+        throw new Error(`Invalid NFT type: ${_marketType}`)
+    }
   }
 }
 

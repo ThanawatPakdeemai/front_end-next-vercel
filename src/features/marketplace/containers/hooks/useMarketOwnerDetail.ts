@@ -42,7 +42,8 @@ const useMarketOwnerDetail = () => {
               qrcode: _res.qrcode_image,
               installments_data: _res.installments_data
                 ? _res.installments_data[0]
-                : undefined
+                : undefined,
+              history: _res.history
             })
           })
           .finally(() => setIsLoading(false))
@@ -60,7 +61,8 @@ const useMarketOwnerDetail = () => {
               model: _res.model_3d,
               installments_data: _res.installments_data
                 ? _res.installments_data[0]
-                : undefined
+                : undefined,
+              history: _res.history
             })
           })
           .finally(() => setIsLoading(false))

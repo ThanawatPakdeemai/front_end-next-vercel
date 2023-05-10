@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-no-undef */
-/* eslint-disable no-undef */
 import React, { useEffect, useState } from "react"
 import ShineIcon from "@components/icons/ShineIcon"
 import Banners from "@components/molecules/Banners"
@@ -10,7 +8,7 @@ import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
-import useGlobal from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import useGetStatisticsGameById from "@feature/game/containers/hooks/useGetStatisticsGameById"
 import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import useGameStore from "@stores/game"
@@ -18,7 +16,7 @@ import Howto from "@components/molecules/HowToPlay"
 import { Box } from "@mui/material"
 import { useTranslation } from "react-i18next"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
-import { BrowserView, MobileView } from "react-device-detect"
+import { MobileView } from "react-device-detect"
 import LikeNoLobby from "@components/molecules/LikeNoLobby"
 import InvestIcon from "@components/icons/Stats/InvestIcon"
 import PlayersIcon from "@components/icons/Stats/PlayersIcon"
@@ -32,7 +30,7 @@ import IconArrowLeft from "@components/icons/arrowLeftIcon"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
 import Breadcrumb from "@components/molecules/Breadcrumb"
-import CONFIGS from "@configs/index"
+import { useRouter } from "next/router"
 
 interface IGamePageDefaultProps {
   component: React.ReactNode
@@ -53,6 +51,10 @@ const GamePageDefault = ({
   const [gameData, setGameData] = useState<IGame | IPartnerGameData>()
   const { statsGameById } = useGetStatisticsGameById()
   const { t } = useTranslation()
+  const router = useRouter()
+  const isReward =
+    router.pathname &&
+    router.pathname === "/[typeGame]/[GameHome]/[typeReward]/[notification_id]"
 
   const {
     onClickedPrev,
@@ -84,62 +86,7 @@ const GamePageDefault = ({
       default:
         return (
           <div className="game-page-default">
-            <BrowserView>
-              <Box component="section">
-                {/* <Tagline
-                  bgColor="bg-neutral-800"
-                  textColor="text-neutral-500 font-bold"
-                  text={t("game_page_tagline_desc")}
-                  icon={<ShineIcon />}
-                  show={false}
-                /> */}
-                <div className="flex flex-wrap gap-3 xl:flex-row xl:flex-nowrap">
-                  <LikeNoLobby
-                    imgSrc={
-                      gameData && "image_category_list" in gameData
-                        ? gameData.image_category_list
-                        : ""
-                    }
-                    value={78.34}
-                  />
-                  <StatisticGameDetail statsGameById={statsGameById} />
-                  <TopPlayer
-                    element="select"
-                    subtitle
-                    background="neutral"
-                    note
-                    elevation={0}
-                    className="border border-neutral-800 bg-primary-main lg:!h-[424px]"
-                    rank
-                    topPlayerGameId={weeklyPoolByGameId?.record || []}
-                    isFetching={isLoadingWeeklyPoolByGameId}
-                    rightContent={
-                      <div className="flex h-10 items-center rounded-[20px] border-[1px] border-neutral-700">
-                        <button
-                          type="button"
-                          className={buttonArrow}
-                          onClick={() =>
-                            onClickedPrev(weeklyPoolByGameId?.previous || "")
-                          }
-                        >
-                          <IconArrowLeft />
-                        </button>
-                        <button
-                          type="button"
-                          className={`${buttonArrow} border-l-[1px] border-neutral-700`}
-                          onClick={() =>
-                            onClickedNext(weeklyPoolByGameId?.next || "")
-                          }
-                        >
-                          <IconArrowRight />
-                        </button>
-                      </div>
-                    }
-                  />
-                </div>
-              </Box>
-            </BrowserView>
-            {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
+            {isMobile ? (
               <MobileView>
                 <Box component="section">
                   <Tagline
@@ -261,6 +208,60 @@ const GamePageDefault = ({
                   </div>
                 </Box>
               </MobileView>
+            ) : (
+              <Box component="section">
+                {/* <Tagline
+                  bgColor="bg-neutral-800"
+                  textColor="text-neutral-500 font-bold"
+                  text={t("game_page_tagline_desc")}
+                  icon={<ShineIcon />}
+                  show={false}
+                /> */}
+                <div className="flex flex-wrap gap-3 xl:flex-row xl:flex-nowrap">
+                  <LikeNoLobby
+                    imgSrc={
+                      gameData && "image_category_list" in gameData
+                        ? gameData.image_category_list
+                        : ""
+                    }
+                    value={78.34}
+                  />
+                  <StatisticGameDetail statsGameById={statsGameById} />
+                  <TopPlayer
+                    element="select"
+                    subtitle
+                    background="neutral"
+                    note
+                    elevation={0}
+                    className="border border-neutral-800 bg-primary-main lg:!h-[424px]"
+                    rank
+                    topPlayerGameId={weeklyPoolByGameId?.record || []}
+                    isFetching={isLoadingWeeklyPoolByGameId}
+                    rightContent={
+                      <div className="flex h-10 items-center rounded-[20px] border-[1px] border-neutral-700">
+                        <button
+                          type="button"
+                          className={buttonArrow}
+                          onClick={() =>
+                            onClickedPrev(weeklyPoolByGameId?.previous || "")
+                          }
+                        >
+                          <IconArrowLeft />
+                        </button>
+                        <button
+                          type="button"
+                          className={`${buttonArrow} border-l-[1px] border-neutral-700`}
+                          onClick={() =>
+                            onClickedNext(weeklyPoolByGameId?.next || "")
+                          }
+                        >
+                          <IconArrowRight />
+                        </button>
+                      </div>
+                    }
+                  />
+                </div>
+              </Box>
             )}
           </div>
         )
@@ -312,17 +313,31 @@ const GamePageDefault = ({
 
   return (
     <div className="game-page-default">
-      <BrowserView>
+      {isMobile ? (
+        <MobileView>
+          <div className={containerClasses}>
+            {component}
+            {/**
+             * @description In case there is a need to add another component
+             */}
+            {component2 && <div className="mt-4">{component2}</div>}
+            {component3 && <div className="mt-4">{component3}</div>}
+            {renderStatistic()}
+          </div>
+        </MobileView>
+      ) : (
         <div className={containerClasses}>
           <Header />
-          <Breadcrumb />
+
+          {/* Not show on reward page */}
+          {!isReward && <Breadcrumb />}
+
           {gameData && "image_banner" in gameData ? (
             <BannerSingle
               src={gameData.image_banner}
               alt={gameData.name}
             />
           ) : (
-            // eslint-disable-next-line react/jsx-no-undef
             <Banners />
           )}
 
@@ -336,23 +351,10 @@ const GamePageDefault = ({
           {component3 && <div className="mt-12">{component3}</div>}
           {/* //NOTE - comment ไว้ก่อน ค่อยเปิด feature นี้ทีหลัง */}
           {/* {gameData && (
-        <ReleatedGames _gameType={getTypeGamePathFolder(gameData as IGame)} />
-      )} */}
+            <ReleatedGames _gameType={getTypeGamePathFolder(gameData as IGame)} />
+          )} */}
           <Footer />
         </div>
-      </BrowserView>
-      {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
-        <MobileView>
-          <div className={containerClasses}>
-            {component}
-            {/**
-             * @description In case there is a need to add another component
-             */}
-            {component2 && <div className="mt-4">{component2}</div>}
-            {component3 && <div className="mt-4">{component3}</div>}
-            {renderStatistic()}
-          </div>
-        </MobileView>
       )}
     </div>
   )

@@ -136,7 +136,7 @@ const Helper = {
       const response = await fetch("https://api.ipify.org/?format=json")
       const data: IResGetIp = await response.json()
       resolve(data)
-    })
+    }).catch(() => {})
   },
   stringToColor(_str: string) {
     let hash = 0

@@ -28,11 +28,11 @@ export async function getServerSideProps({ locale }: { locale: string }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"]))
-    }
+    },
     // remove below if marketplace launch on frontend v2
-    // redirect: {
-    //   destination: _mode === "production" ? "/" : "/marketplace"
-    // }
+    redirect: {
+      destination: _mode === "production" ? "/" : "/marketplace"
+    }
   }
 }
 

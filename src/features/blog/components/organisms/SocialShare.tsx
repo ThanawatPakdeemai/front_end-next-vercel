@@ -9,7 +9,7 @@ import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 import TelegramIcon from "@components/icons/SocialIcon/TelegramIcon"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import { Typography } from "@mui/material"
-import { BrowserView } from "react-device-detect"
+import { isMobile } from "@hooks/useGlobal"
 
 export interface ISocialShareProps {
   shareTitle: string
@@ -39,13 +39,15 @@ const SocialShare = ({
 
   return (
     <div className="mx-12 flex items-center">
-      <BrowserView>
-        {shareHeading && (
-          <Typography className="mr-4 font-neue-machina text-default text-neutral-100">
-            {shareHeading}
-          </Typography>
-        )}
-      </BrowserView>
+      {!isMobile && (
+        <>
+          {shareHeading && (
+            <Typography className="mr-4 font-neue-machina text-default text-neutral-100">
+              {shareHeading}
+            </Typography>
+          )}
+        </>
+      )}
       <div className="flex text-sm">
         {!hideTwitter && (
           <TwitterShareButton

@@ -5,11 +5,11 @@ import {
   ISlideList
 } from "@components/molecules/gameSlide/GameCarouselHeader"
 import { IGameDownloadSlide } from "@feature/slider/interfaces/ISlides"
-import IconNakaWorld from "@components/icons/nakaWorldIcon"
 import IconDollar from "@components/icons/dollarIcon"
-import IconFree from "@components/icons/freeIcon"
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined"
 import ControllerIcon from "@components/icons/ControllerIcon"
+import { ImageCustom } from "@components/atoms/image/Image"
+import { IMAGES } from "./images"
 
 export const GAME_BANNER_SLIDES = [
   {
@@ -218,9 +218,11 @@ const onPlayingMenu: ISlideList[] = [
 ]
 export const P2EHeaderMenu: IHeaderSlide = {
   sticker: (
-    <IconNakaWorld
-      width={180}
-      height={125}
+    <ImageCustom
+      src={IMAGES.stickerEarn.src}
+      alt={IMAGES.stickerEarn.alt}
+      width={IMAGES.stickerEarn.width}
+      height={IMAGES.stickerEarn.height}
     />
   ),
   title: "Play To Earn",
@@ -232,9 +234,11 @@ export const P2EHeaderMenu: IHeaderSlide = {
 
 export const StoryModeHeaderMenu: IHeaderSlide = {
   sticker: (
-    <IconNakaWorld
-      width={180}
-      height={125}
+    <ImageCustom
+      src={IMAGES.stickerEarn.src}
+      alt={IMAGES.stickerEarn.alt}
+      width={IMAGES.stickerEarn.width}
+      height={IMAGES.stickerEarn.height}
     />
   ),
   title: "Story Mode",
@@ -246,9 +250,11 @@ export const StoryModeHeaderMenu: IHeaderSlide = {
 
 export const NFTHeaderMenu: IHeaderSlide = {
   sticker: (
-    <IconNakaWorld
-      width={180}
-      height={125}
+    <ImageCustom
+      src={IMAGES.stickerEarn.src}
+      alt={IMAGES.stickerEarn.alt}
+      width={IMAGES.stickerEarn.width}
+      height={IMAGES.stickerEarn.height}
     />
   ),
   title: "Arcade",
@@ -289,9 +295,11 @@ const f2pMenu: ISlideList[] = [
 
 export const F2PHeaderMenu: IHeaderSlide = {
   sticker: (
-    <IconFree
-      width={200}
-      height={100}
+    <ImageCustom
+      src={IMAGES.stickerFree.src}
+      alt={IMAGES.stickerFree.alt}
+      width={IMAGES.stickerFree.width}
+      height={IMAGES.stickerFree.height}
     />
   ),
   icon: <IconDollar.Not className="slick-header-secondary-icon" />,
@@ -314,7 +322,14 @@ export const GAME_DOWNLOAD: IGameDownloadSlide[] = [
   {
     id: "1",
     name: "Escape",
-    image: "/images/home/escape.png",
+    image: {
+      src: "/images/home/escape/escape.jpg",
+      srcWebp: "/images/home/escape/escape.webp",
+      blurDataURL: "/images/home/escape/escape.webp",
+      width: 678,
+      height: 468,
+      alt: "Escape"
+    },
     description:
       "Your new adventure begins now! Our first 3D multiplayer game with high-end graphics launched on the Nakamoto Games Platform. Join and push yourself to the limits!",
     download_link: "https://files.naka.im/games/escape_win_x64_installation.zip"

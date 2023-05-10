@@ -55,7 +55,7 @@ const CarouselSlide = ({ slideGames, isLoading }: ICarouselSlideProps) => {
             key={item.id}
           >
             <CarouselCardSlide
-              src={item.image}
+              image={item.image}
               name={item.name}
               description={t(item.description)}
               link={item.download_link}

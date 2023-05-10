@@ -10,6 +10,7 @@ import { calculatePosition } from "@utils/map"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import { ILandMap } from "@feature/land/interfaces/ILandService"
 import { useRouter } from "next/router"
+import { v4 as uuidv4 } from "uuid"
 import CameraController from "../molecules/CameraController"
 import MapScene from "../molecules/MapScene"
 import BoxElement from "../molecules/BoxElement"
@@ -151,7 +152,7 @@ const MiniMap = ({
         >
           {buttonsControl.map(({ onClick, icon }) => (
             <ButtonIcon
-              key={icon.props.children}
+              key={uuidv4()}
               onClick={onClick}
               className="map-button"
               icon={icon}

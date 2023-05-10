@@ -14,13 +14,20 @@ const SingleRoom = () => {
             gameData &&
             roomData?.map((item) => (
               <ListJoinGame
+                time={item.end_time as unknown as string}
                 key={item._id}
                 image={gameData.image_room}
                 name={gameData.game_type}
                 desc={gameData.name}
                 onClick={() => handleJoinRoom(item)}
                 textChip={`#${item?.room_number?.toString()}`}
-                descChip1={`${itemSelected?.name} / ${itemSelected?.item_size}`}
+                descChip1={
+                  gameData?.play_to_earn_status === "free"
+                    ? ""
+                    : `${itemSelected?.name || ""} ${
+                        `/ ${itemSelected?.item_size}` || ""
+                      }`
+                }
                 descChip2={`${item.amount_current_player} / ${item.max_players}`}
               />
             ))}

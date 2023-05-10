@@ -141,9 +141,9 @@ const useSocketWaitingRoom = (props: IPropsSocketWaiting) => {
     [socketWaitingRoom]
   )
 
-  const onSendMessage = async () => {
+  const onSendMessage = async (_message?: string) => {
     await socketWaitingRoom.emit(EVENTS.ACTION.CHAT_SEND_MESSAGE, {
-      message
+      message: message || _message
     })
     await setMessage("")
   }

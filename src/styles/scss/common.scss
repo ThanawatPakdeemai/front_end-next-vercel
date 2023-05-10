@@ -251,6 +251,14 @@ body {
   }
 }
 
+.slick-slider-dot-right {
+  .slick-slider {
+    .slick-dots {
+      justify-content: flex-start;
+    }
+  }
+}
+
 .progress-bar-energy {
   background: rgb(35, 35, 41) !important;
   background: linear-gradient(
@@ -825,4 +833,16 @@ body {
   backdrop-filter: blur(15px);
   border-radius: 8px;
   @apply flex items-center justify-center;
+}
+
+.game-card__image {
+  position: relative;
+  width: 100%;
+  padding-top: 90%;
+  picture {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    display: block;
+  }
 }

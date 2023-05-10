@@ -18,7 +18,13 @@ const MultiRoom = () => {
                 desc={data.name}
                 onClick={() => handleJoinRoom(item)}
                 textChip={`#${item?.create_room_detail?.no_room?.toString()}`}
-                descChip1={`${itemSelected?.name} / ${itemSelected?.item_size}`}
+                descChip1={
+                  data?.play_to_earn_status === "free"
+                    ? ""
+                    : `${itemSelected?.name || ""} ${
+                        `/${itemSelected?.item_size}` || ""
+                      }`
+                }
                 descChip2={`${item.amount_current_player} / ${item.max_players}`}
               />
             ))

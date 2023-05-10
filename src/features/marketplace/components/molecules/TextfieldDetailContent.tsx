@@ -6,7 +6,8 @@ import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import { InputAdornment, TextField } from "@mui/material"
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
 import Helper from "@utils/helper"
-import React from "react"
+import React, { useMemo } from "react"
+import useCountStore from "@stores/countComponant"
 
 interface IProp {
   type: TNFTType
@@ -33,9 +34,14 @@ const TextfieldDetailContent = ({
   count
 }: IProp) => {
   const { price: nakaPrice } = useNakaPriceProvider()
-  const calcNakaPrice = price
-    ? ((price / (nakaPrice ? parseFloat(nakaPrice.last) : 0)) as number)
-    : 0
+  const { count: countItemSelected } = useCountStore()
+
+  const calcNakaPrice = useMemo(() => {
+    if (nakaPrice && countItemSelected && price) {
+      return countItemSelected * (price / parseFloat(nakaPrice.last))
+    }
+    return 0
+  }, [nakaPrice, countItemSelected, price])
 
   return (
     <div
@@ -77,7 +83,7 @@ const TextfieldDetailContent = ({
       )}
       {price && (
         <TextField
-          value={price}
+          value={countItemSelected * price}
           label="PRICE (NAKA)"
           sx={{
             "& .MuiOutlinedInput-root": {

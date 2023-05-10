@@ -15,6 +15,7 @@ import {
 } from "@interfaces/IMetamask"
 import {
   TNFTType,
+  TSellerType,
   TType,
   TUrlNFT
 } from "@feature/marketplace/interfaces/IMarketService"
@@ -356,6 +357,51 @@ const Helper = {
         return "NFT-Avatar"
       default:
         throw new Error(`Invalid NFT type: ${_NFTtype}`)
+    }
+  },
+  convertNFTTypeToTType(
+    _nftType: TNFTType,
+    sellerTypes?: TSellerType
+  ): TType | undefined {
+    switch (_nftType) {
+      case "game_item":
+        return sellerTypes && sellerTypes === "system" ? undefined : "game-item"
+      case "nft_material":
+        return sellerTypes && sellerTypes === "system" ? undefined : "material"
+      case "nft_land":
+        return "land"
+      case "nft_building":
+        return "building"
+      case "nft_game":
+        return sellerTypes && sellerTypes === "system"
+          ? undefined
+          : "arcade-game"
+      case "nft_naka_punk":
+        return "naka-punk"
+      case "nft_avatar":
+        return "avatar-reef"
+      default:
+        return undefined
+    }
+  },
+  convertTTypeToNFTType(_nftType: TType): TNFTType {
+    switch (_nftType) {
+      case "game-item":
+        return "game_item"
+      case "material":
+        return "nft_material"
+      case "land":
+        return "nft_land"
+      case "building":
+        return "nft_building"
+      case "arcade-game":
+        return "nft_game"
+      case "naka-punk":
+        return "nft_naka_punk"
+      case "avatar-reef":
+        return "nft_avatar"
+      default:
+        return "nft_land"
     }
   },
   convertMarketTypeToTType(_marketType?: TNFTType): TType {

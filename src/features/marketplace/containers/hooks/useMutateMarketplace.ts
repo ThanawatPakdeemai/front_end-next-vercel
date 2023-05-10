@@ -6,6 +6,7 @@ import {
   cancelMarketOrder,
   claimRent,
   createMarketOrder,
+  getMarketplaceAllTypes,
   mintNFT,
   payBillInstallNFT,
   payInstallment,
@@ -132,6 +133,14 @@ const useMutateMarketplace = () => {
     }
   })
 
+  const { mutateAsync: mutateMarketTypes } = useMutation(
+    getMarketplaceAllTypes,
+    {
+      mutationKey: ["useMarketTypes"],
+      retry: false
+    }
+  )
+
   return {
     mutateMarketCreateOrder,
     mutateMarketCancelOrder,
@@ -141,7 +150,8 @@ const useMutateMarketplace = () => {
     mutateFullPayment,
     mutateMarketPurcPunkOrder,
     mutatePayBillInstallNFT,
-    mutateClaimRentNFT
+    mutateClaimRentNFT,
+    mutateMarketTypes
   }
 }
 

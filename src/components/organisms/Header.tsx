@@ -1,4 +1,4 @@
-import React, { memo } from "react"
+import React, { memo, useEffect } from "react"
 import { Box } from "@mui/material"
 import HeadLogo from "@components/molecules/HeadLogo"
 import HeadMenu from "@components/molecules/HeadMenu"
@@ -7,11 +7,15 @@ import { RightMenu } from "@components/molecules/rightMenu"
 import useGlobal from "@hooks/useGlobal"
 import RightMenuDeveloper from "@components/molecules/rightMenu/RightMenuDeveloper"
 import HeadMenuMobile from "@src/mobile/headerMenu/HeadMenuMobile"
-import { MobileView, isBrowser } from "react-device-detect"
+import { BrowserView, MobileView } from "react-device-detect"
 import HeadProfileMobile from "@src/mobile/headerMenu/HeadProfileMobile"
 import CONFIGS from "@configs/index"
+import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutateMarketplace"
+import useMarketCategTypes from "@stores/marketCategTypes"
+import { NextRouter, useRouter } from "next/router"
 
 const Header = () => {
+  const router: NextRouter = useRouter()
   const { isMarketplace, isDeveloperPage } = useGlobal()
 
   const showHeadPrice = !isMarketplace && !isDeveloperPage
@@ -19,28 +23,84 @@ const Header = () => {
   const showRightMenu = !isDeveloperPage
   const showRightMenuDeveloper = isDeveloperPage
 
+  const { mutateMarketTypes } = useMutateMarketplace()
+  const { fetchStatus, setFetchStatus, onSetMarketTypes, onSetCategory } =
+    useMarketCategTypes()
+
+  useEffect(() => {
+    const fetchMarketTyps = async () => {
+      if (!fetchStatus && isMarketplace) {
+        const { status, data } = await mutateMarketTypes()
+        if (status && data) {
+          onSetMarketTypes(data)
+          setFetchStatus(true)
+        }
+      }
+    }
+    let cleanup = false
+    if (!cleanup) {
+      fetchMarketTyps()
+    }
+    return () => {
+      cleanup = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMarketplace])
+
+  useEffect(() => {
+    let cleanup = false
+    const selectedCategory = () => {
+      const _path = router.asPath
+      if (_path.includes("/game-item")) {
+        onSetCategory("game_item")
+      } else if (_path.includes("/land")) {
+        onSetCategory("nft_land")
+      } else if (_path === "/marketplace") {
+        onSetCategory("nft_land")
+      } else if (_path.includes("/building")) {
+        onSetCategory("nft_building")
+      } else if (_path.includes("/material")) {
+        onSetCategory("nft_material")
+      } else if (_path.includes("/naka-punk")) {
+        onSetCategory("nft_naka_punk")
+      } else if (_path.includes("/arcade-game")) {
+        onSetCategory("nft_game")
+      } else if (_path.includes("/avatar-reef")) {
+        onSetCategory("nft_avatar")
+      } else {
+        onSetCategory(undefined)
+      }
+    }
+    if (!cleanup && isMarketplace) {
+      selectedCategory()
+    }
+    return () => {
+      cleanup = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMarketplace, router.asPath])
+
   return (
     <div className="header-wrapper">
-      {CONFIGS.DISPLAY_MOBILE_MODE === "true" && !isBrowser ? (
+      <BrowserView>
+        {showHeadPrice && <HeadPrice />}
+        <header className="header relative top-10 z-[999] lg:sticky">
+          <Box
+            component="div"
+            className="flex flex-wrap items-center justify-between md:my-10 xl:flex-nowrap"
+          >
+            <HeadLogo />
+            {showHeadMenu && <HeadMenu />}
+            {showRightMenu && <RightMenu />}
+            {showRightMenuDeveloper && <RightMenuDeveloper />}
+          </Box>
+        </header>
+      </BrowserView>
+      {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
         <MobileView>
           <HeadProfileMobile />
           <HeadMenuMobile />
         </MobileView>
-      ) : (
-        <>
-          {showHeadPrice && <HeadPrice />}
-          <header className="header relative top-10 z-[999] lg:sticky">
-            <Box
-              component="div"
-              className="flex flex-wrap items-center justify-between md:my-10 xl:flex-nowrap"
-            >
-              <HeadLogo />
-              {showHeadMenu && <HeadMenu />}
-              {showRightMenu && <RightMenu />}
-              {showRightMenuDeveloper && <RightMenuDeveloper />}
-            </Box>
-          </header>
-        </>
       )}
     </div>
   )

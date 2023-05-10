@@ -21,7 +21,7 @@ const useMarketInfo = () => {
   const [totalCount, setTotalCount] = useState<number>(0)
   const [searchData, setSearchData] = useState<TKey>()
 
-  const { convertNFTTypeToUrl } = Helper
+  const { convertNFTTypeToUrl, convertMarketTypeToTType } = Helper
   const router = useRouter()
   const { marketType } = useGlobal()
   const { getMarketOrderAsnyc, isLoading } = useGetMarketOrder()
@@ -142,36 +142,12 @@ const useMarketInfo = () => {
       }
     }
 
-    switch (marketType) {
-      case "game_item":
-        search.type = "game-item"
-        break
-      case "nft_building":
-        search.type = "building"
-        break
-      case "nft_naka_punk":
-        search.type = "naka-punk"
-        break
-      case "nft_material":
-        search.type = "material"
-        break
-      case "nft_game":
-        search.type = "arcade-game"
-        break
-      case "nft_avatar":
-        search.type = "arcade-game"
-        break
-      default:
-        search.type = "land"
-    }
-
     return search
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.pathname, searchData, filterItem])
+  }, [router.pathname, searchData, filterItem, marketType])
 
   const fetchOrderList = useCallback(async () => {
     const search = await handleSearch()
-    setType(search.type as TType)
     getMarketOrderAsnyc({
       _urlNFT: convertNFTTypeToUrl(search.type_marketplace as TNFTType),
       _limit: limit,
@@ -193,7 +169,21 @@ const useMarketInfo = () => {
     return () => {
       load = true
     }
-  }, [currentPage, fetchOrderList])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage])
+
+  useEffect(() => {
+    let load = false
+
+    if (!load && marketType) {
+      setType(convertMarketTypeToTType(marketType))
+    }
+
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [marketType])
   // end fetch info list
 
   return {

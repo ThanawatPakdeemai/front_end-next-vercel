@@ -147,7 +147,11 @@ const useMutateMarketplace = () => {
     getMarketOrderById,
     {
       mutationKey: ["useMarketOrderByyId"],
-      retry: false
+      retry: false,
+      onError: (_response) => {
+        // errorToast((_response as IMessage)?.message ?? "Order not found!.")
+        errorToast("This order has been purchased or has been cancelled.")
+      }
     }
   )
 

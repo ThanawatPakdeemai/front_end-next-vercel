@@ -91,7 +91,7 @@ const useMarketContext = () => {
 
   const fetchOrderById = async () => {
     if (id && marketType) {
-      mutateMarketOrderById({
+      await mutateMarketOrderById({
         _id: id,
         _urlNFT: convertNFTTypeToUrl(marketType)
       }).then((response) => {

@@ -6,6 +6,7 @@ import {
   cancelMarketOrder,
   claimRent,
   createMarketOrder,
+  getMarketOrderById,
   getMarketplaceAllTypes,
   mintNFT,
   payBillInstallNFT,
@@ -133,10 +134,19 @@ const useMutateMarketplace = () => {
     }
   })
 
+  // get all marketplace types for filter
   const { mutateAsync: mutateMarketTypes } = useMutation(
     getMarketplaceAllTypes,
     {
       mutationKey: ["useMarketTypes"],
+      retry: false
+    }
+  )
+
+  const { mutateAsync: mutateMarketOrderById } = useMutation(
+    getMarketOrderById,
+    {
+      mutationKey: ["useMarketOrderByyId"],
       retry: false
     }
   )
@@ -151,7 +161,8 @@ const useMutateMarketplace = () => {
     mutateMarketPurcPunkOrder,
     mutatePayBillInstallNFT,
     mutateClaimRentNFT,
-    mutateMarketTypes
+    mutateMarketTypes,
+    mutateMarketOrderById
   }
 }
 

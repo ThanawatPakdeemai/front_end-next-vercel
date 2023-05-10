@@ -16,6 +16,7 @@ import { Trans } from "react-i18next"
 import { v4 as uuidv4 } from "uuid"
 import TableNodata from "@feature/transaction/components/atoms/TableNodata"
 import TableRowData from "@feature/table/components/molecules/TableRowData"
+import { IHistory } from "@feature/land/interfaces/ILandService"
 import BillDetailsText from "../atoms/BillDetailsText"
 
 interface TabPanelProps {
@@ -42,16 +43,11 @@ function TabPanel(props: TabPanelProps) {
 
 interface IProp {
   insData: IInstallData
+  history: IHistory[]
 }
 
-//  <Box
-//    component="div"
-//    className={`mt-5 rounded-3xl border border-neutral-800 !bg-neutral-780 px-10 py-[30px] ${1}`}
-//  >
-//    <span className="font-bold uppercase text-neutral-600">Total bill</span>
-//  </Box>
-
-const BillDetailSection = ({ insData }: IProp) => {
+// eslint-disable-next-line no-unused-vars
+const BillDetailSection = ({ insData, history }: IProp) => {
   const [value, setValue] = React.useState(0)
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -318,6 +314,7 @@ const BillDetailSection = ({ insData }: IProp) => {
       >
         Item Three
       </TabPanel>
+      {/* bottom detail */}
       <Box
         component="div"
         className="mt-5 flex flex-row justify-between rounded-3xl border border-neutral-800 !bg-neutral-780 px-10 py-[30px]"

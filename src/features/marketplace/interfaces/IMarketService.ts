@@ -1,7 +1,7 @@
 import { IGameItemList } from "@feature/gameItem/interfaces/IGameItemService"
 import { IFormatMessageService, IFormatService } from "@interfaces/IHelper"
 import { IBuildData } from "@feature/building/interfaces/IBuildingService"
-import { ILandData } from "@feature/land/interfaces/ILandService"
+import { IHistory, ILandData } from "@feature/land/interfaces/ILandService"
 import { IMaterialInfo } from "@feature/material/marketplace/interfaces/IMaterialService"
 import { IArcGameInfo } from "@feature/game/marketplace/interfaces/IArcGameService"
 
@@ -326,6 +326,7 @@ export interface IOwnerDetailsData extends IOwnerData {
   }
   qrcode?: string
   installments_data?: IInstallData
+  history?: IHistory[]
 }
 
 export interface IPayBillInstallServ extends IFormatMessageService {

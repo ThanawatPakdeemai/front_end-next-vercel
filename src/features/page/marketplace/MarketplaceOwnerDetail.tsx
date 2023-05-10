@@ -61,8 +61,11 @@ const MarketplaceOwnerDetail = () => {
           </RightDetailsMarketplace>
         </div>
       </div>
-      {ownerDetail.installments_data && (
-        <BillDetailSection insData={ownerDetail.installments_data} />
+      {ownerDetail.installments_data && ownerDetail.history && (
+        <BillDetailSection
+          insData={ownerDetail.installments_data}
+          history={ownerDetail.history}
+        />
       )}
     </div>
   ) : (

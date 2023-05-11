@@ -51,6 +51,8 @@ const PlayerCardMobile = ({ players }: IPropsPlayerMulti) => {
                       player.status === "inroom" ? " bg-warning-light" : ""
                     } ${player.status === "ready" ? " bg-green-lemon" : ""} ${
                       player.status === "playing" ? " bg-error-light" : ""
+                    } ${
+                      player.status === "played" ? "bg-purple-primary" : ""
                     } absolute bottom-[55px] flex h-[16px] items-center justify-center rounded  px-1 font-neue-machina text-[8px] uppercase  text-primary-main`}
                   >
                     {player?.status || ""}

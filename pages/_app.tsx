@@ -16,7 +16,7 @@ import dynamic from "next/dynamic"
 import dayjs from "dayjs"
 import rt from "dayjs/plugin/relativeTime"
 import createEmotionCache from "@utils/createEmotionCache"
-import MetaDataTag from "@components/atoms/MetaDataTag"
+// import MetaDataTag from "@components/atoms/MetaDataTag"
 
 const Loading = dynamic(() => import("@components/molecules/Loading"), {
   suspense: true,
@@ -44,7 +44,7 @@ const MyApp = (props) => {
 
   return (
     <>
-      <MetaDataTag />
+      {/* <MetaDataTag /> */}
       <Loading />
       <QueryClientProvider client={queryClient}>
         <Web3Provider>

@@ -31,9 +31,8 @@ class MyDocument extends Document {
 
     // Run the parent `getInitialProps`, it now includes the custom `renderPage`
     let _meta: IMetaData | null = null
-    let link = ctx.asPath
     if (ctx.pathname.includes("/[typeGame]/[GameHome]")) {
-      link = `/${ctx.query.GameHome}`
+      const link = `/${ctx.query.GameHome}`
       const _seo = await getSeoByPath(`${link}` as string)
       const meta =
         _seo && (_seo as ISeoResponse)?.data?.length > 0
@@ -57,6 +56,7 @@ class MyDocument extends Document {
         }
       }
     } else {
+      const link = ctx.asPath
       const _seo = await getSeoByPath(`${link}` as string)
       const meta =
         _seo && (_seo as ISeoResponse)?.data?.length > 0
@@ -86,12 +86,12 @@ class MyDocument extends Document {
 
     return (
       <Html>
-        <title>{meta_title ?? metaData.meta_title}</title>
+        <title>{meta_title}</title>
 
         <Head>
           <meta
             name="description"
-            content={meta_description ?? metaData.meta_description}
+            content={meta_description}
           />
           <link
             rel="icon"
@@ -116,7 +116,7 @@ class MyDocument extends Document {
           />
           <meta
             property="og:title"
-            content={meta_title ?? metaData.meta_title}
+            content={meta_title}
           />
           <meta
             property="og:site_name"
@@ -124,19 +124,19 @@ class MyDocument extends Document {
           />
           <meta
             property="og:description"
-            content={meta_description ?? metaData.meta_description}
+            content={meta_description}
           />
           <meta
             property="og:image"
-            content={og_image ?? metaData.og_image}
+            content={og_image}
           />
           <meta
             property="og:width"
-            content="1200"
+            content="2400"
           />
           <meta
             property="og:height"
-            content="630"
+            content="1269"
           />
 
           {/* twitter */}
@@ -154,7 +154,7 @@ class MyDocument extends Document {
           />
           <meta
             property="twitter:image"
-            content={og_image ?? metaData.og_image}
+            content={og_image}
           />
           <meta
             property="site"
@@ -162,16 +162,16 @@ class MyDocument extends Document {
           />
           <meta
             property="twitter:title"
-            content={meta_title ?? metaData.meta_title}
+            content={meta_title}
           />
           <meta
             property="twitter:description"
-            content={meta_description ?? metaData.meta_description}
+            content={meta_description}
           />
 
           <meta
             name="keywords"
-            content={meta_keyword ?? metaData.meta_keyword}
+            content={meta_keyword}
           />
         </Head>
         <body>

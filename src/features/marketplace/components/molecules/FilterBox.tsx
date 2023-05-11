@@ -21,7 +21,8 @@ const FilterBox = () => {
   const router: NextRouter = useRouter()
   const pathName = router.asPath.split("/").pop()
   const isP2P = router.asPath.includes("p2p")
-  const isInventory = router.asPath.search("inventory")
+  // const isInventory = router.asPath.search("inventory")
+  const isInventory = router.asPath.includes("inventory")
 
   const {
     search,
@@ -48,7 +49,6 @@ const FilterBox = () => {
 
   const { category, fetchStatus, getCurrentTypes } = useMarketCategTypes()
 
-  // const sortvalue = sort.reduce((acc, curr) => Object.assign(acc, curr), {})
   const searchvalue = search.reduce((acc, curr) => Object.assign(acc, curr), {})
   const typeOfsearch = pathName === "marketplace" ? "land_id" : "nft_token"
 
@@ -142,12 +142,6 @@ const FilterBox = () => {
 
   const listFilter = isP2P ? "P2P Market" : "NAKA Market"
 
-  //  const handleResetSearch = () => {
-  //    onResetSort()
-  //    onResetSearch()
-  //    setText("")
-  //  }
-
   const handleCheckboxChange = ({
     _value,
     _checked
@@ -194,7 +188,7 @@ const FilterBox = () => {
 
   return (
     <div className="grid gap-3">
-      {isInventory !== -1 ? null : (
+      {!isInventory && (
         <>
           <button
             type="button"
@@ -254,60 +248,59 @@ const FilterBox = () => {
                 </div>
               ))}
           </Collapse>
-
-          {(category === "nft_building" ||
-            category === "nft_game" ||
-            category === "nft_land" ||
-            pathName === "marketplace") && (
-            <>
-              <Typography className="text-xs uppercase text-neutral-500">
-                {category === "nft_land" || pathName === "marketplace"
-                  ? "Land ID"
-                  : "NFT Token"}
-              </Typography>
-              <TextField
-                className="w-full"
-                placeholder="e.g. 11900011"
-                // onKeyDown={(event) => {
-                //   if (event.key === "Enter" && text !== "") {
-                //     pathName === "marketplace" || category === "nft_land"
-                //       ? onSetSearch({ key: "land_id", value: text })
-                //       : onSetSearch({ key: "nft_token", value: text })
-                //   }
-                // }}
-                InputProps={{
-                  style: {
-                    fontSize: "14px",
-                    fontFamily: "neueMachina",
-                    width: "100%",
-                    padding: 8
-                  },
-                  endAdornment: (
-                    <InputAdornment
-                      position="end"
-                      className="cursor-pointer"
-                      onClick={() => {}}
-                    >
-                      <SearchIcon />
-                    </InputAdornment>
-                  )
-                }}
-                onChange={(_event) => {
-                  // setText(_event.target.value)
-                  let { value } = _event.target
-                  value = value.replace(/[^A-Za-z0-9]/gi, "")
-                  pathName === "marketplace" || category === "nft_land"
-                    ? onSetSearch({ key: "land_id", value })
-                    : onSetSearch({ key: "nft_token", value })
-                }}
-                value={
-                  searchvalue[typeOfsearch] !== undefined
-                    ? searchvalue[typeOfsearch]
-                    : ""
-                }
-              />
-            </>
-          )}
+        </>
+      )}
+      {(category === "nft_building" ||
+        category === "nft_game" ||
+        category === "nft_land" ||
+        pathName === "marketplace") && (
+        <>
+          <Typography className="text-xs uppercase text-neutral-500">
+            {category === "nft_land" || pathName === "marketplace"
+              ? "Land ID"
+              : "NFT Token"}
+          </Typography>
+          <TextField
+            className="w-full"
+            placeholder="e.g. 11900011"
+            // onKeyDown={(event) => {
+            //   if (event.key === "Enter" && text !== "") {
+            //     pathName === "marketplace" || category === "nft_land"
+            //       ? onSetSearch({ key: "land_id", value: text })
+            //       : onSetSearch({ key: "nft_token", value: text })
+            //   }
+            // }}
+            InputProps={{
+              style: {
+                fontSize: "14px",
+                fontFamily: "neueMachina",
+                width: "100%",
+                padding: 8
+              },
+              endAdornment: (
+                <InputAdornment
+                  position="end"
+                  className="cursor-pointer"
+                  onClick={() => {}}
+                >
+                  <SearchIcon />
+                </InputAdornment>
+              )
+            }}
+            onChange={(_event) => {
+              // setText(_event.target.value)
+              let { value } = _event.target
+              value = value.replace(/[^A-Za-z0-9]/gi, "")
+              pathName === "marketplace" || category === "nft_land"
+                ? onSetSearch({ key: "land_id", value })
+                : onSetSearch({ key: "nft_token", value })
+            }}
+            value={
+              searchvalue[typeOfsearch] !== undefined
+                ? searchvalue[typeOfsearch]
+                : ""
+            }
+          />
         </>
       )}
 
@@ -338,269 +331,272 @@ const FilterBox = () => {
           </Typography>
         </div>
       </div>
-      {(category === "nft_land" ||
-        category === "game_item" ||
-        category === "nft_material" ||
-        category === "nft_building" ||
-        category === "nft_naka_punk" ||
-        category === "nft_game") && (
-        <div>
+      {!isInventory && (
+        <>
+          {(category === "nft_land" ||
+            category === "game_item" ||
+            category === "nft_material" ||
+            category === "nft_building" ||
+            category === "nft_naka_punk" ||
+            category === "nft_game") && (
+            <div>
+              <Typography className="text-xs uppercase text-neutral-500">
+                Wallet address
+              </Typography>
+              <TextField
+                className="w-full"
+                placeholder="e.g. 0x20E7B302f92185098082988c482C4218f5c58695"
+                InputProps={{
+                  style: {
+                    fontSize: "14px",
+                    fontFamily: "neueMachina",
+                    width: "100%",
+                    padding: 8
+                  },
+                  endAdornment: (
+                    <InputAdornment
+                      position="end"
+                      className="cursor-pointer"
+                      onClick={() => {}}
+                    >
+                      <SearchIcon />
+                    </InputAdornment>
+                  )
+                }}
+                onChange={(_event) => {
+                  // setWallet(_event.target.value)
+                  let { value } = _event.target
+                  value = value.replace(/[^A-Za-z0-9]/gi, "")
+                  if (value) {
+                    onSetSearch({ key: "seller_id", value })
+                  }
+                  // const searchWallet = _event?.target?.value
+                  // if (searchWallet) {
+                  //   onSetSearch({ key: "seller_id", value: searchWallet })
+                  // }
+                }}
+                value={
+                  searchvalue["seller_id"] !== undefined
+                    ? searchvalue["seller_id"]
+                    : ""
+                }
+              />
+            </div>
+          )}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={handleOnExpandPrice}
+              className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
+            >
+              <span>{price}</span>
+              <div
+                className={`${
+                  expandedPrice === true
+                    ? "rotate-180 transition-all duration-300"
+                    : "rotate-0 transition-all duration-300"
+                }`}
+              >
+                <DropdownIcon />
+              </div>
+            </button>
+            <Collapse
+              in={expandedPrice}
+              timeout="auto"
+              className="absolute top-0 mt-10 w-[200px] rounded-[19px] p-2"
+              sx={{
+                backgroundColor: "#232329",
+                zIndex: 99999,
+                position: "absolute",
+                width: "218px"
+              }}
+            >
+              {PRICELIST.map((item) => (
+                <MenuItemCustom
+                  key={item.label}
+                  label={item.label}
+                  icon=""
+                  href=""
+                  id=""
+                  external={false}
+                  active
+                  onClick={() => {
+                    setPrice(item.label)
+                    onSetSort({ key: "price", value: item.value })
+                    setExpandedPrice(!expandedPrice)
+                  }}
+                />
+              ))}
+            </Collapse>
+          </div>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={handleOnExpandDate}
+              className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
+            >
+              <span>{date}</span>
+              <div
+                className={`${
+                  expandDate === true
+                    ? "rotate-180 transition-all duration-300"
+                    : "rotate-0 transition-all duration-300"
+                }`}
+              >
+                <DropdownIcon />
+              </div>
+            </button>
+            <Collapse
+              in={expandDate}
+              timeout="auto"
+              className="absolute top-0 mt-10 w-[200px] rounded-[19px] p-2"
+              sx={{
+                backgroundColor: "#232329",
+                zIndex: 99999,
+                position: "absolute",
+                width: "218px"
+              }}
+            >
+              {DATELIST.map((item) => (
+                <MenuItemCustom
+                  key={item.label}
+                  label={item.label}
+                  icon=""
+                  href=""
+                  id=""
+                  external={false}
+                  active
+                  onClick={() => {
+                    setDate(item.label)
+                    onSetSort({ key: "created_at", value: item.value })
+                    setExpandDate(!expandDate)
+                  }}
+                />
+              ))}
+            </Collapse>
+          </div>
+
+          {(category === "nft_land" ||
+            category === "game_item" ||
+            category === "nft_building" ||
+            category === "nft_game") && (
+            <div className="relative">
+              <button
+                type="button"
+                onClick={handleOnExpandType}
+                className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
+              >
+                <span>{type}</span>
+                <div
+                  className={`${
+                    expandType === true
+                      ? "rotate-180 transition-all duration-300"
+                      : "rotate-0 transition-all duration-300"
+                  }`}
+                >
+                  <DropdownIcon />
+                </div>
+              </button>
+              <Collapse
+                in={expandType}
+                timeout="auto"
+                className="absolute top-0 mt-10 w-[200px] rounded-[19px] p-2"
+                sx={{
+                  backgroundColor: "#232329",
+                  zIndex: 99999,
+                  position: "absolute",
+                  width: "218px"
+                }}
+              >
+                {TYPELIST.map((item) => (
+                  <MenuItemCustom
+                    key={item.label}
+                    label={item.label}
+                    icon=""
+                    href=""
+                    id=""
+                    external={false}
+                    active
+                    onClick={() => {
+                      setType(item.label)
+                      onSetSearch({ key: "selling_type", value: item.value })
+                      setExpandType(!expandType)
+                    }}
+                  />
+                ))}
+              </Collapse>
+            </div>
+          )}
+
           <Typography className="text-xs uppercase text-neutral-500">
-            Wallet address
+            Price Range (NAKA)
           </Typography>
           <TextField
             className="w-full"
-            placeholder="e.g. 0x20E7B302f92185098082988c482C4218f5c58695"
+            placeholder="00.0"
             InputProps={{
               style: {
                 fontSize: "14px",
                 fontFamily: "neueMachina",
-                width: "100%",
-                padding: 8
+                width: "100%"
               },
+              startAdornment: (
+                <InputAdornment position="start">
+                  <div className="flex items-center	">
+                    <SpeedHeight />
+                    <Typography className="ml-2 text-xs uppercase text-neutral-500">
+                      max
+                    </Typography>
+                  </div>
+                </InputAdornment>
+              ),
               endAdornment: (
                 <InputAdornment
                   position="end"
                   className="cursor-pointer"
                   onClick={() => {}}
                 >
-                  <SearchIcon />
+                  <INaka color="#E1E2E2" />
                 </InputAdornment>
               )
             }}
             onChange={(_event) => {
-              // setWallet(_event.target.value)
-              let { value } = _event.target
-              value = value.replace(/[^A-Za-z0-9]/gi, "")
-              if (value) {
-                onSetSearch({ key: "seller_id", value })
-              }
-              // const searchWallet = _event?.target?.value
-              // if (searchWallet) {
-              //   onSetSearch({ key: "seller_id", value: searchWallet })
-              // }
+              // const search = _event?.target?.value
             }}
-            value={
-              searchvalue["seller_id"] !== undefined
-                ? searchvalue["seller_id"]
-                : ""
-            }
           />
-        </div>
-      )}
-
-      <div className="relative">
-        <button
-          type="button"
-          onClick={handleOnExpandPrice}
-          className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
-        >
-          <span>{price}</span>
-          <div
-            className={`${
-              expandedPrice === true
-                ? "rotate-180 transition-all duration-300"
-                : "rotate-0 transition-all duration-300"
-            }`}
-          >
-            <DropdownIcon />
-          </div>
-        </button>
-        <Collapse
-          in={expandedPrice}
-          timeout="auto"
-          className="absolute top-0 mt-10 w-[200px] rounded-[19px] p-2"
-          sx={{
-            backgroundColor: "#232329",
-            zIndex: 99999,
-            position: "absolute",
-            width: "218px"
-          }}
-        >
-          {PRICELIST.map((item) => (
-            <MenuItemCustom
-              key={item.label}
-              label={item.label}
-              icon=""
-              href=""
-              id=""
-              external={false}
-              active
-              onClick={() => {
-                setPrice(item.label)
-                onSetSort({ key: "price", value: item.value })
-                setExpandedPrice(!expandedPrice)
-              }}
-            />
-          ))}
-        </Collapse>
-      </div>
-      <div className="relative">
-        <button
-          type="button"
-          onClick={handleOnExpandDate}
-          className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
-        >
-          <span>{date}</span>
-          <div
-            className={`${
-              expandDate === true
-                ? "rotate-180 transition-all duration-300"
-                : "rotate-0 transition-all duration-300"
-            }`}
-          >
-            <DropdownIcon />
-          </div>
-        </button>
-        <Collapse
-          in={expandDate}
-          timeout="auto"
-          className="absolute top-0 mt-10 w-[200px] rounded-[19px] p-2"
-          sx={{
-            backgroundColor: "#232329",
-            zIndex: 99999,
-            position: "absolute",
-            width: "218px"
-          }}
-        >
-          {DATELIST.map((item) => (
-            <MenuItemCustom
-              key={item.label}
-              label={item.label}
-              icon=""
-              href=""
-              id=""
-              external={false}
-              active
-              onClick={() => {
-                setDate(item.label)
-                onSetSort({ key: "created_at", value: item.value })
-                setExpandDate(!expandDate)
-              }}
-            />
-          ))}
-        </Collapse>
-      </div>
-
-      {(category === "nft_land" ||
-        category === "game_item" ||
-        category === "nft_building" ||
-        category === "nft_game") && (
-        <div className="relative">
-          <button
-            type="button"
-            onClick={handleOnExpandType}
-            className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
-          >
-            <span>{type}</span>
-            <div
-              className={`${
-                expandType === true
-                  ? "rotate-180 transition-all duration-300"
-                  : "rotate-0 transition-all duration-300"
-              }`}
-            >
-              <DropdownIcon />
-            </div>
-          </button>
-          <Collapse
-            in={expandType}
-            timeout="auto"
-            className="absolute top-0 mt-10 w-[200px] rounded-[19px] p-2"
-            sx={{
-              backgroundColor: "#232329",
-              zIndex: 99999,
-              position: "absolute",
-              width: "218px"
+          <TextField
+            className="w-full"
+            placeholder="00.0"
+            InputProps={{
+              style: {
+                fontSize: "14px",
+                fontFamily: "neueMachina",
+                width: "100%"
+              },
+              startAdornment: (
+                <InputAdornment position="start">
+                  <div className="flex items-center	">
+                    <SpeedLow />
+                    <Typography className="ml-2 text-xs uppercase text-neutral-500">
+                      min
+                    </Typography>
+                  </div>
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment
+                  position="end"
+                  className="cursor-pointer"
+                  onClick={() => {}}
+                >
+                  <INaka color="#E1E2E2" />
+                </InputAdornment>
+              )
             }}
-          >
-            {TYPELIST.map((item) => (
-              <MenuItemCustom
-                key={item.label}
-                label={item.label}
-                icon=""
-                href=""
-                id=""
-                external={false}
-                active
-                onClick={() => {
-                  setType(item.label)
-                  onSetSearch({ key: "selling_type", value: item.value })
-                  setExpandType(!expandType)
-                }}
-              />
-            ))}
-          </Collapse>
-        </div>
+            onChange={(_event) => {}}
+          />
+        </>
       )}
-
-      <Typography className="text-xs uppercase text-neutral-500">
-        Price Range (NAKA)
-      </Typography>
-      <TextField
-        className="w-full"
-        placeholder="00.0"
-        InputProps={{
-          style: {
-            fontSize: "14px",
-            fontFamily: "neueMachina",
-            width: "100%"
-          },
-          startAdornment: (
-            <InputAdornment position="start">
-              <div className="flex items-center	">
-                <SpeedHeight />
-                <Typography className="ml-2 text-xs uppercase text-neutral-500">
-                  max
-                </Typography>
-              </div>
-            </InputAdornment>
-          ),
-          endAdornment: (
-            <InputAdornment
-              position="end"
-              className="cursor-pointer"
-              onClick={() => {}}
-            >
-              <INaka color="#E1E2E2" />
-            </InputAdornment>
-          )
-        }}
-        onChange={(_event) => {
-          // const search = _event?.target?.value
-        }}
-      />
-      <TextField
-        className="w-full"
-        placeholder="00.0"
-        InputProps={{
-          style: {
-            fontSize: "14px",
-            fontFamily: "neueMachina",
-            width: "100%"
-          },
-          startAdornment: (
-            <InputAdornment position="start">
-              <div className="flex items-center	">
-                <SpeedLow />
-                <Typography className="ml-2 text-xs uppercase text-neutral-500">
-                  min
-                </Typography>
-              </div>
-            </InputAdornment>
-          ),
-          endAdornment: (
-            <InputAdornment
-              position="end"
-              className="cursor-pointer"
-              onClick={() => {}}
-            >
-              <INaka color="#E1E2E2" />
-            </InputAdornment>
-          )
-        }}
-        onChange={(_event) => {}}
-      />
       <div className="my-4 h-[10px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')]" />
       <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
         <Typography className="text-sm uppercase text-white-default">

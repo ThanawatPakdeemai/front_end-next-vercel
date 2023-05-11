@@ -6,10 +6,10 @@ import {
   useMaterialVaultNoAccount
 } from "@feature/contract/containers/hooks/useContract"
 import { TInvenVaultAction } from "@feature/inventory/interfaces/IInventoryItem"
-import useGetMaterialTypes from "@feature/material/marketplace/containers/hooks/useGetTypeMaterial"
 import { ITypeMaterials } from "@feature/material/marketplace/interfaces/IMaterialService"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
+import useMarketCategTypes from "@stores/marketCategTypes"
 import useProfileStore from "@stores/profileStore"
 import { ethers } from "ethers"
 import { useRouter } from "next/router"
@@ -17,7 +17,7 @@ import { useEffect, useState } from "react"
 
 const useInvenMaterial = () => {
   const { profile } = useProfileStore()
-  const { materialTypes } = useGetMaterialTypes()
+  const { materialTypes } = useMarketCategTypes()
   const { utils } = ethers
   const { signer } = useWeb3Provider()
   const materialContract = useMaterialVault(

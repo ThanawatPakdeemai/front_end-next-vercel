@@ -4,7 +4,10 @@ import { devtools } from "zustand/middleware"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { ITypeBuild } from "@feature/building/interfaces/IBuildingService"
 import { ITypeMaterials } from "@feature/material/marketplace/interfaces/IMaterialService"
-import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
+import {
+  IMarketTypes,
+  TNFTType
+} from "@feature/marketplace/interfaces/IMarketService"
 
 export type TCategory = TNFTType | undefined
 
@@ -24,6 +27,7 @@ interface IUseCategoryStore {
   onSetLandTypes: (_types: ITypeMaterials[]) => void
   onSetBuildingTypes: (_types: ITypeBuild[]) => void
   onSetMaterialTypes: (_types: ITypeMaterials[]) => void
+  onSetMarketTypes: (_types: IMarketTypes) => void
 }
 
 const useMarketCategTypes = create<IUseCategoryStore>()(
@@ -107,6 +111,18 @@ const useMarketCategTypes = create<IUseCategoryStore>()(
           () => ({ materialTypes: _types }),
           false,
           "MarketCategTypesStore/onSetMaterialTypes"
+        )
+      },
+      onSetMarketTypes: (_types) => {
+        set(
+          () => ({
+            landTypes: _types.land,
+            buildingTypes: _types.building,
+            gameItemTypes: _types.game_item,
+            materialTypes: _types.material
+          }),
+          false,
+          "MarketCategTypesStore/onSetMarketTypes"
         )
       }
     }),

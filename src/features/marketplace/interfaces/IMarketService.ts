@@ -1,8 +1,17 @@
-import { IGameItemList } from "@feature/gameItem/interfaces/IGameItemService"
+import {
+  IGameItemList,
+  IGameItemListData
+} from "@feature/gameItem/interfaces/IGameItemService"
 import { IFormatMessageService, IFormatService } from "@interfaces/IHelper"
-import { IBuildData } from "@feature/building/interfaces/IBuildingService"
-import { ILandData } from "@feature/land/interfaces/ILandService"
-import { IMaterialInfo } from "@feature/material/marketplace/interfaces/IMaterialService"
+import {
+  IBuildData,
+  ITypeBuild
+} from "@feature/building/interfaces/IBuildingService"
+import { IHistory, ILandData } from "@feature/land/interfaces/ILandService"
+import {
+  IMaterialInfo,
+  ITypeMaterials
+} from "@feature/material/marketplace/interfaces/IMaterialService"
 import { IArcGameInfo } from "@feature/game/marketplace/interfaces/IArcGameService"
 
 export type TNFTType =
@@ -326,6 +335,14 @@ export interface IOwnerDetailsData extends IOwnerData {
   }
   qrcode?: string
   installments_data?: IInstallData
+  history?: IHistory[]
+}
+
+export interface IMarketTypes {
+  land: ITypeMaterials[]
+  building: ITypeBuild[]
+  game_item: IGameItemListData[]
+  material: ITypeMaterials[]
 }
 
 export interface IPayBillInstallServ extends IFormatMessageService {
@@ -346,4 +363,8 @@ export interface IMarketOrderServ extends IFormatService {
 
 export interface IMarketCreateOrderServ extends IFormatService {
   data: null
+}
+
+export interface IMarketTypesServ extends IFormatService {
+  data: IMarketTypes
 }

@@ -13,7 +13,8 @@ import dynamic from "next/dynamic"
 import Helper from "@utils/helper"
 import { IPosition } from "@feature/land/interfaces/ILandService"
 import Video from "@components/atoms/Video"
-import { useRouter } from "next/router"
+import { NextRouter, useRouter } from "next/router"
+import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 import { ModalCustom } from "./ModalCustom"
 
 const SellActionComp = dynamic(
@@ -84,13 +85,13 @@ const ModalMarket = ({
   plot
 }: IProps) => {
   const currencyRef = useRef<boolean>(false)
-  const { getPriceNakaCurrent } = Helper
+  const { getPriceNakaCurrent, convertNFTTypeToTType } = Helper
   const [price, setPrice] = useState<number>(priceValue)
   const [period, setPeriod] = useState<number>(periodValue)
   const [selling, setSelling] = useState<TSellingType>(sellingType)
   const [currency, setCurrency] = useState<number>(0)
-  const router = useRouter()
-
+  const router: NextRouter = useRouter()
+  const { fetchOrderById } = useMarketplaceProvider()
   const { handleSubmit } = useForm()
   const { onCreateOrder, onCancelOrder, onMintOrder, onExecuteOrder } =
     useMarket()
@@ -170,11 +171,45 @@ const ModalMarket = ({
     switch (action) {
       case "cancel":
         if (orderId && sellerId && sellingType) {
-          await onCancelOrder(nftType, sellingType, orderId, sellerId).finally(
-            () => {
-              onClose()
-            }
-          )
+          await onCancelOrder(nftType, sellingType, orderId, sellerId)
+            .then(() => {
+              // redirect
+              // check if stay on inventory not redirect
+              if (router.asPath.includes("/inventory")) {
+                // refetch data from owner detail
+              } else {
+                setTimeout(
+                  () =>
+                    router.replace({
+                      pathname: `/marketplace/inventory/${convertNFTTypeToTType(
+                        nftType
+                      )}`
+                    }),
+                  1000
+                )
+              }
+            })
+            .catch(async () => {
+              // refetch data
+              if (router.asPath.includes("/inventory")) {
+                //
+              } else if (fetchOrderById) {
+                await fetchOrderById().catch(() => {
+                  setTimeout(
+                    () =>
+                      router.replace({
+                        pathname: `/marketplace/${
+                          sellerType === "system" ? "" : "/p2p"
+                        }/${convertNFTTypeToTType(nftType, sellerType) || ""}`
+                      }),
+                    1000
+                  )
+                })
+              }
+            })
+            .finally(() => {
+              setTimeout(() => onClose(), 3000)
+            })
         } else {
           console.error(
             `sellingType:${sellingType}, order: ${orderId}, sellerAcc: ${sellerId}`
@@ -182,19 +217,18 @@ const ModalMarket = ({
         }
         break
       case "sell":
-        if (tokenId && itemId && amount && priceValue) {
+        if (tokenId && itemId && amount && price) {
           await onCreateOrder(
             nftType,
             sellingType,
             itemId,
             tokenId,
             amount,
-            priceValue
+            price
           ).finally(() => {
-            onClose()
+            setTimeout(() => onClose(), 3000)
           })
-        } else
-          console.error(`marketAmount: ${amount}, marketPrice: ${priceValue}`)
+        } else console.error(`marketAmount: ${amount}, marketPrice: ${price}`)
         break
       case "buy":
         if (
@@ -216,7 +250,7 @@ const ModalMarket = ({
             amount,
             period
           ).finally(() => {
-            onClose()
+            setTimeout(() => onClose(), 3000)
           })
         } else
           console.error(
@@ -226,7 +260,7 @@ const ModalMarket = ({
       case "mint":
         if (marketId && itemId && price) {
           await onMintOrder(nftType, marketId, itemId, 1).finally(() => {
-            onClose()
+            setTimeout(() => onClose(), 3000)
             router.back()
           })
         } else
@@ -335,7 +369,7 @@ const ModalMarket = ({
                     tokenId={tokenId}
                     orderId={orderId}
                     amount={amount}
-                    price={periodValue}
+                    price={price}
                     selling={
                       nftType === "game_item" || nftType === "nft_material"
                         ? undefined

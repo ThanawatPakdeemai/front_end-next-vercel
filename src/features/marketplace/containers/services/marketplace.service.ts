@@ -6,6 +6,7 @@ import {
   IMarketCreateOrderServ,
   IMarketOrderServ,
   IMarketServForm,
+  IMarketTypesServ,
   IPayBillInstallServ,
   IPayBillParams,
   IPayOrderParams,
@@ -236,6 +237,14 @@ export const claimRent = ({ _txHash }: { _txHash: string }) =>
     const data = { transaction_hash: _txHash }
     services
       .post<IClaimRentalServ>(`/rental/claim-rental`, { ...data })
+      .then((response) => resolve(response.data))
+      .catch((error) => reject(error))
+  })
+
+export const getMarketplaceAllTypes = () =>
+  new Promise<IMarketTypesServ>((resolve, reject) => {
+    services
+      .get<IMarketTypesServ>("/market-place/marketplace/marketplace-type")
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

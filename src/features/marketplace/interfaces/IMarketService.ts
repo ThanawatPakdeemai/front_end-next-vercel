@@ -7,7 +7,7 @@ import {
   IBuildData,
   ITypeBuild
 } from "@feature/building/interfaces/IBuildingService"
-import { ILandData } from "@feature/land/interfaces/ILandService"
+import { IHistory, ILandData } from "@feature/land/interfaces/ILandService"
 import {
   IMaterialInfo,
   ITypeMaterials

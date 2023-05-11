@@ -14,6 +14,7 @@ interface IMetaData {
 }
 interface IMeta {
   meta: IMetaData
+  url: string
 }
 
 class MyDocument extends Document {
@@ -72,13 +73,15 @@ class MyDocument extends Document {
 
     return {
       ...initialProps,
-      meta: _meta
+      meta: _meta,
+      url: ctx.asPath
     }
   }
 
   render() {
     const data = this.props
     const meta = (data as unknown as IMeta)?.meta
+    const url = (data as unknown as IMeta)?.url
     const { meta_title, meta_description, og_image, meta_keyword } = meta
 
     return (
@@ -105,7 +108,7 @@ class MyDocument extends Document {
           />
           <meta
             property="og:url"
-            content={CONFIGS.BASE_URL.FRONTEND}
+            content={CONFIGS.BASE_URL.FRONTEND + url}
           />
           <meta
             property="og:type"
@@ -129,11 +132,11 @@ class MyDocument extends Document {
           />
           <meta
             property="og:width"
-            content="2400"
+            content="1200"
           />
           <meta
             property="og:height"
-            content="1260"
+            content="630"
           />
 
           {/* twitter */}

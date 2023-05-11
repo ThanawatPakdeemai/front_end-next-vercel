@@ -3,7 +3,8 @@ import {
   getBuildingById,
   getMyBuilding,
   getMyForSaleBuilding,
-  getMyInstallmentBuilding
+  getMyInstallmentBuilding,
+  getMyRentOutBuilding
 } from "../services/building.services"
 
 export const useGetMyBuilding = () => {
@@ -35,6 +36,16 @@ export const useGetMyInstallmentBuilding = () => {
       cacheTime: Infinity
     })
   return { mutateGetMyInstallmentBuilding, isLoading }
+}
+
+export const useGetMyRentalBuilding = () => {
+  const { mutateAsync: mutateGetMyRentalBuilding, isLoading } = useMutation({
+    mutationKey: ["getMyRentalBuilding"],
+    mutationFn: getMyRentOutBuilding,
+    retry: false,
+    cacheTime: Infinity
+  })
+  return { mutateGetMyRentalBuilding, isLoading }
 }
 
 export const useGetBuildingById = () => {

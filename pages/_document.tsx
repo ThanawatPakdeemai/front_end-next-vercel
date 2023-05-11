@@ -132,11 +132,11 @@ class MyDocument extends Document {
           />
           <meta
             property="og:width"
-            content="2400"
+            content="1200"
           />
           <meta
             property="og:height"
-            content="1269"
+            content="630"
           />
 
           {/* twitter */}

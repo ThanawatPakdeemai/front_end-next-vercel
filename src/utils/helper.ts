@@ -18,6 +18,7 @@ import {
   TType,
   TUrlNFT
 } from "@feature/marketplace/interfaces/IMarketService"
+import dayjs from "dayjs"
 
 const names = ["wei", "kwei", "mwei", "gwei", "szabo", "finney", "ether"]
 
@@ -377,6 +378,12 @@ const Helper = {
       default:
         throw new Error(`Invalid NFT type: ${_marketType}`)
     }
+  },
+  handleDateTimeFormat(_date: Date, _type: "date" | "time"): string {
+    if (_type === "date") {
+      return dayjs(_date).format("DD MMM YYYY")
+    }
+    return dayjs(_date).format("HH:mm A")
   }
 }
 

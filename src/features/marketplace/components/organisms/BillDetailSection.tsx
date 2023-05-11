@@ -1,23 +1,20 @@
-import { IInstallData } from "@feature/marketplace/interfaces/IMarketService"
 import {
-  Box,
-  Chip,
-  Tab,
-  Table,
-  TableBody,
-  TableContainer,
-  Tabs
-} from "@mui/material"
-import dayjs from "dayjs"
-import React, { useMemo } from "react"
-import FavoriteIcon from "@mui/icons-material/Favorite"
-import TableHeader from "@feature/table/components/molecules/TableHeader"
-import { Trans } from "react-i18next"
-import { v4 as uuidv4 } from "uuid"
-import TableNodata from "@feature/transaction/components/atoms/TableNodata"
-import TableRowData from "@feature/table/components/molecules/TableRowData"
+  IInstallData,
+  IInstallPeriod
+} from "@feature/marketplace/interfaces/IMarketService"
+import { Box, Button, Chip, Tab, Tabs } from "@mui/material"
+import React, { useMemo, useState } from "react"
+import Link from "next/link"
 import { IHistory } from "@feature/land/interfaces/ILandService"
+import Helper from "@utils/helper"
+import dayjs from "dayjs"
+import BillsIcon from "@components/icons/BillsIcon"
+import CreditCardIcon from "@components/icons/CreditCardIcon"
+import BarGraph from "@components/icons/BarGraph"
+import TextTip from "@components/atoms/TextTip"
 import BillDetailsText from "../atoms/BillDetailsText"
+import BillPaymentTable from "../molecules/BillPaymentTable"
+import BillHistoryTable from "../molecules/BillHistoryTable"
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -46,45 +43,18 @@ interface IProp {
   history: IHistory[]
 }
 
-// eslint-disable-next-line no-unused-vars
 const BillDetailSection = ({ insData, history }: IProp) => {
-  const [value, setValue] = React.useState(0)
+  const [value, setValue] = useState(0)
+  const [billDueDate, setBillDueDate] = useState<IInstallPeriod>()
+  const [paid, setPaid] = useState<boolean>(true)
+
+  const { handleDateTimeFormat } = Helper
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
   }
 
-  const handleDateTime = (date: Date, type: "date" | "time") => {
-    if (type === "date") {
-      return dayjs(date).format("DD MMM YYYY")
-    }
-    return dayjs(date).format("HH:mm A")
-  }
-
-  const handlePeriodBill = (dueDate: Date, historyId: string | null) => {
-    if (historyId !== null) {
-      return {
-        label: "paid",
-        color: "#3DCD95",
-        text: "#010101 !important"
-      }
-    }
-    if (
-      historyId === null &&
-      dayjs(new Date()) > dayjs(dueDate).add(7, "days")
-    ) {
-      return {
-        label: "unpaid",
-        color: "#F42728",
-        text: "#010101 !important"
-      }
-    }
-    return {
-      label: "pending",
-      color: "#010101",
-      text: "#E1E2E2 !important"
-    }
-  }
+  const currentDate = new Date()
 
   const tabSx = {
     minHeight: "40px",
@@ -95,23 +65,25 @@ const BillDetailSection = ({ insData, history }: IProp) => {
     }
   }
 
+  useMemo(() => {
+    if (insData) {
+      const currentOrderInstallment = insData
+      const _nextBill = currentOrderInstallment.period.find(
+        (item) => item.history_id === null
+      )
+      if (_nextBill) {
+        setBillDueDate(_nextBill)
+        if (dayjs(new Date()) > dayjs(_nextBill.due_date)) {
+          setPaid(false)
+          //   setPeriod(_nextBill.round_no)
+          //   setBillId(currentOrderInstallment.installments_data[0].bill_id)
+        }
+      }
+    }
+  }, [insData])
+
   const tabClassName =
     "!min-h-10 !rounded-lg bg-neutral-800 !text-sm !capitalize text-neutral-500 !opacity-100"
-
-  const billTableHeader = useMemo(
-    () => [
-      {
-        title: <Trans i18nKey="time" />
-      },
-      {
-        title: <Trans i18nKey="price" />
-      },
-      {
-        title: <Trans i18nKey="status" />
-      }
-    ],
-    []
-  )
 
   return (
     <>
@@ -124,21 +96,21 @@ const BillDetailSection = ({ insData, history }: IProp) => {
       >
         <Tab
           label="Bill Details"
-          icon={<FavoriteIcon />}
+          icon={<BillsIcon />}
           iconPosition="start"
           className={`${tabClassName} mr-[5px]`}
           sx={tabSx}
         />
         <Tab
           label="Payment"
-          icon={<FavoriteIcon />}
+          icon={<CreditCardIcon />}
           iconPosition="start"
           className={`${tabClassName} mr-[5px]`}
           sx={tabSx}
         />
         <Tab
-          label="Bill Details"
-          icon={<FavoriteIcon />}
+          label="History"
+          icon={<BarGraph />}
           iconPosition="start"
           className={`${tabClassName}`}
           sx={tabSx}
@@ -155,15 +127,22 @@ const BillDetailSection = ({ insData, history }: IProp) => {
         >
           <BillDetailsText
             title="Date Created"
-            value={handleDateTime(insData.created_at, "date")}
-            time={handleDateTime(insData.created_at, "time")}
+            value={handleDateTimeFormat(insData.created_at, "date")}
+            time={handleDateTimeFormat(insData.created_at, "time")}
             className="border-b border-neutral-800 pb-3"
           />
           <BillDetailsText
             title="Due Date"
-            value={handleDateTime(insData.created_at, "date")}
-            time={handleDateTime(insData.created_at, "time")}
+            value={handleDateTimeFormat(
+              billDueDate ? billDueDate.due_date : currentDate,
+              "date"
+            )}
+            time={handleDateTimeFormat(
+              billDueDate ? billDueDate.due_date : currentDate,
+              "time"
+            )}
             className="border-b border-neutral-800 py-3"
+            textColor="#F42728"
           />
           <BillDetailsText
             title="Bill Id"
@@ -216,18 +195,6 @@ const BillDetailSection = ({ insData, history }: IProp) => {
             className="py-3"
             unit="Naka"
           />
-          {/* total
-        <BillDetailsText
-          title="Total Bill"
-          value={insData.totalBill}
-          unit="Naka"
-          className="border-t-2 pt-5 !text-lg font-bold"
-        />
-        <BillDetailsText
-          title="Current Bill"
-          value={handleDateTime(insData.current_time)}
-          className="pb-5 !text-lg font-bold"
-        /> */}
         </Box>
       </TabPanel>
       {/* payment */}
@@ -235,107 +202,43 @@ const BillDetailSection = ({ insData, history }: IProp) => {
         value={value}
         index={1}
       >
-        <TableContainer className="mt-5 rounded-[14px] border border-neutral-800 bg-neutral-780 px-1.5 pb-1.5">
-          <Table>
-            <TableHeader
-              thead={billTableHeader}
-              gridTemplateColumns="1fr 1fr 1fr"
-            />
-            <TableBody
-              sx={{
-                display: "block",
-                borderRadius: "9px",
-                overflow: "hidden",
-                "tr:last-of-type td": { borderBottom: 0 }
-              }}
-            >
-              {insData && insData.period.length > 0 ? (
-                insData.period.map((item) => (
-                  <TableRowData
-                    key={uuidv4()}
-                    gridTemplateColumns="1fr 1fr 1fr"
-                    child={[
-                      <div key={item._id}>
-                        <Chip
-                          label={handleDateTime(item.due_date, "date")}
-                          variant="outlined"
-                          color="primary"
-                          size="small"
-                          sx={{
-                            backgroundColor: "#010101 !important",
-                            textTransform: "uppercase"
-                          }}
-                        />
-                        <span className="ml-3 text-xs font-bold text-neutral-600">
-                          {handleDateTime(item.due_date, "time")}
-                        </span>
-                      </div>,
-                      <div key={item._id}>
-                        <span className="px-3 font-neue-machina-bold text-sm text-neutral-300">
-                          {item.price.toFixed(4)}
-                        </span>
-                      </div>,
-                      <div key={item._id}>
-                        <Chip
-                          label={
-                            handlePeriodBill(item.due_date, item.history_id)
-                              .label
-                          }
-                          variant="outlined"
-                          color="primary"
-                          size="small"
-                          sx={{
-                            backgroundColor: `${
-                              handlePeriodBill(item.due_date, item.history_id)
-                                .color
-                            } !important`,
-                            textTransform: "uppercase",
-                            color: handlePeriodBill(
-                              item.due_date,
-                              item.history_id
-                            ).text
-                          }}
-                        />
-                      </div>
-                    ]}
-                  />
-                ))
-              ) : (
-                <TableNodata />
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <BillPaymentTable insData={insData} />
       </TabPanel>
       {/* history */}
       <TabPanel
         value={value}
         index={2}
       >
-        Item Three
+        <BillHistoryTable history={history} />
       </TabPanel>
       {/* bottom detail */}
       <Box
         component="div"
-        className="mt-5 flex flex-row justify-between rounded-3xl border border-neutral-800 !bg-neutral-780 px-10 py-[30px]"
+        className="mt-5 flex !h-[54px] flex-row items-center justify-between rounded-[14px] border border-neutral-800 !bg-neutral-780 px-10"
       >
         <div className="flex items-center gap-x-[14px]">
           <span className="font-bold uppercase text-neutral-600">
-            Current Bill
+            {!paid ? "Current Bill" : "Next Bill"}
           </span>
           <Chip
-            label={`${handleDateTime(insData.current_time, "date")}`}
+            label={`${handleDateTimeFormat(
+              billDueDate ? billDueDate.due_date : currentDate,
+              "date"
+            )}`}
             variant="outlined"
             color="primary"
             size="small"
             sx={{
               backgroundColor: "#010101 !important",
               textTransform: "uppercase",
-              color: "rgb(244 39 40) !important"
+              color: !paid ? "#F42728 !important" : "#3DCD95 !important"
             }}
           />
           <span className="text-xs font-bold uppercase text-error-main">
-            {handleDateTime(insData.current_time, "time")}
+            {handleDateTimeFormat(
+              billDueDate ? billDueDate.due_date : currentDate,
+              "time"
+            )}
           </span>
         </div>
         <span className="font-bold uppercase text-error-main">
@@ -344,13 +247,67 @@ const BillDetailSection = ({ insData, history }: IProp) => {
       </Box>
       <Box
         component="div"
-        className="mt-5 flex flex-row justify-between rounded-3xl border border-neutral-800 !bg-neutral-780 px-10 py-[30px]"
+        className="mt-5 flex !h-[54px] flex-row items-center justify-between rounded-[14px] border border-neutral-800 !bg-neutral-780 px-10"
       >
         <span className="font-bold uppercase text-neutral-600">Total Bill</span>
         <span className="font-bold uppercase text-secondary-main">
           {insData.totalBill} NAKA
         </span>
       </Box>
+      <Box
+        component="div"
+        className="mt-5 flex flex-row justify-end gap-5"
+      >
+        <Link
+          href="https://t.me/NakamotoGames"
+          target="_blank"
+        >
+          <Button
+            variant="outlined"
+            color="primary"
+            sx={{
+              height: "40px",
+              fontSize: "12px"
+            }}
+          >
+            Contact Support
+          </Button>
+        </Link>
+        <Button
+          disabled={
+            dayjs().isAfter(dayjs(billDueDate?.due_date).add(7, "days")) || paid
+          }
+          variant="contained"
+          color="secondary"
+          sx={{
+            height: "40px",
+            fontSize: "12px"
+          }}
+        >
+          Pay Current Bill
+        </Button>
+      </Box>
+      {!paid &&
+      dayjs(new Date()) > dayjs(billDueDate?.due_date).add(7, "days") ? (
+        <TextTip
+          text="Land payment overdue. please contact support."
+          textColor="text-warning-dark"
+          bgColor="bg-warning-dark/20"
+          borderColor="border-warning-dark"
+          className="mt-6"
+        />
+      ) : (
+        !paid &&
+        dayjs(new Date()) < dayjs(billDueDate?.due_date).add(7, "days") && (
+          <TextTip
+            text={`Please pay the bill before ${dayjs(billDueDate?.due_date)}`}
+            textColor="text-warning-dark"
+            bgColor="bg-warning-dark/20"
+            borderColor="border-warning-dark"
+            className="mt-6"
+          />
+        )
+      )}
     </>
   )
 }

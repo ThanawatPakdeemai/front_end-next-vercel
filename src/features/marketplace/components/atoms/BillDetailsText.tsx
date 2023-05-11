@@ -1,5 +1,5 @@
 import CopyButton from "@components/atoms/CopyButton"
-import { Chip } from "@mui/material"
+import { Chip, Typography } from "@mui/material"
 import Helper from "@utils/helper"
 import React from "react"
 
@@ -11,6 +11,7 @@ interface IProps {
   copy?: boolean
   shortString?: boolean
   time?: string
+  textColor?: string
 }
 
 const BillDetailsText = ({
@@ -20,7 +21,8 @@ const BillDetailsText = ({
   unit,
   copy,
   shortString,
-  time
+  time,
+  textColor
 }: IProps) => {
   const { shortenString } = Helper
 
@@ -37,11 +39,19 @@ const BillDetailsText = ({
           size="small"
           sx={{
             backgroundColor: "#010101 !important",
-            textTransform: "uppercase"
+            textTransform: "uppercase",
+            color: textColor ? `${textColor} !important` : "#A6A9AE"
           }}
         />
         {time && (
-          <span className="ml-3 font-bold text-neutral-600">{time}</span>
+          <Typography
+            className="ml-3 !text-sm font-bold"
+            sx={{
+              color: textColor ? `${textColor} !important` : "#4E5057"
+            }}
+          >
+            {time}
+          </Typography>
         )}
         {copy && <CopyButton text={value.toString()} />}
       </div>

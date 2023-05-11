@@ -12,6 +12,7 @@ import BillsIcon from "@components/icons/BillsIcon"
 import CreditCardIcon from "@components/icons/CreditCardIcon"
 import BarGraph from "@components/icons/BarGraph"
 import TextTip from "@components/atoms/TextTip"
+import useMarketNFTInstall from "@feature/marketplace/containers/hooks/useMarketNFTInstall"
 import BillDetailsText from "../atoms/BillDetailsText"
 import BillPaymentTable from "../molecules/BillPaymentTable"
 import BillHistoryTable from "../molecules/BillHistoryTable"
@@ -47,8 +48,10 @@ const BillDetailSection = ({ insData, history }: IProp) => {
   const [value, setValue] = useState(0)
   const [billDueDate, setBillDueDate] = useState<IInstallPeriod>()
   const [paid, setPaid] = useState<boolean>(true)
+  const [period, setPeriod] = useState<number>(0)
 
   const { handleDateTimeFormat } = Helper
+  const { onPayBillNFTInstallOrder } = useMarketNFTInstall()
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
@@ -75,7 +78,7 @@ const BillDetailSection = ({ insData, history }: IProp) => {
         setBillDueDate(_nextBill)
         if (dayjs(new Date()) > dayjs(_nextBill.due_date)) {
           setPaid(false)
-          //   setPeriod(_nextBill.round_no)
+          setPeriod(_nextBill.round_no)
           //   setBillId(currentOrderInstallment.installments_data[0].bill_id)
         }
       }
@@ -283,6 +286,7 @@ const BillDetailSection = ({ insData, history }: IProp) => {
             height: "40px",
             fontSize: "12px"
           }}
+          onClick={() => onPayBillNFTInstallOrder(insData.bill_id, period, 1)}
         >
           Pay Current Bill
         </Button>

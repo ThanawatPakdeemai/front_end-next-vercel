@@ -159,7 +159,15 @@ const useMarketInfo = () => {
       setTotalCount(_res.info.totalCount)
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, getMarketOrderAsnyc, handleSearch, limit, sort])
+  }, [
+    currentPage,
+    getMarketOrderAsnyc,
+    handleSearch,
+    limit,
+    sort,
+    // searchText,
+    searchData
+  ])
 
   useEffect(() => {
     let load = false
@@ -170,7 +178,7 @@ const useMarketInfo = () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage])
+  }, [currentPage, searchData, sort, filterItem])
 
   useEffect(() => {
     let load = false

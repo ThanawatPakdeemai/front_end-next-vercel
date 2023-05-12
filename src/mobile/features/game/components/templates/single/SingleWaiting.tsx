@@ -7,7 +7,8 @@ import { useTranslation } from "react-i18next"
 
 const SingleWaiting = () => {
   const { t } = useTranslation()
-  const { gameData, playersMap, onPlayGame } = useWaitingSingle()
+  const { gameData, playersMap, onPlayGame, playersMe } = useWaitingSingle()
+
   return (
     <>
       {gameData && playersMap && (
@@ -15,14 +16,16 @@ const SingleWaiting = () => {
           <PlayerCardMobile
             players={playersMap as unknown[] as CurrentPlayer[]}
           />
-          <ButtonGame
-            textButton={t("start")}
-            url=""
-            onClick={onPlayGame}
-            textColor="text-green-lemon"
-            classCssButton="!mt-0 !bg-green-lemon h-[40px] !w-[105px]"
-            description="Everyone's here and we're ready to go. Let's start the game!"
-          />
+          {playersMe && (
+            <ButtonGame
+              textButton={t("start")}
+              url=""
+              onClick={onPlayGame}
+              textColor="text-green-lemon"
+              classCssButton="!mt-0 !bg-green-lemon h-[40px] !w-[105px]"
+              description="Everyone's here and we're ready to go. Let's start the game!"
+            />
+          )}
         </>
       )}
     </>

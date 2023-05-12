@@ -369,7 +369,8 @@ const useWaitingSingle = () => {
     loadingPlayer,
     gameUrl,
     onPlayGame,
-    playersMap
+    playersMap,
+    playersMe
   }
 }
 

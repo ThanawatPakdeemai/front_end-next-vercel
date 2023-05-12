@@ -50,7 +50,7 @@ const MarketplaceOwnerDetail = () => {
                 marketId={ownerDetail.id}
                 itemId={ownerDetail.id}
                 orderId={ownerDetail.id}
-                price={100}
+                price={ownerDetail.price}
                 amount={count || 1}
                 maxAmount={Number(ownerDetail.amount)}
                 sellingType="fullpayment"

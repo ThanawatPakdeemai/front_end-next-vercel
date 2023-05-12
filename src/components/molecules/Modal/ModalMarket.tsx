@@ -170,8 +170,8 @@ const ModalMarket = ({
   const onSubmit = handleSubmit(async () => {
     switch (action) {
       case "cancel":
-        if (orderId && sellerId && sellingType) {
-          await onCancelOrder(nftType, sellingType, orderId, sellerId)
+        if (orderId && sellerId && selling) {
+          await onCancelOrder(nftType, selling, orderId, sellerId)
             .then(() => {
               // redirect
               // check if stay on inventory not redirect
@@ -212,7 +212,7 @@ const ModalMarket = ({
             })
         } else {
           console.error(
-            `sellingType:${sellingType}, order: ${orderId}, sellerAcc: ${sellerId}`
+            `selling:${selling}, order: ${orderId}, sellerAcc: ${sellerId}`
           )
         }
         break
@@ -220,7 +220,7 @@ const ModalMarket = ({
         if (tokenId && itemId && amount && price) {
           await onCreateOrder(
             nftType,
-            sellingType,
+            selling,
             itemId,
             tokenId,
             amount,
@@ -242,7 +242,7 @@ const ModalMarket = ({
         ) {
           await onExecuteOrder(
             nftType,
-            sellingType,
+            selling,
             marketId,
             itemId,
             sellerId,
@@ -373,7 +373,7 @@ const ModalMarket = ({
                     selling={
                       nftType === "game_item" || nftType === "nft_material"
                         ? undefined
-                        : sellingType
+                        : selling
                     }
                     period={
                       nftType === "game_item" || nftType === "nft_material"

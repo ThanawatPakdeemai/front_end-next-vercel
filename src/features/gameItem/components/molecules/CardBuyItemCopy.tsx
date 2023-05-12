@@ -18,7 +18,7 @@ import { useToast } from "@feature/toast/containers"
 import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
-import useGlobal from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
 import ButtonGame from "@feature/game/components/molecules/ButtonGame"
 import GameItemSingleCardCopy from "@components/atoms/GameItemSingleCardCopy"
@@ -223,13 +223,13 @@ export default function CardBuyItemCopy({
       {hydrated && (
         <>
           <div className="mt-2 flex w-full flex-[1_1_340px]">
-            <div className="flex flex-col items-center">
+            <div className={`flex flex-col items-center ${isMobile && "w-60"}`}>
               {gameItemList && (
                 <>
                   <DropdownListItem
                     isCheck
                     list={gameItemList?.sort((a, b) => a.price - b.price)}
-                    className="mr-auto w-auto"
+                    className={`mr-auto w-auto ${isMobile && "gap-0.5"}`}
                     onChangeSelect={onChangeSelectItem}
                   />
                 </>
@@ -254,7 +254,7 @@ export default function CardBuyItemCopy({
                     itemId={gameObject?.item?.[0]?._id}
                   />
                 )}
-                <div>
+                <div className="ml-8">
                   <div className="mb-2 flex w-[7.5rem] items-center justify-between rounded-xl  bg-[#E1E2E2] p-2 text-center text-[#111111]">
                     <p>{qtyItemSelected ?? 0}</p>
                     {gameObject && (

@@ -31,7 +31,7 @@ export const getMarketOrder = ({
       active: _active
     }
     services
-      .post<IMarketOrderServ>(`/market-place/${_urlNFT}/order-all`, {
+      .post<IMarketOrderServ>(`/market-place-new/${_urlNFT}/order-all`, {
         ...data
       })
       .then((response) => resolve(response.data))
@@ -47,7 +47,7 @@ export const getMarketOrderById = async ({
 }) =>
   new Promise<IMarketOrderServ>((resolve, reject) => {
     services
-      .get<IMarketOrderServ>(`/market-place/${_urlNFT}/order-detail/${_id}`)
+      .get<IMarketOrderServ>(`/market-place-new/${_urlNFT}/order-detail/${_id}`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })
@@ -77,9 +77,12 @@ export const createMarketOrder = ({
       period_amount: _periodAmount
     }
     services
-      .post<IMarketCreateOrderServ>(`/market-place/${_urlNFT}/create-order`, {
-        ...data
-      })
+      .post<IMarketCreateOrderServ>(
+        `/market-place-new/${_urlNFT}/create-order`,
+        {
+          ...data
+        }
+      )
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })
@@ -105,7 +108,9 @@ export const payInstallment = ({
       installment_data: _installment_data
     }
     services
-      .put<IPutOrderServ>(`/market-place/${_urlNFT}/installment`, { ...data })
+      .put<IPutOrderServ>(`/market-place-new/${_urlNFT}/installment`, {
+        ...data
+      })
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })
@@ -131,7 +136,7 @@ export const payRental = ({
       rental_data: _rental_data
     }
     services
-      .put<IPutOrderServ>(`/market-place/${_urlNFT}/rental`, { ...data })
+      .put<IPutOrderServ>(`/market-place-new/${_urlNFT}/rental`, { ...data })
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })
@@ -156,7 +161,7 @@ export const mintNFT = ({
     }
 
     services
-      .put<IPutOrderServ>(`/market-place/${_urlNFT}/mint`, { ...data })
+      .put<IPutOrderServ>(`/market-place-new/${_urlNFT}/mint`, { ...data })
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })
@@ -186,7 +191,9 @@ export const purchaseOrderFullpayment = ({
       smc_amount: _smcAmount
     }
     services
-      .put<IPutOrderServ>(`/market-place/${_urlNFT}/fullpayment`, { ...data })
+      .put<IPutOrderServ>(`/market-place-new/${_urlNFT}/fullpayment`, {
+        ...data
+      })
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })
@@ -202,7 +209,9 @@ export const cancelMarketOrder = ({
       transaction_hash: _txHash
     }
     services
-      .put<IPutOrderServ>(`/market-place/${_urlNFT}/cancel-order`, { ...data })
+      .put<IPutOrderServ>(`/market-place-new/${_urlNFT}/cancel-order`, {
+        ...data
+      })
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })
@@ -244,7 +253,7 @@ export const claimRent = ({ _txHash }: { _txHash: string }) =>
 export const getMarketplaceAllTypes = () =>
   new Promise<IMarketTypesServ>((resolve, reject) => {
     services
-      .get<IMarketTypesServ>("/market-place/marketplace/marketplace-type")
+      .get<IMarketTypesServ>("/market-place-new/marketplace/marketplace-type")
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

@@ -70,8 +70,8 @@ const ModalMarket = ({
   name,
   img,
   vdo,
-  priceValue = 0,
-  periodValue = 0,
+  priceValue = 1,
+  periodValue = 1,
   amount = 1,
   maxPeriod = 1,
   // maxAmount = 0,
@@ -224,7 +224,8 @@ const ModalMarket = ({
             itemId,
             tokenId,
             amount,
-            price
+            price,
+            period
           ).finally(() => {
             setTimeout(() => onClose(), 3000)
           })

@@ -1,4 +1,5 @@
 import ButtonMarket from "@components/atoms/button/ButtonMarket"
+import ButtonRentOut from "@components/atoms/button/ButtonRentOut"
 import CardDetailSkeleton from "@feature/marketplace/components/molecules/CardDetailSkeleton"
 import BillDetailSection from "@feature/marketplace/components/organisms/BillDetailSection"
 import CardContentDetails from "@feature/marketplace/components/organisms/CardContentDetails"
@@ -58,6 +59,22 @@ const MarketplaceOwnerDetail = () => {
                 name={ownerDetail.name}
               />
             )}
+            {marketType !== "nft_land" && marketType === "nft_building" ? (
+              <ButtonRentOut
+                nftType={marketType as TNFTType}
+                name={ownerDetail.name}
+                img={ownerDetail.image as string}
+                tokenId={ownerDetail.tokenId}
+                marketId={ownerDetail.id}
+                itemId={ownerDetail.id}
+                orderId={ownerDetail.id}
+                price={ownerDetail.price}
+                amount={count || 1}
+                maxAmount={Number(ownerDetail.amount)}
+                sellingType="rental"
+                plot={ownerDetail.pos}
+              />
+            ) : null}
           </RightDetailsMarketplace>
         </div>
       </div>

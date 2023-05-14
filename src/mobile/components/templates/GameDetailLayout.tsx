@@ -7,16 +7,16 @@ import SearchIcon from "@components/icons/SearchIcon"
 import ButtonGame from "@feature/game/components/molecules/ButtonGame"
 import { useRouter } from "next/router"
 import ShareToEarn from "@components/atoms/ShareToEarn"
-import HowToPlayMobile from "@components/atoms/HowToPlayMobile"
-import StatisticGameDetailCopy from "@components/molecules/statistic/StatisticGameDetailCopy"
-import CardBuyItemCopy from "@feature/gameItem/components/molecules/CardBuyItemCopy"
+import CardBuyItemMobile from "@mobile/components/atoms/CardBuyItemMobile"
 import StatEstimatedProfit from "@components/molecules/statistic/StatEstimatedProfit"
 import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import useTopPlayerByGameId from "@feature/ranking/containers/hook/useTopPlayerByGameId"
 import VerticalThumbSmallCardSlide from "@feature/slider/components/organisms/VerticalThumbSmallCardSlide"
-import HeaderForWardBackWardMobile from "@mobile/atoms/HeaderForWardBackWardMobile"
+import HeaderForWardBackWardMobile from "@mobile/components/atoms/HeaderForWardBackWardMobile"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
+import MoreDetailGameMobile from "@mobile/components/atoms/MoreDetailGameMobile"
+import StatisticGameDetail from "@components/molecules/statistic/StatisticGameDetail"
 
 interface IProps {
   data: IGame
@@ -94,8 +94,12 @@ const GameDetailLayout = ({ data, gameId, gameType }: IProps) => {
             component="div"
             className="absolute right-5 flex items-center"
           >
-            <HowToPlayMobile />
-            <ShareToEarn id="test-mock-id-string" />
+            <ShareToEarn id={gameId} />
+            <MoreDetailGameMobile
+              gameDetails={data.NFT_info.meta_data.description}
+              howto={data.howto}
+              item={data.item}
+            />
           </Box>
         </Box>
         <hr className="mx-0 my-5 text-neutral-800" />
@@ -116,10 +120,10 @@ const GameDetailLayout = ({ data, gameId, gameType }: IProps) => {
           className="flex"
         >
           <Box component="div">
-            <StatisticGameDetailCopy />
+            <StatisticGameDetail />
           </Box>
           <Box component="div">
-            <CardBuyItemCopy
+            <CardBuyItemMobile
               buttonStyle="green"
               gameObject={data as IGame}
             />

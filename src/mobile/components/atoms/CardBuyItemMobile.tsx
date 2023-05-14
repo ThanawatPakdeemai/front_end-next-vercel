@@ -1,9 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useMemo, useCallback } from "react"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import LogoutIcon from "@mui/icons-material/Logout"
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
-import { Box } from "@mui/material"
 import useProfileStore from "@stores/profileStore/index"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
@@ -19,18 +16,15 @@ import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
-import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
-import ButtonGame from "@feature/game/components/molecules/ButtonGame"
-import GameItemSingleCardCopy from "@components/atoms/GameItemSingleCardCopy"
+import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
 
 interface ICardBuyItemProp {
   gameObject: IGame
   buttonStyle?: "green" | "purple"
   hideButtonPlay?: boolean
 }
-// FIXME Boy: เดี๋ยวกลับมาทำ ขอเอาขึ้นก่อน
 
-export default function CardBuyItemCopy({
+export default function CardBuyItemMobile({
   gameObject,
   buttonStyle = "purple",
   hideButtonPlay = false
@@ -172,52 +166,6 @@ export default function CardBuyItemCopy({
     }
   }, [gameObject, itemSelect, onSetGameItemSelectd])
 
-  // FIXME Boy: เดี๋ยวกลับมาทำ ขอเอาขึ้นก่อน
-
-  const buttonInToGame = useMemo(() => {
-    if (router.pathname === "/[typeGame]/[GameHome]/roomlist") return
-    if (router.pathname === "/[typeGame]/[GameHome]/roomlist/[id]") return
-    if (qtyItemSelected) {
-      if (qtyItemSelected > 0) {
-        return buttonStyle === "green" ? (
-          <Box
-            component="div"
-            sx={StartButtonCustomStyle}
-            className="flex w-full justify-center uppercase"
-          >
-            <ButtonGame
-              textButton={t("join-game")}
-              url={`${router.asPath}/roomlist`}
-            />
-          </Box>
-        ) : (
-          <ButtonLink
-            text={t("join-game")}
-            href={`${router.asPath}/roomlist`}
-            icon={<LogoutIcon />}
-            size="medium"
-            color="secondary"
-            variant="contained"
-            className="w-full"
-          />
-        )
-      }
-    }
-    return (
-      <ButtonLink
-        text={t(MESSAGES["please_item"])}
-        icon={<LogoutIcon />}
-        href={`${router.asPath}`}
-        size="medium"
-        color="secondary"
-        variant="contained"
-        className="w-full"
-        disabled
-      />
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [qtyItemSelected, router.asPath, buttonStyle, router.pathname])
-
   return (
     <>
       {hydrated && (
@@ -248,10 +196,12 @@ export default function CardBuyItemCopy({
 
               <div className="mr-auto flex">
                 {gameObject && (
-                  <GameItemSingleCardCopy
+                  <GameItemSingleCard
                     image={gameObject?.item?.[0].image}
                     name={gameObject?.item?.[0]?.name}
                     itemId={gameObject?.item?.[0]?._id}
+                    width={75}
+                    height={75}
                   />
                 )}
                 <div className="ml-8">

@@ -1,11 +1,11 @@
 import {
   IInstallData,
-  IInstallPeriod
+  IInstallPeriod,
+  IMarketHistory
 } from "@feature/marketplace/interfaces/IMarketService"
 import { Box, Button, Chip, Tab, Tabs } from "@mui/material"
 import React, { useMemo, useState } from "react"
 import Link from "next/link"
-import { IHistory } from "@feature/land/interfaces/ILandService"
 import Helper from "@utils/helper"
 import dayjs from "dayjs"
 import BillsIcon from "@components/icons/BillsIcon"
@@ -41,7 +41,7 @@ function TabPanel(props: TabPanelProps) {
 
 interface IProp {
   insData: IInstallData
-  history: IHistory[]
+  history: IMarketHistory[]
 }
 
 const BillDetailSection = ({ insData, history }: IProp) => {

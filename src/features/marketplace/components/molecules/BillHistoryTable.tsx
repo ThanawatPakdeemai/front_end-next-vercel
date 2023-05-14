@@ -6,11 +6,11 @@ import { v4 as uuidv4 } from "uuid"
 import TableNodata from "@feature/transaction/components/atoms/TableNodata"
 import TableRowData from "@feature/table/components/molecules/TableRowData"
 import Helper from "@utils/helper"
-import { IHistory } from "@feature/land/interfaces/ILandService"
 import CopyButton from "@components/atoms/CopyButton"
+import { IMarketHistory } from "@feature/marketplace/interfaces/IMarketService"
 
 interface IProp {
-  history: IHistory[]
+  history: IMarketHistory[]
 }
 
 const BillHistoryTable = ({ history }: IProp) => {

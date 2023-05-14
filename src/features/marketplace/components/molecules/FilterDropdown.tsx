@@ -5,7 +5,8 @@ import React, { useEffect, useState } from "react"
 import {
   INVENTORY_DROPDOWN,
   INVENTORY_DROPDOWN_FORSALE,
-  INVENTORY_DROPDOWN_PROCESS
+  INVENTORY_DROPDOWN_PROCESS,
+  INVENTORY_DROPDOWN_RENTAL
 } from "@configs/menu"
 
 const FilterDropdown = () => {
@@ -18,6 +19,9 @@ const FilterDropdown = () => {
     }
     if (router.pathname.includes("process")) {
       return INVENTORY_DROPDOWN_PROCESS
+    }
+    if (router.pathname.includes("rental")) {
+      return INVENTORY_DROPDOWN_RENTAL
     }
     return INVENTORY_DROPDOWN
   }

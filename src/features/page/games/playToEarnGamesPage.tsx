@@ -36,7 +36,7 @@ const PlayToEarnGamesPage = () => {
           </div>
         )}
       </MobileView>
-      <div className="mx-2 mb-6 grid grid-cols-2 gap-x-2 gap-y-4 md:mx-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="mx-2 mb-6 grid grid-cols-2 gap-x-4 gap-y-4 md:mx-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {loadingFilterGame
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
           : gameFilter &&
@@ -56,7 +56,7 @@ const PlayToEarnGamesPage = () => {
       </div>
 
       {totalCount === 0 && (
-        <div className="d-flex  justify-center text-center">
+        <div className="d-flex justify-center text-center">
           <NoData />
         </div>
       )}

@@ -1,5 +1,6 @@
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
+import { MarketplaceProvider } from "@providers/MarketplaceProvider"
 import { useRouter } from "next/router"
 import React from "react"
 
@@ -10,7 +11,7 @@ const MarketplaceLayoutWithoutFilter = ({
   const isMapPage = asPath.includes("map")
 
   return (
-    <>
+    <MarketplaceProvider>
       <Header />
       <div
         className={
@@ -28,7 +29,7 @@ const MarketplaceLayoutWithoutFilter = ({
         )}
       </div>
       {!isMapPage && <Footer />}
-    </>
+    </MarketplaceProvider>
   )
 }
 

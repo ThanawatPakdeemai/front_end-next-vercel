@@ -811,3 +811,15 @@ body {
   border-radius: 8px;
   @apply flex items-center justify-center;
 }
+
+.game-card__image {
+  position: relative;
+  width: 100%;
+  padding-top: 90%;
+}
+.game-card__image picture {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  display: block;
+}

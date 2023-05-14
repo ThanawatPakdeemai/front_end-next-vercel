@@ -143,7 +143,7 @@ export const updateLandBanner = ({
 export const getAllLand = () =>
   new Promise<IAllLand>((resolve, reject) => {
     services
-      .get<IAllLand>(`/market-place/NFT-Land/land-all`)
+      .get<IAllLand>(`/market-place-new/NFT-Land/land-all`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

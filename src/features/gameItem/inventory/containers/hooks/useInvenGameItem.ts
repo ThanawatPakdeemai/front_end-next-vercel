@@ -2,16 +2,17 @@ import CONFIGS from "@configs/index"
 import { MESSAGES } from "@constants/messages"
 import { useGetAllGameItemofAddrs } from "@feature/contract/containers/hooks/useContract"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
-import useGetGameItems from "@feature/gameItem/marketplace/containers/hooks/useGetGameItem"
+
 import { TInvenVaultAction } from "@feature/inventory/interfaces/IInventoryItem"
 import useLoadingStore from "@stores/loading"
+import useMarketCategTypes from "@stores/marketCategTypes"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
 const useInvenGameItem = () => {
   const { profile } = useProfileStore()
-  const { gameItemTypes } = useGetGameItems()
+  const { gameItemTypes } = useMarketCategTypes()
   const { setOpen, setClose } = useLoadingStore()
   const allGameItemContract = useGetAllGameItemofAddrs(
     CONFIGS.CONTRACT_ADDRESS.GET_GAMEITEMOFADDRESS

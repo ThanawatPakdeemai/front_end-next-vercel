@@ -677,6 +677,13 @@ export const MENU_MARKETPLACE_INVENTORY: IMenu[] = [
     external: false
   },
   {
+    id: "rental",
+    label: "Rental",
+    icon: <DollarIcon />,
+    href: "/marketplace/inventory/rental",
+    external: false
+  },
+  {
     id: "process-payment",
     label: "Process Payment",
     icon: <ProcessPaymentIcon />,
@@ -707,6 +714,8 @@ export const MENU_ROUTER_MARKETPLACE_TYPE: TType[] = [
   "game-item",
   "arcade-game"
 ]
+
+export const MENU_ROUTER_INVENTORY_RENTAL: TType[] = ["land", "building"]
 
 export const INVENTORY_DROPDOWN = [
   {
@@ -763,6 +772,17 @@ export const INVENTORY_DROPDOWN_FORSALE = [
   {
     label: "Arcade Game",
     href: "/marketplace/inventory/forsale/arcade-game"
+  }
+]
+
+export const INVENTORY_DROPDOWN_RENTAL = [
+  {
+    label: "Land",
+    href: "/marketplace/inventory/rental/land"
+  },
+  {
+    label: "Buildings",
+    href: "/marketplace/inventory/rental/building"
   }
 ]
 

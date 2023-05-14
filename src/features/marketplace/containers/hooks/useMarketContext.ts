@@ -1,26 +1,29 @@
-import useGetMarketOrderById from "@feature/marketplace/hooks/getMarketOrderById"
+import { NextRouter, useRouter } from "next/router"
+import { useEffect, useState } from "react"
+import Helper from "@utils/helper"
 import {
   IMarketDetail,
   TNFTType
 } from "@feature/marketplace/interfaces/IMarketService"
 import useGlobal from "@hooks/useGlobal"
-import Helper from "@utils/helper"
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import useMutateMarketplace from "./useMutateMarketplace"
 
-const useMarketDetail = () => {
+const useMarketContext = () => {
+  const router: NextRouter = useRouter()
+  const id = router.query.id as string
+
+  const { mutateMarketOrderById } = useMutateMarketplace()
+  const { convertNFTTypeToUrl } = Helper
+  const { marketType } = useGlobal()
+  const [marketOrder, setMarketOrder] = useState<IMarketDetail | undefined>(
+    undefined
+  )
   const [nameNFT, setNameNFT] = useState<string | undefined>(undefined)
   const [tokenNFT, setTokenNFT] = useState<string | undefined>(undefined)
-  const [imageNFT, setImageNFT] = useState<string>("")
+  const [imageNFT, setImageNFT] = useState<string>(
+    "/images/gameDetails/nakamoto-wars.webp"
+  )
   const [vdoNFT, setVDONFT] = useState<string | undefined>(undefined)
-  const [detailData, setDetailData] = useState<IMarketDetail>()
-
-  const router = useRouter()
-  const { marketType } = useGlobal()
-  const { convertNFTTypeToUrl } = Helper
-
-  const id = router.query.id as string
-  const limit = 15
 
   const handleSelectToken = (
     _type: TNFTType | undefined,
@@ -35,7 +38,7 @@ const useMarketDetail = () => {
       case "game_item":
         if (_data.item_data) {
           _tokenId = _data.item_data.item_id_smartcontract.toString()
-          _nameNFT = _data.item_data.name
+          _nameNFT = `${_data.item_data.name} ${_data.item_data.item_size}`
           _imageNFT = _data.item_data.image
         }
         break
@@ -86,39 +89,28 @@ const useMarketDetail = () => {
     setVDONFT(_vdoNFT)
   }
 
-  const { orderData: detailOrder } = useGetMarketOrderById({
-    _id: id,
-    _urlNFT: convertNFTTypeToUrl(marketType || "nft_land")
-  })
+  const fetchOrderById = async () => {
+    if (id && marketType) {
+      await mutateMarketOrderById({
+        _id: id,
+        _urlNFT: convertNFTTypeToUrl(marketType)
+      }).then((response) => {
+        handleSelectToken(marketType, response.data[0])
+        setMarketOrder(response.data[0])
+      })
+    }
+  }
 
   useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (detailOrder) {
-        const result = detailOrder.data[0]
-        setDetailData(result)
-        handleSelectToken(marketType, result)
-      }
-    }
-
+    let cleanup = false
+    if (!cleanup) fetchOrderById()
     return () => {
-      load = true
+      cleanup = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [detailOrder])
-  // end fetch detail
+  }, [id, marketType])
 
-  return {
-    nameNFT,
-    tokenNFT,
-    imageNFT,
-    vdoNFT,
-    limit,
-    marketType,
-    detailData,
-    id
-  }
+  return { marketOrder, nameNFT, tokenNFT, imageNFT, vdoNFT, fetchOrderById }
 }
 
-export default useMarketDetail
+export default useMarketContext

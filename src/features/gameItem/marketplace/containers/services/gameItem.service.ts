@@ -4,7 +4,7 @@ import { ITypesGameItemServ } from "@feature/gameItem/marketplace/interfaces/IGa
 export const getTypesGameItem = () =>
   new Promise<ITypesGameItemServ>((resolve, reject) => {
     services
-      .get<ITypesGameItemServ>(`/market-place/NFT-Game-Item/game-item`)
+      .get<ITypesGameItemServ>(`/market-place-new/NFT-Game-Item/game-item`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

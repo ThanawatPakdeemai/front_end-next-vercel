@@ -24,6 +24,8 @@ const useMarketContext = () => {
     "/images/gameDetails/nakamoto-wars.webp"
   )
   const [vdoNFT, setVDONFT] = useState<string | undefined>(undefined)
+  const [marketPeriod, setMarketPeriod] = useState<number>(1)
+  const [marketAmount, setMarketAmount] = useState<number>(1)
 
   const handleSelectToken = (
     _type: TNFTType | undefined,
@@ -110,7 +112,18 @@ const useMarketContext = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, marketType])
 
-  return { marketOrder, nameNFT, tokenNFT, imageNFT, vdoNFT, fetchOrderById }
+  return {
+    marketOrder,
+    nameNFT,
+    tokenNFT,
+    imageNFT,
+    vdoNFT,
+    fetchOrderById,
+    marketPeriod,
+    marketAmount,
+    setMarketPeriod,
+    setMarketAmount
+  }
 }
 
 export default useMarketContext

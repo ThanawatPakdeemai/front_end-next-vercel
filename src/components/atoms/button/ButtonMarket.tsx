@@ -170,7 +170,7 @@ const ButtonMarket = ({
         name={name}
         img={img}
         vdo={vdo}
-        priceValue={price}
+        priceValue={marketplaces_data ? marketplaces_data[0].price : price}
         periodValue={period}
         amount={amount}
         maxPeriod={maxPeriod}
@@ -178,10 +178,12 @@ const ButtonMarket = ({
         tokenId={tokenId}
         marketId={marketId}
         itemId={itemId}
-        orderId={orderId}
-        sellerId={sellerId}
+        orderId={marketplaces_data ? marketplaces_data[0].order_id : orderId}
+        sellerId={marketplaces_data ? marketplaces_data[0].seller_id : sellerId}
         sellerType={sellerType}
-        sellingType={sellingType}
+        sellingType={
+          marketplaces_data ? marketplaces_data[0].selling_type : sellingType
+        }
         plot={plot}
       />
     </div>

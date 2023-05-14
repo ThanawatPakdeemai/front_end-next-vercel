@@ -15,6 +15,7 @@ import { IPosition } from "@feature/land/interfaces/ILandService"
 import Video from "@components/atoms/Video"
 import { NextRouter, useRouter } from "next/router"
 import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
+import { useInventoryProvider } from "@providers/InventoryProvider"
 import { ModalCustom } from "./ModalCustom"
 
 const SellActionComp = dynamic(
@@ -71,10 +72,10 @@ const ModalMarket = ({
   img,
   vdo,
   priceValue = 1,
-  periodValue = 1,
-  amount = 1,
+  // periodValue = 1,
+  // amount = 1,
   maxPeriod = 1,
-  // maxAmount = 0,
+  maxAmount = 0,
   tokenId,
   marketId,
   itemId,
@@ -86,19 +87,38 @@ const ModalMarket = ({
 }: IProps) => {
   const currencyRef = useRef<boolean>(false)
   const { getPriceNakaCurrent, convertNFTTypeToTType } = Helper
-  const [price, setPrice] = useState<number>(priceValue)
-  const [period, setPeriod] = useState<number>(periodValue)
+  // const [price, setPrice] = useState<number>(priceValue)
+  // const [period, setPeriod] = useState<number>(periodValue)
   const [selling, setSelling] = useState<TSellingType>(sellingType)
   const [currency, setCurrency] = useState<number>(0)
   const router: NextRouter = useRouter()
+
   const { fetchOrderById } = useMarketplaceProvider()
   const { handleSubmit } = useForm()
   const { onCreateOrder, onCancelOrder, onMintOrder, onExecuteOrder } =
     useMarket()
 
+  const {
+    invPrice,
+    invPeriod,
+    invAmount,
+    setInvPrice,
+    setInvPeriod,
+    // setInvAmount,
+    fetchInvenItemDataById
+  } = useInventoryProvider()
+
+  const { marketPeriod, marketAmount, setMarketPeriod } =
+    useMarketplaceProvider()
+
   const onPriceChange = (value: string) => {
     const _value = Number(value)
-    setPrice(_value)
+    if (setInvPrice) setInvPrice(_value)
+  }
+
+  const onPeriodChange = (value: number) => {
+    if (setInvPeriod) setInvPeriod(value)
+    if (setMarketPeriod) setMarketPeriod(value)
   }
 
   useEffect(() => {
@@ -177,6 +197,12 @@ const ModalMarket = ({
               // check if stay on inventory not redirect
               if (router.asPath.includes("/inventory")) {
                 // refetch data from owner detail
+                if (fetchInvenItemDataById)
+                  fetchInvenItemDataById().catch(() =>
+                    router.replace(
+                      `/marketplace/inventory/${convertNFTTypeToTType(nftType)}`
+                    )
+                  )
               } else {
                 setTimeout(
                   () =>
@@ -194,17 +220,17 @@ const ModalMarket = ({
               if (router.asPath.includes("/inventory")) {
                 //
               } else if (fetchOrderById) {
-                await fetchOrderById().catch(() => {
-                  setTimeout(
-                    () =>
-                      router.replace({
-                        pathname: `/marketplace/${
-                          sellerType === "system" ? "" : "/p2p"
-                        }/${convertNFTTypeToTType(nftType, sellerType) || ""}`
-                      }),
-                    1000
-                  )
-                })
+                // await fetchOrderById().catch(() => {
+                //   setTimeout(
+                //     () =>
+                //       router.replace({
+                //         pathname: `/marketplace/${
+                //           sellerType === "system" ? "" : "/p2p"
+                //         }/${convertNFTTypeToTType(nftType, sellerType) || ""}`
+                //       }),
+                //     1000
+                //   )
+                // })
               }
             })
             .finally(() => {
@@ -217,19 +243,29 @@ const ModalMarket = ({
         }
         break
       case "sell":
-        if (tokenId && itemId && amount && price) {
+        if (tokenId && itemId && invAmount && invPrice) {
           await onCreateOrder(
             nftType,
             selling,
             itemId,
             tokenId,
-            amount,
-            price,
-            period
-          ).finally(() => {
-            setTimeout(() => onClose(), 3000)
-          })
-        } else console.error(`marketAmount: ${amount}, marketPrice: ${price}`)
+            invAmount,
+            invPrice,
+            invPeriod
+          )
+            .then(async () => {
+              if (
+                router.asPath.includes("/inventory") &&
+                fetchInvenItemDataById
+              ) {
+                await fetchInvenItemDataById()
+              }
+            })
+            .finally(() => {
+              setTimeout(() => onClose(), 3000)
+            })
+        } else
+          console.error(`marketAmount: ${invAmount}, marketPrice: ${invPrice}`)
         break
       case "buy":
         if (
@@ -238,8 +274,8 @@ const ModalMarket = ({
           sellerId &&
           sellerType &&
           orderId &&
-          amount &&
-          period
+          marketAmount &&
+          marketPeriod
         ) {
           await onExecuteOrder(
             nftType,
@@ -248,25 +284,25 @@ const ModalMarket = ({
             itemId,
             sellerId,
             orderId,
-            amount,
-            period
+            marketAmount,
+            marketPeriod
           ).finally(() => {
             setTimeout(() => onClose(), 3000)
           })
         } else
           console.error(
-            `id: ${marketId}, idItem: ${itemId}, selllerAcc: ${sellerId}, order: ${orderId}, orderPeriod: ${period}`
+            `id: ${marketId}, idItem: ${itemId}, selllerAcc: ${sellerId}, order: ${orderId}, orderPeriod: ${marketPeriod}`
           )
         break
       case "mint":
-        if (marketId && itemId && price) {
+        if (marketId && itemId && priceValue) {
           await onMintOrder(nftType, marketId, itemId, 1).finally(() => {
             setTimeout(() => onClose(), 3000)
             router.back()
           })
         } else
           console.error(
-            `id: ${marketId}, idItem: ${itemId}, marketAmount: ${price}`
+            `id: ${marketId}, idItem: ${itemId}, marketAmount: ${priceValue}`
           )
         break
       default:
@@ -339,10 +375,10 @@ const ModalMarket = ({
                     selling={selling}
                     setSelling={setSelling}
                     currency={currency}
-                    price={price}
+                    price={invPrice || 1}
                     onPriceChange={onPriceChange}
-                    period={period}
-                    setPeriod={setPeriod}
+                    period={invPeriod || 1}
+                    setPeriod={onPeriodChange}
                     maxPeriod={365}
                   />
                 ) : null}
@@ -354,9 +390,9 @@ const ModalMarket = ({
                     seller={sellerType}
                     selling={selling}
                     currency={currency}
-                    price={price}
-                    period={period}
-                    setPeriod={setPeriod}
+                    price={priceValue}
+                    period={marketPeriod || 0}
+                    setPeriod={onPeriodChange}
                     maxPeriod={maxPeriod}
                   />
                 ) : null}
@@ -369,8 +405,14 @@ const ModalMarket = ({
                     name={name}
                     tokenId={tokenId}
                     orderId={orderId}
-                    amount={amount}
-                    price={price}
+                    amount={
+                      action === "cancel" && maxAmount
+                        ? maxAmount
+                        : invAmount || marketAmount || 0
+                    }
+                    price={
+                      action === "sell" && invPrice ? invPrice : priceValue
+                    }
                     selling={
                       nftType === "game_item" || nftType === "nft_material"
                         ? undefined
@@ -379,7 +421,7 @@ const ModalMarket = ({
                     period={
                       nftType === "game_item" || nftType === "nft_material"
                         ? undefined
-                        : maxPeriod
+                        : invPeriod || marketPeriod
                     }
                   />
                 ) : null}

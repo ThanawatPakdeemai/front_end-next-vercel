@@ -1,5 +1,4 @@
 import {
-  IInstallData,
   IMarketForm,
   INFTInitial,
   TNFTType
@@ -24,28 +23,17 @@ export interface IPosition {
   y: string
 }
 
-export interface IHistory {
-  _id: string
-  event: string
-  seller: string
-  buyer: string
-  price: number
-  timestamp: Date
-}
-
 interface ILand extends Omit<INFTInitial, "detail"> {
   details: string
   qrcode_image: string
   land_id: string
   position: IPosition
-  logo_approved: boolean
+  logo_approved?: boolean
   logo_in_map: null | string
 }
 
 export interface ILandData extends ILand {
-  history?: IHistory[]
   type: TNFTType
-  installments_data?: IInstallData[]
 }
 
 export interface IMarketLandData extends ILand, IMarketForm {

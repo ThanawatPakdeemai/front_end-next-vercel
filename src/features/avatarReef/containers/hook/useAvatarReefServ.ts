@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 import {
+  getAvatarReefById,
   getListAvatarReef,
   getPriceAvatarReef,
   purchaseAvatarReef,
@@ -44,6 +45,12 @@ const useAvatarReefServ = () => {
     retry: false
   })
 
+  const { mutateAsync: mutateGetNFTAvatarById } = useMutation({
+    mutationKey: ["getNFTAvatarById"],
+    mutationFn: getAvatarReefById,
+    retry: false
+  })
+
   return {
     mutateGetMyAvatarReef,
     isGetMyAvatarReefLoading,
@@ -53,7 +60,8 @@ const useAvatarReefServ = () => {
     mutatePurchaseAvatarReef,
     redeemAvatarReefData,
     isRedeemAvatarReefLoading,
-    mutateRedeemAvatarReef
+    mutateRedeemAvatarReef,
+    mutateGetNFTAvatarById
   }
 }
 

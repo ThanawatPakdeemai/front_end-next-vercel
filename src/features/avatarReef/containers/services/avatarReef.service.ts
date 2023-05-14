@@ -1,5 +1,6 @@
 import services from "@configs/axiosGlobalConfig"
 import {
+  IAvatarData,
   IMyAvatarReefServ,
   IRedeemAvatarReefServ
 } from "@feature/avatarReef/interfaces/IAvatarReefService"
@@ -35,9 +36,9 @@ export const purchaseAvatarReef = ({
   })
 
 export const getAvatarReefById = ({ _id }: { _id: string }) =>
-  new Promise((resolve, reject) => {
+  new Promise<IAvatarData>((resolve, reject) => {
     services
-      .get(`/avatar/avatar-datas/${_id}`)
+      .get<IAvatarData>(`/avatar/avatar-datas/${_id}`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

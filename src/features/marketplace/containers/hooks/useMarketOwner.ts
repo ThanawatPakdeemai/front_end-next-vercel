@@ -155,7 +155,7 @@ const useMartketOwner = () => {
             .then((_res) => {
               const dumpData: IOwnerData[] = _res.data.map((_data) => ({
                 type: "avatar-reef",
-                id: _data._id,
+                id: _data.id,
                 tokenId: _data.NFT_token,
                 image: _data.image,
                 name: _data.name

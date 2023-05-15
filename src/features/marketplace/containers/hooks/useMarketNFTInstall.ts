@@ -116,7 +116,7 @@ const useMarketNFTInstall = () => {
               _orderId: _resultEvent[0],
               _itemId: _id,
               _itemAmount: _amount,
-              _price: WeiToNumber(_resultEvent[2]),
+              _price: WeiToNumber(_resultEvent[3]),
               _type: _NFTtype,
               _txHash: _res.transactionHash,
               _sellerType: "user",

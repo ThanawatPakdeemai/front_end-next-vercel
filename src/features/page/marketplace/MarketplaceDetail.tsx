@@ -84,7 +84,7 @@ const MarketplaceDetail = () => {
           title={nameNFT}
           method={marketOrder.seller_id ? "buy" : "mint"}
           position={marketOrder.land_data?.position}
-          price={marketOrder?.price}
+          price={marketOrder.price}
           qrCode={marketOrder.land_data?.qrcode_image}
           count={{
             helperText: `Total supply : ${marketOrder.item_amount}`,

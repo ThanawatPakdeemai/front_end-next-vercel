@@ -7,7 +7,7 @@ import {
   IBuildData,
   ITypeBuild
 } from "@feature/building/interfaces/IBuildingService"
-import { IHistory, ILandData } from "@feature/land/interfaces/ILandService"
+import { ILandData } from "@feature/land/interfaces/ILandService"
 import {
   IMaterialInfo,
   ITypeMaterials
@@ -335,7 +335,7 @@ export interface IOwnerDetailsData extends IOwnerData {
   }
   qrcode?: string
   installments_data?: IInstallData
-  history?: IHistory[]
+  history?: IMarketHistory[]
 }
 
 export interface IMarketTypes {

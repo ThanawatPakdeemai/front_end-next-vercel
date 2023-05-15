@@ -2,7 +2,7 @@ import services from "@configs/axiosGlobalConfig"
 import { IMarketServForm } from "@feature/marketplace/interfaces/IMarketService"
 import {
   IAllLand,
-  ILandData,
+  IMarketLandData,
   ILandServ,
   IMyLandListServ,
   IRedeemServ
@@ -33,9 +33,9 @@ export const getMyLand = ({
   })
 
 export const getLandById = ({ _id }: { _id: string }) =>
-  new Promise<ILandData>((resolve, reject) => {
+  new Promise<IMarketLandData>((resolve, reject) => {
     services
-      .get<ILandData>(`/nakaverse-land/lands-datas/${_id}`)
+      .get<IMarketLandData>(`/nakaverse-land/lands-datas/${_id}`)
       .then((response) => resolve(response.data[0]))
       .catch((error) => reject(error))
   })

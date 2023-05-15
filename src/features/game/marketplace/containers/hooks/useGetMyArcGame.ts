@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
 import {
+  getArcGameById,
   getMyArcGame,
   getMyForSaleArcGame,
   getMyInstallmentArcGame
@@ -36,4 +37,15 @@ export const useGetMyInstallmentArcGame = () => {
     }
   )
   return { mutateGetMyInstallmentArcGame, isLoading }
+}
+
+export const useGetMyArcGameById = () => {
+  const { mutateAsync: mutateGetMyArcGameById, isLoading } = useMutation(
+    getArcGameById,
+    {
+      mutationKey: ["mutateGetMyArcGameById"],
+      retry: false
+    }
+  )
+  return { mutateGetMyArcGameById, isLoading }
 }

@@ -87,8 +87,6 @@ const ModalMarket = ({
 }: IProps) => {
   const currencyRef = useRef<boolean>(false)
   const { getPriceNakaCurrent, convertNFTTypeToTType } = Helper
-  // const [price, setPrice] = useState<number>(priceValue)
-  // const [period, setPeriod] = useState<number>(periodValue)
   const [selling, setSelling] = useState<TSellingType>(sellingType)
   const [currency, setCurrency] = useState<number>(0)
   const router: NextRouter = useRouter()
@@ -104,7 +102,6 @@ const ModalMarket = ({
     invAmount,
     setInvPrice,
     setInvPeriod,
-    // setInvAmount,
     fetchInvenItemDataById
   } = useInventoryProvider()
 

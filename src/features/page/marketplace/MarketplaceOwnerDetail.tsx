@@ -9,7 +9,6 @@ import useCountStore from "@stores/countComponant"
 import React from "react"
 
 const MarketplaceOwnerDetail = () => {
-  // const { invenItemData, marketType } = useMarketinvenItemData()
   const { invenItemData } = useInventoryProvider()
   const { count } = useCountStore()
 

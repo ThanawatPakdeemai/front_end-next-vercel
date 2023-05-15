@@ -29,6 +29,7 @@ interface IProp {
   poster?: string
   txHash?: string
   meta_data?: MetaData[]
+  nameItem?: string
 }
 
 const CardContentDetails = ({ ...props }: IProp) => {
@@ -41,7 +42,8 @@ const CardContentDetails = ({ ...props }: IProp) => {
     video,
     poster,
     txHash,
-    meta_data
+    meta_data,
+    nameItem
   } = props
   const [open, setOpen] = useState<boolean>(false)
   const { marketType } = useGlobal()
@@ -71,7 +73,10 @@ const CardContentDetails = ({ ...props }: IProp) => {
                 width={marketType === "game_item" ? 400 : 563}
                 height={marketType === "game_item" ? 400 : 563}
                 className={
-                  marketType === "game_item" ? "m-4 rounded-2xl" : "rounded-2xl"
+                  (marketType === "game_item"
+                    ? "m-4  rounded-2xl"
+                    : "rounded-2xl") +
+                  (nameItem === "Bullet" && "!h-[300px] !w-[110px]")
                 }
               />
             )}

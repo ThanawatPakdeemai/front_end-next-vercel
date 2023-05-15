@@ -63,7 +63,7 @@ const GameDetailLayout = ({ data, gameId, gameType }: IProps) => {
           />
         </Box>
         <Typography className="py-[9px] text-center text-[16px] font-bold uppercase text-white-default">
-          {t("NAKAMOTO WAR")}
+          {t(data.name)}
         </Typography>
         <Box
           component="div"

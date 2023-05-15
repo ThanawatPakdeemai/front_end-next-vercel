@@ -2,7 +2,8 @@ import { Typography } from "@mui/material"
 import TrendingUpIcon from "@mui/icons-material/TrendingUp"
 import React from "react"
 import { useTranslation } from "react-i18next"
-import { MobileView, isMobile } from "react-device-detect"
+import { MobileView } from "react-device-detect"
+import { isMobile } from "@hooks/useGlobal"
 
 interface IProp {
   minValue: number | string

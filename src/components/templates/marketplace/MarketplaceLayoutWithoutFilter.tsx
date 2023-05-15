@@ -16,14 +16,12 @@ const MarketplaceLayoutWithoutFilter = ({
       <div
         className={
           isMapPage
-            ? "page-full-map overflow-x-hidden"
+            ? "page-full-map h-[85vh] overflow-x-hidden"
             : "main-container mx-auto"
         }
       >
         {isMapPage ? (
-          <div className="map-wrapper h-full w-full md:pt-[110px]">
-            {children}
-          </div>
+          <div className="map-wrapper h-full w-full">{children}</div>
         ) : (
           <>{children}</>
         )}

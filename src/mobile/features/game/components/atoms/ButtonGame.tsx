@@ -3,9 +3,9 @@ import { memo, ReactNode } from "react"
 import Ellipse from "@components/icons/Ellipse/Ellipse"
 import { useRouter } from "next/router"
 import ButtonPlayer from "@feature/game/components/atoms/ButtonPlayer"
-import { isMobile } from "react-device-detect"
 import ButtonCountdown from "@feature/game/components/atoms/ButtonCountdown"
 import HighlightOffIcon from "@mui/icons-material/HighlightOff"
+import { isMobile } from "@hooks/useGlobal"
 
 interface IProp {
   description?: string

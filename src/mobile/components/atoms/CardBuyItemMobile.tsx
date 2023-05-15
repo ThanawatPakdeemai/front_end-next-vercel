@@ -183,7 +183,7 @@ export default function CardBuyItemMobile({
                 </>
               )}
               <div className="mb-1 w-full rounded-xl border-[1px] border-primary-main bg-primary-main p-2 first-letter:my-2">
-                <p className="w-[285px] text-default uppercase text-white-default">
+                <p className="w-auto text-default uppercase text-white-default">
                   {t("my")}
                   {itemSelected && (
                     <span className="text-purple-primary]">

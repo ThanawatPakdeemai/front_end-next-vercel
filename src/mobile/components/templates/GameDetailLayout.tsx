@@ -96,9 +96,9 @@ const GameDetailLayout = ({ data, gameId, gameType }: IProps) => {
           >
             <ShareToEarn id={gameId} />
             <MoreDetailGameMobile
-              gameDetails={data.NFT_info.meta_data.description}
-              howto={data.howto}
-              item={data.item}
+              gameDetails={data?.NFT_info?.meta_data?.description}
+              howto={data?.howto}
+              item={data?.item}
             />
           </Box>
         </Box>
@@ -117,7 +117,7 @@ const GameDetailLayout = ({ data, gameId, gameType }: IProps) => {
         </Box>
         <Box
           component="div"
-          className="flex"
+          className="flex justify-center pt-8"
         >
           <Box component="div">
             <StatisticGameDetail />
@@ -131,7 +131,7 @@ const GameDetailLayout = ({ data, gameId, gameType }: IProps) => {
         </Box>
         <Box
           component="div"
-          className="mx-[-0.5rem] pt-8"
+          className="mx-[-0.5rem] pl-4 pr-2 pt-8"
         >
           <StatEstimatedProfit
             minValue={0}
@@ -140,7 +140,7 @@ const GameDetailLayout = ({ data, gameId, gameType }: IProps) => {
         </Box>
         <Box
           component="div"
-          className="mx-[-0.5rem] pt-8"
+          className="mx-[-0.5rem] pl-4 pr-2 pt-8"
         >
           <TopPlayer
             element="select"

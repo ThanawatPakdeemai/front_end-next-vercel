@@ -4,12 +4,13 @@ import { useTranslation } from "next-i18next"
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined"
 import SettingIcon from "@components/icons/SettingIcon"
 import Link from "next/link"
+import { Box } from "@mui/material"
 
 interface IProps {
   label?: string
-  forwardIcon?: JSX.Element
+  forwardIcon?: JSX.Element | null
   forwardHref?: string
-  backwardIcon?: JSX.Element
+  backwardIcon?: JSX.Element | null
   backwardHref?: string
   onClickForWard?: React.MouseEventHandler<HTMLAnchorElement>
   onClickBackWard?: React.MouseEventHandler<HTMLAnchorElement>
@@ -26,7 +27,10 @@ const HeaderForWardBackWardMobile = ({
 }: IProps) => {
   const { t } = useTranslation()
   return (
-    <div className="m-4 flex flex-wrap items-center justify-between border-b-2 border-[#161616be] pb-2 text-white-default md:mt-0 md:flex">
+    <Box
+      component="div"
+      className="m-4 flex items-center justify-between border-b-2 border-[#161616be] pb-2 text-white-default"
+    >
       <Link
         href={backwardHref}
         onClick={onClickBackWard}
@@ -42,7 +46,7 @@ const HeaderForWardBackWardMobile = ({
       >
         {forwardIcon}
       </Link>
-    </div>
+    </Box>
   )
 }
 export default memo(HeaderForWardBackWardMobile)

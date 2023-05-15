@@ -12,11 +12,13 @@ interface IProp {
   title: string
   amount: number | string
   unit: string
+  classNameDiv?: string
 }
 
 /**
  *
  * @param className for background of icon should be tailwind class
+ * @param classNameDiv for div of icon
  * @example "bg-primary-main"
  * @param textColor should be tailwind class
  * @example "text-primary-main"
@@ -28,7 +30,8 @@ const StatWithIcon = ({
   className,
   title,
   amount,
-  unit
+  unit,
+  classNameDiv
 }: IProp) => {
   const iconmotion = {
     hover: {
@@ -47,7 +50,9 @@ const StatWithIcon = ({
     <>
       {isMobile ? (
         <MobileView>
-          <div className="flex items-center rounded-lg border-[1px] border-neutral-700 border-opacity-80 ">
+          <div
+            className={`flex items-center rounded-lg border-[1px] border-neutral-700 border-opacity-80 ${classNameDiv}`}
+          >
             <ButtonIcon
               variants={iconmotion}
               icon={icon}

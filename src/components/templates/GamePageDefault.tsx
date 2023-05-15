@@ -31,6 +31,7 @@ import IconArrowRight from "@components/icons/arrowRightIcon"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
 import Breadcrumb from "@components/molecules/Breadcrumb"
 import { useRouter } from "next/router"
+import GameDetailLayout from "@mobile/components/templates/GameDetailLayout"
 
 interface IGamePageDefaultProps {
   component: React.ReactNode
@@ -315,15 +316,17 @@ const GamePageDefault = ({
     <div className="game-page-default">
       {isMobile ? (
         <MobileView>
-          <div className={containerClasses}>
-            {component}
-            {/**
-             * @description In case there is a need to add another component
-             */}
-            {component2 && <div className="mt-4">{component2}</div>}
-            {component3 && <div className="mt-4">{component3}</div>}
-            {renderStatistic()}
-          </div>
+          {gameData && (
+            <GameDetailLayout
+              data={gameData as IGame}
+              gameId={gameData.id}
+              gameType={
+                router.asPath.includes("arcade-emporium")
+                  ? "arcade-emporium"
+                  : "play-to-earn-games"
+              }
+            />
+          )}
         </MobileView>
       ) : (
         <div className={containerClasses}>

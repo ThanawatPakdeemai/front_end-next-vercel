@@ -74,8 +74,8 @@ const GameCarousel = ({
         {
           breakpoint: 480,
           settings: {
-            slidesToShow: 3,
-            slidesToScroll: 3
+            slidesToShow: list.length < 3 ? 1 : 3,
+            slidesToScroll: list.length < 3 ? 1 : 3
           }
         }
       ]

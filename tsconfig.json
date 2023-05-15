@@ -18,6 +18,7 @@
     "incremental": false,
     "baseUrl": ".",
     "paths": {
+      "@mobile/*": ["src/mobile/*"],
       "@components/*": ["src/components/*"],
       "@configs/*": ["src/configs/*"],
       "@constants/*": ["src/constants/*"],

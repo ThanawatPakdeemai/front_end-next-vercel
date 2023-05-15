@@ -26,7 +26,7 @@ import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import { useTranslation } from "react-i18next"
 import { MobileView, isMobile } from "react-device-detect"
-import HeaderForWardBackWardMobile from "@src/mobile/atoms/HeaderForWardBackWardMobile"
+import HeaderForWardBackWardMobile from "@mobile/components/atoms/HeaderForWardBackWardMobile"
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone"
 import ItemRewardIcon from "@components/icons/MenunIcon/ItemRewardIcon"
 import BackPackIcon from "@components/icons/BackPackIcon"
@@ -173,7 +173,10 @@ const ProfileContent = () => {
       {isMobile ? (
         <MobileView>
           <div className="w-full">
-            <HeaderForWardBackWardMobile label="MY Profile" />
+            <HeaderForWardBackWardMobile
+              label="MY Profile"
+              onClickBackWard={() => router.back()}
+            />
             <div className="relative">
               <Box
                 component="img"

@@ -641,17 +641,14 @@ const FormRegister = () => {
               </div>
             </Grid>
             {!isMobile && (
-              <Grid
-                item
-                container
-                justifyContent="center"
-                alignItems="center"
-                className="absolute bottom-4 my-2"
+              <Box
+                component="div"
+                className="mx-auto my-0 pt-4"
               >
                 <Typography className="text-sm uppercase text-neutral-700">
                   COPYRIGHT 2023 © NAKAMOTO GAMES
                 </Typography>
-              </Grid>
+              </Box>
             )}
           </Grid>
         </Box>

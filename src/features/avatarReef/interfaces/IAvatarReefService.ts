@@ -18,11 +18,38 @@ export interface IAvatarReefData
   meta_data: IAvatarReefMetaData[]
 }
 
+export interface Attribute {
+  trait_type: string
+  value: string
+}
+
+export interface History {
+  _id: string
+  event: string
+  seller: string
+  buyer: string
+  price: number
+  timestamp: Date
+}
+
+export interface IAvatarData extends Omit<INFTData, "id"> {
+  attributes: Attribute[]
+  createdAt: Date
+  updatedAt: Date
+  current_time: Date
+  dna: string
+  is_active: boolean
+  chain: string
+  nft_address: string
+}
+
 export interface IRedeemAvatarReefServ extends IFormatService {
   data: IAvatarReefData
 }
 
-interface IMyAvatarReefData extends Omit<INFTData, "wallet_address"> {}
+interface IMyAvatarReefData extends Omit<INFTData, "wallet_address" | "_id"> {
+  id: string
+}
 
 export interface IMyAvatarReefServ extends IInfoFormatServ {
   data: IMyAvatarReefData[]

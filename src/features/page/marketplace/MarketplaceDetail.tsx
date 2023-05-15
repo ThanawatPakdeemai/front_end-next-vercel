@@ -3,14 +3,14 @@ import CardContentDetails from "@feature/marketplace/components/organisms/CardCo
 import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
 import CONFIGS from "@configs/index"
 import React from "react"
-import useCountStore from "@stores/countComponant"
 import dynamic from "next/dynamic"
-import useMarketDetail from "@feature/marketplace/containers/hooks/useMarketDetail"
 import {
   TNFTType,
   TSellingType
 } from "@feature/marketplace/interfaces/IMarketService"
 import CardDetailSkeleton from "@feature/marketplace/components/molecules/CardDetailSkeleton"
+import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
+import useGlobal from "@hooks/useGlobal"
 
 const ButtonMarket = dynamic(
   () => import("@components/atoms/button/ButtonMarket"),
@@ -21,9 +21,9 @@ const ButtonMarket = dynamic(
 )
 
 const MarketplaceDetail = () => {
-  const { detailData, marketType, nameNFT, tokenNFT, imageNFT, vdoNFT } =
-    useMarketDetail()
-  const { count } = useCountStore()
+  const { marketOrder, nameNFT, tokenNFT, imageNFT, vdoNFT } =
+    useMarketplaceProvider()
+  const { marketType } = useGlobal()
 
   const handleColorSellingType = (selling_type: TSellingType) => {
     if (selling_type === "fullpayment") {
@@ -35,42 +35,42 @@ const MarketplaceDetail = () => {
     return "warning"
   }
 
-  return detailData ? (
+  return marketOrder ? (
     <div className="flex w-full flex-col gap-x-[120px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0">
       <CardContentDetails
         detail={
-          detailData.land_data?.details ??
-          detailData.building_data?.detail ??
-          detailData.item_data?.detail ??
-          detailData.material_data?.detail ??
-          detailData.nakapunk_data?.description ??
-          detailData.game_data?.story
+          marketOrder.land_data?.details ??
+          marketOrder.building_data?.detail ??
+          marketOrder.item_data?.detail ??
+          marketOrder.material_data?.detail ??
+          marketOrder.nakapunk_data?.description ??
+          marketOrder.game_data?.story
         }
         image={imageNFT}
         video={vdoNFT}
-        model={detailData.building_data?.model_3d}
+        model={marketOrder.building_data?.model_3d}
         poster={
-          detailData.land_data?.NFT_image ??
-          detailData.game_data?.image_nft_arcade_game ??
-          detailData.building_data?.NFT_image
+          marketOrder.land_data?.NFT_image ??
+          marketOrder.game_data?.image_nft_arcade_game ??
+          marketOrder.building_data?.NFT_image
         }
-        alt={detailData.land_data?.type}
+        alt={marketOrder.land_data?.type}
       >
         <div className="grid grid-cols-2 px-8 py-6">
           <CardWriterDetails
             textHead="create by"
             name="nakamoto.games"
-            date={String(detailData.created_at)}
+            date={String(marketOrder.created_at)}
             link={CONFIGS.CONTRACT_ADDRESS.NAKA}
           />
-          {detailData.seller_id && (
+          {marketOrder.seller_id && (
             <CardWriterDetails
               textHead="Owned by"
-              name={detailData.land_data?.name}
-              date={String(detailData.created_at)}
-              link={detailData.seller_id}
-              image={detailData.land_data?.image}
-              alt={detailData.land_data?.type}
+              name={marketOrder.land_data?.name}
+              date={String(marketOrder.created_at)}
+              link={marketOrder.seller_id}
+              image={marketOrder.land_data?.image}
+              alt={marketOrder.land_data?.type}
             />
           )}
         </div>
@@ -78,52 +78,46 @@ const MarketplaceDetail = () => {
       <div className="flex h-full w-full flex-col">
         <RightDetailsMarketplace
           type={marketType as TNFTType}
-          id={detailData.item_id}
+          id={marketOrder.item_id}
           token={tokenNFT}
-          title={
-            detailData.land_data?.name ||
-            detailData.building_data?.name ||
-            (detailData.item_data &&
-              `${detailData.item_data.name} ${detailData.item_data.item_size}`) ||
-            detailData.nakapunk_data?.name ||
-            detailData.material_data?.name ||
-            detailData.game_data?.name
-          }
-          method={detailData.seller_id ? "buy" : "mint"}
-          position={detailData.land_data?.position}
-          price={detailData.price as number}
-          qrCode={detailData.land_data?.qrcode_image}
+          title={nameNFT}
+          method={marketOrder.seller_id ? "buy" : "mint"}
+          position={marketOrder.land_data?.position}
+          price={marketOrder.price}
+          qrCode={marketOrder.land_data?.qrcode_image}
           count={{
-            helperText: `Total supply : ${count}`,
+            helperText: `Total supply : ${marketOrder.item_amount}`,
             label: "Supply in market",
             min: 1,
-            max: detailData.item_total || 1,
+            max: marketOrder.item_amount || 1,
             count: 1
           }}
-          sellingType={{
-            title: detailData.selling_type,
-            color: handleColorSellingType(
-              detailData.selling_type as TSellingType
-            )
-          }}
-          redemption={!detailData.seller_id}
+          sellingType={
+            marketOrder.selling_type
+              ? {
+                  title: marketOrder.selling_type,
+                  color: handleColorSellingType(marketOrder.selling_type)
+                }
+              : undefined
+          }
+          redemption={!marketOrder.seller_id}
         >
           <ButtonMarket
-            nftType={detailData.type}
+            nftType={marketOrder.type}
             name={nameNFT || ""}
-            img={imageNFT}
+            img={imageNFT || ""}
             vdo={vdoNFT}
             tokenId={tokenNFT}
-            marketId={detailData._id}
-            itemId={detailData.item_id}
-            orderId={detailData.order_id}
-            price={detailData.price}
-            maxPeriod={detailData.period_amount}
-            maxAmount={detailData.item_amount}
-            sellerType={detailData.seller_type}
-            sellingType={detailData.selling_type}
-            sellerId={detailData.seller_id}
-            plot={detailData.land_data?.position}
+            marketId={marketOrder._id}
+            itemId={marketOrder.item_id}
+            orderId={marketOrder.order_id}
+            price={marketOrder.price}
+            maxPeriod={marketOrder.period_amount}
+            maxAmount={marketOrder.item_amount}
+            sellerType={marketOrder.seller_type}
+            sellingType={marketOrder.selling_type}
+            sellerId={marketOrder.seller_id}
+            plot={marketOrder.land_data?.position}
           />
         </RightDetailsMarketplace>
       </div>

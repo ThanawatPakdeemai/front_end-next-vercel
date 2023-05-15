@@ -218,7 +218,7 @@ const GameCard = ({
             height={218}
             className={`slick-card-content h-full overflow-hidden rounded-md object-cover ${
               partnerdata ? "sm:h-2/4 lg:h-4/6 xl:h-full" : ""
-            } ${isMobile ? "w-[6.875rem]" : "w-full"}`}
+            } ${isMobile ? "!h-[6.875rem] w-[6.875rem]" : "w-full"}`}
           />
         </div>
         <motion.div
@@ -261,7 +261,9 @@ const GameCard = ({
             <Chip
               label={t(gameTypeSplit)}
               size="small"
-              className={`mx-2 my-2 w-full font-bold md:mx-0 md:w-auto ${getColorChipByGameType(
+              className={`${
+                isMobile && "ml-0"
+              } mx-2 my-2 w-full font-bold md:mx-0 md:w-auto ${getColorChipByGameType(
                 gameType
               )}`}
             />

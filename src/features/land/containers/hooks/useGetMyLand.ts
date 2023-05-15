@@ -3,7 +3,8 @@ import {
   getLandById,
   getMyForSaleLand,
   getMyInstallmentLand,
-  getMyLand
+  getMyLand,
+  getMyRentOutLand
 } from "../services/land.service"
 
 export const useGetMyLand = () => {
@@ -67,6 +68,29 @@ export const useGetMyInstallmentLand = () => {
   })
   return {
     mutateGetMyInstallmentLand,
+    data,
+    error,
+    isLoading,
+    isError,
+    isSuccess
+  }
+}
+
+export const useGetMyRentalLand = () => {
+  const {
+    mutateAsync: mutateGetMyRentalLand,
+    data,
+    error,
+    isLoading,
+    isError,
+    isSuccess
+  } = useMutation(getMyRentOutLand, {
+    mutationKey: ["getMyRentalLand"],
+    retry: false,
+    cacheTime: Infinity
+  })
+  return {
+    mutateGetMyRentalLand,
     data,
     error,
     isLoading,

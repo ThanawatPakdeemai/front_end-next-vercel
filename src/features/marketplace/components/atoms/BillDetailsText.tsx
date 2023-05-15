@@ -1,4 +1,5 @@
 import CopyButton from "@components/atoms/CopyButton"
+import { Chip, Typography } from "@mui/material"
 import Helper from "@utils/helper"
 import React from "react"
 
@@ -9,6 +10,8 @@ interface IProps {
   className?: string
   copy?: boolean
   shortString?: boolean
+  time?: string
+  textColor?: string
 }
 
 const BillDetailsText = ({
@@ -17,18 +20,39 @@ const BillDetailsText = ({
   className,
   unit,
   copy,
-  shortString
+  shortString,
+  time,
+  textColor
 }: IProps) => {
-  const _t = 1
   const { shortenString } = Helper
 
   return (
     <div className={`grid grid-cols-2 !text-sm ${className}`}>
-      <span>{title}</span>
+      <span className="font-bold uppercase text-neutral-600">{title}</span>
       <div className="flex items-center">
-        <span>
-          {shortString ? shortenString(value.toString()) : value} {unit && unit}
-        </span>
+        <Chip
+          label={`${shortString ? shortenString(value.toString()) : value} ${
+            unit || ""
+          }`}
+          variant="outlined"
+          color="primary"
+          size="small"
+          sx={{
+            backgroundColor: "#010101 !important",
+            textTransform: "uppercase",
+            color: textColor ? `${textColor} !important` : "#A6A9AE"
+          }}
+        />
+        {time && (
+          <Typography
+            className="ml-3 !text-sm font-bold"
+            sx={{
+              color: textColor ? `${textColor} !important` : "#4E5057"
+            }}
+          >
+            {time}
+          </Typography>
+        )}
         {copy && <CopyButton text={value.toString()} />}
       </div>
     </div>

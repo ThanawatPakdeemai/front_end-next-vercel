@@ -130,7 +130,7 @@ const useMarketNFTRent = () => {
               _txHash: _res.transactionHash,
               _sellerType: "user",
               _sellingType: "rental",
-              _periodAmount: WeiToNumber(_resultEvent[4])
+              _periodAmount: Number(_resultEvent[4].toString())
             }
             await mutateMarketCreateOrder(data)
           }

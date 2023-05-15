@@ -6,7 +6,10 @@ import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import { InputAdornment, TextField } from "@mui/material"
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
 import Helper from "@utils/helper"
-import React from "react"
+import React, { useMemo } from "react"
+import useCountStore from "@stores/countComponant"
+import { useInventoryProvider } from "@providers/InventoryProvider"
+import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 
 interface IProp {
   type: TNFTType
@@ -33,9 +36,41 @@ const TextfieldDetailContent = ({
   count
 }: IProp) => {
   const { price: nakaPrice } = useNakaPriceProvider()
-  const calcNakaPrice = price
-    ? ((price / (nakaPrice ? parseFloat(nakaPrice.last) : 0)) as number)
-    : 0
+  const { count: countItemSelected } = useCountStore()
+  const { invPrice, setInvPrice } = useInventoryProvider()
+  const { marketAmount, setMarketAmount } = useMarketplaceProvider()
+  const _priceValue = invPrice || price
+
+  const onPriceChange = (value: string) => {
+    const _value = Number(value)
+    if (setInvPrice) setInvPrice(_value)
+  }
+  const calcNakaPrice = useMemo(() => {
+    if (nakaPrice && countItemSelected && _priceValue) {
+      return countItemSelected * (parseFloat(nakaPrice.last) * _priceValue)
+    }
+    return 0
+  }, [nakaPrice, countItemSelected, _priceValue])
+
+  const onDecreaseAmount = () => {
+    if (count && setMarketAmount) {
+      if (marketAmount && marketAmount <= count.min) {
+        setMarketAmount(count.min)
+      } else {
+        setMarketAmount((prev: number) => prev - 1)
+      }
+    }
+  }
+
+  const onIncreaseAmount = () => {
+    if (count && setMarketAmount) {
+      if (marketAmount && marketAmount >= count.max) {
+        setMarketAmount(count.max)
+      } else {
+        setMarketAmount((prev: number) => prev + 1)
+      }
+    }
+  }
 
   return (
     <div
@@ -49,7 +84,9 @@ const TextfieldDetailContent = ({
           label={count.label}
           min={count.min}
           max={count.max}
-          count={count.count}
+          count={marketAmount}
+          _minusItem={onDecreaseAmount}
+          _addItem={onIncreaseAmount}
         />
       )}
       {position && (
@@ -75,31 +112,30 @@ const TextfieldDetailContent = ({
           helperText="Land position on map"
         />
       )}
-      {price && (
-        <TextField
-          value={price}
-          label="PRICE (NAKA)"
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              backgroundColor: "#010101"
-            },
-            "input": {
-              color: "#E1E2E2 !important"
-            }
-          }}
-          disabled
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <LogoIcon />
-              </InputAdornment>
-            )
-          }}
-          helperText={`= ${Helper.formatNumber(calcNakaPrice, {
-            maximumFractionDigits: 4
-          })} USD`}
-        />
-      )}
+      <TextField
+        value={price ? countItemSelected * price : invPrice}
+        label="PRICE (NAKA)"
+        sx={{
+          "& .MuiOutlinedInput-root": {
+            backgroundColor: "#010101"
+          },
+          "input": {
+            color: "#E1E2E2 !important"
+          }
+        }}
+        onChange={(e) => onPriceChange(e.target.value)}
+        disabled={!!price}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <LogoIcon />
+            </InputAdornment>
+          )
+        }}
+        helperText={`= ${Helper.formatNumber(calcNakaPrice, {
+          maximumFractionDigits: 4
+        })} USD`}
+      />
     </div>
   )
 }

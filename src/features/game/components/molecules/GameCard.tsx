@@ -187,7 +187,9 @@ const GameCard = ({
 
   const renderCardContent = () => (
     <motion.div
-      className="slick-card-container flex h-auto flex-col justify-center blur-none"
+      className={`slick-card-container ${
+        isMobile && "!max-w-[125px]"
+      } flex h-auto flex-col justify-center blur-none`}
       initial="init"
       whileHover="onHover"
       animate="animate"
@@ -246,7 +248,11 @@ const GameCard = ({
               : (data as IGame)?.name ?? partnerdata?.name}
           </p>
         </div>
-        <div className="relative flex w-full flex-wrap items-center gap-2 text-xs uppercase">
+        <div
+          className={`${
+            isMobile && "max-w-[110px]"
+          } relative flex w-full flex-wrap items-center gap-2 text-xs uppercase`}
+        >
           {(data as IRoomAvaliableData) &&
           "game_free_play" in (data as IRoomAvaliableData) ? (
             // Display for Gameroom only

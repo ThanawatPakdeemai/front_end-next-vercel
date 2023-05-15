@@ -68,7 +68,7 @@ const useMarketFilterStore = create<IuseMarketFilterStore>()(
         )
         _filter.map((f) => {
           if (f.value === dummyFilter.find((d) => d === f.value)) {
-            if (!f.checked) {
+            if (f.checked) {
               _remove.push(f.value)
             }
           }

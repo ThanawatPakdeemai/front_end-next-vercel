@@ -1,6 +1,7 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import React, { ReactElement } from "react"
 import dynamic from "next/dynamic"
+import useGlobal from "@hooks/useGlobal"
 
 const MarketplaceLayoutWithFilter = dynamic(
   () => import("@components/templates/marketplace/MarketplaceLayoutWithFilter"),
@@ -17,7 +18,11 @@ const MarketplaceCardList = dynamic(
   }
 )
 
-const MarketplaceHome = () => <MarketplaceCardList />
+const MarketplaceHome = () => {
+  /** This is only temporary code for hide marketplace in production */
+  const { isShowMarket } = useGlobal()
+  return isShowMarket && <MarketplaceCardList />
+}
 
 MarketplaceHome.getLayout = function getLayout(page: ReactElement) {
   return <MarketplaceLayoutWithFilter>{page}</MarketplaceLayoutWithFilter>

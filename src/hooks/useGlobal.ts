@@ -62,6 +62,8 @@ const useGlobal = (
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
   const [hydrated, setHydrated] = useState(false)
   const [marketType, setMarketType] = useState<TNFTType>()
+  /** This is only temporary code for hide marketplace in production */
+  const [isShowMarket, setIsShowMarket] = useState<boolean>(false)
 
   /**
    * @description check if url is in marketplace
@@ -387,6 +389,32 @@ const useGlobal = (
     }
   }, [router.asPath])
 
+  /** This is only temporary code for hide marketplace in production */
+  const _mode = process.env.NEXT_PUBLIC_MODE
+
+  useEffect(() => {
+    const redirectIfNecessary = () => {
+      if (router.asPath.includes("marketplace") && _mode === "production") {
+        router.replace("/404")
+        setIsShowMarket(false)
+      } else if (
+        router.asPath.includes("marketplace") &&
+        _mode === "development"
+      ) {
+        router.replace("/marketplace")
+        setIsShowMarket(true)
+      }
+    }
+
+    const intervalId = setInterval(redirectIfNecessary, 0)
+
+    return () => {
+      clearInterval(intervalId)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.asPath, _mode])
+  /** This is only temporary code for hide marketplace in production */
+
   /**
    * @description Fetch all token supported
    */
@@ -416,6 +444,7 @@ const useGlobal = (
     pager,
     isMarketplace,
     isDeveloperPage,
+    isShowMarket,
     openInNewTab,
     getTypeGamePathFolder,
     getTypeGamePartnerPathFolder,

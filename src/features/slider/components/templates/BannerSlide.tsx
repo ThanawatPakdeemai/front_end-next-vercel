@@ -61,9 +61,9 @@ const BannerSlide = () => {
             {...settings}
           >
             {slideGames &&
-              slideGames.slice(0, 5).map((slide, index) => (
+              slideGames.slice(0, 4).map((slide, index) => (
                 <div key={slide.id}>
-                  {slide[index] !== undefined ? (
+                  {/* {slide[index] !== undefined ? (
                     <BannerCardSlide
                       slide={slide}
                       slideNext={
@@ -77,7 +77,17 @@ const BannerSlide = () => {
                       slideNext={slideGames[index + 1]}
                       gotoNext={gotoNext}
                     />
-                  )}
+                  )} */}
+
+                  <BannerCardSlide
+                    slide={slide}
+                    slideNext={
+                      slide[index + 1] !== undefined
+                        ? slideGames[0]
+                        : slideGames[index + 1]
+                    }
+                    gotoNext={gotoNext}
+                  />
                 </div>
               ))}
           </Slider>

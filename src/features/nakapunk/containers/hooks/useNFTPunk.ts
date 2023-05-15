@@ -68,7 +68,7 @@ const useNFTPunk = () => {
   const transferPunk = (_from: string, _to: string, _tokenId: string) =>
     new Promise<TransactionResponse>((resolve, reject) => {
       punkContract
-        .transferForm(_from, _to, _tokenId)
+        .transferFrom(_from, _to, _tokenId)
         .then((_response: TransactionResponse) => {
           resolve(_response)
         })
@@ -78,7 +78,7 @@ const useNFTPunk = () => {
     })
 
   const onTransferPunk = async (_toAddress: string, _tokenId: string) => {
-    if (signer && address) {
+    if (address) {
       setOpen(MESSAGES.transaction_processing_order)
       await transferPunk(address, _toAddress, _tokenId)
         .then(async (response) => {

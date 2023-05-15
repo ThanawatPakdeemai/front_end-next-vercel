@@ -70,7 +70,7 @@ const useNFTArcGame = () => {
   const transferArcGame = (_from: string, _to: string, _tokenId: string) =>
     new Promise<TransactionResponse>((resolve, reject) => {
       arcadeGameContract
-        .transferForm(_from, _to, _tokenId)
+        .transferFrom(_from, _to, _tokenId)
         .then((_response: TransactionResponse) => {
           resolve(_response)
         })

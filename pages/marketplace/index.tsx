@@ -1,6 +1,7 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import React, { ReactElement } from "react"
 import dynamic from "next/dynamic"
+import useGlobal from "@hooks/useGlobal"
 
 const MarketplaceLayoutWithFilter = dynamic(
   () => import("@components/templates/marketplace/MarketplaceLayoutWithFilter"),
@@ -17,22 +18,26 @@ const MarketplaceCardList = dynamic(
   }
 )
 
-const MarketplaceHome = () => <MarketplaceCardList />
+const MarketplaceHome = () => {
+  /** This is only temporary code for hide marketplace in production */
+  const { isShowMarket } = useGlobal()
+  return isShowMarket && <MarketplaceCardList />
+}
 
 MarketplaceHome.getLayout = function getLayout(page: ReactElement) {
   return <MarketplaceLayoutWithFilter>{page}</MarketplaceLayoutWithFilter>
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {
-  const _mode = process.env.NEXT_PUBLIC_MODE
+  // const _mode = process.env.NEXT_PUBLIC_MODE
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"]))
-    },
-    // remove below if marketplace launch on frontend v2
-    redirect: {
-      destination: _mode === "production" ? "/" : "/marketplace"
     }
+    // remove below if marketplace launch on frontend v2
+    // redirect: {
+    //   destination: _mode === "production" ? "/" : "/marketplace"
+    // }
   }
 }
 

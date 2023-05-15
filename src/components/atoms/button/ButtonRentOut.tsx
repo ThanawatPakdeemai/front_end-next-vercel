@@ -64,7 +64,7 @@ const ButtonRentOut = ({
       <Button
         type="button"
         variant="contained"
-        color="primary"
+        color="error"
         // startIcon={
         //   actionValue === "login" || actionValue === "mint" ? (
         //     <div className="button-icon animation-arrow">

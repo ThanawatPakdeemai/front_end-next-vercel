@@ -1,16 +1,19 @@
 import ButtonMarket from "@components/atoms/button/ButtonMarket"
 import ButtonRentOut from "@components/atoms/button/ButtonRentOut"
 import CardDetailSkeleton from "@feature/marketplace/components/molecules/CardDetailSkeleton"
+import TransferBox from "@feature/marketplace/components/molecules/TransferBox"
 import BillDetailSection from "@feature/marketplace/components/organisms/BillDetailSection"
 import CardContentDetails from "@feature/marketplace/components/organisms/CardContentDetails"
 import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import useCountStore from "@stores/countComponant"
+import useProfileStore from "@stores/profileStore"
 import React from "react"
 
 const MarketplaceOwnerDetail = () => {
   const { invenItemData } = useInventoryProvider()
   const { count } = useCountStore()
+  const profile = useProfileStore((state) => state.profile.data)
 
   return invenItemData ? (
     <div className="flex flex-col">
@@ -23,7 +26,14 @@ const MarketplaceOwnerDetail = () => {
           alt={invenItemData.type}
           model={invenItemData.model}
         >
-          <div className="grid grid-cols-2 px-8 py-6">{/* transfer */}</div>
+          {profile &&
+            profile.address &&
+            invenItemData.wallet_address &&
+            profile.address === invenItemData.wallet_address && (
+              <div className="px-8">
+                <TransferBox _tokenId={invenItemData.tokenId} />
+              </div>
+            )}
         </CardContentDetails>
         <div className="flex h-full w-full flex-col">
           <RightDetailsMarketplace
@@ -45,25 +55,9 @@ const MarketplaceOwnerDetail = () => {
                 : undefined
             }
           >
-            <ButtonMarket
-              nftType={invenItemData.type}
-              img={invenItemData.img}
-              tokenId={invenItemData.tokenId}
-              marketId={invenItemData.id}
-              itemId={invenItemData.id}
-              orderId={invenItemData.id}
-              amount={count || 1}
-              maxAmount={invenItemData.totalAmoumt}
-              plot={invenItemData.position}
-              name={invenItemData.name}
-              marketplaces_data={invenItemData.marketplaces_data}
-            />
-
-            {invenItemData.type === "nft_land" ||
-            invenItemData.type === "nft_building" ? (
-              <ButtonRentOut
+            <div className="flex w-full items-center justify-between">
+              <ButtonMarket
                 nftType={invenItemData.type}
-                name={invenItemData.name}
                 img={invenItemData.img}
                 tokenId={invenItemData.tokenId}
                 marketId={invenItemData.id}
@@ -71,10 +65,28 @@ const MarketplaceOwnerDetail = () => {
                 orderId={invenItemData.id}
                 amount={count || 1}
                 maxAmount={invenItemData.totalAmoumt}
-                sellingType="rental"
                 plot={invenItemData.position}
+                name={invenItemData.name}
+                marketplaces_data={invenItemData.marketplaces_data}
               />
-            ) : null}
+
+              {invenItemData.type === "nft_land" ||
+              invenItemData.type === "nft_building" ? (
+                <ButtonRentOut
+                  nftType={invenItemData.type}
+                  name={invenItemData.name}
+                  img={invenItemData.img}
+                  tokenId={invenItemData.tokenId}
+                  marketId={invenItemData.id}
+                  itemId={invenItemData.id}
+                  orderId={invenItemData.id}
+                  amount={count || 1}
+                  maxAmount={invenItemData.totalAmoumt}
+                  sellingType="rental"
+                  plot={invenItemData.position}
+                />
+              ) : null}
+            </div>
           </RightDetailsMarketplace>
         </div>
       </div>

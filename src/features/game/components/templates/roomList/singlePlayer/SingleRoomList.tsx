@@ -115,8 +115,6 @@ const GameRoomList = () => {
         intoRoomGame(data_player_me as IGameCurrentPlayer, _roomId)
       } else if (_dataRoom.amount_current_player >= _dataRoom.max_players) {
         if (data && data_player_me && data_player_me.status === "played") {
-          // eslint-disable-next-line no-console
-          console.log("sdksalkf")
           router.push(
             `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
           )

@@ -131,7 +131,7 @@ const GameDetailLayout = ({ data, gameId, gameType }: IProps) => {
         </Box>
         <Box
           component="div"
-          className="mx-[-0.5rem] pt-8"
+          className="mx-[-0.5rem] pl-4 pr-2 pt-8"
         >
           <StatEstimatedProfit
             minValue={0}
@@ -140,7 +140,7 @@ const GameDetailLayout = ({ data, gameId, gameType }: IProps) => {
         </Box>
         <Box
           component="div"
-          className="mx-[-0.5rem] pt-8"
+          className="mx-[-0.5rem] pl-4 pr-2 pt-8"
         >
           <TopPlayer
             element="select"

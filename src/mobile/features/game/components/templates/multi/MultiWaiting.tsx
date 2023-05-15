@@ -89,107 +89,112 @@ const MultiWaiting = () => {
               dataPlayers?.current_player as unknown[] as CurrentPlayer[]
             }
           />
+          {playerMe && (
+            <>
+              {playerAllReady &&
+                playerAllBurnItem &&
+                playerMe?.status === "ready" &&
+                // play &&
+                dataPlayers?.room_status === "ready_play" && (
+                  <ButtonGame
+                    textButton=""
+                    // time={new Date(new Date().setSeconds(new Date().getSeconds() + 10))}
+                    time={
+                      playerAllReady && playerAllBurnItem
+                        ? new Date(time.setSeconds(time.getSeconds() + 10))
+                        : new Date()
+                    }
+                    url=""
+                    onClick={() => {}}
+                    textColor={` ${
+                      playerAllReady
+                        ? "text-secondary-main "
+                        : "text-error-main"
+                    }`}
+                    classCssButton="!mt-0 !bg-secondary-main h-[40px] !w-[105px]"
+                    description={checkText}
+                    buttonIcon={{
+                      show: true,
+                      bgColor: "!bg-secondary-main",
+                      icon: <HourglassEmptyIcon />
+                    }}
+                  />
+                )}
 
-          {playerAllReady &&
-            playerAllBurnItem &&
-            playerMe?.status === "ready" &&
-            // play &&
-            dataPlayers?.room_status === "ready_play" && (
-              <ButtonGame
-                textButton=""
-                // time={new Date(new Date().setSeconds(new Date().getSeconds() + 10))}
-                time={
-                  playerAllReady && playerAllBurnItem
-                    ? new Date(time.setSeconds(time.getSeconds() + 10))
-                    : new Date()
-                }
-                url=""
-                onClick={() => {}}
-                textColor={` ${
-                  playerAllReady ? "text-secondary-main " : "text-error-main"
-                }`}
-                classCssButton="!mt-0 !bg-secondary-main h-[40px] !w-[105px]"
-                description={checkText}
-                buttonIcon={{
-                  show: true,
-                  bgColor: "!bg-secondary-main",
-                  icon: <HourglassEmptyIcon />
-                }}
-              />
-            )}
+              {isOwnerRoom &&
+                !ownerPressPlay &&
+                playerMe?.status === "ready" &&
+                dataPlayers?.room_status !== "ready_play" && (
+                  <ButtonGame
+                    disabled={!playerAllReady || loading}
+                    textButton={
+                      loading ? (
+                        <CircularProgress
+                          color="primary"
+                          className="ml-4"
+                          size={15}
+                        />
+                      ) : (
+                        t("start")
+                      )
+                    }
+                    url=""
+                    onClick={() => {
+                      playerAllReady
+                        ? onPlayGame()
+                        : errorToast(MESSAGES["please-wait-player-all-ready"])
+                    }}
+                    textColor={`text-green-lemon ${"!w-[170px]"}`}
+                    classCssButton={`!mt-0 ${
+                      playerAllReady ? "!bg-green-lemon " : " !bg-error-main "
+                    } h-[40px] !w-[105px]`}
+                    description={checkText}
+                  />
+                )}
 
-          {isOwnerRoom &&
-            !ownerPressPlay &&
-            playerMe?.status === "ready" &&
-            dataPlayers?.room_status !== "ready_play" && (
-              <ButtonGame
-                disabled={!playerAllReady || loading}
-                textButton={
-                  loading ? (
-                    <CircularProgress
-                      color="primary"
-                      className="ml-4"
-                      size={15}
-                    />
-                  ) : (
-                    t("start")
-                  )
-                }
-                url=""
-                onClick={() => {
-                  playerAllReady
-                    ? onPlayGame()
-                    : errorToast(MESSAGES["please-wait-player-all-ready"])
-                }}
-                textColor={`text-green-lemon ${"!w-[170px]"}`}
-                classCssButton={`!mt-0 ${
-                  playerAllReady ? "!bg-green-lemon " : " !bg-error-main "
-                } h-[40px] !w-[105px]`}
-                description={checkText}
-              />
-            )}
+              {!isOwnerRoom &&
+                !playerPressReady &&
+                playerMe?.status === "inroom" && (
+                  <ButtonGame
+                    disabled={loading}
+                    textButton={
+                      loading ? (
+                        <CircularProgress
+                          color="primary"
+                          className="ml-4"
+                          size={15}
+                        />
+                      ) : (
+                        t("ready")
+                      )
+                    }
+                    url=""
+                    onClick={onReady}
+                    textColor="text-green-lemon"
+                    classCssButton="!mt-0 !bg-green-lemon h-[40px] !w-[105px]"
+                    description={checkText}
+                  />
+                )}
 
-          {!isOwnerRoom &&
-            !playerPressReady &&
-            playerMe?.status === "inroom" && (
-              <ButtonGame
-                disabled={loading}
-                textButton={
-                  loading ? (
-                    <CircularProgress
-                      color="primary"
-                      className="ml-4"
-                      size={15}
-                    />
-                  ) : (
-                    t("ready")
-                  )
-                }
-                url=""
-                onClick={onReady}
-                textColor="text-green-lemon"
-                classCssButton="!mt-0 !bg-green-lemon h-[40px] !w-[105px]"
-                description={checkText}
-              />
-            )}
-
-          {!isOwnerRoom &&
-            playerPressReady &&
-            playerMe?.status === "ready" &&
-            dataPlayers?.room_status !== "ready_play" && (
-              <ButtonGame
-                textButton={t("You are ready")}
-                url=""
-                onClick={() => {
-                  cancelReadyPlayer()
-                  setPlayerPressReady(false)
-                }}
-                textColor="text-green-lemon "
-                classCssButton="!mt-0 !bg-green-lemon h-[40px] !w-[105px]"
-                description={checkText}
-                buttonIcon={{ show: true, bgColor: "!bg-green-lemon" }}
-              />
-            )}
+              {!isOwnerRoom &&
+                playerPressReady &&
+                playerMe?.status === "ready" &&
+                dataPlayers?.room_status !== "ready_play" && (
+                  <ButtonGame
+                    textButton={t("You are ready")}
+                    url=""
+                    onClick={() => {
+                      cancelReadyPlayer()
+                      setPlayerPressReady(false)
+                    }}
+                    textColor="text-green-lemon "
+                    classCssButton="!mt-0 !bg-green-lemon h-[40px] !w-[105px]"
+                    description={checkText}
+                    buttonIcon={{ show: true, bgColor: "!bg-green-lemon" }}
+                  />
+                )}
+            </>
+          )}
         </>
       )}
     </SocketProvider>

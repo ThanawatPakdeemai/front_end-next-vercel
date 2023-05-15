@@ -1,6 +1,7 @@
 import React, { useMemo } from "react"
 import { Image } from "@components/atoms/image"
 import Link from "next/link"
+import { isMobile } from "@hooks/useGlobal"
 import { useRouter } from "next/router"
 
 interface IGameItemSingleCardProp {
@@ -31,7 +32,13 @@ const GameItemSingleCard = ({
   )
 
   const renderContent = () => (
-    <div className="flex h-[144px] w-[144px] flex-col items-center justify-center rounded-xl border-[1px] border-neutral-800 bg-neutral-900">
+    <div
+      className={`${
+        isMobile
+          ? "flex h-[100px] w-[70px] flex-col items-center justify-center"
+          : "flex h-[144px] w-[144px] flex-col items-center justify-center rounded-xl border-[1px] border-neutral-800 bg-neutral-900"
+      }`}
+    >
       <Image
         src={image}
         alt={name}

@@ -8,7 +8,11 @@ import { isMobile } from "@hooks/useGlobal"
 const VerticalThumbSmallCardSlide = ({
   item
 }: IVerticalThumbCardSlideProps) => (
-  <div className="verticalSmallThumb-slide__item relative my-[2px]">
+  <div
+    className={`verticalSmallThumb-slide__item relative ${
+      isMobile ? "px-5" : "my-[2px]"
+    }`}
+  >
     <div
       className={`verticalSmallThumb-slide__item__image cursor-pointer transition-all hover:opacity-70 ${
         isMobile ? "mx-auto my-0 h-[11.64rem] w-auto" : "h-[70px] w-[70px]"

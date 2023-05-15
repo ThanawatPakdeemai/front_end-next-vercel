@@ -1,9 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useMemo, useCallback } from "react"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import LogoutIcon from "@mui/icons-material/Logout"
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney"
-import { Box } from "@mui/material"
 import useProfileStore from "@stores/profileStore/index"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
@@ -18,19 +15,16 @@ import { useToast } from "@feature/toast/containers"
 import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
-import useGlobal from "@hooks/useGlobal"
-import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
-import ButtonGame from "@feature/game/components/molecules/ButtonGame"
-import GameItemSingleCardCopy from "@components/atoms/GameItemSingleCardCopy"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
+import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
 
 interface ICardBuyItemProp {
   gameObject: IGame
   buttonStyle?: "green" | "purple"
   hideButtonPlay?: boolean
 }
-// FIXME Boy: เดี๋ยวกลับมาทำ ขอเอาขึ้นก่อน
 
-export default function CardBuyItemCopy({
+export default function CardBuyItemMobile({
   gameObject,
   buttonStyle = "purple",
   hideButtonPlay = false
@@ -172,70 +166,24 @@ export default function CardBuyItemCopy({
     }
   }, [gameObject, itemSelect, onSetGameItemSelectd])
 
-  // FIXME Boy: เดี๋ยวกลับมาทำ ขอเอาขึ้นก่อน
-
-  const buttonInToGame = useMemo(() => {
-    if (router.pathname === "/[typeGame]/[GameHome]/roomlist") return
-    if (router.pathname === "/[typeGame]/[GameHome]/roomlist/[id]") return
-    if (qtyItemSelected) {
-      if (qtyItemSelected > 0) {
-        return buttonStyle === "green" ? (
-          <Box
-            component="div"
-            sx={StartButtonCustomStyle}
-            className="flex w-full justify-center uppercase"
-          >
-            <ButtonGame
-              textButton={t("join-game")}
-              url={`${router.asPath}/roomlist`}
-            />
-          </Box>
-        ) : (
-          <ButtonLink
-            text={t("join-game")}
-            href={`${router.asPath}/roomlist`}
-            icon={<LogoutIcon />}
-            size="medium"
-            color="secondary"
-            variant="contained"
-            className="w-full"
-          />
-        )
-      }
-    }
-    return (
-      <ButtonLink
-        text={t(MESSAGES["please_item"])}
-        icon={<LogoutIcon />}
-        href={`${router.asPath}`}
-        size="medium"
-        color="secondary"
-        variant="contained"
-        className="w-full"
-        disabled
-      />
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [qtyItemSelected, router.asPath, buttonStyle, router.pathname])
-
   return (
     <>
       {hydrated && (
         <>
           <div className="mt-2 flex w-full flex-[1_1_340px]">
-            <div className="flex flex-col items-center">
+            <div className={`flex flex-col items-center ${isMobile && "w-60"}`}>
               {gameItemList && (
                 <>
                   <DropdownListItem
                     isCheck
                     list={gameItemList?.sort((a, b) => a.price - b.price)}
-                    className="mr-auto w-auto"
+                    className={`mr-auto w-auto ${isMobile && "gap-0.5"}`}
                     onChangeSelect={onChangeSelectItem}
                   />
                 </>
               )}
               <div className="mb-1 w-full rounded-xl border-[1px] border-primary-main bg-primary-main p-2 first-letter:my-2">
-                <p className="w-[285px] text-default uppercase text-white-default">
+                <p className="w-auto text-default uppercase text-white-default">
                   {t("my")}
                   {itemSelected && (
                     <span className="text-purple-primary]">
@@ -248,13 +196,15 @@ export default function CardBuyItemCopy({
 
               <div className="mr-auto flex">
                 {gameObject && (
-                  <GameItemSingleCardCopy
+                  <GameItemSingleCard
                     image={gameObject?.item?.[0].image}
                     name={gameObject?.item?.[0]?.name}
                     itemId={gameObject?.item?.[0]?._id}
+                    width={75}
+                    height={75}
                   />
                 )}
-                <div>
+                <div className="ml-8">
                   <div className="mb-2 flex w-[7.5rem] items-center justify-between rounded-xl  bg-[#E1E2E2] p-2 text-center text-[#111111]">
                     <p>{qtyItemSelected ?? 0}</p>
                     {gameObject && (

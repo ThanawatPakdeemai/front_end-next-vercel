@@ -155,14 +155,27 @@ const GameCarousel = ({
             ? {
                 "&.game-carousel-slide": {
                   ".slick-track": {
-                    marginLeft: "0"
+                    marginLeft: "0",
+                    gap: "10px",
+                    display: "flex"
+                  },
+                  ".timer-box": {
+                    padding: "6px",
+                    height: "28px",
+                    width: "80px",
+                    ".MuiTypography-root": {
+                      fontSize: "12px"
+                      // width: "100px"
+                    }
                   }
-                  // ".slick-slide.slick-cloned": {
-                  //   display: "none"
-                  // }
                 }
               }
-            : {}
+            : {
+                ".slick-track": {
+                  gap: "10px",
+                  display: "flex"
+                }
+              }
         }
       >
         <Slider

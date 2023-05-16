@@ -431,6 +431,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
       default:
         return (
           (gameData &&
+            gameData.howto &&
             `<h2 class="text-lg uppercase mb-2 font-neue-machina-semi">${gameData.howto.title}</h2><div class="mb-2">${gameData.howto.details}</div>`) ||
           ""
         )

@@ -31,6 +31,10 @@ const FreeToPlayGamesPage = () => {
   } = useGamePageListController()
   const { getTypeGamePathFolder } = useGlobal()
 
+  // useEffect(() => {
+  //   getTypeGamePathFolder(game)
+  // }, [game])
+
   return (
     <div className="flex flex-col">
       <MobileView className="MobileSlider mb-4">

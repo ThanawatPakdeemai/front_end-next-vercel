@@ -223,7 +223,7 @@ const useGlobal = (
     ) {
       return "free-to-play-games"
     }
-    if (_gameData.game_type === "storymode") {
+    if (_gameData?.game_type === "storymode") {
       return "story-mode-games"
     }
     if (_gameData?.is_NFT) {

@@ -28,7 +28,7 @@ import { useTranslation } from "react-i18next"
 import DetailCountGame from "@components/molecules/DetailCountGame"
 import { IGamesToPlay } from "@feature/event/interface/IEventsService"
 import JoinStickIcon from "@components/icons/JoinStickIcon"
-import RoomListBox from "@components/molecules/roomList/RoomListBox"
+import Timer from "@components/atoms/timer/Timer"
 
 interface IProps {
   gameType: IGetType
@@ -459,20 +459,27 @@ const GameCard = ({
 
           {data && (
             <>
-              {"date_end_event" in data &&
+              {
                 "date_end_event" in data &&
-                data.date_end_event &&
-                data.game_mode === "free-to-earn" && (
-                  <RoomListBox
-                    type="timer"
-                    timer={{
-                      time: new Date(data.date_end_event),
-                      onExpire: () => null
-                    }}
-                    color="green"
-                    shade="lemon"
-                  />
-                )}
+                  "date_end_event" in data &&
+                  data.date_end_event &&
+                  data.game_mode === "free-to-earn" && (
+                    <Timer
+                      start_time={new Date(data.date_start_event as Date)}
+                      end_time={new Date(data.date_end_event as Date)}
+                      showDayNumber
+                    />
+                  )
+                // <RoomListBox
+                //   type="timer"
+                //   timer={{
+                //     time: new Date(data.date_end_event),
+                //     onExpire: () => null
+                //   }}
+                //   color="green"
+                //   shade="lemon"
+                // />
+              }
             </>
           )}
 

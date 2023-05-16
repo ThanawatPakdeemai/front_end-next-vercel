@@ -27,6 +27,7 @@ import { useTranslation } from "react-i18next"
 import DetailCountGame from "@components/molecules/DetailCountGame"
 import { IGamesToPlay } from "@feature/event/interface/IEventsService"
 import JoinStickIcon from "@components/icons/JoinStickIcon"
+import RoomListBox from "@components/molecules/roomList/RoomListBox"
 
 interface IProps {
   gameType: IGetType
@@ -265,7 +266,11 @@ const GameCard = ({
           ) : (
             // Display for a;; game page list
             <Chip
-              label={t(gameTypeSplit)}
+              label={
+                data && "game_mode" in data && data.game_mode === "free-to-earn"
+                  ? "Free to earn"
+                  : t(gameTypeSplit)
+              }
               size="small"
               className={`${
                 isMobile && "ml-0"
@@ -301,6 +306,25 @@ const GameCard = ({
             // )
             // ))
           }
+
+          {data && (
+            <>
+              {"date_end_event" in data &&
+                "date_end_event" in data &&
+                data.date_end_event &&
+                data.game_mode === "free-to-earn" && (
+                  <RoomListBox
+                    type="timer"
+                    timer={{
+                      time: new Date(data.date_end_event),
+                      onExpire: () => null
+                    }}
+                    color="green"
+                    shade="lemon"
+                  />
+                )}
+            </>
+          )}
 
           {checkTimer && staminaRecovery && cooldown && setCooldown && (
             <TimerStamina

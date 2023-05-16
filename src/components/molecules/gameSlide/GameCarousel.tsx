@@ -159,6 +159,9 @@ const GameCarousel = ({
                     gap: "10px",
                     display: "flex"
                   },
+                  ".slick-slide.slick-cloned": {
+                    display: "none"
+                  },
                   ".timer-box": {
                     padding: "6px",
                     height: "28px",

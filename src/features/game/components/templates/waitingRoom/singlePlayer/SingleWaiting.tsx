@@ -222,7 +222,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
               gameId={data.id}
               gameType={getTypeGamePathFolder(data)}
             />
-            {data?.play_to_earn_status !== "free" && !data.tournament && (
+            {data.game_mode === "play-to-earn" && !data.tournament && (
               <CardBuyItem gameObject={data} />
             )}
           </Box>

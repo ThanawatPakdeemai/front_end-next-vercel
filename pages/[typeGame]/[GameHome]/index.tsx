@@ -164,6 +164,7 @@ export default function GameLobby() {
         )
 
       case "free-to-play-games":
+      case "free-to-earn-games":
         return (
           <Box
             component="div"

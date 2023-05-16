@@ -83,6 +83,7 @@ const GamePageDefault = ({
     switch (getTypeGamePathFolder(gameData as IGame)) {
       case "story-mode-games":
       case "free-to-play-games":
+      case "free-to-earn-games":
         return null
       default:
         return (

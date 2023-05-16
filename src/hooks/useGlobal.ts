@@ -212,17 +212,31 @@ const useGlobal = (
     if (
       (_gameData?.game_type === "singleplayer" ||
         _gameData?.game_type === "multiplayer") &&
-      _gameData?.play_to_earn_status === "in_progress"
+      _gameData.game_mode === "play-to-earn"
     ) {
       return "play-to-earn-games"
     }
     if (
       (_gameData?.game_type === "singleplayer" ||
         _gameData?.game_type === "multiplayer") &&
-      _gameData?.play_to_earn_status === "free"
+      _gameData.game_mode === "free-to-earn"
+    ) {
+      return "free-to-earn-games"
+    }
+    if (
+      (_gameData?.game_type === "singleplayer" ||
+        _gameData?.game_type === "multiplayer") &&
+      _gameData.game_mode === "free-to-play"
     ) {
       return "free-to-play-games"
     }
+    // if (
+    //   (_gameData?.game_type === "singleplayer" ||
+    //     _gameData?.game_type === "multiplayer") &&
+    //   _gameData?.play_to_earn_status === "free"
+    // ) {
+    //   return "free-to-play-games"
+    // }
     if (_gameData.game_type === "storymode") {
       return "story-mode-games"
     }
@@ -260,6 +274,7 @@ const useGlobal = (
         return "!bg-error-main !text-neutral-900"
 
       case "free-to-play-games":
+      case "free-to-earn-games":
         return "!bg-secondary-main !text-neutral-900"
 
       default:
@@ -338,7 +353,10 @@ const useGlobal = (
   }
 
   const isRedirectRoomlist = (_game: IGame): "/roomlist" | "" => {
-    if (_game.play_to_earn_status === "free") {
+    if (
+      _game.play_to_earn_status === "free" ||
+      _game.game_mode === "free-to-earn"
+    ) {
       return "/roomlist"
     }
     return ""

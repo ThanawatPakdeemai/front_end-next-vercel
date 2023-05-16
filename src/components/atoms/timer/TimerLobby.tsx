@@ -3,7 +3,7 @@ import React from "react"
 import { useTimer } from "react-timer-hook"
 
 interface IProp {
-  time: Date
+  time: Date | null | undefined
   initTheme: string
   onExpire?: () => void
   classNameText?: string

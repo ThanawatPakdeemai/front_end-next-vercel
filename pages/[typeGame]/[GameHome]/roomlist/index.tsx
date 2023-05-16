@@ -95,6 +95,7 @@ export default function GameRoomList() {
     switch (getTypeGamePathFolder(gameData)) {
       case "story-mode-games":
       case "free-to-play-games":
+      case "free-to-earn-games":
         return null
       case "play-to-earn-games":
         return (

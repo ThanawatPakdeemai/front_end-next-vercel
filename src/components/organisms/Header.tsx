@@ -82,7 +82,7 @@ const Header = () => {
 
   return (
     <div className="header-wrapper">
-      {showHeadPrice && <HeadPrice />}
+      {showHeadPrice && !isMobile && <HeadPrice />}
       {!isMobile && (
         <header className="header relative top-10 z-[999] lg:sticky">
           <Box

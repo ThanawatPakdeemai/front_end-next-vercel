@@ -74,7 +74,7 @@ const GameCarousel = ({
         {
           breakpoint: 480,
           settings: {
-            slidesToShow: list.length < 3 ? 1 : 3,
+            slidesToShow: list.length < 3 ? 2 : 3,
             slidesToScroll: list.length < 3 ? 1 : 3
           }
         }
@@ -171,38 +171,48 @@ const GameCarousel = ({
         >
           {list &&
             list.map((item, index) => (
-              <GameCard
-                key={item?.id ?? item.game_id}
-                menu={menu}
-                data={item}
-                showNo={showNo}
-                no={index + 1}
-                checkTimer={checkTimer}
-                cooldown={cooldown}
-                setCooldown={setCooldown}
-                staminaRecovery={staminaRecovery}
-                href={`/${
-                  item.is_NFT ? "arcade-emporium" : getTypeGamePathFolder(item)
-                }/${item.path}${isRedirectRoomlist(item).toString()}`}
-                onPlaying={onPlaying}
-                onHandleClick={() => {
-                  onHandleSetGameStore(
-                    item.is_NFT ? "arcade-emporium" : curType,
-                    item
-                  )
-                  if (onPlaying && item?.play_to_earn_status !== "free") {
-                    const itemSelect = gameItemList?.find(
-                      (ele) => ele.item_size === item.item_size
+              <Box
+                component="div"
+                className={`${list.length < 3 && "px-1"}`}
+                key={item.id}
+              >
+                <GameCard
+                  key={item?.id ?? item.game_id}
+                  menu={menu}
+                  data={item}
+                  showNo={showNo}
+                  no={index + 1}
+                  checkTimer={checkTimer}
+                  cooldown={cooldown}
+                  setCooldown={setCooldown}
+                  staminaRecovery={staminaRecovery}
+                  href={`/${
+                    item.is_NFT
+                      ? "arcade-emporium"
+                      : getTypeGamePathFolder(item)
+                  }/${item.path}${isRedirectRoomlist(item).toString()}`}
+                  onPlaying={onPlaying}
+                  onHandleClick={() => {
+                    onHandleSetGameStore(
+                      item.is_NFT ? "arcade-emporium" : curType,
+                      item
                     )
-                    if (itemSelect) onSetGameItemSelectd(itemSelect)
+                    if (onPlaying && item?.play_to_earn_status !== "free") {
+                      const itemSelect = gameItemList?.find(
+                        (ele) => ele.item_size === item.item_size
+                      )
+                      if (itemSelect) onSetGameItemSelectd(itemSelect)
+                    }
+                  }}
+                  gameType={
+                    item.is_NFT
+                      ? "arcade-emporium"
+                      : getTypeGamePathFolder(item)
                   }
-                }}
-                gameType={
-                  item.is_NFT ? "arcade-emporium" : getTypeGamePathFolder(item)
-                }
-                play_total_count={game?.play_total_count}
-                room_available={game?.game_room_available}
-              />
+                  play_total_count={game?.play_total_count}
+                  room_available={game?.game_room_available}
+                />
+              </Box>
             ))}
         </Slider>
       </Box>

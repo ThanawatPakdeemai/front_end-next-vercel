@@ -62,22 +62,22 @@ const GameCarousel = ({
             infinite: true,
             dots: false
           }
-        },
-        {
-          breakpoint: 640,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 2,
-            initialSlide: 2
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: list.length < 3 ? 2 : 3,
-            slidesToScroll: list.length < 3 ? 1 : 3
-          }
         }
+        // {
+        //   breakpoint: 640,
+        //   settings: {
+        //     slidesToShow: 2,
+        //     slidesToScroll: 2,
+        //     initialSlide: 2
+        //   }
+        // },
+        // {
+        //   breakpoint: 480,
+        //   settings: {
+        //     slidesToShow: list.length < 3 ? 2 : 3,
+        //     slidesToScroll: list.length < 3 ? 1 : 3
+        //   }
+        // }
       ]
     : [
         {

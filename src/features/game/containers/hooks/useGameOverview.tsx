@@ -20,6 +20,12 @@ import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGa
 import useGetReward from "@feature/rewardWeekly/containers/hooks/useGetReward"
 import { IWeeklyPoolByGameIdData } from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
 
+interface IPlayCount {
+  game_id: string
+  play_count: number
+  _id: string
+}
+
 /**
  * @description Game Overview Hook functions to handle all game overview data
  * @param gameId
@@ -456,7 +462,12 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
     if (gameDataState && "game_type" in gameDataState) {
       switch (gameType) {
         case "story-mode-games":
-          return gameDataState.play_total_count
+          // console.log(gameDataState.play_total_count) sometime data is Array
+          return typeof gameDataState?.play_total_count === "number"
+            ? gameDataState?.play_total_count
+            : (
+                gameDataState?.play_total_count as unknown as IPlayCount[]
+              )?.find((ele) => ele)?.play_count || 0
         default:
           return undefined
       }

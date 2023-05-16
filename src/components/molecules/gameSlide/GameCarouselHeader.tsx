@@ -46,7 +46,7 @@ interface IProps {
   showTitle?: boolean
 }
 
-const GameCarouselHeaderMobileSite = ({
+const GameCarouselHeader = ({
   menu,
   curType,
   setCurType,
@@ -227,4 +227,4 @@ const GameCarouselHeaderMobileSite = ({
     </div>
   )
 }
-export default memo(GameCarouselHeaderMobileSite)
+export default memo(GameCarouselHeader)

@@ -1,7 +1,8 @@
+/* eslint-disable max-len */
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { IHeaderSlide } from "@components/molecules/gameSlide/GameCarouselHeader"
 import NumberRank from "@feature/ranking/components/atoms/NumberRank"
-import { Chip } from "@mui/material"
+import { Box, Chip } from "@mui/material"
 import { motion } from "framer-motion"
 import React, { memo, useEffect, useState } from "react"
 import { Image } from "@components/atoms/image"
@@ -185,45 +186,193 @@ const GameCard = ({
       }
     }
   }
-
+  // FIXME  Boy เดี๋ยวมาแก้การ์ดดึ๋งๆ
   const renderCardContent = () => (
+    // <motion.div
+    //   className={`slick-card-container ${
+    //     isMobile && "!max-w-[125px]"
+    //   } flex h-auto flex-col justify-center blur-none`}
+    //   initial="init"
+    //   whileHover="onHover"
+    //   animate="animate"
+    //   onClick={() => {
+    //     setItemSelect({})
+    //     if (onHandleClick) onHandleClick()
+    //   }}
+    // >
+    //   {/* eslint-disable-next-line max-len */}
+    //   {/* relative flex h-auto  min-h-[138px] w-full flex-1 items-center justify-center overflow-hidden md:min-h-[238px] xl:w-[218px] */}
+    //   <motion.div className="game-card__wrapper relative flex-1">
+    //     {showNo && no && (
+    //       <NumberRank
+    //         index={no - 1}
+    //         fixColor={false}
+    //         className="slick-card-number absolute right-1 top-2 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
+    //       />
+    //     )}
+    //     <div
+    //       className={`game-card__image overflow-hidden rounded-3xl ${
+    //         isMobile ? "w-[110px]" : "w-[218px] px-4"
+    //       }`}
+    //     >
+    //       <Image
+    //         src={imageSrc}
+    //         alt="home-slide"
+    //         width={218}
+    //         height={218}
+    //         className={`slick-card-content h-full overflow-hidden rounded-md object-cover ${
+    //           partnerdata ? "sm:h-2/4 lg:h-4/6 xl:h-full" : ""
+    //         } ${isMobile ? "!h-[6.875rem] w-[6.875rem]" : "w-full"}`}
+    //       />
+    //     </div>
+    //     <motion.div
+    //       variants={btnCard}
+    //       className="absolute bottom-0 flex w-full justify-center text-white-primary"
+    //     >
+    //       <ButtonToggleIcon
+    //         startIcon={cooldown ? <IconHourglass /> : <JoinStickIcon />}
+    //         text={cooldown ? `${t("cooldown")}...` : t(lableButton)}
+    //         className={`btn-rainbow-theme z-[2] w-[198px] ${
+    //           cooldown ? "bg-error-main" : "bg-secondary-main "
+    //         } capitalize`}
+    //         type="button"
+    //       />
+    //     </motion.div>
+    //   </motion.div>
+    //   <div className=" z-[3] min-h-[110px]">
+    //     <div className="slick-card-desc flex h-10 w-[95%] items-center justify-between">
+    //       <p className="relative truncate uppercase hover:text-clip">
+    //         {(data as IGame)
+    //           ? (data as IGame).story
+    //           : (data as IGame)?.story ?? (data as IGame)?.name}
+    //         {(data as IRoomAvaliableData)
+    //           ? (data as IRoomAvaliableData)?.game_name
+    //           : (data as IGame)?.name ?? partnerdata?.name}
+    //       </p>
+    //     </div>
+    //     <div
+    //       className={`${
+    //         isMobile && "max-w-[110px]"
+    //       } relative flex w-full flex-wrap items-center gap-2 text-xs uppercase`}
+    //     >
+    //       {(data as IRoomAvaliableData) &&
+    //       "game_free_play" in (data as IRoomAvaliableData) ? (
+    //         // Display for Gameroom only
+    //         <Chip
+    //           label={t(chipLable)}
+    //           size="small"
+    //           color={onChipColor(theme)}
+    //           className="my-2 w-full font-bold md:w-auto"
+    //         />
+    //       ) : (
+    //         // Display for a;; game page list
+    //         <Chip
+    //           label={t(gameTypeSplit)}
+    //           size="small"
+    //           className={`${
+    //             isMobile && "ml-0"
+    //           } mx-2 my-2 w-full font-bold md:mx-0 md:w-auto ${getColorChipByGameType(
+    //             gameType
+    //           )}`}
+    //         />
+    //       )}
+    //       {partnerdata && (
+    //         <Chip
+    //           label={partnerdata.genres?.map((el) => `${el.name}, `)}
+    //           size="small"
+    //           className={`w-full font-bold md:w-auto ${getColorChipByGameType(
+    //             getTypeGamePartnerPathFolder(partnerdata)
+    //           )}`}
+    //         />
+    //       )}
+    //       {
+    //         onPlaying && (
+    //           // (data as IRoomAvaliableData)?
+    //           // .map(
+    //           // (el) =>
+    //           // el?.room_list?.map((ele) => (
+    //           <Chip
+    //             key={(data as IRoomAvaliableData)?.game_id}
+    //             label={`${
+    //               (data as IRoomAvaliableData)?.item_list?.[0]?.item_name
+    //             }`}
+    //             size="small"
+    //             className="w-fit !bg-neutral-400 font-bold !text-neutral-700"
+    //           />
+    //         )
+    //         // )
+    //         // ))
+    //       }
+
+    //       {checkTimer && staminaRecovery && cooldown && setCooldown && (
+    //         <TimerStamina
+    //           time={staminaRecovery}
+    //           show={cooldown}
+    //           setShow={setCooldown}
+    //         />
+    //       )}
+    //     </div>
+    //     {onPlaying && (
+    //       <div className="mt-2 flex w-full flex-wrap items-center gap-2 text-xs uppercase">
+    //         <LocalActivityOutlinedIcon className=" text-[18px] font-thin" />
+    //         {(data as IRoomAvaliableData)?.item_list?.map((el) =>
+    //           el?.room_list?.map((room) => (
+    //             <>
+    //               <Link
+    //                 // href=""
+    //                 href={`/${room.game_type}-games/${room.game_path}/roomlist`}
+    //                 key={el.item_size}
+    //               >
+    //                 <Chip
+    //                   onClick={() => setItemSelect(el)}
+    //                   label={`${
+    //                     !(data as IRoomAvaliableData)?.game_free_play
+    //                       ? `${el.item_size} / `
+    //                       : ""
+    //                   }  rooms ${room?.room_number}`}
+    //                   size="small"
+    //                   className=" w-fit cursor-pointer !border border-solid !border-neutral-700 !bg-primary-main font-bold !text-primary-contrastText"
+    //                 />
+    //               </Link>
+    //             </>
+    //           ))
+    //         )}
+    //       </div>
+    //     )}
+    //     <DetailCountGame
+    //       play_total_count={play_total_count}
+    //       room_available={room_available}
+    //     />
+    //   </div>
+    // </motion.div>
     <motion.div
-      className={`slick-card-container ${
-        isMobile && "!max-w-[125px]"
-      } flex h-auto flex-col justify-center blur-none`}
+      className="slick-card-container flex flex-col justify-center blur-none"
       initial="init"
       whileHover="onHover"
       animate="animate"
-      onClick={() => {
-        setItemSelect({})
-        if (onHandleClick) onHandleClick()
-      }}
     >
-      {/* eslint-disable-next-line max-len */}
-      {/* relative flex h-auto  min-h-[138px] w-full flex-1 items-center justify-center overflow-hidden md:min-h-[238px] xl:w-[218px] */}
-      <motion.div className="game-card__wrapper relative flex-1">
-        {showNo && no && (
+      <motion.div className="relative flex w-full items-center justify-center overflow-hidden xl:h-[218px]">
+        {showNo && no ? (
           <NumberRank
             index={no - 1}
             fixColor={false}
             className="slick-card-number absolute right-1 top-2 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
           />
-        )}
-        <div
-          className={`${
-            !isMobile && "game-card__image overflow-hidden rounded-3xl"
-          }`}
-        >
+        ) : null}
+        <Box component="div">
           <Image
             src={imageSrc}
             alt="home-slide"
             width={218}
             height={218}
-            className={`slick-card-content h-full overflow-hidden rounded-md object-cover ${
-              partnerdata ? "sm:h-2/4 lg:h-4/6 xl:h-full" : ""
-            } ${isMobile ? "!h-[6.875rem] w-[6.875rem]" : "w-full"}`}
+            className={`aspect-[3/2] rounded-3xl object-cover ${
+              isMobile
+                ? "h-[6.875rem] w-[6.875rem]"
+                : "h-[13.625rem] w-[13.625rem]"
+            }`}
+            onClick={onHandleClick}
           />
-        </div>
+        </Box>
         <motion.div
           variants={btnCard}
           className="absolute bottom-0 flex w-full justify-center text-white-primary"
@@ -231,6 +380,7 @@ const GameCard = ({
           <ButtonToggleIcon
             startIcon={cooldown ? <IconHourglass /> : <JoinStickIcon />}
             text={cooldown ? `${t("cooldown")}...` : t(lableButton)}
+            handleClick={onHandleClick}
             className={`btn-rainbow-theme z-[2] w-[198px] ${
               cooldown ? "bg-error-main" : "bg-secondary-main "
             } capitalize`}
@@ -366,6 +516,37 @@ const GameCard = ({
           room_available={room_available}
         />
       </div>
+      {/* <div className="relative z-[3]">
+        <div className="relative grid w-full grid-cols-2 gap-2 text-xs uppercase">
+          <Chip
+            label={chipLable}
+            size="small"
+            color={onChipColor(theme)}
+            className="font-bold"
+          />
+          {partnerdata ? (
+            <Chip
+              label={
+                partnerdata.genres &&
+                partnerdata.genres.map((el) => `${el.name}, `)
+              }
+              size="small"
+              color={onChipColor("default")}
+              className="font-bold"
+            />
+          ) : (
+            ""
+          )}
+
+          {checkTimer && staminaRecovery && cooldown && setCooldown ? (
+            <TimerStamina
+              time={staminaRecovery}
+              show={cooldown}
+              setShow={setCooldown}
+            />
+          ) : null}
+        </div>
+      </div> */}
     </motion.div>
   )
   return href ? (

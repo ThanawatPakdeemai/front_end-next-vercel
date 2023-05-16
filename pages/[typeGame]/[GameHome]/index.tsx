@@ -102,6 +102,7 @@ export default function GameLobby() {
   }, [gameData, onSetGameData])
 
   const getTemplateLobby = () => {
+    // FIXME Boy code ตรงนี้ยังไม่ดีคควรเขียนใหม่
     if (gameData) {
       switch (gameData.game_type) {
         // case "storymode":
@@ -109,11 +110,20 @@ export default function GameLobby() {
         default:
           return (
             <GameContent
-              gameId={gameData.id}
+              gameId={gameData?.id}
               gameType={getTypeGamePathFolder(gameData)}
               themeColor={getColorChipByGameType(
                 getTypeGamePathFolder(gameData)
               )}
+              // gameId={gameData?.id}
+              // gameType={
+              //   getTypeGamePathFolder(gameData) === "story-mode-games"
+              //     ? "storymode"
+              //     : getTypeGamePathFolder(gameData)
+              // }
+              // themeColor={getColorChipByGameType(
+              //   getTypeGamePathFolder(gameData)
+              // )}
             />
           )
       }

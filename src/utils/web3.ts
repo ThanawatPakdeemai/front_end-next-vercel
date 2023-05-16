@@ -4,7 +4,7 @@ import { HttpProviderOptions } from "web3-core-helpers"
 import { ARCHIVED_NODE } from "@constants/endpoints"
 import { ethers, providers } from "ethers"
 import CONFIGS from "@configs/index"
-import getRpcUrl from "@utils/getRpcUrl"
+import getRpcUrl from "./getRpcUrl"
 
 const RPC_URL = getRpcUrl()
 const httpProvider = new Web3.providers.HttpProvider(RPC_URL, {

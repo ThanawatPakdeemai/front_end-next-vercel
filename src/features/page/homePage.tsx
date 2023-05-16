@@ -324,7 +324,9 @@ const Home = () => {
             {p2eGame && !loadingDataP2eGame ? (
               <GameCarousel
                 menu={P2EHeaderMenu}
-                list={p2eGame}
+                list={p2eGame.filter(
+                  (_item) => _item.play_to_earn_status === "in_progress"
+                )}
                 curType={p2eCurType}
                 setCurType={setP2ECurType}
                 showNo

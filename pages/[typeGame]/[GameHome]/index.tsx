@@ -110,11 +110,6 @@ export default function GameLobby() {
         default:
           return (
             <GameContent
-              // gameId={gameData?.id}
-              // gameType="storymode"
-              // themeColor={getColorChipByGameType(
-              //   getTypeGamePathFolder(gameData)
-              // )}
               gameId={gameData?.id}
               gameType={
                 getTypeGamePathFolder(gameData) === "story-mode-games"

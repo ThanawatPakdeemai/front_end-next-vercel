@@ -396,7 +396,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
         case "arcade-emporium":
           return gameData.is_NFT &&
             "is_NFT" in gameData &&
-            gameData.NFT_info.NFT_token !== null
+            gameData?.NFT_info?.NFT_token !== null
             ? gameData.NFT_Owner
             : "-"
         default:

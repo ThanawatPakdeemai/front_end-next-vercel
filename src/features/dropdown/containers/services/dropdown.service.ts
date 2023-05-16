@@ -50,11 +50,16 @@ const getGameAlls = () =>
 // IFilterGames
 const getGamesByCategoryId = (data: IFilterGamesByKey) =>
   new Promise<IGameAllResponse>((resolve, reject) => {
+    // This is optimized performance from the backend api
     services
       .post<IGameAllResponse>(
-        `${CONFIGS.BASE_URL.API}/game/filter/game-all`,
+        `${CONFIGS.BASE_URL.API}/game/filter/game-all-new`,
         data
       )
+      // .post<IGameAllResponse>(
+      //   `${CONFIGS.BASE_URL.API}/game/filter/game-all`,
+      //   data
+      // )
       .then((res) => {
         resolve(res.data)
       })

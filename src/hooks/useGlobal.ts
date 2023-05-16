@@ -2,7 +2,7 @@ import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState, useRef } from "react"
 import {
   IFilterGamesByKey,
   IGame,
@@ -392,17 +392,26 @@ const useGlobal = (
   /** This is only temporary code for hide marketplace in production */
   const _mode = process.env.NEXT_PUBLIC_MODE
 
+  const redirectionDone = useRef(false)
+
   useEffect(() => {
     const redirectIfNecessary = () => {
-      if (router.asPath.includes("marketplace") && _mode === "production") {
+      if (
+        router.asPath.includes("marketplace") &&
+        _mode === "production" &&
+        !redirectionDone.current
+      ) {
         router.replace("/404")
         setIsShowMarket(false)
+        redirectionDone.current = true
       } else if (
         router.asPath.includes("marketplace") &&
-        _mode === "development"
+        _mode === "development" &&
+        !redirectionDone.current
       ) {
-        router.replace("/marketplace")
+        router.replace(router.asPath)
         setIsShowMarket(true)
+        redirectionDone.current = true
       }
     }
 

@@ -53,7 +53,8 @@ const useArcadeEmporiumGames = () => {
         nftgame: true
       }),
     keepPreviousData: true,
-    staleTime: Infinity
+    staleTime: Infinity,
+    retry: 3
   })
 
   return {

@@ -212,7 +212,7 @@ const useGlobal = (
     if (
       (_gameData?.game_type === "singleplayer" ||
         _gameData?.game_type === "multiplayer") &&
-      _gameData.game_mode !== "free-to-earn"
+      _gameData.game_mode === "play-to-earn"
     ) {
       return "play-to-earn-games"
     }
@@ -221,15 +221,22 @@ const useGlobal = (
         _gameData?.game_type === "multiplayer") &&
       _gameData.game_mode === "free-to-earn"
     ) {
-      return "free-to-play-games"
+      return "free-to-earn-games"
     }
     if (
       (_gameData?.game_type === "singleplayer" ||
         _gameData?.game_type === "multiplayer") &&
-      _gameData?.play_to_earn_status === "free"
+      _gameData.game_mode === "free-to-play"
     ) {
       return "free-to-play-games"
     }
+    // if (
+    //   (_gameData?.game_type === "singleplayer" ||
+    //     _gameData?.game_type === "multiplayer") &&
+    //   _gameData?.play_to_earn_status === "free"
+    // ) {
+    //   return "free-to-play-games"
+    // }
     if (_gameData.game_type === "storymode") {
       return "story-mode-games"
     }

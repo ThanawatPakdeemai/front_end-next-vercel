@@ -220,7 +220,7 @@ export interface IGame extends IGameArcadeEmporium {
   // When is_NFT: true
   NFT_info: INFTInfo
   game_room_available?: IGameRoomAvailable[]
-  game_mode: "free-to-earn" | "play-to-earn" | ""
+  game_mode: "free-to-earn" | "play-to-earn" | "free-to-play"
 }
 
 interface IGameHowto {

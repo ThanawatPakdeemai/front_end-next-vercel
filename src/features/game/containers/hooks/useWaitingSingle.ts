@@ -326,7 +326,10 @@ const useWaitingSingle = () => {
   }
 
   const checkGameFree = () => {
-    if (data?.play_to_earn && data?.play_to_earn_status === "free") {
+    if (
+      (data?.play_to_earn && data?.play_to_earn_status === "free") ||
+      data?.game_mode === "free-to-earn"
+    ) {
       return true
     }
     return false

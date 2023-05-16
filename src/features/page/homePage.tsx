@@ -130,7 +130,7 @@ const Home = () => {
         <MobileView>
           <Box
             component="div"
-            className="pt-20"
+            className=""
           >
             <BannerSlide />
             <div className="my-2 h-full w-full lg:mt-10 xl:mt-[140px]">

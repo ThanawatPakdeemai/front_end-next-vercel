@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { useEffect, useState } from "react"
 import useGlobal from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
@@ -78,7 +79,7 @@ const useGamePageListController = (gameType?: IGetType) => {
         setGameFilter([])
       }
       const filterData: IFilterGamesByKey = {
-        limit,
+        limit: getGameTypeFilter() === "free-to-earn-games" ? 9999 : limit,
         skip: page,
         sort: "_id",
         search: searchDropdown,
@@ -86,17 +87,25 @@ const useGamePageListController = (gameType?: IGetType) => {
         item: gameItemDropdown,
         device: deviceDropdown,
         game_type:
-          getGameTypeFilter() === "arcade-emporium"
+          getGameTypeFilter() === "free-to-earn-games"
+            ? "free-to-play-games"
+            : getGameTypeFilter() === "arcade-emporium"
             ? "all"
             : getGameTypeFilter(),
         tournament: false,
-        // nftgame: getGameTypeByPathname() === "arcade-emporium" ? true : "all"
         nftgame: getGameTypeFilter() === "arcade-emporium" ? true : "all"
       }
       mutateGetGamesByCategoryId(filterData).then((res) => {
         if (res) {
           const { data, info } = res
-          setGameFilter(data)
+          if (getGameTypeFilter() === "free-to-earn-games") {
+            const _filterFreeToEarnOnly = data?.filter(
+              (item) => item.game_mode === "free-to-earn"
+            )
+            setGameFilter(_filterFreeToEarnOnly)
+          } else {
+            setGameFilter(data)
+          }
           setTotalCount(info ? info.totalCount : 1)
         }
       })

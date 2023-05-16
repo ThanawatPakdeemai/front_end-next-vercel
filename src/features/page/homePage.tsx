@@ -71,13 +71,15 @@ const Home = () => {
   }
 
   const [f2pGame, setF2PGame] = useState<IGame[]>()
-  const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-play-games")
+  const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-earn-games")
 
   const [p2eGame, setP2EGame] = useState<IGame[]>()
   const [p2eCurType, setP2ECurType] = useState<IGetType>("play-to-earn-games")
 
   const getGameTypeF2EByTitleClicked = (): IGetType => {
     switch (f2pCurType) {
+      case "free-to-earn-games":
+        return "free-to-earn-games"
       case "story-mode-games":
         return "storymode"
       default:
@@ -324,7 +326,9 @@ const Home = () => {
             {p2eGame && !loadingDataP2eGame ? (
               <GameCarousel
                 menu={P2EHeaderMenu}
-                list={p2eGame}
+                list={p2eGame.filter(
+                  (_item) => _item.play_to_earn_status === "in_progress"
+                )}
                 curType={p2eCurType}
                 setCurType={setP2ECurType}
                 showNo

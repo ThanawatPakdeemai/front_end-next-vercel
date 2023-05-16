@@ -109,10 +109,9 @@ const useInvenMaterial = () => {
     })
 
   const onTransferMaterial = async (
-    _from: string,
     _to: string,
     _materialId: string,
-    _materialAmount: number
+    _materialAmount: number = 1
   ) => {
     setOpen(MESSAGES.transaction_processing_order)
     await transferMaterial(_to, _materialId, _materialAmount)

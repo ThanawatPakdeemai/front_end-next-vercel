@@ -123,6 +123,7 @@ export default function ArcadeEmporiumGameDetails() {
         )
 
       case "free-to-play-games":
+      case "free-to-earn-games":
         return (
           <Box
             component="div"

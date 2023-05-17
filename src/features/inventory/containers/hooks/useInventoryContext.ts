@@ -1,4 +1,4 @@
-import useAvatarReefServ from "@feature/avatarReef/containers/hook/useAvatarReefServ"
+import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAvatarReef"
 import { useGetBuildingById } from "@feature/building/containers/hooks/useGetMyBuilding"
 import { useGetMyArcGameById } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
 import useInvenGameItem from "@feature/gameItem/inventory/containers/hooks/useInvenGameItem"
@@ -56,7 +56,7 @@ const useInventoryContext = () => {
   const { mutateGetBuildingById } = useGetBuildingById()
   const { mutateGetNakapunkById } = useGetNakPunkById()
   const { mutateGetMyArcGameById } = useGetMyArcGameById()
-  const { mutateGetNFTAvatarById } = useAvatarReefServ()
+  const { mutateGetNFTAvatarById } = useMutateAvatarReef()
 
   const fetchInvenItemDataById = async () => {
     let _data: IInventoryItemData = {

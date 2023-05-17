@@ -1,5 +1,5 @@
 import CONFIGS from "@configs/index"
-import useAvatarReefServ from "@feature/avatarReef/containers/hook/useAvatarReefServ"
+import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAvatarReef"
 import { useGetMyBuilding } from "@feature/building/containers/hooks/useGetMyBuilding"
 import { useGetMyArcGame } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
 import useInventoryContext from "@feature/inventory/containers/hooks/useInventoryContext"
@@ -30,7 +30,7 @@ const useMartketOwner = () => {
   const { mutateGetOwnerBuilding } = useGetMyBuilding()
   const { mutateGetMyNakaPunk } = useGetMyNakaPunk()
   const { mutateGeyMyArcGame } = useGetMyArcGame()
-  const { mutateGetMyAvatarReef } = useAvatarReefServ()
+  const { mutateGetMyAvatarReef } = useMutateAvatarReef()
   const { gameItemList, materialList } = useInventoryContext()
 
   const fetchOwnerDataList = async () => {

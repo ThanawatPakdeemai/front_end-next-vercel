@@ -50,6 +50,7 @@ const TopPlayerFreeToEarn = ({
                 player={item}
                 itemSrc={gameItem.image_icon || ""}
                 itemName={gameItem.name || ""}
+                itemPrice={gameItem.price}
               />
             ))}
           </div>

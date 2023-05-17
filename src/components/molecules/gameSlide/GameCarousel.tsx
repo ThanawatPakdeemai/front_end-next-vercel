@@ -161,15 +161,6 @@ const GameCarousel = ({
                   },
                   ".slick-slide.slick-cloned": {
                     display: "none"
-                  },
-                  ".timer-box": {
-                    padding: "6px",
-                    height: "28px",
-                    width: "80px",
-                    ".MuiTypography-root": {
-                      fontSize: "12px"
-                      // width: "100px"
-                    }
                   }
                 }
               }

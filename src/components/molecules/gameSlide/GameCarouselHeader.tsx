@@ -187,11 +187,7 @@ const GameCarouselHeader = ({
           <div className="h-10  w-fit max-w-sm flex-auto items-center justify-between gap-4 text-[8px] md:flex lg:flex-none">
             {!hideViewAll ? (
               <Link
-                href={`/${
-                  curType === "free-to-earn-games"
-                    ? "free-to-play-games"
-                    : curType
-                }`}
+                href={`/${curType}`}
                 className="h-full"
               >
                 <ButtonToggleIcon

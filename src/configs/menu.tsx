@@ -215,6 +215,13 @@ export const MENU_GUEST: IMenu[] = [
     external: false
   },
   {
+    id: "free-to-earn-games",
+    label: "Free To Earn Games",
+    icon: <IconDollar.Mask className="stroke-neutral-300" />,
+    href: "/free-to-earn-games",
+    external: false
+  },
+  {
     id: "story-mode-games",
     label: "Story Mode Games",
     icon: <GameStoryIcon stroke="#E1E2E2" />,

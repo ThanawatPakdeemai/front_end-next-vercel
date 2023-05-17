@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import { useEffect, useState } from "react"
 import useGlobal from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
@@ -10,7 +9,7 @@ import {
 import useFilterGameList from "@feature/dropdown/containers/hooks/useFilterGameList"
 import { useRouter } from "next/router"
 
-const useGamePageListController = (gameType?: IGetType) => {
+const useGamePageListController = (gameType?: IGetType, _limit?: number) => {
   const router = useRouter()
   const categoryId = router.query.id
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
@@ -26,7 +25,6 @@ const useGamePageListController = (gameType?: IGetType) => {
     pager,
     setTotalCount,
     getTypeGamePathFolder,
-    getGameTypeByPathname,
     isRedirectRoomlist
   } = useGlobal()
   const {
@@ -47,14 +45,12 @@ const useGamePageListController = (gameType?: IGetType) => {
    * @description Get game type by pathname
    * @returns
    */
-  const getGameTypeFilter = () => {
+  const getGameTypeFilter = (): IGetType => {
     if (categoryId) {
       return "all"
     }
-    if (gameType) {
-      return gameType
-    }
-    return getGameTypeByPathname()
+    if (!gameType) return "all"
+    return gameType
   }
 
   useEffect(() => {
@@ -79,7 +75,7 @@ const useGamePageListController = (gameType?: IGetType) => {
         setGameFilter([])
       }
       const filterData: IFilterGamesByKey = {
-        limit: getGameTypeFilter() === "free-to-earn-games" ? 9999 : limit,
+        limit: _limit || limit,
         skip: page,
         sort: "_id",
         search: searchDropdown,
@@ -87,9 +83,7 @@ const useGamePageListController = (gameType?: IGetType) => {
         item: gameItemDropdown,
         device: deviceDropdown,
         game_type:
-          getGameTypeFilter() === "free-to-earn-games"
-            ? "free-to-play-games"
-            : getGameTypeFilter() === "arcade-emporium"
+          getGameTypeFilter() === "arcade-emporium"
             ? "all"
             : getGameTypeFilter(),
         tournament: false,
@@ -98,14 +92,7 @@ const useGamePageListController = (gameType?: IGetType) => {
       mutateGetGamesByCategoryId(filterData).then((res) => {
         if (res) {
           const { data, info } = res
-          if (getGameTypeFilter() === "free-to-earn-games") {
-            const _filterFreeToEarnOnly = data?.filter(
-              (item) => item.game_mode === "free-to-earn"
-            )
-            setGameFilter(_filterFreeToEarnOnly)
-          } else {
-            setGameFilter(data)
-          }
+          setGameFilter(data)
           setTotalCount(info ? info.totalCount : 1)
         }
       })

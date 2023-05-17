@@ -14,7 +14,7 @@ import CardGameSlider from "@src/mobile/molecules/CardGameSlider"
 import { MobileView } from "react-device-detect"
 import { IGame } from "@feature/game/interfaces/IGameService"
 
-const FreeToPlayGamesPage = () => {
+const FreeToEarnGamesPage = () => {
   const {
     loadingFilterGame,
     limit,
@@ -30,19 +30,17 @@ const FreeToPlayGamesPage = () => {
     cooldown,
     setCooldown
   } = useGamePageListController("free-to-play-games")
-  const { getTypeGamePathFolder } = useGlobal()
+  const { getTypeGamePathFolder, isFreeToEarnGame } = useGlobal()
 
-  const [f2pGame, setF2PGame] = useState<IGame[]>()
+  const [f2eGame, setF2EGame] = useState<IGame[]>()
 
   useEffect(() => {
     let load = false
 
     if (!load) {
       if (gameFilter && gameFilter.length > 0) {
-        const _filterF2P = gameFilter.filter(
-          (item) => item.game_mode === "free-to-play"
-        )
-        setF2PGame(_filterF2P)
+        const _filterF2E = gameFilter.filter((item) => isFreeToEarnGame(item))
+        setF2EGame(_filterF2E)
       }
     }
 
@@ -66,8 +64,8 @@ const FreeToPlayGamesPage = () => {
       <div className="mx-2 mb-6 grid grid-cols-2 gap-x-2 gap-y-4 md:mx-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {loadingFilterGame
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
-          : f2pGame &&
-            f2pGame.map((game) => (
+          : f2eGame &&
+            f2eGame.map((game) => (
               <GameCard
                 key={game.id}
                 menu={F2PHeaderMenu}
@@ -115,4 +113,4 @@ const FreeToPlayGamesPage = () => {
   )
 }
 
-export default memo(FreeToPlayGamesPage)
+export default memo(FreeToEarnGamesPage)

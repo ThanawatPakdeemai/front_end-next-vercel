@@ -10,6 +10,8 @@ import useGlobal, { isMobile } from "@hooks/useGlobal"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import CONFIGS from "@configs/index"
+import TopPlayerFreeToEarn from "@feature/ranking/components/template/TopPlayerFreeToEarn"
+import { IGameItem } from "@feature/gameItem/interfaces/IGameItemService"
 
 const BuyItemBody = dynamic(
   () => import("@components/templates/game/BuyItemBody"),
@@ -84,7 +86,7 @@ export default function GameRoomList() {
   const { GameHome, id } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
   const { onSetGameData } = useGameStore()
-  const { getTypeGamePathFolder } = useGlobal()
+  const { getTypeGamePathFolder, isFreeToEarnGame } = useGlobal()
   const { refetchItemSelected } = useBuyGameItemController()
 
   /**
@@ -164,6 +166,13 @@ export default function GameRoomList() {
                 gameId={gameData.id}
                 gameType={getTypeGamePathFolder(gameData)}
               />
+              {isFreeToEarnGame(gameData) && (
+                <TopPlayerFreeToEarn
+                  gameId={gameData.id}
+                  total={10}
+                  gameItem={gameData.item[0] || ({} as IGameItem)}
+                />
+              )}
               {renderFormBuyItem()}
             </Box>
           }

@@ -1,4 +1,4 @@
-import React, { memo } from "react"
+import React, { memo, useEffect, useState } from "react"
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { F2PHeaderMenu } from "@constants/gameSlide"
@@ -12,6 +12,7 @@ import NoData from "@components/molecules/NoData"
 import BodyCategories from "@src/mobile/molecules/BodyCategories"
 import CardGameSlider from "@src/mobile/molecules/CardGameSlider"
 import { MobileView } from "react-device-detect"
+import { IGame } from "@feature/game/interfaces/IGameService"
 
 const FreeToPlayGamesPage = () => {
   const {
@@ -28,12 +29,28 @@ const FreeToPlayGamesPage = () => {
     staminaRecovery,
     cooldown,
     setCooldown
-  } = useGamePageListController()
+  } = useGamePageListController("free-to-play-games")
   const { getTypeGamePathFolder } = useGlobal()
 
-  // useEffect(() => {
-  //   getTypeGamePathFolder(game)
-  // }, [game])
+  const [f2pGame, setF2PGame] = useState<IGame[]>()
+
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      if (gameFilter && gameFilter.length > 0) {
+        const _filterF2P = gameFilter.filter(
+          (item) => item.game_mode === "free-to-play"
+        )
+        setF2PGame(_filterF2P)
+      }
+    }
+
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameFilter])
 
   return (
     <div className="flex flex-col">
@@ -49,8 +66,8 @@ const FreeToPlayGamesPage = () => {
       <div className="mx-2 mb-6 grid grid-cols-2 gap-x-2 gap-y-4 md:mx-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {loadingFilterGame
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
-          : gameFilter &&
-            gameFilter.map((game) => (
+          : f2pGame &&
+            f2pGame.map((game) => (
               <GameCard
                 key={game.id}
                 menu={F2PHeaderMenu}

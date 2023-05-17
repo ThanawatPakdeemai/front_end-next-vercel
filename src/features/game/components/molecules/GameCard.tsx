@@ -28,7 +28,7 @@ import { useTranslation } from "react-i18next"
 import DetailCountGame from "@components/molecules/DetailCountGame"
 import { IGamesToPlay } from "@feature/event/interface/IEventsService"
 import JoinStickIcon from "@components/icons/JoinStickIcon"
-import Timer from "@components/atoms/timer/Timer"
+import RoomListBox from "@components/molecules/roomList/RoomListBox"
 
 interface IProps {
   gameType: IGetType
@@ -388,15 +388,16 @@ const GameCard = ({
           />
         </motion.div>
       </motion.div>
-      <div className=" z-[3] min-h-[110px]">
+      <div className="z-[3] min-h-[110px]">
         <div className="slick-card-desc flex h-10 w-[95%] items-center justify-between">
           <p className="relative truncate uppercase hover:text-clip">
-            {(data as IGame)
+            {(data as IGame).name}
+            {/* {(data as IGame)
               ? (data as IGame).story
               : (data as IGame)?.story ?? (data as IGame)?.name}
             {(data as IRoomAvaliableData)
               ? (data as IRoomAvaliableData)?.game_name
-              : (data as IGame)?.name ?? partnerdata?.name}
+              : (data as IGame)?.name ?? partnerdata?.name} */}
           </p>
         </div>
         <div
@@ -438,49 +439,48 @@ const GameCard = ({
               )}`}
             />
           )}
-          {
-            onPlaying && (
-              // (data as IRoomAvaliableData)?
-              // .map(
-              // (el) =>
-              // el?.room_list?.map((ele) => (
-              <Chip
-                key={(data as IRoomAvaliableData)?.game_id}
-                label={`${
-                  (data as IRoomAvaliableData)?.item_list?.[0]?.item_name
-                }`}
-                size="small"
-                className="w-fit !bg-neutral-400 font-bold !text-neutral-700"
-              />
-            )
-            // )
-            // ))
-          }
+          {onPlaying && (
+            <Chip
+              key={(data as IRoomAvaliableData)?.game_id}
+              label={`${
+                (data as IRoomAvaliableData)?.item_list?.[0]?.item_name
+              }`}
+              size="small"
+              className="w-fit !bg-neutral-400 font-bold !text-neutral-700"
+            />
+          )}
 
           {data && (
-            <>
-              {
+            <Box
+              component="div"
+              sx={{
+                ".timer-box": {
+                  padding: "6px",
+                  height: "27px",
+                  width: "115px",
+                  borderRadius: "4px",
+                  ".MuiTypography-root": {
+                    fontSize: "12px"
+                  }
+                }
+              }}
+            >
+              {"date_end_event" in data &&
                 "date_end_event" in data &&
-                  "date_end_event" in data &&
-                  data.date_end_event &&
-                  data.game_mode === "free-to-earn" && (
-                    <Timer
-                      start_time={new Date(data.date_start_event as Date)}
-                      end_time={new Date(data.date_end_event as Date)}
-                      showDayNumber
-                    />
-                  )
-                // <RoomListBox
-                //   type="timer"
-                //   timer={{
-                //     time: new Date(data.date_end_event),
-                //     onExpire: () => null
-                //   }}
-                //   color="green"
-                //   shade="lemon"
-                // />
-              }
-            </>
+                data.date_end_event &&
+                data.game_mode === "free-to-earn" && (
+                  <RoomListBox
+                    type="timer"
+                    timer={{
+                      time: new Date(data.date_end_event),
+                      onExpire: () => null
+                    }}
+                    color="green"
+                    shade="lemon"
+                    showTotalHours
+                  />
+                )}
+            </Box>
           )}
 
           {checkTimer && staminaRecovery && cooldown && setCooldown && (

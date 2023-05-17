@@ -1,18 +1,20 @@
+import React, { memo, useEffect, useState } from "react"
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
-import { P2EHeaderMenu } from "@constants/gameSlide"
-import React, { memo } from "react"
+import { F2PHeaderMenu } from "@constants/gameSlide"
+import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 import { v4 as uuid } from "uuid"
 import GameCard from "@feature/game/components/molecules/GameCard"
-import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 import { Box } from "@mui/material"
 import DropdownLimit from "@components/atoms/DropdownLimit"
+import useGlobal from "@hooks/useGlobal"
 import NoData from "@components/molecules/NoData"
 import BodyCategories from "@src/mobile/molecules/BodyCategories"
 import CardGameSlider from "@src/mobile/molecules/CardGameSlider"
 import { MobileView } from "react-device-detect"
+import { IGame } from "@feature/game/interfaces/IGameService"
 
-const PlayToEarnGamesPage = () => {
+const FreeToEarnGamesPage = () => {
   const {
     loadingFilterGame,
     limit,
@@ -20,10 +22,34 @@ const PlayToEarnGamesPage = () => {
     totalCount,
     page,
     setPage,
+    onSetGameStore,
+    gameLink,
     pager,
     setLimit,
-    onSetGameStore
-  } = useGamePageListController("play-to-earn-games")
+    staminaRecovery,
+    cooldown,
+    setCooldown
+  } = useGamePageListController("free-to-play-games")
+  const { getTypeGamePathFolder, isFreeToEarnGame } = useGlobal()
+
+  const [f2eGame, setF2EGame] = useState<IGame[]>()
+
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      if (gameFilter && gameFilter.length > 0) {
+        const _filterF2E = gameFilter.filter((item) => isFreeToEarnGame(item))
+        setF2EGame(_filterF2E)
+      }
+    }
+
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameFilter])
+
   return (
     <div className="flex flex-col">
       <MobileView className="MobileSlider mb-4">
@@ -35,33 +61,32 @@ const PlayToEarnGamesPage = () => {
           </div>
         )}
       </MobileView>
-      <div className="mx-2 mb-6 grid grid-cols-2 gap-x-4 gap-y-4 md:mx-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="mx-2 mb-6 grid grid-cols-2 gap-x-2 gap-y-4 md:mx-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {loadingFilterGame
           ? [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)
-          : gameFilter &&
-            gameFilter.map((game) => (
+          : f2eGame &&
+            f2eGame.map((game) => (
               <GameCard
                 key={game.id}
-                menu={P2EHeaderMenu}
+                menu={F2PHeaderMenu}
                 data={game}
-                href={`/${
-                  game.is_NFT ? "arcade-emporium" : "play-to-earn-games"
-                }/${game.path}`}
+                checkTimer
+                staminaRecovery={staminaRecovery}
+                cooldown={cooldown}
+                setCooldown={setCooldown}
+                href={gameLink(game)}
+                gameType={getTypeGamePathFolder(game)}
                 onHandleClick={() => onSetGameStore(game)}
-                gameType={
-                  game.is_NFT ? "arcade-emporium" : "play-to-earn-games"
-                }
-                room_available={game.game_room_available}
+                play_total_count={game?.play_total_count}
               />
             ))}
       </div>
 
       {totalCount === 0 && (
-        <div className="d-flex justify-center text-center">
+        <div className="d-flex  justify-center text-center">
           <NoData />
         </div>
       )}
-
       <Box
         component="div"
         className="my-2 flex w-full justify-between md:my-5"
@@ -88,4 +113,4 @@ const PlayToEarnGamesPage = () => {
   )
 }
 
-export default memo(PlayToEarnGamesPage)
+export default memo(FreeToEarnGamesPage)

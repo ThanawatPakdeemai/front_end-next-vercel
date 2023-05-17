@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { memo, useEffect, useState } from "react"
 import LogoIcon from "@components/icons/LogoIcon"
 import SupportIcon from "@components/icons/MenunIcon/SupportIcon"
@@ -44,7 +45,13 @@ const Home = () => {
   // const limit = 10
   const { profile } = useProfileStore()
   const { clearQuestStore, setOpen, hasCompleted } = useQuestStore()
-  const { hydrated } = useGlobal()
+  const {
+    hydrated,
+    isFreeToEarnGame,
+    isFreeToPlayGame,
+    isStoryModeGame,
+    limit
+  } = useGlobal()
   const [openSwap, setOpenSwap] = useState(false)
   const { t } = useTranslation()
 
@@ -71,6 +78,8 @@ const Home = () => {
   }
 
   const [f2pGame, setF2PGame] = useState<IGame[]>()
+  const [f2eGame, setF2EGame] = useState<IGame[]>()
+  const [storyModeGame, setStoryModeGame] = useState<IGame[]>()
   const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-earn-games")
 
   const [p2eGame, setP2EGame] = useState<IGame[]>()
@@ -79,7 +88,7 @@ const Home = () => {
   const getGameTypeF2EByTitleClicked = (): IGetType => {
     switch (f2pCurType) {
       case "free-to-earn-games":
-        return "free-to-earn-games"
+        return "free-to-play-games"
       case "story-mode-games":
         return "storymode"
       default:
@@ -98,7 +107,10 @@ const Home = () => {
 
   // const { hotGameData } = useGetHotGames()
   const { gameFilter: dataF2pGames, loadingFilterGame: loadingDataF2pGames } =
-    useGamePageListController(getGameTypeF2EByTitleClicked())
+    useGamePageListController(
+      getGameTypeF2EByTitleClicked(),
+      p2eCurType === "story-mode-games" ? limit : limit
+    )
   const { gameFilter: dataP2eGame, loadingFilterGame: loadingDataP2eGame } =
     useGamePageListController(getGameTypeP2EByTitleClicked())
 
@@ -107,7 +119,14 @@ const Home = () => {
 
     if (!load) {
       if (dataF2pGames) {
-        setF2PGame(dataF2pGames)
+        const _filterF2E = dataF2pGames.filter((item) => isFreeToEarnGame(item))
+        setF2EGame(_filterF2E)
+        const _filterF2P = dataF2pGames.filter((item) => isFreeToPlayGame(item))
+        setF2PGame(_filterF2P)
+        const _filterStoryMode = dataF2pGames.filter((item) =>
+          isStoryModeGame(item)
+        )
+        setStoryModeGame(_filterStoryMode)
       }
       if (dataP2eGame) {
         setP2EGame(dataP2eGame)
@@ -117,6 +136,7 @@ const Home = () => {
     return () => {
       load = true
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     dataF2pGames,
     f2pCurType,
@@ -136,7 +156,7 @@ const Home = () => {
           >
             <BannerSlide />
             <div className="my-2 h-full w-full lg:mt-10 xl:mt-[140px]">
-              {f2pGame && !loadingDataF2pGames ? (
+              {!loadingDataF2pGames && f2pGame && f2eGame && storyModeGame ? (
                 <>
                   <Typography
                     variant="body2"
@@ -146,7 +166,13 @@ const Home = () => {
                   </Typography>
                   <GameCarousel
                     menu={F2PHeaderMenu}
-                    list={f2pGame}
+                    list={
+                      f2pCurType === "free-to-earn-games"
+                        ? f2eGame
+                        : f2pCurType === "story-mode-games"
+                        ? storyModeGame
+                        : f2pGame
+                    }
                     curType={f2pCurType}
                     setCurType={setF2PCurType}
                     checkTimer
@@ -304,10 +330,16 @@ const Home = () => {
           </div>
 
           <div className="my-2 h-full w-full lg:mt-10 xl:mt-[140px]">
-            {f2pGame && !loadingDataF2pGames ? (
+            {!loadingDataF2pGames && f2pGame && f2eGame && storyModeGame ? (
               <GameCarousel
                 menu={F2PHeaderMenu}
-                list={f2pGame}
+                list={
+                  f2pCurType === "free-to-earn-games"
+                    ? f2eGame
+                    : f2pCurType === "story-mode-games"
+                    ? storyModeGame
+                    : f2pGame
+                }
                 curType={f2pCurType}
                 setCurType={setF2PCurType}
                 checkTimer

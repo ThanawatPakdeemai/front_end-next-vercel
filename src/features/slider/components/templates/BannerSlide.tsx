@@ -83,7 +83,7 @@ const BannerSlide = () => {
                   <BannerCardSlide
                     slide={slide}
                     slideNext={
-                      slide[index + 1] === undefined
+                      slide[index + 1] !== undefined
                         ? slideGames[0]
                         : index >= slideGames.length - 1
                         ? slideGames[0]

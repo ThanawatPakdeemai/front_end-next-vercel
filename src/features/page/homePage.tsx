@@ -45,8 +45,13 @@ const Home = () => {
   // const limit = 10
   const { profile } = useProfileStore()
   const { clearQuestStore, setOpen, hasCompleted } = useQuestStore()
-  const { hydrated, isFreeToEarnGame, isFreeToPlayGame, isStoryModeGame } =
-    useGlobal()
+  const {
+    hydrated,
+    isFreeToEarnGame,
+    isFreeToPlayGame,
+    isStoryModeGame,
+    limit
+  } = useGlobal()
   const [openSwap, setOpenSwap] = useState(false)
   const { t } = useTranslation()
 
@@ -102,9 +107,12 @@ const Home = () => {
 
   // const { hotGameData } = useGetHotGames()
   const { gameFilter: dataF2pGames, loadingFilterGame: loadingDataF2pGames } =
-    useGamePageListController(getGameTypeF2EByTitleClicked(), 9999)
+    useGamePageListController(
+      getGameTypeF2EByTitleClicked(),
+      p2eCurType === "story-mode-games" ? limit : 100
+    )
   const { gameFilter: dataP2eGame, loadingFilterGame: loadingDataP2eGame } =
-    useGamePageListController(getGameTypeP2EByTitleClicked(), 9999)
+    useGamePageListController(getGameTypeP2EByTitleClicked())
 
   useEffect(() => {
     let load = false

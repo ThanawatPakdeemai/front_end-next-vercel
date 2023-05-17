@@ -23,7 +23,7 @@ const PlayToEarnGamesPage = () => {
     pager,
     setLimit,
     onSetGameStore
-  } = useGamePageListController()
+  } = useGamePageListController("play-to-earn-games")
   return (
     <div className="flex flex-col">
       <MobileView className="MobileSlider mb-4">

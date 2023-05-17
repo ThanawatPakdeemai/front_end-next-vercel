@@ -388,15 +388,16 @@ const GameCard = ({
           />
         </motion.div>
       </motion.div>
-      <div className=" z-[3] min-h-[110px]">
+      <div className="z-[3] min-h-[110px]">
         <div className="slick-card-desc flex h-10 w-[95%] items-center justify-between">
           <p className="relative truncate uppercase hover:text-clip">
-            {(data as IGame)
+            {(data as IGame).name}
+            {/* {(data as IGame)
               ? (data as IGame).story
               : (data as IGame)?.story ?? (data as IGame)?.name}
             {(data as IRoomAvaliableData)
               ? (data as IRoomAvaliableData)?.game_name
-              : (data as IGame)?.name ?? partnerdata?.name}
+              : (data as IGame)?.name ?? partnerdata?.name} */}
           </p>
         </div>
         <div

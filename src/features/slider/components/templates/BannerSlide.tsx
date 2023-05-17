@@ -79,8 +79,7 @@ const BannerSlide = () => {
                       gotoNext={gotoNext}
                     />
                   )} */}
-
-                  <BannerCardSlide
+                  {/* <BannerCardSlide
                     slide={slide}
                     slideNext={
                       slide[index + 1] !== undefined
@@ -89,6 +88,11 @@ const BannerSlide = () => {
                         ? slideGames[0]
                         : slideGames[index + 1]
                     }
+                    gotoNext={gotoNext}
+                  /> */}
+                  <BannerCardSlide
+                    slide={slide}
+                    slideNext={slideGames[index + 1] || slideGames[0]}
                     gotoNext={gotoNext}
                   />
                 </div>

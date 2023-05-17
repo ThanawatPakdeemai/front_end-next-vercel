@@ -199,7 +199,7 @@ const CardLink = ({
           text={textBtn}
           icon={iconBtn}
           size="medium"
-          className="button-global button-transparent absolute bottom-2.5 left-2.5 right-2.5 !h-[38px] border border-solid border-black-300 text-primary-main lg:left-0 lg:mx-2 lg:!min-w-[134px] xl:left-2.5  xl:!min-w-[154px]"
+          className="button-global button-transparent absolute bottom-2.5 left-2.5 right-2.5 !h-[38px] !min-w-[auto] border border-solid border-black-300 text-primary-main lg:left-0 lg:mx-2 xl:left-2.5"
           stroke="#010101"
         />
       </motion.div>

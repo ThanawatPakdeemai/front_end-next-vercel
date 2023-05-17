@@ -231,17 +231,6 @@ const GameRoomList = () => {
           />
         </div>
       </div>
-      {/* {gameData && (
-        <BuyItemBody>
-          <OverviewContent
-            gameId={gameData.id}
-            gameType={getTypeGamePathFolder(gameData)}
-          />
-          {gameData?.play_to_earn_status !== "free" && !gameData.tournament && (
-            <CardBuyItem gameObject={gameData} />
-          )}
-        </BuyItemBody>
-      )} */}
     </Box>
   )
 }

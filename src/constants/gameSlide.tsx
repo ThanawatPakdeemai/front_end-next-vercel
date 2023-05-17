@@ -281,7 +281,7 @@ const f2pMenu: ISlideList[] = [
   },
   {
     id: "free-to-play-games",
-    label: "Free Mode",
+    label: "Free To Play",
     type: "free-to-play-games"
   },
   {

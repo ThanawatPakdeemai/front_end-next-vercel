@@ -11,7 +11,7 @@ import { MobileView } from "react-device-detect"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { Box } from "@mui/material"
-import HeadMenuMobile from "@src/mobile/headerMenu/HeadMenuMobile"
+import HeadMenuMobile from "@mobile/components/organisms/headerMenu/HeadMenuMobile"
 import { isMobile } from "@hooks/useGlobal"
 
 const GamePageLayout = ({

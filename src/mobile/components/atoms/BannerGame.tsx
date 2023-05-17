@@ -8,7 +8,7 @@ const BannerGame = (props: IProps) => {
   return (
     <Image
       src={`${imageBanner}`}
-      alt="imageBanner"
+      alt="image-banner"
       width={500}
       height={51}
       className="h-[51px] w-full object-cover object-center"

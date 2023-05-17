@@ -14,7 +14,7 @@ import { Box } from "@mui/material"
 
 interface IProps {
   menu: IHeaderSlide
-  list: IGame[] | IRoomAvaliableData[]
+  list: IGame[] | IRoomAvaliableData[] | unknown[]
   showNo?: boolean
   checkTimer?: boolean
   curType: IGetType

@@ -1,8 +1,12 @@
 import React, { useRef } from "react"
 import { Image } from "@components/atoms/image/index"
 import Slider, { Settings } from "react-slick"
+import { IGame } from "@src/types/games"
 
-const CardGameSlider = ({ games }: any) => {
+interface IProps {
+  games: IGame[]
+}
+const CardGameSlider = ({ games }: IProps) => {
   const sliderRef = useRef<Slider>(null)
 
   const settings: Settings = {

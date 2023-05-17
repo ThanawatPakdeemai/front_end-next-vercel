@@ -4,13 +4,14 @@ import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { P2EHeaderMenu } from "@constants/gameSlide"
 import GameCard from "@feature/game/components/molecules/GameCard"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
+import CardGameSlider from "@mobile/components/organisms/CardGameSlider"
+import BodyCategories from "@mobile/components/organisms/BodyCategories"
 import { Box } from "@mui/material"
 import NoData from "@components/molecules/NoData"
 import { memo } from "react"
 import { v4 as uuid } from "uuid"
-import BodyCategories from "@src/mobile/molecules/BodyCategories"
-import CardGameSlider from "@src/mobile/molecules/CardGameSlider"
 import { MobileView } from "react-device-detect"
+import { IGame } from "@src/types/games"
 
 const ArcadeEmporiumGamesPage = () => {
   // Hooks
@@ -30,7 +31,7 @@ const ArcadeEmporiumGamesPage = () => {
   return (
     <div className="flex flex-col">
       <MobileView className="MobileSlider mb-4">
-        <CardGameSlider games={gameFilter} />
+        <CardGameSlider games={gameFilter as unknown as IGame[]} />
         {!loadingFilterGame && (
           <div className="mt-4 w-full">
             <p className="uppercase text-white-default">POPULAR GAMES</p>

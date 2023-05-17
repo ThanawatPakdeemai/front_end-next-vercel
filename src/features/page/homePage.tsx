@@ -109,7 +109,7 @@ const Home = () => {
   const { gameFilter: dataF2pGames, loadingFilterGame: loadingDataF2pGames } =
     useGamePageListController(
       getGameTypeF2EByTitleClicked(),
-      p2eCurType === "story-mode-games" ? limit : 100
+      p2eCurType === "story-mode-games" ? limit : limit
     )
   const { gameFilter: dataP2eGame, loadingFilterGame: loadingDataP2eGame } =
     useGamePageListController(getGameTypeP2EByTitleClicked())
@@ -136,10 +136,8 @@ const Home = () => {
     return () => {
       load = true
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    isFreeToEarnGame,
-    isFreeToPlayGame,
-    isStoryModeGame,
     dataF2pGames,
     f2pCurType,
     p2eCurType,

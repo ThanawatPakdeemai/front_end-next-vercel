@@ -77,9 +77,15 @@ export const MENU = [
         icon: <IconDollar.Ori className="stroke-neutral-300" />
       },
       {
-        name: "Free To Earn Games",
+        name: "Free To Play Games",
         link: "/free-to-play-games",
         icon: <IconDollar.Mask className="stroke-neutral-300" />,
+        textRight: "Free"
+      },
+      {
+        name: "Free To Earn Games",
+        icon: <IconDollar.Mask className="stroke-neutral-300" />,
+        link: "/free-to-earn-games",
         textRight: "Free"
       },
       {

@@ -15,6 +15,7 @@ export interface IBannerCardSlide extends ICardNextSlide {
 const BannerCardSlide = ({ slide, ...props }: IBannerCardSlide) => {
   const { getTypeGamePathFolder, onHandleSetGameStore, isRedirectRoomlist } =
     useGlobal()
+
   return (
     <>
       {isMobile ? (

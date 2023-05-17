@@ -22,8 +22,7 @@ const PlayToEarnGamesPage = () => {
     setPage,
     pager,
     setLimit,
-    onSetGameStore,
-    gameLink
+    onSetGameStore
   } = useGamePageListController()
   return (
     <div className="flex flex-col">
@@ -45,7 +44,9 @@ const PlayToEarnGamesPage = () => {
                 key={game.id}
                 menu={P2EHeaderMenu}
                 data={game}
-                href={gameLink(game)}
+                href={`/${
+                  game.is_NFT ? "arcade-emporium" : "play-to-earn-games"
+                }/${game.path}`}
                 onHandleClick={() => onSetGameStore(game)}
                 gameType={
                   game.is_NFT ? "arcade-emporium" : "play-to-earn-games"

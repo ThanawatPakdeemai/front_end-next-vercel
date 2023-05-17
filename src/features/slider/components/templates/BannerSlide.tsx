@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useRef } from "react"
 import SkeletonBanner from "@components/atoms/skeleton/SkeletonBanner"
 import { TagCircle } from "@components/atoms/tagCircle"
@@ -82,7 +83,9 @@ const BannerSlide = () => {
                   <BannerCardSlide
                     slide={slide}
                     slideNext={
-                      slide[index + 1] !== undefined
+                      slide[index + 1] === undefined
+                        ? slideGames[0]
+                        : index >= slideGames.length - 1
                         ? slideGames[0]
                         : slideGames[index + 1]
                     }

@@ -1,5 +1,4 @@
 import React from "react"
-import { Image } from "@components/atoms/image"
 import { motion } from "framer-motion"
 import { IPlayerPlayToEarnRanking } from "@feature/ranking/interfaces/IRanking"
 import Helper from "@utils/helper"
@@ -10,15 +9,22 @@ interface IProp {
   index: number
   itemSrc: string
   itemName: string
+  itemPrice: number
   player: IPlayerPlayToEarnRanking
 }
 
-const CardRankFreeToEarn = ({ player, index, itemName, itemSrc }: IProp) => (
+const CardRankFreeToEarn = ({
+  player,
+  index,
+  itemName,
+  itemSrc,
+  itemPrice
+}: IProp) => (
   <motion.div
     initial="rest"
     whileHover="hover"
     animate="rest"
-    className="card-ranking__item grid w-full grid-cols-[35px_165px_20px_1fr]  items-center justify-between gap-2 border-b-[1px] border-neutral-800 py-3"
+    className="card-ranking__item grid w-full grid-cols-[35px_150px_40px_1fr]  items-center justify-between gap-2 border-b-[1px] border-neutral-800 py-3"
     key={player.playerId}
   >
     <NumberRank
@@ -28,7 +34,7 @@ const CardRankFreeToEarn = ({ player, index, itemName, itemSrc }: IProp) => (
 
     <div className="flex flex-1 items-center gap-3">
       <div className="h-[35px] w-[35px] overflow-hidden rounded-lg">
-        <Image
+        <ImageCustom
           src={Helper.convertAvatar(player.avatar)}
           alt="profile"
           width={35}
@@ -36,18 +42,21 @@ const CardRankFreeToEarn = ({ player, index, itemName, itemSrc }: IProp) => (
           className="h-full w-full object-cover"
         />
       </div>
-      <h1 className="font-neue-machina-semi text-[12px] uppercase text-neutral-300">
+      <h1 className="max-w-[100px] overflow-hidden font-neue-machina-semi text-[12px] uppercase text-neutral-300">
         {player.username}
       </h1>
     </div>
-    <div className="flex h-[16px] w-[16px] items-center justify-center">
-      <ImageCustom
-        src={itemSrc}
-        alt={itemName}
-        width={40}
-        height={40}
-        className="h-full w-full object-contain opacity-40"
-      />
+    <div className="flex items-center justify-center gap-1">
+      <div className="flex h-[16px] w-[16px] items-center justify-center">
+        <ImageCustom
+          src={itemSrc}
+          alt={itemName}
+          width={40}
+          height={40}
+          className="h-full w-full object-contain opacity-40"
+        />
+      </div>
+      <span className="font-neue-machina-semi text-xs">{itemPrice}$</span>
     </div>
     <div className="ml-auto pr-2">
       <h1 className="font-neue-machina-semi text-[12px] text-info-main">

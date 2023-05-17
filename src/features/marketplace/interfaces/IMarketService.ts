@@ -158,6 +158,8 @@ export interface IMarketServForm {
     player_id?: string
     isRent?: boolean
     type?: TNFTType
+    land_id?: string // wait dup with nft_token
+    nft_token?: string
   }
   _sort?: {
     price?: number

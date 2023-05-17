@@ -34,6 +34,7 @@ interface IInventoryItemData {
   marketplaces_data?: IMarketData[] | null
   installments_data?: IInstallData[] | null
   rentals_data?: IRentalData[] | null
+  wallet_address?: string
 }
 
 const useInventoryContext = () => {
@@ -118,7 +119,8 @@ const useInventoryContext = () => {
               history: _res.history,
               marketplaces_data: _res.marketplaces_data,
               installments_data: _res.installments_data,
-              rentals_data: _res.rentals_data
+              rentals_data: _res.rentals_data,
+              wallet_address: _res.wallet_address
             }
           })
           break
@@ -137,7 +139,8 @@ const useInventoryContext = () => {
               history: _res.history,
               marketplaces_data: _res.marketplaces_data,
               installments_data: _res.installments_data,
-              rentals_data: _res.rentals_data
+              rentals_data: _res.rentals_data,
+              wallet_address: _res.wallet_address
             }
           })
           break
@@ -168,7 +171,8 @@ const useInventoryContext = () => {
               img: _res.image,
               detail: _res.description,
               history: _res.history,
-              marketplaces_data: _res.marketplaces_data
+              marketplaces_data: _res.marketplaces_data,
+              wallet_address: _res.wallet_adddress
             }
           })
           break

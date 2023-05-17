@@ -47,7 +47,7 @@ const HeaderRoomList = ({ lobby }: IHeaderRoomList) => {
             />
           </div>
           <h1 className="text-white-defzault self-center uppercase">
-            {t("lobby")} :{lobby}
+            {t("lobby")}: {lobby}
             {gameData?.play_to_earn || gameData?.tournament ? (
               ""
             ) : (

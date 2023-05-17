@@ -63,7 +63,7 @@ const GameDetailLayout = ({ data, gameId, gameType }: IProps) => {
           />
         </Box>
         <Typography className="py-[9px] text-center text-[16px] font-bold uppercase text-white-default">
-          {t("NAKAMOTO WAR")}
+          {t(data.name)}
         </Typography>
         <Box
           component="div"
@@ -96,9 +96,9 @@ const GameDetailLayout = ({ data, gameId, gameType }: IProps) => {
           >
             <ShareToEarn id={gameId} />
             <MoreDetailGameMobile
-              gameDetails={data.NFT_info.meta_data.description}
-              howto={data.howto}
-              item={data.item}
+              gameDetails={data?.NFT_info?.meta_data?.description}
+              howto={data?.howto}
+              item={data?.item}
             />
           </Box>
         </Box>
@@ -117,7 +117,7 @@ const GameDetailLayout = ({ data, gameId, gameType }: IProps) => {
         </Box>
         <Box
           component="div"
-          className="flex"
+          className="flex justify-center pt-8"
         >
           <Box component="div">
             <StatisticGameDetail />

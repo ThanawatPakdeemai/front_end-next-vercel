@@ -275,6 +275,11 @@ export const onPlayingHeaderMenu: IHeaderSlide = {
 
 const f2pMenu: ISlideList[] = [
   {
+    id: "free-to-earn-games",
+    label: "Free To Earn",
+    type: "free-to-earn-games"
+  },
+  {
     id: "free-to-play-games",
     label: "Free Mode",
     type: "free-to-play-games"

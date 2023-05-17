@@ -55,7 +55,7 @@ const RoomListBox = ({
 
   return type === "timer" ? (
     <div
-      className={`flex h-[40px] w-fit flex-[1_1_100%] items-center justify-center gap-3 rounded-lg border px-3 sm:flex-[1_1_50%] lg:flex-none ${
+      className={`timer-box flex h-[40px] w-fit flex-[1_1_100%] items-center justify-center gap-3 rounded-lg border px-3 sm:flex-[1_1_50%] lg:flex-none ${
         borderColor ?? "border-neutral-700"
       } bg-neutral-900 py-2 align-baseline`}
     >

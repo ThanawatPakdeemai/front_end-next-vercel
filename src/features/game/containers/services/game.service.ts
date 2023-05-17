@@ -203,9 +203,13 @@ export const getGamesByKey = (data: IFilterGamesByKey) =>
   new Promise<IGameAllResponse>((resolve, reject) => {
     services
       .post<IGameAllResponse>(
-        `${CONFIGS.BASE_URL.API}/game/filter/game-all`,
+        `${CONFIGS.BASE_URL.API}/game/filter/game-all-new`,
         data
       )
+      // .post<IGameAllResponse>(
+      //   `${CONFIGS.BASE_URL.API}/game/filter/game-all`,
+      //   data
+      // )
       .then((res) => {
         resolve(res.data)
       })

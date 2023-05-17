@@ -49,7 +49,7 @@ interface IProps {
 
 type IMenuList = "game_details" | "how_to_play" | "game_items"
 
-const MoreDetailGameMobile = ({ gameDetails, howto, item }: IProps) => {
+const MoreDetailGameMobile = ({ gameDetails = "", howto, item }: IProps) => {
   const listMenu = [
     { label: "game_details", icon: <HowToPlayIcon /> },
     { label: "how_to_play", icon: <SportsEsportsIcon /> },

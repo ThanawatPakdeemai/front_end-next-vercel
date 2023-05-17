@@ -73,7 +73,7 @@ const useNFTLand = () => {
   const transferLand = (_from: string, _to: string, _tokenId: string) =>
     new Promise<TransactionResponse>((resolve, reject) => {
       landContract
-        .transferForm(_from, _to, _tokenId)
+        .transferFrom(_from, _to, _tokenId)
         .then((_response: TransactionResponse) => {
           resolve(_response)
         })
@@ -88,7 +88,7 @@ const useNFTLand = () => {
       await transferLand(address, _to, _tokenId)
         .then(async (response) => {
           const _res = await response.wait()
-          // request Backend for api
+          successToast("Transfer success")
         })
         .catch((error) => console.error(error))
     }

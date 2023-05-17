@@ -22,7 +22,8 @@ const SingleRoom = () => {
                 onClick={() => handleJoinRoom(item)}
                 textChip={`#${item?.room_number?.toString()}`}
                 descChip1={
-                  gameData?.play_to_earn_status === "free"
+                  gameData?.play_to_earn_status === "free" ||
+                  gameData.game_mode === "free-to-earn"
                     ? ""
                     : `${itemSelected?.name || ""} ${
                         `/ ${itemSelected?.item_size}` || ""

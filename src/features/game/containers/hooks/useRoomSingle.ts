@@ -112,6 +112,7 @@ const useRoomSingle = () => {
       } else if (
         data &&
         ((data.play_to_earn && data.play_to_earn_status === "free") ||
+          data.game_mode === "free-to-earn" ||
           data.tournament)
       ) {
         intoRoomGame(data_player_me as IGameCurrentPlayer, _roomId)

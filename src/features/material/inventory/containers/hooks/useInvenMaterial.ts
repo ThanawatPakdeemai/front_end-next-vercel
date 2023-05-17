@@ -33,6 +33,19 @@ const useInvenMaterial = () => {
   >(undefined)
   const { pathname } = useRouter()
 
+  // get all material by address
+  const getAllMaterialByAddrs = (_address: string) =>
+    new Promise<string[]>((resolve, reject) => {
+      materialNoAccContract
+        .getAllMaterialAmountbyUser(_address)
+        .then((_response: string[]) => {
+          resolve(_response)
+        })
+        .catch((_error: Error) => {
+          reject(_error)
+        })
+    })
+
   // update materialList
   const updateMaterialList = (
     _type: TInvenVaultAction,
@@ -57,19 +70,6 @@ const useInvenMaterial = () => {
       }
     }
   }
-
-  // get all material by address
-  const getAllMaterialByAddrs = (_address: string) =>
-    new Promise<string[]>((resolve, reject) => {
-      materialNoAccContract
-        .getAllMaterialAmountbyUser(_address)
-        .then((_response: string[]) => {
-          resolve(_response)
-        })
-        .catch((_error: Error) => {
-          reject(_error)
-        })
-    })
 
   const onFetchInvenMaterial = async (_address: string) => {
     setOpen(MESSAGES.transaction_processing_order) // ? changed text
@@ -147,13 +147,11 @@ const useInvenMaterial = () => {
 
   useEffect(() => {
     let load = false
-
     if (!load) {
       if (profile && profile.data && pathname.includes("inventory")) {
         onFetchInvenMaterial(profile.data.address)
       }
     }
-
     return () => {
       load = true
     }
@@ -164,7 +162,8 @@ const useInvenMaterial = () => {
     materialList,
     updateMaterialList,
     onFetchInvenMaterial,
-    onTransferMaterial
+    onTransferMaterial,
+    getAllMaterialByAddrs
   }
 }
 

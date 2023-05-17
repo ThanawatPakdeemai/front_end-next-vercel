@@ -2,7 +2,6 @@ import CONFIGS from "@configs/index"
 import { MESSAGES } from "@constants/messages"
 import { useGetAllGameItemofAddrs } from "@feature/contract/containers/hooks/useContract"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
-
 import { TInvenVaultAction } from "@feature/inventory/interfaces/IInventoryItem"
 import useLoadingStore from "@stores/loading"
 import useMarketCategTypes from "@stores/marketCategTypes"
@@ -21,6 +20,19 @@ const useInvenGameItem = () => {
     Array<IGameItemListData & { amount?: number }> | undefined
   >(undefined)
   const { pathname } = useRouter()
+
+  // get all material by address
+  const getAllGameItemByAddrs = (_address: string, _length: number) =>
+    new Promise<string[]>((resolve, reject) => {
+      allGameItemContract
+        .getAllitem(_address, _length)
+        .then((_response: string[]) => {
+          resolve(_response)
+        })
+        .catch((_error: Error) => {
+          reject(_error)
+        })
+    })
 
   // update gameItemList
   const updateGameItemList = (
@@ -46,19 +58,6 @@ const useInvenGameItem = () => {
       }
     }
   }
-
-  // get all material by address
-  const getAllGameItemByAddrs = (_address: string, _length: number) =>
-    new Promise<string[]>((resolve, reject) => {
-      allGameItemContract
-        .getAllitem(_address, _length)
-        .then((_response: string[]) => {
-          resolve(_response)
-        })
-        .catch((_error: Error) => {
-          reject(_error)
-        })
-    })
 
   const onFetchInvenGameItem = async (_address: string) => {
     setOpen(MESSAGES.transaction_processing_order) // ? changed text
@@ -87,13 +86,11 @@ const useInvenGameItem = () => {
 
   useEffect(() => {
     let load = false
-
     if (!load) {
       if (profile && profile.data && pathname.includes("inventory")) {
         onFetchInvenGameItem(profile.data.address)
       }
     }
-
     return () => {
       load = true
     }
@@ -103,7 +100,8 @@ const useInvenGameItem = () => {
   return {
     gameItemList,
     updateGameItemList,
-    onFetchInvenGameItem
+    onFetchInvenGameItem,
+    getAllGameItemByAddrs
   }
 }
 

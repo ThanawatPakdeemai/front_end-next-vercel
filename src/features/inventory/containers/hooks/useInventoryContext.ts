@@ -48,7 +48,6 @@ const useInventoryContext = () => {
   const [invAmount, setInvAmount] = useState<number>(1)
   // const [transAddrs, setTransAddrs] = useState<string | undefined>(undefined)
   const { marketType } = useGlobal()
-
   // move this to context? for solve multi call api and data need to update
   const { gameItemList } = useInvenGameItem()
   const { materialList } = useInvenMaterial()
@@ -215,7 +214,9 @@ const useInventoryContext = () => {
     invAmount,
     setInvPrice,
     setInvPeriod,
-    setInvAmount
+    setInvAmount,
+    gameItemList,
+    materialList
   }
 }
 

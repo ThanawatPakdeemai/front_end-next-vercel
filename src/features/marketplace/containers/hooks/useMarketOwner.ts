@@ -2,17 +2,17 @@ import CONFIGS from "@configs/index"
 import useAvatarReefServ from "@feature/avatarReef/containers/hook/useAvatarReefServ"
 import { useGetMyBuilding } from "@feature/building/containers/hooks/useGetMyBuilding"
 import { useGetMyArcGame } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
-import useInvenGameItem from "@feature/gameItem/inventory/containers/hooks/useInvenGameItem"
+import useInventoryContext from "@feature/inventory/containers/hooks/useInventoryContext"
 import { useGetMyLand } from "@feature/land/containers/hooks/useGetMyLand"
 import useNFTLand from "@feature/land/containers/hooks/useNFTLand"
 import { IOwnerData } from "@feature/marketplace/interfaces/IMarketService"
-import useInvenMaterial from "@feature/material/inventory/containers/hooks/useInvenMaterial"
 import { useGetMyNakaPunk } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
+// owner
 const useMartketOwner = () => {
   // state
   const [isLoading, setIsLoading] = useState<boolean>()
@@ -26,13 +26,12 @@ const useMartketOwner = () => {
   const { marketType } = useGlobal()
   const { profile } = useProfileStore()
   const { getLandsOfAddress } = useNFTLand()
-  const { gameItemList } = useInvenGameItem()
-  const { materialList } = useInvenMaterial()
   const { mutateGetMyLand } = useGetMyLand()
   const { mutateGetOwnerBuilding } = useGetMyBuilding()
   const { mutateGetMyNakaPunk } = useGetMyNakaPunk()
   const { mutateGeyMyArcGame } = useGetMyArcGame()
   const { mutateGetMyAvatarReef } = useAvatarReefServ()
+  const { gameItemList, materialList } = useInventoryContext()
 
   const fetchOwnerDataList = async () => {
     setOwnerData([])
@@ -221,8 +220,6 @@ const useMartketOwner = () => {
       if (marketType) {
         if (marketType !== "game_item" && marketType !== "nft_material") {
           fetchOwnerDataList()
-        } else {
-          fetchWithContract()
         }
       }
     }
@@ -232,6 +229,23 @@ const useMartketOwner = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [marketType, currentPage])
+
+  useEffect(() => {
+    let load = false
+    if (
+      !load &&
+      marketType &&
+      gameItemList &&
+      materialList &&
+      (marketType === "game_item" || marketType === "nft_material")
+    ) {
+      fetchWithContract()
+    }
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameItemList, materialList, marketType, currentPage])
 
   useEffect(() => {
     let load = false

@@ -29,7 +29,7 @@ const useInvenMaterial = () => {
   )
   const { setOpen, setClose } = useLoadingStore()
   const [materialList, setMaterialList] = useState<
-    Array<ITypeMaterials & { amount: number }> | undefined
+    Array<ITypeMaterials & { amount?: number }> | undefined
   >(undefined)
   const { pathname } = useRouter()
 
@@ -44,15 +44,17 @@ const useInvenMaterial = () => {
       const upd_obj = _dummy.findIndex(
         (obj) => obj.material_id_smartcontract === Number(_tokenId)
       )
-      let _calAmount: number = _dummy[upd_obj].amount
-      if (_type === "decrease") {
-        _calAmount = _dummy[upd_obj].amount - _amount
-      } else {
-        _calAmount = _dummy[upd_obj].amount + _amount
+      if (_dummy[upd_obj].amount) {
+        let _calAmount: number = _dummy[upd_obj].amount || 0
+        if (_type === "decrease") {
+          _calAmount -= _amount
+        } else {
+          _calAmount += _amount
+        }
+        _dummy[upd_obj].amount = _calAmount
+        const result = _dummy // ? not sure for need to declare new variable?
+        setMaterialList(result)
       }
-      _dummy[upd_obj].amount = _calAmount
-      const result = _dummy // ? not sure for need to declare new variable?
-      setMaterialList(result)
     }
   }
 
@@ -84,11 +86,13 @@ const useInvenMaterial = () => {
               ...m,
               amount: Number(response[m.material_id_smartcontract]) // ! Please check index again
             }))
-          setMaterialList(data)
+          setMaterialList(data.filter((_item) => _item.amount > 0))
         }
       })
       .catch((error) => console.error(error))
-      .finally(() => setClose())
+      .finally(() => {
+        setTimeout(() => setClose(), 1000)
+      })
   }
 
   // transfer
@@ -137,7 +141,7 @@ const useInvenMaterial = () => {
       })
       .catch((error) => console.error(error))
       .finally(() => {
-        setClose()
+        setTimeout(() => setClose(), 1000)
       })
   }
 
@@ -157,8 +161,7 @@ const useInvenMaterial = () => {
   }, [profile, materialTypes])
 
   return {
-    materialList:
-      materialList && materialList.filter((_item) => _item.amount > 0),
+    materialList,
     updateMaterialList,
     onFetchInvenMaterial,
     onTransferMaterial

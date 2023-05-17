@@ -18,7 +18,7 @@ const useInvenGameItem = () => {
     CONFIGS.CONTRACT_ADDRESS.GET_GAMEITEMOFADDRESS
   )
   const [gameItemList, setGameItemList] = useState<
-    Array<IGameItemListData & { amount: number }> | undefined
+    Array<IGameItemListData & { amount?: number }> | undefined
   >(undefined)
   const { pathname } = useRouter()
 
@@ -33,15 +33,17 @@ const useInvenGameItem = () => {
       const upd_obj = _dummy.findIndex(
         (obj) => obj.item_id_smartcontract === Number(_tokenId)
       )
-      let _calAmount: number = _dummy[upd_obj].amount
-      if (_type === "decrease") {
-        _calAmount = _dummy[upd_obj].amount - _amount
-      } else {
-        _calAmount = _dummy[upd_obj].amount + _amount
+      if (_dummy[upd_obj].amount) {
+        let _calAmount: number = _dummy[upd_obj].amount || 0
+        if (_type === "decrease") {
+          _calAmount -= _amount
+        } else {
+          _calAmount += _amount
+        }
+        _dummy[upd_obj].amount = _calAmount
+        const result = _dummy // ? not sure for need to declare new variable?
+        setGameItemList(result)
       }
-      _dummy[upd_obj].amount = _calAmount
-      const result = _dummy // ? not sure for need to declare new variable?
-      setGameItemList(result)
     }
   }
 
@@ -74,11 +76,13 @@ const useInvenGameItem = () => {
               ...g,
               amount: Number(response[g.item_id_smartcontract]) // ! Please check index again
             }))
-          setGameItemList(data)
+          setGameItemList(data.filter((_item) => _item.amount > 0))
         }
       })
       .catch((error) => console.error(error))
-      .finally(() => setClose())
+      .finally(() => {
+        setTimeout(() => setClose(), 1000)
+      })
   }
 
   useEffect(() => {
@@ -97,8 +101,7 @@ const useInvenGameItem = () => {
   }, [profile, gameItemTypes])
 
   return {
-    gameItemList:
-      gameItemList && gameItemList.filter((_item) => _item.amount > 0),
+    gameItemList,
     updateGameItemList,
     onFetchInvenGameItem
   }

@@ -1,7 +1,7 @@
 import React, { useRef } from "react"
 import { Image } from "@components/atoms/image/index"
 import Slider, { Settings } from "react-slick"
-import { IGame } from "@src/types/games"
+import { IGame } from "@feature/game/interfaces/IGameService"
 
 interface IProps {
   games: IGame[]

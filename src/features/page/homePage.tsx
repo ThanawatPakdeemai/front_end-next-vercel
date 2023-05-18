@@ -41,6 +41,25 @@ import { useTranslation } from "react-i18next"
 import OnPlayingStyle2 from "@feature/home/components/molecules/OnPlayingStyle2"
 import HomeMobile from "@mobile/features/pages/HomeMobile"
 
+export const getGameTypeF2EByTitleClicked = (f2pCurType): IGetType => {
+  switch (f2pCurType) {
+    case "free-to-earn-games":
+      return "free-to-play-games"
+    case "story-mode-games":
+      return "storymode"
+    default:
+      return f2pCurType
+  }
+}
+
+export const getGameTypeP2EByTitleClicked = (p2eCurType): IGetType => {
+  switch (p2eCurType) {
+    case "arcade-emporium":
+      return "arcade-emporium"
+    default:
+      return "play-to-earn-games"
+  }
+}
 const Home = () => {
   // const limit = 10
   const { profile } = useProfileStore()
@@ -85,34 +104,14 @@ const Home = () => {
   const [p2eGame, setP2EGame] = useState<IGame[]>()
   const [p2eCurType, setP2ECurType] = useState<IGetType>("play-to-earn-games")
 
-  const getGameTypeF2EByTitleClicked = (): IGetType => {
-    switch (f2pCurType) {
-      case "free-to-earn-games":
-        return "free-to-play-games"
-      case "story-mode-games":
-        return "storymode"
-      default:
-        return f2pCurType
-    }
-  }
-
-  const getGameTypeP2EByTitleClicked = (): IGetType => {
-    switch (p2eCurType) {
-      case "arcade-emporium":
-        return "arcade-emporium"
-      default:
-        return "play-to-earn-games"
-    }
-  }
-
   // const { hotGameData } = useGetHotGames()
   const { gameFilter: dataF2pGames, loadingFilterGame: loadingDataF2pGames } =
     useGamePageListController(
-      getGameTypeF2EByTitleClicked(),
+      getGameTypeF2EByTitleClicked(f2pCurType),
       p2eCurType === "story-mode-games" ? limit : 9999
     )
   const { gameFilter: dataP2eGame, loadingFilterGame: loadingDataP2eGame } =
-    useGamePageListController(getGameTypeP2EByTitleClicked())
+    useGamePageListController(getGameTypeP2EByTitleClicked(p2eCurType))
 
   useEffect(() => {
     let load = false

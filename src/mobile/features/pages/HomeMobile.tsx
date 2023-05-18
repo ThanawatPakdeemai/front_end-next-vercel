@@ -7,8 +7,12 @@ import GameCarousel from "@components/molecules/gameSlide/GameCarousel"
 import BannerSlide from "@feature/slider/components/templates/BannerSlide"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 import { F2PHeaderMenu, P2EHeaderMenu } from "@constants/gameSlide"
-import { IGame } from "@src/types/games"
-import { IGetType } from "@feature/game/interfaces/IGameService"
+import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
+import {
+  getGameTypeF2EByTitleClicked,
+  getGameTypeP2EByTitleClicked
+} from "@feature/page/homePage"
+import useGlobal from "@hooks/useGlobal"
 
 const HomeMobile = () => {
   const [f2pGame, setF2PGame] = useState<IGame[]>()
@@ -17,16 +21,16 @@ const HomeMobile = () => {
   const [p2eGame, setP2EGame] = useState<IGame[]>()
   const [p2eCurType, setP2ECurType] = useState<IGetType>("play-to-earn-games")
 
+  const { isFreeToEarnGame, isFreeToPlayGame, isStoryModeGame, limit } =
+    useGlobal()
+
   const { gameFilter: dataF2pGames, loadingFilterGame: loadingDataF2pGames } =
     useGamePageListController(
-      f2pCurType === "story-mode-games" ? "storymode" : f2pCurType
+      getGameTypeF2EByTitleClicked(f2pCurType),
+      p2eCurType === "story-mode-games" ? limit : 9999
     )
   const { gameFilter: dataP2eGame, loadingFilterGame: loadingDataP2eGame } =
-    useGamePageListController(
-      p2eCurType === "arcade-emporium"
-        ? "arcade-emporium"
-        : "play-to-earn-games"
-    )
+    useGamePageListController(getGameTypeP2EByTitleClicked(p2eCurType))
 
   useEffect(() => {
     let load = false
@@ -51,7 +55,6 @@ const HomeMobile = () => {
     loadingDataF2pGames,
     loadingDataP2eGame
   ])
-
   return (
     <>
       <Box
@@ -59,7 +62,7 @@ const HomeMobile = () => {
         className=" mt-[100px]"
       >
         <BannerSlide />
-        <div className="my-2 h-full w-full lg:mt-10 xl:mt-[140px]">
+        <div className="mb-8 mt-2 h-full w-full">
           {f2pGame && !loadingDataF2pGames ? (
             <>
               <Typography
@@ -70,7 +73,11 @@ const HomeMobile = () => {
               </Typography>
               <GameCarousel
                 menu={F2PHeaderMenu}
-                list={f2pGame as unknown as IGame[]}
+                list={
+                  f2pCurType === "free-to-earn-games"
+                    ? f2pGame?.filter((item: IGame) => isFreeToEarnGame(item))
+                    : f2pGame
+                }
                 curType={f2pCurType}
                 setCurType={setF2PCurType}
                 checkTimer

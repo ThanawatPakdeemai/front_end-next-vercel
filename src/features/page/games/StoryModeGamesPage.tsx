@@ -11,7 +11,7 @@ import NoData from "@components/molecules/NoData"
 import BodyCategories from "@mobile/components/organisms/BodyCategories"
 import CardGameSlider from "@mobile/components/organisms/CardGameSlider"
 import { MobileView } from "react-device-detect"
-import { IGame } from "@src/types/games"
+import { IGame } from "@feature/game/interfaces/IGameService"
 
 const StoryModeGamesPage = () => {
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")

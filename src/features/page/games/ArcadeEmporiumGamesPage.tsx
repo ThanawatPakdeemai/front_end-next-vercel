@@ -11,7 +11,7 @@ import NoData from "@components/molecules/NoData"
 import { memo } from "react"
 import { v4 as uuid } from "uuid"
 import { MobileView } from "react-device-detect"
-import { IGame } from "@src/types/games"
+import { IGame } from "@feature/game/interfaces/IGameService"
 
 const ArcadeEmporiumGamesPage = () => {
   // Hooks

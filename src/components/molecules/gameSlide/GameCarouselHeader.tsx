@@ -134,7 +134,7 @@ const GameCarouselHeader = ({
         </motion.div>
       )}
 
-      <div className="flex h-full w-full max-w-full flex-wrap items-center justify-between gap-[5px] sm:flex-nowrap">
+      <div className="flex h-full w-full flex-wrap items-center justify-between gap-[5px] overflow-x-auto sm:flex-nowrap">
         {menu && (
           <div
             className={`relative flex h-full w-fit flex-wrap items-center justify-between rounded-xl border-2 border-neutral-800 bg-neutral-900 bg-opacity-40 p-[5px] text-[10px] capitalize backdrop-blur-[25px] sm:flex-nowrap lg:flex-none ${
@@ -190,11 +190,7 @@ const GameCarouselHeader = ({
           <div className="h-10  w-fit max-w-sm flex-auto items-center justify-between gap-4 text-[8px] md:flex lg:flex-none">
             {!hideViewAll ? (
               <Link
-                href={`/${
-                  curType === "free-to-earn-games"
-                    ? "free-to-play-games"
-                    : curType
-                }`}
+                href={`/${curType}`}
                 className="h-full"
               >
                 <ButtonToggleIcon

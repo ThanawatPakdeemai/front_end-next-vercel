@@ -24,6 +24,7 @@ interface IProp {
   onClick?: () => void
   classNameText?: string
   showClock?: ReactNode
+  showTotalHours?: boolean
 }
 
 /**
@@ -47,7 +48,8 @@ const RoomListBox = ({
   unlimited,
   onClick,
   classNameText,
-  showClock = true
+  showClock = true,
+  showTotalHours
 }: IProp) => {
   const { theme } = fullConfig
 
@@ -63,10 +65,11 @@ const RoomListBox = ({
 
       {timer && !unlimited ? (
         <TimerLobby
-          time={timer.time}
+          endTime={timer.time}
           initTheme={initTheme}
           onExpire={timer.onExpire}
           classNameText={classNameText}
+          showTotalHours={showTotalHours}
         />
       ) : (
         <Typography

@@ -209,34 +209,15 @@ const useGlobal = (
    */
   const getTypeGamePathFolder = (_gameData: IGame): IGetType => {
     if (!_gameData) return "play-to-earn-games"
-    if (
-      (_gameData?.game_type === "singleplayer" ||
-        _gameData?.game_type === "multiplayer") &&
-      _gameData.game_mode === "play-to-earn"
-    ) {
+    if (_gameData.game_mode === "play-to-earn") {
       return "play-to-earn-games"
     }
-    if (
-      (_gameData?.game_type === "singleplayer" ||
-        _gameData?.game_type === "multiplayer") &&
-      _gameData.game_mode === "free-to-earn"
-    ) {
-      return "free-to-earn-games"
-    }
-    if (
-      (_gameData?.game_type === "singleplayer" ||
-        _gameData?.game_type === "multiplayer") &&
-      _gameData.game_mode === "free-to-play"
-    ) {
+    if (_gameData.game_mode === "free-to-earn") {
       return "free-to-play-games"
     }
-    // if (
-    //   (_gameData?.game_type === "singleplayer" ||
-    //     _gameData?.game_type === "multiplayer") &&
-    //   _gameData?.play_to_earn_status === "free"
-    // ) {
-    //   return "free-to-play-games"
-    // }
+    if (_gameData.game_mode === "free-to-play") {
+      return "free-to-play-games"
+    }
     if (_gameData.game_type === "storymode") {
       return "story-mode-games"
     }
@@ -244,6 +225,39 @@ const useGlobal = (
       return "arcade-emporium"
     }
     return "all"
+  }
+
+  /**
+   * @description Check if game is free to earn
+   */
+  const isFreeToEarnGame = (_gameData: IGame): boolean => {
+    if (_gameData.game_mode === "free-to-earn" && !_gameData.is_NFT) {
+      return true
+    }
+    return false
+  }
+
+  /**
+   * @description Check if game is free to play
+   */
+  const isFreeToPlayGame = (_gameData: IGame): boolean => {
+    if (_gameData.game_mode === "free-to-play" && !_gameData.is_NFT) {
+      return true
+    }
+    return false
+  }
+
+  /**
+   * @description Check if game is free to play
+   */
+  const isStoryModeGame = (_gameData: IGame): boolean => {
+    if (
+      _gameData.game_type === "storymode" ||
+      _gameData.game_mode === "story-mode"
+    ) {
+      return true
+    }
+    return false
   }
 
   const getTypeGamePartnerPathFolder = (
@@ -482,7 +496,10 @@ const useGlobal = (
     fetchChainData,
     getColorChipByGameType,
     getGameStoryModeURL,
-    getGameTypeByPathname
+    getGameTypeByPathname,
+    isFreeToEarnGame,
+    isFreeToPlayGame,
+    isStoryModeGame
   }
 }
 

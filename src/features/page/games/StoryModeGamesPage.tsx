@@ -27,7 +27,7 @@ const StoryModeGamesPage = () => {
     gameLink,
     pager,
     setLimit
-  } = useGamePageListController()
+  } = useGamePageListController("storymode")
 
   return (
     <div className="flex flex-col">

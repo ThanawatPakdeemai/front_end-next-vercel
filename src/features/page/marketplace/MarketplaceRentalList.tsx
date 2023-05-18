@@ -29,6 +29,8 @@ interface IDataList {
     totalBalancePeriod: number
     totalPrice: number
     exp: Date
+    owner?: string
+    buyer?: string
   }
 }
 
@@ -73,7 +75,9 @@ const MarketplaceRentalList = () => {
                         totalPeriod: r.rentals_data[0].period_total,
                         totalBalancePeriod: r.rentals_data[0].period_balance,
                         totalPrice: r.rentals_data[0].total_price,
-                        exp: r.rentals_data[0].rent_end
+                        exp: r.rentals_data[0].rent_end,
+                        owner: r.rentals_data[0].seller_address,
+                        buyer: r.rentals_data[0].buyer_address
                       }
                     : undefined
               }))

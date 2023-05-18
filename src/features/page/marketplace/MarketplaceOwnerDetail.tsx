@@ -55,26 +55,10 @@ const MarketplaceOwnerDetail = () => {
                 : undefined
             }
           >
-            <div className="flex w-full items-center justify-between">
-              <ButtonMarket
-                nftType={invenItemData.type}
-                img={invenItemData.img}
-                tokenId={invenItemData.tokenId}
-                marketId={invenItemData.id}
-                itemId={invenItemData.id}
-                orderId={invenItemData.id}
-                amount={count || 1}
-                maxAmount={invenItemData.totalAmoumt}
-                plot={invenItemData.position}
-                name={invenItemData.name}
-                marketplaces_data={invenItemData.marketplaces_data}
-              />
-
-              {invenItemData.type === "nft_land" ||
-              invenItemData.type === "nft_building" ? (
-                <ButtonRentOut
+            {!invenItemData.installments_data ? (
+              <div className="flex w-full items-center justify-between">
+                <ButtonMarket
                   nftType={invenItemData.type}
-                  name={invenItemData.name}
                   img={invenItemData.img}
                   tokenId={invenItemData.tokenId}
                   marketId={invenItemData.id}
@@ -82,11 +66,29 @@ const MarketplaceOwnerDetail = () => {
                   orderId={invenItemData.id}
                   amount={count || 1}
                   maxAmount={invenItemData.totalAmoumt}
-                  sellingType="rental"
                   plot={invenItemData.position}
+                  name={invenItemData.name}
+                  marketplaces_data={invenItemData.marketplaces_data}
                 />
-              ) : null}
-            </div>
+
+                {invenItemData.type === "nft_land" ||
+                invenItemData.type === "nft_building" ? (
+                  <ButtonRentOut
+                    nftType={invenItemData.type}
+                    name={invenItemData.name}
+                    img={invenItemData.img}
+                    tokenId={invenItemData.tokenId}
+                    marketId={invenItemData.id}
+                    itemId={invenItemData.id}
+                    orderId={invenItemData.id}
+                    amount={count || 1}
+                    maxAmount={invenItemData.totalAmoumt}
+                    sellingType="rental"
+                    plot={invenItemData.position}
+                  />
+                ) : null}
+              </div>
+            ) : null}
           </RightDetailsMarketplace>
         </div>
       </div>

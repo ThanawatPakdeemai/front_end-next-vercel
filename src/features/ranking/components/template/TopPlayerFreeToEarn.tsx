@@ -39,7 +39,9 @@ const TopPlayerFreeToEarn = ({
           <div className="top-player__header grid grid-cols-4 gap-2 font-neue-machina-semi text-xs uppercase text-white-primary">
             <div>No</div>
             <div className="top-player__header-item">Avatar</div>
-            <div className="top-player__header-item ml-auto">Item reward</div>
+            <div className="top-player__header-item ml-auto text-end">
+              Item reward
+            </div>
             <div className="top-player__header-item ml-auto pr-2">Score</div>
           </div>
           <div className="custom-scroll h-[340px] overflow-y-scroll">

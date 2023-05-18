@@ -4,7 +4,7 @@ import { useGetMyRentalLand } from "@feature/land/containers/hooks/useGetMyLand"
 import { IMarketServForm } from "@feature/marketplace/interfaces/IMarketService"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 
 const useInventoryRental = () => {
   const { profile } = useProfileStore()
@@ -106,25 +106,33 @@ const useInventoryRental = () => {
     setTotalCount(_total)
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marketType])
+  }, [profile.data, marketType, currentPage, limit])
 
   useEffect(() => {
     let load = false
-    if (!load && marketType) {
+    if (!load) {
       fetchInventoryRental()
     }
     return () => {
       load = false
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marketType, currentPage])
+  }, [fetchInventoryRental])
 
   useEffect(() => {
+    let cleanup = false
+    if (!cleanup) {
+      setIsLoading(true)
+    }
+    return () => {
+      cleanup = true
+    }
+  }, [fetchInventoryRental])
+
+  useMemo(() => {
     let load = false
     if (!load) {
-      if (currentPage > 1) {
-        setCurrentPage(1)
-      }
+      setCurrentPage(1)
     }
     return () => {
       load = true

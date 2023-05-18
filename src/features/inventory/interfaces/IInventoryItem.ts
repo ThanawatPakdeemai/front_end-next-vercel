@@ -28,4 +28,5 @@ export interface IInventoryItemList {
     buyer?: string
   }
   selling?: TSellingType
+  payment_type?: string
 }

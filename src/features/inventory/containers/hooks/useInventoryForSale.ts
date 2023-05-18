@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useGetMyForSaleBuilding } from "@feature/building/containers/hooks/useGetMyBuilding"
 import { useGetForSaleArcGame } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
 import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
@@ -8,7 +9,7 @@ import { useGetMyForSaleNakaPunk } from "@feature/nakapunk/containers/hooks/useG
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 
 const useInventoryForSale = () => {
   // state
@@ -187,29 +188,36 @@ const useInventoryForSale = () => {
     setInventoryItemForsale(_data)
     setTotalCount(_total)
     setIsLoading(false)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marketType])
+  }, [profile.data, marketType, limit, currentPage])
 
   useEffect(() => {
     let load = false
-    if (!load && marketType) {
+    if (!load) {
       fetchMyForsale()
     }
     return () => {
       load = false
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marketType, currentPage])
+  }, [fetchMyForsale])
 
   useEffect(() => {
-    let load = false
-    if (!load) {
-      if (currentPage > 1) {
-        setCurrentPage(1)
-      }
+    let cleanup = false
+    if (!cleanup) {
+      setIsLoading(true)
     }
     return () => {
-      load = true
+      cleanup = true
+    }
+  }, [fetchMyForsale])
+
+  useMemo(() => {
+    let cleanup = false
+    if (!cleanup && marketType) {
+      setCurrentPage(1)
+    }
+    return () => {
+      cleanup = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [marketType])

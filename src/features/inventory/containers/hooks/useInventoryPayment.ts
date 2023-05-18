@@ -5,38 +5,14 @@ import { useGetMyInstallmentArcGame } from "@feature/game/marketplace/containers
 import { useGetMyInstallmentLand } from "@feature/land/containers/hooks/useGetMyLand"
 import {
   IInstallPeriod,
-  IMarketServForm,
-  TType
+  IMarketServForm
 } from "@feature/marketplace/interfaces/IMarketService"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
+import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
 
 dayjs.extend(utc)
-
-interface IInventoryList {
-  id: string
-  tokenId: string
-  cardType: TType
-  name: string
-  img: string
-  vdo?: string
-  model?: string
-  amount?: number
-  size?: string
-  level?: string | number
-  percentage?: number
-  price?: number
-  href?: string
-  keyType?: string // "owner"
-  rental?: {
-    totalPeriod: number
-    totalBalancePeriod: number
-    totalPrice: number
-    exp: Date
-  }
-  payment_type?: string
-}
 
 const useInventoryPayment = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -51,7 +27,7 @@ const useInventoryPayment = () => {
   const { marketType } = useGlobal()
 
   const [inventoryItemPayment, setInventoryItemPayment] = useState<
-    Array<IInventoryList>
+    Array<IInventoryItemList>
   >([])
 
   const handleDate = ({
@@ -62,7 +38,6 @@ const useInventoryPayment = () => {
     _data: IInstallPeriod[]
   }) => {
     const _today = dayjs().utc().unix()
-
     const _nextBill = _data.find((_item) => _item.history_id === null)
     switch (_keyType) {
       case "owner":
@@ -78,7 +53,7 @@ const useInventoryPayment = () => {
   }
 
   const fetchInventoryItemPayment = useCallback(async () => {
-    let _data: IInventoryList[] = []
+    let _data: IInventoryItemList[] = []
     let _total = 0
     setIsLoading(true)
     if (profile.data && marketType) {
@@ -114,7 +89,7 @@ const useInventoryPayment = () => {
           })
           break
         case "nft_building":
-          mutateGetMyInstallmentBuilding(initPayload).then((_res) => {
+          await mutateGetMyInstallmentBuilding(initPayload).then((_res) => {
             if (_res.data && _res.data.length > 0) {
               _data = _res.data.map((b) => ({
                 id: b._id,
@@ -136,7 +111,7 @@ const useInventoryPayment = () => {
           })
           break
         case "nft_game":
-          mutateGetMyInstallmentArcGame(initPayload).then((_res) => {
+          await mutateGetMyInstallmentArcGame(initPayload).then((_res) => {
             if (_res.data && _res.data.length > 0) {
               _data = _res.data.map((g) => ({
                 id: g._id,
@@ -163,18 +138,39 @@ const useInventoryPayment = () => {
     setTotalCount(_total)
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marketType, profile.data])
+  }, [profile.data, marketType, limit, currentPage])
 
   useEffect(() => {
     let cleanup = false
-    if (!cleanup && marketType && profile.data) {
+    if (!cleanup) {
       fetchInventoryItemPayment()
     }
     return () => {
       cleanup = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile.data, marketType])
+  }, [fetchInventoryItemPayment])
+
+  useEffect(() => {
+    let cleanup = false
+    if (!cleanup) {
+      setIsLoading(true)
+    }
+    return () => {
+      cleanup = true
+    }
+  }, [fetchInventoryItemPayment])
+
+  useMemo(() => {
+    let cleanup = false
+    if (!cleanup && marketType) {
+      setCurrentPage(1)
+    }
+    return () => {
+      cleanup = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [marketType])
 
   return {
     inventoryItemPayment,

@@ -1,5 +1,5 @@
 import { useInventoryProvider } from "@providers/InventoryProvider"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useGetMyLand } from "@feature/land/containers/hooks/useGetMyLand"
 import useProfileStore from "@stores/profileStore"
 import useNFTLand from "@feature/land/containers/hooks/useNFTLand"
@@ -13,11 +13,10 @@ import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem
 
 const useInventoryOwner = () => {
   const { profile } = useProfileStore()
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
-  const [limit, setLimit] = useState<number>(16)
-  // const { category } = useMarketCategTypes()
+  const [limit, setLimit] = useState<number>(6)
   const { marketType } = useGlobal()
   // const { sort, search, filter } = useMarketFilterStore()
   // game-item
@@ -39,39 +38,17 @@ const useInventoryOwner = () => {
     Array<IInventoryItemList>
   >([])
 
-  const fetchInventoryItemByType = useCallback(async () => {
+  const fetchInventoryNFTItem = useCallback(async () => {
     let _data: IInventoryItemList[] = []
     let _total = 0
     setIsLoading(true)
-    if (profile.data && marketType) {
+    if (
+      profile.data &&
+      marketType &&
+      marketType !== "game_item" &&
+      marketType !== "nft_material"
+    ) {
       switch (marketType) {
-        case "game_item":
-          if (gameItemList && gameItemList.length > 0) {
-            _data = gameItemList.map((gi) => ({
-              id: gi._id,
-              tokenId: gi.item_id_smartcontract.toString(),
-              cardType: "game-item",
-              name: `${gi.name} ${gi.item_size}`,
-              img: gi.image,
-              amount: gi.amount || 0,
-              size: gi.item_size
-            }))
-            _total = _data.length
-          }
-          break
-        case "nft_material":
-          if (materialList && materialList.length > 0) {
-            _data = materialList.map((m) => ({
-              id: m.id,
-              tokenId: m.material_id_smartcontract.toString(),
-              cardType: "material",
-              name: m.name,
-              img: m.image,
-              amount: m.amount || 0
-            }))
-            _total = _data.length
-          }
-          break
         case "nft_land": {
           const allLandResponse = await getLandsOfAddress(
             CONFIGS.CONTRACT_ADDRESS.LAND_NFT,
@@ -206,42 +183,95 @@ const useInventoryOwner = () => {
     setTotalCount(_total)
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marketType, profile.data])
+  }, [profile.data, marketType, currentPage, limit])
 
-  useEffect(() => {
-    let cleanup = false
+  const fetchInventoryItem = useCallback(async () => {
+    let _data: IInventoryItemList[] = []
+    let _total = 0
     if (
-      !cleanup &&
-      marketType &&
       profile.data &&
-      marketType !== "game_item" &&
-      marketType !== "nft_material"
-    ) {
-      fetchInventoryItemByType()
-    }
-    return () => {
-      cleanup = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile.data, marketType])
-
-  useEffect(() => {
-    let cleanup = false
-    if (
-      !cleanup &&
       marketType &&
-      profile.data &&
-      gameItemList &&
-      materialList &&
       (marketType === "game_item" || marketType === "nft_material")
     ) {
-      fetchInventoryItemByType()
+      switch (marketType) {
+        case "game_item":
+          if (gameItemList && gameItemList.length > 0) {
+            _data = gameItemList.map((gi) => ({
+              id: gi._id,
+              tokenId: gi.item_id_smartcontract.toString(),
+              cardType: "game-item",
+              name: `${gi.name} ${gi.item_size}`,
+              img: gi.image,
+              amount: gi.amount || 0,
+              size: gi.item_size
+            }))
+            _total = _data.length
+          }
+          break
+        case "nft_material":
+          if (materialList && materialList.length > 0) {
+            _data = materialList.map((m) => ({
+              id: m.id,
+              tokenId: m.material_id_smartcontract.toString(),
+              cardType: "material",
+              name: m.name,
+              img: m.image,
+              amount: m.amount || 0
+            }))
+            _total = _data.length
+          }
+          break
+        default:
+          break
+      }
+    }
+    setInventoryItemList(
+      _data.splice((currentPage - 1) * limit, currentPage * limit)
+    )
+    setTotalCount(_total)
+    setIsLoading(false)
+  }, [profile.data, marketType, limit, currentPage, gameItemList, materialList])
+
+  useEffect(() => {
+    let cleanup = false
+    if (!cleanup) {
+      fetchInventoryNFTItem()
+    }
+    return () => {
+      cleanup = true
+    }
+  }, [fetchInventoryNFTItem])
+
+  useEffect(() => {
+    let cleanup = false
+    if (!cleanup) {
+      fetchInventoryItem()
+    }
+    return () => {
+      cleanup = true
+    }
+  }, [fetchInventoryItem])
+
+  useEffect(() => {
+    let cleanup = false
+    if (!cleanup) {
+      setIsLoading(true)
+    }
+    return () => {
+      cleanup = true
+    }
+  }, [fetchInventoryNFTItem, fetchInventoryItem])
+
+  useMemo(() => {
+    let cleanup = false
+    if (!cleanup && marketType) {
+      setCurrentPage(1)
     }
     return () => {
       cleanup = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile.data, marketType, gameItemList, materialList])
+  }, [marketType])
 
   return {
     inventoryItemList,

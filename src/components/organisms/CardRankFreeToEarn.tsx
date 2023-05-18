@@ -11,6 +11,7 @@ interface IProp {
   itemName: string
   itemPrice: number
   player: IPlayerPlayToEarnRanking
+  itemReward: number
 }
 
 const CardRankFreeToEarn = ({
@@ -18,7 +19,8 @@ const CardRankFreeToEarn = ({
   index,
   itemName,
   itemSrc,
-  itemPrice
+  itemPrice,
+  itemReward
 }: IProp) => (
   <motion.div
     initial="rest"
@@ -60,9 +62,10 @@ const CardRankFreeToEarn = ({
     </div>
     <div className="ml-auto pr-2">
       <h1 className="font-neue-machina-semi text-[12px] text-info-main">
-        {Helper.formatNumber(player.bestScore, {
+        {`${itemReward} ${itemName}`}
+        {/* {Helper.formatNumber(player.bestScore, {
           maximumFractionDigits: 2
-        })}
+        })} */}
       </h1>
     </div>
   </motion.div>

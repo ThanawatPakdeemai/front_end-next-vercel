@@ -51,6 +51,7 @@ const TopPlayerFreeToEarn = ({
                 itemSrc={gameItem.image_icon || ""}
                 itemName={gameItem.name || ""}
                 itemPrice={gameItem.price}
+                itemReward={index > 4 ? 1 : 5 - index}
               />
             ))}
           </div>

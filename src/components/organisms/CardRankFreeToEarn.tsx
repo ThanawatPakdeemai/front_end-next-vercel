@@ -19,6 +19,7 @@ const CardRankFreeToEarn = ({
   index,
   itemName,
   itemSrc,
+  // eslint-disable-next-line no-unused-vars
   itemPrice,
   itemReward
 }: IProp) => (
@@ -58,14 +59,16 @@ const CardRankFreeToEarn = ({
           className="h-full w-full object-contain opacity-40"
         />
       </div>
-      <span className="font-neue-machina-semi text-xs">{itemPrice}$</span>
+      <span className="text-center font-neue-machina-semi text-xs">
+        {`${itemReward} ${itemName}`}
+        {/* {itemPrice}$ */}
+      </span>
     </div>
     <div className="ml-auto pr-2">
       <h1 className="font-neue-machina-semi text-[12px] text-info-main">
-        {`${itemReward} ${itemName}`}
-        {/* {Helper.formatNumber(player.bestScore, {
+        {Helper.formatNumber(player.bestScore, {
           maximumFractionDigits: 2
-        })} */}
+        })}
       </h1>
     </div>
   </motion.div>

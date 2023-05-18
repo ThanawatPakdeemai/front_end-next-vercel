@@ -4,6 +4,8 @@ import OverviewContent from "@components/organisms/OverviewContent"
 import SeatPlayersSingle from "@feature/game/components/organisms/SeatPlayerSingle"
 import useGetCurrentPlayerGameSingle from "@feature/game/containers/hooks/useGetCurrentPlayerGameSingle"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
+import { IGameItem } from "@feature/gameItem/interfaces/IGameItemService"
+import TopPlayerFreeToEarn from "@feature/ranking/components/template/TopPlayerFreeToEarn"
 import useGlobal from "@hooks/useGlobal"
 import { Box } from "@mui/material"
 import useGameStore from "@stores/game"
@@ -22,7 +24,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
   const router = useRouter()
   const { isLoading, playerGameSingle, fetchPlayerGameSingle } =
     useGetCurrentPlayerGameSingle()
-  const { getTypeGamePathFolder } = useGlobal()
+  const { getTypeGamePathFolder, isFreeToEarnGame } = useGlobal()
 
   const fetchPlayers = useCallback(
     (_type: "in" | "out") => {
@@ -222,7 +224,14 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
               gameId={data.id}
               gameType={getTypeGamePathFolder(data)}
             />
-            {data?.play_to_earn_status !== "free" && !data.tournament && (
+            {isFreeToEarnGame(data) && (
+              <TopPlayerFreeToEarn
+                gameId={data.id}
+                total={10}
+                gameItem={data.item[0] || ({} as IGameItem)}
+              />
+            )}
+            {data.game_mode === "play-to-earn" && !data.tournament && (
               <CardBuyItem gameObject={data} />
             )}
           </Box>

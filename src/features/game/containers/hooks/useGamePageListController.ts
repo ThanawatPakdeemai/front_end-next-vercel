@@ -9,7 +9,7 @@ import {
 import useFilterGameList from "@feature/dropdown/containers/hooks/useFilterGameList"
 import { useRouter } from "next/router"
 
-const useGamePageListController = (gameType?: IGetType) => {
+const useGamePageListController = (gameType?: IGetType, _limit?: number) => {
   const router = useRouter()
   const categoryId = router.query.id
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
@@ -25,7 +25,6 @@ const useGamePageListController = (gameType?: IGetType) => {
     pager,
     setTotalCount,
     getTypeGamePathFolder,
-    getGameTypeByPathname,
     isRedirectRoomlist
   } = useGlobal()
   const {
@@ -46,14 +45,12 @@ const useGamePageListController = (gameType?: IGetType) => {
    * @description Get game type by pathname
    * @returns
    */
-  const getGameTypeFilter = () => {
+  const getGameTypeFilter = (): IGetType => {
     if (categoryId) {
       return "all"
     }
-    if (gameType) {
-      return gameType
-    }
-    return getGameTypeByPathname()
+    if (!gameType) return "all"
+    return gameType
   }
 
   useEffect(() => {
@@ -78,7 +75,7 @@ const useGamePageListController = (gameType?: IGetType) => {
         setGameFilter([])
       }
       const filterData: IFilterGamesByKey = {
-        limit,
+        limit: _limit || limit,
         skip: page,
         sort: "_id",
         search: searchDropdown,
@@ -90,7 +87,6 @@ const useGamePageListController = (gameType?: IGetType) => {
             ? "all"
             : getGameTypeFilter(),
         tournament: false,
-        // nftgame: getGameTypeByPathname() === "arcade-emporium" ? true : "all"
         nftgame: getGameTypeFilter() === "arcade-emporium" ? true : "all"
       }
       mutateGetGamesByCategoryId(filterData).then((res) => {

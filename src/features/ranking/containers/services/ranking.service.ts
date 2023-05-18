@@ -1,5 +1,9 @@
 import services from "@configs/axiosGlobalConfig"
-import { IPlayerRanking, IRanking } from "@feature/ranking/interfaces/IRanking"
+import {
+  IPlayerPlayToEarnRankingResponse,
+  IPlayerRanking,
+  IRanking
+} from "@feature/ranking/interfaces/IRanking"
 
 // Call api to get players in the game order by NAKA
 const getPlayersRanking = (url: string) =>
@@ -32,15 +36,18 @@ const getPlayerRankByGameId = (_gameId: string) =>
 
 // Call api to get players in the game order by NAKA Play to Earn
 const getPlayersPlayToEarnRanking = ({ _game_id, _top_total }: IRanking) =>
-  new Promise<IPlayerRanking>((resolve, reject) => {
+  new Promise<IPlayerPlayToEarnRankingResponse>((resolve, reject) => {
     const data = {
       gameId: _game_id,
       topTotal: _top_total
     }
     services
-      .post<IPlayerRanking>("/play-to-earn/calculate-top-player", {
-        ...data
-      })
+      .post<IPlayerPlayToEarnRankingResponse>(
+        "/play-to-earn/calculate-top-player",
+        {
+          ...data
+        }
+      )
       .then((res) => {
         resolve(res.data)
       })

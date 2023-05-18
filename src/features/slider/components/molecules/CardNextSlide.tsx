@@ -22,7 +22,7 @@ export default function CardNextSlide({ slideNext, gotoNext }: ICardNextSlide) {
         <ImageCustom
           width={200}
           height={200}
-          src={slideNext?.image_category_list}
+          src={slideNext?.image_category_list || slideNext?.image_room}
           alt={slideNext?.name}
         />
       </div>

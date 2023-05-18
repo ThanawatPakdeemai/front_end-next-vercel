@@ -2,7 +2,7 @@ import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState, useRef } from "react"
 import {
   IFilterGamesByKey,
   IGame,
@@ -209,18 +209,13 @@ const useGlobal = (
    */
   const getTypeGamePathFolder = (_gameData: IGame): IGetType => {
     if (!_gameData) return "play-to-earn-games"
-    if (
-      (_gameData?.game_type === "singleplayer" ||
-        _gameData?.game_type === "multiplayer") &&
-      _gameData?.play_to_earn_status === "in_progress"
-    ) {
+    if (_gameData.game_mode === "play-to-earn") {
       return "play-to-earn-games"
     }
-    if (
-      (_gameData?.game_type === "singleplayer" ||
-        _gameData?.game_type === "multiplayer") &&
-      _gameData?.play_to_earn_status === "free"
-    ) {
+    if (_gameData.game_mode === "free-to-earn") {
+      return "free-to-play-games"
+    }
+    if (_gameData.game_mode === "free-to-play") {
       return "free-to-play-games"
     }
     if (_gameData.game_type === "storymode") {
@@ -230,6 +225,39 @@ const useGlobal = (
       return "arcade-emporium"
     }
     return "all"
+  }
+
+  /**
+   * @description Check if game is free to earn
+   */
+  const isFreeToEarnGame = (_gameData: IGame): boolean => {
+    if (_gameData.game_mode === "free-to-earn" && !_gameData.is_NFT) {
+      return true
+    }
+    return false
+  }
+
+  /**
+   * @description Check if game is free to play
+   */
+  const isFreeToPlayGame = (_gameData: IGame): boolean => {
+    if (_gameData.game_mode === "free-to-play" && !_gameData.is_NFT) {
+      return true
+    }
+    return false
+  }
+
+  /**
+   * @description Check if game is free to play
+   */
+  const isStoryModeGame = (_gameData: IGame): boolean => {
+    if (
+      _gameData.game_type === "storymode" ||
+      _gameData.game_mode === "story-mode"
+    ) {
+      return true
+    }
+    return false
   }
 
   const getTypeGamePartnerPathFolder = (
@@ -260,6 +288,7 @@ const useGlobal = (
         return "!bg-error-main !text-neutral-900"
 
       case "free-to-play-games":
+      case "free-to-earn-games":
         return "!bg-secondary-main !text-neutral-900"
 
       default:
@@ -338,7 +367,10 @@ const useGlobal = (
   }
 
   const isRedirectRoomlist = (_game: IGame): "/roomlist" | "" => {
-    if (_game.play_to_earn_status === "free") {
+    if (
+      _game.play_to_earn_status === "free" ||
+      _game.game_mode === "free-to-earn"
+    ) {
       return "/roomlist"
     }
     return ""
@@ -392,17 +424,26 @@ const useGlobal = (
   /** This is only temporary code for hide marketplace in production */
   const _mode = process.env.NEXT_PUBLIC_MODE
 
+  const redirectionDone = useRef(false)
+
   useEffect(() => {
     const redirectIfNecessary = () => {
-      if (router.asPath.includes("marketplace") && _mode === "production") {
+      if (
+        router.asPath.includes("marketplace") &&
+        _mode === "production" &&
+        !redirectionDone.current
+      ) {
         router.replace("/404")
         setIsShowMarket(false)
+        redirectionDone.current = true
       } else if (
         router.asPath.includes("marketplace") &&
-        _mode === "development"
+        _mode === "development" &&
+        !redirectionDone.current
       ) {
-        router.replace("/marketplace")
+        router.replace(router.asPath)
         setIsShowMarket(true)
+        redirectionDone.current = true
       }
     }
 
@@ -455,7 +496,10 @@ const useGlobal = (
     fetchChainData,
     getColorChipByGameType,
     getGameStoryModeURL,
-    getGameTypeByPathname
+    getGameTypeByPathname,
+    isFreeToEarnGame,
+    isFreeToPlayGame,
+    isStoryModeGame
   }
 }
 

@@ -24,8 +24,8 @@ export type TTypeCode =
 export type IGetType =
   | "play-to-earn-games"
   | "free-to-play-games"
+  | "free-to-earn-games"
   | "story-mode-games"
-  | "free-to-play"
   | "storymode"
   | "must-try"
   | "hot-game"
@@ -35,6 +35,8 @@ export type IGetType =
   | "nft-game"
   | "all"
   | "on-playing"
+
+export type TGameFree = "free-to-play" | "free-to-earn"
 
 export type TRoomStatus =
   | "playing"
@@ -218,6 +220,7 @@ export interface IGame extends IGameArcadeEmporium {
   // When is_NFT: true
   NFT_info: INFTInfo
   game_room_available?: IGameRoomAvailable[]
+  game_mode: "free-to-earn" | "play-to-earn" | "free-to-play" | "story-mode"
 }
 
 interface IGameHowto {
@@ -260,8 +263,8 @@ interface IGameStoryModeData {
 
 export interface IGameFav {
   number_of_played: number
-  date_start_event: string | Date
-  date_end_event: string | Date
+  date_start_event: Date | null | undefined
+  date_end_event: Date | null | undefined
   play_to_earn_status: string
   play_to_earn: boolean
   howto: IGameHowto
@@ -313,6 +316,7 @@ export interface IGameFav {
   reward_payment_rate: IRewardPaymentRate[]
   meta_data_list: IGameStoryModeData[]
   play_total_count?: number
+  game_mode: "free_to_earn" | ""
 }
 
 export interface IGameRewardByPlayer extends IGameBase {

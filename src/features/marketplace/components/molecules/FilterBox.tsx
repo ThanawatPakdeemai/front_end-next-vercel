@@ -1,5 +1,11 @@
 import SearchIcon from "@components/icons/SearchIcon"
-import { Collapse, InputAdornment, TextField, Typography } from "@mui/material"
+import {
+  Collapse,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography
+} from "@mui/material"
 import React, { memo, useEffect, useMemo, useState } from "react"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import INaka from "@components/icons/Naka"
@@ -48,12 +54,14 @@ const FilterBox = () => {
   const [date, setDate] = useState<string>("Date")
   const [type, setType] = useState<string>("Type")
 
-  const { category, fetchStatus, getCurrentTypes } = useMarketCategTypes()
+  const { fetchStatus, getCurrentTypes } = useMarketCategTypes()
   const { isMarketplace, marketType } = useGlobal()
 
   const searchvalue = search.reduce((acc, curr) => Object.assign(acc, curr), {})
   const typeOfsearch =
     isMarketplace && marketType === "nft_land" ? "land_id" : "nft_token"
+
+  // console.log("mktype", marketType)
 
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
@@ -66,6 +74,14 @@ const FilterBox = () => {
   }
   const handleOnExpandType = () => {
     setExpandType(!expandType)
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.keyCode === 13) {
+      isMarketplace && marketType === "nft_land"
+        ? onSetSearch({ key: "land_id", value: text })
+        : onSetSearch({ key: "nft_token", value: text })
+    }
   }
 
   const onFilterChange = (
@@ -257,7 +273,8 @@ const FilterBox = () => {
       )}
       {(marketType === "nft_building" ||
         marketType === "nft_game" ||
-        marketType === "nft_land") &&
+        marketType === "nft_land" ||
+        marketType === "nft_naka_punk") &&
         isMarketplace && (
           <>
             <Typography className="text-xs uppercase text-neutral-500">
@@ -268,13 +285,7 @@ const FilterBox = () => {
             <TextField
               className="w-full"
               placeholder="e.g. 11900011"
-              // onKeyDown={(event) => {
-              //   if (event.key === "Enter" && text !== "") {
-              //     pathName === "marketplace" || marketType === "nft_land"
-              //       ? onSetSearch({ key: "land_id", value: text })
-              //       : onSetSearch({ key: "nft_token", value: text })
-              //   }
-              // }}
+              onKeyDown={handleKeyDown}
               InputProps={{
                 style: {
                   fontSize: "14px",
@@ -286,29 +297,33 @@ const FilterBox = () => {
                   <InputAdornment
                     position="end"
                     className="cursor-pointer"
-                    onClick={() => {}}
                   >
-                    <SearchIcon />
+                    <IconButton
+                      onClick={() => {
+                        isMarketplace && marketType === "nft_land"
+                          ? onSetSearch({ key: "land_id", value: text })
+                          : onSetSearch({ key: "nft_token", value: text })
+                      }}
+                    >
+                      <SearchIcon />
+                    </IconButton>
                   </InputAdornment>
                 )
               }}
               onChange={(_event) => {
-                // setText(_event.target.value)
                 let { value } = _event.target
                 value = value.replace(/[^A-Za-z0-9]/gi, "")
-                isMarketplace && marketType === "nft_land"
-                  ? onSetSearch({ key: "land_id", value })
-                  : onSetSearch({ key: "nft_token", value })
+                setText(_event.target.value)
               }}
-              value={
-                searchvalue[typeOfsearch] !== undefined
-                  ? searchvalue[typeOfsearch]
-                  : ""
-              }
+              // value={
+              //   searchvalue[typeOfsearch] !== undefined
+              //     ? searchvalue[typeOfsearch]
+              //     : ""
+              // }
+              value={text}
             />
           </>
         )}
-
       <div className="my-4 h-[10px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')]" />
       <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
         <Typography className="text-sm uppercase text-white-default">
@@ -628,21 +643,41 @@ const FilterBox = () => {
             (item, index, self) =>
               self.findIndex((t) => t.name === item.name) === index
           ).map((item) => (
-            <CheckBoxNaka
-              // key={checkBoxKey}
-              key={item.name}
-              value={item.checked}
-              onHandle={() => {
-                handleCheckboxChange({
-                  _value: onSelectedFilterValue(marketType, item),
-                  _checked: onFilterChange(marketType, item)
-                })
-              }}
-              text={item.name}
-              className="mr-4 items-center self-center uppercase"
-              fontStyle="text-xs text-black-default"
-              img={item.image}
-            />
+            <>
+              {marketType === "game_item" ? (
+                <CheckBoxNaka
+                  // key={checkBoxKey}
+                  key={item.name}
+                  value={item.checked}
+                  onHandle={() => {
+                    handleCheckboxChange({
+                      _value: onSelectedFilterValue(marketType, item),
+                      _checked: onFilterChange(marketType, item)
+                    })
+                  }}
+                  text={item.name}
+                  className="mr-4 items-center self-center uppercase"
+                  fontStyle="text-xs text-black-default"
+                  img={item.image}
+                />
+              ) : (
+                <CheckBoxNaka
+                  // key={checkBoxKey}
+                  key={item.name}
+                  value={item.checked}
+                  onHandle={() => {
+                    handleCheckboxChange({
+                      _value: onSelectedFilterValue(marketType, item),
+                      _checked: onFilterChange(marketType, item)
+                    })
+                  }}
+                  text={item.name}
+                  className="mr-4 items-center self-center uppercase"
+                  fontStyle="text-xs text-black-default"
+                  img={item.image}
+                />
+              )}
+            </>
           ))}
       </div>
     </div>

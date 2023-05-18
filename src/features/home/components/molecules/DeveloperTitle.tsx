@@ -10,7 +10,7 @@ const DeveloperTitle = () => (
     <Typography className="font-neue-machina-semi !text-default !text-white-primary">
       <Trans i18nKey="unlimited_your_way" />
     </Typography>
-    <Typography className="!mt-3 !text-sm !text-black-default">
+    <Typography className="!mt-4 !text-sm !text-primary-contrastText">
       <Trans i18nKey="dev_desc" />
     </Typography>
   </div>

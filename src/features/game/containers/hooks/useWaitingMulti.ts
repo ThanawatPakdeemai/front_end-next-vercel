@@ -467,7 +467,6 @@ const useWaitingMulti = () => {
           ).getTime()}:|:${profile?.username}:|:${playerInroom?.length}:|:${
             dataPlayers?.map_id
           }:|:${ip}`
-          // console.log("1>>", dataLinkGame)
           gameURL = `${baseUrlGame}/${gameData.id}/?query=${Helper.makeID(
             8
           )}${btoa(dataLinkGame)}`
@@ -481,8 +480,6 @@ const useWaitingMulti = () => {
           ).getTime()}:|:${profile?.username}:|:${playerInroom?.length}:|:${
             dataPlayers?.map_id
           }:|:${ip}`
-          // console.log("2>>", dataLinkGame)
-          // console.log(ip)
 
           gameURL = `${gameData.game_url}/${gameData.id}/?query=${Helper.makeID(
             8

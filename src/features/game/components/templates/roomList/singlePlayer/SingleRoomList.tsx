@@ -38,10 +38,7 @@ const GameRoomList = () => {
   const { balanceofItem } = useBuyGameItemController()
   const item = useMemo(() => {
     if (data) {
-      if (
-        (data.play_to_earn && data.play_to_earn_status === "free") ||
-        data.tournament
-      ) {
+      if (data.game_mode !== "play-to-earn" || data.tournament) {
         return data.item[0]._id
       }
       if (itemSelected) {
@@ -109,7 +106,7 @@ const GameRoomList = () => {
         errorToast(MESSAGES["room-timeout"])
       } else if (
         data &&
-        ((data.play_to_earn && data.play_to_earn_status === "free") ||
+        ((data.play_to_earn && data.game_mode !== "play-to-earn") ||
           data.tournament)
       ) {
         intoRoomGame(data_player_me as IGameCurrentPlayer, _roomId)
@@ -234,17 +231,6 @@ const GameRoomList = () => {
           />
         </div>
       </div>
-      {/* {gameData && (
-        <BuyItemBody>
-          <OverviewContent
-            gameId={gameData.id}
-            gameType={getTypeGamePathFolder(gameData)}
-          />
-          {gameData?.play_to_earn_status !== "free" && !gameData.tournament && (
-            <CardBuyItem gameObject={gameData} />
-          )}
-        </BuyItemBody>
-      )} */}
     </Box>
   )
 }

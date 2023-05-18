@@ -23,7 +23,8 @@ const useCategories = (_body?: IFilterGamesByKey | undefined) => {
     queryKey: ["getCategories"],
     queryFn: () => getCategories(),
     keepPreviousData: true,
-    staleTime: Infinity
+    staleTime: Infinity,
+    retry: 3
   })
 
   /**
@@ -40,7 +41,8 @@ const useCategories = (_body?: IFilterGamesByKey | undefined) => {
     queryKey: ["getGamesByKey", _body],
     queryFn: () => getGamesByKey(_body || defaultBody),
     keepPreviousData: true,
-    staleTime: Infinity
+    staleTime: Infinity,
+    retry: 3
   })
 
   /**

@@ -9,6 +9,7 @@ import { IOwnerData } from "@feature/marketplace/interfaces/IMarketService"
 import useInvenMaterial from "@feature/material/inventory/containers/hooks/useInvenMaterial"
 import { useGetMyNakaPunk } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import useGlobal from "@hooks/useGlobal"
+import useMarketFilterStore from "@stores/marketFilter"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
@@ -33,6 +34,25 @@ const useMartketOwner = () => {
   const { mutateGetMyNakaPunk } = useGetMyNakaPunk()
   const { mutateGeyMyArcGame } = useGetMyArcGame()
   const { mutateGetMyAvatarReef } = useAvatarReefServ()
+  const {
+    // sort,
+    search: searchText
+    // filter: filterItem
+  } = useMarketFilterStore()
+
+  // console.log(
+  //   "searchText",
+  //   searchText.reduce((acc, curr) => Object.assign(acc, curr), {})
+  // )
+  // console.log(
+  //   "filterItem",
+  //   filterItem.reduce((acc, curr) => Object.assign(acc, curr), {})
+  // )
+
+  const searchLand = searchText.reduce(
+    (acc, curr) => Object.assign(acc, curr),
+    {}
+  )
 
   const fetchOwnerDataList = async () => {
     setOwnerData([])
@@ -54,7 +74,8 @@ const useMartketOwner = () => {
             _search: {
               isRent: false,
               player_id: profile.data.id,
-              type: marketType
+              type: marketType,
+              ...searchLand
             },
             _landList: cvLandList
           })
@@ -106,7 +127,8 @@ const useMartketOwner = () => {
             _active: true,
             _page: currentPage,
             _search: {
-              type_marketplace: marketType
+              type_marketplace: marketType,
+              ...searchLand
             }
           })
             .then((_res) => {
@@ -230,8 +252,9 @@ const useMartketOwner = () => {
     return () => {
       load = true
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marketType, currentPage])
+  }, [marketType, currentPage, searchText])
 
   useEffect(() => {
     let load = false

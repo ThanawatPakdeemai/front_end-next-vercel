@@ -1,11 +1,11 @@
 import CardItemMarketPlace from "@components/molecules/cards/CardItemMarketPlace"
-import useMarketForSale from "@feature/marketplace/containers/hooks/useMarketForSale"
 import { useRouter } from "next/router"
 import { v4 as uuidv4 } from "uuid"
 import React from "react"
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonItem from "@feature/marketplace/components/molecules/SkeletonItem"
 import { TSellingType } from "@feature/marketplace/interfaces/IMarketService"
+import useInventoryForSale from "@feature/inventory/containers/hooks/useInventoryForSale"
 
 const MarketPlaceForsaleList = () => {
   const {
@@ -14,8 +14,8 @@ const MarketPlaceForsaleList = () => {
     limit,
     currentPage,
     setCurrentPage,
-    ownerDataForsale
-  } = useMarketForSale()
+    inventoryItemForsale
+  } = useInventoryForSale()
 
   const router = useRouter()
 
@@ -29,29 +29,29 @@ const MarketPlaceForsaleList = () => {
     return "warning"
   }
 
-  if (ownerDataForsale && ownerDataForsale.length > 0 && !isLoading) {
+  if (inventoryItemForsale && inventoryItemForsale.length > 0 && !isLoading) {
     return (
       <div className="flex flex-col gap-y-7">
         <div className="grid w-full grid-cols-1 gap-x-3 gap-y-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {ownerDataForsale.map((_data) => (
+          {inventoryItemForsale.map((_data) => (
             <CardItemMarketPlace
               key={uuidv4()}
-              cardType={_data.type}
+              cardType={_data.cardType}
               id={_data.tokenId}
               itemImage={
-                _data.type === "game-item"
+                _data.cardType === "game-item"
                   ? {
-                      src: String(_data.image),
+                      src: String(_data.img),
                       alt: _data.name,
                       width: _data.name.includes("Bullet") ? 40 : 100
                     }
                   : undefined
               }
               itemVideo={
-                _data.type !== "game-item"
+                _data.cardType !== "game-item"
                   ? {
-                      src: _data.video as string,
-                      poster: String(_data.image)
+                      src: _data.vdo as string,
+                      poster: String(_data.img)
                     }
                   : undefined
               }
@@ -59,12 +59,10 @@ const MarketPlaceForsaleList = () => {
               itemLevel={_data.level}
               itemSize={_data.size as string}
               itemAmount={_data.amount as number}
-              href={`/${router.locale}/marketplace/${_data.type}/${_data.id}`}
+              href={`/${router.locale}/marketplace/${_data.cardType}/${_data.id}`}
               sellingType={{
-                title: _data.selling_type,
-                color: handleColorSellingType(
-                  _data.selling_type as TSellingType
-                )
+                title: _data.selling,
+                color: handleColorSellingType(_data.selling as TSellingType)
               }}
               price={_data.price}
             />
@@ -81,7 +79,7 @@ const MarketPlaceForsaleList = () => {
   }
   return (
     <>
-      {ownerDataForsale.length === 0 && !isLoading ? (
+      {inventoryItemForsale.length === 0 && !isLoading ? (
         <div>No Data</div>
       ) : (
         <div className="grid w-full grid-cols-1 gap-x-3 gap-y-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">

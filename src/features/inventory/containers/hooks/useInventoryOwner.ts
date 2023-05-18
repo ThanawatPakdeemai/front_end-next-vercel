@@ -1,4 +1,3 @@
-import { TType } from "@feature/marketplace/interfaces/IMarketService"
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import { useCallback, useEffect, useState } from "react"
 import { useGetMyLand } from "@feature/land/containers/hooks/useGetMyLand"
@@ -9,38 +8,17 @@ import { useGetMyBuilding } from "@feature/building/containers/hooks/useGetMyBui
 import { useGetMyArcGame } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
 import { useGetMyNakaPunk } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAvatarReef"
-import useMarketCategTypes from "@stores/marketCategTypes"
+import useGlobal from "@hooks/useGlobal"
+import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
 
-interface IInventoryList {
-  id: string
-  tokenId: string
-  cardType: TType
-  name: string
-  img: string
-  vdo?: string
-  model?: string
-  amount?: number
-  size?: string
-  level?: string | number
-  percentage?: number
-  price?: number
-  href?: string
-  keyType?: string // "owner"
-  rental?: {
-    totalPeriod: number
-    totalBalancePeriod: number
-    totalPrice: number
-    exp: Date
-  }
-}
-// hook
 const useInventoryOwner = () => {
   const { profile } = useProfileStore()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
   const [limit, setLimit] = useState<number>(16)
-  const { category } = useMarketCategTypes()
+  // const { category } = useMarketCategTypes()
+  const { marketType } = useGlobal()
   // const { sort, search, filter } = useMarketFilterStore()
   // game-item
   // material
@@ -58,15 +36,15 @@ const useInventoryOwner = () => {
   const { mutateGetMyAvatarReef } = useMutateAvatarReef()
 
   const [inventoryItemList, setInventoryItemList] = useState<
-    Array<IInventoryList>
+    Array<IInventoryItemList>
   >([])
 
   const fetchInventoryItemByType = useCallback(async () => {
-    let _data: IInventoryList[] = []
+    let _data: IInventoryItemList[] = []
     let _total = 0
     setIsLoading(true)
-    if (profile.data && category) {
-      switch (category) {
+    if (profile.data && marketType) {
+      switch (marketType) {
         case "game_item":
           if (gameItemList && gameItemList.length > 0) {
             _data = gameItemList.map((gi) => ({
@@ -228,16 +206,16 @@ const useInventoryOwner = () => {
     setTotalCount(_total)
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category])
+  }, [marketType, profile.data])
 
   useEffect(() => {
     let cleanup = false
     if (
       !cleanup &&
-      category &&
+      marketType &&
       profile.data &&
-      category !== "game_item" &&
-      category !== "nft_material"
+      marketType !== "game_item" &&
+      marketType !== "nft_material"
     ) {
       fetchInventoryItemByType()
     }
@@ -245,17 +223,17 @@ const useInventoryOwner = () => {
       cleanup = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile.data, category])
+  }, [profile.data, marketType])
 
   useEffect(() => {
     let cleanup = false
     if (
       !cleanup &&
-      category &&
+      marketType &&
       profile.data &&
       gameItemList &&
       materialList &&
-      (category === "game_item" || category === "nft_material")
+      (marketType === "game_item" || marketType === "nft_material")
     ) {
       fetchInventoryItemByType()
     }
@@ -263,7 +241,7 @@ const useInventoryOwner = () => {
       cleanup = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile.data, category, gameItemList, materialList])
+  }, [profile.data, marketType, gameItemList, materialList])
 
   return {
     inventoryItemList,

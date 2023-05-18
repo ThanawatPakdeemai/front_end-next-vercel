@@ -15,6 +15,7 @@ import { MobileView } from "react-device-detect"
 import { IGame } from "@feature/game/interfaces/IGameService"
 
 const FreeToEarnGamesPage = () => {
+  const [limitFake] = useState(9999)
   const {
     loadingFilterGame,
     limit,
@@ -29,7 +30,7 @@ const FreeToEarnGamesPage = () => {
     staminaRecovery,
     cooldown,
     setCooldown
-  } = useGamePageListController("free-to-play-games")
+  } = useGamePageListController("free-to-play-games", limitFake) // TODO backend can't filter game free-to-earn
   const { getTypeGamePathFolder, isFreeToEarnGame } = useGlobal()
 
   const [f2eGame, setF2EGame] = useState<IGame[]>()
@@ -98,7 +99,7 @@ const FreeToEarnGamesPage = () => {
       >
         <PaginationNaka
           totalCount={totalCount}
-          limit={limit}
+          limit={limitFake}
           page={page}
           setPage={setPage}
         />

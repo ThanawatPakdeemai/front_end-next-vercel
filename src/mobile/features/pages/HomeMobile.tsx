@@ -21,8 +21,7 @@ const HomeMobile = () => {
   const [p2eGame, setP2EGame] = useState<IGame[]>()
   const [p2eCurType, setP2ECurType] = useState<IGetType>("play-to-earn-games")
 
-  const { isFreeToEarnGame, isFreeToPlayGame, isStoryModeGame, limit } =
-    useGlobal()
+  const { isFreeToEarnGame, limit } = useGlobal()
 
   const { gameFilter: dataF2pGames, loadingFilterGame: loadingDataF2pGames } =
     useGamePageListController(

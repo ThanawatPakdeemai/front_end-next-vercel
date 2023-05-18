@@ -17,7 +17,7 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import { IResGetIp } from "@interfaces/IGetIP"
 import { useTranslation } from "react-i18next"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
-import { isMobile } from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import ButtonGame from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 
@@ -39,6 +39,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   const [ip, setIp] = useState("")
   const { t } = useTranslation()
   const { balanceofItem } = useBuyGameItemController()
+  const { isFreeToEarnGame, isFreeToPlayGame } = useGlobal()
 
   // TODO: Refactor later
   const detectDevice = isMobile ? "mobile" : "desktop"
@@ -171,10 +172,12 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   }
 
   const checkGameFree = () => {
-    if (
-      (data?.play_to_earn && data?.play_to_earn_status === "free") ||
-      data?.game_mode === "free-to-earn"
-    ) {
+    // if (
+    //   (data?.play_to_earn && data?.play_to_earn_status === "free") ||
+    //   data?.game_mode === "free-to-earn"
+    // )
+    if (!data) return false
+    if (isFreeToPlayGame(data) || isFreeToEarnGame(data)) {
       return true
     }
     return false

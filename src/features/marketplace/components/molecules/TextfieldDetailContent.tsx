@@ -112,30 +112,32 @@ const TextfieldDetailContent = ({
           helperText="Land position on map"
         />
       )}
-      <TextField
-        value={price ? countItemSelected * price : invPrice}
-        label="PRICE (NAKA)"
-        sx={{
-          "& .MuiOutlinedInput-root": {
-            backgroundColor: "#010101"
-          },
-          "input": {
-            color: "#E1E2E2 !important"
-          }
-        }}
-        onChange={(e) => onPriceChange(e.target.value)}
-        disabled={!!price}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <LogoIcon />
-            </InputAdornment>
-          )
-        }}
-        helperText={`= ${Helper.formatNumber(calcNakaPrice, {
-          maximumFractionDigits: 4
-        })} USD`}
-      />
+      {price && (
+        <TextField
+          value={price ? countItemSelected * price : invPrice}
+          label="PRICE (NAKA)"
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              backgroundColor: "#010101"
+            },
+            "input": {
+              color: "#E1E2E2 !important"
+            }
+          }}
+          onChange={(e) => onPriceChange(e.target.value)}
+          disabled={!!price}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <LogoIcon />
+              </InputAdornment>
+            )
+          }}
+          helperText={`= ${Helper.formatNumber(calcNakaPrice, {
+            maximumFractionDigits: 4
+          })} USD`}
+        />
+      )}
     </div>
   )
 }

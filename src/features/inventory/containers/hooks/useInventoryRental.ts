@@ -52,7 +52,13 @@ const useInventoryRental = () => {
                     ? l.rentals_data.period_balance
                     : 0,
                   totalPrice: l.rentals_data ? l.rentals_data.total_price : 0,
-                  exp: l.rentals_data ? l.rentals_data.rent_end : new Date()
+                  exp: l.rentals_data ? l.rentals_data.rent_end : new Date(),
+                  owner: l.rentals_data
+                    ? l.rentals_data.seller_address
+                    : undefined,
+                  buyer: l.rentals_data
+                    ? l.rentals_data.buyer_address
+                    : undefined
                 }
               }))
               _total = _res.info.totalCount
@@ -79,7 +85,13 @@ const useInventoryRental = () => {
                     ? b.rentals_data.period_balance
                     : 0,
                   totalPrice: b.rentals_data ? b.rentals_data.total_price : 0,
-                  exp: b.rentals_data ? b.rentals_data.rent_end : new Date()
+                  exp: b.rentals_data ? b.rentals_data.rent_end : new Date(),
+                  owner: b.rentals_data
+                    ? b.rentals_data.seller_address
+                    : undefined,
+                  buyer: b.rentals_data
+                    ? b.rentals_data.buyer_address
+                    : undefined
                 }
               }))
               _total = _res.info.totalCount

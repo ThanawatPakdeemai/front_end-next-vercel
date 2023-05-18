@@ -38,6 +38,7 @@ const MarketplaceRentalList = () => {
               itemAmount={_data.amount}
               // href={`/${router.locale}/marketplace/inventory/${_data.cardType}/${_data.id}`}
               // keyType={_data.keyType}
+              rental={_data.rental}
             />
           ))}
         </div>

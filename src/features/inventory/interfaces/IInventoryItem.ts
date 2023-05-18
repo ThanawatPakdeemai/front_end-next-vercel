@@ -24,6 +24,8 @@ export interface IInventoryItemList {
     totalBalancePeriod: number
     totalPrice: number
     exp: Date
+    owner?: string
+    buyer?: string
   }
   selling?: TSellingType
 }

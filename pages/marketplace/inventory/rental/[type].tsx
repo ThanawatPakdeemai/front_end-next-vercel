@@ -2,18 +2,17 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import React, { ReactElement } from "react"
 import dynamic from "next/dynamic"
 
-const MarketplaceLayoutInventory = dynamic(
-  () => import("@components/templates/marketplace/MarketplaceLayoutInventory"),
+const MarketplaceRentalList = dynamic(
+  () => import("@feature/page/marketplace/MarketplaceRentalList"),
   {
     suspense: true,
     ssr: false
   }
 )
-
-const MarketplaceRentalList = dynamic(
-  () => import("@feature/page/marketplace/MarketplaceRentalList"),
+const MarketplaceLayoutInventory = dynamic(
+  () => import("@components/templates/marketplace/MarketplaceLayoutInventory"),
   {
-    suspense: false,
+    suspense: true,
     ssr: false
   }
 )

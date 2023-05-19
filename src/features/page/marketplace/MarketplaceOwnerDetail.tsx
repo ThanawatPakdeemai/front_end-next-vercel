@@ -11,11 +11,11 @@ import useProfileStore from "@stores/profileStore"
 import React from "react"
 
 const MarketplaceOwnerDetail = () => {
-  const { invenItemData } = useInventoryProvider()
+  const { profile } = useProfileStore()
+  const { invenItemData, isLoading } = useInventoryProvider()
   const { count } = useCountStore()
-  const profile = useProfileStore((state) => state.profile.data)
 
-  return invenItemData ? (
+  return invenItemData && !isLoading ? (
     <div className="flex flex-col">
       <div className="mt-5 flex w-full flex-col gap-x-[120px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0">
         <CardContentDetails
@@ -26,12 +26,15 @@ const MarketplaceOwnerDetail = () => {
           alt={invenItemData.type}
           model={invenItemData.model}
         >
-          {profile &&
-            profile.address &&
+          {profile.data &&
+            profile.data.address &&
             invenItemData.wallet_address &&
-            profile.address === invenItemData.wallet_address && (
+            profile.data.address === invenItemData.wallet_address && (
               <div className="px-8">
-                <TransferBox _tokenId={invenItemData.tokenId} />
+                <TransferBox
+                  _tokenId={invenItemData.tokenId}
+                  _maxAmount={invenItemData.totalAmoumt}
+                />
               </div>
             )}
         </CardContentDetails>

@@ -7,7 +7,7 @@ import {
   Button
 } from "@mui/material"
 import { useRouter } from "next/router"
-import React from "react"
+import React, { useCallback, useEffect } from "react"
 import PlusIcon from "@components/icons/CountIcon/PlusIcon"
 import useProfileStore from "@stores/profileStore"
 import useGlobal from "@hooks/useGlobal"
@@ -15,15 +15,22 @@ import useNFTLand from "@feature/land/containers/hooks/useNFTLand"
 import useNFTBuilding from "@feature/building/containers/hooks/useNFTBuilding"
 import useNFTPunk from "@feature/nakapunk/containers/hooks/useNFTPunk"
 import useNFTArcGame from "@feature/game/marketplace/containers/hooks/useNFTArcGame"
+import NumpadIcon from "@components/icons/NumpadIcon"
+import CountItem from "@components/molecules/CountItem"
+import { useInventoryProvider } from "@providers/InventoryProvider"
+import Helper from "@utils/helper"
 
 interface IProp {
   _tokenId: string
+  _maxAmount?: number
 }
 
-const TransferBox = ({ _tokenId }: IProp) => {
+const TransferBox = ({ _tokenId, _maxAmount }: IProp) => {
   const [expanded, setExpanded] = React.useState<string | false>()
   const [address, setAddress] = React.useState<string>("")
-
+  const [transAmount, setTransAmount] = React.useState<number>(0)
+  const MIN_AMOUNT: number = 1
+  const MAX_AMOUNT: number = _maxAmount || 1
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
   const { marketType } = useGlobal()
@@ -31,27 +38,85 @@ const TransferBox = ({ _tokenId }: IProp) => {
   const { onTransferBuilding } = useNFTBuilding()
   const { onTransferPunk } = useNFTPunk()
   const { onTransferArcGame } = useNFTArcGame()
+  const { onTransferMaterial } = useInventoryProvider()
+  const { convertNFTTypeToTType } = Helper
+
+  const onDecreaseAmount = () => {
+    if (transAmount && transAmount <= MIN_AMOUNT) {
+      setTransAmount(MIN_AMOUNT)
+    } else {
+      setTransAmount((prev: number) => prev - 1)
+    }
+  }
+
+  const onIncreaseAmount = () => {
+    if (transAmount && transAmount >= MAX_AMOUNT) {
+      setTransAmount(MAX_AMOUNT)
+    } else {
+      setTransAmount((prev: number) => prev + 1)
+    }
+  }
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false)
     }
 
-  const handleOnTransfer = () => {
-    const allFunction = {
-      nft_land: onTransferLand,
-      nft_building: onTransferBuilding,
-      nft_naka_punk: onTransferPunk,
-      nft_game: onTransferArcGame
+  const handleOnTransfer = useCallback(async () => {
+    if (marketType) {
+      switch (marketType) {
+        case "nft_material":
+          if (onTransferMaterial)
+            await onTransferMaterial(address, _tokenId, transAmount)
+          break
+        case "nft_land":
+          await onTransferLand(address, _tokenId)
+          break
+        case "nft_building":
+          await onTransferBuilding(address, _tokenId)
+          break
+        case "nft_game":
+          await onTransferArcGame(address, _tokenId)
+          break
+        case "nft_naka_punk":
+          await onTransferPunk(address, _tokenId).catch(() => {})
+          break
+        default:
+          break
+      }
+      if (marketType !== "nft_material")
+        setTimeout(
+          () =>
+            router.replace(
+              `/marketplace/inventory/${convertNFTTypeToTType(marketType)}`
+            ),
+          1000
+        )
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [_tokenId, address, marketType, transAmount])
 
-    const transferFunction = marketType && allFunction[marketType]
-    if (transferFunction) {
-      transferFunction(address, _tokenId)
-        .then(() => router.push("/marketplace/inventory"))
-        .catch(() => console.error("Something went wrong"))
+  useEffect(() => {
+    let load = false
+    if (
+      !load &&
+      marketType &&
+      marketType === "nft_material" &&
+      _maxAmount &&
+      _maxAmount <= 0
+    )
+      setTimeout(
+        () =>
+          router.replace(
+            `/marketplace/inventory/${convertNFTTypeToTType(marketType)}`
+          ),
+        1000
+      )
+    return () => {
+      load = true
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [_maxAmount, marketType])
 
   return (
     <Accordion
@@ -98,8 +163,21 @@ const TransferBox = ({ _tokenId }: IProp) => {
             size="medium"
             onChange={(e) => setAddress(e.target.value)}
           />
+          {marketType === "game_item" || marketType === "nft_material" ? (
+            <CountItem
+              endIcon={<NumpadIcon />}
+              helperText={`Total Amount: ${MAX_AMOUNT}`}
+              label="transfer amount"
+              min={0}
+              max={_maxAmount}
+              count={transAmount}
+              setItemCount={setTransAmount}
+              _minusItem={onDecreaseAmount}
+              _addItem={onIncreaseAmount}
+            />
+          ) : null}
           <Button
-            disabled={!profile}
+            disabled={!profile || !address || transAmount <= 0}
             sx={{ fontFamily: "neueMachina" }}
             color="success"
             className="w-1/3 text-sm font-bold text-primary-main"

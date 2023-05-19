@@ -86,10 +86,10 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
               link: `/categories/${
                 category.slug
                   ? `${category.slug}?id=${category._id}`
-                  : `${category.name
-                      .toLocaleLowerCase()
-                      .split(" ")
-                      .join("-")}?id=${category._id}`
+                  : `${
+                      category.name &&
+                      category.name.toLocaleLowerCase().split(" ").join("-")
+                    }?id=${category._id}`
               }`
             })
           )
@@ -104,10 +104,10 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
                 link: `/categories/${
                   category.slug
                     ? `${category.slug}?id=${category.id}`
-                    : `${category.name
-                        .toLocaleLowerCase()
-                        .split(" ")
-                        .join("-")}?id=${category.id}`
+                    : `${
+                        category.name &&
+                        category.name.toLocaleLowerCase().split(" ").join("-")
+                      }?id=${category.id}`
                 }`
               })
             )

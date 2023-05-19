@@ -20,11 +20,12 @@ import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import SkeletonCardPlayers from "@components/atoms/skeleton/SkeletonCardPlayers"
+import useGameGlobal from "@hooks/useGameGlobal"
 import { IPropWaitingSingle } from "../singlePlayer/SingleWaiting"
 
 const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { data: gameData, itemSelected, onSetGameItemSelectd } = useGameStore()
+  const { data: gameData, onSetGameItemSelectd } = useGameStore()
   const router = useRouter()
   const { t } = useTranslation()
   const { errorToast } = useToast()
@@ -32,19 +33,25 @@ const GameMultiPlayer = ({ _roomId }: IPropWaitingSingle) => {
   const [dataPlayers, setDataPlayers] = useState<
     IGameRoomListSocket | undefined
   >()
+  const {
+    item: item_id
+    // conditionGameFree
+    // itemSelected,
+    // conditionPlayToEarn
+  } = useGameGlobal()
 
-  const item_id = useMemo(() => {
-    if (gameData) {
-      if (gameData.play_to_earn || gameData.tournament) {
-        return gameData.item[0]._id
-      }
-      if (itemSelected) {
-        return itemSelected._id
-      }
-    } else {
-      return ""
-    }
-  }, [gameData, itemSelected])
+  // const item_id = useMemo(() => {
+  //   if (gameData) {
+  //     if (gameData.play_to_earn || gameData.tournament) {
+  //       return gameData.item[0]._id
+  //     }
+  //     if (itemSelected) {
+  //       return itemSelected._id
+  //     }
+  //   } else {
+  //     return ""
+  //   }
+  // }, [gameData, itemSelected])
 
   const propsSocketWaitingRoom = useMemo(
     () => ({

@@ -18,6 +18,7 @@ import { IResGetIp } from "@interfaces/IGetIP"
 import { useTranslation } from "react-i18next"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
+import useGameGlobal from "@hooks/useGameGlobal"
 import ButtonGame from "../atoms/ButtonPlayer"
 import PlayerCard from "../molecules/PlayerCard"
 
@@ -40,6 +41,11 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
   const { t } = useTranslation()
   const { balanceofItem } = useBuyGameItemController()
   const { isFreeToEarnGame, isFreeToPlayGame } = useGlobal()
+  const {
+    item: item_id,
+    // conditionGameFree,
+    conditionPlayToEarn
+  } = useGameGlobal()
 
   // TODO: Refactor later
   const detectDevice = isMobile ? "mobile" : "desktop"
@@ -60,18 +66,18 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
     }
   }, [data])
 
-  const item_id = useMemo(() => {
-    if (data) {
-      if (data.play_to_earn || data.tournament) {
-        return data?.item[0]._id
-      }
-      if (itemSelected) {
-        return itemSelected._id
-      }
-      return undefined
-    }
-    return undefined
-  }, [data, itemSelected])
+  // const item_id = useMemo(() => {
+  //   if (data) {
+  //     if (data.play_to_earn || data.tournament) {
+  //       return data?.item[0]._id
+  //     }
+  //     if (itemSelected) {
+  //       return itemSelected._id
+  //     }
+  //     return undefined
+  //   }
+  //   return undefined
+  // }, [data, itemSelected])
 
   // const item_id_smartcontract = useMemo(() => {
   //   if (data) {
@@ -218,7 +224,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
             ).getTime()}:|:${profile.username}:|:${
               gameRoomById.max_players
             }:|:${gameRoomById.stage_id}:|:${ip}:|:${
-              data.play_to_earn === true ? "free" : "not_free"
+              conditionPlayToEarn ? "free" : "not_free"
             }:|:${profile.country}`
             const gameURL = `${CONFIGS.BASE_URL.GAME}/${
               data.id
@@ -239,7 +245,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
               ? `:|:${gameRoomById.stage_id}`
               : ":|:0"
           }:|:${profile.username}:|:${
-            data.play_to_earn === true ? "free" : "not_free"
+            conditionPlayToEarn ? "free" : "not_free"
           }`
           const gameURL = `${baseUrlGame}/${data.id}/?${Helper.makeID(8)}${btoa(
             url_data

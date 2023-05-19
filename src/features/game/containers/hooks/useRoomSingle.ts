@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react"
+import { useMemo } from "react"
 import useGetAllGameRooms from "@feature/game/containers/hooks/useGetAllGameRooms"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/dist/client/router"
@@ -11,37 +11,20 @@ import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGameRoomsById"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
-import useGetGameByPath from "./useFindGameByPath"
+import useGameGlobal from "@hooks/useGameGlobal"
 
 const useRoomSingle = () => {
   const profile = useProfileStore((state) => state.profile.data)
 
   const router = useRouter()
-  const { id, GameHome } = router.query
-  const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
-  const { data, itemSelected, onSetGameData } = useGameStore()
+  // const { id, GameHome } = router.query
+  // const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
+  const { data, itemSelected } = useGameStore()
 
-  const itemSizeId = id as string
+  // const itemSizeId = id as string
   const { errorToast } = useToast()
   const { balanceofItem } = useBuyGameItemController()
-  const item = useMemo(() => {
-    if (gameData) {
-      if (
-        (gameData.play_to_earn && gameData.play_to_earn_status === "free") ||
-        gameData.tournament
-      ) {
-        return gameData.item[0]._id
-      }
-      if (itemSelected) {
-        return itemSelected._id
-      }
-      if (itemSizeId) {
-        return itemSizeId
-      }
-    } else {
-      return ""
-    }
-  }, [gameData, itemSelected, itemSizeId])
+  const { item, gameData, itemSizeId, conditionGameFree } = useGameGlobal()
 
   const { allGameRooms, isLoading: loadingAllroom } = useGetAllGameRooms({
     _gameId: gameData ? gameData._id : "",
@@ -54,18 +37,18 @@ const useRoomSingle = () => {
       _gameId: !profile && gameData ? gameData._id : ""
     })
 
-  useEffect(() => {
-    let load = false
+  // useEffect(() => {
+  //   let load = false
 
-    if (!load) {
-      if (gameData) onSetGameData(gameData)
-    }
+  //   if (!load) {
+  //     if (gameData) onSetGameData(gameData)
+  //   }
 
-    return () => {
-      load = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameData])
+  //   return () => {
+  //     load = true
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [gameData])
 
   const intoRoomGame = (
     data_player_me: IGameCurrentPlayer,
@@ -109,12 +92,7 @@ const useRoomSingle = () => {
         intoRoomGame(data_player_me as IGameCurrentPlayer, _roomId)
       } else if (new Date() > new Date(_dataRoom.end_time)) {
         errorToast(MESSAGES["room-timeout"])
-      } else if (
-        data &&
-        ((data.play_to_earn && data.play_to_earn_status === "free") ||
-          data.game_mode === "free-to-earn" ||
-          data.tournament)
-      ) {
+      } else if (conditionGameFree) {
         intoRoomGame(data_player_me as IGameCurrentPlayer, _roomId)
       } else if (_dataRoom.amount_current_player >= _dataRoom.max_players) {
         if (data && data_player_me && data_player_me.status === "played") {
@@ -158,6 +136,21 @@ const useRoomSingle = () => {
     return loadingAllroomById
   }, [loadingAllroom, loadingAllroomById, profile])
 
+  const textJoin = (_room: IGameRoomDetail) => {
+    if (_room) {
+      const room = _room?.current_player?.find(
+        (ele) => ele.player_id === profile?.id
+      )
+      if (room?.status === "played") {
+        return "played"
+      }
+      if (data && _room?.amount_current_player >= data?.max_players) {
+        return "full"
+      }
+      return "join"
+    }
+  }
+
   return {
     allGameRooms,
     allGameRoomsById,
@@ -168,7 +161,8 @@ const useRoomSingle = () => {
     roomData,
     loadingAllroomById,
     loadingAllroom,
-    loadRoom
+    loadRoom,
+    textJoin
   }
 }
 

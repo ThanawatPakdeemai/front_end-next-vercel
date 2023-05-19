@@ -135,8 +135,12 @@ const Home = () => {
     return () => {
       load = true
     }
+    // TODO - Boy check loop setState
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
+    // isFreeToEarnGame,
+    // isFreeToPlayGame,
+    // isStoryModeGame,
     dataF2pGames,
     f2pCurType,
     p2eCurType,

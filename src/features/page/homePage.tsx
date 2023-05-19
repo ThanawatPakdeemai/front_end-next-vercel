@@ -128,10 +128,12 @@ const Home = () => {
     return () => {
       load = true
     }
+    // TODO - Boy check loop setState
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    isFreeToEarnGame,
-    isFreeToPlayGame,
-    isStoryModeGame,
+    // isFreeToEarnGame,
+    // isFreeToPlayGame,
+    // isStoryModeGame,
     dataF2pGames,
     f2pCurType,
     p2eCurType,
@@ -186,7 +188,7 @@ const Home = () => {
                 <>
                   <Typography
                     variant="body2"
-                    className="py-[1.125rem] uppercase text-neutral-300"
+                    className="pb-[1.125rem] pt-[3rem] uppercase text-neutral-300"
                   >
                     Play to Earn
                   </Typography>

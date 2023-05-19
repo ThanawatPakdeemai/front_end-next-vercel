@@ -29,32 +29,9 @@ const useInvenMaterial = () => {
   )
   const { setOpen, setClose } = useLoadingStore()
   const [materialList, setMaterialList] = useState<
-    Array<ITypeMaterials & { amount: number }> | undefined
+    Array<ITypeMaterials & { amount?: number }> | undefined
   >(undefined)
   const { pathname } = useRouter()
-
-  // update materialList
-  const updateMaterialList = (
-    _type: TInvenVaultAction,
-    _tokenId: string,
-    _amount: number
-  ) => {
-    if (materialList) {
-      const _dummy = materialList
-      const upd_obj = _dummy.findIndex(
-        (obj) => obj.material_id_smartcontract === Number(_tokenId)
-      )
-      let _calAmount: number = _dummy[upd_obj].amount
-      if (_type === "decrease") {
-        _calAmount = _dummy[upd_obj].amount - _amount
-      } else {
-        _calAmount = _dummy[upd_obj].amount + _amount
-      }
-      _dummy[upd_obj].amount = _calAmount
-      const result = _dummy // ? not sure for need to declare new variable?
-      setMaterialList(result)
-    }
-  }
 
   // get all material by address
   const getAllMaterialByAddrs = (_address: string) =>
@@ -68,6 +45,31 @@ const useInvenMaterial = () => {
           reject(_error)
         })
     })
+
+  // update materialList
+  const updateMaterialList = (
+    _type: TInvenVaultAction,
+    _tokenId: string,
+    _amount: number
+  ) => {
+    if (materialList) {
+      const _dummy = materialList
+      const upd_obj = _dummy.findIndex(
+        (obj) => obj.material_id_smartcontract === Number(_tokenId)
+      )
+      if (_dummy[upd_obj].amount) {
+        let _calAmount: number = _dummy[upd_obj].amount || 0
+        if (_type === "decrease") {
+          _calAmount -= _amount
+        } else {
+          _calAmount += _amount
+        }
+        _dummy[upd_obj].amount = _calAmount
+        const result = _dummy // ? not sure for need to declare new variable?
+        setMaterialList(result)
+      }
+    }
+  }
 
   const onFetchInvenMaterial = async (_address: string) => {
     setOpen(MESSAGES.transaction_processing_order) // ? changed text
@@ -84,11 +86,13 @@ const useInvenMaterial = () => {
               ...m,
               amount: Number(response[m.material_id_smartcontract]) // ! Please check index again
             }))
-          setMaterialList(data)
+          setMaterialList(data.filter((_item) => _item.amount > 0))
         }
       })
       .catch((error) => console.error(error))
-      .finally(() => setClose())
+      .finally(() => {
+        setTimeout(() => setClose(), 1000)
+      })
   }
 
   // transfer
@@ -137,19 +141,17 @@ const useInvenMaterial = () => {
       })
       .catch((error) => console.error(error))
       .finally(() => {
-        setClose()
+        setTimeout(() => setClose(), 1000)
       })
   }
 
   useEffect(() => {
     let load = false
-
     if (!load) {
       if (profile && profile.data && pathname.includes("inventory")) {
         onFetchInvenMaterial(profile.data.address)
       }
     }
-
     return () => {
       load = true
     }
@@ -157,11 +159,11 @@ const useInvenMaterial = () => {
   }, [profile, materialTypes])
 
   return {
-    materialList:
-      materialList && materialList.filter((_item) => _item.amount > 0),
+    materialList,
     updateMaterialList,
     onFetchInvenMaterial,
-    onTransferMaterial
+    onTransferMaterial,
+    getAllMaterialByAddrs
   }
 }
 

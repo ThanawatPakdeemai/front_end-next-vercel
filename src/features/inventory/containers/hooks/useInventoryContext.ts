@@ -1,4 +1,4 @@
-import useAvatarReefServ from "@feature/avatarReef/containers/hook/useAvatarReefServ"
+import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAvatarReef"
 import { useGetBuildingById } from "@feature/building/containers/hooks/useGetMyBuilding"
 import { useGetMyArcGameById } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
 import useInvenGameItem from "@feature/gameItem/inventory/containers/hooks/useInvenGameItem"
@@ -48,7 +48,6 @@ const useInventoryContext = () => {
   const [invAmount, setInvAmount] = useState<number>(1)
   // const [transAddrs, setTransAddrs] = useState<string | undefined>(undefined)
   const { marketType } = useGlobal()
-
   // move this to context? for solve multi call api and data need to update
   const { gameItemList } = useInvenGameItem()
   const { materialList } = useInvenMaterial()
@@ -57,7 +56,7 @@ const useInventoryContext = () => {
   const { mutateGetBuildingById } = useGetBuildingById()
   const { mutateGetNakapunkById } = useGetNakPunkById()
   const { mutateGetMyArcGameById } = useGetMyArcGameById()
-  const { mutateGetNFTAvatarById } = useAvatarReefServ()
+  const { mutateGetNFTAvatarById } = useMutateAvatarReef()
 
   const fetchInvenItemDataById = async () => {
     let _data: IInventoryItemData = {
@@ -215,7 +214,9 @@ const useInventoryContext = () => {
     invAmount,
     setInvPrice,
     setInvPeriod,
-    setInvAmount
+    setInvAmount,
+    gameItemList,
+    materialList
   }
 }
 

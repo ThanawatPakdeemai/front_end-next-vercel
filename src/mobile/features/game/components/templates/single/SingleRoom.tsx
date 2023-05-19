@@ -3,8 +3,14 @@ import Preload from "@src/mobile/components/atoms/Preload"
 import ListJoinGame from "../../molecules/ListJoinGame"
 
 const SingleRoom = () => {
-  const { roomData, gameData, itemSelected, handleJoinRoom, loadRoom } =
-    useRoomSingle()
+  const {
+    roomData,
+    gameData,
+    itemSelected,
+    handleJoinRoom,
+    loadRoom,
+    textJoin
+  } = useRoomSingle()
 
   return (
     <>
@@ -14,6 +20,7 @@ const SingleRoom = () => {
             gameData &&
             roomData?.map((item) => (
               <ListJoinGame
+                text={textJoin(item)}
                 time={item.end_time as unknown as string}
                 key={item._id}
                 image={gameData.image_room}

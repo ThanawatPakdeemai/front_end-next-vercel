@@ -17,6 +17,7 @@ import useNotiStore from "@stores/notification"
 import Helper from "@utils/helper"
 import { isMobile as detectMobile } from "react-device-detect"
 import useSupportedChain from "./useSupportedChain"
+import useGameGlobal from "./useGameGlobal"
 
 const useGlobal = (
   _limit?: number,
@@ -57,6 +58,8 @@ const useGlobal = (
   const profile = useProfileStore((state) => state.profile.data)
   const { isLogin, onReset } = useProfileStore()
   const { fetchNAKAToken, fetchAllTokenSupported } = useSupportedChain()
+
+  const { conditionPlayToEarn } = useGameGlobal()
 
   // States
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
@@ -343,7 +346,7 @@ const useGlobal = (
     const date = null
     const stage_id = null
     const profile_name = profile.username
-    const type_play = gameData.play_to_earn === true ? "free" : "not_free"
+    const type_play = conditionPlayToEarn ? "free" : "not_free"
     // Get url by game type
     switch (gameData.game_type) {
       case "storymode":

@@ -13,6 +13,7 @@ interface IProps {
   descChip1?: string
   descChip2?: string
   time?: string
+  text?: string
 }
 const ListJoinGame = ({
   image,
@@ -22,7 +23,8 @@ const ListJoinGame = ({
   textChip,
   descChip1,
   descChip2,
-  time
+  time,
+  text
 }: IProps) => (
   <>
     <div className="max-h-[393px] w-full border-b border-neutral-700">
@@ -66,7 +68,10 @@ const ListJoinGame = ({
             </p>
           </div>
           <div className=" w-[90px] flex-none">
-            <ButtonJoin onClick={onClick} />
+            <ButtonJoin
+              onClick={onClick}
+              text={text}
+            />
           </div>
         </div>
         <div className=" flex h-[36px] items-center gap-[16px] overflow-hidden rounded-[12px] border border-neutral-800 bg-neutral-780 p-[8px]">

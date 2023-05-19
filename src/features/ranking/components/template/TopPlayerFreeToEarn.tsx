@@ -104,7 +104,7 @@ const TopPlayerFreeToEarn = ({
         elevation={props.elevation}
         sumTotal={10}
         rightContent={props.rightContent}
-        title="Top player reward"
+        title="TOP PLAYERS"
       />
 
       {isLoadingTopPlayerFreeToEarn ? (

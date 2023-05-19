@@ -12,6 +12,5 @@ export function Web3Provider({ children }: { children: ReactNode }) {
 
 export function useWeb3Provider() {
   const context = useContext(Web3Context)
-
   return { ...context }
 }

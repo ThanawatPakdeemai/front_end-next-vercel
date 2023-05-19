@@ -57,9 +57,10 @@ const useGetReward = ({ _poolId, _gameId, _type }: IUseGetReward) => {
     queryFn: () => getWeeklyPoolByGameId(_gameId, _poolId),
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled:
-      (_gameId !== undefined || _gameId !== "" || _poolId !== undefined) &&
-      _type === "REWARD_WEEKLY"
+    enabled: (!!_gameId || !!_poolId) && _type === "REWARD_WEEKLY"
+    // enabled:
+    //   (_gameId !== undefined || _gameId !== "" || _poolId !== undefined) &&
+    //   _type === "REWARD_WEEKLY"
   })
 
   return {

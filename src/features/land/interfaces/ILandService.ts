@@ -1,6 +1,7 @@
 import {
   IMarketForm,
   INFTInitial,
+  IRentalData,
   TNFTType
 } from "@feature/marketplace/interfaces/IMarketService"
 import { IMaterialData } from "@feature/material/marketplace/interfaces/IMaterialService"
@@ -49,6 +50,16 @@ export interface IMarketLandData extends ILand, IMarketForm {
   player_id: string
   is_rent: boolean
   material_detail: IMaterialData[] | null
+}
+
+// discuss backend IMarketRentalLandData and IMyLandListServ should be same as same
+export interface IMarketRentalLandData
+  extends Omit<IMarketLandData, "rentals_data"> {
+  rentals_data: IRentalData | null
+}
+
+export interface IMyLandRentalListServ extends IInfoFormatServ {
+  data: IMarketRentalLandData[]
 }
 
 export interface IMyLandListServ extends IInfoFormatServ {

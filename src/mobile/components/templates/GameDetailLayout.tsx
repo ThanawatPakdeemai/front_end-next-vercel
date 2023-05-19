@@ -117,7 +117,7 @@ const GameDetailLayout = ({ data, gameId, gameType }: IProps) => {
         </Box>
         <Box
           component="div"
-          className="flex justify-center pt-8"
+          className="flex flex-wrap flex-wrap-reverse justify-center gap-3 pt-8"
         >
           <Box component="div">
             <StatisticGameDetail />

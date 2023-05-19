@@ -14,7 +14,7 @@ import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { v4 as uuidv4 } from "uuid"
 import NoData from "@components/molecules/NoData"
-import Headerbackpage from "@src/mobile/features/Headerbackpage"
+import Headerbackpage from "@mobile/components/organisms/headerMenu/Headerbackpage"
 
 const EarnRewardPageMobile = () => {
   const { profile } = useProfileStore()

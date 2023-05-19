@@ -1,6 +1,7 @@
 import {
   IMarketForm,
-  INFTInitial
+  INFTInitial,
+  IRentalData
 } from "@feature/marketplace/interfaces/IMarketService"
 import { TLand } from "@feature/land/interfaces/ILandService"
 import { ITypeMaterials } from "@feature/material/marketplace/interfaces/IMaterialService"
@@ -74,6 +75,14 @@ export interface ITypeBuild
 
 export interface ITypesBuildServ extends IFormatService {
   data: ITypeBuild[]
+}
+
+export interface IMyBuildRentalData extends Omit<IMyBuildData, "rentals_data"> {
+  rentals_data: IRentalData | null
+}
+
+export interface IMyBuildRentalListServ extends IFormatService {
+  data: IMyBuildRentalData[]
 }
 
 export interface IMyBuildListServ extends IFormatService {

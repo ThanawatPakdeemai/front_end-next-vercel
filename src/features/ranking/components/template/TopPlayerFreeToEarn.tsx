@@ -39,7 +39,9 @@ const TopPlayerFreeToEarn = ({
           <div className="top-player__header grid grid-cols-4 gap-2 font-neue-machina-semi text-xs uppercase text-white-primary">
             <div>No</div>
             <div className="top-player__header-item">Avatar</div>
-            <div className="top-player__header-item ml-auto">Item</div>
+            <div className="top-player__header-item ml-auto text-end">
+              Item reward
+            </div>
             <div className="top-player__header-item ml-auto pr-2">Score</div>
           </div>
           <div className="custom-scroll h-[340px] overflow-y-scroll">
@@ -51,6 +53,7 @@ const TopPlayerFreeToEarn = ({
                 itemSrc={gameItem.image_icon || ""}
                 itemName={gameItem.name || ""}
                 itemPrice={gameItem.price}
+                itemReward={index > 4 ? 1 : 5 - index}
               />
             ))}
           </div>
@@ -101,7 +104,7 @@ const TopPlayerFreeToEarn = ({
         elevation={props.elevation}
         sumTotal={10}
         rightContent={props.rightContent}
-        title="Top player reward"
+        title="TOP PLAYERS"
       />
 
       {isLoadingTopPlayerFreeToEarn ? (

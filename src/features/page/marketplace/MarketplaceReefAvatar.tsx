@@ -24,7 +24,7 @@ import WandIcon from "@components/icons/WandIcon"
 import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
 import CouponIcon from "@components/icons/CouponIcon"
 import Helper from "@utils/helper"
-import useAvatarReefServ from "@feature/avatarReef/containers/hook/useAvatarReefServ"
+import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAvatarReef"
 import RedemptionCode from "@components/molecules/RedemptionCode"
 
 const MarketplaceReefAvatar = () => {
@@ -37,7 +37,7 @@ const MarketplaceReefAvatar = () => {
     mutateRedeemAvatarReef,
     purchAvatarReefData,
     mutatePurchaseAvatarReef
-  } = useAvatarReefServ()
+  } = useMutateAvatarReef()
   const { count } = useCountStore()
   const { setOpen, setClose } = useLoadingStore()
   const { isLogin, profile } = useProfileStore()

@@ -59,6 +59,7 @@ const useCreateWeb3Provider = () => {
   } = useChainSupportStore()
   const { successToast, errorToast } = useToast()
   const { onUpdateWallet } = useProfileController()
+  let count: boolean = true
 
   /**
    * @description Disconnect wallet
@@ -138,13 +139,18 @@ const useCreateWeb3Provider = () => {
           type: "success"
         })
         await fetchChainData()
-
+        successToast("Connected to your Wallet")
         if (!isLogin) return
         if (isCorrectWallet) return
         setIsCorrectWallet(true)
         // Hide success popup
         // successToast(`${_accounts[0]} ${MESSAGES.wallet_is_correct}`)
       } else {
+        if (count === true) {
+          errorToast("Please change your wallet or try to connect again")
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+          count = false
+        }
         setStatusWalletConnected({
           responseStatus: false,
           errorMsg: `${_accounts[0]} ${MESSAGES.wallet_is_incorrect}`,
@@ -158,7 +164,14 @@ const useCreateWeb3Provider = () => {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [profile, isLogin, isCorrectWallet, setIsCorrectWallet, successToast]
+    [
+      profile,
+      isLogin,
+      isCorrectWallet,
+      setIsCorrectWallet,
+      successToast,
+      address
+    ]
   )
 
   const switchNetwork = useCallback(
@@ -269,12 +282,13 @@ const useCreateWeb3Provider = () => {
       if (profile && profile.email) {
         if (!profile.address || profile.address === "") {
           onUpdateWallet(profile, walletAccounts[0])
-          return
+          // return
         }
       }
     }
 
     const walletConnector = Helper.getLocalStorage(ELocalKey.walletConnector)
+
     if (walletConnector === WALLET_CONNECTOR_TYPES.injected) {
       const account = await Helper.getWalletAccount()
       if (_provider) {

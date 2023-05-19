@@ -51,17 +51,15 @@ const StatWithIcon = ({
       {isMobile ? (
         <MobileView>
           <div
-            className={`flex items-center rounded-lg border-[1px] border-neutral-700 border-opacity-80 ${classNameDiv}`}
+            className={`flex flex-wrap items-center justify-start gap-4 rounded-lg border-[1px] border-neutral-700 border-opacity-80 ${classNameDiv}`}
           >
             <ButtonIcon
               variants={iconmotion}
               icon={icon}
               className={`rounded-lg ${className}`}
             />
-            <div className={` uppercase ${textColor} ml-4`}>
-              <Typography className="mb-2 text-xs font-bold">
-                {title}
-              </Typography>
+            <div className={` uppercase ${textColor}`}>
+              <Typography className=" text-xs font-bold">{title}</Typography>
               <Typography className="text-default font-bold">
                 {Helper.formatNumber(amount as number)}
               </Typography>

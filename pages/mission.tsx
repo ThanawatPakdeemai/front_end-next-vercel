@@ -11,7 +11,7 @@ import useClaimQuestById from "@feature/quest/containers/hook/useClaimQuestById"
 import { useToast } from "@feature/toast/containers"
 import MissionList from "@feature/quest/components/organisms/MissionList"
 import MissionDetails from "@feature/quest/components/organisms/MissionDetails"
-import Headerbackpage from "@src/mobile/features/Headerbackpage"
+import Headerbackpage from "@mobile/components/organisms/headerMenu/Headerbackpage"
 
 export default function Mission() {
   const {

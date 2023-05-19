@@ -209,34 +209,37 @@ export default function GameLobby() {
   return gameData ? (
     <GamePageDefault
       component={
-        <RightSidebarContentEffect
-          className="mb-[64px]"
-          content={getTemplateLobby()}
-          aside={
-            <Box
-              component="div"
-              className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
-              sx={{
-                ".panel-content": {
-                  maxHeight: "270px",
-                  ".custom-scroll": {
-                    overflow: "hidden"
+        <>
+          <RightSidebarContentEffect
+            className="mb-[64px]"
+            content={getTemplateLobby()}
+            // content={<>sss</>}
+            aside={
+              <Box
+                component="div"
+                className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
+                sx={{
+                  ".panel-content": {
+                    maxHeight: "270px",
+                    ".custom-scroll": {
+                      overflow: "hidden"
+                    }
+                  },
+                  ".like-no_score": {
+                    margin: "0"
                   }
-                },
-                ".like-no_score": {
-                  margin: "0"
-                }
-              }}
-            >
-              <OverviewContent
-                gameId={gameData.id}
-                gameType={getTypeGamePathFolder(gameData)}
-                gameIdNFT={gameData.NFT_Owner}
-              />
-              {renderFormBuyItem()}
-            </Box>
-          }
-        />
+                }}
+              >
+                <OverviewContent
+                  gameId={gameData?.id}
+                  gameType={getTypeGamePathFolder(gameData)}
+                  gameIdNFT={gameData?.NFT_Owner}
+                />
+                {renderFormBuyItem()}
+              </Box>
+            }
+          />
+        </>
       }
       component2={
         <FullWidthContent

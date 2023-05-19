@@ -409,17 +409,19 @@ const FormLogin = () => {
             icon={<GoogleIcon />}
             className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
           />
-          <ButtonIcon
-            whileHover="hover"
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 4
-            }}
-            onClick={metaMarkLogin}
-            icon={<MetaMarkIcon />}
-            className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
-          />
+          {!isMobile && (
+            <ButtonIcon
+              whileHover="hover"
+              transition={{
+                type: "spring",
+                stiffness: 400,
+                damping: 4
+              }}
+              onClick={metaMarkLogin}
+              icon={<MetaMarkIcon />}
+              className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+            />
+          )}
         </div>
       </Grid>
     </>

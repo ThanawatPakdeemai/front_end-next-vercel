@@ -176,6 +176,7 @@ const ProfileContent = () => {
             <HeaderForWardBackWardMobile
               label="MY Profile"
               onClickBackWard={() => router.back()}
+              showForwardIcon={false}
             />
             <div className="relative">
               <Box
@@ -259,7 +260,7 @@ const ProfileContent = () => {
                 textAlign: "-webkit-center"
               }}
             >
-              {profile && (
+              {profile && !isMobile && (
                 <ButtonLink
                   onClick={handleConnectWallet}
                   text={t("Connect Wallet")}
@@ -276,7 +277,7 @@ const ProfileContent = () => {
                 <div>
                   <Button
                     variant="contained"
-                    className="mb-[1.125rem] h-[50px] w-[293px] rounded-lg border border-solid border-neutral-700
+                    className="my-[1.125rem] h-[50px] w-[293px] rounded-lg border border-solid border-neutral-700
                 !bg-neutral-800 text-xs uppercase hover:border-secondary-main"
                   >
                     <div className="flex items-center font-neue-machina text-sm font-bold">

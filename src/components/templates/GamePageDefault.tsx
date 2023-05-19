@@ -32,6 +32,7 @@ import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
 import Breadcrumb from "@components/molecules/Breadcrumb"
 import { useRouter } from "next/router"
 import GameDetailLayout from "@mobile/components/templates/GameDetailLayout"
+import GameSummaryLayout from "@mobile/components/templates/GameSummaryLayout"
 
 interface IGamePageDefaultProps {
   component: React.ReactNode
@@ -87,7 +88,7 @@ const GamePageDefault = ({
         return null
       default:
         return (
-          <div className="game-page-default">
+          <div className="game-page-default w-full">
             {isMobile ? (
               <MobileView>
                 <Box component="section">
@@ -311,15 +312,29 @@ const GamePageDefault = ({
       {isMobile ? (
         <MobileView>
           {gameData && (
-            <GameDetailLayout
-              data={gameData as IGame}
-              gameId={gameData.id}
-              gameType={
-                router.asPath.includes("arcade-emporium")
-                  ? "arcade-emporium"
-                  : "play-to-earn-games"
-              }
-            />
+            <>
+              {router?.asPath?.includes("/summary") ? (
+                <GameSummaryLayout
+                  data={gameData as IGame}
+                  gameId={gameData.id}
+                  gameType={
+                    router.asPath.includes("arcade-emporium")
+                      ? "arcade-emporium"
+                      : "play-to-earn-games"
+                  }
+                />
+              ) : (
+                <GameDetailLayout
+                  data={gameData as IGame}
+                  gameId={gameData.id}
+                  gameType={
+                    router.asPath.includes("arcade-emporium")
+                      ? "arcade-emporium"
+                      : "play-to-earn-games"
+                  }
+                />
+              )}
+            </>
           )}
         </MobileView>
       ) : (

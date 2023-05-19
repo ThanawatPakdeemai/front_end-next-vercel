@@ -16,7 +16,7 @@ const GameSummaryContent = ({
 }: IGameSummaryContentProps) => (
   <Box
     component="section"
-    className="game-summar--wrapper"
+    className="game-summar--wrapper w-full"
   >
     <HeaderWaitingRoom
       roomTag={props.roomTag}

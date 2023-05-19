@@ -5,7 +5,8 @@ import {
   IMarketLandData,
   ILandServ,
   IMyLandListServ,
-  IRedeemServ
+  IRedeemServ,
+  IMyLandRentalListServ
 } from "@feature/land/interfaces/ILandService"
 
 // this service must be improve for transfer land owner
@@ -65,7 +66,7 @@ export const getMyRentOutLand = ({
   _search,
   _sort
 }: IMarketServForm) =>
-  new Promise<IMyLandListServ>((resolve, reject) => {
+  new Promise<IMyLandRentalListServ>((resolve, reject) => {
     const data = {
       limit: _limit,
       skip: _page,
@@ -73,7 +74,9 @@ export const getMyRentOutLand = ({
       sort: _sort
     }
     services
-      .post<IMyLandListServ>(`/nakaverse-land/lands-owner-rental`, { ...data })
+      .post<IMyLandRentalListServ>(`/nakaverse-land/lands-owner-rental`, {
+        ...data
+      })
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

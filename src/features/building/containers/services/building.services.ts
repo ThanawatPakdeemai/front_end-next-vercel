@@ -6,6 +6,7 @@ import {
 import {
   IMyBuildData,
   IMyBuildListServ,
+  IMyBuildRentalListServ,
   ITypesBuildServ
 } from "@feature/building/interfaces/IBuildingService"
 
@@ -71,7 +72,7 @@ export const getMyRentOutBuilding = ({
   _search,
   _sort
 }: IMarketServForm) =>
-  new Promise<IMyBuildListServ>((resolve, reject) => {
+  new Promise<IMyBuildRentalListServ>((resolve, reject) => {
     const data = {
       limit: _limit,
       skip: _page,
@@ -79,9 +80,12 @@ export const getMyRentOutBuilding = ({
       sort: _sort
     }
     services
-      .post<IMyBuildListServ>(`/nakaverse-building/building-owner-rental`, {
-        ...data
-      })
+      .post<IMyBuildRentalListServ>(
+        `/nakaverse-building/building-owner-rental`,
+        {
+          ...data
+        }
+      )
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

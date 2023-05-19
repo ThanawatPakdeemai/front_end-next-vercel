@@ -20,6 +20,7 @@ import {
   TUrlNFT
 } from "@feature/marketplace/interfaces/IMarketService"
 import dayjs from "dayjs"
+import { TKey } from "@stores/marketFilter"
 
 const names = ["wei", "kwei", "mwei", "gwei", "szabo", "finney", "ether"]
 
@@ -430,6 +431,13 @@ const Helper = {
       return dayjs(_date).format("DD MMM YYYY")
     }
     return dayjs(_date).format("HH:mm A")
+  },
+  getValueFromTKey(_search: TKey[], _field: string) {
+    const _value = _search.find((s) => _field in s)
+    if (_value) {
+      return _value[_field]
+    }
+    return undefined
   }
 }
 

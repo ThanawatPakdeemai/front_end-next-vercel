@@ -3,14 +3,13 @@ import utc from "dayjs/plugin/utc"
 import { useGetMyInstallmentBuilding } from "@feature/building/containers/hooks/useGetMyBuilding"
 import { useGetMyInstallmentArcGame } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
 import { useGetMyInstallmentLand } from "@feature/land/containers/hooks/useGetMyLand"
-import {
-  IInstallPeriod,
-  IMarketServForm
-} from "@feature/marketplace/interfaces/IMarketService"
+import { IInstallPeriod } from "@feature/marketplace/interfaces/IMarketService"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
+import Helper from "@utils/helper"
+import useMarketFilterStore from "@stores/marketFilter"
 
 dayjs.extend(utc)
 
@@ -29,6 +28,8 @@ const useInventoryPayment = () => {
   const [inventoryItemPayment, setInventoryItemPayment] = useState<
     Array<IInventoryItemList>
   >([])
+  const { getValueFromTKey } = Helper
+  const { sort, search, filter } = useMarketFilterStore()
 
   const handleDate = ({
     _keyType,
@@ -53,22 +54,26 @@ const useInventoryPayment = () => {
   }
 
   const fetchInventoryItemPayment = useCallback(async () => {
-    let _data: IInventoryItemList[] = []
-    let _total = 0
     setIsLoading(true)
-    if (profile.data && marketType) {
-      const initPayload: IMarketServForm = {
-        _active: true,
-        _limit: limit,
-        _page: currentPage,
-        _search: {
-          player_id: profile.data.id,
-          type: marketType
-        }
-      }
+    if (profile.data && marketType && filter && search && sort) {
+      let _data: IInventoryItemList[] = []
+      let _total = 0
+
       switch (marketType) {
         case "nft_land":
-          await mutateGetMyInstallmentLand(initPayload).then((_res) => {
+          await mutateGetMyInstallmentLand({
+            _active: true,
+            _limit: limit,
+            _page: currentPage,
+            _search: {
+              player_id: profile.data.id,
+              type_land: filter.length > 0 ? filter : undefined,
+              land_id:
+                search.length > 0
+                  ? (getValueFromTKey(search, "land_id") as string) // should be nft_token same, discuss with BE team!
+                  : undefined
+            }
+          }).then((_res) => {
             if (_res.data && _res.data.length > 0) {
               _data = _res.data.map((l) => ({
                 id: l._id,
@@ -89,7 +94,19 @@ const useInventoryPayment = () => {
           })
           break
         case "nft_building":
-          await mutateGetMyInstallmentBuilding(initPayload).then((_res) => {
+          await mutateGetMyInstallmentBuilding({
+            _active: true,
+            _limit: limit,
+            _page: currentPage,
+            _search: {
+              player_id: profile.data.id,
+              type_building: filter.length > 0 ? filter : undefined,
+              nft_token:
+                search.length > 0
+                  ? (getValueFromTKey(search, "land_id") as string) // should be nft_token same, discuss with BE team!
+                  : undefined
+            }
+          }).then((_res) => {
             if (_res.data && _res.data.length > 0) {
               _data = _res.data.map((b) => ({
                 id: b._id,
@@ -111,7 +128,18 @@ const useInventoryPayment = () => {
           })
           break
         case "nft_game":
-          await mutateGetMyInstallmentArcGame(initPayload).then((_res) => {
+          await mutateGetMyInstallmentArcGame({
+            _active: true,
+            _limit: limit,
+            _page: currentPage,
+            _search: {
+              player_id: profile.data.id,
+              nft_token:
+                search.length > 0
+                  ? (getValueFromTKey(search, "land_id") as string) // should be nft_token same, discuss with BE team!
+                  : undefined
+            }
+          }).then((_res) => {
             if (_res.data && _res.data.length > 0) {
               _data = _res.data.map((g) => ({
                 id: g._id,
@@ -133,12 +161,13 @@ const useInventoryPayment = () => {
         default:
           break
       }
+      setInventoryItemPayment(_data)
+      setTotalCount(_total)
     }
-    setInventoryItemPayment(_data)
-    setTotalCount(_total)
+
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile.data, marketType, limit, currentPage])
+  }, [profile.data, marketType, limit, currentPage, filter, search, sort])
 
   useEffect(() => {
     let cleanup = false

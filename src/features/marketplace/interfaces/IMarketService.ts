@@ -154,6 +154,9 @@ export interface IMarketServForm {
     type_marketplace?: TNFTType
     seller_type?: TSellerType
     type_land?: string[]
+    type_building?: string[]
+    item_id?: string[]
+    type_material?: string[]
     seller_id?: string
     player_id?: string
     isRent?: boolean

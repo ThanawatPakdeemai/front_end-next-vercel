@@ -117,7 +117,7 @@ const HomeMobile = () => {
             </div>
           )}
         </div>
-        <div className="mt-[-3rem]">
+        <div className="">
           <OnPlayingStyle2
             isSlider={false}
             showTitle

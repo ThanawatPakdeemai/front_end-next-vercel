@@ -2,6 +2,7 @@ import { PaginationNaka } from "@components/atoms/pagination"
 import CardItemMarketPlace from "@components/molecules/cards/CardItemMarketPlace"
 import useInventoryRental from "@feature/inventory/containers/hooks/useInventoryRental"
 import SkeletonItem from "@feature/marketplace/components/molecules/SkeletonItem"
+import { NextRouter, useRouter } from "next/router"
 import React from "react"
 import { v4 as uuidv4 } from "uuid"
 
@@ -14,6 +15,8 @@ const MarketplaceRentalList = () => {
     limit,
     setCurrentPage
   } = useInventoryRental()
+
+  const router: NextRouter = useRouter()
 
   if (inventoryItemRental && inventoryItemRental.length > 0 && !isLoading) {
     return (
@@ -36,8 +39,8 @@ const MarketplaceRentalList = () => {
               itemName={_data.name}
               itemLevel={_data.level}
               itemAmount={_data.amount}
-              // href={`/${router.locale}/marketplace/inventory/${_data.cardType}/${_data.id}`}
-              // keyType={_data.keyType}
+              href={`/${router.locale}/marketplace/inventory/${_data.cardType}/${_data.id}`}
+              keyType={_data.keyType}
               rental={_data.rental}
             />
           ))}

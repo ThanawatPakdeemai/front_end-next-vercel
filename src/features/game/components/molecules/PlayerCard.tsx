@@ -93,7 +93,11 @@ const PlayerCard = ({ players }: IProps) => {
                       ? "border-purple-primary border-pink-rainbow m-auto"
                       : "border-error-main border-lemon-rainbow"
                   }
-                  src={item.avatar}
+                  src={
+                    item.avatar.split("/")[0] === "assets"
+                      ? `/${item.avatar}`
+                      : item.avatar
+                  }
                   imageBadge={
                     item.rank ? `/images/gamePage/rank/${item.rank}.svg` : ""
                   }

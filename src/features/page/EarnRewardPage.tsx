@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import CheckMarkIcon from "@components/icons/CheckMarkIcon"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import ItemRewardDetails from "@feature/game/containers/components/molecules/ItemRewardDetails"
@@ -16,8 +17,9 @@ import NoData from "@components/molecules/NoData"
 
 const EarnRewardPage = () => {
   const { profile } = useProfileStore()
-  const [rewardList, setRewardList] = useState<IPlayToEarnRewardData[]>()
+  const [rewardList, setRewardList] = useState<IPlayToEarnRewardData[]>([])
   const { allGameData, isLoading: isGameLoading } = useGetAllGames()
+  const [isLoadingReward, setIsLoadingReward] = useState(true)
   const { mutateClaimReward } = useClaimReward()
   const { t } = useTranslation()
   const { earnRewardData, refetchRewardData, isLoading } =
@@ -36,6 +38,10 @@ const EarnRewardPage = () => {
       })
         .then((res) => {
           if (res.status) {
+            const updateData = rewardList.filter(
+              (_item) => _item._id !== reward_id
+            )
+            setRewardList(updateData)
             successToast(res.data)
           }
         })
@@ -54,38 +60,47 @@ const EarnRewardPage = () => {
     let load = false
 
     if (!load) {
-      if (earnRewardData && allGameData && earnRewardData.data.length > 0) {
+      if (earnRewardData && earnRewardData.data.length > 0) {
+        setRewardList(earnRewardData.data)
+        setIsLoadingReward(false)
+      } else {
         setRewardList([])
-        earnRewardData.data.map(async (item) => {
-          const game = allGameData.data.find((data) => data.id === item.game_id)
-          if (game) {
-            setRewardList((oldArray) => {
-              if (oldArray) {
-                return [
-                  ...oldArray,
-                  {
-                    ...item,
-                    game_item_name: game?.item?.[0]?.name,
-                    game_item_image: game?.item?.[0]?.image,
-                    game_name: game?.name,
-                    game_image: game?.image_category_list
-                  }
-                ]
-              }
-            })
-          }
-        })
+        setIsLoadingReward(false)
       }
+      // if (earnRewardData && allGameData && earnRewardData.data.length > 0) {
+      //   setRewardList([])
+      //   earnRewardData.data.map(async (item) => {
+      //     const game = allGameData.data.find((data) => data.id === item.game_id)
+      //     if (game) {
+      //       setRewardList((oldArray) => {
+      //         if (oldArray) {
+      //           return [
+      //             ...oldArray,
+      //             {
+      //               ...item,
+      //               game_item_name: game?.item?.[0]?.name,
+      //               game_item_image: game?.item?.[0]?.image,
+      //               game_name: game?.name,
+      //               game_image: game?.image_category_list
+      //             }
+      //           ]
+      //         }
+      //       })
+      //     }
+      //   })
+      // }
     }
 
     return () => {
       load = true
     }
-  }, [allGameData, earnRewardData])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allGameData, earnRewardData, earnRewardData])
 
   let content: React.ReactElement | React.ReactElement[]
+  console.log("isLoading", isLoading, isGameLoading)
 
-  if (isLoading || isGameLoading) {
+  if (isLoadingReward) {
     content = <SkeletonDetails />
   } else if (rewardList && rewardList.length > 0) {
     content = rewardList.map((data) => (
@@ -102,7 +117,7 @@ const EarnRewardPage = () => {
       </div>
     )
   }
-
+  console.log("test-rewardList", rewardList)
   return (
     <div className="grid max-w-[678px] gap-10">
       <div className="mt-6 flex items-center justify-end md:mt-0">

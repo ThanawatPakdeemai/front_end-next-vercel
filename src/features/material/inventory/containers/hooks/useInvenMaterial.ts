@@ -13,7 +13,7 @@ import useMarketCategTypes from "@stores/marketCategTypes"
 import useProfileStore from "@stores/profileStore"
 import { ethers } from "ethers"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 const useInvenMaterial = () => {
   const { profile } = useProfileStore()
@@ -53,47 +53,53 @@ const useInvenMaterial = () => {
     _amount: number
   ) => {
     if (materialList) {
-      const _dummy = materialList
-      const upd_obj = _dummy.findIndex(
+      const upd_obj = materialList.findIndex(
         (obj) => obj.material_id_smartcontract === Number(_tokenId)
       )
-      if (_dummy[upd_obj].amount) {
-        let _calAmount: number = _dummy[upd_obj].amount || 0
+      let _clone = materialList[upd_obj]
+      if (_clone.amount) {
+        let cal_amount: number = 0
         if (_type === "decrease") {
-          _calAmount -= _amount
+          cal_amount = _clone.amount - _amount
         } else {
-          _calAmount += _amount
+          cal_amount = _clone.amount + _amount
         }
-        _dummy[upd_obj].amount = _calAmount
-        const result = _dummy // ? not sure for need to declare new variable?
-        setMaterialList(result)
+        _clone = { ..._clone, amount: cal_amount }
+        const _dummy = materialList.filter(
+          (f) => f.material_id_smartcontract !== Number(_tokenId)
+        )
+        const _result = [..._dummy, _clone]
+        setMaterialList(_result)
       }
     }
   }
 
-  const onFetchInvenMaterial = async (_address: string) => {
-    setOpen(MESSAGES.transaction_processing_order) // ? changed text
-    await getAllMaterialByAddrs(_address)
-      .then((response) => {
-        if (materialTypes) {
-          const data = materialTypes
-            .sort((_a, _b) =>
-              _a.material_id_smartcontract < _b.material_id_smartcontract
-                ? -1
-                : 1
-            )
-            .map((m) => ({
-              ...m,
-              amount: Number(response[m.material_id_smartcontract]) // ! Please check index again
-            }))
-          setMaterialList(data.filter((_item) => _item.amount > 0))
-        }
-      })
-      .catch((error) => console.error(error))
-      .finally(() => {
-        setTimeout(() => setClose(), 1000)
-      })
-  }
+  const onFetchInvenMaterial = useCallback(async () => {
+    if (profile.data && profile.data.address) {
+      setOpen(MESSAGES.transaction_processing_order) // ? changed text
+      await getAllMaterialByAddrs(profile.data.address)
+        .then((response) => {
+          if (materialTypes) {
+            const data = materialTypes
+              .sort((_a, _b) =>
+                _a.material_id_smartcontract < _b.material_id_smartcontract
+                  ? -1
+                  : 1
+              )
+              .map((m) => ({
+                ...m,
+                amount: Number(response[m.material_id_smartcontract]) // ! Please check index again
+              }))
+            setMaterialList(data.filter((_item) => _item.amount > 0))
+          }
+        })
+        .catch((error) => console.error(error))
+        .finally(() => {
+          setTimeout(() => setClose(), 1000)
+        })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile.data, materialTypes])
 
   // transfer
   const transferMaterial = (
@@ -123,7 +129,7 @@ const useInvenMaterial = () => {
         const _res = await response.wait()
         const _enTopic = await utils.keccak256(
           utils.toUtf8Bytes(
-            "MoveMaterialToUser(address,address,uint256[],uint256[])"
+            "MoveMaterialToUserSingle(address,address,uint256,uint256)"
           )
         )
         const _log = _res.logs.find((f) => f.topics.find((l) => l === _enTopic))
@@ -147,16 +153,14 @@ const useInvenMaterial = () => {
 
   useEffect(() => {
     let load = false
-    if (!load) {
-      if (profile && profile.data && pathname.includes("inventory")) {
-        onFetchInvenMaterial(profile.data.address)
-      }
+    if (!load && pathname.includes("inventory")) {
+      onFetchInvenMaterial()
     }
     return () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile, materialTypes])
+  }, [onFetchInvenMaterial])
 
   return {
     materialList,

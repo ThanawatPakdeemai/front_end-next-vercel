@@ -64,7 +64,7 @@ const GameContent = ({
               className={`${themeColor.toString()} font-bold uppercase`}
             />
             <h2>{gameDataState && gameDataState.name}</h2>
-            {playCount !== undefined && (
+            {playCount && (
               <div className="ml-auto">
                 <GamePlayTime playTime={playCount} />
               </div>

@@ -143,16 +143,12 @@ const StoryLobby = ({
             )}
 
             <TagMultiple
-              title={t("genre")}
+              title={`${t("genre")}`}
               tags={gameTags}
             />
             <TagSingular
               title={`${t("play_count_title")}`}
-              label={
-                gameData && gameData.play_total_count
-                  ? gameData.play_total_count.toString()
-                  : ""
-              }
+              label={gameData?.play_total_count?.toString() || ""}
             />
           </div>
         </div>

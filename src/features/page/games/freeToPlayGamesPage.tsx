@@ -9,8 +9,8 @@ import { Box } from "@mui/material"
 import DropdownLimit from "@components/atoms/DropdownLimit"
 import useGlobal from "@hooks/useGlobal"
 import NoData from "@components/molecules/NoData"
-import BodyCategories from "@src/mobile/molecules/BodyCategories"
-import CardGameSlider from "@src/mobile/molecules/CardGameSlider"
+import CardGameSlider from "@mobile/components/organisms/CardGameSlider"
+import BodyCategories from "@mobile/components/organisms/BodyCategories"
 import { MobileView } from "react-device-detect"
 import { IGame } from "@feature/game/interfaces/IGameService"
 
@@ -55,7 +55,7 @@ const FreeToPlayGamesPage = () => {
   return (
     <div className="flex flex-col">
       <MobileView className="MobileSlider mb-4">
-        <CardGameSlider games={gameFilter} />
+        <CardGameSlider games={gameFilter as unknown as IGame[]} />
         {!loadingFilterGame && (
           <div className="mt-4 w-full">
             <p className="uppercase text-white-default">POPULAR GAMES</p>

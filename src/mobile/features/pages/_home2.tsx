@@ -1,7 +1,6 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from "react"
-import { Link, ToggleButtonGroup, Typography } from "@mui/material"
+import { ToggleButtonGroup, Typography } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
-import { Image } from "@components/atoms/image"
 import useGlobal from "@hooks/useGlobal"
 import useFavoriteGame from "@feature/favourite/containers/hooks/useFavoriteGame"
 import { IGame } from "@feature/game/interfaces/IGameService"
@@ -11,7 +10,9 @@ import MobileGameCard from "@components/molecules/cards/MobileGameCard"
 import dayjs from "dayjs"
 import MuiToggleButton from "@mui/material/ToggleButton"
 import { styled } from "@mui/material/styles"
-import CardDetail from "./components/molecules/homePage/cardDetail/CardDetail"
+import Link from "next/link"
+import { Image } from "@components/atoms/image"
+import CardDetail from "../../components/molecules/homePage/cardDetail/CardDetail"
 
 const Home = () => {
   const profile = useProfileStore((state) => state.profile.data)

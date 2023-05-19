@@ -31,7 +31,7 @@ const RightMenuBuyItem = ({ disabled, ...props }: IProp) => {
         open={openForm}
         onClose={handleClose}
         // className="w-full gap-3 rounded-[34px] p-[10px] md:m-auto md:w-[550px] lg:min-w-[515px]"
-        className="w-full max-w-[333px] gap-3 rounded-3xl md:m-auto"
+        className="w-full gap-3 rounded-3xl md:m-auto md:max-w-[333px]"
       >
         <Stack
           spacing={3}

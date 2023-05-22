@@ -61,7 +61,7 @@ const GameRoomList = () => {
   const { allGameRooms } = useGetAllGameRooms({
     _gameId: data ? data._id : "",
     _email: profile ? profile.email : "",
-    _itemId: itemSizeId || (item ?? "")
+    _itemId: (itemSizeId as string) || ((item as string) ?? "")
   })
 
   const { allGameRoomsById } = useGetAllGameRoomsById({

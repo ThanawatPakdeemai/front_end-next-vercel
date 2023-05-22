@@ -1,4 +1,4 @@
-import useAvatarReefServ from "@feature/avatarReef/containers/hook/useAvatarReefServ"
+import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAvatarReef"
 import { useGetBuildingById } from "@feature/building/containers/hooks/useGetMyBuilding"
 import { useGetMyArcGameById } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
 import useInvenGameItem from "@feature/gameItem/inventory/containers/hooks/useInvenGameItem"
@@ -14,8 +14,9 @@ import {
 import useInvenMaterial from "@feature/material/inventory/containers/hooks/useInvenMaterial"
 import { useGetNakPunkById } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import useGlobal from "@hooks/useGlobal"
+import useProfileStore from "@stores/profileStore"
 import { NextRouter, useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 interface IInventoryItemData {
   id: string
@@ -38,6 +39,7 @@ interface IInventoryItemData {
 }
 
 const useInventoryContext = () => {
+  const { profile } = useProfileStore()
   const router: NextRouter = useRouter()
   const id = router.query.id as string
   const [invenItemData, setInvenItemData] = useState<
@@ -46,64 +48,37 @@ const useInventoryContext = () => {
   const [invPrice, setInvPrice] = useState<number>(0)
   const [invPeriod, setInvPeriod] = useState<number>(0)
   const [invAmount, setInvAmount] = useState<number>(1)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   // const [transAddrs, setTransAddrs] = useState<string | undefined>(undefined)
   const { marketType } = useGlobal()
-
   // move this to context? for solve multi call api and data need to update
   const { gameItemList } = useInvenGameItem()
-  const { materialList } = useInvenMaterial()
+  const { materialList, onTransferMaterial } = useInvenMaterial()
 
   const { mutateGetLandById } = useGetLandById()
   const { mutateGetBuildingById } = useGetBuildingById()
   const { mutateGetNakapunkById } = useGetNakPunkById()
   const { mutateGetMyArcGameById } = useGetMyArcGameById()
-  const { mutateGetNFTAvatarById } = useAvatarReefServ()
+  const { mutateGetNFTAvatarById } = useMutateAvatarReef()
 
-  const fetchInvenItemDataById = async () => {
-    let _data: IInventoryItemData = {
-      id: "",
-      name: "string",
-      tokenId: "string",
-      type: marketType || "nft_land",
-      img: "",
-      detail: "-"
-    }
-    if (id && marketType) {
+  const fetchInvenNFTItemDataById = useCallback(async () => {
+    if (
+      id &&
+      marketType &&
+      profile.data &&
+      marketType !== "game_item" &&
+      marketType !== "nft_material"
+    ) {
+      setIsLoading(true)
+      let _data: IInventoryItemData = {
+        id: "",
+        name: "string",
+        tokenId: "string",
+        type: marketType || "nft_land",
+        img: "",
+        detail: "-"
+      }
       switch (marketType) {
-        case "game_item": {
-          if (gameItemList) {
-            const _gameItem = gameItemList.find((gi) => gi._id === id)
-            if (_gameItem) {
-              _data = {
-                id: _gameItem._id,
-                name: _gameItem.name,
-                tokenId: _gameItem.item_id_smartcontract.toString(),
-                type: marketType,
-                img: _gameItem.image,
-                detail: _gameItem.detail,
-                totalAmoumt: _gameItem.amount
-              }
-            }
-          }
-          break
-        }
-        case "nft_material": {
-          if (materialList) {
-            const _materialItem = materialList.find((m) => m.id === id)
-            if (_materialItem) {
-              _data = {
-                id: _materialItem.id,
-                name: _materialItem.name,
-                tokenId: _materialItem.material_id_smartcontract.toString(),
-                type: marketType,
-                img: _materialItem.image,
-                detail: _materialItem.detail,
-                totalAmoumt: _materialItem.amount
-              }
-            }
-          }
-          break
-        }
         case "nft_land":
           await mutateGetLandById({ _id: id }).then((_res) => {
             _data = {
@@ -194,7 +169,81 @@ const useInventoryContext = () => {
       }
       setInvenItemData(_data)
     }
-  }
+    setIsLoading(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, marketType, profile.data])
+
+  const fetchInvenItemDataById = useCallback(() => {
+    if (
+      id &&
+      profile.data &&
+      gameItemList &&
+      materialList &&
+      marketType &&
+      (marketType === "game_item" || marketType === "nft_material")
+    ) {
+      setIsLoading(true)
+      let _data: IInventoryItemData = {
+        id: "",
+        name: "string",
+        tokenId: "string",
+        type: marketType || "nft_land",
+        img: "",
+        detail: "-"
+      }
+      switch (marketType) {
+        case "game_item": {
+          if (gameItemList) {
+            const _gameItem = gameItemList.find((gi) => gi._id === id)
+            if (_gameItem) {
+              _data = {
+                id: _gameItem._id,
+                name: _gameItem.name,
+                tokenId: _gameItem.item_id_smartcontract.toString(),
+                type: marketType,
+                img: _gameItem.image,
+                detail: _gameItem.detail,
+                totalAmoumt: _gameItem.amount
+              }
+            }
+          }
+          break
+        }
+        case "nft_material": {
+          if (materialList) {
+            const _materialItem = materialList.find((m) => m.id === id)
+            if (_materialItem) {
+              _data = {
+                id: _materialItem.id,
+                name: _materialItem.name,
+                tokenId: _materialItem.material_id_smartcontract.toString(),
+                type: marketType,
+                img: _materialItem.image,
+                detail: _materialItem.detail,
+                totalAmoumt: _materialItem.amount,
+                wallet_address: profile.data.address
+              }
+            }
+          }
+          break
+        }
+        default:
+          break
+      }
+      setInvenItemData(_data)
+    }
+    setIsLoading(false)
+  }, [id, gameItemList, marketType, materialList, profile.data])
+
+  useEffect(() => {
+    let cleanup = false
+    if (!cleanup) {
+      fetchInvenNFTItemDataById()
+    }
+    return () => {
+      cleanup = true
+    }
+  }, [fetchInvenNFTItemDataById])
 
   useEffect(() => {
     let cleanup = false
@@ -204,10 +253,10 @@ const useInventoryContext = () => {
     return () => {
       cleanup = true
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, marketType])
+  }, [fetchInvenItemDataById])
 
   return {
+    isLoading,
     invenItemData,
     fetchInvenItemDataById,
     invPrice,
@@ -215,7 +264,10 @@ const useInventoryContext = () => {
     invAmount,
     setInvPrice,
     setInvPeriod,
-    setInvAmount
+    setInvAmount,
+    gameItemList,
+    materialList,
+    onTransferMaterial
   }
 }
 

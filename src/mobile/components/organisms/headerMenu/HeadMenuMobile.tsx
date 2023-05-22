@@ -3,13 +3,16 @@ import { memo } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import HomeIcon from "@mui/icons-material/Home"
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"
-import SearchIcon from "@mui/icons-material/Search"
+// import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"
+// import SearchIcon from "@mui/icons-material/Search"
 import IconButtonCustom from "@components/atoms/IconButtonCustom/IconButtonCustom"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined"
 import useNotiStore from "@stores/notification"
 import INaka from "@components/icons/Naka"
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports"
+import ListSetting from "@mobile/components/organisms/ListSetting"
+// import MenuIcon from "@mui/icons-material/Menu"
 
 export const styleIcon = {
   fontSize: "20px !important"
@@ -52,7 +55,12 @@ const HeadMenuMobile = () => {
                 <div className="absolute left-[24px] top-[-6px] h-[5px]  w-[15px] rounded-t-lg bg-error-main" />
               )}
             </Link>
-            <ShoppingCartOutlinedIcon sx={{ fontSize: 25 }} />
+            <Link
+              href="/play-to-earn-games"
+              className="static"
+            >
+              <SportsEsportsIcon sx={{ fontSize: 30 }} />
+            </Link>
             <IconButtonCustom
               aria-label="expanded-menu-profile"
               className=" h-10 w-10 rotate-45 rounded-[13px] border-[2px] border-neutral-700 bg-error-main duration-100 "
@@ -97,10 +105,7 @@ const HeadMenuMobile = () => {
                 <div className="absolute right-[75px] top-[-6px] h-[5px]  w-[15px] rounded-t-lg bg-error-main" />
               )}
             </Link>
-            <SearchIcon
-              sx={{ fontSize: 25 }}
-              fontSize="medium"
-            />
+            <ListSetting />
           </div>
         </Box>
       </Box>

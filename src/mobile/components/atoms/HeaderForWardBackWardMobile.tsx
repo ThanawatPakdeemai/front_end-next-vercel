@@ -14,6 +14,7 @@ interface IProps {
   backwardHref?: string
   onClickForWard?: React.MouseEventHandler<HTMLAnchorElement>
   onClickBackWard?: React.MouseEventHandler<HTMLAnchorElement>
+  showForwardIcon?: boolean
 }
 
 const HeaderForWardBackWardMobile = ({
@@ -23,7 +24,8 @@ const HeaderForWardBackWardMobile = ({
   backwardIcon = <ArrowBackOutlinedIcon />,
   backwardHref = "/",
   onClickForWard,
-  onClickBackWard
+  onClickBackWard,
+  showForwardIcon = true
 }: IProps) => {
   const { t } = useTranslation()
   return (
@@ -40,12 +42,14 @@ const HeaderForWardBackWardMobile = ({
       <h1 className="flex-auto py-2 text-center text-default text-neutral-300">
         {t(label)}
       </h1>
-      <Link
-        href={forwardHref}
-        onClick={onClickForWard}
-      >
-        {forwardIcon}
-      </Link>
+      {showForwardIcon && (
+        <Link
+          href={forwardHref}
+          onClick={onClickForWard}
+        >
+          {forwardIcon}
+        </Link>
+      )}
     </Box>
   )
 }

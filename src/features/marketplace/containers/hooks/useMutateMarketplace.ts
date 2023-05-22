@@ -13,7 +13,7 @@ import {
   payInstallment,
   payRental,
   purchaseOrderFullpayment
-} from "../services/marketplace.service"
+} from "@feature/marketplace/containers/services/marketplace.service"
 
 const useMutateMarketplace = () => {
   const { errorToast, successToast } = useToast()

@@ -123,70 +123,77 @@ const GameSummaryRewardPage = () => {
       onOutRoom={() => router.push(link)}
     >
       <div className="flex w-full flex-col justify-center gap-4 lg:flex-row">
-        {!isMobile && (
-          <CardBodyList
-            className="custom-scroll mx-auto flex max-h-[680px] w-[362px] flex-1 flex-col gap-2 overflow-y-scroll"
-            width="auto"
-            players={players || []}
-            rewardType={notificationItem?.type}
-            // maxPlayer={gameRoomById?.max_players || 0}
-          />
-        )}
-        {renderContent()}
-        {isMobile && (
-          <MobileView>
-            <div className="grid grid-cols-2 gap-2">
-              {players ? (
-                players.map((data, index) => (
-                  <div
-                    className="flex items-center justify-between rounded-sm bg-[#151515] p-2 text-xs"
-                    key={index}
-                  >
+        {!isMobile ? (
+          <>
+            <CardBodyList
+              className="custom-scroll mx-auto flex max-h-[680px] w-[362px] flex-1 flex-col gap-2 overflow-y-scroll"
+              width="w-full"
+              players={players || []}
+              rewardType={notificationItem?.type}
+              // maxPlayer={gameRoomById?.max_players || 0}
+            />
+            {renderContent()}
+          </>
+        ) : (
+          <>
+            <MobileView>
+              {renderContent()}
+              <div className="grid grid-cols-2 gap-2">
+                {players ? (
+                  players.map((data, index) => (
                     <div
-                      className={`rounded-sm px-[14px] py-[12px] text-xs text-white-default ${
-                        index === 0
-                          ? "bg-red-card text-black-100"
-                          : index === 1
-                          ? "bg-secondary-main"
-                          : index === 2
-                          ? "bg-varidian-default  text-black-100"
-                          : "bg-[#404040]"
-                      }`}
+                      className="flex items-center justify-between rounded-sm bg-[#151515] p-2 text-xs"
+                      key={index}
                     >
-                      <p>{index + 1}</p>
-                    </div>
-                    <div className="mx-2 flex flex-col items-center justify-center text-[8px] text-white-default">
-                      <p>NAKAMOTO 0{index}</p>
-                      <p
-                        className={`rounded-[6px] border p-2  uppercase ${
+                      <div
+                        // px-[14px] py-[12px]
+                        className={`flex h-[40px] w-[40px] items-center justify-center rounded-sm text-xs text-white-default ${
                           index === 0
-                            ? "border-red-card"
+                            ? "bg-red-card text-black-100"
                             : index === 1
-                            ? "border-secondary-main"
+                            ? "bg-secondary-main"
                             : index === 2
-                            ? "border-varidian-default"
-                            : "border-[#404040]"
+                            ? "bg-varidian-default  text-black-100"
+                            : "bg-[#404040]"
                         }`}
                       >
-                        SCPRE {data.current_score}
-                      </p>
+                        <p>{index + 1}</p>
+                      </div>
+                      <div className="flex flex-col items-center justify-center text-[8px] text-white-default">
+                        <p className=" mb-1 text-left capitalize">
+                          {data.user_name} {index + 1}
+                        </p>
+                        <p
+                          className={`rounded-[6px] border p-1  uppercase ${
+                            index === 0
+                              ? "border-red-card"
+                              : index === 1
+                              ? "border-secondary-main"
+                              : index === 2
+                              ? "border-varidian-default"
+                              : "border-[#404040]"
+                          }`}
+                        >
+                          SCPRE {data.current_score}
+                        </p>
+                      </div>
+                      <Image
+                        src={data.avatar}
+                        width="20"
+                        height="20"
+                        alt={data.user_name}
+                        className="h-[40px] w-[40px] rounded-sm "
+                      />
                     </div>
-                    <Image
-                      src={data.avatar}
-                      width="20"
-                      height="20"
-                      alt={data.user_name}
-                      className="h-[40px] w-[40px] rounded-sm "
-                    />
-                  </div>
-                ))
-              ) : (
-                <Typography className="rounded-[14px] border border-neutral-800 p-4 text-center text-default uppercase text-neutral-200">
-                  {t("please_login")}
-                </Typography>
-              )}
-            </div>
-          </MobileView>
+                  ))
+                ) : (
+                  <Typography className="rounded-[14px] border border-neutral-800 p-4 text-center text-default uppercase text-neutral-200">
+                    {t("please_login")}
+                  </Typography>
+                )}
+              </div>
+            </MobileView>
+          </>
         )}
       </div>
     </GameSummaryContent>

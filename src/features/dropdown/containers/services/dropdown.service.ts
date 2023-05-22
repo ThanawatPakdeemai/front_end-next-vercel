@@ -26,7 +26,8 @@ const getGameAssets = () =>
 const getCategories = () =>
   new Promise<IGameCategory[]>((resolve, reject) => {
     services
-      .get(`${CONFIGS.BASE_URL.API}/game-category/all`)
+      // .get(`${CONFIGS.BASE_URL.API}/game-category/all`)
+      .get(`${CONFIGS.BASE_URL.API}/game-category/all/new`)
       .then((res) => {
         resolve(res.data.data)
       })

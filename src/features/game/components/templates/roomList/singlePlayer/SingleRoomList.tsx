@@ -1,25 +1,23 @@
 /* eslint-disable no-nested-ternary */
 import { Box, Divider } from "@mui/material"
-import React, { useEffect, useMemo, useState } from "react"
+import React from "react"
 import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import useGetAllGameRooms from "@feature/game/containers/hooks/useGetAllGameRooms"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/dist/client/router"
-import useGameStore from "@stores/game"
 import {
-  IGame,
   IGameCurrentPlayer,
   IGameRoomDetail
 } from "@feature/game/interfaces/IGameService"
 import ButtonSticky from "@components/molecules/ButtonSticky"
 import ReloadIcon from "@components/icons/ReloadIcon"
-import { unstable_batchedUpdates } from "react-dom"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGameRoomsById"
 import useGlobal from "@hooks/useGlobal"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
+import useGameGlobal from "@hooks/useGameGlobal"
 
 /**
  *
@@ -29,33 +27,41 @@ const GameRoomList = () => {
   /* mockup data */
   const { getTypeGamePathFolder } = useGlobal()
   const profile = useProfileStore((state) => state.profile.data)
-  const { data, itemSelected } = useGameStore()
+  // const { data } = useGameStore()
   const router = useRouter()
-  const { id } = router.query
-  const itemSizeId = id as string
   const { errorToast } = useToast()
-  const [gameData, setGameData] = useState<IGame>()
+  // const [gameData, setGameData] = useState<IGame>()
   const { balanceofItem } = useBuyGameItemController()
-  const item = useMemo(() => {
-    if (data) {
-      if (data.game_mode !== "play-to-earn" || data.tournament) {
-        return data.item[0]._id
-      }
-      if (itemSelected) {
-        return itemSelected._id
-      }
-      if (itemSizeId) {
-        return itemSizeId
-      }
-    } else {
-      return ""
-    }
-  }, [data, itemSelected, itemSizeId])
+  const {
+    item,
+    conditionGameFree,
+    // conditionPlayToEarn,
+    itemSizeId,
+    itemSelected,
+    gameData: data
+  } = useGameGlobal()
+  const gameData = data
+
+  // const item = useMemo(() => {
+  //   if (data) {
+  //     if (data.game_mode !== "play-to-earn" || data.tournament) {
+  //       return data.item[0]._id
+  //     }
+  //     if (itemSelected) {
+  //       return itemSelected._id
+  //     }
+  //     if (itemSizeId) {
+  //       return itemSizeId
+  //     }
+  //   } else {
+  //     return ""
+  //   }
+  // }, [data, itemSelected, itemSizeId])
 
   const { allGameRooms } = useGetAllGameRooms({
     _gameId: data ? data._id : "",
     _email: profile ? profile.email : "",
-    _itemId: itemSizeId || (item ?? "")
+    _itemId: (itemSizeId as string) || ((item as string) ?? "")
   })
 
   const { allGameRoomsById } = useGetAllGameRoomsById({
@@ -104,11 +110,7 @@ const GameRoomList = () => {
         intoRoomGame(data_player_me as IGameCurrentPlayer, _roomId)
       } else if (new Date() > new Date(_dataRoom.end_time)) {
         errorToast(MESSAGES["room-timeout"])
-      } else if (
-        data &&
-        ((data.play_to_earn && data.game_mode !== "play-to-earn") ||
-          data.tournament)
-      ) {
+      } else if (conditionGameFree) {
         intoRoomGame(data_player_me as IGameCurrentPlayer, _roomId)
       } else if (_dataRoom.amount_current_player >= _dataRoom.max_players) {
         if (data && data_player_me && data_player_me.status === "played") {
@@ -145,21 +147,21 @@ const GameRoomList = () => {
     return "Room"
   }
 
-  useEffect(() => {
-    let load = false
+  // useEffect(() => {
+  //   let load = false
 
-    if (!load) {
-      if (data) {
-        unstable_batchedUpdates(() => {
-          setGameData(data)
-        })
-      }
-    }
+  //   if (!load) {
+  //     if (data) {
+  //       unstable_batchedUpdates(() => {
+  //         setGameData(data)
+  //       })
+  //     }
+  //   }
 
-    return () => {
-      load = true
-    }
-  }, [allGameRooms, data])
+  //   return () => {
+  //     load = true
+  //   }
+  // }, [allGameRooms, data])
 
   return (
     <Box

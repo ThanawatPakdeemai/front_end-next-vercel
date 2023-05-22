@@ -16,7 +16,7 @@ import useTable from "@feature/table/containers/hooks/useTable"
 import { IHistory } from "@feature/history/interfaces/IHistoryService"
 import NoData from "@components/molecules/NoData"
 import { Image } from "@components/atoms/image/index"
-import Headerbackpage from "@src/mobile/features/Headerbackpage"
+import Headerbackpage from "@mobile/components/organisms/headerMenu/Headerbackpage"
 
 const HistoryTableMobile = () => {
   const profile = useProfileStore((state) => state.profile.data)

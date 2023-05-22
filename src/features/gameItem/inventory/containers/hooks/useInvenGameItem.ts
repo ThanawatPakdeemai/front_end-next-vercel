@@ -2,13 +2,12 @@ import CONFIGS from "@configs/index"
 import { MESSAGES } from "@constants/messages"
 import { useGetAllGameItemofAddrs } from "@feature/contract/containers/hooks/useContract"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
-
 import { TInvenVaultAction } from "@feature/inventory/interfaces/IInventoryItem"
 import useLoadingStore from "@stores/loading"
 import useMarketCategTypes from "@stores/marketCategTypes"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 const useInvenGameItem = () => {
   const { profile } = useProfileStore()
@@ -18,32 +17,9 @@ const useInvenGameItem = () => {
     CONFIGS.CONTRACT_ADDRESS.GET_GAMEITEMOFADDRESS
   )
   const [gameItemList, setGameItemList] = useState<
-    Array<IGameItemListData & { amount: number }> | undefined
+    Array<IGameItemListData & { amount?: number }> | undefined
   >(undefined)
   const { pathname } = useRouter()
-
-  // update gameItemList
-  const updateGameItemList = (
-    _type: TInvenVaultAction,
-    _tokenId: string,
-    _amount: number
-  ) => {
-    if (gameItemList) {
-      const _dummy = gameItemList
-      const upd_obj = _dummy.findIndex(
-        (obj) => obj.item_id_smartcontract === Number(_tokenId)
-      )
-      let _calAmount: number = _dummy[upd_obj].amount
-      if (_type === "decrease") {
-        _calAmount = _dummy[upd_obj].amount - _amount
-      } else {
-        _calAmount = _dummy[upd_obj].amount + _amount
-      }
-      _dummy[upd_obj].amount = _calAmount
-      const result = _dummy // ? not sure for need to declare new variable?
-      setGameItemList(result)
-    }
-  }
 
   // get all material by address
   const getAllGameItemByAddrs = (_address: string, _length: number) =>
@@ -58,49 +34,78 @@ const useInvenGameItem = () => {
         })
     })
 
-  const onFetchInvenGameItem = async (_address: string) => {
-    setOpen(MESSAGES.transaction_processing_order) // ? changed text
-    await getAllGameItemByAddrs(
-      _address,
-      gameItemTypes ? gameItemTypes.length + 1 : 0 // ? not sure for plus 1
-    )
-      .then((response) => {
-        if (gameItemTypes) {
-          const data = gameItemTypes
-            .sort((_a, _b) =>
-              _a.item_id_smartcontract < _b.item_id_smartcontract ? -1 : 1
-            )
-            .map((g) => ({
-              ...g,
-              amount: Number(response[g.item_id_smartcontract]) // ! Please check index again
-            }))
-          setGameItemList(data)
+  // update gameItemList
+  const updateGameItemList = (
+    _type: TInvenVaultAction,
+    _tokenId: string,
+    _amount: number
+  ) => {
+    if (gameItemList) {
+      const upd_obj = gameItemList.findIndex(
+        (obj) => obj.item_id_smartcontract === Number(_tokenId)
+      )
+      let _clone = gameItemList[upd_obj]
+      if (_clone.amount) {
+        let cal_amount: number = 0
+        if (_type === "decrease") {
+          cal_amount = _clone.amount - _amount
+        } else {
+          cal_amount = _clone.amount + _amount
         }
-      })
-      .catch((error) => console.error(error))
-      .finally(() => setClose())
+        _clone = { ..._clone, amount: cal_amount }
+        const _dummy = gameItemList.filter(
+          (f) => f.item_id_smartcontract !== Number(_tokenId)
+        )
+        const _result = [..._dummy, _clone]
+        setGameItemList(_result)
+      }
+    }
   }
+
+  const onFetchInvenGameItem = useCallback(async () => {
+    if (profile.data && profile.data.address) {
+      setOpen(MESSAGES.transaction_processing_order) // ? changed text
+      await getAllGameItemByAddrs(
+        profile.data.address,
+        gameItemTypes ? gameItemTypes.length + 1 : 0 // ? not sure for plus 1
+      )
+        .then((response) => {
+          if (gameItemTypes) {
+            const data = gameItemTypes
+              .sort((_a, _b) =>
+                _a.item_id_smartcontract < _b.item_id_smartcontract ? -1 : 1
+              )
+              .map((g) => ({
+                ...g,
+                amount: Number(response[g.item_id_smartcontract]) // ! Please check index again
+              }))
+            setGameItemList(data.filter((_item) => _item.amount > 0))
+          }
+        })
+        .catch((error) => console.error(error))
+        .finally(() => {
+          setTimeout(() => setClose(), 1000)
+        })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile.data, gameItemTypes])
 
   useEffect(() => {
     let load = false
-
-    if (!load) {
-      if (profile && profile.data && pathname.includes("inventory")) {
-        onFetchInvenGameItem(profile.data.address)
-      }
+    if (!load && pathname.includes("inventory")) {
+      onFetchInvenGameItem()
     }
-
     return () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile, gameItemTypes])
+  }, [onFetchInvenGameItem])
 
   return {
-    gameItemList:
-      gameItemList && gameItemList.filter((_item) => _item.amount > 0),
+    gameItemList,
     updateGameItemList,
-    onFetchInvenGameItem
+    onFetchInvenGameItem,
+    getAllGameItemByAddrs
   }
 }
 

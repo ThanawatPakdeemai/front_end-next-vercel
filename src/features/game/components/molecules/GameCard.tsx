@@ -47,6 +47,7 @@ interface IProps {
   onPlaying?: boolean
   play_total_count?: number
   room_available?: IGameRoomAvailable[]
+  classNameImage?: string
 }
 
 const GameCard = ({
@@ -65,7 +66,8 @@ const GameCard = ({
   onHandleClick,
   onPlaying = false,
   play_total_count,
-  room_available
+  room_available,
+  classNameImage
 }: IProps) => {
   const [imageSrc, setImageSrc] = useState<string>(IMAGES.no_image.src)
   const [chipLable, setChipLable] = useState<string>("")
@@ -211,9 +213,7 @@ const GameCard = ({
             width={218}
             height={218}
             className={`aspect-[3/2] rounded-3xl object-cover ${
-              isMobile
-                ? "h-[6.875rem] w-[6.875rem]"
-                : "h-[13.625rem] w-[13.625rem]"
+              isMobile ? `${classNameImage}` : "h-[13.625rem] w-[13.625rem]"
             }`}
             onClick={onHandleClick}
           />

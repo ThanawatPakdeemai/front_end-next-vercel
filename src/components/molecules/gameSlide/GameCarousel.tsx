@@ -188,6 +188,11 @@ const GameCarousel = ({
                   menu={menu}
                   data={item}
                   showNo={showNo}
+                  classNameImage={
+                    list.length < 3
+                      ? "h-40 w-auto"
+                      : "h-[6.875rem] w-[6.875rem]"
+                  }
                   no={index + 1}
                   checkTimer={checkTimer}
                   cooldown={cooldown}

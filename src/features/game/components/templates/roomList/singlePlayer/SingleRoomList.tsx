@@ -4,20 +4,14 @@ import React from "react"
 import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import useGetAllGameRooms from "@feature/game/containers/hooks/useGetAllGameRooms"
 import useProfileStore from "@stores/profileStore"
-import { useRouter } from "next/dist/client/router"
-import {
-  IGameCurrentPlayer,
-  IGameRoomDetail
-} from "@feature/game/interfaces/IGameService"
+
 import ButtonSticky from "@components/molecules/ButtonSticky"
 import ReloadIcon from "@components/icons/ReloadIcon"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
-import { useToast } from "@feature/toast/containers"
-import { MESSAGES } from "@constants/messages"
 import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGameRoomsById"
 import useGlobal from "@hooks/useGlobal"
-import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import useGameGlobal from "@hooks/useGameGlobal"
+import useRoomSingle from "@feature/game/containers/hooks/useRoomSingle"
 
 /**
  *
@@ -28,13 +22,13 @@ const GameRoomList = () => {
   const { getTypeGamePathFolder } = useGlobal()
   const profile = useProfileStore((state) => state.profile.data)
   // const { data } = useGameStore()
-  const router = useRouter()
-  const { errorToast } = useToast()
+  // const router = useRouter()
+  // const { errorToast } = useToast()
   // const [gameData, setGameData] = useState<IGame>()
-  const { balanceofItem } = useBuyGameItemController()
+  // const { balanceofItem } = useBuyGameItemController()
   const {
     item,
-    conditionGameFree,
+    // conditionGameFree,
     // conditionPlayToEarn,
     itemSizeId,
     itemSelected,
@@ -42,6 +36,7 @@ const GameRoomList = () => {
   } = useGameGlobal()
   const gameData = data
 
+  const { handleJoinRoom } = useRoomSingle()
   // const item = useMemo(() => {
   //   if (data) {
   //     if (data.game_mode !== "play-to-earn" || data.tournament) {
@@ -68,76 +63,76 @@ const GameRoomList = () => {
     _gameId: !profile && data ? data._id : ""
   })
 
-  const intoRoomGame = (
-    data_player_me: IGameCurrentPlayer,
-    _roomId: string
-  ) => {
-    if (data_player_me) {
-      if (data_player_me && data_player_me.status !== "played") {
-        router.push(`${router.asPath}/${_roomId}`)
-      } else if (data && data_player_me && data_player_me.status === "played") {
-        router.push(
-          `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
-        )
-        errorToast(MESSAGES["you-played"])
-      } else {
-        errorToast(MESSAGES["error-something"])
-      }
-    } else if (router.asPath.includes("?id=")) {
-      router.push(`${router.asPath.split("?id=")[0]}/${_roomId}`)
-    } else {
-      router.push(`${router.asPath}/${_roomId}`)
-    }
-  }
+  // const intoRoomGame = (
+  //   data_player_me: IGameCurrentPlayer,
+  //   _roomId: string
+  // ) => {
+  //   if (data_player_me) {
+  //     if (data_player_me && data_player_me.status !== "played") {
+  //       router.push(`${router.asPath}/${_roomId}`)
+  //     } else if (data && data_player_me && data_player_me.status === "played") {
+  //       router.push(
+  //         `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
+  //       )
+  //       errorToast(MESSAGES["you-played"])
+  //     } else {
+  //       errorToast(MESSAGES["error-something"])
+  //     }
+  //   } else if (router.asPath.includes("?id=")) {
+  //     router.push(`${router.asPath.split("?id=")[0]}/${_roomId}`)
+  //   } else {
+  //     router.push(`${router.asPath}/${_roomId}`)
+  //   }
+  // }
 
-  const handleJoinRoom = (_dataRoom: IGameRoomDetail) => {
-    const data_player_me = _dataRoom.current_player.find((ele) => {
-      if (profile) {
-        return ele.player_id === profile.id
-      }
-      return undefined
-    })
-    const _roomId = _dataRoom._id
-    if (profile) {
-      if (
-        itemSelected &&
-        itemSelected.qty > 0 &&
-        balanceofItem &&
-        balanceofItem?.data > 0 &&
-        new Date() <= new Date(_dataRoom.end_time) &&
-        _dataRoom.amount_current_player < _dataRoom.max_players
-      ) {
-        intoRoomGame(data_player_me as IGameCurrentPlayer, _roomId)
-      } else if (new Date() > new Date(_dataRoom.end_time)) {
-        errorToast(MESSAGES["room-timeout"])
-      } else if (conditionGameFree) {
-        intoRoomGame(data_player_me as IGameCurrentPlayer, _roomId)
-      } else if (_dataRoom.amount_current_player >= _dataRoom.max_players) {
-        if (data && data_player_me && data_player_me.status === "played") {
-          router.push(
-            `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
-          )
-        } else {
-          errorToast(MESSAGES["room-full"])
-        }
-      } else if (
-        (balanceofItem && balanceofItem?.data < 1) ||
-        balanceofItem === undefined
-      ) {
-        if (data && data_player_me && data_player_me.status === "played") {
-          router.push(
-            `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
-          )
-        } else {
-          errorToast(MESSAGES["you-don't-have-item"])
-        }
-      } else {
-        errorToast(MESSAGES["error-something"])
-      }
-    } else {
-      errorToast(MESSAGES["please_login"])
-    }
-  }
+  // const handleJoinRoom = (_dataRoom: IGameRoomDetail) => {
+  //   const data_player_me = _dataRoom.current_player.find((ele) => {
+  //     if (profile) {
+  //       return ele.player_id === profile.id
+  //     }
+  //     return undefined
+  //   })
+  //   const _roomId = _dataRoom._id
+  //   if (profile) {
+  //     if (
+  //       itemSelected &&
+  //       itemSelected.qty > 0 &&
+  //       balanceofItem &&
+  //       balanceofItem?.data > 0 &&
+  //       new Date() <= new Date(_dataRoom.end_time) &&
+  //       _dataRoom.amount_current_player < _dataRoom.max_players
+  //     ) {
+  //       intoRoomGame(data_player_me as IGameCurrentPlayer, _roomId)
+  //     } else if (new Date() > new Date(_dataRoom.end_time)) {
+  //       errorToast(MESSAGES["room-timeout"])
+  //     } else if (conditionGameFree) {
+  //       intoRoomGame(data_player_me as IGameCurrentPlayer, _roomId)
+  //     } else if (_dataRoom.amount_current_player >= _dataRoom.max_players) {
+  //       if (data && data_player_me && data_player_me.status === "played") {
+  //         router.push(
+  //           `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
+  //         )
+  //       } else {
+  //         errorToast(MESSAGES["room-full"])
+  //       }
+  //     } else if (
+  //       (balanceofItem && balanceofItem?.data < 1) ||
+  //       balanceofItem === undefined
+  //     ) {
+  //       if (data && data_player_me && data_player_me.status === "played") {
+  //         router.push(
+  //           `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
+  //         )
+  //       } else {
+  //         errorToast(MESSAGES["you-don't-have-item"])
+  //       }
+  //     } else {
+  //       errorToast(MESSAGES["error-something"])
+  //     }
+  //   } else {
+  //     errorToast(MESSAGES["please_login"])
+  //   }
+  // }
 
   const renderRoomName = (): string => {
     if (!gameData) return "Room"

@@ -29,7 +29,7 @@ const useRoomSingle = () => {
   const { allGameRooms, isLoading: loadingAllroom } = useGetAllGameRooms({
     _gameId: gameData ? gameData._id : "",
     _email: profile ? profile.email : "",
-    _itemId: itemSizeId || (item ?? "")
+    _itemId: (itemSizeId as string) || ((item as string) ?? "")
   })
 
   const { allGameRoomsById, isLoading: loadingAllroomById } =

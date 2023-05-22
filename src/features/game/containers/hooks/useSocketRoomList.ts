@@ -7,7 +7,7 @@ export interface IPropsSocketRoomList {
   path: string
   player_id: string
   game_id: string
-  item_id: string | undefined
+  item_id: string | false | undefined
 }
 
 const useSocketRoomList = (props: IPropsSocketRoomList) => {

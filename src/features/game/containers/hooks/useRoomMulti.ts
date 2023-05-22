@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/dist/client/router"
-import useGameStore from "@stores/game"
 import {
   CurrentPlayer,
   IGameRoomListSocket,
@@ -11,38 +10,25 @@ import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import helper from "@utils/helper"
+import useGameGlobal from "@hooks/useGameGlobal"
 import useSocketRoomList from "./useSocketRoomList"
-import useGetGameByPath from "./useFindGameByPath"
 
 const useRoomMulti = () => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { data, itemSelected, onSetGameData } = useGameStore()
   const router = useRouter()
-  const { id, GameHome } = router.query
-  const itemSizeId = id as string
   const { errorToast } = useToast()
   const { balanceofItem } = useBuyGameItemController()
   const [dataRoom, setDataRoom] = useState<IGameRoomListSocket[]>()
-  const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
-
-  const item_id = useMemo(() => {
-    if (data) {
-      if (
-        (data.play_to_earn && data.play_to_earn_status === "free") ||
-        data.tournament
-      ) {
-        return data.item[0]._id
-      }
-      if (itemSelected) {
-        return itemSelected._id
-      }
-      if (itemSizeId) {
-        return itemSizeId
-      }
-    } else {
-      return ""
-    }
-  }, [data, itemSelected, itemSizeId])
+  const {
+    item: item_id,
+    gameData,
+    // eslint-disable-next-line no-unused-vars
+    itemSizeId,
+    onSetGameData,
+    itemSelected,
+    conditionGameFree
+  } = useGameGlobal()
+  const data = gameData
 
   useEffect(() => {
     let load = false
@@ -177,11 +163,7 @@ const useRoomMulti = () => {
         data
       ) {
         intoRoomGame(player_me as CurrentPlayer, _data._id)
-      } else if (
-        data &&
-        ((data.play_to_earn && data.play_to_earn_status === "free") ||
-          data.tournament)
-      ) {
+      } else if (conditionGameFree) {
         intoRoomGame(player_me as CurrentPlayer, _data._id)
       } else if (new Date() > new Date(_data.end_time)) {
         errorToast(MESSAGES["room-timeout"])

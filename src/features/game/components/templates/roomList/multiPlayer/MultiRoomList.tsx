@@ -12,6 +12,7 @@ import {
   IResSocketRoomList
 } from "@feature/game/interfaces/IGameService"
 import { useToast } from "@feature/toast/containers"
+import useGameGlobal from "@hooks/useGameGlobal"
 import { Box, Divider } from "@mui/material"
 import SocketProviderRoom from "@providers/SocketProviderRoom"
 import useGameStore from "@stores/game"
@@ -23,32 +24,12 @@ import React, { memo, useEffect, useMemo, useState, useCallback } from "react"
 const MultiRoomList = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
-  const { id } = router.query
-  const itemSizeId = id as string
   const { errorToast } = useToast()
   const { data, itemSelected, qtyItemOfRoom } = useGameStore()
 
   const [dataRoom, setDataRoom] = useState<IGameRoomListSocket[]>()
   const { balanceofItem } = useBuyGameItemController()
-
-  const item_id = useMemo(() => {
-    if (data) {
-      if (
-        (data.play_to_earn && data.play_to_earn_status === "free") ||
-        data.tournament
-      ) {
-        return data.item[0]._id
-      }
-      if (itemSelected) {
-        return itemSelected._id
-      }
-      if (itemSizeId) {
-        return itemSizeId
-      }
-    } else {
-      return ""
-    }
-  }, [data, itemSelected, itemSizeId])
+  const { item: item_id, conditionGameFree } = useGameGlobal()
 
   const propsSocketRoomlist = useMemo(
     () => ({
@@ -170,11 +151,7 @@ const MultiRoomList = () => {
         data
       ) {
         intoRoomGame(player_me as CurrentPlayer, _data._id)
-      } else if (
-        data &&
-        ((data.play_to_earn && data.play_to_earn_status === "free") ||
-          data.tournament)
-      ) {
+      } else if (conditionGameFree) {
         intoRoomGame(player_me as CurrentPlayer, _data._id)
       } else if (new Date() > new Date(_data.end_time)) {
         errorToast(MESSAGES["room-timeout"])

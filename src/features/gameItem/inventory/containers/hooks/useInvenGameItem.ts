@@ -7,7 +7,7 @@ import useLoadingStore from "@stores/loading"
 import useMarketCategTypes from "@stores/marketCategTypes"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 const useInvenGameItem = () => {
   const { profile } = useProfileStore()
@@ -41,61 +41,65 @@ const useInvenGameItem = () => {
     _amount: number
   ) => {
     if (gameItemList) {
-      const _dummy = gameItemList
-      const upd_obj = _dummy.findIndex(
+      const upd_obj = gameItemList.findIndex(
         (obj) => obj.item_id_smartcontract === Number(_tokenId)
       )
-      if (_dummy[upd_obj].amount) {
-        let _calAmount: number = _dummy[upd_obj].amount || 0
+      let _clone = gameItemList[upd_obj]
+      if (_clone.amount) {
+        let cal_amount: number = 0
         if (_type === "decrease") {
-          _calAmount -= _amount
+          cal_amount = _clone.amount - _amount
         } else {
-          _calAmount += _amount
+          cal_amount = _clone.amount + _amount
         }
-        _dummy[upd_obj].amount = _calAmount
-        const result = _dummy // ? not sure for need to declare new variable?
-        setGameItemList(result)
+        _clone = { ..._clone, amount: cal_amount }
+        const _dummy = gameItemList.filter(
+          (f) => f.item_id_smartcontract !== Number(_tokenId)
+        )
+        const _result = [..._dummy, _clone]
+        setGameItemList(_result)
       }
     }
   }
 
-  const onFetchInvenGameItem = async (_address: string) => {
-    setOpen(MESSAGES.transaction_processing_order) // ? changed text
-    await getAllGameItemByAddrs(
-      _address,
-      gameItemTypes ? gameItemTypes.length + 1 : 0 // ? not sure for plus 1
-    )
-      .then((response) => {
-        if (gameItemTypes) {
-          const data = gameItemTypes
-            .sort((_a, _b) =>
-              _a.item_id_smartcontract < _b.item_id_smartcontract ? -1 : 1
-            )
-            .map((g) => ({
-              ...g,
-              amount: Number(response[g.item_id_smartcontract]) // ! Please check index again
-            }))
-          setGameItemList(data.filter((_item) => _item.amount > 0))
-        }
-      })
-      .catch((error) => console.error(error))
-      .finally(() => {
-        setTimeout(() => setClose(), 1000)
-      })
-  }
+  const onFetchInvenGameItem = useCallback(async () => {
+    if (profile.data && profile.data.address) {
+      setOpen(MESSAGES.transaction_processing_order) // ? changed text
+      await getAllGameItemByAddrs(
+        profile.data.address,
+        gameItemTypes ? gameItemTypes.length + 1 : 0 // ? not sure for plus 1
+      )
+        .then((response) => {
+          if (gameItemTypes) {
+            const data = gameItemTypes
+              .sort((_a, _b) =>
+                _a.item_id_smartcontract < _b.item_id_smartcontract ? -1 : 1
+              )
+              .map((g) => ({
+                ...g,
+                amount: Number(response[g.item_id_smartcontract]) // ! Please check index again
+              }))
+            setGameItemList(data.filter((_item) => _item.amount > 0))
+          }
+        })
+        .catch((error) => console.error(error))
+        .finally(() => {
+          setTimeout(() => setClose(), 1000)
+        })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile.data, gameItemTypes])
 
   useEffect(() => {
     let load = false
-    if (!load) {
-      if (profile && profile.data && pathname.includes("inventory")) {
-        onFetchInvenGameItem(profile.data.address)
-      }
+    if (!load && pathname.includes("inventory")) {
+      onFetchInvenGameItem()
     }
     return () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile, gameItemTypes])
+  }, [onFetchInvenGameItem])
 
   return {
     gameItemList,

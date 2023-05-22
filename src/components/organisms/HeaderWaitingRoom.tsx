@@ -9,8 +9,8 @@ import { useRouter } from "next/dist/client/router"
 import React from "react"
 import { useTranslation } from "react-i18next"
 import { MobileView } from "react-device-detect"
-import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined"
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined"
+// import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined"
+// import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined"
 import { isMobile } from "@hooks/useGlobal"
 
 export interface IHeaderWaitingRoomProp {
@@ -117,7 +117,7 @@ const HeaderWaitingRoom = ({
                 color="green"
                 shade="lemon"
               />
-              {player && (
+              {/* {player && (
                 <div className="flex rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-[6px] text-black-default">
                   <PeopleAltOutlinedIcon />
                   <p className="border-r border-black-default px-4">
@@ -125,10 +125,10 @@ const HeaderWaitingRoom = ({
                   </p>
                   <p className="pl-4 text-white-default">{player.maxPlayer}</p>
                 </div>
-              )}
-              <div className="flex rounded-lg border border-neutral-700 bg-neutral-900 p-[6px] px-2 text-white-default">
+              )} */}
+              {/* <div className="flex rounded-lg border border-neutral-700 bg-neutral-900 p-[6px] px-2 text-white-default">
                 <SettingsOutlinedIcon />
-              </div>
+              </div> */}
               {game && game?.game_type === "multiplayer" && (
                 <RoomListBox
                   type="player"

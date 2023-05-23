@@ -2,6 +2,8 @@ import { Box } from "@mui/material"
 import SingleRoom from "@src/mobile/features/game/components/templates/single/SingleRoom"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
+import PleaseLogin from "@components/atoms/PleaseLogin"
+import NoData from "@components/molecules/NoData"
 import MultiRoom from "../../game/components/templates/multi/MultiRoom"
 
 const RoomListPage = () => {
@@ -17,14 +19,14 @@ const RoomListPage = () => {
           if (profile) {
             return <MultiRoom />
           }
-          return <>PleaseLogin</>
+          return <PleaseLogin />
         default:
           return (
             <Box
               component="div"
               className="m-auto block"
             >
-              <>NoData </>
+              <NoData />
             </Box>
           )
       }

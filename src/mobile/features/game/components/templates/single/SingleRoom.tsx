@@ -1,5 +1,6 @@
 import useRoomSingle from "@feature/game/containers/hooks/useRoomSingle"
-import Preload from "@src/mobile/components/atoms/Preload"
+// import Preload from "@src/mobile/components/atoms/Preload"
+import RoomListSkeleton from "@mobile/components/atoms/skelaton/RoomListSkeleton"
 import ListJoinGame from "../../molecules/ListJoinGame"
 
 const SingleRoom = () => {
@@ -41,7 +42,7 @@ const SingleRoom = () => {
             ))}
         </>
       ) : (
-        <Preload />
+        <RoomListSkeleton />
       )}
     </>
   )

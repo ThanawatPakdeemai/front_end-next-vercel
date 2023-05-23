@@ -47,7 +47,8 @@ import StatProfile from "../statProfile/StatProfile"
 
 const ProfileContent = () => {
   const { onClickLogout } = useGlobal()
-  const { profile } = useProfileStore()
+  const { profile: pro } = useProfileStore()
+  const profile = pro.data
   const [openEdit, setOpenEdit] = useState<boolean>(false)
   const [idPlayer, setIdPlayer] = useState<string>("")
   const [emailPlayer, setEmailPlayer] = useState<string>("")
@@ -337,20 +338,22 @@ const ProfileContent = () => {
                   </Button>
                 </div>
               </Link>
-              <div>
-                <Button
-                  variant="contained"
-                  className="mb-[1.125rem] h-[50px] w-[293px] rounded-lg border border-solid border-neutral-700 !bg-error-main text-xs uppercase hover:border-secondary-main"
-                  onClick={onClickLogout}
-                >
-                  <div className="flex items-center font-neue-machina text-sm font-bold">
-                    <span className="absolute left-[15px]">
-                      <PlugIcon />
-                    </span>
-                    Logout
-                  </div>
-                </Button>
-              </div>
+
+              <Button
+                variant="contained"
+                className="mb-[1.125rem] h-[50px] w-[293px] rounded-lg border border-solid border-neutral-700 !bg-error-main text-xs uppercase hover:border-secondary-main"
+                onClick={() => {
+                  onClickLogout()
+                  router.push("/login")
+                }}
+              >
+                <div className="flex items-center font-neue-machina text-sm font-bold">
+                  <span className="absolute left-[15px]">
+                    <PlugIcon />
+                  </span>
+                  Logout
+                </div>
+              </Button>
             </Box>
             {profile && (
               <StatProfile
@@ -388,30 +391,28 @@ const ProfileContent = () => {
               alt="The house from the offer."
               src="/images/common/profile_banner.svg"
             />
-            {profile &&
-              profile.data &&
-              profile.data.id === (player_id as string) && (
-                <>
-                  <div className="absolute right-0 top-0 m-1 sm:m-4">
-                    <ButtonToggleIcon
-                      handleClick={handleOnExpandClick}
-                      startIcon={<SettingIcon />}
-                      text={t("edit_profile")}
-                      className="z-[2] h-[40px] w-fit bg-neutral-900 !text-[8px] font-bold capitalize text-white-default sm:h-[50px] sm:w-[148px] sm:text-sm"
-                      type="button"
-                    />
-                  </div>
-                  <EditProfileModal
-                    onRefetchProfile={refetchGetProfile}
-                    handleClose={handleClose}
-                    showModal={handleOnExpandClick}
-                    openEdit={openEdit}
-                    platinumCount={platinumCount}
-                    userName={getProfileInfo.data.username}
-                    userImage={getProfileInfo.data.avatar}
+            {profile && profile.id === (player_id as string) && (
+              <>
+                <div className="absolute right-0 top-0 m-1 sm:m-4">
+                  <ButtonToggleIcon
+                    handleClick={handleOnExpandClick}
+                    startIcon={<SettingIcon />}
+                    text={t("edit_profile")}
+                    className="z-[2] h-[40px] w-fit bg-neutral-900 !text-[8px] font-bold capitalize text-white-default sm:h-[50px] sm:w-[148px] sm:text-sm"
+                    type="button"
                   />
-                </>
-              )}
+                </div>
+                <EditProfileModal
+                  onRefetchProfile={refetchGetProfile}
+                  handleClose={handleClose}
+                  showModal={handleOnExpandClick}
+                  openEdit={openEdit}
+                  platinumCount={platinumCount}
+                  userName={getProfileInfo.data.username}
+                  userImage={getProfileInfo.data.avatar}
+                />
+              </>
+            )}
           </div>
           <div className="relative">
             <Tagline

@@ -1,7 +1,7 @@
 import React from "react"
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined"
 import Link from "next/link"
-import SearchIcon from "@mui/icons-material/Search"
+// import SearchIcon from "@mui/icons-material/Search"
 import { useTranslation } from "react-i18next"
 
 const Headerbackpage = ({ text }: any) => {
@@ -14,7 +14,7 @@ const Headerbackpage = ({ text }: any) => {
       <h1 className="flex-auto py-2 text-center text-base uppercase sm:mr-3 sm:flex-none sm:text-left">
         {t(text)}
       </h1>
-      <SearchIcon />
+      {/* <SearchIcon /> */}
     </div>
   )
 }

@@ -147,7 +147,7 @@ const GameCarousel = ({
       />
       <Box
         component="div"
-        className={`game-carousel-slide overflow-hidden ${
+        className={`game-carousel-slide overflow-hidden max-[420px]:pt-6 ${
           list.length < 5 && "slick-slider-w-auto"
         }`}
         sx={
@@ -189,9 +189,7 @@ const GameCarousel = ({
                   data={item}
                   showNo={showNo}
                   classNameImage={
-                    list.length < 3
-                      ? "h-44 w-auto"
-                      : "h-[6.875rem] w-[6.875rem]"
+                    list.length < 3 ? "h-40 w-40" : "h-[6.875rem] w-[6.875rem]"
                   }
                   no={index + 1}
                   checkTimer={checkTimer}

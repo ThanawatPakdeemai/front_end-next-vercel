@@ -46,7 +46,7 @@ const PlayToEarnGamesPage = () => {
                 data={game}
                 classNameImage={
                   gameFilter.length > 3
-                    ? "h-44 w-auto"
+                    ? "h-40 w-40"
                     : "h-[6.875rem] w-[6.875rem]"
                 }
                 href={`/${

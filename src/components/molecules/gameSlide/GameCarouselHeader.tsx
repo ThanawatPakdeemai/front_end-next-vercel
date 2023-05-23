@@ -147,7 +147,7 @@ const GameCarouselHeader = ({
       <div className={getMenuClass()}>
         {menu && (
           <div
-            className={`relative flex h-full w-fit flex-wrap items-center justify-between rounded-xl border-2 border-neutral-800 bg-neutral-900 bg-opacity-40 p-[5px] text-[10px] capitalize backdrop-blur-[25px] sm:flex-nowrap lg:flex-none ${
+            className={`relative flex h-full w-fit flex-wrap items-center justify-between overflow-x-auto rounded-xl border-2 border-neutral-800 bg-neutral-900 bg-opacity-40 p-[5px] text-[10px] capitalize backdrop-blur-[25px] sm:flex-nowrap lg:flex-none ${
               isMobile ? " !h-auto !w-full !max-w-fit !flex-wrap" : "flex-auto"
             }`}
           >

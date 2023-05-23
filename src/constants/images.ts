@@ -197,8 +197,8 @@ export const IMAGES: {
     src: "/images/home/nakaVerseMascot/nakaVerseMascot.png",
     srcWebp: "/images/home/nakaVerseMascot/nakaVerseMascot.webp",
     blurDataURL: "/images/home/nakaVerseMascot/nakaVerseMascot.webp",
-    width: 238,
-    height: 239,
+    width: 276,
+    height: 172,
     alt: "nakaVerseMascot"
   },
   nakaIconWhite: {

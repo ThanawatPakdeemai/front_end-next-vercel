@@ -189,13 +189,6 @@ const GameCard = ({
     }
   }
 
-  // eslint-disable-next-line no-console
-  console.log(
-    "test-log",
-    isMobile ? `${classNameImage}` : "h-[13.625rem] w-[13.625rem]",
-    classNameImage
-  )
-
   const renderCardContent = () => (
     <motion.div
       className="slick-card-container flex flex-col justify-center blur-none"

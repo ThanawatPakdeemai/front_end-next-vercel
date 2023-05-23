@@ -1,3 +1,4 @@
+import { TGameType } from "@feature/game/interfaces/IGameService"
 import { IFormatService } from "@interfaces/IHelper"
 
 interface IID {
@@ -99,7 +100,7 @@ export interface ITournamentCondition {
 }
 
 export interface ITournamentGames extends IIDName, IIsActive {
-  game_type: string
+  game_type: TGameType
 }
 
 export interface ITournamentRound extends IIDName, IStatus, IDateStartEnd {

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { useState } from "react"
 import {
   Table,
@@ -29,6 +28,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import NoData from "@components/molecules/NoData"
+import { TGameType } from "@feature/game/interfaces/IGameService"
 
 interface IMockData {
   key: string
@@ -36,7 +36,7 @@ interface IMockData {
   banner_image: string
   banner_image_alt: string
   banner_name: string
-  game_type: string
+  game_type: TGameType
   reward: number
 }
 
@@ -57,20 +57,10 @@ const TournamentList = () => {
       banner_image: "/images/tounament/Thumbnail_Sqaure.png",
       banner_image_alt: `image-banner-${i}`,
       banner_name: `DesiGner Game-${i}`,
-      game_type: "NAKAMOTO WARS",
+      game_type: "singleplayer",
       reward: 200000 * i
     })
   }
-
-  // const mockupData = [
-  //   {
-  //     player_id: "61bc302f7f8867700b66dd4b",
-  //     skip: 1,
-  //     limit: 12,
-  //     sort: undefined,
-  //     sort_value: undefined
-  //   }
-  // ]
 
   const copyClipboard = (id: string) => {
     navigator.clipboard.writeText(id)

@@ -1,3 +1,4 @@
+import { TGameType } from "@feature/game/interfaces/IGameService"
 import { IFormatService } from "@interfaces/IHelper"
 
 export type RewardType =
@@ -38,7 +39,7 @@ export interface INotification {
   createdAt: Date
   room_id?: string | INotificaionRoomID
   game_id: string | INotificaionGameID
-  game_type: string
+  game_type: TGameType
   player_id: string | INotificaionPlayerID
   detail: string
   read: boolean

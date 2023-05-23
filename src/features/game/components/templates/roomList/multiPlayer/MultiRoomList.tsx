@@ -3,33 +3,28 @@ import ReloadIcon from "@components/icons/ReloadIcon"
 import ButtonSticky from "@components/molecules/ButtonSticky"
 import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
-import { MESSAGES } from "@constants/messages"
-import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
+import useRoomMulti from "@feature/game/containers/hooks/useRoomMulti"
 import useSocketRoomList from "@feature/game/containers/hooks/useSocketRoomList"
 import {
-  CurrentPlayer,
   IGameRoomListSocket,
   IResSocketRoomList
 } from "@feature/game/interfaces/IGameService"
-import { useToast } from "@feature/toast/containers"
 import useGameGlobal from "@hooks/useGameGlobal"
 import { Box, Divider } from "@mui/material"
 import SocketProviderRoom from "@providers/SocketProviderRoom"
-import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import helper from "@utils/helper"
-import { useRouter } from "next/router"
 import React, { memo, useEffect, useMemo, useState, useCallback } from "react"
 
 const MultiRoomList = () => {
   const profile = useProfileStore((state) => state.profile.data)
-  const router = useRouter()
-  const { errorToast } = useToast()
-  const { data, itemSelected, qtyItemOfRoom } = useGameStore()
+  // const router = useRouter()
+  // const { errorToast } = useToast()
+  // const { data, itemSelected, qtyItemOfRoom } = useGameStore()
 
   const [dataRoom, setDataRoom] = useState<IGameRoomListSocket[]>()
-  const { balanceofItem } = useBuyGameItemController()
-  const { item: item_id, conditionGameFree } = useGameGlobal()
+  // const { balanceofItem } = useBuyGameItemController()
+  const { item: item_id, gameData: data } = useGameGlobal()
 
   const propsSocketRoomlist = useMemo(
     () => ({
@@ -51,6 +46,8 @@ const MultiRoomList = () => {
   } = useSocketRoomList({
     ...propsSocketRoomlist
   })
+
+  const { handleJoinRoom } = useRoomMulti()
 
   useEffect(() => {
     let load = false
@@ -123,51 +120,51 @@ const MultiRoomList = () => {
     }
   }, [fetchRoom, fetchRoomFromSearch, isConnected, search])
 
-  const intoRoomGame = (player_me: CurrentPlayer, _roomId: string) => {
-    if (data) {
-      if (player_me && player_me.status === "played") {
-        router.push(
-          `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
-        )
-        errorToast(MESSAGES["you-played"])
-      } else if (router.asPath.includes("?id=")) {
-        router.push(`${router.asPath.split("?id=")[0]}/${_roomId}`)
-      } else {
-        router.push(`${router.asPath}/${_roomId}`)
-      }
-    }
-  }
-  const handleJoinRoom = (_data: IGameRoomListSocket) => {
-    if (profile) {
-      const player_me = _data.current_player.find(
-        (ele) => ele.player_id === profile.id
-      )
-      if (
-        _data.amount_current_player < _data.max_players &&
-        new Date() < new Date(_data.end_time) &&
-        itemSelected &&
-        balanceofItem &&
-        balanceofItem?.data >= qtyItemOfRoom &&
-        data
-      ) {
-        intoRoomGame(player_me as CurrentPlayer, _data._id)
-      } else if (conditionGameFree) {
-        intoRoomGame(player_me as CurrentPlayer, _data._id)
-      } else if (new Date() > new Date(_data.end_time)) {
-        errorToast(MESSAGES["room-timeout"])
-      } else if (!balanceofItem || balanceofItem?.data < qtyItemOfRoom) {
-        errorToast(MESSAGES["you-don't-have-item"])
-      } else if (player_me && player_me.status === "played") {
-        errorToast(MESSAGES["you-played"])
-      } else if (_data.amount_current_player >= _data.max_players) {
-        errorToast(MESSAGES["room-full"])
-      } else {
-        errorToast(MESSAGES["error-something"])
-      }
-    } else {
-      errorToast(MESSAGES["please_login"])
-    }
-  }
+  // const intoRoomGame = (player_me: CurrentPlayer, _roomId: string) => {
+  //   if (data) {
+  //     if (player_me && player_me.status === "played") {
+  //       router.push(
+  //         `/${router?.query?.typeGame}/${data.path}/summary/${_roomId}`
+  //       )
+  //       errorToast(MESSAGES["you-played"])
+  //     } else if (router.asPath.includes("?id=")) {
+  //       router.push(`${router.asPath.split("?id=")[0]}/${_roomId}`)
+  //     } else {
+  //       router.push(`${router.asPath}/${_roomId}`)
+  //     }
+  //   }
+  // }
+  // const handleJoinRoom = (_data: IGameRoomListSocket) => {
+  //   if (profile) {
+  //     const player_me = _data.current_player.find(
+  //       (ele) => ele.player_id === profile.id
+  //     )
+  //     if (
+  //       _data.amount_current_player < _data.max_players &&
+  //       new Date() < new Date(_data.end_time) &&
+  //       itemSelected &&
+  //       balanceofItem &&
+  //       balanceofItem?.data >= qtyItemOfRoom &&
+  //       data
+  //     ) {
+  //       intoRoomGame(player_me as CurrentPlayer, _data._id)
+  //     } else if (conditionGameFree) {
+  //       intoRoomGame(player_me as CurrentPlayer, _data._id)
+  //     } else if (new Date() > new Date(_data.end_time)) {
+  //       errorToast(MESSAGES["room-timeout"])
+  //     } else if (!balanceofItem || balanceofItem?.data < qtyItemOfRoom) {
+  //       errorToast(MESSAGES["you-don't-have-item"])
+  //     } else if (player_me && player_me.status === "played") {
+  //       errorToast(MESSAGES["you-played"])
+  //     } else if (_data.amount_current_player >= _data.max_players) {
+  //       errorToast(MESSAGES["room-full"])
+  //     } else {
+  //       errorToast(MESSAGES["error-something"])
+  //     }
+  //   } else {
+  //     errorToast(MESSAGES["please_login"])
+  //   }
+  // }
 
   return (
     <>

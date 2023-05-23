@@ -4,6 +4,7 @@ import { AppBar, Toolbar, Typography } from "@mui/material"
 import { Image } from "@components/atoms/image"
 import useProfileStore from "@stores/profileStore"
 import Link from "next/link"
+import PersonIcon from "@mui/icons-material/Person"
 
 const HeadProfileMobile = () => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -20,16 +21,23 @@ const HeadProfileMobile = () => {
                 ⛅️ {profile?.username}
               </Typography>
             </div>
+
             <div className="flex h-[52px] w-[52px] items-center justify-center rounded-[14px] border-[2px] border-solid border-neutral-700">
-              <Link href={`/profile/${profile?.id}`}>
-                <Image
-                  src={profile?.avatar || "/images/avatar.png"}
-                  alt="avatar"
-                  width={40}
-                  height={40}
-                  className="rounded-lg"
-                />
-              </Link>
+              {profile ? (
+                <Link href={`/profile/${profile?.id}`}>
+                  <Image
+                    src={profile?.avatar || "/images/avatar.png"}
+                    alt="avatar"
+                    width={40}
+                    height={40}
+                    className="rounded-lg"
+                  />
+                </Link>
+              ) : (
+                <Link href="/login">
+                  <PersonIcon />
+                </Link>
+              )}
             </div>
           </div>
         </header>

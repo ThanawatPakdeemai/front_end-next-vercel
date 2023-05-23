@@ -1,15 +1,21 @@
+/* eslint-disable max-len */
 import { useEffect, useState } from "react"
 import useGlobal from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
 import {
   IFilterGamesByKey,
   IGame,
-  IGetType
+  IGetType,
+  TGameType
 } from "@feature/game/interfaces/IGameService"
 import useFilterGameList from "@feature/dropdown/containers/hooks/useFilterGameList"
 import { useRouter } from "next/router"
 
-const useGamePageListController = (gameType?: IGetType, _limit?: number) => {
+const useGamePageListController = (
+  gameMode?: IGetType,
+  gameType?: TGameType,
+  _limit?: number
+) => {
   const router = useRouter()
   const categoryId = router.query.id
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
@@ -45,12 +51,12 @@ const useGamePageListController = (gameType?: IGetType, _limit?: number) => {
    * @description Get game type by pathname
    * @returns
    */
-  const getGameTypeFilter = (): IGetType => {
+  const getGameModeFilter = (): IGetType => {
     if (categoryId) {
       return "all"
     }
-    if (!gameType) return "all"
-    return gameType
+    if (!gameMode) return "all"
+    return gameMode
   }
 
   useEffect(() => {
@@ -75,6 +81,17 @@ const useGamePageListController = (gameType?: IGetType, _limit?: number) => {
         setGameFilter([])
       }
       const filterData: IFilterGamesByKey = {
+        // "limit": 9999,
+        // "skip": 1,
+        // "sort": "_id",
+        // "search": "",
+        // "category": "all",
+        // "item": "all",
+        // "device": "all",
+        // "game_type": "multiplayer", // multiplayer, singleplayer, storymode
+        // "game_mode": "play-to-earn", // free-to-play, free-to-earn, play-to-earn, story-mode
+        // "tournament": false,
+        // "nftgame": "all"
         limit: _limit || limit,
         skip: page,
         sort: "_id",
@@ -82,12 +99,13 @@ const useGamePageListController = (gameType?: IGetType, _limit?: number) => {
         category: categoryId || categoryDropdown,
         item: gameItemDropdown,
         device: deviceDropdown,
-        game_type:
-          getGameTypeFilter() === "arcade-emporium"
+        game_type: gameType || "all",
+        game_mode:
+          getGameModeFilter() === "arcade-emporium"
             ? "all"
-            : getGameTypeFilter(),
+            : getGameModeFilter(),
         tournament: false,
-        nftgame: getGameTypeFilter() === "arcade-emporium" ? true : "all"
+        nftgame: getGameModeFilter() === "arcade-emporium" ? true : "all"
       }
       mutateGetGamesByCategoryId(filterData).then((res) => {
         if (res) {
@@ -110,7 +128,7 @@ const useGamePageListController = (gameType?: IGetType, _limit?: number) => {
     page,
     limit,
     mutateGetGamesByCategoryId,
-    gameType
+    gameMode
   ])
 
   const onSetGameStore = (game: IGame) => {

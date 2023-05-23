@@ -11,7 +11,7 @@ import { IPlayToEarnRewardData } from "@src/types/games"
 import { INFTInfo } from "../marketplace/interfaces/IArcGameService"
 import { IPartnerGameData } from "./IPartnerGame"
 
-export type TGameType = "singleplayer" | "multiplayer" | "storymode"
+export type TGameType = "singleplayer" | "multiplayer" | "storymode" | "all"
 
 export type TTypeCode =
   | "single_01"
@@ -594,7 +594,8 @@ export interface IFilterGamesByKey {
   category?: string | string[]
   item?: string | string[]
   device?: string
-  game_type?: IGetType
+  game_type?: TGameType
+  game_mode?: IGetType
   tournament?: boolean
   nftgame?: boolean | string
 }

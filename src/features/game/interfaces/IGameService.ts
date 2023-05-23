@@ -23,10 +23,12 @@ export type TTypeCode =
 
 export type IGetType =
   | "play-to-earn-games"
+  | "play-to-earn"
   | "free-to-play-games"
   | "free-to-earn-games"
   | "story-mode-games"
   | "storymode"
+  | "story-mode"
   | "must-try"
   | "hot-game"
   | "partner-game"

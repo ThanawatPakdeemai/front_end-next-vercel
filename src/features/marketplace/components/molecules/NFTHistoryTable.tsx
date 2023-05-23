@@ -13,7 +13,7 @@ interface IProp {
   history: IMarketHistory[]
 }
 
-const BillHistoryTable = ({ history }: IProp) => {
+const NFTHistoryTable = ({ history }: IProp) => {
   const { handleDateTimeFormat, shortenString } = Helper
 
   const historyTableHeader = useMemo(
@@ -44,6 +44,8 @@ const BillHistoryTable = ({ history }: IProp) => {
         return "success"
       case "mint":
         return "info"
+      case "rental":
+        return "warning"
       default:
         throw new Error(`Invalid type: ${_event}`)
     }
@@ -155,4 +157,4 @@ const BillHistoryTable = ({ history }: IProp) => {
   )
 }
 
-export default BillHistoryTable
+export default NFTHistoryTable

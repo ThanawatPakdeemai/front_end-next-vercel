@@ -1,5 +1,6 @@
 import useRoomMulti from "@feature/game/containers/hooks/useRoomMulti"
-import Preload from "@src/mobile/components/atoms/Preload"
+// import Preload from "@src/mobile/components/atoms/Preload"
+import RoomListSkeleton from "@mobile/components/atoms/skelaton/RoomListSkeleton"
 import ListJoinGame from "../../molecules/ListJoinGame"
 
 const MultiRoom = () => {
@@ -29,7 +30,7 @@ const MultiRoom = () => {
               />
             ))
           ) : (
-            <Preload />
+            <RoomListSkeleton />
           )}
         </>
       )}

@@ -10,6 +10,7 @@ import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty"
 import { CircularProgress } from "@mui/material"
 import { useRouter } from "next/router"
 import TitleOutRoom from "@src/mobile/components/molecules/TitleOutRoom"
+import WaitingSkeleton from "@mobile/components/atoms/skelaton/WaitingSkeleton"
 import ChatMobile from "../../organisms/ChatMobile"
 
 const MultiWaiting = () => {
@@ -82,7 +83,7 @@ const MultiWaiting = () => {
         />
       </div>
 
-      {gameData && dataPlayers && (
+      {gameData && dataPlayers ? (
         <>
           <PlayerCardMobile
             players={
@@ -196,6 +197,8 @@ const MultiWaiting = () => {
             </>
           )}
         </>
+      ) : (
+        <WaitingSkeleton />
       )}
     </SocketProvider>
   )

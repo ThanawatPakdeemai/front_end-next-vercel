@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { useEffect, useState } from "react"
-import useGlobal from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
 import {
   IFilterGamesByKey,
@@ -41,11 +41,25 @@ const useGamePageListController = (
     clearCategory,
     clearDevice,
     clearGameItem,
-    clearSearch
+    clearSearch,
+    setDevice
   } = useFilterStore()
 
   const { mutateGetGamesByCategoryId, isLoading: loadingFilterGame } =
     useFilterGameList()
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      if (isMobile) {
+        setDevice("mobile")
+      }
+    }
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile])
 
   /**
    * @description Get game type by pathname

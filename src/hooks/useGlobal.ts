@@ -219,7 +219,7 @@ const useGlobal = (
       return "play-to-earn-games"
     }
     if (_gameData.game_mode === "free-to-earn") {
-      return "free-to-play-games"
+      return "free-to-earn-games"
     }
     if (_gameData.game_mode === "free-to-play") {
       return "free-to-play-games"
@@ -294,8 +294,10 @@ const useGlobal = (
         return "!bg-error-main !text-neutral-900"
 
       case "free-to-play-games":
-      case "free-to-earn-games":
         return "!bg-secondary-main !text-neutral-900"
+
+      case "free-to-earn-games":
+        return "!bg-purple-02 !text-purple-primary"
 
       default:
         return "!bg-neutral-800 !text-neutral-900"

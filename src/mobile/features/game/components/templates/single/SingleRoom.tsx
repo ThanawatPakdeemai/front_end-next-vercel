@@ -33,7 +33,7 @@ const SingleRoom = () => {
                   gameData.game_mode === "free-to-earn"
                     ? ""
                     : `${itemSelected?.name || ""} ${
-                        `/ ${itemSelected?.item_size}` || ""
+                        `/${itemSelected?.item_size}` || ""
                       }`
                 }
                 descChip2={`${item.amount_current_player} / ${item.max_players}`}

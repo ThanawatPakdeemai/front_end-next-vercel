@@ -94,7 +94,8 @@ module.exports = {
       colors: {
         purple: {
           primary: "#7B5BE6",
-          "01": "#7a5be6"
+          "01": "#7a5be6",
+          "02": "#D5A9FF"
         },
         white: {
           primary: "#E1E2E2",

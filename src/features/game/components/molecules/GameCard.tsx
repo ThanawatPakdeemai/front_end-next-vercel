@@ -367,7 +367,7 @@ const GameCard = ({
             height={218}
             className={`aspect-[3/2] rounded-3xl object-cover ${
               isMobile
-                ? "h-[6.875rem] w-[6.875rem]"
+                ? "h-[147px] w-full " // "h-[6.875rem] w-[6.875rem]"
                 : "h-[13.625rem] w-[13.625rem]"
             }`}
             onClick={onHandleClick}

@@ -107,7 +107,7 @@ const EarnRewardPageMobile = () => {
 
   return (
     <div className="grid max-w-[678px] gap-10">
-      <div className="mt-6 flex items-center justify-end md:mt-0">
+      <div className="flex items-center justify-end md:mt-0">
         {/* <Typography className="flex-1 text-[22px] uppercase text-neutral-400">
           <Trans i18nKey="item_rewards" />
         </Typography> */}

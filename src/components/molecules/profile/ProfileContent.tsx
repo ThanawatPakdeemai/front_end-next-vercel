@@ -231,8 +231,8 @@ const ProfileContent = () => {
                 </div>
               </div>
             </div>
-            <div className="flex h-full justify-center">
-              <TableIcon className="absolute" />
+            <div className="relative flex h-full justify-center">
+              <TableIcon className="absolute w-full" />
             </div>
             <div className="mt-[50px] flex w-full justify-center">
               <Typography className="font-mondwest text-[46px] uppercase  text-error-main shadow-error-main drop-shadow-xl">

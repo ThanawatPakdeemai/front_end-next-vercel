@@ -6,12 +6,12 @@ import {
 import useGlobal from "@hooks/useGlobal"
 import { useQuery } from "@tanstack/react-query"
 
-const useGameWhatsNew = (_gameType: IGetType, _gameId: string) => {
+const useGameWhatsNew = (_gameMode: IGetType, _gameId: string) => {
   const limit = 5
   const { page } = useGlobal()
 
   const handleQueryFunction = () => {
-    switch (_gameType) {
+    switch (_gameMode) {
       case "partner-game":
         return getGamePartnerAllReview(limit, page, _gameId)
       default:
@@ -50,7 +50,7 @@ const useGameWhatsNew = (_gameType: IGetType, _gameId: string) => {
   } = useQuery({
     queryKey: ["gameNewVersion", _gameId || ""],
     queryFn: () =>
-      _gameType === "partner-game" ? getGamePartnerNewVersion(_gameId) : null,
+      _gameMode === "partner-game" ? getGamePartnerNewVersion(_gameId) : null,
     keepPreviousData: true,
     staleTime: Infinity,
     enabled: !!_gameId

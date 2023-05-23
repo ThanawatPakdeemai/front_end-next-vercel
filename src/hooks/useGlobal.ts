@@ -6,7 +6,8 @@ import { useCallback, useEffect, useState, useRef } from "react"
 import {
   IFilterGamesByKey,
   IGame,
-  IGetType
+  IGetType,
+  TGameType
 } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
@@ -26,7 +27,8 @@ const useGlobal = (
   _search?: string,
   _item?: string | string[],
   _device?: string,
-  _gameType?: IGetType,
+  _gameMode?: IGetType,
+  _gameType?: TGameType,
   _tournament?: boolean,
   _category?: string,
   _nftgame?: boolean
@@ -40,6 +42,7 @@ const useGlobal = (
     search: _search ?? "",
     item: _item ?? "all",
     device: _device ?? "all",
+    game_mode: _gameMode ?? "all",
     game_type: _gameType ?? "all",
     tournament: _tournament ?? false,
     category: _category ?? "all",

@@ -194,9 +194,9 @@ export const IMAGES: {
     alt: "ringNakaverse"
   },
   nakaVerseMascot: {
-    src: "/images/home/nakaVerseMascot.svg",
-    srcWebp: "/images/home/nakaVerseMascot.svg",
-    blurDataURL: "/images/home/nakaVerseMascot.svg",
+    src: "/images/home/nakaVerseMascot/nakaVerseMascot.png",
+    srcWebp: "/images/home/nakaVerseMascot/nakaVerseMascot.webp",
+    blurDataURL: "/images/home/nakaVerseMascot/nakaVerseMascot.webp",
     width: 238,
     height: 239,
     alt: "nakaVerseMascot"

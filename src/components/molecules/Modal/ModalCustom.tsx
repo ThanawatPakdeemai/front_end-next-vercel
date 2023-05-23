@@ -1,10 +1,10 @@
 import React from "react"
-import { Box, ModalUnstyledOwnProps, Modal, Typography } from "@mui/material"
+import { Box, ModalProps, Modal, Typography } from "@mui/material"
 import CircleNakaIcon from "@components/icons/CircleNakaIcon"
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import { Trans } from "next-i18next"
 
-interface IProps extends ModalUnstyledOwnProps {
+interface IProps extends ModalProps {
   bgcolor?: string
   className?: string
   width?: string | number

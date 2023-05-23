@@ -5,7 +5,8 @@ import { IRoomAvaliableResponse } from "@feature/home/interfaces/IHomeService"
 const getHomeSlide = () =>
   new Promise<IGame[]>((resolve, reject) => {
     services
-      .get(`/game/banner/all`)
+      // .get(`/game/banner/all`)
+      .get(`/game/banner/all/new`)
       .then((res) => {
         resolve(res.data.data)
       })

@@ -108,6 +108,7 @@ const Home = () => {
   const { gameFilter: dataF2pGames, loadingFilterGame: loadingDataF2pGames } =
     useGamePageListController(
       getGameTypeF2EByTitleClicked(f2pCurType),
+      "all",
       p2eCurType === "story-mode-games" ? limit : 9999
     )
   const { gameFilter: dataP2eGame, loadingFilterGame: loadingDataP2eGame } =

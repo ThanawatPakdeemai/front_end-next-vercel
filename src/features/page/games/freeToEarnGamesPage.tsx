@@ -30,7 +30,7 @@ const FreeToEarnGamesPage = () => {
     staminaRecovery,
     cooldown,
     setCooldown
-  } = useGamePageListController("free-to-play-games", limitFake) // TODO backend can't filter game free-to-earn
+  } = useGamePageListController("free-to-earn-games", "all", limitFake)
   const { getTypeGamePathFolder, isFreeToEarnGame } = useGlobal()
 
   const [f2eGame, setF2EGame] = useState<IGame[]>()

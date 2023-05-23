@@ -1,4 +1,9 @@
-import { IGame, TRoomStatus } from "@feature/game/interfaces/IGameService"
+import {
+  IGame,
+  IGetType,
+  TGameType,
+  TRoomStatus
+} from "@feature/game/interfaces/IGameService"
 
 export interface IGetHistory {
   player_id: string
@@ -26,8 +31,8 @@ export interface IHistory {
   game_detail: IGame
   room_status: TRoomStatus
   detail_used_items: IDetailUsedItems
-  game_type: string
-  game_mode: string
+  game_type: TGameType
+  game_mode: IGetType
 }
 
 export interface IHistoryInfo {

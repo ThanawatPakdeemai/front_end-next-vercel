@@ -61,7 +61,7 @@ const useGameGlobal = () => {
   const item = useMemo(() => {
     if (gameData) {
       if (conditionGameFree) {
-        return gameData.item[0]._id
+        return gameData.item && gameData.item.length > 0 && gameData.item[0]._id
       }
       if (itemSelected) {
         return itemSelected._id

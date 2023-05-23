@@ -162,7 +162,8 @@ export const claimEarnedRewardByPlayerId = ({
 export const getAllCategory = () =>
   new Promise<IGameCategoryService>((resolve, reject) => {
     services
-      .get<IGameCategoryService>(`/game-category/all`)
+      // .get<IGameCategoryService>(`/game-category/all`)
+      .get<IGameCategoryService>(`/game-category/all/new`)
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

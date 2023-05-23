@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 
+import { TGameType } from "@feature/game/interfaces/IGameService"
 import { IInfo } from "@interfaces/IHelper"
 
 export interface IProfileRank {
@@ -226,7 +227,7 @@ export interface IPlayerInfoGameData {
   name: string
   story: string
   image: string
-  game_type: string
+  game_type: TGameType
   winrate: string
   played: number
   rank: string
@@ -278,7 +279,7 @@ export interface IDataPlayerStatistic {
   info?: IPlayerPageInfo
   data: IDataPlayerStatisticData
   story: string
-  game_type: string
+  game_type: TGameType
   gamename: string
   image_game: string
   tournament?: boolean

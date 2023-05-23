@@ -23,7 +23,7 @@ const PlayToEarnGamesPage = () => {
     pager,
     setLimit,
     onSetGameStore
-  } = useGamePageListController("play-to-earn-games")
+  } = useGamePageListController("play-to-earn")
   return (
     <div className="flex flex-col">
       <MobileView className="MobileSlider mb-4">
@@ -44,6 +44,11 @@ const PlayToEarnGamesPage = () => {
                 key={game.id}
                 menu={P2EHeaderMenu}
                 data={game}
+                classNameImage={
+                  gameFilter.length > 3
+                    ? "h-44 w-auto"
+                    : "h-[6.875rem] w-[6.875rem]"
+                }
                 href={`/${
                   game.is_NFT ? "arcade-emporium" : "play-to-earn-games"
                 }/${game.path}`}

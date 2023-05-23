@@ -190,7 +190,7 @@ const GameCarousel = ({
                   showNo={showNo}
                   classNameImage={
                     list.length < 3
-                      ? "h-40 w-auto"
+                      ? "h-44 w-auto"
                       : "h-[6.875rem] w-[6.875rem]"
                   }
                   no={index + 1}

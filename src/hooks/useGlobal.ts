@@ -6,7 +6,8 @@ import { useCallback, useEffect, useState, useRef } from "react"
 import {
   IFilterGamesByKey,
   IGame,
-  IGetType
+  IGetType,
+  TGameType
 } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
@@ -26,7 +27,8 @@ const useGlobal = (
   _search?: string,
   _item?: string | string[],
   _device?: string,
-  _gameType?: IGetType,
+  _gameMode?: IGetType,
+  _gameType?: TGameType,
   _tournament?: boolean,
   _category?: string,
   _nftgame?: boolean
@@ -40,6 +42,7 @@ const useGlobal = (
     search: _search ?? "",
     item: _item ?? "all",
     device: _device ?? "all",
+    game_mode: _gameMode ?? "all",
     game_type: _gameType ?? "all",
     tournament: _tournament ?? false,
     category: _category ?? "all",
@@ -216,7 +219,7 @@ const useGlobal = (
       return "play-to-earn-games"
     }
     if (_gameData.game_mode === "free-to-earn") {
-      return "free-to-play-games"
+      return "free-to-earn-games"
     }
     if (_gameData.game_mode === "free-to-play") {
       return "free-to-play-games"
@@ -291,8 +294,10 @@ const useGlobal = (
         return "!bg-error-main !text-neutral-900"
 
       case "free-to-play-games":
-      case "free-to-earn-games":
         return "!bg-secondary-main !text-neutral-900"
+
+      case "free-to-earn-games":
+        return "!bg-purple-02 !text-purple-primary"
 
       default:
         return "!bg-neutral-800 !text-neutral-900"

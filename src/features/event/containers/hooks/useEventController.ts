@@ -107,7 +107,7 @@ const useEventController = () => {
             eventDetailData.fixed_rewards &&
             eventDetailData.fixed_rewards.length > 0
           ) {
-            fixedRewardState.forEach((item) => {
+            eventDetailData.fixed_rewards.forEach((item) => {
               if (item.rank.includes("-")) {
                 const rank = item.rank.split("-")
                 const start = Number(rank[0])
@@ -158,6 +158,8 @@ const useEventController = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [topScoreData, leaderBoardData, eventDetailData]
   )
+
+  // topScoreData, leaderBoardData,
 
   const EventTableHeader: Array<ITableHeader> = useMemo(
     () => [

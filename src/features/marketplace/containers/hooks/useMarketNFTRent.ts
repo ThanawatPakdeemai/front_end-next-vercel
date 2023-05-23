@@ -334,6 +334,7 @@ const useMarketNFTRent = () => {
         })
         .catch((error) => console.error(error))
     }
+    setClose()
   }
 
   return {

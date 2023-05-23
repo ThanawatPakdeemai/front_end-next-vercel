@@ -25,6 +25,7 @@ const PlayToEarnGamesPage = () => {
     setLimit,
     onSetGameStore
   } = useGamePageListController("play-to-earn")
+
   return (
     <div className="flex flex-col">
       <MobileView className="MobileSlider mb-4">

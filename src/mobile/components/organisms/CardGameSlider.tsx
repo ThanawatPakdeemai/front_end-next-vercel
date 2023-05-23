@@ -22,6 +22,7 @@ const CardGameSlider = ({ games }: IProps) => {
     pauseOnHover: false,
     dots: true
   }
+
   return (
     <div className="h-full w-full">
       <div className="flex items-center justify-center">
@@ -34,11 +35,11 @@ const CardGameSlider = ({ games }: IProps) => {
               games.slice(0, 5).map((item) => (
                 <div key={item.id}>
                   <Image
-                    className="h-[204px] w-[908px] rounded-[20px] object-cover"
-                    src={item.image_banner}
+                    className="h-[204px] w-[908px] rounded-[20px] object-cover object-center"
+                    src={item.image_category_list}
                     width={908}
                     height={204}
-                    alt="alt"
+                    alt={item.name}
                   />
                 </div>
               ))}

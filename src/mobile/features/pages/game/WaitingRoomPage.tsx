@@ -3,6 +3,8 @@ import SingleWaiting from "@src/mobile/features/game/components/templates/single
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import MultiWaiting from "@src/mobile/features/game/components/templates/multi/MultiWaiting"
+import PleaseLogin from "@components/atoms/PleaseLogin"
+import NoData from "@components/molecules/NoData"
 
 const WaitingRoomPage = () => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -17,14 +19,14 @@ const WaitingRoomPage = () => {
           if (profile) {
             return <MultiWaiting />
           }
-          return <>PleaseLogin</>
+          return <PleaseLogin />
         default:
           return (
             <Box
               component="div"
               className="m-auto block"
             >
-              <>NoData </>
+              <NoData />
             </Box>
           )
       }

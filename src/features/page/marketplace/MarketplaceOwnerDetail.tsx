@@ -2,8 +2,8 @@ import ButtonMarket from "@components/atoms/button/ButtonMarket"
 import ButtonRentOut from "@components/atoms/button/ButtonRentOut"
 import CardDetailSkeleton from "@feature/marketplace/components/molecules/CardDetailSkeleton"
 import TransferBox from "@feature/marketplace/components/molecules/TransferBox"
-import BillDetailSection from "@feature/marketplace/components/organisms/BillDetailSection"
 import CardContentDetails from "@feature/marketplace/components/organisms/CardContentDetails"
+import NFTDetailTable from "@feature/marketplace/components/organisms/NFTDetailTable"
 import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import useCountStore from "@stores/countComponant"
@@ -95,12 +95,22 @@ const MarketplaceOwnerDetail = () => {
           </RightDetailsMarketplace>
         </div>
       </div>
-      {invenItemData.installments_data && invenItemData.history && (
-        <BillDetailSection
-          insData={invenItemData.installments_data[0]}
+      {invenItemData.history &&
+      (invenItemData.installments_data || invenItemData.rentals_data) ? (
+        <NFTDetailTable
+          installmentData={
+            invenItemData.installments_data
+              ? invenItemData.installments_data[0]
+              : undefined
+          }
+          rentalData={
+            invenItemData.rentals_data
+              ? invenItemData.rentals_data[0]
+              : undefined
+          }
           history={invenItemData.history}
         />
-      )}
+      ) : null}
     </div>
   ) : (
     <CardDetailSkeleton />

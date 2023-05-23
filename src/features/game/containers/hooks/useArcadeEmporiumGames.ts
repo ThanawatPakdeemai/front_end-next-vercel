@@ -17,7 +17,7 @@ const useArcadeEmporiumGames = () => {
   const _search = searchDropdown
   const _item = gameItemDropdown
   const _device = deviceDropdown
-  const _gameMode = "play-to-earn-games"
+  const _gameMode = "play-to-earn"
   const _gameType = "all"
   const _tournament = false
   const _category = categoryDropdown

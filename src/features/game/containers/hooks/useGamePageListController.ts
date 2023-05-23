@@ -38,10 +38,12 @@ const useGamePageListController = (
     gameItem: gameItemDropdown,
     device: deviceDropdown,
     search: searchDropdown,
+    game_type: gameTypeDropdown,
     clearCategory,
     clearDevice,
     clearGameItem,
-    clearSearch
+    clearSearch,
+    clearGameType
   } = useFilterStore()
 
   const { mutateGetGamesByCategoryId, isLoading: loadingFilterGame } =
@@ -66,6 +68,7 @@ const useGamePageListController = (
       clearDevice()
       clearGameItem()
       clearSearch()
+      clearGameType()
     }
     return () => {
       load = true
@@ -81,17 +84,6 @@ const useGamePageListController = (
         setGameFilter([])
       }
       const filterData: IFilterGamesByKey = {
-        // "limit": 9999,
-        // "skip": 1,
-        // "sort": "_id",
-        // "search": "",
-        // "category": "all",
-        // "item": "all",
-        // "device": "all",
-        // "game_type": "multiplayer", // multiplayer, singleplayer, storymode
-        // "game_mode": "play-to-earn", // free-to-play, free-to-earn, play-to-earn, story-mode
-        // "tournament": false,
-        // "nftgame": "all"
         limit: _limit || limit,
         skip: page,
         sort: "_id",
@@ -99,7 +91,7 @@ const useGamePageListController = (
         category: categoryId || categoryDropdown,
         item: gameItemDropdown,
         device: deviceDropdown,
-        game_type: gameType || "all",
+        game_type: gameType || gameTypeDropdown,
         game_mode:
           getGameModeFilter() === "arcade-emporium"
             ? "all"
@@ -125,6 +117,7 @@ const useGamePageListController = (
     gameItemDropdown,
     deviceDropdown,
     searchDropdown,
+    gameTypeDropdown,
     page,
     limit,
     mutateGetGamesByCategoryId,

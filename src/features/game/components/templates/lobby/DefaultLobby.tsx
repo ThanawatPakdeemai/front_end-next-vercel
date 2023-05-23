@@ -33,7 +33,7 @@ const DefaultLobby = ({ gameData }: IDefaultLobby) => (
     <BuyItemBody>
       <OverviewHowToPlay
         gameId={gameData ? gameData.id : ""}
-        gameType="play-to-earn-games"
+        gameType="play-to-earn"
         hight="h-[300px]"
         title="how_to_play"
       />

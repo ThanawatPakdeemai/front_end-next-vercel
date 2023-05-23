@@ -82,9 +82,9 @@ const GamePageDefault = ({
     if (!gameData) return null
 
     switch (getTypeGamePathFolder(gameData as IGame)) {
-      case "story-mode-games":
-      case "free-to-play-games":
-      case "free-to-earn-games":
+      case "story-mode":
+      case "free-to-play":
+      case "free-to-earn":
         return null
       default:
         return (
@@ -320,7 +320,7 @@ const GamePageDefault = ({
                   gameType={
                     router.asPath.includes("arcade-emporium")
                       ? "arcade-emporium"
-                      : "play-to-earn-games"
+                      : "play-to-earn"
                   }
                 />
               ) : (
@@ -330,7 +330,7 @@ const GamePageDefault = ({
                   gameType={
                     router.asPath.includes("arcade-emporium")
                       ? "arcade-emporium"
-                      : "play-to-earn-games"
+                      : "play-to-earn"
                   }
                 />
               )}

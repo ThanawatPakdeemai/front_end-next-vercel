@@ -45,13 +45,11 @@ const PlayToEarnGamesPage = () => {
                 key={game.id}
                 menu={P2EHeaderMenu}
                 data={game}
-                href={`/${
-                  game.is_NFT ? "arcade-emporium" : "play-to-earn-games"
-                }/${game.path}`}
+                href={`/${game.is_NFT ? "arcade-emporium" : "play-to-earn"}/${
+                  game.path
+                }`}
                 onHandleClick={() => onSetGameStore(game)}
-                gameType={
-                  game.is_NFT ? "arcade-emporium" : "play-to-earn-games"
-                }
+                gameType={game.is_NFT ? "arcade-emporium" : "play-to-earn"}
                 room_available={game.game_room_available}
               />
             ))}

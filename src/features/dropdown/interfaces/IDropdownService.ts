@@ -1,5 +1,6 @@
+import React from "react"
 import { ITokenContract } from "@feature/contract/containers/hooks/useContractVaultBinance"
-import { IGame } from "@feature/game/interfaces/IGameService"
+import { IGame, TGameType } from "@feature/game/interfaces/IGameService"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 
 export interface IDetailUsedItems {
@@ -84,6 +85,12 @@ export interface IDevice {
   _id: string
   name: string
   supported: boolean
+}
+
+export interface IGameType {
+  _id: TGameType
+  name: string
+  icon: React.ReactNode
 }
 
 export interface IEvent {

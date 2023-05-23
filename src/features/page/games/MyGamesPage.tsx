@@ -13,7 +13,7 @@ import NoData from "@components/molecules/NoData"
 import GameCard from "@feature/game/components/molecules/GameCard"
 
 const MyGamesPage = () => {
-  const type: IGetType = "play-to-earn-games"
+  const type: IGetType = "play-to-earn"
   const {
     limit,
     setPage,

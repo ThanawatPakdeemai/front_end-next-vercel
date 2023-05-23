@@ -499,7 +499,7 @@ const GameCard = ({
                 <>
                   <Link
                     // href=""
-                    href={`/${room.game_type}-games/${room.game_path}/roomlist`}
+                    href={`/${room.game_type}/${room.game_path}/roomlist`}
                     key={el.item_size}
                   >
                     <Chip

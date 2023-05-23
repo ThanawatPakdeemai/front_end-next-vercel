@@ -105,8 +105,6 @@ export default function GameLobby() {
     // FIXME Boy code ตรงนี้ยังไม่ดีคควรเขียนใหม่
     if (gameData) {
       switch (gameData.game_type) {
-        // case "storymode":
-        //   return <StoryLobby />
         default:
           return (
             <GameContent
@@ -115,15 +113,6 @@ export default function GameLobby() {
               themeColor={getColorChipByGameType(
                 getTypeGamePathFolder(gameData)
               )}
-              // gameId={gameData?.id}
-              // gameType={
-              //   getTypeGamePathFolder(gameData) === "story-mode-games"
-              //     ? "storymode"
-              //     : getTypeGamePathFolder(gameData)
-              // }
-              // themeColor={getColorChipByGameType(
-              //   getTypeGamePathFolder(gameData)
-              // )}
             />
           )
       }
@@ -136,7 +125,7 @@ export default function GameLobby() {
   const renderFormBuyItem = () => {
     if (!gameData) return null
     switch (getTypeGamePathFolder(gameData)) {
-      case "story-mode-games":
+      case "story-mode":
         return (
           <Box
             component="div"
@@ -163,8 +152,8 @@ export default function GameLobby() {
           </Box>
         )
 
-      case "free-to-play-games":
-      case "free-to-earn-games":
+      case "free-to-play":
+      case "free-to-earn":
         return (
           <Box
             component="div"
@@ -185,7 +174,7 @@ export default function GameLobby() {
             >
               <ButtonGame
                 textButton={t("join-game")}
-                url={`/${getTypeGamePathFolder(gameData)}-games/${
+                url={`/${getTypeGamePathFolder(gameData)}/${
                   gameData.path
                 }${isRedirectRoomlist(gameData).toString()}`}
               />

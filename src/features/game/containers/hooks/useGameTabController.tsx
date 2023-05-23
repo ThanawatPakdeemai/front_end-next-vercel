@@ -30,8 +30,8 @@ const useGameTabController = (gameType: IGetType, gameId: string) => {
     component?: React.ReactNode
   } =
     gameData &&
-    (getTypeGamePathFolder(gameData) === "free-to-play-games" ||
-      getTypeGamePathFolder(gameData) === "story-mode-games")
+    (getTypeGamePathFolder(gameData) === "free-to-play" ||
+      getTypeGamePathFolder(gameData) === "story-mode")
       ? ({} as {
           id: string
           label: string

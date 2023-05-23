@@ -8,29 +8,25 @@ import BannerSlide from "@feature/slider/components/templates/BannerSlide"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 import { F2PHeaderMenu, P2EHeaderMenu } from "@constants/gameSlide"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
-import {
-  getGameTypeF2EByTitleClicked,
-  getGameTypeP2EByTitleClicked
-} from "@feature/page/homePage"
 import useGlobal from "@hooks/useGlobal"
 
 const HomeMobile = () => {
   const [f2pGame, setF2PGame] = useState<IGame[]>()
-  const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-earn-games")
+  const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-earn")
 
   const [p2eGame, setP2EGame] = useState<IGame[]>()
-  const [p2eCurType, setP2ECurType] = useState<IGetType>("play-to-earn-games")
+  const [p2eCurType, setP2ECurType] = useState<IGetType>("play-to-earn")
 
   const { isFreeToEarnGame, limit } = useGlobal()
 
   const { gameFilter: dataF2pGames, loadingFilterGame: loadingDataF2pGames } =
     useGamePageListController(
-      getGameTypeF2EByTitleClicked(f2pCurType),
+      f2pCurType,
       "all",
-      p2eCurType === "story-mode-games" ? limit : 9999
+      p2eCurType === "story-mode" ? limit : 9999
     )
   const { gameFilter: dataP2eGame, loadingFilterGame: loadingDataP2eGame } =
-    useGamePageListController(getGameTypeP2EByTitleClicked(p2eCurType))
+    useGamePageListController(p2eCurType)
 
   useEffect(() => {
     let load = false
@@ -74,7 +70,7 @@ const HomeMobile = () => {
               <GameCarousel
                 menu={F2PHeaderMenu}
                 list={
-                  f2pCurType === "free-to-earn-games"
+                  f2pCurType === "free-to-earn"
                     ? f2pGame?.filter((item: IGame) => isFreeToEarnGame(item))
                     : f2pGame
                 }

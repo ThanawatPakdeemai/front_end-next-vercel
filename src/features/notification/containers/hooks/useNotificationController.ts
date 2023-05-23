@@ -84,10 +84,9 @@ const useNotificationController = () => {
     if (playerId) {
       setPlayHistoryItem({} as IHistory)
       setNotificationItem(notification)
-      // TODO: Ask backend to return game_mode as well
       router.push(
         `/${validTypeGames.find((res) =>
-          res.includes(notification.game_mode || "play-to-earn-games")
+          res.includes(notification.game_mode || "play-to-earn")
         )}/${notification.path}/${notification.type
           .toLocaleLowerCase()
           .replaceAll("_", "-")}/${notification._id}`

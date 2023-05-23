@@ -62,7 +62,7 @@ export const GetCustomMeta = (): PageMeta => {
         image: "/ng.png"
       }
 
-    case "play-to-earn-games":
+    case "play-to-earn":
       return {
         title: "Nakamoto Games - Full List of Play to Earn Games",
         description:

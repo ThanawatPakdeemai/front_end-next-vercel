@@ -2,7 +2,7 @@ export const NAKA_GAME = [
   {
     label: "PLAY TO EARN",
     id: 0,
-    game: [{ name: "Play To Earn Mode", path: "/play-to-earn-games" }]
+    game: [{ name: "Play To Earn Mode", path: "/play-to-earn" }]
   },
   {
     label: "FREE TO PLAY",
@@ -10,7 +10,7 @@ export const NAKA_GAME = [
     game: [
       {
         name: "Free To Play Games",
-        path: "/free-to-play-games"
+        path: "/free-to-play"
       }
     ]
   },
@@ -20,7 +20,7 @@ export const NAKA_GAME = [
     game: [
       {
         name: "Story Mode Games",
-        path: "/story-mode-games"
+        path: "/story-mode"
       }
     ]
   },

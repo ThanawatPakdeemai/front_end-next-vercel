@@ -55,7 +55,7 @@ const StoryModeGamesPage = () => {
                 setCooldown={setCooldown}
                 href={gameLink(game)}
                 onHandleClick={() => onSetGameStore(game)}
-                gameType="story-mode-games"
+                gameType="story-mode"
                 play_total_count={game?.play_total_count}
               />
             ))}

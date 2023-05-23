@@ -11,7 +11,7 @@ import { IPlayToEarnRewardData } from "@src/types/games"
 import { INFTInfo } from "../marketplace/interfaces/IArcGameService"
 import { IPartnerGameData } from "./IPartnerGame"
 
-export type TGameType = "singleplayer" | "multiplayer" | "storymode"
+export type TGameType = "singleplayer" | "multiplayer" | "storymode" | "all"
 
 export type TTypeCode =
   | "single_01"
@@ -23,10 +23,13 @@ export type TTypeCode =
 
 export type IGetType =
   | "play-to-earn-games"
+  | "play-to-earn"
   | "free-to-play-games"
   | "free-to-earn-games"
+  | "free-to-play"
   | "story-mode-games"
   | "storymode"
+  | "story-mode"
   | "must-try"
   | "hot-game"
   | "partner-game"
@@ -66,6 +69,7 @@ export interface IGamePayload {
   device?: string
   nftgame?: string
   game_type: IGetType
+  game_mode?: TGameType
 }
 
 export interface IGameHowTo {
@@ -140,7 +144,7 @@ export interface IGameRoomList {
   game_id: string
   game_name: string
   game_path: string
-  game_type: string
+  game_type: TGameType
   game_type_code: string
   game_url: string
   image_category_list: string
@@ -282,7 +286,7 @@ export interface IGameFav {
   version: string
   developer: string
   category: ICategory
-  game_type: string
+  game_type: TGameType
   type_code: string
   game_url: string
   path: string
@@ -594,7 +598,8 @@ export interface IFilterGamesByKey {
   category?: string | string[]
   item?: string | string[]
   device?: string
-  game_type?: IGetType
+  game_type?: TGameType
+  game_mode?: IGetType
   tournament?: boolean
   nftgame?: boolean | string
 }

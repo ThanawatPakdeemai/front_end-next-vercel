@@ -25,7 +25,7 @@ const ArcadeEmporiumGamesPage = () => {
     pager,
     setLimit,
     onSetGameStore
-  } = useGamePageListController()
+  } = useGamePageListController("arcade-emporium", "all")
   // const { getTypeGamePathFolder } = useGlobal()
 
   return (

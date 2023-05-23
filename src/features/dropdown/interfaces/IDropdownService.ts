@@ -65,6 +65,7 @@ export interface IFilterGames {
   item: string
   device: string
   game_type: string
+  game_mode: string
   tournament: boolean
   nftgame: string
 }

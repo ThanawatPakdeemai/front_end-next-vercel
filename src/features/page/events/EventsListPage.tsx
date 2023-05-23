@@ -61,8 +61,8 @@ const EventsListPage = () => {
   }, [eventListData, isPreviousData, page, queryClient, type, limit])
 
   return (
-    <>
-      <div className="mb-6 flex w-full gap-6">
+    <div className="blog-list-page w-full">
+      <div className="mb-6 grid grid-cols-5 gap-x-2 gap-y-4">
         {eventListData
           ? eventListData.data.map((item: IGetEventResponseData) => (
               <EventsCard
@@ -79,15 +79,13 @@ const EventsListPage = () => {
             ))
           : [...Array(limit)].map(() => <SkeletonCard key={uuid()} />)}
       </div>
-      {eventListData && eventListData.data.length > 0 && (
-        <PaginationNaka
-          totalCount={totalCount}
-          limit={limit}
-          page={page}
-          setPage={setPage}
-        />
-      )}
-    </>
+      <PaginationNaka
+        totalCount={totalCount}
+        limit={limit}
+        page={page}
+        setPage={setPage}
+      />
+    </div>
   )
 }
 

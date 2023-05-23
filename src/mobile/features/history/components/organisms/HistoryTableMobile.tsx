@@ -44,19 +44,15 @@ const HistoryTableMobile = () => {
             player_id: profile && profile.id ? profile.id : "",
             limit,
             skip
-          }).then((res: any) => {
+          }).then((res) => {
             if (res.data && res.data.length > 0) {
               // res.status === 200 -> ok
               setHxHistory(res.data)
               setPlaytoearn(
-                res.data.filter(
-                  (data: any) => data.game_mode === "play-to-earn"
-                )
+                res.data.filter((data) => data.game_mode === "play-to-earn")
               )
               setFreetoplay(
-                res.data.filter(
-                  (data: IHistory) => data.game_mode === "free-to-play"
-                )
+                res.data.filter((data) => data.game_mode === "free-to-play")
               )
             }
             if (res.info) {

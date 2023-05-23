@@ -12,6 +12,7 @@ const BannerSingle = ({ src, alt }: IProp) => (
     className="relative mb-3 flex h-[60px] flex-row items-center overflow-hidden rounded-sm border-[1px] border-neutral-800 bg-primary-main uppercase sm:h-[180px] sm:rounded-[24px]"
     sx={{
       "picture": {
+        width: "100%",
         height: "100%"
       }
     }}

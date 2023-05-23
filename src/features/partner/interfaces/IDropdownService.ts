@@ -1,4 +1,4 @@
-import { IGame } from "@feature/game/interfaces/IGameService"
+import { IGame, TGameType } from "@feature/game/interfaces/IGameService"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { ICURRENCY } from "@interfaces/ICurrency"
 
@@ -64,7 +64,7 @@ export interface IFilterGames {
   category: string
   item: string
   device: string
-  game_type: string
+  game_type: TGameType
   tournament: boolean
   nftgame: string
 }

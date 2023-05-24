@@ -102,7 +102,6 @@ export default function GameLobby() {
   }, [gameData, onSetGameData])
 
   const getTemplateLobby = () => {
-    // FIXME Boy code ตรงนี้ยังไม่ดีคควรเขียนใหม่
     if (gameData) {
       switch (gameData.game_type) {
         default:

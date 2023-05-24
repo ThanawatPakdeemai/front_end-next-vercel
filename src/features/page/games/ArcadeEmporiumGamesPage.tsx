@@ -26,7 +26,6 @@ const ArcadeEmporiumGamesPage = () => {
     setLimit,
     onSetGameStore
   } = useGamePageListController("arcade-emporium", "all")
-  // const { getTypeGamePathFolder } = useGlobal()
 
   return (
     <div className="flex flex-col">

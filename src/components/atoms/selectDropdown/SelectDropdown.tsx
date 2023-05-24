@@ -5,7 +5,8 @@ import {
   IDevice,
   IDropdownAll,
   IGameCategory,
-  IGameItem
+  IGameItem,
+  IGameType
 } from "@feature/dropdown/interfaces/IDropdownService"
 import { IMenuBase } from "@interfaces/IMenu"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
@@ -26,11 +27,13 @@ interface IProp {
     | IGameCategory[]
     | IGameItem[]
     | IDevice[]
+    | IGameType[]
     | IMenuBase[]
     | IGameItemListData[]
     | ICURRENCY[]
     | IList[]
   setOnTitle?: (_value: IDropdownAll) => void
+  setOnTitleGameType?: (_value: IGameType) => void
   setExpanded?: (_value: boolean) => void
   title?: IDropdownCustomSelect
   icon?: string | React.ReactElement
@@ -42,6 +45,7 @@ const SelectDropdown = ({
   className,
   details,
   setOnTitle,
+  setOnTitleGameType,
   setExpanded,
   title,
   icon,
@@ -151,6 +155,12 @@ const SelectDropdown = ({
             }
             if (setOnTitle) {
               setOnTitle(item)
+              if (setExpanded) {
+                setExpanded(false)
+              }
+            }
+            if (setOnTitleGameType) {
+              setOnTitleGameType(item)
               if (setExpanded) {
                 setExpanded(false)
               }

@@ -58,6 +58,16 @@ const HeadGames = ({ children }: { children: React.ReactNode }) => {
         <Grid
           item
           xs={3}
+          className="max-w-full"
+        >
+          <Dropdown
+            title="All Game Types"
+            className={responsiveStyle}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={3}
           className="hidden 2xl:block"
         />
         <Grid

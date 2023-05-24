@@ -33,12 +33,12 @@ const CardContentSlide = ({ slide }: ICardContentSlide) => {
     {
       id: "2",
       name: slide.game_free_status ? "Free" : "",
-      link: `/free-to-play-games`
+      link: `/free-to-play`
     },
     {
       id: "3",
       name: slide.hot_game_status ? "Hot" : "",
-      link: `/play-to-earn-games`
+      link: `/play-to-earn`
     }
   )
 

@@ -91,7 +91,7 @@ export default function ArcadeEmporiumGameDetails() {
   const renderFormBuyItem = () => {
     if (!gameData) return null
     switch (getTypeGamePathFolder(gameData)) {
-      case "story-mode-games":
+      case "story-mode":
         return (
           <Box
             component="div"
@@ -122,8 +122,8 @@ export default function ArcadeEmporiumGameDetails() {
           </Box>
         )
 
-      case "free-to-play-games":
-      case "free-to-earn-games":
+      case "free-to-play":
+      case "free-to-earn":
         return (
           <Box
             component="div"

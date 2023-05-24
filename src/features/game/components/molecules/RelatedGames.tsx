@@ -14,7 +14,7 @@ interface IProps {
 
 const ReleatedGames = ({ _gameMode }: IProps) => {
   const [gamesByType, setgamesByType] = useState<IGame[]>()
-  const [curType] = useState<IGetType>("free-to-play-games")
+  const [curType] = useState<IGetType>("free-to-play")
   const { page, setPage } = useGlobal()
 
   const { data: _gamesData, isFetching } = useGamesByTypes({

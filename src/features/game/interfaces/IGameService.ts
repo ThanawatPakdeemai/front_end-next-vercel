@@ -22,14 +22,11 @@ export type TTypeCode =
   | "survival_01"
 
 export type IGetType =
-  | "play-to-earn-games"
   | "play-to-earn"
-  | "free-to-play-games"
-  | "free-to-earn-games"
   | "free-to-play"
-  | "story-mode-games"
-  | "storymode"
+  | "free-to-earn"
   | "story-mode"
+  | "storymode"
   | "must-try"
   | "hot-game"
   | "partner-game"
@@ -38,8 +35,6 @@ export type IGetType =
   | "nft-game"
   | "all"
   | "on-playing"
-
-export type TGameFree = "free-to-play" | "free-to-earn"
 
 export type TRoomStatus =
   | "playing"

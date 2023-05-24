@@ -136,7 +136,7 @@ const GameRoomList = () => {
 
   const renderRoomName = (): string => {
     if (!gameData) return "Room"
-    if (gameData && getTypeGamePathFolder(gameData) === "play-to-earn-games") {
+    if (gameData && getTypeGamePathFolder(gameData) === "play-to-earn") {
       return `Room ${itemSelected?.item_size}`
     }
     return "Room"

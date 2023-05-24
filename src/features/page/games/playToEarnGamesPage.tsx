@@ -45,18 +45,16 @@ const PlayToEarnGamesPage = () => {
                 key={game.id}
                 menu={P2EHeaderMenu}
                 data={game}
+                href={`/${game.is_NFT ? "arcade-emporium" : "play-to-earn"}/${
+                  game.path
+                }`}
                 classNameImage={
                   gameFilter.length > 3
                     ? "h-40 w-40"
                     : "h-[6.875rem] w-[6.875rem]"
                 }
-                href={`/${
-                  game.is_NFT ? "arcade-emporium" : "play-to-earn-games"
-                }/${game.path}`}
                 onHandleClick={() => onSetGameStore(game)}
-                gameType={
-                  game.is_NFT ? "arcade-emporium" : "play-to-earn-games"
-                }
+                gameType={game.is_NFT ? "arcade-emporium" : "play-to-earn"}
                 room_available={game.game_room_available}
               />
             ))}

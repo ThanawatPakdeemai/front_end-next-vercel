@@ -19,7 +19,7 @@ const OnPlaying = () => {
       if (gamesAvailble) {
         const data = gamesAvailble?.filter((ele) => ele?.data?.length > 0)
         const combline: IRoomAvaliableData[] = []
-        if (p2eCurType === "free-to-play-games") {
+        if (p2eCurType === "free-to-play") {
           data
             .filter((ele) => ele.chanel_type === "free2play")
             .map((elem) => combline.push(...elem.data))

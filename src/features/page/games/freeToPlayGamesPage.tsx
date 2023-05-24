@@ -29,7 +29,7 @@ const FreeToPlayGamesPage = () => {
     staminaRecovery,
     cooldown,
     setCooldown
-  } = useGamePageListController("free-to-play-games")
+  } = useGamePageListController("free-to-play")
   const { getTypeGamePathFolder } = useGlobal()
 
   const [f2pGame, setF2PGame] = useState<IGame[]>()

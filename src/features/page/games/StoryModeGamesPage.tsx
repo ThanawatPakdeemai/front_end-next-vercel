@@ -27,7 +27,7 @@ const StoryModeGamesPage = () => {
     gameLink,
     pager,
     setLimit
-  } = useGamePageListController("storymode")
+  } = useGamePageListController("story-mode", "storymode")
 
   return (
     <div className="flex flex-col">
@@ -55,7 +55,7 @@ const StoryModeGamesPage = () => {
                 setCooldown={setCooldown}
                 href={gameLink(game)}
                 onHandleClick={() => onSetGameStore(game)}
-                gameType="story-mode-games"
+                gameType="story-mode"
                 play_total_count={game?.play_total_count}
               />
             ))}

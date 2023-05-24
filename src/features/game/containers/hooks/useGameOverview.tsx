@@ -461,7 +461,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   const getPlayingCount = (): number | undefined => {
     if (gameDataState && "game_type" in gameDataState) {
       switch (gameType) {
-        case "story-mode-games":
+        case "story-mode":
           // console.log(gameDataState.play_total_count) sometime data is Array
           return typeof gameDataState?.play_total_count === "number"
             ? gameDataState?.play_total_count

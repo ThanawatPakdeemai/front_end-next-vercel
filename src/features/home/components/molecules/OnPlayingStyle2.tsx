@@ -97,18 +97,6 @@ const OnPlayingStyle2 = ({
     )
   }
 
-  // TODO: Open after launch V2
-  /* const getURL = (_gameType: string): IGetType => {
-    // _gameType is chanel_type from api
-    if (_gameType === "free2play") {
-      return "free-to-play-games"
-    }
-    if (_gameType === "survivor") {
-      return "play-to-earn-games"
-    }
-    return "play-to-earn-games"
-  } */
-
   return (
     <div className="on-playing__content">
       {gamesAvailble && gamesAvailble.length > 0 && !isLoading ? (

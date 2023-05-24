@@ -1,5 +1,6 @@
 import useRoomSingle from "@feature/game/containers/hooks/useRoomSingle"
-import Preload from "@src/mobile/components/atoms/Preload"
+// import Preload from "@src/mobile/components/atoms/Preload"
+import RoomListSkeleton from "@mobile/components/atoms/skelaton/RoomListSkeleton"
 import ListJoinGame from "../../molecules/ListJoinGame"
 
 const SingleRoom = () => {
@@ -33,7 +34,7 @@ const SingleRoom = () => {
                   gameData.game_mode === "free-to-earn"
                     ? ""
                     : `${itemSelected?.name || ""} ${
-                        `/ ${itemSelected?.item_size}` || ""
+                        `/${itemSelected?.item_size}` || ""
                       }`
                 }
                 descChip2={`${item.amount_current_player} / ${item.max_players}`}
@@ -41,7 +42,7 @@ const SingleRoom = () => {
             ))}
         </>
       ) : (
-        <Preload />
+        <RoomListSkeleton />
       )}
     </>
   )

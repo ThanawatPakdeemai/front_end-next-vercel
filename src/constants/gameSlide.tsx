@@ -181,7 +181,7 @@ const p2eMenu: ISlideList[] = [
   {
     id: "11",
     label: "Hot Games",
-    type: "play-to-earn-games"
+    type: "play-to-earn"
   },
   {
     id: "12",
@@ -206,13 +206,13 @@ const onPlayingMenu: ISlideList[] = [
   {
     id: "14",
     label: "Play to earn",
-    type: "play-to-earn-games",
+    type: "play-to-earn",
     className: "w-[110px]"
   },
   {
     id: "13",
     label: "Free to play",
-    type: "free-to-play-games",
+    type: "free-to-play",
     className: "w-[110px]"
   }
 ]
@@ -275,19 +275,19 @@ export const onPlayingHeaderMenu: IHeaderSlide = {
 
 const f2pMenu: ISlideList[] = [
   {
-    id: "free-to-earn-games",
+    id: "free-to-earn",
     label: "Free To Earn",
-    type: "free-to-earn-games"
+    type: "free-to-earn"
   },
   {
-    id: "free-to-play-games",
+    id: "free-to-play",
     label: "Free To Play",
-    type: "free-to-play-games"
+    type: "free-to-play"
   },
   {
-    id: "story-mode-games",
+    id: "story-mode",
     label: "Story Mode",
-    type: "story-mode-games"
+    type: "story-mode"
   }
   // unnessesary use
   // {

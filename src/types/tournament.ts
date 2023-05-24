@@ -1,4 +1,5 @@
 /* eslint-disable no-use-before-define */
+import { TGameType } from "@feature/game/interfaces/IGameService"
 import { IGame, IGameItem } from "./games"
 
 type ITournamentType = "play_for_all" | "tree_match"
@@ -102,7 +103,7 @@ export interface ITournamentGames {
   _id: string
   name: string
   is_active: boolean
-  game_type: string
+  game_type: TGameType
 }
 
 export interface ITournamentRound {

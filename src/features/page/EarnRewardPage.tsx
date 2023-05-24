@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import CheckMarkIcon from "@components/icons/CheckMarkIcon"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import ItemRewardDetails from "@feature/game/containers/components/molecules/ItemRewardDetails"
@@ -18,12 +17,13 @@ import NoData from "@components/molecules/NoData"
 const EarnRewardPage = () => {
   const { profile } = useProfileStore()
   const [rewardList, setRewardList] = useState<IPlayToEarnRewardData[]>([])
-  const { allGameData, isLoading: isGameLoading } = useGetAllGames()
+  const { allGameData } = useGetAllGames()
   const [isLoadingReward, setIsLoadingReward] = useState(true)
   const { mutateClaimReward } = useClaimReward()
   const { t } = useTranslation()
-  const { earnRewardData, refetchRewardData, isLoading } =
-    useGetP2ERewardByPlayerId(profile.data ? profile.data.id : "")
+  const { earnRewardData, refetchRewardData } = useGetP2ERewardByPlayerId(
+    profile.data ? profile.data.id : ""
+  )
   // useGetP2ERewardByPlayerId("61bc7f6be434487ef8e4a7c6")
 
   const { successToast, errorToast, warnToast } = useToast()
@@ -98,7 +98,6 @@ const EarnRewardPage = () => {
   }, [allGameData, earnRewardData, earnRewardData])
 
   let content: React.ReactElement | React.ReactElement[]
-  console.log("isLoading", isLoading, isGameLoading)
 
   if (isLoadingReward) {
     content = <SkeletonDetails />
@@ -117,7 +116,6 @@ const EarnRewardPage = () => {
       </div>
     )
   }
-  console.log("test-rewardList", rewardList)
   return (
     <div className="grid max-w-[678px] gap-10">
       <div className="mt-6 flex items-center justify-end md:mt-0">

@@ -56,7 +56,7 @@ const HeadMenuMobile = () => {
               )}
             </Link>
             <Link
-              href="/play-to-earn-games"
+              href="/play-to-earn"
               className="static"
             >
               <SportsEsportsIcon sx={{ fontSize: 30 }} />

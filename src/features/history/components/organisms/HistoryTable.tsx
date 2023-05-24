@@ -146,7 +146,7 @@ const HistoryTable = () => {
                             className="history--gameType"
                           >
                             {/* //TODO: Refactor this game type */}
-                            {row.game_mode === "play-to-earn-games" ? (
+                            {row.game_mode === "play-to-earn" ? (
                               <Chip
                                 label={row.game_mode
                                   .split("-")

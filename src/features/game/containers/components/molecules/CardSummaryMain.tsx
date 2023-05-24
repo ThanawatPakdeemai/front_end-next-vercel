@@ -6,7 +6,6 @@ import { Typography } from "@mui/material"
 import Helper from "@utils/helper"
 import dayjs from "dayjs"
 import React from "react"
-import { MobileView } from "react-device-detect"
 
 interface IGameCardSummaryMainProps {
   title?: string
@@ -25,33 +24,31 @@ const CardSummaryMain = ({
 }: IGameCardSummaryMainProps) => (
   <>
     {isMobile ? (
-      <MobileView>
-        <div className="mt-4 flex w-full  flex-col items-center justify-center text-error-main">
-          <TableIcon className="absolute z-[1] block" />
-          <span className="mb-4 text-sm font-bold uppercase">{title}</span>
-          <span className="text-neon font-mondwest text-[50px] ">
-            {value &&
-              Helper.formatNumber(value, {
-                maximumFractionDigits: 4
-              })}
-            ✨
-          </span>
-          {gameURLtoShare && (
-            <div className="my-2 flex w-full  flex-col items-center justify-center ">
-              <span className="mb-1 text-xs font-bold uppercase ">
-                Send to friends
-              </span>
-              <div className="flex">
-                <SocialShare
-                  variant="large"
-                  shareTitle={gameName || "Nanamoto.games"}
-                  shareURL={gameURLtoShare}
-                />
-              </div>
+      <div className="relative mt-4 flex w-full  flex-col items-center justify-center text-error-main">
+        <TableIcon className="absolute z-[1] block w-full" />
+        <span className="mb-4 text-sm font-bold uppercase">{title}</span>
+        <span className="text-neon font-mondwest text-[50px] ">
+          {value &&
+            Helper.formatNumber(value, {
+              maximumFractionDigits: 4
+            })}
+          ✨
+        </span>
+        {gameURLtoShare && (
+          <div className="my-2 flex w-full  flex-col items-center justify-center ">
+            <span className="mb-1 text-xs font-bold uppercase ">
+              Send to friends
+            </span>
+            <div className="flex">
+              <SocialShare
+                variant="large"
+                shareTitle={gameName || "Nanamoto.games"}
+                shareURL={gameURLtoShare}
+              />
             </div>
-          )}
-        </div>
-      </MobileView>
+          </div>
+        )}
+      </div>
     ) : (
       <div className="m-[10px] flex flex-row ">
         <Typography

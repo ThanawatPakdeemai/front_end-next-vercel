@@ -1,4 +1,4 @@
-import { TRoomStatus } from "@feature/game/interfaces/IGameService"
+import { TGameType, TRoomStatus } from "@feature/game/interfaces/IGameService"
 
 // Game all response
 export interface IGameAllResponse {
@@ -32,7 +32,7 @@ export interface IGame {
   developer: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   category: any // ICategory
-  game_type: string
+  game_type: TGameType
   type_code: string
   game_url: string
   path: string

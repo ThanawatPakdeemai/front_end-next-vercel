@@ -9,12 +9,12 @@ import useGlobal from "@hooks/useGlobal"
 import GameCard from "./GameCard"
 
 interface IProps {
-  _gameType: IGetType
+  _gameMode: IGetType
 }
 
-const ReleatedGames = ({ _gameType }: IProps) => {
+const ReleatedGames = ({ _gameMode }: IProps) => {
   const [gamesByType, setgamesByType] = useState<IGame[]>()
-  const [curType] = useState<IGetType>("free-to-play-games")
+  const [curType] = useState<IGetType>("free-to-play")
   const { page, setPage } = useGlobal()
 
   const { data: _gamesData, isFetching } = useGamesByTypes({
@@ -27,7 +27,7 @@ const ReleatedGames = ({ _gameType }: IProps) => {
     let load = false
     if (!load) {
       // FIXME -  บัค ลูป API game{type} ปิดไว้ก่อนนะ
-      // setCurType(_gameType)
+      // setCurType(_gameMode)
       setgamesByType(_gamesData?.data)
       setPage(Math.floor(Math.random() * 3) + 1)
     }

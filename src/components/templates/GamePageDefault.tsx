@@ -16,7 +16,6 @@ import Howto from "@components/molecules/HowToPlay"
 import { Box } from "@mui/material"
 import { useTranslation } from "react-i18next"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
-import { MobileView } from "react-device-detect"
 import LikeNoLobby from "@components/molecules/LikeNoLobby"
 import InvestIcon from "@components/icons/Stats/InvestIcon"
 import PlayersIcon from "@components/icons/Stats/PlayersIcon"
@@ -82,15 +81,15 @@ const GamePageDefault = ({
     if (!gameData) return null
 
     switch (getTypeGamePathFolder(gameData as IGame)) {
-      case "story-mode-games":
-      case "free-to-play-games":
-      case "free-to-earn-games":
+      case "story-mode":
+      case "free-to-play":
+      case "free-to-earn":
         return null
       default:
         return (
           <div className="game-page-default w-full">
             {isMobile ? (
-              <MobileView>
+              <>
                 <Box component="section">
                   <Tagline
                     bgColor="bg-neutral-800"
@@ -210,7 +209,7 @@ const GamePageDefault = ({
                     </div>
                   </div>
                 </Box>
-              </MobileView>
+              </>
             ) : (
               <Box component="section">
                 <div className="flex flex-wrap gap-3 xl:flex-row xl:flex-nowrap">
@@ -308,19 +307,19 @@ const GamePageDefault = ({
   }, [stateProfile])
 
   return (
-    <div className="game-page-default">
+    <div className="game-page-default w-full">
       {isMobile ? (
-        <MobileView>
+        <>
           {gameData && (
             <>
-              {router?.asPath?.includes("/summary") ? (
+              {router?.pathname !== "/[typeGame]/[GameHome]" ? (
                 <GameSummaryLayout
                   data={gameData as IGame}
                   gameId={gameData.id}
                   gameType={
                     router.asPath.includes("arcade-emporium")
                       ? "arcade-emporium"
-                      : "play-to-earn-games"
+                      : "play-to-earn"
                   }
                 />
               ) : (
@@ -330,13 +329,13 @@ const GamePageDefault = ({
                   gameType={
                     router.asPath.includes("arcade-emporium")
                       ? "arcade-emporium"
-                      : "play-to-earn-games"
+                      : "play-to-earn"
                   }
                 />
               )}
             </>
           )}
-        </MobileView>
+        </>
       ) : (
         <div className={containerClasses}>
           <Header />

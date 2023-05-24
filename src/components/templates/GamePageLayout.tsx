@@ -26,9 +26,9 @@ const GamePageLayout = ({
           <div className="main-container mx-auto px-2 ">
             <div className="grid h-full w-full grid-cols-2 content-center justify-items-center text-xs">
               <Link
-                href="/play-to-earn-games"
+                href="/play-to-earn"
                 className={`flex w-full items-center justify-center p-2 ${
-                  router.pathname === "/play-to-earn-games"
+                  router.pathname === "/play-to-earn"
                     ? "bg-black-100 text-white-default"
                     : "bg-neutral-800 text-neutral-500"
                 }`}
@@ -36,9 +36,9 @@ const GamePageLayout = ({
                 Play to earn
               </Link>
               <Link
-                href="/free-to-play-games"
+                href="/free-to-play"
                 className={`flex w-full items-center justify-center p-2 ${
-                  router.pathname === "/free-to-play-games"
+                  router.pathname === "/free-to-play"
                     ? "bg-black-100 text-white-default"
                     : "bg-neutral-800 text-neutral-500"
                 }`}
@@ -46,7 +46,7 @@ const GamePageLayout = ({
                 Free to play{" "}
                 <div
                   className={`ml-4 rounded border border-neutral-700 px-1 py-[1px] uppercase ${
-                    router.pathname === "/free-to-play-games"
+                    router.pathname === "/free-to-play"
                       ? "bg-error-main text-white-default"
                       : "bg-black-100 text-neutral-500"
                   }`}
@@ -56,9 +56,9 @@ const GamePageLayout = ({
                 </div>
               </Link>
               <Link
-                href="/story-mode-games"
+                href="/story-mode"
                 className={`flex w-full items-center justify-center p-2 ${
-                  router.pathname === "/story-mode-games"
+                  router.pathname === "/story-mode"
                     ? "bg-black-100 text-white-default"
                     : "bg-neutral-800 text-neutral-500"
                 }`}
@@ -66,7 +66,7 @@ const GamePageLayout = ({
                 Story mode games{" "}
                 <div
                   className={`ml-4 rounded border border-neutral-700 px-1 py-[1px] uppercase ${
-                    router.pathname === "/story-mode-games"
+                    router.pathname === "/story-mode"
                       ? "bg-error-main text-white-default"
                       : "bg-black-100 text-neutral-500"
                   }`}
@@ -89,7 +89,6 @@ const GamePageLayout = ({
             <div className="flex-row gap-3 md:flex">
               <HeadGames>{children}</HeadGames>
             </div>
-            <Footer />
           </div>
           <header className="header fixed inset-x-0 bottom-4 z-[999] ">
             <Box

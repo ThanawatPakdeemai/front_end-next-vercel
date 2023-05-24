@@ -41,36 +41,11 @@ import { useTranslation } from "react-i18next"
 import OnPlayingStyle2 from "@feature/home/components/molecules/OnPlayingStyle2"
 import HomeMobile from "@mobile/features/pages/HomeMobile"
 
-export const getGameTypeF2EByTitleClicked = (f2pCurType): IGetType => {
-  switch (f2pCurType) {
-    case "free-to-earn-games":
-      return "free-to-play-games"
-    case "story-mode-games":
-      return "storymode"
-    default:
-      return f2pCurType
-  }
-}
-
-export const getGameTypeP2EByTitleClicked = (p2eCurType): IGetType => {
-  switch (p2eCurType) {
-    case "arcade-emporium":
-      return "arcade-emporium"
-    default:
-      return "play-to-earn-games"
-  }
-}
 const Home = () => {
-  // const limit = 10
   const { profile } = useProfileStore()
   const { clearQuestStore, setOpen, hasCompleted } = useQuestStore()
-  const {
-    hydrated,
-    isFreeToEarnGame,
-    isFreeToPlayGame,
-    isStoryModeGame,
-    limit
-  } = useGlobal()
+  const { hydrated, isFreeToEarnGame, isFreeToPlayGame, isStoryModeGame } =
+    useGlobal()
   const [openSwap, setOpenSwap] = useState(false)
   const { t } = useTranslation()
 
@@ -99,19 +74,16 @@ const Home = () => {
   const [f2pGame, setF2PGame] = useState<IGame[]>()
   const [f2eGame, setF2EGame] = useState<IGame[]>()
   const [storyModeGame, setStoryModeGame] = useState<IGame[]>()
-  const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-earn-games")
+  const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-earn")
 
   const [p2eGame, setP2EGame] = useState<IGame[]>()
-  const [p2eCurType, setP2ECurType] = useState<IGetType>("play-to-earn-games")
+  const [p2eCurType, setP2ECurType] = useState<IGetType>("play-to-earn")
 
   // const { hotGameData } = useGetHotGames()
   const { gameFilter: dataF2pGames, loadingFilterGame: loadingDataF2pGames } =
-    useGamePageListController(
-      getGameTypeF2EByTitleClicked(f2pCurType),
-      p2eCurType === "story-mode-games" ? limit : 9999
-    )
+    useGamePageListController(f2pCurType)
   const { gameFilter: dataP2eGame, loadingFilterGame: loadingDataP2eGame } =
-    useGamePageListController(getGameTypeP2EByTitleClicked(p2eCurType))
+    useGamePageListController(p2eCurType)
 
   useEffect(() => {
     let load = false
@@ -135,12 +107,8 @@ const Home = () => {
     return () => {
       load = true
     }
-    // TODO - Boy check loop setState
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    // isFreeToEarnGame,
-    // isFreeToPlayGame,
-    // isStoryModeGame,
     dataF2pGames,
     f2pCurType,
     p2eCurType,
@@ -266,9 +234,9 @@ const Home = () => {
               <GameCarousel
                 menu={F2PHeaderMenu}
                 list={
-                  f2pCurType === "free-to-earn-games"
+                  f2pCurType === "free-to-earn"
                     ? f2eGame
-                    : f2pCurType === "story-mode-games"
+                    : f2pCurType === "story-mode"
                     ? storyModeGame
                     : f2pGame
                 }

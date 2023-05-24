@@ -7,7 +7,6 @@ import { RightMenu } from "@components/molecules/rightMenu"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import RightMenuDeveloper from "@components/molecules/rightMenu/RightMenuDeveloper"
 import HeadMenuMobile from "@mobile/components/organisms/headerMenu/HeadMenuMobile"
-import { MobileView } from "react-device-detect"
 import HeadProfileMobile from "@mobile/components/organisms/headerMenu/HeadProfileMobile"
 // import CONFIGS from "@configs/index"
 import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutateMarketplace"
@@ -98,10 +97,10 @@ const Header = () => {
       )}
 
       {isMobile && (
-        <MobileView>
+        <>
           <HeadProfileMobile />
           <HeadMenuMobile />
-        </MobileView>
+        </>
       )}
     </div>
   )

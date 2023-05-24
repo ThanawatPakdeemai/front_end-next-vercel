@@ -29,7 +29,7 @@ export default function EarnReward() {
     <>
       <article className="flex h-full w-full justify-center">
         {isMobile ? (
-          <MobileView>
+          <MobileView className="mb-[80px]">
             <EarnRewardPageMobile />
           </MobileView>
         ) : (

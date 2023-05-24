@@ -197,11 +197,6 @@ const DropdownCustom = ({ title, className }: IProp) => {
       _id: "multiplayer",
       name: "Multiplayer",
       icon: <MultiPlayerIcon />
-    },
-    {
-      _id: "storymode",
-      name: "Story Mode",
-      icon: <DesktopIcon />
     }
   ]
 

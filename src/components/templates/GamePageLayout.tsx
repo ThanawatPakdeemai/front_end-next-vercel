@@ -89,7 +89,6 @@ const GamePageLayout = ({
             <div className="flex-row gap-3 md:flex">
               <HeadGames>{children}</HeadGames>
             </div>
-            <Footer />
           </div>
           <header className="header fixed inset-x-0 bottom-4 z-[999] ">
             <Box

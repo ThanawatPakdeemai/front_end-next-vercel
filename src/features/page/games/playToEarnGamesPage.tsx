@@ -29,12 +29,10 @@ const PlayToEarnGamesPage = () => {
     <div className="flex flex-col">
       <MobileView className="MobileSlider mb-4">
         <BannerSlide />
-        {!loadingFilterGame && (
-          <div className="mt-4 w-full">
-            <p className="uppercase text-white-default">POPULAR GAMES</p>
-            <BodyCategories games={gameFilter} />
-          </div>
-        )}
+        <div className="mt-4 w-full">
+          <p className="uppercase text-white-default">POPULAR GAMES</p>
+          <BodyCategories games={gameFilter} />
+        </div>
       </MobileView>
       <div className="mx-2 mb-6 grid grid-cols-2 gap-x-4 gap-y-4 md:mx-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {loadingFilterGame

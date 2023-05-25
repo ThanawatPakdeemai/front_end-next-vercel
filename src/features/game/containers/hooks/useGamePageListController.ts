@@ -71,7 +71,9 @@ const useGamePageListController = (
     if (categoryId) {
       return "all"
     }
-    if (!gameMode) return "all"
+    if (!gameMode) {
+      return "all"
+    }
     return gameMode
   }
 

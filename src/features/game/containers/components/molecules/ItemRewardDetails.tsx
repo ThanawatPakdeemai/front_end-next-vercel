@@ -5,6 +5,7 @@ import { IPlayToEarnRewardData } from "@src/types/games"
 import Helper from "@utils/helper"
 import { Image } from "@components/atoms/image"
 import React from "react"
+import { Box } from "@mui/material"
 
 interface IProp {
   rewardData: IPlayToEarnRewardData
@@ -15,7 +16,22 @@ const ItemRewardDetails = ({ rewardData, onClaim }: IProp) =>
   rewardData ? (
     <div className="flex w-full flex-row justify-between rounded-[14px] border border-neutral-800 bg-neutral-780 p-2">
       {/* left */}
-      <div className="flex items-center">
+      <Box
+        component="div"
+        className="flex items-center"
+        sx={{
+          width: "75px",
+          height: "75px",
+          "picture": {
+            width: "100%",
+            height: "100%",
+            img: {
+              width: "100%",
+              height: "100%"
+            }
+          }
+        }}
+      >
         {rewardData.game_image && rewardData.game_name ? (
           <Image
             src={rewardData.game_image}
@@ -27,7 +43,7 @@ const ItemRewardDetails = ({ rewardData, onClaim }: IProp) =>
         ) : (
           <>No Image</>
         )}
-      </div>
+      </Box>
       {/* data */}
       <div className="ml-2 grid w-[336px] grid-cols-3 items-center justify-center gap-[22px] px-5 uppercase">
         <TitleWithChip

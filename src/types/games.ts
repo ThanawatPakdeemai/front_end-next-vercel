@@ -429,10 +429,10 @@ export interface IPlayToEarnRewardData {
   updatedAt: Date
   current_time: Date
   __v: number
-  game_item_name?: string
-  game_item_image?: string
-  game_name?: string
-  game_image?: string
+  game_item_name: string
+  game_item_image: string
+  game_name: string
+  game_image: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

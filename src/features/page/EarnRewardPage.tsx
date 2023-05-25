@@ -3,7 +3,6 @@ import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import ItemRewardDetails from "@feature/game/containers/components/molecules/ItemRewardDetails"
 import SkeletonDetails from "@feature/game/containers/components/molecules/SkeletonDetails"
 import useClaimReward from "@feature/game/containers/hooks/useClaimEarnedRewardByPlayerId"
-import useGetAllGames from "@feature/game/containers/hooks/useGetAllGame"
 import useGetP2ERewardByPlayerId from "@feature/game/containers/hooks/useGetP2ERewardByPlayerId"
 import { useToast } from "@feature/toast/containers"
 import { Chip, Typography, Box } from "@mui/material"
@@ -13,12 +12,19 @@ import React, { useEffect, useState } from "react"
 import { Trans, useTranslation } from "react-i18next"
 import { v4 as uuidv4 } from "uuid"
 import NoData from "@components/molecules/NoData"
+import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 
 const EarnRewardPage = () => {
   const { profile } = useProfileStore()
-  const [rewardList, setRewardList] = useState<IPlayToEarnRewardData[]>([])
-  const { allGameData } = useGetAllGames()
-  const [isLoadingReward, setIsLoadingReward] = useState(true)
+  const [rewardList, setRewardList] = useState<
+    IPlayToEarnRewardData[] | undefined
+  >([])
+  const { gameFilter, loadingFilterGame } = useGamePageListController(
+    "all",
+    "all",
+    9999
+  )
+  // const [isLoadingReward, setIsLoadingReward] = useState(true)
   const { mutateClaimReward } = useClaimReward()
   const { t } = useTranslation()
   const { earnRewardData, refetchRewardData } = useGetP2ERewardByPlayerId(
@@ -37,7 +43,7 @@ const EarnRewardPage = () => {
         _rewardId: reward_id
       })
         .then((res) => {
-          if (res.status) {
+          if (res.status && rewardList) {
             const updateData = rewardList.filter(
               (_item) => _item._id !== reward_id
             )
@@ -60,46 +66,47 @@ const EarnRewardPage = () => {
     let load = false
 
     if (!load) {
-      if (earnRewardData && earnRewardData.data.length > 0) {
-        setRewardList(earnRewardData.data)
-        setIsLoadingReward(false)
-      } else {
-        setRewardList([])
-        setIsLoadingReward(false)
-      }
-      // if (earnRewardData && allGameData && earnRewardData.data.length > 0) {
+      // if (earnRewardData && earnRewardData.data.length > 0) {
+      //   setRewardList(earnRewardData.data)
+      //   setIsLoadingReward(false)
+      // } else {
       //   setRewardList([])
-      //   earnRewardData.data.map(async (item) => {
-      //     const game = allGameData.data.find((data) => data.id === item.game_id)
-      //     if (game) {
-      //       setRewardList((oldArray) => {
-      //         if (oldArray) {
-      //           return [
-      //             ...oldArray,
-      //             {
-      //               ...item,
-      //               game_item_name: game?.item?.[0]?.name,
-      //               game_item_image: game?.item?.[0]?.image,
-      //               game_name: game?.name,
-      //               game_image: game?.image_category_list
-      //             }
-      //           ]
-      //         }
-      //       })
-      //     }
-      //   })
+      //   setIsLoadingReward(false)
       // }
+      // TODO: If backend data is ready comment thsi and use above code
+      if (earnRewardData && gameFilter && earnRewardData.data.length > 0) {
+        setRewardList([])
+        earnRewardData.data.map(async (item) => {
+          const game = gameFilter.find((data) => data.id === item.game_id)
+          if (game) {
+            setRewardList((oldArray) => {
+              if (oldArray) {
+                return [
+                  ...oldArray,
+                  {
+                    ...item,
+                    game_item_name: game.item[0].name,
+                    game_item_image: game.item[0].image,
+                    game_name: game.name,
+                    game_image: game.image_category_list
+                  }
+                ]
+              }
+            })
+          }
+        })
+      }
     }
 
     return () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allGameData, earnRewardData, earnRewardData])
+  }, [earnRewardData, earnRewardData, gameFilter])
 
   let content: React.ReactElement | React.ReactElement[]
 
-  if (isLoadingReward) {
+  if (loadingFilterGame) {
     content = <SkeletonDetails />
   } else if (rewardList && rewardList.length > 0) {
     content = rewardList.map((data) => (

@@ -1,4 +1,5 @@
 import { TGameType, TRoomStatus } from "@feature/game/interfaces/IGameService"
+import { IGameItemList } from "@feature/gameItem/interfaces/IGameItemService"
 
 // Game all response
 export interface IGameAllResponse {
@@ -423,16 +424,11 @@ export interface IPlayToEarnRewardData {
   is_active: boolean
   _id: string
   player_id: string
-  item_id: string
-  game_id: string
+  item_id: IGameItemList
+  game_id: IGame
   createdAt: Date
   updatedAt: Date
   current_time: Date
-  __v: number
-  game_item_name: string
-  game_item_image: string
-  game_name: string
-  game_image: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

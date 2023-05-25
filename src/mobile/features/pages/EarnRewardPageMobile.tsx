@@ -4,7 +4,6 @@ import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import ItemRewardDetails from "@feature/game/containers/components/molecules/ItemRewardDetails"
 import SkeletonDetails from "@feature/game/containers/components/molecules/SkeletonDetails"
 import useClaimReward from "@feature/game/containers/hooks/useClaimEarnedRewardByPlayerId"
-import useGetAllGames from "@feature/game/containers/hooks/useGetAllGame"
 import useGetP2ERewardByPlayerId from "@feature/game/containers/hooks/useGetP2ERewardByPlayerId"
 import { useToast } from "@feature/toast/containers"
 import { Chip, Typography } from "@mui/material"
@@ -24,8 +23,9 @@ const EarnRewardPageMobile = () => {
   const [isLoadingReward, setIsLoadingReward] = useState(true)
   const { mutateClaimReward } = useClaimReward()
   const { t } = useTranslation()
-  const { earnRewardData, refetchRewardData, isLoading } =
-    useGetP2ERewardByPlayerId(profile.data ? profile.data.id : "")
+  const { earnRewardData, refetchRewardData } = useGetP2ERewardByPlayerId(
+    profile.data ? profile.data.id : ""
+  )
   // useGetP2ERewardByPlayerId("61bc7f6be434487ef8e4a7c6")
 
   const { successToast, errorToast, warnToast } = useToast()

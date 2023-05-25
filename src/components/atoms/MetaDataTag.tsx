@@ -29,7 +29,7 @@ const MetaDataTag = (props) => {
       />
       <link
         rel="icon"
-        href="https://files.naka.im/seo/favicon.png"
+        href="/favicon.png"
       />
       {/* facebook */}
       <meta

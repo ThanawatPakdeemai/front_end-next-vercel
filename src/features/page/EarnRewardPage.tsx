@@ -3,7 +3,6 @@ import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import ItemRewardDetails from "@feature/game/containers/components/molecules/ItemRewardDetails"
 import SkeletonDetails from "@feature/game/containers/components/molecules/SkeletonDetails"
 import useClaimReward from "@feature/game/containers/hooks/useClaimEarnedRewardByPlayerId"
-import useGetAllGames from "@feature/game/containers/hooks/useGetAllGame"
 import useGetP2ERewardByPlayerId from "@feature/game/containers/hooks/useGetP2ERewardByPlayerId"
 import { useToast } from "@feature/toast/containers"
 import { Chip, Typography, Box } from "@mui/material"
@@ -16,8 +15,9 @@ import NoData from "@components/molecules/NoData"
 
 const EarnRewardPage = () => {
   const { profile } = useProfileStore()
-  const [rewardList, setRewardList] = useState<IPlayToEarnRewardData[]>([])
-  const { allGameData } = useGetAllGames()
+  const [rewardList, setRewardList] = useState<
+    IPlayToEarnRewardData[] | undefined
+  >([])
   const [isLoadingReward, setIsLoadingReward] = useState(true)
   const { mutateClaimReward } = useClaimReward()
   const { t } = useTranslation()
@@ -37,7 +37,7 @@ const EarnRewardPage = () => {
         _rewardId: reward_id
       })
         .then((res) => {
-          if (res.status) {
+          if (res.status && rewardList) {
             const updateData = rewardList.filter(
               (_item) => _item._id !== reward_id
             )
@@ -67,35 +67,13 @@ const EarnRewardPage = () => {
         setRewardList([])
         setIsLoadingReward(false)
       }
-      // if (earnRewardData && allGameData && earnRewardData.data.length > 0) {
-      //   setRewardList([])
-      //   earnRewardData.data.map(async (item) => {
-      //     const game = allGameData.data.find((data) => data.id === item.game_id)
-      //     if (game) {
-      //       setRewardList((oldArray) => {
-      //         if (oldArray) {
-      //           return [
-      //             ...oldArray,
-      //             {
-      //               ...item,
-      //               game_item_name: game?.item?.[0]?.name,
-      //               game_item_image: game?.item?.[0]?.image,
-      //               game_name: game?.name,
-      //               game_image: game?.image_category_list
-      //             }
-      //           ]
-      //         }
-      //       })
-      //     }
-      //   })
-      // }
     }
 
     return () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allGameData, earnRewardData, earnRewardData])
+  }, [earnRewardData])
 
   let content: React.ReactElement | React.ReactElement[]
 

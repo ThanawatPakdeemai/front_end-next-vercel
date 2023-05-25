@@ -5,6 +5,7 @@ import { IPlayToEarnRewardData } from "@src/types/games"
 import Helper from "@utils/helper"
 import { Image } from "@components/atoms/image"
 import React from "react"
+import { Box } from "@mui/material"
 
 interface IProp {
   rewardData: IPlayToEarnRewardData
@@ -15,11 +16,26 @@ const ItemRewardDetails = ({ rewardData, onClaim }: IProp) =>
   rewardData ? (
     <div className="flex w-full flex-row justify-between rounded-[14px] border border-neutral-800 bg-neutral-780 p-2">
       {/* left */}
-      <div className="flex items-center">
-        {rewardData.game_image && rewardData.game_name ? (
+      <Box
+        component="div"
+        className="flex items-center"
+        sx={{
+          width: "75px",
+          height: "75px",
+          "picture": {
+            width: "100%",
+            height: "100%",
+            img: {
+              width: "100%",
+              height: "100%"
+            }
+          }
+        }}
+      >
+        {rewardData.game_id && rewardData.game_id.image_list ? (
           <Image
-            src={rewardData.game_image}
-            alt={rewardData.game_name}
+            src={rewardData.game_id.image_list}
+            alt={rewardData.game_id.name}
             width={75}
             height={75}
             className="rounded-[6px] object-cover"
@@ -27,12 +43,12 @@ const ItemRewardDetails = ({ rewardData, onClaim }: IProp) =>
         ) : (
           <>No Image</>
         )}
-      </div>
+      </Box>
       {/* data */}
       <div className="ml-2 grid w-[336px] grid-cols-3 items-center justify-center gap-[22px] px-5 uppercase">
         <TitleWithChip
           title="Game"
-          label={rewardData.game_name || ""}
+          label={rewardData.game_id.name || ""}
           color="primary"
           className="!bg-primary-main"
         />
@@ -44,7 +60,10 @@ const ItemRewardDetails = ({ rewardData, onClaim }: IProp) =>
         />
         <TitleWithChip
           title="Items"
-          label={rewardData.game_item_name || "No Item"}
+          label={
+            `${rewardData.item_id.name} ${rewardData.item_id.item_size}` ||
+            "No Item"
+          }
           color="primary"
           className="!bg-primary-main"
         />
@@ -52,14 +71,14 @@ const ItemRewardDetails = ({ rewardData, onClaim }: IProp) =>
       {/* right */}
       <div className="flex flex-row gap-2">
         <TooltipsCustom
-          title={rewardData.game_item_name || "No Item"}
+          title={rewardData.item_id.name || "No Item"}
           color="error"
         >
           <div className="flex h-[75px] w-[75px] items-center justify-center rounded-[6px] border border-neutral-700 bg-primary-main text-center text-xs ">
-            {rewardData.game_item_image && rewardData.game_item_name ? (
+            {rewardData.item_id.image ? (
               <Image
-                src={rewardData.game_item_image}
-                alt={rewardData.game_item_name}
+                src={rewardData.item_id.image}
+                alt={rewardData.item_id.name}
                 width={50}
                 height={50}
                 className="rounded-[6px]"

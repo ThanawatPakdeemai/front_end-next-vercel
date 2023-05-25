@@ -10,7 +10,6 @@ import DropdownLimit from "@components/atoms/DropdownLimit"
 import useGlobal from "@hooks/useGlobal"
 import NoData from "@components/molecules/NoData"
 import CardGameSlider from "@mobile/components/organisms/CardGameSlider"
-
 import { MobileView } from "react-device-detect"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import BodyCategories from "@mobile/components/organisms/BodyCategories"
@@ -32,7 +31,6 @@ const FreeToPlayGamesPage = () => {
     setCooldown
   } = useGamePageListController("free-to-play")
   const { getTypeGamePathFolder } = useGlobal()
-
   const [f2pGame, setF2PGame] = useState<IGame[]>()
 
   useEffect(() => {

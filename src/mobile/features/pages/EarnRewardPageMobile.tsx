@@ -18,8 +18,10 @@ import Headerbackpage from "@mobile/components/organisms/headerMenu/Headerbackpa
 
 const EarnRewardPageMobile = () => {
   const { profile } = useProfileStore()
-  const [rewardList, setRewardList] = useState<IPlayToEarnRewardData[]>()
-  const { allGameData, isLoading: isGameLoading } = useGetAllGames()
+  const [rewardList, setRewardList] = useState<
+    IPlayToEarnRewardData[] | undefined
+  >([])
+  const [isLoadingReward, setIsLoadingReward] = useState(true)
   const { mutateClaimReward } = useClaimReward()
   const { t } = useTranslation()
   const { earnRewardData, refetchRewardData, isLoading } =
@@ -56,38 +58,24 @@ const EarnRewardPageMobile = () => {
     let load = false
 
     if (!load) {
-      if (earnRewardData && allGameData && earnRewardData.data.length > 0) {
+      if (earnRewardData && earnRewardData.data.length > 0) {
+        setRewardList(earnRewardData.data)
+        setIsLoadingReward(false)
+      } else {
         setRewardList([])
-        earnRewardData.data.map(async (item) => {
-          const game = allGameData.data.find((data) => data.id === item.game_id)
-          if (game) {
-            setRewardList((oldArray) => {
-              if (oldArray) {
-                return [
-                  ...oldArray,
-                  {
-                    ...item,
-                    game_item_name: game?.item?.[0]?.name,
-                    game_item_image: game?.item?.[0]?.image,
-                    game_name: game?.name,
-                    game_image: game?.image_category_list
-                  }
-                ]
-              }
-            })
-          }
-        })
+        setIsLoadingReward(false)
       }
     }
 
     return () => {
       load = true
     }
-  }, [allGameData, earnRewardData])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [earnRewardData])
 
   let content: React.ReactElement | React.ReactElement[]
 
-  if (isLoading || isGameLoading) {
+  if (isLoadingReward) {
     content = <SkeletonDetails />
   } else if (rewardList && rewardList.length > 0) {
     content = rewardList.map((data) => (

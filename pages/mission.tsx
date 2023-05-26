@@ -11,7 +11,7 @@ import useClaimQuestById from "@feature/quest/containers/hook/useClaimQuestById"
 import { useToast } from "@feature/toast/containers"
 import MissionList from "@feature/quest/components/organisms/MissionList"
 import MissionDetails from "@feature/quest/components/organisms/MissionDetails"
-import Headerbackpage from "@mobile/components/organisms/headerMenu/Headerbackpage"
+import HeaderBackPageMobile from "@mobile/components/atoms/headerMenu/HeaderBackPageMobile"
 
 export default function Mission() {
   const {
@@ -82,13 +82,14 @@ export default function Mission() {
     ) : (
       <MissionDetails />
     )
+
   return (
     <Box
       component="article"
       className="h-full w-full"
     >
       <MobileView>
-        <Headerbackpage text="commission" />
+        <HeaderBackPageMobile text="commission" />
         <div className="z-[999991] flex h-full flex-col gap-5 rounded-md border-[3px] border-neutral-800 bg-neutral-900 p-4">
           {renderElement()}
         </div>

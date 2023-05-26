@@ -6,8 +6,8 @@ import HeadPrice from "@components/molecules/HeadPrice"
 import { RightMenu } from "@components/molecules/rightMenu"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import RightMenuDeveloper from "@components/molecules/rightMenu/RightMenuDeveloper"
-import HeadMenuMobile from "@mobile/components/organisms/headerMenu/HeadMenuMobile"
-import HeadProfileMobile from "@mobile/components/organisms/headerMenu/HeadProfileMobile"
+import HeadMenuMobile from "@mobile/components/atoms/headerMenu/HeadMenuMobile"
+import HeadProfileMobile from "@mobile/components/atoms/headerMenu/HeadProfileMobile"
 // import CONFIGS from "@configs/index"
 import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutateMarketplace"
 import useMarketCategTypes from "@stores/marketCategTypes"
@@ -98,7 +98,7 @@ const Header = () => {
 
       {isMobile && (
         <>
-          <HeadProfileMobile />
+          <HeadProfileMobile show={!router.asPath.includes("/referral")} />
           <HeadMenuMobile />
         </>
       )}

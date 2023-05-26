@@ -7,7 +7,7 @@ import Link from "next/link"
 import { Box } from "@mui/material"
 
 interface IProps {
-  label?: string
+  label?: string | JSX.Element | null
   forwardIcon?: JSX.Element | null
   forwardHref?: string
   backwardIcon?: JSX.Element | null
@@ -15,6 +15,7 @@ interface IProps {
   onClickForWard?: React.MouseEventHandler<HTMLAnchorElement>
   onClickBackWard?: React.MouseEventHandler<HTMLAnchorElement>
   showForwardIcon?: boolean
+  classNameLabel?: string
 }
 
 const HeaderForWardBackWardMobile = ({
@@ -25,7 +26,8 @@ const HeaderForWardBackWardMobile = ({
   backwardHref = "/",
   onClickForWard,
   onClickBackWard,
-  showForwardIcon = true
+  showForwardIcon = true,
+  classNameLabel
 }: IProps) => {
   const { t } = useTranslation()
   return (
@@ -39,8 +41,10 @@ const HeaderForWardBackWardMobile = ({
       >
         {backwardIcon}
       </Link>
-      <h1 className="flex-auto py-2 text-center text-default text-neutral-300">
-        {t(label)}
+      <h1
+        className={`flex-auto py-2 text-center text-default text-neutral-300 ${classNameLabel}`}
+      >
+        {typeof label === "string" ? t(label) : label}
       </h1>
       {showForwardIcon && (
         <Link

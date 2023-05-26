@@ -1,50 +1,71 @@
 import PlusIcon from "@components/icons/CountIcon/PlusIcon"
 import CouponIcon from "@components/icons/CouponIcon"
-import { MESSAGES } from "@constants/messages"
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Typography,
-  TextField,
-  InputAdornment,
+  Alert,
   Button,
-  Alert
+  InputAdornment,
+  TextField,
+  Typography
 } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
-import { motion } from "framer-motion"
-import React, { memo } from "react"
+import React from "react"
 import { useTranslation } from "react-i18next"
-import { useToast } from "@feature/toast/containers"
+import { motion } from "framer-motion"
 import useGetCoupon from "@feature/coupon/containers/hook/useGetCoupon"
+import { useToast } from "@feature/toast/containers"
+import { MESSAGES } from "@constants/messages"
+
+// interface IProp {
+//   expanded: string
+//   coupon: string
+//   handleChange: () => void
+// }
 
 interface ICharacterCoupon {
   couponLength: number
   disableCoupon: boolean
 }
 
-interface IProp {
-  onRedeem?: (_coupon: string) => void
-}
+const AccordionReDreem = () => {
+  const { t } = useTranslation()
+  const profile = useProfileStore((state) => state.profile.data)
 
-const RedemptionCode = ({ onRedeem }: IProp) => {
   const [expanded, setExpanded] = React.useState<string | false>("")
   const [coupon, setCoupon] = React.useState<string>("")
+
+  const { getRedeemCode } = useGetCoupon()
+  const { errorToast, successToast } = useToast()
+
   const [characterCoupon, setCharacterCoupon] =
     React.useState<ICharacterCoupon>({
       couponLength: 0,
       disableCoupon: true
     })
-  const { profile } = useProfileStore()
-  const { getRedeemCode } = useGetCoupon()
-  const { errorToast, successToast } = useToast()
-
-  const { t } = useTranslation()
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false)
     }
+
+  const handleClick = () => {
+    if (coupon) {
+      getRedeemCode(coupon)
+        .then((res) => {
+          successToast(res.message)
+        })
+        .catch((error) => {
+          errorToast(error.message)
+        })
+    }
+    setCoupon("")
+    setCharacterCoupon({
+      couponLength: 0,
+      disableCoupon: true
+    })
+  }
 
   const isCharactersCoupon = (_CharactersCoupon: string) => {
     if (_CharactersCoupon.length < 6) {
@@ -61,31 +82,11 @@ const RedemptionCode = ({ onRedeem }: IProp) => {
     setCoupon(_CharactersCoupon)
   }
 
-  const handleClick = async () => {
-    if (onRedeem) {
-      await onRedeem(coupon)
-    } else if (coupon && !onRedeem) {
-      await getRedeemCode(coupon)
-        .then((res) => {
-          successToast(res.message)
-        })
-        .catch((error) => {
-          errorToast(error.message)
-        })
-    }
-
-    setCoupon("")
-    setCharacterCoupon({
-      couponLength: 0,
-      disableCoupon: true
-    })
-  }
-
   return (
     <Accordion
       expanded={expanded === "panel1"}
       onChange={handleChange("panel1")}
-      className="static mt-4 rounded-md border-neutral-800 bg-neutral-780 px-[26px]"
+      className="static flex items-center justify-center rounded-md border-neutral-800 bg-neutral-780 px-[26px]"
       sx={{
         backgroundImage: "none"
       }}
@@ -94,18 +95,17 @@ const RedemptionCode = ({ onRedeem }: IProp) => {
         aria-controls="panel1d-content"
         id="panel1d-header"
       >
-        <div className="relative flex h-10 w-full items-center justify-between">
-          <Typography className="text-neutral-300">REDEMPTION CODE</Typography>
-          <div className="flex h-[40px] w-[40px] items-center justify-center rounded-lg border-[1px] border-solid border-neutral-700 bg-neutral-800">
-            <div
-              className={`flex items-center justify-center ${
-                expanded === "panel1"
-                  ? "rotate-45 transition-all duration-300"
-                  : "rotate-0 transition-all duration-300"
-              }`}
-            >
-              <PlusIcon />
-            </div>
+        <Typography className="text-neutral-300">REDEMPTION CODE</Typography>
+
+        <div className="flex h-[40px] w-[40px] items-center justify-center rounded-lg border-[1px] border-solid border-neutral-700 bg-neutral-800">
+          <div
+            className={`flex items-center justify-center ${
+              expanded === "panel1"
+                ? "rotate-45 transition-all duration-300"
+                : "rotate-0 transition-all duration-300"
+            }`}
+          >
+            <PlusIcon />
           </div>
         </div>
       </AccordionSummary>
@@ -148,7 +148,7 @@ const RedemptionCode = ({ onRedeem }: IProp) => {
             disabled={!profile || characterCoupon.disableCoupon}
             sx={{ fontFamily: "neueMachina" }}
             color="secondary"
-            className="btn-rainbow-theme w-1/3 text-sm"
+            className="btn-rainbow-theme h-[40px] !min-w-[100px] text-sm sm:h-fit sm:!w-1/3"
             variant="contained"
             size="large"
             type="submit"
@@ -187,4 +187,4 @@ const RedemptionCode = ({ onRedeem }: IProp) => {
   )
 }
 
-export default memo(RedemptionCode)
+export default AccordionReDreem

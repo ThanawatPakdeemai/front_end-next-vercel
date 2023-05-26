@@ -87,7 +87,7 @@ const TextfieldDetailContent = ({
 
   return (
     <div
-      className="flex w-full items-center justify-between"
+      className="grid w-full items-center justify-between sm:flex"
       data-testid={type}
     >
       {count && type !== "nft_land" && type !== "nft_building" && (

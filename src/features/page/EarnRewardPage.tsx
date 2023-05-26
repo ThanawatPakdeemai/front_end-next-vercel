@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import CheckMarkIcon from "@components/icons/CheckMarkIcon"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import ItemRewardDetails from "@feature/game/containers/components/molecules/ItemRewardDetails"
@@ -67,6 +68,28 @@ const EarnRewardPage = () => {
         setRewardList([])
         setIsLoadingReward(false)
       }
+      // if (earnRewardData && allGameData && earnRewardData.data.length > 0) {
+      //   setRewardList([])
+      //   earnRewardData.data.map(async (item) => {
+      //     const game = allGameData.data.find((data) => data.id === item.game_id)
+      //     if (game) {
+      //       setRewardList((oldArray) => {
+      //         if (oldArray) {
+      //           return [
+      //             ...oldArray,
+      //             {
+      //               ...item,
+      //               game_item_name: game?.item?.[0]?.name,
+      //               game_item_image: game?.item?.[0]?.image,
+      //               game_name: game?.name,
+      //               game_image: game?.image_category_list
+      //             }
+      //           ]
+      //         }
+      //       })
+      //     }
+      //   })
+      // }
     }
 
     return () => {

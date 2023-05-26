@@ -2,8 +2,8 @@ import { Skeleton } from "@mui/material"
 import React from "react"
 
 const CardDetailSkeleton = () => (
-  <div className="flex w-full flex-col gap-x-[120px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0">
-    <div className="h-[626px] w-[623px] rounded-2xl bg-neutral-780 p-3">
+  <div className="flex w-full flex-col gap-x-[30px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0 md:gap-x-[60px] lg:gap-x-[120px]">
+    <div className="h-[626px] !max-w-[623px] rounded-2xl bg-neutral-780 p-3">
       <Skeleton
         variant="rectangular"
         width="100%"
@@ -134,7 +134,7 @@ const CardDetailSkeleton = () => (
           height={50}
         />
       </div>
-      <div className="h-[325px] w-[623px] rounded-2xl bg-neutral-780 p-8">
+      <div className="h-[325px] !max-w-[623px] rounded-2xl bg-neutral-780 p-8">
         <div className="flex items-center gap-2">
           <Skeleton
             variant="text"

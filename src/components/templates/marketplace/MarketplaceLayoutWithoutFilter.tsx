@@ -1,5 +1,6 @@
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
+import MarketplaceLayoutMobile from "@feature/page/marketplace/mobilescreen/MarketplaceLayoutMobile"
 import { MarketplaceProvider } from "@providers/MarketplaceProvider"
 import { useRouter } from "next/router"
 import React from "react"
@@ -12,7 +13,12 @@ const MarketplaceLayoutWithoutFilter = ({
 
   return (
     <MarketplaceProvider>
-      <Header />
+      <div className="hidden sm:block">
+        <Header />
+      </div>
+      <div className="block sm:hidden">
+        <MarketplaceLayoutMobile />
+      </div>
       <div
         className={
           isMapPage

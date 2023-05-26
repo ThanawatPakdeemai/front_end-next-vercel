@@ -397,17 +397,20 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
    * @returns {string} gameOwner
    */
   const setGameOwner = (): string => {
-    if (gameData) {
-      switch (gameType) {
-        case "arcade-emporium":
-          return gameData.is_NFT &&
-            "is_NFT" in gameData &&
-            gameData?.NFT_info?.NFT_token !== null
-            ? gameData.NFT_Owner
-            : "-"
-        default:
-          return gameData.developer || "-"
-      }
+    if (
+      gameData &&
+      gameData.is_NFT &&
+      gameData.NFT_info &&
+      gameData.NFT_info.username &&
+      gameData.NFT_info.address_owner
+    ) {
+      return gameData.NFT_info.username || gameData.NFT_info.address_owner
+      // switch (gameType) {
+      //   case "arcade-emporium":
+      //     return gameData.NFT_info.address_owner
+      //   default:
+      //     return gameData.developer || "-"
+      // }
     }
     return "-"
   }

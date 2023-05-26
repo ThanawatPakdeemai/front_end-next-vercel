@@ -23,7 +23,11 @@ interface ICharacterCoupon {
   disableCoupon: boolean
 }
 
-const RedemptionCode = () => {
+interface IProp {
+  onRedeem?: (_coupon: string) => void
+}
+
+const RedemptionCode = ({ onRedeem }: IProp) => {
   const [expanded, setExpanded] = React.useState<string | false>("")
   const [coupon, setCoupon] = React.useState<string>("")
   const [characterCoupon, setCharacterCoupon] =
@@ -58,7 +62,9 @@ const RedemptionCode = () => {
   }
 
   const handleClick = async () => {
-    if (coupon) {
+    if (onRedeem) {
+      await onRedeem(coupon)
+    } else if (coupon && !onRedeem) {
       await getRedeemCode(coupon)
         .then((res) => {
           successToast(res.message)
@@ -67,6 +73,7 @@ const RedemptionCode = () => {
           errorToast(error.message)
         })
     }
+
     setCoupon("")
     setCharacterCoupon({
       couponLength: 0,

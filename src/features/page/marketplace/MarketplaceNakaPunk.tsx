@@ -15,7 +15,7 @@ import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn
 import GotNaKAPunk from "@components/molecules/Inventory/GotNaKAPunk"
 import { v4 as uuidv4 } from "uuid"
 import CONFIGS from "@configs/index"
-import useGlobal from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 
 const MarketplaceNakaPunk = () => {
@@ -71,8 +71,13 @@ const MarketplaceNakaPunk = () => {
   }, [priceNakaPunk])
 
   return (
-    <div className="flex w-full gap-x-[120px]">
+    <div
+      className={`${
+        isMobile ? `p-auto grid gap-4` : `grid md:flex`
+      } w-full gap-x-[30px] gap-y-[60px] md:gap-x-[60px] lg:gap-x-[120px]`}
+    >
       <CardContentDetails
+        hiddenDetails
         detail="NAKA Punks"
         image={!resNakapunk ? "/images/temp-nakapunk.webp" : undefined}
         alt="naka-punk"
@@ -80,7 +85,6 @@ const MarketplaceNakaPunk = () => {
         meta_data={resNakapunk ? metaData : undefined}
       >
         <div>
-          {" "}
           {resNakapunk ? (
             <div>
               {metaData && profile && profile.data && (

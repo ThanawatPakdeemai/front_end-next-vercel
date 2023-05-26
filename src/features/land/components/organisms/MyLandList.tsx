@@ -56,7 +56,7 @@ const MyLandList = ({
   return (
     <>
       {hydrated && (
-        <TableContainer className="w-[457px] rounded-[14px] bg-neutral-800 p-1.5">
+        <TableContainer className="w-full max-w-[457px] rounded-[14px] bg-neutral-800 p-1.5">
           <Table>
             <TableHead>
               <TableRowData
@@ -149,7 +149,7 @@ const MyLandList = ({
         </TableContainer>
       )}
       {landData && landData.length > 0 && (
-        <div className="justify-between md:my-5 md:flex xl:w-[457px]">
+        <div className="my-5 flex justify-between md:my-5 md:flex xl:w-[457px]">
           <PaginationNaka
             totalCount={totolCount}
             limit={limit}

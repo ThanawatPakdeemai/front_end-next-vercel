@@ -73,6 +73,7 @@ interface IProp {
       | "success"
       | "warning"
   }
+  checkRedreemMobile?: boolean
 }
 
 const RightDetailsMarketplace = ({
@@ -89,7 +90,8 @@ const RightDetailsMarketplace = ({
   count,
   children,
   redemption,
-  sellingType
+  sellingType,
+  checkRedreemMobile = true
 }: IProp) => {
   const router = useRouter()
   const profile = useProfileStore((state) => state.profile.data)
@@ -186,7 +188,7 @@ const RightDetailsMarketplace = ({
   return (
     <div className="flex w-full flex-col gap-y-5">
       {token && (
-        <div className="flex w-full items-center justify-between">
+        <div className="flex hidden w-full items-center justify-between sm:block">
           <div className="flex gap-[6px]">
             <Chip
               label={`TOKEN ID : ${String(token)}`}
@@ -204,7 +206,7 @@ const RightDetailsMarketplace = ({
           />
         </div>
       )}
-      <Typography className="text-[46px] font-bold uppercase text-neutral-300">
+      <Typography className="hidden text-[46px] font-bold uppercase text-neutral-300 sm:block">
         {title}
       </Typography>
       <div className="w-ful flex flex-col gap-y-6 rounded-3xl border-neutral-800 bg-neutral-780 px-[42px] py-7 uppercase">
@@ -279,7 +281,7 @@ const RightDetailsMarketplace = ({
 
         <div>{children}</div>
       </div>
-      {redemption && (
+      {redemption && checkRedreemMobile && (
         <Accordion
           expanded={expanded === "panel1"}
           onChange={handleChange("panel1")}
@@ -345,9 +347,12 @@ const RightDetailsMarketplace = ({
               />
               <Button
                 disabled={!profile || characterCoupon.disableCoupon}
-                sx={{ fontFamily: "neueMachina" }}
+                sx={{ fontFamily: "neueMachina", width: 50 }}
                 color="secondary"
-                className="btn-rainbow-theme w-1/3 text-sm"
+                // className={`${
+                //   isMobile ? `!h[40px] !w-[50px]` : `w-1/3`
+                // } btn-rainbow-theme text-sm`}
+                className="btn-rainbow-theme h-[40px] !min-w-[100px] text-sm sm:h-fit sm:!w-1/3"
                 variant="contained"
                 size="large"
                 type="submit"

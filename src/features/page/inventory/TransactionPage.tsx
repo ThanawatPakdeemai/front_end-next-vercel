@@ -135,7 +135,7 @@ const TransactionPage = ({ profile }: IProp) => {
   return (
     <>
       {hydrated && (
-        <div className="md-w-[678px] mx-auto">
+        <div className="mx-auto w-fit overflow-x-auto">
           <div className="flex justify-between">
             <PageHeader
               title="HISTORY TRANSACTION"

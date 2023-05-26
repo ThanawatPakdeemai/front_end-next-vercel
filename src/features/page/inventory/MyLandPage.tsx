@@ -196,7 +196,7 @@ const MyLandPage = () => {
   }
 
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid w-fit grid-cols-1 gap-4 lg:grid-cols-2">
       <div>
         <CardMyLandContent
           title="NAKAVERSE MAP"
@@ -222,7 +222,7 @@ const MyLandPage = () => {
           setPage={setPage}
         />
       </div>
-      <div className="ml-8">
+      <div className="grid justify-center md:ml-8">
         <CardMyLandContent
           title="Upload MAP Banner"
           width={333}

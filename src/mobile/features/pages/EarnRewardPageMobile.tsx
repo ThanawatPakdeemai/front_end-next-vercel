@@ -1,4 +1,4 @@
-import CheckMarkIcon from "@components/icons/CheckMarkIcon"
+import React, { useEffect, useState } from "react"
 import DownloadIcons from "@components/icons/DownloadIcons"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import ItemRewardDetails from "@feature/game/containers/components/molecules/ItemRewardDetails"
@@ -9,11 +9,12 @@ import { useToast } from "@feature/toast/containers"
 import { Chip, Typography } from "@mui/material"
 import { IPlayToEarnRewardData } from "@src/types/games"
 import useProfileStore from "@stores/profileStore"
-import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { v4 as uuidv4 } from "uuid"
 import NoData from "@components/molecules/NoData"
-import Headerbackpage from "@mobile/components/organisms/headerMenu/Headerbackpage"
+import HeaderForWardBackWardMobile from "@mobile/components/atoms/headerMenu/HeaderForWardBackWardMobile"
+import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined"
+import { useRouter } from "next/router"
 
 const EarnRewardPageMobile = () => {
   const { profile } = useProfileStore()
@@ -28,7 +29,7 @@ const EarnRewardPageMobile = () => {
   )
   // useGetP2ERewardByPlayerId("61bc7f6be434487ef8e4a7c6")
 
-  const { successToast, errorToast, warnToast } = useToast()
+  const { successToast, errorToast } = useToast()
 
   const countUnClaim = rewardList ? rewardList.length : 0
 
@@ -51,8 +52,6 @@ const EarnRewardPageMobile = () => {
       }, 1000)
     }
   }
-
-  const onClaimAll = () => warnToast("Claim all is not available yet")
 
   useEffect(() => {
     let load = false
@@ -92,30 +91,28 @@ const EarnRewardPageMobile = () => {
       </div>
     )
   }
-
+  const router = useRouter()
   return (
     <div className="grid max-w-[678px] gap-10">
-      <div className="flex items-center justify-end md:mt-0">
-        {/* <Typography className="flex-1 text-[22px] uppercase text-neutral-400">
-          <Trans i18nKey="item_rewards" />
-        </Typography> */}
-        <Headerbackpage text="item_rewards" />
-        {countUnClaim > 0 && (
-          <>
+      <div className="justify-space-between flex items-center md:mt-0">
+        <HeaderForWardBackWardMobile
+          backwardIcon={
+            <ButtonToggleIcon
+              text={t("item_rewards")}
+              startIcon={<ArrowBackOutlinedIcon />}
+            />
+          }
+          onClickBackWard={() => router.back()}
+          label={
             <Chip
               label={`${t("unclaimed")} ${countUnClaim}`}
               color="error"
               size="small"
             />
-            {/* for claim all */}
-            <ButtonToggleIcon
-              text={t("claim_all")}
-              className="ml-4 h-[50px] !w-[135px] !rounded-[24px] border border-neutral-700 bg-primary-main font-bold capitalize text-white-primary md:ml-[30px]"
-              startIcon={<CheckMarkIcon />}
-              handleClick={onClaimAll}
-            />
-          </>
-        )}
+          }
+          classNameLabel="uppercase"
+          forwardIcon={null}
+        />
       </div>
       <div className="flex h-[100px] w-full items-center justify-center rounded-[13px] text-center text-[26px] uppercase">
         <Typography className="text-shadow-red px-4 font-digital-7 text-[26px] text-error-main">

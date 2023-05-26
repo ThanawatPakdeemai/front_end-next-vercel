@@ -12,7 +12,7 @@ import StatEstimatedProfit from "@components/molecules/statistic/StatEstimatedPr
 import TopPlayer from "@feature/ranking/components/template/TopPlayer"
 import useTopPlayerByGameId from "@feature/ranking/containers/hook/useTopPlayerByGameId"
 import VerticalThumbSmallCardSlide from "@feature/slider/components/organisms/VerticalThumbSmallCardSlide"
-import HeaderForWardBackWardMobile from "@mobile/components/atoms/HeaderForWardBackWardMobile"
+import HeaderForWardBackWardMobile from "@mobile/components/atoms/headerMenu/HeaderForWardBackWardMobile"
 import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
 import MoreDetailGameMobile from "@mobile/components/atoms/MoreDetailGameMobile"

@@ -6,9 +6,13 @@ import useProfileStore from "@stores/profileStore"
 import Link from "next/link"
 import PersonIcon from "@mui/icons-material/Person"
 
-const HeadProfileMobile = () => {
+interface IProps {
+  show: boolean
+}
+
+const HeadProfileMobile = ({ show = true }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
-  return (
+  return show ? (
     <AppBar className="">
       <Toolbar className="contents">
         <header className="header fixed inset-x-0 z-[999] bg-primary-main">
@@ -43,7 +47,7 @@ const HeadProfileMobile = () => {
         </header>
       </Toolbar>
     </AppBar>
-  )
+  ) : null
 }
 
 export default HeadProfileMobile

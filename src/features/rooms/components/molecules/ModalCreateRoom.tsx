@@ -32,6 +32,7 @@ import { useTranslation } from "react-i18next"
 import { unstable_batchedUpdates } from "react-dom"
 // import { Image } from "@components/atoms/image/index"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
+import useGameGlobal from "@hooks/useGameGlobal"
 
 interface IProp {
   gameData: IGame
@@ -60,6 +61,7 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+  const { conditionGameFree, conditionPlayToEarn } = useGameGlobal()
 
   const { mutateCreateRoom, isLoading } = useCreateRoom()
   const { t } = useTranslation()
@@ -81,11 +83,8 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
       balanceofItem.data >= itemUse
     ) {
       const gameItem = gameItemList.find((ele) => ele._id === itemSelected?._id)
-      if (
-        gameData.play_to_earn_status === "free" ||
-        (gameItem && gameItem.qty >= itemUse)
-      ) {
-        if (gameData && gameData.play_to_earn === true) {
+      if (conditionGameFree || (gameItem && gameItem.qty >= itemUse)) {
+        if (conditionPlayToEarn) {
           setItemUse(0)
         }
 
@@ -94,12 +93,11 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
             _gameId: gameData.id,
             _playerId: profile ? profile.id : "",
             _walletAddress: profile ? profile.address : "",
-            _itemId:
-              gameData.play_to_earn_status === "free"
-                ? gameItemList?.[0]?._id
-                : itemSelected
-                ? itemSelected?._id
-                : "",
+            _itemId: conditionGameFree
+              ? gameItemList?.[0]?._id
+              : itemSelected
+              ? itemSelected?._id
+              : "",
             _maxPlayer: count,
             _numberItem: itemUse,
             _mapId: map,

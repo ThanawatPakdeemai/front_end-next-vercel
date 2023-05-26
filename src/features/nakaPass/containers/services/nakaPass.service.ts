@@ -11,7 +11,7 @@ export const getNakaPass = ({ player_id, game_id }: IGetPropNakaPass) =>
       game_id
     }
     services
-      .post(`/game/story-mode-games/season-pass`, data)
+      .post(`/game/story-mode/season-pass`, data)
       .then((_res) =>
         resolve({
           status: true

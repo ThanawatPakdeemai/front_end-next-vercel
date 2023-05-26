@@ -1,10 +1,10 @@
 import CardItemMarketPlace from "@components/molecules/cards/CardItemMarketPlace"
-import useMartketProcessPayment from "@feature/marketplace/containers/hooks/useMartketProcessPayment"
 import { useRouter } from "next/router"
 import { v4 as uuidv4 } from "uuid"
 import React from "react"
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonItem from "@feature/marketplace/components/molecules/SkeletonItem"
+import useInventoryPayment from "@feature/inventory/containers/hooks/useInventoryPayment"
 
 const MarketplaceProcessList = () => {
   const {
@@ -13,34 +13,34 @@ const MarketplaceProcessList = () => {
     limit,
     currentPage,
     setCurrentPage,
-    ownerDataProcess
-  } = useMartketProcessPayment()
+    inventoryItemPayment
+  } = useInventoryPayment()
 
   const router = useRouter()
 
-  if (ownerDataProcess && ownerDataProcess.length > 0 && !isLoading) {
+  if (inventoryItemPayment && inventoryItemPayment.length > 0 && !isLoading) {
     return (
       <div className="flex flex-col gap-y-7">
         <div className="grid w-full grid-cols-1 gap-x-3 gap-y-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {ownerDataProcess.map((_data) => (
+          {inventoryItemPayment.map((_data) => (
             <CardItemMarketPlace
               key={uuidv4()}
-              cardType={_data.type}
+              cardType={_data.cardType}
               id={_data.tokenId}
               itemImage={
-                _data.type === "game-item"
+                _data.cardType === "game-item"
                   ? {
-                      src: String(_data.image),
+                      src: String(_data.img),
                       alt: _data.name,
                       width: _data.name.includes("Bullet") ? 40 : 100
                     }
                   : undefined
               }
               itemVideo={
-                _data.type !== "game-item"
+                _data.cardType !== "game-item"
                   ? {
-                      src: _data.video as string,
-                      poster: String(_data.image)
+                      src: _data.vdo as string,
+                      poster: String(_data.img)
                     }
                   : undefined
               }
@@ -48,10 +48,10 @@ const MarketplaceProcessList = () => {
               itemLevel={_data.level}
               itemSize={_data.size as string}
               itemAmount={_data.amount as number}
-              href={`/${router.locale}/marketplace/inventory/${_data.type}/${_data.id}`}
+              href={`/${router.locale}/marketplace/inventory/${_data.cardType}/${_data.id}`}
               sellingType={{
-                title: _data.selling_type as string,
-                color: _data.selling_type === "unpaid" ? "error" : "info"
+                title: _data.payment_type,
+                color: _data.payment_type === "unpaid" ? "error" : "info"
               }}
               price={_data.price}
             />
@@ -68,7 +68,7 @@ const MarketplaceProcessList = () => {
   }
   return (
     <>
-      {ownerDataProcess.length === 0 && !isLoading ? (
+      {inventoryItemPayment.length === 0 && !isLoading ? (
         <div>No Data</div>
       ) : (
         <div className="grid w-full grid-cols-1 gap-x-3 gap-y-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">

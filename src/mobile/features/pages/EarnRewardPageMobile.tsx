@@ -4,7 +4,6 @@ import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import ItemRewardDetails from "@feature/game/containers/components/molecules/ItemRewardDetails"
 import SkeletonDetails from "@feature/game/containers/components/molecules/SkeletonDetails"
 import useClaimReward from "@feature/game/containers/hooks/useClaimEarnedRewardByPlayerId"
-import useGetAllGames from "@feature/game/containers/hooks/useGetAllGame"
 import useGetP2ERewardByPlayerId from "@feature/game/containers/hooks/useGetP2ERewardByPlayerId"
 import { useToast } from "@feature/toast/containers"
 import { Chip, Typography } from "@mui/material"
@@ -14,16 +13,19 @@ import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { v4 as uuidv4 } from "uuid"
 import NoData from "@components/molecules/NoData"
-import Headerbackpage from "@src/mobile/features/Headerbackpage"
+import Headerbackpage from "@mobile/components/organisms/headerMenu/Headerbackpage"
 
 const EarnRewardPageMobile = () => {
   const { profile } = useProfileStore()
-  const [rewardList, setRewardList] = useState<IPlayToEarnRewardData[]>()
-  const { allGameData, isLoading: isGameLoading } = useGetAllGames()
+  const [rewardList, setRewardList] = useState<
+    IPlayToEarnRewardData[] | undefined
+  >([])
+  const [isLoadingReward, setIsLoadingReward] = useState(true)
   const { mutateClaimReward } = useClaimReward()
   const { t } = useTranslation()
-  const { earnRewardData, refetchRewardData, isLoading } =
-    useGetP2ERewardByPlayerId(profile.data ? profile.data.id : "")
+  const { earnRewardData, refetchRewardData } = useGetP2ERewardByPlayerId(
+    profile.data ? profile.data.id : ""
+  )
   // useGetP2ERewardByPlayerId("61bc7f6be434487ef8e4a7c6")
 
   const { successToast, errorToast, warnToast } = useToast()
@@ -56,38 +58,24 @@ const EarnRewardPageMobile = () => {
     let load = false
 
     if (!load) {
-      if (earnRewardData && allGameData && earnRewardData.data.length > 0) {
+      if (earnRewardData && earnRewardData.data.length > 0) {
+        setRewardList(earnRewardData.data)
+        setIsLoadingReward(false)
+      } else {
         setRewardList([])
-        earnRewardData.data.map(async (item) => {
-          const game = allGameData.data.find((data) => data.id === item.game_id)
-          if (game) {
-            setRewardList((oldArray) => {
-              if (oldArray) {
-                return [
-                  ...oldArray,
-                  {
-                    ...item,
-                    game_item_name: game?.item?.[0]?.name,
-                    game_item_image: game?.item?.[0]?.image,
-                    game_name: game?.name,
-                    game_image: game?.image_category_list
-                  }
-                ]
-              }
-            })
-          }
-        })
+        setIsLoadingReward(false)
       }
     }
 
     return () => {
       load = true
     }
-  }, [allGameData, earnRewardData])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [earnRewardData])
 
   let content: React.ReactElement | React.ReactElement[]
 
-  if (isLoading || isGameLoading) {
+  if (isLoadingReward) {
     content = <SkeletonDetails />
   } else if (rewardList && rewardList.length > 0) {
     content = rewardList.map((data) => (
@@ -107,7 +95,7 @@ const EarnRewardPageMobile = () => {
 
   return (
     <div className="grid max-w-[678px] gap-10">
-      <div className="mt-6 flex items-center justify-end md:mt-0">
+      <div className="flex items-center justify-end md:mt-0">
         {/* <Typography className="flex-1 text-[22px] uppercase text-neutral-400">
           <Trans i18nKey="item_rewards" />
         </Typography> */}

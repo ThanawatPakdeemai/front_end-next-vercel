@@ -66,11 +66,14 @@ const CardNakaverse = ({
           />
         </CardContent>
         <CardContent className="relative hidden w-full sm:block">
-          <div className="absolute left-[10%] top-[10.5%] h-[239.32px] w-[238.62px] ">
+          <div
+            className={`h-[${IMAGES.nakaVerseMascot.width}px] absolute bottom-0 left-[10%] top-[20.5%] w-[${IMAGES.nakaVerseMascot.height}px]`}
+          >
             <Image
               src={IMAGES.nakaVerseMascot.src}
               alt={IMAGES.nakaVerseMascot.alt}
-              className="h-full w-full"
+              width={IMAGES.nakaVerseMascot.width}
+              height={IMAGES.nakaVerseMascot.height}
             />
           </div>
           <div className="absolute right-[12%] top-[15%] w-[171px] max-[480px]:top-[20%] max-[480px]:w-[70%]">

@@ -17,6 +17,7 @@ interface IProp {
   min?: number
   max?: number
   count?: number
+  setItemCount?: (_count: number) => void
   _item?: number
 }
 
@@ -29,6 +30,7 @@ const CountItem = ({
   min,
   max,
   count,
+  setItemCount,
   _item
 }: IProp) => {
   const minusItem = useCountStore((state: any) => state.decrease)
@@ -43,13 +45,16 @@ const CountItem = ({
       unstable_batchedUpdates(() => {
         if (min) setMin(min)
         if (max) setMax(max)
-        if (count) setCount(count)
+        if (count) {
+          if (setItemCount) setItemCount(count)
+          else setCount(count)
+        }
       })
 
     return () => {
       load = true
     }
-  }, [count, max, min, setCount, setMax, setMin])
+  }, [count, max, min, setCount, setItemCount, setMax, setMin])
 
   return (
     <div className="flex flex-col items-start gap-y-2">
@@ -83,7 +88,7 @@ const CountItem = ({
               }
             }
           }}
-          value={_item || item}
+          value={setItemCount && count ? count : _item || item}
           InputProps={{
             readOnly: true,
             endAdornment: endIcon || <SkullIcon />,

@@ -14,7 +14,7 @@ import { Box } from "@mui/material"
 
 interface IProps {
   menu: IHeaderSlide
-  list: IGame[] | IRoomAvaliableData[]
+  list: IGame[] | IRoomAvaliableData[] | unknown[]
   showNo?: boolean
   checkTimer?: boolean
   curType: IGetType
@@ -74,8 +74,8 @@ const GameCarousel = ({
         {
           breakpoint: 480,
           settings: {
-            slidesToShow: list.length < 3 ? 2 : 3,
-            slidesToScroll: list.length < 3 ? 1 : 3
+            slidesToShow: 2, // list.length < 3 ? 2 : 3,
+            slidesToScroll: 2 // list.length < 3 ? 1 : 3
           }
         }
       ]
@@ -147,7 +147,7 @@ const GameCarousel = ({
       />
       <Box
         component="div"
-        className={`game-carousel-slide overflow-hidden ${
+        className={`game-carousel-slide overflow-hidden max-[420px]:pt-6 ${
           list.length < 5 && "slick-slider-w-auto"
         }`}
         sx={
@@ -188,6 +188,7 @@ const GameCarousel = ({
                   menu={menu}
                   data={item}
                   showNo={showNo}
+                  classNameImage="h-40 w-40"
                   no={index + 1}
                   checkTimer={checkTimer}
                   cooldown={cooldown}

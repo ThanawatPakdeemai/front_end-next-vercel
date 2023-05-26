@@ -9,7 +9,6 @@ import CardBodyList from "@feature/ranking/components/molecules/CardBodyList"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import GameSummaryBodyReturnItem from "@feature/game/containers/components/organisms/GameSummaryBodyReturnItem"
 import { useRouter } from "next/router"
-import { MobileView } from "react-device-detect"
 import { Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
 import { Image } from "@components/atoms/image/index"
@@ -122,19 +121,21 @@ const GameSummaryRewardPage = () => {
       }}
       onOutRoom={() => router.push(link)}
     >
-      <div className="flex w-full flex-col justify-center gap-4 lg:flex-row">
-        {!isMobile && (
-          <CardBodyList
-            className="custom-scroll mx-auto flex max-h-[680px] w-[362px] flex-1 flex-col gap-2 overflow-y-scroll"
-            width="auto"
-            players={players || []}
-            rewardType={notificationItem?.type}
-            // maxPlayer={gameRoomById?.max_players || 0}
-          />
-        )}
-        {renderContent()}
-        {isMobile && (
-          <MobileView>
+      <div className="flex flex-col justify-center gap-4 lg:flex-row">
+        {!isMobile ? (
+          <>
+            <CardBodyList
+              className="custom-scroll mx-auto flex max-h-[680px] w-[362px] flex-1 flex-col gap-2 overflow-y-scroll"
+              width="w-full"
+              players={players || []}
+              rewardType={notificationItem?.type}
+              // maxPlayer={gameRoomById?.max_players || 0}
+            />
+            {renderContent()}
+          </>
+        ) : (
+          <>
+            {renderContent()}
             <div className="grid grid-cols-2 gap-2">
               {players ? (
                 players.map((data, index) => (
@@ -143,7 +144,8 @@ const GameSummaryRewardPage = () => {
                     key={index}
                   >
                     <div
-                      className={`rounded-sm px-[14px] py-[12px] text-xs text-white-default ${
+                      // px-[14px] py-[12px]
+                      className={`flex h-[40px] w-[40px] items-center justify-center rounded-sm text-xs text-white-default ${
                         index === 0
                           ? "bg-red-card text-black-100"
                           : index === 1
@@ -155,10 +157,17 @@ const GameSummaryRewardPage = () => {
                     >
                       <p>{index + 1}</p>
                     </div>
-                    <div className="mx-2 flex flex-col items-center justify-center text-[8px] text-white-default">
-                      <p>NAKAMOTO 0{index}</p>
+                    <div className="flex flex-col items-center justify-center text-[8px] text-white-default">
+                      <p className=" mb-1 text-left capitalize">
+                        {["summary", "reward", "return-item"].some((v) =>
+                          router.asPath.includes(v)
+                        ) && <>{data.user_name}</>}
+                        {["reward-weekly"].some((v) =>
+                          router.asPath.includes(v)
+                        ) && <>{data.username}</>}
+                      </p>
                       <p
-                        className={`rounded-[6px] border p-2  uppercase ${
+                        className={`rounded-[6px] border p-1  uppercase ${
                           index === 0
                             ? "border-red-card"
                             : index === 1
@@ -168,7 +177,12 @@ const GameSummaryRewardPage = () => {
                             : "border-[#404040]"
                         }`}
                       >
-                        SCPRE {data.current_score}
+                        {["summary", "reward", "return-item"].some((v) =>
+                          router.asPath.includes(v)
+                        ) && <>SCORE {data.current_score}</>}
+                        {["reward-weekly"].some((v) =>
+                          router.asPath.includes(v)
+                        ) && <>reward {data.reward}</>}
                       </p>
                     </div>
                     <Image
@@ -186,7 +200,7 @@ const GameSummaryRewardPage = () => {
                 </Typography>
               )}
             </div>
-          </MobileView>
+          </>
         )}
       </div>
     </GameSummaryContent>

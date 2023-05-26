@@ -9,8 +9,8 @@ import { Box } from "@mui/material"
 import DropdownLimit from "@components/atoms/DropdownLimit"
 import useGlobal from "@hooks/useGlobal"
 import NoData from "@components/molecules/NoData"
-import BodyCategories from "@src/mobile/molecules/BodyCategories"
-import CardGameSlider from "@src/mobile/molecules/CardGameSlider"
+import CardGameSlider from "@mobile/components/organisms/CardGameSlider"
+import BodyCategories from "@mobile/components/organisms/BodyCategories"
 import { MobileView } from "react-device-detect"
 import { IGame } from "@feature/game/interfaces/IGameService"
 
@@ -29,8 +29,9 @@ const FreeToEarnGamesPage = () => {
     staminaRecovery,
     cooldown,
     setCooldown
-  } = useGamePageListController("free-to-play-games")
-  const { getTypeGamePathFolder, isFreeToEarnGame } = useGlobal()
+  } = useGamePageListController("free-to-earn")
+
+  const { getTypeGamePathFolder } = useGlobal()
 
   const [f2eGame, setF2EGame] = useState<IGame[]>()
 
@@ -39,8 +40,9 @@ const FreeToEarnGamesPage = () => {
 
     if (!load) {
       if (gameFilter && gameFilter.length > 0) {
-        const _filterF2E = gameFilter.filter((item) => isFreeToEarnGame(item))
-        setF2EGame(_filterF2E)
+        setF2EGame(gameFilter)
+      } else {
+        setF2EGame([])
       }
     }
 
@@ -53,13 +55,11 @@ const FreeToEarnGamesPage = () => {
   return (
     <div className="flex flex-col">
       <MobileView className="MobileSlider mb-4">
-        <CardGameSlider games={gameFilter} />
-        {!loadingFilterGame && (
-          <div className="mt-4 w-full">
-            <p className="uppercase text-white-default">POPULAR GAMES</p>
-            <BodyCategories games={gameFilter} />
-          </div>
-        )}
+        <CardGameSlider games={gameFilter as IGame[]} />
+        <div className="mt-4 w-full">
+          <p className="uppercase text-white-default">POPULAR GAMES</p>
+          <BodyCategories games={gameFilter} />
+        </div>
       </MobileView>
       <div className="mx-2 mb-6 grid grid-cols-2 gap-x-2 gap-y-4 md:mx-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {loadingFilterGame

@@ -117,7 +117,9 @@ const EventDetailPage = () => {
                   [ {currentEventData.status} ]
                 </Typography>
               </div>
-              {currentEventData.status !== "end" && renderPlayerContent()}
+              {/* Display when event is not end */}
+              {/* {currentEventData.status !== "end" } */}
+              {renderPlayerContent()}
             </Box>
           }
         />

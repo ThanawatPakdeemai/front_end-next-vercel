@@ -1,5 +1,6 @@
 import Dropdown from "@components/atoms/DropdownCustom"
 import SearchIcon from "@components/icons/SearchIcon"
+import { isMobile } from "@hooks/useGlobal"
 import { Grid, TextField } from "@mui/material"
 import useFilterStore from "@stores/blogFilter"
 import React from "react"
@@ -41,13 +42,26 @@ const HeadGames = ({ children }: { children: React.ReactNode }) => {
             className={responsiveStyle}
           />
         </Grid>
+        {!isMobile && (
+          <Grid
+            item
+            xs={3}
+            className="max-w-full"
+          >
+            <Dropdown
+              title={t("all_devices")}
+              className={responsiveStyle}
+            />
+          </Grid>
+        )}
+
         <Grid
           item
           xs={3}
           className="max-w-full"
         >
           <Dropdown
-            title={t("all_devices")}
+            title="All Game Types"
             className={responsiveStyle}
           />
         </Grid>

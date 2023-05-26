@@ -13,6 +13,7 @@ import { IResGetIp } from "@interfaces/IGetIP"
 import CONFIGS from "@configs/index"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { MESSAGES } from "@constants/messages"
+import useGameGlobal from "@hooks/useGameGlobal"
 import useSocketWaitingRoom from "./useSocketWaitingRoom"
 import useGetGameByPath from "./useFindGameByPath"
 
@@ -47,6 +48,13 @@ const useWaitingMulti = () => {
   const [dataPlayers, setDataPlayers] = useState<
     IGameRoomListSocket | undefined
   >()
+
+  const {
+    item: item_id
+    // conditionGameFree
+    // itemSelected,
+    // conditionPlayToEarn
+  } = useGameGlobal()
 
   useEffect(() => {
     let load = false
@@ -102,18 +110,18 @@ const useWaitingMulti = () => {
     }
   }, [gameData, onSetGameData])
 
-  const item_id = useMemo(() => {
-    if (data) {
-      if (data.play_to_earn || data.tournament) {
-        return data.item[0]._id
-      }
-      if (itemSelected) {
-        return itemSelected._id
-      }
-    } else {
-      return ""
-    }
-  }, [data, itemSelected])
+  // const item_id = useMemo(() => {
+  //   if (data) {
+  //     if (data.play_to_earn || data.tournament) {
+  //       return data.item[0]._id
+  //     }
+  //     if (itemSelected) {
+  //       return itemSelected._id
+  //     }
+  //   } else {
+  //     return ""
+  //   }
+  // }, [data, itemSelected])
 
   const propsSocketWaitingRoom = useMemo(
     () => ({

@@ -4,13 +4,14 @@ import SkeletonCard from "@components/atoms/skeleton/SkeletonCard"
 import { P2EHeaderMenu } from "@constants/gameSlide"
 import GameCard from "@feature/game/components/molecules/GameCard"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
+import CardGameSlider from "@mobile/components/organisms/CardGameSlider"
+import BodyCategories from "@mobile/components/organisms/BodyCategories"
 import { Box } from "@mui/material"
 import NoData from "@components/molecules/NoData"
 import { memo } from "react"
 import { v4 as uuid } from "uuid"
-import BodyCategories from "@src/mobile/molecules/BodyCategories"
-import CardGameSlider from "@src/mobile/molecules/CardGameSlider"
 import { MobileView } from "react-device-detect"
+import { IGame } from "@feature/game/interfaces/IGameService"
 
 const ArcadeEmporiumGamesPage = () => {
   // Hooks
@@ -24,19 +25,16 @@ const ArcadeEmporiumGamesPage = () => {
     pager,
     setLimit,
     onSetGameStore
-  } = useGamePageListController()
-  // const { getTypeGamePathFolder } = useGlobal()
+  } = useGamePageListController("arcade-emporium", "all")
 
   return (
     <div className="flex flex-col">
       <MobileView className="MobileSlider mb-4">
-        <CardGameSlider games={gameFilter} />
-        {!loadingFilterGame && (
-          <div className="mt-4 w-full">
-            <p className="uppercase text-white-default">POPULAR GAMES</p>
-            <BodyCategories games={gameFilter} />
-          </div>
-        )}
+        <CardGameSlider games={gameFilter as unknown as IGame[]} />
+        <div className="mt-4 w-full">
+          <p className="uppercase text-white-default">POPULAR GAMES</p>
+          <BodyCategories games={gameFilter} />
+        </div>
       </MobileView>
       <div className="mx-2 mb-6 grid grid-cols-2 gap-x-2 gap-y-4 md:mx-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {loadingFilterGame

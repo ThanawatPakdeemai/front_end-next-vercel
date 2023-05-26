@@ -12,6 +12,7 @@ import { MESSAGES } from "@constants/messages"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import CONFIGS from "@configs/index"
 import { IResGetIp } from "@interfaces/IGetIP"
+import useGameGlobal from "@hooks/useGameGlobal"
 import useGetCurrentPlayerGameSingle from "./useGetCurrentPlayerGameSingle"
 import useGetGameRoomById from "./useGetGameRoomById"
 
@@ -36,6 +37,13 @@ const useWaitingSingle = () => {
   // TODO: Refactor later
   const detectDevice = isMobile ? "mobile" : "desktop"
 
+  const {
+    item: item_id,
+    // conditionGameFree
+    // itemSelected,
+    conditionPlayToEarn
+  } = useGameGlobal()
+
   useEffect(() => {
     let load = false
 
@@ -52,18 +60,18 @@ const useWaitingSingle = () => {
     }
   }, [data])
 
-  const item_id = useMemo(() => {
-    if (data) {
-      if (data.play_to_earn || data.tournament) {
-        return data?.item[0]._id
-      }
-      if (itemSelected) {
-        return itemSelected._id
-      }
-      return undefined
-    }
-    return undefined
-  }, [data, itemSelected])
+  // const item_id = useMemo(() => {
+  //   if (data) {
+  //     if (data.play_to_earn || data.tournament) {
+  //       return data?.item[0]._id
+  //     }
+  //     if (itemSelected) {
+  //       return itemSelected._id
+  //     }
+  //     return undefined
+  //   }
+  //   return undefined
+  // }, [data, itemSelected])
 
   const {
     isLoading: loadingPlayer,
@@ -209,7 +217,7 @@ const useWaitingSingle = () => {
             ).getTime()}:|:${profile.username}:|:${
               gameRoomById.max_players
             }:|:${gameRoomById.stage_id}:|:${ip}:|:${
-              data.play_to_earn === true ? "free" : "not_free"
+              conditionPlayToEarn ? "free" : "not_free"
             }:|:${profile.country}`
             const gameURL = `${CONFIGS.BASE_URL.GAME}/${
               data.id
@@ -230,7 +238,7 @@ const useWaitingSingle = () => {
               ? `:|:${gameRoomById.stage_id}`
               : ":|:0"
           }:|:${profile.username}:|:${
-            data.play_to_earn === true ? "free" : "not_free"
+            conditionPlayToEarn ? "free" : "not_free"
           }`
 
           const gameURL = `${baseUrlGame}/${data.id}/?${Helper.makeID(8)}${btoa(

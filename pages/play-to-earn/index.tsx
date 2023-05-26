@@ -44,7 +44,7 @@ PlayToEarnGames.getLayout = function getLayout(page: ReactElement) {
 }
 
 export async function getServerSideProps({ locale }) {
-  const _seo = await getSeoByPath(`/play-to-earn-games` as string)
+  const _seo = await getSeoByPath(`/play-to-earn` as string)
   return {
     props: {
       meta:

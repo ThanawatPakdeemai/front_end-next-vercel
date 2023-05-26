@@ -194,12 +194,7 @@ const ModalMarket = ({
               // check if stay on inventory not redirect
               if (router.asPath.includes("/inventory")) {
                 // refetch data from owner detail
-                if (fetchInvenItemDataById)
-                  fetchInvenItemDataById().catch(() =>
-                    router.replace(
-                      `/marketplace/inventory/${convertNFTTypeToTType(nftType)}`
-                    )
-                  )
+                if (fetchInvenItemDataById) fetchInvenItemDataById()
               } else {
                 setTimeout(
                   () =>

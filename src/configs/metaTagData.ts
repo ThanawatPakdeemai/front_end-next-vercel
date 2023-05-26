@@ -24,7 +24,7 @@ export const DATA_META_TAG: IMetaTagConstants[] = [
     metaTag: DEFAULT_META
   },
   {
-    path: "play-to-earn-games",
+    path: "play-to-earn",
     metaTag: DEFAULT_META
   },
   {

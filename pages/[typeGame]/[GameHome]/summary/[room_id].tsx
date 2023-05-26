@@ -1,11 +1,12 @@
 import useGetGameByPath from "@feature/game/containers/hooks/useFindGameByPath"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
+import useRefreshStamina from "@hooks/useRefreshStamina"
 import { Box } from "@mui/material"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
-import React, { ReactElement } from "react"
+import React, { ReactElement, useEffect } from "react"
 import { MobileView } from "react-device-detect"
 
 const GameSummaryRewardPage = dynamic(
@@ -63,8 +64,19 @@ const GameTabsVertical = dynamic(
 export default function SummaryDetails() {
   const { getTypeGamePathFolder } = useGlobal()
   const router = useRouter()
+  const { refreshStamina } = useRefreshStamina()
   const { GameHome } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
+
+  useEffect(() => {
+    let load = false
+    if (!load) refreshStamina()
+
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return gameData ? (
     <GamePageDefault

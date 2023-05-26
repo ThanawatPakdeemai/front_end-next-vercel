@@ -74,7 +74,7 @@ const EventsTopScore = ({
         (item) => Number(item.rank) === _index
       )
       if (reward) {
-        return `${reward.reward}$`
+        return `${reward.reward}`
       }
       return "-"
     }

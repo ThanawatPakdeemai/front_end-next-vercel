@@ -15,6 +15,7 @@ import { useToast } from "@feature/toast/containers"
 import CONFIGS from "@configs/index"
 import Helper from "@utils/helper"
 import { MESSAGES } from "@constants/messages"
+import useGameGlobal from "@hooks/useGameGlobal"
 
 interface IStoryLobbyProps {
   hideButtonPlay?: boolean
@@ -33,6 +34,11 @@ const StoryLobby = ({
   const [gameData, setGameData] = useState<IGame>()
   const route = useRouter()
   const { errorToast } = useToast()
+  const {
+    // item: item_id,
+    // conditionGameFree,
+    conditionPlayToEarn
+  } = useGameGlobal()
 
   useEffect(() => {
     let load = false
@@ -94,7 +100,7 @@ const StoryLobby = ({
       const date = null
       const stage_id = null
       const profile_name = profile.username
-      const type_play = gameData.play_to_earn === true ? "free" : "not_free"
+      const type_play = conditionPlayToEarn ? "free" : "not_free"
 
       window.location.href = `${CONFIGS.BASE_URL.GAME}/${
         gameData.id
@@ -143,16 +149,12 @@ const StoryLobby = ({
             )}
 
             <TagMultiple
-              title={t("genre")}
+              title={`${t("genre")}`}
               tags={gameTags}
             />
             <TagSingular
               title={`${t("play_count_title")}`}
-              label={
-                gameData && gameData.play_total_count
-                  ? gameData.play_total_count.toString()
-                  : ""
-              }
+              label={gameData?.play_total_count?.toString() || ""}
             />
           </div>
         </div>

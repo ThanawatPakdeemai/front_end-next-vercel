@@ -40,6 +40,7 @@ import CommissionIcon from "@components/icons/MenunIcon/CommissionIcon"
 import IDiamond from "@components/icons/Diamond"
 import CalendarSolidIcon from "@components/icons/CalendarSolidIcon"
 import GameStoryIcon from "@components/icons/GameStoryIcon"
+import FreeToEarnIcon from "@components/icons/FreeToEarnIcon"
 
 // TODO: Open after launch V2
 // import GlobalIcon from "@components/icons/GlobalIcon"
@@ -73,18 +74,24 @@ export const MENU = [
     chide: [
       {
         name: "Play To Earn Games",
-        link: "/play-to-earn-games",
+        link: "/play-to-earn",
         icon: <IconDollar.Ori className="stroke-neutral-300" />
       },
       {
-        name: "Free To Earn Games",
-        link: "/free-to-play-games",
+        name: "Free To Play Games",
+        link: "/free-to-play",
         icon: <IconDollar.Mask className="stroke-neutral-300" />,
         textRight: "Free"
       },
       {
+        name: "Free To Earn Games",
+        icon: <FreeToEarnIcon stroke="#E1E2E2" />,
+        link: "/free-to-earn",
+        textRight: "Free"
+      },
+      {
         name: "Story Mode Games",
-        link: "/story-mode-games",
+        link: "/story-mode",
         icon: <GameStoryIcon stroke="#E1E2E2" />,
         textRight: "Free"
       },
@@ -201,31 +208,31 @@ export const MENU = [
 
 export const MENU_GUEST: IMenu[] = [
   {
-    id: "play-to-earn-games",
+    id: "play-to-earn",
     label: "Play To Earn Games",
     icon: <IconDollar.Ori className="stroke-neutral-300" />,
-    href: "/play-to-earn-games",
+    href: "/play-to-earn",
     external: false
   },
   {
-    id: "free-to-play-games",
+    id: "free-to-play",
     label: "Free To Play Games",
     icon: <IconDollar.Mask className="stroke-neutral-300" />,
-    href: "/free-to-play-games",
+    href: "/free-to-play",
     external: false
   },
   {
-    id: "free-to-earn-games",
+    id: "free-to-earn",
     label: "Free To Earn Games",
-    icon: <IconDollar.Mask className="stroke-neutral-300" />,
-    href: "/free-to-earn-games",
+    icon: <FreeToEarnIcon stroke="#E1E2E2" />,
+    href: "/free-to-earn",
     external: false
   },
   {
-    id: "story-mode-games",
+    id: "story-mode",
     label: "Story Mode Games",
     icon: <GameStoryIcon stroke="#E1E2E2" />,
-    href: "/story-mode-games",
+    href: "/story-mode",
     external: false
   },
   // TODO: Open after launch V2

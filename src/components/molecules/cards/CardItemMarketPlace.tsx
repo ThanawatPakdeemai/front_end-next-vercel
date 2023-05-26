@@ -71,6 +71,15 @@ interface IProp {
   price?: number
   nakaPrice?: number
   href?: string
+  keyType?: string // "owner"
+  rental?: {
+    totalPeriod: number
+    totalBalancePeriod: number
+    totalPrice: number
+    exp: Date
+    owner?: string
+    buyer?: string
+  }
 }
 
 const CardItemMarketPlace = ({
@@ -87,7 +96,9 @@ const CardItemMarketPlace = ({
   sellingType,
   price,
   nakaPrice,
-  href
+  href,
+  keyType,
+  rental
 }: IProp) => {
   const { copyClipboard, formatNumber } = Helper
   const { successToast } = useToast()
@@ -118,11 +129,8 @@ const CardItemMarketPlace = ({
   }
 
   return (
-    <div
-      //  className={`relative ${isMobile && `justify-self-center`}`}
-      className="relative justify-self-center"
-    >
-      {id && (
+    <div className="relative justify-self-center">
+      {id && !rental && (
         <Chip
           label={id}
           variant="outlined"
@@ -192,6 +200,45 @@ const CardItemMarketPlace = ({
                     className="cursor-pointer uppercase"
                     color={handleColor()}
                     icon={handleIcon()}
+                  />
+                </div>
+              )}
+              {rental && keyType && (
+                <div className="flex justify-between">
+                  <Chip
+                    label={
+                      keyType.toLowerCase() === "owner"
+                        ? rental.buyer
+                        : rental.owner
+                    }
+                    variant="outlined"
+                    size="small"
+                    className="pointer-events-auto absolute left-4 top-4 z-10 w-[93px] cursor-pointer truncate uppercase"
+                    deleteIcon={
+                      <ContentCopySharpIcon
+                        sx={{
+                          width: 16,
+                          height: 16
+                        }}
+                        className="pb-[2px] !text-neutral-400"
+                      />
+                    }
+                    onDelete={() => {
+                      if (keyType.toLowerCase() === "owner" && rental.buyer)
+                        copyClipboard(rental.buyer)
+                      if (keyType.toLowerCase() !== "owner" && rental.owner)
+                        copyClipboard(rental.owner)
+                      successToast(MESSAGES.copy)
+                    }}
+                  />
+                  <Chip
+                    label={keyType}
+                    variant="filled"
+                    size="small"
+                    className="cursor-pointer uppercase"
+                    color={
+                      keyType.toLowerCase() === "owner" ? "secondary" : "error"
+                    }
                   />
                 </div>
               )}
@@ -304,30 +351,68 @@ const CardItemMarketPlace = ({
               isMobile ? `my-[8px]` : `my-[10px]`
             } border-b border-neutral-700 border-opacity-80`}
           />
-          <div className="mx-2 flex-wrap items-center justify-between sm:flex">
-            {price && (
-              <div className="flex items-center">
-                <ILogoMaster
-                  width="24"
-                  height="11"
-                  color="#ffff"
+          {rental ? (
+            <div className="flex flex-col">
+              <div className="mx-2 flex items-center justify-between">
+                <div className="flex items-center">
+                  <Typography className="ml-[11px] text-sm uppercase text-neutral-500">
+                    {formatNumber(rental.totalPrice as number, {
+                      maximumFractionDigits: 4
+                    })}{" "}
+                    NAKA/DAY
+                  </Typography>
+                </div>
+                <Chip
+                  label={`= ${formatNumber(rental.totalBalancePeriod, {
+                    maximumFractionDigits: 4
+                  })} NAKA`}
+                  variant="outlined"
+                  size="small"
+                  className="cursor-pointer uppercase"
                 />
-                <Typography className="ml-[11px] text-sm uppercase text-white-default">
-                  {formatNumber(price as number, { maximumFractionDigits: 4 })}
-                </Typography>
               </div>
-            )}
-            {nakaPrice && (
-              <Chip
-                label={`= ${formatNumber(nakaPrice, {
-                  maximumFractionDigits: 4
-                })} usd`}
-                variant="outlined"
-                size="small"
-                className="cursor-pointer uppercase"
-              />
-            )}
-          </div>
+              <div className="mx-2 flex items-center justify-between">
+                <div className="flex items-center">
+                  <Typography className="ml-[11px] text-sm uppercase text-neutral-500">
+                    EXPIRE ON
+                  </Typography>
+                </div>
+                <Chip
+                  label={rental.totalPeriod}
+                  variant="outlined"
+                  size="small"
+                  className="cursor-pointer uppercase"
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="mx-2 flex-wrap items-center justify-between sm:flex">
+              {price && (
+                <div className="flex items-center">
+                  <ILogoMaster
+                    width="24"
+                    height="11"
+                    color="#ffff"
+                  />
+                  <Typography className="ml-[11px] text-sm uppercase text-white-default">
+                    {formatNumber(price as number, {
+                      maximumFractionDigits: 4
+                    })}
+                  </Typography>
+                </div>
+              )}
+              {nakaPrice && (
+                <Chip
+                  label={`= ${formatNumber(nakaPrice, {
+                    maximumFractionDigits: 4
+                  })} usd`}
+                  variant="outlined"
+                  size="small"
+                  className="cursor-pointer uppercase"
+                />
+              )}
+            </div>
+          )}
         </motion.div>
       </Link>
     </div>

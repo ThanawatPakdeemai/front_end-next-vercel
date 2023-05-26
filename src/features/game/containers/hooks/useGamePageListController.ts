@@ -1,15 +1,21 @@
+/* eslint-disable max-len */
 import { useEffect, useState } from "react"
-import useGlobal from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
 import {
   IFilterGamesByKey,
   IGame,
-  IGetType
+  IGetType,
+  TGameType
 } from "@feature/game/interfaces/IGameService"
 import useFilterGameList from "@feature/dropdown/containers/hooks/useFilterGameList"
 import { useRouter } from "next/router"
 
-const useGamePageListController = (gameType?: IGetType, _limit?: number) => {
+const useGamePageListController = (
+  gameMode?: IGetType,
+  gameType?: TGameType,
+  _limit?: number
+) => {
   const router = useRouter()
   const categoryId = router.query.id
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
@@ -32,25 +38,43 @@ const useGamePageListController = (gameType?: IGetType, _limit?: number) => {
     gameItem: gameItemDropdown,
     device: deviceDropdown,
     search: searchDropdown,
+    game_type: gameTypeDropdown,
     clearCategory,
     clearDevice,
     clearGameItem,
-    clearSearch
+    clearSearch,
+    clearGameType,
+    setDevice
   } = useFilterStore()
 
   const { mutateGetGamesByCategoryId, isLoading: loadingFilterGame } =
     useFilterGameList()
 
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      if (isMobile) {
+        setDevice("mobile")
+      }
+    }
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile])
+
   /**
    * @description Get game type by pathname
    * @returns
    */
-  const getGameTypeFilter = (): IGetType => {
+  const getGameModeFilter = (): IGetType => {
     if (categoryId) {
       return "all"
     }
-    if (!gameType) return "all"
-    return gameType
+    if (!gameMode) {
+      return "all"
+    }
+    return gameMode
   }
 
   useEffect(() => {
@@ -60,6 +84,7 @@ const useGamePageListController = (gameType?: IGetType, _limit?: number) => {
       clearDevice()
       clearGameItem()
       clearSearch()
+      clearGameType()
     }
     return () => {
       load = true
@@ -82,12 +107,13 @@ const useGamePageListController = (gameType?: IGetType, _limit?: number) => {
         category: categoryId || categoryDropdown,
         item: gameItemDropdown,
         device: deviceDropdown,
-        game_type:
-          getGameTypeFilter() === "arcade-emporium"
+        game_type: gameType || gameTypeDropdown,
+        game_mode:
+          getGameModeFilter() === "arcade-emporium"
             ? "all"
-            : getGameTypeFilter(),
+            : getGameModeFilter(),
         tournament: false,
-        nftgame: getGameTypeFilter() === "arcade-emporium" ? true : "all"
+        nftgame: getGameModeFilter() === "arcade-emporium" ? true : "all"
       }
       mutateGetGamesByCategoryId(filterData).then((res) => {
         if (res) {
@@ -107,10 +133,11 @@ const useGamePageListController = (gameType?: IGetType, _limit?: number) => {
     gameItemDropdown,
     deviceDropdown,
     searchDropdown,
+    gameTypeDropdown,
     page,
     limit,
     mutateGetGamesByCategoryId,
-    gameType
+    gameMode
   ])
 
   const onSetGameStore = (game: IGame) => {

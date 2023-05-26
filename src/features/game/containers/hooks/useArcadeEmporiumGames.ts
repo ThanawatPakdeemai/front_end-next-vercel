@@ -17,7 +17,8 @@ const useArcadeEmporiumGames = () => {
   const _search = searchDropdown
   const _item = gameItemDropdown
   const _device = deviceDropdown
-  const _gameType = "play-to-earn-games"
+  const _gameMode = "play-to-earn"
+  const _gameType = "all"
   const _tournament = false
   const _category = categoryDropdown
   const _nftgame = false
@@ -28,6 +29,7 @@ const useArcadeEmporiumGames = () => {
     _search,
     _item,
     _device,
+    _gameMode,
     _gameType,
     _tournament,
     _category,
@@ -49,7 +51,8 @@ const useArcadeEmporiumGames = () => {
     queryFn: () =>
       getGamesByKey({
         ...defaultBody,
-        game_type: "play-to-earn-games",
+        game_type: "all",
+        game_mode: "play-to-earn",
         nftgame: true
       }),
     keepPreviousData: true,

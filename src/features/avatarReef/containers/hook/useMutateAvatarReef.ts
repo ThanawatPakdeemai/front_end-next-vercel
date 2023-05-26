@@ -5,9 +5,9 @@ import {
   getPriceAvatarReef,
   purchaseAvatarReef,
   redeemAvatarReef
-} from "../services/avatarReef.service"
+} from "@feature/avatarReef/containers/services/avatarReef.service"
 
-const useAvatarReefServ = () => {
+const useMutateAvatarReef = () => {
   const {
     mutateAsync: mutateGetMyAvatarReef,
     isLoading: isGetMyAvatarReefLoading
@@ -65,4 +65,4 @@ const useAvatarReefServ = () => {
   }
 }
 
-export default useAvatarReefServ
+export default useMutateAvatarReef

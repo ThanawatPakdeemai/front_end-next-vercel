@@ -12,7 +12,8 @@ import {
   IDevice,
   IDropdownAll,
   IGameCategory,
-  IGameItem
+  IGameItem,
+  IGameType
 } from "@feature/dropdown/interfaces/IDropdownService"
 import useFilterStore from "@stores/blogFilter"
 import { getGamePartner } from "@feature/partner/containers/services/dropdownPartner.service"
@@ -21,16 +22,20 @@ import AllGamesIcon from "@components/icons/AllGamesIcon"
 import AllDevicesIcon from "@components/icons/AllDevicesIcon"
 import MobileIcon from "@components/icons/HowToPlayIcon/MobileIcon"
 import DesktopIcon from "@components/icons/DesktopIcon"
+import MultiPlayerIcon from "@components/icons/MultiPlayerIcon"
+import SinglePlayerIcon from "@components/icons/SinglePlayerIcon"
 import SelectDropdown from "./selectDropdown/SelectDropdown"
 
 export type IDropdownCustomSelect =
   | "All Categories"
   | "All Game Assets"
   | "All Devices"
+  | "All Game Types"
   | "All Publisher Categories"
   | "Currently Week"
   | "All Partner Categories"
   | "GameItem"
+  | ""
 
 interface IProp {
   icon?: React.ReactNode
@@ -41,19 +46,21 @@ const DropdownCustom = ({ title, className }: IProp) => {
   const { t } = useTranslation()
   const [expanded, setExpanded] = useState<boolean>(false)
   const [listSelect, setListSelect] = useState<
-    IGameItem[] | IGameCategory[] | IDevice[]
+    IGameItem[] | IGameCategory[] | IDevice[] | IGameType[]
   >([])
   const [onTitle, setOnTitle] = useState<IDropdownAll>()
+  const [onTitleGameType, setOnTitleGameType] = useState<IGameType>()
   const { errorToast } = useToast()
   // const [height, setHeight] = useState<number | undefined>(0)
 
   const {
     setCategory: setCategoryDropdown,
     setGameItem: setGameItemDropdown,
-    setDevice: setDeviceDropdown
+    setDevice: setDeviceDropdown,
+    setGameType: setGameTypeDropdown
   } = useFilterStore()
 
-  const [textTitle, setTextTitle] = useState<string>("")
+  const [textTitle, setTextTitle] = useState<IDropdownCustomSelect>("")
 
   const showIcon = title !== "Currently Week"
 
@@ -66,6 +73,8 @@ const DropdownCustom = ({ title, className }: IProp) => {
         return <AllGamesIcon />
       case "All Devices":
         return <AllDevicesIcon />
+      case "All Game Types":
+        return <MultiPlayerIcon />
       default:
         return <AllCategoriesIcon />
     }
@@ -78,22 +87,6 @@ const DropdownCustom = ({ title, className }: IProp) => {
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
   }
-
-  // const dataDetail = useMemo(() => {
-  //   if (gameData) {
-  //     return gameData.map((element) => ({
-  //       label: element.name ?? "",
-  //       icon: element._id ?? "",
-  //       data: element,
-  //       href: ""
-  //     }))
-  //   }
-  //   return Array(1).map(() => ({
-  //     label: "",
-  //     icon: "",
-  //     href: ""
-  //   }))
-  // }, [gameData])
 
   const onGamePartner = () => {
     getGamePartner()
@@ -189,6 +182,24 @@ const DropdownCustom = ({ title, className }: IProp) => {
     }
   ]
 
+  const gameType: IGameType[] = [
+    {
+      _id: "all",
+      name: "All Game Types",
+      icon: <MultiPlayerIcon />
+    },
+    {
+      _id: "singleplayer",
+      name: "Singleplayer",
+      icon: <SinglePlayerIcon />
+    },
+    {
+      _id: "multiplayer",
+      name: "Multiplayer",
+      icon: <MultiPlayerIcon />
+    }
+  ]
+
   useEffect(() => {
     let load = false
 
@@ -208,6 +219,9 @@ const DropdownCustom = ({ title, className }: IProp) => {
       } else if (title === "All Publisher Categories") {
         onGamePartner()
         setTextTitle("All Categories")
+      } else if (title === "All Game Types") {
+        setListSelect(gameType)
+        setTextTitle("All Game Types")
       }
     }
 
@@ -246,6 +260,9 @@ const DropdownCustom = ({ title, className }: IProp) => {
           }
         } else if (textTitle === "All Devices") {
           setDeviceDropdown(onTitle._id)
+        } else if (textTitle === "All Game Types") {
+          if (!onTitleGameType) return
+          setGameTypeDropdown(onTitleGameType._id)
         }
       }
     }
@@ -315,6 +332,7 @@ const DropdownCustom = ({ title, className }: IProp) => {
               // className={className}
               details={listSelect}
               setOnTitle={setOnTitle}
+              setOnTitleGameType={setOnTitleGameType}
               setExpanded={setExpanded}
               title={title}
             />

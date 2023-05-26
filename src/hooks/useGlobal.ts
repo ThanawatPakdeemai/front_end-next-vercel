@@ -6,7 +6,8 @@ import { useCallback, useEffect, useState, useRef } from "react"
 import {
   IFilterGamesByKey,
   IGame,
-  IGetType
+  IGetType,
+  TGameType
 } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
@@ -17,6 +18,7 @@ import useNotiStore from "@stores/notification"
 import Helper from "@utils/helper"
 import { isMobile as detectMobile } from "react-device-detect"
 import useSupportedChain from "./useSupportedChain"
+import useGameGlobal from "./useGameGlobal"
 
 const useGlobal = (
   _limit?: number,
@@ -25,7 +27,8 @@ const useGlobal = (
   _search?: string,
   _item?: string | string[],
   _device?: string,
-  _gameType?: IGetType,
+  _gameMode?: IGetType,
+  _gameType?: TGameType,
   _tournament?: boolean,
   _category?: string,
   _nftgame?: boolean
@@ -39,6 +42,7 @@ const useGlobal = (
     search: _search ?? "",
     item: _item ?? "all",
     device: _device ?? "all",
+    game_mode: _gameMode ?? "all",
     game_type: _gameType ?? "all",
     tournament: _tournament ?? false,
     category: _category ?? "all",
@@ -57,6 +61,8 @@ const useGlobal = (
   const profile = useProfileStore((state) => state.profile.data)
   const { isLogin, onReset } = useProfileStore()
   const { fetchNAKAToken, fetchAllTokenSupported } = useSupportedChain()
+
+  const { conditionPlayToEarn } = useGameGlobal()
 
   // States
   const [stateProfile, setStateProfile] = useState<IProfile | null>()
@@ -136,7 +142,7 @@ const useGlobal = (
 
       case "partner-game":
         onSetGamePartnersData(_gameData as IPartnerGameData)
-        // await router.push(`/partner-games/${_gameUrl}?id=${_gameData.id}`)
+        // await router.push(`/partner/${_gameUrl}?id=${_gameData.id}`)
         break
 
       case "arcade-emporium":
@@ -146,7 +152,7 @@ const useGlobal = (
 
       default:
         onSetGameData(_gameData as IGame)
-        // await router.push(`/${_type}-games/${_gameUrl}`)
+        // await router.push(`/${_type}/${_gameUrl}`)
         break
     }
     // NOTE: No need this code
@@ -186,13 +192,13 @@ const useGlobal = (
         return `/publishers/${_gameData.name}`
 
       case "partner-game":
-        return `/partner-games/${_gameUrl}?id=${_gameData.id}`
+        return `/partner/${_gameUrl}?id=${_gameData.id}`
 
       case "arcade-emporium":
         return `/arcade-emporium/${_gameUrl}?id=${_gameData.id}`
 
       default:
-        return `/${_type}-games/${_gameUrl}`
+        return `/${_type}/${_gameUrl}`
     }
   }
 
@@ -208,18 +214,18 @@ const useGlobal = (
    * @description Get type game path folder
    */
   const getTypeGamePathFolder = (_gameData: IGame): IGetType => {
-    if (!_gameData) return "play-to-earn-games"
+    if (!_gameData) return "play-to-earn"
     if (_gameData.game_mode === "play-to-earn") {
-      return "play-to-earn-games"
+      return "play-to-earn"
     }
     if (_gameData.game_mode === "free-to-earn") {
-      return "free-to-play-games"
+      return "free-to-earn"
     }
     if (_gameData.game_mode === "free-to-play") {
-      return "free-to-play-games"
+      return "free-to-play"
     }
     if (_gameData.game_type === "storymode") {
-      return "story-mode-games"
+      return "story-mode"
     }
     if (_gameData?.is_NFT) {
       return "arcade-emporium"
@@ -281,15 +287,17 @@ const useGlobal = (
         return "!bg-warning-dark !text-neutral-900"
 
       case "storymode":
-      case "story-mode-games":
+      case "story-mode":
         return "!bg-info-main !text-neutral-900"
 
-      case "play-to-earn-games":
+      case "play-to-earn":
         return "!bg-error-main !text-neutral-900"
 
-      case "free-to-play-games":
-      case "free-to-earn-games":
+      case "free-to-play":
         return "!bg-secondary-main !text-neutral-900"
+
+      case "free-to-earn":
+        return "!bg-purple-02 !text-purple-primary"
 
       default:
         return "!bg-neutral-800 !text-neutral-900"
@@ -303,24 +311,22 @@ const useGlobal = (
   const getGameTypeByPathname = (): IGetType => {
     switch (router.pathname) {
       case "/arcade-emporium":
-      case "/arcade-emporium-games":
         return "arcade-emporium"
 
       case "/partner":
-      case "/partner-games":
         return "partner-game"
 
-      case "/play-to-earn-games":
-        return "play-to-earn-games"
+      case "/play-to-earn":
+        return "play-to-earn"
 
-      case "/free-to-play-games":
-        return "free-to-play-games"
+      case "/free-to-play":
+        return "free-to-play"
 
-      case "/story-mode-games":
+      case "/story-mode":
         return "storymode"
 
       default:
-        return "play-to-earn-games"
+        return "play-to-earn"
     }
   }
 
@@ -343,7 +349,7 @@ const useGlobal = (
     const date = null
     const stage_id = null
     const profile_name = profile.username
-    const type_play = gameData.play_to_earn === true ? "free" : "not_free"
+    const type_play = conditionPlayToEarn ? "free" : "not_free"
     // Get url by game type
     switch (gameData.game_type) {
       case "storymode":

@@ -1,3 +1,5 @@
+import { TGameType } from "@feature/game/interfaces/IGameService"
+
 export interface IProfileResponse {
   status: number
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -154,7 +156,7 @@ export interface IDataPlayerStatistic {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any // IDataPlayerStatisticData
   story: string
-  game_type: string
+  game_type: TGameType
   gamename: string
   image_game: string
   tournament?: boolean
@@ -177,7 +179,7 @@ export interface IPlayerInfoGameData {
   name: string
   story: string
   image: string
-  game_type: string
+  game_type: TGameType
   winrate: string
   played: number
   rank: string

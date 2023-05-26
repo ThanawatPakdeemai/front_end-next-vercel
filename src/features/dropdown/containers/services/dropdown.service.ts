@@ -5,7 +5,7 @@ import {
   IGameCategory,
   IGameItem
 } from "@feature/dropdown/interfaces/IDropdownService"
-import { IFilterGamesByKey, IGame } from "@feature/game/interfaces/IGameService"
+import { IFilterGamesByKey } from "@feature/game/interfaces/IGameService"
 
 const getGameAssets = () =>
   new Promise<IGameItem[]>((resolve, reject) => {
@@ -26,19 +26,8 @@ const getGameAssets = () =>
 const getCategories = () =>
   new Promise<IGameCategory[]>((resolve, reject) => {
     services
-      .get(`${CONFIGS.BASE_URL.API}/game-category/all`)
-      .then((res) => {
-        resolve(res.data.data)
-      })
-      .catch((error: Error) => {
-        reject(error)
-      })
-  })
-
-const getGameAlls = () =>
-  new Promise<IGame[]>((resolve, reject) => {
-    services
-      .get(`${CONFIGS.BASE_URL.API}/game/all`)
+      // .get(`${CONFIGS.BASE_URL.API}/game-category/all`)
+      .get(`${CONFIGS.BASE_URL.API}/game-category/all/new`)
       .then((res) => {
         resolve(res.data.data)
       })
@@ -68,4 +57,4 @@ const getGamesByCategoryId = (data: IFilterGamesByKey) =>
       })
   })
 
-export { getGameAssets, getCategories, getGameAlls, getGamesByCategoryId }
+export { getGameAssets, getCategories, getGamesByCategoryId }

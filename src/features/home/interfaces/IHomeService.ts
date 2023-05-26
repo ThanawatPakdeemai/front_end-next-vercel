@@ -1,4 +1,4 @@
-import { IGame } from "@feature/game/interfaces/IGameService"
+import { IGame, TGameType } from "@feature/game/interfaces/IGameService"
 
 export interface IHomeSlideResponse {
   status: boolean
@@ -40,7 +40,7 @@ export interface IRoomAvaliableRoomList {
   item_image: string
   game_name: string
   game_url: string
-  game_type: string
+  game_type: TGameType
   game_type_code: string
   game_free_to_earn: boolean
   game_path: string
@@ -58,7 +58,7 @@ export interface IRoomAvaliableItemList {
 export interface IRoomAvaliableData {
   game_id: string
   game_name: string
-  game_type: string
+  game_type: TGameType
   game_type_code: string
   game_free_play: boolean
   game_image: string

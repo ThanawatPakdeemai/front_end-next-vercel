@@ -2,7 +2,6 @@ import Tagline from "@components/molecules/tagline/Tagline"
 import React from "react"
 import dayjs from "dayjs"
 import _ from "lodash"
-import { MobileView } from "react-device-detect"
 import { isMobile } from "@hooks/useGlobal"
 import SummaryItemUsed, {
   ISummaryItemUsedProps
@@ -39,32 +38,30 @@ const GameSummaryBody = ({
   return (
     <>
       {isMobile ? (
-        <MobileView>
-          <div className="flex w-full flex-col items-center px-2">
-            <Tagline
-              icon={null}
-              bgColor="bg-error-main"
-              textColor="text-error-contrastText font-bold text-[12px]"
-              text="Thanks for playing Nanamoto.games with us. It was a lot of fun!"
-              className="block overflow-hidden"
-              show={show}
-            />
-            <CardSummaryMain
-              value={value}
-              date={dayjs(date).format("DD MMM YYYY")}
+        <div className="flex w-full flex-col items-center px-2">
+          <Tagline
+            icon={null}
+            bgColor="bg-error-main"
+            textColor="text-error-contrastText font-bold text-[12px]"
+            text="Thanks for playing Nanamoto.games with us. It was a lot of fun!"
+            className="block overflow-hidden"
+            show={show}
+          />
+          <CardSummaryMain
+            value={value}
+            date={dayjs(date).format("DD MMM YYYY")}
+            gameName={gameName}
+            gameURLtoShare={gameURLtoShare}
+            title={title}
+          />
+          <GameSummaryRewardFooter gameImage={gameImage}>
+            <SummaryGameData
               gameName={gameName}
-              gameURLtoShare={gameURLtoShare}
-              title={title}
+              gameRaward={gameRaward}
+              itemName={props.itemName}
             />
-            <GameSummaryRewardFooter gameImage={gameImage}>
-              <SummaryGameData
-                gameName={gameName}
-                gameRaward={gameRaward}
-                itemName={props.itemName}
-              />
-            </GameSummaryRewardFooter>
-          </div>
-        </MobileView>
+          </GameSummaryRewardFooter>
+        </div>
       ) : (
         <div className="flex-[1_1_100%] overflow-hidden rounded-[14px] bg-neutral-900 sm:flex-[1_1_50%] lg:w-[605px] lg:flex-none">
           <Tagline

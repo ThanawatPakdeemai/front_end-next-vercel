@@ -6,10 +6,9 @@ import HeadPrice from "@components/molecules/HeadPrice"
 import { RightMenu } from "@components/molecules/rightMenu"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import RightMenuDeveloper from "@components/molecules/rightMenu/RightMenuDeveloper"
-import HeadMenuMobile from "@src/mobile/headerMenu/HeadMenuMobile"
-import { MobileView } from "react-device-detect"
-import HeadProfileMobile from "@src/mobile/headerMenu/HeadProfileMobile"
-import CONFIGS from "@configs/index"
+import HeadMenuMobile from "@mobile/components/organisms/headerMenu/HeadMenuMobile"
+import HeadProfileMobile from "@mobile/components/organisms/headerMenu/HeadProfileMobile"
+// import CONFIGS from "@configs/index"
 import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutateMarketplace"
 import useMarketCategTypes from "@stores/marketCategTypes"
 import { NextRouter, useRouter } from "next/router"
@@ -82,27 +81,26 @@ const Header = () => {
 
   return (
     <div className="header-wrapper">
+      {showHeadPrice && !isMobile && <HeadPrice />}
       {!isMobile && (
-        <>
-          {showHeadPrice && <HeadPrice />}
-          <header className="header relative top-10 z-[999] lg:sticky">
-            <Box
-              component="div"
-              className="flex flex-wrap items-center justify-between md:my-10 xl:flex-nowrap"
-            >
-              <HeadLogo />
-              {showHeadMenu && <HeadMenu />}
-              {showRightMenu && <RightMenu />}
-              {showRightMenuDeveloper && <RightMenuDeveloper />}
-            </Box>
-          </header>
-        </>
+        <header className="header relative top-10 z-[999] lg:sticky">
+          <Box
+            component="div"
+            className="flex flex-wrap items-center justify-between md:my-10 xl:flex-nowrap"
+          >
+            <HeadLogo />
+            {showHeadMenu && <HeadMenu />}
+            {showRightMenu && <RightMenu />}
+            {showRightMenuDeveloper && <RightMenuDeveloper />}
+          </Box>
+        </header>
       )}
-      {CONFIGS.DISPLAY_MOBILE_MODE === "true" && (
-        <MobileView>
+
+      {isMobile && (
+        <>
           <HeadProfileMobile />
           <HeadMenuMobile />
-        </MobileView>
+        </>
       )}
     </div>
   )

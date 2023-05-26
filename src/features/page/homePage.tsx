@@ -16,7 +16,7 @@ import BannerSlide from "@feature/slider/components/templates/BannerSlide"
 import CarouselSlide from "@feature/slider/components/templates/CarouselSlide"
 import CardMarketplace from "@components/molecules/CardMarketplace"
 import CardNakaverse from "@components/molecules/CardNakaverse"
-import { Box, Typography } from "@mui/material"
+import { Box } from "@mui/material"
 import ICoupon from "@components/icons/Coupon"
 import IDiamond from "@components/icons/Diamond"
 import { IMAGES } from "@constants/images"
@@ -39,10 +39,9 @@ import DeveloperPart from "@feature/home/components/template/DeveloperPart"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 import { useTranslation } from "react-i18next"
 import OnPlayingStyle2 from "@feature/home/components/molecules/OnPlayingStyle2"
-import { MobileView } from "react-device-detect"
+import HomeMobile from "@mobile/features/pages/HomeMobile"
 
 const Home = () => {
-  // const limit = 10
   const { profile } = useProfileStore()
   const { clearQuestStore, setOpen, hasCompleted } = useQuestStore()
   const { hydrated, isFreeToEarnGame, isFreeToPlayGame, isStoryModeGame } =
@@ -75,36 +74,16 @@ const Home = () => {
   const [f2pGame, setF2PGame] = useState<IGame[]>()
   const [f2eGame, setF2EGame] = useState<IGame[]>()
   const [storyModeGame, setStoryModeGame] = useState<IGame[]>()
-  const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-earn-games")
+  const [f2pCurType, setF2PCurType] = useState<IGetType>("free-to-earn")
 
   const [p2eGame, setP2EGame] = useState<IGame[]>()
-  const [p2eCurType, setP2ECurType] = useState<IGetType>("play-to-earn-games")
-
-  const getGameTypeF2EByTitleClicked = (): IGetType => {
-    switch (f2pCurType) {
-      case "free-to-earn-games":
-        return "free-to-play-games"
-      case "story-mode-games":
-        return "storymode"
-      default:
-        return f2pCurType
-    }
-  }
-
-  const getGameTypeP2EByTitleClicked = (): IGetType => {
-    switch (p2eCurType) {
-      case "arcade-emporium":
-        return "arcade-emporium"
-      default:
-        return "play-to-earn-games"
-    }
-  }
+  const [p2eCurType, setP2ECurType] = useState<IGetType>("play-to-earn")
 
   // const { hotGameData } = useGetHotGames()
   const { gameFilter: dataF2pGames, loadingFilterGame: loadingDataF2pGames } =
-    useGamePageListController(getGameTypeF2EByTitleClicked(), 9999)
+    useGamePageListController(f2pCurType)
   const { gameFilter: dataP2eGame, loadingFilterGame: loadingDataP2eGame } =
-    useGamePageListController(getGameTypeP2EByTitleClicked(), 9999)
+    useGamePageListController(p2eCurType)
 
   useEffect(() => {
     let load = false
@@ -128,10 +107,8 @@ const Home = () => {
     return () => {
       load = true
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    isFreeToEarnGame,
-    isFreeToPlayGame,
-    isStoryModeGame,
     dataF2pGames,
     f2pCurType,
     p2eCurType,
@@ -143,78 +120,7 @@ const Home = () => {
   return hydrated ? (
     <>
       {isMobile ? (
-        <MobileView>
-          <Box
-            component="div"
-            className="pt-20"
-          >
-            <BannerSlide />
-            <div className="my-2 h-full w-full lg:mt-10 xl:mt-[140px]">
-              {!loadingDataF2pGames && f2pGame && f2eGame && storyModeGame ? (
-                <>
-                  <Typography
-                    variant="body2"
-                    className="py-[1.125rem] uppercase text-neutral-300"
-                  >
-                    Free to Play
-                  </Typography>
-                  <GameCarousel
-                    menu={F2PHeaderMenu}
-                    list={
-                      f2pCurType === "free-to-earn-games"
-                        ? f2eGame
-                        : f2pCurType === "story-mode-games"
-                        ? storyModeGame
-                        : f2pGame
-                    }
-                    curType={f2pCurType}
-                    setCurType={setF2PCurType}
-                    checkTimer
-                    onPlaying={false}
-                  />
-                </>
-              ) : (
-                <div className="grid grid-cols-2 gap-x-3 lg:flex">
-                  {[...Array(6)].map(() => (
-                    <SkeletonCard key={uuid()} />
-                  ))}
-                </div>
-              )}
-            </div>
-            <div className="h-loadingFreeToPlayGames mb-2 mt-[-2rem] w-full">
-              {p2eGame && !loadingDataP2eGame ? (
-                <>
-                  <Typography
-                    variant="body2"
-                    className="py-[1.125rem] uppercase text-neutral-300"
-                  >
-                    Play to Earn
-                  </Typography>
-                  <GameCarousel
-                    menu={P2EHeaderMenu}
-                    list={p2eGame}
-                    curType={p2eCurType}
-                    setCurType={setP2ECurType}
-                    showNo
-                    onPlaying={false}
-                  />
-                </>
-              ) : (
-                <div className="grid grid-cols-2 gap-x-3 md:grid-cols-3 lg:flex lg:grid-cols-4 ">
-                  {[...Array(6)].map(() => (
-                    <SkeletonCard key={uuid()} />
-                  ))}
-                </div>
-              )}
-            </div>
-            <div className="mt-[-3rem]">
-              <OnPlayingStyle2
-                isSlider={false}
-                showTitle
-              />
-            </div>
-          </Box>
-        </MobileView>
+        <HomeMobile />
       ) : (
         <>
           <BannerSlide />
@@ -328,9 +234,9 @@ const Home = () => {
               <GameCarousel
                 menu={F2PHeaderMenu}
                 list={
-                  f2pCurType === "free-to-earn-games"
+                  f2pCurType === "free-to-earn"
                     ? f2eGame
-                    : f2pCurType === "story-mode-games"
+                    : f2pCurType === "story-mode"
                     ? storyModeGame
                     : f2pGame
                 }

@@ -39,6 +39,7 @@ const TextfieldDetailContent = ({
   const { count: countItemSelected } = useCountStore()
   const { invPrice, setInvPrice } = useInventoryProvider()
   const { marketAmount, setMarketAmount } = useMarketplaceProvider()
+  const { invAmount, setInvAmount } = useInventoryProvider()
   const _priceValue = invPrice || price
 
   const onPriceChange = (value: string) => {
@@ -53,24 +54,36 @@ const TextfieldDetailContent = ({
   }, [nakaPrice, countItemSelected, _priceValue])
 
   const onDecreaseAmount = () => {
-    if (count && setMarketAmount) {
-      if (marketAmount && marketAmount <= count.min) {
-        setMarketAmount(count.min)
-      } else {
-        setMarketAmount((prev: number) => prev - 1)
+    if (count)
+      if (setInvAmount) {
+        if (invAmount && invAmount <= count.min) setInvAmount(count.min)
+        else setInvAmount((prev: number) => prev - 1)
+      } else if (setMarketAmount) {
+        if (marketAmount && marketAmount >= count.min)
+          setMarketAmount(count.min)
+        else setMarketAmount((prev: number) => prev - 1)
+      }
+  }
+
+  const onIncreaseAmount = () => {
+    if (count) {
+      if (setInvAmount) {
+        if (invAmount && invAmount >= count.max) setInvAmount(count.max)
+        else setInvAmount((prev: number) => prev + 1)
+      } else if (setMarketAmount) {
+        if (marketAmount && marketAmount >= count.max)
+          setMarketAmount(count.max)
+        else setMarketAmount((prev: number) => prev + 1)
       }
     }
   }
 
-  const onIncreaseAmount = () => {
-    if (count && setMarketAmount) {
-      if (marketAmount && marketAmount >= count.max) {
-        setMarketAmount(count.max)
-      } else {
-        setMarketAmount((prev: number) => prev + 1)
-      }
-    }
-  }
+  const _count = useMemo(() => {
+    if (setInvAmount) return invAmount
+    if (setMarketAmount) return marketAmount
+    0
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [invAmount, marketAmount])
 
   return (
     <div
@@ -84,7 +97,7 @@ const TextfieldDetailContent = ({
           label={count.label}
           min={count.min}
           max={count.max}
-          count={marketAmount}
+          count={_count}
           _minusItem={onDecreaseAmount}
           _addItem={onIncreaseAmount}
         />

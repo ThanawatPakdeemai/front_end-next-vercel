@@ -227,7 +227,7 @@ const useGlobal = (
     if (_gameData.game_type === "storymode") {
       return "story-mode"
     }
-    if (_gameData?.is_NFT) {
+    if (_gameData.is_NFT) {
       return "arcade-emporium"
     }
     return "all"

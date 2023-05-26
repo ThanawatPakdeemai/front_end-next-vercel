@@ -30,6 +30,7 @@ export interface INFTInfo {
   owner_id: string
   meta_data: IArcMetaData
   player_id: string
+  username: string
 }
 
 export interface INFTInfoData {

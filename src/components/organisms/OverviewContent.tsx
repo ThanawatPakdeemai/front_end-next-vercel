@@ -115,24 +115,23 @@ const OverviewContent = ({
                   </div>
                 </>
               )}
-              {gameOwner !== "-" ||
-                (gameOwner !== undefined && (
-                  <>
-                    <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
-                    <div className="overview-row grid gap-2 lg:grid-cols-2">
-                      <div
-                        id="overview-game-owner"
-                        className="overview-col whitespace-nowrap"
-                      >
-                        <TagSingular
-                          title={t("game_owner")}
-                          label={gameOwner}
-                          idNFT={gameIdNFT}
-                        />
-                      </div>
+              {gameOwner && gameOwner !== "-" && (
+                <>
+                  <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+                  <div className="overview-row grid gap-2 lg:grid-cols-2">
+                    <div
+                      id="overview-game-owner"
+                      className="overview-col whitespace-nowrap"
+                    >
+                      <TagSingular
+                        title={t("game_owner")}
+                        label={gameOwner}
+                        idNFT={gameIdNFT}
+                      />
                     </div>
-                  </>
-                ))}
+                  </div>
+                </>
+              )}
               {/* {singleVersion !== "-" && (
                 <>
                   <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />

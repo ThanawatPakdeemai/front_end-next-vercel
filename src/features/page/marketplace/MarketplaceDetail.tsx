@@ -15,6 +15,7 @@ import { Chip, Typography } from "@mui/material"
 import { useRouter } from "next/router"
 import CopyButton from "@components/atoms/CopyButton"
 import ButtonClose from "@components/atoms/button/ButtonClose"
+import RedemptionCode from "@components/molecules/RedemptionCode"
 
 const ButtonMarket = dynamic(
   () => import("@components/atoms/button/ButtonMarket"),
@@ -61,6 +62,7 @@ const MarketplaceDetail = () => {
               marketOrder.nakapunk_data?.description ??
               marketOrder.game_data?.story
             }
+            order_id={marketOrder.order_id}
             image={imageNFT}
             video={vdoNFT}
             model={marketOrder.building_data?.model_3d}
@@ -117,6 +119,7 @@ const MarketplaceDetail = () => {
                   : undefined
               }
               redemption={!marketOrder.seller_id}
+              checkRedreemMobile={!marketOrder.seller_id}
             >
               <ButtonMarket
                 nftType={marketOrder.type}
@@ -190,7 +193,6 @@ const MarketplaceDetail = () => {
           nameItem={marketOrder.item_data?.name}
         >
           <RightDetailsMarketplace
-            checkRedreemMobile
             type={marketType as TNFTType}
             id={marketOrder.item_id}
             token={tokenNFT}
@@ -214,7 +216,6 @@ const MarketplaceDetail = () => {
                   }
                 : undefined
             }
-            redemption={!marketOrder.seller_id}
           >
             <ButtonMarket
               nftType={marketOrder.type}
@@ -235,6 +236,7 @@ const MarketplaceDetail = () => {
             />
           </RightDetailsMarketplace>
         </CardContentDetails>
+        <RedemptionCode />
         <div className="my-4 grid gap-6 rounded-[24px] border-[1px] border-neutral-800 bg-neutral-780 px-8 py-6 ">
           <CardWriterDetails
             textHead="create by"

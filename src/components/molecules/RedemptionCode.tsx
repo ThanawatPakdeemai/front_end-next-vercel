@@ -15,17 +15,15 @@ import useProfileStore from "@stores/profileStore"
 import { motion } from "framer-motion"
 import React, { memo } from "react"
 import { useTranslation } from "react-i18next"
+import { useToast } from "@feature/toast/containers"
+import useGetCoupon from "@feature/coupon/containers/hook/useGetCoupon"
 
 interface ICharacterCoupon {
   couponLength: number
   disableCoupon: boolean
 }
 
-interface IProps {
-  onRedeem: (_coupon: string) => void
-}
-
-const RedemptionCode = ({ onRedeem }: IProps) => {
+const RedemptionCode = () => {
   const [expanded, setExpanded] = React.useState<string | false>("")
   const [coupon, setCoupon] = React.useState<string>("")
   const [characterCoupon, setCharacterCoupon] =
@@ -34,6 +32,8 @@ const RedemptionCode = ({ onRedeem }: IProps) => {
       disableCoupon: true
     })
   const { profile } = useProfileStore()
+  const { getRedeemCode } = useGetCoupon()
+  const { errorToast, successToast } = useToast()
 
   const { t } = useTranslation()
 
@@ -59,7 +59,13 @@ const RedemptionCode = ({ onRedeem }: IProps) => {
 
   const handleClick = async () => {
     if (coupon) {
-      await onRedeem(coupon)
+      await getRedeemCode(coupon)
+        .then((res) => {
+          successToast(res.message)
+        })
+        .catch((error) => {
+          errorToast(error.message)
+        })
     }
     setCoupon("")
     setCharacterCoupon({
@@ -72,13 +78,16 @@ const RedemptionCode = ({ onRedeem }: IProps) => {
     <Accordion
       expanded={expanded === "panel1"}
       onChange={handleChange("panel1")}
-      className="static rounded-md border-neutral-800 bg-neutral-780"
+      className="static mt-4 rounded-md border-neutral-800 bg-neutral-780 px-[26px]"
+      sx={{
+        backgroundImage: "none"
+      }}
     >
       <AccordionSummary
         aria-controls="panel1d-content"
         id="panel1d-header"
       >
-        <div className="relative flex h-10 w-full items-center justify-between px-4">
+        <div className="relative flex h-10 w-full items-center justify-between">
           <Typography className="text-neutral-300">REDEMPTION CODE</Typography>
           <div className="flex h-[40px] w-[40px] items-center justify-center rounded-lg border-[1px] border-solid border-neutral-700 bg-neutral-800">
             <div

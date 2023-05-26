@@ -401,10 +401,10 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
       gameData &&
       gameData.is_NFT &&
       gameData.NFT_info &&
-      gameData.NFT_info.username &&
-      gameData.NFT_info.address_owner
+      gameData.NFT_info.player_id &&
+      gameData.NFT_info.player_id.username
     ) {
-      return gameData.NFT_info.username || gameData.NFT_info.address_owner
+      return gameData.NFT_info.player_id.username
       // switch (gameType) {
       //   case "arcade-emporium":
       //     return gameData.NFT_info.address_owner

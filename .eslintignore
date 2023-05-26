@@ -6,3 +6,4 @@ package-lock.json
 public
 jest.config.js
 jest.setup.ts
+Jenkinsfile

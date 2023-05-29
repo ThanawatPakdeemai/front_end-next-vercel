@@ -77,7 +77,7 @@ const MarketplaceNakaPunk = () => {
       } w-full gap-x-[30px] gap-y-[60px] md:gap-x-[60px] lg:gap-x-[120px]`}
     >
       <CardContentDetails
-        hiddenDetails
+        showDetails
         detail="NAKA Punks"
         image={!resNakapunk ? "/images/temp-nakapunk.webp" : undefined}
         alt="naka-punk"

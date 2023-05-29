@@ -62,7 +62,6 @@ const MarketplaceDetail = () => {
               marketOrder.nakapunk_data?.description ??
               marketOrder.game_data?.story
             }
-            order_id={marketOrder.order_id}
             image={imageNFT}
             video={vdoNFT}
             model={marketOrder.building_data?.model_3d}
@@ -72,6 +71,7 @@ const MarketplaceDetail = () => {
               marketOrder.building_data?.NFT_image
             }
             alt={marketOrder.land_data?.type}
+            seller_type={marketOrder.seller_type}
             nameItem={marketOrder.item_data?.name}
           >
             <div className="grid grid-cols-1 px-8 py-6 lg:grid-cols-2">
@@ -236,7 +236,7 @@ const MarketplaceDetail = () => {
             />
           </RightDetailsMarketplace>
         </CardContentDetails>
-        <RedemptionCode />
+        {marketOrder.seller_type !== "user" ? <RedemptionCode /> : null}
         <div className="my-4 grid gap-6 rounded-[24px] border-[1px] border-neutral-800 bg-neutral-780 px-8 py-6 ">
           <CardWriterDetails
             textHead="create by"

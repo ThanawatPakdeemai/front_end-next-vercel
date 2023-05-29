@@ -22,13 +22,14 @@ const MarketplaceLayoutWithFilter = ({
       <div className="block sm:hidden">
         <MarketplaceLayoutMobile />
       </div>
-      <Banners />
+      <Banners className="!md:mb-10" />
       <Tagline
         icon={<ShineIcon />}
         bgColor="bg-neutral-800"
         textColor="text-neutral-500 font-bold"
         text="Join the NFT revolution and become a part of the future of ownership. "
-        show={false}
+        className="hidden sm:block"
+        show
       />
       <div className="flex flex-col gap-3 sm:flex-row">
         {/* add filter component here */}

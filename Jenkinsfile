@@ -12,8 +12,8 @@ pipeline {
             [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
             ssh-keyscan -t rsa,dsa naka.im >> ~/.ssh/known_hosts
             ssh naka@naka.im
+            pm2 list
           '''
-          sh 'pm2 list'
         }
         echo "success lgoin"
       }

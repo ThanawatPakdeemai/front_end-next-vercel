@@ -8,6 +8,7 @@ pipeline {
       steps {
         echo 'Preparing...'
         sh "npm install -g yarn"
+        sh "npm install -g typescript@4.8.4"
       }
     }
     stage('Install') {

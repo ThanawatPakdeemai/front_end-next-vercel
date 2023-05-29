@@ -12,6 +12,11 @@ import SearchIconMobile from "@mobile/components/atoms/icons/SearchIconMobile"
 import { IGameCategory } from "@feature/dropdown/interfaces/IDropdownService"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
 import NoData from "@components/molecules/NoData"
+import NakaIconMobile from "@mobile/components/atoms/icons/NakaIconMobile"
+import HeartIconMobile from "@mobile/components/atoms/icons/HeartIconMobile"
+import RewardIconMobile from "@mobile/components/atoms/icons/RewardIconMobile"
+import SettingIconMobile from "@mobile/components/atoms/icons/SettingIconMobile"
+import useGlobal from "@hooks/useGlobal"
 
 const f2pMenu: ISlideList[] = [
   {
@@ -19,11 +24,11 @@ const f2pMenu: ISlideList[] = [
     label: "Free To Earn",
     type: "play-to-earn"
   },
-  // {
-  //   id: "free-to-earn",
-  //   label: "Free To Earn",
-  //   type: "free-to-earn"
-  // },
+  {
+    id: "free-to-earn",
+    label: "Free To Earn",
+    type: "free-to-earn"
+  },
   {
     id: "free-to-play",
     label: "Free To Play",
@@ -33,10 +38,40 @@ const f2pMenu: ISlideList[] = [
     id: "story-mode",
     label: "Story Mode",
     type: "story-mode"
+  },
+  {
+    id: "arcade-emporium",
+    label: "Arcade Emporium",
+    type: "arcade-emporium"
   }
 ]
 
-const drawerBleeding = 56
+const MENU_MOBILE: {
+  name: string
+  link: string
+  icon: React.ReactNode
+}[] = [
+  {
+    name: "Home",
+    link: "/",
+    icon: <NakaIconMobile />
+  },
+  {
+    name: "Wishlist",
+    link: "/Wishlist",
+    icon: <HeartIconMobile />
+  },
+  {
+    name: "Reward",
+    link: "/game-reward",
+    icon: <RewardIconMobile />
+  },
+  {
+    name: "Settings",
+    link: "/profile",
+    icon: <SettingIconMobile />
+  }
+]
 
 const StyledInput: SxProps<Theme> = {
   fontFamily: "Urbanist",
@@ -50,17 +85,24 @@ const HomeMobile = () => {
   // Hook
   const { search: searchBlog, setSearch: setSearchBlog } = useFilterStore()
   const { t } = useTranslation()
+  const { limit } = useGlobal()
 
   // State
   const [gameData, setGameData] = useState<IGame[]>([])
   const [activeMenu, setActiveMenu] = useState<IGetType>("play-to-earn")
   const [categories, setCategories] = useState<IGameCategory[]>()
   const [open, setOpen] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState<string>("")
 
   const { getCategoriesAll, isFetchingCategories } = useCategories({
     limit: 100
   })
-  const { gameFilter: dataGames } = useGamePageListController(activeMenu)
+  const { gameFilter: dataGames } = useGamePageListController(
+    activeMenu,
+    "all",
+    limit,
+    selectedCategory
+  )
 
   /**
    * @description Toggle drawer
@@ -102,7 +144,7 @@ const HomeMobile = () => {
   return (
     <Box
       component="div"
-      className="home-page__mobile flex flex-col gap-6"
+      className="home-page__mobile flex flex-col gap-6 pb-28"
       sx={{
         marginTop: "-50px",
         position: "relative",
@@ -115,8 +157,7 @@ const HomeMobile = () => {
     >
       <Box
         component="div"
-        sx={{}}
-        className="home-menu__mobile flex items-center"
+        className="home-menu__mobile--menu flex flex-wrap items-center gap-y-4 whitespace-nowrap"
       >
         {f2pMenu.map((item) => (
           <Box
@@ -125,7 +166,7 @@ const HomeMobile = () => {
             }}
             component="button"
             key={item.id}
-            className={`relative flex-1 px-[6px] py-[12px] font-urbanist text-[18px] ${
+            className={`relative flex-1 px-[6px] py-[12px] font-urbanist text-[90%] ${
               activeMenu === item.type
                 ? "active-menu text-[#F32429]"
                 : "text-[#616161]"
@@ -153,16 +194,32 @@ const HomeMobile = () => {
           </Box>
         ))}
       </Box>
+
+      {/* Filter */}
       <Box
         component="section"
         className="section-filter"
       >
         <Box
           component="div"
-          className="section-filter__title flex gap-[12px]"
+          className="section-filter__title flex gap-[12px] whitespace-nowrap text-[90%]"
         >
-          <ButtonGreenTemplate>All</ButtonGreenTemplate>
-          <ButtonGreenTemplate>Top game</ButtonGreenTemplate>
+          <ButtonGreenTemplate
+            onClick={() => {
+              setActiveMenu("all")
+              setSelectedCategory("all")
+            }}
+          >
+            All
+          </ButtonGreenTemplate>
+          <ButtonGreenTemplate
+            onClick={() => {
+              setActiveMenu("play-to-earn")
+              setSelectedCategory("all")
+            }}
+          >
+            Top game
+          </ButtonGreenTemplate>
           <ButtonGreenTemplate
             onClick={toggleDrawer(true)}
             sxCustom={{
@@ -227,7 +284,7 @@ const HomeMobile = () => {
       {/* Game List */}
       <Box
         component="section"
-        className="game-section grid grid-cols-2 gap-5"
+        className="game-section grid grid-cols-2 gap-5 sm:grid-cols-4"
       >
         {gameData && gameData.length > 0 ? (
           gameData.map((_game) => (
@@ -263,12 +320,41 @@ const HomeMobile = () => {
         )}
       </Box>
 
+      <Box
+        component="footer"
+        className="footer"
+        sx={{
+          position: "fixed",
+          height: "90px",
+          left: "0px",
+          right: "0px",
+          bottom: "0px",
+          background: "#18181C",
+          backdropFilter: "blur(10px)",
+          borderRadius: "24px 24px 0px 0px"
+        }}
+      >
+        <div className="grid h-full grid-cols-4">
+          {MENU_MOBILE.map((_menu) => (
+            <Box
+              component="button"
+              key={_menu.name}
+              className="flex flex-col items-center justify-center gap-1"
+            >
+              <i className="flex items-center justify-center">{_menu.icon}</i>
+              <span className="font-urbanist text-[12px] text-[#9E9E9E]">
+                {_menu.name}
+              </span>
+            </Box>
+          ))}
+        </div>
+      </Box>
+
       <SwipeableDrawer
         anchor="bottom"
         open={open}
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
-        swipeAreaWidth={drawerBleeding}
         disableSwipeToOpen={false}
         ModalProps={{
           keepMounted: true
@@ -318,6 +404,11 @@ const HomeMobile = () => {
                   sx={{
                     fontSize: "18px",
                     fontWeight: 600
+                  }}
+                  onClick={() => {
+                    toggleDrawer(false)
+                    setOpen(false)
+                    setSelectedCategory(item.id)
                   }}
                 >
                   <div className="relative h-[56px] w-[56px] scale-50 overflow-hidden rounded-lg">

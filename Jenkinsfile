@@ -8,14 +8,10 @@ pipeline {
       steps{
         sshagent(credentials: ['ssh-naka-dev']) {
           // sh 'ssh -o StrictHostKeyChecking=no naka@naka.im'
-          sh '''
-            [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
-            ssh-keyscan -t rsa,dsa naka.im >> ~/.ssh/known_hosts
-            ssh naka@naka.im
-            pm2 list
-          '''
+          // sh 'mkdir -p ~/.ssh'
+          // sh "ssh-keyscan naka.im >> ~/.ssh/known_hosts"
+          sh "ssh naka@naka.im 'pm2 list'"
         }
-        echo "success lgoin"
       }
     }
     // stage('Prepare') {

@@ -1,7 +1,7 @@
 pipeline {
   agent any
  
-  tools {nodejs "Node18"}
+  tools {nodejs "Node16"}
 
   stages {
     stage('Prepare') {

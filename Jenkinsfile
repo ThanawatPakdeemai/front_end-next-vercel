@@ -1,9 +1,7 @@
-#!/usr/bin/env groovy
-
 pipeline {
-  agent {
-    docker { image 'node:16' }
-  }
+  agent any
+ 
+  tools {nodejs "node18"}
 
   stages {
     stage('Install') {

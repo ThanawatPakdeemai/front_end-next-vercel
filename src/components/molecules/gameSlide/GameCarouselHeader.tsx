@@ -12,9 +12,9 @@ import { useTranslation } from "react-i18next"
 import { isMobile } from "@hooks/useGlobal"
 
 export interface ISlideList extends React.HTMLAttributes<HTMLDivElement> {
-  id: string
+  id: IGetType
   label: string
-  type: string
+  type: IGetType
 }
 
 export interface IHeaderSlide {

@@ -15,7 +15,7 @@ export default function Layout({
           display: "none"
         }
       }}
-      className="main-container mx-auto w-full px-2 "
+      className="main-container mx-auto w-full lg:px-2"
     >
       <Header />
       {children}

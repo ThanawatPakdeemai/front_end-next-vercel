@@ -14,8 +14,8 @@ pipeline {
           //   ssh naka@naka.im ...
           // '''
         }
+        echo "success lgoin"
       }
-      echo "success lgoin"
     }
     // stage('Prepare') {
     //   steps {

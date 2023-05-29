@@ -23,7 +23,7 @@ const Tagline = ({
       <div
         className={`relative ${bgColor} my-8 flex h-8 w-full items-center overflow-hidden rounded-lg lg:my-16 ${className}`}
       >
-        <div className="absolute top-[7px] flex w-full animate-right-to-left flex-row">
+        <div className="absolute top-[7px] flex w-full animate-right-to-left flex-row items-center">
           <InsideTagLine
             icon={icon}
             textColor={textColor}

@@ -46,8 +46,8 @@ const ColorBoxElementInfo = () => {
           horizontal: "right"
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "left"
+          vertical: "bottom",
+          horizontal: "right"
         }}
         className="land-type-content"
         sx={{

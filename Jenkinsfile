@@ -7,12 +7,13 @@ pipeline {
     stage('login server'){
       steps{
         sshagent(credentials: ['ssh-naka-dev']) {
-          sh 'ssh -o StrictHostKeyChecking=no naka@naka.im uptime "whoami"'
-          // sh '''
-          //   [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
-          //   ssh-keyscan -t rsa,dsa naka.im >> ~/.ssh/known_hosts
-          //   ssh naka@naka.im ...
-          // '''
+          // sh 'ssh -o StrictHostKeyChecking=no naka@naka.im'
+          sh '''
+            [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
+            ssh-keyscan -t rsa,dsa naka.im >> ~/.ssh/known_hosts
+            ssh naka@naka.im
+          '''
+          sh 'pm2 list'
         }
         echo "success lgoin"
       }

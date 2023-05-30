@@ -1,21 +1,56 @@
+import React, { memo } from "react"
+import { GAME_MENU_MOBILE } from "@mobile/constants/menuMobile"
 import { Box } from "@mui/material"
-import { memo } from "react"
+import { IGetType } from "@feature/game/interfaces/IGameService"
 
-export const styleIcon = {
-  fontSize: "20px !important"
+interface IHeadMenuMobileProps {
+  activeMenu: string
+  setActiveMenu: React.Dispatch<React.SetStateAction<IGetType>>
 }
-const HeadMenuMobile = () => (
-  <header className="header fixed inset-x-0 bottom-4 z-[999] ">
-    <Box
-      component="div"
-      className="flex content-center items-center justify-center "
-    >
+
+const HeadMenuMobile = ({
+  activeMenu,
+  setActiveMenu
+}: IHeadMenuMobileProps) => (
+  <Box
+    component="div"
+    className="home-menu__mobile--menu flex flex-wrap items-center gap-y-4 whitespace-nowrap"
+  >
+    {GAME_MENU_MOBILE.map((item) => (
       <Box
-        component="div"
-        className="bg-white/30 border-slate-50 w-full rounded-full border border-neutral-800 text-white-default backdrop-blur-md"
-      />
-    </Box>
-  </header>
+        onClick={() => {
+          setActiveMenu(item.type)
+        }}
+        component="button"
+        key={item.id}
+        className={`relative flex-1 px-[6px] py-[12px] font-urbanist text-[90%] ${
+          activeMenu === item.type
+            ? "active-menu text-[#F32429]"
+            : "text-[#616161]"
+        }`}
+        sx={{
+          fontWeight: "bold",
+          "&:after": {
+            content: '""',
+            background: "#35383F",
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            width: "100%",
+            height: "2px"
+          },
+          "&.active-menu:after": {
+            background: "#F32429",
+            height: "4px",
+            borderRadius: "2px",
+            bottom: "-1px"
+          }
+        }}
+      >
+        {item.label}
+      </Box>
+    ))}
+  </Box>
 )
 
 export default memo(HeadMenuMobile)

@@ -8,14 +8,12 @@ const MarketplaceLayoutFilterNoBanner = ({
 }: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) => (
   <div className="main-container mx-auto">
     <Header />
-    <div className="flex flex-row gap-3">
+    <div className="mx-0 flex flex-row gap-3">
       {/* add filter component here */}
-      <div className="w-[200px]">
-        <div>
-          <FilterBox />
-        </div>
+      <div className="w-60">
+        <FilterBox />
       </div>
-      <div>{children}</div>
+      <main>{children}</main>
     </div>
     <Footer />
   </div>

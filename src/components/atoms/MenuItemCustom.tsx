@@ -11,6 +11,7 @@ interface IMenuItemCustomProp extends IMenu {
   endIcon?: boolean
   onClick?: () => void
   endText?: string | React.ReactElement
+  byPassOnClick?: boolean
 }
 
 /**
@@ -23,6 +24,7 @@ const MenuItemCustom = ({
   icon,
   onClick,
   endText,
+  byPassOnClick,
   ...props
 }: IMenuItemCustomProp) => {
   const router = useRouter()
@@ -30,7 +32,10 @@ const MenuItemCustom = ({
     <MenuItem
       aria-label={props.id}
       onClick={() => {
-        if (props.href && props.href !== "") {
+        if (byPassOnClick && onClick && props.href && props.href !== "") {
+          router.push(props.href)
+          onClick()
+        } else if (props.href && props.href !== "") {
           router.push(props.href)
         } else if (onClick) {
           onClick()
@@ -43,10 +48,12 @@ const MenuItemCustom = ({
     >
       <Link
         href={props.href ?? ""}
-        className={`flex w-full items-center ${active ? "active" : ""}`}
+        className={`flex w-full flex-row items-center justify-start ${
+          active ? "active" : ""
+        } ${icon ? "" : "px-4"}`}
       >
-        <ListItemIcon>{icon}</ListItemIcon>
-        <div className="flex w-full items-center justify-between">
+        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+        <div className="flex w-full items-center">
           <ListItemText className="w-full">
             <Trans i18nKey={props.label as string}>
               {props.label as string}

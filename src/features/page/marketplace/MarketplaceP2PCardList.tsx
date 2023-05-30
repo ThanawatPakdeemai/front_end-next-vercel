@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback } from "react"
 import { v4 as uuidv4 } from "uuid"
 import dynamic from "next/dynamic"
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
@@ -30,7 +30,7 @@ const MarketplaceP2PCardList = () => {
   const { price } = useNakaPriceProvider()
   const router = useRouter()
 
-  const handleColorSellingType = (selling_type: TSellingType) => {
+  const handleColorSellingType = useCallback((selling_type: TSellingType) => {
     if (selling_type === "fullpayment") {
       return "info"
     }
@@ -38,7 +38,7 @@ const MarketplaceP2PCardList = () => {
       return "error"
     }
     return "warning"
-  }
+  }, [])
 
   if (orderData && orderData.data.length > 0 && !isLoading) {
     return (
@@ -107,7 +107,9 @@ const MarketplaceP2PCardList = () => {
   return (
     <>
       {orderData?.data.length === 0 && !isLoading ? (
-        <div>No data</div>
+        <div className="flex h-20 w-full items-center justify-center font-neue-machina uppercase">
+          no data
+        </div>
       ) : (
         <div className="grid w-full grid-cols-1 gap-x-3 gap-y-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {[...Array(limit)].map(() => (

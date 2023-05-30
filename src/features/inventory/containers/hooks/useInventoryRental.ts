@@ -16,26 +16,30 @@ const useInventoryRental = () => {
   const { mutateGetMyRentalLand } = useGetMyRentalLand()
   const { mutateGetMyRentalBuilding } = useGetMyRentalBuilding()
   const { marketType } = useGlobal()
+  const _marketType = marketType || "nft_land"
 
   const [inventoryItemRental, setInventoryItemRental] = useState<
     Array<IInventoryItemList>
   >([])
 
-  const { sort, filter, search } = useMarketFilterStore()
+  const { sort, filterType, search } = useMarketFilterStore()
   const { getValueFromTKey } = Helper
 
   const fetchInventoryRental = useCallback(async () => {
     let _data: IInventoryItemList[] = []
     let _total: number = 0
     setIsLoading(true)
-    if (profile.data && marketType && filter && search && sort) {
+    if (profile.data && _marketType && filterType && search && sort) {
       switch (marketType) {
         case "nft_land":
           await mutateGetMyRentalLand({
             _limit: limit,
             _page: currentPage,
             _search: {
-              type_land: filter.length > 0 ? filter : undefined,
+              type_land:
+                filterType.nft_land.length > 0
+                  ? filterType.nft_land
+                  : undefined,
               land_id:
                 search.length > 0
                   ? (getValueFromTKey(search, "land_id") as string) // should be same as same nft_token
@@ -79,7 +83,10 @@ const useInventoryRental = () => {
             _limit: limit,
             _page: currentPage,
             _search: {
-              type_building: filter.length > 0 ? filter : undefined,
+              type_building:
+                filterType.nft_building.length > 0
+                  ? filterType.nft_building
+                  : undefined,
               nft_token:
                 search.length > 0
                   ? (getValueFromTKey(search, "nft_token") as string) // should be same as same nft_token
@@ -129,7 +136,7 @@ const useInventoryRental = () => {
     setTotalCount(_total)
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile.data, marketType, currentPage, limit, filter, search, sort])
+  }, [profile.data, _marketType, currentPage, limit, filterType, search, sort])
 
   useEffect(() => {
     let load = false

@@ -77,7 +77,9 @@ const MarketplaceCardList = () => {
   return (
     <>
       {orderData?.data.length === 0 && !isLoading ? (
-        <div>No data</div>
+        <div className="flex h-20 w-full items-center justify-center font-neue-machina uppercase">
+          no data
+        </div>
       ) : (
         <div className="grid w-full grid-cols-1 gap-x-3 gap-y-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {[...Array(limit)].map(() => (

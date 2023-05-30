@@ -8,6 +8,7 @@ import {
   IDevice,
   IGameCategory
 } from "@feature/dropdown/interfaces/IDropdownService"
+import MarketPlaceIcon from "@components/icons/BlogIcon/MarketPlaceIcon"
 
 interface ILink {
   href: string
@@ -68,4 +69,28 @@ export interface IMenuIcon extends ILink {
 export interface ICrumb extends ILink {
   title: string
   onClick?: () => void
+}
+
+interface IChide {
+  name: string
+  link: string
+  icon: typeof MarketPlaceIcon
+}
+export interface IMenuMarketPlace {
+  name: string
+  link: string
+  isChilde: boolean
+  left?: string
+  image: {
+    src: string
+    widthImg: number
+    height: number
+    alt: string
+  }
+  chide?: IChide[]
+}
+
+export interface ISelectDropDown {
+  label: string
+  value: number | string
 }

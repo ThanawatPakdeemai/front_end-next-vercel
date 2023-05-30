@@ -29,7 +29,7 @@ const useInventoryPayment = () => {
     Array<IInventoryItemList>
   >([])
   const { getValueFromTKey } = Helper
-  const { sort, search, filter } = useMarketFilterStore()
+  const { sort, search, filterType } = useMarketFilterStore()
 
   const handleDate = ({
     _keyType,
@@ -55,7 +55,7 @@ const useInventoryPayment = () => {
 
   const fetchInventoryItemPayment = useCallback(async () => {
     setIsLoading(true)
-    if (profile.data && marketType && filter && search && sort) {
+    if (profile.data && marketType && filterType && search && sort) {
       let _data: IInventoryItemList[] = []
       let _total = 0
 
@@ -67,7 +67,10 @@ const useInventoryPayment = () => {
             _page: currentPage,
             _search: {
               player_id: profile.data.id,
-              type_land: filter.length > 0 ? filter : undefined,
+              type_land:
+                filterType.nft_land.length > 0
+                  ? filterType.nft_land
+                  : undefined,
               land_id:
                 search.length > 0
                   ? (getValueFromTKey(search, "land_id") as string) // should be nft_token same, discuss with BE team!
@@ -100,7 +103,10 @@ const useInventoryPayment = () => {
             _page: currentPage,
             _search: {
               player_id: profile.data.id,
-              type_building: filter.length > 0 ? filter : undefined,
+              type_building:
+                filterType.nft_building.length > 0
+                  ? filterType.nft_building
+                  : undefined,
               nft_token:
                 search.length > 0
                   ? (getValueFromTKey(search, "land_id") as string) // should be nft_token same, discuss with BE team!
@@ -167,7 +173,7 @@ const useInventoryPayment = () => {
 
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile.data, marketType, limit, currentPage, filter, search, sort])
+  }, [profile.data, marketType, limit, currentPage, filterType, search, sort])
 
   useEffect(() => {
     let cleanup = false

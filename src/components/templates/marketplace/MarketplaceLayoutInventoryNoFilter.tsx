@@ -32,9 +32,9 @@ const MarketplaceLayoutInventory = ({
           className="!w-full"
           sx={{ marginTop: 2 }}
         />
-        <div className="flex flex-col gap-3 md:flex-row">
+        <div className="flex flex-col md:flex-row">
           {/* add filter component here */}
-          <div className="w-[200px]">
+          <div className="w-60">
             <div className="flex-row gap-3 md:flex">
               <MenuList className="mx-auto mt-4 h-fit w-full max-w-xs rounded-[13px] bg-neutral-800 p-[6px] md:mx-0 md:w-[200px]">
                 <div>

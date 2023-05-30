@@ -1,19 +1,3 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations"
-import React from "react"
+import RentalHomePage from "./[type]"
 
-const Page = () => <></>
-
-export async function getServerSideProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["common"]))
-    },
-    redirect: {
-      source: "/marketplace/inventory",
-      destination: `/${locale}/marketplace/inventory/rental/land`,
-      permanent: true
-    }
-  }
-}
-
-export default Page
+export default RentalHomePage

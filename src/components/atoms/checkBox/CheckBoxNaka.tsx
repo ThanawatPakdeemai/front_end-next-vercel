@@ -23,11 +23,11 @@ const CheckBoxNaka = ({
   img = ""
 }: IProp) => (
   <>
-    <label className={`${className} flex`}>
+    <label className={`${className} flex cursor-pointer flex-row gap-x-2`}>
       <Checkbox
         id={text}
         checked={value}
-        defaultChecked={false}
+        // defaultChecked={false}
         onChange={(_event?: React.ChangeEvent<HTMLInputElement>) => {
           onHandle(_event)
         }}
@@ -65,7 +65,8 @@ const CheckBoxNaka = ({
           alt="icons"
           width={20}
           height={20}
-          className="mr-2"
+          style={{ width: 20, height: 20 }}
+          className="mr-2 cursor-pointer object-cover"
         />
       )}
       <Typography className={`cursor-pointer font-neue-machina ${fontStyle}`}>

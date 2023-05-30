@@ -26,11 +26,7 @@ const useMarketInfo = () => {
   const { marketType } = useGlobal()
   const { getMarketOrderAsnyc, isLoading } = useGetMarketOrder()
   const limit = 15
-  const {
-    sort,
-    search: searchText,
-    filter: filterItem
-  } = useMarketFilterStore()
+  const { sort, search: searchText, filterType } = useMarketFilterStore()
 
   const sortData = sort.reduce((acc, curr) => Object.assign(acc, curr), {})
 
@@ -123,41 +119,48 @@ const useMarketInfo = () => {
       ...searchData
     }
 
-    if (filterItem.length > 0) {
-      switch (marketType) {
-        case "nft_land":
-          search.type_land = filterItem
-          break
-        case "nft_building":
-          search.type_building = filterItem
-          break
-        case "game_item":
-          search.item_id = filterItem
-          break
-        case "nft_material":
-          search.type_material = filterItem
-          break
-        default:
-          break
-      }
+    switch (marketType) {
+      case "nft_land":
+        search.type_land =
+          filterType.nft_land.length > 0 ? filterType.nft_land : undefined
+        break
+      case "nft_building":
+        search.type_building =
+          filterType.nft_building.length > 0
+            ? filterType.nft_building
+            : undefined
+        break
+      case "game_item":
+        search.item_id =
+          filterType.game_item.length > 0 ? filterType.game_item : undefined
+        break
+      case "nft_material":
+        search.type_material =
+          filterType.nft_material.length > 0
+            ? filterType.nft_material
+            : undefined
+        break
+      default:
+        break
     }
 
     return search
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.pathname, searchData, filterItem, marketType])
+  }, [router.pathname, searchData, filterType, marketType])
 
   const fetchOrderList = useCallback(async () => {
     const search = await handleSearch()
-    getMarketOrderAsnyc({
-      _urlNFT: convertNFTTypeToUrl(search.type_marketplace as TNFTType),
-      _limit: limit,
-      _page: currentPage,
-      _search: search,
-      _sort: sortData
-    } as IMarketServForm).then((_res) => {
-      setOrderData(_res)
-      setTotalCount(_res.info.totalCount)
-    })
+    if (sort && searchData)
+      await getMarketOrderAsnyc({
+        _urlNFT: convertNFTTypeToUrl(search.type_marketplace as TNFTType),
+        _limit: limit,
+        _page: currentPage,
+        _search: search,
+        _sort: sortData
+      } as IMarketServForm).then((_res) => {
+        setOrderData(_res)
+        setTotalCount(_res.info.totalCount)
+      })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     currentPage,
@@ -178,7 +181,8 @@ const useMarketInfo = () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, searchData, sort, filterItem])
+    // }, [currentPage, searchData, sort, filterItem])
+  }, [fetchOrderList])
 
   useEffect(() => {
     let load = false

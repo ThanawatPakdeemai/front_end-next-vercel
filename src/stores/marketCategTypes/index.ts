@@ -12,7 +12,6 @@ import {
 export type TCategory = TNFTType | undefined
 
 interface IUseCategoryStore {
-  category: TCategory
   fetchStatus: boolean
   gameItemTypes: IGameItemListData[] | undefined
   landTypes: ITypeMaterials[] | undefined
@@ -22,7 +21,6 @@ interface IUseCategoryStore {
   getCurrentTypes: (
     _category: TCategory
   ) => Array<IGameItemListData | ITypeMaterials | ITypeBuild> | undefined
-  onSetCategory: (_category: TCategory) => void
   onSetGameItemTypes: (_types: IGameItemListData[]) => void
   onSetLandTypes: (_types: ITypeMaterials[]) => void
   onSetBuildingTypes: (_types: ITypeBuild[]) => void
@@ -33,7 +31,6 @@ interface IUseCategoryStore {
 const useMarketCategTypes = create<IUseCategoryStore>()(
   devtools(
     (set, get) => ({
-      category: undefined,
       fetchStatus: false,
       gameItemTypes: undefined,
       landTypes: undefined,
@@ -77,13 +74,6 @@ const useMarketCategTypes = create<IUseCategoryStore>()(
             break
         }
         return _types
-      },
-      onSetCategory: (_category) => {
-        set(
-          () => ({ category: _category }),
-          false,
-          "MarketCategTypesStore/onSetCategory"
-        )
       },
       onSetGameItemTypes: (_types) => {
         set(

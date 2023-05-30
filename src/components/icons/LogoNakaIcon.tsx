@@ -2,12 +2,14 @@ import React from "react"
 
 interface IProps extends React.SVGProps<SVGSVGElement> {
   hover?: boolean
+  showIconTM?: boolean
 }
 const LogoNakaIcon = ({
   width = 225,
   height = 30,
   fill = "fill-error-main",
-  hover = true
+  hover = true,
+  showIconTM = true
 }: IProps) => (
   <svg
     width={width}
@@ -15,7 +17,7 @@ const LogoNakaIcon = ({
     viewBox={`0 0 ${width} ${height}`}
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="group"
+    className={showIconTM ? "showIconTM" : "ml-4"}
   >
     <rect
       width="160"
@@ -51,14 +53,18 @@ const LogoNakaIcon = ({
       fill="#010101"
       className="opacity-1 logo-naka-icon__path-2 transition-all group-hover:opacity-0"
     />
-    <path
-      d="M213 0V1.12766H214.695V5H216.047V1.12766H217.743V0H213Z"
-      className={`${fill} logo-naka-icon__path-3 translate-x-[-45px] transition-all group-hover:translate-x-0`}
-    />
-    <path
-      d="M218.338 5H219.697V1.88652L219.436 0.319149H219.772L220.354 5H222.976L223.573 0.319149H223.895L223.648 1.88652V5H225V0H222.348L221.856 4.68085H221.512L221.019 0H218.338V5Z"
-      className={`${fill} logo-naka-icon__path-4 translate-x-[-45px] transition-all group-hover:translate-x-0`}
-    />
+    {showIconTM && (
+      <>
+        <path
+          d="M213 0V1.12766H214.695V5H216.047V1.12766H217.743V0H213Z"
+          className={`${fill} logo-naka-icon__path-3 translate-x-[-45px] transition-all group-hover:translate-x-0`}
+        />
+        <path
+          d="M218.338 5H219.697V1.88652L219.436 0.319149H219.772L220.354 5H222.976L223.573 0.319149H223.895L223.648 1.88652V5H225V0H222.348L221.856 4.68085H221.512L221.019 0H218.338V5Z"
+          className={`${fill} logo-naka-icon__path-4 translate-x-[-45px] transition-all group-hover:translate-x-0`}
+        />
+      </>
+    )}
   </svg>
 )
 

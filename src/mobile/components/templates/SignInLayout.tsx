@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { Box, Button, Stack, Typography } from "@mui/material"
-import { useTranslation } from "react-i18next"
 import {
   getAuth,
   GoogleAuthProvider,
@@ -9,7 +8,6 @@ import {
 } from "firebase/auth"
 import { getApps, initializeApp } from "@firebase/app"
 import CardNoReward from "@feature/game/containers/components/atoms/CardNoReward"
-import ButtonLink from "@components/atoms/button/ButtonLink"
 import DraftsOutlinedIcon from "@mui/icons-material/DraftsOutlined"
 import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
@@ -24,10 +22,9 @@ import { useToast } from "@feature/toast/containers"
 import { IProfileFaceBook } from "@src/types/profile"
 import { IError } from "@src/types/contract"
 import { MESSAGES } from "@constants/messages"
+import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 
 const SignInLayout = () => {
-  const { t } = useTranslation()
-
   const { mutateLoginProvider } = useLoginProvider()
 
   const firebaseConfig = {
@@ -161,8 +158,14 @@ const SignInLayout = () => {
         component="div"
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform"
       >
-        <CardNoReward className="!rounded-none !border-none !bg-transparent" />
-        <Typography className="my-8 text-center text-[22px] uppercase text-red-card">
+        {/* <CardNoReward className="!rounded-none !border-none !bg-transparent" /> */}
+        <Box
+          component="div"
+          className="flex justify-center"
+        >
+          <LogoNakaBigIcon />
+        </Box>
+        <Typography className="my-8 text-center font-urbanist text-3xl font-bold uppercase text-red-card">
           Welcome Back
         </Typography>
         <div>
@@ -237,22 +240,19 @@ const SignInLayout = () => {
             </div>
           </Button>
         </div>
-        <Typography className="pb-[1.188rem] text-center text-xs uppercase text-neutral-500">
-          Don’t have account
-        </Typography>
         <Box
           component="div"
-          className="flex justify-center"
+          className="flex justify-center text-center"
         >
-          <ButtonLink
-            href="/register"
-            text={t("Sign up")}
-            icon={null}
-            size="medium"
-            disabledEndIcon
-            className="h-[40px] w-auto !min-w-[108px] border border-solid border-neutral-700 text-sm hover:h-[45px]"
-          />
+          <p className="text-white pr-2 text-sm font-normal">
+            Don’t have an account?
+          </p>
+          <p className="text-sm font-normal text-yellow-100">Sign up</p>
         </Box>
+        <CardNoReward
+          className="!rounded-none !border-none !bg-transparent"
+          showIconTM={false}
+        />
       </Box>
       <ModalCustom
         open={open}

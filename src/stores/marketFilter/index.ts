@@ -1,3 +1,4 @@
+import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import configZustandDevTools from "@utils/configDevtools"
 import { create } from "zustand"
 import { devtools } from "zustand/middleware"
@@ -20,25 +21,34 @@ interface IKeyValue {
 }
 
 export interface IuseMarketFilterStore {
-  filter: string[]
+  filterType: {
+    nft_land: string[]
+    nft_building: string[]
+    nft_material: string[]
+    game_item: string[]
+  }
   sort: TKey[]
   search: TKey[]
-  getFilter: () => string[]
   getSort: () => TKey[]
   getSearch: () => TKey[]
-  onSetFilter: (_filter: Array<IFilter & IChecked>) => void
+  onSetFilterType: (_type: TNFTType, _filter: Array<IFilter & IChecked>) => void
   onSetSort: (_sort: IKeyValue) => void
   onSetSearch: (_search: IKeyValue) => void
-  onResetFilter: () => void
+  onResetFilterType: () => void
   onResetSort: () => void
   onResetSearch: () => void
+  onAllReset: () => void
 }
 
 const handleKeyValue = (_arr: Array<TKey>, _payload: IKeyValue) => {
   let result: Array<TKey> = _arr
-  const checkedSort = result.find((s) => Object.keys(s)[0] === _payload.key)
+  const checkedSort = result.find((s) =>
+    Object.keys(s).find((k) => k === _payload.key)
+  )
   if (checkedSort) {
-    result.filter((s) => Object.keys(s)[0] !== _payload.key)
+    result = result.filter((s) =>
+      Object.keys(s).find((k) => k !== _payload.key)
+    )
     if (_payload.value) {
       result = [...result, { [_payload.key]: _payload.value }]
     } else {
@@ -50,44 +60,79 @@ const handleKeyValue = (_arr: Array<TKey>, _payload: IKeyValue) => {
   return result
 }
 
+const handleAssignValue = (
+  _arr: string[],
+  _filter: Array<IFilter & IChecked>
+) => {
+  const _remove: string[] = []
+  const _combieArr = [..._arr, ..._filter.map((r) => r.value)]
+  let newFilter = _combieArr.filter(
+    (c, index) => _combieArr.indexOf(c) === index
+  )
+  _filter.map((f) => {
+    if (f.value === _arr.find((d) => d === f.value)) {
+      if (f.checked) {
+        _remove.push(f.value)
+      }
+    }
+    return undefined
+  })
+  newFilter = newFilter.filter((val) => !_remove.includes(val))
+  return newFilter
+}
+
 const useMarketFilterStore = create<IuseMarketFilterStore>()(
   devtools(
     (set, get) => ({
+      filterType: {
+        nft_land: [],
+        nft_building: [],
+        nft_material: [],
+        game_item: []
+      },
       filter: [],
       sort: [],
       search: [],
-      getFilter: () => get().filter,
       getSort: () => get().sort,
       getSearch: () => get().search,
-      onSetFilter: (_filter) => {
-        const dummyFilter = get().filter
-        const _remove: string[] = []
-        const _combieArr = [...dummyFilter, ..._filter.map((r) => r.value)]
-        let newFilter = _combieArr.filter(
-          (c, index) => _combieArr.indexOf(c) === index
-        )
-        _filter.map((f) => {
-          if (f.value === dummyFilter.find((d) => d === f.value)) {
-            if (f.checked) {
-              _remove.push(f.value)
-            }
-          }
-          return undefined
-        })
-        newFilter = newFilter.filter((val) => !_remove.includes(val))
+      onSetFilterType: (_type, _filter) => {
+        const dummyFilter = get().filterType
+        let _gameItemfilter: string[] = []
+        let _nftLandfilter: string[] = []
+        let _nftBuildingfilter: string[] = []
+        let _nftMaterialfilter: string[] = []
+        if (_type === "game_item")
+          _gameItemfilter = handleAssignValue(dummyFilter.game_item, _filter)
+        else if (_type === "nft_land")
+          _nftLandfilter = handleAssignValue(dummyFilter.nft_land, _filter)
+        else if (_type === "nft_building")
+          _nftBuildingfilter = handleAssignValue(
+            dummyFilter.nft_building,
+            _filter
+          )
+        else if (_type === "nft_material")
+          _nftMaterialfilter = handleAssignValue(
+            dummyFilter.nft_material,
+            _filter
+          )
         set(
-          () => ({ filter: newFilter }),
+          () => ({
+            filterType: {
+              game_item: _gameItemfilter,
+              nft_land: _nftLandfilter,
+              nft_building: _nftBuildingfilter,
+              nft_material: _nftMaterialfilter
+            }
+          }),
           false,
-          "MarketFilterStore/onSetFilter"
+          "MarketFilterStore/onSetFilterType"
         )
       },
       onSetSort: (_sort) => {
         const dummySort = get().sort
-        set(
-          () => ({ sort: handleKeyValue(dummySort, _sort) }),
-          false,
-          "MarketFilterStore/onSetSort"
-        )
+        let newSearch: TKey[] = []
+        newSearch = handleKeyValue(dummySort, _sort)
+        set(() => ({ sort: newSearch }), false, "MarketFilterStore/onSetSort")
       },
       onSetSearch: (_search) => {
         const dummySort = get().search
@@ -99,12 +144,17 @@ const useMarketFilterStore = create<IuseMarketFilterStore>()(
           "MarketFilterStore/onSetSearch"
         )
       },
-      onResetFilter: () => {
-        const setFilter = []
+      onResetFilterType: () => {
+        const setFilter = {
+          nft_land: [],
+          nft_building: [],
+          nft_material: [],
+          game_item: []
+        }
         set(
-          () => ({ filter: setFilter }),
+          () => ({ filterType: setFilter }),
           false,
-          "MarketFilterStore/onResetFilter"
+          "MarketFilterStore/onResetFilterType"
         )
       },
       onResetSort: () => {
@@ -112,6 +162,22 @@ const useMarketFilterStore = create<IuseMarketFilterStore>()(
       },
       onResetSearch: () => {
         set(() => ({ search: [] }), false, "MarketFilterStore/onResetSearch")
+      },
+      onAllReset: () => {
+        set(
+          () => ({
+            filterType: {
+              game_item: [],
+              nft_land: [],
+              nft_building: [],
+              nft_material: []
+            },
+            search: [],
+            sort: []
+          }),
+          false,
+          "MarketFilterStore/onAllReset"
+        )
       }
     }),
     configZustandDevTools("MarketFilter-Store")

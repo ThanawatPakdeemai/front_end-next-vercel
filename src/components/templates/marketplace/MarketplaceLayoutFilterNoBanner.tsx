@@ -17,12 +17,10 @@ const MarketplaceLayoutFilterNoBanner = ({
     {/* <Header /> */}
     <div className="flex flex-col gap-3 sm:flex-row">
       {/* add filter component here */}
-      <div className="hidden w-[200px] sm:block">
-        <div>
-          <FilterBox />
-        </div>
+      <div className="hidden w-60 sm:block">
+        <FilterBox />
       </div>
-      <div>{children}</div>
+      <main>{children}</main>
     </div>
     <Footer />
   </div>

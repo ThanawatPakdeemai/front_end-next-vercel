@@ -33,12 +33,10 @@ const MarketplaceLayoutWithFilter = ({
       />
       <div className="flex flex-col gap-3 sm:flex-row">
         {/* add filter component here */}
-        <div className="z-10 mx-2 hidden w-[200px] sm:block md:w-[200px] lg:w-[200px]">
-          <div>
-            <FilterBox />
-          </div>
+        <div className="z-10 mx-2 hidden w-60 sm:block">
+          <FilterBox />
         </div>
-        {children}
+        <main>{children}</main>
       </div>
       <Footer />
     </div>

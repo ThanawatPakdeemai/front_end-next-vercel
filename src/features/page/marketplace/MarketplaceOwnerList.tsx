@@ -5,20 +5,33 @@ import React from "react"
 import SkeletonItem from "@feature/marketplace/components/molecules/SkeletonItem"
 import { useRouter } from "next/router"
 import useInventoryOwner from "@feature/inventory/containers/hooks/useInventoryOwner"
+import useGlobal from "@hooks/useGlobal"
+import useProfileStore from "@stores/profileStore"
 
 const MarketplaceOwnerList = () => {
+  const profile = useProfileStore()
   const {
     inventoryItemList,
     isLoading,
+    isItemLoading,
     limit,
     totalCount,
     currentPage,
     setCurrentPage
   } = useInventoryOwner()
+  const { marketType } = useGlobal()
 
   const router = useRouter()
 
-  if (inventoryItemList && inventoryItemList.length > 0 && !isLoading) {
+  if (
+    inventoryItemList &&
+    inventoryItemList.length > 0 &&
+    ((marketType !== "game_item" &&
+      marketType !== "nft_material" &&
+      !isLoading) ||
+      ((marketType === "game_item" || marketType === "nft_material") &&
+        !isItemLoading))
+  ) {
     return (
       <div className="flex flex-col gap-y-7">
         <div className="grid w-full grid-cols-1 gap-x-3 gap-y-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
@@ -71,8 +84,14 @@ const MarketplaceOwnerList = () => {
   }
   return (
     <>
-      {inventoryItemList && inventoryItemList.length === 0 && !isLoading ? (
-        <div>No Data</div>
+      {(inventoryItemList &&
+        inventoryItemList.length <= 0 &&
+        !isLoading &&
+        !isItemLoading) ||
+      !profile.isLogin ? (
+        <div className="flex h-20 w-full items-center justify-center font-neue-machina uppercase">
+          no data
+        </div>
       ) : (
         <div className="grid w-full grid-cols-1 gap-x-3 gap-y-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {[...Array(limit)].map(() => (

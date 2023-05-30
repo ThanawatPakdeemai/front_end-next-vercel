@@ -5,7 +5,10 @@ import { motion } from "framer-motion"
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded"
 import FilterBox from "@feature/marketplace/components/molecules/FilterBox"
 
-const InventoryPage = () => {
+interface IProps {
+  className?: string
+}
+const InventoryPage = ({ className }: IProps) => {
   const [open, setOpen] = useState(false)
 
   const animetionVariants = {
@@ -13,21 +16,15 @@ const InventoryPage = () => {
       opacity: 0,
       ease: "easeOut",
       width: 0
-      // onanimationend: {
-      //   width: 0
-      // }
     },
     shown: {
       opacity: 1,
-      // scale: 1,
-      // backgroundColor: "#333338",
-      //  w-[276px]
       width: "276px"
     }
   }
 
   return (
-    <div className="h-full border-l-[1px] border-l-neutral-700">
+    <div className={`h-full border-l-[1px] border-l-neutral-700 ${className}`}>
       <div className="flex h-full">
         {open && (
           <motion.div

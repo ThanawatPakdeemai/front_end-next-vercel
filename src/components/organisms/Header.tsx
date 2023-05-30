@@ -8,10 +8,8 @@ import useGlobal, { isMobile } from "@hooks/useGlobal"
 import RightMenuDeveloper from "@components/molecules/rightMenu/RightMenuDeveloper"
 import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutateMarketplace"
 import useMarketCategTypes from "@stores/marketCategTypes"
-import { NextRouter, useRouter } from "next/router"
 
 const Header = () => {
-  const router: NextRouter = useRouter()
   const { isMarketplace, isDeveloperPage } = useGlobal()
 
   const showHeadPrice = !isMarketplace && !isDeveloperPage
@@ -20,7 +18,7 @@ const Header = () => {
   const showRightMenuDeveloper = isDeveloperPage
 
   const { mutateMarketTypes } = useMutateMarketplace()
-  const { fetchStatus, setFetchStatus, onSetMarketTypes, onSetCategory } =
+  const { fetchStatus, setFetchStatus, onSetMarketTypes } =
     useMarketCategTypes()
 
   useEffect(() => {
@@ -42,39 +40,6 @@ const Header = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMarketplace])
-
-  useEffect(() => {
-    let cleanup = false
-    const selectedCategory = () => {
-      const _path = router.asPath
-      if (_path.includes("/game-item")) {
-        onSetCategory("game_item")
-      } else if (_path.includes("/land")) {
-        onSetCategory("nft_land")
-      } else if (_path === "/marketplace") {
-        onSetCategory("nft_land")
-      } else if (_path.includes("/building")) {
-        onSetCategory("nft_building")
-      } else if (_path.includes("/material")) {
-        onSetCategory("nft_material")
-      } else if (_path.includes("/naka-punk")) {
-        onSetCategory("nft_naka_punk")
-      } else if (_path.includes("/arcade-game")) {
-        onSetCategory("nft_game")
-      } else if (_path.includes("/avatar-reef")) {
-        onSetCategory("nft_avatar")
-      } else {
-        onSetCategory(undefined)
-      }
-    }
-    if (!cleanup && isMarketplace) {
-      selectedCategory()
-    }
-    return () => {
-      cleanup = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMarketplace, router.asPath])
 
   return (
     <div className="header-wrapper">

@@ -1,5 +1,5 @@
 import { useInventoryProvider } from "@providers/InventoryProvider"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState, useRef } from "react"
 import { useGetMyLand } from "@feature/land/containers/hooks/useGetMyLand"
 import useProfileStore from "@stores/profileStore"
 import useNFTLand from "@feature/land/containers/hooks/useNFTLand"
@@ -12,15 +12,19 @@ import useGlobal from "@hooks/useGlobal"
 import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
 import useMarketFilterStore from "@stores/marketFilter"
 import Helper from "@utils/helper"
+import { NextRouter, useRouter } from "next/router"
 
 const useInventoryOwner = () => {
+  const ref = useRef<boolean>(false)
+  const router: NextRouter = useRouter()
   const { profile } = useProfileStore()
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isItemLoading, setItemIsLoading] = useState<boolean>(true)
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
   const [limit, setLimit] = useState<number>(16)
   const { marketType } = useGlobal()
-  const { sort, search, filter } = useMarketFilterStore()
+  const { sort, search, filterType } = useMarketFilterStore()
   // game-item
   // material
   const { gameItemList, materialList } = useInventoryProvider()
@@ -64,198 +68,212 @@ const useInventoryOwner = () => {
   }, [])
 
   const fetchInventoryNFTItem = useCallback(async () => {
-    if (
-      profile.data &&
-      marketType &&
-      marketType !== "game_item" &&
-      marketType !== "nft_material" &&
-      filter &&
-      search &&
-      sort
-    ) {
-      setIsLoading(true)
-      let _data: IInventoryItemList[] = []
-      let _total = 0
-      switch (marketType) {
-        case "nft_land": {
-          await mutateGetMyLand({
-            _urlNFT: "NFT-Land",
-            _limit: limit,
-            _page: currentPage,
-            _search: {
-              isRent: false,
-              player_id: profile.data.id,
-              type: "nft_land",
-              type_land: filter.length > 0 ? filter : undefined,
-              land_id:
-                search.length > 0
-                  ? (getValueFromTKey(search, "land_id") as string) // should be nft_token same, discuss with BE team!
-                  : undefined
-            },
-            _landList: await fetchAllLandofAddress()
-          })
-            .then((_res) => {
-              if (_res.data && _res.data.length > 0) {
-                _data = _res.data.map((l) => ({
-                  id: l._id,
-                  tokenId: l.land_id,
-                  cardType: "land",
-                  name: l.name,
-                  img: l.NFT_image,
-                  vdo: l.NFT_video
-                }))
-                _total = _res.info.totalCount
+    if (profile.data && filterType && search && sort) {
+      if (
+        (!marketType &&
+          !router.asPath.includes("/game-item") &&
+          !router.asPath.includes("/material")) ||
+        (marketType &&
+          marketType !== "game_item" &&
+          marketType !== "nft_material")
+      ) {
+        setIsLoading(true)
+        let _data: IInventoryItemList[] = []
+        let _total = 0
+        switch (marketType) {
+          case "nft_building":
+            await mutateGetOwnerBuilding({
+              _urlNFT: "NFT-Building",
+              _limit: limit,
+              _page: currentPage,
+              _search: {
+                isRent: false,
+                player_id: profile.data.id,
+                type_building:
+                  filterType.nft_building.length > 0
+                    ? filterType.nft_building
+                    : undefined,
+                nft_token:
+                  search.length > 0
+                    ? (getValueFromTKey(search, "nft_token") as string)
+                    : undefined
               }
             })
-            .catch(() => {})
-          break
+              .then((_res) => {
+                if (_res.data && _res.data.length > 0) {
+                  _data = _res.data.map((b) => ({
+                    id: b._id,
+                    tokenId: b.NFT_token || "",
+                    cardType: "building",
+                    name: b.name,
+                    img: b.image,
+                    vdo: b.NFT_video,
+                    model: b.model_3d,
+                    level: b.level,
+                    percentage:
+                      b.deteriorate_building?.rate_deteriorate.percentage
+                  }))
+                  _total = _res.info.totalCount
+                }
+              })
+              .catch(() => {})
+            break
+          case "nft_game":
+            await mutateGeyMyArcGame({
+              _urlNFT: "NFT-As-Game",
+              _limit: limit,
+              _page: currentPage,
+              _search: {
+                nft_token:
+                  search.length > 0
+                    ? (getValueFromTKey(search, "nft_token") as string)
+                    : undefined
+              }
+            })
+              .then((_res) => {
+                if (_res.data && _res.data.length > 0) {
+                  _data = _res.data.map((g) => ({
+                    id: g._id,
+                    tokenId: g.NFT_info.NFT_token,
+                    cardType: "arcade-game",
+                    name: g.name,
+                    img: `https://ipfs.io/ipfs/${g.NFT_info.image_game_ipfs_cid}`,
+                    vdo: `https://ipfs.io/ipfs/${g.NFT_info.vdo_game_ipfs_cid}?stream=true`,
+                    model: g.animation_nft_arcade_game
+                  }))
+                  _total = _res.info.totalCount
+                }
+              })
+              .catch(() => {})
+            break
+          case "nft_naka_punk": {
+            await mutateGetMyNakaPunk({
+              _urlNFT: "NFT-NakaPunk",
+              _limit: limit,
+              _active: true,
+              _page: currentPage,
+              _search: {
+                nft_token:
+                  search.length > 0
+                    ? (getValueFromTKey(search, "nft_token") as string)
+                    : undefined
+              }
+            })
+              .then((_res) => {
+                if (_res.data && _res.data.length > 0) {
+                  _data = _res.data.map((p) => ({
+                    id: p._id,
+                    tokenId: p.NFT_token,
+                    cardType: "naka-punk",
+                    name: p.name,
+                    img: p.image
+                  }))
+                  _total = _res.info.totalCount
+                }
+              })
+              .catch(() => {})
+            break
+          }
+          case "nft_avatar":
+            await mutateGetMyAvatarReef({
+              _urlNFT: "NFT-Avatar",
+              _limit: limit,
+              _active: true,
+              _page: currentPage,
+              _search: {
+                nft_token:
+                  search.length > 0
+                    ? (getValueFromTKey(search, "nft_token") as string)
+                    : undefined
+              }
+            })
+              .then((_res) => {
+                if (_res.data.length > 0) {
+                  _data = _res.data.map((a) => ({
+                    id: a.id,
+                    tokenId: a.NFT_token,
+                    cardType: "avatar-reef",
+                    name: a.name,
+                    img: a.image
+                  }))
+                  _total = _res.info.totalCount
+                }
+              })
+              .catch(() => {})
+            break
+          default: {
+            await mutateGetMyLand({
+              _urlNFT: "NFT-Land",
+              _limit: limit,
+              _page: currentPage,
+              _search: {
+                isRent: false,
+                player_id: profile.data.id,
+                type: "nft_land",
+                type_land:
+                  filterType.nft_land.length > 0
+                    ? filterType.nft_land
+                    : undefined,
+                land_id:
+                  search.length > 0
+                    ? (getValueFromTKey(search, "land_id") as string) // should be nft_token same, discuss with BE team!
+                    : undefined
+              },
+              _landList: await fetchAllLandofAddress()
+            })
+              .then((_res) => {
+                if (_res.data && _res.data.length > 0) {
+                  _data = _res.data.map((l) => ({
+                    id: l._id,
+                    tokenId: l.land_id,
+                    cardType: "land",
+                    name: l.name,
+                    img: l.NFT_image,
+                    vdo: l.NFT_video
+                  }))
+                  _total = _res.info.totalCount
+                }
+              })
+              .catch(() => {})
+            break
+          }
         }
-        case "nft_building":
-          await mutateGetOwnerBuilding({
-            _urlNFT: "NFT-Building",
-            _limit: limit,
-            _page: currentPage,
-            _search: {
-              isRent: false,
-              player_id: profile.data.id,
-              type_building: filter.length > 0 ? filter : undefined,
-              nft_token:
-                search.length > 0
-                  ? (getValueFromTKey(search, "nft_token") as string)
-                  : undefined
-            }
-          })
-            .then((_res) => {
-              if (_res.data && _res.data.length > 0) {
-                _data = _res.data.map((b) => ({
-                  id: b._id,
-                  tokenId: b.NFT_token || "",
-                  cardType: "building",
-                  name: b.name,
-                  img: b.image,
-                  vdo: b.NFT_video,
-                  model: b.model_3d,
-                  level: b.level,
-                  percentage:
-                    b.deteriorate_building?.rate_deteriorate.percentage
-                }))
-                _total = _res.info.totalCount
-              }
-            })
-            .catch(() => {})
-          break
-        case "nft_game":
-          await mutateGeyMyArcGame({
-            _urlNFT: "NFT-As-Game",
-            _limit: limit,
-            _page: currentPage,
-            _search: {
-              nft_token:
-                search.length > 0
-                  ? (getValueFromTKey(search, "nft_token") as string)
-                  : undefined
-            }
-          })
-            .then((_res) => {
-              if (_res.data && _res.data.length > 0) {
-                _data = _res.data.map((g) => ({
-                  id: g._id,
-                  tokenId: g.NFT_info.NFT_token,
-                  cardType: "arcade-game",
-                  name: g.name,
-                  img: `https://ipfs.io/ipfs/${g.NFT_info.image_game_ipfs_cid}`,
-                  vdo: `https://ipfs.io/ipfs/${g.NFT_info.vdo_game_ipfs_cid}?stream=true`,
-                  model: g.animation_nft_arcade_game
-                }))
-                _total = _res.info.totalCount
-              }
-            })
-            .catch(() => {})
-          break
-        case "nft_naka_punk": {
-          await mutateGetMyNakaPunk({
-            _urlNFT: "NFT-NakaPunk",
-            _limit: limit,
-            _active: true,
-            _page: currentPage,
-            _search: {
-              nft_token:
-                search.length > 0
-                  ? (getValueFromTKey(search, "nft_token") as string)
-                  : undefined
-            }
-          })
-            .then((_res) => {
-              if (_res.data && _res.data.length > 0) {
-                _data = _res.data.map((p) => ({
-                  id: p._id,
-                  tokenId: p.NFT_token,
-                  cardType: "naka-punk",
-                  name: p.name,
-                  img: p.image
-                }))
-                _total = _res.info.totalCount
-              }
-            })
-            .catch(() => {})
-          break
-        }
-        case "nft_avatar":
-          await mutateGetMyAvatarReef({
-            _urlNFT: "NFT-Avatar",
-            _limit: limit,
-            _active: true,
-            _page: currentPage,
-            _search: {
-              nft_token:
-                search.length > 0
-                  ? (getValueFromTKey(search, "nft_token") as string)
-                  : undefined
-            }
-          })
-            .then((_res) => {
-              if (_res.data.length > 0) {
-                _data = _res.data.map((a) => ({
-                  id: a.id,
-                  tokenId: a.NFT_token,
-                  cardType: "avatar-reef",
-                  name: a.name,
-                  img: a.image
-                }))
-                _total = _res.info.totalCount
-              }
-            })
-            .catch(() => {})
-          break
-        default:
-          break
+        setInventoryItemList(_data)
+        setIsLoading(false)
       }
-      setInventoryItemList(_data)
-      setTotalCount(_total)
-      setIsLoading(false)
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile.data, marketType, currentPage, limit, filter, search, sort])
+  }, [
+    profile.data,
+    marketType,
+    currentPage,
+    limit,
+    filterType,
+    search,
+    sort,
+    ref
+  ])
 
   const fetchInventoryItem = useCallback(async () => {
     if (
       profile.data &&
       marketType &&
-      filter &&
+      filterType &&
       gameItemList &&
       materialList &&
       (marketType === "game_item" || marketType === "nft_material")
     ) {
-      setIsLoading(true)
+      setItemIsLoading(true)
       let _data: IInventoryItemList[] = []
       let _total = 0
       switch (marketType) {
         case "game_item":
           if (gameItemList && gameItemList.length > 0) {
             let _dummy = gameItemList
-            if (filter && filter.length > 0) {
+            if (filterType.game_item && filterType.game_item.length > 0) {
               _dummy = _dummy.filter(
-                (d) => d._id === filter.find((f) => f === d._id)
+                (d) => d._id === filterType.game_item.find((f) => f === d._id)
               )
             }
             _data = _dummy.map((gi) => ({
@@ -273,9 +291,11 @@ const useInventoryOwner = () => {
         case "nft_material":
           if (materialList && materialList.length > 0) {
             let _dummy = materialList
-            if (filter && filter.length > 0) {
+            if (filterType.nft_material && filterType.nft_material.length > 0) {
               _dummy = _dummy.filter(
-                (d) => d.name_type === filter.find((f) => f === d.name_type)
+                (d) =>
+                  d.name_type ===
+                  filterType.nft_material.find((f) => f === d.name_type)
               )
             }
             _data = _dummy.map((m) => ({
@@ -296,16 +316,17 @@ const useInventoryOwner = () => {
         _data.splice((currentPage - 1) * limit, currentPage * limit)
       )
       setTotalCount(_total)
+      setItemIsLoading(false)
     }
-    setIsLoading(false)
+    ref.current = true
   }, [
     profile.data,
     marketType,
-    currentPage,
-    limit,
+    filterType,
     gameItemList,
     materialList,
-    filter
+    currentPage,
+    limit
   ])
 
   useEffect(() => {
@@ -335,6 +356,7 @@ const useInventoryOwner = () => {
     }
     return () => {
       cleanup = true
+      ref.current = false
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [marketType])
@@ -342,6 +364,7 @@ const useInventoryOwner = () => {
   return {
     inventoryItemList,
     isLoading,
+    isItemLoading,
     limit,
     currentPage,
     totalCount,

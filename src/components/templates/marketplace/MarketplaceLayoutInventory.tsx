@@ -5,7 +5,6 @@ import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
 import { MENU_MARKETPLACE_INVENTORY } from "@configs/menu"
-import FilterDropdown from "@feature/marketplace/components/molecules/FilterDropdown"
 import InventoryPage from "@feature/page/inventory/InventoryPage"
 import { Divider, MenuList, Typography } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
@@ -15,6 +14,7 @@ import { NextRouter, useRouter } from "next/router"
 import React from "react"
 import { useTranslation } from "react-i18next"
 import { InventoryProvider } from "@providers/InventoryProvider"
+import FilterDropdown from "@feature/marketplace/components/molecules/FilterDropdown"
 
 const MarketplaceLayoutInventory = ({
   children
@@ -39,7 +39,7 @@ const MarketplaceLayoutInventory = ({
           className="!w-full"
           sx={{ marginTop: 2 }}
         />
-        <div className="flex flex-col gap-3 md:flex-row">
+        <div className="flex flex-col md:flex-row">
           {/* add filter component here */}
           {!isMapPage && (
             <div className="w-[200px]">
@@ -128,10 +128,10 @@ const MarketplaceLayoutInventory = ({
             {isMapPage ? (
               <div className="map-wrapper h-full w-full">{children}</div>
             ) : (
-              <>
+              <main className="flex w-full flex-col gap-y-4 px-2">
                 <FilterDropdown />
                 {children}
-              </>
+              </main>
             )}
           </div>
         </div>

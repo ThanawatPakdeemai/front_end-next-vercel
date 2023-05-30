@@ -40,21 +40,21 @@ const useHomeControllerMobile = () => {
     setOpen(newOpen)
   }
 
-  const toggleDrawerNotification = (newOpen: boolean) => {
-    setOpenNotification(newOpen)
-  }
+  // const toggleDrawerNotification = (newOpen: boolean) => {
+  //   setOpenNotification(newOpen)
+  // }
 
-  const toggleDrawerWishlist = (newOpen: boolean) => {
-    setOpenWishlist(newOpen)
-  }
+  // const toggleDrawerWishlist = (newOpen: boolean) => {
+  //   setOpenWishlist(newOpen)
+  // }
 
-  const toggleDrawerSetting = (newOpen: boolean) => {
-    setOpenSetting(newOpen)
-  }
+  // const toggleDrawerSetting = (newOpen: boolean) => {
+  //   setOpenSetting(newOpen)
+  // }
 
-  const toggleDrawerReward = (newOpen: boolean) => {
-    setOpenReward(newOpen)
-  }
+  // const toggleDrawerReward = (newOpen: boolean) => {
+  //   setOpenReward(newOpen)
+  // }
 
   useEffect(() => {
     let load = false
@@ -94,8 +94,8 @@ const useHomeControllerMobile = () => {
     toggleDrawer,
     openNotification,
     setOpenNotification,
-    toggleDrawerNotification,
-    toggleDrawerWishlist,
+    // toggleDrawerNotification,
+    // toggleDrawerWishlist,
     selectedCategory,
     setSelectedCategory,
     searchBlog,
@@ -107,12 +107,12 @@ const useHomeControllerMobile = () => {
     onSetGameStore,
     setOpenWishlist,
     openWishlist,
-    toggleDrawerSetting,
+    // toggleDrawerSetting,
     openSetting,
     setOpenSetting,
     setOpenReward,
-    openReward,
-    toggleDrawerReward
+    openReward
+    // toggleDrawerReward
   }
 }
 

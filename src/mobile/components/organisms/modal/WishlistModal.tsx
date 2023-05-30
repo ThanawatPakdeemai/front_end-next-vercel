@@ -4,20 +4,15 @@ import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 
 interface IWishlistModalProps {
   open: boolean
-  toggleDrawerWishlist: (newOpen: boolean) => void
   setOpenWishlist: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const WishlistModal = ({
-  open,
-  toggleDrawerWishlist,
-  setOpenWishlist
-}: IWishlistModalProps) => (
+const WishlistModal = ({ open, setOpenWishlist }: IWishlistModalProps) => (
   <SwipeableDrawer
     anchor="right"
     open={open}
-    onClose={() => toggleDrawerWishlist(false)}
-    onOpen={(_newOpen) => toggleDrawerWishlist(true)}
+    onClose={() => setOpenWishlist(false)}
+    onOpen={() => setOpenWishlist(true)}
     disableSwipeToOpen={false}
     ModalProps={{
       keepMounted: true

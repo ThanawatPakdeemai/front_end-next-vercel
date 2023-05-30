@@ -4,20 +4,18 @@ import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 
 interface INotificationModalProps {
   open: boolean
-  toggleDrawerNotification: (newOpen: boolean) => void
   setOpenNotification: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const NotificationModal = ({
   open,
-  toggleDrawerNotification,
   setOpenNotification
 }: INotificationModalProps) => (
   <SwipeableDrawer
     anchor="right"
     open={open}
-    onClose={() => toggleDrawerNotification(false)}
-    onOpen={() => toggleDrawerNotification(true)}
+    onClose={() => setOpenNotification(false)}
+    onOpen={() => setOpenNotification(true)}
     disableSwipeToOpen={false}
     ModalProps={{
       keepMounted: true

@@ -8,26 +8,23 @@ import RewardModal from "./modal/RewardModal"
 
 const FooterMobile = () => {
   const {
-    toggleDrawerWishlist,
     openWishlist,
     setOpenWishlist,
     setOpenSetting,
     openSetting,
-    toggleDrawerSetting,
     setOpenReward,
-    openReward,
-    toggleDrawerReward
+    openReward
   } = useHomeControllerMobile()
 
   const onHandleClick = (_id: TGameMenuMobile) => {
     if (_id === "home") {
       // do something when click Home
     } else if (_id === "wishlist") {
-      return toggleDrawerWishlist(true)
+      return setOpenWishlist(true)
     } else if (_id === "reward") {
-      return toggleDrawerReward(true)
+      return setOpenReward(true)
     } else if (_id === "settings") {
-      return toggleDrawerSetting(true)
+      return setOpenSetting(true)
     }
   }
 
@@ -53,7 +50,7 @@ const FooterMobile = () => {
             component="button"
             key={_menu.name}
             className="flex flex-col items-center justify-center gap-1"
-            onClick={onHandleClick(_menu.id)}
+            onClick={() => onHandleClick(_menu.id)}
           >
             <i className="flex items-center justify-center">{_menu.icon}</i>
             <span className="font-urbanist text-[12px] text-[#9E9E9E]">
@@ -65,19 +62,16 @@ const FooterMobile = () => {
       {/* Modal Wishlist */}
       <WishlistModal
         open={openWishlist}
-        toggleDrawerWishlist={toggleDrawerWishlist}
         setOpenWishlist={setOpenWishlist}
       />
       {/* Setting Modal */}
       <SettingModal
         open={openSetting}
-        toggleDrawerSetting={toggleDrawerSetting}
         setOpenSetting={setOpenSetting}
       />
       {/* Reward Modal */}
       <RewardModal
         open={openReward}
-        toggleDrawerReward={toggleDrawerReward}
         setOpenReward={setOpenReward}
       />
     </Box>

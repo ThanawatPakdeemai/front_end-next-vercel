@@ -4,20 +4,15 @@ import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 
 interface ISettingModalProps {
   open: boolean
-  toggleDrawerSetting: (newOpen: boolean) => void
   setOpenSetting: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const SettingModal = ({
-  open,
-  toggleDrawerSetting,
-  setOpenSetting
-}: ISettingModalProps) => (
+const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => (
   <SwipeableDrawer
     anchor="right"
     open={open}
-    onClose={() => toggleDrawerSetting(false)}
-    onOpen={() => toggleDrawerSetting(true)}
+    onClose={() => setOpenSetting(false)}
+    onOpen={() => setOpenSetting(true)}
     disableSwipeToOpen={false}
     ModalProps={{
       keepMounted: true

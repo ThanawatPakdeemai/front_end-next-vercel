@@ -17,8 +17,7 @@ interface IProps {
 const HeadProfileMobile = ({ show = true }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
   const { count } = useNotiStore()
-  const { toggleDrawerNotification, openNotification, setOpenNotification } =
-    useHomeControllerMobile()
+  const { openNotification, setOpenNotification } = useHomeControllerMobile()
 
   return show ? (
     <header className="header bg-[#F32429] pb-[55px]">
@@ -66,7 +65,7 @@ const HeadProfileMobile = ({ show = true }: IProps) => {
           <IconTemplate>
             <WalletRoundIcon />
           </IconTemplate>
-          <IconTemplate onClick={toggleDrawerNotification(true)}>
+          <IconTemplate onClick={() => setOpenNotification(true)}>
             <div
               className={`absolute right-[15px] top-[12px] h-[6px] w-[6px] rounded-full ${
                 count > 0 && "bg-error-main opacity-100"
@@ -80,7 +79,6 @@ const HeadProfileMobile = ({ show = true }: IProps) => {
       {/* Modal Notification */}
       <NotificationModal
         open={openNotification}
-        toggleDrawerNotification={toggleDrawerNotification}
         setOpenNotification={setOpenNotification}
       />
     </header>

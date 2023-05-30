@@ -10,10 +10,10 @@ pipeline {
           // sh 'ssh -o StrictHostKeyChecking=no naka@naka.im'
           // sh 'mkdir -p ~/.ssh'
           // sh "ssh-keyscan naka.im >> ~/.ssh/known_hosts"
-          sh "
+          sh '''
             ssh naka@naka.im
-            'pm2 list'
-          "
+            pm2 list
+          '''
         }
       }
     }

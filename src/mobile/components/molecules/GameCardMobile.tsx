@@ -13,7 +13,6 @@ interface IProps {
   name: string
   imageCategoryList: string
   categoryList: IGameCategory[]
-  onClick: () => void
   href: string
 }
 
@@ -22,7 +21,7 @@ const GameCardMobile = ({
   imageCategoryList,
   name,
   categoryList,
-  onClick,
+
   href
 }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -38,7 +37,6 @@ const GameCardMobile = ({
         initial="init"
         whileHover="onHover"
         animate="animate"
-        onClick={onClick}
       >
         <div className="relative w-full overflow-hidden rounded-[20px] pt-[84%]">
           <div className="game-favorite absolute right-3 top-3 z-[1]">

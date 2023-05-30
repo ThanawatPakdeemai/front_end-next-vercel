@@ -7,22 +7,20 @@ interface ICategoriesModalProps {
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>
-  toggleDrawer: (newOpen: boolean) => void
   categories: IGameCategory[] | undefined
 }
 
 const CategoriesModal = ({
   open,
   setOpen,
-  toggleDrawer,
   categories,
   setSelectedCategory
 }: ICategoriesModalProps) => (
   <SwipeableDrawer
     anchor="bottom"
     open={open}
-    onClose={() => toggleDrawer(false)}
-    onOpen={() => toggleDrawer(true)}
+    onClose={() => setOpen(false)}
+    onOpen={() => setOpen(true)}
     disableSwipeToOpen={false}
     ModalProps={{
       keepMounted: true
@@ -74,7 +72,6 @@ const CategoriesModal = ({
                 fontWeight: 600
               }}
               onClick={() => {
-                toggleDrawer(false)
                 setOpen(false)
                 setSelectedCategory(item.id)
               }}

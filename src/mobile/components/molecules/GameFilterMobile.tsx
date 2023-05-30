@@ -7,13 +7,13 @@ import ButtonGreenTemplate from "../templates/ButtonGreenTemplate"
 interface IGameFilterMobile {
   setActiveMenu: React.Dispatch<React.SetStateAction<IGetType>>
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>
-  toggleDrawer: (newOpen: boolean) => void
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const GameFilterMobile = ({
   setActiveMenu,
   setSelectedCategory,
-  toggleDrawer
+  setOpen
 }: IGameFilterMobile) => (
   <Box
     component="section"
@@ -40,7 +40,7 @@ const GameFilterMobile = ({
         Top game
       </ButtonGreenTemplate>
       <ButtonGreenTemplate
-        onClick={() => toggleDrawer(true)}
+        onClick={() => setOpen(true)}
         sxCustom={{
           display: "flex",
           alignItems: "center",

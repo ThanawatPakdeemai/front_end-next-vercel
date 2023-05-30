@@ -33,29 +33,6 @@ const useHomeControllerMobile = () => {
     onSetGameStore
   } = useGamePageListController(activeMenu, "all", limit, selectedCategory)
 
-  /**
-   * @description When click toggle categories
-   */
-  const toggleDrawer = (newOpen: boolean) => {
-    setOpen(newOpen)
-  }
-
-  // const toggleDrawerNotification = (newOpen: boolean) => {
-  //   setOpenNotification(newOpen)
-  // }
-
-  // const toggleDrawerWishlist = (newOpen: boolean) => {
-  //   setOpenWishlist(newOpen)
-  // }
-
-  // const toggleDrawerSetting = (newOpen: boolean) => {
-  //   setOpenSetting(newOpen)
-  // }
-
-  // const toggleDrawerReward = (newOpen: boolean) => {
-  //   setOpenReward(newOpen)
-  // }
-
   useEffect(() => {
     let load = false
 
@@ -91,11 +68,8 @@ const useHomeControllerMobile = () => {
     categories,
     open,
     setOpen,
-    toggleDrawer,
     openNotification,
     setOpenNotification,
-    // toggleDrawerNotification,
-    // toggleDrawerWishlist,
     selectedCategory,
     setSelectedCategory,
     searchBlog,
@@ -107,12 +81,10 @@ const useHomeControllerMobile = () => {
     onSetGameStore,
     setOpenWishlist,
     openWishlist,
-    // toggleDrawerSetting,
     openSetting,
     setOpenSetting,
     setOpenReward,
     openReward
-    // toggleDrawerReward
   }
 }
 

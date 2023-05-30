@@ -6,7 +6,7 @@ import GameFilterMobile from "@mobile/components/molecules/GameFilterMobile"
 import SearchInputMobile from "@mobile/components/atoms/input/SearchInputMobile"
 import FooterMobile from "@mobile/components/organisms/FooterMobile"
 import CategoriesModal from "@mobile/components/organisms/modal/CategoriesModal"
-import GameList from "@mobile/components/organisms/GameListMobile"
+import GameListMobile from "@mobile/components/organisms/GameListMobile"
 import useHomeControllerMobile from "../game/containers/hooks/useHomeControllerMobile"
 
 const HomeMobile = () => {
@@ -14,7 +14,6 @@ const HomeMobile = () => {
     activeMenu,
     setActiveMenu,
     setSelectedCategory,
-    toggleDrawer,
     searchBlog,
     setSearchBlog,
     gameData,
@@ -22,9 +21,7 @@ const HomeMobile = () => {
     open,
     setOpen,
     loadingFilterGame,
-    limit,
-    onSetGameStore,
-    gameLink
+    limit
   } = useHomeControllerMobile()
 
   return (
@@ -38,7 +35,7 @@ const HomeMobile = () => {
       <GameFilterMobile
         setActiveMenu={setActiveMenu}
         setSelectedCategory={setSelectedCategory}
-        toggleDrawer={toggleDrawer}
+        setOpen={setOpen}
       />
       {/* Search */}
       <Box
@@ -53,12 +50,10 @@ const HomeMobile = () => {
 
       {/* Game List */}
       {gameData && gameData.length > 0 && (
-        <GameList
+        <GameListMobile
           gameData={gameData}
           loading={loadingFilterGame}
           limit={limit}
-          onSetGameStore={onSetGameStore}
-          gameLink={gameLink}
         />
       )}
 
@@ -67,7 +62,6 @@ const HomeMobile = () => {
         open={open}
         setOpen={setOpen}
         setSelectedCategory={setSelectedCategory}
-        toggleDrawer={toggleDrawer}
         categories={categories}
       />
 

@@ -12,7 +12,8 @@ import useTable from "@feature/table/containers/hooks/useTable"
 import { IHistory } from "@feature/history/interfaces/IHistoryService"
 import NoData from "@components/molecules/NoData"
 import { Image } from "@components/atoms/image/index"
-import Headerbackpage from "@mobile/components/organisms/headerMenu/Headerbackpage"
+import HeaderForWardBackWardMobile from "@mobile/components/atoms/headerMenu/HeaderForWardBackWardMobile"
+import { useRouter } from "next/router"
 
 const GameItem = ({ data, onClickView }) => {
   const { game_mode, createdAt, game_detail } = data
@@ -82,6 +83,7 @@ const HistoryTableMobile = () => {
   const { handleClickView } = useHistoryController()
   const { limit, setLimit } = useTable()
   const { getHistoryData } = useHistory()
+  const router = useRouter()
 
   // States
   const [skip, setSkip] = useState<number>(1)
@@ -135,7 +137,11 @@ const HistoryTableMobile = () => {
     <>
       {hydrated && (
         <div className="mx-auto max-w-[678px]">
-          <Headerbackpage text="Played History" />
+          <HeaderForWardBackWardMobile
+            label="Played History"
+            onClickBackWard={() => router.back()}
+            showForwardIcon={false}
+          />
           <div className="grid h-full w-full grid-cols-2 content-center justify-items-center gap-4">
             <Box
               component="div"

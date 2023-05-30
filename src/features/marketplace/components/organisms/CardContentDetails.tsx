@@ -31,6 +31,7 @@ interface IProp {
   meta_data?: MetaData[]
   nameItem?: string
   hiddenDetails?: boolean
+  order_id?: string
 }
 
 const CardContentDetails = ({ ...props }: IProp) => {
@@ -44,8 +45,9 @@ const CardContentDetails = ({ ...props }: IProp) => {
     poster,
     txHash,
     meta_data,
-    nameItem
-    // hiddenDetails = false
+    nameItem,
+    order_id,
+    hiddenDetails = false
   } = props
   const [open, setOpen] = useState<boolean>(false)
   const { marketType } = useGlobal()
@@ -145,22 +147,25 @@ const CardContentDetails = ({ ...props }: IProp) => {
         </div>
       </div>
       {children}
-      <Divider
-        sx={{ width: "100%", marginBottom: "20px", marginTop: "20px" }}
-        className={`${marketType !== "nft_naka_punk" && `hidden sm:block`} `}
-      />
-      <div
-        className={`${
-          marketType !== "nft_naka_punk" && `hidden sm:block`
-        } px-8 py-6`}
-      >
-        <Typography className="text-sm uppercase text-black-default">
-          details
-        </Typography>
-        <Typography className="text-sm uppercase text-neutral-600 ">
-          {detail}
-        </Typography>
-      </div>
+      {(!order_id && marketType !== "nft_naka_punk") ||
+        (hiddenDetails && (
+          <>
+            <Divider
+              sx={{ width: "100%", marginBottom: "20px", marginTop: "20px" }}
+              className={`${
+                marketType !== "nft_naka_punk" && `hidden sm:block`
+              } `}
+            />
+            <div className="px-8 py-6">
+              <Typography className="text-sm uppercase text-black-default">
+                details
+              </Typography>
+              <Typography className="text-sm uppercase text-neutral-600 ">
+                {detail}
+              </Typography>
+            </div>
+          </>
+        ))}
       <ModalCustom
         open={open}
         onClose={handleClose}

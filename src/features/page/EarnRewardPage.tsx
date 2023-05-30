@@ -57,8 +57,6 @@ const EarnRewardPage = () => {
 
   const onClaimAll = () => warnToast("Claim all is not available yet")
 
-  console.log("test-earnRewardData", earnRewardData)
-
   useEffect(() => {
     let load = false
 

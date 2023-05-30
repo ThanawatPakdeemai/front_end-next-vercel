@@ -28,14 +28,14 @@ const InventoryPage = () => {
 
   return (
     <div className="hidden h-full border-l-[1px] border-l-neutral-700 sm:block">
-      <div className="flex">
+      <div className="flex ">
         {open && (
           <motion.div
             variants={animetionVariants}
             initial="hidden"
             animate="shown"
             // transition={{ duration: 2, ease: "easeIn" }}
-            className="h-fit bg-neutral-780 p-4"
+            className="h-full bg-neutral-780 p-4"
           >
             <FilterBox />
           </motion.div>

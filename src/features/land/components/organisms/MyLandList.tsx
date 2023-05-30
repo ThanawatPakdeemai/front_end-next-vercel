@@ -64,7 +64,7 @@ const MyLandList = ({
                 borderBottom={false}
                 child={[
                   <>
-                    <p className="text-sm">MY LAND</p>
+                    <p className="text-sm text-white-default">MY LAND</p>
                   </>
                 ]}
                 gridTemplateColumns="1fr"
@@ -72,7 +72,7 @@ const MyLandList = ({
             </TableHead>
             <TableHeader
               thead={landListHeader}
-              gridTemplateColumns="180px 1fr 1fr"
+              gridTemplateColumns="150px 1fr 1fr"
             />
             {isLoading ? (
               [...Array(limit)].map(() => <SkeletonTableWallet key={uuid()} />)
@@ -137,7 +137,7 @@ const MyLandList = ({
                           />
                         </div>
                       ]}
-                      gridTemplateColumns="180px 1fr 1fr"
+                      gridTemplateColumns="150px 1fr 1fr"
                     />
                   ))
                 ) : (
@@ -148,7 +148,7 @@ const MyLandList = ({
           </Table>
         </TableContainer>
       )}
-      {landData && landData.length > 0 && (
+      {landData && landData.length > 6 && (
         <div className="my-5 flex justify-between md:my-5 md:flex xl:w-[457px]">
           <PaginationNaka
             totalCount={totolCount}

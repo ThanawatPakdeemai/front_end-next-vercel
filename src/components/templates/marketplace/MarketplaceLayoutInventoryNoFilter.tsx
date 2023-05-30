@@ -75,7 +75,11 @@ const MarketplaceLayoutInventory = ({
                     </div>
                   ) : null}
                   {MENU_MARKETPLACE_INVENTORY.map((ele) => {
-                    const active = router.asPath.includes(ele.href)
+                    const active =
+                      router.asPath.split("/")[3] === ele.href.split("/")[3]
+                    const activeOnlyInventory =
+                      router.pathname.split("/")[3] === "[type]" &&
+                      ele.href.split("/").length === 3
                     return (
                       <MenuItemCustom
                         key={ele.id}
@@ -84,7 +88,7 @@ const MarketplaceLayoutInventory = ({
                         icon={ele.icon}
                         href={ele.href}
                         external={ele.external}
-                        active={active}
+                        active={active || activeOnlyInventory}
                       />
                     )
                   })}

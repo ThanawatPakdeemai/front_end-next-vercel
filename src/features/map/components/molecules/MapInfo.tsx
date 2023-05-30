@@ -5,7 +5,7 @@ import ColorBoxElementInfo from "./ColorBoxElementInfo"
 const MapInfo = () => (
   <Box
     component="div"
-    className="menu-land-type absolute bottom-[15px] z-10 ml-5 md:left-auto md:right-[15px]"
+    className="menu-land-type absolute bottom-[15px] right-[15px] z-10 ml-5"
   >
     <Box
       component="div"

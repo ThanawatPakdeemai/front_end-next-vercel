@@ -6,7 +6,10 @@ import SignInLayout from "@src/mobile/components/templates/SignInLayout"
 import useProfileStore from "@stores/profileStore"
 import { isMobile } from "@hooks/useGlobal"
 
-const HomePage = dynamic(() => import("@feature/page/homePage"))
+const HomePage = dynamic(() => import("@feature/page/homePage"), {
+  suspense: true,
+  ssr: true
+})
 const Home = () => {
   const profile = useProfileStore((state) => state.profile.data)
 

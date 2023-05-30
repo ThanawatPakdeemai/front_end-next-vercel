@@ -30,11 +30,11 @@ const useInventoryForSale = () => {
   const { mutateGetForsaleArcGame } = useGetForSaleArcGame()
   const { getMarketOrderAsnyc } = useGetMarketOrder()
   const { convertNFTTypeToUrl, getValueFromTKey } = Helper
-  const { sort, search, filter } = useMarketFilterStore()
+  const { sort, search, filterType } = useMarketFilterStore()
 
   const fetchMyForsale = useCallback(async () => {
     setIsLoading(true)
-    if (profile && profile.data && marketType && filter && search && sort) {
+    if (profile && profile.data && marketType && filterType && search && sort) {
       let _data: IInventoryItemList[] = []
       let _total: number = 0
       switch (marketType) {
@@ -47,7 +47,10 @@ const useInventoryForSale = () => {
             _search: {
               seller_id: profile.data.address,
               seller_type: "user",
-              item_id: filter.length > 0 ? filter : undefined
+              item_id:
+                filterType.game_item.length > 0
+                  ? filterType.game_item
+                  : undefined
             }
           })
             .then((_res) => {
@@ -78,7 +81,10 @@ const useInventoryForSale = () => {
             _search: {
               seller_id: profile.data.address,
               seller_type: "user",
-              type_material: filter.length > 0 ? filter : undefined
+              type_material:
+                filterType.nft_material.length > 0
+                  ? filterType.nft_material
+                  : undefined
             }
           })
             .then((_res) => {
@@ -105,7 +111,10 @@ const useInventoryForSale = () => {
             _search: {
               seller_type: "user",
               player_id: profile.data.id, // ! discuss BE team need to send ?
-              type_land: filter.length > 0 ? filter : undefined,
+              type_land:
+                filterType.nft_land.length > 0
+                  ? filterType.nft_land
+                  : undefined,
               // selling_type
               land_id:
                 search.length > 0
@@ -139,7 +148,10 @@ const useInventoryForSale = () => {
             _search: {
               seller_type: "user",
               player_id: profile.data.id, // ! discuss BE team need to send ?
-              type_building: filter.length > 0 ? filter : undefined,
+              type_building:
+                filterType.nft_building.length > 0
+                  ? filterType.nft_building
+                  : undefined,
               // selling_type
               nft_token:
                 search.length > 0
@@ -242,7 +254,7 @@ const useInventoryForSale = () => {
       setTotalCount(_total)
     }
     setIsLoading(false)
-  }, [profile.data, marketType, limit, currentPage, filter, search, sort])
+  }, [profile.data, marketType, limit, currentPage, filterType, search, sort])
 
   useEffect(() => {
     let load = false

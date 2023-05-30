@@ -10,8 +10,6 @@ import { useTranslation } from "react-i18next"
 import { MobileView } from "react-device-detect"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { Box } from "@mui/material"
-import HeadMenuMobile from "@mobile/components/atoms/headerMenu/HeadGameMenuMobile"
 import { isMobile } from "@hooks/useGlobal"
 
 const GamePageLayout = ({
@@ -90,14 +88,6 @@ const GamePageLayout = ({
               <HeadGames>{children}</HeadGames>
             </div>
           </div>
-          <header className="header fixed inset-x-0 bottom-4 z-[999] ">
-            <Box
-              component="div"
-              className="flex content-center items-center justify-center "
-            >
-              <HeadMenuMobile />
-            </Box>
-          </header>
         </MobileView>
       ) : (
         <div className="main-container mx-auto px-2 lg:px-0">

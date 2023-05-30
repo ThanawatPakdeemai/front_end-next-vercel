@@ -30,7 +30,7 @@ const useInventoryRental = () => {
     let _total: number = 0
     setIsLoading(true)
     if (profile.data && _marketType && filterType && search && sort) {
-      switch (marketType) {
+      switch (_marketType) {
         case "nft_land":
           await mutateGetMyRentalLand({
             _limit: limit,

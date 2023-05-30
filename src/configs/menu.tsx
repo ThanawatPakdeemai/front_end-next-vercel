@@ -46,6 +46,7 @@ import IDiamond from "@components/icons/Diamond"
 import CalendarSolidIcon from "@components/icons/CalendarSolidIcon"
 import GameStoryIcon from "@components/icons/GameStoryIcon"
 import FreeToEarnIcon from "@components/icons/FreeToEarnIcon"
+import DesktopIcon from "@components/icons/DesktopIcon"
 
 // TODO: Open after launch V2
 // import GlobalIcon from "@components/icons/GlobalIcon"
@@ -200,13 +201,13 @@ export const MENU = [
         name: "About Us",
         link: "https://main.nakamoto.games",
         icon: AboutUsIcon
-      }
+      },
       // TODO: Open after launch V2
-      // {
-      //   name: "Become Developer",
-      //   link: "/become-developer",
-      //   icon: DesktopIcon
-      // }
+      {
+        name: "Become Developer",
+        link: "/become-developer",
+        icon: DesktopIcon
+      }
     ]
   }
 ]
@@ -494,14 +495,14 @@ export const MENU_BLOG: IMenu[] = [
     icon: <NakapunksIcon className="stroke-neutral-300" />,
     href: `${CONFIGS.BASE_URL.MARKETPLACE}/nakapunks`,
     external: false
+  },
+  {
+    id: "become-developer",
+    label: "Become Developer",
+    icon: <DesktopIcon className="stroke-neutral-300" />,
+    href: "/become-developer",
+    external: false
   }
-  // {
-  //   id: "become-developer",
-  //   label: "Become Developer",
-  //   icon: <DesktopIcon className="stroke-neutral-300" />,
-  //   href: "/become-developer",
-  //   external: false
-  // }
 ]
 
 export const MENU_BLOG_HEADER = [

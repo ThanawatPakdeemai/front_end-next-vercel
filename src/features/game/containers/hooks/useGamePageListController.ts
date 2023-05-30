@@ -14,7 +14,8 @@ import { useRouter } from "next/router"
 const useGamePageListController = (
   gameMode?: IGetType,
   gameType?: TGameType,
-  _limit?: number
+  _limit?: number,
+  _categoryId?: string
 ) => {
   const router = useRouter()
   const categoryId = router.query.id
@@ -71,7 +72,9 @@ const useGamePageListController = (
     if (categoryId) {
       return "all"
     }
-    if (!gameMode) return "all"
+    if (!gameMode) {
+      return "all"
+    }
     return gameMode
   }
 
@@ -102,7 +105,7 @@ const useGamePageListController = (
         skip: page,
         sort: "_id",
         search: searchDropdown,
-        category: categoryId || categoryDropdown,
+        category: categoryId || _categoryId || categoryDropdown,
         item: gameItemDropdown,
         device: deviceDropdown,
         game_type: gameType || gameTypeDropdown,
@@ -135,7 +138,8 @@ const useGamePageListController = (
     page,
     limit,
     mutateGetGamesByCategoryId,
-    gameMode
+    gameMode,
+    _categoryId
   ])
 
   const onSetGameStore = (game: IGame) => {

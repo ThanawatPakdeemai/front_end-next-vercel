@@ -1,9 +1,9 @@
+/* eslint-disable no-console */
 import CheckMarkIcon from "@components/icons/CheckMarkIcon"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import ItemRewardDetails from "@feature/game/containers/components/molecules/ItemRewardDetails"
 import SkeletonDetails from "@feature/game/containers/components/molecules/SkeletonDetails"
 import useClaimReward from "@feature/game/containers/hooks/useClaimEarnedRewardByPlayerId"
-import useGetAllGames from "@feature/game/containers/hooks/useGetAllGame"
 import useGetP2ERewardByPlayerId from "@feature/game/containers/hooks/useGetP2ERewardByPlayerId"
 import { useToast } from "@feature/toast/containers"
 import { Chip, Typography, Box } from "@mui/material"
@@ -16,8 +16,9 @@ import NoData from "@components/molecules/NoData"
 
 const EarnRewardPage = () => {
   const { profile } = useProfileStore()
-  const [rewardList, setRewardList] = useState<IPlayToEarnRewardData[]>([])
-  const { allGameData } = useGetAllGames()
+  const [rewardList, setRewardList] = useState<
+    IPlayToEarnRewardData[] | undefined
+  >([])
   const [isLoadingReward, setIsLoadingReward] = useState(true)
   const { mutateClaimReward } = useClaimReward()
   const { t } = useTranslation()
@@ -37,7 +38,7 @@ const EarnRewardPage = () => {
         _rewardId: reward_id
       })
         .then((res) => {
-          if (res.status) {
+          if (res.status && rewardList) {
             const updateData = rewardList.filter(
               (_item) => _item._id !== reward_id
             )
@@ -95,7 +96,7 @@ const EarnRewardPage = () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allGameData, earnRewardData, earnRewardData])
+  }, [earnRewardData])
 
   let content: React.ReactElement | React.ReactElement[]
 

@@ -1,7 +1,8 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { ReactElement } from "react"
 import dynamic from "next/dynamic"
-import Headerbackpage from "@mobile/components/organisms/headerMenu/Headerbackpage"
+import HeaderForWardBackWardMobile from "@mobile/components/atoms/headerMenu/HeaderForWardBackWardMobile"
+import { useRouter } from "next/router"
 
 const ReferralProgramPage = dynamic(
   () => import("@feature/page/ReferralProgramPage"),
@@ -19,10 +20,15 @@ const ServicesPageLayout = dynamic(
 )
 
 export default function Referral() {
+  const router = useRouter()
   return (
     <>
       <article className="h-full w-full">
-        <Headerbackpage text="Referral" />
+        <HeaderForWardBackWardMobile
+          label="referral"
+          showForwardIcon={false}
+          onClickBackWard={() => router.back()}
+        />
         <ReferralProgramPage />
       </article>
     </>

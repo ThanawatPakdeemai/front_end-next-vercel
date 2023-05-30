@@ -10,9 +10,8 @@ const MarketplaceFullMap = dynamic(
   }
 )
 
-const MarketplaceLayoutWithoutFilter = dynamic(
-  () =>
-    import("@components/templates/marketplace/MarketplaceLayoutWithoutFilter"),
+const MarketplaceLayoutInventory = dynamic(
+  () => import("@components/templates/marketplace/MarketplaceLayoutInventory"),
   {
     suspense: true,
     ssr: false
@@ -22,7 +21,7 @@ const MarketplaceLayoutWithoutFilter = dynamic(
 const Map = () => <MarketplaceFullMap />
 
 Map.getLayout = function getLayout(page: ReactElement) {
-  return <MarketplaceLayoutWithoutFilter>{page}</MarketplaceLayoutWithoutFilter>
+  return <MarketplaceLayoutInventory>{page}</MarketplaceLayoutInventory>
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {

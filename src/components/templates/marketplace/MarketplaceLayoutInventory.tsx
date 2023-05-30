@@ -14,6 +14,7 @@ import { NextRouter, useRouter } from "next/router"
 import React from "react"
 import { useTranslation } from "react-i18next"
 import { InventoryProvider } from "@providers/InventoryProvider"
+import FilterDropdown from "@feature/marketplace/components/molecules/FilterDropdown"
 
 const MarketplaceLayoutInventory = ({
   children
@@ -23,10 +24,15 @@ const MarketplaceLayoutInventory = ({
   const { onReset } = useProfileStore()
   const router: NextRouter = useRouter()
   const { t } = useTranslation()
+  const isMapPage = router.asPath.includes("map")
 
   return (
     <InventoryProvider>
-      <div className="main-container mx-auto">
+      <div
+        className={`${
+          isMapPage ? "w-full overflow-hidden" : "main-container"
+        } mx-auto`}
+      >
         <Header />
         <div className="items-center sm:flex" />
         <Divider
@@ -35,76 +41,101 @@ const MarketplaceLayoutInventory = ({
         />
         <div className="flex flex-col md:flex-row">
           {/* add filter component here */}
-          <div className="w-60">
-            {/* <div className="w-full flex-row md:flex"> */}
-            <MenuList className="mt-4 h-fit w-full max-w-xs rounded-[13px] bg-neutral-800 p-[6px] md:mx-0">
-              <div className="w-full">
-                {profile ? (
-                  <div className="mb-2 flex rounded-lg border border-neutral-700 bg-neutral-780 p-1">
-                    <Image
-                      key={profile?.id}
-                      src={profile?.avatar || "/images/avatar.png"}
-                      alt="avatar"
-                      width={40}
-                      height={40}
-                      className="mr-[5px] rounded-lg"
-                    />
-                    <div>
-                      <Typography className="text-sm font-bold">
-                        {profile?.username}
-                      </Typography>
-                      {profile?.address && (
-                        <Typography
-                          paragraph
-                          component="span"
-                          variant="body1"
-                          onClick={() => Helper.copyClipboard(profile?.address)}
-                          className="cursor-pointer text-xs font-bold text-secondary-main"
-                        >
-                          {Helper.shortenString(profile?.address)}
-                        </Typography>
-                      )}
-                    </div>
+          {!isMapPage && (
+            <div className="w-[200px]">
+              <div className="flex-row gap-3 md:flex">
+                <MenuList className="mx-auto mt-4 h-fit w-full max-w-xs rounded-[13px] bg-neutral-800 p-[6px] md:mx-0 md:w-[200px]">
+                  <div>
+                    {profile ? (
+                      <div className="mb-2 flex rounded-lg border border-neutral-700 bg-neutral-780 p-1">
+                        <Image
+                          key={profile?.id}
+                          src={profile?.avatar || "/images/avatar.png"}
+                          alt="avatar"
+                          width={40}
+                          height={40}
+                          className="mr-[5px] rounded-lg"
+                        />
+                        <div>
+                          <Typography className="text-sm font-bold">
+                            {profile?.username}
+                          </Typography>
+                          {profile?.address && (
+                            <Typography
+                              paragraph
+                              component="span"
+                              variant="body1"
+                              onClick={() =>
+                                Helper.copyClipboard(profile?.address)
+                              }
+                              className="cursor-pointer text-xs font-bold text-secondary-main"
+                            >
+                              {Helper.shortenString(profile?.address)}
+                            </Typography>
+                          )}
+                        </div>
+                      </div>
+                    ) : null}
+                    {MENU_MARKETPLACE_INVENTORY.map((ele) => {
+                      const active =
+                        router.asPath.split("/")[3] === ele.href.split("/")[3]
+                      const activeOnlyInventory =
+                        router.pathname.split("/")[3] === "[type]" &&
+                        ele.href.split("/").length === 3
+                      return (
+                        <MenuItemCustom
+                          key={ele.id}
+                          id={ele.id}
+                          label={ele.label}
+                          icon={ele.icon}
+                          href={ele.href}
+                          external={ele.external}
+                          active={active || activeOnlyInventory}
+                        />
+                      )
+                    })}
                   </div>
-                ) : null}
-                {MENU_MARKETPLACE_INVENTORY.map((ele) => {
-                  const active = router.asPath.includes(ele.href)
-                  return (
-                    <MenuItemCustom
-                      key={ele.id}
-                      id={ele.id}
-                      label={ele.label}
-                      icon={ele.icon}
-                      href={ele.href}
-                      external={ele.external}
-                      active={active}
-                    />
-                  )
-                })}
+                </MenuList>
               </div>
-            </MenuList>
-            {/* </div> */}
-
-            {profile ? (
-              <ButtonToggleIcon
-                startIcon={<PlugIcon />}
-                text={t("logout")}
-                handleClick={async () => {
-                  await onResetNotification()
-                  await onReset()
-                }}
-                className="btn-rainbow-theme my-4 bg-error-main px-14 text-sm text-white-default"
-                type="button"
-              />
-            ) : null}
+              {/* <AmountBalance
+            icon={chain === "polygon" ? <INaka /> : <IBusd />}
+            balance={balance || { digit: 0, text: "N/A" }}
+          /> */}
+              {profile && (
+                <ButtonToggleIcon
+                  startIcon={<PlugIcon />}
+                  text={t("logout")}
+                  handleClick={async () => {
+                    await onResetNotification()
+                    await onReset()
+                  }}
+                  className="btn-rainbow-theme my-4 bg-error-main px-14 text-sm text-white-default"
+                  type="button"
+                />
+              )}
+            </div>
+          )}
+          <div className="absolute z-50	h-[85vh]">
+            <InventoryPage />
           </div>
-          <InventoryPage />
-          <main className="flex w-full flex-col gap-y-4 px-2">
-            {/* <FilterDropdown /> */}
-            {children}
-          </main>
+          <div
+            className={
+              isMapPage
+                ? "page-full-map h-[85vh] overflow-x-hidden"
+                : "flex w-full flex-col gap-y-4"
+            }
+          >
+            {isMapPage ? (
+              <div className="map-wrapper h-full w-full">{children}</div>
+            ) : (
+              <main className="flex w-full flex-col gap-y-4 px-2">
+                <FilterDropdown />
+                {children}
+              </main>
+            )}
+          </div>
         </div>
-        <Footer />
+        {!isMapPage && <Footer />}
       </div>
     </InventoryProvider>
   )

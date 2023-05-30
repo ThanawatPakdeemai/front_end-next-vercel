@@ -25,14 +25,14 @@ const InventoryPage = ({ className }: IProps) => {
 
   return (
     <div className={`h-full border-l-[1px] border-l-neutral-700 ${className}`}>
-      <div className="flex">
+      <div className="flex h-full">
         {open && (
           <motion.div
             variants={animetionVariants}
             initial="hidden"
             animate="shown"
             // transition={{ duration: 2, ease: "easeIn" }}
-            className="h-fit bg-neutral-780 p-4"
+            className="h-full bg-neutral-780 p-4"
           >
             <FilterBox />
           </motion.div>

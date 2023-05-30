@@ -4,6 +4,7 @@ import Tagline from "@components/molecules/tagline/Tagline"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
 import FilterBox from "@feature/marketplace/components/molecules/FilterBox"
+import MarketplaceLayoutMobile from "@feature/page/marketplace/mobilescreen/MarketplaceLayoutMobile"
 import useGlobal from "@hooks/useGlobal"
 import React from "react"
 
@@ -15,18 +16,24 @@ const MarketplaceLayoutWithFilter = ({
   /** This is only temporary code for hide marketplace in production */
   return isShowMarket ? (
     <div className="main-container mx-auto">
-      <Header />
-      <Banners />
+      <div className="hidden sm:block">
+        <Header />
+      </div>
+      <div className="block sm:hidden">
+        <MarketplaceLayoutMobile />
+      </div>
+      <Banners className="!md:mb-10" />
       <Tagline
         icon={<ShineIcon />}
         bgColor="bg-neutral-800"
         textColor="text-neutral-500 font-bold"
         text="Join the NFT revolution and become a part of the future of ownership. "
-        show={false}
+        className="hidden sm:block"
+        show
       />
-      <div className="flex flex-col gap-3 md:flex-row">
+      <div className="flex flex-col gap-3 sm:flex-row">
         {/* add filter component here */}
-        <div className="z-10 mx-2 w-60">
+        <div className="z-10 mx-2 hidden w-60 sm:block">
           <FilterBox />
         </div>
         <main>{children}</main>

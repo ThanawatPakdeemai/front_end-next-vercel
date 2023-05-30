@@ -30,6 +30,8 @@ interface IProp {
   txHash?: string
   meta_data?: MetaData[]
   nameItem?: string
+  hiddenDetails?: boolean
+  order_id?: string
 }
 
 const CardContentDetails = ({ ...props }: IProp) => {
@@ -43,7 +45,9 @@ const CardContentDetails = ({ ...props }: IProp) => {
     poster,
     txHash,
     meta_data,
-    nameItem
+    nameItem,
+    order_id,
+    hiddenDetails = false
   } = props
   const [open, setOpen] = useState<boolean>(false)
   const { marketType } = useGlobal()
@@ -51,7 +55,7 @@ const CardContentDetails = ({ ...props }: IProp) => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   return (
-    <div className="h-fit w-full rounded-[24px] border-[1px] border-neutral-800 bg-neutral-780">
+    <div className=" h-fit w-full rounded-[24px] border-[1px] border-neutral-800 bg-neutral-780 ">
       <div className="p-2">
         <div className="flex h-fit w-full content-center justify-center rounded-[24px] border-[1px] border-neutral-800 bg-neutral-900 p-2">
           {marketType === "nft_land" && video && (
@@ -140,36 +144,28 @@ const CardContentDetails = ({ ...props }: IProp) => {
                 ))}
             </div>
           )}
-          {/* {image ? (
-            <Image
-              // src="/images/not_found.webp"
-              src={image as string}
-              alt={alt as string}
-              width={563}
-              height={563}
-              className="rounded-2xl"
-            />
-          ) : (
-            <Video
-              src={video as string}
-              poster={poster as string}
-              className="rounded-2xl"
-            />
-          )} */}
         </div>
       </div>
       {children}
-      <Divider
-        sx={{ width: "100%", marginBottom: "20px", marginTop: "20px" }}
-      />
-      <div className="px-8 py-6">
-        <Typography className="text-sm uppercase text-black-default">
-          details
-        </Typography>
-        <Typography className="text-sm uppercase text-neutral-600">
-          {detail}
-        </Typography>
-      </div>
+      {(!order_id && marketType !== "nft_naka_punk") ||
+        (hiddenDetails && (
+          <>
+            <Divider
+              sx={{ width: "100%", marginBottom: "20px", marginTop: "20px" }}
+              className={`${
+                marketType !== "nft_naka_punk" && `hidden sm:block`
+              } `}
+            />
+            <div className="px-8 py-6">
+              <Typography className="text-sm uppercase text-black-default">
+                details
+              </Typography>
+              <Typography className="text-sm uppercase text-neutral-600 ">
+                {detail}
+              </Typography>
+            </div>
+          </>
+        ))}
       <ModalCustom
         open={open}
         onClose={handleClose}

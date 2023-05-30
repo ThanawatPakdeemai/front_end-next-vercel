@@ -4,7 +4,7 @@ import Link from "next/link"
 // import SearchIcon from "@mui/icons-material/Search"
 import { useTranslation } from "react-i18next"
 
-const Headerbackpage = ({ text }: any) => {
+const HeaderBackPageMobile = ({ text }: any) => {
   const { t } = useTranslation()
   return (
     <div className="mx-4 my-4 flex flex-1 items-center justify-between border-b-2 border-[#161616be] text-white-default">
@@ -18,4 +18,4 @@ const Headerbackpage = ({ text }: any) => {
     </div>
   )
 }
-export default Headerbackpage
+export default HeaderBackPageMobile

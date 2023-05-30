@@ -14,6 +14,7 @@ import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied"
 import Link from "next/link"
 import { TType } from "@feature/marketplace/interfaces/IMarketService"
+import { isMobile } from "@hooks/useGlobal"
 
 // motion
 const imgMotion = {
@@ -101,6 +102,7 @@ const CardItemMarketPlace = ({
 }: IProp) => {
   const { copyClipboard, formatNumber } = Helper
   const { successToast } = useToast()
+
   // "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning"
   const handleColor = () => {
     if (percentage)
@@ -127,7 +129,7 @@ const CardItemMarketPlace = ({
   }
 
   return (
-    <div className="relative">
+    <div className="relative justify-self-center">
       {id && !rental && (
         <Chip
           label={id}
@@ -152,7 +154,8 @@ const CardItemMarketPlace = ({
       <Link href={href || "/"}>
         <motion.div
           whileHover="hover"
-          className="group relative h-fit w-[218px] cursor-pointer rounded-2xl border border-neutral-700 bg-neutral-780 p-2 hover:bg-neutral-900"
+          className="group relative h-fit w-[164px] cursor-pointer rounded-2xl
+           border border-neutral-700 bg-neutral-780 p-2 hover:bg-neutral-900 sm:h-fit sm:w-[218px]"
         >
           <div className="relative">
             <div className="pointer-events-auto absolute z-20 m-[5px] flex">
@@ -174,7 +177,7 @@ const CardItemMarketPlace = ({
                 />
               )}
               {itemLevel && percentage && (
-                <div className="flex w-[190px] justify-between">
+                <div className="flex w-[135px] justify-between sm:w-[190px]">
                   <Chip
                     label={`LV. : ${itemLevel}`}
                     variant="outlined"
@@ -243,14 +246,15 @@ const CardItemMarketPlace = ({
 
             {itemImage && (
               <div
-                className={`flex h-[202px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900 ${
+                className={`flex h-[148px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900 sm:h-[202px] ${
                   cardType !== "naka-punk" ? "p-6" : "p-0"
                 } group-hover:border-secondary-main`}
               >
+                {/* destop */}
                 <motion.div
                   transition={{ type: "spring", stiffness: 100, damping: 6 }}
                   variants={cardType !== "naka-punk" ? imgMotion : undefined}
-                  className="relative flex items-center justify-center"
+                  className="relative block flex items-center justify-center sm:hidden"
                 >
                   <Image
                     src={itemImage.src}
@@ -260,15 +264,39 @@ const CardItemMarketPlace = ({
                         ? "rounded-lg"
                         : cardType === "building" && "image-building"
                     }`}
-                    width={itemImage.width}
-                    height={itemImage.height}
+                    width={itemName === "Bullet" ? 60 : itemImage.width}
+                    height={itemName === "Bullet" ? 60 : itemImage.height}
+                  />
+                </motion.div>
+                {/* mobile */}
+                <motion.div
+                  transition={{ type: "spring", stiffness: 100, damping: 6 }}
+                  variants={cardType !== "naka-punk" ? imgMotion : undefined}
+                  className="relative flex hidden items-center justify-center sm:block"
+                >
+                  <Image
+                    src={itemImage.src}
+                    alt={itemImage.alt}
+                    className={`object-contain ${
+                      cardType === "naka-punk"
+                        ? "rounded-lg"
+                        : cardType === "building" && "image-building"
+                    }`}
+                    width={itemName === "Bullet" ? 60 : 148}
+                    height={itemName === "Bullet" ? 60 : 148}
                   />
                 </motion.div>
               </div>
             )}
             {/* land */}
             {itemVideo && (
-              <div className="relative h-[202px] w-full overflow-hidden">
+              <div
+                className={
+                  isMobile
+                    ? `h-[148px] w-[148px]`
+                    : `relative h-[202px] w-full overflow-hidden`
+                }
+              >
                 <Video
                   src={itemVideo.src}
                   poster={itemVideo.poster}
@@ -281,8 +309,16 @@ const CardItemMarketPlace = ({
               </div>
             )}
           </div>
-          <div className="mx-2 mt-[14px] flex items-center justify-between">
-            <Typography className="text-sm uppercase text-white-default">
+          <div
+            className={`mx-2 ${
+              isMobile ? `mt-[8px]` : `mt-[14px]`
+            } flex items-center justify-between`}
+          >
+            <Typography
+              className={`${
+                isMobile && `truncate`
+              } truncate text-sm uppercase text-white-default`}
+            >
               {itemName}
             </Typography>
             <div className="flex flex-col justify-end gap-2">
@@ -310,7 +346,11 @@ const CardItemMarketPlace = ({
                 )}
             </div>
           </div>
-          <div className="my-[10px] border-b border-neutral-700 border-opacity-80" />
+          <div
+            className={`${
+              isMobile ? `my-[8px]` : `my-[10px]`
+            } border-b border-neutral-700 border-opacity-80`}
+          />
           {rental ? (
             <div className="flex flex-col">
               <div className="mx-2 flex items-center justify-between">
@@ -346,7 +386,7 @@ const CardItemMarketPlace = ({
               </div>
             </div>
           ) : (
-            <div className="mx-2 flex items-center justify-between">
+            <div className="mx-2 flex-wrap items-center justify-between sm:flex">
               {price && (
                 <div className="flex items-center">
                   <ILogoMaster

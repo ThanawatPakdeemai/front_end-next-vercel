@@ -148,7 +148,7 @@ const RedemptionCode = ({ onRedeem }: IProp) => {
             disabled={!profile || characterCoupon.disableCoupon}
             sx={{ fontFamily: "neueMachina" }}
             color="secondary"
-            className="btn-rainbow-theme w-1/3 text-sm"
+            className="btn-rainbow-theme !min-w-[80px] text-sm sm:!min-w-[180x]"
             variant="contained"
             size="large"
             type="submit"

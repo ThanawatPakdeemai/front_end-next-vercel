@@ -27,7 +27,7 @@ const InventoryPage = () => {
   }
 
   return (
-    <div className="h-full border-l-[1px] border-l-neutral-700">
+    <div className="hidden h-full border-l-[1px] border-l-neutral-700 sm:block">
       <div className="flex">
         {open && (
           <motion.div

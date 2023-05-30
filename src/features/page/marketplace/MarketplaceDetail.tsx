@@ -190,7 +190,7 @@ const MarketplaceDetail = () => {
           nameItem={marketOrder.item_data?.name}
         >
           <RightDetailsMarketplace
-            checkRedreemMobile
+            checkRedreemMobile={false}
             type={marketType as TNFTType}
             id={marketOrder.item_id}
             token={tokenNFT}
@@ -235,6 +235,7 @@ const MarketplaceDetail = () => {
             />
           </RightDetailsMarketplace>
         </CardContentDetails>
+        <div>box</div>
         <div className="my-4 grid gap-6 rounded-[24px] border-[1px] border-neutral-800 bg-neutral-780 px-8 py-6 ">
           <CardWriterDetails
             textHead="create by"

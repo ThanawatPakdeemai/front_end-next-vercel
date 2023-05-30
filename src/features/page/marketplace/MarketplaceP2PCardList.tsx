@@ -8,6 +8,7 @@ import useMarketInfo from "@feature/marketplace/containers/hooks/useMarketInfo"
 import { useRouter } from "next/router"
 import { TSellingType } from "@feature/marketplace/interfaces/IMarketService"
 import SkeletonItemMobile from "@feature/page/marketplace/mobilescreen/SkeletonItemMobile"
+import NoData from "@components/molecules/NoData"
 
 const CardItemMarketPlace = dynamic(
   () => import("@components/molecules/cards/CardItemMarketPlace"),
@@ -44,7 +45,7 @@ const MarketplaceP2PCardList = () => {
   if (orderData && orderData.data.length > 0 && !isLoading) {
     return (
       <div className="grid justify-items-center">
-        <div className="flex w-fit flex-col gap-y-7">
+        <div className="flex w-fit flex-col gap-y-7  self-center">
           <div className="grid w-full grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {orderData &&
               orderData.data.length !== 0 &&
@@ -111,7 +112,7 @@ const MarketplaceP2PCardList = () => {
   return (
     <div className="flex justify-center">
       {orderData?.data.length === 0 && !isLoading ? (
-        <div>No data</div>
+        <NoData />
       ) : (
         <div className="grid  w-fit grid-cols-2 gap-4 sm:w-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {[...Array(limit)].map(() => (

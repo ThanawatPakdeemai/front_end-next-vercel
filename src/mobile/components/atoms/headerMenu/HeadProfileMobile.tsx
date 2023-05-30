@@ -10,16 +10,12 @@ import useNotiStore from "@stores/notification"
 import useHomeControllerMobile from "@mobile/features/game/containers/hooks/useHomeControllerMobile"
 import NotificationModal from "@mobile/components/organisms/modal/NotificationModal"
 
-interface IProps {
-  show: boolean
-}
-
-const HeadProfileMobile = ({ show = true }: IProps) => {
+const HeadProfileMobile = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { count } = useNotiStore()
   const { openNotification, setOpenNotification } = useHomeControllerMobile()
 
-  return show ? (
+  return (
     <header className="header bg-[#F32429] pb-[55px]">
       <div className="flex items-center justify-between px-5 py-10">
         <Box
@@ -82,7 +78,7 @@ const HeadProfileMobile = ({ show = true }: IProps) => {
         setOpenNotification={setOpenNotification}
       />
     </header>
-  ) : null
+  )
 }
 
 export default HeadProfileMobile

@@ -31,7 +31,13 @@ const useHomeControllerMobile = () => {
     loadingFilterGame,
     gameLink,
     onSetGameStore
-  } = useGamePageListController(activeMenu, "all", limit, selectedCategory)
+  } = useGamePageListController(
+    activeMenu,
+    "all",
+    limit,
+    selectedCategory,
+    "mobile"
+  )
 
   useEffect(() => {
     let load = false

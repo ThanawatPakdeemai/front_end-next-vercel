@@ -7,18 +7,28 @@ import useProfileStore from "@stores/profileStore"
 import { isMobile } from "@hooks/useGlobal"
 
 const HomePage = dynamic(() => import("@feature/page/homePage"))
+const HomeMobile = dynamic(() => import("@mobile/features/pages/HomeMobile"))
+
 const Home = () => {
   const profile = useProfileStore((state) => state.profile.data)
 
-  return !profile && isMobile ? (
-    <SignInLayout />
-  ) : (
-    <Layout>
-      <article className="h-full w-full">
-        <HomePage />
-      </article>
-    </Layout>
-  )
+  const renderContent = () => {
+    if (!profile && isMobile) {
+      return <SignInLayout />
+    }
+    if (isMobile && profile) {
+      return <HomeMobile />
+    }
+    return (
+      <Layout>
+        <article className="h-full w-full">
+          <HomePage />
+        </article>
+      </Layout>
+    )
+  }
+
+  return renderContent()
 }
 
 Home.getLayout = function getLayout(page: ReactElement) {

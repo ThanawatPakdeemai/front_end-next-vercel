@@ -3,15 +3,15 @@ import { GAME_MENU_MOBILE } from "@mobile/constants/menuMobile"
 import { Box } from "@mui/material"
 import { IGetType } from "@feature/game/interfaces/IGameService"
 
-interface IHeadMenuMobileProps {
+export interface IHeadGameMenuMobileProps {
   activeMenu: string
   setActiveMenu: React.Dispatch<React.SetStateAction<IGetType>>
 }
 
-const HeadMenuMobile = ({
+const HeadGameMenuMobile = ({
   activeMenu,
   setActiveMenu
-}: IHeadMenuMobileProps) => (
+}: IHeadGameMenuMobileProps) => (
   <Box
     component="div"
     className="home-menu__mobile--menu flex flex-wrap items-center gap-y-4 whitespace-nowrap"
@@ -53,4 +53,4 @@ const HeadMenuMobile = ({
   </Box>
 )
 
-export default memo(HeadMenuMobile)
+export default memo(HeadGameMenuMobile)

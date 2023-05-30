@@ -44,7 +44,7 @@ const CategoriesModal = ({
         }
       }}
     >
-      <h2 className="py-[30px] text-center font-urbanist text-[24px] font-bold text-white-primary">
+      <h2 className="py-[30px] text-center font-urbanist text-[24px] font-bold text-[#F2C94C]">
         Categories
       </h2>
       <Box

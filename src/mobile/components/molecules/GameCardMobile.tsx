@@ -21,7 +21,6 @@ const GameCardMobile = ({
   imageCategoryList,
   name,
   categoryList,
-
   href
 }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)

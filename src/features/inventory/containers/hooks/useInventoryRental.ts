@@ -40,9 +40,9 @@ const useInventoryRental = () => {
                 filterType.nft_land.length > 0
                   ? filterType.nft_land
                   : undefined,
-              land_id:
+              nft_token:
                 search.length > 0
-                  ? (getValueFromTKey(search, "land_id") as string) // should be same as same nft_token
+                  ? (getValueFromTKey(search, "nft_token") as string) // should be same as same nft_token
                   : undefined
             }
           })

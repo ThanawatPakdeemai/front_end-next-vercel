@@ -79,7 +79,7 @@ const MarketPlaceForsaleList = () => {
   }
   return (
     <>
-      {inventoryItemForsale.length === 0 && !isLoading ? (
+      {inventoryItemForsale.length <= 0 && !isLoading ? (
         <div className="flex h-20 w-full items-center justify-center font-neue-machina uppercase">
           no data
         </div>

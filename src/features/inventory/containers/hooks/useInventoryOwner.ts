@@ -214,9 +214,9 @@ const useInventoryOwner = () => {
                   filterType.nft_land.length > 0
                     ? filterType.nft_land
                     : undefined,
-                land_id:
+                nft_token:
                   search.length > 0
-                    ? (getValueFromTKey(search, "land_id") as string) // should be nft_token same, discuss with BE team!
+                    ? (getValueFromTKey(search, "nft_token") as string) // should be nft_token same, discuss with BE team!
                     : undefined
               },
               _landList: await fetchAllLandofAddress()

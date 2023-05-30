@@ -161,8 +161,9 @@ export interface IMarketServForm {
     player_id?: string
     isRent?: boolean
     type?: TNFTType
-    land_id?: string // wait dup with nft_token
+    // land_id?: string // wait dup with nft_token
     nft_token?: string
+    selling_type?: TSellingType
   }
   _sort?: {
     price?: number
@@ -277,9 +278,9 @@ export interface IMarketDetail extends IMarketOrder {
 
 export interface IMarketForm {
   history: IMarketHistory[]
-  marketplaces_data: IMarketData[] | null
-  installments_data: IInstallData[] | null
-  rentals_data: IRentalData[] | null
+  marketplaces_data: IMarketData | null
+  installments_data: IInstallData | null
+  rentals_data: IRentalData | null
 }
 
 export interface ITransferMetaData {

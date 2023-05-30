@@ -10,7 +10,7 @@ pipeline {
           // sh 'ssh -o StrictHostKeyChecking=no naka@naka.im'
           // sh 'mkdir -p ~/.ssh'
           // sh "ssh-keyscan naka.im >> ~/.ssh/known_hosts"
-          sh "ssh naka@naka.im 'cd /home/naka/frontend-nextjs && ./deploy.sh && cd /home/naka/frontend-uat && ./deploy.sh'"
+          sh "ssh naka@naka.im 'nvm use 16 && cd /home/naka/frontend-nextjs && ./deploy.sh && cd /home/naka/frontend-uat && ./deploy.sh'"
         }
       }
     }

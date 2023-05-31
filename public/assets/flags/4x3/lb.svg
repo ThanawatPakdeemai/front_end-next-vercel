@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-lb" viewBox="0 0 640 480">
   <defs>
     <clipPath id="a">
-      <path fill-opacity=".7" d="M-85.3 0h682.6v512H-85.3z"/>
+      <path fillOpacity=".7" d="M-85.3 0h682.6v512H-85.3z"/>
     </clipPath>
   </defs>
   <g clipPath="url(#a)" transform="translate(80) scale(.9375)">

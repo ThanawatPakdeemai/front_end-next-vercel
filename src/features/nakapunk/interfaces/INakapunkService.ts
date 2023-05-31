@@ -20,7 +20,7 @@ export interface IPurchasePunkData extends ITransData, IPlayerId {
 }
 
 export interface IPunkData extends INFTData {
-  marketplaces_data: IMarketData[] | null
+  marketplaces_data: IMarketData | null
 }
 
 export interface IPunkPriceServ extends IFormatService {

@@ -4,7 +4,7 @@ import { Box } from "@mui/material"
 import React from "react"
 import WishlistModal from "./modal/WishlistModal"
 import SettingModal from "./modal/SettingModal"
-import RewardModal from "./modal/RewardModal"
+import EarnRewardModal from "./modal/EarnRewardModal"
 
 const FooterMobile = () => {
   const {
@@ -64,15 +64,15 @@ const FooterMobile = () => {
         open={openWishlist}
         setOpenWishlist={setOpenWishlist}
       />
+      {/* Reward Modal */}
+      <EarnRewardModal
+        open={openReward}
+        setOpenReward={setOpenReward}
+      />
       {/* Setting Modal */}
       <SettingModal
         open={openSetting}
         setOpenSetting={setOpenSetting}
-      />
-      {/* Reward Modal */}
-      <RewardModal
-        open={openReward}
-        setOpenReward={setOpenReward}
       />
     </Box>
   )

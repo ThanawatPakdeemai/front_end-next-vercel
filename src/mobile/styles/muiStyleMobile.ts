@@ -1,5 +1,16 @@
 import { SxProps, Theme } from "@mui/material"
 
+export const StyleDrawer: SxProps<Theme> = {
+  "&.MuiDrawer-root": {
+    zIndex: 2
+  },
+  ".MuiDrawer-paper": {
+    background: "#121212",
+    width: "100%",
+    paddingBottom: "90px"
+  }
+}
+
 export const StyledInput: SxProps<Theme> = {
   fontFamily: "Urbanist",
   fontSize: "16px",

@@ -1,25 +1,24 @@
 import React from "react"
 import { Box, SwipeableDrawer } from "@mui/material"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
-import useFavoriteGameControllerMobile from "@mobile/features/game/containers/hooks/useFavoriteGameControllerMobile"
+import useEarnRewardController from "@feature/earnReward/containers/hooks/useEarnRewardController"
 import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
-import GameListMobile from "../GameListMobile"
+import EarnRewardListMobile from "../EarnRewardListMobile"
 
-interface IWishlistModalProps {
+interface IEarnRewardModalProps {
   open: boolean
-  setOpenWishlist: React.Dispatch<React.SetStateAction<boolean>>
+  setOpenReward: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const WishlistModal = ({ open, setOpenWishlist }: IWishlistModalProps) => {
-  const { gameFavouriteState, isLoadingGameFavourite, limit } =
-    useFavoriteGameControllerMobile()
+const EarnRewardModal = ({ open, setOpenReward }: IEarnRewardModalProps) => {
+  const { isLoadingReward, earnReward } = useEarnRewardController()
 
   return (
     <SwipeableDrawer
       anchor="right"
       open={open}
-      onClose={() => setOpenWishlist(false)}
-      onOpen={() => setOpenWishlist(true)}
+      onClose={() => setOpenReward(false)}
+      onOpen={() => setOpenReward(true)}
       disableSwipeToOpen={false}
       ModalProps={{
         keepMounted: true
@@ -32,21 +31,20 @@ const WishlistModal = ({ open, setOpenWishlist }: IWishlistModalProps) => {
       >
         <h2
           className="flex items-center gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary"
-          onClick={() => setOpenWishlist(false)}
+          onClick={() => setOpenReward(false)}
           aria-hidden="true"
         >
           <ArrowBackIcon />
-          Wishlist
+          Item Rewards
         </h2>
-        {/* Game List */}
-        <GameListMobile
-          gameData={gameFavouriteState || []}
-          loading={isLoadingGameFavourite}
-          limit={limit}
+        <EarnRewardListMobile
+          earnReward={earnReward || []}
+          loading={isLoadingReward}
+          limit={30}
         />
       </Box>
     </SwipeableDrawer>
   )
 }
 
-export default WishlistModal
+export default EarnRewardModal

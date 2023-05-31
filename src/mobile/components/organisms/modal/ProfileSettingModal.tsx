@@ -2,6 +2,7 @@ import React from "react"
 import { Box, SwipeableDrawer } from "@mui/material"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import FormProfileSetting from "@mobile/features/profile/components/organisms/FormProfileSetting"
+import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
 
 interface IProfileSettingModalProps {
   open: boolean
@@ -22,9 +23,9 @@ const ProfileSettingModal = ({
       keepMounted: true
     }}
     sx={{
-      ".MuiDrawer-paper": {
-        background: "#121212",
-        width: "100%"
+      ...StyleDrawer,
+      "&.MuiDrawer-root": {
+        zIndex: 1200
       }
     }}
   >

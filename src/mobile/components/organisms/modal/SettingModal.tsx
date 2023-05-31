@@ -1,7 +1,7 @@
 import React from "react"
 import { Box, SwipeableDrawer } from "@mui/material"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
-import ProfileContentMobile from "@mobile/features/profile/components/organisms/FormProfileSetting"
+import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
 
 interface ISettingModalProps {
   open: boolean
@@ -18,12 +18,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => (
     ModalProps={{
       keepMounted: true
     }}
-    sx={{
-      ".MuiDrawer-paper": {
-        background: "#121212",
-        width: "100%"
-      }
-    }}
+    sx={StyleDrawer}
   >
     <Box
       component="div"
@@ -37,8 +32,6 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => (
         <ArrowBackIcon />
         Setting
       </h2>
-      {/* Profile Content */}
-      <ProfileContentMobile />
     </Box>
   </SwipeableDrawer>
 )

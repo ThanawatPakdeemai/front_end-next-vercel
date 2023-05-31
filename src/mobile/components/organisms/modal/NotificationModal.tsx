@@ -1,6 +1,7 @@
 import React from "react"
 import { Box, SwipeableDrawer } from "@mui/material"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
+import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
 
 interface INotificationModalProps {
   open: boolean
@@ -20,12 +21,7 @@ const NotificationModal = ({
     ModalProps={{
       keepMounted: true
     }}
-    sx={{
-      ".MuiDrawer-paper": {
-        background: "#121212",
-        width: "100%"
-      }
-    }}
+    sx={StyleDrawer}
   >
     <Box
       component="div"

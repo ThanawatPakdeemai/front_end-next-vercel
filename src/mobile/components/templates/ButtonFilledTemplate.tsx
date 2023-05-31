@@ -1,16 +1,18 @@
 import React from "react"
 import { Box, SxProps, Theme } from "@mui/material"
 
-const ButtonGreenTemplate = ({
+const ButtonFilledTemplate = ({
   children,
   sxCustom,
   className,
-  onClick
+  onClick,
+  color = "#F2C94C"
 }: {
   children: React.ReactNode
   sxCustom?: SxProps<Theme>
   className?: string
   onClick?: () => void
+  color?: "#F2C94C" | "#F32429" | "#019B83" | "#1F222A"
 }) => (
   <Box
     component="button"
@@ -21,8 +23,9 @@ const ButtonGreenTemplate = ({
       justifyContent: "center",
       alignItems: "center",
       height: "38px",
-      color: "#F2C94C",
-      border: "1px solid #F2C94C",
+      color: "#fff",
+      backgroundColor: color,
+      border: `1px solid ${color}`,
       borderRadius: "100px",
       padding: "8px 12px",
       minWidth: "64px",
@@ -35,4 +38,4 @@ const ButtonGreenTemplate = ({
   </Box>
 )
 
-export default ButtonGreenTemplate
+export default ButtonFilledTemplate

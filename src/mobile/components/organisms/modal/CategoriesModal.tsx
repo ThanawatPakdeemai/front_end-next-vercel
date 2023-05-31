@@ -2,6 +2,7 @@ import React from "react"
 import { IGameCategory } from "@feature/dropdown/interfaces/IDropdownService"
 import { Box, SwipeableDrawer } from "@mui/material"
 import { ImageCustom } from "@components/atoms/image/Image"
+import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
 
 interface ICategoriesModalProps {
   open: boolean
@@ -25,12 +26,7 @@ const CategoriesModal = ({
     ModalProps={{
       keepMounted: true
     }}
-    sx={{
-      ".MuiDrawer-paper": {
-        background: "#18181C",
-        borderRadius: "44px 44px 0px 0px"
-      }
-    }}
+    sx={StyleDrawer}
   >
     <Box
       component="div"

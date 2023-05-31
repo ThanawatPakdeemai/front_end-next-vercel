@@ -1,7 +1,7 @@
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import { iconmotion } from "@components/organisms/Footer"
 import { IVerticalThumbSlide } from "@feature/slider/interfaces/ISlides"
-import { Box, SxProps } from "@mui/material"
+import { Box, SxProps, Theme } from "@mui/material"
 import React, { useState } from "react"
 import Slider, { Settings } from "react-slick"
 import EastIcon from "@mui/icons-material/East"
@@ -9,13 +9,77 @@ import WestIcon from "@mui/icons-material/West"
 import VerticalThumbCardSlide from "../organisms/VerticalThumbCardSlide"
 import VerticalThumbSmallCardSlide from "../organisms/VerticalThumbSmallCardSlide"
 
+export type SliderType = "avatar" | "default"
+
 interface IHorizontalThumbSlideProps {
   items: IVerticalThumbSlide[]
+  sliderType?: SliderType
 }
 
-const HorizontalThumbSlide = ({ items }: IHorizontalThumbSlideProps) => {
+export const SlickSigleSlideAvatarCSS: SxProps = {
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "flexStart",
+  padding: "6px",
+  gap: "10px",
+  width: "100px",
+  height: "100px",
+  border: "2px solid #F42728",
+  borderRadius: "14px",
+  margin: "auto"
+}
+
+const HorizontalThumbSlide = ({
+  items,
+  sliderType = "default"
+}: IHorizontalThumbSlideProps) => {
   const [nav1, setNav1] = useState<Slider | undefined | null>()
   const [nav2, setNav2] = useState<Slider | undefined | null>()
+
+  const SlickMainSlideCSS: SxProps = {
+    ".slick-slider, .slick-list, .slick-track": {
+      height: "100%"
+    },
+    ".slick-slide": {
+      "& > div": {
+        height: "100%",
+        "& > .verticalThumb-slide__item": {
+          height: "100%",
+          "& > .verticalThumb-slide__item__image": {
+            height: "100%",
+            "& > img": {
+              height: "100%"
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * @description Get style for single slide
+   * @returns 
+   */
+  const getStyleSingleSlide = (): SxProps => {
+    switch (sliderType) {
+      case "avatar":
+        return {
+          SlickSigleSlideAvatarCSS,
+          ...SlickMainSlideCSS
+        }
+      default:
+        return SlickMainSlideCSS
+    }
+  }
+
+  const getStyleSingleSlideClasses = (): string => {
+    switch (sliderType) {
+      case "avatar":
+        return "slickSlider__avatar"
+      default:
+        return ""
+    }
+  }
 
   const SlickArrowCSS =
     "m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg  bg-neutral-800/60"
@@ -34,26 +98,6 @@ const HorizontalThumbSlide = ({ items }: IHorizontalThumbSlideProps) => {
       },
       "&:before": {
         display: "none"
-      }
-    }
-  }
-
-  const SlickMainSlideCSS: SxProps = {
-    ".slick-slider, .slick-list, .slick-track": {
-      height: "100%"
-    },
-    ".slick-slide": {
-      "& > div": {
-        height: "100%",
-        "& > .verticalThumb-slide__item": {
-          height: "100%",
-          "& > .verticalThumb-slide__item__image": {
-            height: "100%",
-            "& > img": {
-              height: "100%"
-            }
-          }
-        }
       }
     }
   }
@@ -154,12 +198,23 @@ const HorizontalThumbSlide = ({ items }: IHorizontalThumbSlideProps) => {
     )
   }
 
+  /**
+   * @description Slider classes Tailwind
+   */
+  // const SlickClassesDefaultTailwind =
+  //   "flex h-[60vw] w-full flex-col justify-center overflow-hidden rounded-2xl md:h-[479px] lg:max-w-[852px]"
+  // const SlickClassesAvatarTailwind = ""
+  // const SlickClassesTailwind =
+  //   sliderType === "avatar"
+  //     ? SlickClassesAvatarTailwind
+  //     : SlickClassesDefaultTailwind
+
   return (
     <div className="horizontal-thumb-slide my-4 flex w-full flex-col items-center justify-between gap-4">
       <Box
         component="div"
-        sx={SlickMainSlideCSS}
-        className="flex h-[60vw] w-full flex-col justify-center overflow-hidden rounded-2xl md:h-[479px] lg:max-w-[852px]"
+        sx={getStyleSingleSlide()}
+        className={getStyleSingleSlideClasses()}
       >
         <Slider
           asNavFor={nav2 as Slider}

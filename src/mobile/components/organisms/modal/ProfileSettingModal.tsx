@@ -3,17 +3,20 @@ import { Box, SwipeableDrawer } from "@mui/material"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import ProfileContentMobile from "@mobile/features/profile/components/organisms/ProfileContentMobile"
 
-interface ISettingModalProps {
+interface IProfileSettingModalProps {
   open: boolean
-  setOpenSetting: React.Dispatch<React.SetStateAction<boolean>>
+  setProfileSetting: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => (
+const ProfileSettingModal = ({
+  open,
+  setProfileSetting
+}: IProfileSettingModalProps) => (
   <SwipeableDrawer
     anchor="right"
     open={open}
-    onClose={() => setOpenSetting(false)}
-    onOpen={() => setOpenSetting(true)}
+    onClose={() => setProfileSetting(false)}
+    onOpen={() => setProfileSetting(true)}
     disableSwipeToOpen={false}
     ModalProps={{
       keepMounted: true
@@ -31,16 +34,15 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => (
     >
       <h2
         className="flex items-center gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary"
-        onClick={() => setOpenSetting(false)}
+        onClick={() => setProfileSetting(false)}
         aria-hidden="true"
       >
         <ArrowBackIcon />
-        Setting
+        Edit Profile
       </h2>
-      {/* Profile Content */}
       <ProfileContentMobile />
     </Box>
   </SwipeableDrawer>
 )
 
-export default SettingModal
+export default ProfileSettingModal

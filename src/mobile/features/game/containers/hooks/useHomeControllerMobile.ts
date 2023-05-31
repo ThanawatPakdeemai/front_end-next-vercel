@@ -22,6 +22,7 @@ const useHomeControllerMobile = () => {
   const [openWishlist, setOpenWishlist] = useState<boolean>(false)
   const [openSetting, setOpenSetting] = useState<boolean>(false)
   const [openReward, setOpenReward] = useState<boolean>(false)
+  const [profileSetting, setProfileSetting] = useState<boolean>(false)
 
   const { getCategoriesAll, isFetchingCategories } = useCategories({
     limit: 100
@@ -85,12 +86,14 @@ const useHomeControllerMobile = () => {
     limit,
     gameLink,
     onSetGameStore,
-    setOpenWishlist,
     openWishlist,
+    setOpenWishlist,
     openSetting,
     setOpenSetting,
+    openReward,
     setOpenReward,
-    openReward
+    profileSetting,
+    setProfileSetting
   }
 }
 

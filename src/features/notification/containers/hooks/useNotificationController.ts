@@ -20,6 +20,7 @@ const useNotificationController = () => {
   // State
   const [sortBy, setSortBy] = useState<string>("dateDESC")
   const [buttonStatus, setButtonStatus] = useState<boolean>(false)
+  const [notificationList, setNotificationList] = useState<INotification[]>([])
 
   // Store
   const profile = useProfileStore((state) => state.profile.data)
@@ -50,6 +51,7 @@ const useNotificationController = () => {
       const result = dataNotification.data.filter((item) => !item.read)
       // Set values to store
       // TODO: Refactor this to no use store
+      setNotificationList(dataNotification.data)
       setNotificationAll(dataNotification.data)
       setNotificationCount(result.length)
     }
@@ -159,7 +161,8 @@ const useNotificationController = () => {
     pager,
     setLimit,
     totalCount,
-    setPage
+    setPage,
+    notificationList
   }
 }
 

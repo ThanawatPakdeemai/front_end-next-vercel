@@ -3,7 +3,7 @@ import { Box } from "@mui/material"
 import { IPlayToEarnRewardData } from "@src/types/games"
 import { v4 as uuid } from "uuid"
 import NoData from "@components/molecules/NoData"
-import SkeletonEarnRewardMobile from "../skeleton/SkeletonEarnRewardMobile"
+import SkeletonEarnRewardMobile from "../atoms/skeleton/SkeletonEarnRewardMobile"
 import EarnRewardCardMobile from "../molecules/EarnRewardCardMobile"
 
 interface IEarnRewardListMobile {

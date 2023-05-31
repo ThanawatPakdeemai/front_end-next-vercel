@@ -3,6 +3,7 @@ import { Box, SwipeableDrawer } from "@mui/material"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import useEarnRewardController from "@feature/earnReward/containers/hooks/useEarnRewardController"
 import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
+import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import EarnRewardListMobile from "../EarnRewardListMobile"
 
 interface IEarnRewardModalProps {
@@ -11,6 +12,7 @@ interface IEarnRewardModalProps {
 }
 
 const EarnRewardModal = ({ open, setOpenReward }: IEarnRewardModalProps) => {
+  const { clearAllDrawer } = useDrawerControllerMobile()
   const { isLoadingReward, earnReward } = useEarnRewardController()
 
   return (
@@ -18,7 +20,10 @@ const EarnRewardModal = ({ open, setOpenReward }: IEarnRewardModalProps) => {
       anchor="right"
       open={open}
       onClose={() => setOpenReward(false)}
-      onOpen={() => setOpenReward(true)}
+      onOpen={() => {
+        clearAllDrawer()
+        setOpenReward(true)
+      }}
       disableSwipeToOpen={false}
       ModalProps={{
         keepMounted: true
@@ -40,7 +45,7 @@ const EarnRewardModal = ({ open, setOpenReward }: IEarnRewardModalProps) => {
         <EarnRewardListMobile
           earnReward={earnReward || []}
           loading={isLoadingReward}
-          limit={30}
+          limit={9999}
         />
       </Box>
     </SwipeableDrawer>

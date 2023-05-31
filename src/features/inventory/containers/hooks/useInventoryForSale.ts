@@ -4,12 +4,16 @@ import { useGetForSaleArcGame } from "@feature/game/marketplace/containers/hooks
 import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
 import { useGetMyForSaleLand } from "@feature/land/containers/hooks/useGetMyLand"
 import useGetMarketOrder from "@feature/marketplace/hooks/getMarketOrder"
-import { TSellingType } from "@feature/marketplace/interfaces/IMarketService"
+import {
+  TSellingType,
+  TType
+} from "@feature/marketplace/interfaces/IMarketService"
 import { useGetMyForSaleNakaPunk } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import useGlobal from "@hooks/useGlobal"
 import useMarketFilterStore from "@stores/marketFilter"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
+import { NextRouter, useRouter } from "next/router"
 import { useCallback, useEffect, useMemo, useState } from "react"
 
 const useInventoryForSale = () => {
@@ -30,13 +34,18 @@ const useInventoryForSale = () => {
   const { mutateGetMyForsaleNakaPunk } = useGetMyForSaleNakaPunk()
   const { mutateGetForsaleArcGame } = useGetForSaleArcGame()
   const { getMarketOrderAsnyc } = useGetMarketOrder()
-  const { convertNFTTypeToUrl, getValueFromTKey } = Helper
+  const { convertNFTTypeToUrl, getValueFromTKey, convertTTypeToNFTType } =
+    Helper
   const { sort, search, filterType } = useMarketFilterStore()
-  const _marketType = marketType || "nft_land"
+  const router: NextRouter = useRouter()
 
   const fetchMyForsale = useCallback(async () => {
     let _data: IInventoryItemList[] = []
     let _total: number = 0
+    const _marketType =
+      marketType ||
+      convertTTypeToNFTType(router.query.type as TType) ||
+      "nft_land"
     setIsLoading(true)
     if (
       profile &&
@@ -267,7 +276,7 @@ const useInventoryForSale = () => {
     setInventoryItemForsale(_data)
     setTotalCount(_total)
     setIsLoading(false)
-  }, [profile.data, _marketType, limit, currentPage, filterType, search, sort])
+  }, [profile.data, marketType, limit, currentPage, filterType, search, sort])
 
   useEffect(() => {
     let load = false

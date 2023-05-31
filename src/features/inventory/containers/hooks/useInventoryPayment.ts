@@ -3,13 +3,17 @@ import utc from "dayjs/plugin/utc"
 import { useGetMyInstallmentBuilding } from "@feature/building/containers/hooks/useGetMyBuilding"
 import { useGetMyInstallmentArcGame } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
 import { useGetMyInstallmentLand } from "@feature/land/containers/hooks/useGetMyLand"
-import { IInstallPeriod } from "@feature/marketplace/interfaces/IMarketService"
+import {
+  IInstallPeriod,
+  TType
+} from "@feature/marketplace/interfaces/IMarketService"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
 import Helper from "@utils/helper"
 import useMarketFilterStore from "@stores/marketFilter"
+import { NextRouter, useRouter } from "next/router"
 
 dayjs.extend(utc)
 
@@ -24,13 +28,13 @@ const useInventoryPayment = () => {
   const { mutateGetMyInstallmentBuilding } = useGetMyInstallmentBuilding()
   const { mutateGetMyInstallmentArcGame } = useGetMyInstallmentArcGame()
   const { marketType } = useGlobal()
-  const _marketType = marketType || "nft_land"
 
   const [inventoryItemPayment, setInventoryItemPayment] = useState<
     Array<IInventoryItemList>
   >([])
-  const { getValueFromTKey } = Helper
+  const { getValueFromTKey, convertTTypeToNFTType } = Helper
   const { sort, search, filterType } = useMarketFilterStore()
+  const router: NextRouter = useRouter()
 
   const handleDate = ({
     _keyType,
@@ -57,6 +61,10 @@ const useInventoryPayment = () => {
   const fetchInventoryItemPayment = useCallback(async () => {
     let _data: IInventoryItemList[] = []
     let _total = 0
+    const _marketType =
+      marketType ||
+      convertTTypeToNFTType(router.query.type as TType) ||
+      "nft_land"
     setIsLoading(true)
     if (profile.data && _marketType && filterType && search && sort) {
       switch (_marketType) {
@@ -166,7 +174,7 @@ const useInventoryPayment = () => {
     setTotalCount(_total)
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile.data, _marketType, limit, currentPage, filterType, search, sort])
+  }, [profile.data, marketType, limit, currentPage, filterType, search, sort])
 
   useEffect(() => {
     let cleanup = false

@@ -143,8 +143,8 @@ const GameCarousel = ({
         onNext={onSlideNext}
         onPrev={onSlidePrev}
         setCurType={setCurType}
-        onPlaying
       />
+
       <Box
         component="div"
         className={`game-carousel-slide overflow-hidden max-[420px]:pt-6 ${

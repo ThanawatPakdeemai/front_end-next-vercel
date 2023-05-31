@@ -100,13 +100,11 @@ const MarketplaceOwnerDetail = () => {
         <NFTDetailTable
           installmentData={
             invenItemData.installments_data
-              ? invenItemData.installments_data[0]
+              ? invenItemData.installments_data
               : undefined
           }
           rentalData={
-            invenItemData.rentals_data
-              ? invenItemData.rentals_data[0]
-              : undefined
+            invenItemData.rentals_data ? invenItemData.rentals_data : undefined
           }
           history={invenItemData.history}
         />

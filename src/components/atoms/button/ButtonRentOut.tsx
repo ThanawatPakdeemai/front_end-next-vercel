@@ -34,7 +34,7 @@ interface IProps {
   sellerType?: TSellerType
   sellingType?: TSellingType
   sellerId?: string
-  marketplaces_data?: IMarketData[] | null
+  marketplaces_data?: IMarketData | null
   plot?: IPosition
 }
 

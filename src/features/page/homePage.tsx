@@ -90,6 +90,9 @@ const Home = () => {
     if (!load) {
       if (dataF2pGames) {
         const _filterF2E = dataF2pGames.filter((item) => isFreeToEarnGame(item))
+        if (f2pCurType === "free-to-earn" && _filterF2E.length === 0) {
+          setF2PCurType("free-to-play")
+        }
         setF2EGame(_filterF2E)
         const _filterF2P = dataF2pGames.filter((item) => isFreeToPlayGame(item))
         setF2PGame(_filterF2P)

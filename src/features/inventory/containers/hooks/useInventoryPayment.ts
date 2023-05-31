@@ -3,13 +3,17 @@ import utc from "dayjs/plugin/utc"
 import { useGetMyInstallmentBuilding } from "@feature/building/containers/hooks/useGetMyBuilding"
 import { useGetMyInstallmentArcGame } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
 import { useGetMyInstallmentLand } from "@feature/land/containers/hooks/useGetMyLand"
-import { IInstallPeriod } from "@feature/marketplace/interfaces/IMarketService"
+import {
+  IInstallPeriod,
+  TType
+} from "@feature/marketplace/interfaces/IMarketService"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
 import Helper from "@utils/helper"
 import useMarketFilterStore from "@stores/marketFilter"
+import { NextRouter, useRouter } from "next/router"
 
 dayjs.extend(utc)
 
@@ -28,8 +32,9 @@ const useInventoryPayment = () => {
   const [inventoryItemPayment, setInventoryItemPayment] = useState<
     Array<IInventoryItemList>
   >([])
-  const { getValueFromTKey } = Helper
+  const { getValueFromTKey, convertTTypeToNFTType } = Helper
   const { sort, search, filterType } = useMarketFilterStore()
+  const router: NextRouter = useRouter()
 
   const handleDate = ({
     _keyType,
@@ -54,12 +59,15 @@ const useInventoryPayment = () => {
   }
 
   const fetchInventoryItemPayment = useCallback(async () => {
+    let _data: IInventoryItemList[] = []
+    let _total = 0
+    const _marketType =
+      marketType ||
+      convertTTypeToNFTType(router.query.type as TType) ||
+      "nft_land"
     setIsLoading(true)
-    if (profile.data && marketType && filterType && search && sort) {
-      let _data: IInventoryItemList[] = []
-      let _total = 0
-
-      switch (marketType) {
+    if (profile.data && _marketType && filterType && search && sort) {
+      switch (_marketType) {
         case "nft_land":
           await mutateGetMyInstallmentLand({
             _active: true,
@@ -71,9 +79,9 @@ const useInventoryPayment = () => {
                 filterType.nft_land.length > 0
                   ? filterType.nft_land
                   : undefined,
-              land_id:
+              nft_token:
                 search.length > 0
-                  ? (getValueFromTKey(search, "land_id") as string) // should be nft_token same, discuss with BE team!
+                  ? (getValueFromTKey(search, "nft_token") as string) // should be nft_token same, discuss with BE team!
                   : undefined
             }
           }).then((_res) => {
@@ -87,9 +95,7 @@ const useInventoryPayment = () => {
                 vdo: l.NFT_video,
                 payment_type: handleDate({
                   _keyType: l.key_type || "",
-                  _data: l.installments_data
-                    ? l.installments_data[0].period
-                    : []
+                  _data: l.installments_data ? l.installments_data.period : []
                 })
               }))
               _total = _data.length
@@ -109,7 +115,7 @@ const useInventoryPayment = () => {
                   : undefined,
               nft_token:
                 search.length > 0
-                  ? (getValueFromTKey(search, "land_id") as string) // should be nft_token same, discuss with BE team!
+                  ? (getValueFromTKey(search, "nft_token") as string) // should be nft_token same, discuss with BE team!
                   : undefined
             }
           }).then((_res) => {
@@ -124,9 +130,7 @@ const useInventoryPayment = () => {
                 level: b.level,
                 payment_type: handleDate({
                   _keyType: b.key_type || "",
-                  _data: b.installments_data
-                    ? b.installments_data[0].period
-                    : []
+                  _data: b.installments_data ? b.installments_data.period : []
                 })
               }))
               _total = _data.length
@@ -142,7 +146,7 @@ const useInventoryPayment = () => {
               player_id: profile.data.id,
               nft_token:
                 search.length > 0
-                  ? (getValueFromTKey(search, "land_id") as string) // should be nft_token same, discuss with BE team!
+                  ? (getValueFromTKey(search, "nft_token") as string) // should be nft_token same, discuss with BE team!
                   : undefined
             }
           }).then((_res) => {
@@ -156,9 +160,7 @@ const useInventoryPayment = () => {
                 vdo: `https://ipfs.io/ipfs/${g.NFT_info.vdo_game_ipfs_cid}?stream=true`,
                 payment_type: handleDate({
                   _keyType: g.key_type || "",
-                  _data: g.installments_data
-                    ? g.installments_data[0].period
-                    : []
+                  _data: g.installments_data ? g.installments_data.period : []
                 })
               }))
             }
@@ -167,10 +169,9 @@ const useInventoryPayment = () => {
         default:
           break
       }
-      setInventoryItemPayment(_data)
-      setTotalCount(_total)
     }
-
+    setInventoryItemPayment(_data)
+    setTotalCount(_total)
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile.data, marketType, limit, currentPage, filterType, search, sort])

@@ -15,7 +15,8 @@ const useGamePageListController = (
   gameMode?: IGetType,
   gameType?: TGameType,
   _limit?: number,
-  _categoryId?: string
+  _categoryId?: string,
+  _device?: "mobile" | "desktop" | "all"
 ) => {
   const router = useRouter()
   const categoryId = router.query.id
@@ -107,7 +108,7 @@ const useGamePageListController = (
         search: searchDropdown,
         category: categoryId || _categoryId || categoryDropdown,
         item: gameItemDropdown,
-        device: deviceDropdown,
+        device: _device || deviceDropdown,
         game_type: gameType || gameTypeDropdown,
         game_mode:
           getGameModeFilter() === "arcade-emporium"
@@ -164,7 +165,8 @@ const useGamePageListController = (
     gameLink: onClickLink,
     staminaRecovery,
     cooldown,
-    setCooldown
+    setCooldown,
+    setDevice
   }
 }
 

@@ -6,14 +6,16 @@ import BellRingRoundIcon from "@components/icons/BellRingRoundIcon"
 import Link from "next/link"
 import { ImageCustom } from "@components/atoms/image/Image"
 import { Box } from "@mui/material"
+import useNotiStore from "@stores/notification"
+import useHomeControllerMobile from "@mobile/features/game/containers/hooks/useHomeControllerMobile"
+import NotificationModal from "@mobile/components/organisms/modal/NotificationModal"
 
-interface IProps {
-  show: boolean
-}
-
-const HeadProfileMobile = ({ show = true }: IProps) => {
+const HeadProfileMobile = () => {
   const profile = useProfileStore((state) => state.profile.data)
-  return show ? (
+  const { count } = useNotiStore()
+  const { openNotification, setOpenNotification } = useHomeControllerMobile()
+
+  return (
     <header className="header bg-[#F32429] pb-[55px]">
       <div className="flex items-center justify-between px-5 py-10">
         <Box
@@ -59,13 +61,24 @@ const HeadProfileMobile = ({ show = true }: IProps) => {
           <IconTemplate>
             <WalletRoundIcon />
           </IconTemplate>
-          <IconTemplate>
+          <IconTemplate onClick={() => setOpenNotification(true)}>
+            <div
+              className={`absolute right-[15px] top-[12px] h-[6px] w-[6px] rounded-full ${
+                count > 0 && "bg-error-main opacity-100"
+              }`}
+            />
             <BellRingRoundIcon />
           </IconTemplate>
         </div>
       </div>
+
+      {/* Modal Notification */}
+      <NotificationModal
+        open={openNotification}
+        setOpenNotification={setOpenNotification}
+      />
     </header>
-  ) : null
+  )
 }
 
 export default HeadProfileMobile

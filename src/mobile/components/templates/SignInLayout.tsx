@@ -158,7 +158,6 @@ const SignInLayout = () => {
         component="div"
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform"
       >
-        {/* <CardNoReward className="!rounded-none !border-none !bg-transparent" /> */}
         <Box
           component="div"
           className="flex justify-center"
@@ -168,21 +167,6 @@ const SignInLayout = () => {
         <Typography className="my-8 text-center font-urbanist text-3xl font-bold uppercase text-red-card">
           Welcome Back
         </Typography>
-        <div>
-          <Button
-            variant="contained"
-            className="mb-[1.125rem] h-[50px] w-[293px] rounded-lg border border-solid border-neutral-700
-!bg-neutral-800 text-xs uppercase hover:border-secondary-main"
-            onClick={handleOpen}
-          >
-            <div className="flex items-center font-neue-machina text-sm font-bold">
-              <span className="absolute left-[15px]">
-                <DraftsOutlinedIcon />
-              </span>
-              sign in with Email
-            </div>
-          </Button>
-        </div>
         <div>
           <Button
             variant="contained"
@@ -240,6 +224,21 @@ const SignInLayout = () => {
             </div>
           </Button>
         </div>
+        <Box component="div">
+          <Button
+            variant="contained"
+            className="mb-[1.125rem] h-[50px] w-[293px] rounded-lg border border-solid border-neutral-700
+!bg-neutral-800 text-xs hover:border-secondary-main"
+            onClick={handleOpen}
+          >
+            <div className="flex items-center font-neue-machina text-sm font-bold">
+              <span className="absolute left-[15px]">
+                <DraftsOutlinedIcon />
+              </span>
+              Sign in with Email
+            </div>
+          </Button>
+        </Box>
         <Box
           component="div"
           className="flex justify-center text-center"

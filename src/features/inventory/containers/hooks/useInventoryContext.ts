@@ -32,9 +32,9 @@ interface IInventoryItemData {
   qrCode?: string
   position?: IPosition
   history?: IMarketHistory[]
-  marketplaces_data?: IMarketData[] | null
-  installments_data?: IInstallData[] | null
-  rentals_data?: IRentalData[] | null
+  marketplaces_data?: IMarketData | null
+  installments_data?: IInstallData | null
+  rentals_data?: IRentalData | null
   wallet_address?: string
 }
 

@@ -1,10 +1,12 @@
 import { useGetMyRentalBuilding } from "@feature/building/containers/hooks/useGetMyBuilding"
 import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
 import { useGetMyRentalLand } from "@feature/land/containers/hooks/useGetMyLand"
+import { TType } from "@feature/marketplace/interfaces/IMarketService"
 import useGlobal from "@hooks/useGlobal"
 import useMarketFilterStore from "@stores/marketFilter"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
+import { NextRouter, useRouter } from "next/router"
 import { useCallback, useEffect, useMemo, useState } from "react"
 
 const useInventoryRental = () => {
@@ -16,21 +18,25 @@ const useInventoryRental = () => {
   const { mutateGetMyRentalLand } = useGetMyRentalLand()
   const { mutateGetMyRentalBuilding } = useGetMyRentalBuilding()
   const { marketType } = useGlobal()
-  const _marketType = marketType || "nft_land"
+  const router: NextRouter = useRouter()
 
   const [inventoryItemRental, setInventoryItemRental] = useState<
     Array<IInventoryItemList>
   >([])
 
   const { sort, filterType, search } = useMarketFilterStore()
-  const { getValueFromTKey } = Helper
+  const { getValueFromTKey, convertTTypeToNFTType } = Helper
 
   const fetchInventoryRental = useCallback(async () => {
     let _data: IInventoryItemList[] = []
     let _total: number = 0
+    const _marketType =
+      marketType ||
+      convertTTypeToNFTType(router.query.type as TType) ||
+      "nft_land"
     setIsLoading(true)
     if (profile.data && _marketType && filterType && search && sort) {
-      switch (marketType) {
+      switch (_marketType) {
         case "nft_land":
           await mutateGetMyRentalLand({
             _limit: limit,
@@ -40,9 +46,9 @@ const useInventoryRental = () => {
                 filterType.nft_land.length > 0
                   ? filterType.nft_land
                   : undefined,
-              land_id:
+              nft_token:
                 search.length > 0
-                  ? (getValueFromTKey(search, "land_id") as string) // should be same as same nft_token
+                  ? (getValueFromTKey(search, "nft_token") as string) // should be same as same nft_token
                   : undefined
             }
           })
@@ -136,7 +142,7 @@ const useInventoryRental = () => {
     setTotalCount(_total)
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile.data, _marketType, currentPage, limit, filterType, search, sort])
+  }, [profile.data, marketType, currentPage, limit, filterType, search, sort])
 
   useEffect(() => {
     let load = false

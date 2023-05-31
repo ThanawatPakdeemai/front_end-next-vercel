@@ -115,9 +115,11 @@ const MarketplaceLayoutInventory = ({
               )}
             </div>
           )}
-          <div className="absolute z-50	h-[85vh]">
-            <InventoryPage />
-          </div>
+          {/* <div className="absolute z-50	h-[85vh]">
+            <div />
+          </div> */}
+          <InventoryPage />
+
           <div
             className={
               isMapPage

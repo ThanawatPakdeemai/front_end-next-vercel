@@ -14,14 +14,14 @@ BecomeDeveloper.getLayout = function getLayout(page: ReactElement) {
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {
-  const mode = process.env.NEXT_PUBLIC_MODE
+  // const mode = process.env.NEXT_PUBLIC_MODE
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"]))
-    },
-    redirect: {
-      destination: mode === "production" ? "/" : "/become-developer"
     }
+    // redirect: {
+    //   destination: mode === "production" ? "/" : "/become-developer"
+    // }
   }
 }
 

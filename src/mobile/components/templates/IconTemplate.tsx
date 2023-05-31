@@ -1,7 +1,13 @@
 import React from "react"
 import { Box } from "@mui/material"
 
-const IconTemplate = ({ children }: { children: React.ReactNode }) => (
+const IconTemplate = ({
+  children,
+  onClick
+}: {
+  children: React.ReactNode
+  onClick?: () => void
+}) => (
   <Box
     component="button"
     sx={{
@@ -13,8 +19,10 @@ const IconTemplate = ({ children }: { children: React.ReactNode }) => (
       height: "48px",
       background: "#181A20",
       border: "1px solid #181A20",
-      borderRadius: "100px"
+      borderRadius: "100px",
+      position: "relative"
     }}
+    onClick={onClick}
   >
     {children}
   </Box>

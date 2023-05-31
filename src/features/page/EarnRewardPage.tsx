@@ -12,7 +12,7 @@ import useEarnRewardController from "@feature/earnReward/containers/hooks/useEar
 const EarnRewardPage = () => {
   const {
     isLoadingReward,
-    rewardList,
+    earnReward,
     handleClaimReward,
     countUnClaim,
     onClaimAll
@@ -23,8 +23,8 @@ const EarnRewardPage = () => {
 
   if (isLoadingReward) {
     content = <SkeletonDetails />
-  } else if (rewardList && rewardList.length > 0) {
-    content = rewardList.map((data) => (
+  } else if (earnReward && earnReward.length > 0) {
+    content = earnReward.map((data) => (
       <ItemRewardDetails
         key={uuidv4()}
         rewardData={data}

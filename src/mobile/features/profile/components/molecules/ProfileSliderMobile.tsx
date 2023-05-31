@@ -1,18 +1,28 @@
+import React from "react"
 import HorizontalThumbSlide from "@feature/slider/components/templates/HorizontalThumbSlide"
 import { Box } from "@mui/material"
-import React, { useEffect } from "react"
 import useProfileSettingController from "../../containers/useProfileSettingController"
 
 const ProfileSliderMobile = () => {
-  const { avatarList } = useProfileSettingController()
+  const { avatarList, avatarGoto } = useProfileSettingController()
 
   return (
     <Box
       component="section"
-      id={`profile-avatar__slider`}
+      id="profile-avatar__slider"
       className="w-full"
     >
-      <HorizontalThumbSlide items={avatarList} />
+      <HorizontalThumbSlide
+        items={avatarList}
+        sliderType="avatar"
+        currentSelected={avatarGoto}
+        settingSingle={{
+          speed: 500
+        }}
+        settingThumbnail={{
+          speed: 500
+        }}
+      />
     </Box>
   )
 }

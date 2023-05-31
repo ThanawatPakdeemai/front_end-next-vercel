@@ -1,11 +1,20 @@
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import { iconmotion } from "@components/organisms/Footer"
 import { IVerticalThumbSlide } from "@feature/slider/interfaces/ISlides"
-import { Box, SxProps, Theme } from "@mui/material"
+import { Box, SxProps } from "@mui/material"
 import React, { useState } from "react"
 import Slider, { Settings } from "react-slick"
 import EastIcon from "@mui/icons-material/East"
 import WestIcon from "@mui/icons-material/West"
+import {
+  SlickArrowCSS,
+  SlickAvatarThumbnail,
+  SlickDefaultThumbnail,
+  SlickMainSlideCSS,
+  SlickSingleSlideAvatarCSS,
+  StyleArrowAvatar,
+  StyleArrowDefault
+} from "@feature/slider/constants/HorizontalThumbSlide"
 import VerticalThumbCardSlide from "../organisms/VerticalThumbCardSlide"
 import VerticalThumbSmallCardSlide from "../organisms/VerticalThumbSmallCardSlide"
 
@@ -14,119 +23,61 @@ export type SliderType = "avatar" | "default"
 interface IHorizontalThumbSlideProps {
   items: IVerticalThumbSlide[]
   sliderType?: SliderType
-}
-
-export const SlickSigleSlideAvatarCSS: SxProps = {
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "flexStart",
-  padding: "6px",
-  gap: "10px",
-  width: "100px",
-  height: "100px",
-  border: "2px solid #F42728",
-  borderRadius: "14px",
-  margin: "auto"
+  settingSingle?: Settings
+  settingThumbnail?: Settings
+  currentSelected?: number
 }
 
 const HorizontalThumbSlide = ({
   items,
-  sliderType = "default"
+  sliderType = "default",
+  settingSingle,
+  settingThumbnail,
+  currentSelected
 }: IHorizontalThumbSlideProps) => {
   const [nav1, setNav1] = useState<Slider | undefined | null>()
   const [nav2, setNav2] = useState<Slider | undefined | null>()
 
-  const SlickMainSlideCSS: SxProps = {
-    ".slick-slider, .slick-list, .slick-track": {
-      height: "100%"
-    },
-    ".slick-slide": {
-      "& > div": {
-        height: "100%",
-        "& > .verticalThumb-slide__item": {
-          height: "100%",
-          "& > .verticalThumb-slide__item__image": {
-            height: "100%",
-            "& > img": {
-              height: "100%"
-            }
-          }
-        }
-      }
-    }
-  }
-
   /**
    * @description Get style for single slide
-   * @returns 
+   * @returns
    */
   const getStyleSingleSlide = (): SxProps => {
     switch (sliderType) {
       case "avatar":
-        return {
-          SlickSigleSlideAvatarCSS,
-          ...SlickMainSlideCSS
-        }
+        return SlickSingleSlideAvatarCSS
       default:
         return SlickMainSlideCSS
     }
   }
 
+  const getStyleMultipleSlide = (): SxProps => {
+    switch (sliderType) {
+      case "avatar":
+        return SlickAvatarThumbnail
+      default:
+        return SlickDefaultThumbnail
+    }
+  }
+
+  /**
+   * @description Slider classes Tailwind
+   */
   const getStyleSingleSlideClasses = (): string => {
     switch (sliderType) {
       case "avatar":
-        return "slickSlider__avatar"
+        return "flex h-[100px] w-[100px] flex-col justify-center overflow-hidden rounded-2xl p-[6px] border-2 border-[#F42728] rounded-[14px]"
       default:
-        return ""
+        return "flex h-[60vw] w-full flex-col justify-center overflow-hidden rounded-2xl md:h-[479px] lg:max-w-[852px]"
     }
   }
 
-  const SlickArrowCSS =
-    "m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg  bg-neutral-800/60"
-
-  const StyleArrow = {
-    ".MuiSvgIcon-root": {
-      fill: "white"
-    },
-    "&.slick-arrow": {
-      top: "22px",
-      "&.slick-prev": {
-        "left": "-70px"
-      },
-      "&.slick-next": {
-        "right": "-30px"
-      },
-      "&:before": {
-        display: "none"
-      }
-    }
-  }
-
-  const SlickThumbnailSlideCSS: SxProps = {
-    ".slick-list": {
-      height: "70px",
-      overflow: "hidden"
-    },
-    ".slick-slider": {
-      display: "flex",
-      justifyContent: "center",
-      width: "100%",
-      alignItems: "center",
-      "& > .slick-list": {
-        width: "100%"
-      }
-    },
-    ".slick-slide": {
-      opacity: 0.5,
-      ".verticalSmallThumb-slide__item": {
-        margin: "0 4px"
-      },
-      "&.slick-current.slick-active": {
-        opacity: 1,
-        ".MuiCardMedia-root": {
-          borderColor: "#A0ED61"
-        }
-      }
+  const getStyleArrow = () => {
+    switch (sliderType) {
+      case "avatar":
+        return StyleArrowAvatar
+      default:
+        return StyleArrowDefault
     }
   }
 
@@ -145,25 +96,26 @@ const HorizontalThumbSlide = ({
     fade: true,
     pauseOnHover: false,
     dots: false,
-    arrows: false
+    arrows: false,
+    ...settingSingle
   }
 
   const settingSlideThumbnail: Settings = {
     infinite: true,
     speed: 1000,
-    slidesToShow: 8,
+    slidesToShow: sliderType === "avatar" ? 4 : 8,
     arrows: true,
     vertical: false,
     focusOnSelect: true,
     dots: false,
-    centerPadding: "10px",
+    centerPadding: sliderType === "avatar" ? "0px" : "10px",
     centerMode: false,
     rows: 1,
     variableWidth: true,
     prevArrow: (
       <Box
         component="div"
-        sx={StyleArrow}
+        sx={getStyleArrow()}
       >
         <ButtonIcon
           variants={iconmotion}
@@ -181,7 +133,7 @@ const HorizontalThumbSlide = ({
     nextArrow: (
       <Box
         component="div"
-        sx={StyleArrow}
+        sx={getStyleArrow()}
       >
         <ButtonIcon
           variants={iconmotion}
@@ -195,19 +147,9 @@ const HorizontalThumbSlide = ({
           className={SlickArrowCSS.toString()}
         />
       </Box>
-    )
+    ),
+    ...settingThumbnail
   }
-
-  /**
-   * @description Slider classes Tailwind
-   */
-  // const SlickClassesDefaultTailwind =
-  //   "flex h-[60vw] w-full flex-col justify-center overflow-hidden rounded-2xl md:h-[479px] lg:max-w-[852px]"
-  // const SlickClassesAvatarTailwind = ""
-  // const SlickClassesTailwind =
-  //   sliderType === "avatar"
-  //     ? SlickClassesAvatarTailwind
-  //     : SlickClassesDefaultTailwind
 
   return (
     <div className="horizontal-thumb-slide my-4 flex w-full flex-col items-center justify-between gap-4">
@@ -218,7 +160,13 @@ const HorizontalThumbSlide = ({
       >
         <Slider
           asNavFor={nav2 as Slider}
-          ref={(slider1) => setNav1(slider1)}
+          ref={(slider1) => {
+            if (currentSelected) {
+              slider1?.slickGoTo(currentSelected)
+            }
+
+            setNav1(slider1)
+          }}
           {...settings}
           className="banner"
         >
@@ -234,7 +182,7 @@ const HorizontalThumbSlide = ({
       </Box>
       <Box
         component="div"
-        sx={SlickThumbnailSlideCSS}
+        sx={getStyleMultipleSlide()}
         className="relative mt-4 flex w-full max-w-[613px] justify-center"
       >
         <Slider

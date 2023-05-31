@@ -18,6 +18,7 @@ import rt from "dayjs/plugin/relativeTime"
 import createEmotionCache from "@utils/createEmotionCache"
 import { metaData } from "@src/meta/meta"
 import Head from "next/head"
+
 const Loading = dynamic(() => import("@components/molecules/Loading"), {
   suspense: true,
   ssr: false

@@ -1,7 +1,7 @@
 import React from "react"
 import { Box, SwipeableDrawer } from "@mui/material"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
-import ProfileContentMobile from "@mobile/features/profile/components/organisms/ProfileContentMobile"
+import ProfileContentMobile from "@mobile/features/profile/components/organisms/FormProfileSetting"
 
 interface ISettingModalProps {
   open: boolean

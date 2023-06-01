@@ -10,6 +10,7 @@ import React, { useMemo } from "react"
 import useCountStore from "@stores/countComponant"
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
+import useGlobal from "@hooks/useGlobal"
 
 interface IProp {
   type: TNFTType
@@ -40,6 +41,7 @@ const TextfieldDetailContent = ({
   const { invPrice, setInvPrice } = useInventoryProvider()
   const { marketAmount, setMarketAmount } = useMarketplaceProvider()
   const { invAmount, setInvAmount } = useInventoryProvider()
+  const { marketType } = useGlobal()
   const _priceValue = invPrice || price
 
   const onPriceChange = (value: string) => {
@@ -87,7 +89,11 @@ const TextfieldDetailContent = ({
 
   return (
     <div
-      className="grid w-full items-center justify-between sm:flex"
+      className={`flex w-full items-start justify-between ${
+        marketType === "nft_avatar" || marketType === "nft_naka_punk"
+          ? "flex-col sm:flex-row"
+          : null
+      }`}
       data-testid={type}
     >
       {count && type !== "nft_land" && type !== "nft_building" && (
@@ -106,6 +112,7 @@ const TextfieldDetailContent = ({
         <TextField
           value={`${position.x}, ${position.y}`}
           label="BLOCK IN MAP"
+          className="!w-[131px] sm:!w-[232px]"
           sx={{
             "& .MuiOutlinedInput-root": {
               backgroundColor: "#010101"
@@ -117,7 +124,10 @@ const TextfieldDetailContent = ({
           disabled
           InputProps={{
             startAdornment: (
-              <InputAdornment position="start">
+              <InputAdornment
+                position="start"
+                className="ml-[15px]"
+              >
                 <PinnedMapIcon />
               </InputAdornment>
             )
@@ -128,6 +138,7 @@ const TextfieldDetailContent = ({
       <TextField
         value={price ? countItemSelected * price : invPrice}
         label="PRICE (NAKA)"
+        className="!w-[131px] sm:!w-[232px]"
         sx={{
           "& .MuiOutlinedInput-root": {
             backgroundColor: "#010101"
@@ -140,8 +151,11 @@ const TextfieldDetailContent = ({
         disabled={!!price}
         InputProps={{
           startAdornment: (
-            <InputAdornment position="start">
-              <LogoIcon />
+            <InputAdornment
+              position="start"
+              className="ml-[15px] mr-3"
+            >
+              <LogoIcon fill="#70727B" />
             </InputAdornment>
           )
         }}

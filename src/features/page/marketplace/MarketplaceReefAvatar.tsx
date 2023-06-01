@@ -26,6 +26,7 @@ import CouponIcon from "@components/icons/CouponIcon"
 import Helper from "@utils/helper"
 import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAvatarReef"
 import RedemptionCode from "@components/molecules/RedemptionCode"
+import Breadcrumb from "@components/molecules/Breadcrumb"
 
 const MarketplaceReefAvatar = () => {
   const [evm, setEVM] = useState<string>("")
@@ -126,148 +127,153 @@ const MarketplaceReefAvatar = () => {
   }, [priceAvatarReef])
 
   return (
-    <div className="flex w-full flex-col justify-center gap-y-[30px] px-5 sm:flex-row sm:gap-x-[120px] sm:px-0">
-      <CardContentDetails
-        detail="Avatar Reef"
-        image={!purchAvatarReefData ? "/images/temp-nakapunk.webp" : undefined}
-        alt="avatar-reef"
-        txHash={purchAvatarReefData?.data.transaction_hash}
-        meta_data={metaData || undefined}
-      >
-        <div>
-          {purchAvatarReefData ? (
-            <div>
-              {metaData && profile && profile.data && (
-                <div>
-                  {metaData && metaData.length > 0 && (
-                    <div className="flex items-center px-8 pt-6">
-                      <Chip
-                        label="congrats!"
-                        variant="filled"
-                        color="success"
-                        size="small"
-                        className="cursor-pointer uppercase"
-                      />
-                      <Typography className="ml-4 text-sm uppercase text-white-primary">
-                        you got {metaData.length} Avatar Reef
-                      </Typography>
-                    </div>
-                  )}
-                  <div
-                    className={
-                      metaData &&
-                      "custom-scroll max-h-[100px] overflow-y-scroll"
-                    }
-                  >
-                    {metaData.map((_data) => (
-                      <GotNaKAPunk
-                        key={uuidv4()}
-                        address={String(profile.data?.address)}
-                        token_id={_data.NFT_token}
-                      />
-                    ))}
-                  </div>
-                  {metaData && metaData.length > 0 && (
-                    <a
-                      href={`${CONFIGS.CHAIN.POLYGON_SCAN}/tx/${purchAvatarReefData.data.transaction_hash}`}
-                      target="_blank"
-                      rel="noreferrer"
+    <>
+      <Breadcrumb />
+      <div className="flex w-full flex-col justify-center gap-y-[30px] px-5 sm:flex-row sm:gap-x-[120px] sm:px-0">
+        <CardContentDetails
+          detail="Avatar Reef"
+          image={
+            !purchAvatarReefData ? "/images/temp-nakapunk.webp" : undefined
+          }
+          alt="avatar-reef"
+          txHash={purchAvatarReefData?.data.transaction_hash}
+          meta_data={metaData || undefined}
+        >
+          <div>
+            {purchAvatarReefData ? (
+              <div>
+                {metaData && profile && profile.data && (
+                  <div>
+                    {metaData && metaData.length > 0 && (
+                      <div className="flex items-center px-8 pt-6">
+                        <Chip
+                          label="congrats!"
+                          variant="filled"
+                          color="success"
+                          size="small"
+                          className="cursor-pointer uppercase"
+                        />
+                        <Typography className="ml-4 text-sm uppercase text-white-primary">
+                          you got {metaData.length} Avatar Reef
+                        </Typography>
+                      </div>
+                    )}
+                    <div
+                      className={
+                        metaData &&
+                        "custom-scroll max-h-[100px] overflow-y-scroll"
+                      }
                     >
-                      <Typography
-                        variant="button"
-                        className="cursor-pointer px-8 text-xs uppercase text-purple-primary"
+                      {metaData.map((_data) => (
+                        <GotNaKAPunk
+                          key={uuidv4()}
+                          address={String(profile.data?.address)}
+                          token_id={_data.NFT_token}
+                        />
+                      ))}
+                    </div>
+                    {metaData && metaData.length > 0 && (
+                      <a
+                        href={`${CONFIGS.CHAIN.POLYGON_SCAN}/tx/${purchAvatarReefData.data.transaction_hash}`}
+                        target="_blank"
+                        rel="noreferrer"
                       >
-                        view transaction
-                      </Typography>
-                    </a>
-                  )}
-                </div>
+                        <Typography
+                          variant="button"
+                          className="cursor-pointer px-8 text-xs uppercase text-purple-primary"
+                        >
+                          view transaction
+                        </Typography>
+                      </a>
+                    )}
+                  </div>
+                )}
+              </div>
+            ) : undefined}
+          </div>
+        </CardContentDetails>
+        <div className="flex flex-col gap-y-4">
+          <RightDetailsMarketplace
+            type={marketType as TNFTType}
+            title="avatar mystery box"
+            method="mint"
+            price={priceNP * count}
+            count={{
+              helperText: `1 NFT = ${priceNP} NAKA`,
+              label: "Quantity",
+              min: 1,
+              max: 10,
+              count: 1
+            }}
+          >
+            <div className="flex w-full flex-col gap-y-1 py-2">
+              <Typography
+                className={`text-sm font-bold uppercase ${
+                  evm ? "text-neutral-400" : "text-error-main"
+                } `}
+              >
+                evm address *
+              </Typography>
+              <TextField
+                className="mr-4 w-full"
+                required
+                type="text"
+                value={evm}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    width: "100%"
+                  }
+                }}
+                onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  // e.target.value = e.target.value.replace(/[^A-Za-z0-9]/gi, "")
+                  setEVM(e.target.value)
+                }}
+                id="username-create"
+                placeholder="Ex. 0x0000000000000"
+                size="medium"
+                InputProps={{
+                  style: {
+                    fontFamily: "neueMachina",
+                    backgroundColor: "#232329",
+                    borderColor: "#18181C"
+                  },
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <CouponIcon />
+                    </InputAdornment>
+                  ),
+                  inputProps: {
+                    pattern: "[a-zA-Z0-9]"
+                  }
+                }}
+              />
+              <Divider className="mt-1 !block border-[1px] border-neutral-800" />
+            </div>
+            <div className="flex justify-between">
+              <Typography className="text-xs uppercase text-neutral-500">
+                Create unique digital asset ownership token.
+              </Typography>
+              {isLogin ? (
+                <ButtonLink
+                  text="Mint now"
+                  type="button"
+                  size="medium"
+                  variant="contained"
+                  textColor="text-primary-main"
+                  className="!min-h-10 !h-10 !w-[232px] !bg-green-lemon"
+                  arrowColor="text-primary-main"
+                  icon={<WandIcon />}
+                  onClick={handleMintNakapunk}
+                />
+              ) : (
+                <RightMenuNotLogIn />
               )}
             </div>
-          ) : undefined}
+          </RightDetailsMarketplace>
+          <RedemptionCode onRedeem={handleRedeem} />
         </div>
-      </CardContentDetails>
-      <div className="flex flex-col gap-y-4">
-        <RightDetailsMarketplace
-          type={marketType as TNFTType}
-          title="avatar mystery box"
-          method="mint"
-          price={priceNP * count}
-          count={{
-            helperText: `1 NFT = ${priceNP} NAKA`,
-            label: "Quantity",
-            min: 1,
-            max: 10,
-            count: 1
-          }}
-        >
-          <div className="flex w-full flex-col gap-y-1 py-2">
-            <Typography
-              className={`text-sm font-bold uppercase ${
-                evm ? "text-neutral-400" : "text-error-main"
-              } `}
-            >
-              evm address *
-            </Typography>
-            <TextField
-              className="mr-4 w-full"
-              required
-              type="text"
-              value={evm}
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  width: "100%"
-                }
-              }}
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                // e.target.value = e.target.value.replace(/[^A-Za-z0-9]/gi, "")
-                setEVM(e.target.value)
-              }}
-              id="username-create"
-              placeholder="Ex. 0x0000000000000"
-              size="medium"
-              InputProps={{
-                style: {
-                  fontFamily: "neueMachina",
-                  backgroundColor: "#232329",
-                  borderColor: "#18181C"
-                },
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <CouponIcon />
-                  </InputAdornment>
-                ),
-                inputProps: {
-                  pattern: "[a-zA-Z0-9]"
-                }
-              }}
-            />
-            <Divider className="mt-1 !block border-[1px] border-neutral-800" />
-          </div>
-          <div className="flex justify-between">
-            <Typography className="text-xs uppercase text-neutral-500">
-              Create unique digital asset ownership token.
-            </Typography>
-            {isLogin ? (
-              <ButtonLink
-                text="Mint now"
-                type="button"
-                size="medium"
-                variant="contained"
-                textColor="text-primary-main"
-                className="!min-h-10 !h-10 !w-[232px] !bg-green-lemon"
-                arrowColor="text-primary-main"
-                icon={<WandIcon />}
-                onClick={handleMintNakapunk}
-              />
-            ) : (
-              <RightMenuNotLogIn />
-            )}
-          </div>
-        </RightDetailsMarketplace>
-        <RedemptionCode onRedeem={handleRedeem} />
       </div>
-    </div>
+    </>
   )
 }
 

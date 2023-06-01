@@ -29,7 +29,7 @@ const MarketplaceLayoutWithoutFilter = ({
         {isMapPage ? (
           <div className="map-wrapper h-full w-full">{children}</div>
         ) : (
-          <>{children}</>
+          <div className="max-w-[1368px]">{children}</div>
         )}
       </div>
       {!isMapPage && <Footer />}

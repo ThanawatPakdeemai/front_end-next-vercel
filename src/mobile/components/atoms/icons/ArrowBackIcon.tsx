@@ -1,12 +1,17 @@
 import React from "react"
 
-const ArrowBackIcon = () => (
+interface IProps {
+  onClick?: () => void
+}
+
+const ArrowBackIcon = (props: IProps) => (
   <svg
     width="28"
     height="28"
     viewBox="0 0 28 28"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    onClick={props?.onClick}
   >
     <path
       d="M23.3334 14.32C23.3334 14.763 23.0042 15.1291 22.5771 15.187L22.4584 15.195L4.95837 15.195C4.47512 15.195 4.08337 14.8033 4.08337 14.32C4.08337 13.877 4.41255 13.5109 4.83964 13.453L4.95837 13.445L22.4584 13.445C22.9416 13.445 23.3334 13.8368 23.3334 14.32Z"

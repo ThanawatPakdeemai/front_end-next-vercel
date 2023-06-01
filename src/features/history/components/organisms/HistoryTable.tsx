@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useEffect, useState } from "react"
+import React from "react"
 import {
   Table,
   TableBody,
@@ -9,7 +9,6 @@ import {
   Box
 } from "@mui/material"
 import PaginationNaka from "@components/atoms/pagination/PaginationNaka"
-import useHistory from "@feature/history/containers/hook/useHistory"
 import dayjs from "dayjs"
 import PageHeader from "@feature/table/components/molecules/PageHeader"
 import TableRowData from "@feature/table/components/molecules/TableRowData"
@@ -17,28 +16,22 @@ import DropdownLimit from "@components/atoms/DropdownLimit"
 import TableHeader from "@feature/table/components/molecules/TableHeader"
 import useHistoryController from "@feature/history/containers/hook/useHistoryController"
 import useGlobal from "@hooks/useGlobal"
-import useProfileStore from "@stores/profileStore"
 import useTable from "@feature/table/containers/hooks/useTable"
 import TableNodata from "@feature/transaction/components/atoms/TableNodata"
-import { IHistory } from "@feature/history/interfaces/IHistoryService"
 import SkeletonTableWallet from "@components/atoms/skeleton/SkeletonTableWallet"
 import { v4 as uuid } from "uuid"
 import { TRoomStatus } from "@feature/game/interfaces/IGameService"
 import { useTranslation } from "react-i18next"
 
 const HistoryTable = () => {
-  const profile = useProfileStore((state) => state.profile.data)
+  const { setSkip, totalCount, skip, hxHistory, historyIsLoading } =
+    useHistoryController()
+
   // Hooks
   const { pager, hydrated } = useGlobal()
   const { HistoryTableHead, handleClickView } = useHistoryController()
   const { limit, setLimit } = useTable()
-  const { getHistoryData, historyIsLoading } = useHistory()
   const { t } = useTranslation()
-
-  // States
-  const [skip, setSkip] = useState<number>(1)
-  const [totalCount, setTotalCount] = useState<number>(0)
-  const [hxHistory, setHxHistory] = useState<IHistory[]>([])
 
   const roomStatus = (status: TRoomStatus) => {
     switch (status) {
@@ -52,35 +45,6 @@ const HistoryTable = () => {
         return "Done"
     }
   }
-
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      const fetchHistory = async () => {
-        if (profile) {
-          await getHistoryData({
-            player_id: profile && profile.id ? profile.id : "",
-            limit,
-            skip
-          }).then((res) => {
-            if (res.data && res.data.length > 0) {
-              // res.status === 200 -> ok
-              setHxHistory(res.data)
-            }
-            if (res.info) {
-              setTotalCount(res.info.totalCount)
-            }
-          })
-        }
-      }
-      fetchHistory()
-    }
-
-    return () => {
-      load = true
-    }
-  }, [limit, skip, profile, getHistoryData])
 
   return (
     <>

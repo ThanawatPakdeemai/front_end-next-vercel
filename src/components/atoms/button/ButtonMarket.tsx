@@ -38,7 +38,7 @@ interface IMarketButton {
   sellerType?: TSellerType
   sellingType?: TSellingType
   sellerId?: string
-  marketplaces_data?: IMarketData[] | null
+  marketplaces_data?: IMarketData | null
   plot?: IPosition
 }
 
@@ -170,7 +170,7 @@ const ButtonMarket = ({
         name={name}
         img={img}
         vdo={vdo}
-        priceValue={marketplaces_data ? marketplaces_data[0].price : price}
+        priceValue={marketplaces_data ? marketplaces_data.price : price}
         periodValue={period}
         amount={amount}
         maxPeriod={maxPeriod}
@@ -178,11 +178,11 @@ const ButtonMarket = ({
         tokenId={tokenId}
         marketId={marketId}
         itemId={itemId}
-        orderId={marketplaces_data ? marketplaces_data[0].order_id : orderId}
-        sellerId={marketplaces_data ? marketplaces_data[0].seller_id : sellerId}
+        orderId={marketplaces_data ? marketplaces_data.order_id : orderId}
+        sellerId={marketplaces_data ? marketplaces_data.seller_id : sellerId}
         sellerType={sellerType}
         sellingType={
-          marketplaces_data ? marketplaces_data[0].selling_type : sellingType
+          marketplaces_data ? marketplaces_data.selling_type : sellingType
         }
         plot={plot}
       />

@@ -3,7 +3,12 @@ import { Box } from "@mui/material"
 import useGlobal from "@hooks/useGlobal"
 import LogoNakaIcon from "@components/icons/LogoNakaIcon"
 
-const LogoNaka = () => {
+interface IProps {
+  showIconTM?: boolean
+}
+
+const LogoNaka = (props: IProps) => {
+  const { showIconTM } = props
   const { isMarketplace, isDeveloperPage } = useGlobal()
 
   const themeColor = (): string => {
@@ -21,7 +26,10 @@ const LogoNaka = () => {
       component="div"
       className="logo-naka-icon group w-[180px] transition-all hover:w-auto hover:ease-linear"
     >
-      <LogoNakaIcon fill={themeColor().toString()} />
+      <LogoNakaIcon
+        fill={themeColor().toString()}
+        showIconTM={showIconTM}
+      />
     </Box>
   )
 }

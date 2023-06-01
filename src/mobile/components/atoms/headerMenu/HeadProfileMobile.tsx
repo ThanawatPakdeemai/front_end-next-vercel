@@ -6,14 +6,22 @@ import BellRingRoundIcon from "@components/icons/BellRingRoundIcon"
 import Link from "next/link"
 import { ImageCustom } from "@components/atoms/image/Image"
 import { Box } from "@mui/material"
+import useNotiStore from "@stores/notification"
+import NotificationModal from "@mobile/components/organisms/modal/NotificationModal"
+import ProfileSettingModal from "@mobile/components/organisms/modal/ProfileSettingModal"
+import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 
-interface IProps {
-  show: boolean
-}
-
-const HeadProfileMobile = ({ show = true }: IProps) => {
+const HeadProfileMobile = () => {
   const profile = useProfileStore((state) => state.profile.data)
-  return show ? (
+  const { count } = useNotiStore()
+  const {
+    openNotification,
+    setOpenNotification,
+    profileSetting,
+    setProfileSetting
+  } = useDrawerControllerMobile()
+
+  return (
     <header className="header bg-[#F32429] pb-[55px]">
       <div className="flex items-center justify-between px-5 py-10">
         <Box
@@ -31,12 +39,10 @@ const HeadProfileMobile = ({ show = true }: IProps) => {
               margin: 0
             }
           }}
+          onClick={() => setProfileSetting(true)}
         >
           {profile ? (
-            <Link
-              href={`/profile/${profile?.id}`}
-              className="head-profile__info--avatar"
-            >
+            <div className="head-profile__info--avatar">
               <ImageCustom
                 src={profile?.avatar || "/images/avatar.png"}
                 alt="avatar"
@@ -44,7 +50,7 @@ const HeadProfileMobile = ({ show = true }: IProps) => {
                 height={55}
                 className="h-full w-full object-cover"
               />
-            </Link>
+            </div>
           ) : (
             <Link href="/login">{/* <PersonIcon /> */}</Link>
           )}
@@ -59,13 +65,30 @@ const HeadProfileMobile = ({ show = true }: IProps) => {
           <IconTemplate>
             <WalletRoundIcon />
           </IconTemplate>
-          <IconTemplate>
+          <IconTemplate onClick={() => setOpenNotification(true)}>
+            <div
+              className={`absolute right-[15px] top-[12px] h-[6px] w-[6px] rounded-full ${
+                count > 0 && "bg-error-main opacity-100"
+              }`}
+            />
             <BellRingRoundIcon />
           </IconTemplate>
         </div>
       </div>
+
+      {/* Modal Notification */}
+      <NotificationModal
+        open={openNotification}
+        setOpenNotification={setOpenNotification}
+      />
+
+      {/* Profile Setting Modal */}
+      <ProfileSettingModal
+        open={profileSetting}
+        setProfileSetting={setProfileSetting}
+      />
     </header>
-  ) : null
+  )
 }
 
 export default HeadProfileMobile

@@ -2,7 +2,7 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" id="flag-icons-cw" viewBox="0 0 640 480">
   <defs>
     <clipPath id="a">
-      <path fill-opacity=".7" d="M0 0h682.7v512H0z"/>
+      <path fillOpacity=".7" d="M0 0h682.7v512H0z"/>
     </clipPath>
     <path id="b" d="m0-1 .2.7H1L.3 0l.2.7L0 .4l-.6.4.2-.7-.5-.4h.7z"/>
   </defs>

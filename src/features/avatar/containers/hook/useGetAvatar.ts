@@ -5,7 +5,9 @@ import { getAllAvatar } from "../services/avatar.service"
 const useGetAvatar = () => {
   const { data, error, isLoading, isError } = useQuery<IGetAvatar>({
     queryKey: ["all_avatar"],
-    queryFn: () => getAllAvatar().then((res) => res)
+    queryFn: () => getAllAvatar(),
+    keepPreviousData: true,
+    staleTime: Infinity
   })
 
   if (isLoading) {

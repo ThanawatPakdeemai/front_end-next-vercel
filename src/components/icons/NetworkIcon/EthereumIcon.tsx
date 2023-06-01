@@ -27,7 +27,7 @@ function EthereumIcon({
           <path
             d="M12 3.09765V9.75015L17.6228 12.2627L12 3.09765Z"
             fill="white"
-            fill-opacity="0.602"
+            fillOpacity="0.602"
           />
           <path
             d="M12 3.09765L6.3765 12.2627L12 9.75015V3.09765Z"
@@ -36,7 +36,7 @@ function EthereumIcon({
           <path
             d="M12 16.764V21.2843L17.6265 13.5L12 16.764Z"
             fill="white"
-            fill-opacity="0.602"
+            fillOpacity="0.602"
           />
           <path
             d="M12 21.2842V16.7633L6.3765 13.5L12 21.2842Z"
@@ -45,12 +45,12 @@ function EthereumIcon({
           <path
             d="M12 15.5258L17.6228 12.261L12 9.75V15.5258Z"
             fill="white"
-            fill-opacity="0.2"
+            fillOpacity="0.2"
           />
           <path
             d="M6.3765 12.261L12 15.5257V9.75L6.3765 12.261Z"
             fill="white"
-            fill-opacity="0.602"
+            fillOpacity="0.602"
           />
         </g>
       </g>

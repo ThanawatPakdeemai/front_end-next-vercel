@@ -88,8 +88,11 @@ const MarketplaceOwnerList = () => {
     <div className="flex justify-center">
       {(inventoryItemList &&
         inventoryItemList.length <= 0 &&
-        !isLoading &&
-        !isItemLoading) ||
+        ((marketType !== "game_item" &&
+          marketType !== "nft_material" &&
+          !isLoading) ||
+          ((marketType === "game_item" || marketType !== "nft_material") &&
+            !isLoading))) ||
       !profile.isLogin ? (
         <NoData />
       ) : (

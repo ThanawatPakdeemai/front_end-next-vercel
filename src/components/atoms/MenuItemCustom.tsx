@@ -42,8 +42,12 @@ const MenuItemCustom = ({
         }
       }}
       sx={{
-        color: active ? "#E1E2E2" : null,
-        backgroundColor: active ? "#010101!important" : null
+        color: active ? "#70727B" : null,
+        backgroundColor: active ? "#18181C!important" : null,
+        "&:hover": {
+          backgroundColor: "#F42728 !important",
+          color: "#E1E2E2"
+        }
       }}
     >
       <Link

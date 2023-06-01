@@ -25,6 +25,7 @@ const MarketplaceOwnerDetail = () => {
           poster={invenItemData.img}
           alt={invenItemData.type}
           model={invenItemData.model}
+          showDetails
         >
           {profile.data &&
             profile.data.address &&

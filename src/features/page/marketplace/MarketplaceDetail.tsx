@@ -16,6 +16,7 @@ import { useRouter } from "next/router"
 import CopyButton from "@components/atoms/CopyButton"
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import RedemptionCode from "@components/molecules/RedemptionCode"
+import Breadcrumb from "@components/molecules/Breadcrumb"
 
 const ButtonMarket = dynamic(
   () => import("@components/atoms/button/ButtonMarket"),
@@ -52,6 +53,7 @@ const MarketplaceDetail = () => {
   return marketOrder ? (
     <>
       <div className="hidden sm:block">
+        <Breadcrumb />
         <div className="flex w-full flex-col gap-x-[30px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0 md:gap-x-[60px] lg:gap-x-[120px]">
           <CardContentDetails
             detail={
@@ -73,6 +75,7 @@ const MarketplaceDetail = () => {
             alt={marketOrder.land_data?.type}
             seller_type={marketOrder.seller_type}
             nameItem={marketOrder.item_data?.name}
+            showDetails
           >
             <div className="grid grid-cols-1 px-8 py-6 lg:grid-cols-2">
               <CardWriterDetails

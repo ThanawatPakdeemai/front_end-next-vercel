@@ -73,7 +73,7 @@ const CountItem = ({
           className="m-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-secondary-main"
         />
         <TextField
-          className="mx-1"
+          className="mx-1 !w-[136px]"
           sx={{
             input: {
               textAlign: "center"
@@ -93,7 +93,6 @@ const CountItem = ({
             readOnly: true,
             endAdornment: endIcon || <SkullIcon />,
             style: {
-              width: "200px",
               fontSize: 14,
               paddingLeft: 30,
               fontFamily: "neueMachina"

@@ -9,18 +9,24 @@ export const MuiPaginationItem: Components<
   },
   styleOverrides: {
     root: {
+      width: "40px",
+      height: "40px",
       borderRadius: "8px",
+      fontFamily: "neueMachina",
+      fontSize: "12px",
+      fontWeight: 700,
+      margin: "0 10px 0 0",
       color: PaletteCustom.neutral["300"],
       "&.MuiPaginationItem-root": {
         backgroundColor: PaletteCustom.neutral["800"],
-        border: `1px solid ${PaletteCustom.primary.main}`
+        border: `1px solid ${PaletteCustom.neutral["700"]}`
       },
       "&.MuiPaginationItem-root:hover": {
         borderRadius: "999px"
       },
       "&.MuiPaginationItem-ellipsis": {
         backgroundColor: PaletteCustom.neutral["800"],
-        border: `1px solid ${PaletteCustom.primary.main}`,
+        border: `1px solid ${PaletteCustom.neutral["700"]}`,
         div: {
           margin: "auto 0"
         }
@@ -33,12 +39,14 @@ export const MuiPaginationItem: Components<
       },
       "&.Mui-selected": {
         backgroundColor: PaletteCustom.error.main,
-        color: PaletteCustom.neutral["300"]
+        color: PaletteCustom.neutral["300"],
+        border: "none"
       },
       "&.Mui-selected:hover": {
         backgroundColor: PaletteCustom.error.main,
         color: PaletteCustom.neutral["300"],
-        borderRadius: "999px"
+        borderRadius: "999px",
+        border: "none"
       }
     }
   }

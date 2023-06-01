@@ -1,90 +1,77 @@
 import React, { memo } from "react"
-import useNotificationController from "@feature/notification/containers/hooks/useNotificationController"
-import { PaginationNaka } from "@components/atoms/pagination"
-import SkeletonNotification from "@components/atoms/skeleton/SkeletonNotification"
-import useNotiStore from "@stores/notification"
-import useGlobal from "@hooks/useGlobal"
-import DropdownLimit from "@components/atoms/DropdownLimit"
+import { Box } from "@mui/material"
+import { v4 as uuid } from "uuid"
+import SkeletonNotificationList from "@mobile/components/atoms/skeleton/SkeletonNotificationList"
+import { IHistory } from "@feature/history/interfaces/IHistoryService"
 import NoData from "@components/molecules/NoData"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import CheckMarkIcon from "@components/icons/CheckMarkIcon"
-import { useTranslation } from "next-i18next"
-import NotificationTableMobile from "./NotificationTableMobile"
-import Header from "../molecules/NotificationHeaderMobile"
+import { INotification } from "@feature/notification/interfaces/INotificationService"
+import NotificationCardMobile from "./NotificationCardMobile"
 
-const NotificationListMobile = () => {
-  const { t } = useTranslation()
-  const { hydrated } = useGlobal()
-  const {
-    limit,
-    page,
-    totalCount,
-    setPage,
-    pager,
-    setLimit,
-    sortBy,
-    onHandleSortBy,
-    isLoadingNotification,
-    unread,
-    onHandleClick,
-    onClickView,
-    buttonStatus
-  } = useNotificationController()
-  const { notificationAll } = useNotiStore()
+export type TNotificationType = "history" | "notification"
 
-  return hydrated ? (
-    <div className="mx-auto w-full lg:w-3/4 xl:w-3/5">
-      <Header />
-      {isLoadingNotification && (
-        <SkeletonNotification
-          data={[]}
-          isLoading={isLoadingNotification}
-        />
-      )}
-      {notificationAll && notificationAll.length > 0 ? (
-        <NotificationTableMobile
-          data={notificationAll}
-          page={page}
-          limit={limit}
-          sortBy={sortBy}
-          onHandleView={onClickView}
-          onHandleSortBy={onHandleSortBy}
-        />
-      ) : (
-        <NoData />
-      )}
-      <div className="my-2 flex justify-between md:my-5 md:w-[678px]">
-        <PaginationNaka
-          totalCount={totalCount}
-          limit={limit}
-          page={page}
-          setPage={setPage}
-        />
-        <DropdownLimit
-          className="m-0 w-[160px] flex-row"
-          defaultValue={12}
-          list={pager}
-          onChangeSelect={setLimit}
-        />
-      </div>
-      <div className="header fixed inset-x-0 bottom-0 z-[99]  flex flex-row items-center gap-4 bg-neutral-800 p-2">
-        <div className="w-[160%] rounded bg-neutral-900 p-2.5">
-          <p className="my-2 pl-2 text-sm font-bold uppercase text-[#ffffff]">
-            unread: <span className="text-green-lemon">{unread}</span>
-          </p>
-        </div>
-        <ButtonToggleIcon
-          startIcon={<CheckMarkIcon />}
-          text={t("Read All")}
-          handleClick={onHandleClick}
-          className="border-sky-500 z-[2] w-[120px] rounded-full border border-solid text-[12px] capitalize"
-          type="button"
-          disabled={buttonStatus}
-        />
-      </div>
-    </div>
-  ) : (
-    <></>
+interface INotificationListMobile {
+  type: TNotificationType
+  loading: boolean
+  list: IHistory[] | INotification[]
+  limit: number
+}
+
+const NotificationListMobile = ({
+  type,
+  loading,
+  list,
+  limit
+}: INotificationListMobile) => {
+  const renderContent = () => {
+    switch (type) {
+      case "history":
+        return (
+          <div className="reward-section__wrapper grid grid-cols-1 gap-5">
+            {!loading &&
+              (list as IHistory[]) &&
+              (list as IHistory[]).length > 0 &&
+              (list as IHistory[]).map((_item) => (
+                <NotificationCardMobile
+                  key={_item._id}
+                  id={_item._id}
+                  image={_item.game_detail.image_category_list}
+                  title={_item.game_detail.name}
+                  createdAt={_item.createdAt}
+                />
+              ))}
+          </div>
+        )
+      case "notification":
+        return (
+          <div className="reward-section__wrapper grid grid-cols-1 gap-5">
+            {!loading &&
+              (list as INotification[]) &&
+              (list as INotification[]).length > 0 &&
+              (list as INotification[]).map((_item) => (
+                <NotificationCardMobile
+                  key={_item._id}
+                  id={_item._id}
+                  title={_item.game_name}
+                  createdAt={_item.createdAt}
+                />
+              ))}
+          </div>
+        )
+      default:
+        return null
+    }
+  }
+
+  return (
+    <Box
+      component="section"
+      className="reward-section"
+    >
+      {loading &&
+        [...Array(limit)].map(() => <SkeletonNotificationList key={uuid()} />)}
+      {list && list.length === 0 && <NoData className="w-full" />}
+      {renderContent()}
+    </Box>
   )
 }
 export default memo(NotificationListMobile)

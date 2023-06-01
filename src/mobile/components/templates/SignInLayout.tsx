@@ -1,5 +1,5 @@
-import React from "react"
-import { Box, Button, Divider, Typography } from "@mui/material"
+import React, { useState } from "react"
+import { Box, Button, Divider, Stack, Typography } from "@mui/material"
 import {
   getAuth,
   GoogleAuthProvider,
@@ -9,16 +9,18 @@ import {
 import { getApps, initializeApp } from "@firebase/app"
 import CardNoReward from "@feature/game/containers/components/atoms/CardNoReward"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
-// import useLoginTypeStore from "@stores/loginTypes"
+import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
+import ModalHeader from "@components/molecules/Modal/ModalHeader"
+import FormLogin from "@feature/authentication/components/FormLogin"
 // import FacebookLogin from "react-facebook-login"
 import useLoginProvider from "@feature/authentication/containers/hooks/useLoginProvider"
 import { useToast } from "@feature/toast/containers"
-// import { IProfileFaceBook } from "@src/types/profile"
 import { IError } from "@src/types/contract"
 import { MESSAGES } from "@constants/messages"
 import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import GoogleColorIcon from "@components/icons/SocialIcon/GoogleColorIcon"
 import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
+import Link from "next/link"
 
 const SignInLayout = () => {
   const { mutateLoginProvider } = useLoginProvider()
@@ -37,8 +39,6 @@ const SignInLayout = () => {
     initializeApp(firebaseConfig)
   }
 
-  /* TODO Boy login with facebook */
-
   const auth = getAuth()
 
   // const {
@@ -48,10 +48,10 @@ const SignInLayout = () => {
 
   const { errorToast, successToast } = useToast()
 
-  // const [open, setOpen] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(false)
 
-  // const handleOpen = () => setOpen(true)
-  // const handleClose = () => setOpen(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
 
   // const facebookLogin = async (response: IProfileFaceBook) => {
   //   if (
@@ -222,7 +222,7 @@ const SignInLayout = () => {
           <Button
             variant="contained"
             className="mb-6 h-[50px] w-[293px] rounded-bl-3xl border border-solid border-error-100 !bg-error-100"
-            // onClick={handleOpen}
+            onClick={handleOpen}
           >
             <div className="flex items-center font-urbanist text-base font-bold">
               Sign in with Email
@@ -236,13 +236,36 @@ const SignInLayout = () => {
           <p className="pr-2 text-sm font-normal text-[#fff]">
             Don’t have an account?
           </p>
-          <p className="text-sm font-normal text-warning-100">Sign up</p>
+          <Link
+            href="/register"
+            className="text-sm font-normal text-warning-100"
+          >
+            Sign up
+          </Link>
         </Box>
         <CardNoReward
           className="!rounded-none !border-none !bg-transparent !p-5"
           showIconTM={false}
         />
       </Box>
+      <ModalCustom
+        open={open}
+        onClose={handleClose}
+        className="w-full gap-3 rounded-[34px] p-[10px] md:w-auto"
+        width="auto"
+      >
+        <Stack
+          spacing={3}
+          className="md:p-5"
+        >
+          <ModalHeader
+            handleClose={handleClose}
+            title="Login"
+          />
+
+          <FormLogin />
+        </Stack>
+      </ModalCustom>
     </>
   )
 }

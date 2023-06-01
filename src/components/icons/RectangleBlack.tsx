@@ -23,7 +23,7 @@ function IRectangleBlack({
         <path
           d="M1 2C1 0.89543 1.89543 0 3 0H7V29H3C1.89543 29 1 28.1046 1 27V2Z"
           fill="url(#paint0_linear_5075_19110)"
-          fill-opacity="0.46"
+          fillOpacity="0.46"
         />
       </g>
       <defs>

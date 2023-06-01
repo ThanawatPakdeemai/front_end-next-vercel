@@ -2,7 +2,7 @@ import { Box } from "@mui/material"
 import React from "react"
 import ArrowDownRoundIcon from "@components/icons/ArrowDownRoundIcon"
 import { IGetType } from "@feature/game/interfaces/IGameService"
-import ButtonGreenTemplate from "../templates/ButtonGreenTemplate"
+import ButtonOutlineTemplate from "../templates/ButtonOutlineTemplate"
 
 interface IGameFilterMobile {
   setActiveMenu: React.Dispatch<React.SetStateAction<IGetType>>
@@ -23,23 +23,23 @@ const GameFilterMobile = ({
       component="div"
       className="section-filter__title flex gap-[12px] whitespace-nowrap text-[90%]"
     >
-      <ButtonGreenTemplate
+      <ButtonOutlineTemplate
         onClick={() => {
           setActiveMenu("all")
           setSelectedCategory("all")
         }}
       >
         All
-      </ButtonGreenTemplate>
-      <ButtonGreenTemplate
+      </ButtonOutlineTemplate>
+      <ButtonOutlineTemplate
         onClick={() => {
           setActiveMenu("play-to-earn")
           setSelectedCategory("all")
         }}
       >
         Top game
-      </ButtonGreenTemplate>
-      <ButtonGreenTemplate
+      </ButtonOutlineTemplate>
+      <ButtonOutlineTemplate
         onClick={() => setOpen(true)}
         sxCustom={{
           display: "flex",
@@ -52,7 +52,7 @@ const GameFilterMobile = ({
         <i>
           <ArrowDownRoundIcon />
         </i>
-      </ButtonGreenTemplate>
+      </ButtonOutlineTemplate>
     </Box>
   </Box>
 )

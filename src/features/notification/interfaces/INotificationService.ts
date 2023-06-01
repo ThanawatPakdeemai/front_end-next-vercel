@@ -35,6 +35,7 @@ export interface INotificaionRoomID {
 }
 
 export interface INotification {
+  game_detail: any
   _id: string
   createdAt: Date
   room_id?: string | INotificaionRoomID

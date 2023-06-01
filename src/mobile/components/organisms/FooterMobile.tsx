@@ -1,10 +1,10 @@
 import { MAIN_MENU_MOBILE, TGameMenuMobile } from "@mobile/constants/menuMobile"
-import useHomeControllerMobile from "@mobile/features/game/containers/hooks/useHomeControllerMobile"
 import { Box } from "@mui/material"
 import React from "react"
+import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import WishlistModal from "./modal/WishlistModal"
 import SettingModal from "./modal/SettingModal"
-import RewardModal from "./modal/RewardModal"
+import EarnRewardModal from "./modal/EarnRewardModal"
 
 const FooterMobile = () => {
   const {
@@ -13,10 +13,12 @@ const FooterMobile = () => {
     setOpenSetting,
     openSetting,
     setOpenReward,
-    openReward
-  } = useHomeControllerMobile()
+    openReward,
+    clearAllDrawer
+  } = useDrawerControllerMobile()
 
   const onHandleClick = (_id: TGameMenuMobile) => {
+    clearAllDrawer()
     if (_id === "home") {
       // do something when click Home
     } else if (_id === "wishlist") {
@@ -64,15 +66,15 @@ const FooterMobile = () => {
         open={openWishlist}
         setOpenWishlist={setOpenWishlist}
       />
+      {/* Reward Modal */}
+      <EarnRewardModal
+        open={openReward}
+        setOpenReward={setOpenReward}
+      />
       {/* Setting Modal */}
       <SettingModal
         open={openSetting}
         setOpenSetting={setOpenSetting}
-      />
-      {/* Reward Modal */}
-      <RewardModal
-        open={openReward}
-        setOpenReward={setOpenReward}
       />
     </Box>
   )

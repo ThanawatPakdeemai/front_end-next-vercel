@@ -143,10 +143,10 @@ function ListNotification({
           width="7724.07"
           height="7351.18"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
           <feFlood
-            flood-opacity="0"
+            floodOpacity="0"
             result="BackgroundImageFix"
           />
           <feColorMatrix

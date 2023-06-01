@@ -274,7 +274,8 @@ const FilterBox = () => {
     return _date
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search])
-
+  // eslint-disable-next-line no-console
+  console.log()
   return (
     <div className="grid w-52 gap-3 ">
       <section>

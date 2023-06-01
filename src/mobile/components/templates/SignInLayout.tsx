@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react"
-import { Box, Button, Divider, Stack, Typography } from "@mui/material"
+import { Box, Button, Divider, Typography } from "@mui/material"
 import {
   getAuth,
   GoogleAuthProvider,
@@ -9,18 +10,18 @@ import {
 import { getApps, initializeApp } from "@firebase/app"
 import CardNoReward from "@feature/game/containers/components/atoms/CardNoReward"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
-import FormLogin from "@feature/authentication/components/FormLogin"
+import useLoginTypeStore from "@stores/loginTypes"
 // import FacebookLogin from "react-facebook-login"
 import useLoginProvider from "@feature/authentication/containers/hooks/useLoginProvider"
 import { useToast } from "@feature/toast/containers"
+import { IProfileFaceBook } from "@src/types/profile"
 import { IError } from "@src/types/contract"
 import { MESSAGES } from "@constants/messages"
 import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import GoogleColorIcon from "@components/icons/SocialIcon/GoogleColorIcon"
 import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
 import Link from "next/link"
+import LoginModal from "../organisms/modal/LoginModal"
 
 const SignInLayout = () => {
   const { mutateLoginProvider } = useLoginProvider()
@@ -41,42 +42,41 @@ const SignInLayout = () => {
 
   const auth = getAuth()
 
-  // const {
-  //   getClickLoginFacebook: toggleFacebookLogin,
-  //   setClickLoginFacebook: setToggleFacebookLogin
-  // } = useLoginTypeStore()
+  const {
+    getClickLoginFacebook: toggleFacebookLogin,
+    setClickLoginFacebook: setToggleFacebookLogin
+  } = useLoginTypeStore()
 
   const { errorToast, successToast } = useToast()
 
-  const [open, setOpen] = useState<boolean>(false)
+  const [openModal, setOpenModal] = useState<boolean>(false)
 
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+  const handleModalLogin = () => setOpenModal(!openModal)
 
-  // const facebookLogin = async (response: IProfileFaceBook) => {
-  //   if (
-  //     response.email !== null &&
-  //     response.email !== undefined &&
-  //     response.userID !== null &&
-  //     response.userID !== undefined
-  //   ) {
-  //     mutateLoginProvider({
-  //       _email: response.email,
-  //       _provider: "facebook",
-  //       _prevPath: "/",
-  //       _providerUUID: response.userID,
-  //       _referral: ""
-  //     })
-  //       .then((_res) => {
-  //         if (_res) {
-  //           successToast(MESSAGES.logged_in_successfully)
-  //         }
-  //       })
-  //       .catch((_error: IError) => {
-  //         errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-  //       })
-  //   }
-  // }
+  const facebookLogin = async (response: IProfileFaceBook) => {
+    if (
+      response.email !== null &&
+      response.email !== undefined &&
+      response.userID !== null &&
+      response.userID !== undefined
+    ) {
+      mutateLoginProvider({
+        _email: response.email,
+        _provider: "facebook",
+        _prevPath: "/",
+        _providerUUID: response.userID,
+        _referral: ""
+      })
+        .then((_res) => {
+          if (_res) {
+            successToast(MESSAGES.logged_in_successfully)
+          }
+        })
+        .catch((_error: IError) => {
+          errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
+        })
+    }
+  }
 
   const twitterLogin = async () => {
     const provider = new TwitterAuthProvider()
@@ -211,10 +211,7 @@ const SignInLayout = () => {
           component="div"
           className="py-4"
         >
-          <Divider
-            sx={{ color: "#fff" }}
-            className="font-urbanist font-medium"
-          >
+          <Divider className="font-urbanist font-medium text-white-default">
             or
           </Divider>
         </Box>
@@ -222,7 +219,7 @@ const SignInLayout = () => {
           <Button
             variant="contained"
             className="mb-6 h-[50px] w-[293px] rounded-bl-3xl border border-solid border-error-100 !bg-error-100"
-            onClick={handleOpen}
+            onClick={handleModalLogin}
           >
             <div className="flex items-center font-urbanist text-base font-bold">
               Sign in with Email
@@ -248,24 +245,11 @@ const SignInLayout = () => {
           showIconTM={false}
         />
       </Box>
-      <ModalCustom
-        open={open}
-        onClose={handleClose}
-        className="w-full gap-3 rounded-[34px] p-[10px] md:w-auto"
-        width="auto"
-      >
-        <Stack
-          spacing={3}
-          className="md:p-5"
-        >
-          <ModalHeader
-            handleClose={handleClose}
-            title="Login"
-          />
-
-          <FormLogin />
-        </Stack>
-      </ModalCustom>
+      {/* Modal Login */}
+      <LoginModal
+        open={openModal}
+        setOpenLogin={(_toggle) => setOpenModal(_toggle)}
+      />
     </>
   )
 }

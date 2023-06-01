@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react"
 import {
   Box,
@@ -25,7 +26,6 @@ interface INotificationModalProps {
 }
 
 const LoginModal = ({ open, setOpenLogin }: INotificationModalProps) => {
-  // eslint-disable-next-line no-unused-vars
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   return (
     <SwipeableDrawer

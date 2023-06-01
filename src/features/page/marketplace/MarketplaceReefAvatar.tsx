@@ -126,7 +126,7 @@ const MarketplaceReefAvatar = () => {
   }, [priceAvatarReef])
 
   return (
-    <div className="flex w-full gap-x-[120px]">
+    <div className="flex w-full flex-col justify-center gap-y-[30px] px-5 sm:flex-row sm:gap-x-[120px] sm:px-0">
       <CardContentDetails
         detail="Avatar Reef"
         image={!purchAvatarReefData ? "/images/temp-nakapunk.webp" : undefined}

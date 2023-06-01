@@ -66,7 +66,17 @@ const HeadMenu = () => {
         component="div"
         className="xs:my-5 m-auto grid max-w-[505px] flex-[1_1_100%] grid-cols-2 items-center justify-center gap-1 overflow-hidden rounded-[13px] bg-neutral-700 p-[5px] sm:flex md:order-1 md:mb-0 lg:my-0 lg:flex-none"
       >
-        {MENU_DATA.map((item) => {
+        {MENU_DATA.map((item, _index) => {
+          // const activeHomeMarket: boolean =
+          //   router.asPath.split("/")[2] !== "p2p" &&
+          //   item.link.split("/")[2] !== "p2p" &&
+          //   router.asPath.split("/")[2] !== "map" &&
+          //   item.link.split("/")[2] !== "map"
+
+          // const activeP2p =
+          //   router.asPath.split("/")[2] === "p2p" &&
+          //   item.link.split("/")[2] === "p2p"
+
           if (!item.isChide && item.chide === undefined) {
             return (
               <Link
@@ -97,7 +107,7 @@ const HeadMenu = () => {
           }
           return (
             <div
-              className="m-auto table w-full md:w-auto"
+              className="m-auto table w-full md:w-auto "
               key={`${item.name}`}
             >
               <SelectNaka
@@ -129,9 +139,9 @@ const HeadMenu = () => {
                       item.isChide &&
                       item.chide &&
                       (router.pathname ===
-                      [...item.chide]
-                        // ?.filter((ele) => typeof ele.icon === "string")
-                        .find((ele) => ele.link === router.pathname)?.link
+                      [...item.chide].find(
+                        (ele) => ele.link === router.pathname
+                      )?.link
                         ? "!bg-primary-main"
                         : "!bg-neutral-800")
                     }`}

@@ -55,7 +55,7 @@ const CardContentDetails = ({ ...props }: IProp) => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   return (
-    <div className=" h-fit w-full rounded-[24px] border-[1px] border-neutral-800 bg-neutral-780 ">
+    <div className="h-full w-full rounded-[24px] border-[1px] border-neutral-800 bg-neutral-780 sm:h-fit ">
       <div className="p-2">
         <div className="flex h-fit w-full content-center justify-center rounded-[24px] border-[1px] border-neutral-800 bg-neutral-900 p-2">
           {marketType === "nft_land" && video && (

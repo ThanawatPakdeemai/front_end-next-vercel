@@ -95,7 +95,7 @@ const RightDetailsMarketplace = ({
   }
 
   return (
-    <div className="flex w-full flex-col gap-y-5">
+    <div className="flex w-full max-w-[563px] flex-col gap-y-5">
       {token && (
         <div className="hidden w-full items-center justify-between sm:block">
           <div className="flex gap-[6px]">
@@ -118,7 +118,7 @@ const RightDetailsMarketplace = ({
       <Typography className="hidden text-[46px] font-bold uppercase text-neutral-300 sm:block">
         {title}
       </Typography>
-      <div className="w-ful flex flex-col gap-y-6 rounded-3xl border-neutral-800 bg-neutral-780 px-[42px] py-7 uppercase">
+      <div className="flex w-full flex-col gap-y-6 rounded-3xl border-neutral-800 bg-neutral-780 px-[42px] py-7 uppercase">
         <div className="flex items-center gap-5">
           <Typography className="text-neutral-300">{method}</Typography>
           <Chip
@@ -178,7 +178,10 @@ const RightDetailsMarketplace = ({
                 </a>
               </div>
             </div>
-            <ChipsLink id={id} />
+            <ChipsLink
+              id={id}
+              position={position}
+            />
           </>
         )}
         {durability && (

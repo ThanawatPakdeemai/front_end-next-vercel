@@ -73,6 +73,7 @@ const MarketplaceDetail = () => {
             }
             alt={marketOrder.land_data?.type}
             nameItem={marketOrder.item_data?.name}
+            hiddenDetails
           >
             <div className="grid grid-cols-1 px-8 py-6 lg:grid-cols-2">
               <CardWriterDetails

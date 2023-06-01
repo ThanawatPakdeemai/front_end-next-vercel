@@ -97,7 +97,7 @@ const RightDetailsMarketplace = ({
   return (
     <div className="flex w-full max-w-[563px] flex-col gap-y-5">
       {token && (
-        <div className="hidden w-full items-center justify-between sm:block">
+        <div className="hidden w-full items-center justify-between sm:flex ju">
           <div className="flex gap-[6px]">
             <Chip
               label={`TOKEN ID : ${String(token)}`}

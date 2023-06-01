@@ -15,7 +15,7 @@ import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn
 import GotNaKAPunk from "@components/molecules/Inventory/GotNaKAPunk"
 import { v4 as uuidv4 } from "uuid"
 import CONFIGS from "@configs/index"
-import useGlobal, { isMobile } from "@hooks/useGlobal"
+import useGlobal from "@hooks/useGlobal"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 
 const MarketplaceNakaPunk = () => {
@@ -71,14 +71,10 @@ const MarketplaceNakaPunk = () => {
   }, [priceNakaPunk])
 
   return (
-    <div
-      className={`${
-        isMobile ? `p-auto grid gap-4` : `grid md:flex`
-      } w-full gap-x-[30px] gap-y-[60px] md:gap-x-[60px] lg:gap-x-[120px]`}
-    >
+    <div className="flex w-full flex-col justify-center gap-y-[30px] px-5 sm:flex-row sm:gap-x-[120px] sm:px-0">
       <CardContentDetails
         hiddenDetails
-        detail="NAKA Punks"
+        detail="THE NAKA PUNKS IS A NEXT-GENERATION NFT COLLECTION. IT NOT ONLY BRINGS A LIMITED COLLECTION OF UNIQUE PUNKLIKE CHARACTERS INTO A WORLD BUILT FOR THEM BUT ALSO INTEGRATES PRIVILEGES TO THE HOLDERS OF THESE NFTS. EACH PUNK WILL HAVE DISTINCT CHARACTERISTICS, STRENGTHS, AND WEAKNESSES, BESTOWING UNIQUE CAPABILITIES ON THEIR OWNERS AND WILL BE PARTICULARLY SUITABLE FOR CERTAIN ACTIVITIES WITHIN THE NAKAMOTO.GAMES AND NAKAVERSE."
         image={!resNakapunk ? "/images/temp-nakapunk.webp" : undefined}
         alt="naka-punk"
         txHash={resNakapunk?.data.transaction_hash}

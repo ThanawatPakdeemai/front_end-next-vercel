@@ -12,16 +12,6 @@ const NotificationList = dynamic(
     ssr: false
   }
 )
-const NotificationListMobile = dynamic(
-  () =>
-    import(
-      "@src/mobile/features/notification/components/organisms/NotificationListMobile"
-    ),
-  {
-    suspense: true,
-    ssr: false
-  }
-)
 const ProfileLayout = dynamic(
   () => import("@components/templates/ProfileLayout"),
   {
@@ -36,13 +26,7 @@ export default function Notification() {
       component="article"
       className="h-full w-full"
     >
-      {isMobile ? (
-        <MobileView>
-          <NotificationListMobile />
-        </MobileView>
-      ) : (
-        <NotificationList />
-      )}
+      <NotificationList />
     </Box>
   )
 }

@@ -35,10 +35,10 @@ function VerifiedIcon({
           width="18"
           height="19"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
           <feFlood
-            flood-opacity="0"
+            floodOpacity="0"
             result="BackgroundImageFix"
           />
           <feColorMatrix
@@ -75,10 +75,10 @@ function VerifiedIcon({
           width="18"
           height="18"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
           <feFlood
-            flood-opacity="0"
+            floodOpacity="0"
             result="BackgroundImageFix"
           />
           <feBlend

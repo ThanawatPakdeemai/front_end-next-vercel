@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react"
 
 const useFavoriteGameControllerMobile = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
-  const [gameFavouriteState, setGameFavouriteState] = useState<IGame[]>()
+  const [gameFavouriteState, setGameFavouriteState] = useState<IGame[]>([])
 
   const { stateProfile, defaultBody, setLimit, limit } = useGlobal()
   const { gameFavourite, gameFavouriteInfo, isLoadingGameFavourite } =

@@ -6,11 +6,22 @@ import useNotiStore from "@stores/notification"
 import { useRouter } from "next/router"
 import { Trans } from "react-i18next"
 
-import { useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
+import useGlobal from "@hooks/useGlobal"
+import useProfileStore from "@stores/profileStore"
+import useHistory from "./useHistory"
 
 const useHistoryController = () => {
+  const profile = useProfileStore((state) => state.profile.data)
   const { setNotificationItem, setPlayHistoryItem } = useNotiStore()
+  const { getHistoryData, historyIsLoading } = useHistory()
   const router = useRouter()
+  const { limit } = useGlobal()
+
+  // States
+  const [skip, setSkip] = useState<number>(1)
+  const [totalCount, setTotalCount] = useState<number>(0)
+  const [hxHistory, setHxHistory] = useState<IHistory[]>([])
 
   const HistoryTableHead: Array<ITableHeader> = useMemo(
     () => [
@@ -52,9 +63,45 @@ const useHistoryController = () => {
     )
   }
 
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      const fetchHistory = async () => {
+        if (profile) {
+          await getHistoryData({
+            player_id: profile && profile.id ? profile.id : "",
+            limit,
+            skip
+          }).then((res) => {
+            if (res.data && res.data.length > 0) {
+              // res.status === 200 -> ok
+              setHxHistory(res.data)
+            }
+            if (res.info) {
+              setTotalCount(res.info.totalCount)
+            }
+          })
+        }
+      }
+      fetchHistory()
+    }
+
+    return () => {
+      load = true
+    }
+  }, [limit, skip, profile, getHistoryData])
+
   return {
     HistoryTableHead,
-    handleClickView
+    handleClickView,
+    isLoadingHistory: historyIsLoading,
+    limit,
+    setSkip,
+    totalCount,
+    skip,
+    hxHistory,
+    historyIsLoading
   }
 }
 

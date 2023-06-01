@@ -7,9 +7,9 @@ import Link from "next/link"
 import { ImageCustom } from "@components/atoms/image/Image"
 import { Box } from "@mui/material"
 import useNotiStore from "@stores/notification"
-import useHomeControllerMobile from "@mobile/features/game/containers/hooks/useHomeControllerMobile"
 import NotificationModal from "@mobile/components/organisms/modal/NotificationModal"
 import ProfileSettingModal from "@mobile/components/organisms/modal/ProfileSettingModal"
+import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 
 const HeadProfileMobile = () => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -19,23 +19,11 @@ const HeadProfileMobile = () => {
     setOpenNotification,
     profileSetting,
     setProfileSetting
-  } = useHomeControllerMobile()
+  } = useDrawerControllerMobile()
 
   return (
     <header className="header bg-[#F32429] pb-[55px]">
       <div className="flex items-center justify-between px-5 py-10">
-        {/* <Link
-          href={`/profile/${profile?.id}`}
-          className="head-profile__info--avatar"
-        >
-          <ImageCustom
-            src={profile?.avatar || "/images/avatar.png"}
-            alt="avatar"
-            width={55}
-            height={55}
-            className="h-full w-full object-cover"
-          />
-        </Link> */}
         <Box
           component="div"
           className="head-profile__info--wrapper flex items-center gap-4"

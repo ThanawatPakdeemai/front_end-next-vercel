@@ -1,109 +1,30 @@
-/* eslint-disable no-console */
+import React from "react"
 import CheckMarkIcon from "@components/icons/CheckMarkIcon"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import ItemRewardDetails from "@feature/game/containers/components/molecules/ItemRewardDetails"
 import SkeletonDetails from "@feature/game/containers/components/molecules/SkeletonDetails"
-import useClaimReward from "@feature/game/containers/hooks/useClaimEarnedRewardByPlayerId"
-import useGetP2ERewardByPlayerId from "@feature/game/containers/hooks/useGetP2ERewardByPlayerId"
-import { useToast } from "@feature/toast/containers"
 import { Chip, Typography, Box } from "@mui/material"
-import { IPlayToEarnRewardData } from "@src/types/games"
-import useProfileStore from "@stores/profileStore"
-import React, { useEffect, useState } from "react"
 import { Trans, useTranslation } from "react-i18next"
 import { v4 as uuidv4 } from "uuid"
 import NoData from "@components/molecules/NoData"
+import useEarnRewardController from "@feature/earnReward/containers/hooks/useEarnRewardController"
 
 const EarnRewardPage = () => {
-  const { profile } = useProfileStore()
-  const [rewardList, setRewardList] = useState<
-    IPlayToEarnRewardData[] | undefined
-  >([])
-  const [isLoadingReward, setIsLoadingReward] = useState(true)
-  const { mutateClaimReward } = useClaimReward()
+  const {
+    isLoadingReward,
+    earnReward,
+    handleClaimReward,
+    countUnClaim,
+    onClaimAll
+  } = useEarnRewardController()
+
   const { t } = useTranslation()
-  const { earnRewardData, refetchRewardData } = useGetP2ERewardByPlayerId(
-    profile.data ? profile.data.id : ""
-  )
-  // useGetP2ERewardByPlayerId("61bc7f6be434487ef8e4a7c6")
-
-  const { successToast, errorToast, warnToast } = useToast()
-
-  const countUnClaim = rewardList ? rewardList.length : 0
-
-  const handleClaimReward = (reward_id: string) => {
-    if (profile.data && profile.data.id) {
-      mutateClaimReward({
-        _playerId: profile.data.id,
-        _rewardId: reward_id
-      })
-        .then((res) => {
-          if (res.status && rewardList) {
-            const updateData = rewardList.filter(
-              (_item) => _item._id !== reward_id
-            )
-            setRewardList(updateData)
-            successToast(res.data)
-          }
-        })
-        .catch((err) => {
-          errorToast(err.message)
-        })
-      setTimeout(() => {
-        refetchRewardData()
-      }, 1000)
-    }
-  }
-
-  const onClaimAll = () => warnToast("Claim all is not available yet")
-
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (earnRewardData && earnRewardData.data.length > 0) {
-        setRewardList(earnRewardData.data)
-        setIsLoadingReward(false)
-      } else {
-        setRewardList([])
-        setIsLoadingReward(false)
-      }
-      // if (earnRewardData && allGameData && earnRewardData.data.length > 0) {
-      //   setRewardList([])
-      //   earnRewardData.data.map(async (item) => {
-      //     const game = allGameData.data.find((data) => data.id === item.game_id)
-      //     if (game) {
-      //       setRewardList((oldArray) => {
-      //         if (oldArray) {
-      //           return [
-      //             ...oldArray,
-      //             {
-      //               ...item,
-      //               game_item_name: game?.item?.[0]?.name,
-      //               game_item_image: game?.item?.[0]?.image,
-      //               game_name: game?.name,
-      //               game_image: game?.image_category_list
-      //             }
-      //           ]
-      //         }
-      //       })
-      //     }
-      //   })
-      // }
-    }
-
-    return () => {
-      load = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [earnRewardData])
-
   let content: React.ReactElement | React.ReactElement[]
 
   if (isLoadingReward) {
     content = <SkeletonDetails />
-  } else if (rewardList && rewardList.length > 0) {
-    content = rewardList.map((data) => (
+  } else if (earnReward && earnReward.length > 0) {
+    content = earnReward.map((data) => (
       <ItemRewardDetails
         key={uuidv4()}
         rewardData={data}

@@ -5,22 +5,22 @@ import GameFilterMobile from "@mobile/components/molecules/GameFilterMobile"
 import SearchInputMobile from "@mobile/components/atoms/input/SearchInputMobile"
 import CategoriesModal from "@mobile/components/organisms/modal/CategoriesModal"
 import GameListMobile from "@mobile/components/organisms/GameListMobile"
-import useHomeControllerMobile from "../game/containers/hooks/useHomeControllerMobile"
+import useDrawerControllerMobile from "../game/containers/hooks/useDrawerControllerMobile"
+import useGameControllerMobile from "../game/containers/hooks/useGameControllerMobile"
 
 const HomeMobile = () => {
   const {
-    activeMenu,
-    setActiveMenu,
     setSelectedCategory,
     searchBlog,
     setSearchBlog,
     gameData,
     categories,
-    open,
-    setOpen,
     loadingFilterGame,
-    limit
-  } = useHomeControllerMobile()
+    limit,
+    activeMenu,
+    setActiveMenu
+  } = useGameControllerMobile()
+  const { open, setOpen } = useDrawerControllerMobile()
 
   return (
     <MainLayoutMobile

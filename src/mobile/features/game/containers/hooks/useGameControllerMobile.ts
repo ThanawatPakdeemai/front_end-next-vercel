@@ -4,25 +4,20 @@ import useGlobal from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
 import { IGameCategory } from "@feature/dropdown/interfaces/IDropdownService"
 import useGamePageListController from "@feature/game/containers/hooks/useGamePageListController"
-import { IGame, IGetType } from "@feature/game/interfaces/IGameService"
+import { IGame } from "@feature/game/interfaces/IGameService"
+import useGlobalControllerMobile from "./useGlobalControllerMobile"
 
-const useHomeControllerMobile = () => {
+const useGameControllerMobile = () => {
   // Hook
   const { search: searchBlog, setSearch: setSearchBlog } = useFilterStore()
   const { limit } = useGlobal()
+  const { activeMenu, setActiveMenu } = useGlobalControllerMobile()
 
   // State
   const [gameData, setGameData] = useState<IGame[]>([])
-  const [activeMenu, setActiveMenu] = useState<IGetType>("play-to-earn")
+
   const [categories, setCategories] = useState<IGameCategory[]>()
   const [selectedCategory, setSelectedCategory] = useState<string>("")
-
-  const [open, setOpen] = useState(false)
-  const [openNotification, setOpenNotification] = useState<boolean>(false)
-  const [openWishlist, setOpenWishlist] = useState<boolean>(false)
-  const [openSetting, setOpenSetting] = useState<boolean>(false)
-  const [openReward, setOpenReward] = useState<boolean>(false)
-  const [profileSetting, setProfileSetting] = useState<boolean>(false)
 
   const { getCategoriesAll, isFetchingCategories } = useCategories({
     limit: 100
@@ -30,7 +25,6 @@ const useHomeControllerMobile = () => {
   const {
     gameFilter: dataGames,
     loadingFilterGame,
-    gameLink,
     onSetGameStore
   } = useGamePageListController(
     activeMenu,
@@ -70,13 +64,7 @@ const useHomeControllerMobile = () => {
 
   return {
     gameData,
-    activeMenu,
-    setActiveMenu,
     categories,
-    open,
-    setOpen,
-    openNotification,
-    setOpenNotification,
     selectedCategory,
     setSelectedCategory,
     searchBlog,
@@ -84,17 +72,10 @@ const useHomeControllerMobile = () => {
     isFetchingCategories,
     loadingFilterGame,
     limit,
-    gameLink,
     onSetGameStore,
-    openWishlist,
-    setOpenWishlist,
-    openSetting,
-    setOpenSetting,
-    openReward,
-    setOpenReward,
-    profileSetting,
-    setProfileSetting
+    activeMenu,
+    setActiveMenu
   }
 }
 
-export default useHomeControllerMobile
+export default useGameControllerMobile

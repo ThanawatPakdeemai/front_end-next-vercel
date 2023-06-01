@@ -2,31 +2,30 @@ import React from "react"
 import { Box, SwipeableDrawer } from "@mui/material"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
+import useHistoryController from "@feature/history/containers/hook/useHistoryController"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
-import useNotificationController from "@feature/notification/containers/hooks/useNotificationController"
-import NotificationListMobile from "@mobile/features/notification/components/organisms/NotificationListMobile"
+import PlayedHistoryListMobile from "@mobile/features/history/components/organisms/PlayedHistoryListMobile"
 
-interface INotificationModalProps {
+interface IPlayedHistoryModalProps {
   open: boolean
-  setOpenNotification: React.Dispatch<React.SetStateAction<boolean>>
+  setOpenPlayedHistory: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const NotificationModal = ({
+const PlayedHistoryModal = ({
   open,
-  setOpenNotification
-}: INotificationModalProps) => {
+  setOpenPlayedHistory
+}: IPlayedHistoryModalProps) => {
   const { clearAllDrawer } = useDrawerControllerMobile()
-  const { notificationList, isLoadingNotification, limit } =
-    useNotificationController()
+  const { hxHistory, isLoadingHistory, limit } = useHistoryController()
 
   return (
     <SwipeableDrawer
       anchor="right"
       open={open}
-      onClose={() => setOpenNotification(false)}
+      onClose={() => setOpenPlayedHistory(false)}
       onOpen={() => {
         clearAllDrawer()
-        setOpenNotification(true)
+        setOpenPlayedHistory(true)
       }}
       disableSwipeToOpen={false}
       ModalProps={{
@@ -40,16 +39,16 @@ const NotificationModal = ({
       >
         <h2
           className="flex items-center gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary"
-          onClick={() => setOpenNotification(false)}
+          onClick={() => setOpenPlayedHistory(false)}
           aria-hidden="true"
         >
           <ArrowBackIcon />
-          Notification
+          Played History
         </h2>
 
-        <NotificationListMobile
-          list={notificationList}
-          loading={isLoadingNotification}
+        <PlayedHistoryListMobile
+          list={hxHistory}
+          loading={isLoadingHistory}
           limit={limit}
         />
       </Box>
@@ -57,4 +56,4 @@ const NotificationModal = ({
   )
 }
 
-export default NotificationModal
+export default PlayedHistoryModal

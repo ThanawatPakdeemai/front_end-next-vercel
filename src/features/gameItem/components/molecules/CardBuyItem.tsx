@@ -1,19 +1,14 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react"
+import React, { useMemo } from "react"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import { Box } from "@mui/material"
 import useProfileStore from "@stores/profileStore/index"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import RightMenuBuyItem from "@feature/gameItem/components/molecules/RightMenuBuyItem"
 import { useRouter } from "next/router"
-import useGamesByGameId from "@feature/gameItem/containers/hooks/useGamesByGameId"
 import { MESSAGES } from "@constants/messages"
-import Helper from "@utils/helper"
 import { useTranslation } from "next-i18next"
-import { useToast } from "@feature/toast/containers"
 import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
-import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
 import useGlobal from "@hooks/useGlobal"
 import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
 import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
@@ -36,146 +31,18 @@ export default function CardBuyItem({
   hideButtonPlay = false
 }: ICardBuyItemProp) {
   const { t } = useTranslation()
-  const { itemSelected, onSetGameItemSelectd } = useBuyGameItemController()
-  const { price } = useNakaPriceProvider()
+  const {
+    itemSelected,
+    qtyItemSelected,
+    gameItemList,
+    isHideOnWaitingRoom,
+    onChangeSelectItem,
+    totalPrice,
+    isWaitingRoom
+  } = useBuyGameItemController()
   const { hydrated } = useGlobal()
-  const { errorToast } = useToast()
-
-  // State
-  const [totalPrice, setTotalPrice] = useState<number>(0)
-
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
-
-  const isHideOnWaitingRoom =
-    router.pathname !== "/[typeGame]/[GameHome]/roomlist/[id]"
-  const isWaitingRoom =
-    router.pathname === "/[typeGame]/[GameHome]/roomlist/[id]"
-
-  const { gameItemList } = useGamesByGameId({
-    _playerId: profile ? profile.id : "",
-    _gameId: gameObject ? gameObject._id : ""
-  })
-
-  const getListItemDefalut = useMemo(() => {
-    if (profile && gameItemList) {
-      gameItemList?.sort((a, b) => a.price - b.price)
-      return gameItemList[0]
-    }
-  }, [gameItemList, profile])
-
-  const itemSelect = useMemo(() => {
-    if (itemSelected) {
-      if (gameItemList) {
-        const item = gameItemList.find((ele) => ele._id === itemSelected._id)
-        return item
-      }
-      return itemSelected
-    }
-  }, [gameItemList, itemSelected])
-
-  const qtyItemSelected = useMemo(() => {
-    if (profile) {
-      if (itemSelect) {
-        return itemSelect.qty
-      }
-      if (itemSelected) {
-        return itemSelected.qty
-      }
-      if (getListItemDefalut) {
-        const dataItem = getListItemDefalut as IGameItemListData
-        setTotalPrice(
-          Number(
-            Helper.formatNumber((dataItem?.qty ?? 0) * (dataItem?.price ?? 0), {
-              maximumFractionDigits: 4
-            })
-          )
-        )
-        onSetGameItemSelectd(dataItem)
-        return dataItem?.qty ?? 0
-      }
-    }
-    return 0
-  }, [
-    getListItemDefalut,
-    itemSelect,
-    itemSelected,
-    onSetGameItemSelectd,
-    profile
-  ])
-
-  const priceItemSelected = useMemo(() => {
-    if (profile) {
-      if (itemSelect) {
-        return itemSelect.price
-      }
-      if (itemSelected) {
-        return itemSelected.price
-      }
-    }
-    return 0
-  }, [itemSelect, itemSelected, profile])
-
-  const getTotalPriceItemSelectProfile = useCallback(async () => {
-    if (profile) {
-      if (itemSelected) {
-        if (price && qtyItemSelected) {
-          setTotalPrice(
-            Number(
-              Helper.formatNumber(qtyItemSelected * priceItemSelected, {
-                maximumFractionDigits: 4
-              })
-            )
-          )
-        } else {
-          setTotalPrice(
-            Number(
-              Helper.formatNumber(qtyItemSelected * priceItemSelected, {
-                maximumFractionDigits: 4
-              })
-            )
-          )
-        }
-      }
-    }
-  }, [profile, itemSelected, price, qtyItemSelected, priceItemSelected])
-
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (itemSelected) getTotalPriceItemSelectProfile()
-    }
-
-    return () => {
-      load = true
-    }
-  }, [getTotalPriceItemSelectProfile, itemSelected])
-
-  const onChangeSelectItem = (_item: IGameItemListData) => {
-    onSetGameItemSelectd(_item as IGameItemListData)
-    if (_item.qty < 1) {
-      errorToast(MESSAGES["you-don't-have-item"])
-    }
-  }
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (gameObject) {
-        const item_name =
-          gameObject.item && 0 in gameObject.item ? gameObject.item[0].name : 0
-        const item_selected = itemSelect ? itemSelect?.name : 1
-        if (item_name !== item_selected) {
-          onSetGameItemSelectd(null)
-        }
-      }
-    }
-
-    return () => {
-      load = true
-    }
-  }, [gameObject, itemSelect, onSetGameItemSelectd])
 
   const buttonInToGame = useMemo(() => {
     if (router.pathname === "/[typeGame]/[GameHome]/roomlist") return

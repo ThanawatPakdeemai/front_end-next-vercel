@@ -9,6 +9,7 @@ const useDrawerControllerMobile = () => {
   const [openReward, setOpenReward] = useState<boolean>(false)
   const [profileSetting, setProfileSetting] = useState<boolean>(false)
   const [openPlayedHistory, setOpenPlayedHistory] = useState<boolean>(false)
+  const [openAboutGame, setOpenAboutGame] = useState<boolean>(false)
 
   /**
    * @description Clear all drawer before setting new drawer
@@ -21,6 +22,7 @@ const useDrawerControllerMobile = () => {
     setOpenReward(false)
     setProfileSetting(false)
     setOpenPlayedHistory(false)
+    setOpenAboutGame(false)
   }
 
   return {
@@ -38,7 +40,9 @@ const useDrawerControllerMobile = () => {
     profileSetting,
     setProfileSetting,
     openPlayedHistory,
-    setOpenPlayedHistory
+    setOpenPlayedHistory,
+    openAboutGame,
+    setOpenAboutGame
   }
 }
 

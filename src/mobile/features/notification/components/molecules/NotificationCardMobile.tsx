@@ -25,9 +25,12 @@ const NotificationCardMobile = ({
           {props.title}
         </h3>
         <div className="notificaton-card__mobile__item--details grid grid-cols-1 gap-1">
-          <p className="truncate font-urbanist text-[14px]">
-            {dayjs(props.createdAt).format("DD MMM YYYY | HH:mm A")}
-          </p>
+          {props.createdAt && (
+            <p className="truncate font-urbanist text-[14px]">
+              {dayjs(props.createdAt).format("DD MMM YYYY | HH:mm A")}
+            </p>
+          )}
+
           {props.description && (
             <p className="truncate font-urbanist text-[14px]">
               {props.description}

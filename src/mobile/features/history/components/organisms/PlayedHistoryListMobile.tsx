@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid"
 import SkeletonNotificationList from "@mobile/components/atoms/skeleton/SkeletonNotificationList"
 import { IHistory } from "@feature/history/interfaces/IHistoryService"
 import NoData from "@components/molecules/NoData"
-import PlayedHistoryCardMobile from "@mobile/features/history/components/molecules/PlayedHistoryCardMobile"
+import GameInfoCard from "@mobile/features/game/components/molecules/GameInfoCard"
 
 interface IPlayedHistoryListMobile {
   loading: boolean
@@ -28,7 +28,7 @@ const PlayedHistoryListMobile = ({
       list &&
       list.length > 0 &&
       list.map((_item) => (
-        <PlayedHistoryCardMobile
+        <GameInfoCard
           key={_item._id}
           id={_item._id}
           image={_item.game_detail.image_category_list}

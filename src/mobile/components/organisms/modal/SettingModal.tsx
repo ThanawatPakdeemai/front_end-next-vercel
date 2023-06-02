@@ -17,6 +17,7 @@ import ClockIcon from "@components/icons/ClockIcon"
 import LogoutIcon from "@components/icons/LogoutIcon"
 import { useTranslation } from "react-i18next"
 import LogoutModal from "./LogoutModal"
+import ProfileSettingModal from "./ProfileSettingModal"
 
 interface ISettingModalProps {
   open: boolean
@@ -26,7 +27,7 @@ interface ISettingModalProps {
 const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
   const profile = useProfileStore((state) => state.profile.data)
   const [toggleLogout, setToggleLogout] = useState(false)
-  const handleToggleLogout = () => setToggleLogout(!toggleLogout)
+  const [toggleProflie, setToggleProflie] = useState(false)
 
   const { t } = useTranslation()
 
@@ -97,7 +98,10 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
             </Avatar>
           }
           action={
-            <IconButton aria-label="settings">
+            <IconButton
+              aria-label="settings"
+              onClick={() => setToggleProflie(!toggleProflie)}
+            >
               <EditProfileIcon />
             </IconButton>
           }
@@ -227,7 +231,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
           <hr />
         </Box>
         <CardHeader
-          onClick={handleToggleLogout}
+          onClick={() => setToggleLogout(!toggleLogout)}
           sx={{
             padding: "0px",
             "& .MuiCardHeader-action": {
@@ -262,6 +266,11 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
       <LogoutModal
         open={toggleLogout}
         setOpen={(_toggle) => setToggleLogout(_toggle)}
+      />
+      {/* Profile Setting Modal */}
+      <ProfileSettingModal
+        open={toggleProflie}
+        setProfileSetting={() => setToggleProflie(false)}
       />
     </SwipeableDrawer>
   )

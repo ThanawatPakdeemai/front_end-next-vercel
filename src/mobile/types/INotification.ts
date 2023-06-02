@@ -1,7 +1,7 @@
 export interface INotificationProps {
   id: string
   title: string
-  createdAt: Date
+  createdAt?: Date
   description?: string
   handleClick?: () => void
 }

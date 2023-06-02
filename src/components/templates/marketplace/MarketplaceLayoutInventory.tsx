@@ -5,7 +5,7 @@ import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import Footer from "@components/organisms/Footer"
 import Header from "@components/organisms/Header"
 import { MENU_MARKETPLACE_INVENTORY } from "@configs/menu"
-import InventoryPage from "@feature/page/inventory/InventoryPage"
+// import InventoryPage from "@feature/page/inventory/InventoryPage"
 import { Divider, MenuList, Typography } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
 import useNotiStore from "@stores/notification"
@@ -14,7 +14,10 @@ import { NextRouter, useRouter } from "next/router"
 import React from "react"
 import { useTranslation } from "react-i18next"
 import { InventoryProvider } from "@providers/InventoryProvider"
+import HeaderMunuMobile from "@feature/page/marketplace/mobilescreen/HeaderMunuMobile"
 import FilterDropdown from "@feature/marketplace/components/molecules/FilterDropdown"
+import InventoryPage from "@feature/page/inventory/InventoryPage"
+import Balance from "@components/molecules/balance/Balance"
 
 const MarketplaceLayoutInventory = ({
   children
@@ -31,19 +34,24 @@ const MarketplaceLayoutInventory = ({
       <div
         className={`${
           isMapPage ? "w-full overflow-hidden" : "main-container"
-        } mx-auto`}
+        }  mx-auto mt-16 sm:mt-0`}
       >
-        <Header />
+        <div className="hidden sm:block">
+          <Header />
+        </div>
+        <div className="block sm:hidden">
+          <HeaderMunuMobile />
+        </div>
         <div className="items-center sm:flex" />
         <Divider
-          className="!w-full"
+          className="hidden !w-full sm:block"
           sx={{ marginTop: 2 }}
         />
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col gap-3 sm:flex-row">
           {/* add filter component here */}
           {!isMapPage && (
-            <div className="w-[200px]">
-              <div className="flex-row gap-3 md:flex">
+            <div className="hidden w-[200px] sm:block">
+              <div className="mb-4 flex-row gap-3 md:flex">
                 <MenuList className="mx-auto mt-4 h-fit w-full max-w-xs rounded-[13px] bg-neutral-800 p-[6px] md:mx-0 md:w-[200px]">
                   <div>
                     {profile ? (
@@ -97,6 +105,7 @@ const MarketplaceLayoutInventory = ({
                   </div>
                 </MenuList>
               </div>
+              <Balance widthBalance="w-[calc(100%-70px)]" />
               {/* <AmountBalance
             icon={chain === "polygon" ? <INaka /> : <IBusd />}
             balance={balance || { digit: 0, text: "N/A" }}
@@ -115,11 +124,14 @@ const MarketplaceLayoutInventory = ({
               )}
             </div>
           )}
-          {/* <div className="absolute z-50	h-[85vh]">
-            <div />
-          </div> */}
-          <InventoryPage />
-
+          <div
+            className={` ${
+              isMapPage && `absolute`
+            } z-50 hidden h-0 sm:block sm:h-[85vh]`}
+          >
+            {/* className="absolute left-[22vh] z-50 h-[85vh]" */}
+            <InventoryPage />
+          </div>
           <div
             className={
               isMapPage
@@ -132,6 +144,33 @@ const MarketplaceLayoutInventory = ({
             ) : (
               <main className="flex w-full flex-col gap-y-4 px-2">
                 <FilterDropdown />
+                {/* <div className="block flex gap-2 sm:hidden">
+                  <TextField
+                    className="w-full"
+                    placeholder="Search Keyword"
+                    InputProps={{
+                      style: {
+                        fontSize: "14px",
+                        fontFamily: "neueMachina",
+                        // width: "100%",
+                        paddingLeft: 16
+                      },
+                      endAdornment: (
+                        <InputAdornment
+                          position="end"
+                          className="cursor-pointer"
+                          onClick={() => {}}
+                        >
+                          <SearchIcon />
+                        </InputAdornment>
+                      )
+                    }}
+                    onChange={(_event) => {}}
+                  />
+                  <div className="h-[40px] w-[40px] rounded-lg bg-purple-primary p-2">
+                    <SettingIconFilter />
+                  </div>
+                </div> */}
                 {children}
               </main>
             )}

@@ -1,10 +1,12 @@
 import { PaginationNaka } from "@components/atoms/pagination"
 import CardItemMarketPlace from "@components/molecules/cards/CardItemMarketPlace"
+import NoData from "@components/molecules/NoData"
 import useInventoryRental from "@feature/inventory/containers/hooks/useInventoryRental"
 import SkeletonItem from "@feature/marketplace/components/molecules/SkeletonItem"
 import { NextRouter, useRouter } from "next/router"
 import React from "react"
 import { v4 as uuidv4 } from "uuid"
+import SkeletonItemMobile from "./mobilescreen/SkeletonItemMobile"
 
 const MarketplaceRentalList = () => {
   const {
@@ -55,19 +57,24 @@ const MarketplaceRentalList = () => {
     )
   }
   return (
-    <>
+    <div className="flex justify-center">
       {inventoryItemRental.length === 0 && !isLoading ? (
-        <div className="flex h-20 w-full items-center justify-center font-neue-machina uppercase">
-          no data
-        </div>
+        <NoData />
       ) : (
-        <div className="grid w-full grid-cols-1 gap-x-3 gap-y-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="grid  w-fit grid-cols-2 gap-4 sm:w-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {[...Array(limit)].map(() => (
-            <SkeletonItem key={uuidv4()} />
+            <div key={uuidv4()}>
+              <div className="hidden sm:block">
+                <SkeletonItem />
+              </div>
+              <div className="block sm:hidden">
+                <SkeletonItemMobile />
+              </div>
+            </div>
           ))}
         </div>
       )}
-    </>
+    </div>
   )
 }
 

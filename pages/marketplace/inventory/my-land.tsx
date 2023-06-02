@@ -19,7 +19,7 @@ const MyLandPage = dynamic(() => import("@feature/page/inventory/MyLandPage"), {
 })
 
 const MyLand = () => (
-  <article className="grid h-full w-full justify-items-center">
+  <article className="mt-6 grid h-full w-full justify-items-center sm:mt-0">
     <MyLandPage />
   </article>
 )

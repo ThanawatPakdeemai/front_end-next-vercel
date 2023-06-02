@@ -98,14 +98,14 @@ const MarketplaceOwnerList = () => {
       ) : (
         <div className="grid  w-fit grid-cols-2 gap-4 sm:w-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {[...Array(limit)].map(() => (
-            <>
+            <div key={uuidv4()}>
               <div className="hidden sm:block">
-                <SkeletonItem key={uuidv4()} />
+                <SkeletonItem />
               </div>
               <div className="block sm:hidden">
-                <SkeletonItemMobile key={uuidv4()} />
+                <SkeletonItemMobile />
               </div>
-            </>
+            </div>
           ))}
         </div>
       )}

@@ -3,13 +3,7 @@ import React, { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { NextRouter, useRouter } from "next/router"
 import { Image } from "@components/atoms/image"
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Collapse,
-  Typography
-} from "@mui/material"
+import { Button, Collapse } from "@mui/material"
 import useNotiStore from "@stores/notification"
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined"
 import useProfileStore from "@stores/profileStore"
@@ -18,6 +12,7 @@ import MenuItemCustom from "@components/atoms/MenuItemCustom"
 import { MENU_MARKETPLACE, MENU_MARKETPLACE_INVENTORY } from "@configs/menu"
 // import RightMenuLogIn from "@components/molecules/rightMenu/RightMenuLogIn"
 import PlusIcon from "@components/icons/CountIcon/PlusIcon"
+import Balance from "@components/molecules/balance/Balance"
 import MenuButtonExpandMobile from "./MenuButtonExpandMobile"
 
 const HeaderMunuMobile = () => {
@@ -26,19 +21,23 @@ const HeaderMunuMobile = () => {
   const profile = useProfileStore((state) => state.profile.data)
 
   const [expanded, setExpanded] = useState<boolean>(false)
-  const [expandedInvenTory, setExpandedInvenTory] = React.useState<
-    string | false
-  >("")
+  // const [expandedInvenTory, setExpandedInvenTory] = React.useState<
+  //   string | false
+  // >("")
+  const [expandedInvenTory, setExpandedInvenTory] = useState<boolean>(false)
   const [headerTitle, setHeaderTitle] = useState<string>("NAKA Market")
 
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
   }
+  const handleChange = () => {
+    setExpandedInvenTory(!expandedInvenTory)
+  }
 
-  const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-      setExpandedInvenTory(newExpanded ? panel : false)
-    }
+  // const handleChange =
+  //   (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+  //     setExpandedInvenTory(newExpanded ? panel : false)
+  //   }
 
   useEffect(() => {
     const pathName = router.asPath
@@ -87,7 +86,6 @@ const HeaderMunuMobile = () => {
               />
             </motion.div>
             <div className="grid h-full w-full items-center rounded-[8px] bg-neutral-900 p-1 text-sm text-white-primary">
-              {/* {pathName} */}
               {headerTitle}
             </div>
           </div>
@@ -153,69 +151,55 @@ const HeaderMunuMobile = () => {
               )
             })}
         </div>
-        <Accordion
-          expanded={expandedInvenTory === "panel1"}
-          onChange={handleChange("panel1")}
-          className="static items-center justify-center rounded-[13px] border-neutral-800 bg-neutral-780 px-[26px]"
+        <div className="m-2 my-4 !h-[50px]">
+          <Balance widthBalance="w-[calc(100%-70px)]" />
+        </div>
+        <div className="m-2 flex items-center justify-between rounded-[13px] border border-neutral-800 bg-neutral-900 p-[5px] pl-[14px] text-sm text-white-primary">
+          Inventory
+          <div className="flex h-[40px] w-[40px] items-center justify-center rounded-[8px] border border-neutral-700 bg-neutral-800">
+            <Button
+              onClick={handleChange}
+              className={`flex items-center justify-center ${
+                expandedInvenTory
+                  ? "rotate-90 transition-all duration-300"
+                  : "rotate-0 transition-all duration-300"
+              }`}
+            >
+              <div className="rounded-[2px] border border-neutral-200">
+                <PlusIcon
+                  width={15}
+                  height={15}
+                />
+              </div>
+            </Button>
+          </div>
+        </div>
+        <Collapse
+          in={expandedInvenTory}
+          timeout="auto"
+          className="m-[-8px] w-full max-w-[504px] p-4"
           sx={{
-            "& .MuiAccordionSummary-content": {
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              margin: "10px 0",
-              borderRadius: "13px"
-            },
-            borderRadius: "20px",
-            // borderRadius: "13px",
-            // backgroundImage: "none",
-            margin: 1
+            backgroundColor: "#101013",
+            zIndex: 99999,
+            position: "absolute",
+            width: "90%"
           }}
         >
-          <AccordionSummary
-            aria-controls="panel1d-content"
-            id="panel1d-header"
-            sx={{ backgroundImage: "#010101" }}
-            className="!flex !w-full !justify-between"
-          >
-            <Typography className="text-neutral-300">Inventory</Typography>
-
-            <div className="flex h-[40px] w-[40px] items-center justify-center rounded-[8px] border border-neutral-700 bg-neutral-800">
-              <div
-                className={`flex items-center justify-center ${
-                  expandedInvenTory === "panel1"
-                    ? "rotate-90 transition-all duration-300"
-                    : "rotate-0 transition-all duration-300"
-                }`}
-              >
-                <div className="border border-neutral-200">
-                  <PlusIcon
-                    width={15}
-                    height={15}
-                  />
-                </div>
-              </div>
-            </div>
-          </AccordionSummary>
-          <AccordionDetails>
-            <div>
-              {/* className="m-0 rounded-[13px] bg-neutral-680 p-2" */}
-              {MENU_MARKETPLACE_INVENTORY.map((ele) => {
-                const active = router.asPath.includes(ele.href)
-                return (
-                  <MenuItemCustom
-                    key={ele.id}
-                    id={ele.id}
-                    label={ele.label}
-                    icon={ele.icon}
-                    href={ele.href}
-                    external={ele.external}
-                    active={active}
-                  />
-                )
-              })}
-            </div>
-          </AccordionDetails>
-        </Accordion>
+          {MENU_MARKETPLACE_INVENTORY.map((ele) => {
+            const active = router.asPath.includes(ele.href)
+            return (
+              <MenuItemCustom
+                key={ele.id}
+                id={ele.id}
+                label={ele.label}
+                icon={ele.icon}
+                href={ele.href}
+                external={ele.external}
+                active={active}
+              />
+            )
+          })}
+        </Collapse>
       </Collapse>
     </div>
   )

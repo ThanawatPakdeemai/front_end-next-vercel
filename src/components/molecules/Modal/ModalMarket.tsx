@@ -86,7 +86,7 @@ const ModalMarket = ({
   plot
 }: IProps) => {
   const currencyRef = useRef<boolean>(false)
-  const { getPriceNakaCurrent, convertNFTTypeToTType } = Helper
+  const { getPriceNakaCurrent } = Helper
   const [selling, setSelling] = useState<TSellingType>(sellingType)
   const [currency, setCurrency] = useState<number>(0)
   const router: NextRouter = useRouter()

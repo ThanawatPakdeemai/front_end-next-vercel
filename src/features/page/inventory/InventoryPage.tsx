@@ -34,7 +34,7 @@ const InventoryPage = ({ className }: IProps) => {
             initial="hidden"
             animate="shown"
             // transition={{ duration: 2, ease: "easeIn" }}
-            className="h-full bg-neutral-780 p-4"
+            className="!h-fit bg-neutral-780 p-4 sm:h-full"
           >
             <FilterBox />
           </motion.div>

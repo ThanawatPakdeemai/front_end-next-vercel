@@ -14,6 +14,7 @@ import React from "react"
 import { useTranslation } from "react-i18next"
 import { InventoryProvider } from "@providers/InventoryProvider"
 import HeaderMunuMobile from "@feature/page/marketplace/mobilescreen/HeaderMunuMobile"
+import Balance from "@components/molecules/balance/Balance"
 
 const MarketplaceLayoutInventory = ({
   children
@@ -41,7 +42,7 @@ const MarketplaceLayoutInventory = ({
         <div className="mt-12 flex flex-col gap-3 sm:flex-row">
           {/* add filter component here */}
           <div className="hidden w-[200px] sm:block">
-            <div className="flex-row gap-3 md:flex">
+            <div className="mb-4 flex-row gap-3 md:flex">
               <MenuList className="mx-auto mt-4 h-fit w-full max-w-xs rounded-[13px] bg-neutral-800 p-[6px] md:mx-0 md:w-[200px]">
                 <div>
                   {profile ? (
@@ -95,6 +96,7 @@ const MarketplaceLayoutInventory = ({
                 </div>
               </MenuList>
             </div>
+            <Balance widthBalance="w-[calc(100%-70px)]" />
             {/* <AmountBalance
             icon={chain === "polygon" ? <INaka /> : <IBusd />}
             balance={balance || { digit: 0, text: "N/A" }}

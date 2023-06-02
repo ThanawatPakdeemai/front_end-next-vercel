@@ -19,6 +19,7 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 const useInventoryForSale = () => {
   // state
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isItemLoading, setItemIsLoading] = useState<boolean>(true)
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
   const [limit, setLimit] = useState<number>(16)
@@ -38,22 +39,193 @@ const useInventoryForSale = () => {
     Helper
   const { sort, search, filterType } = useMarketFilterStore()
   const router: NextRouter = useRouter()
+  const _marketType =
+    marketType ||
+    convertTTypeToNFTType(router.query.type as TType) ||
+    "nft_land"
 
-  const fetchMyForsale = useCallback(async () => {
+  const fetchMyNFTForsale = useCallback(async () => {
     let _data: IInventoryItemList[] = []
     let _total: number = 0
-    const _marketType =
-      marketType ||
-      convertTTypeToNFTType(router.query.type as TType) ||
-      "nft_land"
     setIsLoading(true)
+    if (
+      profile.data &&
+      filterType &&
+      search &&
+      sort &&
+      _marketType &&
+      _marketType !== "game_item" &&
+      _marketType !== "nft_material"
+    ) {
+      switch (_marketType) {
+        case "nft_land":
+          await mutateGetMyForSaleLand({
+            _limit: limit,
+            _page: currentPage,
+            _search: {
+              seller_type: "user",
+              type_land:
+                filterType.nft_land.length > 0
+                  ? filterType.nft_land
+                  : undefined,
+              selling_type:
+                search.length > 0
+                  ? (getValueFromTKey(search, "selling_type") as TSellingType)
+                  : undefined,
+              nft_token:
+                search.length > 0
+                  ? (getValueFromTKey(search, "nft_token") as string) // should be same as same nft_token
+                  : undefined
+            }
+          })
+            .then((_res) => {
+              if (_res.data && _res.data.length > 0) {
+                _data = _res.data.map((l) => ({
+                  id: l.marketplaces_data?._id || l._id,
+                  tokenId: l.land_id,
+                  cardType: "land",
+                  name: l.name,
+                  img: l.NFT_image,
+                  vdo: l.NFT_video,
+                  price: l.marketplaces_data ? l.marketplaces_data.price : 0,
+                  selling: l.marketplaces_data
+                    ? l.marketplaces_data.selling_type
+                    : "fullpayment"
+                }))
+                _total = _res.info.totalCount
+              }
+            })
+            .catch(() => {})
+          break
+        case "nft_building":
+          await mutateGetMyForSaleBuilding({
+            _limit: limit,
+            _page: currentPage,
+            _search: {
+              seller_type: "user",
+              type_building:
+                filterType.nft_building.length > 0
+                  ? filterType.nft_building
+                  : undefined,
+              selling_type:
+                search.length > 0
+                  ? (getValueFromTKey(search, "selling_type") as TSellingType)
+                  : undefined,
+              nft_token:
+                search.length > 0
+                  ? (getValueFromTKey(search, "nft_token") as string)
+                  : undefined
+            }
+          })
+            .then((_res) => {
+              if (_res.data && _res.data.length > 0) {
+                _data = _res.data.map((b) => ({
+                  id: b.marketplaces_data?._id || b._id,
+                  tokenId: b.NFT_token || "",
+                  cardType: "building",
+                  name: b.name,
+                  img: b.NFT_image,
+                  vdo: b.NFT_video,
+                  level: b.level,
+                  percentage:
+                    b.deteriorate_building?.rate_deteriorate.percentage || 0,
+                  price: b.marketplaces_data ? b.marketplaces_data.price : 0,
+                  selling: b.marketplaces_data
+                    ? b.marketplaces_data.selling_type
+                    : "fullpayment"
+                }))
+                _total = _res.info.totalCount
+              }
+            })
+            .catch(() => {})
+          break
+        case "nft_game":
+          await mutateGetForsaleArcGame({
+            _limit: limit,
+            _search: {
+              seller_type: "user",
+              nft_token:
+                search.length > 0
+                  ? (getValueFromTKey(search, "nft_token") as string)
+                  : undefined
+              // selling_type
+            },
+            _page: currentPage,
+            _sort: {
+              _id: -1
+            }
+          })
+            .then((_res) => {
+              if (_res.data && _res.data.length > 0) {
+                _data = _res.data.map((g) => ({
+                  id: g.marketplaces_data?._id || g._id,
+                  tokenId: g.NFT_info.NFT_token,
+                  cardType: "arcade-game",
+                  name: g.name,
+                  img: `https://ipfs.io/ipfs/${g.NFT_info.image_game_ipfs_cid}`,
+                  vdo: `https://ipfs.io/ipfs/${g.NFT_info.vdo_game_ipfs_cid}?stream=true`,
+                  price: g.marketplaces_data ? g.marketplaces_data.price : 0,
+                  selling: g.marketplaces_data
+                    ? g.marketplaces_data.selling_type
+                    : "fullpayment"
+                }))
+                _total = _res.info.totalCount
+              }
+            })
+            .catch(() => {})
+          break
+        case "nft_naka_punk":
+          await mutateGetMyForsaleNakaPunk({
+            _active: true,
+            _limit: limit,
+            _page: currentPage,
+            _search: {
+              seller_type: "user",
+              nft_token:
+                search.length > 0
+                  ? (getValueFromTKey(search, "nft_token") as string)
+                  : undefined
+            }
+          })
+            .then((_res) => {
+              if (_res.data && _res.data.length > 0) {
+                _data = _res.data.map((p) => ({
+                  id: p.marketplaces_data?._id || p._id,
+                  tokenId: p.NFT_token,
+                  cardType: "naka-punk",
+                  name: p.name,
+                  img: p.image,
+                  price: p.marketplaces_data ? p.marketplaces_data.price : 0,
+                  selling: p.marketplaces_data
+                    ? p.marketplaces_data.selling_type
+                    : "fullpayment"
+                }))
+                _total = _res.info.totalCount
+              }
+            })
+            .catch(() => {})
+          break
+        default:
+          break
+      }
+    }
+    setInventoryItemForsale(_data)
+    setTotalCount(_total)
+    setIsLoading(false)
+  }, [profile.data, _marketType, limit, currentPage, filterType, search, sort])
+
+  const fetchMyItemForsale = useCallback(async () => {
+    let _data: IInventoryItemList[] = []
+    let _total: number = 0
+    setItemIsLoading(true)
     if (
       profile &&
       profile.data &&
       _marketType &&
       filterType &&
       search &&
-      sort
+      sort &&
+      (_marketType === "game_item" || _marketType === "nft_material")
     ) {
       switch (_marketType) {
         case "game_item": {
@@ -122,197 +294,52 @@ const useInventoryForSale = () => {
             })
             .catch(() => {})
           break
-        case "nft_land":
-          await mutateGetMyForSaleLand({
-            _limit: limit,
-            _page: currentPage,
-            _search: {
-              seller_type: "user",
-              type_land:
-                filterType.nft_land.length > 0
-                  ? filterType.nft_land
-                  : undefined,
-              selling_type:
-                search.length > 0
-                  ? (getValueFromTKey(search, "selling_type") as TSellingType)
-                  : undefined,
-              nft_token:
-                search.length > 0
-                  ? (getValueFromTKey(search, "nft_token") as string) // should be same as same nft_token
-                  : undefined
-            }
-          })
-            .then((_res) => {
-              if (_res.data && _res.data.length > 0) {
-                _data = _res.data.map((l) => ({
-                  id: l._id,
-                  tokenId: l.land_id,
-                  cardType: "land",
-                  name: l.name,
-                  img: l.NFT_image,
-                  vdo: l.NFT_video,
-                  price: l.marketplaces_data ? l.marketplaces_data.price : 0,
-                  selling: l.marketplaces_data
-                    ? l.marketplaces_data.selling_type
-                    : "fullpayment"
-                }))
-                _total = _res.info.totalCount
-              }
-            })
-            .catch(() => {})
-          break
-        case "nft_building":
-          await mutateGetMyForSaleBuilding({
-            _limit: limit,
-            _page: currentPage,
-            _search: {
-              seller_type: "user",
-              type_building:
-                filterType.nft_building.length > 0
-                  ? filterType.nft_building
-                  : undefined,
-              selling_type:
-                search.length > 0
-                  ? (getValueFromTKey(search, "selling_type") as TSellingType)
-                  : undefined,
-              nft_token:
-                search.length > 0
-                  ? (getValueFromTKey(search, "nft_token") as string)
-                  : undefined
-            }
-          })
-            .then((_res) => {
-              if (_res.data && _res.data.length > 0) {
-                _data = _res.data.map((b) => ({
-                  id: b._id,
-                  tokenId: b.NFT_token || "",
-                  cardType: "building",
-                  name: b.name,
-                  img: b.NFT_image,
-                  vdo: b.NFT_video,
-                  level: b.level,
-                  percentage:
-                    b.deteriorate_building?.rate_deteriorate.percentage || 0,
-                  price: b.marketplaces_data ? b.marketplaces_data.price : 0,
-                  selling: b.marketplaces_data
-                    ? b.marketplaces_data.selling_type
-                    : "fullpayment"
-                }))
-                _total = _res.info.totalCount
-              }
-            })
-            .catch(() => {})
-          break
-        case "nft_game":
-          await mutateGetForsaleArcGame({
-            _limit: limit,
-            _search: {
-              seller_type: "user",
-              nft_token:
-                search.length > 0
-                  ? (getValueFromTKey(search, "nft_token") as string)
-                  : undefined
-              // selling_type
-            },
-            _page: currentPage,
-            _sort: {
-              _id: -1
-            }
-          })
-            .then((_res) => {
-              if (_res.data && _res.data.length > 0) {
-                _data = _res.data.map((g) => ({
-                  id: g._id,
-                  tokenId: g.NFT_info.NFT_token,
-                  cardType: "arcade-game",
-                  name: g.name,
-                  img: `https://ipfs.io/ipfs/${g.NFT_info.image_game_ipfs_cid}`,
-                  vdo: `https://ipfs.io/ipfs/${g.NFT_info.vdo_game_ipfs_cid}?stream=true`,
-                  price: g.marketplaces_data ? g.marketplaces_data.price : 0,
-                  selling: g.marketplaces_data
-                    ? g.marketplaces_data.selling_type
-                    : "fullpayment"
-                }))
-                _total = _res.info.totalCount
-              }
-            })
-            .catch(() => {})
-          break
-        case "nft_naka_punk":
-          await mutateGetMyForsaleNakaPunk({
-            _active: true,
-            _limit: limit,
-            _page: currentPage,
-            _search: {
-              seller_type: "user",
-              nft_token:
-                search.length > 0
-                  ? (getValueFromTKey(search, "nft_token") as string)
-                  : undefined
-            }
-          })
-            .then((_res) => {
-              if (_res.data && _res.data.length > 0) {
-                _data = _res.data.map((p) => ({
-                  id: p._id,
-                  tokenId: p.NFT_token,
-                  cardType: "naka-punk",
-                  name: p.name,
-                  img: p.image,
-                  price: p.marketplaces_data ? p.marketplaces_data.price : 0,
-                  selling: p.marketplaces_data
-                    ? p.marketplaces_data.selling_type
-                    : "fullpayment"
-                }))
-                _total = _res.info.totalCount
-              }
-            })
-            .catch(() => {})
-          break
         default:
           break
       }
     }
     setInventoryItemForsale(_data)
     setTotalCount(_total)
-    setIsLoading(false)
-  }, [profile.data, marketType, limit, currentPage, filterType, search, sort])
+    setItemIsLoading(false)
+  }, [profile.data, _marketType, limit, currentPage, filterType, search, sort])
 
   useEffect(() => {
     let load = false
     if (!load) {
-      fetchMyForsale()
+      fetchMyNFTForsale()
     }
     return () => {
       load = false
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchMyForsale])
+  }, [fetchMyNFTForsale])
 
   useEffect(() => {
-    let cleanup = false
-    if (!cleanup) {
-      setIsLoading(true)
+    let load = false
+    if (!load) {
+      fetchMyItemForsale()
     }
     return () => {
-      cleanup = true
+      load = false
     }
-  }, [fetchMyForsale])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchMyItemForsale])
 
   useMemo(() => {
     let cleanup = false
-    if (!cleanup && marketType) {
+    if (!cleanup && _marketType) {
       setCurrentPage(1)
     }
     return () => {
       cleanup = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marketType])
+  }, [_marketType])
 
   return {
     inventoryItemForsale,
     isLoading,
+    isItemLoading,
     totalCount,
     currentPage,
     limit,

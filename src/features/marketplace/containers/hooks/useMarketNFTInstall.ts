@@ -17,6 +17,7 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
 import Helper from "@utils/helper"
 import { BigNumberish, ethers } from "ethers"
+import { useToast } from "@feature/toast/containers"
 import useGlobalMarket from "./useGlobalMarket"
 import useMutateMarketplace from "./useMutateMarketplace"
 
@@ -57,18 +58,27 @@ const useMarketNFTInstall = () => {
   const {
     checkAllowanceNaka,
     getContractAddrsByNFTType,
-    onCheckNFTIsApproveForAll
+    onCheckNFTIsApproveForAll,
+    onCheckPolygonChain
   } = useGlobalMarket()
 
+  const { errorToast } = useToast()
+
   // create order
-  const createNFTInstallOrder = (
-    _contract: string,
-    _token: string,
+  const createNFTInstallOrder = ({
+    _contract = marketNFTInstallContract,
+    _contractAddrs,
+    _token,
+    _nakaAmount
+  }: {
+    _contract?: ethers.Contract
+    _contractAddrs: string
+    _token: string
     _nakaAmount: BigNumberish
-  ) =>
+  }) =>
     new Promise<TransactionResponse>((resolve, reject) => {
-      marketNFTInstallContract
-        .createOrderInstallmentNFT(_contract, _token, _nakaAmount)
+      _contract
+        ._contract(_contractAddrs, _token, _nakaAmount)
         .then((_response: TransactionResponse) => {
           resolve(_response)
         })
@@ -84,18 +94,25 @@ const useMarketNFTInstall = () => {
     _price: number,
     _amount: number
   ) => {
+    setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      setOpen(MESSAGES.transaction_processing_order)
+      const _checkChain = await onCheckPolygonChain(marketNFTInstallContract)
+      if (!_checkChain._pass) {
+        setClose()
+        errorToast(MESSAGES.support_polygon_only)
+        return
+      }
       await onCheckNFTIsApproveForAll(
         address,
         CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_INSTALL,
         _NFTtype
       ).catch((error) => console.error(error))
-      await createNFTInstallOrder(
-        getContractAddrsByNFTType(_NFTtype),
+      await createNFTInstallOrder({
+        _contract: _checkChain._contract,
+        _contractAddrs: getContractAddrsByNFTType(_NFTtype),
         _token,
-        toWei(_price.toString())
-      )
+        _nakaAmount: toWei(_price.toString())
+      })
         .then(async (response) => {
           const _res = await response.wait()
           const _enTopic = await utils.keccak256(
@@ -127,15 +144,21 @@ const useMarketNFTInstall = () => {
         })
         .catch((error) => console.error(error))
     } else {
-      console.error("address not found!, Please connect your wallet")
+      errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
   }
 
   // cancel order
-  const cancelNFTInstallOrder = (_orderId: string) =>
+  const cancelNFTInstallOrder = ({
+    _contract = marketNFTInstallContract,
+    _orderId
+  }: {
+    _contract?: ethers.Contract
+    _orderId: string
+  }) =>
     new Promise<TransactionResponse>((resolve, reject) => {
-      marketNFTInstallContract
+      _contract
         .cancelOrderInstallmentNFT(_orderId)
         .then((_response: TransactionResponse) => {
           resolve(_response)
@@ -147,16 +170,25 @@ const useMarketNFTInstall = () => {
 
   const onCancelNFTInstallOrder = async (
     _NFTtype: TNFTType,
-    _orderId: string
+    _idOrder: string
   ) => {
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
+      const _checkChain = await onCheckPolygonChain(marketNFTInstallContract)
+      if (!_checkChain._pass) {
+        setClose()
+        errorToast(MESSAGES.support_polygon_only)
+        return
+      }
       await onCheckNFTIsApproveForAll(
         address,
         CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_INSTALL,
         _NFTtype
       ).catch((error) => console.error(error))
-      await cancelNFTInstallOrder(_orderId)
+      await cancelNFTInstallOrder({
+        _contract: _checkChain._contract,
+        _orderId: _idOrder
+      })
         .then(async (response) => {
           const _res = await response.wait()
           const _enTopic = await utils.keccak256(
@@ -181,19 +213,27 @@ const useMarketNFTInstall = () => {
           }
         })
         .catch((error) => console.error(error))
+    } else {
+      errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
   }
 
   // execute order
-  const executeNFTInstallOrder = (
-    _sellerAcc: string,
-    _orderId: string,
+  const executeNFTInstallOrder = ({
+    _contract = marketNFTInstallContract,
+    _sellerId,
+    _orderId,
+    _period
+  }: {
+    _contract?: ethers.Contract
+    _sellerId: string
+    _orderId: string
     _period: number
-  ) =>
+  }) =>
     new Promise<TransactionResponse>((resolve, reject) => {
-      marketNFTInstallContract
-        .executeOrderInstallmentNFT(_sellerAcc, _orderId, _period)
+      _contract
+        .executeOrderInstallmentNFT(_sellerId, _orderId, _period)
         .then((_response: TransactionResponse) => {
           resolve(_response)
         })
@@ -212,8 +252,19 @@ const useMarketNFTInstall = () => {
   ) => {
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
+      const _checkChain = await onCheckPolygonChain(marketNFTInstallContract)
+      if (!_checkChain._pass) {
+        setClose()
+        errorToast(MESSAGES.support_polygon_only)
+        return
+      }
       await checkAllowanceNaka(CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_INSTALL)
-      await executeNFTInstallOrder(_sellerId, _orderId, _period)
+      await executeNFTInstallOrder({
+        _contract: _checkChain._contract,
+        _sellerId,
+        _orderId,
+        _period
+      })
         .then(async (response) => {
           const _res = await response.wait()
           const _enTopic = await utils.keccak256(
@@ -263,6 +314,8 @@ const useMarketNFTInstall = () => {
           }
         })
         .catch((error) => console.error(error))
+    } else {
+      errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
   }
@@ -281,9 +334,18 @@ const useMarketNFTInstall = () => {
     })
 
   // paybill
-  const payBillByBillId = (_billId: string, _period: number) =>
+  const payBillByBillId = ({
+    _contract = marketNFTInstallContract,
+    _billId,
+    _period
+  }: {
+    _contract?: ethers.Contract
+
+    _billId: string
+    _period: number
+  }) =>
     new Promise<TransactionResponse>((resolve, reject) => {
-      marketNFTInstallContract
+      _contract
         .payBillInstallmentNFT(_billId, _period)
         .then((_response: TransactionResponse) => {
           resolve(_response)
@@ -298,34 +360,52 @@ const useMarketNFTInstall = () => {
     _periodAt: number,
     _period?: number
   ) => {
-    const periodValue = _period || 0
-    await checkAllowanceNaka(CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_INSTALL)
-    await payBillByBillId(_billId, periodValue)
-      .then(async (response) => {
-        const _res = await response.wait()
-        const _enTopic = await utils.keccak256(
-          utils.toUtf8Bytes(
-            "PayBill(bytes32,address,address,uint256,uint256,uint256)"
-          )
-        )
-        const _log = _res.logs.find((f) => f.topics.find((l) => l === _enTopic))
-        if (_log) {
-          const _resultEvent = utils.defaultAbiCoder.decode(
-            ["bytes32", "uint256", "uint256", "uint256"],
-            _log.data
-          )
-          const data: IPayBillParams = {
-            _billId: _resultEvent[0],
-            _billBalance: WeiToNumber(_resultEvent[2]),
-            _periodBalance: Number(_resultEvent[1].toString()),
-            _txHash: _res.transactionHash,
-            _roundPayed: _periodAt,
-            _roundPayedAmount: WeiToNumber(_resultEvent[3])
-          }
-          await mutatePayBillInstallNFT(data)
-        }
+    setOpen(MESSAGES.transaction_processing_order)
+    if (signer && address) {
+      const _checkChain = await onCheckPolygonChain(marketNFTInstallContract)
+      if (!_checkChain._pass) {
+        setClose()
+        errorToast(MESSAGES.support_polygon_only)
+        return
+      }
+      const periodValue = _period || 0
+      await checkAllowanceNaka(CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_INSTALL)
+      await payBillByBillId({
+        _contract: _checkChain._contract,
+        _billId,
+        _period: periodValue
       })
-      .catch((error) => console.error(error))
+        .then(async (response) => {
+          const _res = await response.wait()
+          const _enTopic = await utils.keccak256(
+            utils.toUtf8Bytes(
+              "PayBill(bytes32,address,address,uint256,uint256,uint256)"
+            )
+          )
+          const _log = _res.logs.find((f) =>
+            f.topics.find((l) => l === _enTopic)
+          )
+          if (_log) {
+            const _resultEvent = utils.defaultAbiCoder.decode(
+              ["bytes32", "uint256", "uint256", "uint256"],
+              _log.data
+            )
+            const data: IPayBillParams = {
+              _billId: _resultEvent[0],
+              _billBalance: WeiToNumber(_resultEvent[2]),
+              _periodBalance: Number(_resultEvent[1].toString()),
+              _txHash: _res.transactionHash,
+              _roundPayed: _periodAt,
+              _roundPayedAmount: WeiToNumber(_resultEvent[3])
+            }
+            await mutatePayBillInstallNFT(data)
+          }
+        })
+        .catch((error) => console.error(error))
+    } else {
+      errorToast(MESSAGES.please_connect_wallet)
+    }
+    setClose()
   }
 
   return {

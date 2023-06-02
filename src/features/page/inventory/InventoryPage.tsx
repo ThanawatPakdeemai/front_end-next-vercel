@@ -24,7 +24,9 @@ const InventoryPage = ({ className }: IProps) => {
   }
 
   return (
-    <div className={`h-full border-l-[1px] border-l-neutral-700 ${className}`}>
+    <div
+      className={`hidden h-full border-l-[1px] border-l-neutral-700 sm:block ${className}`}
+    >
       <div className="flex h-full">
         {open && (
           <motion.div

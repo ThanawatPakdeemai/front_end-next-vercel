@@ -86,7 +86,7 @@ const ModalMarket = ({
   plot
 }: IProps) => {
   const currencyRef = useRef<boolean>(false)
-  const { getPriceNakaCurrent, convertNFTTypeToTType } = Helper
+  const { getPriceNakaCurrent } = Helper
   const [selling, setSelling] = useState<TSellingType>(sellingType)
   const [currency, setCurrency] = useState<number>(0)
   const router: NextRouter = useRouter()
@@ -192,20 +192,6 @@ const ModalMarket = ({
             .then(() => {
               // redirect
               // check if stay on inventory not redirect
-              if (router.asPath.includes("/inventory")) {
-                // refetch data from owner detail
-                if (fetchInvenItemDataById) fetchInvenItemDataById()
-              } else {
-                setTimeout(
-                  () =>
-                    router.replace({
-                      pathname: `/marketplace/inventory/${convertNFTTypeToTType(
-                        nftType
-                      )}`
-                    }),
-                  1000
-                )
-              }
             })
             .catch(async () => {
               // refetch data

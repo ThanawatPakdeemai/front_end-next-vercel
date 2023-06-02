@@ -2,7 +2,7 @@ import { Box, TextField } from "@mui/material"
 import React from "react"
 import { useTranslation } from "react-i18next"
 import { StyledBaseInputMobile } from "@mobile/styles/muiStyleMobile"
-import ProfileSliderMobile from "../molecules/ProfileSliderMobile"
+import HorizontalThumbSlide from "@feature/slider/components/templates/HorizontalThumbSlide"
 import ProfileFooterMobile from "../molecules/ProfileFooterMobile"
 import useProfileSettingController from "../../containers/useProfileSettingController"
 
@@ -11,7 +11,11 @@ const FormProfileSetting = () => {
     handleSubmit,
     onSubmit,
     watchProfileSetting,
-    setValueProfileSetting
+    setValueProfileSetting,
+    avatarList,
+    avatarGoto,
+    featchAvatar,
+    setDefaultAvatar
   } = useProfileSettingController()
   const { t } = useTranslation()
 
@@ -21,7 +25,31 @@ const FormProfileSetting = () => {
       className="profile-content__mobile flex flex-col justify-between gap-4"
     >
       <form onSubmit={handleSubmit(onSubmit)}>
-        <ProfileSliderMobile />
+        {/* <ProfileSliderMobile setValueProfileSetting={setValueProfileSetting} /> */}
+        <Box
+          component="section"
+          id="profile-avatar__slider"
+          className="w-full"
+        >
+          <HorizontalThumbSlide
+            items={avatarList}
+            sliderType="avatar"
+            currentSelected={avatarGoto}
+            settingSingle={{
+              speed: 500
+            }}
+            settingThumbnail={{
+              speed: 500,
+              afterChange: (current: number) => {
+                const selected = avatarList[current]
+                if (selected) {
+                  setDefaultAvatar(selected.src)
+                  featchAvatar()
+                }
+              }
+            }}
+          />
+        </Box>
         <TextField
           className="mb-5 w-full"
           required

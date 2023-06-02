@@ -91,8 +91,8 @@ const MarketplaceOwnerList = () => {
         ((marketType !== "game_item" &&
           marketType !== "nft_material" &&
           !isLoading) ||
-          ((marketType === "game_item" || marketType !== "nft_material") &&
-            !isLoading))) ||
+          ((marketType === "game_item" || marketType === "nft_material") &&
+            !isItemLoading))) ||
       !profile.isLogin ? (
         <NoData />
       ) : (

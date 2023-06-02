@@ -22,8 +22,8 @@ const MarketplaceRentalList = () => {
 
   if (inventoryItemRental && inventoryItemRental.length > 0 && !isLoading) {
     return (
-      <div className="flex flex-col gap-y-7">
-        <div className="grid w-full grid-cols-1 gap-x-3 gap-y-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="flex w-fit flex-col gap-y-7  self-center">
+        <div className="grid w-full grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {inventoryItemRental.map((_data) => (
             <CardItemMarketPlace
               key={uuidv4()}

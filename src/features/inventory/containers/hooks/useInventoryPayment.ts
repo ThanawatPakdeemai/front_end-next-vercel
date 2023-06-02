@@ -35,6 +35,10 @@ const useInventoryPayment = () => {
   const { getValueFromTKey, convertTTypeToNFTType } = Helper
   const { sort, search, filterType } = useMarketFilterStore()
   const router: NextRouter = useRouter()
+  const _marketType =
+    marketType ||
+    convertTTypeToNFTType(router.query.type as TType) ||
+    "nft_land"
 
   const handleDate = ({
     _keyType,
@@ -61,10 +65,6 @@ const useInventoryPayment = () => {
   const fetchInventoryItemPayment = useCallback(async () => {
     let _data: IInventoryItemList[] = []
     let _total = 0
-    const _marketType =
-      marketType ||
-      convertTTypeToNFTType(router.query.type as TType) ||
-      "nft_land"
     setIsLoading(true)
     if (profile.data && _marketType && filterType && search && sort) {
       switch (_marketType) {
@@ -174,7 +174,7 @@ const useInventoryPayment = () => {
     setTotalCount(_total)
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile.data, marketType, limit, currentPage, filterType, search, sort])
+  }, [profile.data, _marketType, limit, currentPage, filterType, search, sort])
 
   useEffect(() => {
     let cleanup = false
@@ -187,26 +187,16 @@ const useInventoryPayment = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchInventoryItemPayment])
 
-  useEffect(() => {
-    let cleanup = false
-    if (!cleanup) {
-      setIsLoading(true)
-    }
-    return () => {
-      cleanup = true
-    }
-  }, [fetchInventoryItemPayment])
-
   useMemo(() => {
     let cleanup = false
-    if (!cleanup && marketType) {
+    if (!cleanup && _marketType) {
       setCurrentPage(1)
     }
     return () => {
       cleanup = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marketType])
+  }, [_marketType])
 
   return {
     inventoryItemPayment,

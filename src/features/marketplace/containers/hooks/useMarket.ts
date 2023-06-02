@@ -162,10 +162,10 @@ const useMarket = () => {
   ) => {
     switch (_type) {
       case "game_item":
-        await onCancelGameItemOrder(_orderId, _sellerId)
+        await onCancelGameItemOrder(_sellerId, _orderId)
         break
       case "nft_material":
-        await onCancelMaterialOrder(_orderId, _sellerId)
+        await onCancelMaterialOrder(_sellerId, _orderId)
         break
       case "nft_land":
         await onCancelBySelling(_type, _selling, _orderId, _sellerId)

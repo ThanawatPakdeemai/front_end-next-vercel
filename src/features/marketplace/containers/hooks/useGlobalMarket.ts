@@ -15,7 +15,8 @@ import {
 import useNFTPunk from "@feature/nakapunk/containers/hooks/useNFTPunk"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import Helper from "@utils/helper"
-import { BigNumberish, ethers } from "ethers"
+import { BigNumberish, ethers, providers } from "ethers"
+import { useCallback } from "react"
 
 const useGlobalMarket = () => {
   const { signer, address } = useWeb3Provider()
@@ -275,7 +276,35 @@ const useGlobalMarket = () => {
     return _approve
   }
 
+  const onCheckPolygonChain = useCallback(
+    async (_contract: ethers.Contract) => {
+      let contract: ethers.Contract = _contract
+      let pass: boolean = false
+      if (signer) {
+        let new_signer: ethers.providers.JsonRpcSigner = signer
+        const _provider = window.ethereum
+        if (_provider && _provider.request) {
+          try {
+            await _provider.request({
+              method: "wallet_switchEthereumChain",
+              params: [{ chainId: CONFIGS.CHAIN.CHAIN_ID_HEX }]
+            })
+            const _resetProvider = new providers.Web3Provider(_provider)
+            new_signer = _resetProvider.getSigner()
+            pass = true
+          } catch (error: Error | any) {
+            //
+          }
+        }
+        contract = await _contract.connect(new_signer)
+      }
+      return { _contract: contract, _pass: pass }
+    },
+    [signer]
+  )
+
   return {
+    onCheckPolygonChain,
     checkAllowanceNaka,
     getContractAddrsByNFTType,
     onCheckNFTIsApproveForAll,

@@ -4,7 +4,7 @@ import { MESSAGES } from "@constants/messages"
 import { INotification } from "@feature/notification/interfaces/INotificationService"
 import useNotiStore from "@stores/notification"
 import { IHistory } from "@feature/history/interfaces/IHistoryService"
-import { validTypeGames } from "@pages/[typeGame]"
+// import { validTypeGames } from "@pages/[typeGame]"
 import { useCallback, useEffect, useState } from "react"
 import useProfileStore from "@stores/profileStore"
 import useGlobal from "@hooks/useGlobal"
@@ -87,11 +87,11 @@ const useNotificationController = () => {
       setPlayHistoryItem({} as IHistory)
       setNotificationItem(notification)
       router.push(
-        `/${validTypeGames.find((res) =>
-          res.includes(notification.game_mode || "play-to-earn")
-        )}/${notification.path}/${notification.type
-          .toLocaleLowerCase()
-          .replaceAll("_", "-")}/${notification._id}`
+        `/${notification.game_mode || "play-to-earn"}/${
+          notification.path
+        }/${notification.type.toLocaleLowerCase().replaceAll("_", "-")}/${
+          notification._id
+        }`
       )
     } else {
       errorToast(MESSAGES.please_login)

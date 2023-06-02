@@ -9,7 +9,7 @@ import { useToast } from "@feature/toast/containers"
 import useGlobal from "@hooks/useGlobal"
 import useLoadingStore from "@stores/loading"
 import useProfileStore from "@stores/profileStore"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 
 const useProfileSettingController = () => {
@@ -41,7 +41,7 @@ const useProfileSettingController = () => {
    * @description Set game media
    * @returns {IVerticalThumbSlide[]}
    */
-  const setAvatarLits = (): IVerticalThumbSlide[] => {
+  const setAvatarList = (): IVerticalThumbSlide[] => {
     const avatar_list: IVerticalThumbSlide[] = []
     if (avatar && avatar.length > 0) {
       avatar.map((slide, index) =>
@@ -72,6 +72,18 @@ const useProfileSettingController = () => {
     }
   })
 
+  const featchAvatar = useCallback(() => {
+    if (avatar && avatar.length > 0) {
+      const currentAvatar = setAvatarList().findIndex(
+        (_avatar) => _avatar.src === defaultAvatar
+      )
+      if (currentAvatar) {
+        setAvatarGoto(currentAvatar)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [avatar, defaultAvatar, profile])
+
   const onSubmit = (data) => {
     if (data && profile) {
       getGeoInfo()
@@ -91,6 +103,17 @@ const useProfileSettingController = () => {
                 if (_res) {
                   successToast(MESSAGES.edit_profile_success)
                   onRefetchProfile()
+                  setDefaultAvatar(_res.avatar)
+                  featchAvatar()
+                  // if (avatar && avatar.length > 0) {
+                  //   const currentAvatar = avatar.findIndex(
+                  //     (_avatar) => _avatar.value === defaultAvatar
+                  //   )
+                  //   if (currentAvatar) {
+                  //     setAvatarGoto(currentAvatar)
+                  //   }
+                  // }
+
                   // onCloseModal()
                   setClose()
                 }
@@ -111,7 +134,9 @@ const useProfileSettingController = () => {
   useEffect(() => {
     let cancel = false
     if (!cancel) {
-      setDefaultAvatar(profile ? profile.avatar : "")
+      if (profile) {
+        setDefaultAvatar(profile.avatar)
+      }
     }
     return () => {
       cancel = true
@@ -121,31 +146,27 @@ const useProfileSettingController = () => {
   useEffect(() => {
     let cancel = false
     if (!cancel) {
-      if (avatar && avatar.length > 0) {
-        const currentAvatar = avatar.findIndex(
-          (_avatar) => _avatar.value === defaultAvatar
-        )
-        if (currentAvatar) {
-          setAvatarGoto(currentAvatar)
-        }
-      }
+      featchAvatar()
     }
     return () => {
       cancel = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [avatar])
+  }, [profile, avatar])
 
   return {
-    avatarList: setAvatarLits(),
+    avatarList: setAvatarList(),
     handleSubmit,
     onSubmit,
     onRefetchProfile,
     defaultAvatar,
+    setDefaultAvatar,
     avatarGoto,
+    setAvatarGoto,
     registerProfileSetting,
     watchProfileSetting,
-    setValueProfileSetting
+    setValueProfileSetting,
+    featchAvatar
   }
 }
 

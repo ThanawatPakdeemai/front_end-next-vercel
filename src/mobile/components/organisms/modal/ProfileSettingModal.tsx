@@ -8,11 +8,13 @@ import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/us
 interface IProfileSettingModalProps {
   open: boolean
   setProfileSetting: React.Dispatch<React.SetStateAction<boolean>>
+  title?: string
 }
 
 const ProfileSettingModal = ({
   open,
-  setProfileSetting
+  setProfileSetting,
+  title = "Edit Profile"
 }: IProfileSettingModalProps) => {
   const { clearAllDrawer } = useDrawerControllerMobile()
 
@@ -46,7 +48,7 @@ const ProfileSettingModal = ({
           aria-hidden="true"
         >
           <ArrowBackIcon />
-          Edit Profile
+          {title}
         </h2>
         <FormProfileSetting />
       </Box>

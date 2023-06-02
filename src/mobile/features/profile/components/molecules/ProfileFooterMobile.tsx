@@ -21,6 +21,7 @@ const ProfileFooterMobile = () => (
       color="error"
       variant="contained"
       className="w-full font-urbanist !text-white-primary"
+      type="submit"
     />
   </Box>
 )

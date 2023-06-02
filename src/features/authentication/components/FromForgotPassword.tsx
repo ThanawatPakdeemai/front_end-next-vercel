@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form"
 import { MESSAGES } from "@constants/messages"
 import { useTranslation } from "react-i18next"
 import ButtonLink from "@components/atoms/button/ButtonLink"
+import { isMobile } from "@hooks/useGlobal"
 import useResetPassword from "../containers/hooks/useResetPassword"
 
 const FromForgotPassword = () => {
@@ -51,12 +52,24 @@ const FromForgotPassword = () => {
 
   return (
     <>
-      <Typography
-        className="cursor-pointer text-right text-sm text-neutral-500"
-        onClick={handleOpen}
-      >
-        {t("forgot_password")}
-      </Typography>
+      {isMobile ? (
+        <Box
+          component="div"
+          className="flex justify-center text-center"
+          onClick={handleOpen}
+        >
+          <Typography className="text-lg font-bold text-warning-100">
+            {t("forgot_password")}
+          </Typography>
+        </Box>
+      ) : (
+        <Typography
+          className="cursor-pointer text-right text-sm text-neutral-500"
+          onClick={handleOpen}
+        >
+          {t("forgot_password")}
+        </Typography>
+      )}
       <Box
         component="div"
         className="m-auto w-max p-1"

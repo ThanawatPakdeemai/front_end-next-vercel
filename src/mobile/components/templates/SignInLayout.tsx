@@ -1,154 +1,27 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from "react"
 import { Box, Button, Divider, Typography } from "@mui/material"
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  TwitterAuthProvider
-} from "firebase/auth"
-import { getApps, initializeApp } from "@firebase/app"
 import CardNoReward from "@feature/game/containers/components/atoms/CardNoReward"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import useLoginTypeStore from "@stores/loginTypes"
-// import FacebookLogin from "react-facebook-login"
-import useLoginProvider from "@feature/authentication/containers/hooks/useLoginProvider"
-import { useToast } from "@feature/toast/containers"
-import { IProfileFaceBook } from "@src/types/profile"
-import { IError } from "@src/types/contract"
-import { MESSAGES } from "@constants/messages"
+import FacebookLogin from "react-facebook-login"
 import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import GoogleColorIcon from "@components/icons/SocialIcon/GoogleColorIcon"
 import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
 import Link from "next/link"
+import useFormLoginController from "@feature/authentication/containers/hooks/useFormLoginController"
 import LoginModal from "../organisms/modal/LoginModal"
 
 const SignInLayout = () => {
-  const { mutateLoginProvider } = useLoginProvider()
-
-  const firebaseConfig = {
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
-    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_Id,
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SEND_ID,
-    appId: process.env.NEXT_PUBLIC_FIREBASE_APPID,
-    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-  }
-
-  if (!getApps().length) {
-    initializeApp(firebaseConfig)
-  }
-
-  const auth = getAuth()
+  const { facebookLogin, googleLogin, twitterLogin } = useFormLoginController()
 
   const {
     getClickLoginFacebook: toggleFacebookLogin,
     setClickLoginFacebook: setToggleFacebookLogin
   } = useLoginTypeStore()
 
-  const { errorToast, successToast } = useToast()
-
   const [openModal, setOpenModal] = useState<boolean>(false)
 
   const handleModalLogin = () => setOpenModal(!openModal)
-
-  const facebookLogin = async (response: IProfileFaceBook) => {
-    if (
-      response.email !== null &&
-      response.email !== undefined &&
-      response.userID !== null &&
-      response.userID !== undefined
-    ) {
-      mutateLoginProvider({
-        _email: response.email,
-        _provider: "facebook",
-        _prevPath: "/",
-        _providerUUID: response.userID,
-        _referral: ""
-      })
-        .then((_res) => {
-          if (_res) {
-            successToast(MESSAGES.logged_in_successfully)
-          }
-        })
-        .catch((_error: IError) => {
-          errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-        })
-    }
-  }
-
-  const twitterLogin = async () => {
-    const provider = new TwitterAuthProvider()
-    provider.addScope("email")
-    await signInWithPopup(auth, provider)
-      .then((result) => {
-        const { user } = result
-        if (
-          user.providerData[0].email !== null &&
-          user.providerData[0].email !== undefined &&
-          result.providerId !== null &&
-          result.providerId !== undefined
-        ) {
-          mutateLoginProvider({
-            _email: user.providerData[0].email,
-            _provider: "google",
-            _prevPath: "/",
-            _providerUUID: user.uid,
-            _referral: ""
-          })
-            .then((_res) => {
-              if (_res) {
-                successToast(MESSAGES.logged_in_successfully)
-              }
-            })
-            .catch((_error: IError) => {
-              errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-            })
-        } else {
-          errorToast(MESSAGES.logged_in_unsuccessfully)
-        }
-      })
-      .catch((_error: IError) => {
-        errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-      })
-  }
-
-  const googleLogin = async () => {
-    const provider = new GoogleAuthProvider()
-    provider.addScope("email")
-    await signInWithPopup(auth, provider)
-      .then((result) => {
-        const { user } = result
-        if (
-          user.providerData[0].email !== null &&
-          user.providerData[0].email !== undefined &&
-          result.providerId !== null &&
-          result.providerId !== undefined
-        ) {
-          mutateLoginProvider({
-            _email: user.providerData[0].email,
-            _provider: "google",
-            _prevPath: "/",
-            _providerUUID: user.uid,
-            _referral: ""
-          })
-            .then((_res) => {
-              if (_res) {
-                successToast(MESSAGES.logged_in_successfully)
-              }
-            })
-            .catch((_error: IError) => {
-              errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-            })
-        } else {
-          errorToast(MESSAGES.logged_in_unsuccessfully)
-        }
-      })
-      .catch((_error: IError) => {
-        errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-      })
-  }
 
   return (
     <>
@@ -169,11 +42,23 @@ const SignInLayout = () => {
           <Button
             variant="contained"
             className="mb-[1.125rem] h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
-            onClick={googleLogin}
+            onClick={() => setToggleFacebookLogin(true)}
           >
             <div className="flex items-center font-urbanist text-base font-medium">
               <span className="pr-2">
-                <FacebookColorIcon />
+                {toggleFacebookLogin ? (
+                  <FacebookLogin
+                    appId={`${process.env.NEXT_PUBLIC_FACEBOOK_APPID}`}
+                    autoLoad
+                    fields="name,email,picture"
+                    callback={facebookLogin}
+                    cssClass="my-facebook-button-class"
+                    textButton={null}
+                    icon={<FacebookColorIcon />}
+                  />
+                ) : (
+                  <FacebookColorIcon />
+                )}
               </span>
               <span>Sign in with Facebook</span>
             </div>
@@ -201,7 +86,11 @@ const SignInLayout = () => {
           >
             <div className="flex items-center font-urbanist text-base font-medium">
               <span className="pr-2">
-                <TwitterIcon fill="#1D9BF0" />
+                <TwitterIcon
+                  fill="#1D9BF0"
+                  width={30}
+                  height={30}
+                />
               </span>
               <span>Sign in with Twitter</span>
             </div>

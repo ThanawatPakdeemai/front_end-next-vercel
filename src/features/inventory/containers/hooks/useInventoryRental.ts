@@ -19,21 +19,19 @@ const useInventoryRental = () => {
   const { mutateGetMyRentalBuilding } = useGetMyRentalBuilding()
   const { marketType } = useGlobal()
   const router: NextRouter = useRouter()
-
   const [inventoryItemRental, setInventoryItemRental] = useState<
     Array<IInventoryItemList>
   >([])
-
   const { sort, filterType, search } = useMarketFilterStore()
   const { getValueFromTKey, convertTTypeToNFTType } = Helper
+  const _marketType =
+    marketType ||
+    convertTTypeToNFTType(router.query.type as TType) ||
+    "nft_land"
 
   const fetchInventoryRental = useCallback(async () => {
     let _data: IInventoryItemList[] = []
     let _total: number = 0
-    const _marketType =
-      marketType ||
-      convertTTypeToNFTType(router.query.type as TType) ||
-      "nft_land"
     setIsLoading(true)
     if (profile.data && _marketType && filterType && search && sort) {
       switch (_marketType) {
@@ -142,7 +140,7 @@ const useInventoryRental = () => {
     setTotalCount(_total)
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile.data, marketType, currentPage, limit, filterType, search, sort])
+  }, [profile.data, _marketType, currentPage, limit, filterType, search, sort])
 
   useEffect(() => {
     let load = false
@@ -155,26 +153,16 @@ const useInventoryRental = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchInventoryRental])
 
-  useEffect(() => {
-    let cleanup = false
-    if (!cleanup) {
-      setIsLoading(true)
-    }
-    return () => {
-      cleanup = true
-    }
-  }, [fetchInventoryRental])
-
   useMemo(() => {
     let load = false
-    if (!load) {
+    if (!load && _marketType) {
       setCurrentPage(1)
     }
     return () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marketType])
+  }, [_marketType])
 
   return {
     isLoading,

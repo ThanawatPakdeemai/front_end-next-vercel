@@ -35,9 +35,10 @@ export interface INotificaionRoomID {
 }
 
 export interface INotification {
+  game_detail: any
   _id: string
   createdAt: Date
-  room_id?: string | INotificaionRoomID
+  room_id: string | INotificaionRoomID
   game_id: string | INotificaionGameID
   game_type: TGameType
   player_id: string | INotificaionPlayerID
@@ -49,7 +50,7 @@ export interface INotification {
   path: string
   weekly_pool_id?: string
   pool_id?: string
-  game_mode?: string
+  game_mode: string
 }
 
 export interface INotificationResponse {

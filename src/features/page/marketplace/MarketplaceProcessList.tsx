@@ -5,6 +5,8 @@ import React from "react"
 import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonItem from "@feature/marketplace/components/molecules/SkeletonItem"
 import useInventoryPayment from "@feature/inventory/containers/hooks/useInventoryPayment"
+import NoData from "@components/molecules/NoData"
+import SkeletonItemMobile from "./mobilescreen/SkeletonItemMobile"
 
 const MarketplaceProcessList = () => {
   const {
@@ -20,8 +22,8 @@ const MarketplaceProcessList = () => {
 
   if (inventoryItemPayment && inventoryItemPayment.length > 0 && !isLoading) {
     return (
-      <div className="flex flex-col gap-y-7">
-        <div className="grid w-full grid-cols-1 gap-x-3 gap-y-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="flex w-fit flex-col gap-y-7  self-center">
+        <div className="grid w-full grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {inventoryItemPayment.map((_data) => (
             <CardItemMarketPlace
               key={uuidv4()}
@@ -67,19 +69,24 @@ const MarketplaceProcessList = () => {
     )
   }
   return (
-    <>
+    <div className="flex justify-center">
       {inventoryItemPayment.length === 0 && !isLoading ? (
-        <div className="flex h-20 w-full items-center justify-center font-neue-machina uppercase">
-          no data
-        </div>
+        <NoData />
       ) : (
-        <div className="grid w-full grid-cols-1 gap-x-3 gap-y-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="grid  w-fit grid-cols-2 gap-4 sm:w-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {[...Array(limit)].map(() => (
-            <SkeletonItem key={uuidv4()} />
+            <>
+              <div className="hidden sm:block">
+                <SkeletonItem key={uuidv4()} />
+              </div>
+              <div className="block sm:hidden">
+                <SkeletonItemMobile key={uuidv4()} />
+              </div>
+            </>
           ))}
         </div>
       )}
-    </>
+    </div>
   )
 }
 

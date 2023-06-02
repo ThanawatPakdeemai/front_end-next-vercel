@@ -2,6 +2,8 @@ import React from "react"
 import { Box, SwipeableDrawer } from "@mui/material"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import useFavoriteGameControllerMobile from "@mobile/features/game/containers/hooks/useFavoriteGameControllerMobile"
+import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
+import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import GameListMobile from "../GameListMobile"
 
 interface IWishlistModalProps {
@@ -12,23 +14,22 @@ interface IWishlistModalProps {
 const WishlistModal = ({ open, setOpenWishlist }: IWishlistModalProps) => {
   const { gameFavouriteState, isLoadingGameFavourite, limit } =
     useFavoriteGameControllerMobile()
+  const { clearAllDrawer } = useDrawerControllerMobile()
 
   return (
     <SwipeableDrawer
       anchor="right"
       open={open}
       onClose={() => setOpenWishlist(false)}
-      onOpen={() => setOpenWishlist(true)}
+      onOpen={() => {
+        clearAllDrawer()
+        setOpenWishlist(true)
+      }}
       disableSwipeToOpen={false}
       ModalProps={{
         keepMounted: true
       }}
-      sx={{
-        ".MuiDrawer-paper": {
-          background: "#121212",
-          width: "100%"
-        }
-      }}
+      sx={StyleDrawer}
     >
       <Box
         component="div"

@@ -7,13 +7,19 @@ import Link from "next/link"
 import { ImageCustom } from "@components/atoms/image/Image"
 import { Box } from "@mui/material"
 import useNotiStore from "@stores/notification"
-import useHomeControllerMobile from "@mobile/features/game/containers/hooks/useHomeControllerMobile"
 import NotificationModal from "@mobile/components/organisms/modal/NotificationModal"
+import ProfileSettingModal from "@mobile/components/organisms/modal/ProfileSettingModal"
+import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 
 const HeadProfileMobile = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { count } = useNotiStore()
-  const { openNotification, setOpenNotification } = useHomeControllerMobile()
+  const {
+    openNotification,
+    setOpenNotification,
+    profileSetting,
+    setProfileSetting
+  } = useDrawerControllerMobile()
 
   return (
     <header className="header bg-[#F32429] pb-[55px]">
@@ -33,12 +39,10 @@ const HeadProfileMobile = () => {
               margin: 0
             }
           }}
+          onClick={() => setProfileSetting(true)}
         >
           {profile ? (
-            <Link
-              href={`/profile/${profile?.id}`}
-              className="head-profile__info--avatar"
-            >
+            <div className="head-profile__info--avatar">
               <ImageCustom
                 src={profile?.avatar || "/images/avatar.png"}
                 alt="avatar"
@@ -46,7 +50,7 @@ const HeadProfileMobile = () => {
                 height={55}
                 className="h-full w-full object-cover"
               />
-            </Link>
+            </div>
           ) : (
             <Link href="/login">{/* <PersonIcon /> */}</Link>
           )}
@@ -76,6 +80,12 @@ const HeadProfileMobile = () => {
       <NotificationModal
         open={openNotification}
         setOpenNotification={setOpenNotification}
+      />
+
+      {/* Profile Setting Modal */}
+      <ProfileSettingModal
+        open={profileSetting}
+        setProfileSetting={setProfileSetting}
       />
     </header>
   )

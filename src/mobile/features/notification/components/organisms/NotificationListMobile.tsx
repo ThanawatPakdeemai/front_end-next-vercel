@@ -10,12 +10,14 @@ interface INotificationListMobile {
   loading: boolean
   list: INotification[]
   limit: number
+  handleClick: (_notification: INotification) => void
 }
 
 const NotificationListMobile = ({
   loading,
   list,
-  limit
+  limit,
+  handleClick
 }: INotificationListMobile) => (
   <Box
     component="section"
@@ -34,6 +36,9 @@ const NotificationListMobile = ({
           title={_item.game_name}
           createdAt={_item.createdAt}
           status={_item.read}
+          handleClick={() => {
+            handleClick(_item)
+          }}
         />
       ))}
   </Box>

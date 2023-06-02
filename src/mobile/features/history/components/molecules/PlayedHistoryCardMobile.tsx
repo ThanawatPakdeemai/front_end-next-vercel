@@ -2,9 +2,9 @@ import React, { memo } from "react"
 import { Box } from "@mui/material"
 import dayjs from "dayjs"
 import { ImageCustom } from "@components/atoms/image/Image"
-import { INotification } from "@mobile/types/INotification"
+import { INotificationProps } from "@mobile/types/INotification"
 
-interface IPlayedHistoryCardMobileProps extends INotification {
+interface IPlayedHistoryCardMobileProps extends INotificationProps {
   image: string
 }
 const PlayedHistoryCardMobile = ({

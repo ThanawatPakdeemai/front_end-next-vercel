@@ -16,7 +16,7 @@ const NotificationModal = ({
   setOpenNotification
 }: INotificationModalProps) => {
   const { clearAllDrawer } = useDrawerControllerMobile()
-  const { notificationList, isLoadingNotification, limit } =
+  const { notificationList, isLoadingNotification, limit, onClickView } =
     useNotificationController()
 
   return (
@@ -51,6 +51,7 @@ const NotificationModal = ({
           list={notificationList}
           loading={isLoadingNotification}
           limit={limit}
+          handleClick={onClickView}
         />
       </Box>
     </SwipeableDrawer>

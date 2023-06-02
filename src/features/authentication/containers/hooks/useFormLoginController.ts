@@ -15,7 +15,11 @@ import { useForm } from "react-hook-form"
 import { ISignIn } from "@feature/authentication/interfaces/IAuthService"
 import { isMobile } from "@hooks/useGlobal"
 import { IError } from "@src/types/contract"
+import useConnectMetamaskAction from "@utils/useConnectMetamesk"
+import { useWeb3Provider } from "@providers/Web3Provider"
+import Web3 from "web3"
 import useSignIn from "./useSignIn"
+import useLoginMetamask from "./useLoginMetamask"
 
 export interface TFormData {
   email: string
@@ -27,10 +31,15 @@ export interface TFormData {
 }
 
 const useFormLoginController = () => {
-  const { mutateSignIn } = useSignIn()
+  const { mutateSignIn, isLoading } = useSignIn()
   const { mutateLoginProvider } = useLoginProvider()
+  const { mutateLoginMetamask } = useLoginMetamask()
   const { successToast, errorToast } = useToast()
   const router = useRouter()
+
+  const web3 = new Web3(Web3.givenProvider)
+  const { address: account } = useWeb3Provider()
+  const { getSignature } = useConnectMetamaskAction()
 
   const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
@@ -64,6 +73,10 @@ const useFormLoginController = () => {
         }
       })
       .catch(() => {})
+  }
+
+  const onError = () => {
+    errorToast(MESSAGES.please_fill)
   }
 
   const facebookLogin = async (response: IProfileFaceBook) => {
@@ -163,13 +176,48 @@ const useFormLoginController = () => {
       })
   }
 
+  const metaMarkLogin = async () => {
+    let accounts: Array<string> = []
+    try {
+      await web3?.givenProvider?.request({ method: "eth_requestAccounts" })
+      accounts = await web3.eth.getAccounts()
+    } catch (_error) {
+      errorToast(MESSAGES["please-connect-wallet"])
+    }
+    const valueSigner = await getSignature(account || accounts[0])
+    if (
+      ((typeof valueSigner === "string" || valueSigner instanceof String) &&
+        account) ||
+      accounts[0]
+    ) {
+      mutateLoginMetamask({
+        _account: account,
+        _accounts: accounts[0],
+        _valueSigner: valueSigner
+      })
+        .then(async (_res) => {
+          if (_res) {
+            successToast(MESSAGES.logged_in_successfully)
+          }
+        })
+        .catch((_error: IError) => {
+          errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
+        })
+    } else {
+      errorToast(MESSAGES["please-connect-wallet"])
+    }
+  }
+
   return {
     register,
+    isLoading,
     onSubmitLogin,
+    onError,
     handleSubmit,
     facebookLogin,
     googleLogin,
-    twitterLogin
+    twitterLogin,
+    metaMarkLogin
   }
 }
 

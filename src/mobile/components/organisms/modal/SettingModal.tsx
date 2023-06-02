@@ -15,6 +15,7 @@ import Support2Icon from "@components/icons/Support2Icon"
 import Profile2Icon from "@components/icons/Profile2Icon"
 import ClockIcon from "@components/icons/ClockIcon"
 import LogoutIcon from "@components/icons/LogoutIcon"
+import { useTranslation } from "react-i18next"
 import LogoutModal from "./LogoutModal"
 
 interface ISettingModalProps {
@@ -26,6 +27,9 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
   const profile = useProfileStore((state) => state.profile.data)
   const [toggleLogout, setToggleLogout] = useState(false)
   const handleToggleLogout = () => setToggleLogout(!toggleLogout)
+
+  const { t } = useTranslation()
+
   return (
     <SwipeableDrawer
       anchor="right"
@@ -143,7 +147,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
                 <NavigateNextIcon className="text-white-default" />
               </IconButton>
             }
-            title="Played History"
+            title={t("Played History")}
           />
           <CardHeader
             sx={{
@@ -213,7 +217,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
                 <NavigateNextIcon className="text-white-default" />
               </IconButton>
             }
-            title="Support"
+            title={t("Support")}
           />
         </Box>
         <Box
@@ -251,7 +255,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
               <LogoutIcon />
             </Avatar>
           }
-          title="Logout"
+          title={t("logout")}
         />
       </Box>
       {/* Modal Logout */}

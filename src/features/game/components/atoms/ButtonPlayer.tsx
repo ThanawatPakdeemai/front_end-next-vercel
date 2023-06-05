@@ -62,11 +62,12 @@ const ButtonGame = ({
         <motion.span
           variants={iconStart}
           transition={{ duration: 0.1, type: "spring", stiffness: stiffValue }}
+          className="text-icon"
         >
           {startIcon}
         </motion.span>
         <motion.div
-          className={`mr-3 w-full font-neue-machina text-sm ${
+          className={`text-button mr-3 w-full font-neue-machina text-sm ${
             isMobile && "px-2.5"
           }`}
           variants={textBtn}

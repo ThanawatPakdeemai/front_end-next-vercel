@@ -9,7 +9,6 @@ import { Box } from "@mui/material"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
-import CONFIGS from "@configs/index"
 import TopPlayerFreeToEarn from "@feature/ranking/components/template/TopPlayerFreeToEarn"
 import { IGameItem } from "@feature/gameItem/interfaces/IGameItemService"
 
@@ -73,8 +72,8 @@ const GameTabsVertical = dynamic(
   }
 )
 
-const RoomListLayout = dynamic(
-  () => import("@src/mobile/components/templates/RoomListLayout"),
+const RoomlistLayoutMobile = dynamic(
+  () => import("@mobile/components/templates/RoomlistLayoutMobile"),
   {
     suspense: true,
     ssr: false
@@ -140,75 +139,95 @@ export default function GameRoomList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameData])
 
-  return gameData ? (
-    <GamePageDefault
-      component={
-        <RightSidebarContent
-          className="mb-24"
-          content={<GameRoomListPage />}
-          aside={
-            <Box
-              component="div"
-              className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
-              sx={{
-                ".panel-content": {
-                  maxHeight: "200px",
-                  ".custom-scroll": {
-                    overflow: "hidden"
+  const renderContentDesktop = () =>
+    gameData ? (
+      <GamePageDefault
+        component={
+          <RightSidebarContent
+            className="mb-24"
+            content={<GameRoomListPage />}
+            aside={
+              <Box
+                component="div"
+                className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
+                sx={{
+                  ".panel-content": {
+                    maxHeight: "200px",
+                    ".custom-scroll": {
+                      overflow: "hidden"
+                    }
+                  },
+                  ".like-no_score": {
+                    margin: "0"
                   }
-                },
-                ".like-no_score": {
-                  margin: "0"
+                }}
+              >
+                <OverviewContent
+                  gameId={gameData.id}
+                  gameType={getTypeGamePathFolder(gameData)}
+                />
+                {isFreeToEarnGame(gameData) && (
+                  <TopPlayerFreeToEarn
+                    gameId={gameData.id}
+                    total={10}
+                    gameItem={gameData.item[0] || ({} as IGameItem)}
+                  />
+                )}
+                {renderFormBuyItem()}
+              </Box>
+            }
+          />
+        }
+        component2={
+          <FullWidthContent
+            sxCustomStyled={{
+              "&.container": {
+                maxWidth: "100%!important",
+                "&.container-fullWidth": {
+                  padding: "49px"
                 }
-              }}
-            >
-              <OverviewContent
+              }
+            }}
+          >
+            <TabProvider>
+              <GameTabsVertical
                 gameId={gameData.id}
                 gameType={getTypeGamePathFolder(gameData)}
               />
-              {isFreeToEarnGame(gameData) && (
-                <TopPlayerFreeToEarn
-                  gameId={gameData.id}
-                  total={10}
-                  gameItem={gameData.item[0] || ({} as IGameItem)}
-                />
-              )}
-              {renderFormBuyItem()}
-            </Box>
-          }
-        />
-      }
-      component2={
-        <FullWidthContent
-          sxCustomStyled={{
-            "&.container": {
-              maxWidth: "100%!important",
-              "&.container-fullWidth": {
-                padding: "49px"
-              }
-            }
-          }}
-        >
-          <TabProvider>
-            <GameTabsVertical
-              gameId={gameData.id}
-              gameType={getTypeGamePathFolder(gameData)}
-            />
-          </TabProvider>
-        </FullWidthContent>
-      }
-    />
-  ) : (
-    <GamePageDefault component={<SkeletonBanner />} />
-  )
+            </TabProvider>
+          </FullWidthContent>
+        }
+      />
+    ) : (
+      <GamePageDefault component={<SkeletonBanner />} />
+    )
+
+  /**
+   * @description Content Mobile
+   */
+  const renderContentMobile = () => {
+    if (gameData) {
+      return <RoomlistLayoutMobile gameData={gameData} />
+    }
+    return <GamePageDefault component={<SkeletonBanner />} />
+  }
+
+  /**
+   * @description Render Default Page (Mobile or Desktop)
+   * @returns
+   */
+  const renderDefaultPage = () => {
+    if (isMobile) {
+      return renderContentMobile()
+    }
+    return renderContentDesktop()
+  }
+
+  return renderDefaultPage()
 }
 
 GameRoomList.getLayout = function getLayout(page: ReactElement) {
-  return isMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true" ? (
-    <RoomListLayout />
-  ) : (
-    page
-  )
+  return page
 }
 
 export async function getServerSideProps({ locale }) {

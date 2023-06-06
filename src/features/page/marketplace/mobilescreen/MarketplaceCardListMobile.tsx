@@ -1,10 +1,11 @@
 import React from "react"
 import { v4 as uuidv4 } from "uuid"
 import dynamic from "next/dynamic"
+import { useRouter } from "next/router"
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
 import { PaginationNaka } from "@components/atoms/pagination"
 import useMarketInfo from "@feature/marketplace/containers/hooks/useMarketInfo"
-import { useRouter } from "next/router"
+import NoData from "@components/molecules/NoData"
 import SkeletonItemMobile from "./SkeletonItemMobile"
 
 const CardItemMarketPlace = dynamic(
@@ -82,7 +83,7 @@ const MarketplaceCardListMobile = () => {
   return (
     <div className="flex justify-center">
       {orderData?.data.length === 0 && !isLoading ? (
-        <div>No data</div>
+        <NoData />
       ) : (
         <div className="grid w-fit grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {[...Array(limit)].map(() => (

@@ -27,7 +27,7 @@ export interface INFTInfo {
   image_game_ipfs_cid: string
   vdo_game_ipfs_cid: string
   address_owner: string
-  owner_id: string
+  owner_id: { _id: string }
   meta_data: IArcMetaData
   player_id: {
     username: string

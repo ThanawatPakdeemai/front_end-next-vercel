@@ -6,6 +6,7 @@ import { PaginationNaka } from "@components/atoms/pagination"
 import SkeletonItem from "@feature/marketplace/components/molecules/SkeletonItem"
 import useMarketInfo from "@feature/marketplace/containers/hooks/useMarketInfo"
 import { useRouter } from "next/router"
+import NoData from "@components/molecules/NoData"
 import SkeletonItemMobile from "./mobilescreen/SkeletonItemMobile"
 
 const CardItemMarketPlace = dynamic(
@@ -83,9 +84,7 @@ const MarketplaceCardList = () => {
   return (
     <div className="flex justify-center">
       {orderData?.data.length === 0 && !isLoading ? (
-        <div className="flex h-20 w-full items-center justify-center font-neue-machina uppercase">
-          no data
-        </div>
+        <NoData />
       ) : (
         <div className="grid  w-fit grid-cols-2 gap-4 sm:w-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {[...Array(limit)].map(() => (

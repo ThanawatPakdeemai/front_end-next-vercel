@@ -8,7 +8,7 @@ import RightDetailsMarketplace from "@feature/marketplace/components/organisms/R
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import useCountStore from "@stores/countComponant"
 import useProfileStore from "@stores/profileStore"
-import React, { useEffect } from "react"
+import React from "react"
 
 const MarketplaceOwnerDetail = () => {
   const { profile } = useProfileStore()

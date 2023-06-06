@@ -375,7 +375,8 @@ const useGlobal = (
   const isRedirectRoomlist = (_game: IGame): "/roomlist" | "" => {
     if (
       _game.play_to_earn_status === "free" ||
-      _game.game_mode === "free-to-earn"
+      _game.game_mode === "free-to-earn" ||
+      _game.game_mode === "free-to-play"
     ) {
       return "/roomlist"
     }

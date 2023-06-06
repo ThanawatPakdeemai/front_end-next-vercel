@@ -17,7 +17,9 @@ import {
   IGetGameByTypesProps,
   IGetGameByTypes,
   IFilterGamesByKey,
-  IResponseGameUpdatedPlaying
+  IResponseGameUpdatedPlaying,
+  IOwnerCommission,
+  IResponseOwnerCommissionData
 } from "@feature/game/interfaces/IGameService"
 
 export const getAllGames = () =>
@@ -237,4 +239,19 @@ export const updatePlayCounting = (gameId: string) =>
       )
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
+  })
+
+export const checkGameOwner = (data: IOwnerCommission) =>
+  new Promise<IResponseOwnerCommissionData>((resolve, reject) => {
+    services
+      .post<IResponseOwnerCommissionData>(
+        `${CONFIGS.BASE_URL.API}/game/NFT/game-owner/commission`,
+        data
+      )
+      .then((res) => {
+        resolve(res.data)
+      })
+      .catch((error: Error) => {
+        reject(error)
+      })
   })

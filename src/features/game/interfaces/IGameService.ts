@@ -612,3 +612,29 @@ export interface IResponseGameUpdatedPlaying {
   status: boolean
   data: IResponseGameUpdatedPlayingData
 }
+
+export interface IOwnerCommission {
+  [x: string]: any
+  game_id: string
+  start: string
+  end: string
+}
+
+export interface IGameCommissionDetail {
+  type: string
+  commission: number
+  game_id: string
+  game_name: string
+  date: Date
+}
+
+export interface IResponseOwnerCommission {
+  _id: string
+  total_transaction: number
+  total_amount_commission: number
+  game_commission_detail: IGameCommissionDetail[]
+}
+
+export interface IResponseOwnerCommissionData {
+  data: IResponseOwnerCommission
+}

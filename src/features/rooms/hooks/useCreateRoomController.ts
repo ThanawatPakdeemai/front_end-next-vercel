@@ -4,7 +4,6 @@ import useCountStore from "@stores/countComponant"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import { useTranslation } from "react-i18next"
 import { unstable_batchedUpdates } from "react-dom"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import useGameGlobal from "@hooks/useGameGlobal"
@@ -147,7 +146,19 @@ const useCreateRoomController = ({ gameData }: ICreateRoomControllerProp) => {
     }
   }, [gameData, setCount, setMax, setMin])
 
-  return {}
+  return {
+    handleOpen,
+    open,
+    handleClose,
+    map,
+    maps,
+    setMap,
+    handleSetIsCurrent,
+    isPublicRoom,
+    setIsPublicRoom,
+    isLoading,
+    handleSubmit
+  }
 }
 
 export default useCreateRoomController

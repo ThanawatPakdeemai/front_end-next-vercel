@@ -3,6 +3,7 @@ import { v4 as uuid } from "uuid"
 import ListJoinGame from "../../molecules/ListJoinGame"
 import SkeletonEarnRewardMobile from "@mobile/components/atoms/skeleton/SkeletonEarnRewardMobile"
 import { Box } from "@mui/material"
+import NoData from "@components/molecules/NoData"
 
 const MultiRoom = () => {
   const { dataRoom, data, handleJoinRoom, itemSelected } = useRoomMulti()
@@ -16,7 +17,18 @@ const MultiRoom = () => {
           component={"div"}
           className="roomlist-multi__content"
         >
-          {dataRoom && dataRoom.length > 0 ? (
+          {!dataRoom && (
+            <div className="flex flex-col gap-3">
+              {[...Array(10)].map(() => (
+                <SkeletonEarnRewardMobile key={uuid()} />
+              ))}
+            </div>
+          )}
+
+          {dataRoom && dataRoom.length === 0 && <NoData />}
+
+          {dataRoom &&
+            dataRoom.length > 0 &&
             dataRoom.map((item) => (
               <ListJoinGame
                 time={item.end_time as unknown as string}
@@ -35,14 +47,7 @@ const MultiRoom = () => {
                 }
                 descChip2={`${item.amount_current_player} / ${item.max_players}`}
               />
-            ))
-          ) : (
-            <div className="flex flex-col gap-3">
-              {[...Array(10)].map(() => (
-                <SkeletonEarnRewardMobile key={uuid()} />
-              ))}
-            </div>
-          )}
+            ))}
         </Box>
       )}
     </Box>

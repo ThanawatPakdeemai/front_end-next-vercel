@@ -1,12 +1,15 @@
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import SwitchCustom from "@components/atoms/SwitchCustom"
-import PlusIcon from "@components/icons/CountIcon/PlusIcon"
 import PlayersIcon from "@components/icons/PlayersIcon"
 import CountItem from "@components/molecules/CountItem"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import { IGame, IGameMap } from "@feature/game/interfaces/IGameService"
 import useCreateRoomController from "@feature/rooms/hooks/useCreateRoomController"
+import ButtonFilledTemplate from "@mobile/components/templates/ButtonFilledTemplate"
+import ModalWithHeaderTemplate from "@mobile/components/templates/ModalWithHeaderTemplate"
+import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
+import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
 import { MapOutlined } from "@mui/icons-material"
 import {
   Box,
@@ -14,48 +17,55 @@ import {
   MenuItem,
   TextField,
   Typography,
-  CircularProgress
+  CircularProgress,
+  SwipeableDrawer
 } from "@mui/material"
 import { useTranslation } from "react-i18next"
 
-interface IProp {
-  gameData: IGame
+interface ICreateRoomProps {
+  map: number
+  maps: IGameMap[]
+  setMap: React.Dispatch<React.SetStateAction<number>>
+  handleSetIsCurrent: (_status: boolean) => void
+  isPublicRoom: boolean
 }
 
-const ModalCreateRoomMobile = ({ gameData }: IProp) => {
+interface IProp extends ICreateRoomProps {
+  gameData: IGame
+  openCreateRoom: boolean
+  setOpenCreateRoom: React.Dispatch<React.SetStateAction<boolean>>
+  setIsPublicRoom: React.Dispatch<React.SetStateAction<boolean>>
+  isLoading: boolean
+  handleSubmit: () => void
+}
+
+const ModalCreateRoomMobile = ({
+  gameData,
+  openCreateRoom,
+  setOpenCreateRoom,
+  ...props
+}: IProp) => {
   const { t } = useTranslation()
-  const {
-    handleOpen,
-    open,
-    handleClose,
-    map,
-    maps,
-    setMap,
-    handleSetIsCurrent,
-    isPublicRoom,
-    setIsPublicRoom,
-    isLoading,
-    handleSubmit
-  } = useCreateRoomController({
-    gameData
-  })
+  const { clearAllDrawer } = useDrawerControllerMobile()
 
   return (
-    <>
-      {/* <ButtonToggleIcon
-        handleClick={handleOpen}
-        startIcon={<PlusIcon />}
-        text={t("create_room")}
-        className="btn-rainbow-theme z-[2] w-[156px] bg-secondary-main font-bold capitalize text-white-primary"
-        type="button"
-      /> */}
-      <ModalCustom
-        open={open}
-        onClose={handleClose}
-        width={353}
-      >
+    <SwipeableDrawer
+      anchor="bottom"
+      open={openCreateRoom}
+      onClose={() => setOpenCreateRoom(false)}
+      onOpen={() => {
+        clearAllDrawer()
+        setOpenCreateRoom(true)
+      }}
+      disableSwipeToOpen={false}
+      ModalProps={{
+        keepMounted: true
+      }}
+      sx={StyleDrawer}
+    >
+      <ModalWithHeaderTemplate title={"Create Room"}>
         <div className="flex w-full flex-col gap-y-[22px]">
-          <Box
+          {/* <Box
             component="div"
             className="flex items-center rounded-lg bg-neutral-800 pr-[7px]"
             sx={{ height: "54px" }}
@@ -66,7 +76,7 @@ const ModalCreateRoomMobile = ({ gameData }: IProp) => {
               </Typography>
             </div>
             <ButtonClose onClick={handleClose} />
-          </Box>
+          </Box> */}
           <CountItem
             endIcon={<PlayersIcon />}
             label={t("number_of_players")}
@@ -76,7 +86,7 @@ const ModalCreateRoomMobile = ({ gameData }: IProp) => {
               label={t("select_map")}
               select
               placeholder={`${t("select_map")}...`}
-              value={map}
+              value={props.map}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -85,15 +95,15 @@ const ModalCreateRoomMobile = ({ gameData }: IProp) => {
                 )
               }}
             >
-              {maps &&
-                maps.map((option: IGameMap) => (
+              {props.maps &&
+                props.maps.map((option: IGameMap) => (
                   <MenuItem
                     sx={{
                       borderRadius: 4
                     }}
                     key={option.map_id}
                     value={option.map_id}
-                    onClick={() => setMap(Number(option.map_id))}
+                    onClick={() => props.setMap(Number(option.map_id))}
                   >
                     {option.map_name}
                   </MenuItem>
@@ -105,28 +115,28 @@ const ModalCreateRoomMobile = ({ gameData }: IProp) => {
             <button
               className="ml-2 mr-[10px]"
               type="button"
-              onClick={() => handleSetIsCurrent(true)}
+              onClick={() => props.handleSetIsCurrent(true)}
             >
-              <span className={isPublicRoom ? "!text-neutral-300" : ""}>
+              <span className={props.isPublicRoom ? "!text-neutral-300" : ""}>
                 {t("public")}
               </span>
             </button>
             <SwitchCustom
-              checked={isPublicRoom}
+              checked={props.isPublicRoom}
               onChange={(e) => {
                 if (e.target.checked) {
-                  setIsPublicRoom(true)
+                  props.setIsPublicRoom(true)
                 } else {
-                  setIsPublicRoom(false)
+                  props.setIsPublicRoom(false)
                 }
               }}
             />
             <button
               className="ml-[10px] mr-2"
               type="button"
-              onClick={() => handleSetIsCurrent(false)}
+              onClick={() => props.handleSetIsCurrent(false)}
             >
-              <span className={!isPublicRoom ? "!text-neutral-300" : ""}>
+              <span className={!props.isPublicRoom ? "!text-neutral-300" : ""}>
                 {t("private")}
               </span>
             </button>
@@ -134,9 +144,9 @@ const ModalCreateRoomMobile = ({ gameData }: IProp) => {
           <ButtonToggleIcon
             className=" flex items-center bg-secondary-main text-white-default"
             startIcon={null}
-            disabled={isLoading}
+            disabled={props.isLoading}
             text={
-              isLoading ? (
+              props.isLoading ? (
                 <CircularProgress
                   color="primary"
                   size={20}
@@ -145,12 +155,12 @@ const ModalCreateRoomMobile = ({ gameData }: IProp) => {
                 t("create")
               )
             }
-            handleClick={handleSubmit}
+            handleClick={props.handleSubmit}
             type="button"
           />
         </div>
-      </ModalCustom>
-    </>
+      </ModalWithHeaderTemplate>
+    </SwipeableDrawer>
   )
 }
 

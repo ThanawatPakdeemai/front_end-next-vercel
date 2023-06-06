@@ -5,9 +5,11 @@ export const StyleDrawer: SxProps<Theme> = {
     zIndex: 2
   },
   ".MuiDrawer-paper": {
-    background: "#121212",
     width: "100%",
-    paddingBottom: "90px"
+    paddingBottom: "90px",
+    borderRadius: "48px 48px 0px 0px",
+    background: "#18181C",
+    border: "1px solid #35383F"
   }
 }
 

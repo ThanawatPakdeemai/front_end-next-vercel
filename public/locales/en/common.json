@@ -402,6 +402,8 @@
   "publisher": "Publisher",
   "game_type": "Game Type",
   "game_owner": "Game Owner",
+  "earn_amount": "Earn Amount",
+  "play_count": "Play Count",
   "game_page_tagline_desc": "Don't miss the information analysis about this game",
   "people": "People",
   "potential_profit": "Potential Profit",

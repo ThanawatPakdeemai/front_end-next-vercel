@@ -1,5 +1,3 @@
-import CONFIGS from "@configs/index"
-
 type Banner = {
   title: string
   imgSrc: string
@@ -59,7 +57,7 @@ export const BANNER_DATA: Banner[] = [
   {
     title: "naka market",
     imgSrc: "/images/banner/nakaMarket.webp",
-    path: `${CONFIGS.BASE_URL.MARKETPLACE}`,
+    path: "/marketplace",
     textColor: "purple"
   }
 ]

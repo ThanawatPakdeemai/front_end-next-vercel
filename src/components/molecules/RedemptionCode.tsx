@@ -15,17 +15,19 @@ import useProfileStore from "@stores/profileStore"
 import { motion } from "framer-motion"
 import React, { memo } from "react"
 import { useTranslation } from "react-i18next"
+import { useToast } from "@feature/toast/containers"
+import useGetCoupon from "@feature/coupon/containers/hook/useGetCoupon"
 
 interface ICharacterCoupon {
   couponLength: number
   disableCoupon: boolean
 }
 
-interface IProps {
-  onRedeem: (_coupon: string) => void
+interface IProp {
+  onRedeem?: (_coupon: string) => void
 }
 
-const RedemptionCode = ({ onRedeem }: IProps) => {
+const RedemptionCode = ({ onRedeem }: IProp) => {
   const [expanded, setExpanded] = React.useState<string | false>("")
   const [coupon, setCoupon] = React.useState<string>("")
   const [characterCoupon, setCharacterCoupon] =
@@ -34,6 +36,8 @@ const RedemptionCode = ({ onRedeem }: IProps) => {
       disableCoupon: true
     })
   const { profile } = useProfileStore()
+  const { getRedeemCode } = useGetCoupon()
+  const { errorToast, successToast } = useToast()
 
   const { t } = useTranslation()
 
@@ -58,9 +62,18 @@ const RedemptionCode = ({ onRedeem }: IProps) => {
   }
 
   const handleClick = async () => {
-    if (coupon) {
+    if (onRedeem) {
       await onRedeem(coupon)
+    } else if (coupon && !onRedeem) {
+      await getRedeemCode(coupon)
+        .then((res) => {
+          successToast(res.message)
+        })
+        .catch((error) => {
+          errorToast(error.message)
+        })
     }
+
     setCoupon("")
     setCharacterCoupon({
       couponLength: 0,
@@ -72,14 +85,22 @@ const RedemptionCode = ({ onRedeem }: IProps) => {
     <Accordion
       expanded={expanded === "panel1"}
       onChange={handleChange("panel1")}
-      className="static rounded-md border-neutral-800 bg-neutral-780"
+      className="static mt-4 rounded-md border-neutral-800 bg-neutral-780 px-[26px]"
+      sx={{
+        backgroundImage: "none"
+      }}
     >
       <AccordionSummary
         aria-controls="panel1d-content"
         id="panel1d-header"
       >
-        <div className="relative flex h-10 w-full items-center justify-between px-4">
-          <Typography className="text-neutral-300">REDEMPTION CODE</Typography>
+        <div className="relative flex h-10 w-full items-center justify-between">
+          <Typography className="flex-1 text-[14px] text-neutral-300 sm:text-lg">
+            REDEMPTION CODE
+          </Typography>
+          <Typography className="mr-[26px] font-neue-machina text-xs uppercase text-secondary-main">
+            How to redeem
+          </Typography>
           <div className="flex h-[40px] w-[40px] items-center justify-center rounded-lg border-[1px] border-solid border-neutral-700 bg-neutral-800">
             <div
               className={`flex items-center justify-center ${
@@ -103,20 +124,24 @@ const RedemptionCode = ({ onRedeem }: IProps) => {
             sx={{
               "& .MuiOutlinedInput-root": {
                 width: "100%"
+              },
+              "& input": {
+                color: "#70727B"
               }
             }}
             onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
               e.target.value = e.target.value.replace(/[^A-Za-z0-9]/gi, "")
-              isCharactersCoupon(e.target.value)
+              if (e.target.value.length <= 6) {
+                isCharactersCoupon(e.target.value)
+              }
             }}
-            id="username-create"
-            placeholder="Ex. naka12345"
+            id="redeem-field"
+            placeholder="e.g. naka12345"
             size="medium"
             InputProps={{
               style: {
                 fontFamily: "neueMachina",
-                backgroundColor: "#232329",
-                borderColor: "#18181C"
+                borderColor: "#232329"
               },
               startAdornment: (
                 <InputAdornment position="start">
@@ -132,7 +157,7 @@ const RedemptionCode = ({ onRedeem }: IProps) => {
             disabled={!profile || characterCoupon.disableCoupon}
             sx={{ fontFamily: "neueMachina" }}
             color="secondary"
-            className="btn-rainbow-theme w-1/3 text-sm"
+            className="btn-rainbow-theme !h-10 !min-w-[80px] text-sm sm:!min-w-[180px]"
             variant="contained"
             size="large"
             type="submit"

@@ -10,7 +10,7 @@ export interface IGameDownloadSlide {
 }
 
 export interface IVerticalThumbSlide {
-  id: string
+  id: string | number
   type: TMediaType
   src: string
 }

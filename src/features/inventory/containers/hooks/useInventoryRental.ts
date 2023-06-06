@@ -1,10 +1,12 @@
 import { useGetMyRentalBuilding } from "@feature/building/containers/hooks/useGetMyBuilding"
 import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
 import { useGetMyRentalLand } from "@feature/land/containers/hooks/useGetMyLand"
+import { TType } from "@feature/marketplace/interfaces/IMarketService"
 import useGlobal from "@hooks/useGlobal"
 import useMarketFilterStore from "@stores/marketFilter"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
+import { NextRouter, useRouter } from "next/router"
 import { useCallback, useEffect, useMemo, useState } from "react"
 
 const useInventoryRental = () => {
@@ -16,29 +18,35 @@ const useInventoryRental = () => {
   const { mutateGetMyRentalLand } = useGetMyRentalLand()
   const { mutateGetMyRentalBuilding } = useGetMyRentalBuilding()
   const { marketType } = useGlobal()
-
+  const router: NextRouter = useRouter()
   const [inventoryItemRental, setInventoryItemRental] = useState<
     Array<IInventoryItemList>
   >([])
-
-  const { sort, filter, search } = useMarketFilterStore()
-  const { getValueFromTKey } = Helper
+  const { sort, filterType, search } = useMarketFilterStore()
+  const { getValueFromTKey, convertTTypeToNFTType } = Helper
+  const _marketType =
+    marketType ||
+    convertTTypeToNFTType(router.query.type as TType) ||
+    "nft_land"
 
   const fetchInventoryRental = useCallback(async () => {
     let _data: IInventoryItemList[] = []
     let _total: number = 0
     setIsLoading(true)
-    if (profile.data && marketType && filter && search && sort) {
-      switch (marketType) {
+    if (profile.data && _marketType && filterType && search && sort) {
+      switch (_marketType) {
         case "nft_land":
           await mutateGetMyRentalLand({
             _limit: limit,
             _page: currentPage,
             _search: {
-              type_land: filter.length > 0 ? filter : undefined,
-              land_id:
+              type_land:
+                filterType.nft_land.length > 0
+                  ? filterType.nft_land
+                  : undefined,
+              nft_token:
                 search.length > 0
-                  ? (getValueFromTKey(search, "land_id") as string) // should be same as same nft_token
+                  ? (getValueFromTKey(search, "nft_token") as string) // should be same as same nft_token
                   : undefined
             }
           })
@@ -79,7 +87,10 @@ const useInventoryRental = () => {
             _limit: limit,
             _page: currentPage,
             _search: {
-              type_building: filter.length > 0 ? filter : undefined,
+              type_building:
+                filterType.nft_building.length > 0
+                  ? filterType.nft_building
+                  : undefined,
               nft_token:
                 search.length > 0
                   ? (getValueFromTKey(search, "nft_token") as string) // should be same as same nft_token
@@ -129,7 +140,7 @@ const useInventoryRental = () => {
     setTotalCount(_total)
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile.data, marketType, currentPage, limit, filter, search, sort])
+  }, [profile.data, _marketType, currentPage, limit, filterType, search, sort])
 
   useEffect(() => {
     let load = false
@@ -142,26 +153,16 @@ const useInventoryRental = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchInventoryRental])
 
-  useEffect(() => {
-    let cleanup = false
-    if (!cleanup) {
-      setIsLoading(true)
-    }
-    return () => {
-      cleanup = true
-    }
-  }, [fetchInventoryRental])
-
   useMemo(() => {
     let load = false
-    if (!load) {
+    if (!load && _marketType) {
       setCurrentPage(1)
     }
     return () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marketType])
+  }, [_marketType])
 
   return {
     isLoading,

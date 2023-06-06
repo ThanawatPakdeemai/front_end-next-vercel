@@ -4,7 +4,7 @@ import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import CardMyLandContent from "@feature/land/components/CardMyLandContent"
 import MyLandList from "@feature/land/components/organisms/MyLandList"
 import AddIcon from "@mui/icons-material/Add"
-import { Typography } from "@mui/material"
+import { Chip, Typography } from "@mui/material"
 import { Image } from "@components/atoms/image"
 import MiniMap from "@feature/map/components/organisms/MiniMap"
 import useGetAllLand from "@feature/land/containers/hooks/useGetAllLand"
@@ -20,7 +20,9 @@ import { colorThree } from "@constants/map"
 import useLoadingStore from "@stores/loading"
 import { useToast } from "@feature/toast/containers"
 import useUpdateLand from "@feature/land/containers/hooks/useUpdateLand"
+import { motion } from "framer-motion"
 import UploadImag from "../../../components/icons/marketplace/UploadImag"
+import MenuButtonExpandMobile from "../marketplace/mobilescreen/MenuButtonExpandMobile"
 
 const MyLandPage = () => {
   const { profile } = useProfileStore()
@@ -44,6 +46,11 @@ const MyLandPage = () => {
   const { sortLandId, sortBlockPoint } = useMyLandController()
   const { errorToast, successToast } = useToast()
   const { query } = useRouter()
+  const [expanded, setExpanded] = useState<boolean>(false)
+
+  const handleOnExpandClick = () => {
+    setExpanded(!expanded)
+  }
 
   const { x, y } = query
 
@@ -196,95 +203,168 @@ const MyLandPage = () => {
   }
 
   return (
-    <div className="grid grid-cols-2 gap-4">
-      <div>
-        <CardMyLandContent
-          title="NAKAVERSE MAP"
-          map
-          x={String(x)}
-          y={String(y)}
-        >
-          <MiniMap
-            pos={pos}
-            className="!h-[315px] rounded-[14px]"
-            ownerList={ownerLandList}
-            notOwnerList={notOwnerLandList}
-            currentLand={currentLand}
-            setCurrentLand={setCurrentLand}
-          />
-        </CardMyLandContent>
-        <MyLandList
-          landData={landData}
-          totolCount={totalCount}
-          limit={limit}
-          setLimit={setLimit}
-          page={page}
-          setPage={setPage}
-        />
+    <div>
+      <div className="mb-9 hidden flex-col justify-start sm:flex">
+        <Typography className="text-lg text-neutral-400">MY LAND</Typography>
+        <Typography className="text-xs text-neutral-600">
+          Wallet manager for nakamoto.games world
+        </Typography>
       </div>
-      <div className="ml-8">
-        <CardMyLandContent
-          title="Upload MAP Banner"
-          width={333}
-          map={false}
-        >
-          <div className="h-[313px] w-full rounded-[14px] border border-neutral-700 bg-neutral-780">
-            {imagePreview ? (
-              <Image
-                src={imagePreview}
-                alt="Image preview"
-                width={250}
-                height={250}
-                className="h-full w-full"
-              />
-            ) : (
-              <div className="relative grid h-full w-full content-center justify-items-center">
-                <UploadImag />
-                <Typography className="absolute bottom-0 mb-4 text-xs uppercase text-neutral-500">
-                  Size Recommended 1,000 x 1,000 px
+      <div className="relative grid justify-items-center">
+        <MiniMap
+          pos={pos}
+          className="block sm:hidden"
+          ownerList={ownerLandList}
+          notOwnerList={notOwnerLandList}
+          currentLand={currentLand}
+          setCurrentLand={setCurrentLand}
+        />
+        <div className="absolute top-4 z-10 mt-6 block h-[200px] sm:hidden">
+          <div className="grid max-w-[400px] justify-center gap-4">
+            <div className="flex h-[40px] gap-2">
+              <div className="flex	w-full items-center justify-between rounded-lg bg-neutral-800 px-[15px]">
+                <Typography className="text-sm uppercase text-white-default">
+                  NAKAVERSE MAP
                 </Typography>
               </div>
-            )}
+              <div className="h-[40pc] w-[40px]">
+                <motion.div
+                  transition={{ type: "spring", stiffness: 100 }}
+                  animate={{
+                    rotate: expanded ? 0 : 180
+                  }}
+                  className={`mr-1 grid h-[40px] !w-[40px] content-center justify-items-center rounded-[8px] border   p-[7px] ${
+                    expanded
+                      ? `bg-error-main`
+                      : `border-neutral-700 bg-neutral-780`
+                  }`}
+                >
+                  <MenuButtonExpandMobile
+                    isOpen={expanded}
+                    onClick={handleOnExpandClick}
+                    strokeWidth="2"
+                    color="#F1F4F4"
+                    transition={{
+                      ease: "easeOut",
+                      duration: 0.2,
+                      stiffness: 10,
+                      bounce: 5
+                    }}
+                    width="20"
+                    height="10"
+                  />
+                </motion.div>
+              </div>
+            </div>
+
+            <div className="flex h-[40px] w-[350px]	items-center justify-between rounded-[14px] bg-[#18181433] px-[15px] backdrop-blur-sm">
+              <Typography className="text-sm uppercase text-white-default">
+                NAKAVERSE MAP
+              </Typography>
+              {x && y && (
+                <Chip
+                  variant="filled"
+                  size="small"
+                  className="!bg-secondary-main uppercase !text-white-default"
+                  label={`x${String(x)}, y${String(y)}`}
+                />
+              )}
+            </div>
           </div>
-          <ButtonToggleIcon
-            text="Browse Image"
-            className="btn-rainbow-theme mt-[10px] h-[40px] !w-full !rounded-[24px] border border-neutral-700 bg-secondary-main font-bold capitalize text-white-primary"
-            startIcon={<AddIcon className="text-neutral-300" />}
-            handleClick={() => {
-              handleClick((e) =>
-                handleFileChange(e, setImagePreview, setSelectedFile)
-              )
-            }}
-          />
-          {selectedFile && (
-            <ButtonToggleIcon
-              text="Upload banner"
-              className="mt-[10px] h-[40px] !w-full !rounded-[24px] border border-neutral-700 bg-success-main font-bold capitalize text-success-contrastText"
-              startIcon={null}
-              endIcon={<IconArrowRight stroke="#010101" />}
-              handleClick={onSubmit}
-            />
-          )}
-          <input
-            type="file"
-            className="hidden"
-            onChange={(e) =>
-              handleFileChange(e, setImagePreview, setSelectedFile)
-            }
-            ref={hiddenImage}
-            id="file-upload"
-          />
-        </CardMyLandContent>
-        <div className="flex w-[333px] justify-center">
-          <Typography className="w-[230px] text-center text-sm text-neutral-500">
-            The banner will show on the map of the assets you hold.
-          </Typography>
         </div>
-        {/* {selectedFile && (
+      </div>
+
+      <div className="grid w-fit grid-cols-1 gap-4 lg:grid-cols-2">
+        <div className="mx-4 mt-4 sm:mx-0 sm:mt-0">
+          <CardMyLandContent
+            title="NAKAVERSE MAP"
+            map
+            x={String(x)}
+            y={String(y)}
+            className="hidden sm:block"
+          >
+            <MiniMap
+              pos={pos}
+              className="!h-[315px] rounded-[14px]"
+              ownerList={ownerLandList}
+              notOwnerList={notOwnerLandList}
+              currentLand={currentLand}
+              setCurrentLand={setCurrentLand}
+            />
+          </CardMyLandContent>
+          <MyLandList
+            landData={landData}
+            totolCount={totalCount}
+            limit={limit}
+            setLimit={setLimit}
+            page={page}
+            setPage={setPage}
+          />
+        </div>
+        <div className="mx-4 justify-center sm:mx-0">
+          <CardMyLandContent
+            title="Upload MAP Banner"
+            width={333}
+            map={false}
+          >
+            <div className="h-[313px] w-full rounded-[14px] border border-neutral-700 bg-neutral-780">
+              {imagePreview ? (
+                <Image
+                  src={imagePreview}
+                  alt="Image preview"
+                  width={250}
+                  height={250}
+                  className="h-full w-full"
+                />
+              ) : (
+                <div className="relative grid h-full w-full content-center justify-items-center">
+                  <UploadImag />
+                  <Typography className="absolute bottom-0 mb-4 text-xs uppercase text-neutral-500">
+                    Size Recommended 1,000 x 1,000 px
+                  </Typography>
+                </div>
+              )}
+            </div>
+            <ButtonToggleIcon
+              text="Browse Image"
+              className="btn-rainbow-theme mt-[10px] h-[40px] !w-full !rounded-[24px] border border-neutral-700 bg-secondary-main font-bold capitalize text-white-primary"
+              startIcon={<AddIcon className="text-neutral-300" />}
+              handleClick={() => {
+                handleClick((e) =>
+                  handleFileChange(e, setImagePreview, setSelectedFile)
+                )
+              }}
+            />
+            {selectedFile && (
+              <ButtonToggleIcon
+                text="Upload banner"
+                className="mt-[10px] h-[40px] !w-full !rounded-[24px] border border-neutral-700 bg-success-main font-bold capitalize text-success-contrastText"
+                startIcon={null}
+                endIcon={<IconArrowRight stroke="#010101" />}
+                handleClick={onSubmit}
+              />
+            )}
+            <input
+              type="file"
+              className="hidden"
+              onChange={(e) =>
+                handleFileChange(e, setImagePreview, setSelectedFile)
+              }
+              ref={hiddenImage}
+              id="file-upload"
+            />
+          </CardMyLandContent>
+          <div className="flex w-[333px] justify-center">
+            <Typography className="w-[230px] text-center text-sm text-neutral-500">
+              The banner will show on the map of the assets you hold.
+            </Typography>
+          </div>
+          {/* {selectedFile && (
           <Typography className="w-[230px] text-center text-sm text-neutral-500">
             {String(selectedFile.string)}
           </Typography>
         )} */}
+        </div>
       </div>
     </div>
   )

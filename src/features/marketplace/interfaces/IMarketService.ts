@@ -161,8 +161,9 @@ export interface IMarketServForm {
     player_id?: string
     isRent?: boolean
     type?: TNFTType
-    land_id?: string // wait dup with nft_token
+    // land_id?: string // wait dup with nft_token
     nft_token?: string
+    selling_type?: TSellingType
   }
   _sort?: {
     price?: number
@@ -261,7 +262,7 @@ export interface IBuyerDetail extends ITransHash {
 export interface IMarketData extends IMarketOrder, ICurrentTime {
   real_land: boolean
   buyer_details: any[]
-  __v: number
+  __v?: number
 }
 
 export interface IMarketGameData extends Omit<IGameItemList, "min_item"> {}
@@ -277,9 +278,9 @@ export interface IMarketDetail extends IMarketOrder {
 
 export interface IMarketForm {
   history: IMarketHistory[]
-  marketplaces_data: IMarketData[] | null
-  installments_data: IInstallData[] | null
-  rentals_data: IRentalData[] | null
+  marketplaces_data: IMarketData | null
+  installments_data: IInstallData | null
+  rentals_data: IRentalData | null
 }
 
 export interface ITransferMetaData {
@@ -367,7 +368,7 @@ export interface IMarketOrderServ extends IFormatService {
 }
 
 export interface IMarketCreateOrderServ extends IFormatService {
-  data: null
+  data: IMarketData
 }
 
 export interface IMarketTypesServ extends IFormatService {

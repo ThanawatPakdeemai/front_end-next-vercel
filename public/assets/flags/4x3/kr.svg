@@ -2,7 +2,7 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" id="flag-icons-kr" viewBox="0 0 640 480">
   <defs>
     <clipPath id="a">
-      <path fill-opacity=".7" d="M-95.8-.4h682.7v512H-95.8z"/>
+      <path fillOpacity=".7" d="M-95.8-.4h682.7v512H-95.8z"/>
     </clipPath>
   </defs>
   <g fillRule="evenodd" clipPath="url(#a)" transform="translate(89.8 .4) scale(.9375)">

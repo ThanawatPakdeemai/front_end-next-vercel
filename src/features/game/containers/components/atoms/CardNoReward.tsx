@@ -23,17 +23,18 @@ const StyledLogoReset = {
 
 interface IProps {
   className?: string
+  showIconTM?: boolean
 }
 
 const CardNoReward = (props: IProps) => {
-  const { className } = props
+  const { className, showIconTM } = props
   return (
     <Box
       component="div"
       className={`flex h-full w-full flex-col items-center justify-center rounded border border-neutral-800 bg-neutral-800 p-[10px] ${className}`}
       sx={StyledLogoReset}
     >
-      <LogoNaka />
+      <LogoNaka showIconTM={showIconTM} />
     </Box>
   )
 }

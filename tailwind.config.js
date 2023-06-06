@@ -20,7 +20,8 @@ module.exports = {
         main: "#F42728",
         light: "#FFAEAB",
         dark: "#F42728",
-        contrastText: "#010101"
+        contrastText: "#010101",
+        100: "#F32429"
       },
       info: {
         main: "#27F1EC",
@@ -38,7 +39,8 @@ module.exports = {
         main: "#E1D35A",
         light: "#FBE88E",
         dark: "#FFCA63",
-        contrastText: "#010101"
+        contrastText: "#010101",
+        100: "#F2C94C"
       },
       neutral: {
         100: "#F7FBFA",
@@ -48,7 +50,9 @@ module.exports = {
         500: "#70727B",
         600: "#4E5057",
         680: "#333338",
+        690: "#35383F",
         700: "#232329",
+        710: "#1F222A",
         780: "#101013",
         800: "#18181C",
         830: "#1f1f23",
@@ -82,7 +86,8 @@ module.exports = {
         "sans-serif"
       ],
       "digital-7": "digital-7",
-      "mondwest": ["mondwest", "Helvetica", "Arial", "sans-serif"]
+      "mondwest": ["mondwest", "Helvetica", "Arial", "sans-serif"],
+      "urbanist": ["Urbanist", "Helvetica", "Arial", "sans-serif"]
     },
     /* extend config here */
     extend: {

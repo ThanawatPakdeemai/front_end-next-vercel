@@ -4,16 +4,22 @@ import { useGetForSaleArcGame } from "@feature/game/marketplace/containers/hooks
 import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
 import { useGetMyForSaleLand } from "@feature/land/containers/hooks/useGetMyLand"
 import useGetMarketOrder from "@feature/marketplace/hooks/getMarketOrder"
+import {
+  TSellingType,
+  TType
+} from "@feature/marketplace/interfaces/IMarketService"
 import { useGetMyForSaleNakaPunk } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import useGlobal from "@hooks/useGlobal"
 import useMarketFilterStore from "@stores/marketFilter"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
+import { NextRouter, useRouter } from "next/router"
 import { useCallback, useEffect, useMemo, useState } from "react"
 
 const useInventoryForSale = () => {
   // state
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isItemLoading, setItemIsLoading] = useState<boolean>(true)
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
   const [limit, setLimit] = useState<number>(16)
@@ -29,87 +35,46 @@ const useInventoryForSale = () => {
   const { mutateGetMyForsaleNakaPunk } = useGetMyForSaleNakaPunk()
   const { mutateGetForsaleArcGame } = useGetForSaleArcGame()
   const { getMarketOrderAsnyc } = useGetMarketOrder()
-  const { convertNFTTypeToUrl, getValueFromTKey } = Helper
-  const { sort, search, filter } = useMarketFilterStore()
+  const { convertNFTTypeToUrl, getValueFromTKey, convertTTypeToNFTType } =
+    Helper
+  const { sort, search, filterType } = useMarketFilterStore()
+  const router: NextRouter = useRouter()
+  const _marketType =
+    marketType ||
+    convertTTypeToNFTType(router.query.type as TType) ||
+    "nft_land"
 
-  const fetchMyForsale = useCallback(async () => {
+  const fetchMyNFTForsale = useCallback(async () => {
+    let _data: IInventoryItemList[] = []
+    let _total: number = 0
     setIsLoading(true)
-    if (profile && profile.data && marketType && filter && search && sort) {
-      let _data: IInventoryItemList[] = []
-      let _total: number = 0
-      switch (marketType) {
-        case "game_item": {
-          await getMarketOrderAsnyc({
-            _urlNFT: convertNFTTypeToUrl(marketType),
-            _limit: limit,
-            _page: currentPage,
-            _sort: {},
-            _search: {
-              seller_id: profile.data.address,
-              seller_type: "user",
-              item_id: filter.length > 0 ? filter : undefined
-            }
-          })
-            .then((_res) => {
-              if (_res.data && _res.data.length > 0) {
-                _data = _res.data.map((gi) => ({
-                  id: gi._id,
-                  tokenId: gi.item_data?.item_id_smartcontract.toString() || "",
-                  cardType: "game-item",
-                  name:
-                    `${gi.item_data?.name} ${gi.item_data?.item_size}` || "",
-                  img: gi.item_data?.image || "",
-                  amount: gi.item_amount,
-                  size: gi.item_data?.item_size || "1$",
-                  price: gi.price
-                }))
-                _total = _res.info.totalCount
-              }
-            })
-            .catch(() => {})
-          break
-        }
-        case "nft_material":
-          await getMarketOrderAsnyc({
-            _urlNFT: convertNFTTypeToUrl(marketType),
-            _limit: limit,
-            _page: currentPage,
-            _sort: {},
-            _search: {
-              seller_id: profile.data.address,
-              seller_type: "user",
-              type_material: filter.length > 0 ? filter : undefined
-            }
-          })
-            .then((_res) => {
-              if (_res.data && _res.data.length > 0) {
-                _data = _res.data.map((m) => ({
-                  id: m._id,
-                  tokenId:
-                    m.material_data?.material_id_smartcontract.toString() || "",
-                  cardType: "material",
-                  name: m.material_data?.name || "",
-                  img: m.material_data?.image || "",
-                  amount: m.item_amount,
-                  price: m.price
-                }))
-                _total = _res.info.totalCount
-              }
-            })
-            .catch(() => {})
-          break
+    if (
+      profile.data &&
+      filterType &&
+      search &&
+      sort &&
+      _marketType &&
+      _marketType !== "game_item" &&
+      _marketType !== "nft_material"
+    ) {
+      switch (_marketType) {
         case "nft_land":
           await mutateGetMyForSaleLand({
             _limit: limit,
             _page: currentPage,
             _search: {
               seller_type: "user",
-              player_id: profile.data.id, // ! discuss BE team need to send ?
-              type_land: filter.length > 0 ? filter : undefined,
-              // selling_type
-              land_id:
+              type_land:
+                filterType.nft_land.length > 0
+                  ? filterType.nft_land
+                  : undefined,
+              selling_type:
                 search.length > 0
-                  ? (getValueFromTKey(search, "land_id") as string) // should be same as same nft_token
+                  ? (getValueFromTKey(search, "selling_type") as TSellingType)
+                  : undefined,
+              nft_token:
+                search.length > 0
+                  ? (getValueFromTKey(search, "nft_token") as string) // should be same as same nft_token
                   : undefined
             }
           })
@@ -122,9 +87,9 @@ const useInventoryForSale = () => {
                   name: l.name,
                   img: l.NFT_image,
                   vdo: l.NFT_video,
-                  price: l.marketplaces_data ? l.marketplaces_data[0].price : 0,
+                  price: l.marketplaces_data ? l.marketplaces_data.price : 0,
                   selling: l.marketplaces_data
-                    ? l.marketplaces_data[0].selling_type
+                    ? l.marketplaces_data.selling_type
                     : "fullpayment"
                 }))
                 _total = _res.info.totalCount
@@ -138,9 +103,14 @@ const useInventoryForSale = () => {
             _page: currentPage,
             _search: {
               seller_type: "user",
-              player_id: profile.data.id, // ! discuss BE team need to send ?
-              type_building: filter.length > 0 ? filter : undefined,
-              // selling_type
+              type_building:
+                filterType.nft_building.length > 0
+                  ? filterType.nft_building
+                  : undefined,
+              selling_type:
+                search.length > 0
+                  ? (getValueFromTKey(search, "selling_type") as TSellingType)
+                  : undefined,
               nft_token:
                 search.length > 0
                   ? (getValueFromTKey(search, "nft_token") as string)
@@ -159,9 +129,9 @@ const useInventoryForSale = () => {
                   level: b.level,
                   percentage:
                     b.deteriorate_building?.rate_deteriorate.percentage || 0,
-                  price: b.marketplaces_data ? b.marketplaces_data[0].price : 0,
+                  price: b.marketplaces_data ? b.marketplaces_data.price : 0,
                   selling: b.marketplaces_data
-                    ? b.marketplaces_data[0].selling_type
+                    ? b.marketplaces_data.selling_type
                     : "fullpayment"
                 }))
                 _total = _res.info.totalCount
@@ -194,9 +164,9 @@ const useInventoryForSale = () => {
                   name: g.name,
                   img: `https://ipfs.io/ipfs/${g.NFT_info.image_game_ipfs_cid}`,
                   vdo: `https://ipfs.io/ipfs/${g.NFT_info.vdo_game_ipfs_cid}?stream=true`,
-                  price: g.marketplaces_data ? g.marketplaces_data[0].price : 0,
+                  price: g.marketplaces_data ? g.marketplaces_data.price : 0,
                   selling: g.marketplaces_data
-                    ? g.marketplaces_data[0].selling_type
+                    ? g.marketplaces_data.selling_type
                     : "fullpayment"
                 }))
                 _total = _res.info.totalCount
@@ -225,9 +195,9 @@ const useInventoryForSale = () => {
                   cardType: "naka-punk",
                   name: p.name,
                   img: p.image,
-                  price: p.marketplaces_data ? p.marketplaces_data[0].price : 0,
+                  price: p.marketplaces_data ? p.marketplaces_data.price : 0,
                   selling: p.marketplaces_data
-                    ? p.marketplaces_data[0].selling_type
+                    ? p.marketplaces_data.selling_type
                     : "fullpayment"
                 }))
                 _total = _res.info.totalCount
@@ -238,47 +208,138 @@ const useInventoryForSale = () => {
         default:
           break
       }
-      setInventoryItemForsale(_data)
-      setTotalCount(_total)
     }
+    setInventoryItemForsale(_data)
+    setTotalCount(_total)
     setIsLoading(false)
-  }, [profile.data, marketType, limit, currentPage, filter, search, sort])
+  }, [profile.data, _marketType, limit, currentPage, filterType, search, sort])
+
+  const fetchMyItemForsale = useCallback(async () => {
+    let _data: IInventoryItemList[] = []
+    let _total: number = 0
+    setItemIsLoading(true)
+    if (
+      profile &&
+      profile.data &&
+      _marketType &&
+      filterType &&
+      search &&
+      sort &&
+      (_marketType === "game_item" || _marketType === "nft_material")
+    ) {
+      switch (_marketType) {
+        case "game_item": {
+          await getMarketOrderAsnyc({
+            _urlNFT: convertNFTTypeToUrl(_marketType),
+            _limit: limit,
+            _page: currentPage,
+            _sort: {},
+            _search: {
+              seller_id: profile.data.address,
+              seller_type: "user",
+              item_id:
+                filterType.game_item.length > 0
+                  ? filterType.game_item
+                  : undefined
+            }
+          })
+            .then((_res) => {
+              if (_res.data && _res.data.length > 0) {
+                _data = _res.data.map((gi) => ({
+                  id: gi._id,
+                  tokenId: gi.item_data?.item_id_smartcontract.toString() || "",
+                  cardType: "game-item",
+                  name:
+                    `${gi.item_data?.name} ${gi.item_data?.item_size}` || "",
+                  img: gi.item_data?.image || "",
+                  amount: gi.item_amount,
+                  size: gi.item_data?.item_size || "1$",
+                  price: gi.price
+                }))
+                _total = _res.info.totalCount
+              }
+            })
+            .catch(() => {})
+          break
+        }
+        case "nft_material":
+          await getMarketOrderAsnyc({
+            _urlNFT: convertNFTTypeToUrl(_marketType),
+            _limit: limit,
+            _page: currentPage,
+            _sort: {},
+            _search: {
+              seller_id: profile.data.address,
+              seller_type: "user",
+              type_material:
+                filterType.nft_material.length > 0
+                  ? filterType.nft_material
+                  : undefined
+            }
+          })
+            .then((_res) => {
+              if (_res.data && _res.data.length > 0) {
+                _data = _res.data.map((m) => ({
+                  id: m._id,
+                  tokenId:
+                    m.material_data?.material_id_smartcontract.toString() || "",
+                  cardType: "material",
+                  name: m.material_data?.name || "",
+                  img: m.material_data?.image || "",
+                  amount: m.item_amount,
+                  price: m.price
+                }))
+                _total = _res.info.totalCount
+              }
+            })
+            .catch(() => {})
+          break
+        default:
+          break
+      }
+    }
+    setInventoryItemForsale(_data)
+    setTotalCount(_total)
+    setItemIsLoading(false)
+  }, [profile.data, _marketType, limit, currentPage, filterType, search, sort])
 
   useEffect(() => {
     let load = false
     if (!load) {
-      fetchMyForsale()
+      fetchMyNFTForsale()
     }
     return () => {
       load = false
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchMyForsale])
+  }, [fetchMyNFTForsale])
 
   useEffect(() => {
-    let cleanup = false
-    if (!cleanup) {
-      setIsLoading(true)
+    let load = false
+    if (!load) {
+      fetchMyItemForsale()
     }
     return () => {
-      cleanup = true
+      load = false
     }
-  }, [fetchMyForsale])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchMyItemForsale])
 
   useMemo(() => {
     let cleanup = false
-    if (!cleanup && marketType) {
+    if (!cleanup && _marketType) {
       setCurrentPage(1)
     }
     return () => {
       cleanup = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marketType])
+  }, [_marketType])
 
   return {
     inventoryItemForsale,
     isLoading,
+    isItemLoading,
     totalCount,
     currentPage,
     limit,

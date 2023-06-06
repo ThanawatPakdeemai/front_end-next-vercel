@@ -26,7 +26,7 @@ import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import { useTranslation } from "react-i18next"
 import { MobileView } from "react-device-detect"
-import HeaderForWardBackWardMobile from "@mobile/components/atoms/HeaderForWardBackWardMobile"
+import HeaderForWardBackWardMobile from "@mobile/components/atoms/headerMenu/HeaderForWardBackWardMobile"
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone"
 import ItemRewardIcon from "@components/icons/MenunIcon/ItemRewardIcon"
 import BackPackIcon from "@components/icons/BackPackIcon"
@@ -39,6 +39,7 @@ import Metamask from "@components/atoms/metamask"
 import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContoller"
 import { useWeb3Provider } from "@providers/index"
 import Link from "next/link"
+import IReferrals from "@components/icons/Referrals"
 import EditProfileModal from "./EditProfileModal"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
@@ -175,7 +176,7 @@ const ProfileContent = () => {
         <MobileView>
           <div className="w-full">
             <HeaderForWardBackWardMobile
-              label="MY Profile"
+              label="my_profile"
               onClickBackWard={() => router.back()}
               showForwardIcon={false}
             />
@@ -285,7 +286,7 @@ const ProfileContent = () => {
                       <span className="absolute left-[15px]">
                         <NotificationsNoneIcon />
                       </span>
-                      Notifications
+                      {t("Notifications")}
                     </div>
                   </Button>
                 </div>
@@ -301,7 +302,7 @@ const ProfileContent = () => {
                       <span className="absolute left-[15px]">
                         <ItemRewardIcon />
                       </span>
-                      Rewards
+                      {t("rewards")}
                     </div>
                   </Button>
                 </div>
@@ -317,7 +318,7 @@ const ProfileContent = () => {
                       <span className="absolute left-[15px]">
                         <BackPackIcon />
                       </span>
-                      Inventory
+                      {t("Inventory")}
                     </div>
                   </Button>
                 </div>
@@ -333,7 +334,23 @@ const ProfileContent = () => {
                       <span className="absolute left-[15px]">
                         <JoinStickIcon />
                       </span>
-                      GamePlay History
+                      {t("Game Play History")}
+                    </div>
+                  </Button>
+                </div>
+              </Link>
+              <Link href="/referral">
+                <div>
+                  <Button
+                    variant="contained"
+                    className="mb-[1.125rem] h-[50px] w-[293px] rounded-lg border border-solid border-neutral-700
+!bg-neutral-800 text-xs uppercase hover:border-secondary-main"
+                  >
+                    <div className="flex items-center font-neue-machina text-sm font-bold">
+                      <span className="absolute left-[15px]">
+                        <IReferrals stroke="#E1E2E2" />
+                      </span>
+                      {t("referral")}
                     </div>
                   </Button>
                 </div>

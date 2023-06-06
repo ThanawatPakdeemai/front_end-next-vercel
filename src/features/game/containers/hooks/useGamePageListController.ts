@@ -14,7 +14,9 @@ import { useRouter } from "next/router"
 const useGamePageListController = (
   gameMode?: IGetType,
   gameType?: TGameType,
-  _limit?: number
+  _limit?: number,
+  _categoryId?: string,
+  _device?: "mobile" | "desktop" | "all"
 ) => {
   const router = useRouter()
   const categoryId = router.query.id
@@ -104,9 +106,9 @@ const useGamePageListController = (
         skip: page,
         sort: "_id",
         search: searchDropdown,
-        category: categoryId || categoryDropdown,
+        category: categoryId || _categoryId || categoryDropdown,
         item: gameItemDropdown,
-        device: deviceDropdown,
+        device: _device || deviceDropdown,
         game_type: gameType || gameTypeDropdown,
         game_mode:
           getGameModeFilter() === "arcade-emporium"
@@ -137,7 +139,8 @@ const useGamePageListController = (
     page,
     limit,
     mutateGetGamesByCategoryId,
-    gameMode
+    gameMode,
+    _categoryId
   ])
 
   const onSetGameStore = (game: IGame) => {
@@ -162,7 +165,8 @@ const useGamePageListController = (
     gameLink: onClickLink,
     staminaRecovery,
     cooldown,
-    setCooldown
+    setCooldown,
+    setDevice
   }
 }
 

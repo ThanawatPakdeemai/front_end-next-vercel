@@ -13,7 +13,7 @@ import useGameStore from "@stores/game"
 import useLoadingStore from "@stores/loading"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { JsonRpcSigner } from "@ethersproject/providers"
 import useSupportedChain from "@hooks/useSupportedChain"
@@ -47,8 +47,15 @@ const useBuyGameItemController = () => {
     _playerId: profile ? profile.id : "",
     _gameId: game ? game._id : ""
   })
+
+  // const { gameItemList } = useGamesByGameId({
+  //   _playerId: profile ? profile.id : "",
+  //   _gameId: gameObject ? gameObject._id : ""
+  // })
+
   // State
   const [openForm, setOpenForm] = useState<boolean>(false)
+  const [totalPrice, setTotalPrice] = useState<number>(0)
 
   const DEFAULT_VALUES: IFormData = {
     player_id: profile ? profile?.id : "",
@@ -376,14 +383,14 @@ const useBuyGameItemController = () => {
 
   const isDisabled = useMemo(() => {
     updatePricePerItem()
-    const totalPrice = watch("nakaPerItem") * watch("qty")
+    const _totalPrice = watch("nakaPerItem") * watch("qty")
 
     if (
       Object.keys(watch("currency") ?? [])?.length !== 0 &&
       Object.keys(watch("item") ?? [])?.length !== 0 &&
       watch("qty") > 0 &&
-      totalPrice <= watch("currency")?.balanceVault?.digit &&
-      totalPrice > 0 &&
+      _totalPrice <= watch("currency")?.balanceVault?.digit &&
+      _totalPrice > 0 &&
       Object.keys((accounts as string[]) ?? [])?.length > 0 &&
       Object.keys((signer as JsonRpcSigner) ?? [])?.length > 0
     ) {
@@ -392,6 +399,131 @@ const useBuyGameItemController = () => {
     return true
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accounts, signer, watch, watch("currency"), watch("nakaPerItem")])
+
+  const isHideOnWaitingRoom =
+    router.pathname !== "/[typeGame]/[GameHome]/roomlist/[id]"
+  const isWaitingRoom =
+    router.pathname === "/[typeGame]/[GameHome]/roomlist/[id]"
+
+  const getListItemDefalut = useMemo(() => {
+    if (profile && gameItemList) {
+      gameItemList?.sort((a, b) => a.price - b.price)
+      return gameItemList[0]
+    }
+  }, [gameItemList, profile])
+
+  const itemSelect = useMemo(() => {
+    if (itemSelected) {
+      if (gameItemList) {
+        const item = gameItemList.find((ele) => ele._id === itemSelected._id)
+        return item
+      }
+      return itemSelected
+    }
+  }, [gameItemList, itemSelected])
+
+  const qtyItemSelected = useMemo(() => {
+    if (profile) {
+      if (itemSelect) {
+        return itemSelect.qty
+      }
+      if (itemSelected) {
+        return itemSelected.qty
+      }
+      if (getListItemDefalut) {
+        const dataItem = getListItemDefalut as IGameItemListData
+        setTotalPrice(
+          Number(
+            Helper.formatNumber((dataItem?.qty ?? 0) * (dataItem?.price ?? 0), {
+              maximumFractionDigits: 4
+            })
+          )
+        )
+        onSetGameItemSelectd(dataItem)
+        return dataItem?.qty ?? 0
+      }
+    }
+    return 0
+  }, [
+    getListItemDefalut,
+    itemSelect,
+    itemSelected,
+    onSetGameItemSelectd,
+    profile
+  ])
+
+  const priceItemSelected = useMemo(() => {
+    if (profile) {
+      if (itemSelect) {
+        return itemSelect.price
+      }
+      if (itemSelected) {
+        return itemSelected.price
+      }
+    }
+    return 0
+  }, [itemSelect, itemSelected, profile])
+
+  const getTotalPriceItemSelectProfile = useCallback(async () => {
+    if (profile) {
+      if (itemSelected) {
+        if (price && qtyItemSelected) {
+          setTotalPrice(
+            Number(
+              Helper.formatNumber(qtyItemSelected * priceItemSelected, {
+                maximumFractionDigits: 4
+              })
+            )
+          )
+        } else {
+          setTotalPrice(
+            Number(
+              Helper.formatNumber(qtyItemSelected * priceItemSelected, {
+                maximumFractionDigits: 4
+              })
+            )
+          )
+        }
+      }
+    }
+  }, [profile, itemSelected, price, qtyItemSelected, priceItemSelected])
+
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      if (itemSelected) getTotalPriceItemSelectProfile()
+    }
+
+    return () => {
+      load = true
+    }
+  }, [getTotalPriceItemSelectProfile, itemSelected])
+
+  const onChangeSelectItem = (_item: IGameItemListData) => {
+    onSetGameItemSelectd(_item as IGameItemListData)
+    if (_item.qty < 1) {
+      errorToast(MESSAGES["you-don't-have-item"])
+    }
+  }
+
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      if (game) {
+        const item_name = game.item && 0 in game.item ? game.item[0].name : 0
+        const item_selected = itemSelect ? itemSelect?.name : 1
+        if (item_name !== item_selected) {
+          onSetGameItemSelectd(null)
+        }
+      }
+    }
+
+    return () => {
+      load = true
+    }
+  }, [game, itemSelect, onSetGameItemSelectd])
 
   return {
     MessageAlert,
@@ -430,7 +562,12 @@ const useBuyGameItemController = () => {
     refetchItemSelected,
     balanceofItem,
     handleTimeExpire,
-    getCodeShareToEarn
+    getCodeShareToEarn,
+    qtyItemSelected,
+    isHideOnWaitingRoom,
+    onChangeSelectItem,
+    totalPrice,
+    isWaitingRoom
   }
 }
 

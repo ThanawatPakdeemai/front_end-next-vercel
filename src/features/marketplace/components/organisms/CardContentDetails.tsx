@@ -5,6 +5,7 @@ import CONFIGS from "@configs/index"
 import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import { MetaData } from "@feature/marketplace/interfaces/INakaPung"
 import { Button, Divider, Typography } from "@mui/material"
+import { TSellerType } from "@feature/marketplace/interfaces/IMarketService"
 import { v4 as uuidv4 } from "uuid"
 import React, { useState } from "react"
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined"
@@ -30,6 +31,8 @@ interface IProp {
   txHash?: string
   meta_data?: MetaData[]
   nameItem?: string
+  showDetails?: boolean
+  seller_type?: TSellerType
 }
 
 const CardContentDetails = ({ ...props }: IProp) => {
@@ -43,7 +46,9 @@ const CardContentDetails = ({ ...props }: IProp) => {
     poster,
     txHash,
     meta_data,
-    nameItem
+    nameItem,
+    showDetails = false,
+    seller_type
   } = props
   const [open, setOpen] = useState<boolean>(false)
   const { marketType } = useGlobal()
@@ -51,7 +56,16 @@ const CardContentDetails = ({ ...props }: IProp) => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   return (
-    <div className="h-fit w-full rounded-[24px] border-[1px] border-neutral-800 bg-neutral-780">
+    <div
+      className={`h-full w-full rounded-[24px] border-[1px] border-neutral-800 bg-neutral-780 ${
+        marketType &&
+        (marketType === "game_item" ||
+          marketType === "nft_naka_punk" ||
+          marketType === "nft_avatar")
+          ? "max-w-[563px]"
+          : null
+      } sm:h-fit`}
+    >
       <div className="p-2">
         <div className="flex h-fit w-full content-center justify-center rounded-[24px] border-[1px] border-neutral-800 bg-neutral-900 p-2">
           {marketType === "nft_land" && video && (
@@ -140,36 +154,28 @@ const CardContentDetails = ({ ...props }: IProp) => {
                 ))}
             </div>
           )}
-          {/* {image ? (
-            <Image
-              // src="/images/not_found.webp"
-              src={image as string}
-              alt={alt as string}
-              width={563}
-              height={563}
-              className="rounded-2xl"
-            />
-          ) : (
-            <Video
-              src={video as string}
-              poster={poster as string}
-              className="rounded-2xl"
-            />
-          )} */}
         </div>
       </div>
       {children}
-      <Divider
-        sx={{ width: "100%", marginBottom: "20px", marginTop: "20px" }}
-      />
-      <div className="px-8 py-6">
-        <Typography className="text-sm uppercase text-black-default">
-          details
-        </Typography>
-        <Typography className="text-sm uppercase text-neutral-600">
-          {detail}
-        </Typography>
-      </div>
+      {(seller_type === "system" && marketType !== "nft_naka_punk") ||
+      showDetails ? (
+        <>
+          <Divider
+            sx={{ width: "100%", marginBottom: "20px", marginTop: "20px" }}
+            className={`${
+              marketType !== "nft_naka_punk" && `hidden sm:block`
+            } `}
+          />
+          <div className="px-8 py-6">
+            <Typography className="text-sm uppercase text-black-default">
+              details
+            </Typography>
+            <Typography className="text-sm uppercase text-neutral-600 ">
+              {detail}
+            </Typography>
+          </div>
+        </>
+      ) : null}
       <ModalCustom
         open={open}
         onClose={handleClose}

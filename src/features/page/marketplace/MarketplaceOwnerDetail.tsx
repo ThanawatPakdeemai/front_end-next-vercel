@@ -8,7 +8,7 @@ import RightDetailsMarketplace from "@feature/marketplace/components/organisms/R
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import useCountStore from "@stores/countComponant"
 import useProfileStore from "@stores/profileStore"
-import React from "react"
+import React, { useEffect } from "react"
 
 const MarketplaceOwnerDetail = () => {
   const { profile } = useProfileStore()
@@ -25,6 +25,7 @@ const MarketplaceOwnerDetail = () => {
           poster={invenItemData.img}
           alt={invenItemData.type}
           model={invenItemData.model}
+          showDetails
         >
           {profile.data &&
             profile.data.address &&
@@ -33,7 +34,7 @@ const MarketplaceOwnerDetail = () => {
               <div className="px-8">
                 <TransferBox
                   _tokenId={invenItemData.tokenId}
-                  _maxAmount={invenItemData.totalAmoumt}
+                  _maxAmount={invenItemData.totalAmount}
                 />
               </div>
             )}
@@ -47,12 +48,12 @@ const MarketplaceOwnerDetail = () => {
             position={invenItemData.position}
             qrCode={invenItemData.qrCode}
             count={
-              invenItemData.totalAmoumt
+              invenItemData.totalAmount
                 ? {
-                    helperText: `Total supply : ${invenItemData.totalAmoumt}`,
+                    helperText: `Total supply : ${invenItemData.totalAmount}`,
                     label: "Supply in inventory",
                     min: 1,
-                    max: Number(invenItemData.totalAmoumt),
+                    max: Number(invenItemData.totalAmount),
                     count: 1
                   }
                 : undefined
@@ -68,7 +69,7 @@ const MarketplaceOwnerDetail = () => {
                   itemId={invenItemData.id}
                   orderId={invenItemData.id}
                   amount={count || 1}
-                  maxAmount={invenItemData.totalAmoumt}
+                  maxAmount={invenItemData.totalAmount}
                   plot={invenItemData.position}
                   name={invenItemData.name}
                   marketplaces_data={invenItemData.marketplaces_data}
@@ -85,7 +86,7 @@ const MarketplaceOwnerDetail = () => {
                     itemId={invenItemData.id}
                     orderId={invenItemData.id}
                     amount={count || 1}
-                    maxAmount={invenItemData.totalAmoumt}
+                    maxAmount={invenItemData.totalAmount}
                     sellingType="rental"
                     plot={invenItemData.position}
                   />
@@ -100,13 +101,11 @@ const MarketplaceOwnerDetail = () => {
         <NFTDetailTable
           installmentData={
             invenItemData.installments_data
-              ? invenItemData.installments_data[0]
+              ? invenItemData.installments_data
               : undefined
           }
           rentalData={
-            invenItemData.rentals_data
-              ? invenItemData.rentals_data[0]
-              : undefined
+            invenItemData.rentals_data ? invenItemData.rentals_data : undefined
           }
           history={invenItemData.history}
         />

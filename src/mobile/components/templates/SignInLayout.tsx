@@ -1,159 +1,27 @@
 import React, { useState } from "react"
-import { Box, Button, Stack, Typography } from "@mui/material"
-import { useTranslation } from "react-i18next"
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  TwitterAuthProvider
-} from "firebase/auth"
-import { getApps, initializeApp } from "@firebase/app"
+import { Box, Button, Divider, Typography } from "@mui/material"
 import CardNoReward from "@feature/game/containers/components/atoms/CardNoReward"
-import ButtonLink from "@components/atoms/button/ButtonLink"
-import DraftsOutlinedIcon from "@mui/icons-material/DraftsOutlined"
-import FacebookIcon from "@components/icons/SocialIcon/FacebookIcon"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
-import GoogleIcon from "@components/icons/SocialIcon/GoogleIcon"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
-import FormLogin from "@feature/authentication/components/FormLogin"
 import useLoginTypeStore from "@stores/loginTypes"
 import FacebookLogin from "react-facebook-login"
-import useLoginProvider from "@feature/authentication/containers/hooks/useLoginProvider"
-import { useToast } from "@feature/toast/containers"
-import { IProfileFaceBook } from "@src/types/profile"
-import { IError } from "@src/types/contract"
-import { MESSAGES } from "@constants/messages"
+import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
+import GoogleColorIcon from "@components/icons/SocialIcon/GoogleColorIcon"
+import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
+import Link from "next/link"
+import useFormLoginController from "@feature/authentication/containers/hooks/useFormLoginController"
+import LoginModal from "../organisms/modal/LoginModal"
 
 const SignInLayout = () => {
-  const { t } = useTranslation()
-
-  const { mutateLoginProvider } = useLoginProvider()
-
-  const firebaseConfig = {
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
-    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_Id,
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SEND_ID,
-    appId: process.env.NEXT_PUBLIC_FIREBASE_APPID,
-    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-  }
-
-  if (!getApps().length) {
-    initializeApp(firebaseConfig)
-  }
-
-  const auth = getAuth()
+  const { facebookLogin, googleLogin, twitterLogin } = useFormLoginController()
 
   const {
     getClickLoginFacebook: toggleFacebookLogin,
     setClickLoginFacebook: setToggleFacebookLogin
   } = useLoginTypeStore()
 
-  const { errorToast, successToast } = useToast()
+  const [openModal, setOpenModal] = useState<boolean>(false)
 
-  const [open, setOpen] = useState<boolean>(false)
-
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-
-  const facebookLogin = async (response: IProfileFaceBook) => {
-    if (
-      response.email !== null &&
-      response.email !== undefined &&
-      response.userID !== null &&
-      response.userID !== undefined
-    ) {
-      mutateLoginProvider({
-        _email: response.email,
-        _provider: "facebook",
-        _prevPath: "/",
-        _providerUUID: response.userID,
-        _referral: ""
-      })
-        .then((_res) => {
-          if (_res) {
-            successToast(MESSAGES.logged_in_successfully)
-          }
-        })
-        .catch((_error: IError) => {
-          errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-        })
-    }
-  }
-
-  const twitterLogin = async () => {
-    const provider = new TwitterAuthProvider()
-    provider.addScope("email")
-    await signInWithPopup(auth, provider)
-      .then((result) => {
-        const { user } = result
-        if (
-          user.providerData[0].email !== null &&
-          user.providerData[0].email !== undefined &&
-          result.providerId !== null &&
-          result.providerId !== undefined
-        ) {
-          mutateLoginProvider({
-            _email: user.providerData[0].email,
-            _provider: "google",
-            _prevPath: "/",
-            _providerUUID: user.uid,
-            _referral: ""
-          })
-            .then((_res) => {
-              if (_res) {
-                successToast(MESSAGES.logged_in_successfully)
-              }
-            })
-            .catch((_error: IError) => {
-              errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-            })
-        } else {
-          errorToast(MESSAGES.logged_in_unsuccessfully)
-        }
-      })
-      .catch((_error: IError) => {
-        errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-      })
-  }
-
-  const googleLogin = async () => {
-    const provider = new GoogleAuthProvider()
-    provider.addScope("email")
-    await signInWithPopup(auth, provider)
-      .then((result) => {
-        const { user } = result
-        if (
-          user.providerData[0].email !== null &&
-          user.providerData[0].email !== undefined &&
-          result.providerId !== null &&
-          result.providerId !== undefined
-        ) {
-          mutateLoginProvider({
-            _email: user.providerData[0].email,
-            _provider: "google",
-            _prevPath: "/",
-            _providerUUID: user.uid,
-            _referral: ""
-          })
-            .then((_res) => {
-              if (_res) {
-                successToast(MESSAGES.logged_in_successfully)
-              }
-            })
-            .catch((_error: IError) => {
-              errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-            })
-        } else {
-          errorToast(MESSAGES.logged_in_unsuccessfully)
-        }
-      })
-      .catch((_error: IError) => {
-        errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-      })
-  }
+  const handleModalLogin = () => setOpenModal(!openModal)
 
   return (
     <>
@@ -161,34 +29,23 @@ const SignInLayout = () => {
         component="div"
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform"
       >
-        <CardNoReward className="!rounded-none !border-none !bg-transparent" />
-        <Typography className="my-8 text-center text-[22px] uppercase text-red-card">
+        <Box
+          component="div"
+          className="mb-20 flex justify-center"
+        >
+          <LogoNakaBigIcon />
+        </Box>
+        <Typography className="my-8 text-center font-urbanist text-3xl font-bold uppercase text-red-card">
           Welcome Back
         </Typography>
-        <div>
+        <Box component="div">
           <Button
             variant="contained"
-            className="mb-[1.125rem] h-[50px] w-[293px] rounded-lg border border-solid border-neutral-700
-!bg-neutral-800 text-xs uppercase hover:border-secondary-main"
-            onClick={handleOpen}
-          >
-            <div className="flex items-center font-neue-machina text-sm font-bold">
-              <span className="absolute left-[15px]">
-                <DraftsOutlinedIcon />
-              </span>
-              sign in with Email
-            </div>
-          </Button>
-        </div>
-        <div>
-          <Button
-            variant="contained"
-            className="mb-[1.125rem] h-[50px] w-[293px] rounded-lg border border-solid border-neutral-700
-!bg-neutral-800 text-xs uppercase hover:border-secondary-main"
+            className="mb-[1.125rem] h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
             onClick={() => setToggleFacebookLogin(true)}
           >
-            <div className="flex items-center font-neue-machina text-sm font-bold">
-              <span className="absolute left-[15px] top-2.5">
+            <div className="flex items-center font-urbanist text-base font-medium">
+              <span className="pr-2">
                 {toggleFacebookLogin ? (
                   <FacebookLogin
                     appId={`${process.env.NEXT_PUBLIC_FACEBOOK_APPID}`}
@@ -197,81 +54,91 @@ const SignInLayout = () => {
                     callback={facebookLogin}
                     cssClass="my-facebook-button-class"
                     textButton={null}
-                    icon={<FacebookIcon />}
+                    icon={<FacebookColorIcon />}
                   />
                 ) : (
-                  <FacebookIcon />
+                  <FacebookColorIcon />
                 )}
               </span>
-              sign in with Facebook
+              <span>Sign in with Facebook</span>
             </div>
           </Button>
-        </div>
-        <div>
+        </Box>
+        <Box component="div">
           <Button
             variant="contained"
-            className="mb-[1.125rem] h-[50px] w-[293px] rounded-lg border border-solid border-neutral-700
-!bg-neutral-800 text-xs uppercase hover:border-secondary-main"
+            className="mb-[1.125rem] h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
             onClick={googleLogin}
           >
-            <div className="flex items-center font-neue-machina text-sm font-bold">
-              <span className="absolute left-[15px]">
-                <GoogleIcon />
+            <div className="flex items-center font-urbanist text-base font-medium">
+              <span className="pr-2">
+                <GoogleColorIcon />
               </span>
-              sign in with Google
+              <span>Sign in with Google</span>
             </div>
           </Button>
-        </div>
-        <div>
+        </Box>
+        <Box component="div">
           <Button
             variant="contained"
-            className="mb-[2.813rem] h-[50px] w-[293px] rounded-lg border border-solid border-neutral-700
-!bg-neutral-800 text-xs uppercase hover:border-secondary-main"
+            className="h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
             onClick={twitterLogin}
           >
-            <div className="flex items-center font-neue-machina text-sm font-bold">
-              <span className="absolute left-[15px]">
-                <TwitterIcon />
+            <div className="flex items-center font-urbanist text-base font-medium">
+              <span className="pr-2">
+                <TwitterIcon
+                  fill="#1D9BF0"
+                  width={30}
+                  height={30}
+                />
               </span>
-              sign in with Twitter
+              <span>Sign in with Twitter</span>
             </div>
           </Button>
-        </div>
-        <Typography className="pb-[1.188rem] text-center text-xs uppercase text-neutral-500">
-          Don’t have account
-        </Typography>
+        </Box>
         <Box
           component="div"
-          className="flex justify-center"
+          className="py-4"
         >
-          <ButtonLink
-            href="/register"
-            text={t("Sign up")}
-            icon={null}
-            size="medium"
-            disabledEndIcon
-            className="h-[40px] w-auto !min-w-[108px] border border-solid border-neutral-700 text-sm hover:h-[45px]"
-          />
+          <Divider className="font-urbanist font-medium text-white-default">
+            or
+          </Divider>
         </Box>
-      </Box>
-      <ModalCustom
-        open={open}
-        onClose={handleClose}
-        className="w-full gap-3 rounded-[34px] p-[10px] md:w-auto"
-        width="auto"
-      >
-        <Stack
-          spacing={3}
-          className="md:p-5"
+        <Box component="div">
+          <Button
+            variant="contained"
+            className="mb-6 h-[50px] w-[293px] rounded-bl-3xl border border-solid border-error-100 !bg-error-100"
+            onClick={handleModalLogin}
+          >
+            <div className="flex items-center font-urbanist text-base font-bold">
+              Sign in with Email
+            </div>
+          </Button>
+        </Box>
+        <Box
+          component="div"
+          className="flex justify-center text-center"
         >
-          <ModalHeader
-            handleClose={handleClose}
-            title="Login"
-          />
-
-          <FormLogin />
-        </Stack>
-      </ModalCustom>
+          <p className="pr-2 text-sm font-normal text-[#fff]">
+            Don’t have an account?
+          </p>
+          <Link
+            href="/register"
+            className="text-sm font-normal text-warning-100"
+          >
+            Sign up
+          </Link>
+        </Box>
+        <CardNoReward
+          className="!rounded-none !border-none !bg-transparent !p-5"
+          showIconTM={false}
+        />
+      </Box>
+      {/* Modal Login */}
+      <LoginModal
+        open={openModal}
+        setOpenLogin={(_toggle) => setOpenModal(_toggle)}
+      />
     </>
   )
 }

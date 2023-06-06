@@ -13,7 +13,7 @@ import NakaMask3 from "@components/icons/Footer/NaKaMask3"
 import { useState } from "react"
 import TextLink from "@components/atoms/TextLink"
 import { ShakeIcon } from "@components/atoms/LigthShake"
-import useGlobal from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import { useTranslation } from "react-i18next"
 
 export const arrowMotion = {
@@ -85,11 +85,11 @@ const Footer = () => {
     <>
       <div className="mx-2 flex items-center sm:flex" />
       <Divider
-        className="footer-divider my-8 md:my-16"
+        className="footer-divider my-12 mt-6 sm:mt-0 md:my-16"
         sx={{ marginTop: 10, marginBottom: 10 }}
       />
       <div className="w-full justify-between overflow-hidden text-[12px] md:px-4 lg:flex">
-        <div className="grid grid-cols-2 justify-center gap-3 whitespace-nowrap p-5 md:flex md:gap-0 md:p-10">
+        <div className="grid hidden grid-cols-2 justify-center gap-3 whitespace-nowrap p-5 sm:block md:flex md:gap-0 md:p-10">
           <div className="flex-auto sm:flex-none md:w-48">
             <div className="mb-4 uppercase text-white-primary">
               {t("games")}
@@ -182,12 +182,15 @@ const Footer = () => {
             ))}
           </div>
         </div>
+
         <div className="flex justify-center pt-[20px] text-center md:text-left lg:justify-center lg:p-0">
           <div className="flex max-w-[480px] flex-col items-center justify-self-end lg:items-start">
             <div className="mb-4 uppercase text-white-primary">
               {t("be_a_part_of_the_play_to_earn_revolution")}
             </div>
-            <div className="max-w-[400px]">{t("footer_title")}</div>
+            <div className="max-w-[400px] px-4 text-center">
+              {t("footer_title")}
+            </div>
             <div className="my-8">
               <ButtonToggleIcon
                 handleClick={() => openInNewTab("https://t.me/NakamotoGames")}
@@ -197,7 +200,13 @@ const Footer = () => {
                 type="button"
               />
             </div>
-            <div className="flex flex-wrap justify-center">
+            <div
+              className={
+                isMobile
+                  ? `flex max-w-[360px] gap-2 overflow-x-auto`
+                  : `flex flex-wrap justify-center`
+              }
+            >
               {SOCIAL?.map((item, index) => (
                 <Link
                   key={Number(index)}
@@ -223,7 +232,7 @@ const Footer = () => {
       </div>
       {/* // TODO: Open after launch V2 */}
       {/* <GameDeveloperFooter /> */}
-      <div className="flex flex-col items-center justify-center text-[10px] uppercase text-neutral-600 md:flex-row md:justify-between lg:m-4 lg:py-[20px]">
+      <div className="my-8 flex flex-col items-center justify-center text-[10px] uppercase text-neutral-600 sm:my-0 md:flex-row md:justify-between lg:m-4 lg:py-[20px]">
         <h4>COPYRIGHT 2023 © NAKAMOTO GAMES</h4>
         <div
           className="h-[80px] cursor-pointer"

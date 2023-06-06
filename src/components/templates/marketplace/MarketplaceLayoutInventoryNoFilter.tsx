@@ -13,6 +13,8 @@ import { NextRouter, useRouter } from "next/router"
 import React from "react"
 import { useTranslation } from "react-i18next"
 import { InventoryProvider } from "@providers/InventoryProvider"
+import HeaderMunuMobile from "@feature/page/marketplace/mobilescreen/HeaderMunuMobile"
+import Balance from "@components/molecules/balance/Balance"
 
 const MarketplaceLayoutInventory = ({
   children
@@ -26,16 +28,21 @@ const MarketplaceLayoutInventory = ({
   return (
     <InventoryProvider>
       <div className="main-container mx-auto">
-        <Header />
+        <div className="hidden sm:block">
+          <Header />
+        </div>
+        <div className="block sm:hidden">
+          <HeaderMunuMobile />
+        </div>
         <div className="items-center sm:flex" />
         <Divider
-          className="!w-full"
+          className="hidden !w-full sm:block"
           sx={{ marginTop: 2 }}
         />
-        <div className="flex flex-col gap-3 md:flex-row">
+        <div className="mt-12 flex flex-col gap-3 sm:flex-row">
           {/* add filter component here */}
-          <div className="w-[200px]">
-            <div className="flex-row gap-3 md:flex">
+          <div className="hidden w-[200px] sm:block">
+            <div className="mb-4 flex-row gap-3 md:flex">
               <MenuList className="mx-auto mt-4 h-fit w-full max-w-xs rounded-[13px] bg-neutral-800 p-[6px] md:mx-0 md:w-[200px]">
                 <div>
                   {profile ? (
@@ -69,7 +76,11 @@ const MarketplaceLayoutInventory = ({
                     </div>
                   ) : null}
                   {MENU_MARKETPLACE_INVENTORY.map((ele) => {
-                    const active = router.asPath.includes(ele.href)
+                    const active =
+                      router.asPath.split("/")[3] === ele.href.split("/")[3]
+                    const activeOnlyInventory =
+                      router.pathname.split("/")[3] === "[type]" &&
+                      ele.href.split("/").length === 3
                     return (
                       <MenuItemCustom
                         key={ele.id}
@@ -78,13 +89,14 @@ const MarketplaceLayoutInventory = ({
                         icon={ele.icon}
                         href={ele.href}
                         external={ele.external}
-                        active={active}
+                        active={active || activeOnlyInventory}
                       />
                     )
                   })}
                 </div>
               </MenuList>
             </div>
+            <Balance widthBalance="w-[calc(100%-70px)]" />
             {/* <AmountBalance
             icon={chain === "polygon" ? <INaka /> : <IBusd />}
             balance={balance || { digit: 0, text: "N/A" }}

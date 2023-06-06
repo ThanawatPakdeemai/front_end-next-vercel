@@ -5,31 +5,31 @@
 
 # BY KAEN
 
-echo "🧐 lint staged active..."
-yarn lint-staged
+# echo "🧐 lint staged active..."
+# yarn lint-staged
 
-yarn check-lint ||
-(
-  echo '🙅‍♀️🙅‍♀️🙅‍♀️ Get that weak shit out of here! 🙅‍♀️🙅‍♀️🙅‍♀️
-    ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
-  false;
-)
+# yarn check-lint ||
+# (
+#   echo '🙅‍♀️🙅‍♀️🙅‍♀️ Get that weak shit out of here! 🙅‍♀️🙅‍♀️🙅‍♀️
+#     ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
+#   false;
+# )
 
-# Building Tailwind CSS
-yarn build:css ||
-(
-  echo '🎨🎨🎨 I am building the CSS 🎨🎨🎨'
-  false;
-)
+# # Building Tailwind CSS
+# yarn build:css ||
+# (
+#   echo '🎨🎨🎨 I am building the CSS 🎨🎨🎨'
+#   false;
+# )
 
-# Format code.
-echo "🤓 Formating code ... "
-yarn format:prettier
+# # Format code.
+# echo "🤓 Formating code ... "
+# yarn format:prettier
 
-# Check Prettier standards
-yarn check:prettier ||
-(
-  echo '🤢🤮🤢🤮 Its FOKING RAW - Your styling looks disgusting. 🤢🤮🤢🤮
-    Prettier Check Failed. Run [yarn format], add changes and try commit again.';
-  false;
-)
+# # Check Prettier standards
+# yarn check:prettier ||
+# (
+#   echo '🤢🤮🤢🤮 Its FOKING RAW - Your styling looks disgusting. 🤢🤮🤢🤮
+#     Prettier Check Failed. Run [yarn format], add changes and try commit again.';
+#   false;
+# )

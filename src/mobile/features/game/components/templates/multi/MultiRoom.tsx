@@ -1,6 +1,7 @@
 import useRoomMulti from "@feature/game/containers/hooks/useRoomMulti"
 // import Preload from "@src/mobile/components/atoms/Preload"
-import RoomListSkeleton from "@mobile/components/atoms/skelaton/RoomListSkeleton"
+import SkeletonCardMobile from "@mobile/components/atoms/skeleton/SkeletonCardMobile"
+import { v4 as uuid } from "uuid"
 import ListJoinGame from "../../molecules/ListJoinGame"
 
 const MultiRoom = () => {
@@ -9,29 +10,27 @@ const MultiRoom = () => {
     <>
       {data && (
         <>
-          {dataRoom && dataRoom?.length > 0 ? (
-            dataRoom?.map((item) => (
-              <ListJoinGame
-                time={item.end_time as unknown as string}
-                key={item._id}
-                image={data.image_room}
-                name={data.game_type}
-                desc={data.name}
-                onClick={() => handleJoinRoom(item)}
-                textChip={`#${item?.create_room_detail?.no_room?.toString()}`}
-                descChip1={
-                  data?.play_to_earn_status === "free"
-                    ? ""
-                    : `${itemSelected?.name || ""} ${
-                        `/${itemSelected?.item_size}` || ""
-                      }`
-                }
-                descChip2={`${item.amount_current_player} / ${item.max_players}`}
-              />
-            ))
-          ) : (
-            <RoomListSkeleton />
-          )}
+          {dataRoom && dataRoom?.length > 0
+            ? dataRoom?.map((item) => (
+                <ListJoinGame
+                  time={item.end_time as unknown as string}
+                  key={item._id}
+                  image={data.image_room}
+                  name={data.game_type}
+                  desc={data.name}
+                  onClick={() => handleJoinRoom(item)}
+                  textChip={`#${item?.create_room_detail?.no_room?.toString()}`}
+                  descChip1={
+                    data?.play_to_earn_status === "free"
+                      ? ""
+                      : `${itemSelected?.name || ""} ${
+                          `/${itemSelected?.item_size}` || ""
+                        }`
+                  }
+                  descChip2={`${item.amount_current_player} / ${item.max_players}`}
+                />
+              ))
+            : [...Array(10)].map(() => <SkeletonCardMobile key={uuid()} />)}
         </>
       )}
     </>

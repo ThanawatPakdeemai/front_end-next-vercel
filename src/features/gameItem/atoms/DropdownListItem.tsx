@@ -115,7 +115,7 @@ const DropdownListItem = ({
                     }
                     rightContent={
                       !hideIcon ? (
-                        <span className="ml-auto font-neue-machina-semi text-xs uppercase text-green-lemon">
+                        <span className="item-balance ml-auto font-neue-machina-semi text-xs uppercase text-green-lemon">
                           {`${itemSelected?.qty} ${itemSelected?.name}`}
                         </span>
                       ) : (

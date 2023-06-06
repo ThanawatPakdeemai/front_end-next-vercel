@@ -81,7 +81,11 @@ const MiniMap = ({
   }, [pos])
 
   return (
-    <div className="relative flex h-full w-full flex-row">
+    <div
+      className={`relative flex ${
+        router.asPath.includes("my-land") ? "h-screen" : "h-full"
+      }  w-full flex-row sm:h-full ${className}`}
+    >
       <Canvas
         gl={{ antialias: true, toneMapping: three.NoToneMapping }}
         linear
@@ -91,7 +95,6 @@ const MiniMap = ({
             setShowBtn(true)
           }, 1000)
         }
-        className={className}
       >
         <CameraController
           focus={focus}

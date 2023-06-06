@@ -1,7 +1,10 @@
 import CONFIGS from "@configs/index"
 import { MESSAGES } from "@constants/messages"
 import { TransactionResponse } from "@ethersproject/providers"
-import { useMarketplaceNFT } from "@feature/contract/containers/hooks/useContract"
+import {
+  useMarketplaceNFT,
+  useMarketplaceNFTNoAccount
+} from "@feature/contract/containers/hooks/useContract"
 import {
   ICancelOrderParams,
   ICreateOrderParams,
@@ -13,8 +16,18 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
 import Helper from "@utils/helper"
 import { BigNumberish, ethers } from "ethers"
+import { useToast } from "@feature/toast/containers"
+import { useInventoryProvider } from "@providers/InventoryProvider"
 import useGlobalMarket from "./useGlobalMarket"
 import useMutateMarketplace from "./useMutateMarketplace"
+
+interface IGetNFTOrderById {
+  nftContract: string
+  orderIdNFT: string
+  price: BigNumberish
+  seller: string
+  tokenIdNFT: BigNumberish
+}
 
 const useMarketNFT = () => {
   const { utils } = ethers
@@ -26,6 +39,9 @@ const useMarketNFT = () => {
     signer,
     CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT
   )
+  const marketNFTContractNoAcc = useMarketplaceNFTNoAccount(
+    CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT
+  )
   const {
     mutateMarketCreateOrder,
     mutateMarketCancelOrder,
@@ -34,18 +50,40 @@ const useMarketNFT = () => {
   const {
     checkAllowanceNaka,
     getContractAddrsByNFTType,
-    onCheckNFTIsApproveForAll
+    onCheckNFTIsApproveForAll,
+    onCheckPolygonChain
   } = useGlobalMarket()
+  const { updateInvenNFTMarketData } = useInventoryProvider()
+  const { errorToast } = useToast()
+
+  // get order by id
+  const getNFTOrderById = (_sellerId: string, _orderId: string) =>
+    new Promise<IGetNFTOrderById>((resolve, reject) => {
+      marketNFTContractNoAcc
+        .orderByOrderIdNFT(_sellerId, _orderId)
+        .then((_response: IGetNFTOrderById) => {
+          resolve(_response)
+        })
+        .catch((_error: Error) => {
+          reject(_error)
+        })
+    })
 
   // create order
-  const createNFTOrder = (
-    _contract: string,
-    _token: string,
+  const createNFTOrder = ({
+    _contract = marketNFTContract,
+    _contractAddrs,
+    _token,
+    _nakaAmount
+  }: {
+    _contract?: ethers.Contract
+    _contractAddrs: string
+    _token: string
     _nakaAmount: BigNumberish
-  ) =>
+  }) =>
     new Promise<TransactionResponse>((resolve, reject) => {
-      marketNFTContract
-        .listNFT(_contract, _token, _nakaAmount)
+      _contract
+        .listNFT(_contractAddrs, _token, _nakaAmount)
         .then((_response: TransactionResponse) => {
           resolve(_response)
         })
@@ -61,18 +99,27 @@ const useMarketNFT = () => {
     _price: number,
     _amount: number
   ) => {
+    let _status: boolean = false
+    setOpen(MESSAGES.transaction_processing_order)
+    // ? check owner
     if (signer && address) {
-      setOpen(MESSAGES.transaction_processing_order)
+      const _checkChain = await onCheckPolygonChain(marketNFTContract)
+      if (!_checkChain._pass) {
+        setClose()
+        errorToast(MESSAGES.support_polygon_only)
+        return false
+      }
       await onCheckNFTIsApproveForAll(
         address,
         CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT,
         _NFTtype
       ).catch((error) => console.error(error))
-      await createNFTOrder(
-        getContractAddrsByNFTType(_NFTtype),
+      await createNFTOrder({
+        _contract: _checkChain._contract,
+        _contractAddrs: getContractAddrsByNFTType(_NFTtype),
         _token,
-        toWei(_price.toString())
-      )
+        _nakaAmount: toWei(_price.toString())
+      })
         .then(async (response) => {
           const _res = await response.wait()
           const _enTopic = await utils.keccak256(
@@ -88,31 +135,45 @@ const useMarketNFT = () => {
               ["bytes32", "bytes32", "bytes32"],
               _log.data
             )
-            const data: ICreateOrderParams = {
+            const _data: ICreateOrderParams = {
               _urlNFT: convertNFTTypeToUrl(_NFTtype),
               _orderId: _resultEvent[0],
               _itemId: _id,
               _itemAmount: _amount,
-              _price: WeiToNumber(parseInt(_resultEvent[2], 16).toString()),
+              _price: WeiToNumber(_resultEvent[2]),
               _type: _NFTtype,
               _txHash: _res.transactionHash,
               _sellerType: "user",
               _sellingType: "fullpayment"
             }
-            await mutateMarketCreateOrder(data)
+            const { data } = await mutateMarketCreateOrder(_data)
+            if (data && updateInvenNFTMarketData)
+              updateInvenNFTMarketData(data, _NFTtype)
+            _status = true
           }
         })
-        .catch((error) => console.error(error))
+        .catch((error) => {
+          console.error(error)
+        })
     } else {
-      console.error("address not found!, Please connect your wallet")
+      errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
+    return _status
   }
 
   // cancel order
-  const cancelNFTOrder = (_sellerId: string, _orderId: string) =>
+  const cancelNFTOrder = ({
+    _contract = marketNFTContract,
+    _sellerId,
+    _orderId
+  }: {
+    _contract?: ethers.Contract
+    _sellerId: string
+    _orderId: string
+  }) =>
     new Promise<TransactionResponse>((resolve, reject) => {
-      marketNFTContract
+      _contract
         .unlistNFT(_sellerId, _orderId)
         .then((_response: TransactionResponse) => {
           resolve(_response)
@@ -124,20 +185,33 @@ const useMarketNFT = () => {
 
   const onCancelNFTOrder = async (
     _NFTtype: TNFTType,
-    _sellerId: string,
-    _orderId: string
+    _idSeller: string,
+    _idOrder: string
   ) => {
+    let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      await onCheckNFTIsApproveForAll(
-        address,
-        CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT,
-        _NFTtype
-      ).catch((error) => console.error(error))
-      await cancelNFTOrder(_sellerId, _orderId)
+      const [_checkOrderById, _checkChain] = await Promise.all([
+        getNFTOrderById(_idSeller, _idOrder),
+        onCheckPolygonChain(marketNFTContract)
+      ])
+      if (Number(_checkOrderById.price) <= 0) {
+        setClose()
+        errorToast("order not founded")
+        return false
+      }
+      if (!_checkChain._pass) {
+        setClose()
+        errorToast(MESSAGES.support_polygon_only)
+        return false
+      }
+      await cancelNFTOrder({
+        _contract: _checkChain._contract,
+        _sellerId: _idSeller,
+        _orderId: _idOrder
+      })
         .then(async (response) => {
           const _res = await response.wait()
-
           const _enTopic = await utils.keccak256(
             utils.toUtf8Bytes(
               "NFTUnlisting(bytes32,address,uint256,address,uint256)"
@@ -157,17 +231,29 @@ const useMarketNFT = () => {
               _txHash: _res.transactionHash
             }
             await mutateMarketCancelOrder(data)
+            _status = true
           }
         })
         .catch((error) => console.error(error))
+    } else {
+      errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
+    return _status
   }
 
   // execute order
-  const executeNFTOrder = (_sellerId: string, _orderId: string) =>
+  const executeNFTOrder = ({
+    _contract = marketNFTContract,
+    _sellerId,
+    _orderId
+  }: {
+    _contract?: ethers.Contract
+    _sellerId: string
+    _orderId: string
+  }) =>
     new Promise<TransactionResponse>((resolve, reject) => {
-      marketNFTContract
+      _contract
         .executeListedNFT(_sellerId, _orderId)
         .then((_response: TransactionResponse) => {
           resolve(_response)
@@ -180,14 +266,33 @@ const useMarketNFT = () => {
   const onExecuteNFTOrder = async (
     _marketId: string,
     _itemID: string,
-    _sellerId: string,
-    _orderId: string,
+    _idSeller: string,
+    _idOrder: string,
     _amountItem: number
   ) => {
+    let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
+      const [_checkOrderById, _checkChain] = await Promise.all([
+        getNFTOrderById(_idSeller, _idOrder),
+        onCheckPolygonChain(marketNFTContract)
+      ])
+      if (Number(_checkOrderById.price) <= 0) {
+        setClose()
+        errorToast("order not founded")
+        return false
+      }
+      if (!_checkChain._pass) {
+        setClose()
+        errorToast(MESSAGES.support_polygon_only)
+        return false
+      }
       await checkAllowanceNaka(CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT)
-      await executeNFTOrder(_sellerId, _orderId)
+      await executeNFTOrder({
+        _contract: _checkChain._contract,
+        _sellerId: _idSeller,
+        _orderId: _idOrder
+      })
         .then(async (response) => {
           const _res = await response.wait()
           const _enTopic = await utils.keccak256(
@@ -215,14 +320,19 @@ const useMarketNFT = () => {
               _txHash: _res.transactionHash
             }
             await mutateFullPayment(data)
+            _status = true
           }
         })
         .catch((error) => console.error(error))
+    } else {
+      errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
+    return _status
   }
 
   return {
+    getNFTOrderById,
     onCreateNFTOrder,
     onCancelNFTOrder,
     onExecuteNFTOrder

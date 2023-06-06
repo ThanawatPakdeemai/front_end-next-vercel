@@ -135,8 +135,8 @@ const TransactionPage = ({ profile }: IProp) => {
   return (
     <>
       {hydrated && (
-        <div className="md-w-[678px] mx-auto">
-          <div className="flex justify-between">
+        <div className="mx-auto mt-12 w-fit overflow-x-auto">
+          <div className="m-4 grid justify-between sm:m-0 sm:flex">
             <PageHeader
               title="HISTORY TRANSACTION"
               subtitle="Wallet manager for nakamoto.games world"

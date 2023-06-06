@@ -1,5 +1,5 @@
 import { useInventoryProvider } from "@providers/InventoryProvider"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState, useRef } from "react"
 import { useGetMyLand } from "@feature/land/containers/hooks/useGetMyLand"
 import useProfileStore from "@stores/profileStore"
 import useNFTLand from "@feature/land/containers/hooks/useNFTLand"
@@ -12,15 +12,20 @@ import useGlobal from "@hooks/useGlobal"
 import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
 import useMarketFilterStore from "@stores/marketFilter"
 import Helper from "@utils/helper"
+import { NextRouter, useRouter } from "next/router"
+import { TType } from "@feature/marketplace/interfaces/IMarketService"
 
 const useInventoryOwner = () => {
+  const ref = useRef<boolean>(false)
+  const router: NextRouter = useRouter()
   const { profile } = useProfileStore()
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isItemLoading, setItemIsLoading] = useState<boolean>(true)
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
   const [limit, setLimit] = useState<number>(16)
   const { marketType } = useGlobal()
-  const { sort, search, filter } = useMarketFilterStore()
+  const { sort, search, filterType } = useMarketFilterStore()
   // game-item
   // material
   const { gameItemList, materialList } = useInventoryProvider()
@@ -42,7 +47,11 @@ const useInventoryOwner = () => {
     Array<IInventoryItemList>
   >([])
 
-  const { getValueFromTKey } = Helper
+  const { getValueFromTKey, convertTTypeToNFTType } = Helper
+  const _marketType =
+    marketType ||
+    convertTTypeToNFTType(router.query.type as TType) ||
+    "nft_land"
 
   const fetchAllLandofAddress = useCallback(async () => {
     if (!isFetchAllLand && profile.data) {
@@ -64,52 +73,19 @@ const useInventoryOwner = () => {
   }, [])
 
   const fetchInventoryNFTItem = useCallback(async () => {
+    let _data: IInventoryItemList[] = []
+    let _total = 0
+    setIsLoading(true)
     if (
       profile.data &&
-      marketType &&
-      marketType !== "game_item" &&
-      marketType !== "nft_material" &&
-      filter &&
+      filterType &&
       search &&
-      sort
+      sort &&
+      _marketType &&
+      _marketType !== "game_item" &&
+      _marketType !== "nft_material"
     ) {
-      setIsLoading(true)
-      let _data: IInventoryItemList[] = []
-      let _total = 0
-      switch (marketType) {
-        case "nft_land": {
-          await mutateGetMyLand({
-            _urlNFT: "NFT-Land",
-            _limit: limit,
-            _page: currentPage,
-            _search: {
-              isRent: false,
-              player_id: profile.data.id,
-              type: "nft_land",
-              type_land: filter.length > 0 ? filter : undefined,
-              land_id:
-                search.length > 0
-                  ? (getValueFromTKey(search, "land_id") as string) // should be nft_token same, discuss with BE team!
-                  : undefined
-            },
-            _landList: await fetchAllLandofAddress()
-          })
-            .then((_res) => {
-              if (_res.data && _res.data.length > 0) {
-                _data = _res.data.map((l) => ({
-                  id: l._id,
-                  tokenId: l.land_id,
-                  cardType: "land",
-                  name: l.name,
-                  img: l.NFT_image,
-                  vdo: l.NFT_video
-                }))
-                _total = _res.info.totalCount
-              }
-            })
-            .catch(() => {})
-          break
-        }
+      switch (_marketType) {
         case "nft_building":
           await mutateGetOwnerBuilding({
             _urlNFT: "NFT-Building",
@@ -118,7 +94,10 @@ const useInventoryOwner = () => {
             _search: {
               isRent: false,
               player_id: profile.data.id,
-              type_building: filter.length > 0 ? filter : undefined,
+              type_building:
+                filterType.nft_building.length > 0
+                  ? filterType.nft_building
+                  : undefined,
               nft_token:
                 search.length > 0
                   ? (getValueFromTKey(search, "nft_token") as string)
@@ -150,6 +129,8 @@ const useInventoryOwner = () => {
             _limit: limit,
             _page: currentPage,
             _search: {
+              isRent: false,
+              player_id: profile.data.id,
               nft_token:
                 search.length > 0
                   ? (getValueFromTKey(search, "nft_token") as string)
@@ -227,35 +208,69 @@ const useInventoryOwner = () => {
             })
             .catch(() => {})
           break
-        default:
+        default: {
+          await mutateGetMyLand({
+            _urlNFT: "NFT-Land",
+            _limit: limit,
+            _page: currentPage,
+            _search: {
+              isRent: false,
+              player_id: profile.data.id,
+              type: "nft_land",
+              type_land:
+                filterType.nft_land.length > 0
+                  ? filterType.nft_land
+                  : undefined,
+              nft_token:
+                search.length > 0
+                  ? (getValueFromTKey(search, "nft_token") as string) // should be nft_token same, discuss with BE team!
+                  : undefined
+            },
+            _landList: await fetchAllLandofAddress()
+          })
+            .then((_res) => {
+              if (_res.data && _res.data.length > 0) {
+                _data = _res.data.map((l) => ({
+                  id: l._id,
+                  tokenId: l.land_id,
+                  cardType: "land",
+                  name: l.name,
+                  img: l.NFT_image,
+                  vdo: l.NFT_video
+                }))
+                _total = _res.info.totalCount
+              }
+            })
+            .catch(() => {})
           break
+        }
       }
-      setInventoryItemList(_data)
-      setTotalCount(_total)
-      setIsLoading(false)
     }
+    setInventoryItemList(_data)
+    setTotalCount(_total)
+    setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile.data, marketType, currentPage, limit, filter, search, sort])
+  }, [profile.data, _marketType, currentPage, limit, filterType, search, sort])
 
   const fetchInventoryItem = useCallback(async () => {
     if (
       profile.data &&
-      marketType &&
-      filter &&
+      _marketType &&
+      filterType &&
       gameItemList &&
       materialList &&
-      (marketType === "game_item" || marketType === "nft_material")
+      (_marketType === "game_item" || _marketType === "nft_material")
     ) {
-      setIsLoading(true)
+      setItemIsLoading(true)
       let _data: IInventoryItemList[] = []
       let _total = 0
-      switch (marketType) {
+      switch (_marketType) {
         case "game_item":
           if (gameItemList && gameItemList.length > 0) {
             let _dummy = gameItemList
-            if (filter && filter.length > 0) {
+            if (filterType.game_item && filterType.game_item.length > 0) {
               _dummy = _dummy.filter(
-                (d) => d._id === filter.find((f) => f === d._id)
+                (d) => d._id === filterType.game_item.find((f) => f === d._id)
               )
             }
             _data = _dummy.map((gi) => ({
@@ -273,9 +288,11 @@ const useInventoryOwner = () => {
         case "nft_material":
           if (materialList && materialList.length > 0) {
             let _dummy = materialList
-            if (filter && filter.length > 0) {
+            if (filterType.nft_material && filterType.nft_material.length > 0) {
               _dummy = _dummy.filter(
-                (d) => d.name_type === filter.find((f) => f === d.name_type)
+                (d) =>
+                  d.name_type ===
+                  filterType.nft_material.find((f) => f === d.name_type)
               )
             }
             _data = _dummy.map((m) => ({
@@ -296,16 +313,17 @@ const useInventoryOwner = () => {
         _data.splice((currentPage - 1) * limit, currentPage * limit)
       )
       setTotalCount(_total)
+      setItemIsLoading(false)
     }
-    setIsLoading(false)
+    ref.current = true
   }, [
     profile.data,
-    marketType,
-    currentPage,
-    limit,
+    _marketType,
+    filterType,
     gameItemList,
     materialList,
-    filter
+    currentPage,
+    limit
   ])
 
   useEffect(() => {
@@ -330,18 +348,20 @@ const useInventoryOwner = () => {
 
   useMemo(() => {
     let cleanup = false
-    if (!cleanup && marketType) {
+    if (!cleanup && _marketType) {
       setCurrentPage(1)
     }
     return () => {
       cleanup = true
+      ref.current = false
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marketType])
+  }, [_marketType])
 
   return {
     inventoryItemList,
     isLoading,
+    isItemLoading,
     limit,
     currentPage,
     totalCount,

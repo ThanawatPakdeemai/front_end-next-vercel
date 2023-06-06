@@ -7,11 +7,11 @@ import { getGameByPath } from "@feature/game/containers/services/game.service"
 import useGetGameByPath from "@feature/game/containers/hooks/useFindGameByPath"
 import useGameStore from "@stores/game"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
-import useGlobal from "@hooks/useGlobal"
 import { Box } from "@mui/material"
 import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
 import { useTranslation } from "react-i18next"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
@@ -27,6 +27,7 @@ const GamePageDefault = dynamic(
     ssr: false
   }
 )
+
 const RightSidebarContentEffect = dynamic(
   () => import("@components/templates/contents/RightSidebarContentEffect"),
   {
@@ -34,6 +35,7 @@ const RightSidebarContentEffect = dynamic(
     ssr: false
   }
 )
+
 const FullWidthContent = dynamic(
   () => import("@components/templates/contents/FullWidthContent"),
   {
@@ -74,11 +76,18 @@ const ButtonGame = dynamic(
   }
 )
 
+const GameDetailLayoutMobile = dynamic(
+  () => import("@mobile/components/templates/GameDetailLayoutMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
 export default function GameLobby() {
   const router = useRouter()
   const { onSetGameData } = useGameStore()
   const { GameHome } = router.query
-
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
   const {
     getTypeGamePathFolder,
@@ -194,14 +203,17 @@ export default function GameLobby() {
     }
   }
 
-  return gameData ? (
-    <GamePageDefault
-      component={
-        <>
+  /**
+   * @description Content Desktop
+   * @returns
+   */
+  const renderContentDesktop = () =>
+    gameData ? (
+      <GamePageDefault
+        component={
           <RightSidebarContentEffect
             className="mb-[64px]"
             content={getTemplateLobby()}
-            // content={<>sss</>}
             aside={
               <Box
                 component="div"
@@ -227,31 +239,53 @@ export default function GameLobby() {
               </Box>
             }
           />
-        </>
-      }
-      component2={
-        <FullWidthContent
-          sxCustomStyled={{
-            "&.container": {
-              maxWidth: "100%!important",
-              "&.container-fullWidth": {
-                padding: "49px"
+        }
+        component2={
+          <FullWidthContent
+            sxCustomStyled={{
+              "&.container": {
+                maxWidth: "100%!important",
+                "&.container-fullWidth": {
+                  padding: "49px"
+                }
               }
-            }
-          }}
-        >
-          <TabProvider>
-            <GameTabsVertical
-              gameId={gameData.id}
-              gameType="arcade-emporium"
-            />
-          </TabProvider>
-        </FullWidthContent>
-      }
-    />
-  ) : (
-    <GamePageDefault component={<SkeletonBanner />} />
-  )
+            }}
+          >
+            <TabProvider>
+              <GameTabsVertical
+                gameId={gameData.id}
+                gameType="arcade-emporium"
+              />
+            </TabProvider>
+          </FullWidthContent>
+        }
+      />
+    ) : (
+      <GamePageDefault component={<SkeletonBanner />} />
+    )
+
+  /**
+   * @description Content Mobile
+   */
+  const renderContentMobile = () => {
+    if (gameData) {
+      return <GameDetailLayoutMobile gameData={gameData} />
+    }
+    return <GamePageDefault component={<SkeletonBanner />} />
+  }
+
+  /**
+   * @description Render Default Page (Mobile or Desktop)
+   * @returns
+   */
+  const renderDefaultPage = () => {
+    if (isMobile) {
+      return renderContentMobile()
+    }
+    return renderContentDesktop()
+  }
+
+  return renderDefaultPage()
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {

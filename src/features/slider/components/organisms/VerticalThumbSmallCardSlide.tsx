@@ -13,11 +13,7 @@ const VerticalThumbSmallCardSlide = ({
       isMobile ? "px-5" : "my-[2px]"
     }`}
   >
-    <div
-      className={`verticalSmallThumb-slide__item__image cursor-pointer transition-all hover:opacity-70 ${
-        isMobile ? "mx-auto my-0 h-[11.64rem] w-auto" : "h-[70px] w-[70px]"
-      }`}
-    >
+    <div className="verticalSmallThumb-slide__item__image h-[70px] w-[70px] cursor-pointer transition-all hover:opacity-70">
       {item.type === "video" && !isMobile && (
         <div className="absolute flex h-full w-full items-center justify-center">
           <span className="flex h-8 w-8 items-center justify-center rounded bg-neutral-900/60">
@@ -27,9 +23,7 @@ const VerticalThumbSmallCardSlide = ({
       )}
       {item.type === "video" ? (
         <CardMedia
-          className={`card-media block overflow-hidden rounded-sm border-2 border-neutral-700 object-cover object-center transition-all ${
-            isMobile ? "mx-auto my-0 h-[11.64rem] w-auto" : "h-[70px] w-[70px]"
-          }`}
+          className="card-media block h-[70px] w-[70px] overflow-hidden rounded-sm border-2 border-neutral-700 object-cover object-center transition-all"
           component={item.type === "video" ? "video" : "img"}
           alt="Slide"
           src={item.src}

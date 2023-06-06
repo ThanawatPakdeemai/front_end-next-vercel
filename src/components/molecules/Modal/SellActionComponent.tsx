@@ -123,9 +123,12 @@ const SellActionComponent = ({
             step 2: select type you would like to sell
           </span>
           <Select
-            className="mx-[6px] mb-2 mt-2 rounded-sm bg-neutral-800 !px-2 py-1 capitalize text-white-primary"
+            className="mx-[6px] mb-2 mt-2 rounded-sm bg-neutral-800 !px-2 py-1 text-sm font-bold capitalize text-neutral-300"
             value={selling}
             onChange={onSellingChange}
+            sx={{
+              "maxHeight": 40
+            }}
           >
             {MARKET_SELLING.map((m) => (
               <MenuItem

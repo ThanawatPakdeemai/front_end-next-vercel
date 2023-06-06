@@ -6,7 +6,7 @@ import {
   TSellerType,
   TSellingType
 } from "@feature/marketplace/interfaces/IMarketService"
-import { Button, Divider, Stack } from "@mui/material"
+import { Button, Divider, Stack, Typography } from "@mui/material"
 import React, { memo, useEffect, useMemo, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import dynamic from "next/dynamic"
@@ -130,31 +130,25 @@ const ModalMarket = ({
     }
   }, [getPriceNakaCurrent])
 
-  const titleModal = useMemo(() => {
-    let _title: string | undefined
+  const actionColor = useMemo(() => {
+    let _color: string | undefined
     switch (action) {
-      case "login":
-        _title = "login"
-        break
       case "mint":
-        _title = `: ${name}`
+        _color = "text-info-main"
         break
       case "buy":
-        _title = `: ${name}`
+        _color = "text-success-main"
         break
-      case "cancel":
-        _title = `: ${name}`
-        break
-      case "sell":
-        _title = `: ${name}`
+      case "rent_out":
+        _color = "text-warning-dark"
         break
       default:
-        _title = "loading"
+        _color = "text-secondary-main"
         break
     }
-    if (_title) return `${action} ${_title}`
+    if (_color) return _color
     return undefined
-  }, [action, name])
+  }, [action])
 
   const textBtn = useMemo(() => {
     let _text: string = "loading"
@@ -182,6 +176,39 @@ const ModalMarket = ({
         break
     }
     return _text
+  }, [action])
+
+  const handleStyle = useMemo(() => {
+    let _color: string
+    let _textColor: string
+    let _icon: React.ReactNode
+    switch (action) {
+      case "login":
+        _color = "#7B5BE6"
+        _textColor = "#E1E2E2"
+        break
+      case "connect_wallet":
+        _color = "#7B5BE6"
+        _textColor = "#E1E2E2"
+        break
+      case "buy":
+        _color = "#A0ED61"
+        _textColor = "#010101"
+        break
+      case "cancel":
+        _color = "#F42728"
+        _textColor = "#010101"
+        break
+      case "sell":
+        _color = "#7B5BE6"
+        _textColor = "#E1E2E2"
+        break
+      default:
+        _color = "#27F1EC"
+        _textColor = "#010101"
+        break
+    }
+    return { bgColor: _color, txtColor: _textColor, icon: _icon }
   }, [action])
 
   const onSubmit = handleSubmit(async () => {
@@ -304,8 +331,16 @@ const ModalMarket = ({
     <ModalCustom
       open={open}
       onClose={onClose}
-      title={titleModal}
+      titleNode={
+        <>
+          <Typography className={`uppercase ${actionColor}`}>
+            {`${action} :`}
+          </Typography>
+          <Typography className="ml-1 uppercase text-neutral-300">{`${name}`}</Typography>
+        </>
+      }
       width={action === "login" ? 400 : 680}
+      hideNakaIcon
     >
       <div className="rounded-lg">
         <Stack
@@ -422,7 +457,11 @@ const ModalMarket = ({
                     type="submit"
                     variant="contained"
                     color="secondary"
-                    className="h-10 w-full"
+                    className="h-10 w-full capitalize"
+                    sx={{
+                      backgroundColor: handleStyle.bgColor,
+                      color: handleStyle.txtColor
+                    }}
                   >
                     {textBtn}
                   </Button>

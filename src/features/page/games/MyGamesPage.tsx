@@ -89,9 +89,9 @@ const MyGamesPage = () => {
                 key={game.id}
                 menu={P2EHeaderMenu}
                 data={game}
-                href={`/${getTypeGamePathFolder(game)}/${
-                  game.path
-                }${isRedirectRoomlist(game).toString()}`}
+                href={`/arcade-emporium/${game.path}${isRedirectRoomlist(
+                  game
+                ).toString()}`}
                 onHandleClick={() =>
                   onHandleSetGameStore(getTypeGamePathFolder(game), game)
                 }

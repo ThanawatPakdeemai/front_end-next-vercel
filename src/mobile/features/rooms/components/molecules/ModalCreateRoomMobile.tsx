@@ -6,6 +6,7 @@ import CountItem from "@components/molecules/CountItem"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import { IGame, IGameMap } from "@feature/game/interfaces/IGameService"
+import useCreateRoomController from "@feature/rooms/hooks/useCreateRoomController"
 import { MapOutlined } from "@mui/icons-material"
 import {
   Box,
@@ -21,18 +22,33 @@ interface IProp {
   gameData: IGame
 }
 
-const ModalCreateRoom = ({ gameData }: IProp) => {
+const ModalCreateRoomMobile = ({ gameData }: IProp) => {
   const { t } = useTranslation()
+  const {
+    handleOpen,
+    open,
+    handleClose,
+    map,
+    maps,
+    setMap,
+    handleSetIsCurrent,
+    isPublicRoom,
+    setIsPublicRoom,
+    isLoading,
+    handleSubmit
+  } = useCreateRoomController({
+    gameData
+  })
 
   return (
     <>
-      <ButtonToggleIcon
+      {/* <ButtonToggleIcon
         handleClick={handleOpen}
         startIcon={<PlusIcon />}
         text={t("create_room")}
         className="btn-rainbow-theme z-[2] w-[156px] bg-secondary-main font-bold capitalize text-white-primary"
         type="button"
-      />
+      /> */}
       <ModalCustom
         open={open}
         onClose={handleClose}
@@ -51,32 +67,6 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
             </div>
             <ButtonClose onClick={handleClose} />
           </Box>
-          {/* <TextField
-            label="Room Name"
-            placeholder="Room Name..."
-            size="medium"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <FlagIcon />
-                </InputAdornment>
-              )
-            }}
-          /> */}
-          {/* <CountItem
-            _item={itemUse}
-            _addItem={() => setItemUse(itemUse > 9 ? 10 : itemUse + 1)}
-            _minusItem={() => setItemUse(itemUse < 2 ? 1 : itemUse - 1)}
-            endIcon={
-              <Image
-                src={gameItemList?.[0]?.image_icon ?? ""}
-                width={15}
-                height={15}
-                alt={gameItemList?.[0]?.item_size ?? ""}
-              />
-            }
-            label={t("number_of_items")}
-          /> */}
           <CountItem
             endIcon={<PlayersIcon />}
             label={t("number_of_players")}
@@ -141,17 +131,6 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
               </span>
             </button>
           </div>
-          {/* <TextField
-            placeholder="Password..."
-            size="medium"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <LockIcon stroke="#70727B" />
-                </InputAdornment>
-              )
-            }}
-          /> */}
           <ButtonToggleIcon
             className=" flex items-center bg-secondary-main text-white-default"
             startIcon={null}
@@ -175,4 +154,4 @@ const ModalCreateRoom = ({ gameData }: IProp) => {
   )
 }
 
-export default ModalCreateRoom
+export default ModalCreateRoomMobile

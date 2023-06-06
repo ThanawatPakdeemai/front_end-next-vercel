@@ -8,8 +8,8 @@ import NoData from "@components/molecules/NoData"
 import PleaseLogin from "@components/atoms/PleaseLogin"
 import MultiRoom from "@mobile/features/game/components/templates/multi/MultiRoom"
 import SingleRoom from "@mobile/features/game/components/templates/single/SingleRoom"
-import ModalCreateRoom from "@feature/rooms/components/molecules/ModalCreateRoom"
 import ArrowBackIcon from "../atoms/icons/ArrowBackIcon"
+import ModalCreateRoomMobile from "@mobile/features/rooms/components/molecules/ModalCreateRoomMobile"
 
 export interface IRoomlistLayoutMobileProps {
   gameData: IGame
@@ -64,7 +64,7 @@ const RoomlistLayoutMobile = ({ gameData }: IRoomlistLayoutMobileProps) => {
         </h3>
         {gameData && gameData.game_type === "multiplayer" && (
           <div className="mr-2 w-[162px]">
-            <ModalCreateRoom gameData={gameData} />
+            <ModalCreateRoomMobile gameData={gameData} />
           </div>
         )}
         {getTemplateGame()}

@@ -28,14 +28,6 @@ const GamePageDefault = dynamic(
   }
 )
 
-const GamePageDefaultMobile = dynamic(
-  () => import("@mobile/components/templates/GamePageDefaultMobile"),
-  {
-    suspense: true,
-    ssr: false
-  }
-)
-
 const RightSidebarContentEffect = dynamic(
   () => import("@components/templates/contents/RightSidebarContentEffect"),
   {
@@ -84,8 +76,8 @@ const ButtonGame = dynamic(
   }
 )
 
-const GameSectionMobile = dynamic(
-  () => import("@mobile/features/game/components/organisms/GameSectionMobile"),
+const GameDetailLayoutMobile = dynamic(
+  () => import("@mobile/components/templates/GameDetailLayoutMobile"),
   {
     suspense: true,
     ssr: false
@@ -277,11 +269,7 @@ export default function GameLobby() {
    */
   const renderContentMobile = () => {
     if (gameData) {
-      return (
-        <GamePageDefaultMobile
-          component={<GameSectionMobile gameData={gameData} />}
-        />
-      )
+      return <GameDetailLayoutMobile gameData={gameData} />
     }
     return <GamePageDefault component={<SkeletonBanner />} />
   }
@@ -292,9 +280,9 @@ export default function GameLobby() {
    */
   const renderDefaultPage = () => {
     if (isMobile) {
-      renderContentMobile()
+      return renderContentMobile()
     }
-    renderContentDesktop()
+    return renderContentDesktop()
   }
 
   return renderDefaultPage()

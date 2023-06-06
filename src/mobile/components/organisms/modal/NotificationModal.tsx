@@ -46,7 +46,6 @@ const NotificationModal = ({
           <ArrowBackIcon />
           Notification
         </h2>
-
         <NotificationListMobile
           list={notificationList}
           loading={isLoadingNotification}

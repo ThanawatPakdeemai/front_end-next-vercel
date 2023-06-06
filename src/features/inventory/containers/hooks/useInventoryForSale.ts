@@ -81,7 +81,7 @@ const useInventoryForSale = () => {
             .then((_res) => {
               if (_res.data && _res.data.length > 0) {
                 _data = _res.data.map((l) => ({
-                  id: l.marketplaces_data?._id || l._id,
+                  id: l._id,
                   tokenId: l.land_id,
                   cardType: "land",
                   name: l.name,
@@ -120,7 +120,7 @@ const useInventoryForSale = () => {
             .then((_res) => {
               if (_res.data && _res.data.length > 0) {
                 _data = _res.data.map((b) => ({
-                  id: b.marketplaces_data?._id || b._id,
+                  id: b._id,
                   tokenId: b.NFT_token || "",
                   cardType: "building",
                   name: b.name,
@@ -158,7 +158,7 @@ const useInventoryForSale = () => {
             .then((_res) => {
               if (_res.data && _res.data.length > 0) {
                 _data = _res.data.map((g) => ({
-                  id: g.marketplaces_data?._id || g._id,
+                  id: g._id,
                   tokenId: g.NFT_info.NFT_token,
                   cardType: "arcade-game",
                   name: g.name,
@@ -190,7 +190,7 @@ const useInventoryForSale = () => {
             .then((_res) => {
               if (_res.data && _res.data.length > 0) {
                 _data = _res.data.map((p) => ({
-                  id: p.marketplaces_data?._id || p._id,
+                  id: p._id,
                   tokenId: p.NFT_token,
                   cardType: "naka-punk",
                   name: p.name,

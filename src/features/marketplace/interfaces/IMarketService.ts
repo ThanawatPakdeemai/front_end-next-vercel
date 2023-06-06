@@ -262,7 +262,7 @@ export interface IBuyerDetail extends ITransHash {
 export interface IMarketData extends IMarketOrder, ICurrentTime {
   real_land: boolean
   buyer_details: any[]
-  __v: number
+  __v?: number
 }
 
 export interface IMarketGameData extends Omit<IGameItemList, "min_item"> {}
@@ -368,7 +368,7 @@ export interface IMarketOrderServ extends IFormatService {
 }
 
 export interface IMarketCreateOrderServ extends IFormatService {
-  data: null
+  data: IMarketData
 }
 
 export interface IMarketTypesServ extends IFormatService {

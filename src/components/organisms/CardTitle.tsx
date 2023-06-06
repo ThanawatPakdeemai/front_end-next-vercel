@@ -101,7 +101,7 @@ const CardTitle = ({
           <h1 className={`${rankTitle}`}>{t("prize_pool")} EST. %</h1>
           <h1 className={`${rankTitle}`}>
             {t("total")} naka :{" "}
-            <span className="text-info-main">
+            <span className="card-header__ranking-span text-info-main">
               {sumTotal
                 ? Helper.formatNumber(sumTotal, {
                     maximumFractionDigits: 2

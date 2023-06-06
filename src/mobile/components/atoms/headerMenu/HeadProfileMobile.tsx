@@ -35,7 +35,7 @@ const HeadProfileMobile = () => {
               borderRadius: "48px",
               overflow: "hidden"
             },
-            p: {
+            "p": {
               margin: 0
             }
           }}

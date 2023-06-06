@@ -19,6 +19,7 @@ import { v4 as uuid } from "uuid"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import useGetReward from "@feature/rewardWeekly/containers/hooks/useGetReward"
 import { IWeeklyPoolByGameIdData } from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
+import useCheckGameOwner from "./useCheckGameOwner"
 
 interface IPlayCount {
   game_id: string
@@ -46,6 +47,13 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   const [weeklyPoolByGameId, setWeeklyPoolByGameId] =
     useState<IWeeklyPoolByGameIdData>()
   const [poolId, setPoolId] = useState<string>("")
+
+  // Get owner Data
+  const { checkOwnerData } = useCheckGameOwner({
+    game_id: gameId,
+    start: "2023-01-31T10:08:02.448Z",
+    end: "2023-05-28T10:08:02.448Z"
+  })
 
   // Get weekly pool data any weeks
   const {
@@ -152,6 +160,21 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
         return (partnerGames && partnerGames?.short_detail?.publisher) || "-"
       default:
         return "-"
+    }
+  }
+
+  /**
+   * @description Set Game Owner Commission
+   * @returns {any} gameOwnerCommission
+   */
+  const setOwnerCommission = (): any => {
+    if (gameType && checkOwnerData) {
+      switch (gameType) {
+        case "play-to-earn":
+          return checkOwnerData.data
+        default:
+          return "-"
+      }
     }
   }
 
@@ -516,6 +539,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
     gameTags: setGameTags(),
     gameDeveloper: setGameDeveloper(),
     gamePublisher: setPublisher(),
+    gameOwnerCommission: setOwnerCommission(),
     gameReleaseDate: setReleaseDate(),
     gamePartnerSocial: setPartnerSocial(),
     gameDescription: setDescription(),

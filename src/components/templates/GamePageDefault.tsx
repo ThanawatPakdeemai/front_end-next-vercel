@@ -30,8 +30,7 @@ import IconArrowRight from "@components/icons/arrowRightIcon"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
 import Breadcrumb from "@components/molecules/Breadcrumb"
 import { useRouter } from "next/router"
-import GameDetailLayout from "@mobile/components/templates/GameDetailLayout"
-import GameSummaryLayout from "@mobile/components/templates/GameSummaryLayout"
+import GameSummaryRewardLayoutMobile from "@mobile/components/templates/GameSummaryRewardLayoutMobile"
 
 interface IGamePageDefaultProps {
   component: React.ReactNode
@@ -308,38 +307,19 @@ const GamePageDefault = ({
 
   return (
     <div className="game-page-default w-full">
-      {isMobile ? (
-        <>
-          {gameData && (
-            <>
-              {router?.pathname !== "/[typeGame]/[GameHome]" ? (
-                <GameSummaryLayout
-                  data={gameData as IGame}
-                  gameId={gameData.id}
-                  gameType={
-                    router.asPath.includes("arcade-emporium")
-                      ? "arcade-emporium"
-                      : "play-to-earn"
-                  }
-                />
-              ) : (
-                <GameDetailLayout
-                  data={gameData as IGame}
-                  gameId={gameData.id}
-                  gameType={
-                    router.asPath.includes("arcade-emporium")
-                      ? "arcade-emporium"
-                      : "play-to-earn"
-                  }
-                />
-              )}
-            </>
-          )}
-        </>
+      {isMobile && gameData ? (
+        <GameSummaryRewardLayoutMobile
+          data={gameData as IGame}
+          gameId={gameData.id}
+          gameType={
+            router.asPath.includes("arcade-emporium")
+              ? "arcade-emporium"
+              : "play-to-earn"
+          }
+        />
       ) : (
         <div className={containerClasses}>
           <Header />
-
           {/* Not show on reward page */}
           {!isReward && <Breadcrumb />}
 

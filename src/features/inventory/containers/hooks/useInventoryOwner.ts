@@ -129,6 +129,8 @@ const useInventoryOwner = () => {
             _limit: limit,
             _page: currentPage,
             _search: {
+              isRent: false,
+              player_id: profile.data.id,
               nft_token:
                 search.length > 0
                   ? (getValueFromTKey(search, "nft_token") as string)

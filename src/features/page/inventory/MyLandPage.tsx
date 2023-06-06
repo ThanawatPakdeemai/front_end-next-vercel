@@ -203,8 +203,8 @@ const MyLandPage = () => {
   }
 
   return (
-    <div>
-      <div className="mb-9 hidden flex-col justify-start sm:flex">
+    <div className="mb-24">
+      <div className="mb-9 mt-10 hidden flex-col justify-start sm:flex">
         <Typography className="text-lg text-neutral-400">MY LAND</Typography>
         <Typography className="text-xs text-neutral-600">
           Wallet manager for nakamoto.games world

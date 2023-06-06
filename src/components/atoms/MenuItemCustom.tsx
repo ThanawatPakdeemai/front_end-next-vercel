@@ -28,6 +28,7 @@ const MenuItemCustom = ({
   ...props
 }: IMenuItemCustomProp) => {
   const router = useRouter()
+
   return (
     <MenuItem
       aria-label={props.id}
@@ -42,8 +43,8 @@ const MenuItemCustom = ({
         }
       }}
       sx={{
-        color: active ? "#70727B" : null,
-        backgroundColor: active ? "#18181C!important" : null,
+        color: active ? "#E1E2E2" : "null",
+        backgroundColor: active ? "#010101 !important" : null,
         "&:hover": {
           backgroundColor: "#F42728 !important",
           color: "#E1E2E2"

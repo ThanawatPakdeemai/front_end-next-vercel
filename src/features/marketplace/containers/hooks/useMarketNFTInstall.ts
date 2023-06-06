@@ -18,6 +18,7 @@ import useLoadingStore from "@stores/loading"
 import Helper from "@utils/helper"
 import { BigNumberish, ethers } from "ethers"
 import { useToast } from "@feature/toast/containers"
+import { useInventoryProvider } from "@providers/InventoryProvider"
 import useGlobalMarket from "./useGlobalMarket"
 import useMutateMarketplace from "./useMutateMarketplace"
 
@@ -61,8 +62,22 @@ const useMarketNFTInstall = () => {
     onCheckNFTIsApproveForAll,
     onCheckPolygonChain
   } = useGlobalMarket()
+  const { updateInvenNFTMarketData } = useInventoryProvider()
 
   const { errorToast } = useToast()
+
+  // get bill detail by billId
+  const getBillByBillId = (_sellerId: string, _billId: string) =>
+    new Promise<IGetBillByBillId>((resolve, reject) => {
+      marketNFTInstallContractNoAcc
+        .billByBillId(_sellerId, _billId)
+        .then((_response: IGetBillByBillId) => {
+          resolve(_response)
+        })
+        .catch((_error: Error) => {
+          reject(_error)
+        })
+    })
 
   // create order
   const createNFTInstallOrder = ({
@@ -94,13 +109,14 @@ const useMarketNFTInstall = () => {
     _price: number,
     _amount: number
   ) => {
+    let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
       const _checkChain = await onCheckPolygonChain(marketNFTInstallContract)
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)
-        return
+        return false
       }
       await onCheckNFTIsApproveForAll(
         address,
@@ -128,7 +144,7 @@ const useMarketNFTInstall = () => {
               ["bytes32", "address", "uint256", "uint256"],
               _log.data
             )
-            const data: ICreateOrderParams = {
+            const _data: ICreateOrderParams = {
               _urlNFT: convertNFTTypeToUrl(_NFTtype),
               _orderId: _resultEvent[0],
               _itemId: _id,
@@ -139,7 +155,10 @@ const useMarketNFTInstall = () => {
               _sellerType: "user",
               _sellingType: "installment"
             }
-            await mutateMarketCreateOrder(data)
+            const { data } = await mutateMarketCreateOrder(_data)
+            if (data && updateInvenNFTMarketData)
+              updateInvenNFTMarketData(data, _NFTtype)
+            _status = true
           }
         })
         .catch((error) => console.error(error))
@@ -147,6 +166,7 @@ const useMarketNFTInstall = () => {
       errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
+    return _status
   }
 
   // cancel order
@@ -170,15 +190,25 @@ const useMarketNFTInstall = () => {
 
   const onCancelNFTInstallOrder = async (
     _NFTtype: TNFTType,
+    _idSeller: string,
     _idOrder: string
   ) => {
+    let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const _checkChain = await onCheckPolygonChain(marketNFTInstallContract)
+      const [_checkOrderById, _checkChain] = await Promise.all([
+        getBillByBillId(_idSeller, _idOrder),
+        onCheckPolygonChain(marketNFTInstallContract)
+      ])
+      if (Number(_checkOrderById.price) <= 0) {
+        setClose()
+        errorToast("order not founded")
+        return false
+      }
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)
-        return
+        return false
       }
       await onCheckNFTIsApproveForAll(
         address,
@@ -210,6 +240,7 @@ const useMarketNFTInstall = () => {
               _txHash: _res.transactionHash
             }
             await mutateMarketCancelOrder(data)
+            _status = true
           }
         })
         .catch((error) => console.error(error))
@@ -217,6 +248,7 @@ const useMarketNFTInstall = () => {
       errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
+    return _status
   }
 
   // execute order
@@ -250,13 +282,22 @@ const useMarketNFTInstall = () => {
     _period: number,
     _amountItem: number
   ) => {
+    let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const _checkChain = await onCheckPolygonChain(marketNFTInstallContract)
+      const [_checkOrderById, _checkChain] = await Promise.all([
+        getBillByBillId(_sellerId, _orderId),
+        onCheckPolygonChain(marketNFTInstallContract)
+      ])
+      if (Number(_checkOrderById.price) <= 0) {
+        setClose()
+        errorToast("order not founded")
+        return false
+      }
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)
-        return
+        return false
       }
       await checkAllowanceNaka(CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_INSTALL)
       await executeNFTInstallOrder({
@@ -311,6 +352,7 @@ const useMarketNFTInstall = () => {
               }
             }
             await mutatePayInstallment(_data)
+            _status = true
           }
         })
         .catch((error) => console.error(error))
@@ -318,20 +360,8 @@ const useMarketNFTInstall = () => {
       errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
+    return _status
   }
-
-  // get bill detail by billId
-  const getBillByBillId = (_sellerId: string, _billId: string) =>
-    new Promise<IGetBillByBillId>((resolve, reject) => {
-      marketNFTInstallContractNoAcc
-        .billByBillId(_sellerId, _billId)
-        .then((_response: IGetBillByBillId) => {
-          resolve(_response)
-        })
-        .catch((_error: Error) => {
-          reject(_error)
-        })
-    })
 
   // paybill
   const payBillByBillId = ({

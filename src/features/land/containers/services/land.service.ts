@@ -37,7 +37,7 @@ export const getLandById = ({ _id }: { _id: string }) =>
   new Promise<IMarketLandData>((resolve, reject) => {
     services
       .get<IMarketLandData>(`/nakaverse-land/lands-datas/${_id}`)
-      .then((response) => resolve(response.data[0]))
+      .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })
 

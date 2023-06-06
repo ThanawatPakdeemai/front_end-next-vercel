@@ -7,9 +7,10 @@ import FacebookLogin from "react-facebook-login"
 import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import GoogleColorIcon from "@components/icons/SocialIcon/GoogleColorIcon"
 import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
-import Link from "next/link"
 import useFormLoginController from "@feature/authentication/containers/hooks/useFormLoginController"
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
 import LoginModal from "../organisms/modal/LoginModal"
+import CreateAccountModal from "../organisms/modal/CreateAccountModal"
 
 const SignInLayout = () => {
   const { facebookLogin, googleLogin, twitterLogin } = useFormLoginController()
@@ -19,9 +20,9 @@ const SignInLayout = () => {
     setClickLoginFacebook: setToggleFacebookLogin
   } = useLoginTypeStore()
 
-  const [openModal, setOpenModal] = useState<boolean>(false)
-
-  const handleModalLogin = () => setOpenModal(!openModal)
+  const [openModalLogin, setOpenModalLogin] = useState<boolean>(false)
+  const [openModalCreateAccount, setOpenModalCreateAccount] =
+    useState<boolean>(false)
 
   return (
     <>
@@ -108,7 +109,7 @@ const SignInLayout = () => {
           <Button
             variant="contained"
             className="mb-6 h-[50px] w-[293px] rounded-bl-3xl border border-solid border-error-100 !bg-error-100"
-            onClick={handleModalLogin}
+            onClick={() => setOpenModalLogin(!openModalLogin)}
           >
             <div className="flex items-center font-urbanist text-base font-bold">
               Sign in with Email
@@ -122,12 +123,12 @@ const SignInLayout = () => {
           <p className="pr-2 text-sm font-normal text-[#fff]">
             Don’t have an account?
           </p>
-          <Link
-            href="/register"
+          <Typography
+            onClick={() => setOpenModalCreateAccount(!openModalCreateAccount)}
             className="text-sm font-normal text-warning-100"
           >
             Sign up
-          </Link>
+          </Typography>
         </Box>
         <CardNoReward
           className="!rounded-none !border-none !bg-transparent !p-5"
@@ -136,9 +137,24 @@ const SignInLayout = () => {
       </Box>
       {/* Modal Login */}
       <LoginModal
-        open={openModal}
-        setOpenLogin={(_toggle) => setOpenModal(_toggle)}
+        open={openModalLogin}
+        setOpenLogin={(_toggle) => setOpenModalLogin(_toggle)}
       />
+      {/* Modal CreateNewAccountModal */}
+      <GoogleReCaptchaProvider
+        reCaptchaKey={`${process.env.NEXT_PUBLIC_KEY_RECAPTCHA}`}
+        scriptProps={{
+          async: true,
+          defer: false,
+          appendTo: "head",
+          nonce: undefined
+        }}
+      >
+        <CreateAccountModal
+          open={openModalCreateAccount}
+          setOpenLogin={(_toggle) => setOpenModalCreateAccount(_toggle)}
+        />
+      </GoogleReCaptchaProvider>
     </>
   )
 }

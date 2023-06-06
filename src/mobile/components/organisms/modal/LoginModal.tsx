@@ -5,16 +5,12 @@ import {
   Divider,
   IconButton,
   InputAdornment,
-  Link,
   SwipeableDrawer,
   TextField,
   Typography
 } from "@mui/material"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
-import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
-import GoogleColorIcon from "@components/icons/SocialIcon/GoogleColorIcon"
-import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import EmailIcon from "@components/icons/EmailIcon"
@@ -22,6 +18,8 @@ import { useTranslation } from "react-i18next"
 import Lock2Icon from "@components/icons/Lock2Icon"
 import useFormLoginController from "@feature/authentication/containers/hooks/useFormLoginController"
 import FromForgotPassword from "@feature/authentication/components/FromForgotPassword"
+import MoreLoginMobile from "@mobile/components/atoms/MoreLoginMobile"
+import CreateAccountModal from "./CreateAccountModal"
 
 interface INotificationModalProps {
   open: boolean
@@ -34,8 +32,8 @@ const LoginModal = ({ open, setOpenLogin }: INotificationModalProps) => {
   const { t } = useTranslation()
 
   const [showPassword, setShowPassword] = useState(false)
-
-  const handleClickShowPassword = () => setShowPassword(!showPassword)
+  const [openModalCreateAccount, setOpenModalCreateAccount] =
+    useState<boolean>(false)
 
   return (
     <SwipeableDrawer
@@ -105,10 +103,6 @@ const LoginModal = ({ open, setOpenLogin }: INotificationModalProps) => {
             type={showPassword ? "text" : "password"}
             placeholder={`${t("password")}`}
             autoComplete="new-password'"
-            // onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-            //   e.target.value = e.target.value.slice(0, 128)
-            //   isCharacters(e.target.value)
-            // }}
             {...register("_password")}
             sx={{
               "& .MuiOutlinedInput-root": {
@@ -129,7 +123,7 @@ const LoginModal = ({ open, setOpenLogin }: INotificationModalProps) => {
                 paddingBottom: "0.5rem"
               }
             }}
-            id="confirmPassword"
+            id="password"
             size="medium"
             InputProps={{
               startAdornment: (
@@ -141,8 +135,7 @@ const LoginModal = ({ open, setOpenLogin }: INotificationModalProps) => {
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    // onMouseDown={handleMouseDownConfirmPassword}
+                    onClick={() => setShowPassword(!showPassword)}
                     edge="end"
                   >
                     {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
@@ -176,33 +169,7 @@ const LoginModal = ({ open, setOpenLogin }: INotificationModalProps) => {
             or continue with
           </Divider>
         </Box>
-        <Box
-          component="div"
-          className="flex justify-center gap-5"
-        >
-          <Button
-            variant="outlined"
-            className="h-[60px] !min-w-[88px] rounded-2xl border border-solid border-neutral-690 bg-neutral-800"
-          >
-            <FacebookColorIcon />
-          </Button>
-          <Button
-            variant="outlined"
-            className="h-[60px] !min-w-[88px] rounded-2xl border border-solid border-neutral-690 bg-neutral-800"
-          >
-            <GoogleColorIcon />
-          </Button>
-          <Button
-            variant="outlined"
-            className="h-[60px] !min-w-[88px] rounded-2xl border border-solid border-neutral-690 bg-neutral-800"
-          >
-            <TwitterIcon
-              fill="#1D9BF0"
-              width={32}
-              height={32}
-            />
-          </Button>
-        </Box>
+        <MoreLoginMobile />
         <Box
           component="div"
           className="flex justify-center py-7 text-center"
@@ -210,13 +177,18 @@ const LoginModal = ({ open, setOpenLogin }: INotificationModalProps) => {
           <p className="pr-2 text-sm font-normal text-[#fff]">
             Already have an account?
           </p>
-          <Link
-            href="/register"
+          <Typography
+            onClick={() => setOpenModalCreateAccount(!openModalCreateAccount)}
             className="text-sm font-normal text-warning-100"
           >
             Sign up
-          </Link>
+          </Typography>
         </Box>
+        {/* Modal CreateNewAccountModal */}
+        <CreateAccountModal
+          open={openModalCreateAccount}
+          setOpenLogin={(_toggle) => setOpenModalCreateAccount(_toggle)}
+        />
       </Box>
     </SwipeableDrawer>
   )

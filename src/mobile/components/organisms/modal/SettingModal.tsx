@@ -153,7 +153,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
             }
             title={t("Played History")}
           />
-          <CardHeader
+          {/* <CardHeader
             sx={{
               padding: "0px",
               "& .MuiCardHeader-action": {
@@ -187,7 +187,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
               </IconButton>
             }
             title="Profile"
-          />
+          /> */}
           <CardHeader
             sx={{
               padding: "0px",

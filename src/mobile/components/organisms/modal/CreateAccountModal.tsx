@@ -33,27 +33,16 @@ const CreateAccountModal = ({
   const {
     verifiCode,
     showPassword,
-    characterPasswordLength,
-    characterUppercase,
-    formSubmitErrors,
     register,
     handleSubmit,
     onSubmitRegister,
     onClickGetCode,
     isNumber,
     isCharacters,
-    facebookLogin,
-    twitterLogin,
-    googleRegister,
-    // metaMarkLogin,
-    passwordCorrect,
-    errors,
     watch,
     handleClickShowPassword,
-    handleMouseDownPassword,
     showConfirmPassword,
-    handleClickShowConfirmPassword,
-    handleMouseDownConfirmPassword
+    handleClickShowConfirmPassword
   } = useFormRegisterController()
   const { isEmail, patternCode, emailCorrect } = useFormController()
 

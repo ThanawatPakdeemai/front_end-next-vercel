@@ -15,6 +15,7 @@ import TextLink from "@components/atoms/TextLink"
 import { ShakeIcon } from "@components/atoms/LigthShake"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import { useTranslation } from "react-i18next"
+import { useRouter } from "next/router"
 
 export const arrowMotion = {
   rest: { opacity: 0, ease: "easeOut", duration: 0.2, type: "spring" },
@@ -69,6 +70,7 @@ export const iconmotion = {
 
 const Footer = () => {
   const { openInNewTab } = useGlobal()
+  const router = useRouter()
 
   const { t } = useTranslation()
 
@@ -85,11 +87,13 @@ const Footer = () => {
     <>
       <div className="mx-2 flex items-center sm:flex" />
       <Divider
-        className="footer-divider my-12 mt-6 sm:mt-0 md:my-16"
+        className={`footer-divider mb-12 mt-6 sm:mt-0 ${
+          router.asPath.includes("inventory") ? "md:mb-16" : "md:my-16"
+        } `}
         sx={{ marginTop: 10, marginBottom: 10 }}
       />
       <div className="w-full justify-between overflow-hidden text-[12px] md:px-4 lg:flex">
-        <div className="grid hidden grid-cols-2 justify-center gap-3 whitespace-nowrap p-5 sm:block md:flex md:gap-0 md:p-10">
+        <div className="hidden grid-cols-2 justify-center gap-3 whitespace-nowrap p-5 sm:block md:flex md:gap-0 md:p-10">
           <div className="flex-auto sm:flex-none md:w-48">
             <div className="mb-4 uppercase text-white-primary">
               {t("games")}

@@ -39,7 +39,7 @@ const MarketplaceLayoutInventory = ({
           className="hidden !w-full sm:block"
           sx={{ marginTop: 2 }}
         />
-        <div className="mt-12 flex flex-col gap-3 sm:flex-row">
+        <div className="flex flex-col gap-3 sm:flex-row">
           {/* add filter component here */}
           <div className="hidden w-[200px] sm:block">
             <div className="mb-4 flex-row gap-3 md:flex">
@@ -114,7 +114,9 @@ const MarketplaceLayoutInventory = ({
               />
             )}
           </div>
-          <div className="flex w-full justify-center">{children}</div>
+          <div className="flex w-full justify-center border-l border-neutral-800">
+            {children}
+          </div>
         </div>
         <Footer />
       </div>

@@ -136,7 +136,7 @@ const MarketplaceLayoutInventory = ({
             className={
               isMapPage
                 ? "page-full-map h-[85vh] overflow-x-hidden"
-                : "flex w-full flex-col gap-y-4"
+                : "my-5 flex w-full flex-col gap-y-4"
             }
           >
             {isMapPage ? (

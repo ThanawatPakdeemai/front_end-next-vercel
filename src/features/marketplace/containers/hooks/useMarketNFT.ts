@@ -1,7 +1,10 @@
 import CONFIGS from "@configs/index"
 import { MESSAGES } from "@constants/messages"
 import { TransactionResponse } from "@ethersproject/providers"
-import { useMarketplaceNFT } from "@feature/contract/containers/hooks/useContract"
+import {
+  useMarketplaceNFT,
+  useMarketplaceNFTNoAccount
+} from "@feature/contract/containers/hooks/useContract"
 import {
   ICancelOrderParams,
   ICreateOrderParams,
@@ -14,8 +17,17 @@ import useLoadingStore from "@stores/loading"
 import Helper from "@utils/helper"
 import { BigNumberish, ethers } from "ethers"
 import { useToast } from "@feature/toast/containers"
+import { useInventoryProvider } from "@providers/InventoryProvider"
 import useGlobalMarket from "./useGlobalMarket"
 import useMutateMarketplace from "./useMutateMarketplace"
+
+interface IGetNFTOrderById {
+  nftContract: string
+  orderIdNFT: string
+  price: BigNumberish
+  seller: string
+  tokenIdNFT: BigNumberish
+}
 
 const useMarketNFT = () => {
   const { utils } = ethers
@@ -25,6 +37,9 @@ const useMarketNFT = () => {
   const { marketType } = useGlobal()
   const marketNFTContract = useMarketplaceNFT(
     signer,
+    CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT
+  )
+  const marketNFTContractNoAcc = useMarketplaceNFTNoAccount(
     CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT
   )
   const {
@@ -38,7 +53,21 @@ const useMarketNFT = () => {
     onCheckNFTIsApproveForAll,
     onCheckPolygonChain
   } = useGlobalMarket()
+  const { updateInvenNFTMarketData } = useInventoryProvider()
   const { errorToast } = useToast()
+
+  // get order by id
+  const getNFTOrderById = (_sellerId: string, _orderId: string) =>
+    new Promise<IGetNFTOrderById>((resolve, reject) => {
+      marketNFTContractNoAcc
+        .orderByOrderIdNFT(_sellerId, _orderId)
+        .then((_response: IGetNFTOrderById) => {
+          resolve(_response)
+        })
+        .catch((_error: Error) => {
+          reject(_error)
+        })
+    })
 
   // create order
   const createNFTOrder = ({
@@ -70,13 +99,15 @@ const useMarketNFT = () => {
     _price: number,
     _amount: number
   ) => {
+    let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
+    // ? check owner
     if (signer && address) {
       const _checkChain = await onCheckPolygonChain(marketNFTContract)
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)
-        return
+        return false
       }
       await onCheckNFTIsApproveForAll(
         address,
@@ -104,7 +135,7 @@ const useMarketNFT = () => {
               ["bytes32", "bytes32", "bytes32"],
               _log.data
             )
-            const data: ICreateOrderParams = {
+            const _data: ICreateOrderParams = {
               _urlNFT: convertNFTTypeToUrl(_NFTtype),
               _orderId: _resultEvent[0],
               _itemId: _id,
@@ -115,7 +146,10 @@ const useMarketNFT = () => {
               _sellerType: "user",
               _sellingType: "fullpayment"
             }
-            await mutateMarketCreateOrder(data)
+            const { data } = await mutateMarketCreateOrder(_data)
+            if (data && updateInvenNFTMarketData)
+              updateInvenNFTMarketData(data, _NFTtype)
+            _status = true
           }
         })
         .catch((error) => {
@@ -125,6 +159,7 @@ const useMarketNFT = () => {
       errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
+    return _status
   }
 
   // cancel order
@@ -153,19 +188,23 @@ const useMarketNFT = () => {
     _idSeller: string,
     _idOrder: string
   ) => {
+    let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const _checkChain = await onCheckPolygonChain(marketNFTContract)
+      const [_checkOrderById, _checkChain] = await Promise.all([
+        getNFTOrderById(_idSeller, _idOrder),
+        onCheckPolygonChain(marketNFTContract)
+      ])
+      if (Number(_checkOrderById.price) <= 0) {
+        setClose()
+        errorToast("order not founded")
+        return false
+      }
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)
-        return
+        return false
       }
-      await onCheckNFTIsApproveForAll(
-        address,
-        CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT,
-        _NFTtype
-      ).catch((error) => console.error(error))
       await cancelNFTOrder({
         _contract: _checkChain._contract,
         _sellerId: _idSeller,
@@ -192,6 +231,7 @@ const useMarketNFT = () => {
               _txHash: _res.transactionHash
             }
             await mutateMarketCancelOrder(data)
+            _status = true
           }
         })
         .catch((error) => console.error(error))
@@ -199,6 +239,7 @@ const useMarketNFT = () => {
       errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
+    return _status
   }
 
   // execute order
@@ -229,13 +270,22 @@ const useMarketNFT = () => {
     _idOrder: string,
     _amountItem: number
   ) => {
+    let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const _checkChain = await onCheckPolygonChain(marketNFTContract)
+      const [_checkOrderById, _checkChain] = await Promise.all([
+        getNFTOrderById(_idSeller, _idOrder),
+        onCheckPolygonChain(marketNFTContract)
+      ])
+      if (Number(_checkOrderById.price) <= 0) {
+        setClose()
+        errorToast("order not founded")
+        return false
+      }
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)
-        return
+        return false
       }
       await checkAllowanceNaka(CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT)
       await executeNFTOrder({
@@ -270,6 +320,7 @@ const useMarketNFT = () => {
               _txHash: _res.transactionHash
             }
             await mutateFullPayment(data)
+            _status = true
           }
         })
         .catch((error) => console.error(error))
@@ -277,9 +328,11 @@ const useMarketNFT = () => {
       errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
+    return _status
   }
 
   return {
+    getNFTOrderById,
     onCreateNFTOrder,
     onCancelNFTOrder,
     onExecuteNFTOrder

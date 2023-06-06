@@ -45,15 +45,28 @@ const useMarket = () => {
     _amount: number,
     _period: number
   ) => {
+    let _status: boolean = false
     switch (_selling) {
       case "fullpayment":
-        await onCreateNFTOrder(_type, _itemId, _tokenId, _price, _amount)
+        _status = await onCreateNFTOrder(
+          _type,
+          _itemId,
+          _tokenId,
+          _price,
+          _amount
+        )
         break
       case "installment":
-        await onCreateNFTInstallOrder(_type, _itemId, _tokenId, _price, _amount)
+        _status = await onCreateNFTInstallOrder(
+          _type,
+          _itemId,
+          _tokenId,
+          _price,
+          _amount
+        )
         break
       case "rental":
-        await onCreateNFTRentOrder(
+        _status = await onCreateNFTRentOrder(
           _type,
           _itemId,
           _tokenId,
@@ -65,6 +78,7 @@ const useMarket = () => {
       default:
         break
     }
+    return _status
   }
 
   const onCreateOrder = async (
@@ -76,16 +90,27 @@ const useMarket = () => {
     _price: number,
     _period?: number
   ) => {
+    let _status: boolean = false
     const periodValue = _period || 0
     switch (_type) {
       case "game_item":
-        await onCreateGameItemOrder(_itemId, _tokenId, _amount, _price)
+        _status = await onCreateGameItemOrder(
+          _itemId,
+          _tokenId,
+          _amount,
+          _price
+        )
         break
       case "nft_material":
-        await onCreateMaterialOrder(_itemId, _tokenId, _amount, _price)
+        _status = await onCreateMaterialOrder(
+          _itemId,
+          _tokenId,
+          _amount,
+          _price
+        )
         break
       case "nft_land":
-        await onCreateBySelling(
+        _status = await onCreateBySelling(
           _type,
           _selling,
           _itemId,
@@ -96,7 +121,7 @@ const useMarket = () => {
         )
         break
       case "nft_building":
-        await onCreateBySelling(
+        _status = await onCreateBySelling(
           _type,
           _selling,
           _itemId,
@@ -107,7 +132,7 @@ const useMarket = () => {
         )
         break
       case "nft_naka_punk":
-        await onCreateBySelling(
+        _status = await onCreateBySelling(
           _type,
           _selling,
           _itemId,
@@ -118,7 +143,7 @@ const useMarket = () => {
         )
         break
       case "nft_game":
-        await onCreateBySelling(
+        _status = await onCreateBySelling(
           _type,
           _selling,
           _itemId,
@@ -131,6 +156,7 @@ const useMarket = () => {
       default:
         break
     }
+    return _status
   }
 
   const onCancelBySelling = async (
@@ -139,19 +165,21 @@ const useMarket = () => {
     _orderId: string,
     _sellerID: string
   ) => {
+    let _status: boolean = false
     switch (_selling) {
       case "fullpayment":
-        await onCancelNFTOrder(_type, _sellerID, _orderId)
+        _status = await onCancelNFTOrder(_type, _sellerID, _orderId)
         break
       case "installment":
-        await onCancelNFTInstallOrder(_type, _orderId)
+        _status = await onCancelNFTInstallOrder(_type, _sellerID, _orderId)
         break
       case "rental":
-        await onCancelNFTRentOrder(_type, _orderId)
+        _status = await onCancelNFTRentOrder(_type, _sellerID, _orderId)
         break
       default:
         break
     }
+    return _status
   }
 
   const onCancelOrder = async (
@@ -160,28 +188,30 @@ const useMarket = () => {
     _orderId: string,
     _sellerId: string
   ) => {
+    let _status: boolean = false
     switch (_type) {
       case "game_item":
-        await onCancelGameItemOrder(_sellerId, _orderId)
+        _status = await onCancelGameItemOrder(_sellerId, _orderId)
         break
       case "nft_material":
-        await onCancelMaterialOrder(_sellerId, _orderId)
+        _status = await onCancelMaterialOrder(_sellerId, _orderId)
         break
       case "nft_land":
-        await onCancelBySelling(_type, _selling, _orderId, _sellerId)
+        _status = await onCancelBySelling(_type, _selling, _orderId, _sellerId)
         break
       case "nft_building":
-        await onCancelBySelling(_type, _selling, _orderId, _sellerId)
+        _status = await onCancelBySelling(_type, _selling, _orderId, _sellerId)
         break
       case "nft_naka_punk":
-        await onCancelBySelling(_type, _selling, _orderId, _sellerId)
+        _status = await onCancelBySelling(_type, _selling, _orderId, _sellerId)
         break
       case "nft_game":
-        await onCancelBySelling(_type, _selling, _orderId, _sellerId)
+        _status = await onCancelBySelling(_type, _selling, _orderId, _sellerId)
         break
       default:
         break
     }
+    return _status
   }
 
   const onExeBySelling = async (
@@ -193,9 +223,10 @@ const useMarket = () => {
     _amount: number,
     _period: number
   ) => {
+    let _status: boolean = false
     switch (_selling) {
       case "fullpayment":
-        await onExecuteNFTOrder(
+        _status = await onExecuteNFTOrder(
           _marketId,
           _itemId,
           _sellerId,
@@ -204,7 +235,7 @@ const useMarket = () => {
         )
         break
       case "installment":
-        await onExecuteNFTInstallOrder(
+        _status = await onExecuteNFTInstallOrder(
           _marketId,
           _itemId,
           _sellerId,
@@ -214,7 +245,7 @@ const useMarket = () => {
         )
         break
       case "rental":
-        await onExecuteNFTRentOrder(
+        _status = await onExecuteNFTRentOrder(
           _marketId,
           _itemId,
           _sellerId,
@@ -226,6 +257,7 @@ const useMarket = () => {
       default:
         break
     }
+    return _status
   }
 
   const onMintOrder = async (
@@ -234,19 +266,21 @@ const useMarket = () => {
     _itemID: string,
     _amount: number
   ) => {
+    let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (_type === "nft_naka_punk") {
-      await mutateMarketPurcPunkOrder({ _qty: _amount }).finally(() =>
-        setClose()
-      )
+      await mutateMarketPurcPunkOrder({ _qty: _amount })
+      _status = true
     } else {
       await mutateMintNFT({
         _urlNFT: convertNFTTypeToUrl(_type),
         _marketplaceId: _marketId,
         _itemAmount: _amount
-      }).finally(() => setClose())
+      })
+      _status = true
     }
-    // setClose()
+    setClose()
+    return _status
   }
 
   const onExecuteOrder = async (
@@ -259,10 +293,11 @@ const useMarket = () => {
     _amount: number,
     _period?: number
   ) => {
+    let _status: boolean = false
     const periodValue = _period || 0
     switch (_type) {
       case "game_item":
-        await onExecuteGameItemOrder(
+        _status = await onExecuteGameItemOrder(
           _marketId,
           _itemId,
           _sellerId,
@@ -271,7 +306,7 @@ const useMarket = () => {
         )
         break
       case "nft_material":
-        await onExecuteMaterialOrder(
+        _status = await onExecuteMaterialOrder(
           _marketId,
           _itemId,
           _sellerId,
@@ -280,7 +315,7 @@ const useMarket = () => {
         )
         break
       case "nft_land":
-        await onExeBySelling(
+        _status = await onExeBySelling(
           _selling,
           _marketId,
           _itemId,
@@ -291,7 +326,7 @@ const useMarket = () => {
         )
         break
       case "nft_building":
-        await onExeBySelling(
+        _status = await onExeBySelling(
           _selling,
           _marketId,
           _itemId,
@@ -302,7 +337,7 @@ const useMarket = () => {
         )
         break
       case "nft_naka_punk":
-        await onExeBySelling(
+        _status = await onExeBySelling(
           _selling,
           _marketId,
           _itemId,
@@ -313,7 +348,7 @@ const useMarket = () => {
         )
         break
       case "nft_game":
-        await onExeBySelling(
+        _status = await onExeBySelling(
           _selling,
           _marketId,
           _itemId,
@@ -326,6 +361,7 @@ const useMarket = () => {
       default:
         break
     }
+    return _status
   }
   return {
     onCreateOrder,

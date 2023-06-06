@@ -139,7 +139,7 @@ const OverviewContent = ({
               {gameOwnerCommission !== undefined &&
                 stateProfile &&
                 data &&
-                stateProfile.id === data.NFT_info.owner_id._id.toString() && (
+                stateProfile.id === data.NFT_info?.owner_id?._id.toString() && (
                   <>
                     <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
                     <div className="overview-row grid gap-2 lg:grid-cols-2">

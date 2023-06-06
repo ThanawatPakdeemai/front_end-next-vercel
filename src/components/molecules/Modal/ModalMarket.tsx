@@ -86,23 +86,23 @@ const ModalMarket = ({
   plot
 }: IProps) => {
   const currencyRef = useRef<boolean>(false)
-  const { getPriceNakaCurrent } = Helper
+  const { getPriceNakaCurrent, convertNFTTypeToTType } = Helper
   const [selling, setSelling] = useState<TSellingType>(sellingType)
   const [currency, setCurrency] = useState<number>(0)
   const router: NextRouter = useRouter()
 
-  const { fetchOrderById } = useMarketplaceProvider()
   const { handleSubmit } = useForm()
   const { onCreateOrder, onCancelOrder, onMintOrder, onExecuteOrder } =
     useMarket()
 
   const {
+    invenItemData,
     invPrice,
     invPeriod,
     invAmount,
     setInvPrice,
     setInvPeriod,
-    fetchInvenItemDataById
+    updateInvenNFTMarketData
   } = useInventoryProvider()
 
   const { marketPeriod, marketAmount, setMarketPeriod } =
@@ -187,36 +187,40 @@ const ModalMarket = ({
   const onSubmit = handleSubmit(async () => {
     switch (action) {
       case "cancel":
-        if (orderId && sellerId && selling) {
+        if (orderId && sellerId && selling && sellerType === "user") {
+          // this function allow sellerType = user only
           await onCancelOrder(nftType, selling, orderId, sellerId)
-            .then(() => {
-              // redirect
-              // check if stay on inventory not redirect
-            })
-            .catch(async () => {
-              // refetch data
-              if (router.asPath.includes("/inventory")) {
-                //
-              } else if (fetchOrderById) {
-                // await fetchOrderById().catch(() => {
-                //   setTimeout(
-                //     () =>
-                //       router.replace({
-                //         pathname: `/marketplace/${
-                //           sellerType === "system" ? "" : "/p2p"
-                //         }/${convertNFTTypeToTType(nftType, sellerType) || ""}`
-                //       }),
-                //     1000
-                //   )
-                // })
+            .then((_res) => {
+              // if _res is true mean cancel success
+              if (_res) {
+                let _path: string | undefined
+                // inventory || forsale || ...
+                if (router.asPath.includes("/inventory")) {
+                  // refetch data or replace data
+                  if (nftType === "game_item" || nftType === "nft_material") {
+                    _path = `/marketplace/inventory/${convertNFTTypeToTType(
+                      nftType
+                    )}`
+                  } else if (invenItemData && updateInvenNFTMarketData) {
+                    // update data from response
+                    updateInvenNFTMarketData(undefined)
+                  }
+                } else {
+                  // p2p
+                  _path = `/marketplace/p2p/${convertNFTTypeToTType(nftType)}`
+                }
+                if (_path) {
+                  return router.replace(_path)
+                }
               }
             })
+            .catch(async (_err) => console.error(_err))
             .finally(() => {
               setTimeout(() => onClose(), 3000)
             })
         } else {
           console.error(
-            `selling:${selling}, order: ${orderId}, sellerAcc: ${sellerId}`
+            `selling:${selling}, order: ${orderId}, sellerAcc: ${sellerId}, sellerType:${sellerType}`
           )
         }
         break
@@ -230,18 +234,18 @@ const ModalMarket = ({
             invAmount,
             invPrice,
             invPeriod
-          )
-            .then(async () => {
-              if (
-                router.asPath.includes("/inventory") &&
-                fetchInvenItemDataById
-              ) {
-                await fetchInvenItemDataById()
-              }
-            })
-            .finally(() => {
-              setTimeout(() => onClose(), 3000)
-            })
+          ).then((_res) => {
+            if (router.asPath.includes("/inventory")) {
+              return
+            }
+            // no effect because redirect when cancel on page != inventory
+            const _path = `/marketplace/inventory/${convertNFTTypeToTType(
+              nftType
+            )}/${itemId}`
+            if (_path) {
+              return router.replace(_path)
+            }
+          })
         } else
           console.error(`marketAmount: ${invAmount}, marketPrice: ${invPrice}`)
         break
@@ -264,8 +268,13 @@ const ModalMarket = ({
             orderId,
             marketAmount,
             marketPeriod
-          ).finally(() => {
-            setTimeout(() => onClose(), 3000)
+          ).then((_res) => {
+            if (_res)
+              return router.replace(
+                `/marketplace/${
+                  sellerType === "system" ? "" : "/p2p"
+                }/${convertNFTTypeToTType(nftType)}`
+              )
           })
         } else
           console.error(
@@ -274,9 +283,11 @@ const ModalMarket = ({
         break
       case "mint":
         if (marketId && itemId && priceValue) {
-          await onMintOrder(nftType, marketId, itemId, 1).finally(() => {
-            setTimeout(() => onClose(), 3000)
-            router.back()
+          await onMintOrder(nftType, marketId, itemId, 1).then((_res) => {
+            if (_res)
+              return router.replace(
+                `/marketplace/${convertNFTTypeToTType(nftType)}`
+              )
           })
         } else
           console.error(

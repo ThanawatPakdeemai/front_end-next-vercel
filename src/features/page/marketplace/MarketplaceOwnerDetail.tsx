@@ -47,6 +47,7 @@ const MarketplaceOwnerDetail = () => {
             title={invenItemData.name}
             position={invenItemData.position}
             qrCode={invenItemData.qrCode}
+            price={invenItemData.marketplaces_data?.price}
             count={
               invenItemData.totalAmount
                 ? {

@@ -31,7 +31,7 @@ import Breadcrumb from "@components/molecules/Breadcrumb"
 const MarketplaceReefAvatar = () => {
   const [evm, setEVM] = useState<string>("")
   const { marketType } = useGlobal()
-  const { onCheckAllowance } = useGlobalMarket()
+  const { checkAllowanceNaka } = useGlobalMarket()
   const {
     priceAvatarReef,
     redeemAvatarReefData,
@@ -65,15 +65,14 @@ const MarketplaceReefAvatar = () => {
     }
   }
 
-  const handleMintNFTAvatar = async () => {
+  const handleMintNakapunk = async () => {
     if (evm) {
       setOpen()
-      const _checkAllowance = await onCheckAllowance({
-        _type: marketType || "nft_avatar",
-        _seller: "user",
-        _price: priceNP * count
-      })
-      if (_checkAllowance.allowStatus) {
+      const result = await checkAllowanceNaka(
+        CONFIGS.CONTRACT_ADDRESS.REEF_CONTRACT
+      )
+      const _allowance = WeiToNumber(result.allowance.toString())
+      if (_allowance > priceNP * count) {
         mutatePurchaseAvatarReef({ _addrs: evm, _qty: count, _chain: "reef" })
           .then(() => {
             successToast("Mint success")
@@ -264,7 +263,7 @@ const MarketplaceReefAvatar = () => {
                   className="!min-h-10 !h-10 !w-[232px] !bg-green-lemon"
                   arrowColor="text-primary-main"
                   icon={<WandIcon />}
-                  onClick={handleMintNFTAvatar}
+                  onClick={handleMintNakapunk}
                 />
               ) : (
                 <RightMenuNotLogIn />

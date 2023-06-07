@@ -54,7 +54,15 @@ const FormProfileSetting = () => {
           className="mb-5 w-full"
           required
           type="text"
-          sx={StyledBaseInputMobile}
+          sx={{
+            ...StyledBaseInputMobile,
+            "&.MuiOutlinedInput-root": {
+              borderRadius: "8px",
+              background: "#18181C",
+              border: "1px solid #232329",
+              padding: "10px"
+            }
+          }}
           value={watchProfileSetting("_username")}
           onChange={(event) => {
             let { value } = event.target
@@ -84,7 +92,15 @@ const FormProfileSetting = () => {
           className="mb-5 w-full"
           required
           type="text"
-          sx={StyledBaseInputMobile}
+          sx={{
+            ...StyledBaseInputMobile,
+            "&.MuiOutlinedInput-root": {
+              borderRadius: "8px",
+              background: "#18181C",
+              border: "1px solid #232329",
+              padding: "10px"
+            }
+          }}
           value={watchProfileSetting("_country")}
           onChange={(event) => {
             const { value } = event.target
@@ -98,7 +114,15 @@ const FormProfileSetting = () => {
           className="mb-5 w-full"
           required
           type="text"
-          sx={StyledBaseInputMobile}
+          sx={{
+            ...StyledBaseInputMobile,
+            "&.MuiOutlinedInput-root": {
+              borderRadius: "8px",
+              background: "#18181C",
+              border: "1px solid #232329",
+              padding: "10px"
+            }
+          }}
           value={watchProfileSetting("_user_ip_address")}
           onChange={(event) => {
             const { value } = event.target

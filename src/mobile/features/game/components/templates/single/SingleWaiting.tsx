@@ -1,4 +1,3 @@
-// import PlayerCard from "@feature/game/components/molecules/PlayerCard"
 import ButtonGame from "@src/mobile/features/game/components/atoms/ButtonGame"
 import useWaitingSingle from "@feature/game/containers/hooks/useWaitingSingle"
 import { CurrentPlayer } from "@feature/game/interfaces/IGameService"

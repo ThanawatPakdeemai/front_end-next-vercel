@@ -69,7 +69,7 @@ const EventsListPage = () => {
                 key={uuid()}
                 event_id={item._id}
                 title={item.name}
-                image={item.banner_image}
+                image={item.icon_image ? item.icon_image : item.banner_image}
                 date_start={item.date_start}
                 date_end={item.date_end}
                 status={item.status}

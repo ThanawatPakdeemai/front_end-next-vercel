@@ -266,6 +266,9 @@ const useFormRegisterController = () => {
   }
 
   const onSubmitRegister = (values: TFormData) => {
+    // eslint-disable-next-line no-console
+    console.log("test-submit-register", values)
+
     const { email, code, password, subscription, referralId } = values
     if (emailCorrect && characterPasswordLength && characterUppercase) {
       setFormSubmitErrors(false)

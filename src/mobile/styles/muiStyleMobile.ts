@@ -10,7 +10,7 @@ export const StyleDrawer: SxProps<Theme> = {
   ".MuiDrawer-paper": {
     width: "100%",
     paddingBottom: "90px",
-    background: "#18181C",
+    background: "#121212",
     border: "1px solid #35383F"
   }
 }

@@ -14,7 +14,8 @@ import {
   MenuItem,
   TextField,
   SwipeableDrawer,
-  Button
+  Button,
+  CircularProgress
 } from "@mui/material"
 import { useTranslation } from "react-i18next"
 
@@ -58,6 +59,7 @@ const ModalCreateRoomMobile = ({
         keepMounted: true
       }}
       sx={StyleDrawer}
+      className="MuiDrawer-paper__bottom"
     >
       <ModalWithHeaderTemplate title="Create Room">
         <Box
@@ -141,8 +143,11 @@ const ModalCreateRoomMobile = ({
           >
             <Button
               variant="contained"
-              className=" h-[58px] w-[170px] min-w-0 rounded-[100px] rounded-bl-3xl border border-solid border-neutral-710 !bg-neutral-710"
-              onClick={() => clearAllDrawer()}
+              className="h-[58px] w-[170px] min-w-0 rounded-[100px] rounded-bl-3xl border border-solid border-neutral-710 !bg-neutral-710"
+              onClick={() => {
+                clearAllDrawer()
+                setOpenCreateRoom(false)
+              }}
             >
               <div className="flex items-center font-urbanist text-base font-bold">
                 Cancel
@@ -155,26 +160,15 @@ const ModalCreateRoomMobile = ({
               disabled={props.isLoading}
             >
               <div className="flex items-center font-urbanist text-base font-bold">
-                {t("create")}
-              </div>
-            </Button>
-            {/* <ButtonToggleIcon
-              className=" flex items-center bg-secondary-main text-white-default"
-              startIcon={null}
-              disabled={props.isLoading}
-              text={
-                props.isLoading ? (
+                {props.isLoading && (
                   <CircularProgress
                     color="primary"
                     size={20}
                   />
-                ) : (
-                  t("create")
-                )
-              }
-              handleClick={props.handleSubmit}
-              type="button"
-            /> */}
+                )}
+                {t("create")}
+              </div>
+            </Button>
           </Box>
         </Box>
       </ModalWithHeaderTemplate>

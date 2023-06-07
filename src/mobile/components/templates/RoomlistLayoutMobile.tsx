@@ -56,7 +56,7 @@ const RoomlistLayoutMobile = ({ gameData }: IRoomlistLayoutMobileProps) => {
     >
       <h2 className="flex items-center gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary">
         <i
-          onClick={() => router.back()}
+          onClick={() => router.push(`/${gameData.game_mode}/${gameData.path}`)}
           aria-hidden="true"
         >
           <ArrowBackIcon />

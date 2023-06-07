@@ -4,10 +4,12 @@ export const StyleDrawer: SxProps<Theme> = {
   "&.MuiDrawer-root": {
     zIndex: 2
   },
+  "&.MuiDrawer-paper__bottom .MuiDrawer-paper": {
+    borderRadius: "48px 48px 0px 0px"
+  },
   ".MuiDrawer-paper": {
     width: "100%",
     paddingBottom: "90px",
-    borderRadius: "48px 48px 0px 0px",
     background: "#18181C",
     border: "1px solid #35383F"
   }
@@ -166,6 +168,14 @@ export const StyleCreateRoom = {
 }
 
 export const StyleWaitingRoom = {
+  "&.waiting-room__info": {
+    display: "flex",
+    gap: "17px",
+    alignItems: "center",
+    ".timer-box": {
+      flex: "1"
+    }
+  },
   "& .waiting-room__content": {
     ".game-play-button": {
       maxWidth: "380px",
@@ -179,13 +189,18 @@ export const StyleWaitingRoom = {
         "& > .btn-icon-container": {
           margin: "0",
           background: "#F32429!important",
+          width: "auto",
+          minWidth: "110px",
+          ":disabled": {
+            background: "#9E9E9E!important"
+          },
           "circle": {
             fill: "#F2C94C!important"
           }
         },
         ".MuiTypography-root": {
           fontSize: "10px",
-          width: "calc(100% - 140px)",
+          width: "calc(100% - 140px)!important",
           fontFamily: "Urbanist",
           fontWeight: 700,
           color: "#FFFFFF",
@@ -199,5 +214,8 @@ export const StyleWaitingRoom = {
         }
       }
     }
+  },
+  ".chat-wrapper": {
+    marginLeft: "auto"
   }
 }

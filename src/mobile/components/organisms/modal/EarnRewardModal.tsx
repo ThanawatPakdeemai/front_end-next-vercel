@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React from "react"
 import { Box, SwipeableDrawer } from "@mui/material"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
@@ -12,6 +13,7 @@ interface IEarnRewardModalProps {
 }
 
 const EarnRewardModal = ({ open, setOpenReward }: IEarnRewardModalProps) => {
+  if (!open) return <></>
   const { clearAllDrawer } = useDrawerControllerMobile()
   const { isLoadingReward, earnReward } = useEarnRewardController()
 

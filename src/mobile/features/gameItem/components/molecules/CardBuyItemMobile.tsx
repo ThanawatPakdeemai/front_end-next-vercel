@@ -132,6 +132,12 @@ export default function CardBuyItemMobile({
       <Box
         component="footer"
         className="card-buy-item__footer w-full"
+        sx={{
+          ".MuiButtonBase-root:focus, .MuiButtonBase-root:hover": {
+            background: "#F42728!important",
+            boxShadow: "none!important"
+          }
+        }}
       >
         {buttonInToGame}
       </Box>

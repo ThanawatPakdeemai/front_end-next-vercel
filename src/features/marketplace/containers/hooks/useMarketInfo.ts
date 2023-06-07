@@ -9,7 +9,7 @@ import {
   TType
 } from "@feature/marketplace/interfaces/IMarketService"
 import useGlobal from "@hooks/useGlobal"
-import useMarketFilterStore, { TKey } from "@stores/marketFilter"
+import useMarketFilterStore from "@stores/marketFilter"
 import { useRouter } from "next/router"
 import Helper from "@utils/helper"
 import { useCallback, useEffect, useMemo, useState } from "react"

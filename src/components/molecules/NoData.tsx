@@ -24,7 +24,7 @@ const NoData = ({ className, icon, text }: INoData) => (
       </div>
     )}
     <Typography className="mx-auto max-w-[257px] rounded-[14px] border border-neutral-800 p-4 text-[14px] text-neutral-300">
-      {text ? text : <Trans i18nKey="no_data_available" />}
+      {text || <Trans i18nKey="no_data_available" />}
     </Typography>
   </div>
 )

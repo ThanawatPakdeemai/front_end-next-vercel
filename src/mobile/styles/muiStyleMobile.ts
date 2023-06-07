@@ -77,3 +77,127 @@ export const StyledBaseInputMobile: SxProps<Theme> = {
     }
   }
 }
+
+export const StyleCreateRoom = {
+  ".MuiTypography-root": {
+    fontFamily: "Urbanist",
+    fontSize: "14px"
+  },
+  "&.modal-create-room": {
+    ".MuiInputLabel-root": {
+      top: "auto",
+      left: "auto",
+      margin: 0,
+      maxWidth: "100%",
+      display: "block",
+      transform: "none",
+      fontFamily: "Urbanist",
+      fontSize: "14px",
+      color: "#70727B",
+      textAlign: "center",
+      marginBottom: "6px"
+    },
+    ".MuiSelect-select": {
+      fontFamily: "Urbanist",
+      fontSize: "14px",
+      color: "#fff",
+      fontWeight: "600",
+      textTransform: "uppercase"
+    },
+    ".MuiSwitch-root": {
+      width: "38px",
+      height: "20px",
+      borderRadius: "40px"
+    },
+    ".MuiSwitch-track": {
+      backgroundColor: "#F32429"
+    },
+    ".MuiSwitch-switchBase": {
+      color: "#fff",
+      top: "2px",
+      left: "2px",
+      "&.Mui-checked+.MuiSwitch-track": {
+        backgroundColor: "#F32429"
+      }
+    },
+    ".modal-create-room__roomStatus": {
+      display: "flex",
+      alignItems: "center",
+      padding: "12px",
+      gap: "14px",
+      width: "100%",
+      background: "#18181C",
+      border: "1px solid #232329",
+      borderRadius: "8px",
+      justifyContent: "space-between"
+    },
+    ".MuiButton-root": {
+      borderRadius: "100px",
+      border: 0
+    }
+  },
+  ".count-item": {
+    "&__content": {
+      justifyContent: "space-between",
+      width: "100%"
+    },
+    "&__wrapper": {
+      alignItems: "center",
+      borderTop: "1px solid #35383F",
+      paddingTop: "30px",
+      ".MuiFormControl-root": {
+        width: "calc(100% - 100px)!important"
+      },
+      ".MuiOutlinedInput-root": {
+        background: "#1F222A",
+        border: "0.9px solid #232329",
+        color: "#fff"
+      }
+    },
+    "&__decrease": {
+      background: "#F32429",
+      margin: 0
+    },
+    "&__increase": {
+      background: "#F32429",
+      margin: 0
+    }
+  }
+}
+
+export const StyleWaitingRoom = {
+  "& .waiting-room__content": {
+    ".game-play-button": {
+      maxWidth: "380px",
+      marginLeft: "auto",
+      "& > div": {
+        width: "100%",
+        background: "#18181C",
+        border: "0.7px solid #35383F",
+        borderRadius: "76px",
+        padding: "10px",
+        "& > .btn-icon-container": {
+          margin: "0",
+          background: "#F32429!important",
+          "circle": {
+            fill: "#F2C94C!important"
+          }
+        },
+        ".MuiTypography-root": {
+          fontSize: "10px",
+          width: "calc(100% - 140px)",
+          fontFamily: "Urbanist",
+          fontWeight: 700,
+          color: "#FFFFFF",
+          textTransform: "uppercase",
+          margin: "0"
+        },
+        ".text-button": {
+          ".MuiTypography-root": {
+            fontSize: "16px!important"
+          }
+        }
+      }
+    }
+  }
+}

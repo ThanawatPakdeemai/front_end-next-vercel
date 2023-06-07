@@ -55,6 +55,16 @@ const useCreateRoomController = ({ gameData }: ICreateRoomControllerProp) => {
     setIsPublicRoom(status)
   }
 
+  const getItemId = (): string => {
+    if (conditionGameFree) {
+      return gameItemList?.[0]?._id || ""
+    }
+    if (itemSelected) {
+      return itemSelected?._id
+    }
+    return ""
+  }
+
   const handleSubmit = () => {
     if (
       gameItemList &&
@@ -73,11 +83,7 @@ const useCreateRoomController = ({ gameData }: ICreateRoomControllerProp) => {
             _gameId: gameData.id,
             _playerId: profile ? profile.id : "",
             _walletAddress: profile ? profile.address : "",
-            _itemId: conditionGameFree
-              ? gameItemList?.[0]?._id
-              : itemSelected
-              ? itemSelected?._id
-              : "",
+            _itemId: getItemId(),
             _maxPlayer: count,
             _numberItem: itemUse,
             _mapId: map,

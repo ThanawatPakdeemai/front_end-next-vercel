@@ -8,11 +8,11 @@ import NoData from "@components/molecules/NoData"
 import PleaseLogin from "@components/atoms/PleaseLogin"
 import MultiRoom from "@mobile/features/game/components/templates/multi/MultiRoom"
 import SingleRoom from "@mobile/features/game/components/templates/single/SingleRoom"
-import ArrowBackIcon from "../atoms/icons/ArrowBackIcon"
 import ModalCreateRoomMobile from "@mobile/features/rooms/components/molecules/ModalCreateRoomMobile"
 import useCreateRoomController from "@feature/rooms/hooks/useCreateRoomController"
-import ButtonFilledTemplate from "./ButtonFilledTemplate"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
+import ButtonFilledTemplate from "./ButtonFilledTemplate"
+import ArrowBackIcon from "../atoms/icons/ArrowBackIcon"
 
 export interface IRoomlistLayoutMobileProps {
   gameData: IGame
@@ -23,9 +23,6 @@ const RoomlistLayoutMobile = ({ gameData }: IRoomlistLayoutMobileProps) => {
   const { openCreateRoom, setOpenCreateRoom } = useDrawerControllerMobile()
   const profile = useProfileStore((state) => state.profile.data)
   const {
-    handleOpen,
-    open,
-    handleClose,
     map,
     maps,
     setMap,
@@ -92,6 +89,7 @@ const RoomlistLayoutMobile = ({ gameData }: IRoomlistLayoutMobileProps) => {
                 gameData={gameData}
                 openCreateRoom={openCreateRoom}
                 setOpenCreateRoom={setOpenCreateRoom}
+                isPublicRoom={isPublicRoom}
                 setIsPublicRoom={setIsPublicRoom}
                 isLoading={isLoading}
                 handleSubmit={handleSubmit}
@@ -99,7 +97,6 @@ const RoomlistLayoutMobile = ({ gameData }: IRoomlistLayoutMobileProps) => {
                 maps={maps}
                 setMap={setMap}
                 handleSetIsCurrent={handleSetIsCurrent}
-                isPublicRoom={false}
               />
             </div>
           )}

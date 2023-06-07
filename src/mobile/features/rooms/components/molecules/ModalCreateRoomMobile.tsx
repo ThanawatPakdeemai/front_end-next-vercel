@@ -1,24 +1,20 @@
-import ButtonClose from "@components/atoms/button/ButtonClose"
+import React from "react"
 import SwitchCustom from "@components/atoms/SwitchCustom"
 import PlayersIcon from "@components/icons/PlayersIcon"
 import CountItem from "@components/molecules/CountItem"
-import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import { IGame, IGameMap } from "@feature/game/interfaces/IGameService"
-import useCreateRoomController from "@feature/rooms/hooks/useCreateRoomController"
-import ButtonFilledTemplate from "@mobile/components/templates/ButtonFilledTemplate"
 import ModalWithHeaderTemplate from "@mobile/components/templates/ModalWithHeaderTemplate"
+import GameInfoCard from "@mobile/features/game/components/molecules/GameInfoCard"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
-import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
+import { StyleCreateRoom, StyleDrawer } from "@mobile/styles/muiStyleMobile"
 import { MapOutlined } from "@mui/icons-material"
 import {
   Box,
   InputAdornment,
   MenuItem,
   TextField,
-  Typography,
-  CircularProgress,
-  SwipeableDrawer
+  SwipeableDrawer,
+  Button
 } from "@mui/material"
 import { useTranslation } from "react-i18next"
 
@@ -63,20 +59,18 @@ const ModalCreateRoomMobile = ({
       }}
       sx={StyleDrawer}
     >
-      <ModalWithHeaderTemplate title={"Create Room"}>
-        <div className="flex w-full flex-col gap-y-[22px]">
-          {/* <Box
-            component="div"
-            className="flex items-center rounded-lg bg-neutral-800 pr-[7px]"
-            sx={{ height: "54px" }}
-          >
-            <div className="flex flex-1 flex-row items-center">
-              <Typography className="pl-[22px] uppercase text-neutral-300">
-                {t("create_room")}
-              </Typography>
-            </div>
-            <ButtonClose onClick={handleClose} />
-          </Box> */}
+      <ModalWithHeaderTemplate title="Create Room">
+        <Box
+          component="div"
+          className="modal-create-room flex w-full flex-col gap-y-[22px] py-4"
+          sx={StyleCreateRoom}
+        >
+          <GameInfoCard
+            key={gameData._id}
+            id={gameData._id}
+            image={gameData.image_category_list}
+            title={gameData.name}
+          />
           <CountItem
             endIcon={<PlayersIcon />}
             label={t("number_of_players")}
@@ -110,7 +104,7 @@ const ModalCreateRoomMobile = ({
                 ))}
             </TextField>
           )}
-          <div className="flex text-sm text-neutral-500">
+          <div className="modal-create-room__roomStatus flex justify-between text-sm text-neutral-500">
             <span>{t("room_status")} :</span>
             <button
               className="ml-2 mr-[10px]"
@@ -141,24 +135,48 @@ const ModalCreateRoomMobile = ({
               </span>
             </button>
           </div>
-          <ButtonToggleIcon
-            className=" flex items-center bg-secondary-main text-white-default"
-            startIcon={null}
-            disabled={props.isLoading}
-            text={
-              props.isLoading ? (
-                <CircularProgress
-                  color="primary"
-                  size={20}
-                />
-              ) : (
-                t("create")
-              )
-            }
-            handleClick={props.handleSubmit}
-            type="button"
-          />
-        </div>
+          <Box
+            component="div"
+            className="flex gap-3"
+          >
+            <Button
+              variant="contained"
+              className=" h-[58px] w-[170px] min-w-0 rounded-[100px] rounded-bl-3xl border border-solid border-neutral-710 !bg-neutral-710"
+              onClick={() => clearAllDrawer()}
+            >
+              <div className="flex items-center font-urbanist text-base font-bold">
+                Cancel
+              </div>
+            </Button>
+            <Button
+              variant="contained"
+              className="h-[58px] w-[170px] min-w-0 rounded-[100px] rounded-bl-3xl border border-solid border-error-100 !bg-error-100"
+              onClick={props.handleSubmit}
+              disabled={props.isLoading}
+            >
+              <div className="flex items-center font-urbanist text-base font-bold">
+                {t("create")}
+              </div>
+            </Button>
+            {/* <ButtonToggleIcon
+              className=" flex items-center bg-secondary-main text-white-default"
+              startIcon={null}
+              disabled={props.isLoading}
+              text={
+                props.isLoading ? (
+                  <CircularProgress
+                    color="primary"
+                    size={20}
+                  />
+                ) : (
+                  t("create")
+                )
+              }
+              handleClick={props.handleSubmit}
+              type="button"
+            /> */}
+          </Box>
+        </Box>
       </ModalWithHeaderTemplate>
     </SwipeableDrawer>
   )

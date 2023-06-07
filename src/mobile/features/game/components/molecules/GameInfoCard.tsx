@@ -48,7 +48,7 @@ const GameInfoCard = ({ image, categories, ...props }: IGameInfoCardProps) => (
             </p>
           </div>
         )}
-        <p className="text-[14px]">In-App Purchase</p>
+        {/* <p className="text-[14px]">In-App Purchase</p> */}
       </div>
     </div>
   </Box>

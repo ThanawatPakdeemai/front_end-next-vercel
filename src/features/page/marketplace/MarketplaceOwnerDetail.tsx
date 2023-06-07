@@ -1,3 +1,4 @@
+import React from "react"
 import ButtonMarket from "@components/atoms/button/ButtonMarket"
 import ButtonRentOut from "@components/atoms/button/ButtonRentOut"
 import CardDetailSkeleton from "@feature/marketplace/components/molecules/CardDetailSkeleton"
@@ -8,7 +9,6 @@ import RightDetailsMarketplace from "@feature/marketplace/components/organisms/R
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import useCountStore from "@stores/countComponant"
 import useProfileStore from "@stores/profileStore"
-import React, { useEffect } from "react"
 
 const MarketplaceOwnerDetail = () => {
   const { profile } = useProfileStore()

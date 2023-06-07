@@ -21,10 +21,7 @@ import useCreateRoomController from "@feature/rooms/hooks/useCreateRoomControlle
 interface IProp {
   gameData: IGame
 }
-interface IPropMessage {
-  status: boolean
-  message: string
-}
+
 const ModalCreateRoom = ({ gameData }: IProp) => {
   const { t } = useTranslation()
   const {

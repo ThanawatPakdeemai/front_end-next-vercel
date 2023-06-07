@@ -1,20 +1,20 @@
 import useRoomMulti from "@feature/game/containers/hooks/useRoomMulti"
 import { v4 as uuid } from "uuid"
-import ListJoinGame from "../../molecules/ListJoinGame"
 import SkeletonEarnRewardMobile from "@mobile/components/atoms/skeleton/SkeletonEarnRewardMobile"
 import { Box } from "@mui/material"
 import NoData from "@components/molecules/NoData"
+import ListJoinGame from "../../molecules/ListJoinGame"
 
 const MultiRoom = () => {
   const { dataRoom, data, handleJoinRoom, itemSelected } = useRoomMulti()
   return (
     <Box
-      component={"div"}
+      component="div"
       className="roomlist-multi__wrapper"
     >
       {data && (
         <Box
-          component={"div"}
+          component="div"
           className="roomlist-multi__content"
         >
           {!dataRoom && (

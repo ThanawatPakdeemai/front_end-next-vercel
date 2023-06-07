@@ -38,10 +38,10 @@ const TextfieldDetailContent = ({
 }: IProp) => {
   const { price: nakaPrice } = useNakaPriceProvider()
   const { count: countItemSelected } = useCountStore()
-  const { invPrice, setInvPrice } = useInventoryProvider()
+  const { invPrice, setInvPrice, invenItemData, invAmount, setInvAmount } =
+    useInventoryProvider()
   const { marketAmount, setMarketAmount, marketOrder } =
     useMarketplaceProvider()
-  const { invAmount, setInvAmount } = useInventoryProvider()
   const { marketType } = useGlobal()
   const _priceValue = invPrice || price
 
@@ -51,13 +51,20 @@ const TextfieldDetailContent = ({
   }
 
   const calcNakaPrice = useMemo(() => {
-    if (nakaPrice && countItemSelected && _priceValue && marketOrder) {
-      return marketOrder.seller_type === "user"
+    if (nakaPrice && countItemSelected && _priceValue) {
+      return marketOrder?.seller_type === "user" ||
+        invenItemData?.marketplaces_data?.seller_type === "user"
         ? countItemSelected * (parseFloat(nakaPrice.last) * _priceValue)
         : countItemSelected * (_priceValue / parseFloat(nakaPrice.last))
     }
     return 0
-  }, [nakaPrice, countItemSelected, _priceValue, marketOrder])
+  }, [
+    nakaPrice,
+    countItemSelected,
+    _priceValue,
+    marketOrder?.seller_type,
+    invenItemData?.marketplaces_data?.seller_type
+  ])
 
   const onDecreaseAmount = () => {
     if (count)
@@ -93,7 +100,7 @@ const TextfieldDetailContent = ({
 
   return (
     <div
-      className={`flex w-full items-start justify-between ${
+      className={`flex w-full items-center justify-between ${
         marketType === "nft_avatar" || marketType === "nft_naka_punk"
           ? "flex-col sm:flex-row"
           : null
@@ -139,44 +146,48 @@ const TextfieldDetailContent = ({
           helperText="Land position on map"
         />
       )}
-      <TextField
-        value={
-          marketOrder && marketOrder.seller_type === "user"
-            ? _priceValue && countItemSelected * _priceValue
-            : Helper.formatNumber(calcNakaPrice, {
-                maximumFractionDigits: 4
-              })
-        }
-        label="PRICE (NAKA)"
-        className="!w-[131px] sm:!w-[232px]"
-        sx={{
-          "& .MuiOutlinedInput-root": {
-            backgroundColor: "#010101"
-          },
-          "input": {
-            color: "#E1E2E2 !important"
+      {_priceValue && (
+        <TextField
+          value={
+            marketOrder?.seller_type === "user" ||
+            invenItemData?.marketplaces_data?.seller_type === "user"
+              ? _priceValue && countItemSelected * _priceValue
+              : Helper.formatNumber(calcNakaPrice, {
+                  maximumFractionDigits: 4
+                })
           }
-        }}
-        onChange={(e) => onPriceChange(e.target.value)}
-        disabled={!!price}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment
-              position="start"
-              className="ml-[15px] mr-3"
-            >
-              <LogoIcon fill="#70727B" />
-            </InputAdornment>
-          )
-        }}
-        helperText={`= ${
-          marketOrder && marketOrder.seller_type === "user"
-            ? Helper.formatNumber(calcNakaPrice, {
-                maximumFractionDigits: 4
-              })
-            : _priceValue
-        } USD`}
-      />
+          label="PRICE (NAKA)"
+          className="!w-[131px] sm:!w-[232px]"
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              backgroundColor: "#010101"
+            },
+            "input": {
+              color: "#E1E2E2 !important"
+            }
+          }}
+          onChange={(e) => onPriceChange(e.target.value)}
+          disabled={!!price}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment
+                position="start"
+                className="ml-[15px] mr-3"
+              >
+                <LogoIcon fill="#70727B" />
+              </InputAdornment>
+            )
+          }}
+          helperText={`= ${
+            marketOrder?.seller_type === "user" ||
+            invenItemData?.marketplaces_data?.seller_type === "user"
+              ? Helper.formatNumber(calcNakaPrice, {
+                  maximumFractionDigits: 4
+                })
+              : _priceValue
+          } USD`}
+        />
+      )}
     </div>
   )
 }

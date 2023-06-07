@@ -127,7 +127,8 @@ const SellActionComponent = ({
             value={selling}
             onChange={onSellingChange}
             sx={{
-              "maxHeight": 40
+              maxHeight: 40,
+              minHeight: 40
             }}
           >
             {MARKET_SELLING.map((m) => (

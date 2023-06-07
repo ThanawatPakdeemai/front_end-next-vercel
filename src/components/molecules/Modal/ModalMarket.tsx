@@ -16,6 +16,7 @@ import Video from "@components/atoms/Video"
 import { NextRouter, useRouter } from "next/router"
 import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 import { useInventoryProvider } from "@providers/InventoryProvider"
+import MagicIcon from "@components/icons/MagicIcon"
 import { ModalCustom } from "./ModalCustom"
 
 const SellActionComp = dynamic(
@@ -130,26 +131,6 @@ const ModalMarket = ({
     }
   }, [getPriceNakaCurrent])
 
-  const actionColor = useMemo(() => {
-    let _color: string | undefined
-    switch (action) {
-      case "mint":
-        _color = "text-info-main"
-        break
-      case "buy":
-        _color = "text-success-main"
-        break
-      case "rent_out":
-        _color = "text-warning-dark"
-        break
-      default:
-        _color = "text-secondary-main"
-        break
-    }
-    if (_color) return _color
-    return undefined
-  }, [action])
-
   const textBtn = useMemo(() => {
     let _text: string = "loading"
     switch (action) {
@@ -199,9 +180,14 @@ const ModalMarket = ({
         _color = "#F42728"
         _textColor = "#010101"
         break
+      case "mint":
+        _color = nftType === "nft_naka_punk" ? "#A0ED61" : "#27F1EC"
+        _textColor = "#010101"
+        _icon = <MagicIcon />
+        break
       case "sell":
-        _color = "#7B5BE6"
-        _textColor = "#E1E2E2"
+        _color = "#F42728"
+        _textColor = "#010101"
         break
       default:
         _color = "#27F1EC"
@@ -209,7 +195,7 @@ const ModalMarket = ({
         break
     }
     return { bgColor: _color, txtColor: _textColor, icon: _icon }
-  }, [action])
+  }, [action, nftType])
 
   const onSubmit = handleSubmit(async () => {
     switch (action) {
@@ -333,7 +319,10 @@ const ModalMarket = ({
       onClose={onClose}
       titleNode={
         <>
-          <Typography className={`uppercase ${actionColor}`}>
+          <Typography
+            className="uppercase"
+            sx={{ color: handleStyle.bgColor }}
+          >
             {`${action} :`}
           </Typography>
           <Typography className="ml-1 uppercase text-neutral-300">{`${name}`}</Typography>
@@ -345,7 +334,7 @@ const ModalMarket = ({
       <div className="rounded-lg">
         <Stack
           spacing={3}
-          className="md:p-5"
+          className="md:py-5"
         >
           {/* <ModalHeader
             handleClose={onClose}
@@ -354,9 +343,9 @@ const ModalMarket = ({
           /> */}
           {action === "login" ? <FormLogin /> : null}
           {action !== "login" ? (
-            <div className="grid h-96 w-full grid-cols-1 items-center gap-2 md:grid-cols-2">
+            <div className="grid w-full grid-cols-1 items-center gap-11 md:grid-cols-2">
               <div className="flex h-full min-h-[320px] w-full flex-col gap-2">
-                <div className="relative flex  h-full max-h-[240px] w-full flex-col items-center justify-center">
+                <div className="relative flex h-full max-h-full w-full flex-col items-center justify-center">
                   <Video
                     poster={img}
                     src={vdo || ""}
@@ -373,16 +362,16 @@ const ModalMarket = ({
                   /> */}
                 </div>
                 <div className="flex w-full flex-col gap-2 rounded-xl border border-neutral-800/75 p-6 uppercase text-neutral-500">
-                  <div className="flex w-full flex-row items-center justify-between">
+                  <div className="flex w-full flex-row items-center justify-between text-sm font-bold">
                     <span>token id :</span>
-                    <span>{tokenId}</span>
+                    <span className="text-neutral-300">{tokenId}</span>
                   </div>
                   {plot ? (
                     <>
                       <Divider className="!block border-b-[1px] border-neutral-800/75" />
-                      <div className="flex w-full flex-row items-center justify-between">
+                      <div className="flex w-full flex-row items-center justify-between text-sm font-bold">
                         <span>plot :</span>
-                        <span>
+                        <span className="text-neutral-300">
                           {plot.x}, {plot.y}
                         </span>
                       </div>
@@ -456,12 +445,18 @@ const ModalMarket = ({
                   <Button
                     type="submit"
                     variant="contained"
-                    color="secondary"
                     className="h-10 w-full capitalize"
                     sx={{
-                      backgroundColor: handleStyle.bgColor,
+                      backgroundColor: `${handleStyle.bgColor} !important`,
                       color: handleStyle.txtColor
                     }}
+                    startIcon={
+                      handleStyle.icon ? (
+                        <div className="button-icon animation-arrow">
+                          {handleStyle.icon}
+                        </div>
+                      ) : null
+                    }
                   >
                     {textBtn}
                   </Button>

@@ -45,7 +45,7 @@ export const ModalCustom = ({
           component="div"
           className={`${boderChide || "rounded-md "}${
             title === "orion trade" ? "rounded-t-none" : ""
-          }  min-w-[280px] border-[1px] border-neutral-800 bg-neutral-900 p-4 focus:border-none focus:outline-none focus-visible:outline-none`}
+          }min-w-[280px] border-[1px] border-neutral-800 bg-neutral-900 p-4 focus:border-none focus:outline-none focus-visible:outline-none`}
         >
           {title ||
             (titleNode && (

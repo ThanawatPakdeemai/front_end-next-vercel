@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React from "react"
 import { Box, SwipeableDrawer } from "@mui/material"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
@@ -12,6 +13,7 @@ interface IWishlistModalProps {
 }
 
 const WishlistModal = ({ open, setOpenWishlist }: IWishlistModalProps) => {
+  if (!open) return <></>
   const { gameFavouriteState, isLoadingGameFavourite, limit } =
     useFavoriteGameControllerMobile()
   const { clearAllDrawer } = useDrawerControllerMobile()

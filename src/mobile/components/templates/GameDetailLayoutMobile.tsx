@@ -44,7 +44,7 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
     >
       <h2
         className="flex items-center justify-between gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary"
-        onClick={() => router.back()}
+        onClick={() => router.push("/")}
         aria-hidden="true"
       >
         <ArrowBackIcon />

@@ -17,7 +17,7 @@ const MarketplaceOwnerDetail = () => {
 
   return invenItemData && !isLoading ? (
     <div className="flex flex-col">
-      <div className="mt-5 flex w-full flex-col gap-x-[120px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0">
+      <div className="mt-5 flex w-full flex-col justify-center gap-x-[60px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0">
         <CardContentDetails
           detail={invenItemData.detail}
           image={invenItemData.img}

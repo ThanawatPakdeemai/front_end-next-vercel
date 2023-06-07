@@ -60,7 +60,7 @@ const MarketplaceOwnerDetail = () => {
             }
           >
             {!invenItemData.installments_data ? (
-              <div className="flex w-full items-center justify-between">
+              <div className="flex w-full items-center justify-between gap-x-2">
                 <ButtonMarket
                   nftType={invenItemData.type}
                   img={invenItemData.img}

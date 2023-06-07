@@ -159,8 +159,8 @@ const ButtonMarket = ({
         _textColor = "#010101"
         break
       case "sell":
-        _color = "#7B5BE6"
-        _textColor = "#E1E2E2"
+        _color = "#F42728"
+        _textColor = "#010101"
         break
       default:
         _color = "#27F1EC"
@@ -181,10 +181,15 @@ const ButtonMarket = ({
         variant="contained"
         color="primary"
         startIcon={
+          // eslint-disable-next-line no-nested-ternary
           actionValue === "login" || actionValue === "mint" ? (
-            <div className="button-icon animation-arrow">
-              {actionValue === "login" ? <LoginIcon /> : handleStyle.icon}
-            </div>
+            actionValue === "login" ? (
+              <div className="button-icon animation-arrow">
+                <LoginIcon />
+              </div>
+            ) : (
+              handleStyle.icon
+            )
           ) : null
         }
         className="!h-10 rounded-[20px] text-sm capitalize"

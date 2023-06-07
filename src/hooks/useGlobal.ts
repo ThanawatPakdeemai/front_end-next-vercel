@@ -486,6 +486,7 @@ const useGlobal = (
     return () => {
       load = true
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [marketType])
 
   return {

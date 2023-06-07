@@ -17,6 +17,7 @@ import React, { memo } from "react"
 import { useTranslation } from "react-i18next"
 import { useToast } from "@feature/toast/containers"
 import useGetCoupon from "@feature/coupon/containers/hook/useGetCoupon"
+import Link from "next/link"
 
 interface ICharacterCoupon {
   couponLength: number
@@ -98,9 +99,14 @@ const RedemptionCode = ({ onRedeem }: IProp) => {
           <Typography className="flex-1 text-[14px] text-neutral-300 sm:text-lg">
             REDEMPTION CODE
           </Typography>
-          <Typography className="mr-[26px] font-neue-machina text-xs uppercase text-secondary-main">
-            How to redeem
-          </Typography>
+          <Link
+            href="https://files.naka.im/pdf/HowtoRedeem.pdf"
+            target="_blank"
+          >
+            <Typography className="z-50 mr-6 font-neue-machina text-xs uppercase text-secondary-main">
+              How to redeem
+            </Typography>
+          </Link>
           <div className="flex h-[40px] w-[40px] items-center justify-center rounded-lg border-[1px] border-solid border-neutral-700 bg-neutral-800">
             <div
               className={`flex items-center justify-center ${

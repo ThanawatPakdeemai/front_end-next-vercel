@@ -9,7 +9,7 @@ import {
   TType
 } from "@feature/marketplace/interfaces/IMarketService"
 import useGlobal from "@hooks/useGlobal"
-import useMarketFilterStore, { TKey } from "@stores/marketFilter"
+import useMarketFilterStore from "@stores/marketFilter"
 import { useRouter } from "next/router"
 import Helper from "@utils/helper"
 import { useCallback, useEffect, useMemo, useState } from "react"
@@ -26,7 +26,7 @@ const useMarketInfo = () => {
   const router = useRouter()
   const { marketType } = useGlobal()
   const { getMarketOrderAsnyc, isLoading } = useGetMarketOrder()
-  const [limit, setLimit] = useState<number>(16)
+  const [limit, setLimit] = useState<number>(20)
   const [cardType, setCardType] = useState<TType>("land")
   const { sort, search, filterType } = useMarketFilterStore()
   const sellerType = router.pathname.includes("p2p") ? "user" : "system"

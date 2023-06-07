@@ -1,11 +1,10 @@
-import ButtonLink from "@components/atoms/button/ButtonLink"
 import WandIcon from "@components/icons/WandIcon"
 import CardContentDetails from "@feature/marketplace/components/organisms/CardContentDetails"
 import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
 import useGetPriceNakaPunk from "@feature/nakapunk/containers/hooks/useGetPriceNakapunk"
 import usePurchaseNakapunk from "@feature/nakapunk/containers/hooks/usePurchaseNakapunk"
 import { useToast } from "@feature/toast/containers"
-import { Chip, Typography } from "@mui/material"
+import { Chip, Typography, Button } from "@mui/material"
 import useCountStore from "@stores/countComponant"
 import useLoadingStore from "@stores/loading"
 import React, { useEffect, useState } from "react"
@@ -156,17 +155,6 @@ const MarketplaceNakaPunk = () => {
               Create unique digital asset ownership token.
             </Typography>
             {isLogin ? (
-              // <ButtonLink
-              //   text="Mint now"
-              //   type="button"
-              //   size="medium"
-              //   variant="contained"
-              //   textColor="text-primary-main"
-              //   className="!min-h-10 !h-10 !w-[232px] !bg-green-lemon"
-              //   arrowColor="text-primary-main"
-              //   icon={<WandIcon />}
-              //   onClick={handleMintNakapunk}
-              // />
               <ButtonMarket
                 nftType="nft_naka_punk"
                 name="Naka Punk"
@@ -175,6 +163,20 @@ const MarketplaceNakaPunk = () => {
                 price={priceNP * count}
                 amount={count}
               />
+              {/* 
+              <Button
+                type="submit"
+                variant="contained"
+                className="h-10 w-full !bg-green-lemon capitalize !text-primary-main"
+                startIcon={<WandIcon />}
+                sx={{
+                  maxWidth: 232
+                }}
+                onClick={handleMintNakapunk}
+              >
+                Mint now
+              </Button>
+              */}     
             ) : (
               <RightMenuNotLogIn />
             )}

@@ -102,7 +102,9 @@ const useNFTLand = () => {
       await transferLand(address, _to, _tokenId)
         .then(async (response) => {
           const _res = await response.wait()
-          successToast("Transfer success")
+          if (_res) {
+            successToast("Transfer success")
+          }
         })
         .catch((error) => console.error(error))
     }

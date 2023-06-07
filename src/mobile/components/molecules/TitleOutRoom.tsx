@@ -1,25 +1,24 @@
-import ButtonClose from "@components/atoms/button/ButtonClose"
-import { useRouter } from "next/router"
+import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import { ReactNode } from "react"
 
 interface IProps {
   name: string | ReactNode
-  onOutRoom?: () => void
+  component?: ReactNode
 }
 const TitleOutRoom = (props: IProps) => {
-  const { name, onOutRoom } = props
-  const router = useRouter()
+  const { name, component } = props
   return (
-    <div className=" my-[17.1px] flex items-center gap-1">
-      <ButtonClose
-        insideClassName="!w-[23px] !h-[23px]"
-        className="!mx-2"
-        onClick={() => (onOutRoom ? onOutRoom() : router.push("/"))}
+    <h3
+      className="flex items-center gap-4 font-urbanist font-semibold text-white-primary"
+      aria-hidden="true"
+    >
+      <LogoNakaBigIcon
+        width={30}
+        height={14}
       />
-      <div className=" font-neue-machina text-xs uppercase text-neutral-500">
-        {name}
-      </div>
-    </div>
+      {name}
+      <div className="chat-wrapper">{component}</div>
+    </h3>
   )
 }
 export default TitleOutRoom

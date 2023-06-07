@@ -270,7 +270,8 @@ const ModalMarket = ({
           sellerType &&
           orderId &&
           marketAmount &&
-          marketPeriod
+          marketPeriod &&
+          priceValue
         ) {
           await onExecuteOrder(
             nftType,
@@ -279,6 +280,7 @@ const ModalMarket = ({
             itemId,
             sellerId,
             orderId,
+            priceValue,
             marketAmount,
             marketPeriod
           ).then((_res) => {
@@ -295,8 +297,13 @@ const ModalMarket = ({
           )
         break
       case "mint":
-        if (marketId && itemId && priceValue) {
-          await onMintOrder(nftType, marketId, itemId, 1).then((_res) => {
+        if (priceValue && marketAmount) {
+          await onMintOrder({
+            _type: nftType,
+            _marketId: marketId,
+            _price: priceValue,
+            _amount: marketAmount
+          }).then((_res) => {
             if (_res)
               return router.replace(
                 `/marketplace/${convertNFTTypeToTType(nftType)}`
@@ -304,7 +311,7 @@ const ModalMarket = ({
           })
         } else
           console.error(
-            `id: ${marketId}, idItem: ${itemId}, marketAmount: ${priceValue}`
+            `id: ${marketId}, idItem: ${itemId}, price: ${priceValue}, amount:${marketAmount}`
           )
         break
       default:
@@ -361,11 +368,17 @@ const ModalMarket = ({
                     className="object-cover"
                   /> */}
                 </div>
-                <div className="flex w-full flex-col gap-2 rounded-xl border border-neutral-800/75 p-6 uppercase text-neutral-500">
-                  <div className="flex w-full flex-row items-center justify-between text-sm font-bold">
-                    <span>token id :</span>
-                    <span className="text-neutral-300">{tokenId}</span>
-                  </div>
+                <div
+                  className={`${
+                    tokenId || plot ? "flex" : "hidden"
+                  } w-full flex-col gap-2 rounded-xl border border-neutral-800/75 p-6 uppercase text-neutral-500`}
+                >
+                  {tokenId ? (
+                    <div className="flex w-full flex-row items-center justify-between text-sm font-bold">
+                      <span>token id :</span>
+                      <span className="text-neutral-300">{tokenId}</span>
+                    </div>
+                  ) : null}
                   {plot ? (
                     <>
                       <Divider className="!block border-b-[1px] border-neutral-800/75" />
@@ -382,7 +395,8 @@ const ModalMarket = ({
               <div className="flex h-full w-full flex-col gap-2 px-4 py-2">
                 {action === "sell" &&
                 nftType !== "game_item" &&
-                nftType !== "nft_material" ? (
+                nftType !== "nft_material" &&
+                nftType !== "nft_naka_punk" ? (
                   <SellActionComp
                     nftType={nftType}
                     selling={selling}
@@ -395,9 +409,10 @@ const ModalMarket = ({
                     maxPeriod={365}
                   />
                 ) : null}
-                {(action === "buy" || action === "mint") &&
+                {action === "buy" &&
                 nftType !== "game_item" &&
-                nftType !== "nft_material" ? (
+                nftType !== "nft_material" &&
+                nftType !== "nft_naka_punk" ? (
                   <BuyActionComponent
                     nftType={nftType}
                     seller={sellerType}
@@ -410,8 +425,11 @@ const ModalMarket = ({
                   />
                 ) : null}
                 {action === "cancel" ||
+                action === "mint" ||
                 nftType === "game_item" ||
-                nftType === "nft_material" ? (
+                nftType === "nft_material" ||
+                nftType === "nft_naka_punk" ||
+                nftType === "nft_avatar" ? (
                   <ReceiptComp
                     nftType={nftType}
                     seller={sellerType}
@@ -427,12 +445,18 @@ const ModalMarket = ({
                       action === "sell" && invPrice ? invPrice : priceValue
                     }
                     selling={
-                      nftType === "game_item" || nftType === "nft_material"
+                      nftType === "game_item" ||
+                      nftType === "nft_material" ||
+                      nftType === "nft_naka_punk" ||
+                      nftType === "nft_avatar"
                         ? undefined
                         : selling
                     }
                     period={
-                      nftType === "game_item" || nftType === "nft_material"
+                      nftType === "game_item" ||
+                      nftType === "nft_material" ||
+                      nftType === "nft_naka_punk" ||
+                      nftType === "nft_avatar"
                         ? undefined
                         : invPeriod || marketPeriod
                     }

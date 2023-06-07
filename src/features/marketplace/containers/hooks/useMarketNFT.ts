@@ -48,10 +48,11 @@ const useMarketNFT = () => {
     mutateFullPayment
   } = useMutateMarketplace()
   const {
-    checkAllowanceNaka,
+    onCheckAllowance,
     getContractAddrsByNFTType,
     onCheckNFTIsApproveForAll,
-    onCheckPolygonChain
+    onCheckPolygonChain,
+    onCheckOwnerNFT
   } = useGlobalMarket()
   const { updateInvenNFTMarketData } = useInventoryProvider()
   const { errorToast } = useToast()
@@ -101,9 +102,16 @@ const useMarketNFT = () => {
   ) => {
     let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
-    // ? check owner
     if (signer && address) {
-      const _checkChain = await onCheckPolygonChain(marketNFTContract)
+      const [_checkNFTOwner, _checkChain] = await Promise.all([
+        onCheckOwnerNFT(_NFTtype, _token),
+        onCheckPolygonChain(marketNFTContract)
+      ])
+      if (!_checkNFTOwner) {
+        setClose()
+        errorToast("you are not owner of this nft")
+        return false
+      }
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)
@@ -268,15 +276,24 @@ const useMarketNFT = () => {
     _itemID: string,
     _idSeller: string,
     _idOrder: string,
+    _price: number,
     _amountItem: number
   ) => {
     let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const [_checkOrderById, _checkChain] = await Promise.all([
-        getNFTOrderById(_idSeller, _idOrder),
-        onCheckPolygonChain(marketNFTContract)
-      ])
+      const [_checkOrderById, _checkChain, _checkAllowance] = await Promise.all(
+        [
+          getNFTOrderById(_idSeller, _idOrder),
+          onCheckPolygonChain(marketNFTContract),
+          onCheckAllowance({
+            _type: marketType || "nft_land",
+            _seller: "user",
+            _selling: "fullpayment",
+            _price
+          })
+        ]
+      )
       if (Number(_checkOrderById.price) <= 0) {
         setClose()
         errorToast("order not founded")
@@ -287,7 +304,10 @@ const useMarketNFT = () => {
         errorToast(MESSAGES.support_polygon_only)
         return false
       }
-      await checkAllowanceNaka(CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT)
+      if (!_checkAllowance.allowStatus) {
+        setClose()
+        return false
+      }
       await executeNFTOrder({
         _contract: _checkChain._contract,
         _sellerId: _idSeller,

@@ -33,6 +33,19 @@ const useInvenMaterial = () => {
   >(undefined)
   const { pathname } = useRouter()
 
+  // get item by addrs & token id
+  const getMaterialByToken = (_address: string, _token: string) =>
+    new Promise<string>((resolve, reject) => {
+      materialNoAccContract
+        .getMaterialAmountbyUser(_address, _token)
+        .then((_response: string) => {
+          resolve(_response)
+        })
+        .catch((_error: Error) => {
+          reject(_error)
+        })
+    })
+
   // get all material by address
   const getAllMaterialByAddrs = (_address: string) =>
     new Promise<string[]>((resolve, reject) => {
@@ -163,6 +176,7 @@ const useInvenMaterial = () => {
   }, [onFetchInvenMaterial])
 
   return {
+    getMaterialByToken,
     materialList,
     updateMaterialList,
     onFetchInvenMaterial,

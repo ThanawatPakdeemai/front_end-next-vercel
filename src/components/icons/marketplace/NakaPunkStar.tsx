@@ -28,7 +28,7 @@ const NakaPunkStar = ({
       strokeWidth="1.89229"
       stroke-miterlimit="10"
       stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinejoin="round"
     />
     <path
       d="M67.9788 45.689H73.928C79.7339 45.689 84.3929 40.9582 84.3929 35.1524V29.2031V35.1524C84.3929 40.9582 89.1236 45.6173 94.8578 45.6173H100.807H94.8578C89.1236 45.689 84.3929 50.348 84.3929 56.1539V62.1031V56.1539C84.3929 50.348 79.7339 45.689 73.928 45.689H67.9788Z"
@@ -37,7 +37,7 @@ const NakaPunkStar = ({
       strokeWidth="1.89229"
       stroke-miterlimit="10"
       stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinejoin="round"
     />
   </svg>
 )

@@ -92,6 +92,9 @@ export const useItemVault = (
     [_address, _provider]
   )
 
+export const useItemVaultNoAccount = (_address: string) =>
+  useMemo(() => getItemVaultContract(_address, web3NoAccount), [_address])
+
 export const useP2PBinance = (
   _provider: Web3Provider | JsonRpcSigner | undefined,
   _address: string

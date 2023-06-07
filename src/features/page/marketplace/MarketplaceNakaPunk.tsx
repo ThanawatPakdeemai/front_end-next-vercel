@@ -17,7 +17,6 @@ import CONFIGS from "@configs/index"
 import useGlobal from "@hooks/useGlobal"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import Breadcrumb from "@components/molecules/Breadcrumb"
-import ButtonMarket from "@components/atoms/button/ButtonMarket"
 import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
 import { MESSAGES } from "@constants/messages"
 

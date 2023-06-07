@@ -46,6 +46,7 @@ const MarketplaceReefAvatar = () => {
   const { successToast, errorToast } = useToast()
   const [priceNP, setPriceNP] = useState<number>(0)
   const [metaData, setMetaData] = useState<IPunkMetaData[]>([])
+  // eslint-disable-next-line no-unused-vars
   const { WeiToNumber } = Helper
 
   const handleRedeem = (_coupon: string) => {

@@ -39,7 +39,8 @@ const TextfieldDetailContent = ({
   const { price: nakaPrice } = useNakaPriceProvider()
   const { count: countItemSelected } = useCountStore()
   const { invPrice, setInvPrice } = useInventoryProvider()
-  const { marketAmount, setMarketAmount } = useMarketplaceProvider()
+  const { marketAmount, setMarketAmount, marketOrder } =
+    useMarketplaceProvider()
   const { invAmount, setInvAmount } = useInventoryProvider()
   const { marketType } = useGlobal()
   const _priceValue = invPrice || price
@@ -48,12 +49,15 @@ const TextfieldDetailContent = ({
     const _value = Number(value)
     if (setInvPrice) setInvPrice(_value)
   }
+
   const calcNakaPrice = useMemo(() => {
-    if (nakaPrice && countItemSelected && _priceValue) {
-      return countItemSelected * (parseFloat(nakaPrice.last) * _priceValue)
+    if (nakaPrice && countItemSelected && _priceValue && marketOrder) {
+      return marketOrder.seller_type === "user"
+        ? countItemSelected * (parseFloat(nakaPrice.last) * _priceValue)
+        : countItemSelected * (_priceValue / parseFloat(nakaPrice.last))
     }
     return 0
-  }, [nakaPrice, countItemSelected, _priceValue])
+  }, [nakaPrice, countItemSelected, _priceValue, marketOrder])
 
   const onDecreaseAmount = () => {
     if (count)
@@ -136,7 +140,13 @@ const TextfieldDetailContent = ({
         />
       )}
       <TextField
-        value={price ? countItemSelected * price : invPrice}
+        value={
+          marketOrder && marketOrder.seller_type === "user"
+            ? _priceValue && countItemSelected * _priceValue
+            : Helper.formatNumber(calcNakaPrice, {
+                maximumFractionDigits: 4
+              })
+        }
         label="PRICE (NAKA)"
         className="!w-[131px] sm:!w-[232px]"
         sx={{
@@ -159,9 +169,13 @@ const TextfieldDetailContent = ({
             </InputAdornment>
           )
         }}
-        helperText={`= ${Helper.formatNumber(calcNakaPrice, {
-          maximumFractionDigits: 4
-        })} USD`}
+        helperText={`= ${
+          marketOrder && marketOrder.seller_type === "user"
+            ? Helper.formatNumber(calcNakaPrice, {
+                maximumFractionDigits: 4
+              })
+            : _priceValue
+        } USD`}
       />
     </div>
   )

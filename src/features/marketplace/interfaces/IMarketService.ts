@@ -147,31 +147,35 @@ export interface INFTInitial extends IId {
   detail: string
 }
 
+export interface IMarketSearch {
+  type_marketplace?: TNFTType
+  seller_type?: TSellerType
+  type_land?: string[]
+  type_building?: string[]
+  item_id?: string[]
+  type_material?: string[]
+  seller_id?: string
+  player_id?: string
+  isRent?: boolean
+  type?: TNFTType
+  // land_id?: string // wait dup with nft_token
+  nft_token?: string
+  selling_type?: TSellingType
+}
+
+export interface IMarketSort {
+  price?: number
+  created_at?: number
+  land_id?: number
+  position?: number
+  _id?: number
+}
+
 export interface IMarketServForm {
   _limit: number
   _page: number
-  _search: {
-    type_marketplace?: TNFTType
-    seller_type?: TSellerType
-    type_land?: string[]
-    type_building?: string[]
-    item_id?: string[]
-    type_material?: string[]
-    seller_id?: string
-    player_id?: string
-    isRent?: boolean
-    type?: TNFTType
-    // land_id?: string // wait dup with nft_token
-    nft_token?: string
-    selling_type?: TSellingType
-  }
-  _sort?: {
-    price?: number
-    created_at?: number
-    land_id?: number
-    position?: number
-    _id?: number
-  }
+  _search: IMarketSearch
+  _sort?: IMarketSort
   _active?: boolean
   _urlNFT?: TUrlNFT
 }

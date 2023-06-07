@@ -9,6 +9,7 @@ import RightDetailsMarketplace from "@feature/marketplace/components/organisms/R
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import useCountStore from "@stores/countComponant"
 import useProfileStore from "@stores/profileStore"
+import React from "react"
 
 const MarketplaceOwnerDetail = () => {
   const { profile } = useProfileStore()
@@ -60,7 +61,7 @@ const MarketplaceOwnerDetail = () => {
             }
           >
             {!invenItemData.installments_data ? (
-              <div className="flex w-full items-center justify-between">
+              <div className="flex w-full items-center justify-between gap-x-2">
                 <ButtonMarket
                   nftType={invenItemData.type}
                   img={invenItemData.img}

@@ -31,7 +31,12 @@ const PlayedHistoryModal = ({
       ModalProps={{
         keepMounted: true
       }}
-      sx={StyleDrawer}
+      sx={{
+        ...StyleDrawer,
+        "&.MuiDrawer-root": {
+          zIndex: 1200
+        }
+      }}
     >
       <Box
         component="div"

@@ -24,6 +24,9 @@ export interface IGameDetailLayoutMobileProps {
   gameData: IGame
 }
 
+export const buttonArrow =
+  "flex flex-1 items-center justify-center p-[0_10px_0_15px] h-full"
+
 const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
   const router = useRouter()
   const { t } = useTranslation()
@@ -33,9 +36,6 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
     gameData.id,
     gameData.game_mode
   )
-
-  const buttonArrow =
-    "flex flex-1 items-center justify-center p-[0_10px_0_15px] h-full"
 
   return (
     <Box

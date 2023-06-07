@@ -10,7 +10,7 @@ export const StyleDrawer: SxProps<Theme> = {
   ".MuiDrawer-paper": {
     width: "100%",
     paddingBottom: "90px",
-    background: "#18181C",
+    background: "#121212",
     border: "1px solid #35383F"
   }
 }
@@ -217,5 +217,41 @@ export const StyleWaitingRoom = {
   },
   ".chat-wrapper": {
     marginLeft: "auto"
+  }
+}
+
+export const StyleTimerMobile = {
+  ".timer-box": {
+    flex: "none",
+    background: "transparent",
+    border: "0",
+    width: "auto",
+    minWidth: "auto",
+    padding: 0,
+    ".MuiTypography-root": {
+      fontFamily: "Urbanist",
+      color: "#F2C94C"
+    }
+  }
+}
+
+export const StylePlayerMobile = {
+  ".player-list": {
+    flex: "none",
+    background: "transparent",
+    border: "0",
+    width: "auto",
+    minWidth: "auto",
+    padding: 0,
+    "path": {
+      stroke: "#F2C94C"
+    },
+    ".MuiTypography-root": {
+      fontFamily: "Urbanist",
+      color: "#F2C94C"
+    },
+    ".player-amount__text": {
+      color: "#F2C94C"
+    }
   }
 }

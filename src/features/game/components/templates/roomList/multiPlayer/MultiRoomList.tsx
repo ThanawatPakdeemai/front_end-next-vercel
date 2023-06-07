@@ -1,7 +1,9 @@
 /* eslint-disable no-nested-ternary */
 import ReloadIcon from "@components/icons/ReloadIcon"
 import ButtonSticky from "@components/molecules/ButtonSticky"
-import RoomListBar from "@components/molecules/roomList/RoomListBar"
+import RoomListBar, {
+  TRoomStatus
+} from "@components/molecules/roomList/RoomListBar"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
 import useRoomMulti from "@feature/game/containers/hooks/useRoomMulti"
 import useSocketRoomList from "@feature/game/containers/hooks/useSocketRoomList"
@@ -166,6 +168,22 @@ const MultiRoomList = () => {
   //   }
   // }
 
+  const getRoomStatus = (_data: IGameRoomListSocket): TRoomStatus => {
+    if (!profile) return "unavailable"
+
+    const _played = _data.current_player.find(
+      (ele) => ele.player_id === profile.id
+    )
+
+    if (_played && _played.status === "played") {
+      return "played"
+    }
+    if (_data.amount_current_player >= _data.max_players) {
+      return "full"
+    }
+    return "join"
+  }
+
   return (
     <>
       <Box
@@ -188,9 +206,6 @@ const MultiRoomList = () => {
                 dataRoom.length > 0 &&
                 dataRoom.map((_data) => {
                   const initEndTime = new Date(_data.end_time)
-                  const player = _data.current_player.find(
-                    (ele) => ele.player_id === profile.id
-                  )
                   return (
                     <RoomListBar
                       key={Number(_data.id)}
@@ -198,13 +213,7 @@ const MultiRoomList = () => {
                         time: initEndTime,
                         onExpire: () => null
                       }}
-                      btnText={
-                        player && player.status === "played"
-                          ? "played"
-                          : _data?.amount_current_player >= _data.max_players
-                          ? "full"
-                          : "join"
-                      }
+                      btnText={getRoomStatus(_data)}
                       player={{
                         currentPlayer: _data.amount_current_player,
                         maxPlayer: _data.max_players

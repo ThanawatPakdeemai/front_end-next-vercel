@@ -1,7 +1,9 @@
 /* eslint-disable no-nested-ternary */
 import { Box, Divider } from "@mui/material"
-import React, { useMemo } from "react"
-import RoomListBar from "@components/molecules/roomList/RoomListBar"
+import React from "react"
+import RoomListBar, {
+  TRoomStatus
+} from "@components/molecules/roomList/RoomListBar"
 import useGetAllGameRooms from "@feature/game/containers/hooks/useGetAllGameRooms"
 import useProfileStore from "@stores/profileStore"
 
@@ -159,18 +161,17 @@ const GameRoomList = () => {
   //   }
   // }, [allGameRooms, data])
 
-  const getRoomStatus = (
-    _data: IGameRoomDetail
-  ): "played" | "full" | "join" | "unavailable" => {
+  const getRoomStatus = (_data: IGameRoomDetail): TRoomStatus => {
     if (!profile) return "unavailable"
 
-    const _played = _data.current_player.find((ele) => {
-      return ele.player_id === profile.id
-    })
+    const _played = _data.current_player.find(
+      (ele) => ele.player_id === profile.id
+    )
 
     if (_played && _played.status === "played") {
       return "played"
-    } else if (_data.amount_current_player >= _data.max_players) {
+    }
+    if (_data.amount_current_player >= _data.max_players) {
       return "full"
     }
     return "join"

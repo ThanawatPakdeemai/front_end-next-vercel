@@ -54,7 +54,7 @@ const useMarketMaterial = () => {
   const getMaterialOrderById = (_sellerId: string, _orderId: string) =>
     new Promise<IGetMaterialOrderById>((resolve, reject) => {
       marketMaterialContractNoAcc
-        .orderByOrderIdNFT(_sellerId, _orderId)
+        .orderByOrderId(_sellerId, _orderId)
         .then((_response: IGetMaterialOrderById) => {
           resolve(_response)
         })

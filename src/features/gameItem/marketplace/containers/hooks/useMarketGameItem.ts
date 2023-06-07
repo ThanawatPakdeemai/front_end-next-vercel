@@ -54,7 +54,7 @@ const useMarketGameItem = () => {
   const getItemOrderById = (_sellerId: string, _orderId: string) =>
     new Promise<IGetItemOrderById>((resolve, reject) => {
       marketGameItemContractNoAcc
-        .orderByOrderIdNFT(_sellerId, _orderId)
+        .orderByOrderId(_sellerId, _orderId)
         .then((_response: IGetItemOrderById) => {
           resolve(_response)
         })

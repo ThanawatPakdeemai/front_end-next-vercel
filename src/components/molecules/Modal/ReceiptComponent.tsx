@@ -7,7 +7,7 @@ import {
 } from "@feature/marketplace/interfaces/IMarketService"
 import { Divider, Stack } from "@mui/material"
 import Helper from "@utils/helper"
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useEffect, useCallback, useState } from "react"
 
 interface IProps {
   nftType: TNFTType
@@ -36,24 +36,30 @@ const ReceiptComponent = ({
   const { onCheckAllowance } = useGlobalMarket()
   const [isAllowance, setAllowance] = useState<boolean | undefined>(undefined)
 
+  const onGetApproval = useCallback(async () => {
+    if (nftType && onCheckAllowance && price && seller && selling) {
+      await onCheckAllowance({
+        _type: nftType,
+        _seller: seller,
+        _selling: selling,
+        _price: price
+      })
+        .then((response) => {
+          setAllowance(response.allowStatus)
+        })
+        .catch((error) => console.error(error))
+    }
+  }, [nftType, onCheckAllowance, price, seller, selling])
+
   useEffect(() => {
     let load = false
-
     if (!load) {
-      const onGetApproval = async () => {
-        await onCheckAllowance(nftType, seller)
-          .then((response) => {
-            setAllowance(response.allowStatus)
-          })
-          .catch((error) => console.error(error))
-      }
-      if (nftType && seller) onGetApproval()
+      onGetApproval()
     }
-
     return () => {
       load = true
     }
-  }, [nftType, onCheckAllowance, seller])
+  }, [onGetApproval])
 
   return (
     <Stack

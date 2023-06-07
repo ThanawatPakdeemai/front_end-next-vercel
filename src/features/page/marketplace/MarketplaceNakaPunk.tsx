@@ -18,6 +18,7 @@ import CONFIGS from "@configs/index"
 import useGlobal from "@hooks/useGlobal"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import Breadcrumb from "@components/molecules/Breadcrumb"
+import ButtonMarket from "@components/atoms/button/ButtonMarket"
 
 const MarketplaceNakaPunk = () => {
   const [priceNP, setPriceNP] = useState<number>(0)
@@ -155,16 +156,24 @@ const MarketplaceNakaPunk = () => {
               Create unique digital asset ownership token.
             </Typography>
             {isLogin ? (
-              <ButtonLink
-                text="Mint now"
-                type="button"
-                size="medium"
-                variant="contained"
-                textColor="text-primary-main"
-                className="!min-h-10 !h-10 !w-[232px] !bg-green-lemon"
-                arrowColor="text-primary-main"
-                icon={<WandIcon />}
-                onClick={handleMintNakapunk}
+              // <ButtonLink
+              //   text="Mint now"
+              //   type="button"
+              //   size="medium"
+              //   variant="contained"
+              //   textColor="text-primary-main"
+              //   className="!min-h-10 !h-10 !w-[232px] !bg-green-lemon"
+              //   arrowColor="text-primary-main"
+              //   icon={<WandIcon />}
+              //   onClick={handleMintNakapunk}
+              // />
+              <ButtonMarket
+                nftType="nft_naka_punk"
+                name="Naka Punk"
+                img="/images/temp-nakapunk.webp"
+                sellerType="system"
+                price={priceNP * count}
+                amount={count}
               />
             ) : (
               <RightMenuNotLogIn />

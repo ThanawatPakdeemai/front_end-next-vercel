@@ -15,7 +15,7 @@ import {
   TextField
 } from "@mui/material"
 import Helper from "@utils/helper"
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useCallback, useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { iconmotion } from "@components/organisms/Footer"
 import PlusIcon from "@components/icons/CountIcon/PlusIcon"
@@ -60,25 +60,30 @@ const BuyActionComponent = ({
     if (_value <= 1) setPeriod(1)
     else setPeriod(_value)
   }
+  const onGetApproval = useCallback(async () => {
+    if (nftType && onCheckAllowance && price && seller && selling) {
+      await onCheckAllowance({
+        _type: nftType,
+        _seller: seller,
+        _selling: selling,
+        _price: price
+      })
+        .then((response) => {
+          setAllowance(response.allowStatus)
+        })
+        .catch((error) => console.error(error))
+    }
+  }, [nftType, onCheckAllowance, price, seller, selling])
 
   useEffect(() => {
     let load = false
-
     if (!load) {
-      const onGetApproval = async () => {
-        await onCheckAllowance(nftType, seller)
-          .then((response) => {
-            setAllowance(response.allowStatus)
-          })
-          .catch((error) => console.error(error))
-      }
-      if (nftType && seller) onGetApproval()
+      onGetApproval()
     }
-
     return () => {
       load = true
     }
-  }, [nftType, onCheckAllowance, seller])
+  }, [onGetApproval])
 
   return (
     <Stack

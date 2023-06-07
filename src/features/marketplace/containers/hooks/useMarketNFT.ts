@@ -48,7 +48,7 @@ const useMarketNFT = () => {
     mutateFullPayment
   } = useMutateMarketplace()
   const {
-    checkAllowanceNaka,
+    onCheckAllowance,
     getContractAddrsByNFTType,
     onCheckNFTIsApproveForAll,
     onCheckPolygonChain,
@@ -276,15 +276,24 @@ const useMarketNFT = () => {
     _itemID: string,
     _idSeller: string,
     _idOrder: string,
+    _price: number,
     _amountItem: number
   ) => {
     let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const [_checkOrderById, _checkChain] = await Promise.all([
-        getNFTOrderById(_idSeller, _idOrder),
-        onCheckPolygonChain(marketNFTContract)
-      ])
+      const [_checkOrderById, _checkChain, _checkAllowance] = await Promise.all(
+        [
+          getNFTOrderById(_idSeller, _idOrder),
+          onCheckPolygonChain(marketNFTContract),
+          onCheckAllowance({
+            _type: marketType || "nft_land",
+            _seller: "user",
+            _selling: "fullpayment",
+            _price
+          })
+        ]
+      )
       if (Number(_checkOrderById.price) <= 0) {
         setClose()
         errorToast("order not founded")
@@ -295,7 +304,10 @@ const useMarketNFT = () => {
         errorToast(MESSAGES.support_polygon_only)
         return false
       }
-      await checkAllowanceNaka(CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT)
+      if (!_checkAllowance.allowStatus) {
+        setClose()
+        return false
+      }
       await executeNFTOrder({
         _contract: _checkChain._contract,
         _sellerId: _idSeller,

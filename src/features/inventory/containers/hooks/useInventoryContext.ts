@@ -15,6 +15,7 @@ import {
 import useInvenMaterial from "@feature/material/inventory/containers/hooks/useInvenMaterial"
 import { useGetNakPunkById } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import useGlobal from "@hooks/useGlobal"
+import useMarketCategTypes from "@stores/marketCategTypes"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
 import { NextRouter, useRouter } from "next/router"
@@ -54,8 +55,10 @@ const useInventoryContext = () => {
   // const [transAddrs, setTransAddrs] = useState<string | undefined>(undefined)
   const { marketType } = useGlobal()
   // move this to context? for solve multi call api and data need to update
-  const { gameItemList } = useInvenGameItem()
-  const { materialList, onTransferMaterial } = useInvenMaterial()
+  const { gameItemList, getGameItemByToken } = useInvenGameItem()
+  const { materialList, onTransferMaterial, getMaterialByToken } =
+    useInvenMaterial()
+  const { gameItemTypes, materialTypes } = useMarketCategTypes()
   const { mutateGetLandById } = useGetLandById()
   const { mutateGetBuildingById } = useGetBuildingById()
   const { mutateGetNakapunkById } = useGetNakPunkById()
@@ -206,8 +209,9 @@ const useInventoryContext = () => {
     if (
       id &&
       profile.data &&
-      gameItemList &&
-      materialList &&
+      profile.data.address &&
+      gameItemTypes &&
+      materialTypes &&
       marketType &&
       (marketType === "game_item" || marketType === "nft_material")
     ) {
@@ -221,18 +225,23 @@ const useInventoryContext = () => {
       }
       switch (marketType) {
         case "game_item": {
-          if (gameItemList) {
-            const _gameItem = gameItemList.find((gi) => gi._id === id)
+          if (gameItemTypes) {
+            const _gameItem = gameItemTypes.find((gi) => gi._id === id)
             if (_gameItem) {
-              _data = {
-                id: _gameItem._id,
-                name: _gameItem.name,
-                tokenId: _gameItem.item_id_smartcontract.toString(),
-                type: marketType,
-                img: _gameItem.image,
-                detail: _gameItem.detail,
-                totalAmount: _gameItem.amount
-              }
+              await getGameItemByToken(
+                profile.data.address,
+                _gameItem.item_id_smartcontract.toString()
+              ).then((_res) => {
+                _data = {
+                  id: _gameItem._id,
+                  name: _gameItem.name,
+                  tokenId: _gameItem.item_id_smartcontract.toString(),
+                  type: marketType,
+                  img: _gameItem.image,
+                  detail: _gameItem.detail,
+                  totalAmount: Number(_res.toString())
+                }
+              })
             } else {
               await mutateMarketOrderById({
                 _id: id,
@@ -278,19 +287,24 @@ const useInventoryContext = () => {
           break
         }
         case "nft_material": {
-          if (materialList) {
-            const _materialItem = materialList.find((m) => m.id === id)
+          if (materialTypes) {
+            const _materialItem = materialTypes.find((m) => m.id === id)
             if (_materialItem) {
-              _data = {
-                id: _materialItem.id,
-                name: _materialItem.name,
-                tokenId: _materialItem.material_id_smartcontract.toString(),
-                type: marketType,
-                img: _materialItem.image,
-                detail: _materialItem.detail,
-                totalAmount: _materialItem.amount,
-                wallet_address: profile.data.address
-              }
+              await getMaterialByToken(
+                profile.data.address,
+                _materialItem.material_id_smartcontract.toString()
+              ).then((_res) => {
+                _data = {
+                  id: _materialItem.id,
+                  name: _materialItem.name,
+                  tokenId: _materialItem.material_id_smartcontract.toString(),
+                  type: marketType,
+                  img: _materialItem.image,
+                  detail: _materialItem.detail,
+                  totalAmount: Number(_res.toString()),
+                  wallet_address: profile.data?.address
+                }
+              })
             } else {
               await mutateMarketOrderById({
                 _id: id,
@@ -342,7 +356,7 @@ const useInventoryContext = () => {
     }
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, profile.data, gameItemList, materialList, marketType])
+  }, [id, profile.data, materialTypes, marketType, gameItemTypes])
 
   useEffect(() => {
     let cleanup = false

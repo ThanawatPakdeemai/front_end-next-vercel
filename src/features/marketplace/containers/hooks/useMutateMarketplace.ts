@@ -8,6 +8,7 @@ import {
   createMarketOrder,
   getMarketOrderById,
   getMarketplaceAllTypes,
+  getSettingMarketplace,
   mintNFT,
   payBillInstallNFT,
   payInstallment,
@@ -155,6 +156,18 @@ const useMutateMarketplace = () => {
     }
   )
 
+  const { mutateAsync: mutateSettingMarket } = useMutation(
+    getSettingMarketplace,
+    {
+      mutationKey: ["getSettingMarketplace"],
+      retry: false,
+      onError: (_response) => {
+        // errorToast((_response as IMessage)?.message ?? "Order not found!.")
+        errorToast("This order has been purchased or has been cancelled.")
+      }
+    }
+  )
+
   return {
     mutateMarketCreateOrder,
     mutateMarketCancelOrder,
@@ -166,7 +179,8 @@ const useMutateMarketplace = () => {
     mutatePayBillInstallNFT,
     mutateClaimRentNFT,
     mutateMarketTypes,
-    mutateMarketOrderById
+    mutateMarketOrderById,
+    mutateSettingMarket
   }
 }
 

@@ -2,13 +2,13 @@ import CardItemMarketPlace from "@components/molecules/cards/CardItemMarketPlace
 import { useRouter } from "next/router"
 import { v4 as uuidv4 } from "uuid"
 import React from "react"
-import { PaginationNaka } from "@components/atoms/pagination"
-import SkeletonItem from "@feature/marketplace/components/molecules/SkeletonItem"
 import useInventoryPayment from "@feature/inventory/containers/hooks/useInventoryPayment"
-import NoData from "@components/molecules/NoData"
-import SkeletonItemMobile from "./mobilescreen/SkeletonItemMobile"
+import useProfileStore from "@stores/profileStore"
+import SkeletonMarketOwnerList from "./SkeletonMarketOwnerList"
+import CardListContainer from "./CardListContainer"
 
 const MarketplaceProcessList = () => {
+  const profile = useProfileStore()
   const {
     totalCount,
     isLoading,
@@ -22,71 +22,57 @@ const MarketplaceProcessList = () => {
 
   if (inventoryItemPayment && inventoryItemPayment.length > 0 && !isLoading) {
     return (
-      <div className="flex w-fit flex-col gap-y-7  self-center">
-        <div className="grid w-full grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {inventoryItemPayment.map((_data) => (
-            <CardItemMarketPlace
-              key={uuidv4()}
-              cardType={_data.cardType}
-              id={_data.tokenId}
-              itemImage={
-                _data.cardType === "game-item"
-                  ? {
-                      src: String(_data.img),
-                      alt: _data.name,
-                      width: _data.name.includes("Bullet") ? 40 : 100
-                    }
-                  : undefined
-              }
-              itemVideo={
-                _data.cardType !== "game-item"
-                  ? {
-                      src: _data.vdo as string,
-                      poster: String(_data.img)
-                    }
-                  : undefined
-              }
-              itemName={_data.name}
-              itemLevel={_data.level}
-              itemSize={_data.size as string}
-              itemAmount={_data.amount as number}
-              href={`/${router.locale}/marketplace/inventory/${_data.cardType}/${_data.id}`}
-              sellingType={{
-                title: _data.payment_type,
-                color: _data.payment_type === "unpaid" ? "error" : "info"
-              }}
-              price={_data.price}
-            />
-          ))}
-        </div>
-        <PaginationNaka
-          totalCount={totalCount}
-          limit={limit}
-          page={currentPage}
-          setPage={setCurrentPage}
-        />
-      </div>
+      <CardListContainer
+        totalCount={totalCount}
+        limit={limit}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      >
+        {inventoryItemPayment.map((_data) => (
+          <CardItemMarketPlace
+            key={uuidv4()}
+            cardType={_data.cardType}
+            id={_data.tokenId}
+            itemImage={
+              _data.cardType === "game-item"
+                ? {
+                    src: String(_data.img),
+                    alt: _data.name,
+                    width: _data.name.includes("Bullet") ? 40 : 100
+                  }
+                : undefined
+            }
+            itemVideo={
+              _data.cardType !== "game-item"
+                ? {
+                    src: _data.vdo as string,
+                    poster: String(_data.img)
+                  }
+                : undefined
+            }
+            itemName={_data.name}
+            itemLevel={_data.level}
+            itemSize={_data.size as string}
+            itemAmount={_data.amount as number}
+            href={`/${router.locale}/marketplace/inventory/${_data.cardType}/${_data.id}`}
+            sellingType={{
+              title: _data.payment_type,
+              color: _data.payment_type === "unpaid" ? "error" : "info"
+            }}
+            price={_data.price}
+          />
+        ))}
+      </CardListContainer>
     )
   }
   return (
-    <div className="flex justify-center">
-      {inventoryItemPayment.length === 0 && !isLoading ? (
-        <NoData />
-      ) : (
-        <div className="grid  w-fit grid-cols-2 gap-4 sm:w-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {[...Array(limit)].map(() => (
-            <div key={uuidv4()}>
-              <div className="hidden sm:block">
-                <SkeletonItem />
-              </div>
-              <div className="block sm:hidden">
-                <SkeletonItemMobile />
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+    <SkeletonMarketOwnerList
+      invenList={inventoryItemPayment}
+      isLoading={isLoading}
+      isItemLoading={isLoading}
+      profile={profile}
+      limit={limit}
+    />
   )
 }
 

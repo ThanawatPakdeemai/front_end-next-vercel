@@ -16,9 +16,9 @@ export interface IUseCountStore {
 const useCountStore = create<IUseCountStore>()(
   devtools(
     (set) => ({
-      count: 0,
-      min: 0,
-      max: 0,
+      count: 1,
+      min: 1,
+      max: 1,
       setCount: (_count) => {
         set(() => ({ count: _count }), false, "CountStore/SetCount")
       },

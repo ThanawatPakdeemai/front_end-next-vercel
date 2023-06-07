@@ -20,6 +20,19 @@ const useNFTPunk = () => {
   const { setOpen, setClose } = useLoadingStore()
   const { mutateTransferNFTPunk } = useMutateNFTPunk()
 
+  // check owner naka-punk
+  const isPunkOwner = (_tokenId: string) =>
+    new Promise<string>((resolve, reject) => {
+      punkContractNoAcc
+        .ownerOf(_tokenId)
+        .then((_response: string) => {
+          resolve(_response)
+        })
+        .catch((_error: Error) => {
+          reject(_error)
+        })
+    })
+
   // check isApprovedForAll
   const isPunkApprovedForAll = (_owner: string, _address: string) =>
     new Promise<boolean>((resolve, reject) => {
@@ -96,6 +109,11 @@ const useNFTPunk = () => {
     setClose()
   }
 
-  return { onCheckApprovalPunkForAll, onTransferPunk, isPunkApprovedForAll }
+  return {
+    isPunkOwner,
+    onCheckApprovalPunkForAll,
+    onTransferPunk,
+    isPunkApprovedForAll
+  }
 }
 export default useNFTPunk

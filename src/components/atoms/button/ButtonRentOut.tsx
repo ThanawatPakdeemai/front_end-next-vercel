@@ -64,20 +64,11 @@ const ButtonRentOut = ({
       <Button
         type="button"
         variant="contained"
-        color="error"
-        // startIcon={
-        //   actionValue === "login" || actionValue === "mint" ? (
-        //     <div className="button-icon animation-arrow">
-        //       {actionValue === "login" ? <LoginIcon /> : null}
-        //     </div>
-        //   ) : null
-        // }
-        className="button-global h-10 w-20 rounded-xl"
+        color="warning"
+        className="!h-10 rounded-[20px] text-sm capitalize"
         onClick={handleOpen}
       >
-        <span className="animation-button-text flex items-center">
-          rent out
-        </span>
+        rent out
       </Button>
       <ModalMarketplace
         nftType={nftType}

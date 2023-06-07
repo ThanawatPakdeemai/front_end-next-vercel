@@ -45,13 +45,11 @@ const MarketplaceNakaPunk = () => {
 
   useEffect(() => {
     let load = false
-
     if (!load) {
       if (resNakapunk) {
         setMetaData(resNakapunk.data.meta_data)
       }
     }
-
     return () => {
       load = true
     }

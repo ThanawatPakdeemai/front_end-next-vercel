@@ -93,7 +93,7 @@ const TextfieldDetailContent = ({
 
   return (
     <div
-      className={`flex w-full items-start justify-between ${
+      className={`flex w-full items-center justify-between ${
         marketType === "nft_avatar" || marketType === "nft_naka_punk"
           ? "flex-col sm:flex-row"
           : null
@@ -139,44 +139,46 @@ const TextfieldDetailContent = ({
           helperText="Land position on map"
         />
       )}
-      <TextField
-        value={
-          marketOrder && marketOrder.seller_type === "user"
-            ? _priceValue && countItemSelected * _priceValue
-            : Helper.formatNumber(calcNakaPrice, {
-                maximumFractionDigits: 4
-              })
-        }
-        label="PRICE (NAKA)"
-        className="!w-[131px] sm:!w-[232px]"
-        sx={{
-          "& .MuiOutlinedInput-root": {
-            backgroundColor: "#010101"
-          },
-          "input": {
-            color: "#E1E2E2 !important"
+      {_priceValue && (
+        <TextField
+          value={
+            marketOrder && marketOrder.seller_type === "user"
+              ? _priceValue && countItemSelected * _priceValue
+              : Helper.formatNumber(calcNakaPrice, {
+                  maximumFractionDigits: 4
+                })
           }
-        }}
-        onChange={(e) => onPriceChange(e.target.value)}
-        disabled={!!price}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment
-              position="start"
-              className="ml-[15px] mr-3"
-            >
-              <LogoIcon fill="#70727B" />
-            </InputAdornment>
-          )
-        }}
-        helperText={`= ${
-          marketOrder && marketOrder.seller_type === "user"
-            ? Helper.formatNumber(calcNakaPrice, {
-                maximumFractionDigits: 4
-              })
-            : _priceValue
-        } USD`}
-      />
+          label="PRICE (NAKA)"
+          className="!w-[131px] sm:!w-[232px]"
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              backgroundColor: "#010101"
+            },
+            "input": {
+              color: "#E1E2E2 !important"
+            }
+          }}
+          onChange={(e) => onPriceChange(e.target.value)}
+          disabled={!!price}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment
+                position="start"
+                className="ml-[15px] mr-3"
+              >
+                <LogoIcon fill="#70727B" />
+              </InputAdornment>
+            )
+          }}
+          helperText={`= ${
+            marketOrder && marketOrder.seller_type === "user"
+              ? Helper.formatNumber(calcNakaPrice, {
+                  maximumFractionDigits: 4
+                })
+              : _priceValue
+          } USD`}
+        />
+      )}
     </div>
   )
 }

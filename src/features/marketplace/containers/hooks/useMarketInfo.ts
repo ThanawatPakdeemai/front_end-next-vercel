@@ -26,7 +26,7 @@ const useMarketInfo = () => {
   const router = useRouter()
   const { marketType } = useGlobal()
   const { getMarketOrderAsnyc, isLoading } = useGetMarketOrder()
-  const [limit, setLimit] = useState<number>(16)
+  const [limit, setLimit] = useState<number>(20)
   const [cardType, setCardType] = useState<TType>("land")
   const { sort, search, filterType } = useMarketFilterStore()
   const sellerType = router.pathname.includes("p2p") ? "user" : "system"

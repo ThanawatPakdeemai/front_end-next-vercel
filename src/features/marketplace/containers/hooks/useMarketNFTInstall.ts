@@ -60,7 +60,8 @@ const useMarketNFTInstall = () => {
     checkAllowanceNaka,
     getContractAddrsByNFTType,
     onCheckNFTIsApproveForAll,
-    onCheckPolygonChain
+    onCheckPolygonChain,
+    onCheckOwnerNFT
   } = useGlobalMarket()
   const { updateInvenNFTMarketData } = useInventoryProvider()
 
@@ -112,7 +113,15 @@ const useMarketNFTInstall = () => {
     let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const _checkChain = await onCheckPolygonChain(marketNFTInstallContract)
+      const [_checkNFTOwner, _checkChain] = await Promise.all([
+        onCheckOwnerNFT(_NFTtype, _token),
+        onCheckPolygonChain(marketNFTInstallContract)
+      ])
+      if (!_checkNFTOwner) {
+        setClose()
+        errorToast("you are not owner of this nft")
+        return false
+      }
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)

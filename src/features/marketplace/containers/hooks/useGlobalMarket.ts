@@ -14,6 +14,7 @@ import {
 } from "@feature/marketplace/interfaces/IMarketService"
 import useNFTPunk from "@feature/nakapunk/containers/hooks/useNFTPunk"
 import { useWeb3Provider } from "@providers/Web3Provider"
+import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
 import { BigNumberish, ethers, providers } from "ethers"
 import { useCallback } from "react"
@@ -22,14 +23,23 @@ const useGlobalMarket = () => {
   const { signer, address } = useWeb3Provider()
   const { WeiToNumber, toWei } = Helper
   const { utils } = ethers
+  const profile = useProfileStore()
   const erc20Contract = useERC20(signer, CONFIGS.CONTRACT_ADDRESS.ERC20)
   const erc20ContractNoAcc = useERC20NoAcc(CONFIGS.CONTRACT_ADDRESS.ERC20)
-  const { onCheckApprovalLandForAll, isLandApprovedForAll } = useNFTLand()
-  const { onCheckApprovalBuildingForAll, isBuildingApprovedForAll } =
-    useNFTBuilding()
-  const { onCheckApprovalPunkForAll, isPunkApprovedForAll } = useNFTPunk()
-  const { onCheckApprovalArcGameForAll, isArcGameApprovedForAll } =
-    useNFTArcGame()
+  const { onCheckApprovalLandForAll, isLandApprovedForAll, isLandOwner } =
+    useNFTLand()
+  const {
+    onCheckApprovalBuildingForAll,
+    isBuildingApprovedForAll,
+    isBuildingOwner
+  } = useNFTBuilding()
+  const { onCheckApprovalPunkForAll, isPunkApprovedForAll, isPunkOwner } =
+    useNFTPunk()
+  const {
+    onCheckApprovalArcGameForAll,
+    isArcGameApprovedForAll,
+    isArcGameOwner
+  } = useNFTArcGame()
 
   const checkAllowance = (_address: string, _tokenAddress: string) =>
     new Promise<BigNumberish>((resolve, reject) => {
@@ -303,7 +313,48 @@ const useGlobalMarket = () => {
     [signer]
   )
 
+  const onCheckOwnerNFT = useCallback(
+    async (_type: TNFTType, _token: string) => {
+      let _status: boolean = false
+      switch (_type) {
+        case "nft_land":
+          await isLandOwner(_token)
+            .then((_res) => {
+              _status = _res === profile.address
+            })
+            .catch(() => {})
+          break
+        case "nft_building":
+          await isBuildingOwner(_token)
+            .then((_res) => {
+              _status = _res === profile.address
+            })
+            .catch(() => {})
+          break
+        case "nft_game":
+          await isArcGameOwner(_token)
+            .then((_res) => {
+              _status = _res === profile.address
+            })
+            .catch(() => {})
+          break
+        case "nft_naka_punk":
+          await isPunkOwner(_token)
+            .then((_res) => {
+              _status = _res === profile.address
+            })
+            .catch(() => {})
+          break
+        default:
+          break
+      }
+      return _status
+    },
+    [isArcGameOwner, isBuildingOwner, isLandOwner, isPunkOwner, profile.address]
+  )
+
   return {
+    onCheckOwnerNFT,
     onCheckPolygonChain,
     checkAllowanceNaka,
     getContractAddrsByNFTType,

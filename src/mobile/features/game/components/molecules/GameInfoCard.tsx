@@ -15,7 +15,13 @@ const GameInfoCard = ({ image, categories, ...props }: IGameInfoCardProps) => (
     id={`played-history-card-${props.id}`}
     className="played-history-card"
   >
-    <div className="played-history-card__mobile__item flex w-full items-center gap-[20px]">
+    <Box
+      component={"div"}
+      sx={{
+        gridTemplateColumns: "80px calc(100% - 100px)"
+      }}
+      className="played-history-card__mobile__item grid items-center gap-[20px]"
+    >
       <div className="played-history-card__mobile__item--image h-[80px] w-[80px] overflow-hidden rounded-[22px]">
         <ImageCustom
           src={image}
@@ -42,7 +48,7 @@ const GameInfoCard = ({ image, categories, ...props }: IGameInfoCardProps) => (
           ))}
         {props.createdAt && (
           <div className="played-history-card__mobile__item--details">
-            <p className="truncate font-urbanist text-[14px]">
+            <p className="font-urbanist text-[14px]">
               Last played :{" "}
               {dayjs(props.createdAt).format("DD/MMM/YYYY HH:mm A")}
             </p>
@@ -50,7 +56,7 @@ const GameInfoCard = ({ image, categories, ...props }: IGameInfoCardProps) => (
         )}
         {/* <p className="text-[14px]">In-App Purchase</p> */}
       </div>
-    </div>
+    </Box>
   </Box>
 )
 

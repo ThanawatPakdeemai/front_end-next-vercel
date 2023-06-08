@@ -40,13 +40,9 @@ const FullMap = () => {
   // const [text, setText] = useState<string | undefined>(undefined)
 
   const [expanded, setExpanded] = useState<boolean>(false)
-  const [openFilter, setOpenFilter] = useState<boolean>(false)
 
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
-  }
-  const onCloseModalCustom = () => {
-    setOpenFilter(!openFilter)
   }
 
   // three stage

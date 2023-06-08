@@ -89,7 +89,7 @@ const SelectNaka = ({
                 </div>
                 <div className="flex items-center justify-between bg-primary-main pt-2 ">
                   <Box
-                    component={"div"}
+                    component="div"
                     className="menu-list flex w-full  items-center justify-between rounded-default bg-neutral-700 p-[3px]"
                   >
                     <MenuList className="w-full !p-[3px]">

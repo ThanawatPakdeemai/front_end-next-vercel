@@ -72,5 +72,6 @@ export const MESSAGES = {
   "please_update_wallet_address": "Please update wallet address",
   "are_you_sure": "Are you sure to do this?",
   "you_out_room_in_to_again": "Please into room again?",
-  "support_polygon_only": "This function only supports Polygon Network"
+  "support_polygon_only": "This function only supports Polygon Network",
+  "end_of_the_limit": "End of the limit"
 }

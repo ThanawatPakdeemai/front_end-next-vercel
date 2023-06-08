@@ -6,7 +6,7 @@ import { colorMap } from "@constants/map"
 
 const MapScene = () => {
   const colorOfBackground = colorMap.background as THREE.ColorRepresentation
-  const textureMap = useLoader(TextureLoader, "/images/bg-map.jpeg")
+  const textureMap = useLoader(TextureLoader, "/images/bg-map.jpg")
   const scene = useRef<THREE.Mesh>(null!)
 
   useFrame(() => {

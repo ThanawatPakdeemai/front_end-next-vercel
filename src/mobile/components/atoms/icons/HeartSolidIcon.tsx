@@ -1,10 +1,5 @@
 import React from "react"
 
-interface IProps {
-  stroke?: string
-  onClick?: () => void
-}
-
 const HeartSolidIcon = ({
   stroke = "white",
   onClick

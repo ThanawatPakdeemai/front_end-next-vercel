@@ -143,7 +143,7 @@ const GameCard = ({
       ) {
         setImageSrc((data as IGame).image_category_list)
         setImageSrcGif(
-          (data as IGame)?.image_git || (data as IGame).image_category_list
+          (data as IGame)?.image_gif || (data as IGame).image_category_list
         )
       }
     }

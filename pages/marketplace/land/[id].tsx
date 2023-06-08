@@ -23,7 +23,11 @@ const MarketplaceDetail = dynamic(
 const Page = () => <MarketplaceDetail />
 
 Page.getLayout = function getLayout(page: ReactElement) {
-  return <MarketplaceLayoutWithoutFilter>{page}</MarketplaceLayoutWithoutFilter>
+  return (
+    <MarketplaceLayoutWithoutFilter isNoFilter={false}>
+      {page}
+    </MarketplaceLayoutWithoutFilter>
+  )
 }
 
 export async function getServerSideProps({ locale }: { locale: string }) {

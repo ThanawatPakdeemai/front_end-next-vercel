@@ -16,7 +16,7 @@ const GameInfoCard = ({ image, categories, ...props }: IGameInfoCardProps) => (
     className="played-history-card"
   >
     <Box
-      component={"div"}
+      component="div"
       sx={{
         gridTemplateColumns: "80px calc(100% - 100px)"
       }}

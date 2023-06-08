@@ -14,12 +14,12 @@ import ClockIcon from "@components/icons/ClockIcon"
 import LogoutIcon from "@components/icons/LogoutIcon"
 import { useTranslation } from "react-i18next"
 import useGlobal from "@hooks/useGlobal"
-import LogoutModal from "./LogoutModal"
-import ProfileSettingModal from "./ProfileSettingModal"
-import PlayedHistoryModal from "./PlayedHistoryModal"
 import { ImageCustom } from "@components/atoms/image/Image"
 import { StyledAvatar } from "@mobile/components/atoms/headerMenu/HeadProfileMobile"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
+import LogoutModal from "./LogoutModal"
+import ProfileSettingModal from "./ProfileSettingModal"
+import PlayedHistoryModal from "./PlayedHistoryModal"
 
 interface ISettingModalProps {
   open: boolean

@@ -14,7 +14,7 @@ interface IProp {
  */
 const Banners = ({ className }: IProp) => {
   const router = useRouter()
-  const banner = BANNER_DATA.find(({ path }) => path === router.pathname)
+  const banner = BANNER_DATA.find(({ path }) => path === router.asPath)
 
   return banner ? (
     <div

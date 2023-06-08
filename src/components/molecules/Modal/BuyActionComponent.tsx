@@ -46,7 +46,7 @@ const BuyActionComponent = ({
   maxPeriod
 }: IProps) => {
   const { formatNumber } = Helper
-  const { checkAllowanceNaka } = useGlobalMarket()
+  const { checkAllowanceNaka, calcUSDPrice, calcNAKAPrice } = useGlobalMarket()
   const [isAllowance, setAllowance] = useState<boolean | undefined>(undefined)
 
   const onIncreasePeriod = () => {
@@ -90,7 +90,9 @@ const BuyActionComponent = ({
       <span className="w-full text-xs uppercase">price</span>
       <TextField
         hiddenLabel
-        value={formatNumber(price / currency)}
+        value={formatNumber(calcNAKAPrice(price), {
+          maximumFractionDigits: 4
+        })}
         disabled
         placeholder="E.G. 1,000"
         sx={{
@@ -110,7 +112,13 @@ const BuyActionComponent = ({
           )
         }}
       />
-      <span className="text-xs uppercase">= {formatNumber(price)} USD</span>
+      <span className="text-xs uppercase">
+        ={" "}
+        {formatNumber(calcUSDPrice(price), {
+          maximumFractionDigits: 4
+        })}{" "}
+        USD
+      </span>
       {selling === "fullpayment" ? (
         <>
           <span className="text-xs uppercase">Payment Type</span>

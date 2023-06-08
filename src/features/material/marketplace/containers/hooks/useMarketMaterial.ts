@@ -45,7 +45,7 @@ const useMarketMaterial = () => {
     mutateMarketCancelOrder,
     mutateFullPayment
   } = useMutateMarketplace()
-  const { updateMaterialList } = useInvenMaterial()
+  const { updateMaterialList, getMaterialByToken } = useInvenMaterial()
   const { onCheckPolygonChain } = useGlobalMarket()
   const { updateInvenNFTMarketData } = useInventoryProvider()
   const { errorToast } = useToast()
@@ -54,7 +54,7 @@ const useMarketMaterial = () => {
   const getMaterialOrderById = (_sellerId: string, _orderId: string) =>
     new Promise<IGetMaterialOrderById>((resolve, reject) => {
       marketMaterialContractNoAcc
-        .orderByOrderIdNFT(_sellerId, _orderId)
+        .orderByOrderId(_sellerId, _orderId)
         .then((_response: IGetMaterialOrderById) => {
           resolve(_response)
         })
@@ -95,7 +95,15 @@ const useMarketMaterial = () => {
     let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const _checkChain = await onCheckPolygonChain(marketMaterialContract)
+      const [_checkItemAmountById, _checkChain] = await Promise.all([
+        getMaterialByToken(address, _materialId),
+        onCheckPolygonChain(marketMaterialContract)
+      ])
+      if (Number(_checkItemAmountById.toString()) < _materialAmount) {
+        setClose()
+        errorToast("material amount not enough")
+        return false
+      }
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)

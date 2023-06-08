@@ -17,6 +17,8 @@ import CONFIGS from "@configs/index"
 import useGlobal from "@hooks/useGlobal"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import Breadcrumb from "@components/molecules/Breadcrumb"
+import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
+import { MESSAGES } from "@constants/messages"
 
 const MarketplaceNakaPunk = () => {
   const [priceNP, setPriceNP] = useState<number>(0)
@@ -28,29 +30,38 @@ const MarketplaceNakaPunk = () => {
   const { setOpen, setClose } = useLoadingStore()
   const { isLogin, profile } = useProfileStore()
   const { successToast, errorToast } = useToast()
+  const { onCheckAllowance } = useGlobalMarket()
 
   const handleMintNakapunk = async () => {
-    setOpen()
-    mutatePurchaseNakapunk({ _qty: count })
-      .then(() => {
-        setClose()
-        successToast("Mint success")
+    if (priceNP > 0) {
+      setOpen(MESSAGES.transaction_processing_order)
+      const _checkAllowance = await onCheckAllowance({
+        _type: "nft_naka_punk",
+        _seller: "system",
+        _price: priceNP * count
       })
-      .catch((_error) => {
+      if (!_checkAllowance.allowStatus) {
         setClose()
-        errorToast("Transection fail")
-      })
+        return
+      }
+      await mutatePurchaseNakapunk({ _qty: count })
+        .then(() => {
+          successToast("Mint success")
+        })
+        .catch((_error) => {
+          errorToast("Transection fail")
+        })
+        .finally(() => setClose())
+    }
   }
 
   useEffect(() => {
     let load = false
-
     if (!load) {
       if (resNakapunk) {
         setMetaData(resNakapunk.data.meta_data)
       }
     }
-
     return () => {
       load = true
     }

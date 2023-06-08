@@ -355,6 +355,14 @@ export interface IMarketTypes {
   material: ITypeMaterials[]
 }
 
+export type ISettingName = "land" | "building"
+export type ISettingValue = "off" | "on"
+interface ISettingMarket {
+  name: ISettingName
+  type: "text"
+  value: ISettingValue
+}
+
 export interface IPayBillInstallServ extends IFormatMessageService {
   data: IPayBillData
 }
@@ -377,4 +385,8 @@ export interface IMarketCreateOrderServ extends IFormatService {
 
 export interface IMarketTypesServ extends IFormatService {
   data: IMarketTypes
+}
+
+export interface ISettingMarketplace extends IFormatService {
+  data: Array<ISettingMarket>
 }

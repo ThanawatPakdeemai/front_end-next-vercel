@@ -21,6 +21,8 @@ import MoreLoginMobile from "@mobile/components/atoms/MoreLoginMobile"
 import useFormRegisterController from "@feature/authentication/containers/hooks/useFormRegisterController"
 import useFormController from "@feature/authentication/containers/hooks/useFormController"
 
+import { useForm } from "react-hook-form"
+
 interface INotificationModalProps {
   open: boolean
   setOpenLogin: (_toggle: boolean) => void
@@ -33,8 +35,6 @@ const CreateAccountModal = ({
   const {
     verifiCode,
     showPassword,
-    register,
-    handleSubmit,
     onSubmitRegister,
     onClickGetCode,
     isNumber,
@@ -44,9 +44,13 @@ const CreateAccountModal = ({
     showConfirmPassword,
     handleClickShowConfirmPassword
   } = useFormRegisterController()
+
+  const { register, handleSubmit } = useForm()
   const { isEmail, patternCode, emailCorrect } = useFormController()
 
   const { t } = useTranslation()
+
+  const onSubmit = (data) => onSubmitRegister(data)
 
   return (
     <SwipeableDrawer
@@ -79,7 +83,7 @@ const CreateAccountModal = ({
         <Typography className="my-8 text-center font-urbanist text-2xl font-bold uppercase text-white-default">
           Create New Account
         </Typography>
-        <form onSubmit={handleSubmit(onSubmitRegister)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <TextField
             className="w-full"
             type="email"

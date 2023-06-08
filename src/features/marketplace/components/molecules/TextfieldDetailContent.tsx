@@ -146,12 +146,16 @@ const TextfieldDetailContent = ({
           helperText="Land position on map"
         />
       )}
+      {/* (countItemSelected * _priceValue) */}
       {_priceValue && (
         <TextField
           value={
             marketOrder?.seller_type === "user" ||
             invenItemData?.marketplaces_data?.seller_type === "user"
-              ? _priceValue && countItemSelected * _priceValue
+              ? _priceValue &&
+                Helper.formatNumber(countItemSelected * _priceValue, {
+                  maximumFractionDigits: 4
+                })
               : Helper.formatNumber(calcNakaPrice, {
                   maximumFractionDigits: 4
                 })
@@ -184,7 +188,9 @@ const TextfieldDetailContent = ({
               ? Helper.formatNumber(calcNakaPrice, {
                   maximumFractionDigits: 4
                 })
-              : _priceValue
+              : Helper.formatNumber(countItemSelected * _priceValue, {
+                  maximumFractionDigits: 4
+                })
           } USD`}
         />
       )}

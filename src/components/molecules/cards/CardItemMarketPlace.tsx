@@ -262,7 +262,7 @@ const CardItemMarketPlace = ({
                     className={`object-contain ${
                       cardType === "naka-punk"
                         ? "rounded-lg"
-                        : cardType === "building" && "image-building"
+                        : cardType === "building" && "!h-[200px]"
                     }`}
                     width={itemName?.includes("Bullet") ? 60 : itemImage.width}
                     height={

@@ -1,5 +1,4 @@
 import MenuItemCustom from "@components/atoms/MenuItemCustom"
-import useGlobal from "@hooks/useGlobal"
 import { IMenu } from "@interfaces/IMenu"
 import { IProfile } from "@src/types/profile"
 import useProfileStore from "@stores/profileStore"

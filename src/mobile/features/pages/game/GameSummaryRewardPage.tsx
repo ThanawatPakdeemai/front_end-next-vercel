@@ -139,7 +139,7 @@ const GameSummaryRewardPage = () => {
         }
       }}
     >
-      <div className="game-summary__header flex items-center justify-between gap-2">
+      <div className="game-summary__header flex flex-wrap items-center justify-around gap-2">
         {/* Timer */}
         <Box
           component="div"

@@ -14,10 +14,15 @@ import {
 } from "@feature/marketplace/interfaces/IMarketService"
 import useNFTPunk from "@feature/nakapunk/containers/hooks/useNFTPunk"
 import { useToast } from "@feature/toast/containers"
+import { useInventoryProvider } from "@providers/InventoryProvider"
+import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
+import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
 import { useWeb3Provider } from "@providers/Web3Provider"
+import useCountStore from "@stores/countComponant"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
 import { BigNumberish, ethers, providers } from "ethers"
+import { useRouter } from "next/router"
 import { useCallback } from "react"
 
 const useGlobalMarket = () => {
@@ -147,6 +152,81 @@ const useGlobalMarket = () => {
         break
     }
     return _contract || ""
+  }
+
+  const getContractByNFTType = (
+    _type: TNFTType,
+    _seller: TSellerType,
+    _selling?: TSellingType
+  ) => {
+    let _contractAddrs: string = ""
+    let _allowStatus: boolean = false
+    switch (_type) {
+      case "game_item": // no need to approve
+        _allowStatus = true
+        break
+      case "nft_material": // no need to approve
+        _allowStatus = true
+        break
+      case "nft_land":
+        if (_seller === "system")
+          _contractAddrs = CONFIGS.CONTRACT_ADDRESS.LAND_NFT
+        else if (_selling) _contractAddrs = getMarketContractBySelling(_selling)
+        break
+      case "nft_building":
+        if (_seller === "system")
+          _contractAddrs = CONFIGS.CONTRACT_ADDRESS.BUILDING_NFT
+        else if (_selling) _contractAddrs = getMarketContractBySelling(_selling)
+        break
+      case "nft_naka_punk":
+        if (_seller === "system")
+          _contractAddrs = CONFIGS.CONTRACT_ADDRESS.NAKAPUNK_NFT
+        else if (_selling) _contractAddrs = getMarketContractBySelling(_selling)
+        break
+      case "nft_game":
+        if (_seller === "system")
+          _contractAddrs = CONFIGS.CONTRACT_ADDRESS.ARCADEGAME_NFT
+        else if (_selling) _contractAddrs = getMarketContractBySelling(_selling)
+        break
+      case "nft_avatar":
+        _contractAddrs = CONFIGS.CONTRACT_ADDRESS.REEF_CONTRACT
+        break
+      default:
+        break
+    }
+    return { _allowStatus, _contractAddrs }
+  }
+
+  const checkAllowanceNaka = async (
+    _type: TNFTType,
+    _seller: TSellerType,
+    _price: number,
+    _selling?: TSellingType
+  ) => {
+    const _contract = await getContractByNFTType(_type, _seller, _selling)
+    let _allowance: number = 0
+    let _checkAllowance: boolean = false
+    let _allowanceStatus: boolean = _contract._allowStatus
+    const _priceValue = _price || 0
+    if (
+      signer &&
+      address &&
+      _contract._contractAddrs &&
+      !_contract._allowStatus
+    ) {
+      await checkAllowance(address, _contract._contractAddrs)
+        .then((response) => {
+          _allowance = WeiToNumber(response as BigNumberish)
+          _checkAllowance = true
+        })
+        .catch((error) => console.error(error))
+      if (_checkAllowance && _allowance >= _priceValue) {
+        _allowanceStatus = true
+      } else {
+        _allowanceStatus = false
+      }
+    }
+    return _allowanceStatus
   }
 
   const onCheckAllowance = async ({
@@ -287,6 +367,92 @@ const useGlobalMarket = () => {
     return _approve
   }
 
+  const { price: nakaPrice } = useNakaPriceProvider()
+  const { count: countItemSelected, setCount } = useCountStore()
+  const { marketOrder } = useMarketplaceProvider()
+  const { invPrice, invenItemData } = useInventoryProvider()
+  const router = useRouter()
+
+  const calcNAKAPrice = useCallback(
+    (_price: number) => {
+      const _priceValue = invPrice || _price
+
+      if (nakaPrice && countItemSelected && _priceValue) {
+        const isUserSeller = marketOrder?.seller_type === "user"
+        const isInvenItemDataAbsent = !invenItemData?.marketplaces_data
+        const isGameItemOrMaterial = ["game-item", "material"].includes(
+          router.asPath
+        )
+        if (isUserSeller || (isInvenItemDataAbsent && isGameItemOrMaterial)) {
+          return countItemSelected * _priceValue
+        }
+        if (!isInvenItemDataAbsent && isGameItemOrMaterial) {
+          return countItemSelected * _priceValue
+        }
+        if (isInvenItemDataAbsent && router.asPath.includes("inventory")) {
+          setCount(1)
+
+          return _priceValue
+        }
+        if (!isInvenItemDataAbsent) {
+          setCount(1)
+
+          return _priceValue
+        }
+        return countItemSelected * (_priceValue / parseFloat(nakaPrice.last))
+      }
+
+      return 0
+    },
+    [
+      countItemSelected,
+      invPrice,
+      invenItemData?.marketplaces_data,
+      marketOrder?.seller_type,
+      nakaPrice,
+      router.asPath,
+      setCount
+    ]
+  )
+
+  const calcUSDPrice = useCallback(
+    (_price: number) => {
+      if (nakaPrice && countItemSelected && _price) {
+        const isUserSeller = marketOrder?.seller_type === "user"
+        const isInvenItemDataAbsent = !invenItemData?.marketplaces_data
+        const isGameItemOrMaterial = ["game-item", "material"].includes(
+          router.asPath
+        )
+        if (isUserSeller || (isInvenItemDataAbsent && isGameItemOrMaterial)) {
+          return countItemSelected * (_price / parseFloat(nakaPrice.last))
+        }
+        if (!isInvenItemDataAbsent && isGameItemOrMaterial) {
+          return countItemSelected * (_price / parseFloat(nakaPrice.last))
+        }
+        if (isInvenItemDataAbsent && router.asPath.includes("inventory")) {
+          setCount(1)
+          return _price / parseFloat(nakaPrice.last)
+        }
+        if (!isInvenItemDataAbsent) {
+          setCount(1)
+          return _price / parseFloat(nakaPrice.last)
+        }
+        // mint
+        return countItemSelected * _price
+      }
+
+      return 0
+    },
+    [
+      nakaPrice,
+      countItemSelected,
+      marketOrder?.seller_type,
+      invenItemData?.marketplaces_data,
+      router.asPath,
+      setCount
+    ]
+  )
+
   const onCheckPolygonChain = useCallback(
     async (_contract: ethers.Contract) => {
       let contract: ethers.Contract = _contract
@@ -321,28 +487,28 @@ const useGlobalMarket = () => {
         case "nft_land":
           await isLandOwner(_token)
             .then((_res) => {
-              _status = _res === profile.address
+              _status = _res.toLowerCase() === profile.address?.toLowerCase()
             })
             .catch(() => {})
           break
         case "nft_building":
           await isBuildingOwner(_token)
             .then((_res) => {
-              _status = _res === profile.address
+              _status = _res.toLowerCase() === profile.address?.toLowerCase()
             })
             .catch(() => {})
           break
         case "nft_game":
           await isArcGameOwner(_token)
             .then((_res) => {
-              _status = _res === profile.address
+              _status = _res.toLowerCase() === profile.address?.toLowerCase()
             })
             .catch(() => {})
           break
         case "nft_naka_punk":
           await isPunkOwner(_token)
             .then((_res) => {
-              _status = _res === profile.address
+              _status = _res.toLowerCase() === profile.address?.toLowerCase()
             })
             .catch(() => {})
           break
@@ -355,12 +521,15 @@ const useGlobalMarket = () => {
   )
 
   return {
+    checkAllowanceNaka,
     onCheckOwnerNFT,
     onCheckPolygonChain,
     getContractAddrsByNFTType,
     onCheckNFTIsApproveForAll,
     onCheckAllowance,
-    onCheckApprovalForAllNFT
+    onCheckApprovalForAllNFT,
+    calcNAKAPrice,
+    calcUSDPrice
   }
 }
 

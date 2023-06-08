@@ -52,7 +52,7 @@ const MarketplaceLayoutInventory = ({
           {!isMapPage && (
             <div className="hidden w-[200px] sm:block">
               <div className="mb-4 flex-row gap-3 md:flex">
-                <MenuList className="mx-auto mt-4 h-fit w-full max-w-xs rounded-[13px] bg-neutral-800 p-[6px] md:mx-0 md:w-[200px]">
+                <MenuList className="md:w-[200px] mx-auto mt-4 h-fit w-full max-w-xs rounded-[13px] bg-neutral-800 p-[6px] md:mx-0">
                   <div>
                     {profile ? (
                       <div className="mb-2 flex rounded-lg border border-neutral-700 bg-neutral-780 p-1">
@@ -127,7 +127,7 @@ const MarketplaceLayoutInventory = ({
           <div
             className={` ${
               isMapPage && `absolute`
-            } z-50 hidden h-0 sm:block sm:h-[85vh]`}
+            } sm:h-[85vh] z-50 hidden h-0 sm:block`}
           >
             {/* className="absolute left-[22vh] z-50 h-[85vh]" */}
             <InventoryPage />
@@ -142,7 +142,7 @@ const MarketplaceLayoutInventory = ({
             {isMapPage ? (
               <div className="map-wrapper h-full w-full">{children}</div>
             ) : (
-              <main className="ml-20 flex w-full flex-col gap-y-4 px-2">
+              <main className="ml-0 flex w-full flex-col items-center	 gap-y-4 px-2 sm:ml-20 sm:items-start">
                 <FilterDropdown />
                 {/* <div className="block flex gap-2 sm:hidden">
                   <TextField

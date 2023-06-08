@@ -119,7 +119,7 @@ const FilterDropdown = () => {
           })}
         </Select>
       </FormControl>
-      <div className="mb-4 flex gap-4 p-4">
+      <div className="mb-4 flex gap-4 p-4 sm:hidden">
         <div className="grid h-[40px] w-[50px] content-center justify-center rounded-lg bg-purple-primary p-2">
           <MenuButtonExpandMobile
             isOpen={expanded}

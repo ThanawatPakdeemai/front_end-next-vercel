@@ -43,7 +43,7 @@ const MarketplaceLayoutInventory = ({
           {/* add filter component here */}
           <div className="hidden w-[200px] sm:block">
             <div className="mb-4 flex-row gap-3 md:flex">
-              <MenuList className="mx-auto mt-4 h-fit w-full max-w-xs rounded-[13px] bg-neutral-800 p-[6px] md:mx-0 md:w-[200px]">
+              <MenuList className="md:w-[200px] mx-auto mt-4 h-fit w-full max-w-xs rounded-[13px] bg-neutral-800 p-[6px] md:mx-0">
                 <div>
                   {profile ? (
                     <div className="mb-2 flex rounded-lg border border-neutral-700 bg-neutral-780 p-1">
@@ -114,7 +114,7 @@ const MarketplaceLayoutInventory = ({
               />
             )}
           </div>
-          <div className="flex w-full justify-center border-l border-neutral-800 pl-10">
+          <div className="flex w-full justify-center border-l border-neutral-800 pl-0 sm:pl-10">
             {children}
           </div>
         </div>

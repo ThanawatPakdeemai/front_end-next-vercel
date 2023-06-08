@@ -8,6 +8,11 @@ import useLoadingStore from "@stores/loading"
 import { calculatePosition } from "@utils/map"
 import { AnimatePresence, motion } from "framer-motion"
 import { useRouter } from "next/router"
+import { Stack, Typography } from "@mui/material"
+import MenuButtonExpandMobile from "@feature/page/marketplace/mobilescreen/MenuButtonExpandMobile"
+import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
+import ModalHeader from "@components/molecules/Modal/ModalHeader"
+import FilterBox from "@feature/marketplace/components/molecules/FilterBox"
 import BoxElement from "../molecules/BoxElement"
 import CameraController from "../molecules/CameraController"
 import MapScene from "../molecules/MapScene"
@@ -33,6 +38,16 @@ const FullMap = () => {
   const [allLand, setAllLand] = useState<ILandMap[]>([])
   const [showCardLand, setShowCardLand] = useState<boolean>(false)
   // const [text, setText] = useState<string | undefined>(undefined)
+
+  const [expanded, setExpanded] = useState<boolean>(false)
+  const [openFilter, setOpenFilter] = useState<boolean>(false)
+
+  const handleOnExpandClick = () => {
+    setExpanded(!expanded)
+  }
+  const onCloseModalCustom = () => {
+    setOpenFilter(!openFilter)
+  }
 
   // three stage
   const [focus, setFocus] = useState<boolean>(false)
@@ -123,6 +138,66 @@ const FullMap = () => {
 
   return (
     <div className="map-content relative flex h-full w-screen flex-col overflow-y-hidden bg-[#0165B6]">
+      <div className="absolute top-6 z-10 mt-6 flex h-[200px] w-full justify-center sm:hidden">
+        <div className="grid max-w-[400px] justify-center gap-4">
+          <div className="flex h-[40px] gap-2">
+            <div className="flex w-[315px] w-full items-center justify-between rounded-lg bg-neutral-800 px-[15px]">
+              <Typography className="text-sm uppercase text-white-default">
+                NAKAVERSE MAP
+              </Typography>
+            </div>
+            <div className="h-[40pc] w-[40px]">
+              <motion.div
+                transition={{ type: "spring", stiffness: 100 }}
+                animate={{
+                  rotate: expanded ? 0 : 180
+                }}
+                className={`mr-1 grid h-[40px] !w-[40px] content-center justify-items-center rounded-[8px] border p-[7px] ${
+                  expanded
+                    ? `bg-error-main`
+                    : `border-neutral-700 bg-neutral-780`
+                }`}
+              >
+                <MenuButtonExpandMobile
+                  isOpen={expanded}
+                  onClick={handleOnExpandClick}
+                  strokeWidth="2"
+                  color="#F1F4F4"
+                  transition={{
+                    ease: "easeOut",
+                    duration: 0.2,
+                    stiffness: 10,
+                    bounce: 5
+                  }}
+                  width="20"
+                  height="10"
+                />
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ModalCustom
+        open={expanded}
+        onClose={handleOnExpandClick}
+        className="m-auto gap-3 rounded-[34px] p-[10px] max-[420px]:w-[370px]"
+        width={515}
+      >
+        <Stack
+          spacing={3}
+          className="md:p-5"
+        >
+          <div className="rounded-2xl border-[1px] border-neutral-700 bg-neutral-800 p-2 uppercase">
+            <ModalHeader
+              handleClose={handleOnExpandClick}
+              title="Filter"
+            />
+          </div>
+          <div className="grid h-[500px] w-full justify-items-center overflow-y-auto">
+            <FilterBox />
+          </div>
+        </Stack>
+      </ModalCustom>
       {/* ---------- map ---------- */}
       <Canvas
         gl={{ antialias: true, toneMapping: THREE.NoToneMapping }}

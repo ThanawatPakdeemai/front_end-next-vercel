@@ -151,7 +151,7 @@ const TextfieldDetailContent = ({
         <TextField
           value={
             marketOrder?.seller_type === "user" ||
-            invenItemData?.marketplaces_data?.seller_type === "user"
+            !invenItemData?.marketplaces_data
               ? _priceValue &&
                 Helper.formatNumber(countItemSelected * _priceValue, {
                   maximumFractionDigits: 4
@@ -184,7 +184,7 @@ const TextfieldDetailContent = ({
           }}
           helperText={`= ${
             marketOrder?.seller_type === "user" ||
-            invenItemData?.marketplaces_data?.seller_type === "user"
+            !invenItemData?.marketplaces_data
               ? Helper.formatNumber(calcNakaPrice, {
                   maximumFractionDigits: 4
                 })

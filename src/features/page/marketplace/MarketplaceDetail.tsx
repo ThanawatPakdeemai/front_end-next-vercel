@@ -114,7 +114,7 @@ const MarketplaceDetail = () => {
                 count: 1
               }}
               sellingType={
-                marketOrder.selling_type
+                marketOrder.selling_type && marketOrder.seller_type !== "system"
                   ? {
                       title: marketOrder.selling_type,
                       color: handleColorSellingType(marketOrder.selling_type)
@@ -206,7 +206,7 @@ const MarketplaceDetail = () => {
               count: 1
             }}
             sellingType={
-              marketOrder.selling_type
+              marketOrder.selling_type && marketOrder.seller_type !== "system"
                 ? {
                     title: marketOrder.selling_type,
                     color: handleColorSellingType(marketOrder.selling_type)

@@ -32,7 +32,7 @@ const ReceiptComponent = ({
   selling,
   period
 }: IProps) => {
-  const { shortenString } = Helper
+  const { shortenString, formatNumber } = Helper
   const { onCheckAllowance } = useGlobalMarket()
   const [isAllowance, setAllowance] = useState<boolean | undefined>(undefined)
 
@@ -83,7 +83,7 @@ const ReceiptComponent = ({
         </>
       ) : null}
 
-      {orderId ? (
+      {orderId && orderId !== "null" ? (
         <>
           <div className="flex w-full flex-row items-center justify-between">
             <span>orderId :</span>
@@ -100,7 +100,7 @@ const ReceiptComponent = ({
 
       <div className="flex w-full flex-row items-center justify-between">
         <span>Price :</span>
-        <span className="text-neutral-300">{price * amount}</span>
+        <span className="text-neutral-300">{formatNumber(price * amount)}</span>
       </div>
       <Divider className="!block border-b-[1px] border-neutral-800/75" />
 

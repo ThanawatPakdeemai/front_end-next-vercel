@@ -1,4 +1,5 @@
 import MenuItemCustom from "@components/atoms/MenuItemCustom"
+import useGlobal from "@hooks/useGlobal"
 import { IMenu } from "@interfaces/IMenu"
 import { IProfile } from "@src/types/profile"
 import useProfileStore from "@stores/profileStore"
@@ -16,6 +17,7 @@ const MenuLoggedin = ({ ele }: IProp) => {
   const { clearQuestStore, setOpen } = useQuestStore()
   const router = useRouter()
   const active = router.asPath.includes(ele.href)
+  const isMarketplaceInv = router.asPath.includes("inventory")
 
   const handleModalMission = () => {
     setOpen()
@@ -36,6 +38,13 @@ const MenuLoggedin = ({ ele }: IProp) => {
     }
   }, [profile])
 
+  const activeMarket = router.asPath.split("/")[3] === ele.href.split("/")[3]
+  const activeOnlyInventory =
+    router.pathname.split("/")[3] === "[type]" &&
+    ele.href.split("/").length === 3
+
+  const checkActiveMarketMenu = activeMarket || activeOnlyInventory
+
   return ele.href === "/profile" ? (
     <MenuItemCustom
       id={ele.id}
@@ -46,7 +55,7 @@ const MenuLoggedin = ({ ele }: IProp) => {
       onClick={() => {
         router.push(`/profile/${profileData && profileData.id}`)
       }}
-      active={active}
+      active={isMarketplaceInv ? checkActiveMarketMenu : active}
     />
   ) : (
     <MenuItemCustom
@@ -58,7 +67,7 @@ const MenuLoggedin = ({ ele }: IProp) => {
       onClick={
         ele.id === "your-mission" ? () => handleModalMission() : undefined
       }
-      active={active}
+      active={isMarketplaceInv ? checkActiveMarketMenu : active}
     />
   )
 }

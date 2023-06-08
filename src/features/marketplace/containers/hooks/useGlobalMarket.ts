@@ -487,28 +487,28 @@ const useGlobalMarket = () => {
         case "nft_land":
           await isLandOwner(_token)
             .then((_res) => {
-              _status = _res === profile.address
+              _status = _res.toLowerCase() === profile.address?.toLowerCase()
             })
             .catch(() => {})
           break
         case "nft_building":
           await isBuildingOwner(_token)
             .then((_res) => {
-              _status = _res === profile.address
+              _status = _res.toLowerCase() === profile.address?.toLowerCase()
             })
             .catch(() => {})
           break
         case "nft_game":
           await isArcGameOwner(_token)
             .then((_res) => {
-              _status = _res === profile.address
+              _status = _res.toLowerCase() === profile.address?.toLowerCase()
             })
             .catch(() => {})
           break
         case "nft_naka_punk":
           await isPunkOwner(_token)
             .then((_res) => {
-              _status = _res === profile.address
+              _status = _res.toLowerCase() === profile.address?.toLowerCase()
             })
             .catch(() => {})
           break

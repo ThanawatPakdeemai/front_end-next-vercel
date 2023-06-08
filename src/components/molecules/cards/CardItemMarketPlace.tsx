@@ -264,8 +264,10 @@ const CardItemMarketPlace = ({
                         ? "rounded-lg"
                         : cardType === "building" && "!h-[200px]"
                     }`}
-                    width={itemName === "Bullet" ? 60 : itemImage.width}
-                    height={itemName === "Bullet" ? 60 : itemImage.height}
+                    width={itemName?.includes("Bullet") ? 60 : itemImage.width}
+                    height={
+                      itemName?.includes("Bullet") ? 60 : itemImage.height
+                    }
                   />
                 </motion.div>
                 {/* mobile */}
@@ -282,8 +284,8 @@ const CardItemMarketPlace = ({
                         ? "rounded-lg"
                         : cardType === "building" && "image-building"
                     }`}
-                    width={itemName === "Bullet" ? 60 : 148}
-                    height={itemName === "Bullet" ? 60 : 148}
+                    width={itemName?.includes("Bullet") ? 60 : 148}
+                    height={itemName?.includes("Bullet") ? 60 : 148}
                   />
                 </motion.div>
               </div>

@@ -13,12 +13,16 @@ import { MENU_MARKETPLACE, MENU_MARKETPLACE_INVENTORY } from "@configs/menu"
 // import RightMenuLogIn from "@components/molecules/rightMenu/RightMenuLogIn"
 import PlusIcon from "@components/icons/CountIcon/PlusIcon"
 import Balance from "@components/molecules/balance/Balance"
+import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
+import useRefreshProfile from "@hooks/useRefreshProfile"
 import MenuButtonExpandMobile from "./MenuButtonExpandMobile"
 
 const HeaderMunuMobile = () => {
   const router: NextRouter = useRouter()
   const { count } = useNotiStore()
   const profile = useProfileStore((state) => state.profile.data)
+  // const { profile } = useProfileStore()
+  const { isTokenValid } = useRefreshProfile()
 
   const [expanded, setExpanded] = useState<boolean>(false)
   // const [expandedInvenTory, setExpandedInvenTory] = React.useState<
@@ -90,27 +94,31 @@ const HeaderMunuMobile = () => {
             </div>
           </div>
         </div>
-        <div className="flex h-[50px] w-fit gap-1 rounded-[13px] border border-neutral-700 bg-neutral-780 p-1">
-          <div
-            className={`relative mr-1 flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-lg border border-neutral-700 bg-transparent before:absolute before:right-[6px] before:top-[5px] before:h-[6px] before:w-[6px] before:rounded-full ${
-              (count > 0 && "before:bg-error-main before:opacity-100") ||
-              "before:bg-transparent before:opacity-0"
-            }`}
-          >
-            <NotificationsOutlinedIcon className="text-white-primary" />
+        {!profile || !isTokenValid ? (
+          <RightMenuNotLogIn />
+        ) : (
+          <div className="flex h-[50px] w-fit gap-1 rounded-[13px] border border-neutral-700 bg-neutral-780 p-1">
+            <div
+              className={`relative mr-1 flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-lg border border-neutral-700 bg-transparent before:absolute before:right-[6px] before:top-[5px] before:h-[6px] before:w-[6px] before:rounded-full ${
+                (count > 0 && "before:bg-error-main before:opacity-100") ||
+                "before:bg-transparent before:opacity-0"
+              }`}
+            >
+              <NotificationsOutlinedIcon className="text-white-primary" />
+            </div>
+            <div className="grid !h-[40px] !w-[40px] content-center rounded-[8px] bg-neutral-900">
+              <Link href={`/profile/${profile.id}`}>
+                <Image
+                  src={profile.avatar || "/images/avatar.png"}
+                  alt="avatar"
+                  width={40}
+                  height={40}
+                  className="mr-[5px] rounded-lg"
+                />
+              </Link>
+            </div>
           </div>
-          <div className="grid !h-[40px] !w-[40px] content-center rounded-[8px] bg-neutral-900">
-            <Link href={`/profile/${profile?.id}`}>
-              <Image
-                src={profile?.avatar || "/images/avatar.png"}
-                alt="avatar"
-                width={40}
-                height={40}
-                className="mr-[5px] rounded-lg"
-              />
-            </Link>
-          </div>
-        </div>
+        )}
         {/* <RightMenuLogIn /> */}
       </div>
       <Collapse

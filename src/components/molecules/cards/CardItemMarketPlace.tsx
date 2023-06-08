@@ -135,7 +135,7 @@ const CardItemMarketPlace = ({
           label={id}
           variant="outlined"
           size="small"
-          className="pointer-events-auto absolute left-4 top-4 z-10 w-[93px] cursor-pointer truncate uppercase"
+          className="pointer-events-auto absolute !left-[65px] !top-[14px] z-10 w-fit cursor-pointer truncate uppercase"
           deleteIcon={
             <ContentCopySharpIcon
               sx={{
@@ -254,7 +254,7 @@ const CardItemMarketPlace = ({
                 <motion.div
                   transition={{ type: "spring", stiffness: 100, damping: 6 }}
                   variants={cardType !== "naka-punk" ? imgMotion : undefined}
-                  className="relative flex items-center justify-center sm:hidden"
+                  className="relative block flex items-center justify-center sm:hidden"
                 >
                   <Image
                     src={itemImage.src}
@@ -272,14 +272,14 @@ const CardItemMarketPlace = ({
                 <motion.div
                   transition={{ type: "spring", stiffness: 100, damping: 6 }}
                   variants={cardType !== "naka-punk" ? imgMotion : undefined}
-                  className="relative hidden items-center justify-center sm:block"
+                  className="relative flex hidden items-center justify-center sm:block"
                 >
                   <Image
                     src={itemImage.src}
                     alt={itemImage.alt}
                     className={`object-contain ${
                       cardType === "naka-punk"
-                        ? "rounded-lg"
+                        ? "h-full w-full rounded-lg"
                         : cardType === "building" && "image-building"
                     }`}
                     width={itemName === "Bullet" ? 60 : 148}

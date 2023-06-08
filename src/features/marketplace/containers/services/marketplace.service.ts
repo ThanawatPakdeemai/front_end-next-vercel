@@ -11,8 +11,17 @@ import {
   IPayBillParams,
   IPayOrderParams,
   IPutOrderServ,
+  ISettingMarketplace,
   TUrlNFT
 } from "@feature/marketplace/interfaces/IMarketService"
+
+export const getSettingMarketplace = () =>
+  new Promise<ISettingMarketplace>((resolve, reject) => {
+    services
+      .get<ISettingMarketplace>(`/setting/type-data/maketplace`)
+      .then((response) => resolve(response.data))
+      .catch((error) => reject(error))
+  })
 
 export const getMarketOrder = ({
   _urlNFT,

@@ -1,4 +1,3 @@
-// import PlayerCard from "@feature/game/components/molecules/PlayerCard"
 import ButtonGame from "@src/mobile/features/game/components/atoms/ButtonGame"
 import useWaitingSingle from "@feature/game/containers/hooks/useWaitingSingle"
 import { CurrentPlayer } from "@feature/game/interfaces/IGameService"
@@ -6,6 +5,7 @@ import PlayerCardMobile from "@src/mobile/features/game/components/molecules/Pla
 import { useTranslation } from "react-i18next"
 import WaitingSkeleton from "@mobile/components/atoms/skelaton/WaitingSkeleton"
 import { Box } from "@mui/material"
+import { StyleWaitingRoom } from "@mobile/styles/muiStyleMobile"
 
 const SingleWaiting = () => {
   const { t } = useTranslation()
@@ -16,42 +16,7 @@ const SingleWaiting = () => {
     <Box
       component="div"
       className="waiting-room__wrapper"
-      sx={{
-        "& .waiting-room__content": {
-          ".game-play-button": {
-            maxWidth: "380px",
-            marginLeft: "auto",
-            "& > div": {
-              width: "100%",
-              background: "#18181C",
-              border: "0.7px solid #35383F",
-              borderRadius: "76px",
-              padding: "10px",
-              "& > .btn-icon-container": {
-                margin: "0",
-                background: "#F32429!important",
-                "circle": {
-                  fill: "#F2C94C!important"
-                }
-              },
-              ".MuiTypography-root": {
-                fontSize: "10px",
-                width: "calc(100% - 140px)",
-                fontFamily: "Urbanist",
-                fontWeight: 700,
-                color: "#FFFFFF",
-                textTransform: "uppercase",
-                margin: "0"
-              },
-              ".text-button": {
-                ".MuiTypography-root": {
-                  fontSize: "16px!important"
-                }
-              }
-            }
-          }
-        }
-      }}
+      sx={StyleWaitingRoom}
     >
       {!loadingPlayer ? (
         <>

@@ -60,8 +60,8 @@ const useMarketContext = () => {
         }
         break
       case "nft_building":
-        if (_data.building_data && _data.building_data.NFT_token) {
-          _tokenId = _data.building_data.NFT_token
+        if (_data.building_data) {
+          _tokenId = _data.building_data.NFT_token || ""
           _nameNFT = _data.building_data.name
           _imageNFT = _data.building_data.NFT_image
           _vdoNFT = _data.building_data.NFT_video

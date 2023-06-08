@@ -13,7 +13,9 @@ import {
   TSellingType
 } from "@feature/marketplace/interfaces/IMarketService"
 import useNFTPunk from "@feature/nakapunk/containers/hooks/useNFTPunk"
+import { useToast } from "@feature/toast/containers"
 import { useWeb3Provider } from "@providers/Web3Provider"
+import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
 import { BigNumberish, ethers, providers } from "ethers"
 import { useCallback } from "react"
@@ -22,14 +24,24 @@ const useGlobalMarket = () => {
   const { signer, address } = useWeb3Provider()
   const { WeiToNumber, toWei } = Helper
   const { utils } = ethers
+  const profile = useProfileStore()
+  const { errorToast } = useToast()
   const erc20Contract = useERC20(signer, CONFIGS.CONTRACT_ADDRESS.ERC20)
   const erc20ContractNoAcc = useERC20NoAcc(CONFIGS.CONTRACT_ADDRESS.ERC20)
-  const { onCheckApprovalLandForAll, isLandApprovedForAll } = useNFTLand()
-  const { onCheckApprovalBuildingForAll, isBuildingApprovedForAll } =
-    useNFTBuilding()
-  const { onCheckApprovalPunkForAll, isPunkApprovedForAll } = useNFTPunk()
-  const { onCheckApprovalArcGameForAll, isArcGameApprovedForAll } =
-    useNFTArcGame()
+  const { onCheckApprovalLandForAll, isLandApprovedForAll, isLandOwner } =
+    useNFTLand()
+  const {
+    onCheckApprovalBuildingForAll,
+    isBuildingApprovedForAll,
+    isBuildingOwner
+  } = useNFTBuilding()
+  const { onCheckApprovalPunkForAll, isPunkApprovedForAll, isPunkOwner } =
+    useNFTPunk()
+  const {
+    onCheckApprovalArcGameForAll,
+    isArcGameApprovedForAll,
+    isArcGameOwner
+  } = useNFTArcGame()
 
   const checkAllowance = (_address: string, _tokenAddress: string) =>
     new Promise<BigNumberish>((resolve, reject) => {
@@ -55,45 +67,6 @@ const useGlobalMarket = () => {
           reject(_error)
         })
     })
-
-  const checkAllowanceNaka = async (_contract: string, _price?: number) => {
-    let _allowance: BigNumberish = "0"
-    let _checkAllowance: boolean = false
-    let _allowanceStatus: boolean = false
-    const _priceValue = _price || 0
-    if (signer && address) {
-      await checkAllowance(address, _contract)
-        .then(async (response) => {
-          _allowance = (await response) as BigNumberish
-          _checkAllowance = true
-        })
-        .catch((error) => console.error(error))
-      if (_checkAllowance && WeiToNumber(_allowance) <= _priceValue) {
-        await allowContract(_contract, toWei("180000000"))
-          .then(async (response) => {
-            _allowanceStatus = true
-            const _res = await response.wait()
-            const _enTopic = await utils.keccak256(
-              utils.toUtf8Bytes("Approval(address,address,uint256)")
-            )
-            const _log = _res.logs.find((f) =>
-              f.topics.find((l) => l === _enTopic)
-            )
-            if (_log) {
-              const _resultEvent = utils.defaultAbiCoder.decode(
-                ["uint256"],
-                _log.data
-              )
-              _allowance = _resultEvent[0] as BigNumberish
-            }
-          })
-          .catch((error) => console.error(error))
-      } else {
-        _allowanceStatus = true
-      }
-    }
-    return { allowStatus: _allowanceStatus, allowance: _allowance }
-  }
 
   const getContractAddrsByNFTType = (_type: TNFTType) => {
     let _contractAddrs: string = ""
@@ -176,13 +149,19 @@ const useGlobalMarket = () => {
     return _contract || ""
   }
 
-  const onCheckAllowance = async (
-    _type: TNFTType,
-    _seller: TSellerType,
+  const onCheckAllowance = async ({
+    _type,
+    _seller,
+    _selling,
+    _price
+  }: {
+    _type: TNFTType
+    _seller: TSellerType
     _selling?: TSellingType
-  ) => {
+    _price: number
+  }) => {
     let _contractAddrs: string | undefined
-    let _allowance: BigNumberish = "0"
+    let _allowance: number = 0
     let _allowStatus: boolean = false
     if (address) {
       switch (_type) {
@@ -216,18 +195,50 @@ const useGlobalMarket = () => {
           else if (_selling)
             _contractAddrs = getMarketContractBySelling(_selling)
           break
+        case "nft_avatar":
+          _contractAddrs = CONFIGS.CONTRACT_ADDRESS.REEF_CONTRACT
+          break
         default:
           break
       }
-      if (_contractAddrs)
+      if (_allowStatus) {
+        return { allowStatus: _allowStatus, allowance: WeiToNumber(_allowance) }
+      }
+      if (_contractAddrs) {
         await checkAllowance(address, _contractAddrs)
           .then((response) => {
-            _allowance = response
+            _allowance = WeiToNumber(response as BigNumberish)
           })
           .catch((error) => console.error(error))
-      if (WeiToNumber(_allowance) > 0) _allowStatus = true
+        if (_allowance >= _price) _allowStatus = true
+        else
+          await allowContract(_contractAddrs, toWei(_price.toString()))
+            .then(async (response) => {
+              const _res = await response.wait()
+              const _enTopic = await utils.keccak256(
+                utils.toUtf8Bytes("Approval(address,address,uint256)")
+              )
+              const _log = _res.logs.find((f) =>
+                f.topics.find((l) => l === _enTopic)
+              )
+              if (_log) {
+                const _resultEvent = utils.defaultAbiCoder.decode(
+                  ["uint256"],
+                  _log.data
+                )
+                _allowance = WeiToNumber(_resultEvent[0] as BigNumberish)
+                if (_allowance >= _price) {
+                  _allowStatus = true
+                }
+              }
+            })
+            .catch((error) => console.error(error))
+      }
     }
-    return { allowStatus: _allowStatus, allowance: WeiToNumber(_allowance) }
+    if (!_allowStatus) {
+      errorToast("allowance less than price")
+    }
+    return { allowStatus: _allowStatus, allowance: _allowance }
   }
 
   const onCheckApprovalForAllNFT = async (
@@ -303,9 +314,49 @@ const useGlobalMarket = () => {
     [signer]
   )
 
+  const onCheckOwnerNFT = useCallback(
+    async (_type: TNFTType, _token: string) => {
+      let _status: boolean = false
+      switch (_type) {
+        case "nft_land":
+          await isLandOwner(_token)
+            .then((_res) => {
+              _status = _res === profile.address
+            })
+            .catch(() => {})
+          break
+        case "nft_building":
+          await isBuildingOwner(_token)
+            .then((_res) => {
+              _status = _res === profile.address
+            })
+            .catch(() => {})
+          break
+        case "nft_game":
+          await isArcGameOwner(_token)
+            .then((_res) => {
+              _status = _res === profile.address
+            })
+            .catch(() => {})
+          break
+        case "nft_naka_punk":
+          await isPunkOwner(_token)
+            .then((_res) => {
+              _status = _res === profile.address
+            })
+            .catch(() => {})
+          break
+        default:
+          break
+      }
+      return _status
+    },
+    [isArcGameOwner, isBuildingOwner, isLandOwner, isPunkOwner, profile.address]
+  )
+
   return {
+    onCheckOwnerNFT,
     onCheckPolygonChain,
-    checkAllowanceNaka,
     getContractAddrsByNFTType,
     onCheckNFTIsApproveForAll,
     onCheckAllowance,

@@ -23,6 +23,20 @@ const useNFTLand = () => {
 
   const { successToast } = useToast()
   const { setOpen, setClose } = useLoadingStore()
+
+  // check land owner
+  const isLandOwner = (_tokenId: string) =>
+    new Promise<string>((resolve, reject) => {
+      landContractNoAcc
+        .ownerOf(_tokenId)
+        .then((_response: string) => {
+          resolve(_response)
+        })
+        .catch((_error: Error) => {
+          reject(_error)
+        })
+    })
+
   // check isApprovedForAll
   const isLandApprovedForAll = (_owner: string, _address: string) =>
     new Promise<boolean>((resolve, reject) => {
@@ -88,7 +102,9 @@ const useNFTLand = () => {
       await transferLand(address, _to, _tokenId)
         .then(async (response) => {
           const _res = await response.wait()
-          successToast("Transfer success")
+          if (_res) {
+            successToast("Transfer success")
+          }
         })
         .catch((error) => console.error(error))
     }
@@ -112,7 +128,8 @@ const useNFTLand = () => {
     onCheckApprovalLandForAll,
     onTransferLand,
     isLandApprovedForAll,
-    getLandsOfAddress
+    getLandsOfAddress,
+    isLandOwner
   }
 }
 

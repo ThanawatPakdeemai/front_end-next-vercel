@@ -12,10 +12,12 @@ import { useTranslation } from "react-i18next"
 import ButtonToggleIcon from "../gameSlide/ButtonToggleIcon"
 import RoomListBox from "./RoomListBox"
 
+export type TRoomStatus = "played" | "full" | "join" | "unavailable"
+
 interface IProp {
   roomId: string | number
   roomName: string
-  btnText?: string
+  btnText?: TRoomStatus
   timer?: {
     time: Date
     onExpire?: () => void
@@ -155,6 +157,11 @@ const RoomListBar = ({
               : "bg-green-lemon"
           } font-bold capitalize text-neutral-900`}
           type="button"
+          disabled={
+            btnText === "full" ||
+            btnText === "played" ||
+            btnText === "unavailable"
+          }
         />
       </Box>
     </motion.div>

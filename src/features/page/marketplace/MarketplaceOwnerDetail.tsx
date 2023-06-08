@@ -1,3 +1,4 @@
+import React from "react"
 import ButtonMarket from "@components/atoms/button/ButtonMarket"
 import ButtonRentOut from "@components/atoms/button/ButtonRentOut"
 import CardDetailSkeleton from "@feature/marketplace/components/molecules/CardDetailSkeleton"
@@ -8,7 +9,6 @@ import RightDetailsMarketplace from "@feature/marketplace/components/organisms/R
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import useCountStore from "@stores/countComponant"
 import useProfileStore from "@stores/profileStore"
-import React, { useEffect } from "react"
 
 const MarketplaceOwnerDetail = () => {
   const { profile } = useProfileStore()
@@ -17,7 +17,7 @@ const MarketplaceOwnerDetail = () => {
 
   return invenItemData && !isLoading ? (
     <div className="flex flex-col">
-      <div className="mt-5 flex w-full flex-col gap-x-[120px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0">
+      <div className="mt-5 flex w-full flex-col justify-center gap-x-[60px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0">
         <CardContentDetails
           detail={invenItemData.detail}
           image={invenItemData.img}
@@ -47,6 +47,7 @@ const MarketplaceOwnerDetail = () => {
             title={invenItemData.name}
             position={invenItemData.position}
             qrCode={invenItemData.qrCode}
+            price={invenItemData.marketplaces_data?.price}
             count={
               invenItemData.totalAmount
                 ? {
@@ -60,7 +61,7 @@ const MarketplaceOwnerDetail = () => {
             }
           >
             {!invenItemData.installments_data ? (
-              <div className="flex w-full items-center justify-between">
+              <div className="flex w-full items-center justify-between gap-x-2">
                 <ButtonMarket
                   nftType={invenItemData.type}
                   img={invenItemData.img}

@@ -27,11 +27,12 @@ import Helper from "@utils/helper"
 import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAvatarReef"
 import RedemptionCode from "@components/molecules/RedemptionCode"
 import Breadcrumb from "@components/molecules/Breadcrumb"
+import { MESSAGES } from "@constants/messages"
 
 const MarketplaceReefAvatar = () => {
   const [evm, setEVM] = useState<string>("")
   const { marketType } = useGlobal()
-  const { checkAllowanceNaka } = useGlobalMarket()
+  const { onCheckAllowance } = useGlobalMarket()
   const {
     priceAvatarReef,
     redeemAvatarReefData,
@@ -45,6 +46,7 @@ const MarketplaceReefAvatar = () => {
   const { successToast, errorToast } = useToast()
   const [priceNP, setPriceNP] = useState<number>(0)
   const [metaData, setMetaData] = useState<IPunkMetaData[]>([])
+  // eslint-disable-next-line no-unused-vars
   const { WeiToNumber } = Helper
 
   const handleRedeem = (_coupon: string) => {
@@ -65,25 +67,32 @@ const MarketplaceReefAvatar = () => {
     }
   }
 
-  const handleMintNakapunk = async () => {
-    if (evm) {
-      setOpen()
-      const result = await checkAllowanceNaka(
-        CONFIGS.CONTRACT_ADDRESS.REEF_CONTRACT
-      )
-      const _allowance = WeiToNumber(result.allowance.toString())
-      if (_allowance > priceNP * count) {
-        mutatePurchaseAvatarReef({ _addrs: evm, _qty: count, _chain: "reef" })
-          .then(() => {
-            successToast("Mint success")
-          })
-          .catch((_error) => {
-            errorToast("Transection fail")
-          })
-          .finally(() => {
-            setTimeout(() => setClose(), 1000)
-          })
+  const handleMintNFTAvatar = async () => {
+    if (evm && priceNP > 0) {
+      setOpen(MESSAGES.transaction_processing_order)
+      const _checkAllowance = await onCheckAllowance({
+        _type: "nft_avatar",
+        _seller: "system",
+        _price: priceNP * count
+      })
+      if (!_checkAllowance.allowStatus) {
+        setClose()
+        return
       }
+      await mutatePurchaseAvatarReef({
+        _addrs: evm,
+        _qty: count,
+        _chain: "reef"
+      })
+        .then(() => {
+          successToast("Mint success")
+        })
+        .catch((_error) => {
+          errorToast("Transection fail")
+        })
+        .finally(() => {
+          setTimeout(() => setClose(), 1000)
+        })
     } else {
       // toast
       errorToast("EVM Address is required!")
@@ -263,7 +272,7 @@ const MarketplaceReefAvatar = () => {
                   className="!min-h-10 !h-10 !w-[232px] !bg-green-lemon"
                   arrowColor="text-primary-main"
                   icon={<WandIcon />}
-                  onClick={handleMintNakapunk}
+                  onClick={handleMintNFTAvatar}
                 />
               ) : (
                 <RightMenuNotLogIn />

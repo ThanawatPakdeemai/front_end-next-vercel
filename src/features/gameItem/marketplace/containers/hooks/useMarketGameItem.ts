@@ -45,7 +45,7 @@ const useMarketGameItem = () => {
     mutateMarketCancelOrder,
     mutateFullPayment
   } = useMutateMarketplace()
-  const { updateGameItemList } = useInvenGameItem()
+  const { updateGameItemList, getGameItemByToken } = useInvenGameItem()
   const { onCheckPolygonChain } = useGlobalMarket()
   const { updateInvenNFTMarketData } = useInventoryProvider()
   const { errorToast } = useToast()
@@ -54,7 +54,7 @@ const useMarketGameItem = () => {
   const getItemOrderById = (_sellerId: string, _orderId: string) =>
     new Promise<IGetItemOrderById>((resolve, reject) => {
       marketGameItemContractNoAcc
-        .orderByOrderIdNFT(_sellerId, _orderId)
+        .orderByOrderId(_sellerId, _orderId)
         .then((_response: IGetItemOrderById) => {
           resolve(_response)
         })
@@ -95,7 +95,15 @@ const useMarketGameItem = () => {
     let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const _checkChain = await onCheckPolygonChain(marketGameItemContract)
+      const [_checkItemAmountById, _checkChain] = await Promise.all([
+        getGameItemByToken(address, _tokenId),
+        onCheckPolygonChain(marketGameItemContract)
+      ])
+      if (Number(_checkItemAmountById.toString()) < _itemAmount) {
+        setClose()
+        errorToast("item amount not enough")
+        return false
+      }
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)

@@ -10,7 +10,7 @@ const WaitingSkeleton = () => (
           key={uniqueId()}
           className="relative pt-6"
         >
-          <div className="rounded-[10px] border-2 border-[#18181C] p-[5px]">
+          <div className="rounded-[10px] border-2 border-[#18181C] p-[2px]">
             <div className={classesWrapper}>
               <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-[#18181C]">
                 <Skeleton

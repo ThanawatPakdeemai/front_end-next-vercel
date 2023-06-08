@@ -1,7 +1,9 @@
 /* eslint-disable no-nested-ternary */
 import { Box, Divider } from "@mui/material"
 import React from "react"
-import RoomListBar from "@components/molecules/roomList/RoomListBar"
+import RoomListBar, {
+  TRoomStatus
+} from "@components/molecules/roomList/RoomListBar"
 import useGetAllGameRooms from "@feature/game/containers/hooks/useGetAllGameRooms"
 import useProfileStore from "@stores/profileStore"
 
@@ -12,6 +14,7 @@ import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGame
 import useGlobal from "@hooks/useGlobal"
 import useGameGlobal from "@hooks/useGameGlobal"
 import useRoomSingle from "@feature/game/containers/hooks/useRoomSingle"
+import { IGameRoomDetail } from "@feature/game/interfaces/IGameService"
 
 /**
  *
@@ -158,6 +161,22 @@ const GameRoomList = () => {
   //   }
   // }, [allGameRooms, data])
 
+  const getRoomStatus = (_data: IGameRoomDetail): TRoomStatus => {
+    if (!profile) return "unavailable"
+
+    const _played = _data.current_player.find(
+      (ele) => ele.player_id === profile.id
+    )
+
+    if (_played && _played.status === "played") {
+      return "played"
+    }
+    if (_data.amount_current_player >= _data.max_players) {
+      return "full"
+    }
+    return "join"
+  }
+
   return (
     <Box
       component="div"
@@ -186,15 +205,7 @@ const GameRoomList = () => {
                     roomId={_data.room_number}
                     roomName={renderRoomName()}
                     onClick={() => handleJoinRoom(_data)}
-                    btnText={
-                      _data?.current_player?.find(
-                        (ele) => ele.player_id === profile?.id
-                      )?.status === "played"
-                        ? "played"
-                        : _data?.amount_current_player >= _data.max_players
-                        ? "full"
-                        : "join"
-                    }
+                    btnText={getRoomStatus(_data)}
                     path={gameData?.path}
                     dataGoalRush={_data.data_play}
                   />

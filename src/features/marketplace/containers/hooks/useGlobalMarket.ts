@@ -149,6 +149,81 @@ const useGlobalMarket = () => {
     return _contract || ""
   }
 
+  const getContractByNFTType = (
+    _type: TNFTType,
+    _seller: TSellerType,
+    _selling?: TSellingType
+  ) => {
+    let _contractAddrs: string = ""
+    let _allowStatus: boolean = false
+    switch (_type) {
+      case "game_item": // no need to approve
+        _allowStatus = true
+        break
+      case "nft_material": // no need to approve
+        _allowStatus = true
+        break
+      case "nft_land":
+        if (_seller === "system")
+          _contractAddrs = CONFIGS.CONTRACT_ADDRESS.LAND_NFT
+        else if (_selling) _contractAddrs = getMarketContractBySelling(_selling)
+        break
+      case "nft_building":
+        if (_seller === "system")
+          _contractAddrs = CONFIGS.CONTRACT_ADDRESS.BUILDING_NFT
+        else if (_selling) _contractAddrs = getMarketContractBySelling(_selling)
+        break
+      case "nft_naka_punk":
+        if (_seller === "system")
+          _contractAddrs = CONFIGS.CONTRACT_ADDRESS.NAKAPUNK_NFT
+        else if (_selling) _contractAddrs = getMarketContractBySelling(_selling)
+        break
+      case "nft_game":
+        if (_seller === "system")
+          _contractAddrs = CONFIGS.CONTRACT_ADDRESS.ARCADEGAME_NFT
+        else if (_selling) _contractAddrs = getMarketContractBySelling(_selling)
+        break
+      case "nft_avatar":
+        _contractAddrs = CONFIGS.CONTRACT_ADDRESS.REEF_CONTRACT
+        break
+      default:
+        break
+    }
+    return { _allowStatus, _contractAddrs }
+  }
+
+  const checkAllowanceNaka = async (
+    _type: TNFTType,
+    _seller: TSellerType,
+    _price: number,
+    _selling?: TSellingType
+  ) => {
+    const _contract = await getContractByNFTType(_type, _seller, _selling)
+    let _allowance: number = 0
+    let _checkAllowance: boolean = false
+    let _allowanceStatus: boolean = _contract._allowStatus
+    const _priceValue = _price || 0
+    if (
+      signer &&
+      address &&
+      _contract._contractAddrs &&
+      !_contract._allowStatus
+    ) {
+      await checkAllowance(address, _contract._contractAddrs)
+        .then((response) => {
+          _allowance = WeiToNumber(response as BigNumberish)
+          _checkAllowance = true
+        })
+        .catch((error) => console.error(error))
+      if (_checkAllowance && _allowance >= _priceValue) {
+        _allowanceStatus = true
+      } else {
+        _allowanceStatus = false
+      }
+    }
+    return _allowanceStatus
+  }
+
   const onCheckAllowance = async ({
     _type,
     _seller,
@@ -355,6 +430,7 @@ const useGlobalMarket = () => {
   )
 
   return {
+    checkAllowanceNaka,
     onCheckOwnerNFT,
     onCheckPolygonChain,
     getContractAddrsByNFTType,

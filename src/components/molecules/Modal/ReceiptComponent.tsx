@@ -33,23 +33,19 @@ const ReceiptComponent = ({
   period
 }: IProps) => {
   const { shortenString, formatNumber } = Helper
-  const { onCheckAllowance } = useGlobalMarket()
+  const { checkAllowanceNaka } = useGlobalMarket()
   const [isAllowance, setAllowance] = useState<boolean | undefined>(undefined)
 
   const onGetApproval = useCallback(async () => {
-    if (nftType && onCheckAllowance && price && seller && selling) {
-      await onCheckAllowance({
-        _type: nftType,
-        _seller: seller,
-        _selling: selling,
-        _price: price
-      })
+    if (nftType && checkAllowanceNaka && price && seller) {
+      await checkAllowanceNaka(nftType, seller, price, selling)
         .then((response) => {
-          setAllowance(response.allowStatus)
+          setAllowance(response)
         })
         .catch((error) => console.error(error))
     }
-  }, [nftType, onCheckAllowance, price, seller, selling])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nftType, price, seller, selling])
 
   useEffect(() => {
     let load = false

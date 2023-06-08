@@ -30,7 +30,8 @@ const MarketplaceOwnerDetail = () => {
           {profile.data &&
             profile.data.address &&
             invenItemData.wallet_address &&
-            profile.data.address === invenItemData.wallet_address && (
+            profile.data.address === invenItemData.wallet_address &&
+            !invenItemData.marketplaces_data && (
               <div className="px-8">
                 <TransferBox
                   _tokenId={invenItemData.tokenId}

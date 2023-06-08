@@ -77,7 +77,7 @@ const MarketplaceCardList = () => {
     )
   }
   return (
-    <div className="flex justify-center">
+    <div className="flex w-full justify-center">
       {orderData?.data.length === 0 && !isLoading ? (
         <NoData />
       ) : (

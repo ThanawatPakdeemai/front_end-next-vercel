@@ -2,12 +2,21 @@ import { Image } from "@components/atoms/image"
 import SearchIcon from "@components/icons/SearchIcon"
 import ShineIcon from "@components/icons/ShineIcon"
 import Tagline from "@components/molecules/tagline/Tagline"
-import { Collapse, InputAdornment, TextField } from "@mui/material"
+import {
+  Button,
+  Collapse,
+  InputAdornment,
+  Stack,
+  TextField
+} from "@mui/material"
 import React, { useState } from "react"
 import SettingIconFilter from "@components/icons/Inventory/SettingIconFilter"
 import { MENU_MARKETPLACE } from "@configs/menu"
 import MenuItemCustom from "@components/atoms/MenuItemCustom"
 import { NextRouter, useRouter } from "next/router"
+import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
+import ModalHeader from "@components/molecules/Modal/ModalHeader"
+import FilterBox from "@feature/marketplace/components/molecules/FilterBox"
 import HeaderMunuMobile from "./HeaderMunuMobile"
 import MenuButtonExpandMobile from "./MenuButtonExpandMobile"
 
@@ -20,20 +29,37 @@ const MarketplaceLayoutMobile = ({
   children
 }: IProp & React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) => {
   const [expanded, setExpanded] = useState<boolean>(false)
+  const [openFilter, setOpenFilter] = useState<boolean>(false)
   const router: NextRouter = useRouter()
 
   const isP2P = router.asPath.includes("p2p")
   const listFilter = isP2P ? "P2P Market" : "NAKA Market"
 
+  const onCloseModalCustom = () => {
+    setOpenFilter(!openFilter)
+  }
+
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
   }
+
+  const styleButton = {
+    minWidth: "10px !important",
+    borderRadius: "8px !important",
+    "&:hover": {
+      boxShadow: "none !important",
+      "svg rect": {
+        fill: "#E1E2E2 !important"
+      }
+    }
+  }
+
   return (
     <div className="main-container mx-auto pt-14">
       <HeaderMunuMobile />
       <Image
         src="/images/banner/bannerMarketplace.webp"
-        alt="test"
+        alt="openFilter"
         width={635}
         height={180}
         className="rounded-3xl p-4"
@@ -124,9 +150,39 @@ const MarketplaceLayoutMobile = ({
             }}
             onChange={(_event) => {}}
           />
-          <div className="h-[40px] w-[40px] rounded-lg bg-purple-primary p-2">
-            <SettingIconFilter />
+          <div className="!h-[40px] !w-[40px]">
+            <Button
+              sx={styleButton}
+              onClick={() => {
+                setOpenFilter(true)
+              }}
+              className="!h-[40px] !w-[40px] rounded-lg border border-neutral-700 bg-neutral-800 p-2"
+            >
+              <SettingIconFilter />
+            </Button>
           </div>
+
+          <ModalCustom
+            open={openFilter}
+            onClose={onCloseModalCustom}
+            className="m-auto gap-3 rounded-[34px] p-[10px] max-[420px]:w-[370px]"
+            width={515}
+          >
+            <Stack
+              spacing={3}
+              className="md:p-5"
+            >
+              <div className="rounded-2xl border-[1px] border-neutral-700 bg-neutral-800 p-2 uppercase">
+                <ModalHeader
+                  handleClose={onCloseModalCustom}
+                  title="Filter"
+                />
+              </div>
+              <div className="grid h-[500px] w-full justify-items-center overflow-y-auto">
+                <FilterBox />
+              </div>
+            </Stack>
+          </ModalCustom>
         </div>
       )}
       {children}

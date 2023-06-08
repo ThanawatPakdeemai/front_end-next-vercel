@@ -32,24 +32,20 @@ const ReceiptComponent = ({
   selling,
   period
 }: IProps) => {
-  const { shortenString } = Helper
-  const { onCheckAllowance } = useGlobalMarket()
+  const { shortenString, formatNumber } = Helper
+  const { checkAllowanceNaka, calcNAKAPrice } = useGlobalMarket()
   const [isAllowance, setAllowance] = useState<boolean | undefined>(undefined)
 
   const onGetApproval = useCallback(async () => {
-    if (nftType && onCheckAllowance && price && seller && selling) {
-      await onCheckAllowance({
-        _type: nftType,
-        _seller: seller,
-        _selling: selling,
-        _price: price
-      })
+    if (nftType && checkAllowanceNaka && price && seller) {
+      await checkAllowanceNaka(nftType, seller, price, selling)
         .then((response) => {
-          setAllowance(response.allowStatus)
+          setAllowance(response)
         })
         .catch((error) => console.error(error))
     }
-  }, [nftType, onCheckAllowance, price, seller, selling])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nftType, price, seller, selling])
 
   useEffect(() => {
     let load = false
@@ -83,7 +79,7 @@ const ReceiptComponent = ({
         </>
       ) : null}
 
-      {orderId ? (
+      {orderId && orderId !== "null" ? (
         <>
           <div className="flex w-full flex-row items-center justify-between">
             <span>orderId :</span>
@@ -100,7 +96,11 @@ const ReceiptComponent = ({
 
       <div className="flex w-full flex-row items-center justify-between">
         <span>Price :</span>
-        <span className="text-neutral-300">{price * amount}</span>
+        <span className="text-neutral-300">
+          {formatNumber(calcNAKAPrice(price), {
+            maximumFractionDigits: 4
+          })}
+        </span>
       </div>
       <Divider className="!block border-b-[1px] border-neutral-800/75" />
 

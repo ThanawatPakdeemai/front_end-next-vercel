@@ -28,7 +28,7 @@ interface IProps {
   selling: TSellingType
   setSelling: (_selling: TSellingType) => void
   currency: number
-  price: number
+  price?: number
   onPriceChange: (_price: string) => void
   period: number
   setPeriod: (_period: number) => void
@@ -115,7 +115,9 @@ const SellActionComponent = ({
         }}
       />
       <span className="text-xs uppercase">
-        = {formatNumber(price * currency)} naka
+        ={" "}
+        {price && formatNumber(price * currency, { maximumFractionDigits: 4 })}{" "}
+        USD
       </span>
       {selling !== "rental" ? (
         <>
@@ -143,7 +145,7 @@ const SellActionComponent = ({
           </Select>
         </>
       ) : null}
-      {selling === "rental" ? (
+      {selling === "rental" && price ? (
         <>
           <span className="w-full text-xs uppercase">total price</span>
           <TextField

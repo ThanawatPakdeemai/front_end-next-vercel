@@ -32,8 +32,8 @@ const ReceiptComponent = ({
   selling,
   period
 }: IProps) => {
-  const { shortenString } = Helper
-  const { checkAllowanceNaka } = useGlobalMarket()
+  const { shortenString, formatNumber } = Helper
+  const { checkAllowanceNaka, calcNAKAPrice } = useGlobalMarket()
   const [isAllowance, setAllowance] = useState<boolean | undefined>(undefined)
 
   const onGetApproval = useCallback(async () => {
@@ -79,7 +79,7 @@ const ReceiptComponent = ({
         </>
       ) : null}
 
-      {orderId ? (
+      {orderId && orderId !== "null" ? (
         <>
           <div className="flex w-full flex-row items-center justify-between">
             <span>orderId :</span>
@@ -96,7 +96,11 @@ const ReceiptComponent = ({
 
       <div className="flex w-full flex-row items-center justify-between">
         <span>Price :</span>
-        <span className="text-neutral-300">{price * amount}</span>
+        <span className="text-neutral-300">
+          {formatNumber(calcNAKAPrice(price), {
+            maximumFractionDigits: 4
+          })}
+        </span>
       </div>
       <Divider className="!block border-b-[1px] border-neutral-800/75" />
 

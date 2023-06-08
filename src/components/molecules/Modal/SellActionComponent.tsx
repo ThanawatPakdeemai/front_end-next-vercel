@@ -115,7 +115,9 @@ const SellActionComponent = ({
         }}
       />
       <span className="text-xs uppercase">
-        = {price && formatNumber(price * currency)} naka
+        ={" "}
+        {price && formatNumber(price * currency, { maximumFractionDigits: 4 })}{" "}
+        USD
       </span>
       {selling !== "rental" ? (
         <>

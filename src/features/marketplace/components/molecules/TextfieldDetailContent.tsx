@@ -4,13 +4,12 @@ import PinnedMapIcon from "@components/icons/PinnedMapIcon"
 import CountItem from "@components/molecules/CountItem"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import { InputAdornment, TextField } from "@mui/material"
-import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
 import Helper from "@utils/helper"
 import React, { useMemo } from "react"
-import useCountStore from "@stores/countComponant"
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 import useGlobal from "@hooks/useGlobal"
+import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
 
 interface IProp {
   type: TNFTType
@@ -36,12 +35,10 @@ const TextfieldDetailContent = ({
   price,
   count
 }: IProp) => {
-  const { price: nakaPrice } = useNakaPriceProvider()
-  const { count: countItemSelected } = useCountStore()
-  const { invPrice, setInvPrice, invenItemData, invAmount, setInvAmount } =
+  const { calcNAKAPrice, calcUSDPrice } = useGlobalMarket()
+  const { invPrice, setInvPrice, invAmount, setInvAmount } =
     useInventoryProvider()
-  const { marketAmount, setMarketAmount, marketOrder } =
-    useMarketplaceProvider()
+  const { marketAmount, setMarketAmount } = useMarketplaceProvider()
   const { marketType } = useGlobal()
   const _priceValue = invPrice || price
 
@@ -49,22 +46,6 @@ const TextfieldDetailContent = ({
     const _value = Number(value)
     if (setInvPrice) setInvPrice(_value)
   }
-
-  const calcNakaPrice = useMemo(() => {
-    if (nakaPrice && countItemSelected && _priceValue) {
-      return marketOrder?.seller_type === "user" ||
-        invenItemData?.marketplaces_data?.seller_type === "user"
-        ? countItemSelected * (parseFloat(nakaPrice.last) * _priceValue)
-        : countItemSelected * (_priceValue / parseFloat(nakaPrice.last))
-    }
-    return 0
-  }, [
-    nakaPrice,
-    countItemSelected,
-    _priceValue,
-    marketOrder?.seller_type,
-    invenItemData?.marketplaces_data?.seller_type
-  ])
 
   const onDecreaseAmount = () => {
     if (count)
@@ -149,17 +130,9 @@ const TextfieldDetailContent = ({
       {/* (countItemSelected * _priceValue) */}
       {_priceValue && (
         <TextField
-          value={
-            marketOrder?.seller_type === "user" ||
-            !invenItemData?.marketplaces_data
-              ? _priceValue &&
-                Helper.formatNumber(countItemSelected * _priceValue, {
-                  maximumFractionDigits: 4
-                })
-              : Helper.formatNumber(calcNakaPrice, {
-                  maximumFractionDigits: 4
-                })
-          }
+          value={Helper.formatNumber(calcNAKAPrice(_priceValue), {
+            maximumFractionDigits: 4
+          })}
           label="PRICE (NAKA)"
           className="!w-[131px] sm:!w-[232px]"
           sx={{
@@ -182,16 +155,9 @@ const TextfieldDetailContent = ({
               </InputAdornment>
             )
           }}
-          helperText={`= ${
-            marketOrder?.seller_type === "user" ||
-            !invenItemData?.marketplaces_data
-              ? Helper.formatNumber(calcNakaPrice, {
-                  maximumFractionDigits: 4
-                })
-              : Helper.formatNumber(countItemSelected * _priceValue, {
-                  maximumFractionDigits: 4
-                })
-          } USD`}
+          helperText={`= ${Helper.formatNumber(calcUSDPrice(_priceValue), {
+            maximumFractionDigits: 4
+          })} USD`}
         />
       )}
     </div>

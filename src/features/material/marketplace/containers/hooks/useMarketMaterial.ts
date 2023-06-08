@@ -1,7 +1,10 @@
 import CONFIGS from "@configs/index"
 import { MESSAGES } from "@constants/messages"
 import { TransactionResponse } from "@ethersproject/providers"
-import { useMarketplaceMaterial } from "@feature/contract/containers/hooks/useContract"
+import {
+  useMarketplaceMaterial,
+  useMarketplaceMaterialNoAccount
+} from "@feature/contract/containers/hooks/useContract"
 import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
 import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutateMarketplace"
 import {
@@ -11,15 +14,27 @@ import {
 } from "@feature/marketplace/interfaces/IMarketService"
 import useInvenMaterial from "@feature/material/inventory/containers/hooks/useInvenMaterial"
 import { useToast } from "@feature/toast/containers"
+import { useInventoryProvider } from "@providers/InventoryProvider"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
 import Helper from "@utils/helper"
 import { BigNumberish, ethers } from "ethers"
 
+interface IGetMaterialOrderById {
+  id: string
+  seller: string
+  materialId: BigNumberish
+  materialAmount: BigNumberish
+  price: BigNumberish
+}
+
 const useMarketMaterial = () => {
   const { signer, address } = useWeb3Provider()
   const marketMaterialContract = useMarketplaceMaterial(
     signer,
+    CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_MATERIAL
+  )
+  const marketMaterialContractNoAcc = useMarketplaceMaterialNoAccount(
     CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_MATERIAL
   )
   const { setOpen, setClose } = useLoadingStore()
@@ -30,9 +45,23 @@ const useMarketMaterial = () => {
     mutateMarketCancelOrder,
     mutateFullPayment
   } = useMutateMarketplace()
-  const { updateMaterialList } = useInvenMaterial()
+  const { updateMaterialList, getMaterialByToken } = useInvenMaterial()
   const { onCheckPolygonChain } = useGlobalMarket()
+  const { updateInvenNFTMarketData } = useInventoryProvider()
   const { errorToast } = useToast()
+
+  // get order
+  const getMaterialOrderById = (_sellerId: string, _orderId: string) =>
+    new Promise<IGetMaterialOrderById>((resolve, reject) => {
+      marketMaterialContractNoAcc
+        .orderByOrderId(_sellerId, _orderId)
+        .then((_response: IGetMaterialOrderById) => {
+          resolve(_response)
+        })
+        .catch((_error: Error) => {
+          reject(_error)
+        })
+    })
 
   // create order
   const createMaterialOrder = ({
@@ -63,13 +92,22 @@ const useMarketMaterial = () => {
     _materialAmount: number,
     _nakaAmount: number
   ) => {
+    let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const _checkChain = await onCheckPolygonChain(marketMaterialContract)
+      const [_checkItemAmountById, _checkChain] = await Promise.all([
+        getMaterialByToken(address, _materialId),
+        onCheckPolygonChain(marketMaterialContract)
+      ])
+      if (Number(_checkItemAmountById.toString()) < _materialAmount) {
+        setClose()
+        errorToast("material amount not enough")
+        return false
+      }
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)
-        return
+        return false
       }
       await createMaterialOrder({
         _contract: _checkChain._contract,
@@ -92,7 +130,7 @@ const useMarketMaterial = () => {
               ["bytes32", "uint256", "uint256", "uint256"],
               _log.data
             )
-            const data: ICreateOrderParams = {
+            const _data: ICreateOrderParams = {
               _urlNFT: convertNFTTypeToUrl("nft_material"),
               _orderId: _resultEvent[0],
               _itemId,
@@ -107,7 +145,14 @@ const useMarketMaterial = () => {
               _resultEvent[1].toString(),
               Number(_resultEvent[2].toString())
             )
-            await mutateMarketCreateOrder(data)
+            const { data } = await mutateMarketCreateOrder(_data)
+            if (data && updateInvenNFTMarketData)
+              updateInvenNFTMarketData(
+                undefined,
+                "nft_material",
+                data.item_total
+              )
+            _status = true
           }
         })
         .catch((error) => console.error(error))
@@ -115,6 +160,7 @@ const useMarketMaterial = () => {
       errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
+    return _status
   }
 
   // cancel order
@@ -139,13 +185,22 @@ const useMarketMaterial = () => {
     })
 
   const onCancelMaterialOrder = async (_sellerId: string, _orderId: string) => {
+    let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const _checkChain = await onCheckPolygonChain(marketMaterialContract)
+      const [_checkOrderById, _checkChain] = await Promise.all([
+        getMaterialOrderById(_sellerId, _orderId),
+        onCheckPolygonChain(marketMaterialContract)
+      ])
+      if (Number(_checkOrderById.price) <= 0) {
+        setClose()
+        errorToast("order not founded")
+        return false
+      }
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)
-        return
+        return false
       }
       await cancelMaterialOrder({
         _contract: _checkChain._contract,
@@ -179,6 +234,7 @@ const useMarketMaterial = () => {
               Number(_resultEvent[2].toString())
             )
             await mutateMarketCancelOrder(data)
+            _status = true
           }
         })
         .catch((error) => console.error(error))
@@ -186,6 +242,7 @@ const useMarketMaterial = () => {
       errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
+    return _status
   }
 
   // execute order
@@ -218,13 +275,22 @@ const useMarketMaterial = () => {
     _orderId: string,
     _amountItem: number
   ) => {
+    let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const _checkChain = await onCheckPolygonChain(marketMaterialContract)
+      const [_checkOrderById, _checkChain] = await Promise.all([
+        getMaterialOrderById(_sellerId, _orderId),
+        onCheckPolygonChain(marketMaterialContract)
+      ])
+      if (Number(_checkOrderById.price) <= 0) {
+        setClose()
+        errorToast("order not founded")
+        return false
+      }
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)
-        return
+        return false
       }
       await executeMaterialOrder({
         _contract: _checkChain._contract,
@@ -273,6 +339,7 @@ const useMarketMaterial = () => {
               Number(_resultEvent[3].toString())
             )
             await mutateFullPayment(data)
+            _status = true
           }
         })
         .catch((error) => console.error(error))
@@ -280,6 +347,7 @@ const useMarketMaterial = () => {
       errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
+    return _status
   }
 
   return {

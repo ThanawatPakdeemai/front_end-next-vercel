@@ -9,7 +9,7 @@ pipeline {
           // sh 'ssh -o StrictHostKeyChecking=no naka@naka.im'
           // sh 'mkdir -p ~/.ssh'
           // sh "ssh-keyscan naka.im >> ~/.ssh/known_hosts"
-          sh "ssh nakator@34.22.245.210 'cd /home/naka/frontend_nextjs && ./deploy.sh'"
+          sh "ssh nakator@34.22.245.210 'pm2 list'"
         }
       }
     }

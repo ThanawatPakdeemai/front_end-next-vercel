@@ -2,7 +2,6 @@ import React, { useMemo } from "react"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { useRouter } from "next/router"
-import { MESSAGES } from "@constants/messages"
 import { useTranslation } from "next-i18next"
 import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
@@ -10,8 +9,8 @@ import useGlobal from "@hooks/useGlobal"
 import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
 import { ImageCustom } from "@components/atoms/image/Image"
 import DollarSolidIcon from "@components/icons/DollarSolidIcon"
-import ArrowJoinIcon from "@components/icons/ArrowJoinIcon"
 import { Box } from "@mui/material"
+import NoReady from "../atoms/NoReady"
 
 interface ICardBuyItemMobileProp {
   gameObject: IGame
@@ -51,18 +50,21 @@ export default function CardBuyItemMobile({
         )
       }
     }
-    return (
-      <ButtonLink
-        text={t(MESSAGES["please_item"])}
-        icon={<ArrowJoinIcon />}
-        href={`${router.asPath}`}
-        size="medium"
-        color="secondary"
-        variant="contained"
-        className="w-full"
-        disabled
-      />
-    )
+    return <NoReady />
+    // eslint-disable-next-line max-len
+    // TODO: Open this after In-App Purchase is ready
+    // return (
+    //   <ButtonLink
+    //     text={t(MESSAGES["please_item"])}
+    //     icon={<ArrowJoinIcon />}
+    //     href={`${router.asPath}`}
+    //     size="medium"
+    //     color="secondary"
+    //     variant="contained"
+    //     className="w-full"
+    //     disabled
+    //   />
+    // )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [qtyItemSelected, router.asPath, buttonStyle, router.pathname])
 
@@ -130,6 +132,12 @@ export default function CardBuyItemMobile({
       <Box
         component="footer"
         className="card-buy-item__footer w-full"
+        sx={{
+          ".MuiButtonBase-root:focus, .MuiButtonBase-root:hover": {
+            background: "#F42728!important",
+            boxShadow: "none!important"
+          }
+        }}
       >
         {buttonInToGame}
       </Box>

@@ -254,7 +254,7 @@ const CardItemMarketPlace = ({
                 <motion.div
                   transition={{ type: "spring", stiffness: 100, damping: 6 }}
                   variants={cardType !== "naka-punk" ? imgMotion : undefined}
-                  className="relative block flex items-center justify-center sm:hidden"
+                  className="relative flex items-center justify-center sm:hidden"
                 >
                   <Image
                     src={itemImage.src}
@@ -272,7 +272,7 @@ const CardItemMarketPlace = ({
                 <motion.div
                   transition={{ type: "spring", stiffness: 100, damping: 6 }}
                   variants={cardType !== "naka-punk" ? imgMotion : undefined}
-                  className="relative flex hidden items-center justify-center sm:block"
+                  className="relative hidden items-center justify-center sm:block"
                 >
                   <Image
                     src={itemImage.src}

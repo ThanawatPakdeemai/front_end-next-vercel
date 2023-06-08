@@ -417,10 +417,10 @@ const NFTDetailTable = ({ installmentData, rentalData, history }: IProps) => {
         profile.data &&
         profile.data.address === installmentData.buyer_address ? (
           <Button
-            disabled={
-              dayjs().isAfter(dayjs(_nextBill?.due_date).add(7, "days")) ||
-              _payBill.status
-            }
+            // disabled={
+            //   dayjs().isAfter(dayjs(_nextBill?.due_date).add(7, "days")) ||
+            //   _payBill.status
+            // }
             variant="contained"
             color="secondary"
             sx={{
@@ -430,7 +430,9 @@ const NFTDetailTable = ({ installmentData, rentalData, history }: IProps) => {
             onClick={() =>
               onPayBillNFTInstallOrder(
                 installmentData.bill_id,
+                installmentData.buyer_address,
                 _payBill.periodNo,
+                installmentData.payByperiod,
                 1
               )
             }

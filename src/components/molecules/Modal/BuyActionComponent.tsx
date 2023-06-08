@@ -15,7 +15,7 @@ import {
   TextField
 } from "@mui/material"
 import Helper from "@utils/helper"
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useCallback, useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { iconmotion } from "@components/organisms/Footer"
 import PlusIcon from "@components/icons/CountIcon/PlusIcon"
@@ -60,25 +60,30 @@ const BuyActionComponent = ({
     if (_value <= 1) setPeriod(1)
     else setPeriod(_value)
   }
+  const onGetApproval = useCallback(async () => {
+    if (nftType && onCheckAllowance && price && seller && selling) {
+      await onCheckAllowance({
+        _type: nftType,
+        _seller: seller,
+        _selling: selling,
+        _price: price
+      })
+        .then((response) => {
+          setAllowance(response.allowStatus)
+        })
+        .catch((error) => console.error(error))
+    }
+  }, [nftType, onCheckAllowance, price, seller, selling])
 
   useEffect(() => {
     let load = false
-
     if (!load) {
-      const onGetApproval = async () => {
-        await onCheckAllowance(nftType, seller)
-          .then((response) => {
-            setAllowance(response.allowStatus)
-          })
-          .catch((error) => console.error(error))
-      }
-      if (nftType && seller) onGetApproval()
+      onGetApproval()
     }
-
     return () => {
       load = true
     }
-  }, [nftType, onCheckAllowance, seller])
+  }, [onGetApproval])
 
   return (
     <Stack
@@ -88,7 +93,7 @@ const BuyActionComponent = ({
       <span className="w-full text-xs uppercase">price</span>
       <TextField
         hiddenLabel
-        value={formatNumber(price)}
+        value={formatNumber(price / currency)}
         disabled
         placeholder="E.G. 1,000"
         sx={{
@@ -108,16 +113,18 @@ const BuyActionComponent = ({
           )
         }}
       />
-      <span className="text-xs uppercase">
-        = {formatNumber(price * currency)} naka
-      </span>
+      <span className="text-xs uppercase">= {formatNumber(price)} USD</span>
       {selling === "fullpayment" ? (
         <>
           <span className="text-xs uppercase">Payment Type</span>
           <Select
-            className="mx-[6px] mb-2 mt-2 rounded-sm bg-neutral-800 !px-2 py-1 capitalize text-white-primary"
+            className="mx-[6px] mb-2 mt-2 rounded-sm bg-neutral-800 !px-2 py-1 text-sm font-bold capitalize text-neutral-300"
             value={selling}
             disabled
+            sx={{
+              maxHeight: 40,
+              minHeight: 40
+            }}
           >
             {MARKET_SELLING.map((m) => (
               <MenuItem
@@ -140,7 +147,7 @@ const BuyActionComponent = ({
             <button
               key={uuidv4()}
               type="button"
-              className={`flex h-11 w-full flex-row items-center justify-between rounded-sm border bg-neutral-800 px-4 text-sm uppercase text-white-primary ${
+              className={`flex h-[50px] w-full flex-row items-center justify-between rounded-sm border bg-neutral-800 px-4 text-sm font-bold uppercase text-neutral-300 ${
                 period === p ? "border-secondary-main" : "border-neutral-700"
               }`}
               onClick={() => setPeriod(p)}
@@ -241,9 +248,10 @@ const BuyActionComponent = ({
       {isAllowance || isAllowance === undefined ? null : (
         <TextTip
           text="Please allow the contract to access your NFTS first."
-          textColor="text-warning-dark"
-          bgColor="bg-warning-dark/20"
+          textColor="text-warning-dark !font-normal"
+          bgColor="bg-[#1F1703]"
           borderColor="border-warning-dark"
+          className="!mt-6"
         />
       )}
     </Stack>

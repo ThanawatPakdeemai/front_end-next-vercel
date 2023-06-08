@@ -17,6 +17,7 @@ import useChainSupportStore from "@stores/chainSupport"
 import useNotiStore from "@stores/notification"
 import Helper from "@utils/helper"
 import { isMobile as detectMobile } from "react-device-detect"
+import useMarketFilterStore from "@stores/marketFilter"
 import useSupportedChain from "./useSupportedChain"
 import useGameGlobal from "./useGameGlobal"
 
@@ -61,6 +62,7 @@ const useGlobal = (
   const profile = useProfileStore((state) => state.profile.data)
   const { isLogin, onReset } = useProfileStore()
   const { fetchNAKAToken, fetchAllTokenSupported } = useSupportedChain()
+  const { onAllReset } = useMarketFilterStore()
 
   const { conditionPlayToEarn } = useGameGlobal()
 
@@ -375,7 +377,8 @@ const useGlobal = (
   const isRedirectRoomlist = (_game: IGame): "/roomlist" | "" => {
     if (
       _game.play_to_earn_status === "free" ||
-      _game.game_mode === "free-to-earn"
+      _game.game_mode === "free-to-earn" ||
+      _game.game_mode === "free-to-play"
     ) {
       return "/roomlist"
     }
@@ -474,6 +477,17 @@ const useGlobal = (
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChainSelected, fetchAllTokenSupported, fetchNAKAToken])
+
+  useEffect(() => {
+    let load = false
+    if (!load && marketType) {
+      onAllReset()
+    }
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [marketType])
 
   return {
     onHandleClick,

@@ -1,7 +1,10 @@
 import CONFIGS from "@configs/index"
 import { MESSAGES } from "@constants/messages"
 import { TransactionResponse } from "@ethersproject/providers"
-import { useMarketplaceGameItems } from "@feature/contract/containers/hooks/useContract"
+import {
+  useMarketplaceGameItems,
+  useMarketplaceGameItemsNoAccount
+} from "@feature/contract/containers/hooks/useContract"
 import useInvenGameItem from "@feature/gameItem/inventory/containers/hooks/useInvenGameItem"
 import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
 import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutateMarketplace"
@@ -11,16 +14,28 @@ import {
   TUrlNFT
 } from "@feature/marketplace/interfaces/IMarketService"
 import { useToast } from "@feature/toast/containers"
+import { useInventoryProvider } from "@providers/InventoryProvider"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
 import Helper from "@utils/helper"
 import { BigNumberish, ethers } from "ethers"
+
+interface IGetItemOrderById {
+  id: string
+  seller: string
+  itemId: BigNumberish
+  itemAmount: BigNumberish
+  price: BigNumberish
+}
 
 const useMarketGameItem = () => {
   const { utils } = ethers
   const { signer, address } = useWeb3Provider()
   const marketGameItemContract = useMarketplaceGameItems(
     signer,
+    CONFIGS.CONTRACT_ADDRESS.MARKETPLACE
+  )
+  const marketGameItemContractNoAcc = useMarketplaceGameItemsNoAccount(
     CONFIGS.CONTRACT_ADDRESS.MARKETPLACE
   )
   const { WeiToNumber, toWei, convertNFTTypeToUrl } = Helper
@@ -30,9 +45,23 @@ const useMarketGameItem = () => {
     mutateMarketCancelOrder,
     mutateFullPayment
   } = useMutateMarketplace()
-  const { updateGameItemList } = useInvenGameItem()
+  const { updateGameItemList, getGameItemByToken } = useInvenGameItem()
   const { onCheckPolygonChain } = useGlobalMarket()
+  const { updateInvenNFTMarketData } = useInventoryProvider()
   const { errorToast } = useToast()
+
+  // get order
+  const getItemOrderById = (_sellerId: string, _orderId: string) =>
+    new Promise<IGetItemOrderById>((resolve, reject) => {
+      marketGameItemContractNoAcc
+        .orderByOrderId(_sellerId, _orderId)
+        .then((_response: IGetItemOrderById) => {
+          resolve(_response)
+        })
+        .catch((_error: Error) => {
+          reject(_error)
+        })
+    })
 
   // create
   const createGameItemOrder = ({
@@ -63,13 +92,22 @@ const useMarketGameItem = () => {
     _itemAmount: number,
     _nakaAmount: number
   ) => {
+    let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const _checkChain = await onCheckPolygonChain(marketGameItemContract)
+      const [_checkItemAmountById, _checkChain] = await Promise.all([
+        getGameItemByToken(address, _tokenId),
+        onCheckPolygonChain(marketGameItemContract)
+      ])
+      if (Number(_checkItemAmountById.toString()) < _itemAmount) {
+        setClose()
+        errorToast("item amount not enough")
+        return false
+      }
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)
-        return
+        return false
       }
       await createGameItemOrder({
         _contract: _checkChain._contract,
@@ -92,7 +130,7 @@ const useMarketGameItem = () => {
               ["bytes32", "uint256", "uint256", "uint256"],
               _log.data
             )
-            const data: ICreateOrderParams = {
+            const _data: ICreateOrderParams = {
               _urlNFT: convertNFTTypeToUrl("game_item"),
               _orderId: _resultEvent[0],
               _itemId,
@@ -107,7 +145,10 @@ const useMarketGameItem = () => {
               _resultEvent[1].toString(),
               Number(_resultEvent[2].toString())
             )
-            await mutateMarketCreateOrder(data)
+            const { data } = await mutateMarketCreateOrder(_data)
+            if (data && updateInvenNFTMarketData)
+              updateInvenNFTMarketData(undefined, "game_item", data.item_total)
+            _status = true
           }
         })
         .catch((error) => console.error(error))
@@ -115,6 +156,7 @@ const useMarketGameItem = () => {
       errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
+    return _status
   }
 
   // cancel
@@ -139,13 +181,22 @@ const useMarketGameItem = () => {
     })
 
   const onCancelGameItemOrder = async (_sellerId: string, _orderId: string) => {
+    let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const _checkChain = await onCheckPolygonChain(marketGameItemContract)
+      const [_checkOrderById, _checkChain] = await Promise.all([
+        getItemOrderById(_sellerId, _orderId),
+        onCheckPolygonChain(marketGameItemContract)
+      ])
+      if (Number(_checkOrderById.price) <= 0) {
+        setClose()
+        errorToast("order not founded")
+        return false
+      }
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)
-        return
+        return false
       }
       await cancelGameItemOrder({
         _contract: _checkChain._contract,
@@ -176,6 +227,7 @@ const useMarketGameItem = () => {
               Number(_resultEvent[2].toString())
             )
             await mutateMarketCancelOrder(data)
+            _status = true
           }
         })
         .catch((error) => console.error(error))
@@ -183,6 +235,7 @@ const useMarketGameItem = () => {
       errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
+    return _status
   }
 
   // buy with approve
@@ -215,13 +268,22 @@ const useMarketGameItem = () => {
     _orderId: string,
     _amountItem: number
   ) => {
+    let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const _checkChain = await onCheckPolygonChain(marketGameItemContract)
+      const [_checkOrderById, _checkChain] = await Promise.all([
+        getItemOrderById(_sellerId, _orderId),
+        onCheckPolygonChain(marketGameItemContract)
+      ])
+      if (Number(_checkOrderById.price) <= 0) {
+        setClose()
+        errorToast("order not founded")
+        return false
+      }
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)
-        return
+        return false
       }
       await executeGameItemOrder({
         _contract: _checkChain._contract,
@@ -270,6 +332,7 @@ const useMarketGameItem = () => {
               Number(_resultEvent[3].toString())
             )
             await mutateFullPayment(data)
+            _status = true
           }
         })
         .catch((error) => console.error(error))
@@ -277,9 +340,11 @@ const useMarketGameItem = () => {
       errorToast(MESSAGES.please_connect_wallet)
     }
     setClose()
+    return _status
   }
 
   return {
+    getItemOrderById,
     onCreateGameItemOrder,
     onCancelGameItemOrder,
     onExecuteGameItemOrder

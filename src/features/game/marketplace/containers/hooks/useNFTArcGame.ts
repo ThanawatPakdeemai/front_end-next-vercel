@@ -22,6 +22,20 @@ const useNFTArcGame = () => {
   const { successToast } = useToast()
   const { setOpen, setClose } = useLoadingStore()
   const { mutateTransferNFTArcGame } = useMutateNFTArcGame()
+
+  // check owner naka-punk
+  const isArcGameOwner = (_tokenId: string) =>
+    new Promise<string>((resolve, reject) => {
+      arcadeGameContractNoAcc
+        .ownerOf(_tokenId)
+        .then((_response: string) => {
+          resolve(_response)
+        })
+        .catch((_error: Error) => {
+          reject(_error)
+        })
+    })
+
   // check isApprovedForAll
   const isArcGameApprovedForAll = (_owner: string, _address: string) =>
     new Promise<boolean>((resolve, reject) => {
@@ -99,6 +113,7 @@ const useNFTArcGame = () => {
   }
 
   return {
+    isArcGameOwner,
     onCheckApprovalArcGameForAll,
     onTransferArcGame,
     isArcGameApprovedForAll

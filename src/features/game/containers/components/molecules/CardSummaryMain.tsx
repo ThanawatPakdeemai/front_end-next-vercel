@@ -35,7 +35,7 @@ const CardSummaryMain = ({
           ✨
         </span>
         {gameURLtoShare && (
-          <div className="my-2 flex w-full  flex-col items-center justify-center ">
+          <div className="relative z-[1] my-2  flex w-full flex-col items-center justify-center">
             <span className="mb-1 text-xs font-bold uppercase ">
               Send to friends
             </span>

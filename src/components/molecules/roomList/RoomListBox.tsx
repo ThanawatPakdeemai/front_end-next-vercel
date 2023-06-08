@@ -82,7 +82,7 @@ const RoomListBox = ({
       )}
     </div>
   ) : (
-    <div className="flex h-[40px] w-fit flex-[1_1_100%] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900 p-2 px-3 align-baseline sm:flex-[1_1_50%] lg:flex-none">
+    <div className="player-list flex h-[40px] w-fit flex-[1_1_100%] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900 p-2 px-3 align-baseline sm:flex-[1_1_50%] lg:flex-none">
       <button
         type="button"
         onClick={onClick}

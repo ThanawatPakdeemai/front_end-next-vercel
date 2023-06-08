@@ -7,9 +7,10 @@ import { Trans } from "react-i18next"
 export interface INoData {
   className?: string
   icon?: React.ReactNode
+  text?: string
 }
 
-const NoData = ({ className, icon }: INoData) => (
+const NoData = ({ className, icon, text }: INoData) => (
   <div className={`${className} flex flex-col gap-7`}>
     {icon || (
       <div className="mx-auto flex h-[125px] w-[125px] items-center justify-center">
@@ -23,7 +24,7 @@ const NoData = ({ className, icon }: INoData) => (
       </div>
     )}
     <Typography className="mx-auto max-w-[257px] rounded-[14px] border border-neutral-800 p-4 text-[14px] text-neutral-300">
-      <Trans i18nKey="no_data_available" />
+      {text || <Trans i18nKey="no_data_available" />}
     </Typography>
   </div>
 )

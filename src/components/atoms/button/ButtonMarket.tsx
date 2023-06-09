@@ -132,14 +132,14 @@ const ButtonMarket = ({
     return _text
   }, [actionValue])
 
-  const handleStyle = () => {
+  const handleStyle = useMemo(() => {
     let _color: string
     let _textColor: string
     let _icon: React.ReactNode
     switch (actionValue) {
       case "login":
-        _color = "#27F1EC"
-        _textColor = "#010101"
+        _color = "#7B5BE6"
+        _textColor = "#E1E2E2"
         break
       case "connect_wallet":
         _color = "#7B5BE6"
@@ -159,7 +159,7 @@ const ButtonMarket = ({
         _textColor = "#010101"
         break
       case "sell":
-        _color = "#27F1EC"
+        _color = "#F42728"
         _textColor = "#010101"
         break
       default:
@@ -168,7 +168,7 @@ const ButtonMarket = ({
         break
     }
     return { bgColor: _color, txtColor: _textColor, icon: _icon }
-  }
+  }, [actionValue, nftType])
 
   return (
     <div className="flex h-10 flex-col items-start justify-between sm:flex-row sm:items-center">
@@ -181,18 +181,23 @@ const ButtonMarket = ({
         variant="contained"
         color="primary"
         startIcon={
+          // eslint-disable-next-line no-nested-ternary
           actionValue === "login" || actionValue === "mint" ? (
-            <div className="button-icon animation-arrow">
-              {actionValue === "login" ? <LoginIcon /> : handleStyle().icon}
-            </div>
+            actionValue === "login" ? (
+              <div className="button-icon animation-arrow">
+                <LoginIcon />
+              </div>
+            ) : (
+              handleStyle.icon
+            )
           ) : null
         }
         className="!h-10 rounded-[20px] text-sm capitalize"
         sx={{
           width: 232,
           "&.MuiButton-contained": {
-            backgroundColor: `${handleStyle().bgColor}`,
-            color: `${handleStyle().txtColor}`
+            backgroundColor: `${handleStyle.bgColor}`,
+            color: `${handleStyle.txtColor}`
           }
         }}
         onClick={handleOpen}

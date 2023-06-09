@@ -34,6 +34,7 @@ const CategoriesModal = ({
         keepMounted: true
       }}
       sx={StyleDrawer}
+      className="MuiDrawer-paper__bottom"
     >
       <Box
         component="div"

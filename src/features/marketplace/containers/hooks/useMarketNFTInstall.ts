@@ -57,20 +57,34 @@ const useMarketNFTInstall = () => {
     mutatePayBillInstallNFT
   } = useMutateMarketplace()
   const {
-    checkAllowanceNaka,
+    onCheckAllowance,
     getContractAddrsByNFTType,
     onCheckNFTIsApproveForAll,
-    onCheckPolygonChain
+    onCheckPolygonChain,
+    onCheckOwnerNFT
   } = useGlobalMarket()
   const { updateInvenNFTMarketData } = useInventoryProvider()
 
   const { errorToast } = useToast()
 
   // get bill detail by billId
-  const getBillByBillId = (_sellerId: string, _billId: string) =>
+  const getBillByBillId = (_buyerId: string, _billId: string) =>
     new Promise<IGetBillByBillId>((resolve, reject) => {
       marketNFTInstallContractNoAcc
-        .billByBillId(_sellerId, _billId)
+        .billByBillId(_buyerId, _billId)
+        .then((_response: IGetBillByBillId) => {
+          resolve(_response)
+        })
+        .catch((_error: Error) => {
+          reject(_error)
+        })
+    })
+
+  // get bill by order id
+  const getBillById = (_sellerId: string, _orderId: string) =>
+    new Promise<IGetBillByBillId>((resolve, reject) => {
+      marketNFTInstallContractNoAcc
+        .orderByOrderId(_sellerId, _orderId)
         .then((_response: IGetBillByBillId) => {
           resolve(_response)
         })
@@ -112,7 +126,15 @@ const useMarketNFTInstall = () => {
     let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const _checkChain = await onCheckPolygonChain(marketNFTInstallContract)
+      const [_checkNFTOwner, _checkChain] = await Promise.all([
+        onCheckOwnerNFT(_NFTtype, _token),
+        onCheckPolygonChain(marketNFTInstallContract)
+      ])
+      if (!_checkNFTOwner) {
+        setClose()
+        errorToast("you are not owner of this nft")
+        return false
+      }
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)
@@ -197,7 +219,7 @@ const useMarketNFTInstall = () => {
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
       const [_checkOrderById, _checkChain] = await Promise.all([
-        getBillByBillId(_idSeller, _idOrder),
+        getBillById(_idSeller, _idOrder),
         onCheckPolygonChain(marketNFTInstallContract)
       ])
       if (Number(_checkOrderById.price) <= 0) {
@@ -280,15 +302,24 @@ const useMarketNFTInstall = () => {
     _sellerId: string,
     _orderId: string,
     _period: number,
+    _price: number,
     _amountItem: number
   ) => {
     let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const [_checkOrderById, _checkChain] = await Promise.all([
-        getBillByBillId(_sellerId, _orderId),
-        onCheckPolygonChain(marketNFTInstallContract)
-      ])
+      const [_checkOrderById, _checkChain, _checkAllowance] = await Promise.all(
+        [
+          getBillById(_sellerId, _orderId),
+          onCheckPolygonChain(marketNFTInstallContract),
+          onCheckAllowance({
+            _type: marketType || "nft_land",
+            _seller: "user",
+            _selling: "installment",
+            _price
+          })
+        ]
+      )
       if (Number(_checkOrderById.price) <= 0) {
         setClose()
         errorToast("order not founded")
@@ -299,7 +330,10 @@ const useMarketNFTInstall = () => {
         errorToast(MESSAGES.support_polygon_only)
         return false
       }
-      await checkAllowanceNaka(CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_INSTALL)
+      if (!_checkAllowance.allowStatus) {
+        setClose()
+        return false
+      }
       await executeNFTInstallOrder({
         _contract: _checkChain._contract,
         _sellerId,
@@ -387,19 +421,42 @@ const useMarketNFTInstall = () => {
 
   const onPayBillNFTInstallOrder = async (
     _billId: string,
+    _buyerId: string,
     _periodAt: number,
+    _price: number,
     _period?: number
   ) => {
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const _checkChain = await onCheckPolygonChain(marketNFTInstallContract)
+      const [_checkOrderById, _checkChain, _checkAllowance] = await Promise.all(
+        [
+          getBillByBillId(_buyerId, _billId),
+          onCheckPolygonChain(marketNFTInstallContract),
+          onCheckAllowance({
+            _type: marketType || "nft_land",
+            _seller: "user",
+            _selling: "installment",
+            _price
+          })
+        ]
+      )
+      if (Number(_checkOrderById.price) <= 0) {
+        setClose()
+        errorToast("bill not founded")
+        return false
+      }
       if (!_checkChain._pass) {
         setClose()
         errorToast(MESSAGES.support_polygon_only)
-        return
+        return false
       }
+      if (!_checkAllowance.allowStatus) {
+        setClose()
+        return false
+      }
+
       const periodValue = _period || 0
-      await checkAllowanceNaka(CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_INSTALL)
+      // await checkAllowanceNaka(CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_INSTALL)
       await payBillByBillId({
         _contract: _checkChain._contract,
         _billId,

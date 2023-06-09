@@ -7,14 +7,18 @@ import {
 import useMarketMaterial from "@feature/material/marketplace/containers/hooks/useMarketMaterial"
 import useLoadingStore from "@stores/loading"
 import Helper from "@utils/helper"
+import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAvatarReef"
+import useGlobal from "@hooks/useGlobal"
 import useMarketNFT from "./useMarketNFT"
 import useMarketNFTInstall from "./useMarketNFTInstall"
 import useMarketNFTRent from "./useMarketNFTRent"
 import useMutateMarketplace from "./useMutateMarketplace"
+import useGlobalMarket from "./useGlobalMarket"
 
 const useMarket = () => {
   const { setOpen, setClose } = useLoadingStore()
   const { mutateMintNFT, mutateMarketPurcPunkOrder } = useMutateMarketplace()
+  const { mutatePurchaseAvatarReef } = useMutateAvatarReef()
   const {
     onCreateGameItemOrder,
     onCancelGameItemOrder,
@@ -34,6 +38,8 @@ const useMarket = () => {
   } = useMarketNFTInstall()
   const { onCreateNFTRentOrder, onCancelNFTRentOrder, onExecuteNFTRentOrder } =
     useMarketNFTRent()
+  const { marketType } = useGlobal()
+  const { onCheckAllowance } = useGlobalMarket()
   const { convertNFTTypeToUrl } = Helper
 
   const onCreateBySelling = async (
@@ -220,6 +226,7 @@ const useMarket = () => {
     _itemId: string,
     _sellerId: string,
     _orderId: string,
+    _price: number,
     _amount: number,
     _period: number
   ) => {
@@ -231,6 +238,7 @@ const useMarket = () => {
           _itemId,
           _sellerId,
           _orderId,
+          _price,
           _amount
         )
         break
@@ -241,6 +249,7 @@ const useMarket = () => {
           _sellerId,
           _orderId,
           _period,
+          _price,
           _amount
         )
         break
@@ -251,6 +260,7 @@ const useMarket = () => {
           _sellerId,
           _orderId,
           _period,
+          _price,
           _amount
         )
         break
@@ -260,24 +270,63 @@ const useMarket = () => {
     return _status
   }
 
-  const onMintOrder = async (
-    _type: TNFTType,
-    _marketId: string,
-    _itemID: string,
+  const onMintOrder = async ({
+    _type,
+    _price,
+    _amount,
+    _marketId,
+    _evm,
+    _chain
+  }: {
+    _type: TNFTType
+    _price: number
     _amount: number
-  ) => {
+    _marketId?: string
+    _evm?: string
+    _chain?: "reef"
+  }) => {
+    // console.log("_price", _price)
+    // console.log("_amount", _amount)
+    // console.log("total", _price * _amount)
     let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
-    if (_type === "nft_naka_punk") {
-      await mutateMarketPurcPunkOrder({ _qty: _amount })
-      _status = true
-    } else {
-      await mutateMintNFT({
-        _urlNFT: convertNFTTypeToUrl(_type),
-        _marketplaceId: _marketId,
-        _itemAmount: _amount
+    if (marketType) {
+      const _checkAllowance = await onCheckAllowance({
+        _type: marketType,
+        _seller: "system",
+        _price: _price * _amount
       })
-      _status = true
+      if (!_checkAllowance.allowStatus) {
+        setClose()
+        return false
+      }
+      if (_type === "nft_naka_punk") {
+        await mutateMarketPurcPunkOrder({ _qty: _amount })
+          .then(() => {
+            _status = true
+          })
+          .catch(() => {})
+      } else if (_type === "nft_avatar" && _evm && _chain) {
+        await mutatePurchaseAvatarReef({
+          _addrs: _evm,
+          _qty: _amount,
+          _chain
+        })
+          .then(() => {
+            _status = true
+          })
+          .catch(() => {})
+      } else if (_marketId) {
+        await mutateMintNFT({
+          _urlNFT: convertNFTTypeToUrl(_type),
+          _marketplaceId: _marketId,
+          _itemAmount: _amount
+        })
+          .then(() => {
+            _status = true
+          })
+          .catch(() => {})
+      }
     }
     setClose()
     return _status
@@ -290,6 +339,7 @@ const useMarket = () => {
     _itemId: string,
     _sellerId: string,
     _orderId: string,
+    _price: number,
     _amount: number,
     _period?: number
   ) => {
@@ -321,6 +371,7 @@ const useMarket = () => {
           _itemId,
           _sellerId,
           _orderId,
+          _price,
           _amount,
           periodValue
         )
@@ -332,6 +383,7 @@ const useMarket = () => {
           _itemId,
           _sellerId,
           _orderId,
+          _price,
           _amount,
           periodValue
         )
@@ -343,6 +395,7 @@ const useMarket = () => {
           _itemId,
           _sellerId,
           _orderId,
+          _price,
           _amount,
           periodValue
         )
@@ -354,6 +407,7 @@ const useMarket = () => {
           _itemId,
           _sellerId,
           _orderId,
+          _price,
           _amount,
           periodValue
         )

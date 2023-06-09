@@ -23,6 +23,19 @@ const useNFTBuilding = () => {
   const { setOpen, setClose } = useLoadingStore()
   const { mutateTransferNFTBuilding } = useMutateNFTBuilding()
 
+  // check owner building
+  const isBuildingOwner = (_tokenId: string) =>
+    new Promise<string>((resolve, reject) => {
+      buildingContractNoAcc
+        .ownerOf(_tokenId)
+        .then((_response: string) => {
+          resolve(_response)
+        })
+        .catch((_error: Error) => {
+          reject(_error)
+        })
+    })
+
   // check isApprovedForAll
   const isBuildingApprovedForAll = (_owner: string, _address: string) =>
     new Promise<boolean>((resolve, reject) => {
@@ -100,6 +113,7 @@ const useNFTBuilding = () => {
   }
 
   return {
+    isBuildingOwner,
     onCheckApprovalBuildingForAll,
     onTransferBuilding,
     isBuildingApprovedForAll

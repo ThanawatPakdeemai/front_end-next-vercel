@@ -24,23 +24,23 @@ const GameCardMobile = ({
   href
 }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { favouriteStatus } = useFavoriteGameContoller({
+  const { onClickFavouriteButton, favouriteStatus } = useFavoriteGameContoller({
     playerId: profile?.id ?? "",
     gameId
   })
 
   return (
-    <Link href={href}>
-      <motion.div
-        className="game-section__list flex flex-col gap-3"
-        initial="init"
-        whileHover="onHover"
-        animate="animate"
-      >
-        <div className="relative w-full overflow-hidden rounded-[20px] pt-[84%]">
-          <div className="game-favorite absolute right-3 top-3 z-[1]">
-            {favouriteStatus ? <HeartFilledIcon /> : <HeartSolidIcon />}
-          </div>
+    <motion.div
+      className="game-section__list flex flex-col gap-3"
+      initial="init"
+      whileHover="onHover"
+      animate="animate"
+    >
+      <div className="relative w-full overflow-hidden rounded-[20px] pt-[84%]">
+        <div className="game-favorite absolute right-3 top-3 z-[1]">
+          {favouriteStatus ? <HeartFilledIcon /> : <HeartSolidIcon />}
+        </div>
+        <Link href={href}>
           <ImageCustom
             src={imageCategoryList}
             alt={name}
@@ -48,7 +48,9 @@ const GameCardMobile = ({
             height={200}
             className="absolute left-0 top-0 h-full w-full object-cover object-center"
           />
-        </div>
+        </Link>
+      </div>
+      <Link href={href}>
         <h2 className="font-urbanist text-[20px] font-semibold text-white-primary line-clamp-2">
           {name}
         </h2>
@@ -61,8 +63,8 @@ const GameCardMobile = ({
             </div>
           )}
         </div>
-      </motion.div>
-    </Link>
+      </Link>
+    </motion.div>
   )
 }
 

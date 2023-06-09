@@ -1,6 +1,9 @@
 import CONFIGS from "@configs/index"
 import { MESSAGES } from "@constants/messages"
-import { useGetAllGameItemofAddrs } from "@feature/contract/containers/hooks/useContract"
+import {
+  useGetAllGameItemofAddrs,
+  useItemVaultNoAccount
+} from "@feature/contract/containers/hooks/useContract"
 import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import { TInvenVaultAction } from "@feature/inventory/interfaces/IInventoryItem"
 import useLoadingStore from "@stores/loading"
@@ -16,10 +19,26 @@ const useInvenGameItem = () => {
   const allGameItemContract = useGetAllGameItemofAddrs(
     CONFIGS.CONTRACT_ADDRESS.GET_GAMEITEMOFADDRESS
   )
+  const gameItemContractNoAcc = useItemVaultNoAccount(
+    CONFIGS.CONTRACT_ADDRESS.ITEM_VAULT
+  )
   const [gameItemList, setGameItemList] = useState<
     Array<IGameItemListData & { amount?: number }> | undefined
   >(undefined)
   const { pathname } = useRouter()
+
+  // get item by addrs & token id
+  const getGameItemByToken = (_address: string, _token: string) =>
+    new Promise<string>((resolve, reject) => {
+      gameItemContractNoAcc
+        .getItemAmountbyId(_address, _token)
+        .then((_response: string) => {
+          resolve(_response)
+        })
+        .catch((_error: Error) => {
+          reject(_error)
+        })
+    })
 
   // get all material by address
   const getAllGameItemByAddrs = (_address: string, _length: number) =>
@@ -102,6 +121,7 @@ const useInvenGameItem = () => {
   }, [onFetchInvenGameItem])
 
   return {
+    getGameItemByToken,
     gameItemList,
     updateGameItemList,
     onFetchInvenGameItem,

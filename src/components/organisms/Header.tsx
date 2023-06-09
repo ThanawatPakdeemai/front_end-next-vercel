@@ -17,18 +17,28 @@ const Header = () => {
   const showRightMenu = !isDeveloperPage
   const showRightMenuDeveloper = isDeveloperPage
 
-  const { mutateMarketTypes } = useMutateMarketplace()
-  const { fetchStatus, setFetchStatus, onSetMarketTypes } =
+  const { mutateMarketTypes, mutateSettingMarket } = useMutateMarketplace()
+  const { fetchStatus, setFetchStatus, onSetMarketTypes, onSetNFTMintAble } =
     useMarketCategTypes()
 
   useEffect(() => {
     const fetchMarketTyps = async () => {
       if (!fetchStatus && isMarketplace) {
-        const { status, data } = await mutateMarketTypes()
-        if (status && data) {
-          onSetMarketTypes(data)
-          setFetchStatus(true)
+        const [_marketResource, _marketSetting] = await Promise.all([
+          mutateMarketTypes(),
+          mutateSettingMarket()
+        ])
+        if (_marketResource.status && _marketResource.data) {
+          onSetMarketTypes(_marketResource.data)
         }
+        if (_marketSetting.status && _marketSetting.data) {
+          const _setting = _marketSetting.data.map((d) => ({
+            _nft: d.name,
+            _value: d.value
+          }))
+          onSetNFTMintAble(_setting)
+        }
+        setFetchStatus(true)
       }
     }
     let cleanup = false

@@ -36,7 +36,7 @@ const MarketplaceLayoutWithFilter = ({
         <div className="z-10 mx-2 hidden w-60 sm:block">
           <FilterBox />
         </div>
-        <main>{children}</main>
+        {children}
       </div>
       <Footer />
     </div>

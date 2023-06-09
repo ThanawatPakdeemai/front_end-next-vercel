@@ -161,7 +161,9 @@ const TransferBox = ({ _tokenId, _maxAmount }: IProp) => {
             helperText="Transfer to (Address)"
             placeholder="0x0000000000000"
             size="medium"
-            onChange={(e) => setAddress(e.target.value)}
+            onChange={(e) => {
+              setAddress(e.target.value)
+            }}
           />
           {marketType === "game_item" || marketType === "nft_material" ? (
             <CountItem
@@ -177,7 +179,13 @@ const TransferBox = ({ _tokenId, _maxAmount }: IProp) => {
             />
           ) : null}
           <Button
-            disabled={!profile || !address || transAmount <= 0}
+            disabled={
+              !profile ||
+              !address ||
+              (["game_item", "nft_material"].includes(String(marketType)) &&
+                transAmount <= 0) ||
+              !/^0x[a-fA-F0-9]{40}$/.test(address)
+            }
             sx={{ fontFamily: "neueMachina" }}
             color="success"
             className="w-1/3 text-sm font-bold text-primary-main"

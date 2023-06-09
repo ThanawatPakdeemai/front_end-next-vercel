@@ -6,18 +6,20 @@ import {
   IconButton,
   SwipeableDrawer
 } from "@mui/material"
-import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import EditProfileIcon from "@components/icons/EditProfileIcon"
 import useProfileStore from "@stores/profileStore"
-import { Image } from "@components/atoms/image/index"
 import NavigateNextIcon from "@mui/icons-material/NavigateNext"
 import Support2Icon from "@components/icons/Support2Icon"
-import Profile2Icon from "@components/icons/Profile2Icon"
 import ClockIcon from "@components/icons/ClockIcon"
 import LogoutIcon from "@components/icons/LogoutIcon"
 import { useTranslation } from "react-i18next"
+import useGlobal from "@hooks/useGlobal"
+import { ImageCustom } from "@components/atoms/image/Image"
+import { StyledAvatar } from "@mobile/components/atoms/headerMenu/HeadProfileMobile"
+import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import LogoutModal from "./LogoutModal"
 import ProfileSettingModal from "./ProfileSettingModal"
+import PlayedHistoryModal from "./PlayedHistoryModal"
 
 interface ISettingModalProps {
   open: boolean
@@ -25,9 +27,11 @@ interface ISettingModalProps {
 }
 
 const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
+  const { openInNewTab } = useGlobal()
   const profile = useProfileStore((state) => state.profile.data)
   const [toggleLogout, setToggleLogout] = useState(false)
   const [toggleProflie, setToggleProflie] = useState(false)
+  const [togglePlayedHistory, setTogglePlayedHistory] = useState(false)
 
   const { t } = useTranslation()
 
@@ -57,10 +61,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
           onClick={() => setOpenSetting(false)}
           aria-hidden="true"
         >
-          <LogoNakaBigIcon
-            width={30}
-            height={14}
-          />
+          <ArrowBackIcon />
           Setting
         </h2>
         <CardHeader
@@ -80,22 +81,19 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
               fontSize: "16px",
               fontFamily: "Urbanist",
               fontWeight: "500"
-            }
+            },
+            ...StyledAvatar
           }}
           avatar={
-            <Avatar
-              sx={{ bgcolor: "red", width: 80, height: 80 }}
-              aria-label="recipe"
-            >
-              {profile && (
-                <Image
-                  src={profile.avatar}
-                  width={80}
-                  height={80}
-                  alt="avatar-profile"
-                />
-              )}
-            </Avatar>
+            <div className="head-profile__info--avatar">
+              <ImageCustom
+                src={profile?.avatar || "/images/avatar.png"}
+                alt="avatar"
+                width={55}
+                height={55}
+                className="h-full w-full object-cover"
+              />
+            </div>
           }
           action={
             <IconButton
@@ -110,15 +108,10 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
         />
         <Box
           component="div"
-          className="border-neutral-600 py-6"
-        >
-          <hr />
-        </Box>
-        <Box
-          component="div"
-          className="grid gap-6"
+          className="my-6 grid gap-6 border-b border-t border-[#35383F] py-6"
         >
           <CardHeader
+            onClick={() => setTogglePlayedHistory(!togglePlayedHistory)}
             sx={{
               padding: "0px",
               "& .MuiCardHeader-action": {
@@ -153,7 +146,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
             }
             title={t("Played History")}
           />
-          <CardHeader
+          {/* <CardHeader
             sx={{
               padding: "0px",
               "& .MuiCardHeader-action": {
@@ -187,8 +180,9 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
               </IconButton>
             }
             title="Profile"
-          />
+          /> */}
           <CardHeader
+            onClick={() => openInNewTab("https://t.me/NakamotoGames")}
             sx={{
               padding: "0px",
               "& .MuiCardHeader-action": {
@@ -223,12 +217,6 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
             }
             title={t("Support")}
           />
-        </Box>
-        <Box
-          component="div"
-          className="border-neutral-600 py-6"
-        >
-          <hr />
         </Box>
         <CardHeader
           onClick={() => setToggleLogout(!toggleLogout)}
@@ -271,6 +259,11 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
       <ProfileSettingModal
         open={toggleProflie}
         setProfileSetting={() => setToggleProflie(false)}
+      />
+      {/* Played History Modal */}
+      <PlayedHistoryModal
+        open={togglePlayedHistory}
+        setOpenPlayedHistory={() => setTogglePlayedHistory(false)}
       />
     </SwipeableDrawer>
   )

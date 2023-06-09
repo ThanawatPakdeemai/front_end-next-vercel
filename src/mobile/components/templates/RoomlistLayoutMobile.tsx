@@ -8,7 +8,10 @@ import NoData from "@components/molecules/NoData"
 import PleaseLogin from "@components/atoms/PleaseLogin"
 import MultiRoom from "@mobile/features/game/components/templates/multi/MultiRoom"
 import SingleRoom from "@mobile/features/game/components/templates/single/SingleRoom"
-import ModalCreateRoom from "@feature/rooms/components/molecules/ModalCreateRoom"
+import ModalCreateRoomMobile from "@mobile/features/rooms/components/molecules/ModalCreateRoomMobile"
+import useCreateRoomController from "@feature/rooms/hooks/useCreateRoomController"
+import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
+import ButtonFilledTemplate from "./ButtonFilledTemplate"
 import ArrowBackIcon from "../atoms/icons/ArrowBackIcon"
 
 export interface IRoomlistLayoutMobileProps {
@@ -17,7 +20,20 @@ export interface IRoomlistLayoutMobileProps {
 
 const RoomlistLayoutMobile = ({ gameData }: IRoomlistLayoutMobileProps) => {
   const router = useRouter()
+  const { openCreateRoom, setOpenCreateRoom } = useDrawerControllerMobile()
   const profile = useProfileStore((state) => state.profile.data)
+  const {
+    map,
+    maps,
+    setMap,
+    handleSetIsCurrent,
+    isPublicRoom,
+    setIsPublicRoom,
+    isLoading,
+    handleSubmit
+  } = useCreateRoomController({
+    gameData
+  })
 
   const getTemplateGame = () => {
     switch (gameData.game_type) {
@@ -40,7 +56,7 @@ const RoomlistLayoutMobile = ({ gameData }: IRoomlistLayoutMobileProps) => {
     >
       <h2 className="flex items-center gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary">
         <i
-          onClick={() => router.back()}
+          onClick={() => router.push(`/${gameData.game_mode}/${gameData.path}`)}
           aria-hidden="true"
         >
           <ArrowBackIcon />
@@ -53,7 +69,7 @@ const RoomlistLayoutMobile = ({ gameData }: IRoomlistLayoutMobileProps) => {
         className="game-section flex flex-col gap-6 font-urbanist text-white-primary"
       >
         <h3
-          className="flex items-center gap-4 font-urbanist text-white-primary"
+          className="flex items-center gap-4 font-urbanist font-semibold text-white-primary"
           aria-hidden="true"
         >
           <LogoNakaBigIcon
@@ -61,12 +77,30 @@ const RoomlistLayoutMobile = ({ gameData }: IRoomlistLayoutMobileProps) => {
             height={14}
           />
           Room List: {gameData.name}
+          {gameData && gameData.game_type === "multiplayer" && (
+            <div className="ml-auto">
+              <ButtonFilledTemplate
+                onClick={() => setOpenCreateRoom(true)}
+                color="#F32429"
+              >
+                Create Room
+              </ButtonFilledTemplate>
+              <ModalCreateRoomMobile
+                gameData={gameData}
+                openCreateRoom={openCreateRoom}
+                setOpenCreateRoom={setOpenCreateRoom}
+                isPublicRoom={isPublicRoom}
+                setIsPublicRoom={setIsPublicRoom}
+                isLoading={isLoading}
+                handleSubmit={handleSubmit}
+                map={map}
+                maps={maps}
+                setMap={setMap}
+                handleSetIsCurrent={handleSetIsCurrent}
+              />
+            </div>
+          )}
         </h3>
-        {gameData && gameData.game_type === "multiplayer" && (
-          <div className="mr-2 w-[162px]">
-            <ModalCreateRoom gameData={gameData} />
-          </div>
-        )}
         {getTemplateGame()}
       </Box>
     </Box>

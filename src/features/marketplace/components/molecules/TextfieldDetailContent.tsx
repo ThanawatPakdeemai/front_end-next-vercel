@@ -4,13 +4,12 @@ import PinnedMapIcon from "@components/icons/PinnedMapIcon"
 import CountItem from "@components/molecules/CountItem"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import { InputAdornment, TextField } from "@mui/material"
-import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
 import Helper from "@utils/helper"
 import React, { useMemo } from "react"
-import useCountStore from "@stores/countComponant"
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 import useGlobal from "@hooks/useGlobal"
+import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
 
 interface IProp {
   type: TNFTType
@@ -36,11 +35,10 @@ const TextfieldDetailContent = ({
   price,
   count
 }: IProp) => {
-  const { price: nakaPrice } = useNakaPriceProvider()
-  const { count: countItemSelected } = useCountStore()
-  const { invPrice, setInvPrice } = useInventoryProvider()
+  const { calcNAKAPrice, calcUSDPrice } = useGlobalMarket()
+  const { invPrice, setInvPrice, invAmount, setInvAmount } =
+    useInventoryProvider()
   const { marketAmount, setMarketAmount } = useMarketplaceProvider()
-  const { invAmount, setInvAmount } = useInventoryProvider()
   const { marketType } = useGlobal()
   const _priceValue = invPrice || price
 
@@ -48,12 +46,6 @@ const TextfieldDetailContent = ({
     const _value = Number(value)
     if (setInvPrice) setInvPrice(_value)
   }
-  const calcNakaPrice = useMemo(() => {
-    if (nakaPrice && countItemSelected && _priceValue) {
-      return countItemSelected * (parseFloat(nakaPrice.last) * _priceValue)
-    }
-    return 0
-  }, [nakaPrice, countItemSelected, _priceValue])
 
   const onDecreaseAmount = () => {
     if (count)
@@ -89,7 +81,7 @@ const TextfieldDetailContent = ({
 
   return (
     <div
-      className={`flex w-full items-start justify-between ${
+      className={`flex w-full items-center justify-between ${
         marketType === "nft_avatar" || marketType === "nft_naka_punk"
           ? "flex-col sm:flex-row"
           : null
@@ -135,34 +127,39 @@ const TextfieldDetailContent = ({
           helperText="Land position on map"
         />
       )}
-      <TextField
-        value={price ? countItemSelected * price : invPrice}
-        label="PRICE (NAKA)"
-        className="!w-[131px] sm:!w-[232px]"
-        sx={{
-          "& .MuiOutlinedInput-root": {
-            backgroundColor: "#010101"
-          },
-          "input": {
-            color: "#E1E2E2 !important"
-          }
-        }}
-        onChange={(e) => onPriceChange(e.target.value)}
-        disabled={!!price}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment
-              position="start"
-              className="ml-[15px] mr-3"
-            >
-              <LogoIcon fill="#70727B" />
-            </InputAdornment>
-          )
-        }}
-        helperText={`= ${Helper.formatNumber(calcNakaPrice, {
-          maximumFractionDigits: 4
-        })} USD`}
-      />
+      {/* (countItemSelected * _priceValue) */}
+      {_priceValue && (
+        <TextField
+          value={Helper.formatNumber(calcNAKAPrice(_priceValue), {
+            maximumFractionDigits: 4
+          })}
+          label="PRICE (NAKA)"
+          className="!w-[131px] sm:!w-[232px]"
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              backgroundColor: "#010101"
+            },
+            "input": {
+              color: "#E1E2E2 !important"
+            }
+          }}
+          onChange={(e) => onPriceChange(e.target.value)}
+          disabled={!!price}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment
+                position="start"
+                className="ml-[15px] mr-3"
+              >
+                <LogoIcon fill="#70727B" />
+              </InputAdornment>
+            )
+          }}
+          helperText={`= ${Helper.formatNumber(calcUSDPrice(_priceValue), {
+            maximumFractionDigits: 4
+          })} USD`}
+        />
+      )}
     </div>
   )
 }

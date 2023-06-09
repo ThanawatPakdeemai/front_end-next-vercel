@@ -203,14 +203,14 @@ const MyLandPage = () => {
   }
 
   return (
-    <div>
-      <div className="mb-9 hidden flex-col justify-start sm:flex">
+    <div className="mb-24">
+      <div className="mb-9 mt-10 hidden flex-col justify-start sm:flex">
         <Typography className="text-lg text-neutral-400">MY LAND</Typography>
         <Typography className="text-xs text-neutral-600">
           Wallet manager for nakamoto.games world
         </Typography>
       </div>
-      <div className="relative grid justify-items-center">
+      <div className="relative mt-12 grid justify-items-center sm:mt-0">
         <MiniMap
           pos={pos}
           className="block sm:hidden"
@@ -219,10 +219,10 @@ const MyLandPage = () => {
           currentLand={currentLand}
           setCurrentLand={setCurrentLand}
         />
-        <div className="absolute top-4 z-10 mt-6 block h-[200px] sm:hidden">
+        <div className="absolute top-6 z-10 mt-6 block h-[200px] sm:hidden">
           <div className="grid max-w-[400px] justify-center gap-4">
             <div className="flex h-[40px] gap-2">
-              <div className="flex	w-full items-center justify-between rounded-lg bg-neutral-800 px-[15px]">
+              <div className="flex w-full items-center justify-between rounded-lg bg-neutral-800 px-[15px]">
                 <Typography className="text-sm uppercase text-white-default">
                   NAKAVERSE MAP
                 </Typography>

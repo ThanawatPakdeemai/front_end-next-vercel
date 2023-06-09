@@ -21,7 +21,7 @@ const GameFilterMobile = ({
   >
     <Box
       component="div"
-      className="section-filter__title flex gap-[12px] whitespace-nowrap text-[90%]"
+      className="section-filter__title flex flex-wrap gap-[12px] whitespace-nowrap text-[90%]"
     >
       <ButtonOutlineTemplate
         onClick={() => {

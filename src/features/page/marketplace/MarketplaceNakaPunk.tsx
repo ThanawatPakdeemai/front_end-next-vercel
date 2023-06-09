@@ -1,11 +1,10 @@
-import ButtonLink from "@components/atoms/button/ButtonLink"
 import WandIcon from "@components/icons/WandIcon"
 import CardContentDetails from "@feature/marketplace/components/organisms/CardContentDetails"
 import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
 import useGetPriceNakaPunk from "@feature/nakapunk/containers/hooks/useGetPriceNakapunk"
 import usePurchaseNakapunk from "@feature/nakapunk/containers/hooks/usePurchaseNakapunk"
 import { useToast } from "@feature/toast/containers"
-import { Chip, Typography } from "@mui/material"
+import { Chip, Typography, Button } from "@mui/material"
 import useCountStore from "@stores/countComponant"
 import useLoadingStore from "@stores/loading"
 import React, { useEffect, useState } from "react"
@@ -18,6 +17,8 @@ import CONFIGS from "@configs/index"
 import useGlobal from "@hooks/useGlobal"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import Breadcrumb from "@components/molecules/Breadcrumb"
+import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
+import { MESSAGES } from "@constants/messages"
 
 const MarketplaceNakaPunk = () => {
   const [priceNP, setPriceNP] = useState<number>(0)
@@ -29,29 +30,38 @@ const MarketplaceNakaPunk = () => {
   const { setOpen, setClose } = useLoadingStore()
   const { isLogin, profile } = useProfileStore()
   const { successToast, errorToast } = useToast()
+  const { onCheckAllowance } = useGlobalMarket()
 
   const handleMintNakapunk = async () => {
-    setOpen()
-    mutatePurchaseNakapunk({ _qty: count })
-      .then(() => {
-        setClose()
-        successToast("Mint success")
+    if (priceNP > 0) {
+      setOpen(MESSAGES.transaction_processing_order)
+      const _checkAllowance = await onCheckAllowance({
+        _type: "nft_naka_punk",
+        _seller: "system",
+        _price: priceNP * count
       })
-      .catch((_error) => {
+      if (!_checkAllowance.allowStatus) {
         setClose()
-        errorToast("Transection fail")
-      })
+        return
+      }
+      await mutatePurchaseNakapunk({ _qty: count })
+        .then(() => {
+          successToast("Mint success")
+        })
+        .catch((_error) => {
+          errorToast("Transection fail")
+        })
+        .finally(() => setClose())
+    }
   }
 
   useEffect(() => {
     let load = false
-
     if (!load) {
       if (resNakapunk) {
         setMetaData(resNakapunk.data.meta_data)
       }
     }
-
     return () => {
       load = true
     }
@@ -155,17 +165,18 @@ const MarketplaceNakaPunk = () => {
               Create unique digital asset ownership token.
             </Typography>
             {isLogin ? (
-              <ButtonLink
-                text="Mint now"
-                type="button"
-                size="medium"
+              <Button
+                type="submit"
                 variant="contained"
-                textColor="text-primary-main"
-                className="!min-h-10 !h-10 !w-[232px] !bg-green-lemon"
-                arrowColor="text-primary-main"
-                icon={<WandIcon />}
+                className="h-10 w-full !bg-green-lemon capitalize !text-primary-main"
+                startIcon={<WandIcon />}
+                sx={{
+                  maxWidth: 232
+                }}
                 onClick={handleMintNakapunk}
-              />
+              >
+                Mint now
+              </Button>
             ) : (
               <RightMenuNotLogIn />
             )}

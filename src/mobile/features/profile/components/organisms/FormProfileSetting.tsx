@@ -19,13 +19,16 @@ const FormProfileSetting = () => {
   } = useProfileSettingController()
   const { t } = useTranslation()
 
+  const StyledInput = {
+    ...StyledBaseInputMobile
+  }
+
   return (
     <Box
       component="div"
       className="profile-content__mobile flex flex-col justify-between gap-4"
     >
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* <ProfileSliderMobile setValueProfileSetting={setValueProfileSetting} /> */}
         <Box
           component="section"
           id="profile-avatar__slider"
@@ -54,7 +57,7 @@ const FormProfileSetting = () => {
           className="mb-5 w-full"
           required
           type="text"
-          sx={StyledBaseInputMobile}
+          sx={StyledInput}
           value={watchProfileSetting("_username")}
           onChange={(event) => {
             let { value } = event.target
@@ -69,7 +72,7 @@ const FormProfileSetting = () => {
           className="mb-5 w-full"
           required
           type="email"
-          sx={StyledBaseInputMobile}
+          sx={StyledInput}
           value={watchProfileSetting("_email")}
           onChange={(event) => {
             const { value } = event.target
@@ -84,7 +87,7 @@ const FormProfileSetting = () => {
           className="mb-5 w-full"
           required
           type="text"
-          sx={StyledBaseInputMobile}
+          sx={StyledInput}
           value={watchProfileSetting("_country")}
           onChange={(event) => {
             const { value } = event.target
@@ -98,7 +101,7 @@ const FormProfileSetting = () => {
           className="mb-5 w-full"
           required
           type="text"
-          sx={StyledBaseInputMobile}
+          sx={StyledInput}
           value={watchProfileSetting("_user_ip_address")}
           onChange={(event) => {
             const { value } = event.target

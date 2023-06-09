@@ -1,9 +1,10 @@
-import { Collapse, InputAdornment, TextField, Typography } from "@mui/material"
+import { Collapse, Typography } from "@mui/material"
 import React, { memo, useMemo, useState } from "react"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { NextRouter, useRouter } from "next/router"
 import DropdownIcon from "@components/icons/DropdownIcon"
 import MenuItemCustom from "@components/atoms/MenuItemCustom"
+import DragHandleIcon from "@mui/icons-material/DragHandle"
 import {
   MARKET_FILTER_DATE,
   MARKET_FILTER_PRICE,
@@ -18,10 +19,6 @@ import { ITypeMaterials } from "@feature/material/marketplace/interfaces/IMateri
 import useGlobal from "@hooks/useGlobal"
 import Helper from "@utils/helper"
 import CheckBoxNaka from "@components/atoms/checkBox/CheckBoxNaka"
-import SpeedHeight from "@components/icons/marketplace/SpeedHeight"
-import INaka from "@components/icons/Naka"
-import SpeedLow from "@components/icons/marketplace/SpeedLow"
-import MenuIcon from "@mui/icons-material/Menu"
 import ResourceTree from "./ResourceTree"
 import FilterSearchBox from "./FilterSearchBox"
 import SearchDropDown from "./SearchDropDown"
@@ -46,55 +43,14 @@ const FilterBox = () => {
   } = useMarketFilterStore()
 
   const [expanded, setExpanded] = useState<boolean>(false)
-  const [expandedPrice, setExpandedPrice] = useState<boolean>(false)
-  const [expandDate, setExpandDate] = useState<boolean>(false)
-  const [expandType, setExpandType] = useState<boolean>(false)
-  /* eslint-disable no-unused-vars */
-  const [land, setLand] = useState<string>("Land")
-  const [text, setText] = useState<string>("")
-  const [wallet, setWallet] = useState<string>("")
-  const [price, setPrice] = useState<string>("Price")
-  const [date, setDate] = useState<string>("Date")
-  const [type, setType] = useState<string>("Type")
+
   const [searchReset, setSearchReset] = useState<boolean>(false)
 
   const { fetchStatus, getCurrentTypes } = useMarketCategTypes()
-  const { isMarketplace, marketType } = useGlobal()
-
-  const PRICELIST = [
-    { label: "Lowest to Highest", value: 1 },
-    { label: "Highest to Lowest", value: -1 }
-  ]
-  const TYPELIST = [
-    {
-      label: "Installment",
-      value: "installment"
-    },
-    {
-      label: "Fullpayment",
-      value: "fullpayment"
-    },
-    {
-      label: "Rental",
-      value: "rental"
-    }
-  ]
-  const DATELIST = [
-    { label: "New", value: -1 },
-    { label: "Oldest", value: 1 }
-  ]
+  const { marketType } = useGlobal()
 
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
-  }
-  const handleOnExpandPrice = () => {
-    setExpandedPrice(!expandedPrice)
-  }
-  const handleOnExpandDate = () => {
-    setExpandDate(!expandDate)
-  }
-  const handleOnExpandType = () => {
-    setExpandType(!expandType)
   }
 
   const onFilterChange = (
@@ -274,6 +230,7 @@ const FilterBox = () => {
     return _date
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search])
+
   return (
     <div className="grid w-52 gap-3 ">
       <section>
@@ -282,10 +239,7 @@ const FilterBox = () => {
           onClick={handleOnExpandClick}
           className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[8px] border-[1px] border-solid border-neutral-700 bg-secondary-main px-5 text-[12px] text-white-primary"
         >
-          <MenuIcon
-            className="!rotate-0 text-white-primary "
-            fontSize="small"
-          />
+          <DragHandleIcon />
           <span className="text-white capitalize">
             {convertNFTTypeToTType(marketType || "nft_land")}
           </span>
@@ -500,241 +454,6 @@ const FilterBox = () => {
           />
         </>
       ) : null}
-
-      <div className="my-4 h-[10px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')]" />
-      <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
-        <Typography className="text-sm uppercase text-white-default">
-          filter
-        </Typography>
-        <div className="flex">
-          <ArrowBackIcon
-            color="secondary"
-            sx={{ fontSize: 15 }}
-          />
-          <Typography
-            component="button"
-            onClick={() => {
-              onResetSort()
-              onResetSearch()
-              setText("")
-              setWallet("")
-              setPrice("Price")
-              setDate("Date")
-              setType("Type")
-            }}
-            className="ml-2 cursor-pointer self-center text-xs uppercase text-secondary-main"
-          >
-            Clear
-          </Typography>
-        </div>
-      </div>
-
-      <div className="relative">
-        <button
-          type="button"
-          onClick={handleOnExpandPrice}
-          className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[8px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
-        >
-          <span>{price}</span>
-          <div
-            className={`${
-              expandedPrice === true
-                ? "rotate-180 transition-all duration-300"
-                : "rotate-0 transition-all duration-300"
-            }`}
-          >
-            <DropdownIcon />
-          </div>
-        </button>
-        <Collapse
-          in={expandedPrice}
-          timeout="auto"
-          className="absolute top-0 mt-10 w-[200px] rounded-[19px] border-[6px] border-[#010101] p-1"
-          sx={{
-            backgroundColor: "#18181C",
-            zIndex: 99999,
-            position: "absolute",
-            width: "218px"
-          }}
-        >
-          {PRICELIST.map((item) => (
-            <MenuItemCustom
-              key={item.label}
-              label={item.label}
-              icon=""
-              href=""
-              id=""
-              external={false}
-              active
-              onClick={() => {
-                setPrice(item.label)
-                onSetSort({ key: "price", value: item.value })
-                setExpandedPrice(!expandedPrice)
-              }}
-            />
-          ))}
-        </Collapse>
-      </div>
-      <div className="relative">
-        <button
-          type="button"
-          onClick={handleOnExpandDate}
-          className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[8px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
-        >
-          <span>{date}</span>
-          <div
-            className={`${
-              expandDate === true
-                ? "rotate-180 transition-all duration-300"
-                : "rotate-0 transition-all duration-300"
-            }`}
-          >
-            <DropdownIcon />
-          </div>
-        </button>
-        <Collapse
-          in={expandDate}
-          timeout="auto"
-          className="absolute top-0 mt-10 w-[200px] rounded-[19px] border-[6px] border-[#010101] p-1"
-          sx={{
-            backgroundColor: "#18181C",
-            zIndex: 99999,
-            position: "absolute",
-            width: "218px"
-          }}
-        >
-          {DATELIST.map((item) => (
-            <MenuItemCustom
-              key={item.label}
-              label={item.label}
-              icon=""
-              href=""
-              id=""
-              external={false}
-              active
-              onClick={() => {
-                setDate(item.label)
-                onSetSort({ key: "created_at", value: item.value })
-                setExpandDate(!expandDate)
-              }}
-            />
-          ))}
-        </Collapse>
-      </div>
-      <div className="relative">
-        <button
-          type="button"
-          onClick={handleOnExpandType}
-          className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[8px] border-[1px] border-solid border-neutral-700 bg-neutral-800 px-5 text-[12px] text-black-default hover:text-white-primary"
-        >
-          <span>{type}</span>
-          <div
-            className={`${
-              expandType === true
-                ? "rotate-180 transition-all duration-300"
-                : "rotate-0 transition-all duration-300"
-            }`}
-          >
-            <DropdownIcon />
-          </div>
-        </button>
-        <Collapse
-          in={expandType}
-          timeout="auto"
-          className="absolute top-0 mt-10 w-[200px] rounded-[19px] border-[6px] border-[#010101] p-1"
-          sx={{
-            backgroundColor: "#18181C",
-            zIndex: 99999,
-            position: "absolute",
-            width: "218px"
-          }}
-        >
-          {TYPELIST.map((item) => (
-            <MenuItemCustom
-              key={item.label}
-              label={item.label}
-              icon=""
-              href=""
-              id=""
-              external={false}
-              active
-              onClick={() => {
-                setType(item.label)
-                onSetSearch({ key: "selling_type", value: item.value })
-                setExpandType(!expandType)
-              }}
-            />
-          ))}
-        </Collapse>
-      </div>
-      <Typography className="text-xs uppercase text-neutral-500">
-        Price Range (NAKA)
-      </Typography>
-      <TextField
-        className="w-full"
-        placeholder="00.0"
-        InputProps={{
-          style: {
-            fontSize: "14px",
-            fontFamily: "neueMachina",
-            width: "100%"
-          },
-          startAdornment: (
-            <InputAdornment position="start">
-              <div className="flex items-center	">
-                <SpeedHeight />
-                <Typography className="ml-2 text-xs uppercase text-neutral-500">
-                  max
-                </Typography>
-              </div>
-            </InputAdornment>
-          ),
-          endAdornment: (
-            <InputAdornment
-              position="end"
-              className="cursor-pointer"
-              onClick={() => {}}
-            >
-              <INaka color="#E1E2E2" />
-            </InputAdornment>
-          )
-        }}
-        onChange={(_event) => {
-          // const search = _event?.target?.value
-        }}
-      />
-      <TextField
-        className="w-full"
-        placeholder="00.0"
-        InputProps={{
-          style: {
-            fontSize: "14px",
-            fontFamily: "neueMachina",
-            width: "100%"
-          },
-          startAdornment: (
-            <InputAdornment position="start">
-              <div className="flex items-center	">
-                <SpeedLow />
-                <Typography className="ml-2 text-xs uppercase text-neutral-500">
-                  min
-                </Typography>
-              </div>
-            </InputAdornment>
-          ),
-          endAdornment: (
-            <InputAdornment
-              position="end"
-              className="cursor-pointer"
-              onClick={() => {}}
-            >
-              <INaka color="#E1E2E2" />
-            </InputAdornment>
-          )
-        }}
-        onChange={(_event) => {}}
-      />
-
       <div className="my-4 h-[10px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')]" />
       <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
         <Typography className="text-sm uppercase text-white-default">

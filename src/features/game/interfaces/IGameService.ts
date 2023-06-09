@@ -202,6 +202,7 @@ export interface IGame extends IGameArcadeEmporium {
   image_room: string
   image_banner: string
   image_category_list: string
+  image_gif?: string
   image_reward: string
   image_waiting: string
   image_background: string

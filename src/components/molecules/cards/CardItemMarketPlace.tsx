@@ -254,7 +254,7 @@ const CardItemMarketPlace = ({
                 <motion.div
                   transition={{ type: "spring", stiffness: 100, damping: 6 }}
                   variants={cardType !== "naka-punk" ? imgMotion : undefined}
-                  className="relative block flex items-center justify-center sm:hidden"
+                  className="relative flex items-center justify-center sm:hidden"
                 >
                   <Image
                     src={itemImage.src}
@@ -262,17 +262,19 @@ const CardItemMarketPlace = ({
                     className={`object-contain ${
                       cardType === "naka-punk"
                         ? "rounded-lg"
-                        : cardType === "building" && "image-building"
+                        : cardType === "building" && "!h-[200px]"
                     }`}
-                    width={itemName === "Bullet" ? 60 : itemImage.width}
-                    height={itemName === "Bullet" ? 60 : itemImage.height}
+                    width={itemName?.includes("Bullet") ? 60 : itemImage.width}
+                    height={
+                      itemName?.includes("Bullet") ? 60 : itemImage.height
+                    }
                   />
                 </motion.div>
                 {/* mobile */}
                 <motion.div
                   transition={{ type: "spring", stiffness: 100, damping: 6 }}
                   variants={cardType !== "naka-punk" ? imgMotion : undefined}
-                  className="relative flex hidden items-center justify-center sm:block"
+                  className="relative hidden items-center justify-center sm:block"
                 >
                   <Image
                     src={itemImage.src}
@@ -282,8 +284,8 @@ const CardItemMarketPlace = ({
                         ? "rounded-lg"
                         : cardType === "building" && "image-building"
                     }`}
-                    width={itemName === "Bullet" ? 60 : 148}
-                    height={itemName === "Bullet" ? 60 : 148}
+                    width={itemName?.includes("Bullet") ? 60 : 148}
+                    height={itemName?.includes("Bullet") ? 60 : 148}
                   />
                 </motion.div>
               </div>

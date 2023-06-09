@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import { useEffect, useState } from "react"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
@@ -11,8 +10,7 @@ import {
 import useFilterGameList from "@feature/dropdown/containers/hooks/useFilterGameList"
 import { useRouter } from "next/router"
 import useScrollDetector from "@hooks/useScrollDetector"
-import { useToast } from "@feature/toast/containers"
-import { MESSAGES } from "@constants/messages"
+import useScrollToEndStore from "@stores/scrollToEnd"
 
 interface ILimitPage {
   limit: number
@@ -30,8 +28,7 @@ const useGamePageListController = (
   const router = useRouter()
   const categoryId = router.query.id
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
-  const scrollBottom = useScrollDetector()
-  const { warnToast } = useToast()
+  const { scrollBottom } = useScrollDetector()
 
   const [cooldown, setCooldown] = useState<boolean>(true)
   const [gameFilter, setGameFilter] = useState<IGame[]>()
@@ -70,6 +67,8 @@ const useGamePageListController = (
 
   const { mutateGetGamesByCategoryId, isLoading: loadingFilterGame } =
     useFilterGameList()
+
+  const { setScrollToEndScreen: setEndScreen } = useScrollToEndStore()
 
   useEffect(() => {
     let load = false
@@ -144,8 +143,8 @@ const useGamePageListController = (
             setTotalCount(info ? info.totalCount : 1)
           }
         })
-      } else if (isMobile) {
-        warnToast(MESSAGES.end_of_the_limit)
+      } else {
+        setEndScreen(true)
       }
     }
 

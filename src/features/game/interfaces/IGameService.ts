@@ -221,6 +221,7 @@ export interface IGame extends IGameArcadeEmporium {
   NFT_info: INFTInfo
   game_room_available?: IGameRoomAvailable[]
   game_mode: "free-to-earn" | "play-to-earn" | "free-to-play" | "story-mode"
+  favorite?: boolean
 }
 
 interface IGameHowto {

@@ -4,7 +4,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { NextRouter, useRouter } from "next/router"
 import DropdownIcon from "@components/icons/DropdownIcon"
 import MenuItemCustom from "@components/atoms/MenuItemCustom"
-import DragHandleIcon from "@mui/icons-material/DragHandle"
 import {
   MARKET_FILTER_DATE,
   MARKET_FILTER_PRICE,

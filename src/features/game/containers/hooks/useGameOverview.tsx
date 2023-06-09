@@ -41,6 +41,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   const { gameItemList } = useBuyGameItemController()
 
   const [gameDataState, setGameDataState] = React.useState<IGame>()
+  const [gameOwnerId, setGameOwnerId] = React.useState<string>("")
   const [gamePartnerState, setGamePartnerState] =
     React.useState<IPartnerGameData>()
 
@@ -50,7 +51,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
 
   // Get owner Data
   const { checkOwnerData } = useCheckGameOwner({
-    game_id: gameId,
+    game_id: gameOwnerId,
     start: "2023-01-31T10:08:02.448Z",
     end: "2023-05-28T10:08:02.448Z"
   })
@@ -65,6 +66,18 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
     _type: "REWARD_WEEKLY",
     _poolId: poolId
   })
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      if (gameData && gameData.NFT_Owner) {
+        setGameOwnerId(gameId)
+      }
+    }
+    return () => {
+      load = true
+    }
+  }, [gameData, gameId])
 
   useEffect(() => {
     let load = false
@@ -170,7 +183,7 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   const setOwnerCommission = (): any => {
     if (gameType && checkOwnerData) {
       switch (gameType) {
-        case "play-to-earn":
+        case "play-to-earn" || "arcade-emporium":
           return checkOwnerData.data
         default:
           return "-"

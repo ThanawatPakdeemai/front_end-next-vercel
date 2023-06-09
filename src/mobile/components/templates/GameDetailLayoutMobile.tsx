@@ -37,6 +37,58 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
     gameData.game_mode
   )
 
+  const renderWeeklyTopPlayer = () => {
+    switch (gameData.game_mode) {
+      case "story-mode":
+        return null
+      case "free-to-play":
+      case "free-to-earn":
+      case "play-to-earn":
+      default:
+        return (
+          <Box
+            component="div"
+            className="game-section__weekly-prize-pool font-urbanist"
+            sx={StyleRanking}
+          >
+            {weeklyPoolByGameId && (
+              <TopPlayer
+                element="select"
+                subtitle
+                background="neutral"
+                elevation={0}
+                rank
+                topPlayerGameId={weeklyPoolByGameId.record || []}
+                className="border-0 bg-[#18181C]"
+                rightContent={
+                  <div className="flex h-10 items-center rounded-[20px] border-[1px] border-neutral-700">
+                    <button
+                      type="button"
+                      className={buttonArrow}
+                      onClick={() =>
+                        onClickedPrev(weeklyPoolByGameId.previous || "")
+                      }
+                    >
+                      <IconArrowLeft />
+                    </button>
+                    <button
+                      type="button"
+                      className={`${buttonArrow} border-l-[1px] border-neutral-700`}
+                      onClick={() =>
+                        onClickedNext(weeklyPoolByGameId.next || "")
+                      }
+                    >
+                      <IconArrowRight />
+                    </button>
+                  </div>
+                }
+              />
+            )}
+          </Box>
+        )
+    }
+  }
+
   return (
     <Box
       component="div"
@@ -81,7 +133,7 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
         {/* Game Banner */}
         <div className="game-section__banner relative overflow-hidden rounded-[20px] pt-[56%]">
           <ImageCustom
-            src={gameData.image_home_banner}
+            src={gameData.image_gif || gameData.image_category_list}
             alt={gameData.name}
             width={300}
             height={300}
@@ -115,7 +167,7 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
         </div>
 
         {/* Game categories */}
-        <div className="game-section__categories flex items-center gap-3">
+        <div className="game-section__categories flex flex-wrap items-center gap-3">
           {gameData.category_list.map((_category) => (
             <div
               key={_category.id}
@@ -131,43 +183,7 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
           </div>
         </div>
 
-        <Box
-          component="div"
-          className="game-section__weekly-prize-pool font-urbanist"
-          sx={StyleRanking}
-        >
-          {weeklyPoolByGameId && (
-            <TopPlayer
-              element="select"
-              subtitle
-              background="neutral"
-              elevation={0}
-              rank
-              topPlayerGameId={weeklyPoolByGameId.record || []}
-              className="border-0 bg-[#18181C]"
-              rightContent={
-                <div className="flex h-10 items-center rounded-[20px] border-[1px] border-neutral-700">
-                  <button
-                    type="button"
-                    className={buttonArrow}
-                    onClick={() =>
-                      onClickedPrev(weeklyPoolByGameId.previous || "")
-                    }
-                  >
-                    <IconArrowLeft />
-                  </button>
-                  <button
-                    type="button"
-                    className={`${buttonArrow} border-l-[1px] border-neutral-700`}
-                    onClick={() => onClickedNext(weeklyPoolByGameId.next || "")}
-                  >
-                    <IconArrowRight />
-                  </button>
-                </div>
-              }
-            />
-          )}
-        </Box>
+        {renderWeeklyTopPlayer()}
 
         {/* Modal About Game */}
         <AboutGameModal

@@ -8,7 +8,7 @@ import SettingIconMobile from "@mobile/components/atoms/icons/SettingIconMobile"
 export const GAME_MENU_MOBILE: ISlideList[] = [
   {
     id: "play-to-earn",
-    label: "Free To Earn",
+    label: "Play To Earn",
     type: "play-to-earn"
   },
   {

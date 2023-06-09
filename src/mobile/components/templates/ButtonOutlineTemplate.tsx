@@ -27,7 +27,6 @@ const ButtonOutlineTemplate = ({
       border: `1px solid ${color}`,
       borderRadius: "100px",
       padding: "8px 12px",
-      minWidth: "64px",
       fontWeight: 600,
       ...sxCustom
     }}

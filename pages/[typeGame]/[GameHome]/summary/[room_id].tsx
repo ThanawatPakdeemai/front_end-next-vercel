@@ -1,11 +1,10 @@
-import useGetGameByPath from "@feature/game/containers/hooks/useFindGameByPath"
+import useGameSummaryRewardController from "@feature/game/containers/hooks/useGameSummaryRewardController"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
-import useGlobal, { isMobile } from "@hooks/useGlobal"
+import { isMobile } from "@hooks/useGlobal"
 import useRefreshStamina from "@hooks/useRefreshStamina"
 import { Box } from "@mui/material"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
-import { useRouter } from "next/router"
 import React, { ReactElement, useEffect } from "react"
 import { MobileView } from "react-device-detect"
 
@@ -62,11 +61,8 @@ const GameTabsVertical = dynamic(
 )
 
 export default function SummaryDetails() {
-  const { getTypeGamePathFolder } = useGlobal()
-  const router = useRouter()
   const { refreshStamina } = useRefreshStamina()
-  const { GameHome } = router.query
-  const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
+  const { gameDataState } = useGameSummaryRewardController()
 
   useEffect(() => {
     let load = false
@@ -78,7 +74,7 @@ export default function SummaryDetails() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return gameData ? (
+  return gameDataState ? (
     <GamePageDefault
       component={
         <>
@@ -110,9 +106,9 @@ export default function SummaryDetails() {
                   }}
                 >
                   <OverviewContent
-                    gameId={gameData.id}
-                    gameType={getTypeGamePathFolder(gameData)}
-                    gameIdNFT={gameData.NFT_Owner}
+                    gameId={gameDataState.id}
+                    gameType={gameDataState.game_mode}
+                    gameIdNFT={gameDataState.NFT_Owner}
                   />
                 </Box>
               }
@@ -136,8 +132,8 @@ export default function SummaryDetails() {
           >
             <TabProvider>
               <GameTabsVertical
-                gameId={gameData.id}
-                gameType={getTypeGamePathFolder(gameData)}
+                gameId={gameDataState.id}
+                gameType={gameDataState.game_mode}
               />
             </TabProvider>
           </FullWidthContent>

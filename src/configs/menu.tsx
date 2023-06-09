@@ -518,7 +518,7 @@ export const MENU_BLOG_HEADER = [
     isChide: true,
     left: "120px !important",
     icon: (
-      <NewIcon className="group-hover:!fill-white-default group-hover:!stroke-white-default  mr-2 stroke-black-600" />
+      <NewIcon className="mr-2 stroke-black-600  group-hover:!fill-white-default group-hover:!stroke-white-default" />
     )
   },
   {
@@ -526,7 +526,7 @@ export const MENU_BLOG_HEADER = [
     link: "info.like",
     isChide: true,
     icon: (
-      <FireOutLineIcon className="group-hover:!stroke-white-default  mr-2 stroke-black-600" />
+      <FireOutLineIcon className="mr-2  stroke-black-600 group-hover:!stroke-white-default" />
     )
   }
   // {

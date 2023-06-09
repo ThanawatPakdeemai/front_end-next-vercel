@@ -19,7 +19,7 @@ import useRoomSingle from "@feature/game/containers/hooks/useRoomSingle"
  */
 const GameRoomList = () => {
   /* mockup data */
-  const { getTypeGamePathFolder } = useGlobal()
+  const { getGameMode } = useGlobal()
   const { getRoomStatus } = useRoomSingle()
   const profile = useProfileStore((state) => state.profile.data)
   // const { data } = useGameStore()
@@ -138,7 +138,7 @@ const GameRoomList = () => {
 
   const renderRoomName = (): string => {
     if (!gameData) return "Room"
-    if (gameData && getTypeGamePathFolder(gameData) === "play-to-earn") {
+    if (gameData && getGameMode(gameData) === "play-to-earn") {
       return `Room ${itemSelected?.item_size}`
     }
     return "Room"

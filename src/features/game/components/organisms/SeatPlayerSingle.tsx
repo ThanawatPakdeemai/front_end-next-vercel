@@ -47,9 +47,6 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
     conditionPlayToEarn
   } = useGameGlobal()
 
-  // TODO: Refactor later
-  const detectDevice = isMobile ? "mobile" : "desktop"
-
   useEffect(() => {
     let load = false
 
@@ -218,7 +215,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
             }:|:${profile.email}:|:${Helper.getLocalStorage(
               "token"
             )}:|:${frontendUrl}:|:${CONFIGS.BASE_URL.API}:|:${
-              isMobile ? detectDevice : gameRoomById.rank_name
+              isMobile ? "mobile" : gameRoomById.rank_name
             }:|:${gameRoomById.room_number}:|:${new Date(
               gameRoomById.start_time
             ).getTime()}:|:${profile.username}:|:${
@@ -237,7 +234,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
           }:|:${Helper.getLocalStorage(
             "token"
           )}:|:${frontendUrl}:|:${baseUrlApi}:|:${
-            isMobile ? detectDevice : gameRoomById.rank_name
+            isMobile ? "mobile" : gameRoomById.rank_name
           }:|:${gameRoomById.room_number}:|:${new Date(
             gameRoomById.start_time
           ).getTime()}${
@@ -267,8 +264,7 @@ const SeatPlayers = ({ players, room_id }: IProps) => {
     item_id,
     profile,
     room_id,
-    router?.query?.typeGame,
-    detectDevice
+    router?.query?.typeGame
   ])
 
   const onPlayGame = () => {

@@ -55,8 +55,7 @@ export default function CatogoriesPageDetails() {
     pager,
     setLimit
   } = useGamePageListController()
-  const { getTypeGamePathFolder, isRedirectRoomlist, onHandleSetGameStore } =
-    useGlobal()
+  const { getGameMode, isRedirectRoomlist, onHandleSetGameStore } = useGlobal()
 
   return (
     <div className="flex w-full flex-col">
@@ -71,14 +70,14 @@ export default function CatogoriesPageDetails() {
             <GameCard
               key={game.id}
               menu={F2PHeaderMenu}
-              href={`/${getTypeGamePathFolder(game)}/${
-                game.path
-              }${isRedirectRoomlist(game).toString()}`}
+              href={`/${getGameMode(game)}/${game.path}${isRedirectRoomlist(
+                game
+              ).toString()}`}
               onHandleClick={() =>
-                onHandleSetGameStore(getTypeGamePathFolder(game), game)
+                onHandleSetGameStore(getGameMode(game), game)
               }
               data={game}
-              gameType={getTypeGamePathFolder(game)}
+              gameType={getGameMode(game)}
             />
           ))}
       </div>

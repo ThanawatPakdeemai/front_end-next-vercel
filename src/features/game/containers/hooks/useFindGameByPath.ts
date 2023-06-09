@@ -7,7 +7,7 @@ import { getGameByPath } from "../services/game.service"
 const useGetGameByPath = (_gamePath: string) => {
   const router = useRouter()
   const { typeGame } = router.query
-  const { getTypeGamePathFolder } = useGlobal()
+  const { getGameMode } = useGlobal()
   const {
     data: gameDataByPath,
     error,
@@ -30,7 +30,7 @@ const useGetGameByPath = (_gamePath: string) => {
     if (gameDataByPath && gameDataByPath.data.length > 0) {
       // When API reture more than 2 values
       const _foundedGame = gameDataByPath.data.find(
-        (item: IGame) => getTypeGamePathFolder(item) === typeGame
+        (item: IGame) => getGameMode(item) === typeGame
       )
       if (_foundedGame) {
         return _foundedGame

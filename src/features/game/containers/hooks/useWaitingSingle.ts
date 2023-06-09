@@ -32,7 +32,7 @@ const useWaitingSingle = () => {
   const { address } = useWeb3Provider()
   const [gameUrl, setGameUrl] = useState<string>("")
   const [ip, setIp] = useState("")
-  const { getTypeGamePathFolder } = useGlobal()
+  const { getGameMode } = useGlobal()
 
   // TODO: Refactor later
   const detectDevice = isMobile ? "mobile" : "desktop"
@@ -376,7 +376,7 @@ const useWaitingSingle = () => {
     outRoom,
     playerGameSingle,
     GameHome,
-    getTypeGamePathFolder,
+    getGameMode,
     loadingPlayer,
     gameUrl,
     onPlayGame,

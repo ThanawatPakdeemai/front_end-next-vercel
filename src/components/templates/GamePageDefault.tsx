@@ -44,7 +44,7 @@ const GamePageDefault = ({
   component2,
   component3
 }: IGamePageDefaultProps) => {
-  const { getTypeGamePathFolder, stateProfile } = useGlobal()
+  const { stateProfile } = useGlobal()
   const { handleTimeExpire, getCodeShareToEarn } = useBuyGameItemController()
   const data = useGameStore((state) => state.data)
   const gamePartnerData = useGameStore((state) => state.dataGamePartner)
@@ -61,10 +61,7 @@ const GamePageDefault = ({
     onClickedNext,
     weeklyPoolByGameId,
     isLoadingWeeklyPoolByGameId
-  } = useGameOverview(
-    gameData?.id as string,
-    getTypeGamePathFolder(gameData as IGame)
-  )
+  } = useGameOverview(gameData?.id as string, (gameData as IGame).game_mode)
 
   const containerClasses = "main-container mx-auto w-full  px-2 lg:px-0"
 
@@ -79,7 +76,7 @@ const GamePageDefault = ({
 
     if (!gameData) return null
 
-    switch (getTypeGamePathFolder(gameData as IGame)) {
+    switch ((gameData as IGame).game_mode) {
       case "story-mode":
       case "free-to-play":
       case "free-to-earn":
@@ -342,7 +339,7 @@ const GamePageDefault = ({
           {component3 && <div className="mt-12">{component3}</div>}
           {/* //NOTE - comment ไว้ก่อน ค่อยเปิด feature นี้ทีหลัง */}
           {/* {gameData && (
-            <ReleatedGames _gameType={getTypeGamePathFolder(gameData as IGame)} />
+            <ReleatedGames _gameType={getGameMode(gameData as IGame)} />
           )} */}
           <Footer />
         </div>

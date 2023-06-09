@@ -16,7 +16,7 @@ import useTabContext from "@feature/tab/contexts/useTabContext"
 
 const useGameTabController = (gameType: IGetType, gameId: string) => {
   const { t } = useTranslation()
-  const { getTypeGamePathFolder } = useGlobal()
+  const { getGameMode } = useGlobal()
   const { newVersionData } = useGameWhatsNew(gameType, gameId)
   const { singleVersion, gameHowToPlay, gameItems, gameDescription } =
     useGameOverview(gameId, gameType)
@@ -30,8 +30,8 @@ const useGameTabController = (gameType: IGetType, gameId: string) => {
     component?: React.ReactNode
   } =
     gameData &&
-    (getTypeGamePathFolder(gameData) === "free-to-play" ||
-      getTypeGamePathFolder(gameData) === "story-mode")
+    (getGameMode(gameData) === "free-to-play" ||
+      getGameMode(gameData) === "story-mode")
       ? ({} as {
           id: string
           label: string

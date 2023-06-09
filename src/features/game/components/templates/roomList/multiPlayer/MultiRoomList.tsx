@@ -219,7 +219,7 @@ const MultiRoomList = () => {
           <BuyItemBody>
             <OverviewContent
               gameId={data.id}
-              gameType={getTypeGamePathFolder(data)}
+              gameType={getGameMode(data)}
               gameIdNFT={data.NFT_Owner}
             />
             {data?.play_to_earn_status !== "free" && !data.tournament && (

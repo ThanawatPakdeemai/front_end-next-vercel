@@ -1,9 +1,6 @@
 import React from "react"
-import { Avatar, Box, Button, SwipeableDrawer, Typography } from "@mui/material"
-import { useRouter } from "next/router"
-import useGlobal from "@hooks/useGlobal"
+import { Avatar, Box, Button, SwipeableDrawer } from "@mui/material"
 import useFavoriteGameContoller from "@feature/favourite/containers/hooks/useFavoriteGameContoller"
-import { ImageCustom } from "@components/atoms/image/Image"
 import HeartFilledIcon from "@mobile/components/atoms/icons/HeartFilledIcon"
 
 interface ICategoriesModalProps {

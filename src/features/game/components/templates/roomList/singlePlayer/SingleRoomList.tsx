@@ -1,9 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import { Box, Divider } from "@mui/material"
 import React from "react"
-import RoomListBar, {
-  TRoomStatus
-} from "@components/molecules/roomList/RoomListBar"
+import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import useGetAllGameRooms from "@feature/game/containers/hooks/useGetAllGameRooms"
 import useProfileStore from "@stores/profileStore"
 
@@ -14,7 +12,6 @@ import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGame
 import useGlobal from "@hooks/useGlobal"
 import useGameGlobal from "@hooks/useGameGlobal"
 import useRoomSingle from "@feature/game/containers/hooks/useRoomSingle"
-import { IGameRoomDetail } from "@feature/game/interfaces/IGameService"
 
 /**
  *
@@ -23,12 +20,14 @@ import { IGameRoomDetail } from "@feature/game/interfaces/IGameService"
 const GameRoomList = () => {
   /* mockup data */
   const { getTypeGamePathFolder } = useGlobal()
+  const { getRoomStatus } = useRoomSingle()
   const profile = useProfileStore((state) => state.profile.data)
   // const { data } = useGameStore()
   // const router = useRouter()
   // const { errorToast } = useToast()
   // const [gameData, setGameData] = useState<IGame>()
   // const { balanceofItem } = useBuyGameItemController()
+
   const {
     item,
     // conditionGameFree,
@@ -160,22 +159,6 @@ const GameRoomList = () => {
   //     load = true
   //   }
   // }, [allGameRooms, data])
-
-  const getRoomStatus = (_data: IGameRoomDetail): TRoomStatus => {
-    if (!profile) return "unavailable"
-
-    const _played = _data.current_player.find(
-      (ele) => ele.player_id === profile.id
-    )
-
-    if (_played && _played.status === "played") {
-      return "played"
-    }
-    if (_data.amount_current_player >= _data.max_players) {
-      return "full"
-    }
-    return "join"
-  }
 
   return (
     <Box

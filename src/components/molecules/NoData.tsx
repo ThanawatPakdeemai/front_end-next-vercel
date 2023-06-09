@@ -15,7 +15,7 @@ const NoData = ({ className, icon, text }: INoData) => (
     {icon || (
       <div className="mx-auto flex h-[125px] w-[125px] items-center justify-center">
         <ImageCustom
-          src={IMAGES.noDataImage.src}
+          src={IMAGES.noDataImage.srcWebp}
           alt={IMAGES.noDataImage.alt}
           width={IMAGES.noDataImage.width}
           height={IMAGES.noDataImage.height}

@@ -15,24 +15,28 @@ interface IGameList {
 const GameListMobile = ({ gameData, loading, limit }: IGameList) => (
   <Box
     component="section"
-    className="game-section grid grid-cols-2 gap-5 sm:grid-cols-4"
+    className="game-section"
   >
-    {loading &&
-      [...Array(limit)].map(() => <SkeletonCardMobile key={uuid()} />)}
-    {gameData && gameData.length === 0 && <NoData className="w-full" />}
-    {!loading &&
-      gameData &&
-      gameData.length > 0 &&
-      gameData.map((_game) => (
-        <GameCardMobile
-          key={_game.id}
-          gameId={_game.id}
-          name={_game.name}
-          imageCategoryList={_game.image_category_list}
-          categoryList={_game.category_list}
-          href={`/${_game.game_mode}/${_game.path}`}
-        />
-      ))}
+    {gameData && gameData.length === 0 && !loading && (
+      <NoData className="w-full" />
+    )}
+    <div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
+      {loading &&
+        [...Array(limit)].map(() => <SkeletonCardMobile key={uuid()} />)}
+      {!loading &&
+        gameData &&
+        gameData.length > 0 &&
+        gameData.map((_game) => (
+          <GameCardMobile
+            key={_game.id}
+            gameId={_game.id}
+            name={_game.name}
+            imageCategoryList={_game.image_category_list}
+            categoryList={_game.category_list}
+            href={`/${_game.game_mode}/${_game.path}`}
+          />
+        ))}
+    </div>
   </Box>
 )
 

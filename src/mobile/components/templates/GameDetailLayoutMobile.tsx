@@ -167,7 +167,7 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
         </div>
 
         {/* Game categories */}
-        <div className="game-section__categories flex items-center gap-3">
+        <div className="game-section__categories flex flex-wrap items-center gap-3">
           {gameData.category_list.map((_category) => (
             <div
               key={_category.id}

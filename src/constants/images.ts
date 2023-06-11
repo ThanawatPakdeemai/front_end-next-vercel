@@ -355,8 +355,8 @@ export const IMAGES: {
   },
   noDataImage: {
     src: "/images/home/sticker/sticker.png",
-    srcWebp: "/images/home/sticker/sticker.webp",
-    blurDataURL: "/images/home/sticker/sticker.webp",
+    srcWebp: "/images/home/sticker/sticker.png",
+    blurDataURL: "/images/home/sticker/sticker.png",
     width: 125,
     height: 125,
     alt: "NodataImage"

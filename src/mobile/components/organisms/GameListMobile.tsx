@@ -14,7 +14,6 @@ interface IGameList {
 
 const GameListMobile = ({ gameData, loading }: IGameList) => {
   const { getScrollToEndScreen: endScreen } = useScrollToEndStore()
-
   return (
     <>
       <Box

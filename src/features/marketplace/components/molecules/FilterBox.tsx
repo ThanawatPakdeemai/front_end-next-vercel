@@ -467,58 +467,65 @@ const FilterBox = () => {
         </>
       ) : null}
       <div className="my-4 h-[7px] w-full rounded-[13px] bg-[url('/images/services/curvy-line2.png')]" />
-      <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
-        <Typography className="text-sm uppercase text-white-default">
-          Resource type
-        </Typography>
-        <div className="flex">
-          <ArrowBackIcon
-            color="secondary"
-            sx={{ fontSize: 15 }}
-          />
-          <Typography
-            component="button"
-            onClick={() => {
-              if (
-                filterType &&
-                (filterType.game_item.length > 0 ||
-                  filterType.nft_land.length > 0 ||
-                  filterType.nft_building.length > 0 ||
-                  filterType.nft_material.length > 0)
-              )
-                onResetFilterType()
-            }}
-            className="corsor-pointer ml-2 self-center text-xs uppercase text-secondary-main"
-          >
-            Clear
-          </Typography>
-        </div>
-      </div>
+
       <div>
-        {marketType !== "game_item" && _resourceType && _resourceType.length > 0
-          ? _resourceType
+        {marketType !== "game_item" &&
+        _resourceType &&
+        _resourceType.length > 0 ? (
+          <>
+            <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
+              <Typography className="text-sm uppercase text-white-default">
+                Resource type
+              </Typography>
+              <div className="flex">
+                <ArrowBackIcon
+                  color="secondary"
+                  sx={{ fontSize: 15 }}
+                />
+                <Typography
+                  component="button"
+                  onClick={() => {
+                    if (
+                      filterType &&
+                      (filterType.game_item.length > 0 ||
+                        filterType.nft_land.length > 0 ||
+                        filterType.nft_building.length > 0 ||
+                        filterType.nft_material.length > 0)
+                    )
+                      onResetFilterType()
+                  }}
+                  className="corsor-pointer ml-2 self-center text-xs uppercase text-secondary-main"
+                >
+                  Clear
+                </Typography>
+              </div>
+            </div>
+            {_resourceType
               .filter(
                 (item, index, self) =>
                   self.findIndex((t) => t.name === item.name) === index
                 // filter building level 2 & 3
               )
               .map((item) => (
-                <CheckBoxNaka
-                  key={item.name}
-                  value={item.checked}
-                  onHandle={() => {
-                    handleCheckboxChange({
-                      _value: onSelectedFilterValue(marketType, item),
-                      _checked: onFilterChange(marketType, item)
-                    })
-                  }}
-                  text={item.name}
-                  className="mr-4 items-center self-center uppercase"
-                  fontStyle="text-xs text-black-default"
-                  img={item.image}
-                />
-              ))
-          : null}
+                <>
+                  <CheckBoxNaka
+                    key={item.name}
+                    value={item.checked}
+                    onHandle={() => {
+                      handleCheckboxChange({
+                        _value: onSelectedFilterValue(marketType, item),
+                        _checked: onFilterChange(marketType, item)
+                      })
+                    }}
+                    text={item.name}
+                    className="mr-4 items-center self-center uppercase"
+                    fontStyle="text-xs text-black-default"
+                    img={item.image}
+                  />
+                </>
+              ))}
+          </>
+        ) : null}
         {marketType === "game_item" && _gameItemType && _gameItemType.length > 0
           ? _gameItemType
               .filter(

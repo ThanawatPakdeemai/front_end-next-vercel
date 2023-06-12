@@ -76,24 +76,24 @@ const MarketplaceCardList = () => {
       </div>
     )
   }
-  return (
+  return orderData?.data.length === 0 && !isLoading ? (
     <div className="flex w-full justify-center">
-      {orderData?.data.length === 0 && !isLoading ? (
-        <NoData />
-      ) : (
-        <div className="grid  w-fit grid-cols-2 gap-4 sm:w-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {[...Array(limit)].map(() => (
-            <div key={uuidv4()}>
-              <div className="hidden sm:block">
-                <SkeletonItem />
-              </div>
-              <div className="block sm:hidden">
-                <SkeletonItemMobile />
-              </div>
+      <NoData />
+    </div>
+  ) : (
+    <div className="flex w-fit justify-center">
+      <div className="grid w-fit grid-cols-2 gap-4 sm:w-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        {[...Array(limit)].map(() => (
+          <div key={uuidv4()}>
+            <div className="hidden sm:block">
+              <SkeletonItem />
             </div>
-          ))}
-        </div>
-      )}
+            <div className="block sm:hidden">
+              <SkeletonItemMobile />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

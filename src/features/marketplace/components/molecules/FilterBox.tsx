@@ -264,24 +264,21 @@ const FilterBox = () => {
             width: "218px"
           }}
         >
-          {_menuDropDown.map((ele) => {
-            const active = router.asPath.includes(ele.href)
-            return (
-              <MenuItemCustom
-                key={ele.name}
-                id={ele.name}
-                label={ele.name}
-                icon=""
-                href={ele.href}
-                external={false}
-                active
-                onClick={() => {
-                  setExpanded(!expanded)
-                }}
-                byPassOnClick
-              />
-            )
-          })}
+          {_menuDropDown.map((ele) => (
+            <MenuItemCustom
+              key={ele.name}
+              id={ele.name}
+              label={ele.name}
+              icon=""
+              href={ele.href}
+              external={false}
+              active
+              onClick={() => {
+                setExpanded(!expanded)
+              }}
+              byPassOnClick
+            />
+          ))}
         </Collapse>
       </section>
 

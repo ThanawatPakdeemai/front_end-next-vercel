@@ -14,6 +14,10 @@ interface IGameList {
 
 const GameListMobile = ({ gameData, loading }: IGameList) => {
   const { getScrollToEndScreen: endScreen } = useScrollToEndStore()
+
+  // eslint-disable-next-line no-console
+  console.log("test-gameData", gameData)
+
   return (
     <>
       <Box

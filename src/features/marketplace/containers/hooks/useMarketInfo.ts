@@ -6,6 +6,7 @@ import {
   IMarketServForm,
   IMarketSort,
   TNFTType,
+  TSellingType,
   TType
 } from "@feature/marketplace/interfaces/IMarketService"
 import useGlobal from "@hooks/useGlobal"
@@ -90,7 +91,8 @@ const useMarketInfo = () => {
     if (filterType && search && sort && _marketType && sellerType) {
       setCardType(convertNFTTypeToTType(_marketType) || "land")
       let __search: IMarketSearch = {
-        type_marketplace: _marketType
+        type_marketplace: _marketType,
+        selling_type: getValueFromTKey(search, "selling_type") as TSellingType
       }
       const __sort: IMarketSort = {
         created_at:

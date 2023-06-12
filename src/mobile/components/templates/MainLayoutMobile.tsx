@@ -6,6 +6,7 @@ import HeadGameMenuMobile, {
   IHeadGameMenuMobileProps
 } from "../atoms/headerMenu/HeadGameMenuMobile"
 import FooterMobile from "../organisms/FooterMobile"
+import HeadProfileNoLoginMobile from "../atoms/headerMenu/HeadProfileNoLoginMobile"
 
 interface IMainLayoutMobileProps extends IHeadGameMenuMobileProps {
   children: React.ReactNode
@@ -16,13 +17,7 @@ const MainLayoutMobile = ({ children, ...props }: IMainLayoutMobileProps) => {
 
   return (
     <Box component="article">
-      {profile ? (
-        <HeadProfileMobile />
-      ) : (
-        <header className="header bg-[#F32429] pb-[55px]">
-          <div className="flex items-center justify-between px-5 py-10" />
-        </header>
-      )}
+      {profile ? <HeadProfileMobile /> : <HeadProfileNoLoginMobile />}
 
       <Box
         component="div"

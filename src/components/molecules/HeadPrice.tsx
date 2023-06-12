@@ -1,7 +1,5 @@
 import React, { memo, useState } from "react"
-import { Image } from "@components/atoms/image"
 import { Box, Typography } from "@mui/material"
-import { IMAGES } from "@constants/images"
 import { siteInfo } from "@configs/sites"
 import Helper from "@utils/helper"
 import dayjs from "dayjs"
@@ -11,6 +9,7 @@ import { BUY_NAKA_MENU } from "@configs/buynaka"
 import Link from "next/link"
 import CONFIGS from "@configs/index"
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
+import NakaIcon from "@components/icons/Tournament/NakaIcon"
 import { ModalCustom } from "./Modal/ModalCustom"
 import TabMenu from "./TabMenu"
 
@@ -29,7 +28,6 @@ const HeadPrice = ({
   showLow = true,
   showTime = true
 }: IProp) => {
-  // const { t } = useTranslation()
   const [open, setOpen] = useState<boolean>(false)
   const { price } = useNakaPriceProvider()
 
@@ -41,8 +39,8 @@ const HeadPrice = ({
       component="div"
       className="relative mb-2 flex w-[100%] flex-row flex-wrap rounded-b-lg bg-neutral-800 sm:mb-0 lg:h-[30px] lg:flex-nowrap"
     >
-      <Typography className="text-black-01 flex h-full w-full max-w-[150px] flex-1 items-center justify-center whitespace-nowrap bg-secondary-main md:absolute md:rounded-bl-lg  lg:static lg:w-[15%] lg:flex-none">
-        <span className="font-neue-machina text-sm uppercase text-primary-main">
+      <Typography className="text-black-01 flex h-full w-full max-w-[150px] flex-1 items-center justify-center whitespace-nowrap bg-neutral-700 md:absolute md:rounded-bl-lg lg:static lg:w-[15%] lg:flex-none">
+        <span className="font-neue-machina text-sm uppercase text-white-primary">
           TOKENS INFO =
         </span>
       </Typography>
@@ -50,11 +48,11 @@ const HeadPrice = ({
         component="div"
         className="flex flex-[1_1_100%] items-center justify-center font-neue-machina text-sm uppercase sm:ml-4 lg:flex-none"
       >
-        <span className="xs:block mr-2 hidden text-black-default">
+        <span className="mr-2 hidden text-black-default xl:block">
           NAKA Contract{" "}
         </span>
         <div className="flex flex-row items-center">
-          <span className="mr-1 text-purple-primary">Polygon : </span>
+          <span className="mr-1 text-white-primary">Polygon : </span>
           {siteInfo.contract && (
             <Link
               href={`${CONFIGS.CHAIN.POLYGON_SCAN}/address/${CONFIGS.CONTRACT_ADDRESS.NAKA}`}
@@ -67,7 +65,7 @@ const HeadPrice = ({
                 onClick={() =>
                   Helper.copyClipboard(CONFIGS.CONTRACT_ADDRESS.NAKA)
                 }
-                className="mt-4 cursor-pointer font-neue-machina text-sm uppercase text-purple-primary"
+                className="mt-4 cursor-pointer font-neue-machina text-sm uppercase text-white-primary"
               >
                 {Helper.textWithDots(CONFIGS.CONTRACT_ADDRESS.NAKA, 8)}
               </Typography>
@@ -80,86 +78,91 @@ const HeadPrice = ({
           component="div"
           className="flex w-full flex-wrap items-center justify-center md:px-[170px] lg:ml-auto lg:w-auto lg:flex-nowrap lg:px-0"
         >
-          {showTime && (
-            <Typography
-              variant="body1"
-              className="mr-2 font-neue-machina text-sm text-black-default sm:flex-none"
-            >
-              {dayjs(price.time).format("h:mm A")} {price.symbol}{" "}
-            </Typography>
-          )}
-          {showLast && (
-            <Typography
-              variant="body1"
-              className="mr-2 font-neue-machina text-sm text-black-default sm:flex-none"
-            >
-              {Number(price.changeRate) > 0 ? (
-                <span className="flex items-center font-neue-machina text-sm uppercase text-green-card">
-                  {price.last}
+          <div className="flex flex-row items-center justify-end sm:mr-4">
+            {showTime && (
+              <Typography
+                variant="body1"
+                className="mr-2 font-neue-machina text-sm text-white-primary sm:flex-none"
+              >
+                {dayjs(price.time).format("h:mm A")} {price.symbol}{" "}
+              </Typography>
+            )}
+            {showLast && (
+              <Typography
+                variant="body1"
+                className="mr-2 font-neue-machina text-sm text-white-primary sm:flex-none"
+              >
+                {Number(price.changeRate) > 0 ? (
+                  <span className="flex items-center font-neue-machina text-sm uppercase text-green-card">
+                    {price.last}
+                  </span>
+                ) : (
+                  <span className="flex items-center justify-center font-neue-machina text-sm uppercase text-red-default">
+                    {price.last}
+                  </span>
+                )}
+              </Typography>
+            )}
+            {showRate && (
+              <Typography
+                variant="body1"
+                className="flex items-center justify-center lg:flex-none"
+              >
+                {Number(price.changeRate) > 0 ? (
+                  <span className="flex items-center font-neue-machina text-sm uppercase text-green-card">
+                    +{(Number(price.changeRate) * 100).toFixed(2)}%
+                  </span>
+                ) : (
+                  <span className="flex items-center justify-center font-neue-machina text-sm uppercase text-red-default">
+                    {(Number(price.changeRate) * 100).toFixed(2)}%
+                  </span>
+                )}
+              </Typography>
+            )}
+            {showHigh && (
+              <Typography
+                variant="body1"
+                className="mx-3 flex items-center justify-center lg:flex-none"
+              >
+                <span className="font-neue-machina text-sm uppercase text-white-primary">
+                  24h High
                 </span>
-              ) : (
-                <span className="flex items-center justify-center font-neue-machina text-sm uppercase text-red-default">
-                  {price.last}
+                <span className="ml-2 font-neue-machina text-sm uppercase text-white-primary">
+                  {price.high}
                 </span>
-              )}
-            </Typography>
-          )}
-          {showRate && (
-            <Typography
-              variant="body1"
-              className="flex items-center justify-center lg:flex-none"
-            >
-              {Number(price.changeRate) > 0 ? (
-                <span className="flex items-center font-neue-machina text-sm uppercase text-green-card">
-                  +{(Number(price.changeRate) * 100).toFixed(2)}%
+              </Typography>
+            )}
+            {showLow && (
+              <Typography
+                variant="body1"
+                className="flex items-center justify-center lg:flex-none"
+              >
+                <span className="font-neue-machina text-sm uppercase text-white-primary">
+                  24h Low
                 </span>
-              ) : (
-                <span className="flex items-center justify-center font-neue-machina text-sm uppercase text-red-default">
-                  {(Number(price.changeRate) * 100).toFixed(2)}%
+                <span className="ml-2 font-neue-machina text-sm uppercase text-white-primary">
+                  {price.low}
                 </span>
-              )}
-            </Typography>
-          )}
-          {showHigh && (
-            <Typography
-              variant="body1"
-              className="mx-3 flex items-center justify-center lg:flex-none"
-            >
-              <span className="font-neue-machina text-sm uppercase text-black-default">
-                24h High{" "}
-              </span>
-              <span className="ml-2 font-neue-machina text-sm uppercase text-black-default">
-                {price.high}
-              </span>
-            </Typography>
-          )}
-          {showLow && (
-            <Typography
-              variant="body1"
-              className="flex items-center justify-center lg:flex-none"
-            >
-              <span className="font-neue-machina text-sm uppercase text-black-default">
-                24h Low{" "}
-              </span>
-              <span className="ml-2 font-neue-machina text-sm uppercase text-black-default">
-                {price.low}
-              </span>
-            </Typography>
-          )}
+              </Typography>
+            )}
+          </div>
+
           <button
             type="button"
-            className="absolute right-0 top-0 z-[51] m-auto flex w-full max-w-[150px] flex-row items-center justify-center bg-error-main sm:h-[100%] sm:w-[150px] sm:rounded-br-lg lg:relative lg:right-auto lg:top-auto lg:h-[30px] lg:w-[150px] lg:justify-evenly xl:m-0 xl:ml-4"
+            className="lg:h-[30px]lg:justify-evenly absolute right-0 top-0 z-[51] m-auto flex w-[120px] flex-row items-center justify-center gap-x-2 bg-neutral-700 sm:rounded-br-lg md:h-[100%] lg:relative lg:right-auto lg:top-auto"
             onClick={handleOpen}
           >
-            <div className="font-neue-machina text-sm uppercase text-white-primary">
+            <div className="font-neue-machina text-sm uppercase text-error-main">
               BUY NAKA
             </div>
-            <Image
+            {/* <Image
               src={IMAGES.nakaLogoMaster.src}
               width={IMAGES.nakaLogoMaster.width}
               height={IMAGES.nakaLogoMaster.height}
               alt={IMAGES.nakaLogoMaster.alt}
-            />
+              className="text-error-main"
+            /> */}
+            <NakaIcon color="#F42728" />
           </button>
         </Box>
       ) : null}

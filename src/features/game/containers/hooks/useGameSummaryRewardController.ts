@@ -18,12 +18,14 @@ import useNotiStore from "@stores/notification"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useState } from "react"
+import useLoadingStore from "@stores/loading"
 import useGetGameRoomById from "./useGetGameRoomById"
 import useGetSummaryGameByRoomId from "./useGetSummaryGameByRoomId"
 import useGetGameByPath from "./useFindGameByPath"
 
 const useGameSummaryRewardController = () => {
   const router = useRouter()
+  const { setClose } = useLoadingStore()
   const { room_id, notification_id, GameHome } = router.query
 
   // Store
@@ -140,14 +142,19 @@ const useGameSummaryRewardController = () => {
     _type: notificationItem?.type || "REWARD"
   })
 
+  const getGamePath = useCallback(() => {
+    if (!notificationItem) return ""
+    if (!playHistoryItem) return ""
+
+    return router.asPath.includes("summary")
+      ? (GameHome as string)
+      : notificationItem.path || "" || playHistoryItem.game_detail.path || ""
+  }, [GameHome, notificationItem, playHistoryItem, router.asPath])
+
   /**
    * @description Get game data from notification game path
    */
-  const { gameData } = useGetGameByPath(
-    router.asPath.includes("summary")
-      ? (GameHome as string)
-      : notificationItem?.path || "" || playHistoryItem?.game_detail.path || ""
-  )
+  const { gameData } = useGetGameByPath(getGamePath())
 
   // const { gameData } = useFindGameById(gameIdTarget)
 
@@ -333,6 +340,7 @@ const useGameSummaryRewardController = () => {
           (item) => item._id === notification_id
         )
         if (currentNotification) {
+          setClose()
           setNotificationItem(currentNotification)
           onUpdateReadNotification(currentNotification)
         }
@@ -346,7 +354,8 @@ const useGameSummaryRewardController = () => {
     notification_id,
     notificationAll,
     notificationItem,
-    onUpdateReadNotification
+    onUpdateReadNotification,
+    setClose
   ])
 
   /**
@@ -354,10 +363,10 @@ const useGameSummaryRewardController = () => {
    */
   useEffect(() => {
     let load = false
-
     if (!playHistory) return
     if (!load) {
       if (playHistory) {
+        setClose()
         setPlayHistory(playHistory)
       }
     }
@@ -365,7 +374,7 @@ const useGameSummaryRewardController = () => {
     return () => {
       load = true
     }
-  }, [playHistory])
+  }, [playHistory, setClose])
 
   /**
    * Set game data to store

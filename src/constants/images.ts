@@ -265,6 +265,14 @@ export const IMAGES: {
     height: 218,
     alt: "no_image"
   },
+  no_avatar: {
+    src: "/images/common/no_login_avatar.png",
+    srcWebp: "/images/common/no_login_avatar.png",
+    blurDataURL: "/images/common/no_login_avatar.png",
+    width: 50,
+    height: 50,
+    alt: "no_avatar"
+  },
   MetaMaskds: {
     src: "/images/Profile/Wallet/MetaMaskds.svg",
     srcWebp: "/images/Profile/Wallet/MetaMaskds.svg",

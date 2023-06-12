@@ -124,7 +124,7 @@ const SelectNaka = ({
                             <ListItemIcon className="!text-primary-contrastText ">
                               {option.icon}
                             </ListItemIcon>
-                            <ListItemText className="w-50">
+                            <ListItemText className="w-50 flex items-center">
                               <Typography className="!font-neue-machina-semi !text-sm">
                                 <Trans i18nKey={option.label}>
                                   {option.label}

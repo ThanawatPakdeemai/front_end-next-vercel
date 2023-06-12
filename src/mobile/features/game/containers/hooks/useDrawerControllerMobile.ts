@@ -11,6 +11,7 @@ const useDrawerControllerMobile = () => {
   const [openPlayedHistory, setOpenPlayedHistory] = useState<boolean>(false)
   const [openAboutGame, setOpenAboutGame] = useState<boolean>(false)
   const [openCreateRoom, setOpenCreateRoom] = useState<boolean>(false)
+  const [openSignIn, setOpenSignIn] = useState<boolean>(false)
 
   /**
    * @description Clear all drawer before setting new drawer
@@ -25,6 +26,7 @@ const useDrawerControllerMobile = () => {
     setOpenPlayedHistory(false)
     setOpenAboutGame(false)
     setOpenCreateRoom(false)
+    setOpenSignIn(false)
   }
 
   return {
@@ -46,7 +48,9 @@ const useDrawerControllerMobile = () => {
     openAboutGame,
     setOpenAboutGame,
     openCreateRoom,
-    setOpenCreateRoom
+    setOpenCreateRoom,
+    openSignIn,
+    setOpenSignIn
   }
 }
 

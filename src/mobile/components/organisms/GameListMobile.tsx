@@ -47,7 +47,7 @@ const GameListMobile = ({ gameData, loading }: IGameList) => {
           variant="button"
           display="block"
           gutterBottom
-          className="text-center"
+          className="text-center font-bold text-white-default"
         >
           End of The Limit
         </Typography>

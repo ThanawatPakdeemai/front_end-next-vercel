@@ -344,6 +344,8 @@ const useWaitingSingle = () => {
   }
 
   const checkAccountProfile = () => {
+    // For code detect isMobile, if In-App purchase is ready we will delete it
+    if (isMobile) return true
     if (profile && address === profile.address) {
       return true
     }

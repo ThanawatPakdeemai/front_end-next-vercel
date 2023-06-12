@@ -61,7 +61,7 @@ const GamePageDefault = ({
     onClickedNext,
     weeklyPoolByGameId,
     isLoadingWeeklyPoolByGameId
-  } = useGameOverview(gameData?.id as string, (gameData as IGame).game_mode)
+  } = useGameOverview(gameData?.id as string, (gameData as IGame)?.game_mode)
 
   const containerClasses = "main-container mx-auto w-full  px-2 lg:px-0"
 

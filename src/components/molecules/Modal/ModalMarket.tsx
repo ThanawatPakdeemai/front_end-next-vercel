@@ -96,6 +96,8 @@ const ModalMarket = ({
   const { onCreateOrder, onCancelOrder, onMintOrder, onExecuteOrder } =
     useMarket()
 
+  const [sellPrice, setSellPrice] = useState<string>("")
+
   const {
     invenItemData,
     invPrice,
@@ -112,6 +114,7 @@ const ModalMarket = ({
   const onPriceChange = (value: string) => {
     const _value = Number(value)
     if (setInvPrice) setInvPrice(_value)
+    // setSellPrice(value)
   }
 
   const onPeriodChange = (value: number) => {
@@ -343,11 +346,6 @@ const ModalMarket = ({
           spacing={3}
           className="md:py-5"
         >
-          {/* <ModalHeader
-            handleClose={onClose}
-            title={titleModal}
-            bg="bg-neutral-800"
-          /> */}
           {action === "login" ? <FormLogin /> : null}
           {action !== "login" ? (
             <div className="grid w-full grid-cols-1 items-center gap-11 md:grid-cols-2">
@@ -360,13 +358,6 @@ const ModalMarket = ({
                     disableOnClick
                     className="rounded-xl object-cover"
                   />
-                  {/* <Image
-                    src={img}
-                    alt=""
-                    width={320}
-                    height={360}
-                    className="object-cover"
-                  /> */}
                 </div>
                 <div
                   className={`${
@@ -402,7 +393,9 @@ const ModalMarket = ({
                     selling={selling}
                     setSelling={setSelling}
                     currency={currency}
-                    price={invPrice || undefined}
+                    // price={invPrice || undefined}
+                    // onPriceChange={onPriceChange}
+                    price={sellPrice}
                     onPriceChange={onPriceChange}
                     period={invPeriod || 1}
                     setPeriod={onPeriodChange}

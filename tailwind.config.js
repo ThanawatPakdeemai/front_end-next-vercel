@@ -138,6 +138,7 @@ module.exports = {
         },
         grey: {
           default: "#98A0B5",
+          "neutral01": "#E0E0E0",
           "neutral04": "#A6A9AE"
         },
         black: {

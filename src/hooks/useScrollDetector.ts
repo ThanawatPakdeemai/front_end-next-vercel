@@ -26,7 +26,7 @@ const useScrollDetector = () => {
       window.removeEventListener("scroll", handleScroll)
     }
   }, [])
-  return isBottomed
+  return { scrollBottom: isBottomed }
 }
 
 export default useScrollDetector

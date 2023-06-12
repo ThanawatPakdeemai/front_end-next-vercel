@@ -12,6 +12,7 @@ import { MESSAGES } from "@constants/messages"
 import useGetAllGameRoomsById from "@feature/game/containers/hooks/useGetAllGameRoomsById"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import useGameGlobal from "@hooks/useGameGlobal"
+import { TRoomStatus } from "@components/molecules/roomList/RoomListBar"
 
 const useRoomSingle = () => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -151,6 +152,25 @@ const useRoomSingle = () => {
     }
   }
 
+  /**
+   * @description Get room status
+   */
+  const getRoomStatus = (_data: IGameRoomDetail): TRoomStatus => {
+    if (!profile) return "unavailable"
+
+    const _played = _data.current_player.find(
+      (ele) => ele.player_id === profile.id
+    )
+
+    if (_played && _played.status === "played") {
+      return "played"
+    }
+    if (_data.amount_current_player >= _data.max_players) {
+      return "full"
+    }
+    return "join"
+  }
+
   return {
     allGameRooms,
     allGameRoomsById,
@@ -162,7 +182,8 @@ const useRoomSingle = () => {
     loadingAllroomById,
     loadingAllroom,
     loadRoom,
-    textJoin
+    textJoin,
+    getRoomStatus
   }
 }
 

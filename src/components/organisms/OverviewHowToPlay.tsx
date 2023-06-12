@@ -21,13 +21,6 @@ const OverviewHowToPlay = ({
   const { t } = useTranslation()
   const { gameHowToPlay } = useGameOverview(gameId, gameType)
 
-  // const { hydrated } = useGlobal()
-  // const { data } = useGameStore()
-  // const [gameData, setGameData] = useState<IGame>()
-  // useEffect(() => {
-  //   if (data) setGameData(data)
-  // }, [data])
-
   return (
     <div className="relative my-2 flex flex-col overflow-hidden rounded-2xl bg-neutral-780 p-2 sm:m-0 md:min-w-[330px]">
       <AsideLayout

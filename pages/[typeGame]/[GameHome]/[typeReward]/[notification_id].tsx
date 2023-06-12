@@ -59,7 +59,7 @@ const GameTabsVertical = dynamic(
 )
 export default function Notification_id() {
   const { gameDataState } = useGameSummaryRewardController()
-  const { getTypeGamePathFolder } = useGlobal()
+  const { getGameMode } = useGlobal()
 
   return gameDataState ? (
     <GamePageDefault
@@ -85,7 +85,7 @@ export default function Notification_id() {
             >
               <OverviewContent
                 gameId={gameDataState.id}
-                gameType={getTypeGamePathFolder(gameDataState)}
+                gameType={getGameMode(gameDataState)}
                 gameIdNFT={gameDataState.NFT_Owner}
               />
             </Box>

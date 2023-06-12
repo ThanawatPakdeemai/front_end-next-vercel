@@ -81,8 +81,7 @@ export default function ArcadeEmporiumGameDetails() {
   const gamePath = slug ? slug.toString() : ""
   const { gameData } = useGetGameByPath(gamePath)
   const { onSetGameData } = useGameStore()
-  const { getTypeGamePathFolder, getGameStoryModeURL, isRedirectRoomlist } =
-    useGlobal()
+  const { getGameStoryModeURL, isRedirectRoomlist } = useGlobal()
   const { t } = useTranslation()
 
   /**
@@ -90,7 +89,7 @@ export default function ArcadeEmporiumGameDetails() {
    */
   const renderFormBuyItem = () => {
     if (!gameData) return null
-    switch (getTypeGamePathFolder(gameData)) {
+    switch (gameData.game_mode) {
       case "story-mode":
         return (
           <Box
@@ -148,24 +147,22 @@ export default function ArcadeEmporiumGameDetails() {
             >
               <ButtonGame
                 textButton={t("join-game")}
-                url={`/${getTypeGamePathFolder(gameData)}/${
+                url={`/${gameData.game_mode}/${
                   gameData.path
                 }${isRedirectRoomlist(gameData).toString()}`}
               />
             </Box>
           </Box>
         )
-      default:
+      case "play-to-earn":
         return (
           <CardBuyItem
-            buttonStyle={
-              getTypeGamePathFolder(gameData) !== "storymode"
-                ? "purple"
-                : "green"
-            }
+            buttonStyle="purple"
             gameObject={gameData}
           />
         )
+      default:
+        null
     }
   }
 
@@ -211,7 +208,7 @@ export default function ArcadeEmporiumGameDetails() {
             >
               <OverviewContent
                 gameId={gameData.id}
-                gameType={getTypeGamePathFolder(gameData)}
+                gameType={gameData.game_mode}
                 gameIdNFT={gameData.NFT_Owner}
               />
               {renderFormBuyItem()}

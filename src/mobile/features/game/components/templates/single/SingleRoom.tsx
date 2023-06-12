@@ -11,7 +11,8 @@ const SingleRoom = () => {
     itemSelected,
     handleJoinRoom,
     loadRoom,
-    textJoin
+    textJoin,
+    getRoomStatus
   } = useRoomSingle()
 
   return (
@@ -42,6 +43,7 @@ const SingleRoom = () => {
                   }`
             }
             descChip2={`${_room.amount_current_player} / ${_room.max_players}`}
+            btnText={getRoomStatus(_room)}
           />
         ))
       ) : (

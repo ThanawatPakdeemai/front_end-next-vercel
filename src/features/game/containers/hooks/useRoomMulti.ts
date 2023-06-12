@@ -11,6 +11,7 @@ import { MESSAGES } from "@constants/messages"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import helper from "@utils/helper"
 import useGameGlobal from "@hooks/useGameGlobal"
+import { TRoomStatus } from "@components/molecules/roomList/RoomListBar"
 import useSocketRoomList from "./useSocketRoomList"
 
 const useRoomMulti = () => {
@@ -180,6 +181,26 @@ const useRoomMulti = () => {
       errorToast(MESSAGES["please_login"])
     }
   }
+
+  /**
+   * @description Get room status
+   */
+  const getRoomStatus = (_data: IGameRoomListSocket): TRoomStatus => {
+    if (!profile) return "unavailable"
+
+    const _played = _data.current_player.find(
+      (ele) => ele.player_id === profile.id
+    )
+
+    if (_played && _played.status === "played") {
+      return "played"
+    }
+    if (_data.amount_current_player >= _data.max_players) {
+      return "full"
+    }
+    return "join"
+  }
+
   return {
     profile,
     gameData: data,
@@ -187,7 +208,8 @@ const useRoomMulti = () => {
     handleJoinRoom,
     dataRoom,
     searchRoom,
-    data
+    data,
+    getRoomStatus
   }
 }
 

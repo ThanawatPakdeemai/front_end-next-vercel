@@ -22,7 +22,7 @@ const CardFooterSlide = ({
   const { t } = useTranslation()
   const {
     onHandleSetGameStore,
-    getTypeGamePathFolder,
+    getGameMode,
     stateProfile,
     isRedirectRoomlist
   } = useGlobal()
@@ -50,15 +50,15 @@ const CardFooterSlide = ({
           color="secondary"
           variant="contained"
           className="w-full"
-          // href={`/${getTypeGamePathFolder(gameData)}/${
+          // href={`/${getGameMode(gameData)}/${
           //   gameData.path
           // }${isRedirectRoomlist(gameData).toString()}`}
           onClick={() => {
-            onHandleSetGameStore(getTypeGamePathFolder(gameData), gameData)
+            onHandleSetGameStore(getGameMode(gameData), gameData)
             router.push(
-              `/${getTypeGamePathFolder(gameData)}/${
-                gameData.path
-              }${isRedirectRoomlist(gameData).toString()}`
+              `/${getGameMode(gameData)}/${gameData.path}${isRedirectRoomlist(
+                gameData
+              ).toString()}`
             )
           }}
         />

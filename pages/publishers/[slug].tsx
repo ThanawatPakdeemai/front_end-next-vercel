@@ -27,11 +27,10 @@ const SkeletonPublisherCard = dynamic(
 )
 
 export default function PublisherDetails() {
-  const { limit } = useGlobal()
+  const { limit, onHandleClick } = useGlobal()
   const { category: categoryDropdown, search: searchDropdown } =
     useFilterStore()
 
-  const { onHandleClick } = useGlobal()
   const [gameFilter, setGameFilter] = useState<IPartnerGameData[]>()
   const [page, setPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)

@@ -8,7 +8,7 @@ import React, { memo, useEffect, useState } from "react"
 import { Image } from "@components/atoms/image"
 import IconHourglass from "@components/icons/hourglassIcon"
 import TimerStamina from "@components/atoms/timer/TimerStamina"
-import { IGame, IGameFav } from "@feature/game/interfaces/IGameService"
+import { IGame } from "@feature/game/interfaces/IGameService"
 import { IPartnerGameData } from "@feature/game/interfaces/IPartnerGame"
 import { IMAGES } from "@constants/images"
 import { useTranslation } from "react-i18next"
@@ -16,7 +16,7 @@ import JoinStickIcon from "@components/icons/JoinStickIcon"
 
 interface IProps {
   menu: IHeaderSlide
-  data?: IGame | IGameFav
+  data?: IGame
   partnerdata?: IPartnerGameData
   imgPartner?: string | undefined
   showNo?: boolean

@@ -4,7 +4,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { NextRouter, useRouter } from "next/router"
 import DropdownIcon from "@components/icons/DropdownIcon"
 import MenuItemCustom from "@components/atoms/MenuItemCustom"
-import DragHandleIcon from "@mui/icons-material/DragHandle"
 import {
   MARKET_FILTER_DATE,
   MARKET_FILTER_PRICE,
@@ -19,6 +18,7 @@ import { ITypeMaterials } from "@feature/material/marketplace/interfaces/IMateri
 import useGlobal from "@hooks/useGlobal"
 import Helper from "@utils/helper"
 import CheckBoxNaka from "@components/atoms/checkBox/CheckBoxNaka"
+import MenuButtonExpandMobile from "@feature/page/marketplace/mobilescreen/MenuButtonExpandMobile"
 import ResourceTree from "./ResourceTree"
 import FilterSearchBox from "./FilterSearchBox"
 import SearchDropDown from "./SearchDropDown"
@@ -239,7 +239,19 @@ const FilterBox = () => {
           onClick={handleOnExpandClick}
           className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[8px] border-[1px] border-solid border-neutral-700 bg-secondary-main px-5 text-[12px] text-white-primary"
         >
-          <DragHandleIcon />
+          <MenuButtonExpandMobile
+            isOpen={expanded}
+            strokeWidth="1"
+            color="#F1F4F4"
+            transition={{
+              ease: "easeOut",
+              duration: 0.2,
+              stiffness: 10,
+              bounce: 5
+            }}
+            width="16"
+            height="10"
+          />
           <span className="text-white capitalize">
             {convertNFTTypeToTType(marketType || "nft_land")}
           </span>
@@ -264,25 +276,28 @@ const FilterBox = () => {
             width: "218px"
           }}
         >
-          {_menuDropDown.map((ele) => (
-            <MenuItemCustom
-              key={ele.name}
-              id={ele.name}
-              label={ele.name}
-              icon=""
-              href={ele.href}
-              external={false}
-              active
-              onClick={() => {
-                setExpanded(!expanded)
-              }}
-              byPassOnClick
-            />
-          ))}
+          {_menuDropDown.map((ele) => {
+            const active = router.asPath.includes(ele.href)
+            return (
+              <MenuItemCustom
+                key={ele.name}
+                id={ele.name}
+                label={ele.name}
+                icon=""
+                href={ele.href}
+                external={false}
+                active={active}
+                onClick={() => {
+                  setExpanded(!expanded)
+                }}
+                byPassOnClick
+              />
+            )
+          })}
         </Collapse>
       </section>
 
-      <div className="my-4 h-[10px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')]" />
+      <div className="my-4 h-[7px] w-full rounded-[13px] bg-[url('/images/services/curvy-line2.png')]" />
 
       <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
         <Typography className="text-sm uppercase text-white-default">
@@ -414,7 +429,7 @@ const FilterBox = () => {
       ) : null}
       {isP2P || isForSale ? (
         <>
-          <div className="my-4 h-[10px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')]" />
+          <div className="my-4 h-[7px] w-full rounded-[13px] bg-[url('/images/services/curvy-line2.png')]" />
           <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
             <Typography className="text-sm uppercase text-white-default">
               sort
@@ -451,7 +466,7 @@ const FilterBox = () => {
           />
         </>
       ) : null}
-      <div className="my-4 h-[10px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')]" />
+      <div className="my-4 h-[7px] w-full rounded-[13px] bg-[url('/images/services/curvy-line2.png')]" />
       <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
         <Typography className="text-sm uppercase text-white-default">
           Resource type

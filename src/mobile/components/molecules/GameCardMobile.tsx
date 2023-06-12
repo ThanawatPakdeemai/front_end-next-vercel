@@ -24,7 +24,7 @@ const GameCardMobile = ({
   href
 }: IProps) => {
   const profile = useProfileStore((state) => state.profile.data)
-  const { onClickFavouriteButton, favouriteStatus } = useFavoriteGameContoller({
+  const { favouriteStatus } = useFavoriteGameContoller({
     playerId: profile?.id ?? "",
     gameId
   })

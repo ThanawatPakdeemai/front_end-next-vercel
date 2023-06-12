@@ -36,11 +36,12 @@ const TooltipsCustom = ({ color, ...props }: IProp) => {
                   ? theme?.["colors"][color].main
                   : "transparent"
             }
-          }
+          },
+          zIndex: "auto"
         }
       }}
       classes={{
-        tooltip: `bg-${color}-main text-${color}-contrastText uppercase font-neue-machina-bold py-[10px] px-4 rounded-lg`,
+        tooltip: `bg-${color}-main text-${color}-contrastText uppercase font-neue-machina-bold py-[20px] px-4 rounded-lg sm:!m-4 !m-4 sm:!top-0 top-14`,
         arrow: `text-${color}-main`,
         tooltipPlacementRight: "!mr-0 ml-[14px]",
         tooltipPlacementLeft: "mr-[14px] !ml-0"

@@ -10,7 +10,6 @@ import IconHourglass from "@components/icons/hourglassIcon"
 import TimerStamina from "@components/atoms/timer/TimerStamina"
 import {
   IGame,
-  IGameFav,
   IGameRoomAvailable,
   IGetType
 } from "@feature/game/interfaces/IGameService"
@@ -34,7 +33,7 @@ interface IProps {
   gameType: IGetType
   href?: string
   menu: IHeaderSlide
-  data?: IGame | IGameFav | IPartnerGameData | IRoomAvaliableData | IGamesToPlay
+  data?: IGame | IPartnerGameData | IRoomAvaliableData | IGamesToPlay
   partnerdata?: IPartnerGameData
   imgPartner?: string | undefined
   showNo?: boolean

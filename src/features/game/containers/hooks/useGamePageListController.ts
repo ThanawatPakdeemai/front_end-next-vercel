@@ -2,10 +2,11 @@ import { useEffect, useState } from "react"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
 import {
-  IFilterGamesByKey,
+  IPayloadGameFilter,
   IGame,
   IGetType,
-  TGameType
+  TGameType,
+  TDevice
 } from "@feature/game/interfaces/IGameService"
 import useFilterGameList from "@feature/dropdown/containers/hooks/useFilterGameList"
 import { useRouter } from "next/router"
@@ -22,7 +23,7 @@ const useGamePageListController = (
   gameType?: TGameType,
   _limit?: number,
   _categoryId?: string,
-  _device?: "mobile" | "desktop" | "all"
+  _device?: TDevice
 ) => {
   const router = useRouter()
   const categoryId = router.query.id
@@ -55,7 +56,7 @@ const useGamePageListController = (
     page,
     pager,
     setTotalCount,
-    getTypeGamePathFolder,
+    getGameMode,
     isRedirectRoomlist
   } = useGlobal()
   const {
@@ -72,7 +73,7 @@ const useGamePageListController = (
     setDevice
   } = useFilterStore()
 
-  const { mutateGetGamesByCategoryId, isLoading: loadingFilterGame } =
+  const { mutateGetGameAllFilter, isLoading: loadingFilterGame } =
     useFilterGameList()
 
   useEffect(() => {
@@ -119,12 +120,11 @@ const useGamePageListController = (
 
   useEffect(() => {
     let load = false
-
     if (!load) {
       if (loadingFilterGame) {
         setGameFilter([])
       }
-      const filterData: IFilterGamesByKey = {
+      const filterData: IPayloadGameFilter = {
         limit: limitPage.limit >= 10 ? limitPage.limit : 10,
         skip: page,
         sort: "_id",
@@ -142,7 +142,7 @@ const useGamePageListController = (
       }
 
       if (!endLimit && countCallApi < 1) {
-        mutateGetGamesByCategoryId(filterData).then((res) => {
+        mutateGetGameAllFilter(filterData).then((res) => {
           if (res) {
             const { data, info } = res
             setGameFilter(data)
@@ -169,7 +169,7 @@ const useGamePageListController = (
     gameTypeDropdown,
     page,
     limit,
-    mutateGetGamesByCategoryId,
+    mutateGetGameAllFilter,
     gameMode,
     _categoryId,
     limitPage
@@ -201,13 +201,11 @@ const useGamePageListController = (
   }, [scrollBottom])
 
   const onSetGameStore = (game: IGame) => {
-    onHandleSetGameStore(getTypeGamePathFolder(game), game)
+    onHandleSetGameStore(game.game_mode, game)
   }
 
   const onClickLink = (game: IGame) =>
-    `/${game.is_NFT ? "arcade-emporium" : getTypeGamePathFolder(game)}/${
-      game.path
-    }${isRedirectRoomlist(game).toString()}`
+    `/${getGameMode(game)}/${game.path}${isRedirectRoomlist(game).toString()}`
 
   return {
     limit,

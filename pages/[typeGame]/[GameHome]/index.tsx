@@ -90,7 +90,7 @@ export default function GameLobby() {
   const { GameHome } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
   const {
-    getTypeGamePathFolder,
+    getGameMode,
     getColorChipByGameType,
     getGameStoryModeURL,
     isRedirectRoomlist
@@ -117,10 +117,8 @@ export default function GameLobby() {
           return (
             <GameContent
               gameId={gameData?.id}
-              gameType={getTypeGamePathFolder(gameData)}
-              themeColor={getColorChipByGameType(
-                getTypeGamePathFolder(gameData)
-              )}
+              gameType={getGameMode(gameData)}
+              themeColor={getColorChipByGameType(getGameMode(gameData))}
             />
           )
       }
@@ -132,7 +130,7 @@ export default function GameLobby() {
    */
   const renderFormBuyItem = () => {
     if (!gameData) return null
-    switch (getTypeGamePathFolder(gameData)) {
+    switch (getGameMode(gameData)) {
       case "story-mode":
         return (
           <Box
@@ -182,7 +180,7 @@ export default function GameLobby() {
             >
               <ButtonGame
                 textButton={t("join-game")}
-                url={`/${getTypeGamePathFolder(gameData)}/${
+                url={`/${getGameMode(gameData)}/${
                   gameData.path
                 }${isRedirectRoomlist(gameData).toString()}`}
               />
@@ -192,11 +190,7 @@ export default function GameLobby() {
       default:
         return (
           <CardBuyItem
-            buttonStyle={
-              getTypeGamePathFolder(gameData) !== "storymode"
-                ? "purple"
-                : "green"
-            }
+            buttonStyle="purple"
             gameObject={gameData}
           />
         )
@@ -232,7 +226,7 @@ export default function GameLobby() {
               >
                 <OverviewContent
                   gameId={gameData?.id}
-                  gameType={getTypeGamePathFolder(gameData)}
+                  gameType={getGameMode(gameData)}
                   gameIdNFT={gameData?.NFT_Owner}
                 />
                 {renderFormBuyItem()}

@@ -11,6 +11,8 @@ import { IPlayToEarnRewardData } from "@src/types/games"
 import { INFTInfo } from "../marketplace/interfaces/IArcGameService"
 import { IPartnerGameData } from "./IPartnerGame"
 
+export type TDevice = "mobile" | "desktop" | "all"
+
 export type TGameType = "singleplayer" | "multiplayer" | "storymode" | "all"
 
 export type TTypeCode =
@@ -21,12 +23,13 @@ export type TTypeCode =
   | "story_01"
   | "survival_01"
 
-export type IGetType =
+export type TGameMode =
   | "play-to-earn"
   | "free-to-play"
   | "free-to-earn"
   | "story-mode"
-  | "storymode"
+
+export type IGetType =
   | "must-try"
   | "hot-game"
   | "partner-game"
@@ -35,6 +38,7 @@ export type IGetType =
   | "nft-game"
   | "all"
   | "on-playing"
+  | TGameMode
 
 export type TRoomStatus =
   | "playing"
@@ -44,28 +48,7 @@ export type TRoomStatus =
   | "ready_play"
   | "end"
 
-export interface IGetGameByTypesProps {
-  _type: IGetType
-  _limit: number
-  _page: number
-  _categoryId?: string
-  _deviceSup?: string
-  _itemId?: string
-  _search?: string
-}
-
-export interface IGamePayload {
-  limit?: number
-  skip?: number
-  sort?: string
-  search?: string
-  category?: string
-  item?: string
-  device?: string
-  nftgame?: string
-  game_type: IGetType
-  game_mode?: TGameType
-}
+export type TGameFreeToEarnStatus = "end" | "free" | "in_progress"
 
 export interface IGameHowTo {
   title: string
@@ -173,7 +156,7 @@ export interface IGame extends IGameArcadeEmporium {
   device_support: IGameSupport[]
   item: IGameItemList[]
   play_to_earn: boolean
-  play_to_earn_status?: "end" | "free" | "in_progress"
+  play_to_earn_status?: TGameFreeToEarnStatus
   date_start_event?: Date | null
   date_end_event?: Date | null
   reward_item_amount?: number
@@ -220,18 +203,7 @@ export interface IGame extends IGameArcadeEmporium {
   // When is_NFT: true
   NFT_info: INFTInfo
   game_room_available?: IGameRoomAvailable[]
-  game_mode: "free-to-earn" | "play-to-earn" | "free-to-play" | "story-mode"
-  favorite?: boolean
-}
-
-interface IGameHowto {
-  title: string
-  details: string
-}
-
-interface ICategory {
-  name: string
-  id: string
+  game_mode: TGameMode
 }
 
 export interface IGameDevice {
@@ -244,80 +216,6 @@ export interface IGameBrowser {
   key: string
   name: string
   supported: boolean
-}
-
-interface IRewardPaymentRate {
-  item_reward_amount: number
-  no: number
-}
-
-interface IGameStoryModeData {
-  item_key: string
-  item_name: string
-  type: string
-  image: string
-  mini_image: string
-  active_display: boolean
-  default_value: number
-  max_value: number
-}
-
-export interface IGameFav {
-  number_of_played: number
-  date_start_event: Date | null | undefined
-  date_end_event: Date | null | undefined
-  play_to_earn_status: string
-  play_to_earn: boolean
-  howto: IGameHowto
-  item: IGameItem[]
-  name: string
-  story: string
-  tournament: boolean
-  is_active: boolean
-  max_players: number
-  play_time: number
-  hot_game_status: boolean
-  hot_game_no: number
-  banner_status: boolean
-  banner_no: number
-  version: string
-  developer: string
-  category: ICategory
-  game_type: TGameType
-  type_code: string
-  game_url: string
-  path: string
-  image_waiting: string
-  image_sum: string
-  image_room: string
-  image_banner: string
-  image_reward: string
-  image_main: string
-  image_background: string
-  banner_description: string
-  game_free_status: boolean
-  game_free_url: string
-  image_category_list: string
-  image_free_to_earn_icon: string
-  image_home_banner: string
-  image_list: string
-  min_player: number
-  map: IGameMap[]
-  socket_info: {
-    url_room: string
-    url_lobby: string
-  }
-  id: string
-  device_support: IGameDevice[]
-  browser_support: IGameBrowser[]
-  num: number
-  title: string
-  image: string
-  _id: string
-  reward_payment_rate: IRewardPaymentRate[]
-  meta_data_list: IGameStoryModeData[]
-  play_total_count?: number
-  game_mode: "free_to_earn" | ""
 }
 
 export interface IGameRewardByPlayer extends IGameBase {
@@ -587,7 +485,7 @@ export interface IError {
   message: string
 }
 
-export interface IFilterGamesByKey {
+export interface IPayloadGameFilter {
   limit?: number
   skip?: number
   sort?: string
@@ -599,6 +497,16 @@ export interface IFilterGamesByKey {
   game_mode?: IGetType
   tournament?: boolean
   nftgame?: boolean | string
+}
+
+export interface IGetGameByTypesProps {
+  _type: IGetType
+  _limit: number
+  _page: number
+  _categoryId?: string
+  _deviceSup?: string
+  _itemId?: string
+  _search?: string
 }
 
 export interface IResponseGameUpdatedPlayingData {

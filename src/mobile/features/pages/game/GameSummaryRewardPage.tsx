@@ -21,6 +21,7 @@ import {
   classesWrapper
 } from "@mobile/features/game/components/molecules/PlayerCardMobile"
 import { IGameReward } from "@src/types/games"
+import Helper from "@utils/helper"
 
 const GameSummaryRewardPage = () => {
   const {
@@ -94,6 +95,7 @@ const GameSummaryRewardPage = () => {
       default:
         return (
           <GameSummaryBodyMobile
+            gameData={gameDataState}
             date={
               notificationItem?.createdAt || playHistoryItem?.createdAt || ""
             }
@@ -208,7 +210,7 @@ const GameSummaryRewardPage = () => {
                     <div className={`${classesAvatar} border-[#F2C94C]`}>
                       <div className={classesWrapper}>
                         <Image
-                          src={data.avatar}
+                          src={Helper.convertAvatar(data.avatar)}
                           alt={data.user_name}
                           width={70}
                           height={70}
@@ -227,7 +229,9 @@ const GameSummaryRewardPage = () => {
                     {/* Player Score/Reward */}
                     <div className="player-name">
                       <p className="truncate text-center font-urbanist text-sm font-semibold uppercase text-[#F2C94C]">
-                        {data.current_score || data.naka_for_player}
+                        {Helper.formatNumber(
+                          data.current_score || data.naka_for_player
+                        )}
                       </p>
                     </div>
                   </div>

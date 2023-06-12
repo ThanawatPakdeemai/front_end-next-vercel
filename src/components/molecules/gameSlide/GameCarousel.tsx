@@ -116,8 +116,7 @@ const GameCarousel = ({
     variableWidth: false,
     responsive: breakPointMobileSite
   }
-  const { onHandleSetGameStore, getTypeGamePathFolder, isRedirectRoomlist } =
-    useGlobal()
+  const { onHandleSetGameStore, getGameMode, isRedirectRoomlist } = useGlobal()
   const { onSetGameItemSelectd } = useGameStore()
   const profile = useProfileStore((state) => state.profile.data)
   const game = useGameStore((state) => state.data)
@@ -194,17 +193,12 @@ const GameCarousel = ({
                   cooldown={cooldown}
                   setCooldown={setCooldown}
                   staminaRecovery={staminaRecovery}
-                  href={`/${
-                    item.is_NFT
-                      ? "arcade-emporium"
-                      : getTypeGamePathFolder(item)
-                  }/${item.path}${isRedirectRoomlist(item).toString()}`}
+                  href={`/${getGameMode(item)}/${item.path}${isRedirectRoomlist(
+                    item
+                  ).toString()}`}
                   onPlaying={onPlaying}
                   onHandleClick={() => {
-                    onHandleSetGameStore(
-                      item.is_NFT ? "arcade-emporium" : curType,
-                      item
-                    )
+                    onHandleSetGameStore(getGameMode(item), item)
                     if (onPlaying && item?.play_to_earn_status !== "free") {
                       const itemSelect = gameItemList?.find(
                         (ele) => ele.item_size === item.item_size
@@ -212,11 +206,7 @@ const GameCarousel = ({
                       if (itemSelect) onSetGameItemSelectd(itemSelect)
                     }
                   }}
-                  gameType={
-                    item.is_NFT
-                      ? "arcade-emporium"
-                      : getTypeGamePathFolder(item)
-                  }
+                  gameType={getGameMode(item)}
                   play_total_count={game?.play_total_count}
                   room_available={game?.game_room_available}
                 />

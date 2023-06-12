@@ -12,14 +12,12 @@ import {
 } from "@feature/notification/interfaces/INotificationService"
 import useGetReward from "@feature/rewardWeekly/containers/hooks/useGetReward"
 import { IRewardWeeklyData } from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
-import useGlobal from "@hooks/useGlobal"
 import { IGameReward } from "@src/types/games"
 import useGameStore from "@stores/game"
 import useNotiStore from "@stores/notification"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useState } from "react"
-// import useFindGameById from "./useFindGameById"
 import useGetGameRoomById from "./useGetGameRoomById"
 import useGetSummaryGameByRoomId from "./useGetSummaryGameByRoomId"
 import useGetGameByPath from "./useFindGameByPath"
@@ -37,7 +35,6 @@ const useGameSummaryRewardController = () => {
   } = useNotiStore()
   const profile = useProfileStore((state) => state.profile.data)
   const { onSetGameData, data: dataGameStore } = useGameStore()
-  const { getTypeGamePathFolder } = useGlobal()
 
   // State
   const [notificationItem, setNotificationItem] =
@@ -381,9 +378,7 @@ const useGameSummaryRewardController = () => {
       onSetGameData(gameData)
       setGameDataState(gameData)
       setShareURL(
-        `${CONFIGS.BASE_URL.FRONTEND}/${getTypeGamePathFolder(gameData)}/${
-          gameData.path
-        }`
+        `${CONFIGS.BASE_URL.FRONTEND}/${gameData.game_mode}/${gameData.path}`
       )
     }
 

@@ -1,6 +1,6 @@
 import useGameSummaryRewardController from "@feature/game/containers/hooks/useGameSummaryRewardController"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
-import { isMobile } from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import useRefreshStamina from "@hooks/useRefreshStamina"
 import { Box } from "@mui/material"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
@@ -61,6 +61,7 @@ const GameTabsVertical = dynamic(
 )
 
 export default function SummaryDetails() {
+  const { getGameMode } = useGlobal()
   const { refreshStamina } = useRefreshStamina()
   const { gameDataState } = useGameSummaryRewardController()
 
@@ -107,7 +108,7 @@ export default function SummaryDetails() {
                 >
                   <OverviewContent
                     gameId={gameDataState.id}
-                    gameType={gameDataState.game_mode}
+                    gameType={getGameMode(gameDataState)}
                     gameIdNFT={gameDataState.NFT_Owner}
                   />
                 </Box>

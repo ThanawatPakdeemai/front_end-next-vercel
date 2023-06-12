@@ -5,7 +5,7 @@ import {
   IGameCategory,
   IGameItem
 } from "@feature/dropdown/interfaces/IDropdownService"
-import { IFilterGamesByKey } from "@feature/game/interfaces/IGameService"
+import { IPayloadGameFilter } from "@feature/game/interfaces/IGameService"
 
 const getGameAssets = () =>
   new Promise<IGameItem[]>((resolve, reject) => {
@@ -37,18 +37,13 @@ const getCategories = () =>
   })
 
 // IFilterGames
-const getGamesByCategoryId = (data: IFilterGamesByKey) =>
+const getGameAllFilter = (data: IPayloadGameFilter) =>
   new Promise<IGameAllResponse>((resolve, reject) => {
-    // This is optimized performance from the backend api
     services
       .post<IGameAllResponse>(
         `${CONFIGS.BASE_URL.API}/game/filter/game-all-new`,
         data
       )
-      // .post<IGameAllResponse>(
-      //   `${CONFIGS.BASE_URL.API}/game/filter/game-all`,
-      //   data
-      // )
       .then((res) => {
         resolve(res.data)
       })
@@ -57,4 +52,4 @@ const getGamesByCategoryId = (data: IFilterGamesByKey) =>
       })
   })
 
-export { getGameAssets, getCategories, getGamesByCategoryId }
+export { getGameAssets, getCategories, getGameAllFilter }

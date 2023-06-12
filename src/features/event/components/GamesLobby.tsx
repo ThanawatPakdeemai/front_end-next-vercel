@@ -10,7 +10,7 @@ interface IGamesLobbyProps {
 }
 
 const GamesLobby = ({ _gameData }: IGamesLobbyProps) => {
-  const { getTypeGamePathFolder } = useGlobal()
+  const { getGameMode } = useGlobal()
   const { onSetGameStore } = useGamePageListController()
 
   return (
@@ -21,9 +21,9 @@ const GamesLobby = ({ _gameData }: IGamesLobbyProps) => {
             key={game._id}
             menu={P2EHeaderMenu}
             data={game}
-            href={`/${getTypeGamePathFolder(game)}/${game.path}`}
+            href={`/${getGameMode(game)}/${game.path}`}
             onHandleClick={() => onSetGameStore(game)}
-            gameType={getTypeGamePathFolder(game)}
+            gameType={getGameMode(game)}
           />
         ))}
     </div>

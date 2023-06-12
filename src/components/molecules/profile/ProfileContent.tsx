@@ -459,7 +459,7 @@ const ProfileContent = () => {
                 </div>
 
                 <Image
-                  src={getProfileInfo.data.avatar}
+                  src={Helper.convertAvatar(getProfileInfo.data.avatar)}
                   width={150}
                   height={150}
                   alt="profile-avatar"

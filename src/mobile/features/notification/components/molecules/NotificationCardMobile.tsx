@@ -20,7 +20,7 @@ const NotificationCardMobile = ({
       onClick={props.handleClick}
       aria-hidden="true"
     >
-      <div className="notificaton-card__mobile__item--content relative w-full text-white-primary">
+      <div className="notificaton-card__mobile__item--content relative w-full pr-20 text-white-primary">
         <h3 className="truncate font-urbanist text-[18px] font-bold">
           {props.title}
         </h3>

@@ -145,7 +145,7 @@ const useGamePageListController = (
             setTotalCount(info ? info.totalCount : 1)
           }
         })
-      } else {
+      } else if (isMobile) {
         warnToast(MESSAGES.end_of_the_limit)
       }
     }
@@ -170,7 +170,7 @@ const useGamePageListController = (
 
   const handleInfinityLimit = () => {
     if (gameFilter) {
-      if (scrollBottom && limitPage.limit < totalCount) {
+      if (scrollBottom && limitPage.limit < totalCount && isMobile) {
         setLimitPage({
           limit: limitPage.limit + 10,
           endLimit: false,

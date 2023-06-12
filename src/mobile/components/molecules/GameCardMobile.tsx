@@ -38,11 +38,7 @@ const GameCardMobile = ({
     >
       <div className="relative w-full overflow-hidden rounded-[20px] pt-[84%]">
         <div className="game-favorite absolute right-3 top-3 z-[1]">
-          {favouriteStatus ? (
-            <HeartFilledIcon onClick={() => onClickFavouriteButton()} />
-          ) : (
-            <HeartSolidIcon onClick={() => onClickFavouriteButton()} />
-          )}
+          {favouriteStatus ? <HeartFilledIcon /> : <HeartSolidIcon />}
         </div>
         <Link href={href}>
           <ImageCustom

@@ -1,7 +1,6 @@
 import { TextField } from "@mui/material"
 import { StyledSearchInputMobile } from "@mobile/styles/muiStyleMobile"
 import { useTranslation } from "react-i18next"
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt"
 import SearchIconMobile from "../icons/SearchIconMobile"
 
 interface ISearchInputMobileProps {
@@ -24,8 +23,7 @@ const SearchInputMobile = ({
       }}
       placeholder={`${t("search_games")}...`}
       InputProps={{
-        startAdornment: <SearchIconMobile />,
-        endAdornment: <ArrowRightAltIcon className="text-warning-100" />
+        startAdornment: <SearchIconMobile />
       }}
       sx={StyledSearchInputMobile}
     />

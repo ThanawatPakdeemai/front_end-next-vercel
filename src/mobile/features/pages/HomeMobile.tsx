@@ -28,17 +28,12 @@ const HomeMobile = () => {
   >([])
 
   const handleFavouriteData = () => {
-    // eslint-disable-next-line no-console
-    console.log("test-homeMobile", gameData)
-
     const mapFavouriteData = gameData.map((_item) =>
       data.find((_elm) => _elm._id === _item._id)
         ? { ..._item, favorite: true }
         : { ..._item, favorite: false }
     )
     setGameDataWithFavouriteData(mapFavouriteData)
-    // eslint-disable-next-line no-console
-    console.log("test-mapFavouriteData", mapFavouriteData)
   }
 
   useEffect(() => {

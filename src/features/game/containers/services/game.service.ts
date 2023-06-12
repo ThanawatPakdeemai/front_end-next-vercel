@@ -16,7 +16,7 @@ import {
   IClaimEarnedRewardByPlayerId,
   IGetGameByTypesProps,
   IGetGameByTypes,
-  IFilterGamesByKey,
+  IPayloadGameFilter,
   IResponseGameUpdatedPlaying,
   IOwnerCommission,
   IResponseOwnerCommissionData
@@ -202,7 +202,7 @@ export const getGameByTypes = ({
       .catch((error) => reject(error))
   })
 
-export const getGamesByKey = (data: IFilterGamesByKey) =>
+export const getGameAllFilter = (data: IPayloadGameFilter) =>
   new Promise<IGameAllResponse>((resolve, reject) => {
     services
       .post<IGameAllResponse>(
@@ -221,7 +221,7 @@ export const getGamesByKey = (data: IFilterGamesByKey) =>
       })
   })
 
-export const getMyGameNFT = (data: IFilterGamesByKey) =>
+export const getMyGameNFT = (data: IPayloadGameFilter) =>
   new Promise<IGameService>((resolve, reject) => {
     services
       .post<IGameService>(`${CONFIGS.BASE_URL.API}/game/NFT/my-game`, {

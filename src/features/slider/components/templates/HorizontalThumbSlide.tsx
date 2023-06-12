@@ -26,6 +26,7 @@ interface IHorizontalThumbSlideProps {
   settingSingle?: Settings
   settingThumbnail?: Settings
   currentSelected?: number
+  slidesToScrollCustom?: number
 }
 
 const HorizontalThumbSlide = ({
@@ -33,7 +34,8 @@ const HorizontalThumbSlide = ({
   sliderType = "default",
   settingSingle,
   settingThumbnail,
-  currentSelected
+  currentSelected,
+  slidesToScrollCustom
 }: IHorizontalThumbSlideProps) => {
   const [nav1, setNav1] = useState<Slider | undefined | null>()
   const [nav2, setNav2] = useState<Slider | undefined | null>()
@@ -66,7 +68,7 @@ const HorizontalThumbSlide = ({
   const getStyleSingleSlideClasses = (): string => {
     switch (sliderType) {
       case "avatar":
-        return "flex h-[100px] w-[100px] flex-col justify-center overflow-hidden rounded-2xl p-[6px] border-2 border-[#F42728] rounded-[14px]"
+        return "flex h-[80px] w-[80px] flex-col justify-center overflow-hidden rounded-2xl p-[6px] border-2 border-[#F42728] rounded-[14px]"
       default:
         return "flex h-[60vw] w-full flex-col justify-center overflow-hidden rounded-2xl md:h-[479px] lg:max-w-[852px]"
     }
@@ -104,6 +106,7 @@ const HorizontalThumbSlide = ({
     infinite: true,
     speed: 1000,
     slidesToShow: sliderType === "avatar" ? 4 : 8,
+    slidesToScroll: slidesToScrollCustom || 4,
     arrows: true,
     vertical: false,
     focusOnSelect: true,

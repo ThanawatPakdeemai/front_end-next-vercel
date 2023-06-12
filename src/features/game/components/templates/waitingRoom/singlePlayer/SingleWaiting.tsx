@@ -24,7 +24,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
   const router = useRouter()
   const { isLoading, playerGameSingle, fetchPlayerGameSingle } =
     useGetCurrentPlayerGameSingle()
-  const { getTypeGamePathFolder, isFreeToEarnGame } = useGlobal()
+  const { getGameMode, isFreeToEarnGame } = useGlobal()
 
   const fetchPlayers = useCallback(
     (_type: "in" | "out") => {
@@ -222,7 +222,7 @@ const GameSinglePlayer = ({ _roomId }: IPropWaitingSingle) => {
           >
             <OverviewContent
               gameId={data.id}
-              gameType={getTypeGamePathFolder(data)}
+              gameType={getGameMode(data)}
             />
             {isFreeToEarnGame(data) && (
               <TopPlayerFreeToEarn

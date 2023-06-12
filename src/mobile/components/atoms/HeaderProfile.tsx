@@ -1,6 +1,7 @@
 import useProfileStore from "@stores/profileStore"
 import dayjs from "dayjs"
 import { Image } from "@components/atoms/image/index"
+import Helper from "@utils/helper"
 
 interface IProp {
   title: string
@@ -36,7 +37,7 @@ const HeaderProfile = ({ title }: IProp) => {
         <div className=" relative flex w-auto  max-w-fit items-center justify-end  rounded-[14px] border-[2px] border-neutral-700 p-[6px]">
           <div className="before:d-inline text-error-main after:absolute after:right-[7px] after:top-[7px] after:h-[12px] after:w-[12px] after:rounded-full after:bg-error-main after:text-xs after:content-['**']" />
           <Image
-            src={profile?.avatar || ""}
+            src={Helper.convertAvatar(profile?.avatar || "")}
             alt={profile?.username || "avatar profile"}
             width={40}
             height={40}

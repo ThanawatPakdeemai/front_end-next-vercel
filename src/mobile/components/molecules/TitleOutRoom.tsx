@@ -9,7 +9,7 @@ const TitleOutRoom = (props: IProps) => {
   const { name, component } = props
   return (
     <h3
-      className="flex items-center gap-4 font-urbanist font-semibold text-white-primary"
+      className="flex gap-4 font-urbanist font-semibold text-white-primary"
       aria-hidden="true"
     >
       <LogoNakaBigIcon

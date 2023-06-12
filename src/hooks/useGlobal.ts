@@ -4,7 +4,7 @@ import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useState, useRef } from "react"
 import {
-  IFilterGamesByKey,
+  IPayloadGameFilter,
   IGame,
   IGetType,
   TGameType
@@ -21,6 +21,10 @@ import useMarketFilterStore from "@stores/marketFilter"
 import useSupportedChain from "./useSupportedChain"
 import useGameGlobal from "./useGameGlobal"
 
+export const isMobile = !!(
+  detectMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true"
+)
+
 const useGlobal = (
   _limit?: number,
   _skip?: number,
@@ -36,7 +40,7 @@ const useGlobal = (
 ) => {
   const router = useRouter()
 
-  const defaultBody: IFilterGamesByKey = {
+  const defaultBody: IPayloadGameFilter = {
     limit: _limit ?? 30,
     skip: _skip ?? 1,
     sort: _sort ?? "_id",
@@ -213,26 +217,14 @@ const useGlobal = (
   }
 
   /**
-   * @description Get type game path folder
+   * @description Get type game path by game_mode
+   * @returns {IGetType}
    */
-  const getTypeGamePathFolder = (_gameData: IGame): IGetType => {
-    if (!_gameData) return "play-to-earn"
-    if (_gameData.game_mode === "play-to-earn") {
-      return "play-to-earn"
-    }
-    if (_gameData.game_mode === "free-to-earn") {
-      return "free-to-earn"
-    }
-    if (_gameData.game_mode === "free-to-play") {
-      return "free-to-play"
-    }
-    if (_gameData.game_type === "storymode") {
-      return "story-mode"
-    }
+  const getGameMode = (_gameData: IGame): IGetType => {
     if (_gameData.is_NFT) {
       return "arcade-emporium"
     }
-    return "all"
+    return _gameData.game_mode
   }
 
   /**
@@ -288,7 +280,6 @@ const useGlobal = (
       case "arcade-emporium":
         return "!bg-warning-dark !text-neutral-900"
 
-      case "storymode":
       case "story-mode":
         return "!bg-info-main !text-neutral-900"
 
@@ -303,32 +294,6 @@ const useGlobal = (
 
       default:
         return "!bg-neutral-800 !text-neutral-900"
-    }
-  }
-
-  /**
-   * @description Get game type by pathname
-   * @returns {IGetType}
-   */
-  const getGameTypeByPathname = (): IGetType => {
-    switch (router.pathname) {
-      case "/arcade-emporium":
-        return "arcade-emporium"
-
-      case "/partner":
-        return "partner-game"
-
-      case "/play-to-earn":
-        return "play-to-earn"
-
-      case "/free-to-play":
-        return "free-to-play"
-
-      case "/story-mode":
-        return "storymode"
-
-      default:
-        return "play-to-earn"
     }
   }
 
@@ -469,6 +434,7 @@ const useGlobal = (
    * @description Fetch all token supported
    */
   const fetchChainData = useCallback(async () => {
+    if (isMobile) return
     if (!isLogin) return
     if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
       await fetchAllTokenSupported()
@@ -507,7 +473,7 @@ const useGlobal = (
     isDeveloperPage,
     isShowMarket,
     openInNewTab,
-    getTypeGamePathFolder,
+    getGameMode,
     getTypeGamePartnerPathFolder,
     marketType,
     isRedirectRoomlist,
@@ -516,7 +482,6 @@ const useGlobal = (
     fetchChainData,
     getColorChipByGameType,
     getGameStoryModeURL,
-    getGameTypeByPathname,
     isFreeToEarnGame,
     isFreeToPlayGame,
     isStoryModeGame
@@ -524,7 +489,3 @@ const useGlobal = (
 }
 
 export default useGlobal
-
-export const isMobile = !!(
-  detectMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true"
-)

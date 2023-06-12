@@ -66,15 +66,22 @@ const RoomlistLayoutMobile = ({ gameData }: IRoomlistLayoutMobileProps) => {
 
       <Box
         component="section"
+        sx={{
+          ".logo-naka": {
+            top: "5px",
+            position: "relative"
+          }
+        }}
         className="game-section flex flex-col gap-6 font-urbanist text-white-primary"
       >
         <h3
-          className="flex items-center gap-4 font-urbanist font-semibold text-white-primary"
+          className="flex gap-4 font-urbanist font-semibold text-white-primary"
           aria-hidden="true"
         >
           <LogoNakaBigIcon
             width={30}
             height={14}
+            className="logo-naka"
           />
           Room List: {gameData.name}
           {gameData && gameData.game_type === "multiplayer" && (

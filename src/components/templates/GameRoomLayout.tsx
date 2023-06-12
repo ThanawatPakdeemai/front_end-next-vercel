@@ -26,11 +26,11 @@ const GameRoomLayout = ({
   const [gameData, setGameData] = useState<IGame>()
   const { topPlayerGameId, fetchTopPlayersByGameId } = useTopPlayerByGameId()
   const { statsGameById, fetchStatsGameById } = useGetStatisticsGameById()
-  const { getTypeGamePathFolder } = useGlobal()
+  const { getGameMode } = useGlobal()
 
   const renderStatistic = () => {
     if (!gameData) return null
-    switch (getTypeGamePathFolder(gameData as IGame)) {
+    switch (getGameMode(gameData as IGame)) {
       case "story-mode":
       case "free-to-play":
       case "free-to-earn":
@@ -135,11 +135,11 @@ const GameRoomLayout = ({
           <TabProvider>
             <GameTabsVertical
               gameId={gameData.id}
-              gameType={getTypeGamePathFolder(gameData)}
+              gameType={getGameMode(gameData)}
             />
             {/* <GameTabs
               gameId={gameData.id}
-              gameType={getTypeGamePathFolder(gameData)}
+              gameType={getGameMode(gameData)}
             /> */}
           </TabProvider>
         ) : null}

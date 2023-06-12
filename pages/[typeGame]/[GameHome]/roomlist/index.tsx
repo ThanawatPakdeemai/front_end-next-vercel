@@ -85,7 +85,7 @@ export default function GameRoomList() {
   const { GameHome, id } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
   const { onSetGameData } = useGameStore()
-  const { getTypeGamePathFolder, isFreeToEarnGame } = useGlobal()
+  const { getGameMode, isFreeToEarnGame } = useGlobal()
   const { refetchItemSelected } = useBuyGameItemController()
 
   /**
@@ -93,7 +93,7 @@ export default function GameRoomList() {
    */
   const renderFormBuyItem = () => {
     if (!gameData) return null
-    switch (getTypeGamePathFolder(gameData)) {
+    switch (getGameMode(gameData)) {
       case "story-mode":
       case "free-to-play":
       case "free-to-earn":
@@ -164,7 +164,7 @@ export default function GameRoomList() {
               >
                 <OverviewContent
                   gameId={gameData.id}
-                  gameType={getTypeGamePathFolder(gameData)}
+                  gameType={getGameMode(gameData)}
                 />
                 {isFreeToEarnGame(gameData) && (
                   <TopPlayerFreeToEarn
@@ -192,7 +192,7 @@ export default function GameRoomList() {
             <TabProvider>
               <GameTabsVertical
                 gameId={gameData.id}
-                gameType={getTypeGamePathFolder(gameData)}
+                gameType={getGameMode(gameData)}
               />
             </TabProvider>
           </FullWidthContent>

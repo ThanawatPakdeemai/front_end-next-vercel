@@ -1,9 +1,9 @@
-import { IFilterGamesByKey } from "@feature/game/interfaces/IGameService"
+import { IPayloadGameFilter } from "@feature/game/interfaces/IGameService"
 import { IInfo } from "@interfaces/IHelper"
 import { useQuery } from "@tanstack/react-query"
 import { getFavoriteGameByUser } from "../services/favourite.service"
 
-interface IGameFavoriteBody extends IFilterGamesByKey {
+interface IGameFavoriteBody extends IPayloadGameFilter {
   playerId: string
 }
 const useFavoriteGame = ({ playerId = "", ...props }: IGameFavoriteBody) => {

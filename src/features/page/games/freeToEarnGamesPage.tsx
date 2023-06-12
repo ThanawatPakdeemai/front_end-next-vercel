@@ -31,7 +31,7 @@ const FreeToEarnGamesPage = () => {
     setCooldown
   } = useGamePageListController("free-to-earn")
 
-  const { getTypeGamePathFolder } = useGlobal()
+  const { getGameMode } = useGlobal()
 
   const [f2eGame, setF2EGame] = useState<IGame[]>()
 
@@ -75,7 +75,7 @@ const FreeToEarnGamesPage = () => {
                 cooldown={cooldown}
                 setCooldown={setCooldown}
                 href={gameLink(game)}
-                gameType={getTypeGamePathFolder(game)}
+                gameType={getGameMode(game)}
                 onHandleClick={() => onSetGameStore(game)}
                 play_total_count={game?.play_total_count}
               />

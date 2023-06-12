@@ -147,6 +147,7 @@ const useGamePageListController = (
             const { data, info } = res
             setGameFilter(data)
             setTotalCount(info ? info.totalCount : 1)
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             _countCallApi = 0
             setValueCountCallApi(_countCallApi)
           }

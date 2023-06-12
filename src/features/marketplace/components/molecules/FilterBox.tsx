@@ -286,7 +286,7 @@ const FilterBox = () => {
                 icon=""
                 href={ele.href}
                 external={false}
-                active
+                active={active}
                 onClick={() => {
                   setExpanded(!expanded)
                 }}

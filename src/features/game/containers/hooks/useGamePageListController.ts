@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import { useEffect, useState } from "react"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
@@ -12,12 +11,10 @@ import {
 import useFilterGameList from "@feature/dropdown/containers/hooks/useFilterGameList"
 import { useRouter } from "next/router"
 import useScrollDetector from "@hooks/useScrollDetector"
-import { useToast } from "@feature/toast/containers"
-import { MESSAGES } from "@constants/messages"
+import useScrollToEndStore from "@stores/scrollToEnd"
 
 interface ILimitPage {
   limit: number
-  endLimit: boolean
   endLimitCount: number
 }
 
@@ -31,17 +28,24 @@ const useGamePageListController = (
   const router = useRouter()
   const categoryId = router.query.id
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
-  const scrollBottom = useScrollDetector()
-  const { warnToast } = useToast()
+  const { scrollBottom } = useScrollDetector()
+
+  const {
+    setScrollToEndScreen: setEndScreen,
+    getEndLimitApi: endLimit,
+    setEndLimitApi: setEndLimit,
+    getCountCallApi: countCallApi,
+    setCountCallApi: setValueCountCallApi
+  } = useScrollToEndStore()
 
   const [cooldown, setCooldown] = useState<boolean>(true)
   const [gameFilter, setGameFilter] = useState<IGame[]>()
   const [limitPage, setLimitPage] = useState<ILimitPage>({
     limit: 10,
-    endLimit: false,
     endLimitCount: 0
   })
-  let countCallApi = 0
+
+  let _countCallApi = 0
 
   const {
     onHandleSetGameStore,
@@ -116,13 +120,12 @@ const useGamePageListController = (
 
   useEffect(() => {
     let load = false
-
     if (!load) {
       if (loadingFilterGame) {
         setGameFilter([])
       }
       const filterData: IPayloadGameFilter = {
-        limit: limitPage.limit,
+        limit: limitPage.limit >= 10 ? limitPage.limit : 10,
         skip: page,
         sort: "_id",
         search: searchDropdown,
@@ -137,16 +140,20 @@ const useGamePageListController = (
         tournament: false,
         nftgame: getGameModeFilter() === "arcade-emporium" ? true : "all"
       }
-      if (!limitPage.endLimit && countCallApi < 1) {
+
+      if (!endLimit && countCallApi < 1) {
         mutateGetGameAllFilter(filterData).then((res) => {
           if (res) {
             const { data, info } = res
             setGameFilter(data)
             setTotalCount(info ? info.totalCount : 1)
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            _countCallApi = 0
+            setValueCountCallApi(_countCallApi)
           }
         })
-      } else if (isMobile) {
-        warnToast(MESSAGES.end_of_the_limit)
+      } else {
+        setEndScreen(true)
       }
     }
 
@@ -173,16 +180,17 @@ const useGamePageListController = (
       if (scrollBottom && limitPage.limit < totalCount && isMobile) {
         setLimitPage({
           limit: limitPage.limit + 10,
-          endLimit: false,
           endLimitCount: gameFilter.length
         })
+        setEndLimit(false)
       } else {
         setLimitPage({
           limit: gameFilter?.length,
-          endLimit: true,
           endLimitCount: 1
         })
-        countCallApi += 1
+        _countCallApi += 1
+        setValueCountCallApi(_countCallApi)
+        setEndLimit(true)
       }
     }
   }

@@ -6,6 +6,7 @@ import { IHistory } from "@feature/history/interfaces/IHistoryService"
 import NoData from "@components/molecules/NoData"
 import GameInfoCard from "@mobile/features/game/components/molecules/GameInfoCard"
 import useHistoryController from "@feature/history/containers/hook/useHistoryController"
+import useLoadingStore from "@stores/loading"
 
 interface IPlayedHistoryListMobile {
   loading: boolean
@@ -19,6 +20,7 @@ const PlayedHistoryListMobile = ({
   limit
 }: IPlayedHistoryListMobile) => {
   const { handleClickView } = useHistoryController()
+  const { setOpen } = useLoadingStore()
 
   return (
     <Box
@@ -34,7 +36,10 @@ const PlayedHistoryListMobile = ({
         list.map((_item) => (
           <div
             key={_item._id}
-            onClick={() => handleClickView(_item)}
+            onClick={() => {
+              setOpen("")
+              handleClickView(_item)
+            }}
             aria-hidden="true"
           >
             <GameInfoCard

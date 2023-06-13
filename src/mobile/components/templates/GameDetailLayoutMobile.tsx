@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { Box } from "@mui/material"
 import { ImageCustom } from "@components/atoms/image/Image"
@@ -19,6 +19,7 @@ import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/us
 import GameInfoCard from "@mobile/features/game/components/molecules/GameInfoCard"
 import { StyleRanking } from "@mobile/features/game/styles/StyleRanking"
 import { useRouter } from "next/router"
+import useLoadingStore from "@stores/loading"
 
 export interface IGameDetailLayoutMobileProps {
   gameData: IGame
@@ -30,12 +31,19 @@ export const buttonArrow =
 const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
   const router = useRouter()
   const { t } = useTranslation()
+  const { setClose } = useLoadingStore()
   const { openAboutGame, setOpenAboutGame } = useDrawerControllerMobile()
   const { statsGameById } = useGetStatisticsGameById()
   const { onClickedPrev, onClickedNext, weeklyPoolByGameId } = useGameOverview(
     gameData.id,
     gameData.game_mode
   )
+
+  useEffect(() => {
+    if (gameData) {
+      setClose()
+    }
+  }, [gameData])
 
   const renderWeeklyTopPlayer = () => {
     switch (gameData.game_mode) {

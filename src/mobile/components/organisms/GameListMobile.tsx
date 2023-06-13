@@ -15,7 +15,21 @@ interface IGameList {
 const GameListMobile = ({ gameData, loading }: IGameList) => {
   const { getScrollToEndScreen: endScreen } = useScrollToEndStore()
   return (
-    <>
+    <Box
+      component="section"
+      sx={{
+        ".no-data": {
+          ".MuiTypography-root": {
+            border: "1px solid #35383F",
+            borderRadius: "14px"
+          }
+        }
+      }}
+    >
+      {/* {gameData && gameData.length === 0 && !loading && (
+        <NoData className="w-full" />
+      )} */}
+
       <Box
         component="section"
         className="game-section grid grid-cols-2 gap-5 sm:grid-cols-4"
@@ -24,7 +38,6 @@ const GameListMobile = ({ gameData, loading }: IGameList) => {
           [...Array(gameData.length)].map(() => (
             <SkeletonCardMobile key={uuid()} />
           ))}
-        {gameData && gameData.length === 0 && <NoData className="w-full" />}
         {!loading &&
           gameData &&
           gameData.length > 0 &&
@@ -47,12 +60,12 @@ const GameListMobile = ({ gameData, loading }: IGameList) => {
           variant="button"
           display="block"
           gutterBottom
-          className="text-center font-bold text-white-default"
+          className="mt-5 rounded-sm border border-[#35383F] py-3 text-center font-bold text-white-default"
         >
           End of The Limit
         </Typography>
       )}
-    </>
+    </Box>
   )
 }
 

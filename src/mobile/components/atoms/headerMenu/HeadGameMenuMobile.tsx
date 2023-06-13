@@ -3,6 +3,7 @@ import { GAME_MENU_MOBILE } from "@mobile/constants/menuMobile"
 import { Box } from "@mui/material"
 import { IGetType } from "@feature/game/interfaces/IGameService"
 import useScrollToEndStore from "@stores/scrollToEnd"
+import useLoadingStore from "@stores/loading"
 
 export interface IHeadGameMenuMobileProps {
   activeMenu: string
@@ -22,6 +23,8 @@ const HeadGameMenuMobile = ({
     setEndLimit(false)
   }
 
+  const { setOpen } = useLoadingStore()
+
   return (
     <Box
       component="div"
@@ -30,6 +33,7 @@ const HeadGameMenuMobile = ({
       {GAME_MENU_MOBILE.map((item) => (
         <Box
           onClick={() => {
+            setOpen("")
             handlGameMenu(item.type)
           }}
           component="button"

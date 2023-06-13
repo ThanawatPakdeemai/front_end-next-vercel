@@ -12,6 +12,7 @@ import useFilterGameList from "@feature/dropdown/containers/hooks/useFilterGameL
 import { useRouter } from "next/router"
 import useScrollDetector from "@hooks/useScrollDetector"
 import useScrollToEndStore from "@stores/scrollToEnd"
+import useLoadingStore from "@stores/loading"
 
 interface ILimitPage {
   limit: number

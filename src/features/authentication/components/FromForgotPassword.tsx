@@ -141,7 +141,7 @@ const FromForgotPassword = () => {
                     size="medium"
                     color="secondary"
                     disabled={isLoading}
-                    className="h-[40px] !min-w-[200px]  text-sm"
+                    className="min-w-auto h-[40px]  text-sm"
                     sxCustomStyled={{ borderRadius: "0px 24px 24px 0px" }}
                     href=""
                     onClick={() => {}}

@@ -4,7 +4,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { NextRouter, useRouter } from "next/router"
 import DropdownIcon from "@components/icons/DropdownIcon"
 import MenuItemCustom from "@components/atoms/MenuItemCustom"
-import DragHandleIcon from "@mui/icons-material/DragHandle"
 import {
   MARKET_FILTER_DATE,
   MARKET_FILTER_PRICE,
@@ -298,7 +297,7 @@ const FilterBox = () => {
         </Collapse>
       </section>
 
-      <div className="my-4 h-[7px] w-full rounded-[13px] bg-[url('/images/services/curvy-line2.png')]" />
+      <div className="my-4 h-[6px] w-full rounded-[13px] bg-[url('/images/services/curvy-line2.png')]" />
 
       <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
         <Typography className="text-sm uppercase text-white-default">
@@ -430,7 +429,7 @@ const FilterBox = () => {
       ) : null}
       {isP2P || isForSale ? (
         <>
-          <div className="my-4 h-[7px] w-full rounded-[13px] bg-[url('/images/services/curvy-line2.png')]" />
+          <div className="my-4 h-[6px] w-full rounded-[13px] bg-[url('/images/services/curvy-line2.png')]" />
           <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
             <Typography className="text-sm uppercase text-white-default">
               sort
@@ -467,7 +466,7 @@ const FilterBox = () => {
           />
         </>
       ) : null}
-      <div className="my-4 h-[7px] w-full rounded-[13px] bg-[url('/images/services/curvy-line2.png')]" />
+      <div className="my-4 h-[6px] w-full rounded-[13px] bg-[url('/images/services/curvy-line2.png')]" />
       <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
         <Typography className="text-sm uppercase text-white-default">
           Resource type

@@ -594,7 +594,7 @@ export const MENU_MARKETPLACE: IMenuMarketPlace[] = [
   {
     name: "NAKA Market",
     link: "/marketplace",
-    isChilde: true,
+    isChilde: false,
     left: "180px !important",
     image: {
       src: IMAGES.tableCom.src,

@@ -25,6 +25,8 @@ import Helper from "@utils/helper"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import useLoadingStore from "@stores/loading"
 import { useRouter } from "next/router"
+import useProfileStore from "@stores/profileStore"
+import useGameStore from "@stores/game"
 
 const GameSummaryRewardPageMobile = () => {
   const {
@@ -40,10 +42,12 @@ const GameSummaryRewardPageMobile = () => {
     usedItem,
     gameItemBalance
   } = useGameSummaryRewardController()
+  const game = useGameStore((state) => state.data)
   const { hydrated } = useGlobal()
   const { t } = useTranslation()
   const router = useRouter()
   const { setOpen } = useLoadingStore()
+  const profile = useProfileStore((state) => state.profile.data)
 
   const getDateUpdated = () => {
     if (notificationItem) {
@@ -100,7 +104,7 @@ const GameSummaryRewardPageMobile = () => {
       default:
         return (
           <GameSummaryBodyMobile
-            gameData={gameDataState}
+            gameData={gameDataState || game}
             date={
               notificationItem?.createdAt || playHistoryItem?.createdAt || ""
             }
@@ -142,11 +146,14 @@ const GameSummaryRewardPageMobile = () => {
     >
       <h2
         className="flex items-center gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary"
-        // id={`/${data.game_mode}/${data.path}`}
-        // onClick={() => router.push(`/${data.game_mode}/${data.path}`)}
         onClick={() => {
           setOpen("")
-          router.push(`/${gameDataState.game_mode}/${gameDataState.path}`)
+          if (profile) {
+            return router.push(
+              `/${gameDataState.game_mode}/${gameDataState.path}`
+            )
+          }
+          return router.push(`/`)
         }}
         aria-hidden="true"
       >

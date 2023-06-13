@@ -331,7 +331,7 @@ const FilterBox = () => {
         </Collapse>
       </section>
 
-      <div className="my-4 h-[10px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')]" />
+      <div className="my-4 h-1.5 w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')] bg-repeat-x" />
 
       <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
         <Typography className="text-sm uppercase text-white-default">
@@ -463,7 +463,7 @@ const FilterBox = () => {
       ) : null}
       {isP2P || isForSale ? (
         <>
-          <div className="my-4 h-[10px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')]" />
+          <div className="my-4 h-1.5 w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')] bg-repeat-x" />
           <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
             <Typography className="text-sm uppercase text-white-default">
               sort
@@ -501,7 +501,7 @@ const FilterBox = () => {
         </>
       ) : null}
 
-      <div className="my-4 h-[10px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')]" />
+      <div className="my-4 h-1.5 w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')] bg-repeat-x" />
       <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
         <Typography className="text-sm uppercase text-white-default">
           filter
@@ -735,7 +735,7 @@ const FilterBox = () => {
         onChange={(_event) => {}}
       />
 
-      <div className="my-4 h-[10px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')]" />
+      <div className="my-4 h-1.5 w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')] bg-repeat-x" />
       <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
         <Typography className="text-sm uppercase text-white-default">
           Resource type

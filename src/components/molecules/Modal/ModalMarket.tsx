@@ -49,7 +49,7 @@ interface IProps {
   name: string
   img: string
   vdo?: string
-  priceValue?: number
+  orderPrice?: number
   periodValue?: number
   amount?: number
   maxPeriod?: number
@@ -72,9 +72,7 @@ const ModalMarket = ({
   name,
   img,
   vdo,
-  priceValue = 1,
-  // periodValue = 1,
-  // amount = 1,
+  orderPrice,
   maxPeriod = 1,
   maxAmount = 0,
   tokenId,
@@ -96,7 +94,7 @@ const ModalMarket = ({
   const { onCreateOrder, onCancelOrder, onMintOrder, onExecuteOrder } =
     useMarket()
 
-  const [sellPrice, setSellPrice] = useState<string>("")
+  const [sellNFTPrice, setSellNFTPrice] = useState<string>("")
 
   const {
     invenItemData,
@@ -112,9 +110,9 @@ const ModalMarket = ({
     useMarketplaceProvider()
 
   const onPriceChange = (value: string) => {
-    const _value = Number(value)
-    if (setInvPrice) setInvPrice(_value)
-    // setSellPrice(value)
+    // const _value = Number(value)
+    // if (setInvPrice) setInvPrice(_value)
+    setSellNFTPrice(value)
   }
 
   const onPeriodChange = (value: number) => {
@@ -219,7 +217,7 @@ const ModalMarket = ({
                     )}`
                   } else if (invenItemData && updateInvenNFTMarketData) {
                     // update data from response
-                    updateInvenNFTMarketData(undefined)
+                    updateInvenNFTMarketData(undefined, nftType)
                   }
                 } else {
                   // p2p
@@ -241,14 +239,21 @@ const ModalMarket = ({
         }
         break
       case "sell":
-        if (tokenId && itemId && invAmount && invPrice) {
+        if (
+          tokenId &&
+          itemId &&
+          invAmount &&
+          (Number(sellNFTPrice) > 0 || invPrice)
+        ) {
+          const _price =
+            Number(sellNFTPrice) > 0 ? Number(sellNFTPrice) : invPrice || 0
           await onCreateOrder(
             nftType,
             selling,
             itemId,
             tokenId,
             invAmount,
-            invPrice,
+            _price,
             invPeriod
           ).then((_res) => {
             if (router.asPath.includes("/inventory")) {
@@ -263,7 +268,9 @@ const ModalMarket = ({
             }
           })
         } else
-          console.error(`marketAmount: ${invAmount}, marketPrice: ${invPrice}`)
+          console.error(
+            `tokenId:${tokenId}, marketAmount: ${invAmount}, marketPrice: ${invPrice}`
+          )
         break
       case "buy":
         if (
@@ -274,7 +281,7 @@ const ModalMarket = ({
           orderId &&
           marketAmount &&
           marketPeriod &&
-          priceValue
+          orderPrice
         ) {
           await onExecuteOrder(
             nftType,
@@ -283,7 +290,7 @@ const ModalMarket = ({
             itemId,
             sellerId,
             orderId,
-            priceValue,
+            orderPrice,
             marketAmount,
             marketPeriod
           ).then((_res) => {
@@ -300,11 +307,11 @@ const ModalMarket = ({
           )
         break
       case "mint":
-        if (priceValue && marketAmount) {
+        if (orderPrice && marketAmount) {
           await onMintOrder({
             _type: nftType,
             _marketId: marketId,
-            _price: priceValue,
+            _price: orderPrice,
             _amount: marketAmount
           }).then((_res) => {
             if (_res)
@@ -314,13 +321,14 @@ const ModalMarket = ({
           })
         } else
           console.error(
-            `id: ${marketId}, idItem: ${itemId}, price: ${priceValue}, amount:${marketAmount}`
+            `id: ${marketId}, idItem: ${itemId}, price: ${orderPrice}, amount:${marketAmount}`
           )
         break
       default:
         console.error(`Action not found!`)
         break
     }
+    onClose()
   })
 
   return (
@@ -395,7 +403,7 @@ const ModalMarket = ({
                     currency={currency}
                     // price={invPrice || undefined}
                     // onPriceChange={onPriceChange}
-                    price={sellPrice}
+                    price={sellNFTPrice}
                     onPriceChange={onPriceChange}
                     period={invPeriod || 1}
                     setPeriod={onPeriodChange}
@@ -403,6 +411,7 @@ const ModalMarket = ({
                   />
                 ) : null}
                 {action === "buy" &&
+                orderPrice &&
                 nftType !== "game_item" &&
                 nftType !== "nft_material" &&
                 nftType !== "nft_naka_punk" ? (
@@ -411,7 +420,7 @@ const ModalMarket = ({
                     seller={sellerType}
                     selling={selling}
                     currency={currency}
-                    price={priceValue}
+                    price={orderPrice}
                     period={marketPeriod || 0}
                     setPeriod={onPeriodChange}
                     maxPeriod={maxPeriod}
@@ -435,7 +444,9 @@ const ModalMarket = ({
                         : invAmount || marketAmount || 0
                     }
                     price={
-                      action === "sell" && invPrice ? invPrice : priceValue
+                      action === "sell" && orderPrice
+                        ? orderPrice
+                        : invPrice || 0
                     }
                     selling={
                       nftType === "game_item" ||

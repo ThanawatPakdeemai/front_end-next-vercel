@@ -30,7 +30,7 @@ interface IProps {
   selling: TSellingType
   setSelling: (_selling: TSellingType) => void
   currency: number
-  price?: string
+  price: string
   onPriceChange: (_price: string) => void
   period: number
   setPeriod: (_period: number) => void

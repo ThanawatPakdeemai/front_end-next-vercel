@@ -1,7 +1,7 @@
 import useGetMarketOrder from "@feature/marketplace/hooks/getMarketOrder"
 import {
   IMarketDetail,
-  IMarketOrderServ,
+  IMarketOrderListServ,
   IMarketSearch,
   IMarketServForm,
   IMarketSort,
@@ -16,9 +16,10 @@ import Helper from "@utils/helper"
 import { useCallback, useEffect, useMemo, useState } from "react"
 
 const useMarketInfo = () => {
-  const [orderData, setOrderData] = useState<IMarketOrderServ | undefined>(
+  const [orderData, setOrderData] = useState<IMarketOrderListServ | undefined>(
     undefined
   )
+
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
 

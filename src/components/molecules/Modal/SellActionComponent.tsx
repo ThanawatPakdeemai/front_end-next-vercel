@@ -20,7 +20,6 @@ import {
   TextField
 } from "@mui/material"
 import FormattedInputs from "@feature/marketplace/components/molecules/CurrencyTextField"
-import { useInventoryProvider } from "@providers/InventoryProvider"
 import Helper from "@utils/helper"
 import React, { memo, useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"

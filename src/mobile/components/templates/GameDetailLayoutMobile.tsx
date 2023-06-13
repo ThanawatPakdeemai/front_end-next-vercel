@@ -31,14 +31,17 @@ export const buttonArrow =
 const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
   const router = useRouter()
   const { t } = useTranslation()
-  const { setClose } = useLoadingStore()
   const { openAboutGame, setOpenAboutGame } = useDrawerControllerMobile()
   const { statsGameById } = useGetStatisticsGameById()
   const { onClickedPrev, onClickedNext, weeklyPoolByGameId } = useGameOverview(
     gameData.id,
     gameData.game_mode
   )
+  const { setClose } = useLoadingStore()
 
+  /**
+   * @description State for close loading
+   */
   useEffect(() => {
     if (gameData) {
       setClose()

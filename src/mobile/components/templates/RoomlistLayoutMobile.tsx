@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useRouter } from "next/router"
 import { Box } from "@mui/material"
 import { IGame } from "@feature/game/interfaces/IGameService"
@@ -13,6 +13,7 @@ import useCreateRoomController from "@feature/rooms/hooks/useCreateRoomControlle
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import ButtonFilledTemplate from "./ButtonFilledTemplate"
 import ArrowBackIcon from "../atoms/icons/ArrowBackIcon"
+import useLoadingStore from "@stores/loading"
 
 export interface IRoomlistLayoutMobileProps {
   gameData: IGame
@@ -34,6 +35,16 @@ const RoomlistLayoutMobile = ({ gameData }: IRoomlistLayoutMobileProps) => {
   } = useCreateRoomController({
     gameData
   })
+  const { setClose } = useLoadingStore()
+
+  /**
+   * @description State for close loading
+   */
+  useEffect(() => {
+    if (gameData) {
+      setClose()
+    }
+  }, [gameData])
 
   const getTemplateGame = () => {
     switch (gameData.game_type) {

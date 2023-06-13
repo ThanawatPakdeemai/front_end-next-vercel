@@ -101,8 +101,6 @@ export default function CardBuyItemMobile({
   }
 
   const buttonInToGame = useMemo(() => {
-    setOpen("")
-
     switch (gameObject.game_mode) {
       case "story-mode":
         return (
@@ -131,7 +129,10 @@ export default function CardBuyItemMobile({
                 color="error"
                 variant="contained"
                 className="w-full !p-[8px_20px] font-urbanist !text-white-primary"
-                href={`${router.asPath}/roomlist`}
+                onClick={() => {
+                  setOpen("")
+                  router.push(`${router.asPath}/roomlist`)
+                }}
               />
             )
           }
@@ -154,7 +155,7 @@ export default function CardBuyItemMobile({
         return <NoReady />
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [qtyItemSelected, router.asPath, buttonStyle, router.pathname])
+  }, [qtyItemSelected, router.asPath, buttonStyle, router.pathname, setOpen])
 
   return hydrated ? (
     <Box

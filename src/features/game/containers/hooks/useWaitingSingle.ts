@@ -15,6 +15,7 @@ import { IResGetIp } from "@interfaces/IGetIP"
 import useGameGlobal from "@hooks/useGameGlobal"
 import useGetCurrentPlayerGameSingle from "./useGetCurrentPlayerGameSingle"
 import useGetGameRoomById from "./useGetGameRoomById"
+import useLoadingStore from "@stores/loading"
 
 const baseUrlGame = CONFIGS.BASE_URL.GAME
 const baseUrlApi = CONFIGS.BASE_URL.API
@@ -33,6 +34,7 @@ const useWaitingSingle = () => {
   const [gameUrl, setGameUrl] = useState<string>("")
   const [ip, setIp] = useState("")
   const { getGameMode } = useGlobal()
+  const { setClose } = useLoadingStore()
 
   // TODO: Refactor later
   const detectDevice = isMobile ? "mobile" : "desktop"
@@ -97,7 +99,10 @@ const useWaitingSingle = () => {
   useEffect(() => {
     let load = false
 
-    if (!load) fetchPlayers("in")
+    if (!load) {
+      fetchPlayers("in")
+      setClose()
+    }
 
     return () => {
       load = true

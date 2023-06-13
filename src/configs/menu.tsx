@@ -47,6 +47,15 @@ import CalendarSolidIcon from "@components/icons/CalendarSolidIcon"
 import GameStoryIcon from "@components/icons/GameStoryIcon"
 import FreeToEarnIcon from "@components/icons/FreeToEarnIcon"
 import DesktopIcon from "@components/icons/DesktopIcon"
+import {
+  GameItemIcon,
+  LandIcon,
+  BuildingIcon,
+  MaterialIcon,
+  NakapunkIcon,
+  ArcadeGameIcon,
+  ReefIcon
+} from "@components/icons/MenunIcon/MarketIcon"
 
 // TODO: Open after launch V2
 // import GlobalIcon from "@components/icons/GlobalIcon"
@@ -606,22 +615,22 @@ export const MENU_MARKETPLACE: IMenuMarketPlace[] = [
       {
         name: "Land",
         link: "/marketplace",
-        icon: MarketPlaceIcon
+        icon: LandIcon
       },
       {
         name: "Buildings",
         link: "/marketplace/building",
-        icon: MarketPlaceIcon
+        icon: BuildingIcon
       },
       {
         name: "NAKA Punks",
         link: "/marketplace/naka-punk",
-        icon: MarketPlaceIcon
+        icon: NakapunkIcon
       },
       {
         name: "Avatar Reef",
         link: "/marketplace/avatar-reef",
-        icon: MarketPlaceIcon
+        icon: ReefIcon
       }
     ]
   },
@@ -639,32 +648,32 @@ export const MENU_MARKETPLACE: IMenuMarketPlace[] = [
       {
         name: "Game Item",
         link: "/marketplace/p2p/game-item",
-        icon: MarketPlaceIcon
+        icon: GameItemIcon
       },
       {
         name: "Land",
         link: "/marketplace/p2p/land",
-        icon: MarketPlaceIcon
+        icon: LandIcon
       },
       {
         name: "Buildings",
         link: "/marketplace/p2p/building",
-        icon: MarketPlaceIcon
+        icon: BuildingIcon
       },
       {
         name: "Material",
         link: "/marketplace/p2p/material",
-        icon: MarketPlaceIcon
+        icon: MaterialIcon
       },
       {
         name: "NAKA Punks",
         link: "/marketplace/p2p/naka-punk",
-        icon: MarketPlaceIcon
+        icon: NakapunkIcon
       },
       {
         name: "Arcade Game",
         link: "/marketplace/p2p/arcade-game",
-        icon: MarketPlaceIcon
+        icon: ArcadeGameIcon
       }
     ]
   },

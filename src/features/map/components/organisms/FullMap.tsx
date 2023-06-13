@@ -41,7 +41,7 @@ const FullMap = () => {
   const [currentLand, setCurrentLand] = useState<ILandMap | null>(null)
   const [loadingStatus, setLoadingStatus] = useState<boolean>(true)
   const [disable, setDisable] = useState<boolean>(true)
-  const [allLand, setAllLand] = useState<ILandMap[]>()
+  const [allLand, setAllLand] = useState<ILandMap[]>([])
   const [showCardLand, setShowCardLand] = useState<boolean>(false)
   // const [text, setText] = useState<string | undefined>(undefined)
 

@@ -1,7 +1,7 @@
 import useGlobal from "@hooks/useGlobal"
 import { useQuery } from "@tanstack/react-query"
 import useFilterStore from "@stores/blogFilter"
-import { getGamesByKey } from "../services/game.service"
+import { getGameAllFilter } from "../services/game.service"
 
 const useArcadeEmporiumGames = () => {
   const {
@@ -47,9 +47,9 @@ const useArcadeEmporiumGames = () => {
     isError: isErrorGamesFilterByNftgame,
     isFetching: isFetchingGamesFilterByNftgame
   } = useQuery({
-    queryKey: ["getGamesByKey", defaultBody],
+    queryKey: ["getGameAllFilter", defaultBody],
     queryFn: () =>
-      getGamesByKey({
+      getGameAllFilter({
         ...defaultBody,
         game_type: "all",
         game_mode: "play-to-earn",

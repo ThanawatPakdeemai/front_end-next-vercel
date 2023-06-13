@@ -22,7 +22,8 @@ const GameSummaryRewardLayoutMobile = ({ data, gameId, gameType }: IProps) => {
     >
       <h2
         className="flex items-center gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary"
-        id={`/${data.game_mode}/${data.path}`}
+        // id={`/${data.game_mode}/${data.path}`}
+        // onClick={() => router.push(`/${data.game_mode}/${data.path}`)}
         onClick={() => router.push(`/${data.game_mode}/${data.path}`)}
         aria-hidden="true"
       >

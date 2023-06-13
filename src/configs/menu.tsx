@@ -696,21 +696,21 @@ export const MENU_MARKETPLACE_FILTERBOX: IMenuFilter[] = [
   {
     page: "p2p",
     child: [
-      { name: "Game-Item", href: "/marketplace/p2p/game-item" },
-      { name: "Material", href: "/marketplace/p2p/material" },
+      { name: "Game Item", href: "/marketplace/p2p/game-item" },
       { name: "Land", href: "/marketplace/p2p/land" },
-      { name: "Building", href: "/marketplace/p2p/building" },
-      { name: "Arcade Game", href: "/marketplace/p2p/arcade-game" },
-      { name: "Naka Punk", href: "/marketplace/p2p/naka-punk" }
+      { name: "Buildings", href: "/marketplace/p2p/building" },
+      { name: "Material", href: "/marketplace/p2p/material" },
+      { name: "NAKA Punks", href: "/marketplace/p2p/naka-punk" },
+      { name: "Arcade Game", href: "/marketplace/p2p/arcade-game" }
     ]
   },
   {
     page: "forsale",
     child: [
-      { name: "Game-Item", href: "/marketplace/inventory/forsale/game-item" },
+      { name: "Game Item", href: "/marketplace/inventory/forsale/game-item" },
       { name: "Material", href: "/marketplace/inventory/forsale/material" },
       { name: "Land", href: "/marketplace/inventory/forsale/land" },
-      { name: "Building", href: "/marketplace/inventory/forsale/building" },
+      { name: "Buildings", href: "/marketplace/inventory/forsale/building" },
       {
         name: "Arcade Game",
         href: "/marketplace/inventory/forsale/arcade-game"
@@ -722,7 +722,7 @@ export const MENU_MARKETPLACE_FILTERBOX: IMenuFilter[] = [
     page: "rental",
     child: [
       { name: "Land", href: "/marketplace/inventory/rental/land" },
-      { name: "Building", href: "/marketplace/inventory/rental/building" }
+      { name: "Buildings", href: "/marketplace/inventory/rental/building" }
     ]
   },
   {
@@ -738,12 +738,12 @@ export const MENU_MARKETPLACE_FILTERBOX: IMenuFilter[] = [
   {
     page: "inventory",
     child: [
-      { name: "Game-Item", href: "/marketplace/inventory/game-item" },
-      { name: "Material", href: "/marketplace/inventory/material" },
+      { name: "Game Item", href: "/marketplace/inventory/game-item" },
       { name: "Land", href: "/marketplace/inventory/land" },
       { name: "Building", href: "/marketplace/inventory/building" },
-      { name: "Arcade Game", href: "/marketplace/inventory/arcade-game" },
+      { name: "Material", href: "/marketplace/inventory/material" },
       { name: "NAKA Punks", href: "/marketplace/inventory/naka-punk" },
+      { name: "Arcade Game", href: "/marketplace/inventory/arcade-game" },
       { name: "Avatar Reef", href: "/marketplace/inventory/avatar-reef" }
     ]
   },
@@ -751,7 +751,7 @@ export const MENU_MARKETPLACE_FILTERBOX: IMenuFilter[] = [
     page: "marketplace",
     child: [
       { name: "Land", href: "/marketplace/land" },
-      { name: "Building", href: "/marketplace/building" },
+      { name: "Buildings", href: "/marketplace/building" },
       { name: "NAKA Punks", href: "/marketplace/naka-punk" },
       { name: "Avatar Reef", href: "/marketplace/avatar-reef" }
     ]

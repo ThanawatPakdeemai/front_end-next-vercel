@@ -184,7 +184,6 @@ const RegisterTemplate = ({ children, background }: IRegisterTemplate) => {
           </Grid>
         </Grid>
       </Box>
-      {/* <CreateProfile /> */}
     </Box>
   )
 }

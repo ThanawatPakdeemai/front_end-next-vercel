@@ -20,16 +20,12 @@ const ProfileSettingModal = ({
 
   return (
     <SwipeableDrawer
-      anchor="right"
+      anchor="bottom"
       open={open}
       onClose={() => setProfileSetting(false)}
       onOpen={() => {
         clearAllDrawer()
         setProfileSetting(true)
-      }}
-      disableSwipeToOpen={false}
-      ModalProps={{
-        keepMounted: true
       }}
       sx={{
         ...StyleDrawer,

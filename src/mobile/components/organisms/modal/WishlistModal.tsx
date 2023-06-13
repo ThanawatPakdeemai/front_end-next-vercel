@@ -1,9 +1,9 @@
 import React from "react"
 import { Box, SwipeableDrawer } from "@mui/material"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
-import useFavoriteGameControllerMobile from "@mobile/features/game/containers/hooks/useFavoriteGameControllerMobile"
 import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
+import useFavoriteGameControllerMobile from "@mobile/features/game/containers/hooks/useFavoriteGameControllerMobile"
 import GameListMobile from "../GameListMobile"
 
 interface IWishlistModalProps {
@@ -12,8 +12,7 @@ interface IWishlistModalProps {
 }
 
 const WishlistModal = ({ open, setOpenWishlist }: IWishlistModalProps) => {
-  const { gameFavouriteState, isLoadingGameFavourite, limit } =
-    useFavoriteGameControllerMobile()
+  const { data, loading } = useFavoriteGameControllerMobile()
   const { clearAllDrawer } = useDrawerControllerMobile()
 
   return (
@@ -45,9 +44,8 @@ const WishlistModal = ({ open, setOpenWishlist }: IWishlistModalProps) => {
         </h2>
         {/* Game List */}
         <GameListMobile
-          gameData={gameFavouriteState || []}
-          loading={isLoadingGameFavourite}
-          limit={limit}
+          gameData={data}
+          loading={loading}
         />
       </Box>
     </SwipeableDrawer>

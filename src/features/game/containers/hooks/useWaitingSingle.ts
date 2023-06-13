@@ -32,7 +32,7 @@ const useWaitingSingle = () => {
   const { address } = useWeb3Provider()
   const [gameUrl, setGameUrl] = useState<string>("")
   const [ip, setIp] = useState("")
-  const { getTypeGamePathFolder } = useGlobal()
+  const { getGameMode } = useGlobal()
 
   // TODO: Refactor later
   const detectDevice = isMobile ? "mobile" : "desktop"
@@ -344,6 +344,8 @@ const useWaitingSingle = () => {
   }
 
   const checkAccountProfile = () => {
+    // For code detect isMobile, if In-App purchase is ready we will delete it
+    if (isMobile) return true
     if (profile && address === profile.address) {
       return true
     }
@@ -376,7 +378,7 @@ const useWaitingSingle = () => {
     outRoom,
     playerGameSingle,
     GameHome,
-    getTypeGamePathFolder,
+    getGameMode,
     loadingPlayer,
     gameUrl,
     onPlayGame,

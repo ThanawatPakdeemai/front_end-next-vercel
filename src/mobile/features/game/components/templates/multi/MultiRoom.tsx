@@ -6,7 +6,8 @@ import NoData from "@components/molecules/NoData"
 import ListJoinGame from "../../molecules/ListJoinGame"
 
 const MultiRoom = () => {
-  const { dataRoom, data, handleJoinRoom, itemSelected } = useRoomMulti()
+  const { dataRoom, data, handleJoinRoom, itemSelected, getRoomStatus } =
+    useRoomMulti()
   return (
     <Box
       component="div"
@@ -46,6 +47,7 @@ const MultiRoom = () => {
                       }`
                 }
                 descChip2={`${item.amount_current_player} / ${item.max_players}`}
+                btnText={getRoomStatus(item)}
               />
             ))}
         </Box>

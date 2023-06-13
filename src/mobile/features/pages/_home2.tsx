@@ -33,12 +33,8 @@ const Home = () => {
     }
   }
 
-  const {
-    stateProfile,
-    getTypeGamePathFolder,
-    isRedirectRoomlist,
-    defaultBody
-  } = useGlobal()
+  const { stateProfile, getGameMode, isRedirectRoomlist, defaultBody } =
+    useGlobal()
   const { gameFavourite, gameFavouriteInfo } = useFavoriteGame({
     playerId: stateProfile?.id ?? "",
     ...defaultBody
@@ -181,7 +177,7 @@ const Home = () => {
                     key={uuid()}
                     img={item.image_list}
                     text={item.name}
-                    href={`/${getTypeGamePathFolder(item)}/${
+                    href={`/${getGameMode(item)}/${
                       item.path
                     }${isRedirectRoomlist(item).toString()}`}
                   />

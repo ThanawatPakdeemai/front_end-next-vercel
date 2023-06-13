@@ -67,31 +67,6 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
     _poolId: poolId
   })
 
-  useEffect(() => {
-    let load = false
-    if (!load) {
-      if (gameData && gameData.NFT_Owner) {
-        setGameOwnerId(gameId)
-      }
-    }
-    return () => {
-      load = true
-    }
-  }, [gameData, gameId])
-
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (gameData) setGameDataState(gameData)
-      if (partnerGames) setGamePartnerState(partnerGames)
-    }
-
-    return () => {
-      load = true
-    }
-  }, [gameData, partnerGames])
-
   /**
    * @description Set Game Tags
    * @returns {IGameTag[]} gameTags
@@ -373,44 +348,14 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
         //     src: metaData.image as string
         //   })
         // )
-        gameDataMedia.push(
-          {
-            id: uuid(),
-            type: "image",
-            src:
-              gameData && gameData.image_background
-                ? gameData.image_background
-                : GAME_MOCKUP_CARD[0].src
-          }
-          // TODO: uncomment when game data is ready
-          // {
-          //   id: uuid(),
-          //   type: "image",
-          //   src: gameData ? gameData.image_category_list : ""
-          // },
-          // {
-          //   id: uuid(),
-          //   type: "image",
-          //   src: gameData ? gameData.image_room : ""
-          // },
-          // {
-          //   id: uuid(),
-          //   type: "image",
-          //   src: gameData ? gameData.image_waiting : ""
-          // },
-          // {
-          //   id: uuid(),
-          //   type: "image",
-          //   src: gameData ? gameData.image_sum : ""
-          // },
-          // {
-          //   id: uuid(),
-          //   type: "image",
-          //   src: gameData ? gameData.image_reward : ""
-          // }
-          // ...EMPTY_MEDIAS,
-          // ...EMPTY_MEDIAS
-        )
+        gameDataMedia.push({
+          id: uuid(),
+          type: "image",
+          src:
+            gameData && gameData.image_background
+              ? gameData.image_background
+              : GAME_MOCKUP_CARD[0].src
+        })
     }
     return gameDataMedia
   }
@@ -547,6 +492,31 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   const onClickedNextWeeklyPoolByGameId = (_nextId: string) => {
     setPoolId(_nextId)
   }
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      if (gameData && gameData.NFT_Owner) {
+        setGameOwnerId(gameId)
+      }
+    }
+    return () => {
+      load = true
+    }
+  }, [gameData, gameId])
+
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      if (gameData) setGameDataState(gameData)
+      if (partnerGames) setGamePartnerState(partnerGames)
+    }
+
+    return () => {
+      load = true
+    }
+  }, [gameData, partnerGames])
 
   return {
     gameTags: setGameTags(),

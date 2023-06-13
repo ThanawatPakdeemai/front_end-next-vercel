@@ -1,10 +1,10 @@
 import { getCategories } from "@feature/dropdown/containers/services/dropdown.service"
-import { getGamesByKey } from "@feature/game/containers/services/game.service"
-import { IFilterGamesByKey } from "@feature/game/interfaces/IGameService"
+import { getGameAllFilter } from "@feature/game/containers/services/game.service"
+import { IPayloadGameFilter } from "@feature/game/interfaces/IGameService"
 import { useQuery } from "@tanstack/react-query"
 import useGlobal from "./useGlobal"
 
-const useCategories = (_body?: IFilterGamesByKey | undefined) => {
+const useCategories = (_body?: IPayloadGameFilter | undefined) => {
   const { defaultBody } = useGlobal()
 
   /**
@@ -38,8 +38,8 @@ const useCategories = (_body?: IFilterGamesByKey | undefined) => {
     isError: isErrorGamesFilterByCategoryId,
     isFetching: isFetchingGamesFilterByCategoryId
   } = useQuery({
-    queryKey: ["getGamesByKey", _body],
-    queryFn: () => getGamesByKey(_body || defaultBody),
+    queryKey: ["getGameAllFilter", _body],
+    queryFn: () => getGameAllFilter(_body || defaultBody),
     keepPreviousData: true,
     staleTime: Infinity,
     retry: 3

@@ -205,12 +205,24 @@ const useGamePageListController = (
   }
 
   useEffect(() => {
-    handleInfinityLimit()
+    let load = false
+    if (!load) {
+      handleInfinityLimit()
+    }
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scrollBottom])
 
   useEffect(() => {
-    handleSearchFilter()
+    let load = false
+    if (!load) {
+      handleSearchFilter()
+    }
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchDropdown])
 

@@ -9,7 +9,18 @@ const Loading = () => {
 
   const renderLoading = () => {
     if (isMobile) {
-      return <Preload />
+      return (
+        <Backdrop
+          sx={{
+            color: "#fff",
+            zIndex: 99999,
+            backgroundColor: "transparent"
+          }}
+          open={open}
+        >
+          <Preload open={open} />
+        </Backdrop>
+      )
     }
     return (
       <div>

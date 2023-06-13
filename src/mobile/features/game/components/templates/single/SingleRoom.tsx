@@ -29,7 +29,7 @@ const SingleRoom = () => {
             text={textJoin(_room)}
             time={_room.end_time as unknown as string}
             key={_room._id}
-            image={gameData.image_room}
+            image={gameData.image_category_list}
             name={gameData.game_type}
             desc={gameData.name}
             onClick={() => handleJoinRoom(_room)}

@@ -237,7 +237,7 @@ const FilterBox = () => {
         <button
           type="button"
           onClick={handleOnExpandClick}
-          className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[13px] border-[1px] border-solid border-neutral-700 bg-secondary-main px-5 text-[12px] text-white-primary"
+          className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[8px] border-[1px] border-solid border-neutral-700 bg-secondary-main px-5 text-[12px] text-white-primary"
         >
           <MenuButtonExpandMobile
             isOpen={expanded}
@@ -268,9 +268,9 @@ const FilterBox = () => {
         <Collapse
           in={expanded}
           timeout="auto"
-          className="mt- flex w-[200px] flex-col rounded-[19px] p-2"
+          className="absolute mt-[-4px] w-[200px] rounded-[19px] border-[6px] border-[#010101] p-1"
           sx={{
-            backgroundColor: "#232329",
+            backgroundColor: "#18181C",
             zIndex: 99999,
             position: "absolute",
             width: "218px"

@@ -17,6 +17,7 @@ import useGlobal from "@hooks/useGlobal"
 import { ImageCustom } from "@components/atoms/image/Image"
 import { StyledAvatar } from "@mobile/components/atoms/headerMenu/HeadProfileMobile"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
+import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import LogoutModal from "./LogoutModal"
 import ProfileSettingModal from "./ProfileSettingModal"
 import PlayedHistoryModal from "./PlayedHistoryModal"
@@ -34,13 +35,17 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
   const [togglePlayedHistory, setTogglePlayedHistory] = useState(false)
 
   const { t } = useTranslation()
+  const { clearAllDrawer } = useDrawerControllerMobile()
 
   return (
     <SwipeableDrawer
       anchor="right"
       open={open}
       onClose={() => setOpenSetting(false)}
-      onOpen={() => setOpenSetting(true)}
+      onOpen={() => {
+        clearAllDrawer()
+        setOpenSetting(true)
+      }}
       disableSwipeToOpen={false}
       ModalProps={{
         keepMounted: true

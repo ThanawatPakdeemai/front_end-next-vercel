@@ -29,9 +29,7 @@ const HeadGameMenuMobile = ({
     >
       {GAME_MENU_MOBILE.map((item) => (
         <Box
-          onClick={() => {
-            handlGameMenu(item.type)
-          }}
+          onClick={() => handlGameMenu(item.type)}
           component="button"
           key={item.id}
           className={`relative flex-1 px-[6px] py-[12px] font-urbanist text-[90%] ${

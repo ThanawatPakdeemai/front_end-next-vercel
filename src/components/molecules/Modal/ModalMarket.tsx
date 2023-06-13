@@ -224,7 +224,7 @@ const ModalMarket = ({
                   _path = `/marketplace/p2p/${convertNFTTypeToTType(nftType)}`
                 }
                 if (_path) {
-                  return router.replace(_path)
+                  return router.replace(_path, undefined, { shallow: true })
                 }
               }
             })
@@ -264,7 +264,7 @@ const ModalMarket = ({
               nftType
             )}/${itemId}`
             if (_path) {
-              return router.replace(_path)
+              return router.replace(_path, undefined, { shallow: true })
             }
           })
         } else
@@ -298,7 +298,9 @@ const ModalMarket = ({
               return router.replace(
                 `/marketplace/${
                   sellerType === "system" ? "" : "/p2p"
-                }/${convertNFTTypeToTType(nftType)}`
+                }/${convertNFTTypeToTType(nftType)}`,
+                undefined,
+                { shallow: true }
               )
           })
         } else
@@ -316,7 +318,9 @@ const ModalMarket = ({
           }).then((_res) => {
             if (_res)
               return router.replace(
-                `/marketplace/${convertNFTTypeToTType(nftType)}`
+                `/marketplace/${convertNFTTypeToTType(nftType)}`,
+                undefined,
+                { shallow: true }
               )
           })
         } else

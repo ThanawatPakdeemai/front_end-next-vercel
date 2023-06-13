@@ -407,7 +407,7 @@ const useGlobal = (
         _mode === "production" &&
         !redirectionDone.current
       ) {
-        router.replace("/404")
+        router.replace("/404", undefined, { shallow: true })
         setIsShowMarket(false)
         redirectionDone.current = true
       } else if (
@@ -415,7 +415,7 @@ const useGlobal = (
         _mode === "development" &&
         !redirectionDone.current
       ) {
-        router.replace(router.asPath)
+        router.replace(router.asPath, undefined, { shallow: true })
         setIsShowMarket(true)
         redirectionDone.current = true
       }

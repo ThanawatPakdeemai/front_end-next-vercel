@@ -88,7 +88,9 @@ const TransferBox = ({ _tokenId, _maxAmount }: IProp) => {
         setTimeout(
           () =>
             router.replace(
-              `/marketplace/inventory/${convertNFTTypeToTType(marketType)}`
+              `/marketplace/inventory/${convertNFTTypeToTType(marketType)}`,
+              undefined,
+              { shallow: true }
             ),
           1000
         )
@@ -108,7 +110,9 @@ const TransferBox = ({ _tokenId, _maxAmount }: IProp) => {
       setTimeout(
         () =>
           router.replace(
-            `/marketplace/inventory/${convertNFTTypeToTType(marketType)}`
+            `/marketplace/inventory/${convertNFTTypeToTType(marketType)}`,
+            undefined,
+            { shallow: true }
           ),
         1000
       )

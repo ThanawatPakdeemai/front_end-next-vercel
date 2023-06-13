@@ -11,6 +11,12 @@ const WaitingLayout = () => {
     <Box
       component="div"
       className="flex min-h-[100vh] flex-col bg-[#121212] p-[0_24px_24px]"
+      sx={{
+        "h2": {
+          lineHeight: "1",
+          alignItems: "flex-start"
+        }
+      }}
     >
       <h2 className="flex items-center gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary">
         <i

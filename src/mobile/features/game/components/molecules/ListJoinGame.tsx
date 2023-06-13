@@ -127,7 +127,8 @@ const ListJoinGame = ({
         >
           <ButtonToggleIcon
             handleClick={onClick}
-            text={t(btnText as string) || t("join")}
+            // When logout button display "join" text
+            text={btnText === "unavailable" ? "join" : t(btnText as string)}
             className={`first-letter:btn-green-rainbow z-[2] h-[40px] !w-[95px] ${
               btnText === "full" ? " bg-error-light" : "!bg-error-main"
             } ${

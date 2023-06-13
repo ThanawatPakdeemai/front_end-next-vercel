@@ -52,6 +52,7 @@ const RoomlistLayoutMobile = ({ gameData }: IRoomlistLayoutMobileProps) => {
     return () => {
       load = true
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameData, setClose])
 
   const getTemplateGame = () => {

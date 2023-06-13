@@ -260,9 +260,17 @@ const CardItemMarketPlace = ({
                         ? "rounded-lg"
                         : cardType === "building" && "!h-[200px]"
                     }`}
-                    width={itemName?.includes("Bullet") ? 60 : itemImage.width}
+                    width={
+                      itemName?.includes("Bullet") &&
+                      Number(itemImage.width) > 60
+                        ? 30
+                        : itemImage.width
+                    }
                     height={
-                      itemName?.includes("Bullet") ? 60 : itemImage.height
+                      itemName?.includes("Bullet") &&
+                      Number(itemImage.height) > 60
+                        ? 30
+                        : itemImage.height
                     }
                   />
                 </motion.div>

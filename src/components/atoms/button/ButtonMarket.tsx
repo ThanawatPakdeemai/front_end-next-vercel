@@ -31,7 +31,7 @@ interface IMarketButton {
   marketId?: string
   itemId?: string
   orderId?: string
-  price?: number
+  orderPrice?: number
   period?: number
   amount?: number
   maxPeriod?: number
@@ -52,7 +52,7 @@ const ButtonMarket = ({
   marketId,
   itemId,
   orderId,
-  price = 0,
+  orderPrice,
   period = 1,
   amount = 1,
   maxPeriod = 1,
@@ -221,7 +221,9 @@ const ButtonMarket = ({
         name={name}
         img={img}
         vdo={vdo}
-        priceValue={marketplaces_data ? marketplaces_data.price : price}
+        orderPrice={
+          marketplaces_data ? marketplaces_data.price : orderPrice || 0
+        }
         periodValue={period}
         amount={amount}
         maxPeriod={maxPeriod}

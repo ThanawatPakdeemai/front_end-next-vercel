@@ -8,13 +8,11 @@ import useLoadingStore from "@stores/loading"
 import { calculatePosition } from "@utils/map"
 import { AnimatePresence, motion } from "framer-motion"
 import { useRouter } from "next/router"
-import { Stack, Typography } from "@mui/material"
+import { Typography } from "@mui/material"
 import MenuButtonExpandMobile from "@feature/page/marketplace/mobilescreen/MenuButtonExpandMobile"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
-import FilterBox from "@feature/marketplace/components/molecules/FilterBox"
 import useMarketFilterStore from "@stores/marketFilter"
 import Helper from "@utils/helper"
+import SwipeableEdgeDrawer from "@feature/marketplace/components/organisms/DrawerMobileFilter"
 import BoxElement from "../molecules/BoxElement"
 import CameraController from "../molecules/CameraController"
 import MapScene from "../molecules/MapScene"
@@ -262,7 +260,8 @@ const FullMap = () => {
           </div>
         </div>
       </div>
-      <ModalCustom
+      <SwipeableEdgeDrawer open={expanded} />
+      {/* <ModalCustom
         open={expanded}
         onClose={handleOnExpandClick}
         className="m-auto gap-3 rounded-[34px] p-[10px] max-[420px]:w-[370px]"
@@ -282,7 +281,7 @@ const FullMap = () => {
             <FilterBox />
           </div>
         </Stack>
-      </ModalCustom>
+      </ModalCustom> */}
       {/* ---------- map ---------- */}
       <Canvas
         gl={{ antialias: true, toneMapping: THREE.NoToneMapping }}

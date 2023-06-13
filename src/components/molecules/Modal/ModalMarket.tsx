@@ -17,6 +17,7 @@ import { NextRouter, useRouter } from "next/router"
 import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import MagicIcon from "@components/icons/MagicIcon"
+import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
 import { ModalCustom } from "./ModalCustom"
 
 const SellActionComp = dynamic(
@@ -88,11 +89,13 @@ const ModalMarket = ({
   const { getPriceNakaCurrent, convertNFTTypeToTType } = Helper
   const [selling, setSelling] = useState<TSellingType>(sellingType)
   const [currency, setCurrency] = useState<number>(0)
+
   const router: NextRouter = useRouter()
 
   const { handleSubmit } = useForm()
   const { onCreateOrder, onCancelOrder, onMintOrder, onExecuteOrder } =
     useMarket()
+  const { calcNAKAPrice } = useGlobalMarket()
 
   const [sellNFTPrice, setSellNFTPrice] = useState<string>("")
 
@@ -101,7 +104,6 @@ const ModalMarket = ({
     invPrice,
     invPeriod,
     invAmount,
-    setInvPrice,
     setInvPeriod,
     updateInvenNFTMarketData
   } = useInventoryProvider()
@@ -110,8 +112,6 @@ const ModalMarket = ({
     useMarketplaceProvider()
 
   const onPriceChange = (value: string) => {
-    // const _value = Number(value)
-    // if (setInvPrice) setInvPrice(_value)
     setSellNFTPrice(value)
   }
 
@@ -311,7 +311,7 @@ const ModalMarket = ({
           await onMintOrder({
             _type: nftType,
             _marketId: marketId,
-            _price: orderPrice,
+            _price: calcNAKAPrice(orderPrice),
             _amount: marketAmount
           }).then((_res) => {
             if (_res)
@@ -444,7 +444,7 @@ const ModalMarket = ({
                         : invAmount || marketAmount || 0
                     }
                     price={
-                      action === "sell" && orderPrice
+                      action !== "sell" && orderPrice
                         ? orderPrice
                         : invPrice || 0
                     }

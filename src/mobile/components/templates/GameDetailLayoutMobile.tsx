@@ -54,7 +54,8 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
     return () => {
       load = true
     }
-  }, [gameData, setClose])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameData, setClose, setOpen])
 
   const renderWeeklyTopPlayer = () => {
     switch (gameData.game_mode) {

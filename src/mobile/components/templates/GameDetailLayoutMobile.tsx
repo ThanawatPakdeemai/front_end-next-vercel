@@ -43,8 +43,16 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
    * @description State for close loading
    */
   useEffect(() => {
-    if (gameData) {
-      setClose()
+    let load = false
+
+    if (!load) {
+      if (gameData) {
+        setClose()
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [gameData, setClose])
 

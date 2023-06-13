@@ -13,9 +13,9 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import CONFIGS from "@configs/index"
 import { IResGetIp } from "@interfaces/IGetIP"
 import useGameGlobal from "@hooks/useGameGlobal"
+import useLoadingStore from "@stores/loading"
 import useGetCurrentPlayerGameSingle from "./useGetCurrentPlayerGameSingle"
 import useGetGameRoomById from "./useGetGameRoomById"
-import useLoadingStore from "@stores/loading"
 
 const baseUrlGame = CONFIGS.BASE_URL.GAME
 const baseUrlApi = CONFIGS.BASE_URL.API

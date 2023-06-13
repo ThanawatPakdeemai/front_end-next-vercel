@@ -11,9 +11,9 @@ import SingleRoom from "@mobile/features/game/components/templates/single/Single
 import ModalCreateRoomMobile from "@mobile/features/rooms/components/molecules/ModalCreateRoomMobile"
 import useCreateRoomController from "@feature/rooms/hooks/useCreateRoomController"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
+import useLoadingStore from "@stores/loading"
 import ButtonFilledTemplate from "./ButtonFilledTemplate"
 import ArrowBackIcon from "../atoms/icons/ArrowBackIcon"
-import useLoadingStore from "@stores/loading"
 
 export interface IRoomlistLayoutMobileProps {
   gameData: IGame
@@ -44,7 +44,7 @@ const RoomlistLayoutMobile = ({ gameData }: IRoomlistLayoutMobileProps) => {
     if (gameData) {
       setClose()
     }
-  }, [gameData])
+  }, [gameData, setClose])
 
   const getTemplateGame = () => {
     switch (gameData.game_type) {

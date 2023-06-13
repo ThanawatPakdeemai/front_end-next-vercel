@@ -37,7 +37,7 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
     gameData.id,
     gameData.game_mode
   )
-  const { setClose } = useLoadingStore()
+  const { setClose, setOpen } = useLoadingStore()
 
   /**
    * @description State for close loading
@@ -46,7 +46,7 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
     if (gameData) {
       setClose()
     }
-  }, [gameData])
+  }, [gameData, setClose])
 
   const renderWeeklyTopPlayer = () => {
     switch (gameData.game_mode) {
@@ -107,7 +107,10 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
     >
       <h2
         className="flex items-center justify-between gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary"
-        onClick={() => router.push("/")}
+        onClick={() => {
+          setOpen("")
+          router.push("/")
+        }}
         aria-hidden="true"
       >
         <ArrowBackIcon />

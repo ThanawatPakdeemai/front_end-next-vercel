@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useRouter } from "next/router"
 import { Box } from "@mui/material"
 import { IGame } from "@feature/game/interfaces/IGameService"
@@ -11,6 +11,7 @@ import SingleRoom from "@mobile/features/game/components/templates/single/Single
 import ModalCreateRoomMobile from "@mobile/features/rooms/components/molecules/ModalCreateRoomMobile"
 import useCreateRoomController from "@feature/rooms/hooks/useCreateRoomController"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
+import useLoadingStore from "@stores/loading"
 import ButtonFilledTemplate from "./ButtonFilledTemplate"
 import ArrowBackIcon from "../atoms/icons/ArrowBackIcon"
 
@@ -34,6 +35,25 @@ const RoomlistLayoutMobile = ({ gameData }: IRoomlistLayoutMobileProps) => {
   } = useCreateRoomController({
     gameData
   })
+  const { setClose } = useLoadingStore()
+
+  /**
+   * @description State for close loading
+   */
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      if (gameData) {
+        setClose()
+      }
+    }
+
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameData, setClose])
 
   const getTemplateGame = () => {
     switch (gameData.game_type) {
@@ -53,6 +73,12 @@ const RoomlistLayoutMobile = ({ gameData }: IRoomlistLayoutMobileProps) => {
     <Box
       component="div"
       className="flex min-h-[100vh] flex-col bg-[#121212] p-[0_24px_24px]"
+      sx={{
+        "h2": {
+          lineHeight: "1",
+          alignItems: "flex-start"
+        }
+      }}
     >
       <h2 className="flex items-center gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary">
         <i

@@ -133,7 +133,7 @@ const MarketplaceDetail = () => {
                 marketId={marketOrder._id}
                 itemId={marketOrder.item_id}
                 orderId={marketOrder.order_id}
-                price={marketOrder.price}
+                orderPrice={marketOrder.price}
                 maxPeriod={marketOrder.period_amount}
                 maxAmount={marketOrder.item_amount}
                 sellerType={marketOrder.seller_type}
@@ -223,7 +223,7 @@ const MarketplaceDetail = () => {
               marketId={marketOrder._id}
               itemId={marketOrder.item_id}
               orderId={marketOrder.order_id}
-              price={marketOrder.price}
+              orderPrice={marketOrder.price}
               maxPeriod={marketOrder.period_amount}
               maxAmount={marketOrder.item_amount}
               sellerType={marketOrder.seller_type}

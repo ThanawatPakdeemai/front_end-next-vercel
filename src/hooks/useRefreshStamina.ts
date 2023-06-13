@@ -10,18 +10,15 @@ const useRefreshStamina = () => {
   const { fetchToken } = useRefreshProfile()
   const { onSetProfileData } = useProfileStore()
   const { data } = useGameStore()
-  // console.log(data?.game_mode)
 
   const refreshStamina = () => {
     if (profile && data && data.game_mode !== "play-to-earn") {
       getProfileByEmail(profile?.data?.email || "")
         .then((__res: IProfile) => {
           onSetProfileData(__res)
-          // console.log(__res)
         })
         .catch((err) => {
           console.error(err)
-          // console.log(err)
           fetchToken()
         })
     }

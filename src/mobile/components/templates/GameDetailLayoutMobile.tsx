@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { Box } from "@mui/material"
 import { ImageCustom } from "@components/atoms/image/Image"
@@ -19,6 +19,7 @@ import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/us
 import GameInfoCard from "@mobile/features/game/components/molecules/GameInfoCard"
 import { StyleRanking } from "@mobile/features/game/styles/StyleRanking"
 import { useRouter } from "next/router"
+import useLoadingStore from "@stores/loading"
 
 export interface IGameDetailLayoutMobileProps {
   gameData: IGame
@@ -36,6 +37,25 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
     gameData.id,
     gameData.game_mode
   )
+  const { setClose, setOpen } = useLoadingStore()
+
+  /**
+   * @description State for close loading
+   */
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      if (gameData) {
+        setClose()
+      }
+    }
+
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameData, setClose, setOpen])
 
   const renderWeeklyTopPlayer = () => {
     switch (gameData.game_mode) {
@@ -96,7 +116,10 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
     >
       <h2
         className="flex items-center justify-between gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary"
-        onClick={() => router.push("/")}
+        onClick={() => {
+          setOpen("")
+          router.push("/")
+        }}
         aria-hidden="true"
       >
         <ArrowBackIcon />

@@ -107,7 +107,7 @@ const useMarketNFTInstall = () => {
   }) =>
     new Promise<TransactionResponse>((resolve, reject) => {
       _contract
-        ._contract(_contractAddrs, _token, _nakaAmount)
+        .createOrderInstallmentNFT(_contractAddrs, _token, _nakaAmount)
         .then((_response: TransactionResponse) => {
           resolve(_response)
         })

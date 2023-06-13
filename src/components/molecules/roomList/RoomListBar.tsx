@@ -157,11 +157,7 @@ const RoomListBar = ({
               : "bg-green-lemon"
           } font-bold capitalize text-neutral-900`}
           type="button"
-          disabled={
-            btnText === "full" ||
-            btnText === "played" ||
-            btnText === "unavailable"
-          }
+          disabled={btnText === "full" || btnText === "unavailable"}
         />
       </Box>
     </motion.div>

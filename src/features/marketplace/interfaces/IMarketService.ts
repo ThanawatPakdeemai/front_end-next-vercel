@@ -375,8 +375,11 @@ export interface INFTTransferServ extends IFormatMessageService {
   data: INFTTransfer
 }
 
-export interface IMarketOrderServ extends IFormatService {
+export interface IMarketOrderListServ extends IFormatService {
   data: IMarketDetail[]
+}
+export interface IMarketOrderServ extends IFormatService {
+  data: IMarketDetail
 }
 
 export interface IMarketCreateOrderServ extends IFormatService {

@@ -242,8 +242,6 @@ const useBuyGameItemController = () => {
 
   const onSubmit = (_data: IFormData) => {
     setOpen("Blockchain transaction in progress...")
-
-    // console.log("code", code)
     // const coinName = (): string => {
     //   switch (
     //     _data.currency.symbol &&

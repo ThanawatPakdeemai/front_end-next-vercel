@@ -10,6 +10,7 @@ import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
 import { ImageCustom } from "@components/atoms/image/Image"
 import DollarSolidIcon from "@components/icons/DollarSolidIcon"
 import { Box } from "@mui/material"
+import useLoadingStore from "@stores/loading"
 import NoReady from "../atoms/NoReady"
 
 interface ICardBuyItemMobileProp {
@@ -29,8 +30,10 @@ export default function CardBuyItemMobile({
     onChangeSelectItem,
     totalPrice
   } = useBuyGameItemController()
+
   const { hydrated, getGameStoryModeURL } = useGlobal()
   const router = useRouter()
+  const { setOpen } = useLoadingStore()
 
   const inputClasses =
     "flex h-10 items-center justify-between rounded-xl border-[1px]  border-neutral-700 bg-neutral-800 text-white-primary p-[10px] text-center font-neue-machina-semi text-sm !bg-[#18181C]"
@@ -126,7 +129,10 @@ export default function CardBuyItemMobile({
                 color="error"
                 variant="contained"
                 className="w-full !p-[8px_20px] font-urbanist !text-white-primary"
-                href={`${router.asPath}/roomlist`}
+                onClick={() => {
+                  setOpen("")
+                  router.push(`${router.asPath}/roomlist`)
+                }}
               />
             )
           }
@@ -149,7 +155,7 @@ export default function CardBuyItemMobile({
         return <NoReady />
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [qtyItemSelected, router.asPath, buttonStyle, router.pathname])
+  }, [qtyItemSelected, router.asPath, buttonStyle, router.pathname, setOpen])
 
   return hydrated ? (
     <Box

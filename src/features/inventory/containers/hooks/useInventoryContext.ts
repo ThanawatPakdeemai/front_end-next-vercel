@@ -247,37 +247,33 @@ const useInventoryContext = () => {
                 _id: id,
                 _urlNFT: convertNFTTypeToUrl(marketType)
               }).then((response) => {
-                if (
-                  response.data &&
-                  response.data.length > 0 &&
-                  response.data[0].item_data
-                ) {
+                if (response.data && response.data.item_data) {
                   _data = {
-                    id: response.data[0]._id,
-                    name: response.data[0].item_data.name,
+                    id: response.data._id,
+                    name: response.data.item_data.name,
                     tokenId:
-                      response.data[0].item_data.item_id_smartcontract.toString(),
+                      response.data.item_data.item_id_smartcontract.toString(),
                     type: marketType,
-                    img: response.data[0].item_data.image,
-                    detail: response.data[0].item_data.detail,
-                    totalAmount: response.data[0].item_amount,
+                    img: response.data.item_data.image,
+                    detail: response.data.item_data.detail,
+                    totalAmount: response.data.item_amount,
                     marketplaces_data: {
-                      item_amount: response.data[0].item_amount,
-                      order_id: response.data[0].order_id,
-                      seller_id: response.data[0].seller_id,
-                      seller_type: response.data[0].seller_type,
-                      selling_type: response.data[0].selling_type,
-                      item_total: response.data[0].item_total,
-                      is_active: response.data[0].is_active,
-                      type: response.data[0].type,
-                      item_id: response.data[0].item_id,
-                      _id: response.data[0]._id,
-                      price: response.data[0].price,
+                      item_amount: response.data.item_amount,
+                      order_id: response.data.order_id,
+                      seller_id: response.data.seller_id,
+                      seller_type: response.data.seller_type,
+                      selling_type: response.data.selling_type,
+                      item_total: response.data.item_total,
+                      is_active: response.data.is_active,
+                      type: response.data.type,
+                      item_id: response.data.item_id,
+                      _id: response.data._id,
+                      price: response.data.price,
                       real_land: false,
                       buyer_details: [],
-                      updated_at: response.data[0].created_at,
-                      current_time: response.data[0].created_at,
-                      created_at: response.data[0].created_at
+                      updated_at: response.data.created_at,
+                      current_time: response.data.created_at,
+                      created_at: response.data.created_at
                     }
                   }
                 }
@@ -310,37 +306,33 @@ const useInventoryContext = () => {
                 _id: id,
                 _urlNFT: convertNFTTypeToUrl(marketType)
               }).then((response) => {
-                if (
-                  response.data &&
-                  response.data.length > 0 &&
-                  response.data[0].material_data
-                ) {
+                if (response.data && response.data.material_data) {
                   _data = {
-                    id: response.data[0]._id,
-                    name: response.data[0].material_data.name,
+                    id: response.data._id,
+                    name: response.data.material_data.name,
                     tokenId:
-                      response.data[0].material_data.material_id_smartcontract.toString(),
+                      response.data.material_data.material_id_smartcontract.toString(),
                     type: marketType,
-                    img: response.data[0].material_data.image,
-                    detail: response.data[0].material_data.detail,
-                    totalAmount: response.data[0].item_amount,
+                    img: response.data.material_data.image,
+                    detail: response.data.material_data.detail,
+                    totalAmount: response.data.item_amount,
                     marketplaces_data: {
-                      item_amount: response.data[0].item_amount,
-                      order_id: response.data[0].order_id,
-                      seller_id: response.data[0].seller_id,
-                      seller_type: response.data[0].seller_type,
-                      selling_type: response.data[0].selling_type,
-                      item_total: response.data[0].item_total,
-                      is_active: response.data[0].is_active,
-                      type: response.data[0].type,
-                      item_id: response.data[0].item_id,
-                      _id: response.data[0]._id,
-                      price: response.data[0].price,
+                      item_amount: response.data.item_amount,
+                      order_id: response.data.order_id,
+                      seller_id: response.data.seller_id,
+                      seller_type: response.data.seller_type,
+                      selling_type: response.data.selling_type,
+                      item_total: response.data.item_total,
+                      is_active: response.data.is_active,
+                      type: response.data.type,
+                      item_id: response.data.item_id,
+                      _id: response.data._id,
+                      price: response.data.price,
                       real_land: false,
                       buyer_details: [],
-                      updated_at: response.data[0].created_at,
-                      current_time: response.data[0].created_at,
-                      created_at: response.data[0].created_at
+                      updated_at: response.data.created_at,
+                      current_time: response.data.created_at,
+                      created_at: response.data.created_at
                     }
                   }
                 }

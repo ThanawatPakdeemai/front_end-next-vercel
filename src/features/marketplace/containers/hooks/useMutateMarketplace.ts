@@ -8,6 +8,7 @@ import {
   createMarketOrder,
   getMarketOrderById,
   getMarketplaceAllTypes,
+  getSettingMarketplace,
   mintNFT,
   payBillInstallNFT,
   payInstallment,
@@ -17,6 +18,14 @@ import {
 
 const useMutateMarketplace = () => {
   const { errorToast, successToast } = useToast()
+  const errMsgToast = (_message: string) => {
+    const errorMessage = _message.toLowerCase().includes("has been reverted")
+      ? "Transaction has been reverted by the EVM"
+      : _message || "Transaction fail"
+
+    return errorToast(errorMessage)
+  }
+
   const { mutateAsync: mutateMarketCreateOrder } = useMutation(
     createMarketOrder,
     {
@@ -26,7 +35,7 @@ const useMutateMarketplace = () => {
         successToast("Transaction success")
       },
       onError: (_response) => {
-        errorToast((_response as IMessage)?.message ?? "Transaction fail")
+        errMsgToast((_response as IMessage)?.message)
       }
     }
   )
@@ -40,7 +49,7 @@ const useMutateMarketplace = () => {
         successToast(_response.data)
       },
       onError: (_response) => {
-        errorToast((_response as IMessage)?.message ?? "Transaction fail")
+        errMsgToast((_response as IMessage)?.message)
       }
     }
   )
@@ -53,7 +62,7 @@ const useMutateMarketplace = () => {
       successToast(_response.data)
     },
     onError: (_response) => {
-      errorToast((_response as IMessage)?.message ?? "Transaction fail")
+      errMsgToast((_response as IMessage)?.message)
     }
   })
 
@@ -64,7 +73,7 @@ const useMutateMarketplace = () => {
       successToast(_response.data)
     },
     onError: (_response) => {
-      errorToast((_response as IMessage)?.message ?? "Transaction fail")
+      errMsgToast((_response as IMessage)?.message)
     }
   })
 
@@ -75,7 +84,7 @@ const useMutateMarketplace = () => {
       successToast(_response.data)
     },
     onError: (_response) => {
-      errorToast((_response as IMessage)?.message ?? "Transaction fail")
+      errMsgToast((_response as IMessage)?.message)
     }
   })
 
@@ -88,7 +97,7 @@ const useMutateMarketplace = () => {
         successToast(_response.data)
       },
       onError: (_response) => {
-        errorToast((_response as IMessage)?.message ?? "Transaction fail")
+        errMsgToast((_response as IMessage)?.message)
       }
     }
   )
@@ -102,7 +111,7 @@ const useMutateMarketplace = () => {
         successToast("Transaction success")
       },
       onError: (_response) => {
-        errorToast((_response as IMessage)?.message ?? "Transaction fail")
+        errMsgToast((_response as IMessage)?.message)
       }
     }
   )
@@ -117,7 +126,7 @@ const useMutateMarketplace = () => {
         successToast(_response.message)
       },
       onError: (_response) => {
-        errorToast((_response as IMessage)?.message ?? "Transaction fail")
+        errMsgToast((_response as IMessage)?.message)
       }
     }
   )
@@ -130,7 +139,7 @@ const useMutateMarketplace = () => {
       successToast("Transaction success")
     },
     onError: (_response) => {
-      errorToast((_response as IMessage)?.message ?? "Transaction fail")
+      errMsgToast((_response as IMessage)?.message)
     }
   })
 
@@ -155,6 +164,18 @@ const useMutateMarketplace = () => {
     }
   )
 
+  const { mutateAsync: mutateSettingMarket } = useMutation(
+    getSettingMarketplace,
+    {
+      mutationKey: ["getSettingMarketplace"],
+      retry: false,
+      onError: (_response) => {
+        // errorToast((_response as IMessage)?.message ?? "Order not found!.")
+        errorToast("This order has been purchased or has been cancelled.")
+      }
+    }
+  )
+
   return {
     mutateMarketCreateOrder,
     mutateMarketCancelOrder,
@@ -166,7 +187,8 @@ const useMutateMarketplace = () => {
     mutatePayBillInstallNFT,
     mutateClaimRentNFT,
     mutateMarketTypes,
-    mutateMarketOrderById
+    mutateMarketOrderById,
+    mutateSettingMarket
   }
 }
 

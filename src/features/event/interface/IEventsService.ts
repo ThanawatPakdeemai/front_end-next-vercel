@@ -48,7 +48,7 @@ export interface IGetEventResponseData {
   date_start: Date
   date_end?: Date
   banner_image: string
-  __v?: number
+  icon_image: string
   event_type: EventType
   date_end1?: Date
   min_score?: number

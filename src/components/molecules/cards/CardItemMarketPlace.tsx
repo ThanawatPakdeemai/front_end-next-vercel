@@ -130,27 +130,109 @@ const CardItemMarketPlace = ({
 
   return (
     <div className="relative justify-self-center">
-      {id && !rental && (
-        <Chip
-          label={id}
-          variant="outlined"
-          size="small"
-          className="pointer-events-auto absolute left-4 top-4 z-10 w-[93px] cursor-pointer truncate uppercase"
-          deleteIcon={
-            <ContentCopySharpIcon
-              sx={{
-                width: 16,
-                height: 16
-              }}
-              className="pb-[2px] !text-neutral-400"
+      <div className="pointer-events-auto absolute z-20 m-[14px] mt-[18px] flex gap-2">
+        {itemAmount && (
+          <Chip
+            label={`${itemAmount}${itemTotal ? ` / ${itemTotal}` : ""}`}
+            variant="outlined"
+            size="small"
+            className="ml-1 cursor-pointer uppercase"
+            icon={
+              <GridViewRoundedIcon
+                sx={{
+                  width: 16,
+                  height: 16
+                }}
+                className="pb-[2px] !text-neutral-400"
+              />
+            }
+          />
+        )}
+        {id && !rental && (
+          <Chip
+            label={id}
+            variant="outlined"
+            size="small"
+            className="pointer-events-auto z-10 w-fit cursor-pointer truncate uppercase"
+            deleteIcon={
+              <ContentCopySharpIcon
+                sx={{
+                  width: 16,
+                  height: 16
+                }}
+                className="pb-[2px] !text-neutral-400"
+              />
+            }
+            onDelete={() => {
+              copyClipboard(id)
+              successToast(MESSAGES.copy)
+            }}
+          />
+        )}
+        {itemLevel && percentage && (
+          <div className="flex w-[135px] justify-between sm:w-[190px]">
+            <Chip
+              label={`LV. : ${itemLevel}`}
+              variant="outlined"
+              size="small"
+              className="cursor-pointer uppercase"
+              icon={
+                <GridViewRoundedIcon
+                  sx={{
+                    width: 16,
+                    height: 16
+                  }}
+                  className="pb-[2px] !text-neutral-400"
+                />
+              }
             />
-          }
-          onDelete={() => {
-            copyClipboard(id)
-            successToast(MESSAGES.copy)
-          }}
-        />
-      )}
+            <Chip
+              label={`${percentage} %`}
+              variant="filled"
+              size="small"
+              className="cursor-pointer uppercase"
+              color={handleColor()}
+              icon={handleIcon()}
+            />
+          </div>
+        )}
+        {rental && keyType && (
+          <div className="flex justify-between">
+            <Chip
+              label={
+                keyType.toLowerCase() === "owner" ? rental.buyer : rental.owner
+              }
+              variant="outlined"
+              size="small"
+              className="pointer-events-auto absolute left-4 top-4 z-10 w-[93px] cursor-pointer truncate uppercase"
+              deleteIcon={
+                <ContentCopySharpIcon
+                  sx={{
+                    width: 16,
+                    height: 16
+                  }}
+                  className="pb-[2px] !text-neutral-400"
+                />
+              }
+              onDelete={() => {
+                if (keyType.toLowerCase() === "owner" && rental.buyer)
+                  copyClipboard(rental.buyer)
+                if (keyType.toLowerCase() !== "owner" && rental.owner)
+                  copyClipboard(rental.owner)
+                successToast(MESSAGES.copy)
+              }}
+            />
+            <Chip
+              label={keyType}
+              variant="filled"
+              size="small"
+              className="cursor-pointer uppercase"
+              color={keyType.toLowerCase() === "owner" ? "secondary" : "error"}
+            />
+          </div>
+        )}
+      </div>
+
       <Link href={href || "/"}>
         <motion.div
           whileHover="hover"
@@ -158,92 +240,6 @@ const CardItemMarketPlace = ({
            border border-neutral-700 bg-neutral-780 p-2 hover:bg-neutral-900 sm:h-fit sm:w-[218px]"
         >
           <div className="relative">
-            <div className="pointer-events-auto absolute z-20 m-[5px] flex">
-              {itemAmount && (
-                <Chip
-                  label={`${itemAmount}${itemTotal ? ` / ${itemTotal}` : ""}`}
-                  variant="outlined"
-                  size="small"
-                  className="ml-1 cursor-pointer uppercase"
-                  icon={
-                    <GridViewRoundedIcon
-                      sx={{
-                        width: 16,
-                        height: 16
-                      }}
-                      className="pb-[2px] !text-neutral-400"
-                    />
-                  }
-                />
-              )}
-              {itemLevel && percentage && (
-                <div className="flex w-[135px] justify-between sm:w-[190px]">
-                  <Chip
-                    label={`LV. : ${itemLevel}`}
-                    variant="outlined"
-                    size="small"
-                    className="cursor-pointer uppercase"
-                    icon={
-                      <GridViewRoundedIcon
-                        sx={{
-                          width: 16,
-                          height: 16
-                        }}
-                        className="pb-[2px] !text-neutral-400"
-                      />
-                    }
-                  />
-                  <Chip
-                    label={`${percentage} %`}
-                    variant="filled"
-                    size="small"
-                    className="cursor-pointer uppercase"
-                    color={handleColor()}
-                    icon={handleIcon()}
-                  />
-                </div>
-              )}
-              {rental && keyType && (
-                <div className="flex justify-between">
-                  <Chip
-                    label={
-                      keyType.toLowerCase() === "owner"
-                        ? rental.buyer
-                        : rental.owner
-                    }
-                    variant="outlined"
-                    size="small"
-                    className="pointer-events-auto absolute left-4 top-4 z-10 w-[93px] cursor-pointer truncate uppercase"
-                    deleteIcon={
-                      <ContentCopySharpIcon
-                        sx={{
-                          width: 16,
-                          height: 16
-                        }}
-                        className="pb-[2px] !text-neutral-400"
-                      />
-                    }
-                    onDelete={() => {
-                      if (keyType.toLowerCase() === "owner" && rental.buyer)
-                        copyClipboard(rental.buyer)
-                      if (keyType.toLowerCase() !== "owner" && rental.owner)
-                        copyClipboard(rental.owner)
-                      successToast(MESSAGES.copy)
-                    }}
-                  />
-                  <Chip
-                    label={keyType}
-                    variant="filled"
-                    size="small"
-                    className="cursor-pointer uppercase"
-                    color={
-                      keyType.toLowerCase() === "owner" ? "secondary" : "error"
-                    }
-                  />
-                </div>
-              )}
-            </div>
-
             {itemImage && (
               <div
                 className={`flex h-[148px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-900 sm:h-[202px] ${
@@ -262,10 +258,20 @@ const CardItemMarketPlace = ({
                     className={`object-contain ${
                       cardType === "naka-punk"
                         ? "rounded-lg"
-                        : cardType === "building" && "image-building"
+                        : cardType === "building" && "!h-[200px]"
                     }`}
-                    width={itemName === "Bullet" ? 60 : itemImage.width}
-                    height={itemName === "Bullet" ? 60 : itemImage.height}
+                    width={
+                      itemName?.includes("Bullet") &&
+                      Number(itemImage.width) > 60
+                        ? 30
+                        : itemImage.width
+                    }
+                    height={
+                      itemName?.includes("Bullet") &&
+                      Number(itemImage.height) > 60
+                        ? 30
+                        : itemImage.height
+                    }
                   />
                 </motion.div>
                 {/* mobile */}
@@ -279,11 +285,11 @@ const CardItemMarketPlace = ({
                     alt={itemImage.alt}
                     className={`object-contain ${
                       cardType === "naka-punk"
-                        ? "rounded-lg"
+                        ? "h-full w-full rounded-lg"
                         : cardType === "building" && "image-building"
                     }`}
-                    width={itemName === "Bullet" ? 60 : 148}
-                    height={itemName === "Bullet" ? 60 : 148}
+                    width={itemName?.includes("Bullet") ? 60 : 148}
+                    height={itemName?.includes("Bullet") ? 60 : 148}
                   />
                 </motion.div>
               </div>

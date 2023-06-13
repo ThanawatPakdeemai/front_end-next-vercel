@@ -19,6 +19,7 @@ import {
   Stack,
   TextField
 } from "@mui/material"
+import FormattedInputs from "@feature/marketplace/components/molecules/CurrencyTextField"
 import Helper from "@utils/helper"
 import React, { memo, useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
@@ -28,7 +29,7 @@ interface IProps {
   selling: TSellingType
   setSelling: (_selling: TSellingType) => void
   currency: number
-  price: number
+  price: string
   onPriceChange: (_price: string) => void
   period: number
   setPeriod: (_period: number) => void
@@ -49,7 +50,7 @@ const SellActionComponent = ({
   const { formatNumber } = Helper
   const { onCheckApprovalForAllNFT } = useGlobalMarket()
   const [isApproved, setIsApproved] = useState<boolean | undefined>(undefined)
-
+  const sellPriceAsNumber = Number(price)
   const onSellingChange = (event: SelectChangeEvent) => {
     setIsApproved(undefined)
     setSelling(event.target.value as TSellingType)
@@ -92,7 +93,7 @@ const SellActionComponent = ({
       direction="column"
     >
       <span className="w-full text-xs uppercase">step 1 : set sell price</span>
-      <TextField
+      {/* <TextField
         hiddenLabel
         value={price}
         onChange={(e) => onPriceChange(e.target.value)}
@@ -113,9 +114,18 @@ const SellActionComponent = ({
             </InputAdornment>
           )
         }}
+      /> */}
+      <FormattedInputs
+        values={price}
+        onSetValues={onPriceChange}
       />
       <span className="text-xs uppercase">
-        = {formatNumber(price * currency)} naka
+        ={" "}
+        {sellPriceAsNumber &&
+          formatNumber(sellPriceAsNumber * currency, {
+            maximumFractionDigits: 4
+          })}{" "}
+        USD
       </span>
       {selling !== "rental" ? (
         <>
@@ -123,9 +133,13 @@ const SellActionComponent = ({
             step 2: select type you would like to sell
           </span>
           <Select
-            className="mx-[6px] mb-2 mt-2 rounded-sm bg-neutral-800 !px-2 py-1 capitalize text-white-primary"
+            className="mx-[6px] mb-2 mt-2 rounded-sm bg-neutral-800 !px-2 py-1 text-sm font-bold capitalize text-neutral-300"
             value={selling}
             onChange={onSellingChange}
+            sx={{
+              maxHeight: 40,
+              minHeight: 40
+            }}
           >
             {MARKET_SELLING.map((m) => (
               <MenuItem
@@ -139,12 +153,12 @@ const SellActionComponent = ({
           </Select>
         </>
       ) : null}
-      {selling === "rental" ? (
+      {selling === "rental" && sellPriceAsNumber ? (
         <>
           <span className="w-full text-xs uppercase">total price</span>
           <TextField
             hiddenLabel
-            value={price * period}
+            value={sellPriceAsNumber * period}
             disabled
             sx={{
               "& .MuiOutlinedInput-root": {
@@ -164,7 +178,7 @@ const SellActionComponent = ({
             }}
           />
           <span className="text-xs uppercase">
-            = {formatNumber(price * currency * period)} naka
+            = {formatNumber(sellPriceAsNumber * currency * period)} naka
           </span>
           <span className="w-full py-2">
             <Divider className="!block border-b-[1px] border-neutral-800/75" />

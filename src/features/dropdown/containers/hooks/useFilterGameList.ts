@@ -1,18 +1,22 @@
 import { useMutation } from "@tanstack/react-query"
-import { getGamesByCategoryId } from "../services/dropdown.service"
+import useLoadingStore from "@stores/loading"
+import { getGameAllFilter } from "../services/dropdown.service"
 
 const useFilterGameList = () => {
-  // const { setNakaBalance } = useWalletStore()
+  const { setClose } = useLoadingStore()
   const {
     data,
     error,
     isLoading,
     isError,
-    mutateAsync: mutateGetGamesByCategoryId
-  } = useMutation(getGamesByCategoryId, {
+    mutateAsync: mutateGetGameAllFilter
+  } = useMutation(getGameAllFilter, {
     mutationKey: ["filterGameList"],
     retry: 3,
-    cacheTime: 1000 * 60 * 60 * 24
+    cacheTime: 1000 * 60 * 60 * 24,
+    onSuccess: () => {
+      setClose()
+    }
   })
 
   return {
@@ -20,7 +24,7 @@ const useFilterGameList = () => {
     isLoading,
     error,
     isError,
-    mutateGetGamesByCategoryId
+    mutateGetGameAllFilter
   }
 }
 

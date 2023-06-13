@@ -2,7 +2,8 @@ import React from "react"
 
 const LogoNakaBigIcon = ({
   width = 136,
-  height = 63
+  height = 63,
+  className
 }: React.SVGProps<SVGSVGElement>) => (
   <svg
     width={width}
@@ -10,6 +11,7 @@ const LogoNakaBigIcon = ({
     viewBox="0 0 136 63"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    className={className}
   >
     <mask
       id="mask0_17_2602"

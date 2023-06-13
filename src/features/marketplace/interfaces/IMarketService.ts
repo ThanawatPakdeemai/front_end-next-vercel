@@ -147,31 +147,35 @@ export interface INFTInitial extends IId {
   detail: string
 }
 
+export interface IMarketSearch {
+  type_marketplace?: TNFTType
+  seller_type?: TSellerType
+  type_land?: string[]
+  type_building?: string[]
+  item_id?: string[]
+  type_material?: string[]
+  seller_id?: string
+  player_id?: string
+  isRent?: boolean
+  type?: TNFTType
+  // land_id?: string // wait dup with nft_token
+  nft_token?: string
+  selling_type?: TSellingType
+}
+
+export interface IMarketSort {
+  price?: number
+  created_at?: number
+  land_id?: number
+  position?: number
+  _id?: number
+}
+
 export interface IMarketServForm {
   _limit: number
   _page: number
-  _search: {
-    type_marketplace?: TNFTType
-    seller_type?: TSellerType
-    type_land?: string[]
-    type_building?: string[]
-    item_id?: string[]
-    type_material?: string[]
-    seller_id?: string
-    player_id?: string
-    isRent?: boolean
-    type?: TNFTType
-    // land_id?: string // wait dup with nft_token
-    nft_token?: string
-    selling_type?: TSellingType
-  }
-  _sort?: {
-    price?: number
-    created_at?: number
-    land_id?: number
-    position?: number
-    _id?: number
-  }
+  _search: IMarketSearch
+  _sort?: IMarketSort
   _active?: boolean
   _urlNFT?: TUrlNFT
 }
@@ -262,7 +266,7 @@ export interface IBuyerDetail extends ITransHash {
 export interface IMarketData extends IMarketOrder, ICurrentTime {
   real_land: boolean
   buyer_details: any[]
-  __v: number
+  __v?: number
 }
 
 export interface IMarketGameData extends Omit<IGameItemList, "min_item"> {}
@@ -351,6 +355,14 @@ export interface IMarketTypes {
   material: ITypeMaterials[]
 }
 
+export type ISettingName = "land" | "building"
+export type ISettingValue = "off" | "on"
+interface ISettingMarket {
+  name: ISettingName
+  type: "text"
+  value: ISettingValue
+}
+
 export interface IPayBillInstallServ extends IFormatMessageService {
   data: IPayBillData
 }
@@ -363,14 +375,21 @@ export interface INFTTransferServ extends IFormatMessageService {
   data: INFTTransfer
 }
 
-export interface IMarketOrderServ extends IFormatService {
+export interface IMarketOrderListServ extends IFormatService {
   data: IMarketDetail[]
+}
+export interface IMarketOrderServ extends IFormatService {
+  data: IMarketDetail
 }
 
 export interface IMarketCreateOrderServ extends IFormatService {
-  data: null
+  data: IMarketData
 }
 
 export interface IMarketTypesServ extends IFormatService {
   data: IMarketTypes
+}
+
+export interface ISettingMarketplace extends IFormatService {
+  data: Array<ISettingMarket>
 }

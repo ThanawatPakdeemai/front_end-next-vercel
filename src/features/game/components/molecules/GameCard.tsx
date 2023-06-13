@@ -10,7 +10,6 @@ import IconHourglass from "@components/icons/hourglassIcon"
 import TimerStamina from "@components/atoms/timer/TimerStamina"
 import {
   IGame,
-  IGameFav,
   IGameRoomAvailable,
   IGetType
 } from "@feature/game/interfaces/IGameService"
@@ -34,7 +33,7 @@ interface IProps {
   gameType: IGetType
   href?: string
   menu: IHeaderSlide
-  data?: IGame | IGameFav | IPartnerGameData | IRoomAvaliableData | IGamesToPlay
+  data?: IGame | IPartnerGameData | IRoomAvaliableData | IGamesToPlay
   partnerdata?: IPartnerGameData
   imgPartner?: string | undefined
   showNo?: boolean
@@ -70,6 +69,7 @@ const GameCard = ({
   classNameImage
 }: IProps) => {
   const [imageSrc, setImageSrc] = useState<string>(IMAGES.no_image.src)
+  const [imageSrcGif, setImageSrcGif] = useState<string>("")
   const [chipLable, setChipLable] = useState<string>("")
   const [theme, setTheme] = useState<string>("")
   const [lableButton, setLableButton] = useState<string>("play now")
@@ -141,6 +141,9 @@ const GameCard = ({
         (data as IGame).image_category_list
       ) {
         setImageSrc((data as IGame).image_category_list)
+        setImageSrcGif(
+          (data as IGame)?.image_gif || (data as IGame).image_category_list
+        )
       }
     }
 
@@ -207,7 +210,25 @@ const GameCard = ({
             className="slick-card-number absolute right-1 top-2 z-[3] m-[10px] h-10 w-10 text-default text-white-primary"
           />
         ) : null}
-        <Box component="div">
+        <Box
+          component="div"
+          sx={{
+            position: "relative",
+            ".image-hover": {
+              opacity: 0,
+              visibility: "hidden",
+              zIndex: -1,
+              transition: "all 0.3s ease-in-out"
+            },
+            "&:hover": {
+              ".image-hover": {
+                opacity: 1,
+                visibility: "visible",
+                zIndex: 1
+              }
+            }
+          }}
+        >
           <Image
             src={imageSrc}
             alt="home-slide"
@@ -218,6 +239,17 @@ const GameCard = ({
             }`}
             onClick={onHandleClick}
           />
+          <div className="absolute left-0 top-0">
+            <Image
+              src={imageSrcGif}
+              alt="home-slide"
+              width={218}
+              height={218}
+              className={`image-hover aspect-[3/2] rounded-3xl object-cover ${
+                isMobile ? `${classNameImage}` : "h-[13.625rem] w-[13.625rem]"
+              }`}
+            />
+          </div>
         </Box>
         <motion.div
           variants={btnCard}

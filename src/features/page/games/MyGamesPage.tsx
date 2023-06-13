@@ -21,9 +21,9 @@ const MyGamesPage = () => {
     totalCount,
     setTotalCount,
     onHandleSetGameStore,
-    getTypeGamePathFolder,
     defaultBody,
-    isRedirectRoomlist
+    isRedirectRoomlist,
+    getGameMode
   } = useGlobal()
   const fetchRef = useRef(false)
   const queryClient = useQueryClient()
@@ -89,15 +89,11 @@ const MyGamesPage = () => {
                 key={game.id}
                 menu={P2EHeaderMenu}
                 data={game}
-                href={`/${getTypeGamePathFolder(game)}/${
-                  game.path
-                }${isRedirectRoomlist(game).toString()}`}
-                onHandleClick={() =>
-                  onHandleSetGameStore(getTypeGamePathFolder(game), game)
-                }
-                gameType={
-                  game.is_NFT ? "arcade-emporium" : getTypeGamePathFolder(game)
-                }
+                href={`/arcade-emporium/${game.path}${isRedirectRoomlist(
+                  game
+                ).toString()}`}
+                onHandleClick={() => onHandleSetGameStore(game.game_mode, game)}
+                gameType={getGameMode(game)}
                 play_total_count={game?.play_total_count}
               />
             ))

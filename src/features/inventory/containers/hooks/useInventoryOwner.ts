@@ -129,6 +129,8 @@ const useInventoryOwner = () => {
             _limit: limit,
             _page: currentPage,
             _search: {
+              isRent: false,
+              player_id: profile.data.id,
               nft_token:
                 search.length > 0
                   ? (getValueFromTKey(search, "nft_token") as string)
@@ -245,6 +247,7 @@ const useInventoryOwner = () => {
       }
     }
     setInventoryItemList(_data)
+    setTotalCount(_total)
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile.data, _marketType, currentPage, limit, filterType, search, sort])
@@ -252,16 +255,16 @@ const useInventoryOwner = () => {
   const fetchInventoryItem = useCallback(async () => {
     if (
       profile.data &&
-      marketType &&
+      _marketType &&
       filterType &&
       gameItemList &&
       materialList &&
-      (marketType === "game_item" || marketType === "nft_material")
+      (_marketType === "game_item" || _marketType === "nft_material")
     ) {
       setItemIsLoading(true)
       let _data: IInventoryItemList[] = []
       let _total = 0
-      switch (marketType) {
+      switch (_marketType) {
         case "game_item":
           if (gameItemList && gameItemList.length > 0) {
             let _dummy = gameItemList
@@ -315,7 +318,7 @@ const useInventoryOwner = () => {
     ref.current = true
   }, [
     profile.data,
-    marketType,
+    _marketType,
     filterType,
     gameItemList,
     materialList,
@@ -345,7 +348,7 @@ const useInventoryOwner = () => {
 
   useMemo(() => {
     let cleanup = false
-    if (!cleanup && marketType) {
+    if (!cleanup && _marketType) {
       setCurrentPage(1)
     }
     return () => {
@@ -353,7 +356,7 @@ const useInventoryOwner = () => {
       ref.current = false
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marketType])
+  }, [_marketType])
 
   return {
     inventoryItemList,

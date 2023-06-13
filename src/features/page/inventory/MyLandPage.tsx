@@ -4,7 +4,7 @@ import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import CardMyLandContent from "@feature/land/components/CardMyLandContent"
 import MyLandList from "@feature/land/components/organisms/MyLandList"
 import AddIcon from "@mui/icons-material/Add"
-import { Typography } from "@mui/material"
+import { Chip, Typography } from "@mui/material"
 import { Image } from "@components/atoms/image"
 import MiniMap from "@feature/map/components/organisms/MiniMap"
 import useGetAllLand from "@feature/land/containers/hooks/useGetAllLand"
@@ -20,7 +20,9 @@ import { colorThree } from "@constants/map"
 import useLoadingStore from "@stores/loading"
 import { useToast } from "@feature/toast/containers"
 import useUpdateLand from "@feature/land/containers/hooks/useUpdateLand"
+import { motion } from "framer-motion"
 import UploadImag from "../../../components/icons/marketplace/UploadImag"
+import MenuButtonExpandMobile from "../marketplace/mobilescreen/MenuButtonExpandMobile"
 
 const MyLandPage = () => {
   const { profile } = useProfileStore()
@@ -44,6 +46,11 @@ const MyLandPage = () => {
   const { sortLandId, sortBlockPoint } = useMyLandController()
   const { errorToast, successToast } = useToast()
   const { query } = useRouter()
+  const [expanded, setExpanded] = useState<boolean>(false)
+
+  const handleOnExpandClick = () => {
+    setExpanded(!expanded)
+  }
 
   const { x, y } = query
 
@@ -196,21 +203,77 @@ const MyLandPage = () => {
   }
 
   return (
-    <div>
-      <div className="mb-9 mt-12 hidden flex-col justify-start sm:flex">
+    <div className="mb-24">
+      <div className="mb-9 mt-10 hidden flex-col justify-start sm:flex">
         <Typography className="text-lg text-neutral-400">MY LAND</Typography>
         <Typography className="text-xs text-neutral-600">
           Wallet manager for nakamoto.games world
         </Typography>
       </div>
-      <MiniMap
-        pos={pos}
-        className="block sm:hidden"
-        ownerList={ownerLandList}
-        notOwnerList={notOwnerLandList}
-        currentLand={currentLand}
-        setCurrentLand={setCurrentLand}
-      />
+      <div className="relative mt-12 grid justify-items-center sm:mt-0">
+        <MiniMap
+          pos={pos}
+          className="block sm:hidden"
+          ownerList={ownerLandList}
+          notOwnerList={notOwnerLandList}
+          currentLand={currentLand}
+          setCurrentLand={setCurrentLand}
+        />
+        <div className="absolute top-6 z-10 mt-6 block h-[200px] sm:hidden">
+          <div className="grid max-w-[400px] justify-center gap-4">
+            <div className="flex h-[40px] gap-2">
+              <div className="flex w-full items-center justify-between rounded-lg bg-neutral-800 px-[15px]">
+                <Typography className="text-sm uppercase text-white-default">
+                  NAKAVERSE MAP
+                </Typography>
+              </div>
+              <div className="h-[40pc] w-[40px]">
+                <motion.div
+                  transition={{ type: "spring", stiffness: 100 }}
+                  animate={{
+                    rotate: expanded ? 0 : 180
+                  }}
+                  className={`mr-1 grid h-[40px] !w-[40px] content-center justify-items-center rounded-[8px] border   p-[7px] ${
+                    expanded
+                      ? `bg-error-main`
+                      : `border-neutral-700 bg-neutral-780`
+                  }`}
+                >
+                  <MenuButtonExpandMobile
+                    isOpen={expanded}
+                    onClick={handleOnExpandClick}
+                    strokeWidth="2"
+                    color="#F1F4F4"
+                    transition={{
+                      ease: "easeOut",
+                      duration: 0.2,
+                      stiffness: 10,
+                      bounce: 5
+                    }}
+                    width="20"
+                    height="10"
+                  />
+                </motion.div>
+              </div>
+            </div>
+
+            <div className="flex h-[40px] w-[350px]	items-center justify-between rounded-[14px] bg-[#18181433] px-[15px] backdrop-blur-sm">
+              <Typography className="text-sm uppercase text-white-default">
+                NAKAVERSE MAP
+              </Typography>
+              {x && y && (
+                <Chip
+                  variant="filled"
+                  size="small"
+                  className="!bg-secondary-main uppercase !text-white-default"
+                  label={`x${String(x)}, y${String(y)}`}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="grid w-fit grid-cols-1 gap-4 lg:grid-cols-2">
         <div className="mx-4 mt-4 sm:mx-0 sm:mt-0">
           <CardMyLandContent

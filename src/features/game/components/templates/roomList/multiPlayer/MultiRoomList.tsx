@@ -47,7 +47,7 @@ const MultiRoomList = () => {
     ...propsSocketRoomlist
   })
 
-  const { handleJoinRoom } = useRoomMulti()
+  const { handleJoinRoom, getRoomStatus } = useRoomMulti()
 
   useEffect(() => {
     let load = false
@@ -188,9 +188,6 @@ const MultiRoomList = () => {
                 dataRoom.length > 0 &&
                 dataRoom.map((_data) => {
                   const initEndTime = new Date(_data.end_time)
-                  const player = _data.current_player.find(
-                    (ele) => ele.player_id === profile.id
-                  )
                   return (
                     <RoomListBar
                       key={Number(_data.id)}
@@ -198,13 +195,7 @@ const MultiRoomList = () => {
                         time: initEndTime,
                         onExpire: () => null
                       }}
-                      btnText={
-                        player && player.status === "played"
-                          ? "played"
-                          : _data?.amount_current_player >= _data.max_players
-                          ? "full"
-                          : "join"
-                      }
+                      btnText={getRoomStatus(_data)}
                       player={{
                         currentPlayer: _data.amount_current_player,
                         maxPlayer: _data.max_players
@@ -228,7 +219,7 @@ const MultiRoomList = () => {
           <BuyItemBody>
             <OverviewContent
               gameId={data.id}
-              gameType={getTypeGamePathFolder(data)}
+              gameType={getGameMode(data)}
               gameIdNFT={data.NFT_Owner}
             />
             {data?.play_to_earn_status !== "free" && !data.tournament && (

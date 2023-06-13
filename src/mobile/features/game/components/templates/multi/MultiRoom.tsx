@@ -1,16 +1,36 @@
 import useRoomMulti from "@feature/game/containers/hooks/useRoomMulti"
-// import Preload from "@src/mobile/components/atoms/Preload"
-import RoomListSkeleton from "@mobile/components/atoms/skelaton/RoomListSkeleton"
+import { v4 as uuid } from "uuid"
+import SkeletonEarnRewardMobile from "@mobile/components/atoms/skeleton/SkeletonEarnRewardMobile"
+import { Box } from "@mui/material"
+import NoData from "@components/molecules/NoData"
 import ListJoinGame from "../../molecules/ListJoinGame"
 
 const MultiRoom = () => {
-  const { dataRoom, data, handleJoinRoom, itemSelected } = useRoomMulti()
+  const { dataRoom, data, handleJoinRoom, itemSelected, getRoomStatus } =
+    useRoomMulti()
   return (
-    <>
+    <Box
+      component="div"
+      className="roomlist-multi__wrapper"
+    >
       {data && (
-        <>
-          {dataRoom && dataRoom?.length > 0 ? (
-            dataRoom?.map((item) => (
+        <Box
+          component="div"
+          className="roomlist-multi__content"
+        >
+          {!dataRoom && (
+            <div className="flex flex-col gap-3">
+              {[...Array(10)].map(() => (
+                <SkeletonEarnRewardMobile key={uuid()} />
+              ))}
+            </div>
+          )}
+
+          {dataRoom && dataRoom.length === 0 && <NoData />}
+
+          {dataRoom &&
+            dataRoom.length > 0 &&
+            dataRoom.map((item) => (
               <ListJoinGame
                 time={item.end_time as unknown as string}
                 key={item._id}
@@ -27,14 +47,12 @@ const MultiRoom = () => {
                       }`
                 }
                 descChip2={`${item.amount_current_player} / ${item.max_players}`}
+                btnText={getRoomStatus(item)}
               />
-            ))
-          ) : (
-            <RoomListSkeleton />
-          )}
-        </>
+            ))}
+        </Box>
       )}
-    </>
+    </Box>
   )
 }
 

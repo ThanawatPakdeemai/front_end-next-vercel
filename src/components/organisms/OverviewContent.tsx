@@ -11,6 +11,7 @@ import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
 import { IGetType } from "@feature/game/interfaces/IGameService"
 import PanelContent from "@components/molecules/PanelContent"
 import AsideLayout from "@components/templates/contents/AsideLayout"
+import useGameStore from "@stores/game"
 // import AboutGame from "./AboutGame"
 
 interface IOverviewGameProps {
@@ -27,11 +28,12 @@ const OverviewContent = ({
   gameIdNFT
 }: IOverviewGameProps) => {
   const { t } = useTranslation()
-  const { hydrated } = useGlobal()
+  const { hydrated, stateProfile } = useGlobal()
   const {
     gameTags,
     gameDeveloper,
     gamePublisher,
+    gameOwnerCommission,
     // gameReleaseDate,
     gamePartnerSocial,
     // chainName,
@@ -40,6 +42,7 @@ const OverviewContent = ({
     gameOwner
     // singleVersion
   } = useGameOverview(gameId, gameType)
+  const { data } = useGameStore()
 
   return (
     <div className="relative flex w-full flex-col justify-start rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 lg:min-w-[333px]">
@@ -132,6 +135,37 @@ const OverviewContent = ({
                   </div>
                 </>
               )}
+              {gameOwnerCommission !== undefined &&
+                stateProfile &&
+                data &&
+                stateProfile.id === data.NFT_info?.owner_id?._id.toString() && (
+                  <>
+                    <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+                    <div className="overview-row grid gap-2 lg:grid-cols-2">
+                      <div
+                        id="overview-game-owner"
+                        className="overview-col whitespace-nowrap"
+                      >
+                        <TagSingular
+                          title={t("earn_amount")}
+                          label={gameOwnerCommission.total_amount_commission.toString()}
+                        />
+                      </div>
+                    </div>
+                    <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />
+                    <div className="overview-row grid gap-2 lg:grid-cols-2">
+                      <div
+                        id="overview-game-owner"
+                        className="overview-col whitespace-nowrap"
+                      >
+                        <TagSingular
+                          title={t("play_count")}
+                          label={gameOwnerCommission.total_transaction.toString()}
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
               {/* {singleVersion !== "-" && (
                 <>
                   <Divider className="border-neutral-750 my-4 !block border-b-[1px]" />

@@ -98,7 +98,8 @@ export const MuiButton: Components<Omit<Theme, "components">>["MuiButton"] = {
           }
         },
         "&Warning": {
-          backgroundColor: PaletteCustom.warning.main
+          backgroundColor: PaletteCustom.warning.main,
+          color: PaletteCustom.warning.contrastText
         },
         "&Info": {
           backgroundColor: PaletteCustom.info.main

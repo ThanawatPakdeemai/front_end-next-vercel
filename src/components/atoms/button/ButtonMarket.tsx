@@ -4,7 +4,7 @@ import {
   TSellerType,
   TSellingType
 } from "@feature/marketplace/interfaces/IMarketService"
-import { Button } from "@mui/material"
+import { Button, Typography } from "@mui/material"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useProfileStore from "@stores/profileStore"
 import React, { memo, useMemo, useState } from "react"
@@ -12,6 +12,7 @@ import LoginIcon from "@mui/icons-material/Login"
 import { TMarketAction } from "@feature/marketplace/interfaces/IMarket"
 import dynamic from "next/dynamic"
 import { IPosition } from "@feature/land/interfaces/ILandService"
+import MagicIcon from "@components/icons/MagicIcon"
 
 const ModalMarketplace = dynamic(
   () => import("@components/molecules/Modal/ModalMarket"),
@@ -30,7 +31,7 @@ interface IMarketButton {
   marketId?: string
   itemId?: string
   orderId?: string
-  price?: number
+  orderPrice?: number
   period?: number
   amount?: number
   maxPeriod?: number
@@ -51,7 +52,7 @@ const ButtonMarket = ({
   marketId,
   itemId,
   orderId,
-  price = 0,
+  orderPrice,
   period = 1,
   amount = 1,
   maxPeriod = 1,
@@ -131,28 +132,78 @@ const ButtonMarket = ({
     return _text
   }, [actionValue])
 
+  const handleStyle = useMemo(() => {
+    let _color: string
+    let _textColor: string
+    let _icon: React.ReactNode
+    switch (actionValue) {
+      case "login":
+        _color = "#7B5BE6"
+        _textColor = "#E1E2E2"
+        break
+      case "connect_wallet":
+        _color = "#7B5BE6"
+        _textColor = "#E1E2E2"
+        break
+      case "mint":
+        _color = nftType === "nft_naka_punk" ? "#A0ED61" : "#27F1EC"
+        _textColor = "#010101"
+        _icon = <MagicIcon />
+        break
+      case "buy":
+        _color = "#A0ED61"
+        _textColor = "#010101"
+        break
+      case "cancel":
+        _color = "#F42728"
+        _textColor = "#010101"
+        break
+      case "sell":
+        _color = "#F42728"
+        _textColor = "#010101"
+        break
+      default:
+        _color = "#27F1EC"
+        _textColor = "#010101"
+        break
+    }
+    return { bgColor: _color, txtColor: _textColor, icon: _icon }
+  }, [actionValue, nftType])
+
   return (
-    <div className="flex flex-row justify-between">
-      <div className="rounded-xl bg-neutral-700 p-1">
-        <Button
-          type="button"
-          variant="contained"
-          color="primary"
-          startIcon={
-            actionValue === "login" || actionValue === "mint" ? (
+    <div className="flex h-10 flex-col items-start justify-between sm:flex-row sm:items-center">
+      <Typography className="mb-[10px] mt-[-10px] text-xs font-bold text-neutral-500 sm:mb-0 sm:mt-0">
+        Acquire unique digital ownership
+        <br /> asset token.
+      </Typography>
+      <Button
+        type="button"
+        variant="contained"
+        color="primary"
+        startIcon={
+          // eslint-disable-next-line no-nested-ternary
+          actionValue === "login" || actionValue === "mint" ? (
+            actionValue === "login" ? (
               <div className="button-icon animation-arrow">
-                {actionValue === "login" ? <LoginIcon /> : null}
+                <LoginIcon />
               </div>
-            ) : null
+            ) : (
+              handleStyle.icon
+            )
+          ) : null
+        }
+        className="!h-10 rounded-[20px] text-sm capitalize"
+        sx={{
+          width: 232,
+          "&.MuiButton-contained": {
+            backgroundColor: `${handleStyle.bgColor}`,
+            color: `${handleStyle.txtColor}`
           }
-          className="button-global h-10 w-20 rounded-xl"
-          onClick={handleOpen}
-        >
-          <span className="animation-button-text flex items-center">
-            {textBtn}
-          </span>
-        </Button>
-      </div>
+        }}
+        onClick={handleOpen}
+      >
+        {textBtn}
+      </Button>
       {/* <Button
         type="button"
         variant="contained"
@@ -170,7 +221,9 @@ const ButtonMarket = ({
         name={name}
         img={img}
         vdo={vdo}
-        priceValue={marketplaces_data ? marketplaces_data.price : price}
+        orderPrice={
+          marketplaces_data ? marketplaces_data.price : orderPrice || 0
+        }
         periodValue={period}
         amount={amount}
         maxPeriod={maxPeriod}

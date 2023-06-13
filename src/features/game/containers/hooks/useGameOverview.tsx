@@ -19,6 +19,7 @@ import { v4 as uuid } from "uuid"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import useGetReward from "@feature/rewardWeekly/containers/hooks/useGetReward"
 import { IWeeklyPoolByGameIdData } from "@feature/rewardWeekly/interfaces/IRewardWeeklyService"
+import useCheckGameOwner from "./useCheckGameOwner"
 
 interface IPlayCount {
   game_id: string
@@ -40,12 +41,20 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
   const { gameItemList } = useBuyGameItemController()
 
   const [gameDataState, setGameDataState] = React.useState<IGame>()
+  const [gameOwnerId, setGameOwnerId] = React.useState<string>("")
   const [gamePartnerState, setGamePartnerState] =
     React.useState<IPartnerGameData>()
 
   const [weeklyPoolByGameId, setWeeklyPoolByGameId] =
     useState<IWeeklyPoolByGameIdData>()
   const [poolId, setPoolId] = useState<string>("")
+
+  // Get owner Data
+  const { checkOwnerData } = useCheckGameOwner({
+    game_id: gameOwnerId,
+    start: "2023-01-31T10:08:02.448Z",
+    end: "2023-05-28T10:08:02.448Z"
+  })
 
   // Get weekly pool data any weeks
   const {
@@ -57,19 +66,6 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
     _type: "REWARD_WEEKLY",
     _poolId: poolId
   })
-
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (gameData) setGameDataState(gameData)
-      if (partnerGames) setGamePartnerState(partnerGames)
-    }
-
-    return () => {
-      load = true
-    }
-  }, [gameData, partnerGames])
 
   /**
    * @description Set Game Tags
@@ -152,6 +148,21 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
         return (partnerGames && partnerGames?.short_detail?.publisher) || "-"
       default:
         return "-"
+    }
+  }
+
+  /**
+   * @description Set Game Owner Commission
+   * @returns {any} gameOwnerCommission
+   */
+  const setOwnerCommission = (): any => {
+    if (gameType && checkOwnerData) {
+      switch (gameType) {
+        case "play-to-earn" || "arcade-emporium":
+          return checkOwnerData.data
+        default:
+          return "-"
+      }
     }
   }
 
@@ -337,44 +348,14 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
         //     src: metaData.image as string
         //   })
         // )
-        gameDataMedia.push(
-          {
-            id: uuid(),
-            type: "image",
-            src:
-              gameData && gameData.image_background
-                ? gameData.image_background
-                : GAME_MOCKUP_CARD[0].src
-          }
-          // TODO: uncomment when game data is ready
-          // {
-          //   id: uuid(),
-          //   type: "image",
-          //   src: gameData ? gameData.image_category_list : ""
-          // },
-          // {
-          //   id: uuid(),
-          //   type: "image",
-          //   src: gameData ? gameData.image_room : ""
-          // },
-          // {
-          //   id: uuid(),
-          //   type: "image",
-          //   src: gameData ? gameData.image_waiting : ""
-          // },
-          // {
-          //   id: uuid(),
-          //   type: "image",
-          //   src: gameData ? gameData.image_sum : ""
-          // },
-          // {
-          //   id: uuid(),
-          //   type: "image",
-          //   src: gameData ? gameData.image_reward : ""
-          // }
-          // ...EMPTY_MEDIAS,
-          // ...EMPTY_MEDIAS
-        )
+        gameDataMedia.push({
+          id: uuid(),
+          type: "image",
+          src:
+            gameData && gameData.image_background
+              ? gameData.image_background
+              : GAME_MOCKUP_CARD[0].src
+        })
     }
     return gameDataMedia
   }
@@ -465,7 +446,6 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
     if (gameDataState && "game_type" in gameDataState) {
       switch (gameType) {
         case "story-mode":
-          // console.log(gameDataState.play_total_count) sometime data is Array
           return typeof gameDataState?.play_total_count === "number"
             ? gameDataState?.play_total_count
             : (
@@ -512,10 +492,36 @@ const useGameOverview = (gameId: string, gameType: IGetType) => {
     setPoolId(_nextId)
   }
 
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      if (gameData && gameData.NFT_Owner) {
+        setGameOwnerId(gameId)
+      }
+    }
+    return () => {
+      load = true
+    }
+  }, [gameData, gameId])
+
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      if (gameData) setGameDataState(gameData)
+      if (partnerGames) setGamePartnerState(partnerGames)
+    }
+
+    return () => {
+      load = true
+    }
+  }, [gameData, partnerGames])
+
   return {
     gameTags: setGameTags(),
     gameDeveloper: setGameDeveloper(),
     gamePublisher: setPublisher(),
+    gameOwnerCommission: setOwnerCommission(),
     gameReleaseDate: setReleaseDate(),
     gamePartnerSocial: setPartnerSocial(),
     gameDescription: setDescription(),

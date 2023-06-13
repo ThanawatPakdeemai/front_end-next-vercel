@@ -20,7 +20,7 @@ const MarketplaceLayoutFilterNoBanner = ({
       <div className="hidden w-60 sm:block">
         <FilterBox />
       </div>
-      <main>{children}</main>
+      {children}
     </div>
     <Footer />
   </div>

@@ -2,9 +2,9 @@ import React from "react"
 import { Box, SwipeableDrawer } from "@mui/material"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
-import NotificationListMobile from "@mobile/features/notification/components/organisms/NotificationListMobile"
-import useHistoryController from "@feature/history/containers/hook/useHistoryController"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
+import useNotificationController from "@feature/notification/containers/hooks/useNotificationController"
+import NotificationListMobile from "@mobile/features/notification/components/organisms/NotificationListMobile"
 
 interface INotificationModalProps {
   open: boolean
@@ -16,7 +16,8 @@ const NotificationModal = ({
   setOpenNotification
 }: INotificationModalProps) => {
   const { clearAllDrawer } = useDrawerControllerMobile()
-  const { hxHistory, isLoadingHistory, limit } = useHistoryController()
+  const { notificationList, isLoadingNotification, limit, onClickView } =
+    useNotificationController()
 
   return (
     <SwipeableDrawer
@@ -36,6 +37,12 @@ const NotificationModal = ({
       <Box
         component="div"
         className="notification-list flex flex-col p-[8px_24px_36px]"
+        sx={{
+          "h2": {
+            lineHeight: "1",
+            alignItems: "flex-start"
+          }
+        }}
       >
         <h2
           className="flex items-center gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary"
@@ -45,12 +52,11 @@ const NotificationModal = ({
           <ArrowBackIcon />
           Notification
         </h2>
-
         <NotificationListMobile
-          list={hxHistory}
-          loading={isLoadingHistory}
+          list={notificationList}
+          loading={isLoadingNotification}
           limit={limit}
-          type="history"
+          handleClick={onClickView}
         />
       </Box>
     </SwipeableDrawer>

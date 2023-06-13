@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set Node.js 16.x
+      - name: Set Node.js v16.x
         uses: actions/setup-node@v2
         with:
           node-version: "16.x"
@@ -25,17 +25,14 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Check lint-staged
-        run: yarn lint-staged
-
-      # - name: Check Format
-      #   run: yarn format:prettier
-
-      - name: Eslint
+      - name: Check Eslint
         run: yarn check:eslint
 
       - name: Check Types
         run: yarn check:types
+
+      - name: Check Prettier
+        run: yarn check:prettier
 
       # - name: Test
       # run: yarn test

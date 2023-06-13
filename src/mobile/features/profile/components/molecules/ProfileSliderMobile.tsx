@@ -4,7 +4,8 @@ import { Box } from "@mui/material"
 import useProfileSettingController from "../../containers/useProfileSettingController"
 
 const ProfileSliderMobile = () => {
-  const { avatarList, avatarGoto } = useProfileSettingController()
+  const { avatarList, avatarGoto, setDefaultAvatar } =
+    useProfileSettingController()
 
   return (
     <Box
@@ -20,7 +21,13 @@ const ProfileSliderMobile = () => {
           speed: 500
         }}
         settingThumbnail={{
-          speed: 500
+          speed: 500,
+          beforeChange: (current: number) => {
+            const selected = avatarList[current]
+            if (selected) {
+              setDefaultAvatar(selected.src)
+            }
+          }
         }}
       />
     </Box>

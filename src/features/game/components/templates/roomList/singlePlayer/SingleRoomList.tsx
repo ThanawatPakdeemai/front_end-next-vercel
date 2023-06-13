@@ -19,13 +19,15 @@ import useRoomSingle from "@feature/game/containers/hooks/useRoomSingle"
  */
 const GameRoomList = () => {
   /* mockup data */
-  const { getTypeGamePathFolder } = useGlobal()
+  const { getGameMode } = useGlobal()
+  const { getRoomStatus } = useRoomSingle()
   const profile = useProfileStore((state) => state.profile.data)
   // const { data } = useGameStore()
   // const router = useRouter()
   // const { errorToast } = useToast()
   // const [gameData, setGameData] = useState<IGame>()
   // const { balanceofItem } = useBuyGameItemController()
+
   const {
     item,
     // conditionGameFree,
@@ -136,7 +138,7 @@ const GameRoomList = () => {
 
   const renderRoomName = (): string => {
     if (!gameData) return "Room"
-    if (gameData && getTypeGamePathFolder(gameData) === "play-to-earn") {
+    if (gameData && getGameMode(gameData) === "play-to-earn") {
       return `Room ${itemSelected?.item_size}`
     }
     return "Room"
@@ -186,15 +188,7 @@ const GameRoomList = () => {
                     roomId={_data.room_number}
                     roomName={renderRoomName()}
                     onClick={() => handleJoinRoom(_data)}
-                    btnText={
-                      _data?.current_player?.find(
-                        (ele) => ele.player_id === profile?.id
-                      )?.status === "played"
-                        ? "played"
-                        : _data?.amount_current_player >= _data.max_players
-                        ? "full"
-                        : "join"
-                    }
+                    btnText={getRoomStatus(_data)}
                     path={gameData?.path}
                     dataGoalRush={_data.data_play}
                   />

@@ -1,7 +1,7 @@
 import React from "react"
 import useProfileStore from "@stores/profileStore"
 import IconTemplate from "@mobile/components/templates/IconTemplate"
-import WalletRoundIcon from "@components/icons/WalletRoundIcon"
+// import WalletRoundIcon from "@components/icons/WalletRoundIcon"
 import BellRingRoundIcon from "@components/icons/BellRingRoundIcon"
 import Link from "next/link"
 import { ImageCustom } from "@components/atoms/image/Image"
@@ -10,6 +10,19 @@ import useNotiStore from "@stores/notification"
 import NotificationModal from "@mobile/components/organisms/modal/NotificationModal"
 import ProfileSettingModal from "@mobile/components/organisms/modal/ProfileSettingModal"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
+
+export const StyledAvatar = {
+  color: "#E0E0E0",
+  ".head-profile__info--avatar": {
+    width: "48px",
+    height: "48px",
+    borderRadius: "48px",
+    overflow: "hidden"
+  },
+  "p": {
+    margin: 0
+  }
+}
 
 const HeadProfileMobile = () => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -27,18 +40,7 @@ const HeadProfileMobile = () => {
         <Box
           component="div"
           className="head-profile__info--wrapper flex items-center gap-4"
-          sx={{
-            color: "#E0E0E0",
-            ".head-profile__info--avatar": {
-              width: "48px",
-              height: "48px",
-              borderRadius: "48px",
-              overflow: "hidden"
-            },
-            p: {
-              margin: 0
-            }
-          }}
+          sx={StyledAvatar}
           onClick={() => setProfileSetting(true)}
         >
           {profile ? (
@@ -62,9 +64,10 @@ const HeadProfileMobile = () => {
           </div>
         </Box>
         <div className="head-profile__mobile--right flex items-center gap-4">
-          <IconTemplate>
+          {/* TODO: Open this when In-App purchase is ready */}
+          {/* <IconTemplate>
             <WalletRoundIcon />
-          </IconTemplate>
+          </IconTemplate> */}
           <IconTemplate onClick={() => setOpenNotification(true)}>
             <div
               className={`absolute right-[15px] top-[12px] h-[6px] w-[6px] rounded-full ${

@@ -1,37 +1,39 @@
 import React, { ReactElement } from "react"
-
-import Header from "@components/organisms/Header"
-import useGameStore from "@stores/game"
 import WaitingRoomPage from "@src/mobile/features/pages/game/WaitingRoomPage"
 import { useRouter } from "next/router"
-import HeaderProfile from "../atoms/HeaderProfile"
-import BannerGame from "../atoms/BannerGame"
-import TitleOutRoom from "../molecules/TitleOutRoom"
+import { Box } from "@mui/material"
+import ArrowBackIcon from "../atoms/icons/ArrowBackIcon"
 
 const WaitingLayout = () => {
-  const { data } = useGameStore()
   const router = useRouter()
-  return (
-    <>
-      <HeaderProfile title={data?.name || "Game"} />
-      <BannerGame imageBanner={data?.image_banner || ""} />
-      {/* <HeaderMenu menu={MENU[1].chide || []} /> */}
-      {data && data.game_type === "singleplayer" && (
-        <TitleOutRoom
-          name={`${data?.name || "Game"} `}
-          onOutRoom={() =>
-            router.push(router?.asPath?.split("/")?.slice(0, -1).join("/"))
-          }
-        />
-      )}
 
-      <div className="mb-[80px]">
-        {/* content */}
+  return (
+    <Box
+      component="div"
+      className="flex min-h-[100vh] flex-col bg-[#121212] p-[0_24px_24px]"
+      sx={{
+        "h2": {
+          lineHeight: "1",
+          alignItems: "flex-start"
+        }
+      }}
+    >
+      <h2 className="flex items-center gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary">
+        <i
+          onClick={() => router.back()}
+          aria-hidden="true"
+        >
+          <ArrowBackIcon />
+        </i>
+        Waiting Room
+      </h2>
+      <Box
+        component="section"
+        className="game-section flex flex-col gap-6 font-urbanist text-white-primary"
+      >
         <WaitingRoomPage />
-        {/* footer */}
-      </div>
-      <Header />
-    </>
+      </Box>
+    </Box>
   )
 }
 

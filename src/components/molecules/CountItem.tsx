@@ -57,23 +57,23 @@ const CountItem = ({
   }, [count, max, min, setCount, setItemCount, setMax, setMin])
 
   return (
-    <div className="flex flex-col items-start gap-y-2">
+    <div className="count-item__wrapper flex flex-col items-start gap-y-2">
       {label && (
         <Typography className="text-sm font-bold uppercase text-neutral-500">
           {label}
         </Typography>
       )}
-      <div className="flex items-center">
+      <div className="count-item__content flex items-center">
         <ButtonIcon
           onClick={_minusItem || minusItem}
           variants={iconmotion}
           whileHover="hover"
           transition={{ type: "spring", stiffness: 400, damping: 4 }}
           icon={<MinusIcon />}
-          className="m-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-secondary-main"
+          className="count-item__decrease m-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-secondary-main"
         />
         <TextField
-          className="mx-1"
+          className="mx-1 !w-[136px]"
           sx={{
             input: {
               textAlign: "center"
@@ -93,7 +93,6 @@ const CountItem = ({
             readOnly: true,
             endAdornment: endIcon || <SkullIcon />,
             style: {
-              width: "200px",
               fontSize: 14,
               paddingLeft: 30,
               fontFamily: "neueMachina"
@@ -107,7 +106,7 @@ const CountItem = ({
           whileHover="hover"
           transition={{ type: "spring", stiffness: 400, damping: 4 }}
           icon={<PlusIcon />}
-          className="m-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-secondary-main"
+          className="count-item__increase m-1 flex h-[40px] w-[40px] items-center justify-center rounded-lg bg-secondary-main"
         />
       </div>
       {helperText && (

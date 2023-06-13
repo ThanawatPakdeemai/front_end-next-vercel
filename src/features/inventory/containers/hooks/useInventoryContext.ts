@@ -4,6 +4,7 @@ import { useGetMyArcGameById } from "@feature/game/marketplace/containers/hooks/
 import useInvenGameItem from "@feature/gameItem/inventory/containers/hooks/useInvenGameItem"
 import { useGetLandById } from "@feature/land/containers/hooks/useGetMyLand"
 import { IPosition } from "@feature/land/interfaces/ILandService"
+import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutateMarketplace"
 import {
   IInstallData,
   IMarketData,
@@ -14,7 +15,9 @@ import {
 import useInvenMaterial from "@feature/material/inventory/containers/hooks/useInvenMaterial"
 import { useGetNakPunkById } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import useGlobal from "@hooks/useGlobal"
+import useMarketCategTypes from "@stores/marketCategTypes"
 import useProfileStore from "@stores/profileStore"
+import Helper from "@utils/helper"
 import { NextRouter, useRouter } from "next/router"
 import { useCallback, useEffect, useState } from "react"
 
@@ -28,7 +31,7 @@ interface IInventoryItemData {
   model?: string
   level?: number
   detail: string
-  totalAmoumt?: number
+  totalAmount?: number
   qrCode?: string
   position?: IPosition
   history?: IMarketHistory[]
@@ -52,15 +55,45 @@ const useInventoryContext = () => {
   // const [transAddrs, setTransAddrs] = useState<string | undefined>(undefined)
   const { marketType } = useGlobal()
   // move this to context? for solve multi call api and data need to update
-  const { gameItemList } = useInvenGameItem()
-  const { materialList, onTransferMaterial } = useInvenMaterial()
+  const { gameItemList, getGameItemByToken } = useInvenGameItem()
+  const { materialList, onTransferMaterial, getMaterialByToken } =
+    useInvenMaterial()
+  const { gameItemTypes, materialTypes } = useMarketCategTypes()
   const { mutateGetLandById } = useGetLandById()
   const { mutateGetBuildingById } = useGetBuildingById()
   const { mutateGetNakapunkById } = useGetNakPunkById()
   const { mutateGetMyArcGameById } = useGetMyArcGameById()
   const { mutateGetNFTAvatarById } = useMutateAvatarReef()
+  const { mutateMarketOrderById } = useMutateMarketplace()
+  const { convertNFTTypeToUrl } = Helper
+
+  const updateInvenNFTMarketData = useCallback(
+    (_update: IMarketData | undefined, _type?: TNFTType, _amount?: number) => {
+      if (invenItemData) {
+        let _dummy = invenItemData
+        if (_type && _type !== "game_item" && _type !== "nft_material") {
+          _dummy = { ...invenItemData, marketplaces_data: _update }
+        } else if (_type && _amount && invenItemData.totalAmount) {
+          const _total = invenItemData.totalAmount - _amount
+          _dummy = {
+            ...invenItemData,
+            totalAmount: _total,
+            marketplaces_data: undefined
+          }
+        }
+        setInvenItemData(_dummy)
+        if (!_update) {
+          setInvPrice(0)
+          setInvPeriod(0)
+          setInvAmount(1)
+        }
+      }
+    },
+    [invenItemData]
+  )
 
   const fetchInvenNFTItemDataById = useCallback(async () => {
+    setIsLoading(true)
     if (
       id &&
       marketType &&
@@ -68,7 +101,6 @@ const useInventoryContext = () => {
       marketType !== "game_item" &&
       marketType !== "nft_material"
     ) {
-      setIsLoading(true)
       let _data: IInventoryItemData = {
         id: "",
         name: "string",
@@ -172,16 +204,17 @@ const useInventoryContext = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, marketType, profile.data])
 
-  const fetchInvenItemDataById = useCallback(() => {
+  const fetchInvenItemDataById = useCallback(async () => {
+    setIsLoading(true)
     if (
       id &&
       profile.data &&
-      gameItemList &&
-      materialList &&
+      profile.data.address &&
+      gameItemTypes &&
+      materialTypes &&
       marketType &&
       (marketType === "game_item" || marketType === "nft_material")
     ) {
-      setIsLoading(true)
       let _data: IInventoryItemData = {
         id: "",
         name: "string",
@@ -192,36 +225,118 @@ const useInventoryContext = () => {
       }
       switch (marketType) {
         case "game_item": {
-          if (gameItemList) {
-            const _gameItem = gameItemList.find((gi) => gi._id === id)
+          if (gameItemTypes) {
+            const _gameItem = gameItemTypes.find((gi) => gi._id === id)
             if (_gameItem) {
-              _data = {
-                id: _gameItem._id,
-                name: _gameItem.name,
-                tokenId: _gameItem.item_id_smartcontract.toString(),
-                type: marketType,
-                img: _gameItem.image,
-                detail: _gameItem.detail,
-                totalAmoumt: _gameItem.amount
-              }
+              await getGameItemByToken(
+                profile.data.address,
+                _gameItem.item_id_smartcontract.toString()
+              ).then((_res) => {
+                _data = {
+                  id: _gameItem._id,
+                  name: _gameItem.name,
+                  tokenId: _gameItem.item_id_smartcontract.toString(),
+                  type: marketType,
+                  img: _gameItem.image,
+                  detail: _gameItem.detail,
+                  totalAmount: Number(_res.toString())
+                }
+              })
+            } else {
+              await mutateMarketOrderById({
+                _id: id,
+                _urlNFT: convertNFTTypeToUrl(marketType)
+              }).then((response) => {
+                if (response.data && response.data.item_data) {
+                  _data = {
+                    id: response.data._id,
+                    name: response.data.item_data.name,
+                    tokenId:
+                      response.data.item_data.item_id_smartcontract.toString(),
+                    type: marketType,
+                    img: response.data.item_data.image,
+                    detail: response.data.item_data.detail,
+                    totalAmount: response.data.item_amount,
+                    marketplaces_data: {
+                      item_amount: response.data.item_amount,
+                      order_id: response.data.order_id,
+                      seller_id: response.data.seller_id,
+                      seller_type: response.data.seller_type,
+                      selling_type: response.data.selling_type,
+                      item_total: response.data.item_total,
+                      is_active: response.data.is_active,
+                      type: response.data.type,
+                      item_id: response.data.item_id,
+                      _id: response.data._id,
+                      price: response.data.price,
+                      real_land: false,
+                      buyer_details: [],
+                      updated_at: response.data.created_at,
+                      current_time: response.data.created_at,
+                      created_at: response.data.created_at
+                    }
+                  }
+                }
+              })
             }
           }
           break
         }
         case "nft_material": {
-          if (materialList) {
-            const _materialItem = materialList.find((m) => m.id === id)
+          if (materialTypes) {
+            const _materialItem = materialTypes.find((m) => m.id === id)
             if (_materialItem) {
-              _data = {
-                id: _materialItem.id,
-                name: _materialItem.name,
-                tokenId: _materialItem.material_id_smartcontract.toString(),
-                type: marketType,
-                img: _materialItem.image,
-                detail: _materialItem.detail,
-                totalAmoumt: _materialItem.amount,
-                wallet_address: profile.data.address
-              }
+              await getMaterialByToken(
+                profile.data.address,
+                _materialItem.material_id_smartcontract.toString()
+              ).then((_res) => {
+                _data = {
+                  id: _materialItem.id,
+                  name: _materialItem.name,
+                  tokenId: _materialItem.material_id_smartcontract.toString(),
+                  type: marketType,
+                  img: _materialItem.image,
+                  detail: _materialItem.detail,
+                  totalAmount: Number(_res.toString()),
+                  wallet_address: profile.data?.address
+                }
+              })
+            } else {
+              await mutateMarketOrderById({
+                _id: id,
+                _urlNFT: convertNFTTypeToUrl(marketType)
+              }).then((response) => {
+                if (response.data && response.data.material_data) {
+                  _data = {
+                    id: response.data._id,
+                    name: response.data.material_data.name,
+                    tokenId:
+                      response.data.material_data.material_id_smartcontract.toString(),
+                    type: marketType,
+                    img: response.data.material_data.image,
+                    detail: response.data.material_data.detail,
+                    totalAmount: response.data.item_amount,
+                    marketplaces_data: {
+                      item_amount: response.data.item_amount,
+                      order_id: response.data.order_id,
+                      seller_id: response.data.seller_id,
+                      seller_type: response.data.seller_type,
+                      selling_type: response.data.selling_type,
+                      item_total: response.data.item_total,
+                      is_active: response.data.is_active,
+                      type: response.data.type,
+                      item_id: response.data.item_id,
+                      _id: response.data._id,
+                      price: response.data.price,
+                      real_land: false,
+                      buyer_details: [],
+                      updated_at: response.data.created_at,
+                      current_time: response.data.created_at,
+                      created_at: response.data.created_at
+                    }
+                  }
+                }
+              })
             }
           }
           break
@@ -232,7 +347,8 @@ const useInventoryContext = () => {
       setInvenItemData(_data)
     }
     setIsLoading(false)
-  }, [id, gameItemList, marketType, materialList, profile.data])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, profile.data, materialTypes, marketType, gameItemTypes])
 
   useEffect(() => {
     let cleanup = false
@@ -266,7 +382,8 @@ const useInventoryContext = () => {
     setInvAmount,
     gameItemList,
     materialList,
-    onTransferMaterial
+    onTransferMaterial,
+    updateInvenNFTMarketData
   }
 }
 

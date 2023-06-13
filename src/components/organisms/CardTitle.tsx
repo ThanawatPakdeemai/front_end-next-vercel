@@ -61,13 +61,13 @@ const CardTitle = ({
         {subtitle ? (
           <Box
             component="div"
-            className="flex w-full items-center justify-between lg:justify-between"
+            className="card-subtitle__wrapper flex w-full items-center justify-between lg:justify-between"
             sx={StyledCardTitle}
           >
             <div className="flex-1 uppercase">
-              <h1 className="col-span-2 font-neue-machina-semi text-[14px] text-neutral-300">
+              <h1 className="card-title__h1 col-span-2 font-neue-machina-semi text-[14px] text-neutral-300">
                 {t("weekly_prize_pool")} :{" "}
-                <span className="text-info-main">
+                <span className="card-title__span text-info-main">
                   {sumTotal &&
                     Helper.formatNumber(sumTotal, {
                       maximumFractionDigits: 2
@@ -95,13 +95,13 @@ const CardTitle = ({
         )}
       </div>
       {subtitle ? (
-        <div className="grid grid-cols-[35px_165px_1fr_1fr] gap-1 border-b-[1px] border-neutral-800 p-[15px_10px_15px_30px] text-[10px] uppercase">
+        <div className="card-header__ranking grid grid-cols-[35px_165px_1fr_1fr] gap-1 border-b-[1px] border-neutral-800 p-[15px_10px_15px_30px] text-[10px] uppercase">
           <h1 className={`${rankTitle}`}>{t("rank")}</h1>
           <h1 className={`${rankTitle}`}>{t("player")}</h1>
           <h1 className={`${rankTitle}`}>{t("prize_pool")} EST. %</h1>
           <h1 className={`${rankTitle}`}>
             {t("total")} naka :{" "}
-            <span className="text-info-main">
+            <span className="card-header__ranking-span text-info-main">
               {sumTotal
                 ? Helper.formatNumber(sumTotal, {
                     maximumFractionDigits: 2

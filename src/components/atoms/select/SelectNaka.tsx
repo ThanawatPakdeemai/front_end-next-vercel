@@ -88,7 +88,10 @@ const SelectNaka = ({
                   </div>
                 </div>
                 <div className="flex items-center justify-between bg-primary-main pt-2 ">
-                  <div className="flex w-full items-center  justify-between rounded-default bg-neutral-700 p-[3px]">
+                  <Box
+                    component="div"
+                    className="menu-list flex w-full  items-center justify-between rounded-default bg-neutral-700 p-[3px]"
+                  >
                     <MenuList className="w-full !p-[3px]">
                       {options.map((option) => (
                         <MenuItem
@@ -104,6 +107,15 @@ const SelectNaka = ({
                               router.push(option.link)
                             }
                           }}
+                          sx={
+                            option.value === "Become Developer"
+                              ? {
+                                  "&.MuiMenuItem-root": {
+                                    display: "none"
+                                  }
+                                }
+                              : {}
+                          }
                         >
                           <Link
                             href={option.link ?? ""}
@@ -112,7 +124,7 @@ const SelectNaka = ({
                             <ListItemIcon className="!text-primary-contrastText ">
                               {option.icon}
                             </ListItemIcon>
-                            <ListItemText className="w-50">
+                            <ListItemText className="w-50 flex items-center">
                               <Typography className="!font-neue-machina-semi !text-sm">
                                 <Trans i18nKey={option.label}>
                                   {option.label}
@@ -135,7 +147,7 @@ const SelectNaka = ({
                       ))}
                     </MenuList>
                     <div className="px-2 py-1">{imageSelectd}</div>
-                  </div>
+                  </Box>
                 </div>
               </div>
             </Popover>

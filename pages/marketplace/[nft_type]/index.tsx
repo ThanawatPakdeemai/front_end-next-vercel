@@ -18,9 +18,9 @@ const MarketplaceCardList = dynamic(
   }
 )
 
-const Building = () => <MarketplaceCardList />
+const NFTListPage = () => <MarketplaceCardList />
 
-Building.getLayout = function getLayout(page: ReactElement) {
+NFTListPage.getLayout = function getLayout(page: ReactElement) {
   return <MarketplaceLayoutWithFilter>{page}</MarketplaceLayoutWithFilter>
 }
 
@@ -32,4 +32,4 @@ export async function getServerSideProps({ locale }: { locale: string }) {
   }
 }
 
-export default Building
+export default NFTListPage

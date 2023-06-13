@@ -41,10 +41,21 @@ const CardDetail = ({ type, title, detail, time, image }: any) => {
     (filter) => filter.type === "daily" && filter.status === "in_progress"
   ).length
 
+  /**
+   * @description State for close loading
+   */
   useEffect(() => {
-    if (questDone !== undefined && dailyCount !== undefined) {
-      setValue(questDone)
-      setMax(dailyCount)
+    let load = false
+
+    if (!load) {
+      if (questDone !== undefined && dailyCount !== undefined) {
+        setValue(questDone)
+        setMax(dailyCount)
+      }
+    }
+
+    return () => {
+      load = true
     }
   }, [dailyCount, questDone])
 

@@ -2,7 +2,8 @@ import { SxProps } from "@mui/material"
 
 export const StyleArrowDefault = {
   ".MuiSvgIcon-root": {
-    fill: "white"
+    fill: "white",
+    transform: "scale(0.7)"
   },
   "&.slick-arrow": {
     top: "22px",
@@ -23,8 +24,10 @@ export const StyleArrowAvatar = {
     fill: "white"
   },
   "&.slick-arrow": {
-    top: "-110px",
+    top: "-96px",
     transform: "translate(0, 0)",
+    width: "auto",
+    height: "auto",
     "& > div": {
       background: "#18181C",
       border: "1px solid #232329",
@@ -32,10 +35,12 @@ export const StyleArrowAvatar = {
       borderRadius: "8px"
     },
     "&.slick-prev": {
-      "left": "40px"
+      left: "auto",
+      marginLeft: "-150px"
     },
     "&.slick-next": {
-      "right": "80px"
+      right: "auto",
+      marginRight: "-150px"
     },
     "&:before": {
       display: "none"
@@ -44,7 +49,7 @@ export const StyleArrowAvatar = {
 }
 
 export const SlickArrowCSS =
-  "m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg  bg-neutral-800/60"
+  "m-1 flex items-center justify-center rounded-lg  bg-neutral-800/60 w-[40px] h-[40px]"
 
 export const SlickMainSlideCSS: SxProps = {
   ".slick-slider, .slick-list, .slick-track": {

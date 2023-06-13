@@ -13,8 +13,7 @@ export interface IBannerCardSlide extends ICardNextSlide {
 }
 
 const BannerCardSlide = ({ slide, ...props }: IBannerCardSlide) => {
-  const { getTypeGamePathFolder, onHandleSetGameStore, isRedirectRoomlist } =
-    useGlobal()
+  const { getGameMode, onHandleSetGameStore, isRedirectRoomlist } = useGlobal()
 
   return (
     <>
@@ -35,14 +34,11 @@ const BannerCardSlide = ({ slide, ...props }: IBannerCardSlide) => {
                 >
                   <div className="slide-item--image h-full w-full overflow-hidden rounded-2xl">
                     <Link
-                      href={`/${getTypeGamePathFolder(slide)}/${
+                      href={`/${getGameMode(slide)}/${
                         slide.path
                       }${isRedirectRoomlist(slide).toString()}`}
                       onClick={() =>
-                        onHandleSetGameStore(
-                          getTypeGamePathFolder(slide),
-                          slide
-                        )
+                        onHandleSetGameStore(getGameMode(slide), slide)
                       }
                     >
                       <ImageCustom
@@ -77,11 +73,11 @@ const BannerCardSlide = ({ slide, ...props }: IBannerCardSlide) => {
               >
                 <div className="slide-item--image h-full w-full overflow-hidden rounded-2xl">
                   <Link
-                    href={`/${getTypeGamePathFolder(slide)}/${
+                    href={`/${getGameMode(slide)}/${
                       slide.path
                     }${isRedirectRoomlist(slide).toString()}`}
                     onClick={() =>
-                      onHandleSetGameStore(getTypeGamePathFolder(slide), slide)
+                      onHandleSetGameStore(getGameMode(slide), slide)
                     }
                   >
                     <ImageCustom

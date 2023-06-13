@@ -4,6 +4,7 @@ import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import useEarnRewardController from "@feature/earnReward/containers/hooks/useEarnRewardController"
 import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
+import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
 import EarnRewardListMobile from "../EarnRewardListMobile"
 
 interface IEarnRewardModalProps {
@@ -14,6 +15,7 @@ interface IEarnRewardModalProps {
 const EarnRewardModal = ({ open, setOpenReward }: IEarnRewardModalProps) => {
   const { clearAllDrawer } = useDrawerControllerMobile()
   const { isLoadingReward, earnReward } = useEarnRewardController()
+  const { limit } = useGlobalControllerMobile()
 
   return (
     <SwipeableDrawer
@@ -33,6 +35,12 @@ const EarnRewardModal = ({ open, setOpenReward }: IEarnRewardModalProps) => {
       <Box
         component="div"
         className="notification-list flex flex-col p-[8px_24px_36px]"
+        sx={{
+          "h2": {
+            lineHeight: "1",
+            alignItems: "flex-start"
+          }
+        }}
       >
         <h2
           className="flex items-center gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary"
@@ -45,7 +53,7 @@ const EarnRewardModal = ({ open, setOpenReward }: IEarnRewardModalProps) => {
         <EarnRewardListMobile
           earnReward={earnReward || []}
           loading={isLoadingReward}
-          limit={9999}
+          limit={limit}
         />
       </Box>
     </SwipeableDrawer>

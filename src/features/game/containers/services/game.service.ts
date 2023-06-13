@@ -16,8 +16,10 @@ import {
   IClaimEarnedRewardByPlayerId,
   IGetGameByTypesProps,
   IGetGameByTypes,
-  IFilterGamesByKey,
-  IResponseGameUpdatedPlaying
+  IPayloadGameFilter,
+  IResponseGameUpdatedPlaying,
+  IOwnerCommission,
+  IResponseOwnerCommissionData
 } from "@feature/game/interfaces/IGameService"
 
 export const getAllGames = () =>
@@ -200,7 +202,7 @@ export const getGameByTypes = ({
       .catch((error) => reject(error))
   })
 
-export const getGamesByKey = (data: IFilterGamesByKey) =>
+export const getGameAllFilter = (data: IPayloadGameFilter) =>
   new Promise<IGameAllResponse>((resolve, reject) => {
     services
       .post<IGameAllResponse>(
@@ -219,7 +221,7 @@ export const getGamesByKey = (data: IFilterGamesByKey) =>
       })
   })
 
-export const getMyGameNFT = (data: IFilterGamesByKey) =>
+export const getMyGameNFT = (data: IPayloadGameFilter) =>
   new Promise<IGameService>((resolve, reject) => {
     services
       .post<IGameService>(`${CONFIGS.BASE_URL.API}/game/NFT/my-game`, {
@@ -237,4 +239,19 @@ export const updatePlayCounting = (gameId: string) =>
       )
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
+  })
+
+export const checkGameOwner = (data: IOwnerCommission) =>
+  new Promise<IResponseOwnerCommissionData>((resolve, reject) => {
+    services
+      .post<IResponseOwnerCommissionData>(
+        `${CONFIGS.BASE_URL.API}/game/NFT/game-owner/commission`,
+        data
+      )
+      .then((res) => {
+        resolve(res.data)
+      })
+      .catch((error: Error) => {
+        reject(error)
+      })
   })

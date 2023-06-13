@@ -1,154 +1,28 @@
 import React, { useState } from "react"
-import { Box, Button, Divider, Stack, Typography } from "@mui/material"
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  TwitterAuthProvider
-} from "firebase/auth"
-import { getApps, initializeApp } from "@firebase/app"
+import { Box, Button, Divider, Typography } from "@mui/material"
 import CardNoReward from "@feature/game/containers/components/atoms/CardNoReward"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
-import FormLogin from "@feature/authentication/components/FormLogin"
-// import FacebookLogin from "react-facebook-login"
-import useLoginProvider from "@feature/authentication/containers/hooks/useLoginProvider"
-import { useToast } from "@feature/toast/containers"
-import { IError } from "@src/types/contract"
-import { MESSAGES } from "@constants/messages"
+import useLoginTypeStore from "@stores/loginTypes"
+import FacebookLogin from "react-facebook-login"
 import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import GoogleColorIcon from "@components/icons/SocialIcon/GoogleColorIcon"
 import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
-import Link from "next/link"
+import useFormLoginController from "@feature/authentication/containers/hooks/useFormLoginController"
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
+import LoginModal from "../organisms/modal/LoginModal"
+import CreateAccountModal from "../organisms/modal/CreateAccountModal"
 
 const SignInLayout = () => {
-  const { mutateLoginProvider } = useLoginProvider()
+  const { facebookLogin, googleLogin, twitterLogin } = useFormLoginController()
 
-  const firebaseConfig = {
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
-    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_Id,
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SEND_ID,
-    appId: process.env.NEXT_PUBLIC_FIREBASE_APPID,
-    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-  }
+  const {
+    getClickLoginFacebook: toggleFacebookLogin,
+    setClickLoginFacebook: setToggleFacebookLogin
+  } = useLoginTypeStore()
 
-  if (!getApps().length) {
-    initializeApp(firebaseConfig)
-  }
-
-  const auth = getAuth()
-
-  // const {
-  //   getClickLoginFacebook: toggleFacebookLogin,
-  //   setClickLoginFacebook: setToggleFacebookLogin
-  // } = useLoginTypeStore()
-
-  const { errorToast, successToast } = useToast()
-
-  const [open, setOpen] = useState<boolean>(false)
-
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-
-  // const facebookLogin = async (response: IProfileFaceBook) => {
-  //   if (
-  //     response.email !== null &&
-  //     response.email !== undefined &&
-  //     response.userID !== null &&
-  //     response.userID !== undefined
-  //   ) {
-  //     mutateLoginProvider({
-  //       _email: response.email,
-  //       _provider: "facebook",
-  //       _prevPath: "/",
-  //       _providerUUID: response.userID,
-  //       _referral: ""
-  //     })
-  //       .then((_res) => {
-  //         if (_res) {
-  //           successToast(MESSAGES.logged_in_successfully)
-  //         }
-  //       })
-  //       .catch((_error: IError) => {
-  //         errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-  //       })
-  //   }
-  // }
-
-  const twitterLogin = async () => {
-    const provider = new TwitterAuthProvider()
-    provider.addScope("email")
-    await signInWithPopup(auth, provider)
-      .then((result) => {
-        const { user } = result
-        if (
-          user.providerData[0].email !== null &&
-          user.providerData[0].email !== undefined &&
-          result.providerId !== null &&
-          result.providerId !== undefined
-        ) {
-          mutateLoginProvider({
-            _email: user.providerData[0].email,
-            _provider: "google",
-            _prevPath: "/",
-            _providerUUID: user.uid,
-            _referral: ""
-          })
-            .then((_res) => {
-              if (_res) {
-                successToast(MESSAGES.logged_in_successfully)
-              }
-            })
-            .catch((_error: IError) => {
-              errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-            })
-        } else {
-          errorToast(MESSAGES.logged_in_unsuccessfully)
-        }
-      })
-      .catch((_error: IError) => {
-        errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-      })
-  }
-
-  const googleLogin = async () => {
-    const provider = new GoogleAuthProvider()
-    provider.addScope("email")
-    await signInWithPopup(auth, provider)
-      .then((result) => {
-        const { user } = result
-        if (
-          user.providerData[0].email !== null &&
-          user.providerData[0].email !== undefined &&
-          result.providerId !== null &&
-          result.providerId !== undefined
-        ) {
-          mutateLoginProvider({
-            _email: user.providerData[0].email,
-            _provider: "google",
-            _prevPath: "/",
-            _providerUUID: user.uid,
-            _referral: ""
-          })
-            .then((_res) => {
-              if (_res) {
-                successToast(MESSAGES.logged_in_successfully)
-              }
-            })
-            .catch((_error: IError) => {
-              errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-            })
-        } else {
-          errorToast(MESSAGES.logged_in_unsuccessfully)
-        }
-      })
-      .catch((_error: IError) => {
-        errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-      })
-  }
+  const [openModalLogin, setOpenModalLogin] = useState<boolean>(false)
+  const [openModalCreateAccount, setOpenModalCreateAccount] =
+    useState<boolean>(false)
 
   return (
     <>
@@ -169,11 +43,23 @@ const SignInLayout = () => {
           <Button
             variant="contained"
             className="mb-[1.125rem] h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
-            onClick={googleLogin}
+            onClick={() => setToggleFacebookLogin(true)}
           >
             <div className="flex items-center font-urbanist text-base font-medium">
               <span className="pr-2">
-                <FacebookColorIcon />
+                {toggleFacebookLogin ? (
+                  <FacebookLogin
+                    appId={`${process.env.NEXT_PUBLIC_FACEBOOK_APPID}`}
+                    autoLoad
+                    fields="name,email,picture"
+                    callback={facebookLogin}
+                    cssClass="my-facebook-button-class"
+                    textButton={null}
+                    icon={<FacebookColorIcon />}
+                  />
+                ) : (
+                  <FacebookColorIcon />
+                )}
               </span>
               <span>Sign in with Facebook</span>
             </div>
@@ -201,7 +87,11 @@ const SignInLayout = () => {
           >
             <div className="flex items-center font-urbanist text-base font-medium">
               <span className="pr-2">
-                <TwitterIcon fill="#1D9BF0" />
+                <TwitterIcon
+                  fill="#1D9BF0"
+                  width={30}
+                  height={30}
+                />
               </span>
               <span>Sign in with Twitter</span>
             </div>
@@ -211,10 +101,7 @@ const SignInLayout = () => {
           component="div"
           className="py-4"
         >
-          <Divider
-            sx={{ color: "#fff" }}
-            className="font-urbanist font-medium"
-          >
+          <Divider className="font-urbanist font-medium text-white-default">
             or
           </Divider>
         </Box>
@@ -222,7 +109,7 @@ const SignInLayout = () => {
           <Button
             variant="contained"
             className="mb-6 h-[50px] w-[293px] rounded-bl-3xl border border-solid border-error-100 !bg-error-100"
-            onClick={handleOpen}
+            onClick={() => setOpenModalLogin(!openModalLogin)}
           >
             <div className="flex items-center font-urbanist text-base font-bold">
               Sign in with Email
@@ -236,36 +123,38 @@ const SignInLayout = () => {
           <p className="pr-2 text-sm font-normal text-[#fff]">
             Don’t have an account?
           </p>
-          <Link
-            href="/register"
+          <Typography
+            onClick={() => setOpenModalCreateAccount(!openModalCreateAccount)}
             className="text-sm font-normal text-warning-100"
           >
             Sign up
-          </Link>
+          </Typography>
         </Box>
         <CardNoReward
           className="!rounded-none !border-none !bg-transparent !p-5"
           showIconTM={false}
         />
       </Box>
-      <ModalCustom
-        open={open}
-        onClose={handleClose}
-        className="w-full gap-3 rounded-[34px] p-[10px] md:w-auto"
-        width="auto"
+      {/* Modal Login */}
+      <LoginModal
+        open={openModalLogin}
+        setOpenLogin={(_toggle) => setOpenModalLogin(_toggle)}
+      />
+      {/* Modal CreateNewAccountModal */}
+      <GoogleReCaptchaProvider
+        reCaptchaKey={`${process.env.NEXT_PUBLIC_KEY_RECAPTCHA}`}
+        scriptProps={{
+          async: true,
+          defer: false,
+          appendTo: "head",
+          nonce: undefined
+        }}
       >
-        <Stack
-          spacing={3}
-          className="md:p-5"
-        >
-          <ModalHeader
-            handleClose={handleClose}
-            title="Login"
-          />
-
-          <FormLogin />
-        </Stack>
-      </ModalCustom>
+        <CreateAccountModal
+          open={openModalCreateAccount}
+          setOpenLogin={(_toggle) => setOpenModalCreateAccount(_toggle)}
+        />
+      </GoogleReCaptchaProvider>
     </>
   )
 }

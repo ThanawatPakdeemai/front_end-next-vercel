@@ -3,27 +3,45 @@ import React, { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { NextRouter, useRouter } from "next/router"
 import { Image } from "@components/atoms/image"
-import { Collapse } from "@mui/material"
+import { Button, Collapse } from "@mui/material"
 import useNotiStore from "@stores/notification"
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined"
 import useProfileStore from "@stores/profileStore"
 import Link from "next/link"
 import MenuItemCustom from "@components/atoms/MenuItemCustom"
-import { MENU_MARKETPLACE } from "@configs/menu"
+import { MENU_MARKETPLACE, MENU_MARKETPLACE_INVENTORY } from "@configs/menu"
 // import RightMenuLogIn from "@components/molecules/rightMenu/RightMenuLogIn"
+import PlusIcon from "@components/icons/CountIcon/PlusIcon"
+import Balance from "@components/molecules/balance/Balance"
+import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
+import useRefreshProfile from "@hooks/useRefreshProfile"
 import MenuButtonExpandMobile from "./MenuButtonExpandMobile"
 
 const HeaderMunuMobile = () => {
   const router: NextRouter = useRouter()
   const { count } = useNotiStore()
   const profile = useProfileStore((state) => state.profile.data)
+  // const { profile } = useProfileStore()
+  const { isTokenValid } = useRefreshProfile()
 
   const [expanded, setExpanded] = useState<boolean>(false)
+  // const [expandedInvenTory, setExpandedInvenTory] = React.useState<
+  //   string | false
+  // >("")
+  const [expandedInvenTory, setExpandedInvenTory] = useState<boolean>(false)
   const [headerTitle, setHeaderTitle] = useState<string>("NAKA Market")
 
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
   }
+  const handleChange = () => {
+    setExpandedInvenTory(!expandedInvenTory)
+  }
+
+  // const handleChange =
+  //   (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+  //     setExpandedInvenTory(newExpanded ? panel : false)
+  //   }
 
   useEffect(() => {
     const pathName = router.asPath
@@ -72,33 +90,35 @@ const HeaderMunuMobile = () => {
               />
             </motion.div>
             <div className="grid h-full w-full items-center rounded-[8px] bg-neutral-900 p-1 text-sm text-white-primary">
-              {/* {pathName} */}
               {headerTitle}
             </div>
           </div>
         </div>
-        <div className="flex h-[50px] w-fit gap-1 rounded-[13px] border border-neutral-700 bg-neutral-780 p-1">
-          <div
-            className={`relative mr-1 flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-lg border border-neutral-700 bg-transparent before:absolute before:right-[6px] before:top-[5px] before:h-[6px] before:w-[6px] before:rounded-full ${
-              (count > 0 && "before:bg-error-main before:opacity-100") ||
-              "before:bg-transparent before:opacity-0"
-            }`}
-          >
-            <NotificationsOutlinedIcon className="text-white-primary" />
+        {!profile || !isTokenValid ? (
+          <RightMenuNotLogIn />
+        ) : (
+          <div className="flex h-[50px] w-fit gap-1 rounded-[13px] border border-neutral-700 bg-neutral-780 p-1">
+            <div
+              className={`relative mr-1 flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-lg border border-neutral-700 bg-transparent before:absolute before:right-[6px] before:top-[5px] before:h-[6px] before:w-[6px] before:rounded-full ${
+                (count > 0 && "before:bg-error-main before:opacity-100") ||
+                "before:bg-transparent before:opacity-0"
+              }`}
+            >
+              <NotificationsOutlinedIcon className="text-white-primary" />
+            </div>
+            <div className="grid !h-[40px] !w-[40px] content-center rounded-[8px] bg-neutral-900">
+              <Link href={`/profile/${profile.id}`}>
+                <Image
+                  src={profile.avatar || "/images/avatar.png"}
+                  alt="avatar"
+                  width={40}
+                  height={40}
+                  className="mr-[5px] rounded-lg"
+                />
+              </Link>
+            </div>
           </div>
-          <div className="grid !h-[40px] !w-[40px] content-center rounded-[8px] bg-neutral-900">
-            <Link href={`/profile/${profile?.id}`}>
-              <Image
-                src={profile?.avatar || "/images/avatar.png"}
-                alt="avatar"
-                width={40}
-                height={40}
-                className="mr-[5px] rounded-lg"
-              />
-            </Link>
-          </div>
-        </div>
-        {/* <RightMenuLogIn /> */}
+        )}
       </div>
       <Collapse
         in={expanded}
@@ -138,6 +158,55 @@ const HeaderMunuMobile = () => {
               )
             })}
         </div>
+        <div className="m-2 my-4 !h-[50px]">
+          <Balance widthBalance="w-[calc(100%-70px)]" />
+        </div>
+        <div className="m-2 flex items-center justify-between rounded-[13px] border border-neutral-800 bg-neutral-900 p-[5px] pl-[14px] text-sm text-white-primary">
+          Inventory
+          <div className="flex h-[40px] w-[40px] items-center justify-center rounded-[8px] border border-neutral-700 bg-neutral-800">
+            <Button
+              onClick={handleChange}
+              className={`flex items-center justify-center ${
+                expandedInvenTory
+                  ? "rotate-90 transition-all duration-300"
+                  : "rotate-0 transition-all duration-300"
+              }`}
+            >
+              <div className="rounded-[2px] border border-neutral-200">
+                <PlusIcon
+                  width={15}
+                  height={15}
+                />
+              </div>
+            </Button>
+          </div>
+        </div>
+        <Collapse
+          in={expandedInvenTory}
+          timeout="auto"
+          className="m-[-8px] w-full max-w-[504px] p-4"
+          sx={{
+            backgroundColor: "#101013",
+            zIndex: 99999,
+            position: "absolute",
+            width: "90%"
+          }}
+        >
+          {MENU_MARKETPLACE_INVENTORY.map((ele) => {
+            const active = router.asPath.includes(ele.href)
+            return (
+              <MenuItemCustom
+                key={ele.id}
+                id={ele.id}
+                label={ele.label}
+                icon={ele.icon}
+                href={ele.href}
+                external={ele.external}
+                active={active}
+              />
+            )
+          })}
+        </Collapse>
       </Collapse>
     </div>
   )

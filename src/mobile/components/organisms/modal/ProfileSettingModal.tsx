@@ -8,26 +8,24 @@ import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/us
 interface IProfileSettingModalProps {
   open: boolean
   setProfileSetting: React.Dispatch<React.SetStateAction<boolean>>
+  title?: string
 }
 
 const ProfileSettingModal = ({
   open,
-  setProfileSetting
+  setProfileSetting,
+  title = "Edit Profile"
 }: IProfileSettingModalProps) => {
   const { clearAllDrawer } = useDrawerControllerMobile()
 
   return (
     <SwipeableDrawer
-      anchor="right"
+      anchor="bottom"
       open={open}
       onClose={() => setProfileSetting(false)}
       onOpen={() => {
         clearAllDrawer()
         setProfileSetting(true)
-      }}
-      disableSwipeToOpen={false}
-      ModalProps={{
-        keepMounted: true
       }}
       sx={{
         ...StyleDrawer,
@@ -39,6 +37,12 @@ const ProfileSettingModal = ({
       <Box
         component="div"
         className="setting-list flex flex-col p-[8px_24px_36px]"
+        sx={{
+          "h2": {
+            lineHeight: "1",
+            alignItems: "flex-start"
+          }
+        }}
       >
         <h2
           className="flex items-center gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary"
@@ -46,7 +50,7 @@ const ProfileSettingModal = ({
           aria-hidden="true"
         >
           <ArrowBackIcon />
-          Edit Profile
+          {title}
         </h2>
         <FormProfileSetting />
       </Box>

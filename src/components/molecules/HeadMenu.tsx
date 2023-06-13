@@ -56,17 +56,26 @@ const HeadMenu = () => {
   return (
     <Box
       component="div"
-      className="order-3 w-full rounded-[19px] p-[6px] sm:order-2 sm:w-auto"
+      className="order-3 w-full rounded-[19px] bg-[#232329]/50 p-[6px] sm:order-2 sm:w-auto"
       sx={{
-        background: "rgba(1, 1, 1, 0.2)",
         backdropFilter: "blur(15px)"
       }}
     >
       <Box
         component="div"
-        className="xs:my-5 m-auto grid max-w-[505px] flex-[1_1_100%] grid-cols-2 items-center justify-center gap-1 overflow-hidden rounded-[13px] bg-neutral-700 p-[5px] sm:flex md:order-1 md:mb-0 lg:my-0 lg:flex-none"
+        className="xs:my-5 m-auto grid max-w-[505px] flex-[1_1_100%] grid-cols-2 items-center justify-center gap-[5px] overflow-hidden rounded-[13px] bg-neutral-700 p-[5px] sm:flex md:order-1 md:mb-0 lg:my-0 lg:flex-none"
       >
-        {MENU_DATA.map((item) => {
+        {MENU_DATA.map((item, _index) => {
+          // const activeHomeMarket: boolean =
+          //   router.asPath.split("/")[2] !== "p2p" &&
+          //   item.link.split("/")[2] !== "p2p" &&
+          //   router.asPath.split("/")[2] !== "map" &&
+          //   item.link.split("/")[2] !== "map"
+
+          // const activeP2p =
+          //   router.asPath.split("/")[2] === "p2p" &&
+          //   item.link.split("/")[2] === "p2p"
+
           if (!item.isChide && item.chide === undefined) {
             return (
               <Link
@@ -76,7 +85,7 @@ const HeadMenu = () => {
               >
                 <Button
                   sx={styleButton}
-                  className={`button-select-naka xs:mb-1 !hover:bg-error-main !hover:text-white-primary w-full !rounded-[8px] !px-[23px] !py-[12px] !text-black-default ${
+                  className={`button-select-naka xs:mb-1 !hover:bg-error-main !hover:text-black-default w-full !rounded-[8px] !px-[23px] !py-[12px] text-white-primary ${
                     router.pathname === item.link
                       ? "!bg-primary-main"
                       : "!bg-neutral-800"
@@ -97,7 +106,7 @@ const HeadMenu = () => {
           }
           return (
             <div
-              className="m-auto table w-full md:w-auto"
+              className="m-auto table w-full md:w-auto "
               key={`${item.name}`}
             >
               <SelectNaka
@@ -126,14 +135,14 @@ const HeadMenu = () => {
                   <Button
                     sx={styleButton}
                     className={`button-select-naka xs:mb-1 !hover:bg-error-main  !hover:text-white-primary group w-full !min-w-[100px]  !rounded-[8px] !py-[12px] px-2 !text-black-default last:p-[15px_5px_13px] md:mb-0 md:w-auto ${
-                      item.isChide &&
-                      item.chide &&
-                      (router.pathname ===
-                      [...item.chide]
-                        // ?.filter((ele) => typeof ele.icon === "string")
-                        .find((ele) => ele.link === router.pathname)?.link
+                      // item.isChide &&
+                      // item.chide &&
+                      router.pathname ===
+                      [...item.chide].find(
+                        (ele) => ele.link === router.pathname
+                      )?.link
                         ? "!bg-primary-main"
-                        : "!bg-neutral-800")
+                        : "!bg-neutral-800"
                     }`}
                     variant="contained"
                     size="large"
@@ -159,7 +168,7 @@ const HeadMenu = () => {
                           >
                             {t(`${item.name}`)}
                           </Typography>
-                          <HamburgerIcon fill="#70727B" />
+                          <HamburgerIcon fill="#fff" />
                           {/* <DragHandleIcon
                             // className="ml-4"
                             sx={styleIcon}

@@ -680,8 +680,12 @@ body {
   display: none;
 }
 
-.page-full-map {
-  height: calc(var(--vh, 1vh) * 100);
+.page-full-map::-webkit-scrollbar {
+  display: none;
+}
+
+.map-wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 .card-land-panel-wrapper {

@@ -41,7 +41,7 @@ const FavouriteGamesPage = () => {
 
   const {
     stateProfile,
-    getTypeGamePathFolder,
+    getGameMode,
     onHandleSetGameStore,
     isRedirectRoomlist,
     defaultBody,
@@ -142,14 +142,14 @@ const FavouriteGamesPage = () => {
               <GameCard
                 key={game.id}
                 menu={menu || F2PHeaderMenu}
-                href={`/${getTypeGamePathFolder(game)}/${
-                  game.path
-                }${isRedirectRoomlist(game).toString()}`}
+                href={`/${getGameMode(game)}/${game.path}${isRedirectRoomlist(
+                  game
+                ).toString()}`}
                 onHandleClick={() =>
-                  onHandleSetGameStore(getTypeGamePathFolder(game), game)
+                  onHandleSetGameStore(getGameMode(game), game)
                 }
                 data={game}
-                gameType={getTypeGamePathFolder(game)}
+                gameType={getGameMode(game)}
               />
             )
           })

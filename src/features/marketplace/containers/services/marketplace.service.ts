@@ -4,6 +4,7 @@ import {
   IClaimRentalServ,
   ICreateOrderParams,
   IMarketCreateOrderServ,
+  IMarketOrderListServ,
   IMarketOrderServ,
   IMarketServForm,
   IMarketTypesServ,
@@ -11,8 +12,17 @@ import {
   IPayBillParams,
   IPayOrderParams,
   IPutOrderServ,
+  ISettingMarketplace,
   TUrlNFT
 } from "@feature/marketplace/interfaces/IMarketService"
+
+export const getSettingMarketplace = () =>
+  new Promise<ISettingMarketplace>((resolve, reject) => {
+    services
+      .get<ISettingMarketplace>(`/setting/type-data/maketplace`)
+      .then((response) => resolve(response.data))
+      .catch((error) => reject(error))
+  })
 
 export const getMarketOrder = ({
   _urlNFT,
@@ -22,7 +32,7 @@ export const getMarketOrder = ({
   _sort,
   _active = true
 }: IMarketServForm) =>
-  new Promise<IMarketOrderServ>((resolve, reject) => {
+  new Promise<IMarketOrderListServ>((resolve, reject) => {
     const data = {
       limit: _limit,
       skip: _page,
@@ -31,7 +41,7 @@ export const getMarketOrder = ({
       active: _active
     }
     services
-      .post<IMarketOrderServ>(`/market-place-new/${_urlNFT}/order-all`, {
+      .post<IMarketOrderListServ>(`/market-place-new/${_urlNFT}/order-all`, {
         ...data
       })
       .then((response) => resolve(response.data))

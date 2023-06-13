@@ -21,5 +21,6 @@ export const colorThree = {
   currentLand: 0xec2f2f,
   availableForSale: 0xff8d85,
   disable: 0x1d2029,
-  background: 0x0fa9dc
+  background: 0x0fa9dc,
+  walletColor: 0xf9f9f9
 }

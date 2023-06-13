@@ -10,6 +10,8 @@ import { AnimatePresence, motion } from "framer-motion"
 import { useRouter } from "next/router"
 import { Typography } from "@mui/material"
 import MenuButtonExpandMobile from "@feature/page/marketplace/mobilescreen/MenuButtonExpandMobile"
+import useMarketFilterStore from "@stores/marketFilter"
+import Helper from "@utils/helper"
 import SwipeableEdgeDrawer from "@feature/marketplace/components/organisms/DrawerMobileFilter"
 import BoxElement from "../molecules/BoxElement"
 import CameraController from "../molecules/CameraController"
@@ -27,6 +29,12 @@ const FullMap = () => {
   // hook
   const { setOpen, setClose } = useLoadingStore()
   const router = useRouter()
+  const { filterType, search } = useMarketFilterStore()
+  const { getValueFromTKey } = Helper
+  const filterCheck = filterType.nft_land
+
+  const tokenId = getValueFromTKey(search, "nft_token") as string
+  const sellerId = getValueFromTKey(search, "seller_id") as string
 
   // state
   const { allLand: allLandData, isSuccess, isLoading } = useGetAllLand()
@@ -96,6 +104,87 @@ const FullMap = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allLandData])
 
+  useMemo(() => {
+    if (allLand && allLand.length > 0) {
+      const filteredLand = allLand
+      if (filterCheck && filterCheck.length > 0) {
+        filteredLand.filter((item: ILandMap) => {
+          const landFilter = filterCheck.find(
+            (element: string) => item.type === element
+          )
+          if (landFilter) {
+            if (search.length > 0) {
+              if (item.color) {
+                item.color = colorThree.land
+              } else {
+                item.color = null
+              }
+            } else {
+              item.color = colorThree.land
+            }
+          } else {
+            item.color = null
+          }
+          return item
+        })
+      }
+      if (tokenId) {
+        let landSelected: ILandMap | null = null
+        filteredLand.map((item: ILandMap) => {
+          if (tokenId === item.land_id) {
+            if (filterCheck.length > 0) {
+              if (item.color) {
+                item.color = colorThree.currentLand
+                landSelected = item
+              } else {
+                item.color = null
+              }
+            } else {
+              item.color = colorThree.currentLand
+              landSelected = item
+            }
+          } else {
+            item.color = null
+          }
+          return item
+        })
+        landSelected ? setCurrentLand(landSelected) : setCurrentLand(null)
+      }
+      if (sellerId) {
+        filteredLand.filter((item: ILandMap) => {
+          if (sellerId === item.wallet_address) {
+            if (filterCheck.length > 0) {
+              if (item.color) {
+                item.color = colorThree.owned
+              } else {
+                item.color = null
+              }
+            } else {
+              item.color = colorThree.owned
+            }
+          } else {
+            item.color = null
+          }
+          return item
+        })
+      }
+      if (filterCheck.length <= 0 && search.length <= 0) {
+        filteredLand.map((item: ILandMap) => {
+          item.color = colorThree.land
+          return item
+        })
+        setCurrentLand(null)
+        router.query.x = undefined
+        router.query.y = undefined
+        setFocus(false)
+        setUpdateZoom(false)
+      }
+      setAllLand(filteredLand)
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allLand, filterCheck, search.length])
+
   // handle click on map
   useMemo(() => {
     if (currentLand) {
@@ -131,11 +220,11 @@ const FullMap = () => {
   }, [router.query, allLand])
 
   return (
-    <div className="map-content relative flex h-full w-screen flex-col overflow-y-hidden bg-[#0165B6]">
+    <div className="map-content relative flex h-full w-full flex-col bg-[#0165B6]">
       <div className="absolute top-6 z-10 mt-6 flex h-[200px] w-full justify-center sm:hidden">
         <div className="grid max-w-[400px] justify-center gap-4">
           <div className="flex h-[40px] gap-2">
-            <div className="flex !w-[315px] w-full items-center justify-between rounded-lg bg-neutral-800 px-[15px]">
+            <div className="flex !w-[315px] items-center justify-between rounded-lg bg-neutral-800 px-[15px]">
               <Typography className="text-sm uppercase text-white-default">
                 NAKAVERSE MAP
               </Typography>

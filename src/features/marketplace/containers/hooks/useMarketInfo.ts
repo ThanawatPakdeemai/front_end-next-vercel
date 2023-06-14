@@ -82,7 +82,9 @@ const useMarketInfo = () => {
       setCardType(convertNFTTypeToTType(NFTType) || "land")
       let __search: IMarketSearch = {
         type_marketplace: NFTType,
-        selling_type: getValueFromTKey(search, "selling_type") as TSellingType
+        selling_type: getValueFromTKey(search, "selling_type") as TSellingType,
+        seller_id: getValueFromTKey(search, "seller_id") as string,
+        nft_token: getValueFromTKey(search, "nft_token") as string
       }
       const __sort: IMarketSort = {
         created_at:

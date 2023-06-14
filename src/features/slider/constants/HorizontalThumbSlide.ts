@@ -145,6 +145,11 @@ export const SlickAvatarThumbnail: SxProps = {
   },
   ".slick-slide": {
     opacity: 1,
+    "&.slick-cloned": {
+      opacity: 0,
+      visibility: "hidden",
+      display: "none"
+    },
     ".verticalSmallThumb-slide__item": {
       margin: "0 4px",
       padding: "0",

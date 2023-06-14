@@ -2,7 +2,7 @@ import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import { iconmotion } from "@components/organisms/Footer"
 import { IVerticalThumbSlide } from "@feature/slider/interfaces/ISlides"
 import { Box, SxProps } from "@mui/material"
-import React, { useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import Slider, { Settings } from "react-slick"
 import EastIcon from "@mui/icons-material/East"
 import WestIcon from "@mui/icons-material/West"
@@ -37,8 +37,40 @@ const HorizontalThumbSlide = ({
   currentSelected,
   slidesToScrollCustom
 }: IHorizontalThumbSlideProps) => {
-  const [nav1, setNav1] = useState<Slider | undefined | null>()
-  const [nav2, setNav2] = useState<Slider | undefined | null>()
+  const [nav1, setNav1] = useState<Slider | null>()
+  const [nav2, setNav2] = useState<Slider | null>()
+
+  const sliderRef = useRef<Slider>(null)
+  const sliderRef1 = useRef<Slider>(null)
+
+  const onSlideTo = useCallback(() => {
+    sliderRef?.current?.slickGoTo(Number(currentSelected), false)
+    sliderRef1?.current?.slickGoTo(Number(currentSelected), false)
+    setNav1(sliderRef?.current)
+    setNav2(sliderRef1?.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    currentSelected,
+    sliderRef?.current,
+    sliderRef1?.current,
+    setNav1,
+    setNav2
+  ])
+
+  const onSlideNext = () => {
+    sliderRef?.current?.slickNext()
+    sliderRef1?.current?.slickNext()
+  }
+
+  const onSlidePrev = () => {
+    sliderRef?.current?.slickPrev()
+    sliderRef1?.current?.slickPrev()
+  }
+
+  useEffect(() => {
+    onSlideTo()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentSelected, onSlideTo])
 
   /**
    * @description Get style for single slide
@@ -119,6 +151,7 @@ const HorizontalThumbSlide = ({
       <Box
         component="div"
         sx={getStyleArrow()}
+        onClick={() => onSlidePrev()}
       >
         <ButtonIcon
           variants={iconmotion}
@@ -137,6 +170,7 @@ const HorizontalThumbSlide = ({
       <Box
         component="div"
         sx={getStyleArrow()}
+        onClick={() => onSlideNext()}
       >
         <ButtonIcon
           variants={iconmotion}
@@ -163,13 +197,7 @@ const HorizontalThumbSlide = ({
       >
         <Slider
           asNavFor={nav2 as Slider}
-          ref={(slider1) => {
-            if (currentSelected) {
-              slider1?.slickGoTo(currentSelected)
-            }
-
-            setNav1(slider1)
-          }}
+          ref={sliderRef}
           {...settings}
           className="banner"
         >
@@ -186,11 +214,11 @@ const HorizontalThumbSlide = ({
       <Box
         component="div"
         sx={getStyleMultipleSlide()}
-        className="relative mt-4 flex w-full max-w-[613px] justify-center"
+        className="slick-thunbmail__wrapper relative mt-4 flex w-full max-w-[613px] justify-center"
       >
         <Slider
           asNavFor={nav1 as Slider}
-          ref={(slider2) => setNav2(slider2)}
+          ref={sliderRef1}
           {...settingSlideThumbnail}
           className="h-[84px] w-full rounded-2xl border-[1px] border-neutral-700 border-opacity-80 p-1"
         >

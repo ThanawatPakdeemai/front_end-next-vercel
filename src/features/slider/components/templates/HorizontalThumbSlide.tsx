@@ -100,7 +100,7 @@ const HorizontalThumbSlide = ({
   const getStyleSingleSlideClasses = (): string => {
     switch (sliderType) {
       case "avatar":
-        return "flex h-[80px] w-[80px] flex-col justify-center overflow-hidden rounded-2xl p-[6px] border-2 border-[#F42728] rounded-[14px]"
+        return "flex h-[80px] w-[80px] flex-col justify-center rounded-2xl p-[6px] border-2 border-[#F42728] rounded-[14px]"
       default:
         return "flex h-[60vw] w-full flex-col justify-center overflow-hidden rounded-2xl md:h-[479px] lg:max-w-[852px]"
     }
@@ -130,23 +130,7 @@ const HorizontalThumbSlide = ({
     fade: true,
     pauseOnHover: false,
     dots: false,
-    arrows: false,
-    ...settingSingle
-  }
-
-  const settingSlideThumbnail: Settings = {
-    infinite: true,
-    speed: 1000,
-    slidesToShow: sliderType === "avatar" ? 4 : 8,
-    slidesToScroll: slidesToScrollCustom || 4,
     arrows: true,
-    vertical: false,
-    focusOnSelect: true,
-    dots: false,
-    centerPadding: sliderType === "avatar" ? "0px" : "10px",
-    centerMode: false,
-    rows: 1,
-    variableWidth: true,
     prevArrow: (
       <Box
         component="div"
@@ -185,6 +169,22 @@ const HorizontalThumbSlide = ({
         />
       </Box>
     ),
+    ...settingSingle
+  }
+
+  const settingSlideThumbnail: Settings = {
+    infinite: true,
+    speed: 1000,
+    slidesToShow: sliderType === "avatar" ? 4 : 8,
+    slidesToScroll: slidesToScrollCustom || 4,
+    arrows: false,
+    vertical: false,
+    focusOnSelect: true,
+    dots: false,
+    centerPadding: sliderType === "avatar" ? "0px" : "10px",
+    centerMode: false,
+    rows: 1,
+    variableWidth: true,
     ...settingThumbnail
   }
 

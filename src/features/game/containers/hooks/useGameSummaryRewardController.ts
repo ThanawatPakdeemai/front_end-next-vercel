@@ -395,7 +395,7 @@ const useGameSummaryRewardController = () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameData, GameHome])
+  }, [gameData, GameHome, onSetGameData, setGameDataState])
 
   useEffect(() => {
     let load = false

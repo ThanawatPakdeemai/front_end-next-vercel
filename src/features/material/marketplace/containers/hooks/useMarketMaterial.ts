@@ -194,7 +194,7 @@ const useMarketMaterial = () => {
       ])
       if (Number(_checkOrderById.price) <= 0) {
         setClose()
-        errorToast("order not founded")
+        errorToast(`${MESSAGES.check_order_error} or rpc error.`)
         return false
       }
       if (!_checkChain._pass) {
@@ -284,7 +284,7 @@ const useMarketMaterial = () => {
       ])
       if (Number(_checkOrderById.price) <= 0) {
         setClose()
-        errorToast("order not founded")
+        errorToast(`${MESSAGES.check_order_error} or rpc error.`)
         return false
       }
       if (!_checkChain._pass) {

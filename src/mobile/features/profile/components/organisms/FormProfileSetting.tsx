@@ -2,6 +2,7 @@ import { Box, TextField } from "@mui/material"
 import React from "react"
 import { useTranslation } from "react-i18next"
 import { StyledBaseInputMobile } from "@mobile/styles/muiStyleMobile"
+import { commonPattern } from "@constants/regex"
 import HorizontalThumbSlide from "@feature/slider/components/templates/HorizontalThumbSlide"
 import ProfileFooterMobile from "../molecules/ProfileFooterMobile"
 import useProfileSettingController from "../../containers/useProfileSettingController"
@@ -61,7 +62,7 @@ const FormProfileSetting = () => {
           value={watchProfileSetting("_username")}
           onChange={(event) => {
             let { value } = event.target
-            value = value.replace(/[^A-Za-z0-9]/gi, "")
+            value = value.replace(commonPattern, "")
             setValueProfileSetting("_username", value)
           }}
           id="username"

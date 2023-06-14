@@ -11,7 +11,12 @@ const Crumb = ({ title, href, last = false }: IProp) => {
   const router = useRouter()
   if (last) {
     return (
-      <Typography className="cursor-pointer rounded bg-error-main px-[10px] py-[5px] text-xs font-bold text-error-contrastText">
+      <Typography
+        sx={{
+          lineHeight: "25px"
+        }}
+        className="max-w-sm cursor-pointer rounded bg-error-main px-[10px] text-xs font-bold text-error-contrastText line-clamp-1"
+      >
         {title.split(/[_-]/).join(" ")}
       </Typography>
     )

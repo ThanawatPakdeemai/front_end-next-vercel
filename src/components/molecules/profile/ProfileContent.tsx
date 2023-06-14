@@ -180,13 +180,10 @@ const ProfileContent = () => {
   //   />
   // )
 
-  // ReactDOM.render(
-  //   <TelegramLoginButton
-  //     dataOnauth={handleTelegramResponse}
-  //     botName="OdauBot"
-  //   />,
-  //   document.getElementById("telegramButton")
-  // )
+  const responseTelegram = (user: any) => {
+    // eslint-disable-next-line no-console
+    console.log("user", user)
+  }
 
   const handleOnExpandClick = () => {
     setOpenEdit(!openEdit)
@@ -429,15 +426,22 @@ const ProfileContent = () => {
       ) : (
         <div className="mt-8 w-full md:mt-0 md:w-[98%] lg:w-[90%]">
           {/* <div className="w-[90%]"> */}
-          <button
+          {/* <button
             className="btn tgme_widget_login_button"
             // eslint-disable-next-line react/jsx-curly-brace-presence
             onClick={() => window?.TWidgetLogin?.auth()}
           >
             <i className="tgme_widget_login_button_icon" />
             Log in with Telegram
-          </button>
-
+          </button> */}
+          <script
+            async
+            src="https://telegram.org/js/telegram-widget.js?22"
+            data-telegram-login="NakaGameBot"
+            data-size="large"
+            data-onauth={responseTelegram}
+            data-request-access="write"
+          />
           {/* <ButtonToggleIcon
             handleClick={handleTelegramResponse}
             startIcon={<></>}

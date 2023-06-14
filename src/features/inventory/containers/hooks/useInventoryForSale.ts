@@ -5,15 +5,14 @@ import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem
 import { useGetMyForSaleLand } from "@feature/land/containers/hooks/useGetMyLand"
 import useGetMarketOrder from "@feature/marketplace/hooks/getMarketOrder"
 import {
-  TSellingType,
-  TType
+  TNFTType,
+  TSellingType
 } from "@feature/marketplace/interfaces/IMarketService"
 import { useGetMyForSaleNakaPunk } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import useGlobal from "@hooks/useGlobal"
 import useMarketFilterStore from "@stores/marketFilter"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
-import { NextRouter, useRouter } from "next/router"
 import { useCallback, useEffect, useMemo, useState } from "react"
 
 const useInventoryForSale = () => {
@@ -35,14 +34,9 @@ const useInventoryForSale = () => {
   const { mutateGetMyForsaleNakaPunk } = useGetMyForSaleNakaPunk()
   const { mutateGetForsaleArcGame } = useGetForSaleArcGame()
   const { getMarketOrderAsnyc } = useGetMarketOrder()
-  const { convertNFTTypeToUrl, getValueFromTKey, convertTTypeToNFTType } =
-    Helper
+  const { convertNFTTypeToUrl, getValueFromTKey } = Helper
   const { sort, search, filterType } = useMarketFilterStore()
-  const router: NextRouter = useRouter()
-  const _marketType =
-    marketType ||
-    convertTTypeToNFTType(router.query.type as TType) ||
-    "nft_land"
+  const [NFTType, setNFTType] = useState<TNFTType | undefined>(undefined)
 
   const fetchMyNFTForsale = useCallback(async () => {
     let _data: IInventoryItemList[] = []
@@ -53,11 +47,11 @@ const useInventoryForSale = () => {
       filterType &&
       search &&
       sort &&
-      _marketType &&
-      _marketType !== "game_item" &&
-      _marketType !== "nft_material"
+      NFTType &&
+      NFTType !== "game_item" &&
+      NFTType !== "nft_material"
     ) {
-      switch (_marketType) {
+      switch (NFTType) {
         case "nft_land":
           await mutateGetMyForSaleLand({
             _limit: limit,
@@ -212,7 +206,7 @@ const useInventoryForSale = () => {
     setInventoryItemForsale(_data)
     setTotalCount(_total)
     setIsLoading(false)
-  }, [profile.data, _marketType, limit, currentPage, filterType, search, sort])
+  }, [profile.data, NFTType, limit, currentPage, filterType, search, sort])
 
   const fetchMyItemForsale = useCallback(async () => {
     let _data: IInventoryItemList[] = []
@@ -221,16 +215,16 @@ const useInventoryForSale = () => {
     if (
       profile &&
       profile.data &&
-      _marketType &&
+      NFTType &&
       filterType &&
       search &&
       sort &&
-      (_marketType === "game_item" || _marketType === "nft_material")
+      (NFTType === "game_item" || NFTType === "nft_material")
     ) {
-      switch (_marketType) {
+      switch (NFTType) {
         case "game_item": {
           await getMarketOrderAsnyc({
-            _urlNFT: convertNFTTypeToUrl(_marketType),
+            _urlNFT: convertNFTTypeToUrl(NFTType),
             _limit: limit,
             _page: currentPage,
             _sort: {},
@@ -264,7 +258,7 @@ const useInventoryForSale = () => {
         }
         case "nft_material":
           await getMarketOrderAsnyc({
-            _urlNFT: convertNFTTypeToUrl(_marketType),
+            _urlNFT: convertNFTTypeToUrl(NFTType),
             _limit: limit,
             _page: currentPage,
             _sort: {},
@@ -301,7 +295,7 @@ const useInventoryForSale = () => {
     setInventoryItemForsale(_data)
     setTotalCount(_total)
     setItemIsLoading(false)
-  }, [profile.data, _marketType, limit, currentPage, filterType, search, sort])
+  }, [profile.data, NFTType, limit, currentPage, filterType, search, sort])
 
   useEffect(() => {
     let load = false
@@ -325,16 +319,26 @@ const useInventoryForSale = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchMyItemForsale])
 
+  useEffect(() => {
+    let cleanup = false
+    if (!cleanup && marketType) {
+      setNFTType(marketType)
+    }
+    return () => {
+      cleanup = true
+    }
+  }, [marketType])
+
   useMemo(() => {
     let cleanup = false
-    if (!cleanup && _marketType) {
+    if (!cleanup && NFTType) {
       setCurrentPage(1)
     }
     return () => {
       cleanup = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [_marketType])
+  }, [NFTType])
 
   return {
     inventoryItemForsale,

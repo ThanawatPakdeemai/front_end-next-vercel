@@ -77,15 +77,16 @@ const CardLandMap = ({ land, onClose }: ICardLandMap) => {
           : {land.position.x}, {land.position.y}
         </Typography>
       </div>
-      <div className="relative mt-4 flex w-full items-center justify-center overflow-hidden rounded-md bg-white-primary pt-[68%]">
-        <Image
-          src={land.image}
-          alt={`_img-card-map-${land.image.trim().toLowerCase()}`}
-          layout="fill"
-          loading="lazy"
-          className="object-cover object-center"
-        />
-      </div>
+
+      <Image
+        src={land.image}
+        alt={`_img-card-map-${land.image.trim().toLowerCase()}`}
+        layout="fill"
+        width={232}
+        height={152}
+        loading="lazy"
+        className="object-cover object-center"
+      />
     </Box>
   )
 }

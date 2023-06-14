@@ -1,12 +1,14 @@
 import React from "react"
-import { Box } from "@mui/material"
+import { Box, SxProps } from "@mui/material"
 
 const IconTemplate = ({
   children,
-  onClick
+  onClick,
+  sxCustomStyled
 }: {
   children: React.ReactNode
   onClick?: () => void
+  sxCustomStyled?: SxProps
 }) => (
   <Box
     component="button"
@@ -20,7 +22,8 @@ const IconTemplate = ({
       background: "#181A20",
       border: "1px solid #181A20",
       borderRadius: "100px",
-      position: "relative"
+      position: "relative",
+      ...sxCustomStyled
     }}
     onClick={onClick}
   >

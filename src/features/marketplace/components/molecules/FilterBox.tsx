@@ -1,7 +1,10 @@
-import { Collapse, Typography } from "@mui/material"
+"use client"
+
 import React, { memo, useMemo, useState } from "react"
+import { usePathname } from "next/navigation"
+import { Collapse, Typography } from "@mui/material"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import { NextRouter, useRouter } from "next/router"
+// import { NextRouter } from "next/router"
 import DropdownIcon from "@components/icons/DropdownIcon"
 import MenuItemCustom from "@components/atoms/MenuItemCustom"
 import {
@@ -24,12 +27,15 @@ import FilterSearchBox from "./FilterSearchBox"
 import SearchDropDown from "./SearchDropDown"
 
 const FilterBox = () => {
-  const router: NextRouter = useRouter()
+  const pathname = usePathname()
+  // const router: NextRouter = useRouter()
   // const isInventory = router.asPath.includes("inventory")
-  const isForSale = router.asPath.includes("forsale")
-  const isP2P = router.asPath.includes("p2p")
+  const isForSale = pathname.includes("forsale")
+  const isP2P = pathname.includes("p2p")
+  const isMap = pathname.includes("map")
   const { convertNFTTypeToTType, getValueFromTKey } = Helper
-
+  // eslint-disable-next-line no-console
+  console.log("pathname", pathname)
   const {
     search,
     sort,
@@ -157,21 +163,21 @@ const FilterBox = () => {
 
   const _menuDropDown = useMemo(() => {
     let _menu: { name: string; href: string }[] = []
-    if (router.asPath.includes("/p2p")) {
+    if (pathname.includes("/p2p")) {
       _menu =
         MENU_MARKETPLACE_FILTERBOX.find((f) => f.page === "p2p")?.child || []
-    } else if (router.asPath.includes("/forsale")) {
+    } else if (pathname.includes("/forsale")) {
       _menu =
         MENU_MARKETPLACE_FILTERBOX.find((f) => f.page === "forsale")?.child ||
         []
-    } else if (router.asPath.includes("/rental")) {
+    } else if (pathname.includes("/rental")) {
       _menu =
         MENU_MARKETPLACE_FILTERBOX.find((f) => f.page === "rental")?.child || []
-    } else if (router.asPath.includes("process-payment")) {
+    } else if (pathname.includes("process-payment")) {
       _menu =
         MENU_MARKETPLACE_FILTERBOX.find((f) => f.page === "process-payment")
           ?.child || []
-    } else if (router.asPath.includes("inventory")) {
+    } else if (pathname.includes("inventory")) {
       _menu =
         MENU_MARKETPLACE_FILTERBOX.find((f) => f.page === "inventory")?.child ||
         []
@@ -181,7 +187,7 @@ const FilterBox = () => {
           ?.child || []
     }
     return _menu
-  }, [router.asPath])
+  }, [pathname])
 
   const _priceLabel = useMemo(() => {
     let _date: string = "price"
@@ -233,71 +239,75 @@ const FilterBox = () => {
 
   return (
     <div className="grid w-52 gap-3 ">
-      <section>
-        <button
-          type="button"
-          onClick={handleOnExpandClick}
-          className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[8px] border-[1px] border-solid border-neutral-700 bg-secondary-main px-5 text-[12px] text-white-primary"
-        >
-          <MenuButtonExpandMobile
-            isOpen={expanded}
-            strokeWidth="1"
-            color="#F1F4F4"
-            transition={{
-              ease: "easeOut",
-              duration: 0.2,
-              stiffness: 10,
-              bounce: 5
-            }}
-            width="16"
-            height="10"
-          />
-          <span className="text-white capitalize">
-            {convertNFTTypeToTType(marketType || "nft_land")}
-          </span>
-          <div
-            className={`${
-              expanded === true
-                ? "rotate-180 transition-all duration-300"
-                : "rotate-0 transition-all duration-300"
-            }`}
+      {!isMap && (
+        <section>
+          <button
+            type="button"
+            onClick={handleOnExpandClick}
+            className="mx-auto mb-1 flex h-[40px] w-full flex-row items-center justify-between rounded-[8px] border-[1px] border-solid border-neutral-700 bg-secondary-main px-5 text-[12px] text-white-primary"
           >
-            <DropdownIcon />
-          </div>
-        </button>
-        <Collapse
-          in={expanded}
-          timeout="auto"
-          className="absolute mt-[-4px] w-[200px] rounded-[19px] border-[6px] border-[#010101] p-1"
-          sx={{
-            backgroundColor: "#18181C",
-            zIndex: 99999,
-            position: "absolute",
-            width: "218px"
-          }}
-        >
-          {_menuDropDown.map((ele) => {
-            const active = router.asPath.includes(ele.href)
-            return (
-              <MenuItemCustom
-                key={ele.name}
-                id={ele.name}
-                label={ele.name}
-                icon=""
-                href={ele.href}
-                external={false}
-                active={active}
-                onClick={() => {
-                  setExpanded(!expanded)
-                }}
-                byPassOnClick
-              />
-            )
-          })}
-        </Collapse>
-      </section>
+            <MenuButtonExpandMobile
+              isOpen={expanded}
+              strokeWidth="1"
+              color="#F1F4F4"
+              transition={{
+                ease: "easeOut",
+                duration: 0.2,
+                stiffness: 10,
+                bounce: 5
+              }}
+              width="16"
+              height="10"
+            />
+            <span className="text-white capitalize">
+              {convertNFTTypeToTType(marketType || "nft_land")}
+            </span>
+            <div
+              className={`${
+                expanded === true
+                  ? "rotate-180 transition-all duration-300"
+                  : "rotate-0 transition-all duration-300"
+              }`}
+            >
+              <DropdownIcon />
+            </div>
+          </button>
+          <Collapse
+            in={expanded}
+            timeout="auto"
+            className="absolute mt-[-4px] w-[200px] rounded-[19px] border-[6px] border-[#010101] p-1"
+            sx={{
+              backgroundColor: "#18181C",
+              zIndex: 99999,
+              position: "absolute",
+              width: "218px"
+            }}
+          >
+            {_menuDropDown.map((ele) => {
+              const active = pathname.includes(ele.href)
+              return (
+                <MenuItemCustom
+                  key={ele.name}
+                  id={ele.name}
+                  label={ele.name}
+                  icon=""
+                  href={ele.href}
+                  external={false}
+                  active={active}
+                  onClick={() => {
+                    setExpanded(!expanded)
+                  }}
+                  byPassOnClick
+                />
+              )
+            })}
+          </Collapse>
+        </section>
+      )}
 
-      <div className="my-4 h-[7px] w-full rounded-[13px] bg-[url('/images/services/curvy-line2.png')]" />
+      {!isMap && (
+        <div className="my-4 h-[6px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')] bg-repeat-x" />
+      )}
 
       <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
         <Typography className="text-sm uppercase text-white-default">
@@ -337,7 +347,7 @@ const FilterBox = () => {
         }}
         reset={searchReset}
       />
-      {isP2P ? (
+      {isP2P || isMap ? (
         <FilterSearchBox
           title="wallet address"
           placeholder="e.g. 0x20E7B302f92185098082988c482C4218f5c58695"
@@ -429,7 +439,7 @@ const FilterBox = () => {
       ) : null}
       {isP2P || isForSale ? (
         <>
-          <div className="my-4 h-[7px] w-full rounded-[13px] bg-[url('/images/services/curvy-line2.png')]" />
+          <div className="my-4 h-[6px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')] bg-repeat-x" />
           <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
             <Typography className="text-sm uppercase text-white-default">
               sort
@@ -466,59 +476,88 @@ const FilterBox = () => {
           />
         </>
       ) : null}
-      <div className="my-4 h-[7px] w-full rounded-[13px] bg-[url('/images/services/curvy-line2.png')]" />
-      <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
-        <Typography className="text-sm uppercase text-white-default">
-          Resource type
-        </Typography>
-        <div className="flex">
-          <ArrowBackIcon
-            color="secondary"
-            sx={{ fontSize: 15 }}
-          />
-          <Typography
-            component="button"
-            onClick={() => {
-              if (
-                filterType &&
-                (filterType.game_item.length > 0 ||
-                  filterType.nft_land.length > 0 ||
-                  filterType.nft_building.length > 0 ||
-                  filterType.nft_material.length > 0)
-              )
-                onResetFilterType()
-            }}
-            className="corsor-pointer ml-2 self-center text-xs uppercase text-secondary-main"
-          >
-            Clear
-          </Typography>
-        </div>
-      </div>
+      <div className="my-4 h-[6px] w-full rounded-[13px] bg-[url('/images/services/curvy-line.png')] bg-repeat-x" />
+
       <div>
-        {marketType !== "game_item" && _resourceType && _resourceType.length > 0
-          ? _resourceType
-              .filter(
-                (item, index, self) =>
-                  self.findIndex((t) => t.name === item.name) === index
-                // filter building level 2 & 3
-              )
-              .map((item) => (
-                <CheckBoxNaka
-                  key={item.name}
-                  value={item.checked}
-                  onHandle={() => {
-                    handleCheckboxChange({
-                      _value: onSelectedFilterValue(marketType, item),
-                      _checked: onFilterChange(marketType, item)
-                    })
-                  }}
-                  text={item.name}
-                  className="mr-4 items-center self-center uppercase"
-                  fontStyle="text-xs text-black-default"
-                  img={item.image}
+        {marketType !== "game_item" &&
+        _resourceType &&
+        _resourceType.length > 0 ? (
+          <>
+            <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
+              <Typography className="text-sm uppercase text-white-default">
+                Resource type
+              </Typography>
+              <div className="flex">
+                <ArrowBackIcon
+                  color="secondary"
+                  sx={{ fontSize: 15 }}
                 />
-              ))
-          : null}
+                <Typography
+                  component="button"
+                  onClick={() => {
+                    if (
+                      filterType &&
+                      (filterType.game_item.length > 0 ||
+                        filterType.nft_land.length > 0 ||
+                        filterType.nft_building.length > 0 ||
+                        filterType.nft_material.length > 0)
+                    )
+                      onResetFilterType()
+                  }}
+                  className="corsor-pointer ml-2 self-center text-xs uppercase text-secondary-main"
+                >
+                  Clear
+                </Typography>
+              </div>
+            </div>
+            {marketType === "nft_building"
+              ? _resourceType
+                  .filter((item) => "level" in item && item.level === 1)
+                  .filter(
+                    (item, index, self) =>
+                      self.findIndex((t) => t.name === item.name) === index
+                    // filter building level 2 & 3
+                  )
+                  .map((item) => (
+                    <CheckBoxNaka
+                      key={item.name}
+                      value={item.checked}
+                      onHandle={() => {
+                        handleCheckboxChange({
+                          _value: onSelectedFilterValue(marketType, item),
+                          _checked: onFilterChange(marketType, item)
+                        })
+                      }}
+                      text={item.name}
+                      className="mr-4 items-center self-center uppercase"
+                      fontStyle="text-xs text-black-default"
+                      img={item.image}
+                    />
+                  ))
+              : _resourceType
+                  .filter(
+                    (item, index, self) =>
+                      self.findIndex((t) => t.name === item.name) === index
+                    // filter building level 2 & 3
+                  )
+                  .map((item) => (
+                    <CheckBoxNaka
+                      key={item.name}
+                      value={item.checked}
+                      onHandle={() => {
+                        handleCheckboxChange({
+                          _value: onSelectedFilterValue(marketType, item),
+                          _checked: onFilterChange(marketType, item)
+                        })
+                      }}
+                      text={item.name}
+                      className="mr-4 items-center self-center uppercase"
+                      fontStyle="text-xs text-black-default"
+                      img={item.image}
+                    />
+                  ))}
+          </>
+        ) : null}
         {marketType === "game_item" && _gameItemType && _gameItemType.length > 0
           ? _gameItemType
               .filter(

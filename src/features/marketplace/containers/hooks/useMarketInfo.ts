@@ -1,11 +1,12 @@
 import useGetMarketOrder from "@feature/marketplace/hooks/getMarketOrder"
 import {
   IMarketDetail,
-  IMarketOrderServ,
+  IMarketOrderListServ,
   IMarketSearch,
   IMarketServForm,
   IMarketSort,
   TNFTType,
+  TSellingType,
   TType
 } from "@feature/marketplace/interfaces/IMarketService"
 import useGlobal from "@hooks/useGlobal"
@@ -15,9 +16,10 @@ import Helper from "@utils/helper"
 import { useCallback, useEffect, useMemo, useState } from "react"
 
 const useMarketInfo = () => {
-  const [orderData, setOrderData] = useState<IMarketOrderServ | undefined>(
+  const [orderData, setOrderData] = useState<IMarketOrderListServ | undefined>(
     undefined
   )
+
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>(0)
 
@@ -30,28 +32,17 @@ const useMarketInfo = () => {
   const [cardType, setCardType] = useState<TType>("land")
   const { sort, search, filterType } = useMarketFilterStore()
   const sellerType = router.pathname.includes("p2p") ? "user" : "system"
-  const _marketType = useMemo(() => {
-    let __marketTye: TNFTType | undefined
-    if (marketType) {
-      __marketTye = marketType
-    } else if (
-      router.asPath === "/marketplace" ||
-      router.asPath === "/marketplace/p2p"
-    ) {
-      __marketTye = "nft_land"
-    }
-    return __marketTye
-  }, [marketType, router])
+  const [NFTType, setNFTType] = useState<TNFTType | undefined>(undefined)
 
   const handleImage = (_data: IMarketDetail) => {
-    if (_marketType === "game_item" && _data.item_data) {
+    if (NFTType === "game_item" && _data.item_data) {
       return {
         src: _data.item_data.image,
         alt: _data.item_data.name,
         width: _data.item_data.name.includes("Bullet") ? 40 : 100
       }
     }
-    if (_marketType === "nft_building" && _data.building_data) {
+    if (NFTType === "nft_building" && _data.building_data) {
       return {
         src: _data.building_data.NFT_image,
         alt: _data.building_data.name,
@@ -59,7 +50,7 @@ const useMarketInfo = () => {
         height: 500
       }
     }
-    if (_marketType === "nft_material" && _data.material_data) {
+    if (NFTType === "nft_material" && _data.material_data) {
       return {
         src: _data.material_data.image,
         alt: _data.material_data.name,
@@ -67,7 +58,7 @@ const useMarketInfo = () => {
         height: 200
       }
     }
-    if (_marketType === "nft_naka_punk" && _data.nakapunk_data) {
+    if (NFTType === "nft_naka_punk" && _data.nakapunk_data) {
       return {
         src: _data.nakapunk_data.image,
         alt: _data.nakapunk_data.name,
@@ -75,7 +66,7 @@ const useMarketInfo = () => {
         height: 200
       }
     }
-    if (_marketType === "nft_game" && _data.game_data) {
+    if (NFTType === "nft_game" && _data.game_data) {
       return {
         src: _data.game_data.image_nft_arcade_game,
         alt: _data.game_data.name,
@@ -87,10 +78,13 @@ const useMarketInfo = () => {
 
   const fetchOrderList = useCallback(async () => {
     // const search = await handleSearch()
-    if (filterType && search && sort && _marketType && sellerType) {
-      setCardType(convertNFTTypeToTType(_marketType) || "land")
+    if (filterType && search && sort && NFTType && sellerType) {
+      setCardType(convertNFTTypeToTType(NFTType) || "land")
       let __search: IMarketSearch = {
-        type_marketplace: _marketType
+        type_marketplace: NFTType,
+        selling_type: getValueFromTKey(search, "selling_type") as TSellingType,
+        seller_id: getValueFromTKey(search, "seller_id") as string,
+        nft_token: getValueFromTKey(search, "nft_token") as string
       }
       const __sort: IMarketSort = {
         created_at:
@@ -102,7 +96,7 @@ const useMarketInfo = () => {
             ? (getValueFromTKey(sort, "price") as number)
             : undefined
       }
-      switch (_marketType) {
+      switch (NFTType) {
         case "nft_land":
           __search = {
             ...__search,
@@ -145,7 +139,7 @@ const useMarketInfo = () => {
           break
       }
       await getMarketOrderAsnyc({
-        _urlNFT: convertNFTTypeToUrl(_marketType as TNFTType),
+        _urlNFT: convertNFTTypeToUrl(NFTType as TNFTType),
         _limit: limit,
         _page: currentPage,
         _search: __search,
@@ -156,7 +150,7 @@ const useMarketInfo = () => {
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterType, search, sort, _marketType, limit, currentPage, sellerType])
+  }, [filterType, search, sort, NFTType, limit, currentPage, sellerType])
 
   useEffect(() => {
     let load = false
@@ -167,16 +161,26 @@ const useMarketInfo = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchOrderList])
 
+  useEffect(() => {
+    let cleanup = false
+    if (!cleanup && marketType) {
+      setNFTType(marketType)
+    }
+    return () => {
+      cleanup = true
+    }
+  }, [marketType])
+
   useMemo(() => {
     let cleanup = false
-    if (!cleanup && _marketType) {
+    if (!cleanup && NFTType) {
       setCurrentPage(1)
     }
     return () => {
       cleanup = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [_marketType])
+  }, [NFTType])
 
   return {
     orderData,

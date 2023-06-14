@@ -5,7 +5,7 @@ import { useGetMyInstallmentArcGame } from "@feature/game/marketplace/containers
 import { useGetMyInstallmentLand } from "@feature/land/containers/hooks/useGetMyLand"
 import {
   IInstallPeriod,
-  TType
+  TNFTType
 } from "@feature/marketplace/interfaces/IMarketService"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
@@ -13,7 +13,6 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
 import Helper from "@utils/helper"
 import useMarketFilterStore from "@stores/marketFilter"
-import { NextRouter, useRouter } from "next/router"
 
 dayjs.extend(utc)
 
@@ -32,13 +31,9 @@ const useInventoryPayment = () => {
   const [inventoryItemPayment, setInventoryItemPayment] = useState<
     Array<IInventoryItemList>
   >([])
-  const { getValueFromTKey, convertTTypeToNFTType } = Helper
+  const { getValueFromTKey } = Helper
   const { sort, search, filterType } = useMarketFilterStore()
-  const router: NextRouter = useRouter()
-  const _marketType =
-    marketType ||
-    convertTTypeToNFTType(router.query.type as TType) ||
-    "nft_land"
+  const [NFTType, setNFTType] = useState<TNFTType | undefined>(undefined)
 
   const handleDate = ({
     _keyType,
@@ -66,8 +61,8 @@ const useInventoryPayment = () => {
     let _data: IInventoryItemList[] = []
     let _total = 0
     setIsLoading(true)
-    if (profile.data && _marketType && filterType && search && sort) {
-      switch (_marketType) {
+    if (profile.data && NFTType && filterType && search && sort) {
+      switch (NFTType) {
         case "nft_land":
           await mutateGetMyInstallmentLand({
             _active: true,
@@ -174,7 +169,7 @@ const useInventoryPayment = () => {
     setTotalCount(_total)
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile.data, _marketType, limit, currentPage, filterType, search, sort])
+  }, [profile.data, NFTType, limit, currentPage, filterType, search, sort])
 
   useEffect(() => {
     let cleanup = false
@@ -187,16 +182,26 @@ const useInventoryPayment = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchInventoryItemPayment])
 
+  useEffect(() => {
+    let cleanup = false
+    if (!cleanup && marketType) {
+      setNFTType(marketType)
+    }
+    return () => {
+      cleanup = true
+    }
+  }, [marketType])
+
   useMemo(() => {
     let cleanup = false
-    if (!cleanup && _marketType) {
+    if (!cleanup && NFTType) {
       setCurrentPage(1)
     }
     return () => {
       cleanup = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [_marketType])
+  }, [NFTType])
 
   return {
     inventoryItemPayment,

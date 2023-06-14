@@ -3,6 +3,7 @@ import ListJoinGame from "@mobile/features/game/components/molecules/ListJoinGam
 import { v4 as uuid } from "uuid"
 import SkeletonEarnRewardMobile from "@mobile/components/atoms/skeleton/SkeletonEarnRewardMobile"
 import { Box } from "@mui/material"
+import useLoadingStore from "@stores/loading"
 
 const SingleRoom = () => {
   const {
@@ -14,6 +15,7 @@ const SingleRoom = () => {
     textJoin,
     getRoomStatus
   } = useRoomSingle()
+  const { setOpen } = useLoadingStore()
 
   return (
     <Box
@@ -29,10 +31,13 @@ const SingleRoom = () => {
             text={textJoin(_room)}
             time={_room.end_time as unknown as string}
             key={_room._id}
-            image={gameData.image_room}
+            image={gameData.image_category_list}
             name={gameData.game_type}
             desc={gameData.name}
-            onClick={() => handleJoinRoom(_room)}
+            onClick={() => {
+              setOpen("")
+              handleJoinRoom(_room)
+            }}
             textChip={`${_room?.room_number?.toString()}`}
             descChip1={
               gameData?.play_to_earn_status === "free" ||

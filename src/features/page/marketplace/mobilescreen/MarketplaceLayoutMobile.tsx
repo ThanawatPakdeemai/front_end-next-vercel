@@ -2,21 +2,13 @@ import { Image } from "@components/atoms/image"
 import SearchIcon from "@components/icons/SearchIcon"
 import ShineIcon from "@components/icons/ShineIcon"
 import Tagline from "@components/molecules/tagline/Tagline"
-import {
-  Button,
-  Collapse,
-  InputAdornment,
-  Stack,
-  TextField
-} from "@mui/material"
+import { Button, Collapse, InputAdornment, TextField } from "@mui/material"
 import React, { useState } from "react"
 import SettingIconFilter from "@components/icons/Inventory/SettingIconFilter"
 import { MENU_MARKETPLACE } from "@configs/menu"
 import MenuItemCustom from "@components/atoms/MenuItemCustom"
 import { NextRouter, useRouter } from "next/router"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
-import FilterBox from "@feature/marketplace/components/molecules/FilterBox"
+import SwipeableEdgeDrawer from "@feature/marketplace/components/organisms/DrawerMobileFilter"
 import HeaderMunuMobile from "./HeaderMunuMobile"
 import MenuButtonExpandMobile from "./MenuButtonExpandMobile"
 
@@ -35,9 +27,9 @@ const MarketplaceLayoutMobile = ({
   const isP2P = router.asPath.includes("p2p")
   const listFilter = isP2P ? "P2P Market" : "NAKA Market"
 
-  const onCloseModalCustom = () => {
-    setOpenFilter(!openFilter)
-  }
+  // const onCloseModalCustom = () => {
+  //   setOpenFilter(!openFilter)
+  // }
 
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
@@ -154,35 +146,14 @@ const MarketplaceLayoutMobile = ({
             <Button
               sx={styleButton}
               onClick={() => {
-                setOpenFilter(true)
+                setOpenFilter(!openFilter)
               }}
               className="!h-[40px] !w-[40px] rounded-lg border border-neutral-700 bg-neutral-800 p-2"
             >
               <SettingIconFilter />
             </Button>
           </div>
-
-          <ModalCustom
-            open={openFilter}
-            onClose={onCloseModalCustom}
-            className="m-auto gap-3 rounded-[34px] p-[10px] max-[420px]:w-[370px]"
-            width={515}
-          >
-            <Stack
-              spacing={3}
-              className="md:p-5"
-            >
-              <div className="rounded-2xl border-[1px] border-neutral-700 bg-neutral-800 p-2 uppercase">
-                <ModalHeader
-                  handleClose={onCloseModalCustom}
-                  title="Filter"
-                />
-              </div>
-              <div className="grid h-[500px] w-full justify-items-center overflow-y-auto">
-                <FilterBox />
-              </div>
-            </Stack>
-          </ModalCustom>
+          <SwipeableEdgeDrawer open={openFilter} />
         </div>
       )}
       {children}

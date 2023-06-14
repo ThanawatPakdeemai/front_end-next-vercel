@@ -514,22 +514,20 @@ const FilterBox = () => {
                     // filter building level 2 & 3
                   )
                   .map((item) => (
-                    <>
-                      <CheckBoxNaka
-                        key={item.name}
-                        value={item.checked}
-                        onHandle={() => {
-                          handleCheckboxChange({
-                            _value: onSelectedFilterValue(marketType, item),
-                            _checked: onFilterChange(marketType, item)
-                          })
-                        }}
-                        text={item.name}
-                        className="mr-4 items-center self-center uppercase"
-                        fontStyle="text-xs text-black-default"
-                        img={item.image}
-                      />
-                    </>
+                    <CheckBoxNaka
+                      key={item.name}
+                      value={item.checked}
+                      onHandle={() => {
+                        handleCheckboxChange({
+                          _value: onSelectedFilterValue(marketType, item),
+                          _checked: onFilterChange(marketType, item)
+                        })
+                      }}
+                      text={item.name}
+                      className="mr-4 items-center self-center uppercase"
+                      fontStyle="text-xs text-black-default"
+                      img={item.image}
+                    />
                   ))
               : _resourceType
                   .filter(
@@ -538,22 +536,20 @@ const FilterBox = () => {
                     // filter building level 2 & 3
                   )
                   .map((item) => (
-                    <>
-                      <CheckBoxNaka
-                        key={item.name}
-                        value={item.checked}
-                        onHandle={() => {
-                          handleCheckboxChange({
-                            _value: onSelectedFilterValue(marketType, item),
-                            _checked: onFilterChange(marketType, item)
-                          })
-                        }}
-                        text={item.name}
-                        className="mr-4 items-center self-center uppercase"
-                        fontStyle="text-xs text-black-default"
-                        img={item.image}
-                      />
-                    </>
+                    <CheckBoxNaka
+                      key={item.name}
+                      value={item.checked}
+                      onHandle={() => {
+                        handleCheckboxChange({
+                          _value: onSelectedFilterValue(marketType, item),
+                          _checked: onFilterChange(marketType, item)
+                        })
+                      }}
+                      text={item.name}
+                      className="mr-4 items-center self-center uppercase"
+                      fontStyle="text-xs text-black-default"
+                      img={item.image}
+                    />
                   ))}
           </>
         ) : null}

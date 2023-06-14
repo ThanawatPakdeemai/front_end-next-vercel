@@ -34,7 +34,8 @@ const MarketplaceOwnerDetail = () => {
             !invenItemData.marketplaces_data && (
               <div className="px-8">
                 <TransferBox
-                  _tokenId={invenItemData.tokenId}
+                  _tokenId={invenItemData.id}
+                  _nftToken={invenItemData.tokenId}
                   _maxAmount={invenItemData.totalAmount}
                 />
               </div>

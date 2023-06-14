@@ -97,6 +97,15 @@ class MyDocument extends Document {
             rel="icon"
             href="/favicon.png"
           />
+          <link
+            rel="shortcut icon"
+            href="/favicon.png"
+          />
+          <link
+            rel="icon"
+            type="image/x-icon"
+            href="/favicon.png"
+          />
           {/* facebook */}
           <meta
             property="fb:app_id"

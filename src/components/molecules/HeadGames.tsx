@@ -1,16 +1,28 @@
 import Dropdown from "@components/atoms/DropdownCustom"
 import SearchIcon from "@components/icons/SearchIcon"
+import { commonPattern } from "@constants/regex"
 import { isMobile } from "@hooks/useGlobal"
 import { Grid, TextField } from "@mui/material"
 import useFilterStore from "@stores/blogFilter"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 const HeadGames = ({ children }: { children: React.ReactNode }) => {
-  const { search: searchBlog, setSearch: setSearchBlog } = useFilterStore()
+  const { setSearch: setSearchBlog } = useFilterStore()
+  const [searchVal, setSearchVal] = useState<string>("")
   const { t } = useTranslation()
   const responsiveStyle =
     "mx-auto lg:mx-0 !w-[300px] md:!w-[265px] lg:!w-[200px] xl:!w-[218px]"
+
+  useEffect(() => {
+    const deboucer = setTimeout(() => {
+      setSearchBlog(searchVal)
+    }, 1000)
+
+    return () => clearTimeout(deboucer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchVal])
+
   return (
     <div className="w-[calc(100%)]">
       <Grid
@@ -76,11 +88,11 @@ const HeadGames = ({ children }: { children: React.ReactNode }) => {
           className="mx-auto max-w-full lg:mx-0"
         >
           <TextField
-            value={searchBlog}
+            value={searchVal}
             onChange={(event) => {
               let { value } = event.target
-              value = value.replace(/[^A-Za-z0-9]/gi, "")
-              setSearchBlog(value)
+              value = value.replace(commonPattern, "")
+              setSearchVal(value)
             }}
             placeholder={`${t("search_games")}...`}
             InputProps={{

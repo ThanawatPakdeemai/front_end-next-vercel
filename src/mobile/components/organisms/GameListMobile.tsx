@@ -31,7 +31,9 @@ const GameListMobile = ({ gameData, loading }: IGameList) => {
 
       <Box
         component="section"
-        className="game-section grid grid-cols-2 gap-5 sm:grid-cols-4"
+        className={`game-section grid gap-5 sm:grid-cols-4 ${
+          gameData.length > 0 && "grid-cols-2"
+        }`}
       >
         {loading &&
           [...Array(gameData.length)].map(() => (

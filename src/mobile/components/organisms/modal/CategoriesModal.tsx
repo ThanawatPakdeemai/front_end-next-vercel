@@ -1,24 +1,36 @@
-import React from "react"
+import React, { useState } from "react"
 import { IGameCategory } from "@feature/dropdown/interfaces/IDropdownService"
 import { Box, SwipeableDrawer } from "@mui/material"
 import { ImageCustom } from "@components/atoms/image/Image"
 import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
+import CheckIcon from "@mui/icons-material/Check"
 
 interface ICategoriesModalProps {
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>
   categories: IGameCategory[] | undefined
+  choiceType?: (_name: string) => void
 }
 
 const CategoriesModal = ({
   open,
   setOpen,
   categories,
-  setSelectedCategory
+  setSelectedCategory,
+  choiceType
 }: ICategoriesModalProps) => {
   const { clearAllDrawer } = useDrawerControllerMobile()
+
+  const [choiceId, setChoiceId] = useState<string>("")
+
+  const onClickSelectChoiceFilter = (_id: string, _name: string) => {
+    setOpen(false)
+    setSelectedCategory(_id)
+    setChoiceId(_id)
+    choiceType?.(_name)
+  }
 
   return (
     <SwipeableDrawer
@@ -75,10 +87,7 @@ const CategoriesModal = ({
                   fontSize: "18px",
                   fontWeight: 600
                 }}
-                onClick={() => {
-                  setOpen(false)
-                  setSelectedCategory(item.id)
-                }}
+                onClick={() => onClickSelectChoiceFilter(item.id, item.name)}
               >
                 <div className="relative h-[56px] w-[56px] scale-50 overflow-hidden rounded-lg">
                   <ImageCustom
@@ -90,6 +99,9 @@ const CategoriesModal = ({
                   />
                 </div>
                 <span>{item.name}</span>
+                {choiceId === item.id && (
+                  <CheckIcon className="ml-auto mr-4 text-warning-100" />
+                )}
               </Box>
             ))}
         </Box>

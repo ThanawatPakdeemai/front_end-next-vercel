@@ -295,7 +295,7 @@ const useMarketGameItem = () => {
           const _res = await response.wait()
           const _enTopic = await utils.keccak256(
             utils.toUtf8Bytes(
-              "OrderExecuted(bytes32,address,address,uint256,uint256,uint256,uint256)"
+              "OrderExecuted(bytes32,address,address,uint256,uint256,uint256,uint256,uint256)"
             )
           )
           const _log = _res.logs.find((f) =>

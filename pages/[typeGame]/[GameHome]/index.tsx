@@ -137,7 +137,7 @@ export default function GameLobby() {
       case "story-mode":
         return (
           <>
-            {gameData.path.includes("poker") && (
+            {gameData?.category?.name.includes("Casino") && (
               <CardBuyItem
                 buttonStyle="purple"
                 gameObject={gameData}

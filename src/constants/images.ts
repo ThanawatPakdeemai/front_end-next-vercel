@@ -384,6 +384,14 @@ export const IMAGES: {
     width: 190,
     height: 96,
     alt: "Free"
+  },
+  eventBackground: {
+    src: "/images/events/background_event/background_event.webp",
+    srcWebp: "/images/events/background_event/background_event.webp",
+    blurDataURL: "/images/events/background_event/background_event.webp",
+    width: 1024,
+    height: 740,
+    alt: "event background"
   }
 }
 

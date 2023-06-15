@@ -34,8 +34,6 @@ const FilterBox = () => {
   const isP2P = pathname.includes("p2p")
   const isMap = pathname.includes("map")
   const { convertNFTTypeToTType, getValueFromTKey } = Helper
-  // eslint-disable-next-line no-console
-  console.log("pathname", pathname)
   const {
     search,
     sort,

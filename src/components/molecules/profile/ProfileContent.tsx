@@ -443,7 +443,7 @@ const ProfileContent = () => {
             data-size="large"
             data-onauth="onTelegramAuth(user)"
             data-request-access="write"
-            strategy="worker"
+            strategy="lazyOnload"
           />
           {/* <ButtonToggleIcon
             handleClick={handleTelegramResponse}

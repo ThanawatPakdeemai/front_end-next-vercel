@@ -45,7 +45,7 @@ import IReferrals from "@components/icons/Referrals"
 // import { Helmet } from "react-helmet"
 // import ReactDOM from "react-dom"
 // eslint-disable-next-line import/no-extraneous-dependencies
-import Script from "next/script"
+// import Script from "next/script"
 import EditProfileModal from "./EditProfileModal"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
@@ -452,7 +452,7 @@ const ProfileContent = () => {
             <i className="tgme_widget_login_button_icon" />
             Log in with Telegram
           </button> */}
-          <div id="login-telegram">
+          {/* <div id="login-telegram">
             <Script
               async
               src="https://telegram.org/js/telegram-widget.js?22"
@@ -465,7 +465,7 @@ const ProfileContent = () => {
             <Script id="show-banner">
               {`function onTelegramAuth(params) { console.log(params);}`}
             </Script>
-          </div>
+          </div> */}
           {/* <ButtonToggleIcon
             handleClick={handleTelegramResponse}
             startIcon={<></>}

@@ -42,7 +42,7 @@ import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContol
 import { useWeb3Provider } from "@providers/index"
 import Link from "next/link"
 import IReferrals from "@components/icons/Referrals"
-import { Helmet } from "react-helmet"
+// import { Helmet } from "react-helmet"
 // import ReactDOM from "react-dom"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import EditProfileModal from "./EditProfileModal"
@@ -181,10 +181,10 @@ const ProfileContent = () => {
   //   />
   // )
 
-  const responseTelegram = (user: any) => {
-    // eslint-disable-next-line no-console
-    console.log("user", user)
-  }
+  // const responseTelegram = (user: any) => {
+  //   // eslint-disable-next-line no-console
+  //   console.log("user", user)
+  // }
 
   const handleOnExpandClick = () => {
     setOpenEdit(!openEdit)
@@ -435,7 +435,7 @@ const ProfileContent = () => {
             <i className="tgme_widget_login_button_icon" />
             Log in with Telegram
           </button> */}
-          <Helmet>
+          {/* <Helmet>
             <script
               async
               src="https://telegram.org/js/telegram-widget.js?22"
@@ -444,7 +444,7 @@ const ProfileContent = () => {
               data-onauth={responseTelegram}
               data-request-access="write"
             />
-          </Helmet>
+          </Helmet> */}
           {/* <ButtonToggleIcon
             handleClick={handleTelegramResponse}
             startIcon={<></>}

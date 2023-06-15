@@ -44,7 +44,7 @@ const CardContent = ({ ...props }: IProp) => {
                   <PlayersIcon />
                   <span className="mx-2">total players:</span>
                   <span className="text-neutral-200">
-                    {`${labels.player_count}`}
+                    {labels.player_count && `${labels.player_count}`}
                   </span>
                 </div>
                 <div
@@ -53,7 +53,9 @@ const CardContent = ({ ...props }: IProp) => {
                 >
                   <JoinStickIcon stroke="#70727B" />
                   <span>total games played:</span>
-                  <span className="ml-2 text-neutral-200">{`${labels.transaction_count}`}</span>
+                  <span className="ml-2 text-neutral-200">
+                    {labels.transaction_count && `${labels.transaction_count}`}
+                  </span>
                 </div>
               </div>
             ) : null}

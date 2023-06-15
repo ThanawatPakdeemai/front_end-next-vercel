@@ -339,6 +339,31 @@ const useGlobal = (
     }
   }
 
+  const getGamePokerModeURL = (gameData: IGame): string => {
+    if (!profile) return ""
+
+    const frontendUrl = `${CONFIGS.BASE_URL.FRONTEND}/${router.query.typeGame}/${gameData.path}`
+    const { username, address, avatar, status } = profile
+
+    // Get url by game type
+    // address: string
+    // username: string
+    // avatar: number
+    // status: number
+    // createdAt?: string
+    // friend: IAuthServiceFriend[]
+    // banned: string[]
+    // gas: 0 | 1 | 2 | null | undefined
+    // jwtToken: string
+
+    return `${gameData.game_url}?game_data=${gameData.id}?data=${btoa(
+      `${address}:|:${username}:|:${avatar}:|:${status}:|:${CONFIGS.BASE_URL.API?.slice(
+        0,
+        -4
+      )}:|:${frontendUrl}:|:${gameData.image_banner}`
+    )}`
+  }
+
   const isRedirectRoomlist = (_game: IGame): "/roomlist" | "" => {
     if (
       _game.play_to_earn_status === "free" ||
@@ -472,6 +497,7 @@ const useGlobal = (
     isMarketplace,
     isDeveloperPage,
     // isShowMarket,
+    getGamePokerModeURL,
     openInNewTab,
     getGameMode,
     getTypeGamePartnerPathFolder,

@@ -12,6 +12,7 @@ import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
 import { useTranslation } from "react-i18next"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
+import useProfileStore from "@stores/profileStore"
 
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
@@ -87,12 +88,14 @@ const GameDetailLayoutMobile = dynamic(
 export default function GameLobby() {
   const router = useRouter()
   const { onSetGameData } = useGameStore()
+  const profile = useProfileStore((state) => state.profile.data)
   const { GameHome } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
   const {
     getGameMode,
     getColorChipByGameType,
     getGameStoryModeURL,
+    getGamePokerModeURL,
     isRedirectRoomlist
   } = useGlobal()
   const { t } = useTranslation()
@@ -133,29 +136,43 @@ export default function GameLobby() {
     switch (getGameMode(gameData)) {
       case "story-mode":
         return (
-          <Box
-            component="div"
-            className="flex w-full flex-col justify-between gap-4 uppercase"
-            sx={{
-              ".like-no_wrapper": {
-                flex: "0 0 100%",
-                ".like-no_score": {
-                  width: "100%"
-                }
-              }
-            }}
-          >
+          <>
+            {gameData.path.includes("poker") && (
+              <CardBuyItem
+                buttonStyle="purple"
+                gameObject={gameData}
+              />
+            )}
             <Box
               component="div"
-              sx={StartButtonCustomStyle}
-              className="flex w-full justify-center uppercase"
+              className="flex w-full flex-col justify-between gap-4 uppercase"
+              sx={{
+                ".like-no_wrapper": {
+                  flex: "0 0 100%",
+                  ".like-no_score": {
+                    width: "100%"
+                  }
+                }
+              }}
             >
-              <ButtonGame
-                textButton={t("join-game")}
-                url={getGameStoryModeURL(gameData)}
-              />
+              {profile && profile.gold > 0 && (
+                <Box
+                  component="div"
+                  sx={StartButtonCustomStyle}
+                  className="flex w-full justify-center uppercase"
+                >
+                  <ButtonGame
+                    textButton={t("join-game")}
+                    url={
+                      gameData.path.includes("poker")
+                        ? getGamePokerModeURL(gameData)
+                        : getGameStoryModeURL(gameData)
+                    }
+                  />
+                </Box>
+              )}
             </Box>
-          </Box>
+          </>
         )
 
       case "free-to-play":

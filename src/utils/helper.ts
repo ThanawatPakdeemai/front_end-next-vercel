@@ -358,7 +358,7 @@ const Helper = {
       case "nft_avatar":
         return "NFT-Avatar"
       default:
-        throw new Error(`Invalid NFT type: ${_NFTtype}`)
+        return "NFT-Land"
     }
   },
   convertNFTTypeToTType(
@@ -423,7 +423,7 @@ const Helper = {
       case "nft_land":
         return "land"
       default:
-        throw new Error(`Invalid NFT type: ${_marketType}`)
+        return "land"
     }
   },
   handleDateTimeFormat(_date: Date, _type: "date" | "time"): string {

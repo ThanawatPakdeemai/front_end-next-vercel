@@ -97,6 +97,15 @@ class MyDocument extends Document {
             rel="icon"
             href="/favicon.png"
           />
+          <link
+            rel="shortcut icon"
+            href="/favicon.png"
+          />
+          <link
+            rel="icon"
+            type="image/x-icon"
+            href="/favicon.png"
+          />
           {/* facebook */}
           <meta
             property="fb:app_id"
@@ -175,6 +184,14 @@ class MyDocument extends Document {
           />
         </Head>
         <body>
+          {/* <script
+            async
+            src="https://telegram.org/js/telegram-widget.js?22"
+            data-telegram-login="NakaGameBot"
+            data-size="large"
+            data-onauth="onTelegramAuth(user)"
+            data-request-access="write"
+          /> */}
           <Main />
           <NextScript />
         </body>

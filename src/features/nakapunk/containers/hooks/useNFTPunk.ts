@@ -78,10 +78,10 @@ const useNFTPunk = () => {
   }
 
   // transfer owner
-  const transferPunk = (_from: string, _to: string, _tokenId: string) =>
+  const transferPunk = (_from: string, _to: string, _nftToken: string) =>
     new Promise<TransactionResponse>((resolve, reject) => {
       punkContract
-        .transferFrom(_from, _to, _tokenId)
+        .transferFrom(_from, _to, _nftToken)
         .then((_response: TransactionResponse) => {
           resolve(_response)
         })
@@ -90,14 +90,18 @@ const useNFTPunk = () => {
         })
     })
 
-  const onTransferPunk = async (_toAddress: string, _tokenId: string) => {
+  const onTransferPunk = async (
+    _toAddress: string,
+    _nftToken: string,
+    _tokenId: string
+  ) => {
     if (address) {
       setOpen(MESSAGES.transaction_processing_order)
-      await transferPunk(address, _toAddress, _tokenId)
+      await transferPunk(address, _toAddress, _nftToken)
         .then(async (response) => {
           const _res = await response.wait()
           const data = {
-            _token: _tokenId,
+            _id: _tokenId,
             _to: _toAddress,
             _from: address,
             _txHash: _res.transactionHash

@@ -16,11 +16,14 @@ import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService
 import useChainSupportStore from "@stores/chainSupport"
 import useNotiStore from "@stores/notification"
 import Helper from "@utils/helper"
+import { isMobile as detectMobile } from "react-device-detect"
 import useMarketFilterStore from "@stores/marketFilter"
 import useSupportedChain from "./useSupportedChain"
 import useGameGlobal from "./useGameGlobal"
 
-export const isMobile = CONFIGS.DISPLAY_MOBILE_MODE === "true"
+export const isMobile = !!(
+  detectMobile && CONFIGS.DISPLAY_MOBILE_MODE === "true"
+)
 
 const useGlobal = (
   _limit?: number,
@@ -384,6 +387,9 @@ const useGlobal = (
         setMarketType("nft_game")
       } else if (router.asPath.includes("avatar-reef")) {
         setMarketType("nft_avatar")
+      } else {
+        // path = "/"
+        setMarketType("nft_land")
       }
     }
 

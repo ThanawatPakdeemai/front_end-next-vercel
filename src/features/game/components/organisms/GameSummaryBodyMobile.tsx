@@ -149,7 +149,7 @@ const GameSummaryBodyMobile = ({
       />
       <Box
         component="div"
-        className="game-summary-body__list flex w-full flex-col gap-6"
+        className={`game-summary-body__list flex w-full flex-col gap-6 ${gameData.game_mode}`}
       >
         {/* Game Item */}
         {renderGameItem()}

@@ -62,7 +62,7 @@ const HomeMobile = () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameData])
+  }, [gameData, setClose, setOpen])
 
   return (
     <MainLayoutMobile

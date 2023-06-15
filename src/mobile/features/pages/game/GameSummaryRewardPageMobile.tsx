@@ -25,6 +25,8 @@ import Helper from "@utils/helper"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import useLoadingStore from "@stores/loading"
 import { useRouter } from "next/router"
+import useProfileStore from "@stores/profileStore"
+import useGameStore from "@stores/game"
 
 const GameSummaryRewardPageMobile = () => {
   const {
@@ -33,17 +35,18 @@ const GameSummaryRewardPageMobile = () => {
     gameRoomById,
     players,
     totalGameReward,
-    gameDataState,
     summaryDataPlayerId,
     summaryDataPlayerIdWeekly,
     shareURL,
     usedItem,
     gameItemBalance
   } = useGameSummaryRewardController()
+  const gameData = useGameStore((state) => state.data)
   const { hydrated } = useGlobal()
   const { t } = useTranslation()
   const router = useRouter()
   const { setOpen } = useLoadingStore()
+  const profile = useProfileStore((state) => state.profile.data)
 
   const getDateUpdated = () => {
     if (notificationItem) {
@@ -82,13 +85,15 @@ const GameSummaryRewardPageMobile = () => {
   }
 
   const renderContent = () => {
+    if (!gameData) return <></>
+
     switch (notificationItem?.type) {
       case "RETURN_ITEM":
         return (
           <GameSummaryBodyReturnItem
             text={notificationItem.detail}
-            gameImage={gameDataState?.image_category_list || ""}
-            gameName={gameDataState?.name || ""}
+            gameImage={gameData?.image_category_list || ""}
+            gameName={gameData?.name || ""}
             date={notificationItem?.createdAt || ""}
             itemImage={usedItem.images}
             usedAmount={usedItem.usedAmount}
@@ -100,13 +105,13 @@ const GameSummaryRewardPageMobile = () => {
       default:
         return (
           <GameSummaryBodyMobile
-            gameData={gameDataState}
+            gameData={gameData}
             date={
               notificationItem?.createdAt || playHistoryItem?.createdAt || ""
             }
             gameRaward={totalGameReward || 0}
-            gameImage={gameDataState?.image_category_list || ""}
-            gameName={gameDataState?.name || ""}
+            gameImage={gameData?.image_category_list || ""}
+            gameName={gameData?.name || ""}
             value={getSummaryValue()}
             hash={
               summaryDataPlayerId.tx_address ||
@@ -142,16 +147,17 @@ const GameSummaryRewardPageMobile = () => {
     >
       <h2
         className="flex items-center gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary"
-        // id={`/${data.game_mode}/${data.path}`}
-        // onClick={() => router.push(`/${data.game_mode}/${data.path}`)}
         onClick={() => {
           setOpen("")
-          router.push(`/${gameDataState.game_mode}/${gameDataState.path}`)
+          if (profile && gameData) {
+            return router.push(`/${gameData.game_mode}/${gameData.path}`)
+          }
+          return router.push(`/`)
         }}
         aria-hidden="true"
       >
         <ArrowBackIcon />
-        {gameDataState.name}
+        {gameData?.name}
       </h2>
       <Box
         component="section"

@@ -60,5 +60,10 @@ const nextConfig = {
   },
   distDir: process.env.BUILD_DIR || ".next"
 }
+module.exports = {
+  experimental: {
+    nextScriptWorkers: true
+  }
+}
 
 module.exports = withBundleAnalyzer({ ...nextConfig })

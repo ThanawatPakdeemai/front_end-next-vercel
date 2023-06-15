@@ -82,7 +82,11 @@ export default function CardBuyItem({
             >
               <ButtonGame
                 textButton={t("join-game")}
-                url={getGamePokerModeURL(gameObject)}
+                url={
+                  gameObject.game_url
+                    ? getGamePokerModeURL(gameObject)
+                    : `${router.asPath}/roomlist`
+                }
               />
             </Box>
           )

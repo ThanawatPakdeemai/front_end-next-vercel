@@ -297,7 +297,7 @@ const ModalMarket = ({
             if (_res)
               return router.replace(
                 `/marketplace/${
-                  sellerType === "system" ? "" : "/p2p"
+                  sellerType === "system" ? "" : "p2p"
                 }/${convertNFTTypeToTType(nftType)}`,
                 undefined,
                 { shallow: true }
@@ -468,6 +468,7 @@ const ModalMarket = ({
                         ? undefined
                         : invPeriod || marketPeriod
                     }
+                    action={action}
                   />
                 ) : null}
                 <form

@@ -45,6 +45,7 @@ import IReferrals from "@components/icons/Referrals"
 // import { Helmet } from "react-helmet"
 // import ReactDOM from "react-dom"
 // eslint-disable-next-line import/no-extraneous-dependencies
+import Script from "next/script"
 import EditProfileModal from "./EditProfileModal"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
@@ -68,7 +69,7 @@ const ProfileContent = () => {
   const { errorToast } = useToast()
   const { player_id } = router.query
   // eslint-disable-next-line no-console
-  // const responseTelegram = (response: TelegramUser) => console.log(response)
+  // const responseTelegram = (response: any) => console.log(response)
 
   const { t } = useTranslation()
 
@@ -425,7 +426,7 @@ const ProfileContent = () => {
           </div>
         </MobileView>
       ) : (
-        <div className="mt-8 w-full md:mt-0 md:w-[98%] lg:w-[90%]">
+        <div className="login-telegram mt-8 w-full md:mt-0 md:w-[98%] lg:w-[90%]">
           {/* <div className="w-[90%]"> */}
           {/* <button
             className="btn tgme_widget_login_button"
@@ -435,16 +436,17 @@ const ProfileContent = () => {
             <i className="tgme_widget_login_button_icon" />
             Log in with Telegram
           </button> */}
-          {/* <Helmet>
-            <script
+          <div id="login-telegram">
+            <Script
               async
               src="https://telegram.org/js/telegram-widget.js?22"
               data-telegram-login="NakaGameBot"
               data-size="large"
-              data-onauth={responseTelegram}
+              data-onauth="onTelegramAuth(user)"
               data-request-access="write"
+              strategy="lazyOnload"
             />
-          </Helmet> */}
+          </div>
           {/* <ButtonToggleIcon
             handleClick={handleTelegramResponse}
             startIcon={<></>}

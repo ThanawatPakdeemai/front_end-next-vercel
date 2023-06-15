@@ -86,10 +86,10 @@ const NFTDetailTable = ({ installmentData, rentalData, history }: IProps) => {
   }, [installmentData])
 
   const _payBill = useMemo(() => {
-    let _status: boolean = true
+    let _status: boolean = false
     let _round: number = -1
-    if (_nextBill && dayjs(new Date()) > dayjs(_nextBill.due_date)) {
-      _status = false
+    if (_nextBill && dayjs(new Date()) <= dayjs(_nextBill.due_date)) {
+      _status = true
       _round = _nextBill.round_no
     }
     return { status: _status, periodNo: _round }

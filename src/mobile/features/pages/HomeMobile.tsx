@@ -28,6 +28,7 @@ const HomeMobile = () => {
     IGame[]
   >([])
   const { setClose } = useLoadingStore()
+  const [choiceType, setChoiceType] = useState<string>("Categories")
 
   const handleFavouriteData = () => {
     const mapFavouriteData = gameData.map((_item) =>
@@ -74,6 +75,7 @@ const HomeMobile = () => {
         setActiveMenu={setActiveMenu}
         setSelectedCategory={setSelectedCategory}
         setOpen={setOpen}
+        choiceType={choiceType}
       />
       {/* Search */}
       <Box
@@ -98,6 +100,7 @@ const HomeMobile = () => {
         setOpen={setOpen}
         setSelectedCategory={setSelectedCategory}
         categories={categories}
+        choiceType={(_name) => setChoiceType(_name)}
       />
     </MainLayoutMobile>
   )

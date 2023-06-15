@@ -1,5 +1,6 @@
 import TextTip from "@components/atoms/TextTip"
 import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
+import { TMarketAction } from "@feature/marketplace/interfaces/IMarket"
 import {
   TNFTType,
   TSellerType,
@@ -19,6 +20,7 @@ interface IProps {
   orderId?: string
   selling?: TSellingType
   period?: number
+  action: TMarketAction
 }
 
 const ReceiptComponent = ({
@@ -30,7 +32,8 @@ const ReceiptComponent = ({
   tokenId,
   orderId,
   selling,
-  period
+  period,
+  action
 }: IProps) => {
   const { shortenString, formatNumber } = Helper
   const { checkAllowanceNaka, calcNAKAPrice } = useGlobalMarket()
@@ -135,7 +138,9 @@ const ReceiptComponent = ({
           <Divider className="!block border-b-[1px] border-neutral-800/75" />
         </>
       ) : null}
-      {isAllowance || isAllowance === undefined ? null : (
+      {isAllowance ||
+      isAllowance === undefined ||
+      action === "cancel" ? null : (
         <TextTip
           text="Please allow the contract to access your NFTS first."
           textColor="text-warning-dark"

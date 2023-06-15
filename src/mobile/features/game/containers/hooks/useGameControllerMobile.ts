@@ -40,6 +40,8 @@ const useGameControllerMobile = () => {
     if (!load) {
       if (dataGames && dataGames.length > 0) {
         setGameData(dataGames)
+      } else {
+        setGameData([])
       }
     }
 

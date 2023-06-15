@@ -11,7 +11,7 @@ export interface INoData {
 }
 
 const NoData = ({ className, icon, text }: INoData) => (
-  <div className={`${className} flex flex-col gap-7`}>
+  <div className={`${className} no-data flex flex-col gap-7`}>
     {icon || (
       <div className="mx-auto flex h-[125px] w-[125px] items-center justify-center">
         <ImageCustom
@@ -23,7 +23,7 @@ const NoData = ({ className, icon, text }: INoData) => (
         />
       </div>
     )}
-    <Typography className="mx-auto max-w-[257px] rounded-[14px] border border-neutral-800 p-4 text-[14px] text-neutral-300">
+    <Typography className="no-data__text mx-auto max-w-[257px] rounded-[14px] border border-neutral-800 p-4 text-[14px] text-neutral-300">
       {text || <Trans i18nKey="no_data_available" />}
     </Typography>
   </div>

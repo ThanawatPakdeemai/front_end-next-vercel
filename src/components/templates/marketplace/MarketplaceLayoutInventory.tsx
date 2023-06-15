@@ -135,14 +135,16 @@ const MarketplaceLayoutInventory = ({
           <div
             className={
               isMapPage
-                ? "page-full-map h-[85vh] overflow-x-hidden"
+                ? "page-full-map h-[85vh] overflow-hidden"
                 : "my-5 flex w-full flex-col gap-y-4"
             }
           >
             {isMapPage ? (
-              <div className="map-wrapper h-full w-full">{children}</div>
+              <div className="map-wrapper h-full w-screen overflow-hidden">
+                {children}
+              </div>
             ) : (
-              <main className="ml-20 flex w-full flex-col gap-y-4 px-2">
+              <main className="ml-0 flex w-full flex-col items-center	 gap-y-4 px-2 sm:ml-20 sm:items-start">
                 <FilterDropdown />
                 {/* <div className="block flex gap-2 sm:hidden">
                   <TextField

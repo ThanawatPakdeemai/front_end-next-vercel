@@ -5,6 +5,7 @@ import useEventController from "@feature/event/containers/hooks/useEventControll
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { Box } from "@mui/material"
 import { useRouter } from "next/router"
+// import { useRouter } from "next/router"
 import React from "react"
 import { useTranslation } from "react-i18next"
 
@@ -20,7 +21,7 @@ const GameCardFullWidth = ({
   gameData
 }: IGameCardFullWidthProps) => {
   const { t } = useTranslation()
-  const { getTypeGamePathFolder, onSetGameStore, isRedirectRoomlist } =
+  const { onSetGameStore, getGameMode, isRedirectRoomlist } =
     useEventController()
   const router = useRouter()
 
@@ -58,9 +59,9 @@ const GameCardFullWidth = ({
           onClick={() => {
             onSetGameStore(gameData)
             router.push(
-              `/${getTypeGamePathFolder(gameData)}/${
-                gameData.path
-              }${isRedirectRoomlist(gameData).toString()}`
+              `/${getGameMode(gameData)}/${gameData.path}${isRedirectRoomlist(
+                gameData
+              ).toString()}`
             )
           }}
         />

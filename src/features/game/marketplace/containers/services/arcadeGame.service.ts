@@ -79,19 +79,19 @@ export const getMyInstallmentArcGame = ({
   })
 
 export const setTransferArcGame = ({
-  _token,
+  _id,
   _to,
   _from,
   _txHash
 }: {
-  _token: string
+  _id: string
   _to: string
   _from: string
   _txHash: string
 }) =>
   new Promise<INFTTransferServ>((resolve, reject) => {
     const data = {
-      nft_token: _token,
+      id: _id,
       to_address: _to,
       from_address: _from,
       tx_hash: _txHash

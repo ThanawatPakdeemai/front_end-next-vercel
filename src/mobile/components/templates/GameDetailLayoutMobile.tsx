@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { Box } from "@mui/material"
 import { ImageCustom } from "@components/atoms/image/Image"
@@ -19,6 +19,7 @@ import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/us
 import GameInfoCard from "@mobile/features/game/components/molecules/GameInfoCard"
 import { StyleRanking } from "@mobile/features/game/styles/StyleRanking"
 import { useRouter } from "next/router"
+import useLoadingStore from "@stores/loading"
 
 export interface IGameDetailLayoutMobileProps {
   gameData: IGame
@@ -36,6 +37,77 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
     gameData.id,
     gameData.game_mode
   )
+  const { setClose, setOpen } = useLoadingStore()
+
+  /**
+   * @description State for close loading
+   */
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      if (gameData) {
+        setClose()
+      }
+    }
+
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameData, setClose, setOpen])
+
+  const renderWeeklyTopPlayer = () => {
+    switch (gameData.game_mode) {
+      case "story-mode":
+        return null
+      case "free-to-play":
+      case "free-to-earn":
+      case "play-to-earn":
+      default:
+        return (
+          <Box
+            component="div"
+            className="game-section__weekly-prize-pool font-urbanist"
+            sx={StyleRanking}
+          >
+            {weeklyPoolByGameId && (
+              <TopPlayer
+                element="select"
+                subtitle
+                background="neutral"
+                elevation={0}
+                rank
+                topPlayerGameId={weeklyPoolByGameId.record || []}
+                className="border-0 bg-[#18181C]"
+                rightContent={
+                  <div className="flex h-10 items-center rounded-[20px] border-[1px] border-neutral-700">
+                    <button
+                      type="button"
+                      className={buttonArrow}
+                      onClick={() =>
+                        onClickedPrev(weeklyPoolByGameId.previous || "")
+                      }
+                    >
+                      <IconArrowLeft />
+                    </button>
+                    <button
+                      type="button"
+                      className={`${buttonArrow} border-l-[1px] border-neutral-700`}
+                      onClick={() =>
+                        onClickedNext(weeklyPoolByGameId.next || "")
+                      }
+                    >
+                      <IconArrowRight />
+                    </button>
+                  </div>
+                }
+              />
+            )}
+          </Box>
+        )
+    }
+  }
 
   return (
     <Box
@@ -44,7 +116,10 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
     >
       <h2
         className="flex items-center justify-between gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary"
-        onClick={() => router.push("/")}
+        onClick={() => {
+          setOpen("")
+          router.push("/")
+        }}
         aria-hidden="true"
       >
         <ArrowBackIcon />
@@ -81,7 +156,7 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
         {/* Game Banner */}
         <div className="game-section__banner relative overflow-hidden rounded-[20px] pt-[56%]">
           <ImageCustom
-            src={gameData.image_home_banner}
+            src={gameData.image_gif || gameData.image_category_list}
             alt={gameData.name}
             width={300}
             height={300}
@@ -115,7 +190,7 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
         </div>
 
         {/* Game categories */}
-        <div className="game-section__categories flex items-center gap-3">
+        <div className="game-section__categories flex flex-wrap items-center gap-3">
           {gameData.category_list.map((_category) => (
             <div
               key={_category.id}
@@ -131,43 +206,7 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
           </div>
         </div>
 
-        <Box
-          component="div"
-          className="game-section__weekly-prize-pool font-urbanist"
-          sx={StyleRanking}
-        >
-          {weeklyPoolByGameId && (
-            <TopPlayer
-              element="select"
-              subtitle
-              background="neutral"
-              elevation={0}
-              rank
-              topPlayerGameId={weeklyPoolByGameId.record || []}
-              className="border-0 bg-[#18181C]"
-              rightContent={
-                <div className="flex h-10 items-center rounded-[20px] border-[1px] border-neutral-700">
-                  <button
-                    type="button"
-                    className={buttonArrow}
-                    onClick={() =>
-                      onClickedPrev(weeklyPoolByGameId.previous || "")
-                    }
-                  >
-                    <IconArrowLeft />
-                  </button>
-                  <button
-                    type="button"
-                    className={`${buttonArrow} border-l-[1px] border-neutral-700`}
-                    onClick={() => onClickedNext(weeklyPoolByGameId.next || "")}
-                  >
-                    <IconArrowRight />
-                  </button>
-                </div>
-              }
-            />
-          )}
-        </Box>
+        {renderWeeklyTopPlayer()}
 
         {/* Modal About Game */}
         <AboutGameModal

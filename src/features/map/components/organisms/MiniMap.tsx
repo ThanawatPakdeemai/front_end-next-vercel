@@ -84,7 +84,7 @@ const MiniMap = ({
     <div
       className={`relative flex ${
         router.asPath.includes("my-land") ? "h-screen" : "h-full"
-      }  w-full flex-row sm:h-full ${className}`}
+      }  w-full flex-row sm:h-full sm:w-full ${className}`}
     >
       <Canvas
         gl={{ antialias: true, toneMapping: three.NoToneMapping }}

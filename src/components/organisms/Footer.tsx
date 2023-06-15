@@ -192,7 +192,7 @@ const Footer = () => {
             <div className="mb-4 uppercase text-white-primary">
               {t("be_a_part_of_the_play_to_earn_revolution")}
             </div>
-            <div className="max-w-[400px] px-4 text-center">
+            <div className="max-w-[400px] px-4 text-center sm:px-0 sm:text-start">
               {t("footer_title")}
             </div>
             <div className="my-8">

@@ -86,6 +86,9 @@ interface ethreumAdditionalMethods {
 declare interface Window {
   ethereum?: import("ethers").providers.ExternalProvider &
     ethreumAdditionalMethods
+  TWidgetLogin: {
+    auth: () => void
+  }
 }
 
 // declare module "*.svg" {

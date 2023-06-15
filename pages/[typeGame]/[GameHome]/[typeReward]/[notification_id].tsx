@@ -1,6 +1,6 @@
 import useGameSummaryRewardController from "@feature/game/containers/hooks/useGameSummaryRewardController"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
-import useGlobal from "@hooks/useGlobal"
+import useGlobal, { isMobile } from "@hooks/useGlobal"
 import { Box } from "@mui/material"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import dynamic from "next/dynamic"
@@ -13,6 +13,7 @@ const GameSummaryRewardPage = dynamic(
     ssr: false
   }
 )
+
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
   {
@@ -20,6 +21,7 @@ const SkeletonBanner = dynamic(
     ssr: false
   }
 )
+
 const GamePageDefault = dynamic(
   () => import("@components/templates/GamePageDefault"),
   {
@@ -27,6 +29,23 @@ const GamePageDefault = dynamic(
     ssr: false
   }
 )
+
+const GamePageDefaultMobile = dynamic(
+  () => import("@mobile/components/templates/GamePageDefaultMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
+const GameSummaryRewardPageMobile = dynamic(
+  () => import("@mobile/features/pages/game/GameSummaryRewardPageMobile"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
+
 const RightSidebarContent = dynamic(
   () => import("@components/templates/contents/RightSidebarContent"),
   {
@@ -59,62 +78,90 @@ const GameTabsVertical = dynamic(
 )
 export default function Notification_id() {
   const { gameDataState } = useGameSummaryRewardController()
-  const { getTypeGamePathFolder } = useGlobal()
+  const { getGameMode } = useGlobal()
 
-  return gameDataState ? (
-    <GamePageDefault
-      component={
-        <RightSidebarContent
-          className="mb-24"
-          content={<GameSummaryRewardPage />}
-          aside={
-            <Box
-              component="div"
-              className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
-              sx={{
-                ".panel-content": {
-                  maxHeight: "270px",
-                  ".custom-scroll": {
-                    overflow: "hidden"
+  /**
+   * @description Content Desktop
+   * @returns
+   */
+  const renderContentDesktop = () =>
+    gameDataState ? (
+      <GamePageDefault
+        component={
+          <RightSidebarContent
+            className="mb-24"
+            content={<GameSummaryRewardPage />}
+            aside={
+              <Box
+                component="div"
+                className="aside-wrapper flex flex-col justify-between gap-4 lg:h-full"
+                sx={{
+                  ".panel-content": {
+                    maxHeight: "270px",
+                    ".custom-scroll": {
+                      overflow: "hidden"
+                    }
+                  },
+                  ".like-no_score": {
+                    margin: "0"
                   }
-                },
-                ".like-no_score": {
-                  margin: "0"
-                }
-              }}
-            >
-              <OverviewContent
-                gameId={gameDataState.id}
-                gameType={getTypeGamePathFolder(gameDataState)}
-                gameIdNFT={gameDataState.NFT_Owner}
-              />
-            </Box>
-          }
-        />
-      }
-      component2={
-        <FullWidthContent
-          sxCustomStyled={{
-            "&.container": {
-              maxWidth: "100%!important",
-              "&.container-fullWidth": {
-                padding: "49px"
-              }
+                }}
+              >
+                <OverviewContent
+                  gameId={gameDataState.id}
+                  gameType={getGameMode(gameDataState)}
+                  gameIdNFT={gameDataState.NFT_Owner}
+                />
+              </Box>
             }
-          }}
-        >
-          <TabProvider>
-            <GameTabsVertical
-              gameId={gameDataState.id}
-              gameType="arcade-emporium"
-            />
-          </TabProvider>
-        </FullWidthContent>
-      }
-    />
-  ) : (
-    <GamePageDefault component={<SkeletonBanner />} />
-  )
+          />
+        }
+        component2={
+          <FullWidthContent
+            sxCustomStyled={{
+              "&.container": {
+                maxWidth: "100%!important",
+                "&.container-fullWidth": {
+                  padding: "49px"
+                }
+              }
+            }}
+          >
+            <TabProvider>
+              <GameTabsVertical
+                gameId={gameDataState.id}
+                gameType="arcade-emporium"
+              />
+            </TabProvider>
+          </FullWidthContent>
+        }
+      />
+    ) : (
+      <GamePageDefault component={<SkeletonBanner />} />
+    )
+
+  /**
+   * @description Content Mobile
+   */
+  const renderContentMobile = () =>
+    gameDataState ? (
+      <GamePageDefaultMobile component={<GameSummaryRewardPageMobile />} />
+    ) : (
+      <GamePageDefaultMobile component={<SkeletonBanner />} />
+    )
+
+  /**
+   * @description Render Default Page (Mobile or Desktop)
+   * @returns
+   */
+  const renderDefaultPage = () => {
+    if (isMobile) {
+      return renderContentMobile()
+    }
+    return renderContentDesktop()
+  }
+
+  return renderDefaultPage()
 }
 
 Notification_id.getLayout = function getLayout(page: ReactElement) {

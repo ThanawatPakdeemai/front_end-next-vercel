@@ -62,7 +62,8 @@ const useMarketNFTRent = () => {
     onCheckPolygonChain,
     onCheckOwnerNFT
   } = useGlobalMarket()
-  const { updateInvenNFTMarketData } = useInventoryProvider()
+  const { updateInvenNFTMarketData, updateClaimRentalTable } =
+    useInventoryProvider()
   const { errorToast } = useToast()
 
   // get rent detail by rentId
@@ -114,13 +115,19 @@ const useMarketNFTRent = () => {
     let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const [_checkNFTOwner, _checkChain] = await Promise.all([
-        onCheckOwnerNFT(_NFTtype, _token),
-        onCheckPolygonChain(marketNFTRentContract)
-      ])
+      const [_checkNFTOwner, _checkChain, _checkApproveForAll] =
+        await Promise.all([
+          onCheckOwnerNFT(_NFTtype, _token),
+          onCheckPolygonChain(marketNFTRentContract),
+          onCheckNFTIsApproveForAll(
+            address,
+            CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_INSTALL,
+            _NFTtype
+          )
+        ])
       if (!_checkNFTOwner) {
         setClose()
-        errorToast("you are not owner of this nft")
+        errorToast(`${MESSAGES.check_owner_nft_error} or rpc error.`)
         return false
       }
       if (!_checkChain._pass) {
@@ -128,11 +135,11 @@ const useMarketNFTRent = () => {
         errorToast(MESSAGES.support_polygon_only)
         return false
       }
-      await onCheckNFTIsApproveForAll(
-        address,
-        CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_INSTALL,
-        _NFTtype
-      ).catch((error) => console.error(error))
+      if (!_checkApproveForAll) {
+        setClose()
+        errorToast(MESSAGES.approve_for_all_error)
+        return false
+      }
       await createNFTRentOrder({
         _contract: _checkChain._contract,
         _contractAddrs: getContractAddrsByNFTType(_NFTtype),
@@ -217,11 +224,16 @@ const useMarketNFTRent = () => {
     if (signer && address) {
       const [_checkOrderById, _checkChain] = await Promise.all([
         getRentDetailById(_orderId),
-        onCheckPolygonChain(marketNFTRentContract)
+        onCheckPolygonChain(marketNFTRentContract),
+        onCheckNFTIsApproveForAll(
+          address,
+          CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_RENTAL,
+          _NFTtype
+        )
       ])
       if (Number(_checkOrderById.rentalPricePerDays) <= 0) {
         setClose()
-        errorToast("order not founded")
+        errorToast(`${MESSAGES.check_order_error} or rpc error.`)
         return false
       }
       if (!_checkChain._pass) {
@@ -229,11 +241,6 @@ const useMarketNFTRent = () => {
         errorToast(MESSAGES.support_polygon_only)
         return false
       }
-      await onCheckNFTIsApproveForAll(
-        address,
-        CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_RENTAL,
-        _NFTtype
-      ).catch((error) => console.error(error))
       await cancelNFTRentOrder({
         _contract: _checkChain._contract,
         _orderId
@@ -317,7 +324,7 @@ const useMarketNFTRent = () => {
       )
       if (Number(_checkOrderById.rentalPricePerDays) <= 0) {
         setClose()
-        errorToast("order not founded")
+        errorToast(`${MESSAGES.check_order_error} or rpc error.`)
         return false
       }
       if (!_checkChain._pass) {
@@ -445,10 +452,13 @@ const useMarketNFTRent = () => {
               ],
               _log.data
             )
-            const data: { _txHash: string } = {
+            const _data: { _txHash: string } = {
               _txHash: _res.transactionHash
             }
-            await mutateClaimRentNFT(data)
+            const data = await mutateClaimRentNFT(_data)
+            if (data && updateClaimRentalTable) {
+              updateClaimRentalTable(data)
+            }
           }
         })
         .catch((error) => console.error(error))

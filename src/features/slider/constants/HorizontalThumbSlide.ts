@@ -2,7 +2,8 @@ import { SxProps } from "@mui/material"
 
 export const StyleArrowDefault = {
   ".MuiSvgIcon-root": {
-    fill: "white"
+    fill: "white",
+    transform: "scale(0.7)"
   },
   "&.slick-arrow": {
     top: "22px",
@@ -23,8 +24,10 @@ export const StyleArrowAvatar = {
     fill: "white"
   },
   "&.slick-arrow": {
-    top: "-110px",
+    top: "10px",
     transform: "translate(0, 0)",
+    width: "auto",
+    height: "auto",
     "& > div": {
       background: "#18181C",
       border: "1px solid #232329",
@@ -32,10 +35,10 @@ export const StyleArrowAvatar = {
       borderRadius: "8px"
     },
     "&.slick-prev": {
-      "left": "40px"
+      left: "-60px"
     },
     "&.slick-next": {
-      "right": "80px"
+      right: "-60px"
     },
     "&:before": {
       display: "none"
@@ -44,7 +47,7 @@ export const StyleArrowAvatar = {
 }
 
 export const SlickArrowCSS =
-  "m-1 flex h-[50px] w-[50px] items-center justify-center rounded-lg  bg-neutral-800/60"
+  "m-1 flex items-center justify-center rounded-lg  bg-neutral-800/60 w-[40px] h-[40px]"
 
 export const SlickMainSlideCSS: SxProps = {
   ".slick-slider, .slick-list, .slick-track": {
@@ -92,6 +95,9 @@ export const SlickSingleSlideAvatarCSS = {
 }
 
 export const SlickDefaultThumbnail: SxProps = {
+  ".slick-track": {
+    overflow: "hidden"
+  },
   ".slick-list": {
     height: "70px",
     overflow: "hidden"
@@ -120,6 +126,9 @@ export const SlickDefaultThumbnail: SxProps = {
 }
 
 export const SlickAvatarThumbnail: SxProps = {
+  ".slick-track": {
+    overflow: "hidden"
+  },
   ".slick-list": {
     maxWidth: "480px",
     width: "270px!important",
@@ -134,12 +143,18 @@ export const SlickAvatarThumbnail: SxProps = {
     border: "0",
     padding: "0",
     height: "auto",
+    overflow: "hidden",
     "& > .slick-list": {
       width: "100%"
     }
   },
   ".slick-slide": {
     opacity: 1,
+    "&.slick-cloned": {
+      opacity: 0,
+      visibility: "hidden",
+      display: "none"
+    },
     ".verticalSmallThumb-slide__item": {
       margin: "0 4px",
       padding: "0",

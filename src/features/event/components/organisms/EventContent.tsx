@@ -8,7 +8,7 @@ import React from "react"
 import { v4 as uuid } from "uuid"
 
 const EventContent = () => {
-  const { limit, currentEventData, getTypeGamePathFolder, onSetGameStore } =
+  const { limit, currentEventData, getGameMode, onSetGameStore } =
     useEventController()
 
   const renderEventContent = () => {
@@ -28,9 +28,9 @@ const EventContent = () => {
           key={game.id}
           menu={P2EHeaderMenu}
           data={game}
-          href={`/${getTypeGamePathFolder(game)}/${game.path}`}
+          href={`/${getGameMode(game)}/${game.path}`}
           onHandleClick={() => onSetGameStore(game)}
-          gameType={getTypeGamePathFolder(game)}
+          gameType={getGameMode(game)}
         />
       ))
     }

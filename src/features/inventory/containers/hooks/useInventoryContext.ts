@@ -1,3 +1,4 @@
+import { MESSAGES } from "@constants/messages"
 import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAvatarReef"
 import { useGetBuildingById } from "@feature/building/containers/hooks/useGetMyBuilding"
 import { useGetMyArcGameById } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
@@ -6,14 +7,18 @@ import { useGetLandById } from "@feature/land/containers/hooks/useGetMyLand"
 import { IPosition } from "@feature/land/interfaces/ILandService"
 import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutateMarketplace"
 import {
+  IClaimRentalServ,
   IInstallData,
+  IInstallPeriod,
   IMarketData,
   IMarketHistory,
+  IPayBillData,
   IRentalData,
   TNFTType
 } from "@feature/marketplace/interfaces/IMarketService"
 import useInvenMaterial from "@feature/material/inventory/containers/hooks/useInvenMaterial"
 import { useGetNakPunkById } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
+import { useToast } from "@feature/toast/containers"
 import useGlobal from "@hooks/useGlobal"
 import useMarketCategTypes from "@stores/marketCategTypes"
 import useProfileStore from "@stores/profileStore"
@@ -39,6 +44,8 @@ interface IInventoryItemData {
   installments_data?: IInstallData | null
   rentals_data?: IRentalData | null
   wallet_address?: string
+  owner_id?: string
+  player_id?: string
 }
 
 const useInventoryContext = () => {
@@ -66,6 +73,7 @@ const useInventoryContext = () => {
   const { mutateGetNFTAvatarById } = useMutateAvatarReef()
   const { mutateMarketOrderById } = useMutateMarketplace()
   const { convertNFTTypeToUrl } = Helper
+  const { errorToast } = useToast()
 
   const updateInvenNFTMarketData = useCallback(
     (_update: IMarketData | undefined, _type?: TNFTType, _amount?: number) => {
@@ -87,6 +95,48 @@ const useInventoryContext = () => {
           setInvPeriod(0)
           setInvAmount(1)
         }
+      }
+    },
+    [invenItemData]
+  )
+
+  // update installment
+  const updateInstallmentTable = useCallback(
+    (_data: IPayBillData) => {
+      if (invenItemData && invenItemData.installments_data) {
+        const _dummyRound: IInstallPeriod[] =
+          invenItemData.installments_data.period
+        const _indexUpdateRound = _dummyRound.findIndex((f) => !f.history_id)
+        _dummyRound[_indexUpdateRound] = {
+          ..._dummyRound[_indexUpdateRound],
+          history_id: _data.id
+        }
+        const _result: IInventoryItemData = {
+          ...invenItemData,
+          installments_data: {
+            ...invenItemData.installments_data,
+            period: _dummyRound
+          }
+        }
+        setInvenItemData(_result)
+      }
+    },
+    [invenItemData]
+  )
+
+  // update claim
+  const updateClaimRentalTable = useCallback(
+    (_data: IClaimRentalServ) => {
+      if (invenItemData && invenItemData.rentals_data) {
+        const _result: IInventoryItemData = {
+          ...invenItemData,
+          rentals_data: {
+            ...invenItemData.rentals_data,
+            period: _data.period,
+            period_balance: _data.period_balance
+          }
+        }
+        setInvenItemData(_result)
       }
     },
     [invenItemData]
@@ -126,7 +176,9 @@ const useInventoryContext = () => {
               marketplaces_data: _res.marketplaces_data,
               installments_data: _res.installments_data,
               rentals_data: _res.rentals_data,
-              wallet_address: _res.wallet_address
+              wallet_address: _res.wallet_address,
+              owner_id: _res.owner_id,
+              player_id: _res.player_id
             }
           })
           break
@@ -146,7 +198,9 @@ const useInventoryContext = () => {
               marketplaces_data: _res.marketplaces_data,
               installments_data: _res.installments_data,
               rentals_data: _res.rentals_data,
-              wallet_address: _res.wallet_address
+              wallet_address: _res.wallet_address,
+              owner_id: _res.owner_id,
+              player_id: _res.player_id
             }
           })
           break
@@ -163,7 +217,9 @@ const useInventoryContext = () => {
               detail: _res.data.story,
               history: _res.data.history,
               marketplaces_data: _res.data.marketplaces_data,
-              installments_data: _res.data.installments_data
+              installments_data: _res.data.installments_data,
+              owner_id: _res.data.NFT_info.owner_id._id,
+              player_id: _res.data.NFT_info.owner_id._id
             }
           })
           break
@@ -178,7 +234,9 @@ const useInventoryContext = () => {
               detail: _res.description,
               history: _res.history,
               marketplaces_data: _res.marketplaces_data,
-              wallet_address: _res.wallet_adddress
+              wallet_address: _res.wallet_adddress,
+              owner_id: _res.owner_id,
+              player_id: _res.player_id
             }
           })
           break
@@ -191,7 +249,9 @@ const useInventoryContext = () => {
               type: marketType,
               img: _res.image,
               detail: _res.description,
-              history: _res.history
+              history: _res.history,
+              owner_id: _res.owner_id,
+              player_id: _res.player_id
             }
           })
           break
@@ -231,54 +291,69 @@ const useInventoryContext = () => {
               await getGameItemByToken(
                 profile.data.address,
                 _gameItem.item_id_smartcontract.toString()
-              ).then((_res) => {
-                _data = {
-                  id: _gameItem._id,
-                  name: _gameItem.name,
-                  tokenId: _gameItem.item_id_smartcontract.toString(),
-                  type: marketType,
-                  img: _gameItem.image,
-                  detail: _gameItem.detail,
-                  totalAmount: Number(_res.toString())
-                }
-              })
+              )
+                .then((_res) => {
+                  _data = {
+                    id: _gameItem._id,
+                    name: _gameItem.name,
+                    tokenId: _gameItem.item_id_smartcontract.toString(),
+                    type: marketType,
+                    img: _gameItem.image,
+                    detail: _gameItem.detail,
+                    totalAmount: Number(_res.toString()),
+                    owner_id: profile.data?.address,
+                    player_id: profile.data?.address
+                  }
+                })
+                .catch(() => {
+                  errorToast(MESSAGES.network_error)
+                  _data = {
+                    id: _gameItem._id,
+                    name: _gameItem.name,
+                    tokenId: _gameItem.item_id_smartcontract.toString(),
+                    type: marketType,
+                    img: _gameItem.image,
+                    detail: _gameItem.detail,
+                    totalAmount: 0,
+                    owner_id: profile.data?.address,
+                    player_id: profile.data?.address
+                  }
+                })
             } else {
               await mutateMarketOrderById({
                 _id: id,
                 _urlNFT: convertNFTTypeToUrl(marketType)
               }).then((response) => {
-                if (
-                  response.data &&
-                  response.data.length > 0 &&
-                  response.data[0].item_data
-                ) {
+                if (response.data && response.data.item_data) {
                   _data = {
-                    id: response.data[0]._id,
-                    name: response.data[0].item_data.name,
+                    id: response.data._id,
+                    name: response.data.item_data.name,
                     tokenId:
-                      response.data[0].item_data.item_id_smartcontract.toString(),
+                      response.data.item_data.item_id_smartcontract.toString(),
                     type: marketType,
-                    img: response.data[0].item_data.image,
-                    detail: response.data[0].item_data.detail,
-                    totalAmount: response.data[0].item_amount,
+                    img: response.data.item_data.image,
+                    detail: response.data.item_data.detail,
+                    totalAmount: response.data.item_amount,
                     marketplaces_data: {
-                      item_amount: response.data[0].item_amount,
-                      order_id: response.data[0].order_id,
-                      seller_id: response.data[0].seller_id,
-                      seller_type: response.data[0].seller_type,
-                      selling_type: response.data[0].selling_type,
-                      item_total: response.data[0].item_total,
-                      is_active: response.data[0].is_active,
-                      type: response.data[0].type,
-                      item_id: response.data[0].item_id,
-                      _id: response.data[0]._id,
-                      price: response.data[0].price,
+                      item_amount: response.data.item_amount,
+                      order_id: response.data.order_id,
+                      seller_id: response.data.seller_id,
+                      seller_type: response.data.seller_type,
+                      selling_type: response.data.selling_type,
+                      item_total: response.data.item_total,
+                      is_active: response.data.is_active,
+                      type: response.data.type,
+                      item_id: response.data.item_id,
+                      _id: response.data._id,
+                      price: response.data.price,
                       real_land: false,
                       buyer_details: [],
-                      updated_at: response.data[0].created_at,
-                      current_time: response.data[0].created_at,
-                      created_at: response.data[0].created_at
-                    }
+                      updated_at: response.data.created_at,
+                      current_time: response.data.created_at,
+                      created_at: response.data.created_at
+                    },
+                    owner_id: profile.data?.address,
+                    player_id: profile.data?.address
                   }
                 }
               })
@@ -310,37 +385,33 @@ const useInventoryContext = () => {
                 _id: id,
                 _urlNFT: convertNFTTypeToUrl(marketType)
               }).then((response) => {
-                if (
-                  response.data &&
-                  response.data.length > 0 &&
-                  response.data[0].material_data
-                ) {
+                if (response.data && response.data.material_data) {
                   _data = {
-                    id: response.data[0]._id,
-                    name: response.data[0].material_data.name,
+                    id: response.data._id,
+                    name: response.data.material_data.name,
                     tokenId:
-                      response.data[0].material_data.material_id_smartcontract.toString(),
+                      response.data.material_data.material_id_smartcontract.toString(),
                     type: marketType,
-                    img: response.data[0].material_data.image,
-                    detail: response.data[0].material_data.detail,
-                    totalAmount: response.data[0].item_amount,
+                    img: response.data.material_data.image,
+                    detail: response.data.material_data.detail,
+                    totalAmount: response.data.item_amount,
                     marketplaces_data: {
-                      item_amount: response.data[0].item_amount,
-                      order_id: response.data[0].order_id,
-                      seller_id: response.data[0].seller_id,
-                      seller_type: response.data[0].seller_type,
-                      selling_type: response.data[0].selling_type,
-                      item_total: response.data[0].item_total,
-                      is_active: response.data[0].is_active,
-                      type: response.data[0].type,
-                      item_id: response.data[0].item_id,
-                      _id: response.data[0]._id,
-                      price: response.data[0].price,
+                      item_amount: response.data.item_amount,
+                      order_id: response.data.order_id,
+                      seller_id: response.data.seller_id,
+                      seller_type: response.data.seller_type,
+                      selling_type: response.data.selling_type,
+                      item_total: response.data.item_total,
+                      is_active: response.data.is_active,
+                      type: response.data.type,
+                      item_id: response.data.item_id,
+                      _id: response.data._id,
+                      price: response.data.price,
                       real_land: false,
                       buyer_details: [],
-                      updated_at: response.data[0].created_at,
-                      current_time: response.data[0].created_at,
-                      created_at: response.data[0].created_at
+                      updated_at: response.data.created_at,
+                      current_time: response.data.created_at,
+                      created_at: response.data.created_at
                     }
                   }
                 }
@@ -391,7 +462,9 @@ const useInventoryContext = () => {
     gameItemList,
     materialList,
     onTransferMaterial,
-    updateInvenNFTMarketData
+    updateInvenNFTMarketData,
+    updateInstallmentTable,
+    updateClaimRentalTable
   }
 }
 

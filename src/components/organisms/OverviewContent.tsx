@@ -28,7 +28,7 @@ const OverviewContent = ({
   gameIdNFT
 }: IOverviewGameProps) => {
   const { t } = useTranslation()
-  const { hydrated } = useGlobal()
+  const { hydrated, stateProfile } = useGlobal()
   const {
     gameTags,
     gameDeveloper,
@@ -42,7 +42,6 @@ const OverviewContent = ({
     gameOwner
     // singleVersion
   } = useGameOverview(gameId, gameType)
-  const { stateProfile } = useGlobal()
   const { data } = useGameStore()
 
   return (

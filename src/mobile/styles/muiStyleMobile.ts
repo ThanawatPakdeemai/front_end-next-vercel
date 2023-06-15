@@ -20,7 +20,14 @@ export const StyledInput: SxProps<Theme> = {
   fontSize: "16px",
   color: "#fff",
   fontWeight: 600,
-  opacity: 1
+  opacity: 1,
+  ".MuiOutlinedInput-root": {
+    "&:focus": {
+      border: 0,
+      outline: "none",
+      boxShadow: "none"
+    }
+  }
 }
 
 export const StyledSearchInputMobile: SxProps<Theme> = {

@@ -13,6 +13,7 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import CONFIGS from "@configs/index"
 import { IResGetIp } from "@interfaces/IGetIP"
 import useGameGlobal from "@hooks/useGameGlobal"
+import useLoadingStore from "@stores/loading"
 import useGetCurrentPlayerGameSingle from "./useGetCurrentPlayerGameSingle"
 import useGetGameRoomById from "./useGetGameRoomById"
 
@@ -32,7 +33,8 @@ const useWaitingSingle = () => {
   const { address } = useWeb3Provider()
   const [gameUrl, setGameUrl] = useState<string>("")
   const [ip, setIp] = useState("")
-  const { getTypeGamePathFolder } = useGlobal()
+  const { getGameMode } = useGlobal()
+  const { setClose } = useLoadingStore()
 
   // TODO: Refactor later
   const detectDevice = isMobile ? "mobile" : "desktop"
@@ -97,7 +99,10 @@ const useWaitingSingle = () => {
   useEffect(() => {
     let load = false
 
-    if (!load) fetchPlayers("in")
+    if (!load) {
+      fetchPlayers("in")
+      setClose()
+    }
 
     return () => {
       load = true
@@ -344,6 +349,8 @@ const useWaitingSingle = () => {
   }
 
   const checkAccountProfile = () => {
+    // For code detect isMobile, if In-App purchase is ready we will delete it
+    if (isMobile) return true
     if (profile && address === profile.address) {
       return true
     }
@@ -376,7 +383,7 @@ const useWaitingSingle = () => {
     outRoom,
     playerGameSingle,
     GameHome,
-    getTypeGamePathFolder,
+    getGameMode,
     loadingPlayer,
     gameUrl,
     onPlayGame,

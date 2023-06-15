@@ -81,10 +81,10 @@ const useNFTBuilding = () => {
   }
 
   // transfer owner
-  const transferฺBuilding = (_from: string, _to: string, _tokenId: string) =>
+  const transferฺBuilding = (_from: string, _to: string, _nftToken: string) =>
     new Promise<TransactionResponse>((resolve, reject) => {
       buildingContract
-        .transferFrom(_from, _to, _tokenId)
+        .transferFrom(_from, _to, _nftToken)
         .then((_response: TransactionResponse) => {
           resolve(_response)
         })
@@ -93,14 +93,18 @@ const useNFTBuilding = () => {
         })
     })
 
-  const onTransferBuilding = async (_toAddrs: string, _tokenId: string) => {
+  const onTransferBuilding = async (
+    _toAddrs: string,
+    _nftToken: string,
+    _tokenId: string
+  ) => {
     if (signer && address) {
       setOpen(MESSAGES.transaction_processing_order)
-      await transferฺBuilding(address, _toAddrs, _tokenId)
+      await transferฺBuilding(address, _toAddrs, _nftToken)
         .then(async (response) => {
           const _res = await response.wait()
           const data = {
-            _token: _tokenId,
+            _id: _tokenId,
             _to: _toAddrs,
             _from: address,
             _txHash: _res.transactionHash

@@ -30,10 +30,12 @@ const MarketplaceOwnerDetail = () => {
           {profile.data &&
             profile.data.address &&
             invenItemData.wallet_address &&
-            profile.data.address === invenItemData.wallet_address && (
+            profile.data.address === invenItemData.wallet_address &&
+            !invenItemData.marketplaces_data && (
               <div className="px-8">
                 <TransferBox
-                  _tokenId={invenItemData.tokenId}
+                  _tokenId={invenItemData.id}
+                  _nftToken={invenItemData.tokenId}
                   _maxAmount={invenItemData.totalAmount}
                 />
               </div>
@@ -60,7 +62,8 @@ const MarketplaceOwnerDetail = () => {
                 : undefined
             }
           >
-            {!invenItemData.installments_data ? (
+            {!invenItemData.installments_data &&
+            invenItemData.owner_id === invenItemData.player_id ? (
               <div className="flex w-full items-center justify-between gap-x-2">
                 <ButtonMarket
                   nftType={invenItemData.type}
@@ -75,7 +78,6 @@ const MarketplaceOwnerDetail = () => {
                   name={invenItemData.name}
                   marketplaces_data={invenItemData.marketplaces_data}
                 />
-
                 {invenItemData.type === "nft_land" ||
                 invenItemData.type === "nft_building" ? (
                   <ButtonRentOut

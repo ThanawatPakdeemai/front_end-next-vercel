@@ -11,6 +11,7 @@ import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import TopPlayerFreeToEarn from "@feature/ranking/components/template/TopPlayerFreeToEarn"
 import { IGameItem } from "@feature/gameItem/interfaces/IGameItemService"
+import useLoadingStore from "@stores/loading"
 
 const BuyItemBody = dynamic(
   () => import("@components/templates/game/BuyItemBody"),
@@ -85,15 +86,16 @@ export default function GameRoomList() {
   const { GameHome, id } = router.query
   const { gameData } = useGetGameByPath(GameHome ? GameHome.toString() : "")
   const { onSetGameData } = useGameStore()
-  const { getTypeGamePathFolder, isFreeToEarnGame } = useGlobal()
+  const { getGameMode, isFreeToEarnGame } = useGlobal()
   const { refetchItemSelected } = useBuyGameItemController()
+  const { setClose } = useLoadingStore()
 
   /**
    * @description Render Form Buy Item
    */
   const renderFormBuyItem = () => {
     if (!gameData) return null
-    switch (getTypeGamePathFolder(gameData)) {
+    switch (getGameMode(gameData)) {
       case "story-mode":
       case "free-to-play":
       case "free-to-earn":
@@ -130,6 +132,7 @@ export default function GameRoomList() {
     let load = false
 
     if (!load) {
+      setClose()
       if (gameData) onSetGameData(gameData)
     }
 
@@ -164,7 +167,7 @@ export default function GameRoomList() {
               >
                 <OverviewContent
                   gameId={gameData.id}
-                  gameType={getTypeGamePathFolder(gameData)}
+                  gameType={getGameMode(gameData)}
                 />
                 {isFreeToEarnGame(gameData) && (
                   <TopPlayerFreeToEarn
@@ -192,7 +195,7 @@ export default function GameRoomList() {
             <TabProvider>
               <GameTabsVertical
                 gameId={gameData.id}
-                gameType={getTypeGamePathFolder(gameData)}
+                gameType={getGameMode(gameData)}
               />
             </TabProvider>
           </FullWidthContent>

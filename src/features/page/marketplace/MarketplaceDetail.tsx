@@ -114,7 +114,7 @@ const MarketplaceDetail = () => {
                 count: 1
               }}
               sellingType={
-                marketOrder.selling_type
+                marketOrder.selling_type && marketOrder.seller_type !== "system"
                   ? {
                       title: marketOrder.selling_type,
                       color: handleColorSellingType(marketOrder.selling_type)
@@ -133,7 +133,7 @@ const MarketplaceDetail = () => {
                 marketId={marketOrder._id}
                 itemId={marketOrder.item_id}
                 orderId={marketOrder.order_id}
-                price={marketOrder.price}
+                orderPrice={marketOrder.price}
                 maxPeriod={marketOrder.period_amount}
                 maxAmount={marketOrder.item_amount}
                 sellerType={marketOrder.seller_type}
@@ -206,7 +206,7 @@ const MarketplaceDetail = () => {
               count: 1
             }}
             sellingType={
-              marketOrder.selling_type
+              marketOrder.selling_type && marketOrder.seller_type !== "system"
                 ? {
                     title: marketOrder.selling_type,
                     color: handleColorSellingType(marketOrder.selling_type)
@@ -223,7 +223,7 @@ const MarketplaceDetail = () => {
               marketId={marketOrder._id}
               itemId={marketOrder.item_id}
               orderId={marketOrder.order_id}
-              price={marketOrder.price}
+              orderPrice={marketOrder.price}
               maxPeriod={marketOrder.period_amount}
               maxAmount={marketOrder.item_amount}
               sellerType={marketOrder.seller_type}

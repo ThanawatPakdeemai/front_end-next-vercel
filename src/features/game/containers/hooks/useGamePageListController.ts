@@ -1,28 +1,52 @@
-/* eslint-disable max-len */
 import { useEffect, useState } from "react"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
 import {
-  IFilterGamesByKey,
+  IPayloadGameFilter,
   IGame,
   IGetType,
-  TGameType
+  TGameType,
+  TDevice
 } from "@feature/game/interfaces/IGameService"
 import useFilterGameList from "@feature/dropdown/containers/hooks/useFilterGameList"
 import { useRouter } from "next/router"
+import useScrollDetector from "@hooks/useScrollDetector"
+import useScrollToEndStore from "@stores/scrollToEnd"
+
+interface ILimitPage {
+  limit: number
+  endLimitCount: number
+}
 
 const useGamePageListController = (
   gameMode?: IGetType,
   gameType?: TGameType,
   _limit?: number,
   _categoryId?: string,
-  _device?: "mobile" | "desktop" | "all"
+  _device?: TDevice
 ) => {
   const router = useRouter()
   const categoryId = router.query.id
   const staminaRecovery = new Date("2023-01-07T22:24:00.000Z")
+  const { scrollBottom } = useScrollDetector()
+
+  const {
+    setScrollToEndScreen: setEndScreen,
+    getEndLimitApi: endLimit,
+    setEndLimitApi: setEndLimit,
+    getCountCallApi: countCallApi,
+    setCountCallApi: setValueCountCallApi
+  } = useScrollToEndStore()
+
   const [cooldown, setCooldown] = useState<boolean>(true)
   const [gameFilter, setGameFilter] = useState<IGame[]>()
+  const [limitPage, setLimitPage] = useState<ILimitPage>({
+    limit: 10,
+    endLimitCount: 0
+  })
+
+  let _countCallApi = 0
+
   const {
     onHandleSetGameStore,
     limit,
@@ -32,7 +56,7 @@ const useGamePageListController = (
     page,
     pager,
     setTotalCount,
-    getTypeGamePathFolder,
+    getGameMode,
     isRedirectRoomlist
   } = useGlobal()
   const {
@@ -49,7 +73,7 @@ const useGamePageListController = (
     setDevice
   } = useFilterStore()
 
-  const { mutateGetGamesByCategoryId, isLoading: loadingFilterGame } =
+  const { mutateGetGameAllFilter, isLoading: loadingFilterGame } =
     useFilterGameList()
 
   useEffect(() => {
@@ -96,13 +120,12 @@ const useGamePageListController = (
 
   useEffect(() => {
     let load = false
-
     if (!load) {
       if (loadingFilterGame) {
         setGameFilter([])
       }
-      const filterData: IFilterGamesByKey = {
-        limit: _limit || limit,
+      const filterData: IPayloadGameFilter = {
+        limit: limitPage.limit >= 10 ? limitPage.limit : 10,
         skip: page,
         sort: "_id",
         search: searchDropdown,
@@ -117,13 +140,24 @@ const useGamePageListController = (
         tournament: false,
         nftgame: getGameModeFilter() === "arcade-emporium" ? true : "all"
       }
-      mutateGetGamesByCategoryId(filterData).then((res) => {
-        if (res) {
-          const { data, info } = res
-          setGameFilter(data)
-          setTotalCount(info ? info.totalCount : 1)
-        }
-      })
+
+      if (!endLimit && countCallApi < 1) {
+        const timer = setTimeout(() => {
+          mutateGetGameAllFilter(filterData).then((res) => {
+            if (res) {
+              const { data, info } = res
+              setGameFilter(data)
+              setTotalCount(info ? info.totalCount : 1)
+              // eslint-disable-next-line react-hooks/exhaustive-deps
+              _countCallApi = 0
+              setValueCountCallApi(_countCallApi)
+            }
+          })
+        }, 500)
+
+        return () => clearTimeout(timer)
+      }
+      setEndScreen(true)
     }
 
     return () => {
@@ -138,19 +172,66 @@ const useGamePageListController = (
     gameTypeDropdown,
     page,
     limit,
-    mutateGetGamesByCategoryId,
+    mutateGetGameAllFilter,
     gameMode,
-    _categoryId
+    _categoryId,
+    limitPage
   ])
 
+  const handleInfinityLimit = () => {
+    if (gameFilter) {
+      if (scrollBottom && limitPage.limit < totalCount && isMobile) {
+        setLimitPage({
+          limit: limitPage.limit + 10,
+          endLimitCount: gameFilter.length
+        })
+        setEndLimit(false)
+      } else {
+        setLimitPage({
+          limit: gameFilter?.length < 10 ? totalCount : gameFilter?.length,
+          endLimitCount: 1
+        })
+        _countCallApi += 1
+        setValueCountCallApi(_countCallApi)
+        setEndLimit(true)
+      }
+    }
+  }
+
+  const handleSearchFilter = () => {
+    setEndLimit(false)
+    _countCallApi = 0
+    setValueCountCallApi(_countCallApi)
+  }
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      handleInfinityLimit()
+    }
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scrollBottom])
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      handleSearchFilter()
+    }
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchDropdown])
+
   const onSetGameStore = (game: IGame) => {
-    onHandleSetGameStore(getTypeGamePathFolder(game), game)
+    onHandleSetGameStore(game.game_mode, game)
   }
 
   const onClickLink = (game: IGame) =>
-    `/${game.is_NFT ? "arcade-emporium" : getTypeGamePathFolder(game)}/${
-      game.path
-    }${isRedirectRoomlist(game).toString()}`
+    `/${getGameMode(game)}/${game.path}${isRedirectRoomlist(game).toString()}`
 
   return {
     limit,

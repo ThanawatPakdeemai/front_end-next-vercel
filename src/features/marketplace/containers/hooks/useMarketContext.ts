@@ -97,8 +97,8 @@ const useMarketContext = () => {
         _id: id,
         _urlNFT: convertNFTTypeToUrl(marketType)
       }).then((response) => {
-        handleSelectToken(marketType, response.data[0])
-        setMarketOrder(response.data[0])
+        handleSelectToken(marketType, response.data)
+        setMarketOrder(response.data)
       })
     }
   }

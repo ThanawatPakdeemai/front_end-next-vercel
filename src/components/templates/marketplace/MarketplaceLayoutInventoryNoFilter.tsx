@@ -114,7 +114,7 @@ const MarketplaceLayoutInventory = ({
               />
             )}
           </div>
-          <div className="flex w-full justify-center border-l border-neutral-800 pl-10">
+          <div className="flex w-full justify-center border-l border-neutral-800 pl-0 sm:pl-10">
             {children}
           </div>
         </div>

@@ -1,9 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import ReloadIcon from "@components/icons/ReloadIcon"
 import ButtonSticky from "@components/molecules/ButtonSticky"
-import RoomListBar, {
-  TRoomStatus
-} from "@components/molecules/roomList/RoomListBar"
+import RoomListBar from "@components/molecules/roomList/RoomListBar"
 import HeaderRoomList from "@components/organisms/HeaderRoomList"
 import useRoomMulti from "@feature/game/containers/hooks/useRoomMulti"
 import useSocketRoomList from "@feature/game/containers/hooks/useSocketRoomList"
@@ -49,7 +47,7 @@ const MultiRoomList = () => {
     ...propsSocketRoomlist
   })
 
-  const { handleJoinRoom } = useRoomMulti()
+  const { handleJoinRoom, getRoomStatus } = useRoomMulti()
 
   useEffect(() => {
     let load = false
@@ -168,22 +166,6 @@ const MultiRoomList = () => {
   //   }
   // }
 
-  const getRoomStatus = (_data: IGameRoomListSocket): TRoomStatus => {
-    if (!profile) return "unavailable"
-
-    const _played = _data.current_player.find(
-      (ele) => ele.player_id === profile.id
-    )
-
-    if (_played && _played.status === "played") {
-      return "played"
-    }
-    if (_data.amount_current_player >= _data.max_players) {
-      return "full"
-    }
-    return "join"
-  }
-
   return (
     <>
       <Box
@@ -237,7 +219,7 @@ const MultiRoomList = () => {
           <BuyItemBody>
             <OverviewContent
               gameId={data.id}
-              gameType={getTypeGamePathFolder(data)}
+              gameType={getGameMode(data)}
               gameIdNFT={data.NFT_Owner}
             />
             {data?.play_to_earn_status !== "free" && !data.tournament && (

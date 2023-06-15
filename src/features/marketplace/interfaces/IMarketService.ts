@@ -195,6 +195,7 @@ export interface IMarketHistory extends IPrice {
 export interface IRentalPeriod extends IRound {
   claim_status: boolean
   transaction_hash: string | null
+  claim_date?: Date
 }
 
 interface ISellingDetail extends IMarketInit, ICurrentTime {
@@ -375,8 +376,11 @@ export interface INFTTransferServ extends IFormatMessageService {
   data: INFTTransfer
 }
 
-export interface IMarketOrderServ extends IFormatService {
+export interface IMarketOrderListServ extends IFormatService {
   data: IMarketDetail[]
+}
+export interface IMarketOrderServ extends IFormatService {
+  data: IMarketDetail
 }
 
 export interface IMarketCreateOrderServ extends IFormatService {

@@ -30,7 +30,6 @@ import IconArrowRight from "@components/icons/arrowRightIcon"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
 import Breadcrumb from "@components/molecules/Breadcrumb"
 import { useRouter } from "next/router"
-import GameSummaryRewardLayoutMobile from "@mobile/components/templates/GameSummaryRewardLayoutMobile"
 
 interface IGamePageDefaultProps {
   component: React.ReactNode
@@ -44,7 +43,7 @@ const GamePageDefault = ({
   component2,
   component3
 }: IGamePageDefaultProps) => {
-  const { getTypeGamePathFolder, stateProfile } = useGlobal()
+  const { stateProfile } = useGlobal()
   const { handleTimeExpire, getCodeShareToEarn } = useBuyGameItemController()
   const data = useGameStore((state) => state.data)
   const gamePartnerData = useGameStore((state) => state.dataGamePartner)
@@ -61,10 +60,7 @@ const GamePageDefault = ({
     onClickedNext,
     weeklyPoolByGameId,
     isLoadingWeeklyPoolByGameId
-  } = useGameOverview(
-    gameData?.id as string,
-    getTypeGamePathFolder(gameData as IGame)
-  )
+  } = useGameOverview(gameData?.id as string, (gameData as IGame)?.game_mode)
 
   const containerClasses = "main-container mx-auto w-full  px-2 lg:px-0"
 
@@ -79,7 +75,7 @@ const GamePageDefault = ({
 
     if (!gameData) return null
 
-    switch (getTypeGamePathFolder(gameData as IGame)) {
+    switch ((gameData as IGame).game_mode) {
       case "story-mode":
       case "free-to-play":
       case "free-to-earn":
@@ -307,46 +303,34 @@ const GamePageDefault = ({
 
   return (
     <div className="game-page-default w-full">
-      {isMobile && gameData ? (
-        <GameSummaryRewardLayoutMobile
-          data={gameData as IGame}
-          gameId={gameData.id}
-          gameType={
-            router.asPath.includes("arcade-emporium")
-              ? "arcade-emporium"
-              : "play-to-earn"
-          }
-        />
-      ) : (
-        <div className={containerClasses}>
-          <Header />
-          {/* Not show on reward page */}
-          {!isReward && <Breadcrumb />}
+      <div className={containerClasses}>
+        <Header />
+        {/* Not show on reward page */}
+        {!isReward && <Breadcrumb />}
 
-          {gameData && "image_banner" in gameData ? (
-            <BannerSingle
-              src={gameData.image_banner}
-              alt={gameData.name}
-            />
-          ) : (
-            <Banners />
-          )}
+        {gameData && "image_banner" in gameData ? (
+          <BannerSingle
+            src={gameData.image_banner}
+            alt={gameData.name}
+          />
+        ) : (
+          <Banners />
+        )}
 
-          {gameData && <Howto data={gameData as IGame} />}
-          {component}
-          {renderStatistic()}
-          {/**
-           * @description In case there is a need to add another component
-           */}
-          {component2 && <div className="mt-12">{component2}</div>}
-          {component3 && <div className="mt-12">{component3}</div>}
-          {/* //NOTE - comment ไว้ก่อน ค่อยเปิด feature นี้ทีหลัง */}
-          {/* {gameData && (
-            <ReleatedGames _gameType={getTypeGamePathFolder(gameData as IGame)} />
+        {gameData && <Howto data={gameData as IGame} />}
+        {component}
+        {renderStatistic()}
+        {/**
+         * @description In case there is a need to add another component
+         */}
+        {component2 && <div className="mt-12">{component2}</div>}
+        {component3 && <div className="mt-12">{component3}</div>}
+        {/* //NOTE - comment ไว้ก่อน ค่อยเปิด feature นี้ทีหลัง */}
+        {/* {gameData && (
+            <ReleatedGames _gameType={getGameMode(gameData as IGame)} />
           )} */}
-          <Footer />
-        </div>
-      )}
+        <Footer />
+      </div>
     </div>
   )
 }

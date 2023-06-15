@@ -6,17 +6,18 @@ import {
   IconButton,
   SwipeableDrawer
 } from "@mui/material"
-import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import EditProfileIcon from "@components/icons/EditProfileIcon"
 import useProfileStore from "@stores/profileStore"
-import { Image } from "@components/atoms/image/index"
 import NavigateNextIcon from "@mui/icons-material/NavigateNext"
 import Support2Icon from "@components/icons/Support2Icon"
-// import Profile2Icon from "@components/icons/Profile2Icon"
 import ClockIcon from "@components/icons/ClockIcon"
 import LogoutIcon from "@components/icons/LogoutIcon"
 import { useTranslation } from "react-i18next"
 import useGlobal from "@hooks/useGlobal"
+import { ImageCustom } from "@components/atoms/image/Image"
+import { StyledAvatar } from "@mobile/components/atoms/headerMenu/HeadProfileMobile"
+import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
+import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import LogoutModal from "./LogoutModal"
 import ProfileSettingModal from "./ProfileSettingModal"
 import PlayedHistoryModal from "./PlayedHistoryModal"
@@ -34,13 +35,17 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
   const [togglePlayedHistory, setTogglePlayedHistory] = useState(false)
 
   const { t } = useTranslation()
+  const { clearAllDrawer } = useDrawerControllerMobile()
 
   return (
     <SwipeableDrawer
       anchor="right"
       open={open}
       onClose={() => setOpenSetting(false)}
-      onOpen={() => setOpenSetting(true)}
+      onOpen={() => {
+        clearAllDrawer()
+        setOpenSetting(true)
+      }}
       disableSwipeToOpen={false}
       ModalProps={{
         keepMounted: true
@@ -61,10 +66,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
           onClick={() => setOpenSetting(false)}
           aria-hidden="true"
         >
-          <LogoNakaBigIcon
-            width={30}
-            height={14}
-          />
+          <ArrowBackIcon />
           Setting
         </h2>
         <CardHeader
@@ -84,22 +86,19 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
               fontSize: "16px",
               fontFamily: "Urbanist",
               fontWeight: "500"
-            }
+            },
+            ...StyledAvatar
           }}
           avatar={
-            <Avatar
-              sx={{ bgcolor: "red", width: 80, height: 80 }}
-              aria-label="recipe"
-            >
-              {profile && (
-                <Image
-                  src={profile.avatar}
-                  width={80}
-                  height={80}
-                  alt="avatar-profile"
-                />
-              )}
-            </Avatar>
+            <div className="head-profile__info--avatar">
+              <ImageCustom
+                src={profile?.avatar || "/images/avatar.png"}
+                alt="avatar"
+                width={55}
+                height={55}
+                className="h-full w-full object-cover"
+              />
+            </div>
           }
           action={
             <IconButton
@@ -114,13 +113,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
         />
         <Box
           component="div"
-          className="border-neutral-600 py-6"
-        >
-          <hr />
-        </Box>
-        <Box
-          component="div"
-          className="grid gap-6"
+          className="my-6 grid gap-6 border-b border-t border-[#35383F] py-6"
         >
           <CardHeader
             onClick={() => setTogglePlayedHistory(!togglePlayedHistory)}
@@ -229,12 +222,6 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
             }
             title={t("Support")}
           />
-        </Box>
-        <Box
-          component="div"
-          className="border-neutral-600 py-6"
-        >
-          <hr />
         </Box>
         <CardHeader
           onClick={() => setToggleLogout(!toggleLogout)}

@@ -81,10 +81,10 @@ const useNFTArcGame = () => {
   }
 
   // transfer owner
-  const transferArcGame = (_from: string, _to: string, _tokenId: string) =>
+  const transferArcGame = (_from: string, _to: string, _nftToken: string) =>
     new Promise<TransactionResponse>((resolve, reject) => {
       arcadeGameContract
-        .transferFrom(_from, _to, _tokenId)
+        .transferFrom(_from, _to, _nftToken)
         .then((_response: TransactionResponse) => {
           resolve(_response)
         })
@@ -93,14 +93,18 @@ const useNFTArcGame = () => {
         })
     })
 
-  const onTransferArcGame = async (_toAddrs: string, _tokenId: string) => {
+  const onTransferArcGame = async (
+    _toAddrs: string,
+    _nftToken: string,
+    _tokenId: string
+  ) => {
     if (signer && address) {
       setOpen(MESSAGES.transaction_processing_order)
-      await transferArcGame(address, _toAddrs, _tokenId)
+      await transferArcGame(address, _toAddrs, _nftToken)
         .then(async (response) => {
           const _res = await response.wait()
           const data = {
-            _token: _tokenId,
+            _id: _tokenId,
             _to: _toAddrs,
             _from: address,
             _txHash: _res.transactionHash

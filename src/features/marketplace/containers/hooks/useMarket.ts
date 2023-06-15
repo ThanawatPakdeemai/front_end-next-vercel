@@ -285,9 +285,6 @@ const useMarket = () => {
     _evm?: string
     _chain?: "reef"
   }) => {
-    // console.log("_price", _price)
-    // console.log("_amount", _amount)
-    // console.log("total", _price * _amount)
     let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (marketType) {

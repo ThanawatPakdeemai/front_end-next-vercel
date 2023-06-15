@@ -5,9 +5,14 @@ import { MarketplaceProvider } from "@providers/MarketplaceProvider"
 import { useRouter } from "next/router"
 import React from "react"
 
+interface IProp {
+  isNoFilter?: boolean
+}
+
 const MarketplaceLayoutWithoutFilter = ({
+  isNoFilter = true,
   children
-}: React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) => {
+}: IProp & React.PropsWithChildren<React.ComponentPropsWithoutRef<"div">>) => {
   const { asPath } = useRouter()
   const isMapPage = asPath.includes("map")
 
@@ -17,7 +22,7 @@ const MarketplaceLayoutWithoutFilter = ({
         <Header />
       </div>
       <div className="block sm:hidden">
-        <MarketplaceLayoutMobile />
+        <MarketplaceLayoutMobile isNoFilter={isNoFilter} />
       </div>
       <div
         className={

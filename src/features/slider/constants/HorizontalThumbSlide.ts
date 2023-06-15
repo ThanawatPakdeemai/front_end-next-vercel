@@ -126,6 +126,9 @@ export const SlickDefaultThumbnail: SxProps = {
 }
 
 export const SlickAvatarThumbnail: SxProps = {
+  ".slick-thumbnail__wrapper": {
+    maxWidth: "270px !important"
+  },
   ".slick-track": {
     overflow: "hidden"
   },

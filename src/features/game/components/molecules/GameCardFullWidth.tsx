@@ -4,7 +4,7 @@ import JoinStickIcon from "@components/icons/JoinStickIcon"
 import useEventController from "@feature/event/containers/hooks/useEventController"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { Box } from "@mui/material"
-import { useRouter } from "next/router"
+// import { useRouter } from "next/router"
 import React from "react"
 import { useTranslation } from "react-i18next"
 
@@ -20,9 +20,10 @@ const GameCardFullWidth = ({
   gameData
 }: IGameCardFullWidthProps) => {
   const { t } = useTranslation()
-  const { getTypeGamePathFolder, onSetGameStore, isRedirectRoomlist } =
-    useEventController()
-  const router = useRouter()
+  const { onSetGameStore } = useEventController()
+  //  const { getTypeGamePathFolder, onSetGameStore, isRedirectRoomlist } =
+  //    useEventController()
+  // const router = useRouter()
 
   return (
     <Box
@@ -57,11 +58,11 @@ const GameCardFullWidth = ({
           className="w-full"
           onClick={() => {
             onSetGameStore(gameData)
-            router.push(
-              `/${getTypeGamePathFolder(gameData)}/${
-                gameData.path
-              }${isRedirectRoomlist(gameData).toString()}`
-            )
+            // router.push(
+            //   `/${getTypeGamePathFolder(gameData)}/${
+            //     gameData.path
+            //   }${isRedirectRoomlist(gameData).toString()}`
+            // )
           }}
         />
       </Box>

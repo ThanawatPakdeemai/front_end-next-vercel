@@ -78,7 +78,7 @@ const useEventController = () => {
   const [leaderBoardDataState, setLeaderBardDataState] =
     useState<IResponseLeaderBoardData>()
 
-  const { limit, getGameMode } = useGlobal()
+  const { limit, getGameMode, isRedirectRoomlist } = useGlobal()
   const { onSetGameStore } = useGamePageListController()
   const { setOpen, setClose } = useLoadingStore()
   const router = useRouter()
@@ -206,6 +206,7 @@ const useEventController = () => {
     currentEventData,
     limit,
     getGameMode,
+    isRedirectRoomlist,
     onSetGameStore,
     setOpen,
     setClose,

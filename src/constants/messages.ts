@@ -75,5 +75,6 @@ export const MESSAGES = {
   "you_out_room_in_to_again": "Please into room again?",
   "support_polygon_only": "This function only supports Polygon Network",
   "check_owner_nft_error": "You are't owner this NFT",
-  "check_order_error": "Order isn't founded!."
+  "check_order_error": "Order isn't founded!.",
+  "network_error": "RPC or Network are offline!, Please try again later."
 }

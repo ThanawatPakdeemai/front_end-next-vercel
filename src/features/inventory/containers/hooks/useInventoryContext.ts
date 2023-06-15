@@ -1,3 +1,4 @@
+import { MESSAGES } from "@constants/messages"
 import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAvatarReef"
 import { useGetBuildingById } from "@feature/building/containers/hooks/useGetMyBuilding"
 import { useGetMyArcGameById } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
@@ -14,6 +15,7 @@ import {
 } from "@feature/marketplace/interfaces/IMarketService"
 import useInvenMaterial from "@feature/material/inventory/containers/hooks/useInvenMaterial"
 import { useGetNakPunkById } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
+import { useToast } from "@feature/toast/containers"
 import useGlobal from "@hooks/useGlobal"
 import useMarketCategTypes from "@stores/marketCategTypes"
 import useProfileStore from "@stores/profileStore"
@@ -66,6 +68,7 @@ const useInventoryContext = () => {
   const { mutateGetNFTAvatarById } = useMutateAvatarReef()
   const { mutateMarketOrderById } = useMutateMarketplace()
   const { convertNFTTypeToUrl } = Helper
+  const { errorToast } = useToast()
 
   const updateInvenNFTMarketData = useCallback(
     (_update: IMarketData | undefined, _type?: TNFTType, _amount?: number) => {
@@ -231,17 +234,30 @@ const useInventoryContext = () => {
               await getGameItemByToken(
                 profile.data.address,
                 _gameItem.item_id_smartcontract.toString()
-              ).then((_res) => {
-                _data = {
-                  id: _gameItem._id,
-                  name: _gameItem.name,
-                  tokenId: _gameItem.item_id_smartcontract.toString(),
-                  type: marketType,
-                  img: _gameItem.image,
-                  detail: _gameItem.detail,
-                  totalAmount: Number(_res.toString())
-                }
-              })
+              )
+                .then((_res) => {
+                  _data = {
+                    id: _gameItem._id,
+                    name: _gameItem.name,
+                    tokenId: _gameItem.item_id_smartcontract.toString(),
+                    type: marketType,
+                    img: _gameItem.image,
+                    detail: _gameItem.detail,
+                    totalAmount: Number(_res.toString())
+                  }
+                })
+                .catch(() => {
+                  errorToast(MESSAGES.network_error)
+                  _data = {
+                    id: _gameItem._id,
+                    name: _gameItem.name,
+                    tokenId: _gameItem.item_id_smartcontract.toString(),
+                    type: marketType,
+                    img: _gameItem.image,
+                    detail: _gameItem.detail,
+                    totalAmount: 0
+                  }
+                })
             } else {
               await mutateMarketOrderById({
                 _id: id,

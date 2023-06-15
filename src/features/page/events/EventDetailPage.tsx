@@ -8,6 +8,7 @@ import EventContent from "@feature/event/components/organisms/EventContent"
 import EventSidebar from "@feature/event/components/organisms/EventSidebar"
 import { EVENT_CRUMB } from "@configs/crumb"
 import EventMessages from "@feature/event/components/molecules/EventMessages"
+import { IMAGES } from "@constants/images"
 
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
@@ -74,7 +75,22 @@ const EventDetailPage = () => {
   }
 
   return (
-    <>
+    <Box
+      component="section"
+      className="section-event-detail"
+      sx={{
+        ".right-sidebar-content__wrapper": {
+          backgroundImage: `url(${IMAGES.eventBackground.src})`,
+          minHeight: "auto",
+          maxHeight: "740px"
+        },
+        ".right-sidebar-content__sidebar": {
+          ".panel-content": {
+            maxHeight: "365px"
+          }
+        }
+      }}
+    >
       {currentEventData ? (
         <EventDetailLayout
           bannerImage={currentEventData.banner_image}
@@ -126,7 +142,7 @@ const EventDetailPage = () => {
       ) : (
         <EventDetailLayout component={<SkeletonBanner />} />
       )}
-    </>
+    </Box>
   )
 }
 

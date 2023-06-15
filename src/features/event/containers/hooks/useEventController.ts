@@ -217,7 +217,7 @@ const useEventController = () => {
     eventDetailIsLoading,
     eventId,
     MOCKUP_REWARD,
-    fixedRewardState
+    fixedRewardState,
   }
 }
 

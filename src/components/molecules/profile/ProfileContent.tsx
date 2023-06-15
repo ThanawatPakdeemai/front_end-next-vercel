@@ -45,6 +45,7 @@ import IReferrals from "@components/icons/Referrals"
 // import { Helmet } from "react-helmet"
 // import ReactDOM from "react-dom"
 // eslint-disable-next-line import/no-extraneous-dependencies
+import Script from "next/script"
 import EditProfileModal from "./EditProfileModal"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
@@ -68,7 +69,7 @@ const ProfileContent = () => {
   const { errorToast } = useToast()
   const { player_id } = router.query
   // eslint-disable-next-line no-console
-  // const responseTelegram = (response: TelegramUser) => console.log(response)
+  const responseTelegram = (response: any) => console.log(response)
 
   const { t } = useTranslation()
 
@@ -435,16 +436,14 @@ const ProfileContent = () => {
             <i className="tgme_widget_login_button_icon" />
             Log in with Telegram
           </button> */}
-          {/* <Helmet>
-            <script
-              async
-              src="https://telegram.org/js/telegram-widget.js?22"
-              data-telegram-login="NakaGameBot"
-              data-size="large"
-              data-onauth={responseTelegram}
-              data-request-access="write"
-            />
-          </Helmet> */}
+          <Script
+            async
+            src="https://telegram.org/js/telegram-widget.js?22"
+            data-telegram-login="NakaGameBot"
+            data-size="large"
+            data-onauth={responseTelegram}
+            data-request-access="write"
+          />
           {/* <ButtonToggleIcon
             handleClick={handleTelegramResponse}
             startIcon={<></>}

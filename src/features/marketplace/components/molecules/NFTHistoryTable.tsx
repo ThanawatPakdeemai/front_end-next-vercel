@@ -47,7 +47,7 @@ const NFTHistoryTable = ({ history }: IProp) => {
       case "rental":
         return "warning"
       default:
-        throw new Error(`Invalid type: ${_event}`)
+        return "primary"
     }
   }
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   Table,
   TableBody,
@@ -29,6 +29,7 @@ import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import NoData from "@components/molecules/NoData"
 import { TGameType } from "@feature/game/interfaces/IGameService"
+import { commonPattern } from "@constants/regex"
 
 interface IMockData {
   key: string
@@ -41,7 +42,7 @@ interface IMockData {
 }
 
 const TournamentList = () => {
-  const { search: searchBlog, setSearch: setSearchBlog } = useFilterStore()
+  const { setSearch: setSearchBlog } = useFilterStore()
   const { pager } = useGlobal()
   const { successToast } = useToast()
   const [sortType] = useState<ISortReferrals>({
@@ -67,6 +68,17 @@ const TournamentList = () => {
     successToast(MESSAGES.copy)
   }
 
+  const [searchVal, setSearchVal] = useState<string>("")
+
+  useEffect(() => {
+    const deboucer = setTimeout(() => {
+      setSearchBlog(searchVal)
+    }, 1000)
+
+    return () => clearTimeout(deboucer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchVal])
+
   return (
     <>
       <div className="pb-14 pt-16">
@@ -86,11 +98,11 @@ const TournamentList = () => {
             All Games
           </Button>
           <TextField
-            value={searchBlog}
+            value={searchVal}
             onChange={(event) => {
               let { value } = event.target
-              value = value.replace(/[^A-Za-z0-9]/gi, "")
-              setSearchBlog(value)
+              value = value.replace(commonPattern, " ")
+              setSearchVal(value)
             }}
             placeholder="Search Games..."
             InputProps={{

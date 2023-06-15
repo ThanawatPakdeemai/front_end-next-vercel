@@ -19,13 +19,15 @@ import NumpadIcon from "@components/icons/NumpadIcon"
 import CountItem from "@components/molecules/CountItem"
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import Helper from "@utils/helper"
+import { addressPattern } from "@constants/regex"
 
 interface IProp {
   _tokenId: string
+  _nftToken: string
   _maxAmount?: number
 }
 
-const TransferBox = ({ _tokenId, _maxAmount }: IProp) => {
+const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
   const [expanded, setExpanded] = React.useState<string | false>()
   const [address, setAddress] = React.useState<string>("")
   const [transAmount, setTransAmount] = React.useState<number>(0)
@@ -67,19 +69,19 @@ const TransferBox = ({ _tokenId, _maxAmount }: IProp) => {
       switch (marketType) {
         case "nft_material":
           if (onTransferMaterial)
-            await onTransferMaterial(address, _tokenId, transAmount)
+            await onTransferMaterial(address, _nftToken, transAmount)
           break
         case "nft_land":
-          await onTransferLand(address, _tokenId)
+          await onTransferLand(address, _nftToken, _tokenId)
           break
         case "nft_building":
-          await onTransferBuilding(address, _tokenId)
+          await onTransferBuilding(address, _nftToken, _tokenId)
           break
         case "nft_game":
-          await onTransferArcGame(address, _tokenId)
+          await onTransferArcGame(address, _nftToken, _tokenId)
           break
         case "nft_naka_punk":
-          await onTransferPunk(address, _tokenId).catch(() => {})
+          await onTransferPunk(address, _nftToken, _tokenId).catch(() => {})
           break
         default:
           break
@@ -96,7 +98,7 @@ const TransferBox = ({ _tokenId, _maxAmount }: IProp) => {
         )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [_tokenId, address, marketType, transAmount])
+  }, [_nftToken, address, marketType, transAmount])
 
   useEffect(() => {
     let load = false
@@ -168,6 +170,11 @@ const TransferBox = ({ _tokenId, _maxAmount }: IProp) => {
             onChange={(e) => {
               setAddress(e.target.value)
             }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                paddingLeft: 1
+              }
+            }}
           />
           {marketType === "game_item" || marketType === "nft_material" ? (
             <CountItem
@@ -188,7 +195,7 @@ const TransferBox = ({ _tokenId, _maxAmount }: IProp) => {
               !address ||
               (["game_item", "nft_material"].includes(String(marketType)) &&
                 transAmount <= 0) ||
-              !/^0x[a-fA-F0-9]{40}$/.test(address)
+              !addressPattern.test(address)
             }
             sx={{ fontFamily: "neueMachina" }}
             color="success"

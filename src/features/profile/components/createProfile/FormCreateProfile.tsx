@@ -19,6 +19,7 @@ import useGetAvatar from "@feature/avatar/containers/hook/useGetAvatar"
 import { MESSAGES } from "@constants/messages"
 import { useRouter } from "next/router"
 import { useTranslation } from "react-i18next"
+import { commonPattern } from "@constants/regex"
 
 const FormCreateProfile = () => {
   const profile = useProfileStore((state) => state.profile.data)
@@ -133,7 +134,7 @@ const FormCreateProfile = () => {
               value={watch("_username")}
               onChange={(event) => {
                 let { value } = event.target
-                value = value.replace(/[^A-Za-z0-9]/gi, "")
+                value = value.replace(commonPattern, "")
                 setValue("_username", value)
               }}
               id="username-create"

@@ -20,6 +20,7 @@ import { MESSAGES } from "@constants/messages"
 import useLoadingStore from "@stores/loading"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import { useTranslation } from "react-i18next"
+import { commonPattern } from "@constants/regex"
 import useUpdateProfile from "../containers/hook/getUpdateProfile"
 import { IGeoProfile } from "../interfaces/IProfileService"
 import { getGeoInfo } from "../containers/services/profile.service"
@@ -143,7 +144,7 @@ const FormEditProfile = ({
             value={watch("_username")}
             onChange={(event) => {
               let { value } = event.target
-              value = value.replace(/[^A-Za-z0-9]/gi, "")
+              value = value.replace(commonPattern, "")
               setValue("_username", value)
             }}
             id="username-create"

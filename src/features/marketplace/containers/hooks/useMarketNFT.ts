@@ -103,13 +103,19 @@ const useMarketNFT = () => {
     let _status: boolean = false
     setOpen(MESSAGES.transaction_processing_order)
     if (signer && address) {
-      const [_checkNFTOwner, _checkChain] = await Promise.all([
-        onCheckOwnerNFT(_NFTtype, _token),
-        onCheckPolygonChain(marketNFTContract)
-      ])
+      const [_checkNFTOwner, _checkChain, _checkApproveForAll] =
+        await Promise.all([
+          onCheckOwnerNFT(_NFTtype, _token),
+          onCheckPolygonChain(marketNFTContract),
+          onCheckNFTIsApproveForAll(
+            address,
+            CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT,
+            _NFTtype
+          )
+        ])
       if (!_checkNFTOwner) {
         setClose()
-        errorToast("you are not owner of this nft")
+        errorToast(`${MESSAGES.check_owner_nft_error} or rpc error.`)
         return false
       }
       if (!_checkChain._pass) {
@@ -117,11 +123,11 @@ const useMarketNFT = () => {
         errorToast(MESSAGES.support_polygon_only)
         return false
       }
-      await onCheckNFTIsApproveForAll(
-        address,
-        CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT,
-        _NFTtype
-      ).catch((error) => console.error(error))
+      if (!_checkApproveForAll) {
+        setClose()
+        errorToast(MESSAGES.approve_for_all_error)
+        return false
+      }
       await createNFTOrder({
         _contract: _checkChain._contract,
         _contractAddrs: getContractAddrsByNFTType(_NFTtype),
@@ -205,7 +211,7 @@ const useMarketNFT = () => {
       ])
       if (Number(_checkOrderById.price) <= 0) {
         setClose()
-        errorToast("order not founded")
+        errorToast(`${MESSAGES.check_order_error} or rpc error.`)
         return false
       }
       if (!_checkChain._pass) {
@@ -296,7 +302,7 @@ const useMarketNFT = () => {
       )
       if (Number(_checkOrderById.price) <= 0) {
         setClose()
-        errorToast("order not founded")
+        errorToast(`${MESSAGES.check_order_error} or rpc error.`)
         return false
       }
       if (!_checkChain._pass) {

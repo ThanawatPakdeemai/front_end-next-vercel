@@ -30,7 +30,10 @@ const ProfileSettingModal = ({
       sx={{
         ...StyleDrawer,
         "&.MuiDrawer-root": {
-          zIndex: 1200
+          zIndex: 1200,
+          ".MuiPaper-root": {
+            height: "100%"
+          }
         }
       }}
     >

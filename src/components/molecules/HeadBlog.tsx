@@ -5,7 +5,8 @@ import useSearchStore from "@stores/blogFilter"
 import useSelectStore from "@stores/selector"
 import { useRouter } from "next/router"
 import { useTranslation } from "next-i18next"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
+import { commonPattern } from "@constants/regex"
 
 const HeadBlog = ({ children }: { children: React.ReactNode }) => {
   const styleButton = {
@@ -13,11 +14,7 @@ const HeadBlog = ({ children }: { children: React.ReactNode }) => {
     borderRadius: "15px !important"
   }
 
-  const {
-    search: searchBlog,
-    setSearch: setSearchBlog,
-    clearSearch
-  } = useSearchStore()
+  const { setSearch: setSearchBlog, clearSearch } = useSearchStore()
   const { select: selectHeader, setSelect: setSelectHeader } = useSelectStore()
   const router = useRouter()
 
@@ -27,6 +24,17 @@ const HeadBlog = ({ children }: { children: React.ReactNode }) => {
     clearSearch()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.pathname])
+
+  const [searchVal, setSearchVal] = useState<string>("")
+
+  useEffect(() => {
+    const deboucer = setTimeout(() => {
+      setSearchBlog(searchVal)
+    }, 1000)
+
+    return () => clearTimeout(deboucer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchVal])
 
   return (
     <div className="mx-auto w-full max-w-[1140px] xl:mx-0">
@@ -56,11 +64,11 @@ const HeadBlog = ({ children }: { children: React.ReactNode }) => {
           ))}
         </div>
         <TextField
-          value={searchBlog}
+          value={searchVal}
           onChange={(event) => {
             let { value } = event.target
-            value = value.replace(/[^A-Za-z0-9]/gi, "")
-            setSearchBlog(value)
+            value = value.replace(commonPattern, " ")
+            setSearchVal(value)
           }}
           className="mx-auto h-full w-full max-w-xs max-md:flex md:mx-0 md:w-[234px] md:px-2"
           placeholder={t("search") + t("Blog")}

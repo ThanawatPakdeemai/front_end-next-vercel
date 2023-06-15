@@ -12,12 +12,10 @@ import useGlobal from "@hooks/useGlobal"
 import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
 import useMarketFilterStore from "@stores/marketFilter"
 import Helper from "@utils/helper"
-import { NextRouter, useRouter } from "next/router"
-import { TType } from "@feature/marketplace/interfaces/IMarketService"
+import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 
 const useInventoryOwner = () => {
   const ref = useRef<boolean>(false)
-  const router: NextRouter = useRouter()
   const { profile } = useProfileStore()
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [isItemLoading, setItemIsLoading] = useState<boolean>(true)
@@ -47,11 +45,8 @@ const useInventoryOwner = () => {
     Array<IInventoryItemList>
   >([])
 
-  const { getValueFromTKey, convertTTypeToNFTType } = Helper
-  const _marketType =
-    marketType ||
-    convertTTypeToNFTType(router.query.type as TType) ||
-    "nft_land"
+  const { getValueFromTKey } = Helper
+  const [NFTType, setNFTType] = useState<TNFTType | undefined>(undefined)
 
   const fetchAllLandofAddress = useCallback(async () => {
     if (!isFetchAllLand && profile.data) {
@@ -81,11 +76,11 @@ const useInventoryOwner = () => {
       filterType &&
       search &&
       sort &&
-      _marketType &&
-      _marketType !== "game_item" &&
-      _marketType !== "nft_material"
+      NFTType &&
+      NFTType !== "game_item" &&
+      NFTType !== "nft_material"
     ) {
-      switch (_marketType) {
+      switch (NFTType) {
         case "nft_building":
           await mutateGetOwnerBuilding({
             _urlNFT: "NFT-Building",
@@ -250,21 +245,21 @@ const useInventoryOwner = () => {
     setTotalCount(_total)
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile.data, _marketType, currentPage, limit, filterType, search, sort])
+  }, [profile.data, NFTType, currentPage, limit, filterType, search, sort])
 
   const fetchInventoryItem = useCallback(async () => {
     if (
       profile.data &&
-      _marketType &&
+      NFTType &&
       filterType &&
       gameItemList &&
       materialList &&
-      (_marketType === "game_item" || _marketType === "nft_material")
+      (NFTType === "game_item" || NFTType === "nft_material")
     ) {
       setItemIsLoading(true)
       let _data: IInventoryItemList[] = []
       let _total = 0
-      switch (_marketType) {
+      switch (NFTType) {
         case "game_item":
           if (gameItemList && gameItemList.length > 0) {
             let _dummy = gameItemList
@@ -318,7 +313,7 @@ const useInventoryOwner = () => {
     ref.current = true
   }, [
     profile.data,
-    _marketType,
+    NFTType,
     filterType,
     gameItemList,
     materialList,
@@ -346,9 +341,19 @@ const useInventoryOwner = () => {
     }
   }, [fetchInventoryItem])
 
+  useEffect(() => {
+    let cleanup = false
+    if (!cleanup && marketType) {
+      setNFTType(marketType)
+    }
+    return () => {
+      cleanup = true
+    }
+  }, [marketType])
+
   useMemo(() => {
     let cleanup = false
-    if (!cleanup && _marketType) {
+    if (!cleanup && NFTType) {
       setCurrentPage(1)
     }
     return () => {
@@ -356,7 +361,7 @@ const useInventoryOwner = () => {
       ref.current = false
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [_marketType])
+  }, [NFTType])
 
   return {
     inventoryItemList,

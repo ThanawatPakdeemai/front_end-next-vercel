@@ -3,7 +3,6 @@ import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
 import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import {
   Box,
-  ButtonGroup,
   CircularProgress,
   InputAdornment,
   Stack,
@@ -17,6 +16,8 @@ import { MESSAGES } from "@constants/messages"
 import { useTranslation } from "react-i18next"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import { isMobile } from "@hooks/useGlobal"
+import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import IconArrowRight from "@components/icons/arrowRightIcon"
 import useResetPassword from "../containers/hooks/useResetPassword"
 
 const FromForgotPassword = () => {
@@ -120,40 +121,46 @@ const FromForgotPassword = () => {
                     )
                   }}
                 />
+                <Box
+                  component="div"
+                  className="mt-8 flex justify-center"
+                >
+                  <ButtonToggleIcon
+                    type="button"
+                    className="border border-solid border-neutral-700 bg-transparent font-bold text-white-default !no-underline"
+                    text="Back"
+                    startIcon={null}
+                    handleClick={handleClose}
+                    endIcon={<IconArrowRight stroke="#fff" />}
+                    style={{ borderRadius: "24px 0px 0px 24px" }}
+                  />
+                  <ButtonLink
+                    icon={<></>}
+                    size="medium"
+                    color="secondary"
+                    disabled={isLoading}
+                    className="min-w-auto h-[40px]  text-sm"
+                    sxCustomStyled={{ borderRadius: "0px 24px 24px 0px" }}
+                    href=""
+                    onClick={() => {}}
+                    text={
+                      <>
+                        {isLoading ? (
+                          <CircularProgress
+                            color="primary"
+                            className="ml-4"
+                            size={20}
+                          />
+                        ) : (
+                          "Reset Password"
+                        )}
+                      </>
+                    }
+                    type="submit"
+                    variant="contained"
+                  />
+                </Box>
               </Box>
-              <ButtonGroup className="mt-10  gap-3">
-                <ButtonLink
-                  className="h-[40px] !min-w-[150px] text-sm"
-                  href=""
-                  onClick={handleClose}
-                  text="Back"
-                  size="medium"
-                />
-                <ButtonLink
-                  icon={<></>}
-                  size="medium"
-                  color="secondary"
-                  disabled={isLoading}
-                  className="h-[40px] !min-w-[200px]  text-sm"
-                  href=""
-                  onClick={() => {}}
-                  text={
-                    <>
-                      {isLoading ? (
-                        <CircularProgress
-                          color="primary"
-                          className="ml-4"
-                          size={20}
-                        />
-                      ) : (
-                        "Reset Password"
-                      )}
-                    </>
-                  }
-                  type="submit"
-                  variant="contained"
-                />
-              </ButtonGroup>
             </form>
           </Stack>
         </ModalCustom>

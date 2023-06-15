@@ -412,6 +412,9 @@ const useGlobal = (
         setMarketType("nft_game")
       } else if (router.asPath.includes("avatar-reef")) {
         setMarketType("nft_avatar")
+      } else {
+        // path = "/"
+        setMarketType("nft_land")
       }
     }
 

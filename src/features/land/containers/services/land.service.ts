@@ -1,5 +1,8 @@
 import services from "@configs/axiosGlobalConfig"
-import { IMarketServForm } from "@feature/marketplace/interfaces/IMarketService"
+import {
+  IMarketServForm,
+  INFTTransferServ
+} from "@feature/marketplace/interfaces/IMarketService"
 import {
   IAllLand,
   IMarketLandData,
@@ -147,6 +150,32 @@ export const getAllLand = () =>
   new Promise<IAllLand>((resolve, reject) => {
     services
       .get<IAllLand>(`/market-place-new/NFT-Land/land-all`)
+      .then((response) => resolve(response.data))
+      .catch((error) => reject(error))
+  })
+
+export const setTransferLand = ({
+  _id,
+  _to,
+  _from,
+  _txHash
+}: {
+  _id: string
+  _to: string
+  _from: string
+  _txHash: string
+}) =>
+  new Promise<INFTTransferServ>((resolve, reject) => {
+    const data = {
+      id: _id,
+      to_address: _to,
+      from_address: _from,
+      tx_hash: _txHash
+    }
+    services
+      .post<INFTTransferServ>(`/nakaverse-land/land-owner-change`, {
+        ...data
+      })
       .then((response) => resolve(response.data))
       .catch((error) => reject(error))
   })

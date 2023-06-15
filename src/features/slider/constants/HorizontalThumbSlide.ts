@@ -24,7 +24,7 @@ export const StyleArrowAvatar = {
     fill: "white"
   },
   "&.slick-arrow": {
-    top: "-96px",
+    top: "10px",
     transform: "translate(0, 0)",
     width: "auto",
     height: "auto",
@@ -35,12 +35,10 @@ export const StyleArrowAvatar = {
       borderRadius: "8px"
     },
     "&.slick-prev": {
-      left: "auto",
-      marginLeft: "-150px"
+      left: "-60px"
     },
     "&.slick-next": {
-      right: "auto",
-      marginRight: "-150px"
+      right: "-60px"
     },
     "&:before": {
       display: "none"
@@ -97,6 +95,9 @@ export const SlickSingleSlideAvatarCSS = {
 }
 
 export const SlickDefaultThumbnail: SxProps = {
+  ".slick-track": {
+    overflow: "hidden"
+  },
   ".slick-list": {
     height: "70px",
     overflow: "hidden"
@@ -125,6 +126,9 @@ export const SlickDefaultThumbnail: SxProps = {
 }
 
 export const SlickAvatarThumbnail: SxProps = {
+  ".slick-track": {
+    overflow: "hidden"
+  },
   ".slick-list": {
     maxWidth: "480px",
     width: "270px!important",
@@ -139,12 +143,18 @@ export const SlickAvatarThumbnail: SxProps = {
     border: "0",
     padding: "0",
     height: "auto",
+    overflow: "hidden",
     "& > .slick-list": {
       width: "100%"
     }
   },
   ".slick-slide": {
     opacity: 1,
+    "&.slick-cloned": {
+      opacity: 0,
+      visibility: "hidden",
+      display: "none"
+    },
     ".verticalSmallThumb-slide__item": {
       margin: "0 4px",
       padding: "0",

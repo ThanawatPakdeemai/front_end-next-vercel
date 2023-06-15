@@ -8,12 +8,14 @@ interface IGameFilterMobile {
   setActiveMenu: React.Dispatch<React.SetStateAction<IGetType>>
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  choiceType: string
 }
 
 const GameFilterMobile = ({
   setActiveMenu,
   setSelectedCategory,
-  setOpen
+  setOpen,
+  choiceType
 }: IGameFilterMobile) => (
   <Box
     component="section"
@@ -48,7 +50,7 @@ const GameFilterMobile = ({
           gap: "4px"
         }}
       >
-        Categories
+        {choiceType}
         <i>
           <ArrowDownRoundIcon />
         </i>

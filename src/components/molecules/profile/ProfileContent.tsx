@@ -42,6 +42,7 @@ import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContol
 import { useWeb3Provider } from "@providers/index"
 import Link from "next/link"
 import IReferrals from "@components/icons/Referrals"
+import { Helmet } from "react-helmet"
 // import ReactDOM from "react-dom"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import EditProfileModal from "./EditProfileModal"
@@ -434,14 +435,16 @@ const ProfileContent = () => {
             <i className="tgme_widget_login_button_icon" />
             Log in with Telegram
           </button> */}
-          <script
-            async
-            src="https://telegram.org/js/telegram-widget.js?22"
-            data-telegram-login="NakaGameBot"
-            data-size="large"
-            data-onauth={responseTelegram}
-            data-request-access="write"
-          />
+          <Helmet>
+            <script
+              async
+              src="https://telegram.org/js/telegram-widget.js?22"
+              data-telegram-login="NakaGameBot"
+              data-size="large"
+              data-onauth={responseTelegram}
+              data-request-access="write"
+            />
+          </Helmet>
           {/* <ButtonToggleIcon
             handleClick={handleTelegramResponse}
             startIcon={<></>}

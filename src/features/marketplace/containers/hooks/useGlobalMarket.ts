@@ -424,7 +424,7 @@ const useGlobalMarket = () => {
           router.asPath
         )
         if (isUserSeller || (isInvenItemDataAbsent && isGameItemOrMaterial)) {
-          return countItemSelected * (_price / parseFloat(nakaPrice.last))
+          return countItemSelected * (_price * parseFloat(nakaPrice.last))
         }
         if (!isInvenItemDataAbsent && isGameItemOrMaterial) {
           return countItemSelected * (_price / parseFloat(nakaPrice.last))

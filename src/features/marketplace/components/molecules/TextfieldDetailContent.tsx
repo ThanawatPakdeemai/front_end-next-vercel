@@ -153,11 +153,13 @@ const TextfieldDetailContent = ({
       {/* (countItemSelected * _priceValue) */}
       {(price && price > 0) ||
       type === "game_item" ||
-      type === "nft_material" ? (
+      type === "nft_material" ||
+      type === "nft_naka_punk" ||
+      type === "nft_avatar" ? (
         <FormattedInputs
           label="PRICE (NAKA)"
           className="!w-[131px] sm:!w-[232px]"
-          values={price?.toString() || sellPriceNaKa}
+          values={calcNAKAPrice(price || 0).toString() || sellPriceNaKa}
           onSetValues={onPriceChange}
           disabled={!!price}
           propsInput={{

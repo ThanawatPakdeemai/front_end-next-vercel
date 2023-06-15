@@ -15,7 +15,7 @@ const NoData = ({ className, icon, text }: INoData) => (
     {icon || (
       <div className="mx-auto flex h-[125px] w-[125px] items-center justify-center">
         <ImageCustom
-          src={IMAGES.noDataImage.srcWebp}
+          src={IMAGES.noDataImage.src}
           alt={IMAGES.noDataImage.alt}
           width={IMAGES.noDataImage.width}
           height={IMAGES.noDataImage.height}
@@ -23,7 +23,7 @@ const NoData = ({ className, icon, text }: INoData) => (
         />
       </div>
     )}
-    <Typography className="mx-auto max-w-[257px] rounded-[14px] border border-neutral-800 p-4 text-[14px] text-neutral-300">
+    <Typography className="no-data__text mx-auto max-w-[257px] rounded-[14px] border border-neutral-800 p-4 text-[14px] text-neutral-300">
       {text || <Trans i18nKey="no_data_available" />}
     </Typography>
   </div>

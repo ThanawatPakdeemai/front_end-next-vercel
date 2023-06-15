@@ -7,9 +7,12 @@ import { useGetLandById } from "@feature/land/containers/hooks/useGetMyLand"
 import { IPosition } from "@feature/land/interfaces/ILandService"
 import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutateMarketplace"
 import {
+  IClaimRentalServ,
   IInstallData,
+  IInstallPeriod,
   IMarketData,
   IMarketHistory,
+  IPayBillData,
   IRentalData,
   TNFTType
 } from "@feature/marketplace/interfaces/IMarketService"
@@ -41,6 +44,8 @@ interface IInventoryItemData {
   installments_data?: IInstallData | null
   rentals_data?: IRentalData | null
   wallet_address?: string
+  owner_id?: string
+  player_id?: string
 }
 
 const useInventoryContext = () => {
@@ -95,6 +100,48 @@ const useInventoryContext = () => {
     [invenItemData]
   )
 
+  // update installment
+  const updateInstallmentTable = useCallback(
+    (_data: IPayBillData) => {
+      if (invenItemData && invenItemData.installments_data) {
+        const _dummyRound: IInstallPeriod[] =
+          invenItemData.installments_data.period
+        const _indexUpdateRound = _dummyRound.findIndex((f) => !f.history_id)
+        _dummyRound[_indexUpdateRound] = {
+          ..._dummyRound[_indexUpdateRound],
+          history_id: _data.id
+        }
+        const _result: IInventoryItemData = {
+          ...invenItemData,
+          installments_data: {
+            ...invenItemData.installments_data,
+            period: _dummyRound
+          }
+        }
+        setInvenItemData(_result)
+      }
+    },
+    [invenItemData]
+  )
+
+  // update claim
+  const updateClaimRentalTable = useCallback(
+    (_data: IClaimRentalServ) => {
+      if (invenItemData && invenItemData.rentals_data) {
+        const _result: IInventoryItemData = {
+          ...invenItemData,
+          rentals_data: {
+            ...invenItemData.rentals_data,
+            period: _data.period,
+            period_balance: _data.period_balance
+          }
+        }
+        setInvenItemData(_result)
+      }
+    },
+    [invenItemData]
+  )
+
   const fetchInvenNFTItemDataById = useCallback(async () => {
     setIsLoading(true)
     if (
@@ -129,7 +176,9 @@ const useInventoryContext = () => {
               marketplaces_data: _res.marketplaces_data,
               installments_data: _res.installments_data,
               rentals_data: _res.rentals_data,
-              wallet_address: _res.wallet_address
+              wallet_address: _res.wallet_address,
+              owner_id: _res.owner_id,
+              player_id: _res.player_id
             }
           })
           break
@@ -149,7 +198,9 @@ const useInventoryContext = () => {
               marketplaces_data: _res.marketplaces_data,
               installments_data: _res.installments_data,
               rentals_data: _res.rentals_data,
-              wallet_address: _res.wallet_address
+              wallet_address: _res.wallet_address,
+              owner_id: _res.owner_id,
+              player_id: _res.player_id
             }
           })
           break
@@ -166,7 +217,9 @@ const useInventoryContext = () => {
               detail: _res.data.story,
               history: _res.data.history,
               marketplaces_data: _res.data.marketplaces_data,
-              installments_data: _res.data.installments_data
+              installments_data: _res.data.installments_data,
+              owner_id: _res.data.NFT_info.owner_id._id,
+              player_id: _res.data.NFT_info.owner_id._id
             }
           })
           break
@@ -181,7 +234,9 @@ const useInventoryContext = () => {
               detail: _res.description,
               history: _res.history,
               marketplaces_data: _res.marketplaces_data,
-              wallet_address: _res.wallet_adddress
+              wallet_address: _res.wallet_adddress,
+              owner_id: _res.owner_id,
+              player_id: _res.player_id
             }
           })
           break
@@ -194,7 +249,9 @@ const useInventoryContext = () => {
               type: marketType,
               img: _res.image,
               detail: _res.description,
-              history: _res.history
+              history: _res.history,
+              owner_id: _res.owner_id,
+              player_id: _res.player_id
             }
           })
           break
@@ -243,7 +300,9 @@ const useInventoryContext = () => {
                     type: marketType,
                     img: _gameItem.image,
                     detail: _gameItem.detail,
-                    totalAmount: Number(_res.toString())
+                    totalAmount: Number(_res.toString()),
+                    owner_id: profile.data?.address,
+                    player_id: profile.data?.address
                   }
                 })
                 .catch(() => {
@@ -255,7 +314,9 @@ const useInventoryContext = () => {
                     type: marketType,
                     img: _gameItem.image,
                     detail: _gameItem.detail,
-                    totalAmount: 0
+                    totalAmount: 0,
+                    owner_id: profile.data?.address,
+                    player_id: profile.data?.address
                   }
                 })
             } else {
@@ -290,7 +351,9 @@ const useInventoryContext = () => {
                       updated_at: response.data.created_at,
                       current_time: response.data.created_at,
                       created_at: response.data.created_at
-                    }
+                    },
+                    owner_id: profile.data?.address,
+                    player_id: profile.data?.address
                   }
                 }
               })
@@ -399,7 +462,9 @@ const useInventoryContext = () => {
     gameItemList,
     materialList,
     onTransferMaterial,
-    updateInvenNFTMarketData
+    updateInvenNFTMarketData,
+    updateInstallmentTable,
+    updateClaimRentalTable
   }
 }
 

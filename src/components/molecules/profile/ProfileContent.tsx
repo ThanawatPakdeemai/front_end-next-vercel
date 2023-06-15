@@ -443,6 +443,7 @@ const ProfileContent = () => {
             data-size="large"
             data-onauth={responseTelegram}
             data-request-access="write"
+            strategy="worker"
           />
           {/* <ButtonToggleIcon
             handleClick={handleTelegramResponse}

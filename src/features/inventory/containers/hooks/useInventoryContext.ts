@@ -8,8 +8,10 @@ import { IPosition } from "@feature/land/interfaces/ILandService"
 import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutateMarketplace"
 import {
   IInstallData,
+  IInstallPeriod,
   IMarketData,
   IMarketHistory,
+  IPayBillData,
   IRentalData,
   TNFTType
 } from "@feature/marketplace/interfaces/IMarketService"
@@ -94,6 +96,32 @@ const useInventoryContext = () => {
     },
     [invenItemData]
   )
+
+  // update installment
+  const updateInstallmentTable = useCallback(
+    (_data: IPayBillData) => {
+      if (invenItemData && invenItemData.installments_data) {
+        const _dummyRound: IInstallPeriod[] =
+          invenItemData.installments_data.period
+        const _indexUpdateRound = _dummyRound.findIndex((f) => !f.history_id)
+        _dummyRound[_indexUpdateRound] = {
+          ..._dummyRound[_indexUpdateRound],
+          history_id: _data.id
+        }
+        const _result: IInventoryItemData = {
+          ...invenItemData,
+          installments_data: {
+            ...invenItemData.installments_data,
+            period: _dummyRound
+          }
+        }
+        setInvenItemData(_result)
+      }
+    },
+    [invenItemData]
+  )
+
+  // update claim
 
   const fetchInvenNFTItemDataById = useCallback(async () => {
     setIsLoading(true)
@@ -399,7 +427,8 @@ const useInventoryContext = () => {
     gameItemList,
     materialList,
     onTransferMaterial,
-    updateInvenNFTMarketData
+    updateInvenNFTMarketData,
+    updateInstallmentTable
   }
 }
 

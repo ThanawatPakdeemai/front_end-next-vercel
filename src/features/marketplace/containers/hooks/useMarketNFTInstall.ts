@@ -63,7 +63,8 @@ const useMarketNFTInstall = () => {
     onCheckPolygonChain,
     onCheckOwnerNFT
   } = useGlobalMarket()
-  const { updateInvenNFTMarketData } = useInventoryProvider()
+  const { updateInvenNFTMarketData, updateInstallmentTable } =
+    useInventoryProvider()
 
   const { errorToast } = useToast()
 
@@ -476,7 +477,7 @@ const useMarketNFTInstall = () => {
               ["bytes32", "uint256", "uint256", "uint256"],
               _log.data
             )
-            const data: IPayBillParams = {
+            const _data: IPayBillParams = {
               _billId: _resultEvent[0],
               _billBalance: WeiToNumber(_resultEvent[2]),
               _periodBalance: Number(_resultEvent[1].toString()),
@@ -484,7 +485,10 @@ const useMarketNFTInstall = () => {
               _roundPayed: _periodAt,
               _roundPayedAmount: WeiToNumber(_resultEvent[3])
             }
-            await mutatePayBillInstallNFT(data)
+            const data = await mutatePayBillInstallNFT(_data)
+            if (data && updateInstallmentTable) {
+              updateInstallmentTable(data.data)
+            }
           }
         })
         .catch((error) => console.error(error))

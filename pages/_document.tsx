@@ -184,6 +184,14 @@ class MyDocument extends Document {
           />
         </Head>
         <body>
+          <script
+            async
+            src="https://telegram.org/js/telegram-widget.js?22"
+            data-telegram-login="NakaGameBot"
+            data-size="large"
+            data-onauth="onTelegramAuth(user)"
+            data-request-access="write"
+          />
           <Main />
           <NextScript />
         </body>

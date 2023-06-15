@@ -19,6 +19,7 @@ import NumpadIcon from "@components/icons/NumpadIcon"
 import CountItem from "@components/molecules/CountItem"
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import Helper from "@utils/helper"
+import { addressPattern } from "@constants/regex"
 
 interface IProp {
   _tokenId: string
@@ -169,6 +170,11 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
             onChange={(e) => {
               setAddress(e.target.value)
             }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                paddingLeft: 1
+              }
+            }}
           />
           {marketType === "game_item" || marketType === "nft_material" ? (
             <CountItem
@@ -189,7 +195,7 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
               !address ||
               (["game_item", "nft_material"].includes(String(marketType)) &&
                 transAmount <= 0) ||
-              !/^0x[a-fA-F0-9]{40}$/.test(address)
+              !addressPattern.test(address)
             }
             sx={{ fontFamily: "neueMachina" }}
             color="success"

@@ -73,7 +73,7 @@ export default function CardBuyItem({
             />
           )
         }
-        if (profile && profile.gold > 0) {
+        if (profile && (profile.gold as number) > 0) {
           return (
             <Box
               component="div"

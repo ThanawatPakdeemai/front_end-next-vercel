@@ -39,7 +39,8 @@ describe("useCreateWeb3Provider", () => {
     avatar: "",
     username: "",
     id: "",
-    subscription: false
+    subscription: false,
+    gold: 0
   }
 
   // Set up mock functions

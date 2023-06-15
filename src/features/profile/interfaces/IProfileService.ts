@@ -46,7 +46,7 @@ export interface IProfile extends IProfileMain {
   exp: number
   level: number
   message?: string
-  gold: number
+  gold?: number
 }
 
 export interface IProfileSubmit {

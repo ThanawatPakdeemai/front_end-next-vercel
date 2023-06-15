@@ -468,6 +468,7 @@ const ModalMarket = ({
                         ? undefined
                         : invPeriod || marketPeriod
                     }
+                    action={action}
                   />
                 ) : null}
                 <form

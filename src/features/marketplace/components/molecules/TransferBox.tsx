@@ -7,7 +7,7 @@ import {
   Button
 } from "@mui/material"
 import { useRouter } from "next/router"
-import React, { useCallback, useEffect } from "react"
+import React, { useCallback, useEffect, useMemo } from "react"
 import PlusIcon from "@components/icons/CountIcon/PlusIcon"
 import useProfileStore from "@stores/profileStore"
 import useGlobal from "@hooks/useGlobal"
@@ -30,9 +30,19 @@ interface IProp {
 const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
   const [expanded, setExpanded] = React.useState<string | false>()
   const [address, setAddress] = React.useState<string>("")
-  const [transAmount, setTransAmount] = React.useState<number>(0)
-  const MIN_AMOUNT: number = 1
+  const MIN_AMOUNT = useMemo(() => {
+    let _min: number = 0
+    if (_nftToken === "game_item" || _nftToken === "nft_material") {
+      if (_maxAmount && _maxAmount > 0) {
+        _min = 1
+      }
+    } else {
+      _min = 1
+    }
+    return _min
+  }, [_nftToken, _maxAmount])
   const MAX_AMOUNT: number = _maxAmount || 1
+  const [transAmount, setTransAmount] = React.useState<number>(MIN_AMOUNT)
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
   const { marketType } = useGlobal()
@@ -181,8 +191,8 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
               endIcon={<NumpadIcon />}
               helperText={`Total Amount: ${MAX_AMOUNT}`}
               label="transfer amount"
-              min={0}
-              max={_maxAmount}
+              min={MIN_AMOUNT}
+              max={MAX_AMOUNT}
               count={transAmount}
               setItemCount={setTransAmount}
               _minusItem={onDecreaseAmount}
@@ -195,7 +205,8 @@ const TransferBox = ({ _tokenId, _nftToken, _maxAmount }: IProp) => {
               !address ||
               (["game_item", "nft_material"].includes(String(marketType)) &&
                 transAmount <= 0) ||
-              !addressPattern.test(address)
+              !addressPattern.test(address) ||
+              profile.address.toLowerCase() === address.toLowerCase()
             }
             sx={{ fontFamily: "neueMachina" }}
             color="success"

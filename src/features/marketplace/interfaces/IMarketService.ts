@@ -195,6 +195,7 @@ export interface IMarketHistory extends IPrice {
 export interface IRentalPeriod extends IRound {
   claim_status: boolean
   transaction_hash: string | null
+  claim_date?: Date
 }
 
 interface ISellingDetail extends IMarketInit, ICurrentTime {

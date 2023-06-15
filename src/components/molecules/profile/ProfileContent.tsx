@@ -69,7 +69,7 @@ const ProfileContent = () => {
   const { errorToast } = useToast()
   const { player_id } = router.query
   // eslint-disable-next-line no-console
-  const responseTelegram = (response: any) => console.log(response)
+  // const responseTelegram = (response: any) => console.log(response)
 
   const { t } = useTranslation()
 
@@ -441,7 +441,7 @@ const ProfileContent = () => {
             src="https://telegram.org/js/telegram-widget.js?22"
             data-telegram-login="NakaGameBot"
             data-size="large"
-            data-onauth={responseTelegram}
+            data-onauth="onTelegramAuth(user)"
             data-request-access="write"
             strategy="worker"
           />

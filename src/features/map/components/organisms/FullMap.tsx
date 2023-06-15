@@ -283,50 +283,52 @@ const FullMap = () => {
         </Stack>
       </ModalCustom> */}
       {/* ---------- map ---------- */}
-      <Canvas
-        gl={{ antialias: true, toneMapping: THREE.NoToneMapping }}
-        linear
-        camera={{
-          position: [0, 0, cameraSetting.maxDis * 3.5]
-        }}
-      >
-        <Suspense fallback={null}>
-          <CameraController
-            focus={focus}
-            setFocus={setFocus}
-            dollyState={cameraSetting.doll}
-            updated={updateZoom}
-            setUpdated={setUpdateZoom}
-            dismove={disMove}
-            setDismove={setDisMove}
-            setting={cameraSetting}
-            pos={calculatePosition(cameraPos)}
-            full
-          />
-          {allLandData && allLandData.length > 0 && <MapScene />}
-          {isLoading && <MapScene />}
-          {allLand &&
-            allLand.length > 0 &&
-            allLand.map((element, index) => (
-              <BoxElement
-                key={element._id}
-                pos={calculatePosition(element.position)}
-                color={element.color ? element.color : colorThree.disable}
-                land={element}
-                currentLand={currentLand}
-                setCurrentLand={setCurrentLand}
-                lastBox={allLand.length === index + 1}
-                setLoading={setLoadingStatus}
-              />
-            ))}
-        </Suspense>
-      </Canvas>
+      <div className="h-full w-full">
+        <Canvas
+          gl={{ antialias: true, toneMapping: THREE.NoToneMapping }}
+          linear
+          camera={{
+            position: [0, 0, cameraSetting.maxDis * 3.5]
+          }}
+        >
+          <Suspense fallback={null}>
+            <CameraController
+              focus={focus}
+              setFocus={setFocus}
+              dollyState={cameraSetting.doll}
+              updated={updateZoom}
+              setUpdated={setUpdateZoom}
+              dismove={disMove}
+              setDismove={setDisMove}
+              setting={cameraSetting}
+              pos={calculatePosition(cameraPos)}
+              full
+            />
+            {allLandData && allLandData.length > 0 && <MapScene />}
+            {isLoading && <MapScene />}
+            {allLand &&
+              allLand.length > 0 &&
+              allLand.map((element, index) => (
+                <BoxElement
+                  key={element._id}
+                  pos={calculatePosition(element.position)}
+                  color={element.color ? element.color : colorThree.disable}
+                  land={element}
+                  currentLand={currentLand}
+                  setCurrentLand={setCurrentLand}
+                  lastBox={allLand.length === index + 1}
+                  setLoading={setLoadingStatus}
+                />
+              ))}
+          </Suspense>
+        </Canvas>
+      </div>
       {/* ---------- card ---------- */}
       <div>
         {currentLand && (
           <div className="card-land-map-panel animate__fadeInRight">
             <AnimatePresence
-              exitBeforeEnter
+              mode="wait"
               initial={false}
             >
               {showCardLand && (

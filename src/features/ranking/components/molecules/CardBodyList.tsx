@@ -1,5 +1,5 @@
 import React, { memo } from "react"
-import { Typography } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 import { IPlayerRanking } from "@feature/ranking/interfaces/IRanking"
 import { IGameReward } from "@src/types/games"
 import {
@@ -33,9 +33,17 @@ const CardBodyList = ({ width, players, className, rewardType }: IProp) => {
     // When data is empty
     if (players.length === 0 || !players.length)
       return (
-        <div className="text-center text-white-primary">
+        <Box
+          component="div"
+          sx={{
+            ".no-data__text": {
+              border: "1px solid #232329"
+            }
+          }}
+          className="text-center text-white-primary"
+        >
           <NoData />
-        </div>
+        </Box>
       )
 
     // When data is not empty

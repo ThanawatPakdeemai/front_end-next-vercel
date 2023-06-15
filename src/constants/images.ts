@@ -362,9 +362,9 @@ export const IMAGES: {
     alt: "READY TO TRY NAKAMOTO.GAMES?"
   },
   noDataImage: {
-    src: "/images/home/sticker/sticker.png",
-    srcWebp: "/images/home/sticker/sticker.png",
-    blurDataURL: "/images/home/sticker/sticker.png",
+    src: "/images/sticker.png",
+    srcWebp: "/images/sticker.png",
+    blurDataURL: "/images/sticker.png",
     width: 125,
     height: 125,
     alt: "NodataImage"

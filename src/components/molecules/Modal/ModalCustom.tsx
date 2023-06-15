@@ -3,6 +3,7 @@ import { Box, ModalProps, Modal, Typography } from "@mui/material"
 import CircleNakaIcon from "@components/icons/CircleNakaIcon"
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import { Trans } from "next-i18next"
+import { isMobile } from "@hooks/useGlobal"
 
 interface IProps extends ModalProps {
   bgcolor?: string
@@ -45,7 +46,9 @@ export const ModalCustom = ({
           component="div"
           className={`${boderChide || "rounded-md "}${
             title === "orion trade" ? "rounded-t-none" : ""
-          }min-w-[280px] border-[1px] border-neutral-800 bg-neutral-900 p-4 focus:border-none focus:outline-none focus-visible:outline-none`}
+          }min-w-[280px] border-[1px] border-neutral-800 bg-neutral-900 p-4 focus:border-none focus:outline-none focus-visible:outline-none ${
+            isMobile && "w-[90vw]"
+          }`}
         >
           {title ||
             (titleNode && (

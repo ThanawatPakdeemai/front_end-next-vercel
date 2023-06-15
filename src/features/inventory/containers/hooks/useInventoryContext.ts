@@ -7,6 +7,7 @@ import { useGetLandById } from "@feature/land/containers/hooks/useGetMyLand"
 import { IPosition } from "@feature/land/interfaces/ILandService"
 import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutateMarketplace"
 import {
+  IClaimRentalServ,
   IInstallData,
   IInstallPeriod,
   IMarketData,
@@ -122,6 +123,22 @@ const useInventoryContext = () => {
   )
 
   // update claim
+  const updateClaimRentalTable = useCallback(
+    (_data: IClaimRentalServ) => {
+      if (invenItemData && invenItemData.rentals_data) {
+        const _result: IInventoryItemData = {
+          ...invenItemData,
+          rentals_data: {
+            ...invenItemData.rentals_data,
+            period: _data.period,
+            period_balance: _data.period_balance
+          }
+        }
+        setInvenItemData(_result)
+      }
+    },
+    [invenItemData]
+  )
 
   const fetchInvenNFTItemDataById = useCallback(async () => {
     setIsLoading(true)
@@ -428,7 +445,8 @@ const useInventoryContext = () => {
     materialList,
     onTransferMaterial,
     updateInvenNFTMarketData,
-    updateInstallmentTable
+    updateInstallmentTable,
+    updateClaimRentalTable
   }
 }
 

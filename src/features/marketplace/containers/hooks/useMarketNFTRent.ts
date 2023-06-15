@@ -62,7 +62,8 @@ const useMarketNFTRent = () => {
     onCheckPolygonChain,
     onCheckOwnerNFT
   } = useGlobalMarket()
-  const { updateInvenNFTMarketData } = useInventoryProvider()
+  const { updateInvenNFTMarketData, updateClaimRentalTable } =
+    useInventoryProvider()
   const { errorToast } = useToast()
 
   // get rent detail by rentId
@@ -451,10 +452,13 @@ const useMarketNFTRent = () => {
               ],
               _log.data
             )
-            const data: { _txHash: string } = {
+            const _data: { _txHash: string } = {
               _txHash: _res.transactionHash
             }
-            await mutateClaimRentNFT(data)
+            const data = await mutateClaimRentNFT(_data)
+            if (data && updateClaimRentalTable) {
+              updateClaimRentalTable(data)
+            }
           }
         })
         .catch((error) => console.error(error))

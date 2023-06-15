@@ -45,7 +45,7 @@ import IReferrals from "@components/icons/Referrals"
 // import { Helmet } from "react-helmet"
 // import ReactDOM from "react-dom"
 // eslint-disable-next-line import/no-extraneous-dependencies
-import Script from "next/script"
+// import Script from "next/script"
 import EditProfileModal from "./EditProfileModal"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
@@ -157,6 +157,22 @@ const ProfileContent = () => {
     }
   }, [player_id])
 
+  const MoveTelegramButton = () => {
+    const gandalf: any = document.querySelector("#telegram-login-NakaGameBot")
+    const list: any = document.querySelector("#login-telegram")
+    list.append(gandalf)
+    // function onTelegramAuth(params) {
+    //   // eslint-disable-next-line no-console
+    //   console.log(params)
+    // }
+  }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      MoveTelegramButton
+    }, 5000)
+    return () => clearTimeout(timer)
+  }, [])
   // useEffect(() => {
   //   if (!profile.status) {
   //     router.push("/")
@@ -426,7 +442,7 @@ const ProfileContent = () => {
           </div>
         </MobileView>
       ) : (
-        <div className="mt-8 w-full md:mt-0 md:w-[98%] lg:w-[90%]">
+        <div className="login-telegram mt-8 w-full md:mt-0 md:w-[98%] lg:w-[90%]">
           {/* <div className="w-[90%]"> */}
           {/* <button
             className="btn tgme_widget_login_button"
@@ -436,15 +452,20 @@ const ProfileContent = () => {
             <i className="tgme_widget_login_button_icon" />
             Log in with Telegram
           </button> */}
-          <Script
-            async
-            src="https://telegram.org/js/telegram-widget.js?22"
-            data-telegram-login="NakaGameBot"
-            data-size="large"
-            data-onauth="onTelegramAuth(user)"
-            data-request-access="write"
-            strategy="lazyOnload"
-          />
+          {/* <div id="login-telegram">
+            <Script
+              async
+              src="https://telegram.org/js/telegram-widget.js?22"
+              data-telegram-login="NakaGameBot"
+              data-size="large"
+              data-onauth="onTelegramAuth(user)"
+              data-request-access="write"
+              strategy="lazyOnload"
+            />
+            <Script id="show-banner">
+              {`function onTelegramAuth(params) { console.log(params);}`}
+            </Script>
+          </div> */}
           {/* <ButtonToggleIcon
             handleClick={handleTelegramResponse}
             startIcon={<></>}

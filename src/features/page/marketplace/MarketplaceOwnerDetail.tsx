@@ -62,7 +62,8 @@ const MarketplaceOwnerDetail = () => {
                 : undefined
             }
           >
-            {!invenItemData.installments_data ? (
+            {!invenItemData.installments_data &&
+            invenItemData.owner_id === invenItemData.player_id ? (
               <div className="flex w-full items-center justify-between gap-x-2">
                 <ButtonMarket
                   nftType={invenItemData.type}
@@ -77,7 +78,6 @@ const MarketplaceOwnerDetail = () => {
                   name={invenItemData.name}
                   marketplaces_data={invenItemData.marketplaces_data}
                 />
-
                 {invenItemData.type === "nft_land" ||
                 invenItemData.type === "nft_building" ? (
                   <ButtonRentOut

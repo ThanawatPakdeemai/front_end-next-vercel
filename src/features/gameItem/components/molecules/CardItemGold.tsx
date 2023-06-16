@@ -3,11 +3,9 @@ import ButtonLink from "@components/atoms/button/ButtonLink"
 import { Box } from "@mui/material"
 import useProfileStore from "@stores/profileStore/index"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import RightMenuBuyItem from "@feature/gameItem/components/molecules/RightMenuBuyItem"
 import { useRouter } from "next/router"
 import { MESSAGES } from "@constants/messages"
 import { useTranslation } from "next-i18next"
-import DropdownListItem from "@feature/gameItem/atoms/DropdownListItem"
 import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import useGlobal from "@hooks/useGlobal"
 import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
@@ -16,7 +14,6 @@ import ButtonGame from "@feature/game/components/molecules/ButtonGame"
 import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
 import { ImageCustom } from "@components/atoms/image/Image"
 import CardBuyItemHeader from "@feature/gameItem/molecules/CardBuyItemHeader"
-import DollarSolidIcon from "@components/icons/DollarSolidIcon"
 import ArrowJoinIcon from "@components/icons/ArrowJoinIcon"
 
 interface ICardBuyItemProp {
@@ -25,7 +22,7 @@ interface ICardBuyItemProp {
   hideButtonPlay?: boolean
 }
 
-export default function CardBuyItem({
+export default function CardItemGold({
   gameObject,
   buttonStyle = "purple",
   hideButtonPlay = false
@@ -34,13 +31,19 @@ export default function CardBuyItem({
   const {
     itemSelected,
     qtyItemSelected,
-    gameItemList,
-    isHideOnWaitingRoom,
-    onChangeSelectItem,
-    totalPrice,
+    // gameItemList,
+    // isHideOnWaitingRoom,
+    // onChangeSelectItem,
+    // totalPrice,
     isWaitingRoom
   } = useBuyGameItemController()
-  const { hydrated } = useGlobal()
+  const {
+    hydrated,
+    getGamePokerModeURL,
+    isPokerGame,
+    goldProfile,
+    goldProfileComma
+  } = useGlobal()
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
 
@@ -49,28 +52,48 @@ export default function CardBuyItem({
     if (router.pathname === "/[typeGame]/[GameHome]/roomlist/[id]") return
     if (qtyItemSelected) {
       if (qtyItemSelected > 0) {
-        return buttonStyle === "green" ? (
-          <Box
-            component="div"
-            sx={StartButtonCustomStyle}
-            className="flex w-full justify-center uppercase"
-          >
-            <ButtonGame
-              textButton={t("join-game")}
-              url={`${router.asPath}/roomlist`}
+        if (!isPokerGame(gameObject)) {
+          return buttonStyle === "green" ? (
+            <Box
+              component="div"
+              sx={StartButtonCustomStyle}
+              className="flex w-full justify-center uppercase"
+            >
+              <ButtonGame
+                textButton={t("join-game")}
+                url={`${router.asPath}/roomlist`}
+              />
+            </Box>
+          ) : (
+            <ButtonLink
+              text={t("join-game")}
+              href={`${router.asPath}/roomlist`}
+              icon={<ArrowJoinIcon />}
+              size="medium"
+              color="secondary"
+              variant="contained"
+              className="h-[50px] w-full"
             />
-          </Box>
-        ) : (
-          <ButtonLink
-            text={t("join-game")}
-            href={`${router.asPath}/roomlist`}
-            icon={<ArrowJoinIcon />}
-            size="medium"
-            color="secondary"
-            variant="contained"
-            className="h-[50px] w-full"
-          />
-        )
+          )
+        }
+        if (goldProfile > 0) {
+          return (
+            <Box
+              component="div"
+              sx={StartButtonCustomStyle}
+              className="flex w-full justify-center uppercase"
+            >
+              <ButtonGame
+                textButton={t("join-game")}
+                url={
+                  gameObject.game_url
+                    ? getGamePokerModeURL(gameObject)
+                    : `${router.asPath}/roomlist`
+                }
+              />
+            </Box>
+          )
+        }
       }
     }
     return (
@@ -128,16 +151,16 @@ export default function CardBuyItem({
             className={`mt-2 flex w-full flex-[1_1_340px] justify-center rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 lg:mt-0 lg:flex-none `}
           >
             <div className="flex flex-col items-center justify-center gap-3 p-4">
-              {itemSelected && (
+              {goldProfile && itemSelected && (
                 <CardBuyItemHeader
                   image={itemSelected.image_icon}
                   name={itemSelected.name}
-                  itemSize={itemSelected.item_size}
+                  itemSize={`${goldProfileComma}`}
                   title={isWaitingRoom ? " " : ""}
                 />
               )}
               <div className="flex w-full flex-col gap-3 rounded-2xl border-[1px] border-neutral-700 bg-primary-main p-3">
-                {gameItemList && isHideOnWaitingRoom && (
+                {/* {gameItemList && isHideOnWaitingRoom && (
                   <>
                     <DropdownListItem
                       isCheck
@@ -146,7 +169,7 @@ export default function CardBuyItem({
                       hideDropdownIcon
                     />
                   </>
-                )}
+                )} */}
                 <div className="flex w-full flex-wrap gap-3">
                   {gameObject && (
                     <div className="flex-1">
@@ -161,7 +184,7 @@ export default function CardBuyItem({
                     <div
                       className={`${inputClasses} border-neutral-700 bg-neutral-800 text-white-primary`}
                     >
-                      <p>{qtyItemSelected ?? 0}</p>
+                      <p>{goldProfileComma ?? 0}</p>
                       {gameObject && (
                         <div className="game-item-image h-6 w-6 p-[4px]">
                           <ImageCustom
@@ -179,11 +202,11 @@ export default function CardBuyItem({
                     >
                       <p className="flex items-center gap-1 p-[10px]">
                         <span>=</span>
-                        <span className="total-price">{totalPrice}</span>
+                        <span className="total-price">{goldProfileComma}</span>
                       </p>
-                      <DollarSolidIcon />
+                      {/* <DollarSolidIcon /> */}
                     </div>
-                    {isHideOnWaitingRoom && (
+                    {/* {isHideOnWaitingRoom && (
                       <div className="card-buy-item__buyButton w-full">
                         <RightMenuBuyItem
                           disabled={
@@ -193,7 +216,7 @@ export default function CardBuyItem({
                           disabledStartIcon
                         />
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>

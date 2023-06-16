@@ -107,21 +107,22 @@ const CardItemMarketPlace = ({
 
   // "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning"
 
-  const [size, setSize] = useState<any>()
+  const [size, setSize] = useState<Blob>()
 
   useEffect(() => {
-    if (itemImage && itemName === "Bullet") {
+    if (itemImage && itemName === "Bullet" && !size) {
       fetch(itemImage?.src)
         .then((response) => response.blob())
         .then((blob) => {
           setSize(blob)
           // Further operations with the blob object
+          // console.log(itemName, "size:", blob)
         })
         .catch(() => {
           // console.log("Error fetching image:", error)
         })
     }
-  }, [itemName, itemImage])
+  }, [itemName, itemImage, size])
 
   const handleColor = () => {
     if (percentage)
@@ -321,13 +322,13 @@ const CardItemMarketPlace = ({
                         : cardType === "building" && "image-building"
                     } ${
                       size && size.size <= 1765
-                        ? `!h-[120px] !w-auto`
-                        : `!h-[100px] !w-auto`
+                        ? `h-[120px] !w-auto`
+                        : `h-[100px] !w-auto`
                     }`}
                     // layout="fill"
                     // objectFit="contain"
-                    width={itemName?.includes("Bullet") ? 20 : 148}
-                    height={itemName?.includes("Bullet") ? 20 : 148}
+                    width={itemName?.includes("Bullet") ? 40 : 148}
+                    height={itemName?.includes("Bullet") ? 40 : 148}
                   />
                 </motion.div>
               </div>

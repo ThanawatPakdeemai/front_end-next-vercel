@@ -10,6 +10,9 @@ import { useInventoryProvider } from "@providers/InventoryProvider"
 import useCountStore from "@stores/countComponant"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
+import ButtonClose from "@components/atoms/button/ButtonClose"
+import { Chip, Typography } from "@mui/material"
+import CopyButton from "@components/atoms/CopyButton"
 
 const MarketplaceOwnerDetail = () => {
   const { profile } = useProfileStore()
@@ -19,13 +22,46 @@ const MarketplaceOwnerDetail = () => {
   const router = useRouter()
   const isInventory = router.asPath.includes("inventory")
 
+  const handleRouter = () => {
+    if (router.asPath.includes("inventory")) {
+      router.push("/marketplace/inventory")
+    } else {
+      router.back()
+    }
+  }
+
   return invenItemData && !isLoading ? (
     <div className="flex flex-col">
       <div
-        className={`mt-5 flex w-full flex-col justify-center gap-x-[60px] gap-y-[60px] px-10 py-4 ${
+        className={`mt-16 flex w-full flex-col justify-center gap-x-[60px] gap-y-[60px] px-10 py-4 ${
           isInventory ? `lg:flex-row` : `sm:flex-row`
         }  sm:gap-y-0 sm:px-0 sm:py-0`}
       >
+        <div className="grid sm:hidden">
+          {invenItemData.tokenId && (
+            <div className="flex w-fit items-center justify-between">
+              <ButtonClose
+                onClick={handleRouter}
+                insideClassName="!bg-error-main hover:bg-error-main"
+              />
+              <div className="flex gap-[6px]">
+                <Chip
+                  label={`TOKEN ID : ${String(invenItemData.tokenId)}`}
+                  size="small"
+                  variant="outlined"
+                />
+                <CopyButton
+                  text={invenItemData.tokenId as string}
+                  className="!bg-neutral-780"
+                />
+              </div>
+            </div>
+          )}
+          <Typography className="ml-12 mt-2 text-[46px] font-bold uppercase text-neutral-300">
+            {invenItemData.name}
+          </Typography>
+        </div>
+
         <CardContentDetails
           detail={invenItemData.detail}
           image={invenItemData.img}

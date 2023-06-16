@@ -142,7 +142,7 @@ const CardContentDetails = ({ ...props }: IProp) => {
               className={` ${
                 meta_data && meta_data.length <= 1
                   ? ""
-                  : "grid-cols-2 gap-[10px]"
+                  : "grid grid-cols-2 gap-[10px]"
               }`}
             >
               {meta_data &&

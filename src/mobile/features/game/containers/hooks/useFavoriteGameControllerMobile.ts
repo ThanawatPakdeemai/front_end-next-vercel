@@ -28,7 +28,7 @@ const useFavoriteGameControllerMobile = () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [handleFavouriteData])
 
   return {
     gameFavorite: dataFavorite.length > 0 ? dataFavorite : [],

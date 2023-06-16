@@ -1,7 +1,16 @@
 export const StyleRanking = {
-  ".top-player__wrapper-inner:before": {
-    display: "none"
+  ".top-player": {
+    "&__content": {
+      paddingBottom: "30px",
+      ".custom-scroll": {
+        overflowX: "hidden"
+      }
+    },
+    "&__wrapper-inner:before": {
+      display: "none"
+    }
   },
+
   ".card-title-page": {
     display: "flex",
     flexDirection: "row",

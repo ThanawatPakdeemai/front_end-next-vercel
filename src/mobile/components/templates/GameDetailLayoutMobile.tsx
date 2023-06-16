@@ -112,7 +112,7 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
   return (
     <Box
       component="div"
-      className="flex flex-col bg-[#121212] p-[0_24px_24px]"
+      className="flex min-h-[100vh] flex-col bg-[#121212] p-[0_24px_24px]"
     >
       <h2
         className="flex items-center justify-between gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary"

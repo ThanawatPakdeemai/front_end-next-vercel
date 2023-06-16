@@ -3,6 +3,7 @@ import { IGame } from "@feature/game/interfaces/IGameService"
 import { Box, Typography } from "@mui/material"
 import { v4 as uuid } from "uuid"
 import useScrollToEndStore from "@stores/scrollToEnd"
+import NoData from "@components/molecules/NoData"
 import SkeletonCardMobile from "../atoms/skeleton/SkeletonCardMobile"
 import GameCardMobile from "../molecules/GameCardMobile"
 
@@ -25,9 +26,9 @@ const GameListMobile = ({ gameData, loading }: IGameList) => {
         }
       }}
     >
-      {/* {gameData && gameData.length === 0 && !loading && (
+      {gameData && gameData.length === 0 && !loading && (
         <NoData className="w-full" />
-      )} */}
+      )}
 
       <Box
         component="section"

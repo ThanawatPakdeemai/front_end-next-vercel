@@ -44,13 +44,19 @@ const HeaderMunuMobile = () => {
   //   }
 
   useEffect(() => {
+    let cancel = false
     const pathName = router.asPath
-    if (pathName.includes("/p2p")) {
-      setHeaderTitle("P2P Market")
-    } else if (pathName.includes("/map")) {
-      setHeaderTitle("Nakaverse Map")
-    } else if (pathName === "/marketplace") {
-      setHeaderTitle("NAKA Market")
+    if (!cancel) {
+      if (pathName.includes("/p2p")) {
+        setHeaderTitle("P2P Market")
+      } else if (pathName.includes("/map")) {
+        setHeaderTitle("Nakaverse Map")
+      } else if (pathName === "/marketplace") {
+        setHeaderTitle("NAKA Market")
+      }
+    }
+    return () => {
+      cancel = true
     }
   }, [router.asPath])
 

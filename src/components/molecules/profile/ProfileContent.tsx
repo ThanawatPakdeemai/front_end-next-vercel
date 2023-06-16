@@ -174,7 +174,7 @@ const ProfileContent = () => {
       const gandalf: any = document.querySelector("#telegram-login-NakaGameBot")
       const list: any = document.querySelector("#login-telegram")
       list.append(gandalf)
-    }, 10000)
+    }, 5000)
     return () => clearTimeout(timer)
   }, [])
 
@@ -449,14 +449,6 @@ const ProfileContent = () => {
       ) : (
         <div className="login-telegram mt-8 w-full md:mt-0 md:w-[98%] lg:w-[90%]">
           {/* <div className="w-[90%]"> */}
-          {/* <button
-            className="btn tgme_widget_login_button"
-            // eslint-disable-next-line react/jsx-curly-brace-presence
-            onClick={() => window?.TWidgetLogin?.auth()}
-          >
-            <i className="tgme_widget_login_button_icon" />
-            Log in with Telegram
-          </button> */}
           <div id="login-telegram">
             <Script
               async
@@ -468,21 +460,9 @@ const ProfileContent = () => {
               strategy="lazyOnload"
             />
             <Script id="show-banner">
-              {`function onTelegramAuth(params) { console.log(params);}`}
+              {`function onTelegramAuth(params) { console.log(params); localStorage.setItem('params', JSON.stringify(params));}`}
             </Script>
           </div>
-          {/* <ButtonToggleIcon
-            handleClick={handleTelegramResponse}
-            startIcon={<></>}
-            text={t("Link To Telegram")}
-            className="z-[2] h-[40px] w-fit bg-secondary-main !text-[8px] font-bold capitalize text-white-default sm:h-[50px] sm:w-[148px] sm:text-sm"
-            type="button"
-          /> */}
-
-          {/* <TelegramLoginButton
-            dataOnauth={handleTelegramResponse}
-            botName="OdauBot"
-          /> */}
 
           <SideSocialShare hidden="hidden lg:block" />
           <div className="relative">

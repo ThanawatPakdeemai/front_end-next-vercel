@@ -98,6 +98,11 @@ const ProfileContent = () => {
   )
 
   useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log("telegram_", telegramParams)
+  }, [telegramParams])
+
+  useEffect(() => {
     if (isError) {
       errorToast(MESSAGES.please_login)
       router.push("/")

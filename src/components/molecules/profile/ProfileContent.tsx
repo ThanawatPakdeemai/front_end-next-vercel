@@ -101,7 +101,7 @@ const ProfileContent = () => {
       telegramParams !== null
     ) {
       // eslint-disable-next-line no-console
-      console.log("telegram_", telegramParams.id)
+      console.log("telegram__", telegramParams.id)
       // eslint-disable-next-line no-console
       console.log("telegram_type", typeof telegramParams.id)
       // eslint-disable-next-line no-console

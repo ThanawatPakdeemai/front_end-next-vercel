@@ -91,16 +91,15 @@ const ProfileContent = () => {
   const { profile: profileFetched, isError } = useGetProfileByEmail(emailPlayer)
   const { handleConnectWallet } = useWalletContoller()
   const { hasMetamask, disabledConnectButton } = useWeb3Provider()
+  const [telegramId, setTelegramId] = useState<string>("")
   const telegramParams: any = localStorage.getItem("telegram-params")
-  const { linkTelegramData } = useLinkToTelegram(
-    idPlayer,
-    telegramParams && telegramParams.id.toString()
-  )
+  const { linkTelegramData } = useLinkToTelegram(idPlayer, telegramId)
 
   useEffect(() => {
     if (telegramParams !== undefined) {
       // eslint-disable-next-line no-console
       console.log("telegram_", telegramParams)
+      setTelegramId(telegramParams.id.toString())
     }
   }, [telegramParams])
 

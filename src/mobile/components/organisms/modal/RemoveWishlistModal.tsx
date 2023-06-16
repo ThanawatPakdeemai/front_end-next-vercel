@@ -86,17 +86,14 @@ const RemoveWishlistModal = ({
           >
             <Box
               component="div"
-              className="flex justify-between"
+              className="grid grid-cols-[1fr_calc(100%-132px)_1fr] items-start justify-between gap-4"
             >
               <Avatar
                 className="h-20 w-20 rounded-2xl"
                 variant="square"
                 src={src}
               />
-              <Box
-                component="div"
-                className="pr-20"
-              >
+              <Box component="div">
                 <p className="font-urbanist font-bold text-white-default">
                   {name}
                 </p>
@@ -111,7 +108,7 @@ const RemoveWishlistModal = ({
               </Box>
               <Box
                 component="div"
-                className="flex items-center"
+                className="mt-[5px] flex items-center"
               >
                 <HeartFilledIcon />
               </Box>

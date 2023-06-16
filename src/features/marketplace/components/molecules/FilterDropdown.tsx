@@ -2,12 +2,9 @@ import {
   Button,
   Collapse,
   FormControl,
-  InputAdornment,
   MenuItem,
   Select,
-  SelectChangeEvent,
-  Stack,
-  TextField
+  SelectChangeEvent
 } from "@mui/material"
 import { v4 as uuidv4 } from "uuid"
 import { useRouter } from "next/router"
@@ -18,12 +15,11 @@ import {
   INVENTORY_DROPDOWN_PROCESS,
   INVENTORY_DROPDOWN_RENTAL
 } from "@configs/menu"
-import SearchIcon from "@components/icons/SearchIcon"
 import SettingIconFilter from "@components/icons/Inventory/SettingIconFilter"
-import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
-import ModalHeader from "@components/molecules/Modal/ModalHeader"
 import MenuButtonExpandMobile from "@feature/page/marketplace/mobilescreen/MenuButtonExpandMobile"
-import FilterBox from "./FilterBox"
+import useMarketFilterStore from "@stores/marketFilter"
+import FilterSearchBox from "./FilterSearchBox"
+import SwipeableEdgeDrawer from "../organisms/DrawerMobileFilter"
 
 const FilterDropdown = () => {
   const router = useRouter()
@@ -66,10 +62,10 @@ const FilterDropdown = () => {
 
   const [openFilter, setOpenFilter] = useState<boolean>(false)
   const [expanded, setExpanded] = useState<boolean>(false)
+  const isP2P = router.asPath.includes("p2p")
+  const [searchReset, setSearchReset] = useState<boolean>(false)
 
-  const onCloseModalCustom = () => {
-    setOpenFilter(!openFilter)
-  }
+  const { onSetSearch } = useMarketFilterStore()
 
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
@@ -119,8 +115,8 @@ const FilterDropdown = () => {
           })}
         </Select>
       </FormControl>
-      <div className="mb-4 flex gap-4 p-4 sm:hidden">
-        <div className="grid h-[40px] w-[50px] content-center justify-center rounded-lg bg-purple-primary p-2">
+      <div className="mb-4 flex	 p-4 sm:hidden">
+        <div className="grid h-[40px] w-[40px] content-center justify-center rounded-lg bg-purple-primary p-2">
           <MenuButtonExpandMobile
             isOpen={expanded}
             onClick={handleOnExpandClick}
@@ -139,7 +135,7 @@ const FilterDropdown = () => {
         <Collapse
           in={expanded}
           timeout="auto"
-          className="mt-10 w-[200px] rounded-[19px] p-2"
+          className="!mt-[48px] w-[200px] rounded-[19px] p-2"
           sx={{
             backgroundColor: "#232329",
             zIndex: 99999,
@@ -165,27 +161,23 @@ const FilterDropdown = () => {
             )
           })}
         </Collapse>
-        <TextField
-          className="w-full"
-          placeholder="Search Keyword"
-          InputProps={{
-            style: {
-              fontSize: "14px",
-              fontFamily: "neueMachina",
-              // width: "100%",
-              paddingLeft: 16
-            },
-            endAdornment: (
-              <InputAdornment
-                position="end"
-                className="cursor-pointer"
-                onClick={() => {}}
-              >
-                <SearchIcon />
-              </InputAdornment>
-            )
+        <FilterSearchBox
+          className="!px-5"
+          title=""
+          placeholder="e.g. 11900011"
+          onClick={(_value) => {
+            onSetSearch({ key: "nft_token", value: _value })
           }}
-          onChange={(_event) => {}}
+          onKey={(event, _value) => {
+            if (event.key === "Enter") {
+              event.preventDefault()
+              onSetSearch({
+                key: "nft_token",
+                value: _value
+              })
+            }
+          }}
+          reset={searchReset}
         />
         <div className="!h-[40px] !w-[40px]">
           <Button
@@ -198,28 +190,10 @@ const FilterDropdown = () => {
             <SettingIconFilter />
           </Button>
         </div>
-
-        <ModalCustom
+        <SwipeableEdgeDrawer
           open={openFilter}
-          onClose={onCloseModalCustom}
-          className="m-auto gap-3 rounded-[34px] p-[10px] max-[420px]:w-[370px]"
-          width={515}
-        >
-          <Stack
-            spacing={3}
-            className="md:p-5"
-          >
-            <div className="rounded-2xl border-[1px] border-neutral-700 bg-neutral-800 p-2 uppercase">
-              <ModalHeader
-                handleClose={onCloseModalCustom}
-                title="Filter"
-              />
-            </div>
-            <div className="grid h-[500px] w-full justify-items-center overflow-y-auto">
-              <FilterBox />
-            </div>
-          </Stack>
-        </ModalCustom>
+          setClose={(_toggle) => setOpenFilter(_toggle)}
+        />
       </div>
     </>
   )

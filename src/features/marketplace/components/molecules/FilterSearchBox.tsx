@@ -14,6 +14,7 @@ interface IProps {
   // eslint-disable-next-line no-unused-vars
   onKey?: (event: React.KeyboardEvent<HTMLDivElement>, _value: string) => void
   reset?: boolean
+  className?: string
 }
 
 const FilterSearchBox = ({
@@ -21,7 +22,8 @@ const FilterSearchBox = ({
   placeholder,
   onClick,
   onKey,
-  reset
+  reset,
+  className
 }: IProps) => {
   const [state, setState] = useState<string>("")
 
@@ -34,7 +36,7 @@ const FilterSearchBox = ({
   }, [reset])
 
   return (
-    <div className="flex flex-col gap-y-1">
+    <div className={`${className || `flex-col`} flex  gap-y-1`}>
       <Typography className="text-xs uppercase text-neutral-500">
         {title}
       </Typography>

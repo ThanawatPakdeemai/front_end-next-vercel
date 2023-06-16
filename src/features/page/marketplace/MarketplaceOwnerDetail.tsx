@@ -9,15 +9,23 @@ import RightDetailsMarketplace from "@feature/marketplace/components/organisms/R
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import useCountStore from "@stores/countComponant"
 import useProfileStore from "@stores/profileStore"
+import { useRouter } from "next/router"
 
 const MarketplaceOwnerDetail = () => {
   const { profile } = useProfileStore()
   const { invenItemData, isLoading } = useInventoryProvider()
   const { count } = useCountStore()
 
+  const router = useRouter()
+  const isInventory = router.asPath.includes("inventory")
+
   return invenItemData && !isLoading ? (
     <div className="flex flex-col">
-      <div className="mt-5 flex w-full flex-col justify-center gap-x-[60px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0">
+      <div
+        className={`mt-5 flex w-full flex-col justify-center gap-x-[60px] gap-y-[60px] px-10 py-4 ${
+          isInventory ? `lg:flex-row` : `sm:flex-row`
+        }  sm:gap-y-0 sm:px-0 sm:py-0`}
+      >
         <CardContentDetails
           detail={invenItemData.detail}
           image={invenItemData.img}

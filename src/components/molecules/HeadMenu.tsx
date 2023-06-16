@@ -85,7 +85,7 @@ const HeadMenu = () => {
               >
                 <Button
                   sx={styleButton}
-                  className={`button-select-naka xs:mb-1 !hover:bg-error-main !hover:text-black-default w-full !rounded-[8px] !px-[23px] !py-[12px] text-white-primary ${
+                  className={`button-select-naka xs:mb-1 !hover:bg-error-main !hover:text-black-default w-full !rounded-[8px] !px-[23px] !py-[12px] !text-[#676A73]  ${
                     router.pathname === item.link
                       ? "!bg-primary-main"
                       : "!bg-neutral-800"
@@ -136,14 +136,13 @@ const HeadMenu = () => {
                     sx={styleButton}
                     className={`button-select-naka xs:mb-1 !hover:bg-error-main  !hover:text-white-primary group w-full !min-w-[100px]  !rounded-[8px] !py-[12px] px-2 !text-black-default last:p-[15px_5px_13px] md:mb-0 md:w-auto ${
                       // item.isChide &&
-                      // item.chide &&
-                      router.pathname ===
-                      [...item.chide].find(
-                        (ele) => ele.link === router.pathname
-                      )?.link
+                      item.chide &&
+                      (router.asPath ===
+                      [...item.chide].find((ele) => ele.link === router.asPath)
+                        ?.link
                         ? "!bg-primary-main"
-                        : "!bg-neutral-800"
-                    }`}
+                        : "!bg-neutral-800")
+                    } ${router.asPath === item.link && "!bg-primary-main"}`}
                     variant="contained"
                     size="large"
                   >
@@ -158,13 +157,21 @@ const HeadMenu = () => {
                         <div className="flex items-center gap-1">
                           <Typography
                             className={`!whitespace-nowrap !font-neue-machina-semi !text-sm ${
-                              router.pathname ===
+                              item.chide &&
+                              (router.asPath ===
                               [...item.chide].find(
-                                (ele) => ele.link === router.pathname
+                                (ele) => ele.link === router.asPath
                               )?.link
                                 ? "!text-neutral-300"
-                                : ""
+                                : "")
+                            }  ${
+                              router.asPath === item.link && "!text-neutral-300"
                             }`}
+
+                            // ${
+                            //   router.pathname === "marketplace/p2p" &&
+                            //   "!text-neutral-300"
+                            // }
                           >
                             {t(`${item.name}`)}
                           </Typography>

@@ -158,6 +158,8 @@ const ProfileContent = () => {
   }, [player_id])
 
   const MoveTelegramButton = () => {
+    // eslint-disable-next-line no-console
+    console.log("in Move button")
     const gandalf: any = document.querySelector("#telegram-login-NakaGameBot")
     const list: any = document.querySelector("#login-telegram")
     list.append(gandalf)
@@ -170,9 +172,16 @@ const ProfileContent = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       MoveTelegramButton
-    }, 5000)
+    }, 10000)
     return () => clearTimeout(timer)
   }, [])
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     MoveTelegramButton
+  //   }, 5000)
+  //   return () => clearTimeout(timer)
+  // }, [])
   // useEffect(() => {
   //   if (!profile.status) {
   //     router.push("/")
@@ -462,9 +471,9 @@ const ProfileContent = () => {
               data-request-access="write"
               strategy="lazyOnload"
             />
-            <Script id="show-banner">
+            {/* <Script id="show-banner">
               {`function onTelegramAuth(params) { console.log(params);}`}
-            </Script>
+            </Script> */}
           </div>
           {/* <ButtonToggleIcon
             handleClick={handleTelegramResponse}

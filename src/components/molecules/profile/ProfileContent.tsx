@@ -157,28 +157,27 @@ const ProfileContent = () => {
     }
   }, [player_id])
 
-  const MoveTelegramButton = () => {
-    // eslint-disable-next-line no-console
-    console.log("in Move button")
-    const gandalf: any = document.querySelector("#telegram-login-NakaGameBot")
-    const list: any = document.querySelector("#login-telegram")
-    list.append(gandalf)
-    // function onTelegramAuth(params) {
-    //   // eslint-disable-next-line no-console
-    //   console.log(params)
-    // }
-  }
+  // const MoveTelegramButton = () => {
+  //   // eslint-disable-next-line no-console
+  //   console.log("in Move button")
+  //   const gandalf: any = document.querySelector("#telegram-login-NakaGameBot")
+  //   const list: any = document.querySelector("#login-telegram")
+  //   list.append(gandalf)
+  //   // function onTelegramAuth(params) {
+  //   //   // eslint-disable-next-line no-console
+  //   //   console.log(params)
+  //   // }
+  // }
 
   useEffect(() => {
-    MoveTelegramButton
+    const timer = setTimeout(() => {
+      const gandalf: any = document.querySelector("#telegram-login-NakaGameBot")
+      const list: any = document.querySelector("#login-telegram")
+      list.append(gandalf)
+    }, 10000)
+    return () => clearTimeout(timer)
   }, [])
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     MoveTelegramButton
-  //   }, 5000)
-  //   return () => clearTimeout(timer)
-  // }, [])
   // useEffect(() => {
   //   if (!profile.status) {
   //     router.push("/")

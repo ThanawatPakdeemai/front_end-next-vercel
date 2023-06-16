@@ -2,7 +2,6 @@ import React from "react"
 import SkeletonSummaryRaward from "@components/atoms/skeleton/SkeletonSummaryRaward"
 import useGameSummaryRewardController from "@feature/game/containers/hooks/useGameSummaryRewardController"
 import useGlobal from "@hooks/useGlobal"
-import GameSummaryBodyReturnItem from "@feature/game/containers/components/organisms/GameSummaryBodyReturnItem"
 import { Box, Typography } from "@mui/material"
 import { useTranslation } from "react-i18next"
 import { Image } from "@components/atoms/image/index"
@@ -20,13 +19,13 @@ import {
   classesImage,
   classesWrapper
 } from "@mobile/features/game/components/molecules/PlayerCardMobile"
-import { IGameReward } from "@src/types/games"
 import Helper from "@utils/helper"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import useLoadingStore from "@stores/loading"
 import { useRouter } from "next/router"
 import useProfileStore from "@stores/profileStore"
 import useGameStore from "@stores/game"
+import GameSummaryBodyReturnItemMobile from "@mobile/features/game/components/organisms/GameSummaryBodyReturnItemMobile"
 
 const GameSummaryRewardPageMobile = () => {
   const {
@@ -90,8 +89,7 @@ const GameSummaryRewardPageMobile = () => {
     switch (notificationItem?.type) {
       case "RETURN_ITEM":
         return (
-          <GameSummaryBodyReturnItem
-            text={notificationItem.detail}
+          <GameSummaryBodyReturnItemMobile
             gameImage={gameData?.image_category_list || ""}
             gameName={gameData?.name || ""}
             date={notificationItem?.createdAt || ""}
@@ -240,7 +238,7 @@ const GameSummaryRewardPageMobile = () => {
               <div className="custom-scroll overflow-y-auto">
                 <div className="grid w-full grid-cols-4 flex-wrap justify-center gap-3 sm:grid-cols-8">
                   {players ? (
-                    (players as IGameReward[]).map((data) => (
+                    players.map((data) => (
                       <div
                         key={data._id}
                         className="flex flex-col gap-2 border-secondary-main"
@@ -249,7 +247,7 @@ const GameSummaryRewardPageMobile = () => {
                           <div className={classesWrapper}>
                             <Image
                               src={Helper.convertAvatar(data.avatar)}
-                              alt={data.user_name}
+                              alt={data.user_name || data.username}
                               width={70}
                               height={70}
                               className={classesImage}
@@ -260,7 +258,7 @@ const GameSummaryRewardPageMobile = () => {
                         {/* Player Name */}
                         <div className="player-name">
                           <p className="truncate text-center font-urbanist text-sm font-semibold uppercase text-neutral-300">
-                            {data.user_name}
+                            {data.user_name || data.username}
                           </p>
                         </div>
 
@@ -268,7 +266,12 @@ const GameSummaryRewardPageMobile = () => {
                         <div className="player-name">
                           <p className="truncate text-center font-urbanist text-sm font-semibold uppercase text-[#F2C94C]">
                             {Helper.formatNumber(
-                              data.current_score || data.naka_for_player
+                              data.current_score ||
+                                data.naka_for_player ||
+                                data.reward,
+                              {
+                                maximumFractionDigits: 2
+                              }
                             )}
                           </p>
                         </div>

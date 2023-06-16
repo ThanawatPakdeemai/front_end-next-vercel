@@ -48,7 +48,7 @@ const useHistoryController = () => {
   )
 
   const onHandleView = (path: string, room_id: string) => {
-    router.push(`/${path}/summary/${room_id}`)
+    router.push(`${path}/summary/${room_id}`)
   }
 
   const handleClickView = (_historyItem: IHistory) => {

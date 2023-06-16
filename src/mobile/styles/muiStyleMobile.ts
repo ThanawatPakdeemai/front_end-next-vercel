@@ -21,6 +21,9 @@ export const StyledInput: SxProps<Theme> = {
   color: "#fff",
   fontWeight: 600,
   opacity: 1,
+  "&.MuiFormControl-root:hover .MuiOutlinedInput-root": {
+    border: "0 !important"
+  },
   ".MuiOutlinedInput-root": {
     "&:focus": {
       border: 0,
@@ -53,7 +56,11 @@ export const StyledSearchInputMobile: SxProps<Theme> = {
     border: 0,
     gap: "10px",
     "&:hover": {
-      border: 0
+      border: 0,
+      boxShadow: "none",
+      ".MuiOutlinedInput-root": {
+        border: 0
+      }
     }
   }
 }

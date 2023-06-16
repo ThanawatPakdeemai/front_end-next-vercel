@@ -136,40 +136,42 @@ export default function GameLobby() {
       case "story-mode":
         return (
           <>
-            {isPokerGame(gameData) ? (
-              <CardItemGold
-                buttonStyle="purple"
-                gameObject={gameData}
-              />
-            ) : (
+            <Box
+              component="div"
+              className="flex w-full flex-col justify-between gap-4 uppercase"
+              sx={{
+                ".like-no_wrapper": {
+                  flex: "0 0 100%",
+                  ".like-no_score": {
+                    width: "100%"
+                  }
+                }
+              }}
+            >
               <Box
                 component="div"
-                className="flex w-full flex-col justify-between gap-4 uppercase"
-                sx={{
-                  ".like-no_wrapper": {
-                    flex: "0 0 100%",
-                    ".like-no_score": {
-                      width: "100%"
-                    }
-                  }
-                }}
+                sx={StartButtonCustomStyle}
+                className="flex w-full justify-center uppercase"
               >
-                <Box
-                  component="div"
-                  sx={StartButtonCustomStyle}
-                  className="flex w-full justify-center uppercase"
-                >
-                  <ButtonGame
-                    textButton={t("join-game")}
-                    url={getGameStoryModeURL(gameData)}
-                  />
-                </Box>
+                <ButtonGame
+                  textButton={t("join-game")}
+                  url={getGameStoryModeURL(gameData)}
+                />
               </Box>
-            )}
+            </Box>
           </>
         )
 
       case "free-to-play":
+        if (isPokerGame(gameData)) {
+          return (
+            <CardItemGold
+              buttonStyle="purple"
+              gameObject={gameData}
+            />
+          )
+        }
+        return <></>
       case "free-to-earn":
         return (
           <Box

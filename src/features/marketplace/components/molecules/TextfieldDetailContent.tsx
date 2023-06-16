@@ -104,7 +104,7 @@ const TextfieldDetailContent = ({
 
   return (
     <div
-      className={`flex w-full items-center justify-between ${
+      className={`flex w-full flex-wrap items-center justify-between ${
         marketType === "nft_avatar" || marketType === "nft_naka_punk"
           ? "flex-col sm:flex-row"
           : null
@@ -127,7 +127,7 @@ const TextfieldDetailContent = ({
         <TextField
           value={`${position.x}, ${position.y}`}
           label="BLOCK IN MAP"
-          className="!w-[131px] sm:!w-[232px]"
+          className="!w-[131px] !max-w-[231px] sm:!w-[232px]"
           sx={{
             "& .MuiOutlinedInput-root": {
               backgroundColor: "#010101"
@@ -159,7 +159,7 @@ const TextfieldDetailContent = ({
         <FormattedInputs
           label="PRICE (NAKA)"
           className="!w-[131px] sm:!w-[232px]"
-          values={calcNAKAPrice(price || 0).toString() || sellPriceNaKa}
+          values={sellPriceNaKa}
           onSetValues={onPriceChange}
           disabled={!!price}
           propsInput={{

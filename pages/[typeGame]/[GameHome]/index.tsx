@@ -12,6 +12,7 @@ import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
 import { useTranslation } from "react-i18next"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
+import CardItemGold from "@feature/gameItem/components/molecules/CardItemGold"
 
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
@@ -93,7 +94,8 @@ export default function GameLobby() {
     getGameMode,
     getColorChipByGameType,
     getGameStoryModeURL,
-    isRedirectRoomlist
+    isRedirectRoomlist,
+    isPokerGame
   } = useGlobal()
   const { t } = useTranslation()
 
@@ -134,8 +136,8 @@ export default function GameLobby() {
       case "story-mode":
         return (
           <>
-            {gameData?.category?.name.includes("Casino") ? (
-              <CardBuyItem
+            {isPokerGame(gameData) ? (
+              <CardItemGold
                 buttonStyle="purple"
                 gameObject={gameData}
               />

@@ -60,6 +60,7 @@
     "axios": "^1.1.2",
     "babel-plugin-preval": "^5.1.0",
     "camera-controls": "^2.3.4",
+    "copy-to-clipboard": "^3.3.3",
     "crypto-js": "^4.1.1",
     "dayjs": "^1.11.6",
     "env-cmd": "^10.1.0",

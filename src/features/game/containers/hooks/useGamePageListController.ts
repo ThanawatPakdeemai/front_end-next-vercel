@@ -41,7 +41,7 @@ const useGamePageListController = (
   const [cooldown, setCooldown] = useState<boolean>(true)
   const [gameFilter, setGameFilter] = useState<IGame[]>()
   const [limitPage, setLimitPage] = useState<ILimitPage>({
-    limit: 10,
+    limit: 20,
     endLimitCount: 0
   })
 
@@ -125,7 +125,12 @@ const useGamePageListController = (
         setGameFilter([])
       }
       const filterData: IPayloadGameFilter = {
-        limit: limitPage.limit >= 10 ? limitPage.limit : 10,
+        // eslint-disable-next-line no-nested-ternary
+        limit: isMobile
+          ? limitPage.limit >= 10
+            ? limitPage.limit
+            : 10
+          : limitPage.limit,
         skip: page,
         sort: "_id",
         search: searchDropdown,
@@ -179,7 +184,7 @@ const useGamePageListController = (
   ])
 
   const handleInfinityLimit = () => {
-    if (gameFilter) {
+    if (gameFilter && isMobile) {
       if (scrollBottom && limitPage.limit < totalCount && isMobile) {
         setLimitPage({
           limit: limitPage.limit + 10,
@@ -247,7 +252,9 @@ const useGamePageListController = (
     staminaRecovery,
     cooldown,
     setCooldown,
-    setDevice
+    setDevice,
+    limitPage,
+    setLimitPage
   }
 }
 

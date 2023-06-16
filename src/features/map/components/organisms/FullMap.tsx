@@ -260,7 +260,10 @@ const FullMap = () => {
           </div>
         </div>
       </div>
-      <SwipeableEdgeDrawer open={expanded} />
+      <SwipeableEdgeDrawer
+        open={expanded}
+        setClose={(_toggle) => setExpanded(_toggle)}
+      />
       {/* <ModalCustom
         open={expanded}
         onClose={handleOnExpandClick}

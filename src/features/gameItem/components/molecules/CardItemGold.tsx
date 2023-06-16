@@ -50,50 +50,48 @@ export default function CardItemGold({
   const buttonInToGame = useMemo(() => {
     if (router.pathname === "/[typeGame]/[GameHome]/roomlist") return
     if (router.pathname === "/[typeGame]/[GameHome]/roomlist/[id]") return
-    if (qtyItemSelected) {
-      if (qtyItemSelected > 0) {
-        if (!isPokerGame(gameObject)) {
-          return buttonStyle === "green" ? (
-            <Box
-              component="div"
-              sx={StartButtonCustomStyle}
-              className="flex w-full justify-center uppercase"
-            >
-              <ButtonGame
-                textButton={t("join-game")}
-                url={`${router.asPath}/roomlist`}
-              />
-            </Box>
-          ) : (
-            <ButtonLink
-              text={t("join-game")}
-              href={`${router.asPath}/roomlist`}
-              icon={<ArrowJoinIcon />}
-              size="medium"
-              color="secondary"
-              variant="contained"
-              className="h-[50px] w-full"
+    if (profile) {
+      if (!isPokerGame(gameObject)) {
+        return buttonStyle === "green" ? (
+          <Box
+            component="div"
+            sx={StartButtonCustomStyle}
+            className="flex w-full justify-center uppercase"
+          >
+            <ButtonGame
+              textButton={t("join-game")}
+              url={`${router.asPath}/roomlist`}
             />
-          )
-        }
-        if (goldProfile > 0) {
-          return (
-            <Box
-              component="div"
-              sx={StartButtonCustomStyle}
-              className="flex w-full justify-center uppercase"
-            >
-              <ButtonGame
-                textButton={t("join-game")}
-                url={
-                  gameObject.game_url
-                    ? getGamePokerModeURL(gameObject)
-                    : `${router.asPath}/roomlist`
-                }
-              />
-            </Box>
-          )
-        }
+          </Box>
+        ) : (
+          <ButtonLink
+            text={t("join-game")}
+            href={`${router.asPath}/roomlist`}
+            icon={<ArrowJoinIcon />}
+            size="medium"
+            color="secondary"
+            variant="contained"
+            className="h-[50px] w-full"
+          />
+        )
+      }
+      if (goldProfile > 0) {
+        return (
+          <Box
+            component="div"
+            sx={StartButtonCustomStyle}
+            className="flex w-full justify-center uppercase"
+          >
+            <ButtonGame
+              textButton={t("join-game")}
+              url={
+                gameObject.game_url
+                  ? getGamePokerModeURL(gameObject)
+                  : `${router.asPath}/roomlist`
+              }
+            />
+          </Box>
+        )
       }
     }
     return (

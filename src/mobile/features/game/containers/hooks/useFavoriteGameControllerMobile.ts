@@ -29,7 +29,7 @@ const useFavoriteGameControllerMobile = () => {
   }, [gameFavourite])
 
   return {
-    data: dataFavorite.length > 0 ? dataFavorite : [],
+    gameFavorite: dataFavorite.length > 0 ? dataFavorite : [],
     loading: isLoadingGameFavourite
   }
 }

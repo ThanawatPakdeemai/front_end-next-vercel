@@ -22,7 +22,7 @@ const HomeMobile = () => {
     setActiveMenu
   } = useGameControllerMobile()
   const { open, setOpen } = useDrawerControllerMobile()
-  const { data } = useFavoriteGameControllerMobile()
+  const { gameFavorite } = useFavoriteGameControllerMobile()
   const [gameDataWithFavouriteData, setGameDataWithFavouriteData] = useState<
     IGame[]
   >([])
@@ -30,7 +30,7 @@ const HomeMobile = () => {
 
   const handleFavouriteData = () => {
     const mapFavouriteData = gameData.map((_item) =>
-      data.find((_elm) => _elm._id === _item._id)
+      gameFavorite.find((_elm) => _elm._id === _item._id)
         ? { ..._item, favorite: true }
         : { ..._item, favorite: false }
     )
@@ -46,7 +46,7 @@ const HomeMobile = () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameData, data])
+  }, [gameData, gameFavorite])
 
   return (
     <MainLayoutMobile

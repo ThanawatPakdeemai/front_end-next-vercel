@@ -5,6 +5,7 @@ import { ImageCustom } from "@components/atoms/image/Image"
 import Link from "next/link"
 import useFavoriteGameContoller from "@feature/favourite/containers/hooks/useFavoriteGameContoller"
 import useProfileStore from "@stores/profileStore"
+import useLoadingStore from "@stores/loading"
 import HeartSolidIcon from "../atoms/icons/HeartSolidIcon"
 import HeartFilledIcon from "../atoms/icons/HeartFilledIcon"
 import RemoveWishlistModal from "../organisms/modal/RemoveWishlistModal"
@@ -35,7 +36,9 @@ const GameCardMobile = ({
     playerId: profile?.id ?? "",
     gameId
   })
+  const { setOpen } = useLoadingStore()
 
+  // State
   const [toggleRemove, setToggleRemove] = useState(false)
 
   return (
@@ -54,7 +57,10 @@ const GameCardMobile = ({
               <HeartSolidIcon onClick={() => onClickFavouriteButton()} />
             )}
           </div>
-          <Link href={href}>
+          <Link
+            href={href}
+            onClick={() => setOpen("")}
+          >
             <ImageCustom
               src={imageCategoryList}
               alt={name}

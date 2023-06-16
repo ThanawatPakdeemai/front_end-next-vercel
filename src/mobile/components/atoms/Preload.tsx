@@ -1,30 +1,38 @@
-import LogoNakaIcon from "@components/icons/LogoNakaIcon"
-import INaka from "@components/icons/Naka"
-import { memo } from "react"
+import React, { memo } from "react"
+import { Box, keyframes } from "@mui/material"
+import NakaPreload from "@components/icons/NakaPreload"
 
 interface IPreloadProps {
   open: boolean
 }
 
+const fadeIn = keyframes`
+  0% {
+    fill: #F32429;
+  }
+  50% {
+    fill: #ffffff;
+  }
+  100% {
+    fill: #F32429;
+  }
+`
+
 const Preload = ({ open }: IPreloadProps) => (
-  <div
-    className={`duration-300" fixed flex h-[100vh] w-full flex-col items-center justify-center bg-[#121212] pb-[30%] transition-all ${
+  <Box
+    component="div"
+    className={`duration-300" fixed flex h-[100vh] w-full flex-col items-center justify-center bg-[#121212] pb-[10%] transition-all ${
       open ? "z-[100] opacity-100" : "z-[-1] opacity-0"
     } `}
+    sx={{
+      ".logo-naka path": {
+        animation: `${fadeIn} 1.75s linear infinite`
+      }
+    }}
   >
-    <div className="flex h-[60%] items-center">
-      <INaka
-        width={184}
-        height={84}
-      />
+    <div className="flex w-[200px] items-center">
+      <NakaPreload className="logo-naka" />
     </div>
-    <div>
-      <LogoNakaIcon
-        fill="!fill-[#F42728]"
-        width={225}
-        hover={false}
-      />
-    </div>
-  </div>
+  </Box>
 )
 export default memo(Preload)

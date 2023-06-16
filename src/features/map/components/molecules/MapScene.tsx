@@ -22,7 +22,7 @@ const MapScene = () => {
       />
       <ambientLight intensity={1} />
       <mesh ref={scene}>
-        <planeBufferGeometry
+        <planeGeometry
           attach="geometry"
           args={[145, 80, 145, 80]}
         />

@@ -10,9 +10,11 @@ import { useToast } from "@feature/toast/containers"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import useLoadingStore from "@stores/loading"
 import { BigNumberish } from "ethers"
+import useMutateNFTLand from "./useMutateNFTLand"
 
 const useNFTLand = () => {
   const { signer, address } = useWeb3Provider()
+  const { mutateTransferNFTLand } = useMutateNFTLand()
   const landContract = useLandNFT(signer, CONFIGS.CONTRACT_ADDRESS.LAND_NFT)
   const landContractNoAcc = useLandNFTNoAccount(
     CONFIGS.CONTRACT_ADDRESS.LAND_NFT
@@ -84,10 +86,10 @@ const useNFTLand = () => {
   // get All Land
 
   // transfer owner
-  const transferLand = (_from: string, _to: string, _tokenId: string) =>
+  const transferLand = (_from: string, _to: string, _nftToken: string) =>
     new Promise<TransactionResponse>((resolve, reject) => {
       landContract
-        .transferFrom(_from, _to, _tokenId)
+        .transferFrom(_from, _to, _nftToken)
         .then((_response: TransactionResponse) => {
           resolve(_response)
         })
@@ -96,15 +98,23 @@ const useNFTLand = () => {
         })
     })
 
-  const onTransferLand = async (_to: string, _tokenId: string) => {
+  const onTransferLand = async (
+    _toAddress: string,
+    _nftToken: string,
+    _tokenId: string
+  ) => {
     if (signer && address) {
       setOpen(MESSAGES.transaction_processing_order)
-      await transferLand(address, _to, _tokenId)
+      await transferLand(address, _toAddress, _nftToken)
         .then(async (response) => {
           const _res = await response.wait()
-          if (_res) {
-            successToast("Transfer success")
+          const data = {
+            _id: _tokenId,
+            _to: _toAddress,
+            _from: address,
+            _txHash: _res.transactionHash
           }
+          await mutateTransferNFTLand(data)
         })
         .catch((error) => console.error(error))
     }

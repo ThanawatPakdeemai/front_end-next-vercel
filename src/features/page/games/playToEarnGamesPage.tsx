@@ -22,7 +22,8 @@ const PlayToEarnGamesPage = () => {
     setPage,
     pager,
     setLimit,
-    onSetGameStore
+    onSetGameStore,
+    limitPage
   } = useGamePageListController("play-to-earn")
 
   return (
@@ -75,7 +76,7 @@ const PlayToEarnGamesPage = () => {
       >
         <PaginationNaka
           totalCount={totalCount}
-          limit={limit}
+          limit={limitPage.limit}
           page={page}
           setPage={setPage}
         />

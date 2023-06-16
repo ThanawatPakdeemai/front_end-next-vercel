@@ -255,3 +255,15 @@ export const checkGameOwner = (data: IOwnerCommission) =>
         reject(error)
       })
   })
+
+export const linkToTelegram = (data: any) =>
+  new Promise<any>((resolve, reject) => {
+    services
+      .put<any>(`${CONFIGS.BASE_URL.API}/profile/link-profile-telegram/`, data)
+      .then((res) => {
+        resolve(res.data)
+      })
+      .catch((error: Error) => {
+        reject(error)
+      })
+  })

@@ -5,7 +5,7 @@ import useGetPriceNakaPunk from "@feature/nakapunk/containers/hooks/useGetPriceN
 import usePurchaseNakapunk from "@feature/nakapunk/containers/hooks/usePurchaseNakapunk"
 import { useToast } from "@feature/toast/containers"
 import { Chip, Typography, Button } from "@mui/material"
-import useCountStore from "@stores/countComponant"
+// import useCountStore from "@stores/countComponant"
 import useLoadingStore from "@stores/loading"
 import React, { useEffect, useState } from "react"
 import { IPunkMetaData } from "@feature/nakapunk/interfaces/INakapunkService"
@@ -19,6 +19,7 @@ import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import Breadcrumb from "@components/molecules/Breadcrumb"
 import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
 import { MESSAGES } from "@constants/messages"
+import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 
 const MarketplaceNakaPunk = () => {
   const [priceNP, setPriceNP] = useState<number>(0)
@@ -26,25 +27,26 @@ const MarketplaceNakaPunk = () => {
   const { marketType } = useGlobal()
   const { priceNakaPunk } = useGetPriceNakaPunk()
   const { resNakapunk, mutatePurchaseNakapunk } = usePurchaseNakapunk()
-  const { count } = useCountStore()
+  // const { count } = useCountStore()
+  const { marketAmount } = useMarketplaceProvider()
   const { setOpen, setClose } = useLoadingStore()
   const { isLogin, profile } = useProfileStore()
   const { successToast, errorToast } = useToast()
   const { onCheckAllowance } = useGlobalMarket()
-
+  const _count = marketAmount || 1
   const handleMintNakapunk = async () => {
     if (priceNP > 0) {
       setOpen(MESSAGES.transaction_processing_order)
       const _checkAllowance = await onCheckAllowance({
         _type: "nft_naka_punk",
         _seller: "system",
-        _price: priceNP * count
+        _price: priceNP * _count
       })
       if (!_checkAllowance.allowStatus) {
         setClose()
         return
       }
-      await mutatePurchaseNakapunk({ _qty: count })
+      await mutatePurchaseNakapunk({ _qty: _count })
         .then(() => {
           successToast("Mint success")
         })
@@ -150,7 +152,7 @@ const MarketplaceNakaPunk = () => {
           type={marketType as TNFTType}
           title="NAKA Punks mystery box"
           method="mint"
-          price={priceNP * count}
+          price={priceNP * _count}
           count={{
             helperText: `1 NFT = ${priceNP} NAKA`,
             label: "Quantity (Max : 10)",

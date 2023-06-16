@@ -1,4 +1,5 @@
 import SearchIcon from "@components/icons/SearchIcon"
+import { commonPattern } from "@constants/regex"
 import {
   IconButton,
   InputAdornment,
@@ -69,7 +70,7 @@ const FilterSearchBox = ({
           if (onKey) onKey(event, state)
         }}
         onChange={(_event) => {
-          setState(_event.target.value.replace(/[^A-Za-z0-9]/gi, ""))
+          setState(_event.target.value.replace(commonPattern, ""))
         }}
         value={state}
       />

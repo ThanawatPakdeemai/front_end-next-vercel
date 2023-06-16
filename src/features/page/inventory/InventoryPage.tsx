@@ -1,6 +1,7 @@
 import SettingIconFilter from "@components/icons/Inventory/SettingIconFilter"
 import { Box } from "@mui/material"
 import React, { useState } from "react"
+import { NextRouter, useRouter } from "next/router"
 import { motion } from "framer-motion"
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded"
 import FilterBox from "@feature/marketplace/components/molecules/FilterBox"
@@ -10,6 +11,8 @@ interface IProps {
 }
 const InventoryPage = ({ className }: IProps) => {
   const [open, setOpen] = useState(false)
+  const router: NextRouter = useRouter()
+  const isMapPage = router.asPath.includes("map")
 
   const animetionVariants = {
     hidden: {
@@ -34,7 +37,9 @@ const InventoryPage = ({ className }: IProps) => {
             initial="hidden"
             animate="shown"
             // transition={{ duration: 2, ease: "easeIn" }}
-            className="!h-fit bg-neutral-780 p-4 sm:h-full"
+            className={`${
+              isMapPage ? "!h-full" : "!h-fit"
+            } bg-neutral-780 p-4 sm:h-full`}
           >
             <FilterBox />
           </motion.div>

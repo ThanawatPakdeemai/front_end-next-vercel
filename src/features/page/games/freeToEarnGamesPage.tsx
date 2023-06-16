@@ -28,7 +28,8 @@ const FreeToEarnGamesPage = () => {
     setLimit,
     staminaRecovery,
     cooldown,
-    setCooldown
+    setCooldown,
+    limitPage
   } = useGamePageListController("free-to-earn")
 
   const { getGameMode } = useGlobal()
@@ -98,7 +99,7 @@ const FreeToEarnGamesPage = () => {
       >
         <PaginationNaka
           totalCount={totalCount}
-          limit={limit}
+          limit={limitPage.limit}
           page={page}
           setPage={setPage}
         />

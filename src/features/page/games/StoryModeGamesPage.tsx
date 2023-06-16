@@ -26,7 +26,9 @@ const StoryModeGamesPage = () => {
     onSetGameStore,
     gameLink,
     pager,
-    setLimit
+    setLimit,
+    limitPage
+    // setLimitPage
   } = useGamePageListController("story-mode", "storymode")
 
   return (
@@ -76,13 +78,13 @@ const StoryModeGamesPage = () => {
       >
         <PaginationNaka
           totalCount={totalCount}
-          limit={limit}
+          limit={limitPage?.limit}
           page={page}
           setPage={setPage}
         />
         <DropdownLimit
           className="m-0 w-[160px] flex-row"
-          defaultValue={30}
+          defaultValue={limit}
           list={pager}
           onChangeSelect={setLimit}
         />

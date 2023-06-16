@@ -10,6 +10,7 @@ import { useInventoryProvider } from "@providers/InventoryProvider"
 import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 import useGlobal from "@hooks/useGlobal"
 import useGlobalMarket from "@feature/marketplace/containers/hooks/useGlobalMarket"
+import FormattedInputs from "./CurrencyTextField"
 
 interface IProp {
   type: TNFTType
@@ -150,22 +151,18 @@ const TextfieldDetailContent = ({
         />
       ) : null}
       {/* (countItemSelected * _priceValue) */}
-      {sellPriceNaKa && sellPriceUSD ? (
-        <TextField
-          value={sellPriceNaKa}
+      {(price && price > 0) ||
+      type === "game_item" ||
+      type === "nft_material" ||
+      type === "nft_naka_punk" ||
+      type === "nft_avatar" ? (
+        <FormattedInputs
           label="PRICE (NAKA)"
           className="!w-[131px] sm:!w-[232px]"
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              backgroundColor: "#010101"
-            },
-            "input": {
-              color: "#E1E2E2 !important"
-            }
-          }}
-          onChange={(e) => onPriceChange(e.target.value)}
+          values={sellPriceNaKa}
+          onSetValues={onPriceChange}
           disabled={!!price}
-          InputProps={{
+          propsInput={{
             startAdornment: (
               <InputAdornment
                 position="start"

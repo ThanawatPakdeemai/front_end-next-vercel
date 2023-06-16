@@ -41,7 +41,7 @@ const useGamePageListController = (
   const [cooldown, setCooldown] = useState<boolean>(true)
   const [gameFilter, setGameFilter] = useState<IGame[]>()
   const [limitPage, setLimitPage] = useState<ILimitPage>({
-    limit: 10,
+    limit: 20,
     endLimitCount: 0
   })
 
@@ -125,7 +125,12 @@ const useGamePageListController = (
         setGameFilter([])
       }
       const filterData: IPayloadGameFilter = {
-        limit: limitPage.limit >= 10 ? limitPage.limit : 10,
+        // eslint-disable-next-line no-nested-ternary
+        limit: isMobile
+          ? limitPage.limit >= 10
+            ? limitPage.limit
+            : 10
+          : limitPage.limit,
         skip: page,
         sort: "_id",
         search: searchDropdown,
@@ -142,19 +147,22 @@ const useGamePageListController = (
       }
 
       if (!endLimit && countCallApi < 1) {
-        mutateGetGameAllFilter(filterData).then((res) => {
-          if (res) {
-            const { data, info } = res
-            setGameFilter(data)
-            setTotalCount(info ? info.totalCount : 1)
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-            _countCallApi = 0
-            setValueCountCallApi(_countCallApi)
-          }
-        })
-      } else {
-        setEndScreen(true)
+        const timer = setTimeout(() => {
+          mutateGetGameAllFilter(filterData).then((res) => {
+            if (res) {
+              const { data, info } = res
+              setGameFilter(data)
+              setTotalCount(info ? info.totalCount : 1)
+              // eslint-disable-next-line react-hooks/exhaustive-deps
+              _countCallApi = 0
+              setValueCountCallApi(_countCallApi)
+            }
+          })
+        }, 500)
+
+        return () => clearTimeout(timer)
       }
+      setEndScreen(true)
     }
 
     return () => {
@@ -176,7 +184,7 @@ const useGamePageListController = (
   ])
 
   const handleInfinityLimit = () => {
-    if (gameFilter) {
+    if (gameFilter && isMobile) {
       if (scrollBottom && limitPage.limit < totalCount && isMobile) {
         setLimitPage({
           limit: limitPage.limit + 10,
@@ -185,7 +193,7 @@ const useGamePageListController = (
         setEndLimit(false)
       } else {
         setLimitPage({
-          limit: gameFilter?.length,
+          limit: gameFilter?.length < 10 ? totalCount : gameFilter?.length,
           endLimitCount: 1
         })
         _countCallApi += 1
@@ -195,10 +203,33 @@ const useGamePageListController = (
     }
   }
 
+  const handleSearchFilter = () => {
+    setEndLimit(false)
+    _countCallApi = 0
+    setValueCountCallApi(_countCallApi)
+  }
+
   useEffect(() => {
-    handleInfinityLimit()
+    let load = false
+    if (!load) {
+      handleInfinityLimit()
+    }
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scrollBottom])
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      handleSearchFilter()
+    }
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchDropdown])
 
   const onSetGameStore = (game: IGame) => {
     onHandleSetGameStore(game.game_mode, game)
@@ -221,7 +252,9 @@ const useGamePageListController = (
     staminaRecovery,
     cooldown,
     setCooldown,
-    setDevice
+    setDevice,
+    limitPage,
+    setLimitPage
   }
 }
 

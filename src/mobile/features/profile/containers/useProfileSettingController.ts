@@ -82,7 +82,7 @@ const useProfileSettingController = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [avatar, defaultAvatar, profile])
+  }, [avatar, defaultAvatar, profile, setAvatarGoto])
 
   const onSubmit = (data) => {
     if (data && profile) {
@@ -113,7 +113,6 @@ const useProfileSettingController = () => {
                   //     setAvatarGoto(currentAvatar)
                   //   }
                   // }
-
                   // onCloseModal()
                   setClose()
                 }
@@ -152,7 +151,14 @@ const useProfileSettingController = () => {
       cancel = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile, avatar])
+  }, [
+    avatar,
+    defaultAvatar,
+    featchAvatar,
+    profile,
+    setAvatarGoto,
+    setDefaultAvatar
+  ])
 
   return {
     avatarList: setAvatarList(),

@@ -6,6 +6,7 @@ import SearchInputMobile from "@mobile/components/atoms/input/SearchInputMobile"
 import CategoriesModal from "@mobile/components/organisms/modal/CategoriesModal"
 import GameListMobile from "@mobile/components/organisms/GameListMobile"
 import { IGame } from "@feature/game/interfaces/IGameService"
+import useLoadingStore from "@stores/loading"
 import useDrawerControllerMobile from "../game/containers/hooks/useDrawerControllerMobile"
 import useGameControllerMobile from "../game/containers/hooks/useGameControllerMobile"
 import useFavoriteGameControllerMobile from "../game/containers/hooks/useFavoriteGameControllerMobile"
@@ -26,6 +27,8 @@ const HomeMobile = () => {
   const [gameDataWithFavouriteData, setGameDataWithFavouriteData] = useState<
     IGame[]
   >([])
+  const { setClose } = useLoadingStore()
+  const [choiceType, setChoiceType] = useState<string>("Categories")
 
   const handleFavouriteData = () => {
     const mapFavouriteData = gameData.map((_item) =>
@@ -47,6 +50,21 @@ const HomeMobile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameData, data])
 
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      if (gameData) {
+        setClose()
+      }
+    }
+
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameData, setClose, setOpen])
+
   return (
     <MainLayoutMobile
       activeMenu={activeMenu}
@@ -57,6 +75,7 @@ const HomeMobile = () => {
         setActiveMenu={setActiveMenu}
         setSelectedCategory={setSelectedCategory}
         setOpen={setOpen}
+        choiceType={choiceType}
       />
       {/* Search */}
       <Box
@@ -81,6 +100,7 @@ const HomeMobile = () => {
         setOpen={setOpen}
         setSelectedCategory={setSelectedCategory}
         categories={categories}
+        choiceType={(_name) => setChoiceType(_name)}
       />
     </MainLayoutMobile>
   )

@@ -30,13 +30,22 @@ const ProfileSettingModal = ({
       sx={{
         ...StyleDrawer,
         "&.MuiDrawer-root": {
-          zIndex: 1200
+          zIndex: 1200,
+          ".MuiPaper-root": {
+            height: "100%"
+          }
         }
       }}
     >
       <Box
         component="div"
         className="setting-list flex flex-col p-[8px_24px_36px]"
+        sx={{
+          "h2": {
+            lineHeight: "1",
+            alignItems: "flex-start"
+          }
+        }}
       >
         <h2
           className="flex items-center gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary"

@@ -133,29 +133,38 @@ export default function GameLobby() {
     switch (getGameMode(gameData)) {
       case "story-mode":
         return (
-          <Box
-            component="div"
-            className="flex w-full flex-col justify-between gap-4 uppercase"
-            sx={{
-              ".like-no_wrapper": {
-                flex: "0 0 100%",
-                ".like-no_score": {
-                  width: "100%"
-                }
-              }
-            }}
-          >
-            <Box
-              component="div"
-              sx={StartButtonCustomStyle}
-              className="flex w-full justify-center uppercase"
-            >
-              <ButtonGame
-                textButton={t("join-game")}
-                url={getGameStoryModeURL(gameData)}
+          <>
+            {gameData?.category?.name.includes("Casino") ? (
+              <CardBuyItem
+                buttonStyle="purple"
+                gameObject={gameData}
               />
-            </Box>
-          </Box>
+            ) : (
+              <Box
+                component="div"
+                className="flex w-full flex-col justify-between gap-4 uppercase"
+                sx={{
+                  ".like-no_wrapper": {
+                    flex: "0 0 100%",
+                    ".like-no_score": {
+                      width: "100%"
+                    }
+                  }
+                }}
+              >
+                <Box
+                  component="div"
+                  sx={StartButtonCustomStyle}
+                  className="flex w-full justify-center uppercase"
+                >
+                  <ButtonGame
+                    textButton={t("join-game")}
+                    url={getGameStoryModeURL(gameData)}
+                  />
+                </Box>
+              </Box>
+            )}
+          </>
         )
 
       case "free-to-play":

@@ -2,7 +2,7 @@ import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import { useCallback, useEffect, useState, useRef } from "react"
+import { useCallback, useEffect, useState } from "react"
 import {
   IPayloadGameFilter,
   IGame,
@@ -75,7 +75,7 @@ const useGlobal = (
   const [hydrated, setHydrated] = useState(false)
   const [marketType, setMarketType] = useState<TNFTType>()
   /** This is only temporary code for hide marketplace in production */
-  const [isShowMarket, setIsShowMarket] = useState<boolean>(false)
+  // const [isShowMarket, setIsShowMarket] = useState<boolean>(false)
 
   /**
    * @description check if url is in marketplace
@@ -339,6 +339,31 @@ const useGlobal = (
     }
   }
 
+  const getGamePokerModeURL = (gameData: IGame): string => {
+    if (!profile) return ""
+
+    const frontendUrl = `${CONFIGS.BASE_URL.FRONTEND}/${router.query.typeGame}/${gameData.path}`
+    const { username, address, avatar, status } = profile
+
+    // Get url by game type
+    // address: string
+    // username: string
+    // avatar: number
+    // status: number
+    // createdAt?: string
+    // friend: IAuthServiceFriend[]
+    // banned: string[]
+    // gas: 0 | 1 | 2 | null | undefined
+    // jwtToken: string
+
+    return `${gameData.game_url}?game_data=${gameData.id}?data=${btoa(
+      `${address}:|:${username}:|:${avatar}:|:${status}:|:${CONFIGS.BASE_URL.API?.slice(
+        0,
+        -4
+      )}:|:${frontendUrl}:|:${gameData.image_banner}`
+    )}`
+  }
+
   const isRedirectRoomlist = (_game: IGame): "/roomlist" | "" => {
     if (
       _game.play_to_earn_status === "free" ||
@@ -387,6 +412,9 @@ const useGlobal = (
         setMarketType("nft_game")
       } else if (router.asPath.includes("avatar-reef")) {
         setMarketType("nft_avatar")
+      } else {
+        // path = "/"
+        setMarketType("nft_land")
       }
     }
 
@@ -396,38 +424,38 @@ const useGlobal = (
   }, [router.asPath])
 
   /** This is only temporary code for hide marketplace in production */
-  const _mode = process.env.NEXT_PUBLIC_MODE
+  // const _mode = process.env.NEXT_PUBLIC_MODE
 
-  const redirectionDone = useRef(false)
+  // const redirectionDone = useRef(false)
 
-  useEffect(() => {
-    const redirectIfNecessary = () => {
-      if (
-        router.asPath.includes("marketplace") &&
-        _mode === "production" &&
-        !redirectionDone.current
-      ) {
-        router.replace("/404", undefined, { shallow: true })
-        setIsShowMarket(false)
-        redirectionDone.current = true
-      } else if (
-        router.asPath.includes("marketplace") &&
-        _mode === "development" &&
-        !redirectionDone.current
-      ) {
-        router.replace(router.asPath, undefined, { shallow: true })
-        setIsShowMarket(true)
-        redirectionDone.current = true
-      }
-    }
+  // useEffect(() => {
+  //   const redirectIfNecessary = () => {
+  //     if (
+  //       router.asPath.includes("marketplace") &&
+  //       _mode === "production" &&
+  //       !redirectionDone.current
+  //     ) {
+  //       router.replace("/404", undefined, { shallow: true })
+  //       setIsShowMarket(false)
+  //       redirectionDone.current = true
+  //     } else if (
+  //       router.asPath.includes("marketplace") &&
+  //       _mode === "development" &&
+  //       !redirectionDone.current
+  //     ) {
+  //       router.replace(router.asPath, undefined, { shallow: true })
+  //       setIsShowMarket(true)
+  //       redirectionDone.current = true
+  //     }
+  //   }
 
-    const intervalId = setInterval(redirectIfNecessary, 0)
+  //   const intervalId = setInterval(redirectIfNecessary, 0)
 
-    return () => {
-      clearInterval(intervalId)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.asPath, _mode])
+  //   return () => {
+  //     clearInterval(intervalId)
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [router.asPath, _mode])
   /** This is only temporary code for hide marketplace in production */
 
   /**
@@ -471,7 +499,8 @@ const useGlobal = (
     pager,
     isMarketplace,
     isDeveloperPage,
-    isShowMarket,
+    // isShowMarket,
+    getGamePokerModeURL,
     openInNewTab,
     getGameMode,
     getTypeGamePartnerPathFolder,

@@ -13,6 +13,7 @@ import { useWeb3Provider } from "@providers/Web3Provider"
 import CONFIGS from "@configs/index"
 import { IResGetIp } from "@interfaces/IGetIP"
 import useGameGlobal from "@hooks/useGameGlobal"
+import useLoadingStore from "@stores/loading"
 import useGetCurrentPlayerGameSingle from "./useGetCurrentPlayerGameSingle"
 import useGetGameRoomById from "./useGetGameRoomById"
 
@@ -33,6 +34,7 @@ const useWaitingSingle = () => {
   const [gameUrl, setGameUrl] = useState<string>("")
   const [ip, setIp] = useState("")
   const { getGameMode } = useGlobal()
+  const { setClose } = useLoadingStore()
 
   // TODO: Refactor later
   const detectDevice = isMobile ? "mobile" : "desktop"
@@ -97,7 +99,10 @@ const useWaitingSingle = () => {
   useEffect(() => {
     let load = false
 
-    if (!load) fetchPlayers("in")
+    if (!load) {
+      fetchPlayers("in")
+      setClose()
+    }
 
     return () => {
       load = true

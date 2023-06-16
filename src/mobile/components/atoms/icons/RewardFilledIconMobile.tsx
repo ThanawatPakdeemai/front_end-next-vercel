@@ -1,9 +1,9 @@
 import React from "react"
 
-const RewardIconMobile = ({
+const RewardFilledIconMobile = ({
   width = 25,
   height = 24,
-  stroke = "#9E9E9E",
+  stroke = "#F32429",
   className
 }: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -87,4 +87,4 @@ const RewardIconMobile = ({
   </svg>
 )
 
-export default RewardIconMobile
+export default RewardFilledIconMobile

@@ -40,7 +40,7 @@ export default function CardBuyItem({
     totalPrice,
     isWaitingRoom
   } = useBuyGameItemController()
-  const { hydrated } = useGlobal()
+  const { hydrated, getGamePokerModeURL } = useGlobal()
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
 
@@ -49,28 +49,48 @@ export default function CardBuyItem({
     if (router.pathname === "/[typeGame]/[GameHome]/roomlist/[id]") return
     if (qtyItemSelected) {
       if (qtyItemSelected > 0) {
-        return buttonStyle === "green" ? (
-          <Box
-            component="div"
-            sx={StartButtonCustomStyle}
-            className="flex w-full justify-center uppercase"
-          >
-            <ButtonGame
-              textButton={t("join-game")}
-              url={`${router.asPath}/roomlist`}
+        if (gameObject?.category?.name !== "Casino") {
+          return buttonStyle === "green" ? (
+            <Box
+              component="div"
+              sx={StartButtonCustomStyle}
+              className="flex w-full justify-center uppercase"
+            >
+              <ButtonGame
+                textButton={t("join-game")}
+                url={`${router.asPath}/roomlist`}
+              />
+            </Box>
+          ) : (
+            <ButtonLink
+              text={t("join-game")}
+              href={`${router.asPath}/roomlist`}
+              icon={<ArrowJoinIcon />}
+              size="medium"
+              color="secondary"
+              variant="contained"
+              className="h-[50px] w-full"
             />
-          </Box>
-        ) : (
-          <ButtonLink
-            text={t("join-game")}
-            href={`${router.asPath}/roomlist`}
-            icon={<ArrowJoinIcon />}
-            size="medium"
-            color="secondary"
-            variant="contained"
-            className="h-[50px] w-full"
-          />
-        )
+          )
+        }
+        if (profile && (profile.gold as number) > 0) {
+          return (
+            <Box
+              component="div"
+              sx={StartButtonCustomStyle}
+              className="flex w-full justify-center uppercase"
+            >
+              <ButtonGame
+                textButton={t("join-game")}
+                url={
+                  gameObject.game_url
+                    ? getGamePokerModeURL(gameObject)
+                    : `${router.asPath}/roomlist`
+                }
+              />
+            </Box>
+          )
+        }
       }
     }
     return (

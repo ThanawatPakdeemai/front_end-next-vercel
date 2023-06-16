@@ -40,6 +40,7 @@ export interface IProfile {
   max_exp: number
   exp: number
   level: number
+  gold?: number | undefined // for poker
 }
 
 export interface IGetUserById {

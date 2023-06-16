@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { linkToTelegram } from "../services/game.service"
 
-const useLinkToTelegram = ({ player_id, telegram_id }: any) => {
+const useLinkToTelegram = (player_id: any, telegram_id: any) => {
   const {
     data: linkTelegramData,
     error,

@@ -46,6 +46,7 @@ import IReferrals from "@components/icons/Referrals"
 // import ReactDOM from "react-dom"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Script from "next/script"
+import useLinkToTelegram from "@feature/game/containers/hooks/useLinkToTelegram"
 import EditProfileModal from "./EditProfileModal"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
@@ -90,6 +91,11 @@ const ProfileContent = () => {
   const { profile: profileFetched, isError } = useGetProfileByEmail(emailPlayer)
   const { handleConnectWallet } = useWalletContoller()
   const { hasMetamask, disabledConnectButton } = useWeb3Provider()
+  const telegramParams: any = localStorage.getItem("telegram-params")
+  const { linkTelegramData } = useLinkToTelegram(
+    idPlayer,
+    telegramParams && telegramParams.id.toString()
+  )
 
   useEffect(() => {
     if (isError) {
@@ -156,6 +162,30 @@ const ProfileContent = () => {
       load = true
     }
   }, [player_id])
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      if (player_id) {
+        setIdPlayer(player_id as string)
+      }
+    }
+    return () => {
+      load = true
+    }
+  }, [player_id])
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      if (linkTelegramData) {
+        localStorage.removeItem("telegram-params")
+      }
+    }
+    return () => {
+      load = true
+    }
+  }, [linkTelegramData])
 
   // const MoveTelegramButton = () => {
   //   // eslint-disable-next-line no-console
@@ -449,7 +479,10 @@ const ProfileContent = () => {
       ) : (
         <div className="login-telegram mt-8 w-full md:mt-0 md:w-[98%] lg:w-[90%]">
           {/* <div className="w-[90%]"> */}
-          <div id="login-telegram">
+          <div
+            id="login-telegram"
+            className="pb-[20px]"
+          >
             <Script
               async
               src="https://telegram.org/js/telegram-widget.js?22"
@@ -460,7 +493,7 @@ const ProfileContent = () => {
               strategy="lazyOnload"
             />
             <Script id="show-banner">
-              {`function onTelegramAuth(params) { console.log(params); localStorage.setItem('params', JSON.stringify(params));}`}
+              {`function onTelegramAuth(params) { localStorage.setItem('telegram-params', JSON.stringify(params));}`}
             </Script>
           </div>
 

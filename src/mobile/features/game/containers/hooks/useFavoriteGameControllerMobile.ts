@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import useFavoriteGame from "@feature/favourite/containers/hooks/useFavoriteGame"
 import useGlobal from "@hooks/useGlobal"
 import { IGame } from "@feature/game/interfaces/IGameService"
@@ -12,23 +12,21 @@ const useFavoriteGameControllerMobile = () => {
     ...defaultBody
   })
 
-  const handleFavouriteData = useCallback(() => {
+  const handleFavouriteData = () => {
     const mapData = gameFavourite.map((_elm) => ({ ..._elm, favorite: true }))
-    if (mapData && mapData.length > 0) setDataFavorite(mapData)
-  }, [gameFavourite])
+    setDataFavorite(mapData)
+  }
 
   useEffect(() => {
     let load = false
 
-    if (!load) {
-      handleFavouriteData()
-    }
+    if (!load) handleFavouriteData()
 
     return () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [gameFavourite])
 
   return {
     gameFavorite: dataFavorite.length > 0 ? dataFavorite : [],

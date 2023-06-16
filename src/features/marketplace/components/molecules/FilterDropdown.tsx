@@ -62,7 +62,8 @@ const FilterDropdown = () => {
 
   const [openFilter, setOpenFilter] = useState<boolean>(false)
   const [expanded, setExpanded] = useState<boolean>(false)
-  const isP2P = router.asPath.includes("p2p")
+  // const isP2P = router.asPath.includes("p2p")
+  // eslint-disable-next-line no-unused-vars
   const [searchReset, setSearchReset] = useState<boolean>(false)
 
   const { onSetSearch } = useMarketFilterStore()

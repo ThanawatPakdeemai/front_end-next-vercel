@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { Global } from "@emotion/react"
 import { styled } from "@mui/material/styles"
 import { grey } from "@mui/material/colors"

@@ -364,6 +364,12 @@ const useGlobal = (
     )}`
   }
 
+  const isPokerGame = (gameData: IGame) =>
+    gameData && gameData?.category?.name === "Casino"
+
+  const goldProfile: number = profile?.gold || 0
+  const goldProfileComma: string = Helper.formatNumber(profile?.gold || 0)
+
   const isRedirectRoomlist = (_game: IGame): "/roomlist" | "" => {
     if (
       _game.play_to_earn_status === "free" ||
@@ -513,7 +519,10 @@ const useGlobal = (
     getGameStoryModeURL,
     isFreeToEarnGame,
     isFreeToPlayGame,
-    isStoryModeGame
+    isStoryModeGame,
+    isPokerGame,
+    goldProfile,
+    goldProfileComma
   }
 }
 

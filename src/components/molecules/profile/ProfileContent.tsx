@@ -98,11 +98,6 @@ const ProfileContent = () => {
   )
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log("telegram_", telegramParams)
-  }, [telegramParams])
-
-  useEffect(() => {
     if (isError) {
       errorToast(MESSAGES.please_login)
       router.push("/")
@@ -183,6 +178,8 @@ const ProfileContent = () => {
   useEffect(() => {
     let load = false
     if (!load) {
+      // eslint-disable-next-line no-console
+      console.log("telegram_", telegramParams)
       if (linkTelegramData) {
         localStorage.removeItem("telegram-params")
       }
@@ -190,7 +187,7 @@ const ProfileContent = () => {
     return () => {
       load = true
     }
-  }, [linkTelegramData])
+  }, [linkTelegramData, telegramParams])
 
   // const MoveTelegramButton = () => {
   //   // eslint-disable-next-line no-console

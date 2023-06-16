@@ -170,10 +170,7 @@ const ProfileContent = () => {
   }
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      MoveTelegramButton
-    }, 10000)
-    return () => clearTimeout(timer)
+    MoveTelegramButton
   }, [])
 
   // useEffect(() => {
@@ -471,9 +468,9 @@ const ProfileContent = () => {
               data-request-access="write"
               strategy="lazyOnload"
             />
-            {/* <Script id="show-banner">
+            <Script id="show-banner">
               {`function onTelegramAuth(params) { console.log(params);}`}
-            </Script> */}
+            </Script>
           </div>
           {/* <ButtonToggleIcon
             handleClick={handleTelegramResponse}

@@ -96,10 +96,14 @@ const ProfileContent = () => {
   const { linkTelegramData } = useLinkToTelegram(idPlayer, telegramId)
 
   useEffect(() => {
-    if (telegramParams !== undefined) {
+    if (telegramParams !== undefined || null) {
       // eslint-disable-next-line no-console
-      console.log("telegram_", telegramParams)
-      setTelegramId("")
+      console.log("telegram_", telegramParams.id)
+      // eslint-disable-next-line no-console
+      console.log("telegram_type", typeof telegramParams.id)
+      // eslint-disable-next-line no-console
+      console.log("telegram_type_string ", telegramParams.id.toString())
+      setTelegramId(telegramParams.id.toString())
     }
   }, [telegramParams])
 
@@ -185,7 +189,7 @@ const ProfileContent = () => {
     let load = false
     if (!load) {
       if (linkTelegramData) {
-        localStorage.removeItem("telegram-params")
+        // localStorage.removeItem("telegram-params")
       }
     }
     return () => {

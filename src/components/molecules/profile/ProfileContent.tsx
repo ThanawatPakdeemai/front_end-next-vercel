@@ -94,7 +94,7 @@ const ProfileContent = () => {
   const telegramParams: any = localStorage.getItem("telegram-params")
   const { linkTelegramData } = useLinkToTelegram(
     idPlayer,
-    telegramParams !== null && telegramParams.id.toString()
+    telegramParams && telegramParams.id.toString()
   )
 
   useEffect(() => {

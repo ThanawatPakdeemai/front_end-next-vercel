@@ -98,7 +98,11 @@ const ProfileContent = () => {
   useEffect(() => {
     if (telegramParams) {
       // eslint-disable-next-line no-console
-      console.log("telegram_", typeof telegramParams.id)
+      console.log("telegram_", telegramParams.id)
+      // eslint-disable-next-line no-console
+      console.log("telegram_type", typeof telegramParams.id)
+      // eslint-disable-next-line no-console
+      console.log("telegram_type_string ", telegramParams.id.toString())
       setTelegramId(telegramParams.id.toString())
     }
   }, [telegramParams])

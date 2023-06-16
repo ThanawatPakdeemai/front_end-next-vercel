@@ -204,6 +204,9 @@ export interface IGame extends IGameArcadeEmporium {
   NFT_info: INFTInfo
   game_room_available?: IGameRoomAvailable[]
   game_mode: TGameMode
+
+  // Custom for favorite game
+  favorite: boolean
 }
 
 export interface IGameDevice {

@@ -3,7 +3,7 @@ import { useState } from "react"
 
 const useGlobalControllerMobile = () => {
   // State
-  const [activeMenu, setActiveMenu] = useState<IGetType>("play-to-earn")
+  const [activeMenu, setActiveMenu] = useState<IGetType>("free-to-play")
   const [limit, setLimit] = useState<number>(10)
   const iOS =
     typeof navigator !== "undefined" &&

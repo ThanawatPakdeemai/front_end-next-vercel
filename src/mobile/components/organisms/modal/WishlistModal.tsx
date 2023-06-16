@@ -12,7 +12,7 @@ interface IWishlistModalProps {
 }
 
 const WishlistModal = ({ open, setOpenWishlist }: IWishlistModalProps) => {
-  const { data, loading } = useFavoriteGameControllerMobile()
+  const { gameFavorite, loading } = useFavoriteGameControllerMobile()
   const { clearAllDrawer } = useDrawerControllerMobile()
 
   return (
@@ -50,7 +50,7 @@ const WishlistModal = ({ open, setOpenWishlist }: IWishlistModalProps) => {
         </h2>
         {/* Game List */}
         <GameListMobile
-          gameData={data}
+          gameData={gameFavorite}
           loading={loading}
         />
       </Box>

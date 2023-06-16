@@ -28,7 +28,8 @@ const FreeToPlayGamesPage = () => {
     setLimit,
     staminaRecovery,
     cooldown,
-    setCooldown
+    setCooldown,
+    limitPage
   } = useGamePageListController("free-to-play")
   const { getGameMode } = useGlobal()
   const [f2pGame, setF2PGame] = useState<IGame[]>()
@@ -99,7 +100,7 @@ const FreeToPlayGamesPage = () => {
       >
         <PaginationNaka
           totalCount={totalCount}
-          limit={limit}
+          limit={limitPage.limit}
           page={page}
           setPage={setPage}
         />

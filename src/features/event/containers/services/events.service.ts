@@ -16,7 +16,6 @@ export const getEventList = async ({
     const body = {
       limit: limit || 20,
       skip: skip || 1,
-      sort: sort || "_id",
       search: search || ""
     }
     services

@@ -7,7 +7,7 @@ import SkeletonCardMobile from "../atoms/skeleton/SkeletonCardMobile"
 import GameCardMobile from "../molecules/GameCardMobile"
 
 interface IGameList {
-  gameData: IGame[] | []
+  gameData: IGame[]
   loading: boolean
 }
 
@@ -32,11 +32,11 @@ const GameListMobile = ({ gameData, loading }: IGameList) => {
       <Box
         component="section"
         className={`game-section grid gap-5 sm:grid-cols-4 ${
-          gameData.length > 0 && "grid-cols-2"
+          gameData && gameData.length > 0 && "grid-cols-2"
         }`}
       >
         {loading &&
-          [...Array(gameData.length)].map(() => (
+          [...Array((gameData && gameData.length) || 10)].map(() => (
             <SkeletonCardMobile key={uuid()} />
           ))}
         {!loading &&

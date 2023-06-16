@@ -23,7 +23,6 @@ const useGetEventList = ({ limit, skip, sort, search }: IGetAllEventsProps) => {
     isLoading,
     isPreviousData,
     isError,
-
     isFetching
   }
 }

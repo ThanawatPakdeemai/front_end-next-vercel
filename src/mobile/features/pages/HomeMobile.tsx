@@ -1,4 +1,4 @@
-import React, { useState, memo, useEffect } from "react"
+import React, { useState, memo, useEffect, useCallback } from "react"
 import { Box } from "@mui/material"
 import MainLayoutMobile from "@mobile/components/templates/MainLayoutMobile"
 import GameFilterMobile from "@mobile/components/molecules/GameFilterMobile"
@@ -23,47 +23,49 @@ const HomeMobile = () => {
     setActiveMenu
   } = useGameControllerMobile()
   const { open, setOpen } = useDrawerControllerMobile()
-  const { data } = useFavoriteGameControllerMobile()
+  const { gameFavorite } = useFavoriteGameControllerMobile()
   const [gameDataWithFavouriteData, setGameDataWithFavouriteData] = useState<
     IGame[]
   >([])
   const { setClose } = useLoadingStore()
   const [choiceType, setChoiceType] = useState<string>("Categories")
 
-  const handleFavouriteData = () => {
+  const handleFavouriteData = useCallback(() => {
     const mapFavouriteData = gameData.map((_item) =>
-      data.find((_elm) => _elm._id === _item._id)
+      gameFavorite.find((_elm) => _elm._id === _item._id)
         ? { ..._item, favorite: true }
         : { ..._item, favorite: false }
     )
-    setGameDataWithFavouriteData(mapFavouriteData)
-  }
-
-  useEffect(() => {
-    let load = false
-
-    if (!load) handleFavouriteData()
-
-    return () => {
-      load = true
-    }
+    if (mapFavouriteData) setGameDataWithFavouriteData(mapFavouriteData)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameData, data])
+  }, [gameData, gameFavorite])
 
   useEffect(() => {
     let load = false
 
     if (!load) {
-      if (gameData) {
-        setClose()
-      }
+      if (!gameData.length) return
+      handleFavouriteData()
     }
 
     return () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameData, setClose, setOpen])
+  }, [gameData])
+
+  useEffect(() => {
+    let load = false
+
+    if (!load) {
+      setClose()
+    }
+
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setClose])
 
   return (
     <MainLayoutMobile
@@ -90,7 +92,7 @@ const HomeMobile = () => {
 
       {/* Game List */}
       <GameListMobile
-        gameData={gameDataWithFavouriteData || []}
+        gameData={gameDataWithFavouriteData}
         loading={loadingFilterGame}
       />
 

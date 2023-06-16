@@ -96,7 +96,10 @@ const ProfileContent = () => {
   const { linkTelegramData } = useLinkToTelegram(idPlayer, telegramId)
 
   useEffect(() => {
-    if (telegramParams !== undefined || null) {
+    if (
+      (telegramParams && telegramParams !== undefined) ||
+      telegramParams !== null
+    ) {
       // eslint-disable-next-line no-console
       console.log("telegram_", telegramParams.id)
       // eslint-disable-next-line no-console

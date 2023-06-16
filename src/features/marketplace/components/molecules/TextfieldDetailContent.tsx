@@ -159,7 +159,7 @@ const TextfieldDetailContent = ({
         <FormattedInputs
           label="PRICE (NAKA)"
           className="!w-[131px] sm:!w-[232px]"
-          values={calcNAKAPrice(price || 0).toString() || sellPriceNaKa}
+          values={sellPriceNaKa}
           onSetValues={onPriceChange}
           disabled={!!price}
           propsInput={{

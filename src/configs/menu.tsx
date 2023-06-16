@@ -680,7 +680,7 @@ export const MENU_MARKETPLACE: IMenuMarketPlace[] = [
   {
     name: "Nakaverse Map",
     link: "/marketplace/map",
-    isChilde: false,
+    isChilde: true,
     image: {
       src: IMAGES.tableCom.src,
       widthImg: 240,

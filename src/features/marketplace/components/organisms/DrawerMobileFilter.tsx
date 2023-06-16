@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { Global } from "@emotion/react"
 import { styled } from "@mui/material/styles"
 import { grey } from "@mui/material/colors"
@@ -10,7 +10,7 @@ const drawerBleeding = 56
 
 interface IProp {
   open: boolean
-  window?: () => Window
+  setClose: (_toggle) => void
 }
 
 // const styleButton = {
@@ -24,27 +24,18 @@ interface IProp {
 //   }
 // }
 
-const Puller = styled(Box)(({ theme }) => ({
+const Puller = styled(Box)(() => ({
   width: 30,
   height: 6,
-  backgroundColor: theme.palette.mode === "light" ? grey[300] : grey[900],
+  backgroundColor: grey[900],
   borderRadius: 3,
   position: "absolute",
   top: 8,
-  left: "calc(50% - 15px)"
+  left: "calc(50% - 15px)",
+  background: grey[900]
 }))
 
-export default function SwipeableEdgeDrawer({ open }: IProp) {
-  const [opened, setOpen] = React.useState(false)
-
-  useEffect(() => {
-    setOpen(open)
-  }, [open])
-
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen)
-  }
-
+export default function SwipeableEdgeDrawer({ open, setClose }: IProp) {
   return (
     <div>
       <Global
@@ -60,21 +51,11 @@ export default function SwipeableEdgeDrawer({ open }: IProp) {
         }}
       />
 
-      {/* <Button
-        sx={styleButton}
-        onClick={() => {
-          setOpen(true)
-        }}
-        className="!h-[40px] !w-[40px] !rounded-lg border border-neutral-700 bg-neutral-800 p-2"
-      >
-        <SettingIconFilter />
-      </Button> */}
       <SwipeableDrawer
-        // container={container}
         anchor="bottom"
-        open={opened}
-        onClose={toggleDrawer(false)}
-        onOpen={toggleDrawer(true)}
+        open={open}
+        onClose={() => setClose(false)}
+        onOpen={() => {}}
         swipeAreaWidth={drawerBleeding}
         disableSwipeToOpen={false}
         ModalProps={{

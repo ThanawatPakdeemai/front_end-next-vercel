@@ -10,9 +10,9 @@ import NakaIconFilledMobile from "@mobile/components/atoms/icons/NakaIconFilledM
 
 export const GAME_MENU_MOBILE: ISlideList[] = [
   {
-    id: "play-to-earn",
-    label: "Play To Earn",
-    type: "play-to-earn"
+    id: "free-to-play",
+    label: "Free To Play",
+    type: "free-to-play"
   },
   {
     id: "free-to-earn",
@@ -20,14 +20,14 @@ export const GAME_MENU_MOBILE: ISlideList[] = [
     type: "free-to-earn"
   },
   {
-    id: "free-to-play",
-    label: "Free To Play",
-    type: "free-to-play"
-  },
-  {
     id: "story-mode",
     label: "Story Mode",
     type: "story-mode"
+  },
+  {
+    id: "play-to-earn",
+    label: "Play To Earn",
+    type: "play-to-earn"
   },
   {
     id: "arcade-emporium",

@@ -337,6 +337,7 @@ const ModalMarket = ({
 
   return (
     <ModalCustom
+      className="max-w-full sm:min-w-[280px]"
       open={open}
       onClose={onClose}
       titleNode={

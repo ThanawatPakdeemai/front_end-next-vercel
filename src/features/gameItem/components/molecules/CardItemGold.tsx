@@ -151,7 +151,7 @@ export default function CardItemGold({
             className={`mt-2 flex w-full flex-[1_1_340px] justify-center rounded-3xl border-[1px] border-neutral-800 bg-neutral-800 lg:mt-0 lg:flex-none `}
           >
             <div className="flex flex-col items-center justify-center gap-3 p-4">
-              {goldProfile && itemSelected && (
+              {goldProfileComma && itemSelected && (
                 <CardBuyItemHeader
                   image={itemSelected.image_icon}
                   name={itemSelected.name}

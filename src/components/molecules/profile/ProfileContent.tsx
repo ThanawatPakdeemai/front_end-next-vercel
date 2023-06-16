@@ -99,7 +99,7 @@ const ProfileContent = () => {
     if (telegramParams !== undefined) {
       // eslint-disable-next-line no-console
       console.log("telegram_", telegramParams)
-      setTelegramId(telegramParams.id.toString())
+      setTelegramId("")
     }
   }, [telegramParams])
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import ILogoMaster from "@components/icons/LogoMaster"
@@ -82,6 +83,7 @@ interface IProp {
     owner?: string
     buyer?: string
   }
+  filterImage?: any
 }
 
 const CardItemMarketPlace = ({
@@ -100,29 +102,93 @@ const CardItemMarketPlace = ({
   nakaPrice,
   href,
   keyType,
-  rental
+  rental,
+  filterImage
 }: IProp) => {
   const { copyClipboard, formatNumber } = Helper
   const { successToast } = useToast()
 
   // "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning"
 
-  const [size, setSize] = useState<Blob>()
+  const [imageSize, setImageSize] = useState<any>("")
+
+  const fetchSizeImage = () => {
+    const mapdata = filterImage?.data?.filter(
+      (elm) => elm.item_data.name === "Bullet"
+    )
+    setImageSize(mapdata[0])
+    console.log("mapdata", mapdata)
+  }
 
   useEffect(() => {
-    if (itemImage && itemName === "Bullet" && !size) {
-      fetch(itemImage?.src)
-        .then((response) => response.blob())
-        .then((blob) => {
-          setSize(blob)
-          // Further operations with the blob object
-          // console.log(itemName, "size:", blob)
-        })
-        .catch(() => {
-          // console.log("Error fetching image:", error)
-        })
-    }
-  }, [itemName, itemImage, size])
+    fetchSizeImage()
+  }, [])
+
+  console.log("imageSize", imageSize?.item_data?.image)
+  console.log("itemImage.alt", itemImage?.alt)
+
+  // const [itemNameTestPrefix]: string[] =
+  //   itemName && (itemName.split(" ") as string[])
+
+  console.log("filterImage", filterImage)
+
+  const [size, setSize] = useState<Blob>()
+
+  console.log("img", itemImage)
+
+  // const bulletImage = useMemo(() => {
+  //   if (itemImage.) {
+  //     if (gameItemList) {
+  //       const item = gameItemList.find((ele) => ele._id === itemSelected._id)
+  //       return item
+  //     }
+  //     return itemSelected
+  //   }
+  // }, [gameItemList, itemSelected])
+
+  // useEffect(() => {
+  //   if (
+  //     itemImage &&
+  //     // itemName &&
+  //     itemNameTestPrefix === "Bullet" &&
+  //     size === undefined
+  //   ) {
+  //     fetchSizeImage()
+  //     // fetch(itemImage?.src)
+  //     //   .then((response) => response.blob())
+  //     //   .then((blob) => {
+  //     //     setSize(blob)
+  //     //     // Further operations with the blob object
+  //     //     // console.log(itemName, "size:", blob)
+  //     //   })
+  //     //   .catch(() => {
+  //     //     // console.log("Error fetching image:", error)
+  //     //   })
+  //   }
+  // }, [itemImage, size])
+
+  // const { data: imageSize, isLoading: imageSizeLoading } = useQuery<
+  //   Blob | undefined
+  // >(
+  //   ["itemImageSize", itemImage?.src],
+  //   () => fetch(itemImage?.src).then((response) => response.blob()),
+  //   {
+  //     enabled: itemName === "Bullet",
+  //     retry: false
+  //   }
+  // )
+
+  // useEffect(() => {
+  //   if (itemSize) {
+  //     // Further operations with the imageSize
+  //     console.log(itemName, "size:", itemSize)
+  //   }
+  // }, [itemName, itemSize])
+
+  // if (imageSizeLoading) {
+  //   // Render loading state if needed
+  //   return <div>Loading...</div>
+  // }
 
   const handleColor = () => {
     if (percentage)
@@ -314,7 +380,11 @@ const CardItemMarketPlace = ({
                   className="relative  hidden items-center justify-center sm:block"
                 >
                   <Image
-                    src={itemImage.src}
+                    src={`${
+                      itemName === "Bullet" && imageSize
+                        ? imageSize?.item_data?.image
+                        : itemImage.src
+                    }`}
                     alt={itemImage.alt}
                     className={`object-contain ${
                       cardType === "naka-punk"

@@ -71,6 +71,7 @@ const MarketplaceP2PCardList = () => {
                     poster: _data.land_data.NFT_image
                   }
                 }
+                filterImage={orderData}
                 itemName={
                   _data.land_data?.name ||
                   _data.building_data?.name ||

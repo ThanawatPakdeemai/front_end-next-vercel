@@ -39,7 +39,6 @@ const CreateAccountModal = ({
     onClickGetCode,
     isNumber,
     isCharacters,
-    watch,
     handleClickShowPassword,
     showConfirmPassword,
     handleClickShowConfirmPassword

@@ -185,10 +185,12 @@ const LoginModal = ({ open, setOpenLogin }: INotificationModalProps) => {
           </Typography>
         </Box>
         {/* Modal CreateNewAccountModal */}
-        <CreateAccountModal
-          open={openModalCreateAccount}
-          setOpenLogin={(_toggle) => setOpenModalCreateAccount(_toggle)}
-        />
+        {openModalCreateAccount && (
+          <CreateAccountModal
+            open={openModalCreateAccount}
+            setOpenLogin={(_toggle) => setOpenModalCreateAccount(_toggle)}
+          />
+        )}
       </Box>
     </SwipeableDrawer>
   )

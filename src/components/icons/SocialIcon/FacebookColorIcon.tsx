@@ -12,7 +12,7 @@ function FacebookColorIcon({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clipPath="url(#clip0_117_1464)">
+      <g>
         <path
           d="M12 0C5.3724 0 0 5.3724 0 12C0 18.6276 5.3724 24 12 24C18.6276 24 24 18.6276 24 12C24 5.3724 18.6276 0 12 0Z"
           fill="url(#paint0_linear_117_1464)"

@@ -219,7 +219,8 @@ const useInventoryContext = () => {
               marketplaces_data: _res.data.marketplaces_data,
               installments_data: _res.data.installments_data,
               owner_id: _res.data.NFT_info.owner_id._id,
-              player_id: _res.data.NFT_info.owner_id._id
+              player_id: _res.data.NFT_info.owner_id._id,
+              wallet_address: _res.data.NFT_info.address_owner
             }
           })
           break
@@ -251,7 +252,8 @@ const useInventoryContext = () => {
               detail: _res.description,
               history: _res.history,
               owner_id: _res.owner_id,
-              player_id: _res.player_id
+              player_id: _res.player_id,
+              wallet_address: profile.data?.address
             }
           })
           break

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback } from "react"
 import ButtonMarket from "@components/atoms/button/ButtonMarket"
 import ButtonRentOut from "@components/atoms/button/ButtonRentOut"
 import CardDetailSkeleton from "@feature/marketplace/components/molecules/CardDetailSkeleton"
@@ -22,13 +22,13 @@ const MarketplaceOwnerDetail = () => {
   const router = useRouter()
   const isInventory = router.asPath.includes("inventory")
 
-  const handleRouter = () => {
+  const handleRouter = useCallback(() => {
     if (router.asPath.includes("inventory")) {
       router.push("/marketplace/inventory")
     } else {
       router.back()
     }
-  }
+  }, [router])
 
   return invenItemData && !isLoading ? (
     <div className="flex flex-col">

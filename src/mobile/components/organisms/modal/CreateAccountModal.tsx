@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import {
   Box,
   Button,
@@ -39,7 +39,6 @@ const CreateAccountModal = ({
     onClickGetCode,
     isNumber,
     isCharacters,
-    watch,
     handleClickShowPassword,
     showConfirmPassword,
     handleClickShowConfirmPassword
@@ -47,6 +46,7 @@ const CreateAccountModal = ({
 
   const { register, handleSubmit } = useForm()
   const { isEmail, patternCode, emailCorrect } = useFormController()
+  const [email, setEmail] = useState<string>("")
 
   const { t } = useTranslation()
 
@@ -90,6 +90,7 @@ const CreateAccountModal = ({
             placeholder={String(t("email"))}
             onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
               isEmail(e.target.value.toString())
+              setEmail(e.target.value)
             }}
             {...register("email")}
             sx={{
@@ -267,11 +268,11 @@ const CreateAccountModal = ({
               className="flex justify-center"
             >
               <Button
-                disabled={!emailCorrect || watch("email") === ""}
-                onClick={() => onClickGetCode(watch("email"))}
+                disabled={!emailCorrect || email === ""}
+                onClick={() => onClickGetCode(email)}
                 variant="contained"
                 className={`mb-6 h-[50px] w-full rounded-bl-3xl border border-solid border-error-100 !bg-error-100 ${
-                  !emailCorrect || watch("email") === ""
+                  !emailCorrect || email === ""
                     ? "border-grey-default"
                     : "border-error-100"
                 }`}

@@ -122,8 +122,9 @@ const MarketplaceOwnerDetail = () => {
                   name={invenItemData.name}
                   marketplaces_data={invenItemData.marketplaces_data}
                 />
-                {invenItemData.type === "nft_land" ||
-                invenItemData.type === "nft_building" ? (
+                {!invenItemData.marketplaces_data &&
+                (invenItemData.type === "nft_land" ||
+                  invenItemData.type === "nft_building") ? (
                   <ButtonRentOut
                     nftType={invenItemData.type}
                     name={invenItemData.name}

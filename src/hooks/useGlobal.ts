@@ -376,6 +376,9 @@ const useGlobal = (
       _game.game_mode === "free-to-earn" ||
       _game.game_mode === "free-to-play"
     ) {
+      if (isPokerGame(_game)) {
+        return ""
+      }
       return "/roomlist"
     }
     return ""

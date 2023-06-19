@@ -9,6 +9,7 @@ import {
 export const getEventList = async ({
   limit,
   skip,
+  // eslint-disable-next-line no-unused-vars
   sort,
   search
 }: IGetAllEventsProps) =>

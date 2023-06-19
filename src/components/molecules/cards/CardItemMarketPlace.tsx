@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { motion } from "framer-motion"
 import ILogoMaster from "@components/icons/LogoMaster"
 import { Chip, Typography } from "@mui/material"
@@ -14,7 +13,10 @@ import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied"
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied"
 import Link from "next/link"
-import { TType } from "@feature/marketplace/interfaces/IMarketService"
+import {
+  IMarketDetail,
+  TType
+} from "@feature/marketplace/interfaces/IMarketService"
 import { isMobile } from "@hooks/useGlobal"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import copy from "copy-to-clipboard"
@@ -83,7 +85,7 @@ interface IProp {
     owner?: string
     buyer?: string
   }
-  filterImage?: any
+  firstData?: IMarketDetail
 }
 
 const CardItemMarketPlace = ({
@@ -103,38 +105,15 @@ const CardItemMarketPlace = ({
   href,
   keyType,
   rental,
-  filterImage
+  firstData
 }: IProp) => {
   const { copyClipboard, formatNumber } = Helper
   const { successToast } = useToast()
 
   // "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning"
 
-  const [imageSize, setImageSize] = useState<any>("")
-
-  const fetchSizeImage = () => {
-    const mapdata = filterImage?.data?.filter(
-      (elm) => elm.item_data.name === "Bullet"
-    )
-    setImageSize(mapdata[0])
-    console.log("mapdata", mapdata)
-  }
-
-  useEffect(() => {
-    fetchSizeImage()
-  }, [])
-
-  console.log("imageSize", imageSize?.item_data?.image)
-  console.log("itemImage.alt", itemImage?.alt)
-
   // const [itemNameTestPrefix]: string[] =
   //   itemName && (itemName.split(" ") as string[])
-
-  console.log("filterImage", filterImage)
-
-  const [size, setSize] = useState<Blob>()
-
-  console.log("img", itemImage)
 
   // const bulletImage = useMemo(() => {
   //   if (itemImage.) {
@@ -381,8 +360,8 @@ const CardItemMarketPlace = ({
                 >
                   <Image
                     src={`${
-                      itemName === "Bullet" && imageSize
-                        ? imageSize?.item_data?.image
+                      itemName === "Bullet"
+                        ? firstData?.item_data?.image
                         : itemImage.src
                     }`}
                     alt={itemImage.alt}
@@ -390,10 +369,6 @@ const CardItemMarketPlace = ({
                       cardType === "naka-punk"
                         ? "h-full w-full rounded-lg"
                         : cardType === "building" && "image-building"
-                    } ${
-                      size && size.size <= 1765
-                        ? `h-[120px] !w-auto`
-                        : `h-[100px] !w-auto`
                     }`}
                     // layout="fill"
                     // objectFit="contain"

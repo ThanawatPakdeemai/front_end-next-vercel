@@ -92,23 +92,24 @@ const ProfileContent = () => {
   const { handleConnectWallet } = useWalletContoller()
   const { hasMetamask, disabledConnectButton } = useWeb3Provider()
   const [telegramId, setTelegramId] = useState<string>("")
-  const telegramParams: any = localStorage.getItem("telegram-params")
+  const telegramStatus: any = localStorage.setItem("telegram-status", "false")
   const { linkTelegramData } = useLinkToTelegram(idPlayer, telegramId)
 
   useEffect(() => {
-    if (
-      (telegramParams && telegramParams !== undefined) ||
-      telegramParams !== null
-    ) {
+    const telegramParams: any = localStorage.getItem("telegram-params")
+    if (telegramStatus === "true") {
+      // (telegramParams && telegramParams !== undefined) ||
+      // (telegramParams && telegramParams !== null)
       // eslint-disable-next-line no-console
-      console.log("telegram_", telegramParams.id)
+      console.log("telegram__", telegramParams.id)
       // eslint-disable-next-line no-console
       console.log("telegram_type", typeof telegramParams.id)
       // eslint-disable-next-line no-console
       console.log("telegram_type_string ", telegramParams.id.toString())
       setTelegramId(telegramParams.id.toString())
+      localStorage.setItem("telegram-status", "false")
     }
-  }, [telegramParams])
+  }, [telegramStatus])
 
   useEffect(() => {
     if (isError) {
@@ -506,7 +507,8 @@ const ProfileContent = () => {
               strategy="lazyOnload"
             />
             <Script id="show-banner">
-              {`function onTelegramAuth(params) { localStorage.setItem('telegram-params', JSON.stringify(params));}`}
+              {`function onTelegramAuth(params) { localStorage.setItem('telegram-params', JSON.stringify(params)); localStorage.setItem("telegram-status", "true");} 
+              `}
             </Script>
           </div>
 

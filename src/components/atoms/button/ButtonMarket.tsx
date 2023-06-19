@@ -117,7 +117,8 @@ const ButtonMarket = ({
         _text = "mint now"
         break
       case "buy":
-        _text = "buy now"
+        if (sellingType === "rental") _text = "rent now"
+        else _text = "buy now"
         break
       case "cancel":
         _text = "cancel now"
@@ -130,7 +131,7 @@ const ButtonMarket = ({
         break
     }
     return _text
-  }, [actionValue])
+  }, [actionValue, sellingType])
 
   const handleStyle = useMemo(() => {
     let _color: string

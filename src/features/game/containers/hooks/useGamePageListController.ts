@@ -57,7 +57,8 @@ const useGamePageListController = (
     pager,
     setTotalCount,
     getGameMode,
-    isRedirectRoomlist
+    isRedirectRoomlist,
+    isPokerGame
   } = useGlobal()
   const {
     category: categoryDropdown,
@@ -235,8 +236,14 @@ const useGamePageListController = (
     onHandleSetGameStore(game.game_mode, game)
   }
 
-  const onClickLink = (game: IGame) =>
-    `/${getGameMode(game)}/${game.path}${isRedirectRoomlist(game).toString()}`
+  const onClickLink = (game: IGame) => {
+    if (isPokerGame(game)) {
+      return `/${getGameMode(game)}/${game.path}`
+    }
+    return `/${getGameMode(game)}/${game.path}${isRedirectRoomlist(
+      game
+    ).toString()}`
+  }
 
   return {
     limit,

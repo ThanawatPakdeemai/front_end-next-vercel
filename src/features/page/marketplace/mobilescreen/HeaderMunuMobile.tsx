@@ -17,7 +17,11 @@ import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn
 import useRefreshProfile from "@hooks/useRefreshProfile"
 import MenuButtonExpandMobile from "./MenuButtonExpandMobile"
 
-const HeaderMunuMobile = () => {
+interface IProp {
+  margin?: string
+}
+
+const HeaderMunuMobile = ({ margin }: IProp) => {
   const router: NextRouter = useRouter()
   const { count } = useNotiStore()
   const profile = useProfileStore((state) => state.profile.data)
@@ -129,7 +133,7 @@ const HeaderMunuMobile = () => {
       <Collapse
         in={expanded}
         timeout="auto"
-        className="fixed mt-4 !h-full w-full gap-2 p-2"
+        className={`fixed ${margin || `mt-4`} !h-full w-full gap-2 p-2`}
         sx={{
           backgroundColor: "#101013",
           zIndex: 99999,

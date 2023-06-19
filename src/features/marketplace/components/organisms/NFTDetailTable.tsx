@@ -109,7 +109,7 @@ const NFTDetailTable = ({ installmentData, rentalData, history }: IProps) => {
   }, [installmentData, rentalData])
 
   return (
-    <div>
+    <div className="mt-5">
       <Tabs
         value={value}
         onChange={handleChange}

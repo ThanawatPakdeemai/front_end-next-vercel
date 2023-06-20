@@ -19,6 +19,7 @@ import Lock2Icon from "@components/icons/Lock2Icon"
 import useFormLoginController from "@feature/authentication/containers/hooks/useFormLoginController"
 import FromForgotPassword from "@feature/authentication/components/FromForgotPassword"
 import MoreLoginMobile from "@mobile/components/atoms/MoreLoginMobile"
+import useLoadingStore from "@stores/loading"
 import CreateAccountModal from "./CreateAccountModal"
 
 interface INotificationModalProps {
@@ -28,6 +29,7 @@ interface INotificationModalProps {
 
 const LoginModal = ({ open, setOpenLogin }: INotificationModalProps) => {
   const { onSubmitLogin, handleSubmit, register } = useFormLoginController()
+  const { open: openLoading } = useLoadingStore()
 
   const { t } = useTranslation()
 
@@ -39,7 +41,11 @@ const LoginModal = ({ open, setOpenLogin }: INotificationModalProps) => {
     <SwipeableDrawer
       anchor="right"
       open={open}
-      onClose={() => {}}
+      onClose={() => {
+        if (openLoading) {
+          setOpenLogin(false)
+        }
+      }}
       onOpen={() => {}}
       disableSwipeToOpen={false}
       ModalProps={{

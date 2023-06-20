@@ -114,9 +114,10 @@ const EventDetailPage = () => {
                   maxWidth: "100%!important"
                 }
               }}
+              className="flex flex-col gap-4"
             >
               {renderMessages()}
-              <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2  md:px-16 md:py-8 md:text-center md:text-base">
+              <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:px-16 md:py-8 md:text-center md:text-base">
                 <Typography className="font-dogicapixel-bold text-center  uppercase">
                   Reward Pool
                 </Typography>
@@ -125,7 +126,7 @@ const EventDetailPage = () => {
                 </Typography>
               </div>
               {/* TODO YUI remove when flow events success */}
-              <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:my-2  md:px-16 md:py-8 md:text-center md:text-base">
+              <div className="rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4 font-neue-machina-bold md:px-16 md:py-8 md:text-center md:text-base">
                 <Typography className="font-dogicapixel-bold text-center  uppercase">
                   Event Status
                 </Typography>

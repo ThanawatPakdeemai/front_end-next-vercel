@@ -1,9 +1,13 @@
 import React, { memo } from "react"
 
-const NakaIcon = (fill = "#F42728") => (
+const NakaIcon = ({
+  width = 128,
+  height = 68,
+  fill = "#F42728"
+}: React.SVGProps<SVGSVGElement>) => (
   <svg
-    width="128"
-    height="68"
+    width={width}
+    height={height}
     viewBox="0 0 128 68"
     fill={fill}
     xmlns="http://www.w3.org/2000/svg"

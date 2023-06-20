@@ -495,7 +495,7 @@ const ProfileContent = () => {
           {/* <div className="w-[90%]"> */}
           <div
             id="login-telegram"
-            className="pb-[20px]"
+            className="hidden pb-[20px]"
           >
             <Script
               async

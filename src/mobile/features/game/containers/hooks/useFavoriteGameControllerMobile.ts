@@ -35,8 +35,7 @@ const useFavoriteGameControllerMobile = ({
     return () => {
       load = true
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameFavourite])
+  }, [handleFavouriteData, profileId, gameFavourite, isLoadingGameFavourite])
 
   return {
     gameFavorite: dataFavorite.length > 0 ? dataFavorite : [],

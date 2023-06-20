@@ -166,10 +166,7 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
 
         {/* Game Item Balance */}
         <div className="game-section__playGame">
-          <CardBuyItemMobile
-            buttonStyle="purple"
-            gameObject={gameData}
-          />
+          <CardBuyItemMobile gameObject={gameData} />
         </div>
 
         {/* Game detail */}

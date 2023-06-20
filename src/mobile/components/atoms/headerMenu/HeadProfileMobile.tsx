@@ -1,16 +1,13 @@
 import React from "react"
 import useProfileStore from "@stores/profileStore"
 import IconTemplate from "@mobile/components/templates/IconTemplate"
-// import WalletRoundIcon from "@components/icons/WalletRoundIcon"
 import BellRingRoundIcon from "@components/icons/BellRingRoundIcon"
-import Link from "next/link"
 import { ImageCustom } from "@components/atoms/image/Image"
 import { Box } from "@mui/material"
 import useNotiStore from "@stores/notification"
 import NotificationModal from "@mobile/components/organisms/modal/NotificationModal"
 import ProfileSettingModal from "@mobile/components/organisms/modal/ProfileSettingModal"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
-import NakaIconMobile from "../icons/NakaIconMobile"
 
 export const StyledAvatar = {
   color: "#E0E0E0",

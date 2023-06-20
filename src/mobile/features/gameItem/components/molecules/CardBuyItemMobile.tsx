@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React, { useCallback } from "react"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { useRouter } from "next/router"
@@ -11,16 +11,15 @@ import { ImageCustom } from "@components/atoms/image/Image"
 import DollarSolidIcon from "@components/icons/DollarSolidIcon"
 import { Box } from "@mui/material"
 import useLoadingStore from "@stores/loading"
-import NoReady from "../atoms/NoReady"
+import CONFIGS from "@configs/index"
+import OpenMetamask from "../atoms/OpenMetamask"
 
 interface ICardBuyItemMobileProp {
   gameObject: IGame
-  buttonStyle?: "green" | "purple"
 }
 
 export default function CardBuyItemMobile({
-  gameObject,
-  buttonStyle = "purple"
+  gameObject
 }: ICardBuyItemMobileProp) {
   const { t } = useTranslation()
   const {
@@ -39,9 +38,74 @@ export default function CardBuyItemMobile({
     "flex h-10 items-center justify-between rounded-xl border-[1px]  border-neutral-700 bg-neutral-800 text-white-primary p-[10px] text-center font-neue-machina-semi text-sm !bg-[#18181C]"
 
   /**
+   * @description Button go to room list
+   */
+  const buttonGotoRoomlist = () => {
+    if (router.pathname === "/[typeGame]/[GameHome]/roomlist") return
+    if (router.pathname === "/[typeGame]/[GameHome]/roomlist/[id]") return
+    return (
+      <ButtonLink
+        icon={<></>}
+        text={t("join-game")}
+        size="large"
+        color="error"
+        variant="contained"
+        className="w-full !p-[8px_20px] font-urbanist !text-white-primary"
+        onClick={() => {
+          setOpen("")
+          router.push(`${router.asPath}/roomlist`)
+        }}
+      />
+    )
+  }
+
+  const buttonInToGame = useCallback(() => {
+    switch (gameObject.game_mode) {
+      case "story-mode":
+        return (
+          <ButtonLink
+            icon={<></>}
+            text="Play"
+            size="large"
+            color="error"
+            variant="contained"
+            className="w-full !p-[8px_20px] font-urbanist !text-white-primary"
+            href={getGameStoryModeURL(gameObject)}
+          />
+        )
+      case "free-to-earn":
+      case "free-to-play":
+        return buttonGotoRoomlist()
+      case "play-to-earn":
+        if (router.pathname === "/[typeGame]/[GameHome]/roomlist") return
+        if (router.pathname === "/[typeGame]/[GameHome]/roomlist/[id]") return
+        if (qtyItemSelected) {
+          if (qtyItemSelected > 0) {
+            return buttonGotoRoomlist()
+          }
+        } else {
+          // Jumb to Metamask app to buy item
+          const path = `${gameObject.game_mode}/${gameObject.path}`
+          return (
+            <OpenMetamask
+              url={`${CONFIGS.BASE_URL.FRONTEND.replace(
+                "https://",
+                ""
+              )}/${path}`}
+            />
+          )
+        }
+        break
+      default:
+        return null
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [qtyItemSelected, router, gameObject])
+
+  /**
    * @description Render Form Buy Item
    */
-  const renderFormItem = () => {
+  const renderFormItem = useCallback(() => {
     if (!gameObject) return null
     switch (gameObject.game_mode) {
       case "story-mode":
@@ -98,64 +162,14 @@ export default function CardBuyItemMobile({
       default:
         null
     }
-  }
-
-  const buttonInToGame = useMemo(() => {
-    switch (gameObject.game_mode) {
-      case "story-mode":
-        return (
-          <ButtonLink
-            icon={<></>}
-            text="Play"
-            size="large"
-            color="error"
-            variant="contained"
-            className="w-full !p-[8px_20px] font-urbanist !text-white-primary"
-            href={getGameStoryModeURL(gameObject)}
-          />
-        )
-      case "free-to-play":
-      case "free-to-earn":
-      case "play-to-earn":
-        if (router.pathname === "/[typeGame]/[GameHome]/roomlist") return
-        if (router.pathname === "/[typeGame]/[GameHome]/roomlist/[id]") return
-        if (qtyItemSelected) {
-          if (qtyItemSelected > 0) {
-            return (
-              <ButtonLink
-                icon={<></>}
-                text={t("join-game")}
-                size="large"
-                color="error"
-                variant="contained"
-                className="w-full !p-[8px_20px] font-urbanist !text-white-primary"
-                onClick={() => {
-                  setOpen("")
-                  router.push(`${router.asPath}/roomlist`)
-                }}
-              />
-            )
-          }
-        }
-        break
-      default:
-        // TODO: Open this after In-App Purchase is ready
-        // return (
-        //   <ButtonLink
-        //     text={t(MESSAGES["please_item"])}
-        //     icon={<ArrowJoinIcon />}
-        //     href={`${router.asPath}`}
-        //     size="medium"
-        //     color="secondary"
-        //     variant="contained"
-        //     className="w-full"
-        //     disabled
-        //   />
-        // )
-        return <NoReady />
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [qtyItemSelected, router.asPath, buttonStyle, router.pathname, setOpen])
+  }, [
+    qtyItemSelected,
+    gameObject,
+    gameItemList,
+    isHideOnWaitingRoom,
+    onChangeSelectItem,
+    totalPrice
+  ])
 
   return hydrated ? (
     <Box
@@ -182,7 +196,7 @@ export default function CardBuyItemMobile({
           }
         }}
       >
-        {buttonInToGame}
+        {buttonInToGame()}
       </Box>
     </Box>
   ) : (

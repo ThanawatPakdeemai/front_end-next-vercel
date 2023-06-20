@@ -101,7 +101,7 @@ const EventDetailPage = () => {
           })}
           component={
             <RightSidebarContentEffect
-              className="mb-24"
+              className="mb-5 xl:mb-24"
               content={<EventContent />}
               aside={<EventSidebar />}
             />

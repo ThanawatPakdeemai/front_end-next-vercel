@@ -95,6 +95,10 @@ const ProfileContent = () => {
   // const telegramStatus: any = localStorage.setItem("telegram-status", "false")
   const { linkTelegramData } = useLinkToTelegram(idPlayer, telegramId)
 
+  const updateTelegram = () => {
+    linkTelegramData(telegramId)
+  }
+
   // useEffect(() => {
   //   const telegramParams: any = localStorage.getItem("telegram-params")
   //   if (telegramStatus === "true") {
@@ -213,12 +217,12 @@ const ProfileContent = () => {
   //   // }
   // }
   const jsClickButton = () => {
+    const telegramParams: any = localStorage.getItem("telegram-params")
     // eslint-disable-next-line no-console
     console.log("in button js")
-    const telegramParams: any = localStorage.getItem("telegram-params")
     if (telegramParams) {
       setTelegramId(telegramParams.id.toString())
-
+      updateTelegram()
       // localStorage.setItem("telegram-status", "false")
     }
   }

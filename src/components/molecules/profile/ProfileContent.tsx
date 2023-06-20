@@ -103,6 +103,8 @@ const ProfileContent = () => {
         player_id: idPlayer,
         telegram_id: telegramId
       })
+      // eslint-disable-next-line no-console
+      console.log("updatedd", telegramId)
     }
   }
   // useEffect(() => {

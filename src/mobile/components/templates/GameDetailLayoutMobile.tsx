@@ -37,25 +37,7 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
     gameData.id,
     gameData.game_mode
   )
-  const { setClose, setOpen } = useLoadingStore()
-
-  /**
-   * @description State for close loading
-   */
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (gameData) {
-        setClose()
-      }
-    }
-
-    return () => {
-      load = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameData, setClose, setOpen])
+  const { setOpen } = useLoadingStore()
 
   const renderWeeklyTopPlayer = () => {
     switch (gameData.game_mode) {

@@ -10,6 +10,7 @@ import useNotiStore from "@stores/notification"
 import NotificationModal from "@mobile/components/organisms/modal/NotificationModal"
 import ProfileSettingModal from "@mobile/components/organisms/modal/ProfileSettingModal"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
+import NakaIconMobile from "../icons/NakaIconMobile"
 
 export const StyledAvatar = {
   color: "#E0E0E0",
@@ -43,19 +44,15 @@ const HeadProfileMobile = () => {
           sx={StyledAvatar}
           onClick={() => setProfileSetting(true)}
         >
-          {profile ? (
-            <div className="head-profile__info--avatar">
-              <ImageCustom
-                src={profile?.avatar || "/images/avatar.png"}
-                alt="avatar"
-                width={55}
-                height={55}
-                className="h-full w-full object-cover"
-              />
-            </div>
-          ) : (
-            <Link href="/login">{/* <PersonIcon /> */}</Link>
-          )}
+          <div className="head-profile__info--avatar">
+            <ImageCustom
+              src={profile?.avatar || "/images/avatar.png"}
+              alt="avatar"
+              width={55}
+              height={55}
+              className="h-full w-full object-cover"
+            />
+          </div>
           <div className="head-profile__info--welcome flex flex-col">
             <p className="font-urbanist text-[14px]">Welcome Back! 👋</p>
             <p className="font-urbanist text-[20px] font-bold">

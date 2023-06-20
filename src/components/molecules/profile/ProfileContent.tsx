@@ -94,19 +94,6 @@ const ProfileContent = () => {
   // const telegramStatus: any = localStorage.setItem("telegram-status", "false")
   const { mutateLinkToTelegram } = useLinkToTelegram()
 
-  const updateTelegram = async () => {
-    // eslint-disable-next-line no-console
-    console.log("update", telegramId)
-    const teleId = await telegramId
-    if (teleId) {
-      mutateLinkToTelegram({
-        player_id: idPlayer,
-        telegram_id: telegramId
-      })
-      // eslint-disable-next-line no-console
-      console.log("updatedd", telegramId)
-    }
-  }
   // useEffect(() => {
   //   const telegramParams: any = localStorage.getItem("telegram-params")
   //   if (telegramStatus === "true") {
@@ -224,10 +211,25 @@ const ProfileContent = () => {
   //   //   console.log(params)
   //   // }
   // }
-  const jsClickButton = () => {
-    const telegramParams: any = localStorage.getItem("telegram-params")
+
+  const updateTelegram = async () => {
     // eslint-disable-next-line no-console
-    console.log("in button js")
+    console.log("update", telegramId)
+    const teleId = await telegramId
+    if (teleId) {
+      mutateLinkToTelegram({
+        player_id: idPlayer,
+        telegram_id: telegramId
+      })
+      // eslint-disable-next-line no-console
+      console.log("updatedd", telegramId)
+    }
+  }
+
+  const jsClickButton = async () => {
+    const telegramParams: any = await localStorage.getItem("telegram-params")
+    // eslint-disable-next-line no-console
+    console.log("in button js", telegramParams)
     if (telegramParams) {
       setTelegramId(telegramParams.id.toString())
       updateTelegram()
@@ -524,7 +526,7 @@ const ProfileContent = () => {
           </button>
           <div
             id="login-telegram"
-            className="hidden pb-[20px]"
+            className="pb-[20px]"
           >
             <Script
               async

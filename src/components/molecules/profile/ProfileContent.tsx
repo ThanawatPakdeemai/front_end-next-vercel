@@ -228,10 +228,11 @@ const ProfileContent = () => {
 
   const jsClickButton = async () => {
     const telegramParams: any = await localStorage.getItem("telegram-params")
+    const telegramParse: any = JSON.parse(telegramParams).id.toString()
     // eslint-disable-next-line no-console
-    console.log("in button js", telegramParams)
-    if (telegramParams) {
-      setTelegramId(telegramParams.id.toString())
+    console.log("in button js", telegramParse)
+    if (telegramParse) {
+      setTelegramId(telegramParse.id.toString())
       updateTelegram()
       // localStorage.setItem("telegram-status", "false")
     }

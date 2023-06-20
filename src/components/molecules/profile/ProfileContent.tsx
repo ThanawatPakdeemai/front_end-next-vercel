@@ -232,18 +232,15 @@ const ProfileContent = () => {
     // eslint-disable-next-line no-console
     console.log("in button js", telegramParse)
     if (telegramParse) {
-      await setTelegramId(
-        telegramParse.id.toString(),
+      await setTelegramId(telegramParse.id.toString())
+      if (telegramId) {
         mutateLinkToTelegram({
           player_id: idPlayer,
           telegram_id: telegramId
         })
-      )
-
-      // if (telegramId) {
-      //   // eslint-disable-next-line no-console
-      //   console.log("updatedd", telegramId)
-      // }
+        // eslint-disable-next-line no-console
+        console.log("updatedd", telegramId)
+      }
       // localStorage.setItem("telegram-status", "false")
     }
   }

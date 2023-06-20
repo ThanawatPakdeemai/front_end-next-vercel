@@ -212,19 +212,19 @@ const ProfileContent = () => {
   //   // }
   // }
 
-  const updateTelegram = async () => {
-    // eslint-disable-next-line no-console
-    console.log("update", telegramId)
-    const teleId = await telegramId
-    if (teleId) {
-      mutateLinkToTelegram({
-        player_id: idPlayer,
-        telegram_id: telegramId
-      })
-      // eslint-disable-next-line no-console
-      console.log("updatedd", telegramId)
-    }
-  }
+  // const updateTelegram = async () => {
+  //   // eslint-disable-next-line no-console
+  //   console.log("update", telegramId)
+  //   const teleId = await telegramId
+  //   if (teleId) {
+  //     mutateLinkToTelegram({
+  //       player_id: idPlayer,
+  //       telegram_id: telegramId
+  //     })
+  //     // eslint-disable-next-line no-console
+  //     console.log("updatedd", telegramId)
+  //   }
+  // }
 
   const jsClickButton = async () => {
     const telegramParams: any = await localStorage.getItem("telegram-params")
@@ -232,8 +232,15 @@ const ProfileContent = () => {
     // eslint-disable-next-line no-console
     console.log("in button js", telegramParse)
     if (telegramParse) {
-      setTelegramId(telegramParse.id.toString())
-      updateTelegram()
+      await setTelegramId(telegramParse.id.toString())
+      if (telegramId) {
+        mutateLinkToTelegram({
+          player_id: idPlayer,
+          telegram_id: telegramId
+        })
+        // eslint-disable-next-line no-console
+        console.log("updatedd", telegramId)
+      }
       // localStorage.setItem("telegram-status", "false")
     }
   }

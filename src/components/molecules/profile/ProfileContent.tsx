@@ -71,7 +71,6 @@ const ProfileContent = () => {
   const { player_id } = router.query
   // eslint-disable-next-line no-console
   // const responseTelegram = (response: any) => console.log(response)
-
   const { t } = useTranslation()
 
   const {
@@ -93,12 +92,19 @@ const ProfileContent = () => {
   const { hasMetamask, disabledConnectButton } = useWeb3Provider()
   const [telegramId, setTelegramId] = useState<string>("")
   // const telegramStatus: any = localStorage.setItem("telegram-status", "false")
-  const { linkTelegramData } = useLinkToTelegram(idPlayer, telegramId)
+  const { mutateLinkToTelegram } = useLinkToTelegram()
 
-  const updateTelegram = () => {
-    linkTelegramData(telegramId)
+  const updateTelegram = async () => {
+    // eslint-disable-next-line no-console
+    console.log("update", telegramId)
+    const teleId = await telegramId
+    if (teleId) {
+      mutateLinkToTelegram({
+        player_id: idPlayer,
+        telegram_id: telegramId
+      })
+    }
   }
-
   // useEffect(() => {
   //   const telegramParams: any = localStorage.getItem("telegram-params")
   //   if (telegramStatus === "true") {
@@ -193,17 +199,17 @@ const ProfileContent = () => {
     }
   }, [player_id])
 
-  useEffect(() => {
-    let load = false
-    if (!load) {
-      if (linkTelegramData) {
-        // localStorage.removeItem("telegram-params")
-      }
-    }
-    return () => {
-      load = true
-    }
-  }, [linkTelegramData])
+  // useEffect(() => {
+  //   let load = false
+  //   if (!load) {
+  //     if (linkTelegramData) {
+  //       localStorage.removeItem("telegram-params")
+  //     }
+  //   }
+  //   return () => {
+  //     load = true
+  //   }
+  // }, [linkTelegramData])
 
   // const MoveTelegramButton = () => {
   //   // eslint-disable-next-line no-console

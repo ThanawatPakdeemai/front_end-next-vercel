@@ -4,10 +4,15 @@ import { useTranslation } from "react-i18next"
 import { StyledBaseInputMobile } from "@mobile/styles/muiStyleMobile"
 import { commonPattern } from "@constants/regex"
 import HorizontalThumbSlide from "@feature/slider/components/templates/HorizontalThumbSlide"
+import { TTypeSettingProfile } from "@mobile/components/organisms/modal/ProfileSettingModal"
 import ProfileFooterMobile from "../molecules/ProfileFooterMobile"
 import useProfileSettingController from "../../containers/useProfileSettingController"
 
-const FormProfileSetting = () => {
+interface IFormProfileSetting {
+  type: TTypeSettingProfile
+}
+
+const FormProfileSetting = ({ type }: IFormProfileSetting) => {
   const {
     handleSubmit,
     onSubmit,
@@ -112,7 +117,7 @@ const FormProfileSetting = () => {
           size="medium"
           disabled
         />
-        <ProfileFooterMobile />
+        <ProfileFooterMobile type={type} />
       </form>
     </Box>
   )

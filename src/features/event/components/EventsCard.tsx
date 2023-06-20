@@ -24,25 +24,25 @@ const EventCard = ({
   variant = "filled",
   color = "primary"
 }: IEventCardProps) => (
-  <div className="mx-auto w-[218px] md:mx-0">
+  <div className="mx-auto w-full md:mx-0 xl:w-[218px]">
     <Link
       href={`/events/${event_id}`}
       className="cursor-pointer"
     >
-      <div className="h-[218px] overflow-hidden rounded-3xl">
+      <div className="relative overflow-hidden rounded-3xl pt-[94%]">
         <ImageCustom
           src={image}
           alt={title}
-          className="h-full w-full object-cover"
+          className="absolute left-0 top-0 h-full w-full object-cover"
           width={372}
           height={372}
         />
       </div>
     </Link>
-    <Typography className="truncate text-default uppercase md:my-[20px]">
+    <Typography className="my-[10px] truncate text-default uppercase md:my-[20px]">
       {title}
     </Typography>
-    <div className="flex justify-center gap-2 rounded-lg border-[1px] border-neutral-700 border-opacity-80 py-[10px]">
+    <div className="flex flex-col justify-center gap-2 rounded-lg border-[1px] border-neutral-700 border-opacity-80 px-[10px] py-[10px] xl:flex-row xl:px-0">
       <div className="flex flex-col">
         <Typography className="flex text-xs">
           {`Start: ${dayjs(date_start).format("DD MMM YYYY")}`}
@@ -51,7 +51,7 @@ const EventCard = ({
           {`End: ${dayjs(date_end).format("DD MMM YYYY")}`}
         </Typography>
       </div>
-      <div className="border-r border-neutral-700 border-opacity-80" />
+      <div className="border-t border-neutral-700 border-opacity-80 xl:border-r xl:border-t-0" />
       <Link
         href={`/events/${event_id}`}
         className="flex cursor-pointer items-center text-center"

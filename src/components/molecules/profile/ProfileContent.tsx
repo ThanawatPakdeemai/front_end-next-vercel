@@ -516,7 +516,7 @@ const ProfileContent = () => {
           </button>
           <div
             id="login-telegram"
-            className="pb-[20px]"
+            className="hidden pb-[20px]"
           >
             <Script
               async

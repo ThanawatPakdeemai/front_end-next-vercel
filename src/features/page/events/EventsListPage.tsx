@@ -62,7 +62,7 @@ const EventsListPage = () => {
 
   return (
     <div className="blog-list-page w-full">
-      <div className="mb-6 grid grid-cols-5 gap-x-2 gap-y-4">
+      <div className="my-6 !mb-6 grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4 md:my-0 xl:grid-cols-5">
         {eventListData
           ? eventListData.data.map((item: IGetEventResponseData) => (
               <EventsCard

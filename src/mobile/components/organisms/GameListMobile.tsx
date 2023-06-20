@@ -3,11 +3,12 @@ import { IGame } from "@feature/game/interfaces/IGameService"
 import { Box, Typography } from "@mui/material"
 import { v4 as uuid } from "uuid"
 import useScrollToEndStore from "@stores/scrollToEnd"
+import NoData from "@components/molecules/NoData"
 import SkeletonCardMobile from "../atoms/skeleton/SkeletonCardMobile"
 import GameCardMobile from "../molecules/GameCardMobile"
 
 interface IGameList {
-  gameData: IGame[] | []
+  gameData: IGame[]
   loading: boolean
 }
 
@@ -25,18 +26,18 @@ const GameListMobile = ({ gameData, loading }: IGameList) => {
         }
       }}
     >
-      {/* {gameData && gameData.length === 0 && !loading && (
+      {gameData && gameData.length === 0 && !loading && (
         <NoData className="w-full" />
-      )} */}
+      )}
 
       <Box
         component="section"
         className={`game-section grid gap-5 sm:grid-cols-4 ${
-          gameData.length > 0 && "grid-cols-2"
+          gameData && gameData.length > 0 && "grid-cols-2"
         }`}
       >
         {loading &&
-          [...Array(gameData.length)].map(() => (
+          [...Array((gameData && gameData.length) || 10)].map(() => (
             <SkeletonCardMobile key={uuid()} />
           ))}
         {!loading &&

@@ -55,7 +55,7 @@ const Header = () => {
     <div className="header-wrapper">
       {showHeadPrice && !isMobile && <HeadPrice />}
       {!isMobile && (
-        <header className="header relative top-10 z-[999] lg:sticky">
+        <header className="header relative z-[999] lg:sticky lg:top-10">
           <Box
             component="div"
             className="flex flex-wrap items-center justify-between md:my-10 xl:flex-nowrap"

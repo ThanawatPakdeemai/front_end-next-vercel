@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import ILogoMaster from "@components/icons/LogoMaster"
 import { Chip, Typography } from "@mui/material"
@@ -15,6 +15,8 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import Link from "next/link"
 import { TType } from "@feature/marketplace/interfaces/IMarketService"
 import { isMobile } from "@hooks/useGlobal"
+// eslint-disable-next-line import/no-extraneous-dependencies
+import copy from "copy-to-clipboard"
 
 // motion
 const imgMotion = {
@@ -104,6 +106,24 @@ const CardItemMarketPlace = ({
   const { successToast } = useToast()
 
   // "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning"
+
+  const [size, setSize] = useState<Blob>()
+
+  useEffect(() => {
+    if (itemImage && itemName === "Bullet" && !size) {
+      fetch(itemImage?.src)
+        .then((response) => response.blob())
+        .then((blob) => {
+          setSize(blob)
+          // Further operations with the blob object
+          // console.log(itemName, "size:", blob)
+        })
+        .catch(() => {
+          // console.log("Error fetching image:", error)
+        })
+    }
+  }, [itemName, itemImage, size])
+
   const handleColor = () => {
     if (percentage)
       switch (true) {
@@ -163,9 +183,16 @@ const CardItemMarketPlace = ({
                 className="pb-[2px] !text-neutral-400"
               />
             }
+            // onDelete={() => {
+            //   copyClipboard(id)
+            //   successToast(MESSAGES.copy)
+            // }}
+            // onClick={handleDeleteClick}
             onDelete={() => {
-              copyClipboard(id)
-              successToast(MESSAGES.copy)
+              copy(id, {
+                debug: true,
+                message: successToast(MESSAGES.copy)
+              })
             }}
           />
         )}
@@ -246,39 +273,45 @@ const CardItemMarketPlace = ({
                   cardType !== "naka-punk" ? "p-6" : "p-0"
                 } group-hover:border-secondary-main`}
               >
-                {/* destop */}
-                <motion.div
-                  transition={{ type: "spring", stiffness: 100, damping: 6 }}
-                  variants={cardType !== "naka-punk" ? imgMotion : undefined}
-                  className="relative block flex items-center justify-center sm:hidden"
-                >
-                  <Image
-                    src={itemImage.src}
-                    alt={itemImage.alt}
-                    className={`object-contain ${
-                      cardType === "naka-punk"
-                        ? "rounded-lg"
-                        : cardType === "building" && "!h-[200px]"
-                    }`}
-                    width={
-                      itemName?.includes("Bullet") &&
-                      Number(itemImage.width) > 60
-                        ? 30
-                        : itemImage.width
-                    }
-                    height={
-                      itemName?.includes("Bullet") &&
-                      Number(itemImage.height) > 60
-                        ? 30
-                        : itemImage.height
-                    }
-                  />
-                </motion.div>
                 {/* mobile */}
                 <motion.div
                   transition={{ type: "spring", stiffness: 100, damping: 6 }}
                   variants={cardType !== "naka-punk" ? imgMotion : undefined}
-                  className="relative flex hidden items-center justify-center sm:block"
+                  className="relative flex items-center justify-center sm:hidden"
+                >
+                  <Image
+                    src={itemImage.src}
+                    alt={itemImage.alt}
+                    className={`!m-0 !h-[80px] w-auto object-contain !p-0 ${
+                      cardType === "naka-punk"
+                        ? "rounded-lg"
+                        : cardType === "building" && "!h-[200px]"
+                    }`}
+                    // width={
+                    //   itemName?.includes("Bullet") &&
+                    //   Number(itemImage.width) > 60
+                    //     ? 30
+                    //     : itemImage.width
+                    // }
+                    // height={
+                    //   itemName?.includes("Bullet") &&
+                    //   Number(itemImage.height) > 60
+                    //     ? 30
+                    //     : itemImage.height
+                    // }
+                    width={itemName?.includes("Bullet") ? 40 : itemImage.width}
+                    height={
+                      itemName?.includes("Bullet") ? 40 : itemImage.height
+                    }
+                    // sizes="height: 100vw, width: 100vw"
+                    // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </motion.div>
+                {/* destop */}
+                <motion.div
+                  transition={{ type: "spring", stiffness: 100, damping: 6 }}
+                  variants={cardType !== "naka-punk" ? imgMotion : undefined}
+                  className="relative  hidden items-center justify-center sm:block"
                 >
                   <Image
                     src={itemImage.src}
@@ -287,9 +320,15 @@ const CardItemMarketPlace = ({
                       cardType === "naka-punk"
                         ? "h-full w-full rounded-lg"
                         : cardType === "building" && "image-building"
+                    } ${
+                      size && size.size <= 1765
+                        ? `h-[120px] !w-auto`
+                        : `h-[100px] !w-auto`
                     }`}
-                    width={itemName?.includes("Bullet") ? 60 : 148}
-                    height={itemName?.includes("Bullet") ? 60 : 148}
+                    // layout="fill"
+                    // objectFit="contain"
+                    width={itemName?.includes("Bullet") ? 40 : 148}
+                    height={itemName?.includes("Bullet") ? 40 : 148}
                   />
                 </motion.div>
               </div>

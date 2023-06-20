@@ -96,7 +96,7 @@ const SelectNaka = ({
                       {options.map((option) => (
                         <MenuItem
                           className={`${
-                            router.pathname === option.link ? "active" : ""
+                            router.asPath === option.link ? "active" : ""
                           } menu-select-naka !rounded-[8px] !p-[10px]`}
                           key={option.value}
                           onClick={() => {

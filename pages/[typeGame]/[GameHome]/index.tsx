@@ -12,6 +12,7 @@ import CardBuyItem from "@feature/gameItem/components/molecules/CardBuyItem"
 import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby/GameContent"
 import { useTranslation } from "react-i18next"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
+import CardItemGold from "@feature/gameItem/components/molecules/CardItemGold"
 
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
@@ -93,7 +94,8 @@ export default function GameLobby() {
     getGameMode,
     getColorChipByGameType,
     getGameStoryModeURL,
-    isRedirectRoomlist
+    isRedirectRoomlist,
+    isPokerGame
   } = useGlobal()
   const { t } = useTranslation()
 
@@ -133,32 +135,43 @@ export default function GameLobby() {
     switch (getGameMode(gameData)) {
       case "story-mode":
         return (
-          <Box
-            component="div"
-            className="flex w-full flex-col justify-between gap-4 uppercase"
-            sx={{
-              ".like-no_wrapper": {
-                flex: "0 0 100%",
-                ".like-no_score": {
-                  width: "100%"
-                }
-              }
-            }}
-          >
+          <>
             <Box
               component="div"
-              sx={StartButtonCustomStyle}
-              className="flex w-full justify-center uppercase"
+              className="flex w-full flex-col justify-between gap-4 uppercase"
+              sx={{
+                ".like-no_wrapper": {
+                  flex: "0 0 100%",
+                  ".like-no_score": {
+                    width: "100%"
+                  }
+                }
+              }}
             >
-              <ButtonGame
-                textButton={t("join-game")}
-                url={getGameStoryModeURL(gameData)}
-              />
+              <Box
+                component="div"
+                sx={StartButtonCustomStyle}
+                className="flex w-full justify-center uppercase"
+              >
+                <ButtonGame
+                  textButton={t("join-game")}
+                  url={getGameStoryModeURL(gameData)}
+                />
+              </Box>
             </Box>
-          </Box>
+          </>
         )
 
       case "free-to-play":
+        if (isPokerGame(gameData)) {
+          return (
+            <CardItemGold
+              buttonStyle="purple"
+              gameObject={gameData}
+            />
+          )
+        }
+        return <></>
       case "free-to-earn":
         return (
           <Box

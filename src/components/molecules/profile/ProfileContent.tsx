@@ -45,7 +45,8 @@ import IReferrals from "@components/icons/Referrals"
 // import { Helmet } from "react-helmet"
 // import ReactDOM from "react-dom"
 // eslint-disable-next-line import/no-extraneous-dependencies
-// import Script from "next/script"
+import Script from "next/script"
+import useLinkToTelegram from "@feature/game/containers/hooks/useLinkToTelegram"
 import EditProfileModal from "./EditProfileModal"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
@@ -90,6 +91,29 @@ const ProfileContent = () => {
   const { profile: profileFetched, isError } = useGetProfileByEmail(emailPlayer)
   const { handleConnectWallet } = useWalletContoller()
   const { hasMetamask, disabledConnectButton } = useWeb3Provider()
+  const [telegramId, setTelegramId] = useState<string>("")
+  // const telegramStatus: any = localStorage.setItem("telegram-status", "false")
+  const { linkTelegramData } = useLinkToTelegram(idPlayer, telegramId)
+
+  const updateTelegram = () => {
+    linkTelegramData(telegramId)
+  }
+
+  // useEffect(() => {
+  //   const telegramParams: any = localStorage.getItem("telegram-params")
+  //   if (telegramStatus === "true") {
+  //     // (telegramParams && telegramParams !== undefined) ||
+  //     // (telegramParams && telegramParams !== null)
+  //     // eslint-disable-next-line no-console
+  //     console.log("telegram__", telegramParams.id)
+  //     // eslint-disable-next-line no-console
+  //     console.log("telegram_type", typeof telegramParams.id)
+  //     // eslint-disable-next-line no-console
+  //     console.log("telegram_type_string ", telegramParams.id.toString())
+  //     setTelegramId(telegramParams.id.toString())
+  //     localStorage.setItem("telegram-status", "false")
+  //   }
+  // }, [telegramStatus])
 
   useEffect(() => {
     if (isError) {
@@ -157,22 +181,61 @@ const ProfileContent = () => {
     }
   }, [player_id])
 
-  const MoveTelegramButton = () => {
-    const gandalf: any = document.querySelector("#telegram-login-NakaGameBot")
-    const list: any = document.querySelector("#login-telegram")
-    list.append(gandalf)
-    // function onTelegramAuth(params) {
-    //   // eslint-disable-next-line no-console
-    //   console.log(params)
-    // }
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      if (player_id) {
+        setIdPlayer(player_id as string)
+      }
+    }
+    return () => {
+      load = true
+    }
+  }, [player_id])
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      if (linkTelegramData) {
+        // localStorage.removeItem("telegram-params")
+      }
+    }
+    return () => {
+      load = true
+    }
+  }, [linkTelegramData])
+
+  // const MoveTelegramButton = () => {
+  //   // eslint-disable-next-line no-console
+  //   console.log("in Move button")
+  //   const gandalf: any = document.querySelector("#telegram-login-NakaGameBot")
+  //   const list: any = document.querySelector("#login-telegram")
+  //   list.append(gandalf)
+  //   // function onTelegramAuth(params) {
+  //   //   // eslint-disable-next-line no-console
+  //   //   console.log(params)
+  //   // }
+  // }
+  const jsClickButton = () => {
+    const telegramParams: any = localStorage.getItem("telegram-params")
+    // eslint-disable-next-line no-console
+    console.log("in button js")
+    if (telegramParams) {
+      setTelegramId(telegramParams.id.toString())
+      updateTelegram()
+      // localStorage.setItem("telegram-status", "false")
+    }
   }
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      MoveTelegramButton
+      const gandalf: any = document.querySelector("#telegram-login-NakaGameBot")
+      const list: any = document.querySelector("#login-telegram")
+      list.append(gandalf)
     }, 5000)
     return () => clearTimeout(timer)
   }, [])
+
   // useEffect(() => {
   //   if (!profile.status) {
   //     router.push("/")
@@ -444,15 +507,17 @@ const ProfileContent = () => {
       ) : (
         <div className="login-telegram mt-8 w-full md:mt-0 md:w-[98%] lg:w-[90%]">
           {/* <div className="w-[90%]"> */}
-          {/* <button
-            className="btn tgme_widget_login_button"
-            // eslint-disable-next-line react/jsx-curly-brace-presence
-            onClick={() => window?.TWidgetLogin?.auth()}
+          <button
+            onClick={jsClickButton}
+            className="hidden"
+            id="button-click"
           >
-            <i className="tgme_widget_login_button_icon" />
-            Log in with Telegram
-          </button> */}
-          {/* <div id="login-telegram">
+            Click
+          </button>
+          <div
+            id="login-telegram"
+            className="hidden pb-[20px]"
+          >
             <Script
               async
               src="https://telegram.org/js/telegram-widget.js?22"
@@ -463,22 +528,10 @@ const ProfileContent = () => {
               strategy="lazyOnload"
             />
             <Script id="show-banner">
-              {`function onTelegramAuth(params) { console.log(params);}`}
+              {`function onTelegramAuth(params) { localStorage.setItem('telegram-params', JSON.stringify(params)); document.getElementById("button-click").click();} 
+              `}
             </Script>
-          </div> */}
-          {/* <ButtonToggleIcon
-            handleClick={handleTelegramResponse}
-            startIcon={<></>}
-            text={t("Link To Telegram")}
-            className="z-[2] h-[40px] w-fit bg-secondary-main !text-[8px] font-bold capitalize text-white-default sm:h-[50px] sm:w-[148px] sm:text-sm"
-            type="button"
-          /> */}
-
-          {/* <TelegramLoginButton
-            dataOnauth={handleTelegramResponse}
-            botName="OdauBot"
-          /> */}
-
+          </div>
           <SideSocialShare hidden="hidden lg:block" />
           <div className="relative">
             <Box

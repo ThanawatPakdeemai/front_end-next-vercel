@@ -1,6 +1,6 @@
+import React, { useState } from "react"
 import { MAIN_MENU_MOBILE, TGameMenuMobile } from "@mobile/constants/menuMobile"
 import { Box } from "@mui/material"
-import React from "react"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import WishlistModal from "./modal/WishlistModal"
 import SettingModal from "./modal/SettingModal"
@@ -17,16 +17,37 @@ const FooterMobile = () => {
     clearAllDrawer
   } = useDrawerControllerMobile()
 
+  const [menuActive, setMenuActive] = useState({ id: "home", status: true })
+
   const onHandleClick = (_id: TGameMenuMobile) => {
     clearAllDrawer()
     if (_id === "home") {
       // do something when click Home
+      setMenuActive({ id: _id, status: true })
     } else if (_id === "wishlist") {
+      setMenuActive({ id: _id, status: true })
       return setOpenWishlist(true)
     } else if (_id === "reward") {
+      setMenuActive({ id: _id, status: true })
       return setOpenReward(true)
     } else if (_id === "settings") {
+      setMenuActive({ id: _id, status: true })
       return setOpenSetting(true)
+    }
+  }
+
+  const handMeneActive = (_id: TGameMenuMobile) => {
+    if (_id === "home") {
+      // do something when click Home
+    } else if (_id === "wishlist") {
+      setMenuActive({ id: "home", status: true })
+      return setOpenWishlist(false)
+    } else if (_id === "reward") {
+      setMenuActive({ id: "home", status: true })
+      return setOpenReward(false)
+    } else if (_id === "settings") {
+      setMenuActive({ id: "home", status: true })
+      return setOpenSetting(false)
     }
   }
 
@@ -54,7 +75,11 @@ const FooterMobile = () => {
             className="flex flex-col items-center justify-center gap-1"
             onClick={() => onHandleClick(_menu.id)}
           >
-            <i className="flex items-center justify-center">{_menu.icon}</i>
+            <i className="flex items-center justify-center">
+              {menuActive.status && menuActive.id === _menu.id
+                ? _menu.iconActive
+                : _menu.icon}
+            </i>
             <span className="font-urbanist text-[12px] text-[#9E9E9E]">
               {_menu.name}
             </span>
@@ -64,17 +89,17 @@ const FooterMobile = () => {
       {/* Modal Wishlist */}
       <WishlistModal
         open={openWishlist}
-        setOpenWishlist={setOpenWishlist}
+        setOpenWishlist={() => handMeneActive("wishlist")}
       />
       {/* Reward Modal */}
       <EarnRewardModal
         open={openReward}
-        setOpenReward={setOpenReward}
+        setOpenReward={() => handMeneActive("reward")}
       />
       {/* Setting Modal */}
       <SettingModal
         open={openSetting}
-        setOpenSetting={setOpenSetting}
+        setOpenSetting={() => handMeneActive("settings")}
       />
     </Box>
   )

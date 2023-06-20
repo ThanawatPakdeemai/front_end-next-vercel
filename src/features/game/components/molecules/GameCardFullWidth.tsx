@@ -28,7 +28,7 @@ const GameCardFullWidth = ({
   return (
     <Box
       component="div"
-      className="game-card-fullwidth__wrapper flex h-full w-full flex-col items-center justify-center p-[68px]"
+      className="game-card-fullwidth__wrapper flex h-full w-full flex-col items-center justify-center p-5 md:p-[68px]"
     >
       <div className="relative w-full overflow-hidden rounded-2xl pt-[48%]">
         <ImageCustom

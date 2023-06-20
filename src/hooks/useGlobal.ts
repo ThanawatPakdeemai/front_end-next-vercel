@@ -2,7 +2,7 @@ import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import {
   IPayloadGameFilter,
   IGame,
@@ -339,12 +339,49 @@ const useGlobal = (
     }
   }
 
+  const getGamePokerModeURL = (gameData: IGame): string => {
+    if (!profile) return ""
+
+    const frontendUrl = `${CONFIGS.BASE_URL.FRONTEND}/${router.query.typeGame}/${gameData.path}`
+    const { username, address, avatar, status } = profile
+
+    // Get url by game type
+    // address: string
+    // username: string
+    // avatar: number
+    // status: number
+    // createdAt?: string
+    // friend: IAuthServiceFriend[]
+    // banned: string[]
+    // gas: 0 | 1 | 2 | null | undefined
+    // jwtToken: string
+
+    return `${gameData.game_url}?game_data=${gameData.id}?data=${btoa(
+      `${address}:|:${username}:|:${avatar}:|:${status}:|:${CONFIGS.BASE_URL.API?.slice(
+        0,
+        -4
+      )}:|:${frontendUrl}:|:${gameData.image_banner}`
+    )}`
+  }
+
+  const isPokerGame = (gameData: IGame) =>
+    gameData && gameData?.category?.name === "Casino"
+
+  const goldProfile: number = useMemo(() => profile?.gold || 0, [profile])
+  const goldProfileComma: string = useMemo(
+    () => Helper.formatNumber(profile?.gold || 0),
+    [profile]
+  )
+
   const isRedirectRoomlist = (_game: IGame): "/roomlist" | "" => {
     if (
       _game.play_to_earn_status === "free" ||
       _game.game_mode === "free-to-earn" ||
       _game.game_mode === "free-to-play"
     ) {
+      if (isPokerGame(_game)) {
+        return ""
+      }
       return "/roomlist"
     }
     return ""
@@ -475,6 +512,7 @@ const useGlobal = (
     isMarketplace,
     isDeveloperPage,
     // isShowMarket,
+    getGamePokerModeURL,
     openInNewTab,
     getGameMode,
     getTypeGamePartnerPathFolder,
@@ -487,7 +525,10 @@ const useGlobal = (
     getGameStoryModeURL,
     isFreeToEarnGame,
     isFreeToPlayGame,
-    isStoryModeGame
+    isStoryModeGame,
+    isPokerGame,
+    goldProfile,
+    goldProfileComma
   }
 }
 

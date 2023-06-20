@@ -4,6 +4,7 @@ import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import useFavoriteGameControllerMobile from "@mobile/features/game/containers/hooks/useFavoriteGameControllerMobile"
+import useGlobal from "@hooks/useGlobal"
 import GameListMobile from "../GameListMobile"
 
 interface IWishlistModalProps {
@@ -12,8 +13,30 @@ interface IWishlistModalProps {
 }
 
 const WishlistModal = ({ open, setOpenWishlist }: IWishlistModalProps) => {
-  const { data, loading } = useFavoriteGameControllerMobile()
+  const { defaultBody, stateProfile } = useGlobal()
   const { clearAllDrawer } = useDrawerControllerMobile()
+
+  const { gameFavorite, isLoadingGameFavourite } =
+    useFavoriteGameControllerMobile({
+      defaultBody,
+      profileId: stateProfile?.id || ""
+    })
+
+  /**
+   * @description When player login, render game favorite
+   * @returns
+   */
+  const renderContent = () => {
+    if (stateProfile) {
+      return (
+        <GameListMobile
+          gameData={gameFavorite}
+          loading={isLoadingGameFavourite}
+        />
+      )
+    }
+    return <></>
+  }
 
   return (
     <SwipeableDrawer
@@ -48,11 +71,7 @@ const WishlistModal = ({ open, setOpenWishlist }: IWishlistModalProps) => {
           <ArrowBackIcon />
           Wishlist
         </h2>
-        {/* Game List */}
-        <GameListMobile
-          gameData={data}
-          loading={loading}
-        />
+        {renderContent()}
       </Box>
     </SwipeableDrawer>
   )

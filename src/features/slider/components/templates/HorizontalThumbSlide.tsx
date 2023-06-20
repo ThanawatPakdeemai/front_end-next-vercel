@@ -214,7 +214,7 @@ const HorizontalThumbSlide = ({
       <Box
         component="div"
         sx={getStyleMultipleSlide()}
-        className="slick-thunbmail__wrapper relative mt-4 flex w-full max-w-[613px] justify-center"
+        className="slick-thumbnail__wrapper relative mt-4 flex justify-center"
       >
         <Slider
           asNavFor={nav1 as Slider}

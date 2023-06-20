@@ -57,7 +57,7 @@ const CardContentDetails = ({ ...props }: IProp) => {
   const handleClose = () => setOpen(false)
   return (
     <div
-      className={`h-full w-full rounded-[24px] border-[1px] border-neutral-800 bg-neutral-780 ${
+      className={`h-full w-full min-w-[300px] rounded-[24px] border-[1px] border-neutral-800 bg-neutral-780 ${
         marketType &&
         (marketType === "game_item" ||
           marketType === "nft_naka_punk" ||
@@ -67,7 +67,13 @@ const CardContentDetails = ({ ...props }: IProp) => {
       } sm:h-fit`}
     >
       <div className="p-2">
-        <div className="flex h-fit w-full content-center justify-center rounded-[24px] border-[1px] border-neutral-800 bg-neutral-900 p-2">
+        <div
+          // className={`flex ${
+          //   marketType === "game_item" ? `h-fit w-auto` : `h-fit w-full`
+          // eslint-disable-next-line max-len
+          // } content-center justify-center rounded-[24px] border-[1px] border-neutral-800 bg-neutral-900 p-2`}
+          className="flex h-fit w-full content-center justify-center rounded-[24px] border-[1px] border-neutral-800 bg-neutral-900 p-2"
+        >
           {marketType === "nft_land" && video && (
             <Video
               src={video as string}
@@ -84,8 +90,8 @@ const CardContentDetails = ({ ...props }: IProp) => {
                 // src="/images/not_found.webp"
                 src={image as string}
                 alt={alt as string}
-                width={marketType === "game_item" ? 400 : 563}
-                height={marketType === "game_item" ? 400 : 563}
+                width={marketType === "game_item" ? 120 : 563}
+                height={marketType === "game_item" ? 120 : 563}
                 className={
                   (marketType === "game_item"
                     ? "m-4  rounded-2xl"

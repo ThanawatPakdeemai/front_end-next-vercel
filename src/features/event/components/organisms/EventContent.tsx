@@ -63,7 +63,7 @@ const EventContent = () => {
             size="small"
             color="success"
           />
-          <h2>{currentEventData?.name}</h2>
+          <h2 className="truncate">{currentEventData?.name}</h2>
         </div>
       </div>
       <div className="flex h-full items-center justify-center">

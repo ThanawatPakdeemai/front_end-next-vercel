@@ -109,7 +109,7 @@ const MarketplaceP2PCardList = () => {
       <NoData />
     </div>
   ) : (
-    <div className="flex w-fit justify-center">
+    <div className="flex w-full justify-center">
       <div className="grid w-fit grid-cols-2 gap-4 sm:w-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {[...Array(limit)].map(() => (
           <div key={uuidv4()}>

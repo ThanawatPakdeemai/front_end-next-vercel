@@ -141,20 +141,22 @@ const SignInLayout = () => {
         setOpenLogin={(_toggle) => setOpenModalLogin(_toggle)}
       />
       {/* Modal CreateNewAccountModal */}
-      <GoogleReCaptchaProvider
-        reCaptchaKey={`${process.env.NEXT_PUBLIC_KEY_RECAPTCHA}`}
-        scriptProps={{
-          async: true,
-          defer: false,
-          appendTo: "head",
-          nonce: undefined
-        }}
-      >
-        <CreateAccountModal
-          open={openModalCreateAccount}
-          setOpenLogin={(_toggle) => setOpenModalCreateAccount(_toggle)}
-        />
-      </GoogleReCaptchaProvider>
+      {openModalCreateAccount && (
+        <GoogleReCaptchaProvider
+          reCaptchaKey={`${process.env.NEXT_PUBLIC_KEY_RECAPTCHA}`}
+          scriptProps={{
+            async: true,
+            defer: false,
+            appendTo: "head",
+            nonce: undefined
+          }}
+        >
+          <CreateAccountModal
+            open={openModalCreateAccount}
+            setOpenLogin={(_toggle) => setOpenModalCreateAccount(_toggle)}
+          />
+        </GoogleReCaptchaProvider>
+      )}
     </>
   )
 }

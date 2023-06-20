@@ -17,7 +17,11 @@ import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn
 import useRefreshProfile from "@hooks/useRefreshProfile"
 import MenuButtonExpandMobile from "./MenuButtonExpandMobile"
 
-const HeaderMunuMobile = () => {
+interface IProp {
+  margin?: string
+}
+
+const HeaderMunuMobile = ({ margin }: IProp) => {
   const router: NextRouter = useRouter()
   const { count } = useNotiStore()
   const profile = useProfileStore((state) => state.profile.data)
@@ -44,13 +48,19 @@ const HeaderMunuMobile = () => {
   //   }
 
   useEffect(() => {
+    let cancel = false
     const pathName = router.asPath
-    if (pathName.includes("/p2p")) {
-      setHeaderTitle("P2P Market")
-    } else if (pathName.includes("/map")) {
-      setHeaderTitle("Nakaverse Map")
-    } else if (pathName === "/marketplace") {
-      setHeaderTitle("NAKA Market")
+    if (!cancel) {
+      if (pathName.includes("/p2p")) {
+        setHeaderTitle("P2P Market")
+      } else if (pathName.includes("/map")) {
+        setHeaderTitle("Nakaverse Map")
+      } else if (pathName === "/marketplace") {
+        setHeaderTitle("NAKA Market")
+      }
+    }
+    return () => {
+      cancel = true
     }
   }, [router.asPath])
 
@@ -123,7 +133,7 @@ const HeaderMunuMobile = () => {
       <Collapse
         in={expanded}
         timeout="auto"
-        className="fixed mt-4 !h-full w-full gap-2 p-2"
+        className={`fixed ${margin || `mt-4`} !h-full w-full gap-2 p-2`}
         sx={{
           backgroundColor: "#101013",
           zIndex: 99999,

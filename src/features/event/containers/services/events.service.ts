@@ -9,7 +9,6 @@ import {
 export const getEventList = async ({
   limit,
   skip,
-  sort,
   search
 }: IGetAllEventsProps) =>
   new Promise<IGetEventResponse>((resolve, reject) => {

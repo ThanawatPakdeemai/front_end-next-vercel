@@ -427,15 +427,15 @@ const useGlobalMarket = () => {
           return countItemSelected * (_price * parseFloat(nakaPrice.last))
         }
         if (!isInvenItemDataAbsent && isGameItemOrMaterial) {
-          return countItemSelected * (_price / parseFloat(nakaPrice.last))
+          return countItemSelected * (_price * parseFloat(nakaPrice.last))
         }
         if (isInvenItemDataAbsent && router.asPath.includes("inventory")) {
           setCount(1)
-          return _price / parseFloat(nakaPrice.last)
+          return _price * parseFloat(nakaPrice.last)
         }
         if (!isInvenItemDataAbsent) {
           setCount(1)
-          return _price / parseFloat(nakaPrice.last)
+          return _price * parseFloat(nakaPrice.last)
         }
         // mint
         return countItemSelected * _price

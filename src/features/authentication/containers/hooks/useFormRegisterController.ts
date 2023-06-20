@@ -13,7 +13,7 @@ import {
   getAuth,
   signInWithPopup
 } from "firebase/auth"
-import { initializeApp, getApps } from "@firebase/app"
+import { initializeApp, getApps, getApp } from "@firebase/app"
 import { useRouter } from "next/router"
 import useLoginProvider from "@feature/authentication/containers/hooks/useLoginProvider"
 import { IProfileFaceBook } from "@src/types/profile"
@@ -184,7 +184,8 @@ const useFormRegisterController = () => {
   const twitterLogin = async (referralId: string | string[]) => {
     const provider = new TwitterAuthProvider()
     provider.addScope("email")
-    const app = initializeApp(firebaseConfig)
+    // const app = initializeApp(firebaseConfig)
+    const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
     const auth = getAuth(app)
     await signInWithPopup(auth, provider)
       .then((result) => {
@@ -224,7 +225,8 @@ const useFormRegisterController = () => {
   const googleRegister = async (referralId: string | string[]) => {
     const provider = new GoogleAuthProvider()
     provider.addScope("email")
-    const app = initializeApp(firebaseConfig)
+    // const app = initializeApp(firebaseConfig)
+    const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
     const auth = getAuth(app)
     await signInWithPopup(auth, provider)
       .then((result) => {
@@ -267,12 +269,13 @@ const useFormRegisterController = () => {
 
   const onSubmitRegister = (values: TFormData) => {
     const { email, code, password, subscription, referralId } = values
+
     if (emailCorrect && characterPasswordLength && characterUppercase) {
       setFormSubmitErrors(false)
       mutateSignUp({
         _email: email,
         _password: password,
-        _referral: referralId,
+        _referral: referralId ?? "",
         _verifycode: code,
         _subscription: subscription
       })

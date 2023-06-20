@@ -1,21 +1,31 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import useFavoriteGame from "@feature/favourite/containers/hooks/useFavoriteGame"
-import useGlobal from "@hooks/useGlobal"
-import { IGame } from "@feature/game/interfaces/IGameService"
+import {
+  IGame,
+  IPayloadGameFilter
+} from "@feature/game/interfaces/IGameService"
 
-const useFavoriteGameControllerMobile = () => {
-  const { stateProfile, defaultBody } = useGlobal()
+interface IDefaultBody extends IPayloadGameFilter {
+  defaultBody: IPayloadGameFilter
+  profileId: string
+}
+
+const useFavoriteGameControllerMobile = ({
+  defaultBody,
+  profileId
+}: IDefaultBody) => {
   const [dataFavorite, setDataFavorite] = useState<IGame[]>([])
 
   const { gameFavourite, isLoadingGameFavourite } = useFavoriteGame({
-    playerId: stateProfile?.id || "",
+    playerId: profileId,
     ...defaultBody
   })
 
-  const handleFavouriteData = () => {
+  const handleFavouriteData = useCallback(() => {
+    if (!profileId) return []
     const mapData = gameFavourite.map((_elm) => ({ ..._elm, favorite: true }))
     setDataFavorite(mapData)
-  }
+  }, [gameFavourite, profileId])
 
   useEffect(() => {
     let load = false
@@ -29,8 +39,8 @@ const useFavoriteGameControllerMobile = () => {
   }, [gameFavourite])
 
   return {
-    data: dataFavorite.length > 0 ? dataFavorite : [],
-    loading: isLoadingGameFavourite
+    gameFavorite: dataFavorite.length > 0 ? dataFavorite : [],
+    isLoadingGameFavourite
   }
 }
 

@@ -3,6 +3,7 @@ import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/us
 import SignInModal from "@mobile/components/organisms/modal/SignInModal"
 import { Box } from "@mui/material"
 import IconTemplate from "@mobile/components/templates/IconTemplate"
+import NakaIconMobile from "../icons/NakaIconMobile"
 
 export const StyledAvatar = {
   color: "#E0E0E0",
@@ -29,7 +30,14 @@ const HeadProfileNoLoginMobile = () => {
           sx={StyledAvatar}
         >
           <div className="head-profile__info--welcome flex flex-col">
-            <p className="font-urbanist text-[14px]">Welcome! 👋</p>
+            <p className="flex items-center gap-2 font-urbanist text-[14px]">
+              <div className="flex h-[26px] w-[40px] items-center justify-center rounded-[6px] bg-[#121212] p-[10px]">
+                <NakaIconMobile fill="#F32429" />
+              </div>
+              <span className="text-sm font-bold uppercase text-[#121212]">
+                NAKAMOTO.Games
+              </span>
+            </p>
           </div>
         </Box>
         <div className="head-profile__mobile--right flex items-center gap-4">

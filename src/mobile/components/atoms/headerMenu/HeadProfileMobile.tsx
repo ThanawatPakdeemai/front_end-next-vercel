@@ -3,7 +3,6 @@ import useProfileStore from "@stores/profileStore"
 import IconTemplate from "@mobile/components/templates/IconTemplate"
 // import WalletRoundIcon from "@components/icons/WalletRoundIcon"
 import BellRingRoundIcon from "@components/icons/BellRingRoundIcon"
-import Link from "next/link"
 import { ImageCustom } from "@components/atoms/image/Image"
 import { Box } from "@mui/material"
 import useNotiStore from "@stores/notification"
@@ -46,19 +45,15 @@ const HeadProfileMobile = () => {
           sx={StyledAvatar}
           onClick={() => setToggleProfileSetting(true)}
         >
-          {profile ? (
-            <div className="head-profile__info--avatar">
-              <ImageCustom
-                src={profile?.avatar || "/images/avatar.png"}
-                alt="avatar"
-                width={55}
-                height={55}
-                className="h-full w-full object-cover"
-              />
-            </div>
-          ) : (
-            <Link href="/login">{/* <PersonIcon /> */}</Link>
-          )}
+          <div className="head-profile__info--avatar">
+            <ImageCustom
+              src={profile?.avatar || "/images/avatar.png"}
+              alt="avatar"
+              width={55}
+              height={55}
+              className="h-full w-full object-cover"
+            />
+          </div>
           <div className="head-profile__info--welcome flex flex-col">
             <p className="font-urbanist text-[14px]">Welcome Back! 👋</p>
             <p className="font-urbanist text-[20px] font-bold">

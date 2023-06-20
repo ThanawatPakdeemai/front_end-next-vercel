@@ -92,24 +92,24 @@ const ProfileContent = () => {
   const { handleConnectWallet } = useWalletContoller()
   const { hasMetamask, disabledConnectButton } = useWeb3Provider()
   const [telegramId, setTelegramId] = useState<string>("")
-  const telegramStatus: any = localStorage.setItem("telegram-status", "false")
+  // const telegramStatus: any = localStorage.setItem("telegram-status", "false")
   const { linkTelegramData } = useLinkToTelegram(idPlayer, telegramId)
 
-  useEffect(() => {
-    const telegramParams: any = localStorage.getItem("telegram-params")
-    if (telegramStatus === "true") {
-      // (telegramParams && telegramParams !== undefined) ||
-      // (telegramParams && telegramParams !== null)
-      // eslint-disable-next-line no-console
-      console.log("telegram__", telegramParams.id)
-      // eslint-disable-next-line no-console
-      console.log("telegram_type", typeof telegramParams.id)
-      // eslint-disable-next-line no-console
-      console.log("telegram_type_string ", telegramParams.id.toString())
-      setTelegramId(telegramParams.id.toString())
-      localStorage.setItem("telegram-status", "false")
-    }
-  }, [telegramStatus])
+  // useEffect(() => {
+  //   const telegramParams: any = localStorage.getItem("telegram-params")
+  //   if (telegramStatus === "true") {
+  //     // (telegramParams && telegramParams !== undefined) ||
+  //     // (telegramParams && telegramParams !== null)
+  //     // eslint-disable-next-line no-console
+  //     console.log("telegram__", telegramParams.id)
+  //     // eslint-disable-next-line no-console
+  //     console.log("telegram_type", typeof telegramParams.id)
+  //     // eslint-disable-next-line no-console
+  //     console.log("telegram_type_string ", telegramParams.id.toString())
+  //     setTelegramId(telegramParams.id.toString())
+  //     localStorage.setItem("telegram-status", "false")
+  //   }
+  // }, [telegramStatus])
 
   useEffect(() => {
     if (isError) {
@@ -212,6 +212,16 @@ const ProfileContent = () => {
   //   //   console.log(params)
   //   // }
   // }
+  const jsClickButton = () => {
+    // eslint-disable-next-line no-console
+    console.log("in button js")
+    const telegramParams: any = localStorage.getItem("telegram-params")
+    if (telegramParams) {
+      setTelegramId(telegramParams.id.toString())
+
+      // localStorage.setItem("telegram-status", "false")
+    }
+  }
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -493,6 +503,13 @@ const ProfileContent = () => {
       ) : (
         <div className="login-telegram mt-8 w-full md:mt-0 md:w-[98%] lg:w-[90%]">
           {/* <div className="w-[90%]"> */}
+          <button
+            onClick={jsClickButton}
+            className="hidden"
+            id="button-click"
+          >
+            Click
+          </button>
           <div
             id="login-telegram"
             className="pb-[20px]"
@@ -507,11 +524,10 @@ const ProfileContent = () => {
               strategy="lazyOnload"
             />
             <Script id="show-banner">
-              {`function onTelegramAuth(params) { localStorage.setItem('telegram-params', JSON.stringify(params)); localStorage.setItem("telegram-status", "true");} 
+              {`function onTelegramAuth(params) { localStorage.setItem('telegram-params', JSON.stringify(params)); document.getElementById("button-click").click();} 
               `}
             </Script>
           </div>
-
           <SideSocialShare hidden="hidden lg:block" />
           <div className="relative">
             <Box

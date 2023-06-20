@@ -55,18 +55,6 @@ const MyApp = (props) => {
         <Web3Provider>
           <CacheProvider value={emotionCache}>
             <ThemeProvider theme={customTheme}>
-              {/* <BrowserView>
-                <ProviderApp>
-                  {getLayout(<Component {...pageProps} />)}
-                </ProviderApp>
-              </BrowserView>
-              <MobileView>
-                <Home />
-                <SignInLayout />
-                <GameDetailLayout />
-                <CreateProfileLayout />
-                {getLayout(<Component {...pageProps} />)}
-              </MobileView> */}
               <ProviderApp>
                 {getLayout(<Component {...pageProps} />)}
               </ProviderApp>

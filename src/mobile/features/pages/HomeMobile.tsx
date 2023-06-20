@@ -6,7 +6,7 @@ import SearchInputMobile from "@mobile/components/atoms/input/SearchInputMobile"
 import CategoriesModal from "@mobile/components/organisms/modal/CategoriesModal"
 import GameListMobile from "@mobile/components/organisms/GameListMobile"
 import { IGame } from "@feature/game/interfaces/IGameService"
-import useLoadingStore from "@stores/loading"
+import useGlobal from "@hooks/useGlobal"
 import useDrawerControllerMobile from "../game/containers/hooks/useDrawerControllerMobile"
 import useGameControllerMobile from "../game/containers/hooks/useGameControllerMobile"
 import useFavoriteGameControllerMobile from "../game/containers/hooks/useFavoriteGameControllerMobile"
@@ -22,50 +22,37 @@ const HomeMobile = () => {
     activeMenu,
     setActiveMenu
   } = useGameControllerMobile()
+  const { stateProfile, defaultBody } = useGlobal()
   const { open, setOpen } = useDrawerControllerMobile()
-  const { gameFavorite } = useFavoriteGameControllerMobile()
+  const { gameFavorite } = useFavoriteGameControllerMobile({
+    defaultBody,
+    profileId: stateProfile?.id || ""
+  })
   const [gameDataWithFavouriteData, setGameDataWithFavouriteData] = useState<
     IGame[]
   >([])
-  const { setClose } = useLoadingStore()
   const [choiceType, setChoiceType] = useState<string>("Categories")
 
   const handleFavouriteData = useCallback(() => {
+    if (!stateProfile) return []
     const mapFavouriteData = gameData.map((_item) =>
       gameFavorite.find((_elm) => _elm._id === _item._id)
         ? { ..._item, favorite: true }
         : { ..._item, favorite: false }
     )
-    if (mapFavouriteData) setGameDataWithFavouriteData(mapFavouriteData)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameData, gameFavorite])
+    setGameDataWithFavouriteData(mapFavouriteData)
+  }, [gameData, gameFavorite, stateProfile])
 
   useEffect(() => {
     let load = false
 
-    if (!load) {
-      if (!gameData.length) return
-      handleFavouriteData()
-    }
+    if (!load) handleFavouriteData()
 
     return () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameData])
-
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      setClose()
-    }
-
-    return () => {
-      load = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setClose])
+  }, [gameData, gameFavorite, handleFavouriteData, stateProfile])
 
   return (
     <MainLayoutMobile
@@ -92,7 +79,7 @@ const HomeMobile = () => {
 
       {/* Game List */}
       <GameListMobile
-        gameData={gameDataWithFavouriteData}
+        gameData={stateProfile ? gameDataWithFavouriteData : gameData}
         loading={loadingFilterGame}
       />
 

@@ -145,7 +145,8 @@ const ModalMarket = ({
         _text = "mint now"
         break
       case "buy":
-        _text = "buy now"
+        if (sellingType === "rental") _text = "rent now"
+        else _text = "buy now"
         break
       case "cancel":
         _text = "cancel now"
@@ -158,7 +159,7 @@ const ModalMarket = ({
         break
     }
     return _text
-  }, [action])
+  }, [action, sellingType])
 
   const handleStyle = useMemo(() => {
     let _color: string
@@ -400,7 +401,8 @@ const ModalMarket = ({
                 {action === "sell" &&
                 nftType !== "game_item" &&
                 nftType !== "nft_material" &&
-                nftType !== "nft_naka_punk" ? (
+                nftType !== "nft_naka_punk" &&
+                nftType !== "nft_game" ? (
                   <SellActionComp
                     nftType={nftType}
                     selling={selling}
@@ -436,7 +438,8 @@ const ModalMarket = ({
                 nftType === "game_item" ||
                 nftType === "nft_material" ||
                 nftType === "nft_naka_punk" ||
-                nftType === "nft_avatar" ? (
+                nftType === "nft_avatar" ||
+                (nftType === "nft_game" && sellingType !== "installment") ? (
                   <ReceiptComp
                     nftType={nftType}
                     seller={sellerType}

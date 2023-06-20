@@ -90,7 +90,7 @@ const ProfileContent = () => {
   const { profile: profileFetched, isError } = useGetProfileByEmail(emailPlayer)
   const { handleConnectWallet } = useWalletContoller()
   const { hasMetamask, disabledConnectButton } = useWeb3Provider()
-  const [telegramId, setTelegramId] = useState<string>("")
+  // const [telegramId, setTelegramId] = useState<string>("")
   // const telegramStatus: any = localStorage.setItem("telegram-status", "false")
   const { mutateLinkToTelegram } = useLinkToTelegram()
 
@@ -228,11 +228,11 @@ const ProfileContent = () => {
 
   const jsClickButton = async () => {
     const telegramParams: any = await localStorage.getItem("telegram-params")
-    const telegramParse: any = JSON.parse(telegramParams).id.toString()
+    const telegramParse: any = JSON.parse(telegramParams)
     // eslint-disable-next-line no-console
     console.log("in button js", telegramParse)
     if (telegramParse) {
-      await setTelegramId(telegramParse.id.toString())
+      const telegramId = String(telegramParse.id)
       if (telegramId) {
         mutateLinkToTelegram({
           player_id: idPlayer,

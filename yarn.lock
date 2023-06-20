@@ -2915,16 +2915,16 @@
   resolved "https://registry.yarnpkg.com/@react-spring/types/-/types-9.6.1.tgz#913d3a68c5cbc1124fdb18eff919432f7b6abdde"
   integrity sha512-POu8Mk0hIU3lRXB3bGIGe4VHIwwDsQyoD1F394OK7STTiX9w4dG3cTLljjYswkQN+hDSHRrj4O36kuVa7KPU8Q==
 
-"@react-three/drei@9.57.1":
-  version "9.57.1"
-  resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-9.57.1.tgz#459d8a8a1578bf08385d5be3500b090b0c14e4e4"
-  integrity sha512-6Vy8PkEKpUXtlS8FvOj3rOZ5k4QurpQulLehgh3HEtUE7SKfhBBTfnSA0dxPZ9eQP5g6gNcgJvZj5oLIuw8GiQ==
+"@react-three/drei@9.70.4":
+  version "9.70.4"
+  resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-9.70.4.tgz#b01bb20477fc29c5dcaf96e3fcdde1f194e65dd7"
+  integrity sha512-Q40FX8C+iOSkTyB9qvwokNBxw196T3Fb6TGlZ3IWLP1+j84eWDVvG0bSvLe4yjRcjnjTiC66KCKjxxpc48REhw==
   dependencies:
     "@babel/runtime" "^7.11.2"
     "@react-spring/three" "~9.6.1"
     "@use-gesture/react" "^10.2.24"
-    camera-controls "^2.1.0"
-    detect-gpu "^5.0.10"
+    camera-controls "^2.3.1"
+    detect-gpu "^5.0.14"
     glsl-noise "^0.0.0"
     lodash.clamp "^4.0.3"
     lodash.omit "^4.5.0"
@@ -2936,7 +2936,7 @@
     stats.js "^0.17.0"
     suspend-react "^0.0.8"
     three-mesh-bvh "^0.5.23"
-    three-stdlib "^2.21.8"
+    three-stdlib "^2.23.5"
     troika-three-text "^0.47.1"
     utility-types "^3.10.0"
     zustand "^3.5.13"
@@ -5003,7 +5003,12 @@ camelize@^1.0.0:
   resolved "https://registry.yarnpkg.com/camelize/-/camelize-1.0.1.tgz#89b7e16884056331a35d6b5ad064332c91daa6c3"
   integrity sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==
 
-camera-controls@^2.1.0, camera-controls@^2.3.4:
+camera-controls@^2.3.1:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/camera-controls/-/camera-controls-2.6.0.tgz#27bb5398a7600220fba4300debc3dfd3693d1eb0"
+  integrity sha512-65vkZ+FQfRLtq5LHrNuDFeOALN8+gfoRFuIOwYwgwzVY7bjBxP+j3joj6RTgc5Ot+dTJupFWwfcq7ds4Iq4DGg==
+
+camera-controls@^2.3.4:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/camera-controls/-/camera-controls-2.3.8.tgz#db34689a80d7cdb51b09144aac36e10e27f612e3"
   integrity sha512-oJi8jZTQOae7FXTs9OtuIDUg4cDZp2PiQUcyRC+GNoDJW+6kcrIJCJdu673IRlWMLvdFaMgCSTgudWqZH3dzTA==
@@ -6103,10 +6108,10 @@ detect-browser@5.2.0:
   resolved "https://registry.yarnpkg.com/detect-browser/-/detect-browser-5.2.0.tgz#c9cd5afa96a6a19fda0bbe9e9be48a6b6e1e9c97"
   integrity sha512-tr7XntDAu50BVENgQfajMLzacmSe34D+qZc4zjnniz0ZVuw/TZcLcyxHQjYpJTM36sGEkZZlYLnIM1hH7alTMA==
 
-detect-gpu@^5.0.10:
-  version "5.0.26"
-  resolved "https://registry.yarnpkg.com/detect-gpu/-/detect-gpu-5.0.26.tgz#0db5d80fea3e1504d85eedaf2165ad26a4bb8685"
-  integrity sha512-4a/739IXLeZv6izD+PdzZzinvyRvUVJyTLRPNU4fhiInrnOPBU9c6eCyyCLEv3INP1VDjHIFf5Fuq1r9ES0kQA==
+detect-gpu@^5.0.14:
+  version "5.0.29"
+  resolved "https://registry.yarnpkg.com/detect-gpu/-/detect-gpu-5.0.29.tgz#87238cbea009ad5509025784f6cb64cb586a3df5"
+  integrity sha512-DEqWxHXAKaoIHxF0rtFPDdWWINGoketQ6fk64KbahK3IC0I0LiZR6NbWZo4pwf7UH8khBLY8w4wS+1MHi81LSQ==
   dependencies:
     webgl-constants "^1.1.1"
 
@@ -12028,10 +12033,10 @@ three-mesh-bvh@^0.5.23:
   resolved "https://registry.yarnpkg.com/three-mesh-bvh/-/three-mesh-bvh-0.5.24.tgz#56dd27ad35bfbafacedaba4a4d567723bbdd686c"
   integrity sha512-VTIgfjz8aFoPKTQoMIQQv9jJD4ybFRZuKKE1/kqy78FQcuHQ0+iIWv7C5cSb2inlvs7bNMVY3yRx3RXGZfrvzQ==
 
-three-stdlib@^2.21.8:
-  version "2.23.7"
-  resolved "https://registry.yarnpkg.com/three-stdlib/-/three-stdlib-2.23.7.tgz#18b4a1a00d79737006622c9a2301232c3f4fa9e9"
-  integrity sha512-nxs0z6OthtN+Qy6N1Ee0ztR87IcaCEOF+WHCJCzjpu+37c+/IFDzI9igg7xgw4qWM05vETxUAkrXnLRxSZlgcw==
+three-stdlib@^2.23.5:
+  version "2.23.10"
+  resolved "https://registry.yarnpkg.com/three-stdlib/-/three-stdlib-2.23.10.tgz#94907a558a00da327bd74308c92078fea72f77fc"
+  integrity sha512-y0DlxaN5HZXI9hKjEtqO2xlCEt7XyDCOMvD2M3JJFBmYjwbU+PbJ1n3Z+7Hr/6BeVGE6KZYcqPMnfKrTK5WTJg==
   dependencies:
     "@types/draco3d" "^1.4.0"
     "@types/offscreencanvas" "^2019.6.4"

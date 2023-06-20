@@ -36,23 +36,23 @@ const CardContent = ({ ...props }: IProp) => {
             <span className="pl-4">{icon}</span>
             {/* <div className={`ml-4 uppercase ${textColor}`}>{title}</div> */}
             {labels ? (
-              <div className="flex w-1/2 items-center px-2 text-sm uppercase">
+              <div className="flex flex-wrap items-center gap-2 px-2 text-sm uppercase lg:w-1/2">
                 <div
                   key={uuid()}
-                  className="mr-2 flex w-full items-center rounded-lg border-[1px] border-neutral-700 bg-neutral-780 font-neue-machina-semi text-neutral-500 md:px-4 md:py-2"
+                  className="mr-2 flex w-full flex-1 items-center rounded-lg border-[1px] border-neutral-700 bg-neutral-780 px-2 py-2 font-neue-machina-semi text-neutral-500 md:px-4"
                 >
                   <PlayersIcon />
-                  <span className="mx-2">total players:</span>
+                  <span className="mx-2 whitespace-nowrap">total players:</span>
                   <span className="text-neutral-200">
                     {labels.player_count && `${labels.player_count}`}
                   </span>
                 </div>
                 <div
                   key={uuid()}
-                  className="mr-2 flex w-full items-center rounded-lg border-[1px] border-neutral-700 bg-neutral-780 font-neue-machina-semi text-neutral-500 md:px-4 md:py-2"
+                  className="mr-2 flex w-full flex-1 items-center rounded-lg border-[1px] border-neutral-700 bg-neutral-780 px-2 py-2 font-neue-machina-semi text-neutral-500 md:px-4"
                 >
                   <JoinStickIcon stroke="#70727B" />
-                  <span>total games played:</span>
+                  <span className="whitespace-nowrap">total games played:</span>
                   <span className="ml-2 text-neutral-200">
                     {labels.transaction_count && `${labels.transaction_count}`}
                   </span>

@@ -118,6 +118,7 @@ export default function CardBuyItemMobile({
       <Box
         component="section"
         id="my-assets"
+        className="flex w-full flex-col gap-3"
       >
         {gameItemList && (
           <DropdownListItem

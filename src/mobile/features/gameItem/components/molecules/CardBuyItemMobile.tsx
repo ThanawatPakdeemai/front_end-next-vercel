@@ -10,11 +10,11 @@ import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
 import { ImageCustom } from "@components/atoms/image/Image"
 import DollarSolidIcon from "@components/icons/DollarSolidIcon"
 import { Box } from "@mui/material"
-import useLoadingStore from "@stores/loading"
 import CONFIGS from "@configs/index"
 import { useCreateWeb3Provider } from "@hooks/useWeb3Provider"
 import RightMenuBuyItem from "@feature/gameItem/components/molecules/RightMenuBuyItem"
 import useProfileStore from "@stores/profileStore"
+import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
 import OpenMetamask from "../atoms/OpenMetamask"
 
 interface ICardBuyItemMobileProp {
@@ -32,7 +32,7 @@ export default function CardBuyItemMobile({
 
   const { hydrated, getGameStoryModeURL } = useGlobal()
   const router = useRouter()
-  const { setOpen } = useLoadingStore()
+  const { handleClickOpenLoading } = useGlobalControllerMobile()
 
   const inputClasses =
     "flex h-10 items-center justify-between rounded-xl border-[1px]  border-neutral-700 bg-neutral-800 text-white-primary p-[10px] text-center font-neue-machina-semi text-sm !bg-[#18181C]"
@@ -52,7 +52,8 @@ export default function CardBuyItemMobile({
         variant="contained"
         className="w-full !p-[8px_20px] font-urbanist !text-white-primary"
         onClick={() => {
-          setOpen("")
+          // setOpen("")
+          handleClickOpenLoading()
           router.push(`${router.asPath}/roomlist`)
         }}
       />

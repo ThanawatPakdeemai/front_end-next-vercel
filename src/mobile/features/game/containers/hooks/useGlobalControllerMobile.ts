@@ -1,5 +1,5 @@
 import { IGetType } from "@feature/game/interfaces/IGameService"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 
 const useGlobalControllerMobile = () => {
   // State
@@ -9,12 +9,18 @@ const useGlobalControllerMobile = () => {
     typeof navigator !== "undefined" &&
     /iPad|iPhone|iPod/.test(navigator.userAgent)
 
+  const handleClickOpenLoading = useCallback(() => {
+    // do something
+    // setOpen("")
+  }, [])
+
   return {
     setActiveMenu,
     activeMenu,
     limit,
     setLimit,
-    iOS
+    iOS,
+    handleClickOpenLoading
   }
 }
 

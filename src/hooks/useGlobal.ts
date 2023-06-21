@@ -399,9 +399,12 @@ const useGlobal = (
     await router.push("/")
   }
 
-  /**
-   * @description check device mobile
-   */
+  const handleClickScroll = (targetSection: string) => {
+    const element = document.getElementById(targetSection)
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" })
+    }
+  }
 
   /**
    * @description Get market type
@@ -528,7 +531,8 @@ const useGlobal = (
     isStoryModeGame,
     isPokerGame,
     goldProfile,
-    goldProfileComma
+    goldProfileComma,
+    handleClickScroll
   }
 }
 

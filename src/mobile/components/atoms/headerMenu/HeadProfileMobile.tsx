@@ -1,7 +1,6 @@
 import React from "react"
 import useProfileStore from "@stores/profileStore"
 import IconTemplate from "@mobile/components/templates/IconTemplate"
-// import WalletRoundIcon from "@components/icons/WalletRoundIcon"
 import BellRingRoundIcon from "@components/icons/BellRingRoundIcon"
 import { ImageCustom } from "@components/atoms/image/Image"
 import { Box } from "@mui/material"

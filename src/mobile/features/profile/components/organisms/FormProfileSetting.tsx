@@ -49,6 +49,7 @@ const FormProfileSetting = ({ type }: IFormProfileSetting) => {
             }}
             settingThumbnail={{
               speed: 500,
+              slidesToShow: 4,
               afterChange: (current: number) => {
                 const selected = avatarList[current]
                 if (selected) {

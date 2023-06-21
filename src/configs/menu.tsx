@@ -931,3 +931,18 @@ export const MARKET_FILTER_DATE: ISelectDropDown[] = [
   { label: "New", value: -1 },
   { label: "Oldest", value: 1 }
 ]
+
+export const MARKET_FILTER_MAP: ISelectDropDown[] = [
+  {
+    label: "Owned",
+    value: "Owned"
+  },
+  {
+    label: "Occupied",
+    value: "Occupied"
+  },
+  {
+    label: "Avaliable for sale",
+    value: "Avaliable for sale"
+  }
+]

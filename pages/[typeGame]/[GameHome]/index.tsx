@@ -13,6 +13,7 @@ import { StartButtonCustomStyle } from "@feature/game/components/templates/lobby
 import { useTranslation } from "react-i18next"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import CardItemGold from "@feature/gameItem/components/molecules/CardItemGold"
+import useLoadingStore from "@stores/loading"
 
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
@@ -98,19 +99,21 @@ export default function GameLobby() {
     isPokerGame
   } = useGlobal()
   const { t } = useTranslation()
+  const { setClose } = useLoadingStore()
 
   useEffect(() => {
     let load = false
 
     if (!load) {
       if (!gameData) return
+      setClose()
       onSetGameData(gameData)
     }
 
     return () => {
       load = true
     }
-  }, [gameData, onSetGameData])
+  }, [gameData, onSetGameData, setClose])
 
   const getTemplateLobby = () => {
     if (gameData) {

@@ -7,6 +7,7 @@ import Helper from "@utils/helper"
 import { useEffect, useState } from "react"
 import jwt_decode from "jwt-decode"
 import { refreshProfileToken } from "@feature/authentication/containers/services/auth.service"
+import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 
 const useRefreshProfile = () => {
   const { onReset } = useProfileStore()
@@ -17,6 +18,9 @@ const useRefreshProfile = () => {
   const { onSetProfileData, onSetProfileAddress, onSetProfileJWT } =
     useProfileStore()
   const { onResetNotification } = useNotiStore()
+
+  // Remove all modal mobile
+  const { clearAllDrawer } = useDrawerControllerMobile()
 
   const fetchToken = () => {
     refreshProfileToken()
@@ -37,6 +41,7 @@ const useRefreshProfile = () => {
         setIsTokenValid(false)
         onResetNotification() // remove notification zustand
         onReset() // remove profile zustand
+        clearAllDrawer()
       })
   }
 

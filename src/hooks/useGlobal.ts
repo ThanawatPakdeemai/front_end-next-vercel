@@ -2,7 +2,7 @@ import { IProfile } from "@feature/profile/interfaces/IProfileService"
 import useGameStore from "@stores/game"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
   IPayloadGameFilter,
   IGame,
@@ -75,7 +75,7 @@ const useGlobal = (
   const [hydrated, setHydrated] = useState(false)
   const [marketType, setMarketType] = useState<TNFTType>()
   /** This is only temporary code for hide marketplace in production */
-  // const [isShowMarket, setIsShowMarket] = useState<boolean>(false)
+  const [isShowMarket, setIsShowMarket] = useState<boolean>(false)
 
   /**
    * @description check if url is in marketplace
@@ -399,9 +399,12 @@ const useGlobal = (
     await router.push("/")
   }
 
-  /**
-   * @description check device mobile
-   */
+  const handleClickScroll = (targetSection: string) => {
+    const element = document.getElementById(targetSection)
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" })
+    }
+  }
 
   /**
    * @description Get market type
@@ -436,38 +439,38 @@ const useGlobal = (
   }, [router.asPath])
 
   /** This is only temporary code for hide marketplace in production */
-  // const _mode = process.env.NEXT_PUBLIC_MODE
+  const _mode = process.env.NEXT_PUBLIC_MODE
 
-  // const redirectionDone = useRef(false)
+  const redirectionDone = useRef(false)
 
-  // useEffect(() => {
-  //   const redirectIfNecessary = () => {
-  //     if (
-  //       router.asPath.includes("marketplace") &&
-  //       _mode === "production" &&
-  //       !redirectionDone.current
-  //     ) {
-  //       router.replace("/404", undefined, { shallow: true })
-  //       setIsShowMarket(false)
-  //       redirectionDone.current = true
-  //     } else if (
-  //       router.asPath.includes("marketplace") &&
-  //       _mode === "development" &&
-  //       !redirectionDone.current
-  //     ) {
-  //       router.replace(router.asPath, undefined, { shallow: true })
-  //       setIsShowMarket(true)
-  //       redirectionDone.current = true
-  //     }
-  //   }
+  useEffect(() => {
+    const redirectIfNecessary = () => {
+      if (
+        router.asPath.includes("marketplace") &&
+        _mode === "production" &&
+        !redirectionDone.current
+      ) {
+        router.replace("/404", undefined, { shallow: true })
+        setIsShowMarket(false)
+        redirectionDone.current = true
+      } else if (
+        router.asPath.includes("marketplace") &&
+        _mode === "development" &&
+        !redirectionDone.current
+      ) {
+        router.replace(router.asPath, undefined, { shallow: true })
+        setIsShowMarket(true)
+        redirectionDone.current = true
+      }
+    }
 
-  //   const intervalId = setInterval(redirectIfNecessary, 0)
+    const intervalId = setInterval(redirectIfNecessary, 0)
 
-  //   return () => {
-  //     clearInterval(intervalId)
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [router.asPath, _mode])
+    return () => {
+      clearInterval(intervalId)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.asPath, _mode])
   /** This is only temporary code for hide marketplace in production */
 
   /**
@@ -511,7 +514,7 @@ const useGlobal = (
     pager,
     isMarketplace,
     isDeveloperPage,
-    // isShowMarket,
+    isShowMarket,
     getGamePokerModeURL,
     openInNewTab,
     getGameMode,
@@ -528,7 +531,8 @@ const useGlobal = (
     isStoryModeGame,
     isPokerGame,
     goldProfile,
-    goldProfileComma
+    goldProfileComma,
+    handleClickScroll
   }
 }
 

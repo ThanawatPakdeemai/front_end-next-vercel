@@ -8,6 +8,7 @@ import useNotiStore from "@stores/notification"
 import NotificationModal from "@mobile/components/organisms/modal/NotificationModal"
 import ProfileSettingModal from "@mobile/components/organisms/modal/ProfileSettingModal"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
+import useDrawerControllerMobileStore from "@stores/drawerControllerMobile"
 
 export const StyledAvatar = {
   color: "#E0E0E0",
@@ -25,12 +26,14 @@ export const StyledAvatar = {
 const HeadProfileMobile = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { count } = useNotiStore()
+  const { openNotification, setOpenNotification } = useDrawerControllerMobile()
+
   const {
-    openNotification,
-    setOpenNotification,
-    profileSetting,
-    setProfileSetting
-  } = useDrawerControllerMobile()
+    openProfileCreate: toggleProfileCreate,
+    setOpenProfileCreate: setToggleProfileCreate,
+    openProfileSetting: toggleProfileSetting,
+    setOpenProfileSetting: setToggleProfileSetting
+  } = useDrawerControllerMobileStore()
 
   return (
     <header className="header bg-[#F32429] pb-[55px]">
@@ -39,7 +42,7 @@ const HeadProfileMobile = () => {
           component="div"
           className="head-profile__info--wrapper flex items-center gap-4"
           sx={StyledAvatar}
-          onClick={() => setProfileSetting(true)}
+          onClick={() => setToggleProfileSetting(true)}
         >
           <div className="head-profile__info--avatar">
             <ImageCustom
@@ -78,11 +81,18 @@ const HeadProfileMobile = () => {
         open={openNotification}
         setOpenNotification={setOpenNotification}
       />
-
       {/* Profile Setting Modal */}
       <ProfileSettingModal
-        open={profileSetting}
-        setProfileSetting={setProfileSetting}
+        open={toggleProfileSetting}
+        setProfileSetting={(_toggle) => setToggleProfileSetting(_toggle)}
+        type="edit"
+      />
+      {/* Profile Setting Modal */}
+      <ProfileSettingModal
+        open={toggleProfileCreate}
+        setProfileSetting={(_toggle) => setToggleProfileCreate(_toggle)}
+        title="Create Profile"
+        type="create"
       />
     </header>
   )

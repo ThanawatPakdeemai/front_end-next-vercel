@@ -1,8 +1,13 @@
 import ButtonLink from "@components/atoms/button/ButtonLink"
+import { TTypeSettingProfile } from "@mobile/components/organisms/modal/ProfileSettingModal"
 import { Box } from "@mui/material"
 import React from "react"
 
-const ProfileFooterMobile = () => (
+interface IProfileFooter {
+  type: TTypeSettingProfile
+}
+
+const ProfileFooterMobile = ({ type }: IProfileFooter) => (
   <Box
     component="footer"
     className="fixed bottom-0 left-0 right-0 flex flex-col gap-6 bg-[#18181C] p-[24px_24px_36px]"
@@ -15,7 +20,7 @@ const ProfileFooterMobile = () => (
     }}
   >
     <ButtonLink
-      text="Update"
+      text={type === "create" ? "Create" : "Update"}
       icon={<></>}
       size="large"
       color="error"

@@ -88,7 +88,7 @@ export default function CardBuyItemMobile({
     const path = `${gameObject.game_mode}/${gameObject.path}`
     return (
       <Box
-        component={"section"}
+        component="section"
         id="open-with-metamask"
       >
         <OpenMetamask
@@ -112,10 +112,10 @@ export default function CardBuyItemMobile({
     [profile]
   )
 
-  const renderMyAsset = useCallback(() => {
-    return (
+  const renderMyAsset = useCallback(
+    () => (
       <Box
-        component={"section"}
+        component="section"
         id="my-assets"
       >
         {gameItemList && (
@@ -157,14 +157,9 @@ export default function CardBuyItemMobile({
           </div>
         </div>
       </Box>
-    )
-  }, [
-    gameObject,
-    gameItemList,
-    onChangeSelectItem,
-    qtyItemSelected,
-    totalPrice
-  ])
+    ),
+    [gameObject, gameItemList, onChangeSelectItem, qtyItemSelected, totalPrice]
+  )
 
   /**
    * @description Render Form Buy Item
@@ -208,14 +203,12 @@ export default function CardBuyItemMobile({
     )
   }, [
     gameObject,
-    gameItemList,
     hasMetamask,
-    onChangeSelectItem,
-    totalPrice,
     qtyItemSelected,
     buttonBuyAsset,
     buttonGotoRoomlist,
-    buttonOpenWithMetamask
+    buttonOpenWithMetamask,
+    renderMyAsset
   ])
 
   /**

@@ -87,9 +87,14 @@ export default function CardBuyItemMobile({
     if (!gameObject) return <></>
     const path = `${gameObject.game_mode}/${gameObject.path}`
     return (
-      <OpenMetamask
-        url={`${CONFIGS.BASE_URL.FRONTEND.replace("https://", "")}/${path}`}
-      />
+      <Box
+        component="section"
+        id="open-with-metamask"
+      >
+        <OpenMetamask
+          url={`${CONFIGS.BASE_URL.FRONTEND.replace("https://", "")}/${path}`}
+        />
+      </Box>
     )
   }, [gameObject])
 
@@ -107,22 +112,11 @@ export default function CardBuyItemMobile({
     [profile]
   )
 
-  /**
-   * @description Render Form Buy Item
-   */
-  const renderGameItemContent = useCallback(() => {
-    if (!gameObject) return null
-    if (!hasMetamask) return buttonOpenWithMetamask()
-    return (
+  const renderMyAsset = useCallback(
+    () => (
       <Box
-        component="div"
-        sx={{
-          ".MuiButton-containedError:hover": {
-            background: "#F32429!important",
-            boxShadow: "none!important"
-          }
-        }}
-        className="flex w-full flex-col gap-3"
+        component="section"
+        id="my-assets"
       >
         {gameItemList && (
           <DropdownListItem
@@ -162,6 +156,46 @@ export default function CardBuyItemMobile({
             </div>
           </div>
         </div>
+      </Box>
+    ),
+    [gameObject, gameItemList, onChangeSelectItem, qtyItemSelected, totalPrice]
+  )
+
+  /**
+   * @description Render Form Buy Item
+   */
+  const renderGameItemContent = useCallback(() => {
+    if (!gameObject) return null
+    if (!hasMetamask)
+      return (
+        <Box
+          component="div"
+          sx={{
+            ".MuiButton-containedError:hover": {
+              background: "#F32429!important",
+              boxShadow: "none!important"
+            }
+          }}
+          className="flex w-full flex-col gap-3"
+        >
+          {renderMyAsset()}
+          {qtyItemSelected && qtyItemSelected > 0
+            ? buttonGotoRoomlist()
+            : buttonOpenWithMetamask()}
+        </Box>
+      )
+    return (
+      <Box
+        component="div"
+        sx={{
+          ".MuiButton-containedError:hover": {
+            background: "#F32429!important",
+            boxShadow: "none!important"
+          }
+        }}
+        className="flex w-full flex-col gap-3"
+      >
+        {renderMyAsset()}
         {qtyItemSelected && qtyItemSelected > 0
           ? buttonGotoRoomlist()
           : buttonBuyAsset()}
@@ -169,14 +203,12 @@ export default function CardBuyItemMobile({
     )
   }, [
     gameObject,
-    gameItemList,
     hasMetamask,
-    onChangeSelectItem,
-    totalPrice,
     qtyItemSelected,
     buttonBuyAsset,
     buttonGotoRoomlist,
-    buttonOpenWithMetamask
+    buttonOpenWithMetamask,
+    renderMyAsset
   ])
 
   /**

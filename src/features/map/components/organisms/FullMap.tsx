@@ -13,6 +13,8 @@ import MenuButtonExpandMobile from "@feature/page/marketplace/mobilescreen/MenuB
 import useMarketFilterStore from "@stores/marketFilter"
 import Helper from "@utils/helper"
 import SwipeableEdgeDrawer from "@feature/marketplace/components/organisms/DrawerMobileFilter"
+import useProfileStore from "@stores/profileStore"
+import ItemRewardDetails from "@feature/game/containers/components/molecules/ItemRewardDetails"
 import BoxElement from "../molecules/BoxElement"
 import CameraController from "../molecules/CameraController"
 import MapScene from "../molecules/MapScene"
@@ -28,6 +30,7 @@ const containerVariants = {
 const FullMap = () => {
   // hook
   const { setOpen, setClose } = useLoadingStore()
+  const { profile } = useProfileStore()
   const router = useRouter()
   const { filterType, search } = useMarketFilterStore()
   const { getValueFromTKey } = Helper
@@ -35,6 +38,7 @@ const FullMap = () => {
 
   const tokenId = getValueFromTKey(search, "nft_token") as string
   const sellerId = getValueFromTKey(search, "seller_id") as string
+  const infoMap = getValueFromTKey(search, "infomap") as string
 
   // state
   const { allLand: allLandData, isSuccess, isLoading } = useGetAllLand()
@@ -104,8 +108,65 @@ const FullMap = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allLandData])
 
+  const sortInfoLand = (land: ILandMap[], filterInfo: string) => {
+    if (filterInfo === "Owned") {
+      return land.map((item: ILandMap) => {
+        if (
+          (profile && profile.data && profile.data.id === item.player_id) ||
+          (profile &&
+            profile.data &&
+            profile.data.address === item.wallet_address)
+        ) {
+          if (tokenId || sellerId) {
+            item.color = colorThree.currentLand
+          } else {
+            item.color = colorThree.owned
+          }
+        } else {
+          item.color = null
+        }
+        return item
+      })
+    }
+    land.map((item: ILandMap) => {
+      item.color = colorThree.land
+      return ItemRewardDetails
+    })
+
+    if (filterInfo === "Occupied") {
+      return land.map((item: ILandMap) => {
+        if (item.wallet_address || item.player_id) {
+          if (tokenId || sellerId) {
+            item.color = colorThree.currentLand
+          } else {
+            item.color = colorThree.occupied
+          }
+        } else {
+          item.color = null
+        }
+        return item
+      })
+    }
+    if (filterInfo === "Avaliable for sale") {
+      return land.map((item: ILandMap) => {
+        if (item.marketplaces_data) {
+          if (tokenId || sellerId) {
+            item.color = colorThree.currentLand
+          } else {
+            item.color = colorThree.availableForSale
+          }
+        } else {
+          item.color = null
+        }
+        return item
+      })
+    }
+    const resLand = land
+    return resLand
+  }
+
   useMemo(() => {
-    if (allLand && allLand.length > 0) {
+    if (allLand && allLand.length > 0 && allLandData) {
       const filteredLand = allLand
       if (filterCheck && filterCheck.length > 0) {
         filteredLand.filter((item: ILandMap) => {
@@ -179,11 +240,13 @@ const FullMap = () => {
         setFocus(false)
         setUpdateZoom(false)
       }
+      if (infoMap) {
+        return sortInfoLand(allLand, infoMap)
+      }
       setAllLand(filteredLand)
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allLand, filterCheck, search.length])
+  }, [allLand, filterCheck, search.length, infoMap, tokenId, sellerId])
 
   // handle click on map
   useMemo(() => {

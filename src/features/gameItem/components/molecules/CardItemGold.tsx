@@ -30,7 +30,7 @@ export default function CardItemGold({
   const { t } = useTranslation()
   const {
     itemSelected,
-    qtyItemSelected,
+    // qtyItemSelected,
     // gameItemList,
     // isHideOnWaitingRoom,
     // onChangeSelectItem,
@@ -107,7 +107,16 @@ export default function CardItemGold({
       />
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [qtyItemSelected, router.asPath, buttonStyle, router.pathname])
+  }, [
+    router.pathname,
+    router.asPath,
+    profile,
+    isPokerGame,
+    gameObject,
+    goldProfile,
+    buttonStyle,
+    getGamePokerModeURL
+  ])
 
   const renderButton = () => (
     <div className="w-full">

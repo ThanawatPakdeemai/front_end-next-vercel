@@ -2,7 +2,9 @@ import React, { useState } from "react"
 import {
   Box,
   Button,
+  Checkbox,
   Divider,
+  FormControlLabel,
   IconButton,
   InputAdornment,
   Link,
@@ -15,6 +17,8 @@ import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import EmailIcon from "@components/icons/EmailIcon"
+import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlineBlankOutlined"
+import ICheckMark from "@components/icons/CheckMark"
 import { useTranslation } from "react-i18next"
 import Lock2Icon from "@components/icons/Lock2Icon"
 import MoreLoginMobile from "@mobile/components/atoms/MoreLoginMobile"
@@ -50,7 +54,9 @@ const CreateAccountModal = ({
 
   const { t } = useTranslation()
 
-  const onSubmit = (data) => onSubmitRegister(data)
+  const onSubmit = (data) => {
+    onSubmitRegister(data)
+  }
 
   return (
     <SwipeableDrawer
@@ -224,7 +230,7 @@ const CreateAccountModal = ({
             className="flex items-center gap-2"
           >
             <TextField
-              className="hidden-arrow-number mb-6 w-full"
+              className="hidden-arrow-number mb-4 w-full"
               type="number"
               placeholder={String(t("verification_code"))}
               onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -271,7 +277,7 @@ const CreateAccountModal = ({
                 disabled={!emailCorrect || email === ""}
                 onClick={() => onClickGetCode(email)}
                 variant="contained"
-                className={`mb-6 h-[50px] w-full rounded-bl-3xl border border-solid border-error-100 !bg-error-100 ${
+                className={`mb-4 h-[50px] w-full rounded-bl-3xl border border-solid border-error-100 !bg-error-100 ${
                   !emailCorrect || email === ""
                     ? "border-grey-default"
                     : "border-error-100"
@@ -285,12 +291,59 @@ const CreateAccountModal = ({
           </Box>
           <Box
             component="div"
+            className="mb-6"
+          >
+            <FormControlLabel
+              className="!ml-0 !mr-0"
+              control={
+                <Checkbox
+                  sx={{
+                    "&:hover": { bgcolor: "transparent" },
+                    ":hover": {
+                      "& .MuiSvgIcon-root": {
+                        background: "transparent",
+                        border: "2px solid #F2C94C !important"
+                      }
+                    }
+                  }}
+                  icon={
+                    <CheckBoxOutlineBlankOutlinedIcon
+                      className="border-2 border-solid border-neutral-600 text-transparent"
+                      sx={{
+                        borderRadius: "8.5px"
+                      }}
+                    />
+                  }
+                  checkedIcon={
+                    <ICheckMark
+                      className="border-2 border-solid border-warning-100 bg-neutral-800 p-1 text-warning-100"
+                      style={{
+                        borderRadius: "8.5px"
+                      }}
+                      fillColor="#F2C94C"
+                    />
+                  }
+                  {...register("subscription")}
+                />
+              }
+              label={t("would_you_like_to_subscribe")}
+              sx={{
+                "& .MuiTypography-root": {
+                  fontSize: 10,
+                  color: "#70727B",
+                  textTransform: "uppercase"
+                }
+              }}
+            />
+          </Box>
+          <Box
+            component="div"
             className="flex justify-center"
           >
             <Button
               type="submit"
               variant="contained"
-              className="mb-6 h-[50px] w-full rounded-bl-3xl border border-solid border-error-100 !bg-error-100"
+              className="h-[50px] w-full rounded-bl-3xl border border-solid border-error-100 !bg-error-100"
             >
               <div className="flex items-center font-urbanist text-base font-bold">
                 Sign up

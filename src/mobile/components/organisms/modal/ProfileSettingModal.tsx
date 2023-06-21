@@ -5,16 +5,19 @@ import FormProfileSetting from "@mobile/features/profile/components/organisms/Fo
 import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 
+export type TTypeSettingProfile = "create" | "edit"
 interface IProfileSettingModalProps {
   open: boolean
-  setProfileSetting: React.Dispatch<React.SetStateAction<boolean>>
+  setProfileSetting: (_toggle: boolean) => void
   title?: string
+  type: TTypeSettingProfile
 }
 
 const ProfileSettingModal = ({
   open,
   setProfileSetting,
-  title = "Edit Profile"
+  title = "Edit Profile",
+  type
 }: IProfileSettingModalProps) => {
   const { clearAllDrawer } = useDrawerControllerMobile()
 
@@ -25,7 +28,6 @@ const ProfileSettingModal = ({
       onClose={() => setProfileSetting(false)}
       onOpen={() => {
         clearAllDrawer()
-        setProfileSetting(true)
       }}
       sx={{
         ...StyleDrawer,
@@ -55,7 +57,7 @@ const ProfileSettingModal = ({
           <ArrowBackIcon />
           {title}
         </h2>
-        <FormProfileSetting />
+        <FormProfileSetting type={type} />
       </Box>
     </SwipeableDrawer>
   )

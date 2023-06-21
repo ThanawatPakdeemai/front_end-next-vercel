@@ -50,13 +50,16 @@ const GameCardMobile = ({
         animate="animate"
       >
         <div className="relative w-full overflow-hidden rounded-[20px] pt-[84%]">
-          <div className="game-favorite absolute right-3 top-3 z-[1]">
-            {favourite ? (
-              <HeartFilledIcon onClick={() => setToggleRemove(true)} />
-            ) : (
-              <HeartSolidIcon onClick={() => onClickFavouriteButton()} />
-            )}
-          </div>
+          {profile && (
+            <div className="game-favorite absolute right-3 top-3 z-[1]">
+              {favourite ? (
+                <HeartFilledIcon onClick={() => setToggleRemove(true)} />
+              ) : (
+                <HeartSolidIcon onClick={() => onClickFavouriteButton()} />
+              )}
+            </div>
+          )}
+
           <Link
             href={href}
             onClick={() => setOpen("")}

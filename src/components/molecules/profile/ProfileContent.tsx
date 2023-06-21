@@ -18,7 +18,6 @@ import { Image } from "@components/atoms/image"
 import Helper from "@utils/helper"
 import { v4 as uuidv4 } from "uuid"
 import DropdownLimit from "@components/atoms/DropdownLimit"
-// import useGlobal from "@hooks/useGlobal"
 import { PaginationNaka } from "@components/atoms/pagination"
 import useLoadingStore from "@stores/loading"
 import GameStatOverview from "@feature/playerProfile/components/organisms/GameStatOverview"
@@ -42,9 +41,6 @@ import useWalletContoller from "@feature/wallet/containers/hooks/useWalletContol
 import { useWeb3Provider } from "@providers/index"
 import Link from "next/link"
 import IReferrals from "@components/icons/Referrals"
-// import { Helmet } from "react-helmet"
-// import ReactDOM from "react-dom"
-// eslint-disable-next-line import/no-extraneous-dependencies
 import Script from "next/script"
 import useLinkToTelegram from "@feature/game/containers/hooks/useLinkToTelegram"
 import EditProfileModal from "./EditProfileModal"
@@ -69,9 +65,6 @@ const ProfileContent = () => {
   const router = useRouter()
   const { errorToast } = useToast()
   const { player_id } = router.query
-  // eslint-disable-next-line no-console
-  // const responseTelegram = (response: any) => console.log(response)
-
   const { t } = useTranslation()
 
   const {
@@ -91,25 +84,7 @@ const ProfileContent = () => {
   const { profile: profileFetched, isError } = useGetProfileByEmail(emailPlayer)
   const { handleConnectWallet } = useWalletContoller()
   const { hasMetamask, disabledConnectButton } = useWeb3Provider()
-  const [telegramId, setTelegramId] = useState<string>("")
-  const telegramStatus: any = localStorage.setItem("telegram-status", "false")
-  const { linkTelegramData } = useLinkToTelegram(idPlayer, telegramId)
-
-  useEffect(() => {
-    const telegramParams: any = localStorage.getItem("telegram-params")
-    if (telegramStatus === "true") {
-      // (telegramParams && telegramParams !== undefined) ||
-      // (telegramParams && telegramParams !== null)
-      // eslint-disable-next-line no-console
-      console.log("telegram__", telegramParams.id)
-      // eslint-disable-next-line no-console
-      console.log("telegram_type", typeof telegramParams.id)
-      // eslint-disable-next-line no-console
-      console.log("telegram_type_string ", telegramParams.id.toString())
-      setTelegramId(telegramParams.id.toString())
-      localStorage.setItem("telegram-status", "false")
-    }
-  }, [telegramStatus])
+  const { mutateLinkToTelegram } = useLinkToTelegram()
 
   useEffect(() => {
     if (isError) {
@@ -189,29 +164,20 @@ const ProfileContent = () => {
     }
   }, [player_id])
 
-  useEffect(() => {
-    let load = false
-    if (!load) {
-      if (linkTelegramData) {
-        // localStorage.removeItem("telegram-params")
+  const jsClickButton = async () => {
+    const telegramParams: any = await localStorage.getItem("telegram-params")
+    const telegramParse: any = JSON.parse(telegramParams)
+    if (telegramParse) {
+      const telegramId = String(telegramParse.id)
+      if (telegramId) {
+        mutateLinkToTelegram({
+          player_id: idPlayer,
+          telegram_id: telegramId
+        })
+        localStorage.removeItem("telegram-params")
       }
     }
-    return () => {
-      load = true
-    }
-  }, [linkTelegramData])
-
-  // const MoveTelegramButton = () => {
-  //   // eslint-disable-next-line no-console
-  //   console.log("in Move button")
-  //   const gandalf: any = document.querySelector("#telegram-login-NakaGameBot")
-  //   const list: any = document.querySelector("#login-telegram")
-  //   list.append(gandalf)
-  //   // function onTelegramAuth(params) {
-  //   //   // eslint-disable-next-line no-console
-  //   //   console.log(params)
-  //   // }
-  // }
+  }
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -221,36 +187,6 @@ const ProfileContent = () => {
     }, 5000)
     return () => clearTimeout(timer)
   }, [])
-
-  // useEffect(() => {
-  //   if (!profile.status) {
-  //     router.push("/")
-  //     errorToast(MESSAGES.please_login)
-  //   }
-  // }, [errorToast, profile.status, router])
-
-  // const handleTelegramResponse = () => {
-  //   const responseTelegram = (response: TelegramUser) =>
-  //     // eslint-disable-next-line no-console
-  //     console.log("response", responseTelegram)
-  // }
-
-  // eslint-disable-next-line no-undef, react/no-unstable-nested-components
-  // const LinkTelegram = () => (
-  //   <script
-  //     async
-  //     src="https://telegram.org/js/telegram-widget.js?22"
-  //     data-telegram-login="NakaGameBot"
-  //     data-size="large"
-  //     data-onauth="onTelegramAuth(user)"
-  //     data-request-access="write"
-  //   />
-  // )
-
-  // const responseTelegram = (user: any) => {
-  //   // eslint-disable-next-line no-console
-  //   console.log("user", user)
-  // }
 
   const handleOnExpandClick = () => {
     setOpenEdit(!openEdit)
@@ -493,9 +429,16 @@ const ProfileContent = () => {
       ) : (
         <div className="login-telegram mt-8 w-full md:mt-0 md:w-[98%] lg:w-[90%]">
           {/* <div className="w-[90%]"> */}
+          <button
+            onClick={jsClickButton}
+            className="hidden"
+            id="button-click"
+          >
+            Click
+          </button>
           <div
             id="login-telegram"
-            className="pb-[20px]"
+            className="hidden pb-[20px]"
           >
             <Script
               async
@@ -507,11 +450,10 @@ const ProfileContent = () => {
               strategy="lazyOnload"
             />
             <Script id="show-banner">
-              {`function onTelegramAuth(params) { localStorage.setItem('telegram-params', JSON.stringify(params)); localStorage.setItem("telegram-status", "true");} 
+              {`function onTelegramAuth(params) { localStorage.setItem('telegram-params', JSON.stringify(params)); document.getElementById("button-click").click();} 
               `}
             </Script>
           </div>
-
           <SideSocialShare hidden="hidden lg:block" />
           <div className="relative">
             <Box

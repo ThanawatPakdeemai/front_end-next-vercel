@@ -15,6 +15,7 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_API_URL: string
     readonly NEXT_PUBLIC_GAME_URL: string
     readonly NEXT_PUBLIC_FRONTEND_URL: string
+    readonly NEXT_PUBLIC_METAMASK_APP: string
     readonly NEXT_PUBLIC_SUPPORT: string
     readonly NEXT_PUBLIC_KEYTEXT: string
     readonly NEXT_PUBLIC_MARKETPLACE: string

@@ -6,6 +6,7 @@ import DropdownIcon from "@components/icons/DropdownIcon"
 import MenuItemCustom from "@components/atoms/MenuItemCustom"
 import {
   MARKET_FILTER_DATE,
+  MARKET_FILTER_MAP,
   MARKET_FILTER_PRICE,
   MARKET_FILTER_SELLINGTYPE,
   MENU_MARKETPLACE_FILTERBOX
@@ -229,6 +230,22 @@ const FilterBox = () => {
       if (_label) _date = _label.label
     }
     return _date
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search])
+
+  const _infoLabel = useMemo(() => {
+    let _info: string = "Explore land slots"
+    if (
+      search &&
+      search.length > 0 &&
+      (getValueFromTKey(search, "infomap") as string)
+    ) {
+      const _label = MARKET_FILTER_MAP.find(
+        (d) => d.value === getValueFromTKey(search, "infomap")
+      )
+      if (_label) _info = _label.label
+    }
+    return _info
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search])
 
@@ -471,8 +488,37 @@ const FilterBox = () => {
           />
         </>
       ) : null}
-      <div className="my-4 h-[6px] w-full rounded-[13px] bg-[url('/images/services/curvy-line2.png')] bg-repeat-x" />
-
+      {isMap ? (
+        <>
+          <div className="my-4 h-[6px] w-full rounded-[13px] bg-[url('/images/services/curvy-line2.png')] bg-repeat-x" />
+          <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
+            <Typography className="text-sm uppercase text-white-default">
+              Land Slot
+            </Typography>
+            <div className="flex">
+              <ArrowBackIcon
+                color="secondary"
+                sx={{ fontSize: 15 }}
+              />
+              <Typography
+                component="button"
+                onClick={() => {
+                  if (search && search.length > 0) onResetSearch()
+                  setSearchReset((prev: boolean) => !prev)
+                }}
+                className="ml-2 cursor-pointer self-center text-xs uppercase text-secondary-main"
+              >
+                Clear
+              </Typography>
+            </div>
+          </div>
+          <SearchDropDown
+            title={_infoLabel}
+            dropDown={MARKET_FILTER_MAP}
+            onClick={(_value) => onSetSearch({ key: "infomap", value: _value })}
+          />
+        </>
+      ) : null}
       <div>
         {marketType !== "game_item" &&
         _resourceType &&
@@ -514,22 +560,20 @@ const FilterBox = () => {
                     // filter building level 2 & 3
                   )
                   .map((item) => (
-                    <>
-                      <CheckBoxNaka
-                        key={item.name}
-                        value={item.checked}
-                        onHandle={() => {
-                          handleCheckboxChange({
-                            _value: onSelectedFilterValue(marketType, item),
-                            _checked: onFilterChange(marketType, item)
-                          })
-                        }}
-                        text={item.name}
-                        className="mr-4 items-center self-center uppercase"
-                        fontStyle="text-xs text-black-default"
-                        img={item.image}
-                      />
-                    </>
+                    <CheckBoxNaka
+                      key={item.name}
+                      value={item.checked}
+                      onHandle={() => {
+                        handleCheckboxChange({
+                          _value: onSelectedFilterValue(marketType, item),
+                          _checked: onFilterChange(marketType, item)
+                        })
+                      }}
+                      text={item.name}
+                      className="mr-4 items-center self-center uppercase"
+                      fontStyle="text-xs text-black-default"
+                      img={item.image}
+                    />
                   ))
               : _resourceType
                   .filter(
@@ -538,22 +582,20 @@ const FilterBox = () => {
                     // filter building level 2 & 3
                   )
                   .map((item) => (
-                    <>
-                      <CheckBoxNaka
-                        key={item.name}
-                        value={item.checked}
-                        onHandle={() => {
-                          handleCheckboxChange({
-                            _value: onSelectedFilterValue(marketType, item),
-                            _checked: onFilterChange(marketType, item)
-                          })
-                        }}
-                        text={item.name}
-                        className="mr-4 items-center self-center uppercase"
-                        fontStyle="text-xs text-black-default"
-                        img={item.image}
-                      />
-                    </>
+                    <CheckBoxNaka
+                      key={item.name}
+                      value={item.checked}
+                      onHandle={() => {
+                        handleCheckboxChange({
+                          _value: onSelectedFilterValue(marketType, item),
+                          _checked: onFilterChange(marketType, item)
+                        })
+                      }}
+                      text={item.name}
+                      className="mr-4 items-center self-center uppercase"
+                      fontStyle="text-xs text-black-default"
+                      img={item.image}
+                    />
                   ))}
           </>
         ) : null}

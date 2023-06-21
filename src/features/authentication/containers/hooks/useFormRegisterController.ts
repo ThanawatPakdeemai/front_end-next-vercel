@@ -269,12 +269,13 @@ const useFormRegisterController = () => {
 
   const onSubmitRegister = (values: TFormData) => {
     const { email, code, password, subscription, referralId } = values
+
     if (emailCorrect && characterPasswordLength && characterUppercase) {
       setFormSubmitErrors(false)
       mutateSignUp({
         _email: email,
         _password: password,
-        _referral: referralId,
+        _referral: referralId ?? "",
         _verifycode: code,
         _subscription: subscription
       })

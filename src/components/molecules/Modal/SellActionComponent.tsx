@@ -51,6 +51,7 @@ const SellActionComponent = ({
   const { onCheckApprovalForAllNFT } = useGlobalMarket()
   const [isApproved, setIsApproved] = useState<boolean | undefined>(undefined)
   const sellPriceAsNumber = Number(price)
+
   const onSellingChange = (event: SelectChangeEvent) => {
     setIsApproved(undefined)
     setSelling(event.target.value as TSellingType)
@@ -153,7 +154,7 @@ const SellActionComponent = ({
           </Select>
         </>
       ) : null}
-      {selling === "rental" && sellPriceAsNumber ? (
+      {selling === "rental" ? (
         <>
           <span className="w-full text-xs uppercase">total price</span>
           <TextField

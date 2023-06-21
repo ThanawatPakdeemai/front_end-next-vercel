@@ -111,7 +111,10 @@ const TextfieldDetailContent = ({
       }`}
       data-testid={type}
     >
-      {count && type !== "nft_land" && type !== "nft_building" ? (
+      {count &&
+      type !== "nft_land" &&
+      type !== "nft_building" &&
+      type !== "nft_game" ? (
         <CountItem
           endIcon={<NumpadIcon />}
           helperText={count.helperText}
@@ -155,7 +158,8 @@ const TextfieldDetailContent = ({
       type === "game_item" ||
       type === "nft_material" ||
       type === "nft_naka_punk" ||
-      type === "nft_avatar" ? (
+      type === "nft_avatar" ||
+      type === "nft_game" ? (
         <FormattedInputs
           label="PRICE (NAKA)"
           className="!w-[131px] sm:!w-[232px]"

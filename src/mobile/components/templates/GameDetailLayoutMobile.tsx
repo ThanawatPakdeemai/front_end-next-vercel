@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { Box } from "@mui/material"
 import { ImageCustom } from "@components/atoms/image/Image"

@@ -113,7 +113,7 @@ export default function GameLobby() {
     return () => {
       load = true
     }
-  }, [gameData, onSetGameData])
+  }, [gameData, onSetGameData, setClose])
 
   const getTemplateLobby = () => {
     if (gameData) {

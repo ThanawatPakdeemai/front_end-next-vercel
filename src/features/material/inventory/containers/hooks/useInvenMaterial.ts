@@ -12,8 +12,7 @@ import useLoadingStore from "@stores/loading"
 import useMarketCategTypes from "@stores/marketCategTypes"
 import useProfileStore from "@stores/profileStore"
 import { ethers } from "ethers"
-import { useRouter } from "next/router"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback } from "react"
 
 const useInvenMaterial = () => {
   const { profile } = useProfileStore()
@@ -28,10 +27,6 @@ const useInvenMaterial = () => {
     CONFIGS.CONTRACT_ADDRESS.MATERIAL_VAULT
   )
   const { setOpen, setClose } = useLoadingStore()
-  const [materialList, setMaterialList] = useState<
-    Array<ITypeMaterials & { amount?: number }> | undefined
-  >(undefined)
-  const { pathname } = useRouter()
 
   // get item by addrs & token id
   const getMaterialByToken = (_address: string, _token: string) =>
@@ -59,17 +54,18 @@ const useInvenMaterial = () => {
         })
     })
 
-  // update materialList
+  // update _arr
   const updateMaterialList = (
+    _arr: Array<ITypeMaterials & { amount?: number }> | undefined,
     _type: TInvenVaultAction,
     _tokenId: string,
     _amount: number
   ) => {
-    if (materialList) {
-      const upd_obj = materialList.findIndex(
+    if (_arr) {
+      const upd_obj = _arr.findIndex(
         (obj) => obj.material_id_smartcontract === Number(_tokenId)
       )
-      let _clone = materialList[upd_obj]
+      let _clone = _arr[upd_obj]
       if (_clone.amount) {
         let cal_amount: number = 0
         if (_type === "decrease") {
@@ -78,38 +74,43 @@ const useInvenMaterial = () => {
           cal_amount = _clone.amount + _amount
         }
         _clone = { ..._clone, amount: cal_amount }
-        const _dummy = materialList.filter(
+        const _dummy = _arr.filter(
           (f) => f.material_id_smartcontract !== Number(_tokenId)
         )
         const _result = [..._dummy, _clone]
-        setMaterialList(_result)
+        return _result
       }
     }
   }
 
   const onFetchInvenMaterial = useCallback(async () => {
-    if (profile.data && profile.data.address) {
+    if (
+      profile.data &&
+      profile.data.address &&
+      materialTypes &&
+      materialTypes.length > 0
+    ) {
+      let _data: Array<ITypeMaterials & { amount?: number }> | undefined = []
       setOpen(MESSAGES.transaction_processing_order) // ? changed text
       await getAllMaterialByAddrs(profile.data.address)
         .then((response) => {
-          if (materialTypes) {
-            const data = materialTypes
-              .sort((_a, _b) =>
-                _a.material_id_smartcontract < _b.material_id_smartcontract
-                  ? -1
-                  : 1
-              )
-              .map((m) => ({
-                ...m,
-                amount: Number(response[m.material_id_smartcontract]) // ! Please check index again
-              }))
-            setMaterialList(data.filter((_item) => _item.amount > 0))
-          }
+          const data = materialTypes
+            .sort((_a, _b) =>
+              _a.material_id_smartcontract < _b.material_id_smartcontract
+                ? -1
+                : 1
+            )
+            .map((m) => ({
+              ...m,
+              amount: Number(response[m.material_id_smartcontract])
+            }))
+          _data = data.filter((_item) => _item.amount > 0)
         })
         .catch((error) => console.error(error))
         .finally(() => {
           setTimeout(() => setClose(), 1000)
         })
+      return _data
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile.data, materialTypes])
@@ -131,7 +132,8 @@ const useInvenMaterial = () => {
         })
     })
 
-  const onTransferMaterial = async (
+  const sendTransferMaterial = async (
+    _arr: Array<ITypeMaterials & { amount?: number }>,
     _to: string,
     _materialId: string,
     _materialAmount: number = 1
@@ -152,6 +154,7 @@ const useInvenMaterial = () => {
             _log.data
           )
           updateMaterialList(
+            _arr,
             "decrease",
             _resultEvent[2].toString(),
             Number(_resultEvent[3].toString())
@@ -164,23 +167,11 @@ const useInvenMaterial = () => {
       })
   }
 
-  useEffect(() => {
-    let load = false
-    if (!load && pathname.includes("inventory")) {
-      onFetchInvenMaterial()
-    }
-    return () => {
-      load = true
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onFetchInvenMaterial])
-
   return {
     getMaterialByToken,
-    materialList,
     updateMaterialList,
     onFetchInvenMaterial,
-    onTransferMaterial,
+    sendTransferMaterial,
     getAllMaterialByAddrs
   }
 }

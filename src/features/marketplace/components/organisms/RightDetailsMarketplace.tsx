@@ -3,13 +3,13 @@ import { useRouter } from "next/router"
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import CopyButton from "@components/atoms/CopyButton"
 import { Chip, Divider, Typography } from "@mui/material"
-// import MuiAccordionDetails from "@mui/material/AccordionDetails"
 import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined"
 import { Image } from "@components/atoms/image"
 import { TNFTType } from "@feature/marketplace/interfaces/IMarketService"
 import CONFIGS from "@configs/index"
 import MiniMap from "@feature/map/components/organisms/MiniMap"
 import RedemptionCode from "@components/molecules/RedemptionCode"
+import Video from "@components/atoms/Video"
 import TextfieldDetailContent from "../molecules/TextfieldDetailContent"
 import ChipsLink from "../molecules/ChipsLink"
 
@@ -48,6 +48,9 @@ interface IProp {
       | "warning"
   }
   checkRedreemMobile?: boolean
+  image?: string
+  video?: string
+  showListMintItem?: React.ReactNode
 }
 
 const RightDetailsMarketplace = ({
@@ -65,7 +68,10 @@ const RightDetailsMarketplace = ({
   children,
   redemption,
   sellingType,
-  checkRedreemMobile = true
+  checkRedreemMobile = true,
+  image,
+  video,
+  showListMintItem
 }: IProp) => {
   const router = useRouter()
   const getPathnameType = router.pathname.includes("inventory")
@@ -95,9 +101,9 @@ const RightDetailsMarketplace = ({
   }
 
   return (
-    <div className="flex w-full max-w-[563px] flex-col gap-y-5">
+    <div className="flex w-full max-w-[563px] flex-col">
       {token && (
-        <div className="hidden w-full items-center justify-between sm:flex">
+        <div className="flex w-fit flex-row-reverse items-center sm:w-full sm:flex-row">
           <div className="flex gap-[6px]">
             <Chip
               label={`TOKEN ID : ${String(token)}`}
@@ -115,83 +121,99 @@ const RightDetailsMarketplace = ({
           />
         </div>
       )}
-      <Typography className="hidden text-[46px] font-bold uppercase text-neutral-300 sm:block">
+      <Typography className="block text-[46px] font-bold uppercase text-neutral-300">
         {title}
       </Typography>
-      <div className="flex w-full flex-col gap-y-6 rounded-3xl border-neutral-800 bg-neutral-780 px-[42px] py-7 uppercase">
-        <div className="flex items-center gap-5">
-          <Typography className="text-neutral-300">{method}</Typography>
-          <Chip
-            label={handleType()}
-            size="small"
-            color="info"
-          />
-          {sellingType && (
-            <Chip
-              label={sellingType.title}
-              variant="filled"
-              size="small"
-              className="cursor-pointer uppercase"
-              color={sellingType.color || "info"}
+      <div className="flex w-full flex-col rounded-xl border-neutral-800 bg-neutral-780 p-1 pb-6 uppercase">
+        <div className="flex h-[320px] w-full items-center justify-center rounded-lg bg-neutral-900 sm:hidden">
+          {showListMintItem ? (
+            <main>{showListMintItem}</main>
+          ) : (
+            <Video
+              src={video as string}
+              poster={image as string}
+              className="h-full rounded-2xl object-cover"
+              autoPlay
+              controls={false}
             />
           )}
         </div>
-        <Divider className="!block border-[1px] border-neutral-800" />
-        <TextfieldDetailContent
-          type={type}
-          position={position}
-          itemAmount={itemAmount}
-          price={price}
-          count={count}
-        />
-        {qrCode && id && position && (
-          <>
-            <div className="flex h-[158px] w-full gap-1 rounded-lg bg-primary-main p-1">
-              <div className="w-3/4">
-                <MiniMap
-                  pos={position}
-                  className="rounded"
-                />
-              </div>
-              <div className="relative flex w-1/4 items-center justify-center rounded bg-neutral-800">
-                <Image
-                  src={qrCode}
-                  alt={`QRCode ${token}`}
-                  width={80}
-                  height={80}
-                />
-                <a
-                  href={`${CONFIGS.BASE_URL.NAKAVERSE}/nft-land/${id}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Chip
-                    className="absolute bottom-0 right-0 cursor-pointer"
-                    label="LAND INFO"
-                    color="primary"
-                    size="small"
-                    deleteIcon={
-                      <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />
-                    }
-                    onDelete={() => null}
-                  />
-                </a>
-              </div>
-            </div>
-            <ChipsLink
-              id={id}
-              position={position}
+        <Divider className="mt-1 !block border-[1px] border-neutral-800 sm:!hidden" />
+        <div className="flex flex-col gap-y-4 px-4 pt-6">
+          <div className="flex items-center gap-4">
+            <Typography className="text-neutral-300">{method}</Typography>
+            <Chip
+              label={handleType()}
+              size="small"
+              color="info"
             />
-          </>
-        )}
-        {durability && (
-          <Typography className="text-[46px] font-bold uppercase text-neutral-300">
-            {durability}
-          </Typography>
-        )}
-        <Divider className="!block border-[1px] border-neutral-800" />
-
-        <div>{children}</div>
+            {sellingType && (
+              <Chip
+                label={sellingType.title}
+                variant="filled"
+                size="small"
+                className="cursor-pointer uppercase"
+                color={sellingType.color || "info"}
+              />
+            )}
+          </div>
+          <Divider className="!block border-[1px] border-neutral-800" />
+          <TextfieldDetailContent
+            type={type}
+            position={position}
+            itemAmount={itemAmount}
+            price={price}
+            count={count}
+            isUSD={method === "mint" && type !== "nft_avatar"}
+          />
+          {qrCode && id && position && (
+            <>
+              <div className="flex h-[158px] w-full gap-1 rounded-lg bg-primary-main p-1">
+                <div className="w-3/4">
+                  <MiniMap
+                    pos={position}
+                    className="rounded"
+                  />
+                </div>
+                <div className="relative flex w-1/4 items-center justify-center rounded bg-neutral-800">
+                  <Image
+                    src={qrCode}
+                    alt={`QRCode ${token}`}
+                    width={80}
+                    height={80}
+                  />
+                  <a
+                    href={`${CONFIGS.BASE_URL.NAKAVERSE}/nft-land/${id}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <Chip
+                      className="absolute bottom-0 right-0 cursor-pointer"
+                      label="LAND INFO"
+                      color="primary"
+                      size="small"
+                      deleteIcon={
+                        <ArrowOutwardOutlinedIcon sx={{ height: 14 }} />
+                      }
+                      onDelete={() => null}
+                    />
+                  </a>
+                </div>
+              </div>
+              <ChipsLink
+                id={id}
+                position={position}
+              />
+            </>
+          )}
+          {durability && (
+            <Typography className="text-[46px] font-bold uppercase text-neutral-300">
+              {durability}
+            </Typography>
+          )}
+          <Divider className="!block border-[1px] border-neutral-800" />
+        </div>
+        <main className="h-auto w-full px-4">{children}</main>
       </div>
       {redemption && checkRedreemMobile && <RedemptionCode />}
       <div className="flex flex-row items-center" />

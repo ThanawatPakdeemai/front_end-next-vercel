@@ -45,9 +45,10 @@ const useMarketMaterial = () => {
     mutateMarketCancelOrder,
     mutateFullPayment
   } = useMutateMarketplace()
-  const { updateMaterialList, getMaterialByToken } = useInvenMaterial()
+  const { getMaterialByToken } = useInvenMaterial()
   const { onCheckPolygonChain } = useGlobalMarket()
-  const { updateInvenNFTMarketData } = useInventoryProvider()
+  const { updateInvenNFTMarketData, onUpdateMaterialList } =
+    useInventoryProvider()
   const { errorToast } = useToast()
 
   // get order
@@ -140,11 +141,12 @@ const useMarketMaterial = () => {
               _txHash: _res.transactionHash,
               _sellerType: "user"
             }
-            updateMaterialList(
-              "decrease",
-              _resultEvent[1].toString(),
-              Number(_resultEvent[2].toString())
-            )
+            if (onUpdateMaterialList)
+              onUpdateMaterialList(
+                "decrease",
+                _resultEvent[1].toString(),
+                Number(_resultEvent[2].toString())
+              )
             const { data } = await mutateMarketCreateOrder(_data)
             if (data && updateInvenNFTMarketData)
               updateInvenNFTMarketData(
@@ -228,11 +230,12 @@ const useMarketMaterial = () => {
               _orderId: _resultEvent[0],
               _txHash: _res.transactionHash
             }
-            updateMaterialList(
-              "increase",
-              _resultEvent[1].toString(),
-              Number(_resultEvent[2].toString())
-            )
+            if (onUpdateMaterialList)
+              onUpdateMaterialList(
+                "increase",
+                _resultEvent[1].toString(),
+                Number(_resultEvent[2].toString())
+              )
             await mutateMarketCancelOrder(data)
             _status = true
           }
@@ -333,11 +336,12 @@ const useMarketMaterial = () => {
               _smcAmount: Number(_resultEvent[2].toString()),
               _txHash: _res.transactionHash
             }
-            updateMaterialList(
-              "increase",
-              _resultEvent[1].toString(),
-              Number(_resultEvent[3].toString())
-            )
+            if (onUpdateMaterialList)
+              onUpdateMaterialList(
+                "increase",
+                _resultEvent[1].toString(),
+                Number(_resultEvent[3].toString())
+              )
             await mutateFullPayment(data)
             _status = true
           }

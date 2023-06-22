@@ -41,7 +41,6 @@ const ReceiptComponent = ({
   const { checkAllowanceNaka } = useGlobalMarket()
   const [isAllowance, setAllowance] = useState<boolean | undefined>(undefined)
 
-
   const onGetApproval = useCallback(async () => {
     if (nftType && checkAllowanceNaka && price && seller) {
       await checkAllowanceNaka(nftType, seller, price, selling)

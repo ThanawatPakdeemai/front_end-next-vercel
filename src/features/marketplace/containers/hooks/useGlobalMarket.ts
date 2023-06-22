@@ -368,8 +368,6 @@ const useGlobalMarket = () => {
   const calcNakaPrice = useCallback(
     (price: number, amount?: number, isUSD?: boolean) => {
       const _amount = amount || 1
-      console.log("price", price)
-      console.log("_amount", _amount)
       let _result: number = 0
       if (nakaPrice && nakaPrice.last) {
         _result = price * _amount

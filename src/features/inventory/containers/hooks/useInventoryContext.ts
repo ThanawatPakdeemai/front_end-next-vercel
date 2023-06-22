@@ -2,7 +2,9 @@ import { MESSAGES } from "@constants/messages"
 import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAvatarReef"
 import { useGetBuildingById } from "@feature/building/containers/hooks/useGetMyBuilding"
 import { useGetMyArcGameById } from "@feature/game/marketplace/containers/hooks/useGetMyArcGame"
+import { IGameItemListData } from "@feature/gameItem/interfaces/IGameItemService"
 import useInvenGameItem from "@feature/gameItem/inventory/containers/hooks/useInvenGameItem"
+import { TInvenVaultAction } from "@feature/inventory/interfaces/IInventoryItem"
 import { useGetLandById } from "@feature/land/containers/hooks/useGetMyLand"
 import { IPosition } from "@feature/land/interfaces/ILandService"
 import useMutateMarketplace from "@feature/marketplace/containers/hooks/useMutateMarketplace"
@@ -17,6 +19,7 @@ import {
   TNFTType
 } from "@feature/marketplace/interfaces/IMarketService"
 import useInvenMaterial from "@feature/material/inventory/containers/hooks/useInvenMaterial"
+import { ITypeMaterials } from "@feature/material/marketplace/interfaces/IMaterialService"
 import { useGetNakPunkById } from "@feature/nakapunk/containers/hooks/useGetMyNakapunk"
 import { useToast } from "@feature/toast/containers"
 import useGlobal from "@hooks/useGlobal"
@@ -62,9 +65,14 @@ const useInventoryContext = () => {
   // const [transAddrs, setTransAddrs] = useState<string | undefined>(undefined)
   const { marketType } = useGlobal()
   // move this to context? for solve multi call api and data need to update
-  const { gameItemList, getGameItemByToken } = useInvenGameItem()
-  const { materialList, onTransferMaterial, getMaterialByToken } =
-    useInvenMaterial()
+  const { getGameItemByToken, onFetchInvenGameItem, updateGameItemList } =
+    useInvenGameItem()
+  const {
+    sendTransferMaterial,
+    getMaterialByToken,
+    onFetchInvenMaterial,
+    updateMaterialList
+  } = useInvenMaterial()
   const { gameItemTypes, materialTypes } = useMarketCategTypes()
   const { mutateGetLandById } = useGetLandById()
   const { mutateGetBuildingById } = useGetBuildingById()
@@ -74,6 +82,29 @@ const useInventoryContext = () => {
   const { mutateMarketOrderById } = useMutateMarketplace()
   const { convertNFTTypeToUrl } = Helper
   const { errorToast } = useToast()
+
+  const [gameItemList, setGameItemList] = useState<
+    Array<IGameItemListData & { amount?: number }> | undefined
+  >(undefined)
+  const [materialList, setMaterialList] = useState<
+    Array<ITypeMaterials & { amount?: number }> | undefined
+  >(undefined)
+
+  const onUpdateGameItemList = useCallback(
+    (_type: TInvenVaultAction, _tokenId: string, _amount: number) => {
+      const _data = updateGameItemList(gameItemList, _type, _tokenId, _amount)
+      setGameItemList(_data)
+    },
+    [gameItemList, updateGameItemList]
+  )
+
+  const onUpdateMaterialList = useCallback(
+    (_type: TInvenVaultAction, _tokenId: string, _amount: number) => {
+      const _data = updateMaterialList(materialList, _type, _tokenId, _amount)
+      setMaterialList(_data)
+    },
+    [materialList, updateMaterialList]
+  )
 
   const updateInvenNFTMarketData = useCallback(
     (_update: IMarketData | undefined, _type?: TNFTType, _amount?: number) => {
@@ -140,6 +171,19 @@ const useInventoryContext = () => {
       }
     },
     [invenItemData]
+  )
+
+  const onTransferMaterial = useCallback(
+    async (_to: string, _materialId: string, _materialAmount: number = 1) => {
+      if (materialList)
+        await sendTransferMaterial(
+          materialList,
+          _to,
+          _materialId,
+          _materialAmount
+        )
+    },
+    [materialList, sendTransferMaterial]
   )
 
   const fetchInvenNFTItemDataById = useCallback(async () => {
@@ -244,7 +288,7 @@ const useInventoryContext = () => {
         case "nft_avatar":
           await mutateGetNFTAvatarById({ _id: id }).then((_res) => {
             _data = {
-              id: _res._id,
+              id: _res.id,
               name: _res.name,
               tokenId: _res.NFT_token,
               type: marketType,
@@ -431,6 +475,16 @@ const useInventoryContext = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, profile.data, materialTypes, marketType, gameItemTypes])
 
+  const fetchInvenGameItemMaterial = useCallback(async () => {
+    if (marketType === "game_item") {
+      const _data = await onFetchInvenGameItem()
+      setGameItemList(_data)
+    } else if (marketType === "nft_material") {
+      const _data = await onFetchInvenMaterial()
+      setMaterialList(_data)
+    }
+  }, [marketType, onFetchInvenGameItem, onFetchInvenMaterial])
+
   useEffect(() => {
     let cleanup = false
     if (!cleanup) {
@@ -451,6 +505,18 @@ const useInventoryContext = () => {
     }
   }, [fetchInvenItemDataById])
 
+  useEffect(() => {
+    let load = false
+    if (!load && router.pathname.includes("inventory")) {
+      fetchInvenGameItemMaterial()
+    }
+
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchInvenGameItemMaterial])
+
   return {
     isLoading,
     invenItemData,
@@ -466,7 +532,9 @@ const useInventoryContext = () => {
     onTransferMaterial,
     updateInvenNFTMarketData,
     updateInstallmentTable,
-    updateClaimRentalTable
+    updateClaimRentalTable,
+    onUpdateGameItemList,
+    onUpdateMaterialList
   }
 }
 

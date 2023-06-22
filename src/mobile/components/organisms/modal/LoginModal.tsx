@@ -41,11 +41,7 @@ const LoginModal = ({ open, setOpenLogin }: INotificationModalProps) => {
     <SwipeableDrawer
       anchor="right"
       open={open}
-      onClose={() => {
-        if (openLoading) {
-          setOpenLogin(false)
-        }
-      }}
+      onClose={() => {}}
       onOpen={() => {}}
       disableSwipeToOpen={false}
       ModalProps={{
@@ -60,7 +56,8 @@ const LoginModal = ({ open, setOpenLogin }: INotificationModalProps) => {
     >
       <Box
         component="div"
-        className="notification-list flex flex-col p-[8px_24px_36px]"
+        className={`login-modal flex flex-col
+        p-[8px_24px_36px] ${openLoading ? "opacity-0" : ""}`}
       >
         <ArrowBackIcon onClick={() => setOpenLogin(false)} />
         <Box
@@ -165,6 +162,7 @@ const LoginModal = ({ open, setOpenLogin }: INotificationModalProps) => {
             </Button>
           </Box>
         </form>
+
         {/* Modal ForgotPassword */}
         <FromForgotPassword />
         <Box

@@ -9,7 +9,7 @@ import { v4 as uuid } from "uuid"
 import NoData from "@components/molecules/NoData"
 import CardRankFreeToEarn from "@components/organisms/CardRankFreeToEarn"
 import { IGameItemList } from "@feature/gameItem/interfaces/IGameItemService"
-import { IPlayer } from "./TopPlayer"
+import { IPlayer, StyledTopPlayerContent } from "./TopPlayer"
 
 interface ITopPlayerFreeToEarn extends IPlayer {
   gameId: string
@@ -35,7 +35,11 @@ const TopPlayerFreeToEarn = ({
 
     if (topPlayerFreeToEarnData && topPlayerFreeToEarnData.length > 0) {
       return (
-        <div className="top-player__content h-[calc(100%-136px)] w-[calc(100%)] p-[14px_10px_20px_10px]">
+        <Box
+          component="div"
+          sx={StyledTopPlayerContent}
+          className="top-player__content h-[calc(100%-136px)] w-[calc(100%)] p-[14px_10px_20px_10px]"
+        >
           <div className="top-player__header grid grid-cols-4 gap-2 font-neue-machina-semi text-xs uppercase text-white-primary">
             <div>No</div>
             <div className="top-player__header-item">Avatar</div>
@@ -57,7 +61,7 @@ const TopPlayerFreeToEarn = ({
               />
             ))}
           </div>
-        </div>
+        </Box>
       )
     }
   }

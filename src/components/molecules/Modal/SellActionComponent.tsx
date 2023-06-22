@@ -34,6 +34,7 @@ interface IProps {
   period: number
   setPeriod: (_period: number) => void
   maxPeriod: number
+  isRentout?: boolean
 }
 
 const SellActionComponent = ({
@@ -45,7 +46,8 @@ const SellActionComponent = ({
   onPriceChange,
   period,
   setPeriod,
-  maxPeriod
+  maxPeriod,
+  isRentout = false
 }: IProps) => {
   const { formatNumber } = Helper
   const { onCheckApprovalForAllNFT } = useGlobalMarket()
@@ -94,28 +96,6 @@ const SellActionComponent = ({
       direction="column"
     >
       <span className="w-full text-xs uppercase">step 1 : set sell price</span>
-      {/* <TextField
-        hiddenLabel
-        value={price}
-        onChange={(e) => onPriceChange(e.target.value)}
-        placeholder="E.G. 1,000"
-        sx={{
-          "& .MuiOutlinedInput-root": {
-            backgroundColor: "#010101",
-            paddingLeft: "10px"
-          },
-          "input": {
-            color: "#E1E2E2 !important"
-          }
-        }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="start">
-              <LogoIcon />
-            </InputAdornment>
-          )
-        }}
-      /> */}
       <FormattedInputs
         values={price}
         onSetValues={onPriceChange}
@@ -128,7 +108,7 @@ const SellActionComponent = ({
           })}{" "}
         USD
       </span>
-      {selling !== "rental" ? (
+      {selling !== "rental" && !isRentout ? (
         <>
           <span className="text-xs uppercase">
             step 2: select type you would like to sell
@@ -154,7 +134,7 @@ const SellActionComponent = ({
           </Select>
         </>
       ) : null}
-      {selling === "rental" ? (
+      {isRentout ? (
         <>
           <span className="w-full text-xs uppercase">total price</span>
           <TextField

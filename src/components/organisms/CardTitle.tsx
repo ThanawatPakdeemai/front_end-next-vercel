@@ -18,6 +18,8 @@ interface Iprop {
   sumTotal?: number
   className?: string
   rightContent?: React.ReactNode
+  startDate?: string
+  endDate?: string
 }
 
 const StyledCardTitle: SxProps<Theme> = {
@@ -27,6 +29,13 @@ const StyledCardTitle: SxProps<Theme> = {
     justifyContent: "flex-end",
     "button": {
       width: "190px"
+    }
+  },
+  "@media screen and (max-width: 991px)": {
+    textAlign: "center",
+    flexDirection: "column",
+    ".card-title__span": {
+      whiteSpace: "nowrap"
     }
   }
 }
@@ -40,11 +49,17 @@ const CardTitle = ({
   elevation,
   sumTotal,
   className,
-  rightContent
+  rightContent,
+  startDate,
+  endDate
 }: Iprop) => {
-  const week = dayjs().startOf("week")
-  const formattedWeek = week.format("DD MMM YYYY")
-  const formattedEndWeek = week.endOf("week").format("DD MMM YYYY")
+  const dayjsFormat = "DD MMM YYYY MM:HH A"
+  const startWeekly = startDate
+    ? dayjs(startDate).format(dayjsFormat)
+    : dayjs().startOf("week").format(dayjsFormat)
+  const endWeekly = endDate
+    ? dayjs(endDate).format(dayjsFormat)
+    : dayjs().endOf("week").format(dayjsFormat)
   const { t } = useTranslation()
 
   const rankTitle = "font-neue-machina-semi text-neutral-500"
@@ -64,7 +79,7 @@ const CardTitle = ({
             className="card-subtitle__wrapper flex w-full items-center justify-between lg:justify-between"
             sx={StyledCardTitle}
           >
-            <div className="flex-1 uppercase">
+            <div className="card-subtitle__text flex-1 uppercase">
               <h1 className="card-title__h1 col-span-2 font-neue-machina-semi text-[14px] text-neutral-300">
                 {t("weekly_prize_pool")} :{" "}
                 <span className="card-title__span text-info-main">
@@ -76,7 +91,7 @@ const CardTitle = ({
                 </span>
               </h1>
               <h1 className="font-neue-machina-semi text-[10px] text-neutral-600">
-                {formattedWeek} - {formattedEndWeek}
+                {startWeekly} - {endWeekly}
               </h1>
             </div>
             {rightContent}
@@ -96,10 +111,16 @@ const CardTitle = ({
       </div>
       {subtitle ? (
         <div className="card-header__ranking grid grid-cols-[35px_165px_1fr_1fr] gap-1 border-b-[1px] border-neutral-800 p-[15px_10px_15px_30px] text-[10px] uppercase">
-          <h1 className={`${rankTitle}`}>{t("rank")}</h1>
-          <h1 className={`${rankTitle}`}>{t("player")}</h1>
-          <h1 className={`${rankTitle}`}>{t("prize_pool")} EST. %</h1>
-          <h1 className={`${rankTitle}`}>
+          <h1 className={`card-header__ranking--no ${rankTitle}`}>
+            {t("rank")}
+          </h1>
+          <h1 className={`card-header__ranking--username-avatar ${rankTitle}`}>
+            {t("player")}
+          </h1>
+          <h1 className={`card-header__ranking--est ${rankTitle}`}>
+            {t("prize_pool")} EST. %
+          </h1>
+          <h1 className={`card-header__ranking--earn ${rankTitle}`}>
             {t("total")} naka :{" "}
             <span className="card-header__ranking-span text-info-main">
               {sumTotal

@@ -32,6 +32,7 @@ interface IProps {
   period: number
   setPeriod: (_period: number) => void
   maxPeriod: number
+  displayPrice: number
 }
 
 // mint || buy
@@ -43,10 +44,11 @@ const BuyActionComponent = ({
   price,
   period,
   setPeriod,
-  maxPeriod
+  maxPeriod,
+  displayPrice
 }: IProps) => {
   const { formatNumber } = Helper
-  const { checkAllowanceNaka, calcUSDPrice, calcNAKAPrice } = useGlobalMarket()
+  const { checkAllowanceNaka } = useGlobalMarket()
   const [isAllowance, setAllowance] = useState<boolean | undefined>(undefined)
 
   const onIncreasePeriod = () => {
@@ -90,7 +92,7 @@ const BuyActionComponent = ({
       <span className="w-full text-xs uppercase">price</span>
       <TextField
         hiddenLabel
-        value={formatNumber(calcNAKAPrice(price), {
+        value={formatNumber(displayPrice, {
           maximumFractionDigits: 4
         })}
         disabled
@@ -114,7 +116,7 @@ const BuyActionComponent = ({
       />
       <span className="text-xs uppercase">
         ={" "}
-        {formatNumber(calcUSDPrice(price), {
+        {formatNumber(displayPrice, {
           maximumFractionDigits: 4
         })}{" "}
         USD

@@ -224,12 +224,7 @@ const useMarketNFTRent = () => {
     if (signer && address) {
       const [_checkOrderById, _checkChain] = await Promise.all([
         getRentDetailById(_orderId),
-        onCheckPolygonChain(marketNFTRentContract),
-        onCheckNFTIsApproveForAll(
-          address,
-          CONFIGS.CONTRACT_ADDRESS.MARKETPLACE_NFT_RENTAL,
-          _NFTtype
-        )
+        onCheckPolygonChain(marketNFTRentContract)
       ])
       if (Number(_checkOrderById.rentalPricePerDays) <= 0) {
         setClose()

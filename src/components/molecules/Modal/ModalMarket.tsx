@@ -95,7 +95,7 @@ const ModalMarket = ({
   const { handleSubmit } = useForm()
   const { onCreateOrder, onCancelOrder, onMintOrder, onExecuteOrder } =
     useMarket()
-  const { calcNAKAPrice } = useGlobalMarket()
+  const { calcNakaPrice } = useGlobalMarket()
 
   const [sellNFTPrice, setSellNFTPrice] = useState<string>("")
 
@@ -153,6 +153,9 @@ const ModalMarket = ({
         break
       case "sell":
         _text = "sell now"
+        break
+      case "rent_out":
+        _text = "rentout now"
         break
       default:
         _text = "loading"
@@ -239,40 +242,6 @@ const ModalMarket = ({
           )
         }
         break
-      case "sell":
-        if (
-          tokenId &&
-          itemId &&
-          invAmount &&
-          (Number(sellNFTPrice) > 0 || invPrice)
-        ) {
-          const _price =
-            Number(sellNFTPrice) > 0 ? Number(sellNFTPrice) : invPrice || 0
-          await onCreateOrder(
-            nftType,
-            selling,
-            itemId,
-            tokenId,
-            invAmount,
-            _price,
-            invPeriod
-          ).then((_res) => {
-            if (router.asPath.includes("/inventory")) {
-              return
-            }
-            // no effect because redirect when cancel on page != inventory
-            const _path = `/marketplace/inventory/${convertNFTTypeToTType(
-              nftType
-            )}/${itemId}`
-            if (_path) {
-              return router.replace(_path, undefined, { shallow: true })
-            }
-          })
-        } else
-          console.error(
-            `tokenId:${tokenId}, marketAmount: ${invAmount}, marketPrice: ${invPrice}`
-          )
-        break
       case "buy":
         if (
           marketId &&
@@ -314,7 +283,7 @@ const ModalMarket = ({
           await onMintOrder({
             _type: nftType,
             _marketId: marketId,
-            _price: calcNAKAPrice(orderPrice),
+            _price: calcNakaPrice(orderPrice, marketAmount, true),
             _amount: marketAmount
           }).then((_res) => {
             if (_res)
@@ -329,9 +298,46 @@ const ModalMarket = ({
             `id: ${marketId}, idItem: ${itemId}, price: ${orderPrice}, amount:${marketAmount}`
           )
         break
-      default:
-        console.error(`Action not found!`)
+      default: {
+        // sell & rentout
+        if (
+          (action === "sell" || action === "rent_out") &&
+          tokenId &&
+          itemId &&
+          invAmount &&
+          (Number(sellNFTPrice) > 0 || invPrice)
+        ) {
+          const _price =
+            Number(sellNFTPrice) > 0 ? Number(sellNFTPrice) : invPrice || 0
+          const _selling = action === "rent_out" ? "rental" : selling
+          await onCreateOrder(
+            nftType,
+            _selling,
+            itemId,
+            tokenId,
+            invAmount,
+            _price,
+            invPeriod
+          ).then((_res) => {
+            if (router.asPath.includes("/inventory")) {
+              return
+            }
+            // no effect because redirect when cancel on page != inventory
+            const _path = `/marketplace/inventory/${convertNFTTypeToTType(
+              nftType
+            )}/${itemId}`
+            if (_path) {
+              return router.replace(_path, undefined, { shallow: true })
+            }
+          })
+        } else
+          console.error(
+            `action:${action}, tokenId:${tokenId}, itemId:${itemId}, marketAmount: ${invAmount}, marketPrice: ${
+              Number(sellNFTPrice) > 0 || invPrice
+            }`
+          )
         break
+      }
     }
     onClose()
   })
@@ -398,10 +404,11 @@ const ModalMarket = ({
                 </div>
               </div>
               <div className="flex h-full w-full flex-col gap-2 px-4 py-2">
-                {action === "sell" &&
+                {(action === "sell" || action === "rent_out") &&
                 nftType !== "game_item" &&
                 nftType !== "nft_material" &&
                 nftType !== "nft_naka_punk" &&
+                nftType !== "nft_avatar" &&
                 nftType !== "nft_game" ? (
                   <SellActionComp
                     nftType={nftType}
@@ -415,13 +422,15 @@ const ModalMarket = ({
                     period={invPeriod || 1}
                     setPeriod={onPeriodChange}
                     maxPeriod={365}
+                    isRentout={action === "rent_out"}
                   />
                 ) : null}
                 {action === "buy" &&
                 orderPrice &&
                 nftType !== "game_item" &&
                 nftType !== "nft_material" &&
-                nftType !== "nft_naka_punk" ? (
+                nftType !== "nft_naka_punk" &&
+                nftType !== "nft_avatar" ? (
                   <BuyActionComponent
                     nftType={nftType}
                     seller={sellerType}
@@ -431,6 +440,7 @@ const ModalMarket = ({
                     period={marketPeriod || 0}
                     setPeriod={onPeriodChange}
                     maxPeriod={maxPeriod}
+                    displayPrice={calcNakaPrice(orderPrice, marketAmount)}
                   />
                 ) : null}
                 {action === "cancel" ||
@@ -473,6 +483,13 @@ const ModalMarket = ({
                         : invPeriod || marketPeriod
                     }
                     action={action}
+                    displayPrice={calcNakaPrice(
+                      action !== "sell" && orderPrice
+                        ? orderPrice
+                        : invPrice || 0,
+                      marketAmount,
+                      action === "mint"
+                    )}
                   />
                 ) : null}
                 <form

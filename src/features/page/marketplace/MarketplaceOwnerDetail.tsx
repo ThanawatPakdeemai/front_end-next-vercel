@@ -1,23 +1,27 @@
 import React, { useCallback } from "react"
-import ButtonMarket from "@components/atoms/button/ButtonMarket"
-import ButtonRentOut from "@components/atoms/button/ButtonRentOut"
 import CardDetailSkeleton from "@feature/marketplace/components/molecules/CardDetailSkeleton"
 import TransferBox from "@feature/marketplace/components/molecules/TransferBox"
 import CardContentDetails from "@feature/marketplace/components/organisms/CardContentDetails"
 import NFTDetailTable from "@feature/marketplace/components/organisms/NFTDetailTable"
 import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
 import { useInventoryProvider } from "@providers/InventoryProvider"
-import useCountStore from "@stores/countComponant"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
 import ButtonClose from "@components/atoms/button/ButtonClose"
 import { Chip, Typography } from "@mui/material"
 import CopyButton from "@components/atoms/CopyButton"
+import dynamic from "next/dynamic"
 
+const MarketplaceButton = dynamic(
+  () => import("@components/molecules/MarketplaceButton"),
+  {
+    suspense: true,
+    ssr: false
+  }
+)
 const MarketplaceOwnerDetail = () => {
   const { profile } = useProfileStore()
-  const { invenItemData, isLoading } = useInventoryProvider()
-  const { count } = useCountStore()
+  const { invenItemData, isLoading, invAmount } = useInventoryProvider()
 
   const router = useRouter()
   const isInventory = router.asPath.includes("inventory")
@@ -109,36 +113,22 @@ const MarketplaceOwnerDetail = () => {
             {!invenItemData.installments_data &&
             invenItemData.owner_id === invenItemData.player_id ? (
               <div className="flex w-full items-center justify-between gap-x-2">
-                <ButtonMarket
+                <MarketplaceButton
                   nftType={invenItemData.type}
+                  name={invenItemData.name}
+                  itemId={invenItemData.id}
                   img={invenItemData.img}
                   tokenId={invenItemData.tokenId}
-                  marketId={invenItemData.id}
-                  itemId={invenItemData.id}
-                  orderId={invenItemData.id}
-                  amount={count || 1}
+                  position={invenItemData.position}
+                  amount={invAmount || 1}
                   maxAmount={invenItemData.totalAmount}
-                  plot={invenItemData.position}
-                  name={invenItemData.name}
                   marketplaces_data={invenItemData.marketplaces_data}
+                  showRentBtn={
+                    !invenItemData.marketplaces_data &&
+                    (invenItemData.type === "nft_land" ||
+                      invenItemData.type === "nft_building")
+                  }
                 />
-                {!invenItemData.marketplaces_data &&
-                (invenItemData.type === "nft_land" ||
-                  invenItemData.type === "nft_building") ? (
-                  <ButtonRentOut
-                    nftType={invenItemData.type}
-                    name={invenItemData.name}
-                    img={invenItemData.img}
-                    tokenId={invenItemData.tokenId}
-                    marketId={invenItemData.id}
-                    itemId={invenItemData.id}
-                    orderId={invenItemData.id}
-                    amount={count || 1}
-                    maxAmount={invenItemData.totalAmount}
-                    sellingType="rental"
-                    plot={invenItemData.position}
-                  />
-                ) : null}
               </div>
             ) : null}
           </RightDetailsMarketplace>

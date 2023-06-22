@@ -28,8 +28,6 @@ const useInventoryOwner = () => {
   // material
   const { gameItemList, materialList } = useInventoryProvider()
   // land
-  const [isFetchAllLand, setIsFetchAllLand] = useState<boolean>(false)
-  const [allLandofAddrsData, setAllLandofAddrsData] = useState<string[]>([])
   const { getLandsOfAddress } = useNFTLand()
   const { mutateGetMyLand } = useGetMyLand()
   // building
@@ -49,7 +47,7 @@ const useInventoryOwner = () => {
   const [NFTType, setNFTType] = useState<TNFTType | undefined>(undefined)
 
   const fetchAllLandofAddress = useCallback(async () => {
-    if (!isFetchAllLand && profile.data) {
+    if (profile.data && profile.data.address) {
       const allLandResponse = await getLandsOfAddress(
         CONFIGS.CONTRACT_ADDRESS.LAND_NFT,
         profile.data.address
@@ -58,12 +56,11 @@ const useInventoryOwner = () => {
         item.toString()
       )
       if (cvLandList && allLandResponse) {
-        setIsFetchAllLand(true)
-        setAllLandofAddrsData(cvLandList)
+        return cvLandList
       }
-      return cvLandList
+      return []
     }
-    return allLandofAddrsData
+    return []
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -204,6 +201,12 @@ const useInventoryOwner = () => {
             .catch(() => {})
           break
         default: {
+          let _fetchAllLand: string[] = []
+          try {
+            _fetchAllLand = await fetchAllLandofAddress()
+          } catch (error) {
+            console.error(`can not fetch data from contract`)
+          }
           await mutateGetMyLand({
             _urlNFT: "NFT-Land",
             _limit: limit,
@@ -221,7 +224,7 @@ const useInventoryOwner = () => {
                   ? (getValueFromTKey(search, "nft_token") as string) // should be nft_token same, discuss with BE team!
                   : undefined
             },
-            _landList: await fetchAllLandofAddress()
+            _landList: _fetchAllLand
           })
             .then((_res) => {
               if (_res.data && _res.data.length > 0) {
@@ -252,8 +255,6 @@ const useInventoryOwner = () => {
       profile.data &&
       NFTType &&
       filterType &&
-      gameItemList &&
-      materialList &&
       (NFTType === "game_item" || NFTType === "nft_material")
     ) {
       setItemIsLoading(true)

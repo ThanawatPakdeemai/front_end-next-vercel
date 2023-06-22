@@ -50,6 +50,7 @@ interface IProp {
   checkRedreemMobile?: boolean
   image?: string
   video?: string
+  showListMintItem?: React.ReactNode
 }
 
 const RightDetailsMarketplace = ({
@@ -69,7 +70,8 @@ const RightDetailsMarketplace = ({
   sellingType,
   checkRedreemMobile = true,
   image,
-  video
+  video,
+  showListMintItem
 }: IProp) => {
   const router = useRouter()
   const getPathnameType = router.pathname.includes("inventory")
@@ -122,17 +124,21 @@ const RightDetailsMarketplace = ({
       <Typography className="block text-[46px] font-bold uppercase text-neutral-300">
         {title}
       </Typography>
-      <div className="flex w-full flex-col rounded-3xl border-neutral-800 bg-neutral-780 p-1 pb-6 uppercase">
-        <div className="flex h-[320px] w-full items-center justify-center rounded-3xl bg-primary-contrastText sm:hidden">
-          <Video
-            src={video as string}
-            poster={image as string}
-            className="h-full rounded-2xl object-cover"
-            autoPlay
-            controls={false}
-          />
+      <div className="flex w-full flex-col rounded-xl border-neutral-800 bg-neutral-780 p-1 pb-6 uppercase">
+        <div className="flex h-[320px] w-full items-center justify-center rounded-lg bg-neutral-900 sm:hidden">
+          {showListMintItem ? (
+            <main>{showListMintItem}</main>
+          ) : (
+            <Video
+              src={video as string}
+              poster={image as string}
+              className="h-full rounded-2xl object-cover"
+              autoPlay
+              controls={false}
+            />
+          )}
         </div>
-        <Divider className="block border-[1px] border-neutral-800 sm:hidden" />
+        <Divider className="mt-1 !block border-[1px] border-neutral-800 sm:!hidden" />
         <div className="flex flex-col gap-y-4 px-4 pt-6">
           <div className="flex items-center gap-4">
             <Typography className="text-neutral-300">{method}</Typography>

@@ -109,6 +109,8 @@ const MarketplaceOwnerDetail = () => {
                   }
                 : undefined
             }
+            image={invenItemData.img}
+            video={invenItemData.vdo}
           >
             {!invenItemData.installments_data &&
             invenItemData.owner_id === invenItemData.player_id ? (

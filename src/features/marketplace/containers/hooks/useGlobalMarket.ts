@@ -465,7 +465,6 @@ const useGlobalMarket = () => {
     onCheckNFTIsApproveForAll,
     onCheckAllowance,
     onCheckApprovalForAllNFT,
-    // calcNAKAPrice,
     calcUSDPrice,
     calcNakaPrice
   }

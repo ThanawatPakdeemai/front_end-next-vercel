@@ -23,7 +23,6 @@ import ButtonLink from "@components/atoms/button/ButtonLink"
 import WandIcon from "@components/icons/WandIcon"
 import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
 import CouponIcon from "@components/icons/CouponIcon"
-import Helper from "@utils/helper"
 import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAvatarReef"
 import RedemptionCode from "@components/molecules/RedemptionCode"
 import Breadcrumb from "@components/molecules/Breadcrumb"
@@ -46,8 +45,6 @@ const MarketplaceReefAvatar = () => {
   const { successToast, errorToast } = useToast()
   const [priceNP, setPriceNP] = useState<number>(0)
   const [metaData, setMetaData] = useState<IPunkMetaData[]>([])
-  // eslint-disable-next-line no-unused-vars
-  const { WeiToNumber } = Helper
 
   const handleRedeem = (_coupon: string) => {
     if (evm) {

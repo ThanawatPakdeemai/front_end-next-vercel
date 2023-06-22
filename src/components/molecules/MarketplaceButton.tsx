@@ -96,7 +96,7 @@ const MarketplaceButton = ({
       _action = "sell"
     }
     return _action
-  }, [profile.data, curAccount, marketplaces_data])
+  }, [profile, curAccount, marketplaces_data])
 
   const handleStyle = useMemo(() => {
     let _color: string

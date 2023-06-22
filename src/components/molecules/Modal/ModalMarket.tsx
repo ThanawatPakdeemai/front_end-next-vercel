@@ -408,8 +408,7 @@ const ModalMarket = ({
                 nftType !== "game_item" &&
                 nftType !== "nft_material" &&
                 nftType !== "nft_naka_punk" &&
-                nftType !== "nft_avatar" &&
-                nftType !== "nft_game" ? (
+                nftType !== "nft_avatar" ? (
                   <SellActionComp
                     nftType={nftType}
                     selling={selling}
@@ -448,8 +447,7 @@ const ModalMarket = ({
                 nftType === "game_item" ||
                 nftType === "nft_material" ||
                 nftType === "nft_naka_punk" ||
-                nftType === "nft_avatar" ||
-                (nftType === "nft_game" && sellingType !== "installment") ? (
+                nftType === "nft_avatar" ? (
                   <ReceiptComp
                     nftType={nftType}
                     seller={sellerType}

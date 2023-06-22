@@ -20,19 +20,8 @@ const MarketplaceOwnerDetail = () => {
   const { profile } = useProfileStore()
   const { invenItemData, isLoading, invAmount } = useInventoryProvider()
 
-  const router = useRouter()
-  const isInventory = router.asPath.includes("inventory")
-
-  const handleRouter = useCallback(() => {
-    if (router.asPath.includes("inventory")) {
-      router.push("/marketplace/inventory")
-    } else {
-      router.back()
-    }
-  }, [router])
-
   return invenItemData && !isLoading ? (
-    <div className="flex flex-col">
+    <div className="flex flex-col pb-4">
       <div className="mt-16 flex w-full flex-col justify-center gap-x-[60px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0">
         <div className="hidden sm:block">
           <CardContentDetails
@@ -122,8 +111,7 @@ const MarketplaceOwnerDetail = () => {
           </RightDetailsMarketplace>
         </div>
       </div>
-      {invenItemData.history &&
-      (invenItemData.installments_data || invenItemData.rentals_data) ? (
+      {invenItemData.installments_data || invenItemData.rentals_data ? (
         <NFTDetailTable
           installmentData={
             invenItemData.installments_data
@@ -133,7 +121,7 @@ const MarketplaceOwnerDetail = () => {
           rentalData={
             invenItemData.rentals_data ? invenItemData.rentals_data : undefined
           }
-          history={invenItemData.history}
+          history={invenItemData.history || []}
         />
       ) : null}
     </div>

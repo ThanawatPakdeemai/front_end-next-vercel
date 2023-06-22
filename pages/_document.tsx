@@ -106,6 +106,10 @@ class MyDocument extends Document {
             type="image/x-icon"
             href="/favicon.png"
           />
+          <link
+            rel="manifest"
+            href="/manifest.json"
+          />
           {/* facebook */}
           <meta
             property="fb:app_id"

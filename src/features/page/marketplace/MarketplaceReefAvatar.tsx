@@ -27,6 +27,8 @@ import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAv
 import RedemptionCode from "@components/molecules/RedemptionCode"
 import Breadcrumb from "@components/molecules/Breadcrumb"
 import { MESSAGES } from "@constants/messages"
+import { useMarketplaceMaterialNoAccount } from "@feature/contract/containers/hooks/useContract"
+import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 
 const MarketplaceReefAvatar = () => {
   const [evm, setEVM] = useState<string>("")
@@ -39,12 +41,13 @@ const MarketplaceReefAvatar = () => {
     purchAvatarReefData,
     mutatePurchaseAvatarReef
   } = useMutateAvatarReef()
-  const { count } = useCountStore()
   const { setOpen, setClose } = useLoadingStore()
   const { isLogin, profile } = useProfileStore()
   const { successToast, errorToast } = useToast()
   const [priceNP, setPriceNP] = useState<number>(0)
   const [metaData, setMetaData] = useState<IPunkMetaData[]>([])
+  const { marketAmount } = useMarketplaceProvider()
+  const count = marketAmount || 1
 
   const handleRedeem = (_coupon: string) => {
     if (evm) {

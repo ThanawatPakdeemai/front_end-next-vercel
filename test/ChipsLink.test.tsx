@@ -1,6 +1,7 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
 import ChipsLink from "@feature/marketplace/components/molecules/ChipsLink"
+// import { getBlogDetail } from "@feature/blog/containers/services/blog.service"
 
 describe("ChipsLink", () => {
   it("renders the component correctly", () => {
@@ -23,6 +24,14 @@ describe("ChipsLink", () => {
     // Add more assertions for other elements if needed
   })
 })
+
+// describe("API", () => {
+//   it("Case 1: Data", async () => {
+//     const id = "647961ba3984af4dce887ece"
+//     const response = await getBlogDetail(id)
+//     expect(response.data?._id).toContain(id)
+//   })
+// })
 
 // describe("test ยกกำลัง", () => {
 //   const yokkumlang = (number: number) => number ** 2

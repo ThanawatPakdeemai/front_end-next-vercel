@@ -85,7 +85,8 @@ interface IProp {
     owner?: string
     buyer?: string
   }
-  firstData?: IMarketDetail
+  firstData?: any
+  // IMarketDetail
 }
 
 const CardItemMarketPlace = ({
@@ -110,6 +111,10 @@ const CardItemMarketPlace = ({
   const { copyClipboard, formatNumber } = Helper
   const { successToast } = useToast()
 
+  // eslint-disable-next-line no-console
+  console.log("firstData", firstData?.img)
+  // console.log("firstData", firstData)
+
   // "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning"
 
   // const [itemNameTestPrefix]: string[] =
@@ -128,11 +133,9 @@ const CardItemMarketPlace = ({
   // useEffect(() => {
   //   if (
   //     itemImage &&
-  //     // itemName &&
   //     itemNameTestPrefix === "Bullet" &&
   //     size === undefined
   //   ) {
-  //     fetchSizeImage()
   //     // fetch(itemImage?.src)
   //     //   .then((response) => response.blob())
   //     //   .then((blob) => {
@@ -145,29 +148,6 @@ const CardItemMarketPlace = ({
   //     //   })
   //   }
   // }, [itemImage, size])
-
-  // const { data: imageSize, isLoading: imageSizeLoading } = useQuery<
-  //   Blob | undefined
-  // >(
-  //   ["itemImageSize", itemImage?.src],
-  //   () => fetch(itemImage?.src).then((response) => response.blob()),
-  //   {
-  //     enabled: itemName === "Bullet",
-  //     retry: false
-  //   }
-  // )
-
-  // useEffect(() => {
-  //   if (itemSize) {
-  //     // Further operations with the imageSize
-  //     console.log(itemName, "size:", itemSize)
-  //   }
-  // }, [itemName, itemSize])
-
-  // if (imageSizeLoading) {
-  //   // Render loading state if needed
-  //   return <div>Loading...</div>
-  // }
 
   const handleColor = () => {
     if (percentage)
@@ -325,25 +305,17 @@ const CardItemMarketPlace = ({
                   className="relative flex items-center justify-center sm:hidden"
                 >
                   <Image
-                    src={itemImage.src}
+                    src={`${
+                      itemName === "Bullet"
+                        ? firstData.item_data.image
+                        : itemImage.src
+                    }`}
                     alt={itemImage.alt}
                     className={`!m-0 !h-[80px] w-auto object-contain !p-0 ${
                       cardType === "naka-punk"
                         ? "rounded-lg"
                         : cardType === "building" && "!h-[200px]"
                     }`}
-                    // width={
-                    //   itemName?.includes("Bullet") &&
-                    //   Number(itemImage.width) > 60
-                    //     ? 30
-                    //     : itemImage.width
-                    // }
-                    // height={
-                    //   itemName?.includes("Bullet") &&
-                    //   Number(itemImage.height) > 60
-                    //     ? 30
-                    //     : itemImage.height
-                    // }
                     width={itemName?.includes("Bullet") ? 40 : itemImage.width}
                     height={
                       itemName?.includes("Bullet") ? 40 : itemImage.height
@@ -360,18 +332,17 @@ const CardItemMarketPlace = ({
                 >
                   <Image
                     src={`${
-                      itemName === "Bullet"
-                        ? firstData?.item_data?.image
-                        : itemImage.src
+                      itemName === "Bullet" ? firstData?.img : itemImage.src
                     }`}
+                    // src={itemImage.src}
+                    // firstData.item_data?.item_data
+                    // firstData.item_data.image ||
                     alt={itemImage.alt}
                     className={`object-contain ${
                       cardType === "naka-punk"
                         ? "h-full w-full rounded-lg"
                         : cardType === "building" && "image-building"
                     }`}
-                    // layout="fill"
-                    // objectFit="contain"
                     width={itemName?.includes("Bullet") ? 40 : 148}
                     height={itemName?.includes("Bullet") ? 40 : 148}
                   />

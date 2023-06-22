@@ -71,7 +71,10 @@ const MarketplaceP2PCardList = () => {
                     poster: _data.land_data.NFT_image
                   }
                 }
-                firstData={orderData.data[0]}
+                firstData={orderData.data.find(
+                  (e) => e.item_data?.name === "Bullet" && e.item_data.image
+                )}
+                // firstData={orderData.data[0]}
                 itemName={
                   _data.land_data?.name ||
                   _data.building_data?.name ||

@@ -206,16 +206,12 @@ const MarketplaceButton = ({
   }, [])
 
   return (
-    <div
-      className={`flex ${
-        showRentBtn ? "flex-col" : "flex-row"
-      } h-auto flex-col items-start justify-between sm:flex-row sm:items-center`}
-    >
+    <div className="flex h-auto w-full flex-col items-start justify-between sm:flex-row sm:items-center">
       <Typography className="mb-[10px] mt-[-10px] text-xs font-bold text-neutral-500 sm:mb-0 sm:mt-0">
         Acquire unique digital ownership
         <br /> asset token.
       </Typography>
-      <>
+      <div className="mt-0 flex w-full flex-col items-center gap-y-2 sm:mt-4">
         <Button
           type="button"
           variant="contained"
@@ -239,12 +235,15 @@ const MarketplaceButton = ({
             variant="contained"
             color="warning"
             className="!h-10 rounded-[20px] text-sm capitalize"
+            sx={{
+              width: 232
+            }}
             onClick={handleRentOut}
           >
             rent out
           </Button>
         ) : undefined}
-      </>
+      </div>
       <ModalMarketplace
         nftType={nftType}
         open={isOpen}

@@ -288,7 +288,7 @@ const useInventoryContext = () => {
         case "nft_avatar":
           await mutateGetNFTAvatarById({ _id: id }).then((_res) => {
             _data = {
-              id: _res._id,
+              id: _res.id,
               name: _res.name,
               tokenId: _res.NFT_token,
               type: marketType,

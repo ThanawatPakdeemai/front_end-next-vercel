@@ -85,6 +85,8 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
                     </button>
                   </div>
                 }
+                startDate={weeklyPoolByGameId.started_at}
+                endDate={weeklyPoolByGameId.ended_at}
               />
             )}
           </Box>

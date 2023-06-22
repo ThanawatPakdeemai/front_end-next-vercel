@@ -25,6 +25,14 @@ export interface IPlayer {
   topPlayerGameId?: IPlayerRanking[] | IWeeklyPoolByGameIdDataRecord[]
   isFetching?: boolean
   rightContent?: React.ReactNode
+  startDate?: string
+  endDate?: string
+}
+
+export const StyledTopPlayerContent = {
+  "@media (max-width: 767px)": {
+    padding: "0 0 0 15px"
+  }
 }
 
 const TopPlayer = ({
@@ -37,7 +45,9 @@ const TopPlayer = ({
   background,
   topPlayerGameId,
   rightContent,
-  isFetching = false
+  isFetching = false,
+  startDate,
+  endDate
 }: IPlayer) => {
   const { topPlayerAllGame, isLoading } = useTopPlayer()
   const skeleton = 10
@@ -97,9 +107,13 @@ const TopPlayer = ({
     }
 
     return (
-      <div className="top-player__content h-[calc(100%-136px)] w-[calc(100%-20px)] p-[14px_0px_0px_30px]">
+      <Box
+        component="div"
+        sx={StyledTopPlayerContent}
+        className="top-player__content h-[calc(100%-136px)] w-[calc(100%-20px)] p-[14px_0px_0px_30px]"
+      >
         <NoData />
-      </div>
+      </Box>
     )
   }
 
@@ -137,6 +151,8 @@ const TopPlayer = ({
             rank ? sumTopPlayerGameId() : (sumTopPlayerAllGame as number)
           }
           rightContent={rightContent}
+          startDate={startDate}
+          endDate={endDate}
         />
 
         {(isLoading && topPlayerAllGame === undefined) || isFetching ? (

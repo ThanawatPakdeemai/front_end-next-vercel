@@ -21,6 +21,7 @@ interface IProps {
   selling?: TSellingType
   period?: number
   action: TMarketAction
+  displayPrice: number
 }
 
 const ReceiptComponent = ({
@@ -33,25 +34,13 @@ const ReceiptComponent = ({
   orderId,
   selling,
   period,
-  action
+  action,
+  displayPrice
 }: IProps) => {
   const { shortenString, formatNumber } = Helper
-  const { checkAllowanceNaka, calcNAKAPrice } = useGlobalMarket()
-  const [receiptPrice, setReceiptPrice] = useState<string>("0")
+  const { checkAllowanceNaka } = useGlobalMarket()
   const [isAllowance, setAllowance] = useState<boolean | undefined>(undefined)
 
-  useEffect(() => {
-    let load = false
-    if (price && !load) {
-      const _value = formatNumber(calcNAKAPrice(price), {
-        maximumFractionDigits: 4
-      })
-      setReceiptPrice(_value)
-    }
-    return () => {
-      load = true
-    }
-  }, [calcNAKAPrice, formatNumber, price])
 
   const onGetApproval = useCallback(async () => {
     if (nftType && checkAllowanceNaka && price && seller) {
@@ -110,11 +99,15 @@ const ReceiptComponent = ({
       </div>
       <Divider className="!block border-b-[1px] border-neutral-800/75" />
 
-      {receiptPrice ? (
+      {displayPrice ? (
         <>
           <div className="flex w-full flex-row items-center justify-between">
             <span>Price :</span>
-            <span className="text-neutral-300">{receiptPrice}</span>
+            <span className="text-neutral-300">
+              {formatNumber(displayPrice, {
+                maximumFractionDigits: 4
+              })}
+            </span>
           </div>
           <Divider className="!block border-b-[1px] border-neutral-800/75" />
         </>

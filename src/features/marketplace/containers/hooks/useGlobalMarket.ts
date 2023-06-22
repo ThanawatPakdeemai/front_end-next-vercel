@@ -14,15 +14,11 @@ import {
 } from "@feature/marketplace/interfaces/IMarketService"
 import useNFTPunk from "@feature/nakapunk/containers/hooks/useNFTPunk"
 import { useToast } from "@feature/toast/containers"
-import { useInventoryProvider } from "@providers/InventoryProvider"
-import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 import { useNakaPriceProvider } from "@providers/NakaPriceProvider"
 import { useWeb3Provider } from "@providers/Web3Provider"
-import useCountStore from "@stores/countComponant"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
 import { BigNumberish, ethers, providers } from "ethers"
-import { useRouter } from "next/router"
 import { useCallback } from "react"
 
 const useGlobalMarket = () => {
@@ -368,89 +364,30 @@ const useGlobalMarket = () => {
   }
 
   const { price: nakaPrice } = useNakaPriceProvider()
-  const { count: countItemSelected, setCount } = useCountStore()
-  const { marketOrder } = useMarketplaceProvider()
-  const { invPrice, invenItemData } = useInventoryProvider()
-  const router = useRouter()
 
-  const calcNAKAPrice = useCallback(
-    (_price: number) => {
-      const _priceValue = invPrice || _price
-
-      if (nakaPrice && countItemSelected && _priceValue) {
-        const isUserSeller = marketOrder?.seller_type === "user"
-        const isInvenItemDataAbsent = !invenItemData?.marketplaces_data
-        const isGameItemOrMaterial = ["game-item", "material"].includes(
-          router.asPath
-        )
-        if (isUserSeller || (isInvenItemDataAbsent && isGameItemOrMaterial)) {
-          return countItemSelected * _priceValue
-        }
-        if (!isInvenItemDataAbsent && isGameItemOrMaterial) {
-          return countItemSelected * _priceValue
-        }
-        if (isInvenItemDataAbsent && router.asPath.includes("inventory")) {
-          setCount(1)
-
-          return _priceValue
-        }
-        if (!isInvenItemDataAbsent) {
-          setCount(1)
-
-          return _priceValue
-        }
-        return countItemSelected * (_priceValue / parseFloat(nakaPrice.last))
+  const calcNakaPrice = useCallback(
+    (price: number, amount?: number, isUSD?: boolean) => {
+      const _amount = amount || 1
+      let _result: number = 0
+      if (nakaPrice && nakaPrice.last) {
+        _result = price * _amount
+        if (isUSD) _result /= parseFloat(nakaPrice.last)
       }
-
-      return 0
+      return _result
     },
-    [
-      countItemSelected,
-      invPrice,
-      invenItemData?.marketplaces_data,
-      marketOrder?.seller_type,
-      nakaPrice,
-      router.asPath,
-      setCount
-    ]
+    [nakaPrice]
   )
 
   const calcUSDPrice = useCallback(
-    (_price: number) => {
-      if (nakaPrice && countItemSelected && _price) {
-        const isUserSeller = marketOrder?.seller_type === "user"
-        const isInvenItemDataAbsent = !invenItemData?.marketplaces_data
-        const isGameItemOrMaterial = ["game-item", "material"].includes(
-          router.asPath
-        )
-        if (isUserSeller || (isInvenItemDataAbsent && isGameItemOrMaterial)) {
-          return countItemSelected * (_price * parseFloat(nakaPrice.last))
-        }
-        if (!isInvenItemDataAbsent && isGameItemOrMaterial) {
-          return countItemSelected * (_price * parseFloat(nakaPrice.last))
-        }
-        if (isInvenItemDataAbsent && router.asPath.includes("inventory")) {
-          setCount(1)
-          return _price * parseFloat(nakaPrice.last)
-        }
-        if (!isInvenItemDataAbsent) {
-          setCount(1)
-          return _price * parseFloat(nakaPrice.last)
-        }
-        // mint
-        return countItemSelected * _price
+    (price: number, amount?: number) => {
+      const _amount = amount || 1
+      let _result: number = 0
+      if (nakaPrice && nakaPrice.last) {
+        _result = price * _amount * parseFloat(nakaPrice.last)
       }
-
-      return 0
+      return _result
     },
-    [
-      nakaPrice,
-      countItemSelected,
-      marketOrder?.seller_type,
-      invenItemData?.marketplaces_data,
-      router.asPath,
-      setCount
-    ]
+    [nakaPrice]
   )
 
   const onCheckPolygonChain = useCallback(
@@ -528,8 +465,9 @@ const useGlobalMarket = () => {
     onCheckNFTIsApproveForAll,
     onCheckAllowance,
     onCheckApprovalForAllNFT,
-    calcNAKAPrice,
-    calcUSDPrice
+    // calcNAKAPrice,
+    calcUSDPrice,
+    calcNakaPrice
   }
 }
 

@@ -37,14 +37,26 @@ export const StyleRanking = {
   },
   ".card-header__ranking": {
     padding: "0 14px",
-    gridTemplateColumns: "1fr 130px 60px 50px",
+    gridTemplateColumns: "35px 1fr 1fr 1fr",
     gap: "10px",
-    "h1": {
-      fontFamily: "Urbanist",
-      fontWeight: "bold"
-    },
-    "&-span": {
-      color: "#F2C94C"
+    "@media (max-width: 991px)": {
+      fontSize: "9px",
+      whiteSpace: "nowrap",
+      gridTemplateColumns: "40px 1fr 1fr 90px",
+      "&--earn": {
+        marginLeft: "auto"
+      },
+      "&--est": {
+        textAlign: "right"
+      },
+      "h1": {
+        fontFamily: "Urbanist",
+        fontWeight: "bold"
+      },
+      "&-span": {
+        color: "#F2C94C",
+        whiteSpace: "normal"
+      }
     }
   }
 }

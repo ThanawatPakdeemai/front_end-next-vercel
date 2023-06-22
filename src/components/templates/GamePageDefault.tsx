@@ -113,6 +113,8 @@ const GamePageDefault = ({
                       </button>
                     </div>
                   }
+                  startDate={weeklyPoolByGameId?.started_at}
+                  endDate={weeklyPoolByGameId?.ended_at}
                 />
               </div>
             </Box>

@@ -7,9 +7,6 @@ import RightDetailsMarketplace from "@feature/marketplace/components/organisms/R
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import useProfileStore from "@stores/profileStore"
 import { useRouter } from "next/router"
-import ButtonClose from "@components/atoms/button/ButtonClose"
-import { Chip, Typography } from "@mui/material"
-import CopyButton from "@components/atoms/CopyButton"
 import dynamic from "next/dynamic"
 
 const MarketplaceButton = dynamic(
@@ -36,59 +33,32 @@ const MarketplaceOwnerDetail = () => {
 
   return invenItemData && !isLoading ? (
     <div className="flex flex-col">
-      <div
-        className={`mt-16 flex w-full flex-col justify-center gap-x-[60px] gap-y-[60px] px-10 py-4 ${
-          isInventory ? `lg:flex-row` : `sm:flex-row`
-        }  sm:gap-y-0 sm:px-0 sm:py-0`}
-      >
-        <div className="grid sm:hidden">
-          {invenItemData.tokenId && (
-            <div className="flex w-fit items-center justify-between">
-              <ButtonClose
-                onClick={handleRouter}
-                insideClassName="!bg-error-main hover:bg-error-main"
-              />
-              <div className="flex gap-[6px]">
-                <Chip
-                  label={`TOKEN ID : ${String(invenItemData.tokenId)}`}
-                  size="small"
-                  variant="outlined"
-                />
-                <CopyButton
-                  text={invenItemData.tokenId as string}
-                  className="!bg-neutral-780"
-                />
-              </div>
-            </div>
-          )}
-          <Typography className="ml-12 mt-2 text-[46px] font-bold uppercase text-neutral-300">
-            {invenItemData.name}
-          </Typography>
+      <div className="mt-16 flex w-full flex-col justify-center gap-x-[60px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0">
+        <div className="hidden sm:block">
+          <CardContentDetails
+            detail={invenItemData.detail}
+            image={invenItemData.img}
+            video={invenItemData.vdo}
+            poster={invenItemData.img}
+            alt={invenItemData.type}
+            model={invenItemData.model}
+            showDetails
+          >
+            {profile.data &&
+              profile.data.address &&
+              invenItemData.wallet_address &&
+              profile.data.address === invenItemData.wallet_address &&
+              !invenItemData.marketplaces_data && (
+                <div className="px-8">
+                  <TransferBox
+                    _tokenId={invenItemData.id}
+                    _nftToken={invenItemData.tokenId}
+                    _maxAmount={invenItemData.totalAmount}
+                  />
+                </div>
+              )}
+          </CardContentDetails>
         </div>
-
-        <CardContentDetails
-          detail={invenItemData.detail}
-          image={invenItemData.img}
-          video={invenItemData.vdo}
-          poster={invenItemData.img}
-          alt={invenItemData.type}
-          model={invenItemData.model}
-          showDetails
-        >
-          {profile.data &&
-            profile.data.address &&
-            invenItemData.wallet_address &&
-            profile.data.address === invenItemData.wallet_address &&
-            !invenItemData.marketplaces_data && (
-              <div className="px-8">
-                <TransferBox
-                  _tokenId={invenItemData.id}
-                  _nftToken={invenItemData.tokenId}
-                  _maxAmount={invenItemData.totalAmount}
-                />
-              </div>
-            )}
-        </CardContentDetails>
         <div className="flex h-full w-full flex-col">
           <RightDetailsMarketplace
             type={invenItemData.type}
@@ -111,9 +81,25 @@ const MarketplaceOwnerDetail = () => {
             }
             image={invenItemData.img}
             video={invenItemData.vdo}
+            transferBox={
+              profile.data &&
+              profile.data.address &&
+              invenItemData.wallet_address &&
+              profile.data.address === invenItemData.wallet_address &&
+              !invenItemData.marketplaces_data && (
+                <div className="px-8">
+                  <TransferBox
+                    _tokenId={invenItemData.id}
+                    _nftToken={invenItemData.tokenId}
+                    _maxAmount={invenItemData.totalAmount}
+                  />
+                </div>
+              )
+            }
           >
             {!invenItemData.installments_data &&
-            invenItemData.owner_id === invenItemData.player_id ? (
+            invenItemData.owner_id === invenItemData.player_id &&
+            invenItemData.type !== "nft_avatar" ? (
               <div className="flex w-full items-center justify-between gap-x-2">
                 <MarketplaceButton
                   nftType={invenItemData.type}

@@ -114,7 +114,7 @@ const MarketplaceDetailMobile = () => {
             name={nameNFT || ""}
             itemId={marketOrder.item_id}
             img={imageNFT || ""}
-            tokenId={tokenNFT || ""}
+            tokenId={marketOrder.item_id || ""}
             position={marketOrder.land_data?.position}
             amount={marketAmount || 1}
             maxAmount={marketOrder.item_amount}

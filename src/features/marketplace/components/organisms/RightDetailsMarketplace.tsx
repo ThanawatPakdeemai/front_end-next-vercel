@@ -51,6 +51,7 @@ interface IProp {
   image?: string
   video?: string
   showListMintItem?: React.ReactNode
+  transferBox?: React.ReactNode
 }
 
 const RightDetailsMarketplace = ({
@@ -71,7 +72,8 @@ const RightDetailsMarketplace = ({
   checkRedreemMobile = true,
   image,
   video,
-  showListMintItem
+  showListMintItem,
+  transferBox
 }: IProp) => {
   const router = useRouter()
   const getPathnameType = router.pathname.includes("inventory")
@@ -124,9 +126,10 @@ const RightDetailsMarketplace = ({
       <Typography className="block text-[46px] font-bold uppercase text-neutral-300">
         {title}
       </Typography>
+
       <div className="flex w-full flex-col rounded-xl border-neutral-800 bg-neutral-780 p-1 pb-6 uppercase">
         <div className="flex h-[320px] w-full items-center justify-center rounded-lg bg-neutral-900 sm:hidden">
-          {showListMintItem ? (
+          {method === "mint" && showListMintItem ? (
             <main>{showListMintItem}</main>
           ) : (
             <Video
@@ -138,7 +141,13 @@ const RightDetailsMarketplace = ({
             />
           )}
         </div>
+        {transferBox ? (
+          <div className="block w-full flex-col py-2 sm:hidden">
+            <main>{transferBox}</main>
+          </div>
+        ) : undefined}
         <Divider className="mt-1 !block border-[1px] border-neutral-800 sm:!hidden" />
+
         <div className="flex flex-col gap-y-4 px-4 pt-6">
           <div className="flex items-center gap-4">
             <Typography className="text-neutral-300">{method}</Typography>
@@ -157,15 +166,21 @@ const RightDetailsMarketplace = ({
               />
             )}
           </div>
-          <Divider className="!block border-[1px] border-neutral-800" />
-          <TextfieldDetailContent
-            type={type}
-            position={position}
-            itemAmount={itemAmount}
-            price={price}
-            count={count}
-            isUSD={method === "mint" && type !== "nft_avatar"}
+          <Divider
+            className={`border-[1px] border-neutral-800 ${
+              !method && type === "nft_avatar" ? "!hidden" : "!block"
+            }`}
           />
+          {!method && type === "nft_avatar" ? undefined : (
+            <TextfieldDetailContent
+              type={type}
+              position={position}
+              itemAmount={itemAmount}
+              price={price}
+              count={count}
+              isUSD={method === "mint" && type !== "nft_avatar"}
+            />
+          )}
           {qrCode && id && position && (
             <>
               <div className="flex h-[158px] w-full gap-1 rounded-lg bg-primary-main p-1">
@@ -211,7 +226,11 @@ const RightDetailsMarketplace = ({
               {durability}
             </Typography>
           )}
-          <Divider className="!block border-[1px] border-neutral-800" />
+          <Divider
+            className={`border-[1px] border-neutral-800 ${
+              !method && type === "nft_avatar" ? "!hidden" : "!block"
+            }`}
+          />
         </div>
         <main className="h-auto w-full px-4">{children}</main>
       </div>

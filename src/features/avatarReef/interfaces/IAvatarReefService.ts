@@ -32,7 +32,8 @@ export interface History {
   timestamp: Date
 }
 
-export interface IAvatarData extends Omit<INFTData, "id"> {
+export interface IAvatarData extends Omit<INFTData, "_id"> {
+  id: string
   attributes: Attribute[]
   createdAt: Date
   updatedAt: Date

@@ -332,7 +332,9 @@ const ModalMarket = ({
           })
         } else
           console.error(
-            `tokenId:${tokenId}, marketAmount: ${invAmount}, marketPrice: ${invPrice}`
+            `action:${action}, tokenId:${tokenId}, itemId:${itemId}, marketAmount: ${invAmount}, marketPrice: ${
+              Number(sellNFTPrice) > 0 || invPrice
+            }`
           )
         break
       }
@@ -406,6 +408,7 @@ const ModalMarket = ({
                 nftType !== "game_item" &&
                 nftType !== "nft_material" &&
                 nftType !== "nft_naka_punk" &&
+                nftType !== "nft_avatar" &&
                 nftType !== "nft_game" ? (
                   <SellActionComp
                     nftType={nftType}
@@ -426,7 +429,8 @@ const ModalMarket = ({
                 orderPrice &&
                 nftType !== "game_item" &&
                 nftType !== "nft_material" &&
-                nftType !== "nft_naka_punk" ? (
+                nftType !== "nft_naka_punk" &&
+                nftType !== "nft_avatar" ? (
                   <BuyActionComponent
                     nftType={nftType}
                     seller={sellerType}

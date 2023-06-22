@@ -82,12 +82,12 @@ const ModalMarket = ({
   orderId,
   sellerId,
   sellerType = "user",
-  sellingType = "fullpayment",
+  sellingType,
   plot
 }: IProps) => {
   const currencyRef = useRef<boolean>(false)
   const { getPriceNakaCurrent, convertNFTTypeToTType } = Helper
-  const [selling, setSelling] = useState<TSellingType>(sellingType)
+  const [selling, setSelling] = useState<TSellingType>("fullpayment")
   const [currency, setCurrency] = useState<number>(0)
 
   const router: NextRouter = useRouter()
@@ -116,8 +116,9 @@ const ModalMarket = ({
   }
 
   const onPeriodChange = (value: number) => {
-    if (setInvPeriod) setInvPeriod(value)
-    if (setMarketPeriod) setMarketPeriod(value)
+    const _value = value > 0 ? value : 1
+    if (setInvPeriod) setInvPeriod(_value)
+    if (setMarketPeriod) setMarketPeriod(_value)
   }
 
   useEffect(() => {
@@ -131,6 +132,18 @@ const ModalMarket = ({
       currencyRef.current = true
     }
   }, [getPriceNakaCurrent])
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      let _selling: TSellingType = "fullpayment"
+      if (sellingType) _selling = sellingType
+      setSelling(_selling)
+    }
+    return () => {
+      load = true
+    }
+  }, [sellingType])
 
   const textBtn = useMemo(() => {
     let _text: string = "loading"
@@ -305,7 +318,8 @@ const ModalMarket = ({
           tokenId &&
           itemId &&
           invAmount &&
-          (Number(sellNFTPrice) > 0 || invPrice)
+          (Number(sellNFTPrice) > 0 || invPrice) &&
+          invPeriod
         ) {
           const _price =
             Number(sellNFTPrice) > 0 ? Number(sellNFTPrice) : invPrice || 0

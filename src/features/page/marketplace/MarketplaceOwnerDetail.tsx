@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React from "react"
 import CardDetailSkeleton from "@feature/marketplace/components/molecules/CardDetailSkeleton"
 import TransferBox from "@feature/marketplace/components/molecules/TransferBox"
 import CardContentDetails from "@feature/marketplace/components/organisms/CardContentDetails"
@@ -6,7 +6,6 @@ import NFTDetailTable from "@feature/marketplace/components/organisms/NFTDetailT
 import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import useProfileStore from "@stores/profileStore"
-import { useRouter } from "next/router"
 import dynamic from "next/dynamic"
 
 const MarketplaceButton = dynamic(

@@ -193,7 +193,7 @@ const CardItemMarketPlace = ({
             }}
           />
         )}
-        {itemLevel && percentage && (
+        {itemLevel && (
           <div className="flex w-[135px] justify-between sm:w-[190px]">
             <Chip
               label={`LV. : ${itemLevel}`}
@@ -210,15 +210,17 @@ const CardItemMarketPlace = ({
                 />
               }
             />
-            <Chip
-              label={`${percentage} %`}
-              variant="filled"
-              size="small"
-              className="cursor-pointer uppercase"
-              color={handleColor()}
-              icon={handleIcon()}
-            />
           </div>
+        )}
+        {percentage && (
+          <Chip
+            label={`${percentage} %`}
+            variant="filled"
+            size="small"
+            className="absolute top-[110px] cursor-pointer uppercase sm:top-[160px]"
+            color={handleColor()}
+            icon={handleIcon()}
+          />
         )}
         {rental && keyType && (
           <div className="flex justify-between">

@@ -59,7 +59,11 @@ const MarketplaceP2PCardList = () => {
               <CardItemMarketPlace
                 key={uuidv4()}
                 cardType={type}
-                id={_data.land_data?.land_id}
+                id={
+                  _data.land_data?.land_id ||
+                  _data.game_data?.NFT_info.NFT_token ||
+                  _data.building_data?.NFT_token
+                }
                 itemAmount={
                   type === "game-item" ? _data.item_amount : undefined
                 }
@@ -76,7 +80,8 @@ const MarketplaceP2PCardList = () => {
                   _data.building_data?.name ||
                   _data.item_data?.name ||
                   _data.material_data?.name ||
-                  _data.nakapunk_data?.name
+                  _data.nakapunk_data?.name ||
+                  _data.game_data?.name
                 }
                 itemLevel={_data.building_data?.level}
                 percentage={

@@ -317,51 +317,52 @@ const useGlobalMarket = () => {
     return { allowStatus: _allowStatus, allowance: _allowance }
   }
 
-  const onCheckApprovalForAllNFT = async (
-    _NFTType: TNFTType,
-    _selling: TSellingType
-  ) => {
-    let _contract = ""
-    let _approve: boolean = false
-    _contract = getMarketContractBySelling(_selling)
-    if (address) {
-      switch (_NFTType) {
-        case "nft_land":
-          await isLandApprovedForAll(address, _contract)
-            .then((response) => {
-              _approve = response
-            })
-            .catch((error) => console.error(error))
-          break
-        case "nft_building":
-          await isBuildingApprovedForAll(address, _contract)
-            .then((response) => {
-              _approve = response
-            })
-            .catch((error) => console.error(error))
+  const onCheckApprovalForAllNFT = useCallback(
+    async (_NFTType: TNFTType, _selling: TSellingType) => {
+      let _contract = ""
+      let _approve: boolean = false
+      _contract = getMarketContractBySelling(_selling)
+      if (address) {
+        switch (_NFTType) {
+          case "nft_land":
+            await isLandApprovedForAll(address, _contract)
+              .then((response) => {
+                _approve = response
+              })
+              .catch((error) => console.error(error))
+            break
+          case "nft_building":
+            await isBuildingApprovedForAll(address, _contract)
+              .then((response) => {
+                _approve = response
+              })
+              .catch((error) => console.error(error))
 
-          break
-        case "nft_naka_punk":
-          await isPunkApprovedForAll(address, _contract)
-            .then((response) => {
-              _approve = response
-            })
-            .catch((error) => console.error(error))
+            break
+          case "nft_naka_punk":
+            await isPunkApprovedForAll(address, _contract)
+              .then((response) => {
+                _approve = response
+              })
+              .catch((error) => console.error(error))
 
-          break
-        case "nft_game":
-          await isArcGameApprovedForAll(address, _contract)
-            .then((response) => {
-              _approve = response
-            })
-            .catch((error) => console.error(error))
-          break
-        default:
-          break
+            break
+          case "nft_game":
+            await isArcGameApprovedForAll(address, _contract)
+              .then((response) => {
+                _approve = response
+              })
+              .catch((error) => console.error(error))
+            break
+          default:
+            break
+        }
       }
-    }
-    return _approve
-  }
+      return _approve
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
 
   const { price: nakaPrice } = useNakaPriceProvider()
 

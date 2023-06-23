@@ -31,7 +31,8 @@ const MarketplaceDetail = () => {
     imageNFT,
     vdoNFT,
     marketAmount,
-    marketPeriod
+    marketPeriod,
+    setMarketPeriod
   } = useMarketplaceProvider()
   const { marketType } = useGlobal()
   const { NFTMintAble, fetchStatus } = useMarketCategTypes()
@@ -62,6 +63,10 @@ const MarketplaceDetail = () => {
       return "error"
     }
     return "warning"
+  }
+
+  const onMarketPeriodChange = (_value: number) => {
+    if (setMarketPeriod) setMarketPeriod(_value)
   }
 
   return marketOrder ? (
@@ -154,6 +159,7 @@ const MarketplaceDetail = () => {
                   maxAmount={marketOrder.item_amount}
                   period={marketPeriod}
                   maxPeriod={marketOrder.period_amount}
+                  setPeriod={onMarketPeriodChange}
                   marketplaces_data={{
                     item_amount: marketOrder.item_amount,
                     order_id: marketOrder.order_id,

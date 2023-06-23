@@ -143,36 +143,36 @@ const MarketplaceDetail = () => {
               video={vdoNFT}
             >
               {_hiddenMarketbtn ? null : (
-               <MarketplaceButton
-                nftType={marketOrder.type}
-                name={nameNFT || ""}
-                itemId={marketOrder.item_id}
-                img={imageNFT || ""}
-                tokenId={tokenNFT || ""}
-                position={marketOrder.land_data?.position}
-                amount={marketAmount || 1}
-                maxAmount={marketOrder.item_amount}
-                period={marketPeriod}
-                maxPeriod={marketOrder.period_amount}
-                marketplaces_data={{
-                  item_amount: marketOrder.item_amount,
-                  order_id: marketOrder.order_id,
-                  seller_id: marketOrder.seller_id,
-                  seller_type: marketOrder.seller_type,
-                  selling_type: marketOrder.selling_type,
-                  item_total: marketOrder.item_total,
-                  is_active: marketOrder.is_active,
-                  type: marketOrder.type,
-                  item_id: marketOrder.item_id,
-                  _id: marketOrder._id,
-                  price: marketOrder.price,
-                  real_land: false,
-                  buyer_details: [],
-                  updated_at: marketOrder.created_at,
-                  current_time: marketOrder.created_at,
-                  created_at: marketOrder.created_at
-                }}
-              />
+                <MarketplaceButton
+                  nftType={marketOrder.type}
+                  name={nameNFT || ""}
+                  itemId={marketOrder.item_id}
+                  img={imageNFT || ""}
+                  tokenId={tokenNFT || ""}
+                  position={marketOrder.land_data?.position}
+                  amount={marketAmount || 1}
+                  maxAmount={marketOrder.item_amount}
+                  period={marketPeriod}
+                  maxPeriod={marketOrder.period_amount}
+                  marketplaces_data={{
+                    item_amount: marketOrder.item_amount,
+                    order_id: marketOrder.order_id,
+                    seller_id: marketOrder.seller_id,
+                    seller_type: marketOrder.seller_type,
+                    selling_type: marketOrder.selling_type,
+                    item_total: marketOrder.item_total,
+                    is_active: marketOrder.is_active,
+                    type: marketOrder.type,
+                    item_id: marketOrder.item_id,
+                    _id: marketOrder._id,
+                    price: marketOrder.price,
+                    real_land: false,
+                    buyer_details: [],
+                    updated_at: marketOrder.created_at,
+                    current_time: marketOrder.created_at,
+                    created_at: marketOrder.created_at
+                  }}
+                />
               )}
             </RightDetailsMarketplace>
           </div>

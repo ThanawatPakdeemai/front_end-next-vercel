@@ -59,7 +59,7 @@ const useInventoryContext = () => {
     IInventoryItemData | undefined
   >(undefined)
   const [invPrice, setInvPrice] = useState<number>(0)
-  const [invPeriod, setInvPeriod] = useState<number>(0)
+  const [invPeriod, setInvPeriod] = useState<number>(1)
   const [invAmount, setInvAmount] = useState<number>(1)
   const [isLoading, setIsLoading] = useState<boolean>(true)
   // const [transAddrs, setTransAddrs] = useState<string | undefined>(undefined)
@@ -123,7 +123,7 @@ const useInventoryContext = () => {
         setInvenItemData(_dummy)
         if (!_update) {
           setInvPrice(0)
-          setInvPeriod(0)
+          setInvPeriod(1)
           setInvAmount(1)
         }
       }

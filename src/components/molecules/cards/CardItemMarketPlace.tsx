@@ -116,11 +116,8 @@ const CardItemMarketPlace = ({
         .then((blob) => {
           setSize(blob)
           // Further operations with the blob object
-          // console.log(itemName, "size:", blob)
         })
-        .catch(() => {
-          // console.log("Error fetching image:", error)
-        })
+        .catch(() => {})
     }
   }, [itemName, itemImage, size])
 

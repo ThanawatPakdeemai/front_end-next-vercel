@@ -168,10 +168,13 @@ const RightDetailsMarketplace = ({
           </div>
           <Divider
             className={`border-[1px] border-neutral-800 ${
-              !method && type === "nft_avatar" ? "!hidden" : "!block"
+              !method && (type === "nft_avatar" || type === "nft_game")
+                ? "!hidden"
+                : "!block"
             }`}
           />
-          {!method && type === "nft_avatar" ? undefined : (
+          {!method &&
+          (type === "nft_avatar" || type === "nft_game") ? undefined : (
             <TextfieldDetailContent
               type={type}
               position={position}
@@ -228,7 +231,9 @@ const RightDetailsMarketplace = ({
           )}
           <Divider
             className={`border-[1px] border-neutral-800 ${
-              !method && type === "nft_avatar" ? "!hidden" : "!block"
+              !method && (type === "nft_avatar" || type === "nft_game")
+                ? "!hidden"
+                : "!block"
             }`}
           />
         </div>

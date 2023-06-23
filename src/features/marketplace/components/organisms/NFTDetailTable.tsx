@@ -445,7 +445,9 @@ const NFTDetailTable = ({ installmentData, rentalData, history }: IProps) => {
         profile.data.address === rentalData.seller_address ? (
           <Button
             disabled={
-              !rentalData.period.some((p) => dayjs().isAfter(dayjs(p.due_date)))
+              !rentalData.period.some((p) =>
+                dayjs().isAfter(dayjs(p.due_date))
+              ) && rentalData.period.some((p) => p.claim_status === false)
             }
             variant="contained"
             color="secondary"

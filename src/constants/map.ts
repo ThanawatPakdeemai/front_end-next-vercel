@@ -1,9 +1,9 @@
 export const colorMap = {
-  land: "#057536",
-  owned: "#a45ee9",
-  occupied: "#f17925",
+  land: "#36733D",
+  owned: "#9963e1",
+  occupied: "#df7e3c",
   currentLand: "#ec2f2f",
-  availableForSale: "#ff8d85",
+  availableForSale: "#ee9389",
   disable: "#1d2029",
   background: "#0fa9dc"
 }
@@ -15,11 +15,11 @@ export const cameraSetting = {
 }
 
 export const colorThree = {
-  land: 0x2ebd85,
-  owned: 0xa45ee9,
-  occupied: 0xf17925,
+  land: 0x36733d,
+  owned: 0x9963e1,
+  occupied: 0xdf7e3c,
   currentLand: 0xec2f2f,
-  availableForSale: 0xff8d85,
+  availableForSale: 0xee9389,
   disable: 0x1d2029,
   background: 0x0fa9dc,
   walletColor: 0xf9f9f9

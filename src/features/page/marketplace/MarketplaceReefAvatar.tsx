@@ -12,7 +12,6 @@ import {
   TextField,
   Typography
 } from "@mui/material"
-import useCountStore from "@stores/countComponant"
 import useLoadingStore from "@stores/loading"
 import useProfileStore from "@stores/profileStore"
 import React, { memo, useEffect, useState } from "react"
@@ -27,7 +26,6 @@ import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAv
 import RedemptionCode from "@components/molecules/RedemptionCode"
 import Breadcrumb from "@components/molecules/Breadcrumb"
 import { MESSAGES } from "@constants/messages"
-import { useMarketplaceMaterialNoAccount } from "@feature/contract/containers/hooks/useContract"
 import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 
 const MarketplaceReefAvatar = () => {

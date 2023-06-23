@@ -12,6 +12,7 @@ import useGameStore from "@stores/game"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import SycnIcon from "@components/icons/SycnIcon"
 import { ImageCustom } from "@components/atoms/image/Image"
+import useBuyGameItemController from "@feature/buyItem/containers/hooks/useBuyGameItemController"
 import ButtonDropdown from "./ButtonDropdown"
 
 interface IProp {
@@ -36,6 +37,7 @@ const DropdownListItem = ({
 }: IProp) => {
   const { t } = useTranslation()
   const { itemSelected, onSetGameItemSelectd } = useGameStore()
+  const { qtyItemSelected } = useBuyGameItemController()
   // const { errorToast } = useToast()
 
   const [defaultItem, setDefaultItem] = useState<IGameItemListData | null>(
@@ -116,7 +118,8 @@ const DropdownListItem = ({
                     rightContent={
                       !hideIcon ? (
                         <span className="item-balance ml-auto font-neue-machina-semi text-xs uppercase text-green-lemon">
-                          {`${itemSelected?.qty} ${itemSelected?.name}`}
+                          {/* {`${itemSelected?.qty} ${itemSelected?.name}`} */}
+                          {`${qtyItemSelected} ${itemSelected?.name}`}
                         </span>
                       ) : (
                         <></>

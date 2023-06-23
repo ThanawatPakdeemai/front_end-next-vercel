@@ -21,11 +21,11 @@ import {
 } from "@mobile/features/game/components/molecules/PlayerCardMobile"
 import Helper from "@utils/helper"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
-import useLoadingStore from "@stores/loading"
 import { useRouter } from "next/router"
 import useProfileStore from "@stores/profileStore"
 import useGameStore from "@stores/game"
 import GameSummaryBodyReturnItemMobile from "@mobile/features/game/components/organisms/GameSummaryBodyReturnItemMobile"
+import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
 
 const GameSummaryRewardPageMobile = () => {
   const {
@@ -44,8 +44,8 @@ const GameSummaryRewardPageMobile = () => {
   const { hydrated } = useGlobal()
   const { t } = useTranslation()
   const router = useRouter()
-  const { setOpen } = useLoadingStore()
   const profile = useProfileStore((state) => state.profile.data)
+  const { handleClickOpenLoading } = useGlobalControllerMobile()
 
   const getDateUpdated = () => {
     if (notificationItem) {
@@ -146,7 +146,8 @@ const GameSummaryRewardPageMobile = () => {
       <h2
         className="flex items-center gap-4 py-[30px] font-urbanist text-[24px] font-bold text-white-primary"
         onClick={() => {
-          setOpen("")
+          // setOpen("")
+          handleClickOpenLoading()
           if (profile && gameData) {
             return router.push(`/${gameData.game_mode}/${gameData.path}`)
           }

@@ -16,13 +16,15 @@ import { Image } from "@components/atoms/image/index"
 import TooltipsCustom from "@components/atoms/TooltipsCustom"
 import { useTranslation } from "react-i18next"
 import ShareToEarn from "@components/atoms/ShareToEarn"
+import HowToPlayIcon from "@components/icons/HowToPlayIcon/HowToPlayIcon"
+import { Button } from "@mui/material"
 
 interface IProp {
   data: IGame
 }
 
 const Howto = ({ data }: IProp) => {
-  const { stateProfile } = useGlobal()
+  const { stateProfile, handleClickScroll } = useGlobal()
 
   const { t } = useTranslation()
 
@@ -175,6 +177,18 @@ const Howto = ({ data }: IProp) => {
         </div>
       </div>
       <div className="flex items-center justify-end ">
+        <div className="flex items-center justify-end ">
+          <Button
+            className="md flex !min-w-[6.25rem] flex-[1_1_150px] items-center justify-center text-sm text-neutral-400 md:flex-none"
+            onClick={() => {
+              handleClickScroll("full-width-content")
+            }}
+          >
+            <HowToPlayIcon className="mr-2" />
+            {t("how_to_play")}
+          </Button>
+        </div>
+        <div className="mx-5 hidden h-3 border-[1px] border-solid border-neutral-600 md:block" />
         <ShareToEarn id={data.id} />
         <div className="mx-5 hidden h-3 border-[1px] border-solid border-neutral-600 md:block" />
         <ButtonLink

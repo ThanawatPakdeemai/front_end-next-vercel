@@ -17,7 +17,8 @@ const MarketplaceButton = dynamic(
 )
 const MarketplaceOwnerDetail = () => {
   const { profile } = useProfileStore()
-  const { invenItemData, isLoading, invAmount } = useInventoryProvider()
+  const { invenItemData, isLoading, invAmount, invPeriod } =
+    useInventoryProvider()
 
   return invenItemData && !isLoading ? (
     <div className="flex flex-col pb-4">
@@ -98,6 +99,8 @@ const MarketplaceOwnerDetail = () => {
                   position={invenItemData.position}
                   amount={invAmount || 1}
                   maxAmount={invenItemData.totalAmount}
+                  period={invPeriod}
+                  maxPeriod={365}
                   marketplaces_data={invenItemData.marketplaces_data}
                   showRentBtn={
                     !invenItemData.marketplaces_data &&

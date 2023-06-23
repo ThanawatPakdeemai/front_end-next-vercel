@@ -3,7 +3,7 @@ import ListJoinGame from "@mobile/features/game/components/molecules/ListJoinGam
 import { v4 as uuid } from "uuid"
 import SkeletonEarnRewardMobile from "@mobile/components/atoms/skeleton/SkeletonEarnRewardMobile"
 import { Box } from "@mui/material"
-import useLoadingStore from "@stores/loading"
+import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
 
 const SingleRoom = () => {
   const {
@@ -15,7 +15,7 @@ const SingleRoom = () => {
     textJoin,
     getRoomStatus
   } = useRoomSingle()
-  const { setOpen } = useLoadingStore()
+  const { handleClickOpenLoading } = useGlobalControllerMobile()
 
   return (
     <Box
@@ -35,7 +35,7 @@ const SingleRoom = () => {
             name={gameData.game_type}
             desc={gameData.name}
             onClick={() => {
-              setOpen("")
+              handleClickOpenLoading()
               handleJoinRoom(_room)
             }}
             textChip={`${_room?.room_number?.toString()}`}

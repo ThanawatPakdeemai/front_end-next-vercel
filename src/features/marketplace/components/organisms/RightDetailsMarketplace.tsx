@@ -168,7 +168,10 @@ const RightDetailsMarketplace = ({
           </div>
           <Divider
             className={`border-[1px] border-neutral-800 ${
-              !method && (type === "nft_avatar" || type === "nft_game")
+              !method &&
+              (type === "nft_avatar" ||
+                type === "nft_game" ||
+                type === "nft_building")
                 ? "!hidden"
                 : "!block"
             }`}

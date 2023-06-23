@@ -47,6 +47,7 @@ interface IProps {
   position?: IPosition
   period?: number
   maxPeriod?: number
+  setPeriod?: (_value: number) => void
   amount?: number
   maxAmount?: number
   marketplaces_data?: IMarketData | null
@@ -63,6 +64,7 @@ const MarketplaceButton = ({
   position,
   period,
   maxPeriod,
+  setPeriod,
   amount,
   maxAmount,
   marketplaces_data,
@@ -253,7 +255,8 @@ const MarketplaceButton = ({
         img={img}
         vdo={vdo}
         periodValue={period}
-        maxPeriod={maxPeriod}
+        maxPeriod={marketplaces_data?.period_amount || maxPeriod}
+        setPeriod={setPeriod}
         amount={amount}
         maxAmount={maxAmount}
         itemId={itemId}

@@ -33,7 +33,15 @@ const MarketplaceRentalList = () => {
             key={uuidv4()}
             cardType={_data.cardType}
             id={_data.id}
-            itemImage={undefined}
+            itemImage={
+              _data.cardType === "building"
+                ? {
+                    src: String(_data.img),
+                    alt: _data.name
+                    // width: _data.name.includes("Bullet") ? 40 : 100
+                  }
+                : undefined
+            }
             itemVideo={
               _data.cardType === "land"
                 ? {

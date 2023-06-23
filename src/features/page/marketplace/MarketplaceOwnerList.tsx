@@ -1,6 +1,6 @@
 import CardItemMarketPlace from "@components/molecules/cards/CardItemMarketPlace"
 import { v4 as uuidv4 } from "uuid"
-import React, { useEffect } from "react"
+import React from "react"
 import { useRouter } from "next/router"
 import useInventoryOwner from "@feature/inventory/containers/hooks/useInventoryOwner"
 import useGlobal from "@hooks/useGlobal"
@@ -40,22 +40,11 @@ const MarketplaceOwnerList = () => {
         setCurrentPage={setCurrentPage}
       >
         {inventoryItemList.map((_data) => {
-          // const stringToSplit = _data.name
-          // const [label, value] = stringToSplit.split(" ")
-
           const text = _data.name
           const splitText = text.split(/\s(?=\d)/)
           const firstSpan = splitText[0]
 
-          // eslint-disable-next-line no-console
-          console.log("label", firstSpan)
-
           return (
-            // console.log(
-            //   "test",
-            //   inventoryItemList.find((e) => e.name)
-            // ),
-
             <CardItemMarketPlace
               key={uuidv4()}
               cardType={_data.cardType}
@@ -66,6 +55,7 @@ const MarketplaceOwnerList = () => {
               firstData={inventoryItemList.find(
                 (e) => firstSpan === "Bullet" && e.img
               )}
+              // firstData={_data.name}
               itemImage={
                 // eslint-disable-next-line no-nested-ternary
                 _data.cardType === "game-item"
@@ -91,7 +81,8 @@ const MarketplaceOwnerList = () => {
                     }
                   : undefined
               }
-              itemName={_data.name}
+              // itemName={_data.name}
+              itemName={firstSpan}
               itemLevel={_data.level}
               itemSize={_data.size as string}
               itemAmount={_data.amount as number}

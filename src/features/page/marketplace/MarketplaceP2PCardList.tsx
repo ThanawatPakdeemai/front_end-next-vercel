@@ -74,6 +74,9 @@ const MarketplaceP2PCardList = () => {
                 firstData={orderData.data.find(
                   (e) => e.item_data?.name === "Bullet" && e.item_data.image
                 )}
+                // firstData={orderData.data.find(
+                //   (e) => e.item_data?.name === "Bullet" && e.item_data.image
+                // )}
                 // firstData={orderData.data[0]}
                 itemName={
                   _data.land_data?.name ||

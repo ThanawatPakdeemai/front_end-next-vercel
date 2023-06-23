@@ -13,13 +13,11 @@ import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied"
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied"
 import Link from "next/link"
-import {
-  IMarketDetail,
-  TType
-} from "@feature/marketplace/interfaces/IMarketService"
+import { TType } from "@feature/marketplace/interfaces/IMarketService"
 import { isMobile } from "@hooks/useGlobal"
 // eslint-disable-next-line import/no-extraneous-dependencies
 import copy from "copy-to-clipboard"
+import { useRouter } from "next/router"
 
 // motion
 const imgMotion = {
@@ -111,10 +109,6 @@ const CardItemMarketPlace = ({
   const { copyClipboard, formatNumber } = Helper
   const { successToast } = useToast()
 
-  // eslint-disable-next-line no-console
-  console.log("firstData", firstData?.img)
-  // console.log("firstData", firstData)
-
   // "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning"
 
   // const [itemNameTestPrefix]: string[] =
@@ -148,6 +142,15 @@ const CardItemMarketPlace = ({
   //     //   })
   //   }
   // }, [itemImage, size])
+
+  // console.log("firstData", firstData.item_data.image)
+  // console.log("label-firstData", firstData?.img)
+  // console.log("label-itemName", itemName)
+
+  const router = useRouter()
+  const pathCheck = router.pathname.includes("p2p")
+    ? firstData && firstData.item_data.image
+    : firstData && firstData.img
 
   const handleColor = () => {
     if (percentage)
@@ -256,7 +259,9 @@ const CardItemMarketPlace = ({
               }
               variant="outlined"
               size="small"
-              className="pointer-events-auto absolute left-4 top-4 z-10 w-[93px] cursor-pointer truncate uppercase"
+              className={`pointer-events-auto ${
+                keyType ? `mr-2` : `absolute left-4 top-4 z-10 `
+              }  w-[93px] cursor-pointer truncate uppercase`}
               deleteIcon={
                 <ContentCopySharpIcon
                   sx={{
@@ -305,11 +310,13 @@ const CardItemMarketPlace = ({
                   className="relative flex items-center justify-center sm:hidden"
                 >
                   <Image
-                    src={`${
-                      itemName === "Bullet"
-                        ? firstData.item_data.image
-                        : itemImage.src
-                    }`}
+                    // src={`${
+                    //   itemName === "Bullet"
+                    //     ? firstData.item_data.image
+                    //     : itemImage.src
+                    // }`}
+                    // src={itemImage.src}
+                    src={itemName === "Bullet" ? pathCheck : itemImage.src}
                     alt={itemImage.alt}
                     className={`!m-0 !h-[80px] w-auto object-contain !p-0 ${
                       cardType === "naka-punk"
@@ -331,10 +338,10 @@ const CardItemMarketPlace = ({
                   className="relative  hidden items-center justify-center sm:block"
                 >
                   <Image
-                    src={`${
-                      itemName === "Bullet" ? firstData?.img : itemImage.src
-                    }`}
-                    // src={itemImage.src}
+                    // src={`${
+                    //   itemName === "Bullet" ? firstData?.img : itemImage.src
+                    // }`}
+                    src={itemName === "Bullet" ? pathCheck : itemImage.src}
                     // firstData.item_data?.item_data
                     // firstData.item_data.image ||
                     alt={itemImage.alt}

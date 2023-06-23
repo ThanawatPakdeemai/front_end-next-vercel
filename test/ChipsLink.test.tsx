@@ -20,8 +20,6 @@ describe("ChipsLink", () => {
 
     const landDetailsChip = screen.getByText("LAND DETAILS")
     expect(landDetailsChip).toBeInTheDocument()
-
-    // Add more assertions for other elements if needed
   })
 })
 

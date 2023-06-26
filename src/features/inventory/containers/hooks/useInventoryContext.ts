@@ -520,6 +520,7 @@ const useInventoryContext = () => {
   return {
     isLoading,
     invenItemData,
+    fetchInvenNFTItemDataById,
     fetchInvenItemDataById,
     invPrice,
     invPeriod,

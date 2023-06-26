@@ -63,8 +63,12 @@ const useMarketNFTInstall = () => {
     onCheckPolygonChain,
     onCheckOwnerNFT
   } = useGlobalMarket()
-  const { updateInvenNFTMarketData, updateInstallmentTable } =
-    useInventoryProvider()
+  const {
+    updateInvenNFTMarketData,
+    updateInstallmentTable,
+    fetchInvenItemDataById,
+    fetchInvenNFTItemDataById
+  } = useInventoryProvider()
 
   const { errorToast } = useToast()
 
@@ -184,9 +188,14 @@ const useMarketNFTInstall = () => {
               _sellerType: "user",
               _sellingType: "installment"
             }
-            const { data } = await mutateMarketCreateOrder(_data)
-            if (data && updateInvenNFTMarketData)
-              updateInvenNFTMarketData(data, _NFTtype)
+            try {
+              const { data } = await mutateMarketCreateOrder(_data)
+              if (data && updateInvenNFTMarketData)
+                updateInvenNFTMarketData(data, _NFTtype)
+            } catch (error) {
+              // fetch data
+              if (fetchInvenNFTItemDataById) await fetchInvenNFTItemDataById()
+            }
             _status = true
           }
         })
@@ -263,7 +272,12 @@ const useMarketNFTInstall = () => {
               _orderId: _resultEvent[0],
               _txHash: _res.transactionHash
             }
-            await mutateMarketCancelOrder(data)
+            try {
+              await mutateMarketCancelOrder(data)
+            } catch (error) {
+              // fetch data
+              if (fetchInvenNFTItemDataById) await fetchInvenNFTItemDataById()
+            }
             _status = true
           }
         })

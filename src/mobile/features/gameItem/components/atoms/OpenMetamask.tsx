@@ -19,10 +19,10 @@ const OpenMetamask = ({ url }: IOpenMetamask) => (
     }}
     className="flex flex-col items-center justify-center gap-2"
   >
-    <span>{`Your don't have items to play. Please click the "Open with Metamask" to buy items.`}</span>
+    <span>{`Looks like your inventory is empty! To enhance your gaming experience, tap on 'Open in Metamask' to purchase the items you need.`}</span>
     <ButtonLink
       icon={<></>}
-      text="Open with Metamask"
+      text="Open in Metamask"
       size="large"
       color="error"
       variant="contained"

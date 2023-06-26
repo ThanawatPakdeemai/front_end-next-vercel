@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React from "react"
 import CardDetailSkeleton from "@feature/marketplace/components/molecules/CardDetailSkeleton"
 import TransferBox from "@feature/marketplace/components/molecules/TransferBox"
 import CardContentDetails from "@feature/marketplace/components/organisms/CardContentDetails"
@@ -6,7 +6,6 @@ import NFTDetailTable from "@feature/marketplace/components/organisms/NFTDetailT
 import RightDetailsMarketplace from "@feature/marketplace/components/organisms/RightDetailsMarketplace"
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import useProfileStore from "@stores/profileStore"
-import { useRouter } from "next/router"
 import dynamic from "next/dynamic"
 
 const MarketplaceButton = dynamic(
@@ -18,21 +17,11 @@ const MarketplaceButton = dynamic(
 )
 const MarketplaceOwnerDetail = () => {
   const { profile } = useProfileStore()
-  const { invenItemData, isLoading, invAmount } = useInventoryProvider()
-
-  const router = useRouter()
-  const isInventory = router.asPath.includes("inventory")
-
-  const handleRouter = useCallback(() => {
-    if (router.asPath.includes("inventory")) {
-      router.push("/marketplace/inventory")
-    } else {
-      router.back()
-    }
-  }, [router])
+  const { invenItemData, isLoading, invAmount, invPeriod } =
+    useInventoryProvider()
 
   return invenItemData && !isLoading ? (
-    <div className="flex flex-col">
+    <div className="flex flex-col pb-4">
       <div className="mt-16 flex w-full flex-col justify-center gap-x-[60px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0">
         <div className="hidden sm:block">
           <CardContentDetails
@@ -110,6 +99,8 @@ const MarketplaceOwnerDetail = () => {
                   position={invenItemData.position}
                   amount={invAmount || 1}
                   maxAmount={invenItemData.totalAmount}
+                  period={invPeriod}
+                  maxPeriod={365}
                   marketplaces_data={invenItemData.marketplaces_data}
                   showRentBtn={
                     !invenItemData.marketplaces_data &&
@@ -122,8 +113,7 @@ const MarketplaceOwnerDetail = () => {
           </RightDetailsMarketplace>
         </div>
       </div>
-      {invenItemData.history &&
-      (invenItemData.installments_data || invenItemData.rentals_data) ? (
+      {invenItemData.installments_data || invenItemData.rentals_data ? (
         <NFTDetailTable
           installmentData={
             invenItemData.installments_data
@@ -133,7 +123,7 @@ const MarketplaceOwnerDetail = () => {
           rentalData={
             invenItemData.rentals_data ? invenItemData.rentals_data : undefined
           }
-          history={invenItemData.history}
+          history={invenItemData.history || []}
         />
       ) : null}
     </div>

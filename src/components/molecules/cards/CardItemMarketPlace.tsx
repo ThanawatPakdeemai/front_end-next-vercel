@@ -111,42 +111,6 @@ const CardItemMarketPlace = ({
 
   // "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning"
 
-  // const [itemNameTestPrefix]: string[] =
-  //   itemName && (itemName.split(" ") as string[])
-
-  // const bulletImage = useMemo(() => {
-  //   if (itemImage.) {
-  //     if (gameItemList) {
-  //       const item = gameItemList.find((ele) => ele._id === itemSelected._id)
-  //       return item
-  //     }
-  //     return itemSelected
-  //   }
-  // }, [gameItemList, itemSelected])
-
-  // useEffect(() => {
-  //   if (
-  //     itemImage &&
-  //     itemNameTestPrefix === "Bullet" &&
-  //     size === undefined
-  //   ) {
-  //     // fetch(itemImage?.src)
-  //     //   .then((response) => response.blob())
-  //     //   .then((blob) => {
-  //     //     setSize(blob)
-  //     //     // Further operations with the blob object
-  //     //     // console.log(itemName, "size:", blob)
-  //     //   })
-  //     //   .catch(() => {
-  //     //     // console.log("Error fetching image:", error)
-  //     //   })
-  //   }
-  // }, [itemImage, size])
-
-  // console.log("firstData", firstData.item_data.image)
-  // console.log("label-firstData", firstData?.img)
-  // console.log("label-itemName", itemName)
-
   const router = useRouter()
   const pathCheck = router.pathname.includes("p2p")
     ? firstData && firstData.item_data.image
@@ -178,7 +142,11 @@ const CardItemMarketPlace = ({
 
   return (
     <div className="relative justify-self-center">
-      <div className="pointer-events-auto absolute z-20 m-[14px] mt-[18px] flex gap-2">
+      <div
+        className={`pointer-events-auto absolute z-20 m-[14px] mt-[18px] flex ${
+          keyType && `flex-wrap`
+        } gap-2`}
+      >
         {itemAmount && (
           <Chip
             label={`${itemAmount}${itemTotal ? ` / ${itemTotal}` : ""}`}
@@ -224,8 +192,12 @@ const CardItemMarketPlace = ({
             }}
           />
         )}
-        {itemLevel && percentage && (
-          <div className="flex w-[135px] justify-between sm:w-[190px]">
+        {itemLevel && (
+          <div
+            className={`flex ${
+              keyType ? `` : `w-[135px] justify-between sm:w-[190px]`
+            } `}
+          >
             <Chip
               label={`LV. : ${itemLevel}`}
               variant="outlined"
@@ -241,15 +213,17 @@ const CardItemMarketPlace = ({
                 />
               }
             />
-            <Chip
-              label={`${percentage} %`}
-              variant="filled"
-              size="small"
-              className="cursor-pointer uppercase"
-              color={handleColor()}
-              icon={handleIcon()}
-            />
           </div>
+        )}
+        {percentage && (
+          <Chip
+            label={`${percentage} %`}
+            variant="filled"
+            size="small"
+            className="absolute top-[110px] cursor-pointer uppercase sm:top-[160px]"
+            color={handleColor()}
+            icon={handleIcon()}
+          />
         )}
         {rental && keyType && (
           <div className="flex justify-between">

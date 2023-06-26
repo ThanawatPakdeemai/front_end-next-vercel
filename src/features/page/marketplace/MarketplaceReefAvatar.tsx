@@ -12,7 +12,6 @@ import {
   TextField,
   Typography
 } from "@mui/material"
-import useCountStore from "@stores/countComponant"
 import useLoadingStore from "@stores/loading"
 import useProfileStore from "@stores/profileStore"
 import React, { memo, useEffect, useState } from "react"
@@ -27,6 +26,7 @@ import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAv
 import RedemptionCode from "@components/molecules/RedemptionCode"
 import Breadcrumb from "@components/molecules/Breadcrumb"
 import { MESSAGES } from "@constants/messages"
+import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 
 const MarketplaceReefAvatar = () => {
   const [evm, setEVM] = useState<string>("")
@@ -39,12 +39,13 @@ const MarketplaceReefAvatar = () => {
     purchAvatarReefData,
     mutatePurchaseAvatarReef
   } = useMutateAvatarReef()
-  const { count } = useCountStore()
   const { setOpen, setClose } = useLoadingStore()
   const { isLogin, profile } = useProfileStore()
   const { successToast, errorToast } = useToast()
   const [priceNP, setPriceNP] = useState<number>(0)
   const [metaData, setMetaData] = useState<IPunkMetaData[]>([])
+  const { marketAmount } = useMarketplaceProvider()
+  const count = marketAmount || 1
 
   const handleRedeem = (_coupon: string) => {
     if (evm) {

@@ -23,8 +23,15 @@ const MarketplaceButton = dynamic(
 )
 
 const MarketplaceDetail = () => {
-  const { marketOrder, nameNFT, tokenNFT, imageNFT, vdoNFT, marketAmount } =
-    useMarketplaceProvider()
+  const {
+    marketOrder,
+    nameNFT,
+    tokenNFT,
+    imageNFT,
+    vdoNFT,
+    marketAmount,
+    marketPeriod
+  } = useMarketplaceProvider()
   const { marketType } = useGlobal()
 
   const handleColorSellingType = (selling_type: TSellingType) => {
@@ -124,6 +131,8 @@ const MarketplaceDetail = () => {
                 position={marketOrder.land_data?.position}
                 amount={marketAmount || 1}
                 maxAmount={marketOrder.item_amount}
+                period={marketPeriod}
+                maxPeriod={marketOrder.period_amount}
                 marketplaces_data={{
                   item_amount: marketOrder.item_amount,
                   order_id: marketOrder.order_id,

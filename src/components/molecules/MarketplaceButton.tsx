@@ -96,7 +96,7 @@ const MarketplaceButton = ({
       _action = "sell"
     }
     return _action
-  }, [profile.data, curAccount, marketplaces_data])
+  }, [profile, curAccount, marketplaces_data])
 
   const handleStyle = useMemo(() => {
     let _color: string
@@ -263,7 +263,9 @@ const MarketplaceButton = ({
         orderId={marketplaces_data?.order_id}
         sellerId={marketplaces_data?.seller_id}
         sellerType={marketplaces_data?.seller_type}
-        sellingType={marketplaces_data?.selling_type}
+        sellingType={
+          curAction === "rent_out" ? "rental" : marketplaces_data?.selling_type
+        }
         orderPrice={marketplaces_data?.price}
       />
     </div>

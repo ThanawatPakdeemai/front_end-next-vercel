@@ -111,7 +111,7 @@ const MarketplaceOwnerDetail = () => {
                     !invenItemData.marketplaces_data &&
                     (invenItemData.type === "nft_land" ||
                       invenItemData.type === "nft_building") &&
-                    invenItemData.owner_id !== profile.data.id
+                    invenItemData.owner_id === profile.data.id
                   }
                 />
               </div>

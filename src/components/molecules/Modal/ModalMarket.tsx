@@ -455,7 +455,7 @@ const ModalMarket = ({
                     onPriceChange={onPriceChange}
                     period={periodValue || 1}
                     setPeriod={onPeriodChange}
-                    maxPeriod={365}
+                    maxPeriod={action === "rent_out" ? 365 : maxPeriod}
                     isRentout={action === "rent_out"}
                   />
                 ) : null}

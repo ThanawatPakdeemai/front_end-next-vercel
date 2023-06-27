@@ -15,7 +15,7 @@ const ResourceTree = ({ _main, _data }: IProps) => {
 
   return (
     <div className="relative w-full cursor-pointer">
-      <div className="flex h-10 h-full w-full cursor-pointer flex-row items-center justify-between">
+      <div className="flex h-11 w-full cursor-pointer flex-row items-center justify-between">
         <button
           type="button"
           className="flex h-full w-full flex-row items-center gap-x-2"

@@ -5,6 +5,7 @@ import { useRouter } from "next/router"
 import useInventoryOwner from "@feature/inventory/containers/hooks/useInventoryOwner"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
+import { IGameItemData } from "@feature/gameItem/interfaces/IGameItemService"
 import SkeletonMarketOwnerList from "./SkeletonMarketOwnerList"
 import CardListContainer from "./CardListContainer"
 
@@ -52,9 +53,11 @@ const MarketplaceOwnerList = () => {
               // firstData={_data.find(
               //   (e) => e.item_data?.name === "Bullet" && e.item_data.image
               // )}
-              firstData={inventoryItemList.find(
-                (e) => firstSpan === "Bullet" && e.img
-              )}
+              firstData={
+                inventoryItemList.find(
+                  (e) => firstSpan === "Bullet" && e.img
+                ) as IGameItemData | undefined
+              }
               // firstData={_data.name}
               itemImage={
                 // eslint-disable-next-line no-nested-ternary

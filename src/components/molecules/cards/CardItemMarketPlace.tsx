@@ -19,6 +19,8 @@ import { isMobile } from "@hooks/useGlobal"
 import copy from "copy-to-clipboard"
 import { useRouter } from "next/router"
 
+import { IGameItemData } from "@feature/gameItem/interfaces/IGameItemService"
+
 // motion
 const imgMotion = {
   visible: {
@@ -83,7 +85,8 @@ interface IProp {
     owner?: string
     buyer?: string
   }
-  firstData?: any
+  firstData?: IGameItemData
+  // | IInventoryItemList
   // IMarketDetail
 }
 
@@ -113,8 +116,8 @@ const CardItemMarketPlace = ({
 
   const router = useRouter()
   const pathCheck = router.pathname.includes("p2p")
-    ? firstData && firstData.item_data.image
-    : firstData && firstData.img
+    ? firstData?.item_data.image
+    : firstData?.img
 
   const handleColor = () => {
     if (percentage)
@@ -144,7 +147,7 @@ const CardItemMarketPlace = ({
     <div className="relative justify-self-center">
       <div
         className={`pointer-events-auto absolute z-20 m-[14px] mt-[18px] flex ${
-          keyType && `flex-wrap`
+          keyType && "flex-wrap"
         } gap-2`}
       >
         {itemAmount && (
@@ -195,7 +198,7 @@ const CardItemMarketPlace = ({
         {itemLevel && (
           <div
             className={`flex ${
-              keyType ? `` : `w-[135px] justify-between sm:w-[190px]`
+              keyType ? "" : "w-[135px] justify-between sm:w-[190px]"
             } `}
           >
             <Chip
@@ -234,7 +237,7 @@ const CardItemMarketPlace = ({
               variant="outlined"
               size="small"
               className={`pointer-events-auto ${
-                keyType ? `mr-2` : `absolute left-4 top-4 z-10 `
+                keyType ? "mr-2 !w-[50px]" : "absolute left-4 top-4 z-10"
               }  w-[93px] cursor-pointer truncate uppercase`}
               deleteIcon={
                 <ContentCopySharpIcon
@@ -284,13 +287,11 @@ const CardItemMarketPlace = ({
                   className="relative flex items-center justify-center sm:hidden"
                 >
                   <Image
-                    // src={`${
-                    //   itemName === "Bullet"
-                    //     ? firstData.item_data.image
-                    //     : itemImage.src
-                    // }`}
-                    // src={itemImage.src}
-                    src={itemName === "Bullet" ? pathCheck : itemImage.src}
+                    src={
+                      itemName === "Bullet"
+                        ? (pathCheck as string)
+                        : itemImage.src
+                    }
                     alt={itemImage.alt}
                     className={`!m-0 !h-[80px] w-auto object-contain !p-0 ${
                       cardType === "naka-punk"
@@ -301,8 +302,6 @@ const CardItemMarketPlace = ({
                     height={
                       itemName?.includes("Bullet") ? 40 : itemImage.height
                     }
-                    // sizes="height: 100vw, width: 100vw"
-                    // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </motion.div>
                 {/* destop */}
@@ -312,10 +311,11 @@ const CardItemMarketPlace = ({
                   className="relative  hidden items-center justify-center sm:block"
                 >
                   <Image
-                    // src={`${
-                    //   itemName === "Bullet" ? firstData?.img : itemImage.src
-                    // }`}
-                    src={itemName === "Bullet" ? pathCheck : itemImage.src}
+                    src={
+                      itemName === "Bullet"
+                        ? (pathCheck as string)
+                        : itemImage.src
+                    }
                     // firstData.item_data?.item_data
                     // firstData.item_data.image ||
                     alt={itemImage.alt}

@@ -8,6 +8,7 @@ import { useRouter } from "next/router"
 import { TSellingType } from "@feature/marketplace/interfaces/IMarketService"
 import SkeletonItemMobile from "@feature/page/marketplace/mobilescreen/SkeletonItemMobile"
 import NoData from "@components/molecules/NoData"
+import { IGameItemData } from "@feature/gameItem/interfaces/IGameItemService"
 import CardListContainer from "./CardListContainer"
 
 const CardItemMarketPlace = dynamic(
@@ -77,6 +78,15 @@ const MarketplaceP2PCardList = () => {
                     poster: _data.land_data.NFT_image
                   }
                 }
+                firstData={
+                  orderData.data.find(
+                    (e) => e.item_data?.name === "Bullet" && e.item_data.image
+                  ) as IGameItemData | undefined
+                }
+                // firstData={orderData.data.find(
+                //   (e) => e.item_data?.name === "Bullet" && e.item_data.image
+                // )}
+                // firstData={orderData.data[0]}
                 itemName={
                   _data.land_data?.name ||
                   _data.building_data?.name ||

@@ -66,7 +66,7 @@ const useMarketNFTInstall = () => {
   const {
     updateInvenNFTMarketData,
     updateInstallmentTable,
-    fetchInvenItemDataById,
+    // fetchInvenItemDataById,
     fetchInvenNFTItemDataById
   } = useInventoryProvider()
 

@@ -81,7 +81,7 @@ const useInventoryContext = () => {
   const { mutateGetNFTAvatarById } = useMutateAvatarReef()
   const { mutateMarketOrderById } = useMutateMarketplace()
   const { convertNFTTypeToUrl } = Helper
-  const { errorToast } = useToast()
+  const { errorToast, successToast } = useToast()
 
   const [gameItemList, setGameItemList] = useState<
     Array<IGameItemListData & { amount?: number }> | undefined
@@ -182,7 +182,10 @@ const useInventoryContext = () => {
           _materialId,
           _materialAmount
         )
+          .then(() => successToast("Transfer material successfully"))
+          .catch(() => errorToast("Transfer material failed"))
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [materialList, sendTransferMaterial]
   )
 
@@ -341,14 +344,14 @@ const useInventoryContext = () => {
                 .then((_res) => {
                   _data = {
                     id: _gameItem._id,
-                    name: _gameItem.name,
+                    name: `${_gameItem.name} ${_gameItem.item_size}`,
                     tokenId: _gameItem.item_id_smartcontract.toString(),
                     type: marketType,
                     img: _gameItem.image,
                     detail: _gameItem.detail,
                     totalAmount: Number(_res.toString()),
-                    owner_id: profile.data?.address,
-                    player_id: profile.data?.address
+                    owner_id: profile.data?.id,
+                    player_id: profile.data?.id
                   }
                 })
                 .catch(() => {
@@ -361,8 +364,8 @@ const useInventoryContext = () => {
                     img: _gameItem.image,
                     detail: _gameItem.detail,
                     totalAmount: 0,
-                    owner_id: profile.data?.address,
-                    player_id: profile.data?.address
+                    owner_id: profile.data?.id,
+                    player_id: profile.data?.id
                   }
                 })
             } else {
@@ -423,7 +426,9 @@ const useInventoryContext = () => {
                   img: _materialItem.image,
                   detail: _materialItem.detail,
                   totalAmount: Number(_res.toString()),
-                  wallet_address: profile.data?.address
+                  wallet_address: profile.data?.address,
+                  owner_id: profile.data?.id,
+                  player_id: profile.data?.id
                 }
               })
             } else {

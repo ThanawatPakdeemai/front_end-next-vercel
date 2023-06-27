@@ -81,7 +81,7 @@ const useInventoryContext = () => {
   const { mutateGetNFTAvatarById } = useMutateAvatarReef()
   const { mutateMarketOrderById } = useMutateMarketplace()
   const { convertNFTTypeToUrl } = Helper
-  const { errorToast } = useToast()
+  const { errorToast, successToast } = useToast()
 
   const [gameItemList, setGameItemList] = useState<
     Array<IGameItemListData & { amount?: number }> | undefined
@@ -182,7 +182,10 @@ const useInventoryContext = () => {
           _materialId,
           _materialAmount
         )
+          .then(() => successToast("Transfer material successfully"))
+          .catch(() => errorToast("Transfer material failed"))
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [materialList, sendTransferMaterial]
   )
 

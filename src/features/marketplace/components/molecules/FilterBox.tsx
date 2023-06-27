@@ -523,8 +523,8 @@ const FilterBox = () => {
         {marketType !== "game_item" &&
         _resourceType &&
         _resourceType.length > 0 ? (
-          <>
-            <div className="flex justify-between rounded-lg border-2 border-neutral-700 p-3">
+          <section>
+            <div className="mb-4 flex justify-between rounded-lg border-2 border-neutral-700 p-3">
               <Typography className="text-sm uppercase text-white-default">
                 Resource type
               </Typography>
@@ -597,7 +597,7 @@ const FilterBox = () => {
                       img={item.image}
                     />
                   ))}
-          </>
+          </section>
         ) : null}
         {marketType === "game_item" && _gameItemType && _gameItemType.length > 0
           ? _gameItemType

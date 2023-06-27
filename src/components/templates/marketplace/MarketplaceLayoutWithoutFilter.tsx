@@ -18,26 +18,28 @@ const MarketplaceLayoutWithoutFilter = ({
 
   return (
     <MarketplaceProvider>
-      <div className="hidden sm:block">
-        <Header />
+      <div className="main-container mx-auto">
+        <div className="hidden sm:block">
+          <Header />
+        </div>
+        <div className="block sm:hidden">
+          <MarketplaceLayoutMobile isNoFilter={isNoFilter} />
+        </div>
+        <div
+          className={
+            isMapPage
+              ? "page-full-map h-[85vh] overflow-x-hidden"
+              : "main-container mx-auto"
+          }
+        >
+          {isMapPage ? (
+            <div className="map-wrapper h-full w-full">{children}</div>
+          ) : (
+            <div className="max-w-[1368px]">{children}</div>
+          )}
+        </div>
+        {!isMapPage && <Footer />}
       </div>
-      <div className="block sm:hidden">
-        <MarketplaceLayoutMobile isNoFilter={isNoFilter} />
-      </div>
-      <div
-        className={
-          isMapPage
-            ? "page-full-map h-[85vh] overflow-x-hidden"
-            : "main-container mx-auto"
-        }
-      >
-        {isMapPage ? (
-          <div className="map-wrapper h-full w-full">{children}</div>
-        ) : (
-          <div className="max-w-[1368px]">{children}</div>
-        )}
-      </div>
-      {!isMapPage && <Footer />}
     </MarketplaceProvider>
   )
 }

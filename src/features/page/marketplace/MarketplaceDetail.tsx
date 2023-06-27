@@ -14,6 +14,7 @@ import useGlobal from "@hooks/useGlobal"
 import { Typography } from "@mui/material"
 import Breadcrumb from "@components/molecules/Breadcrumb"
 import useMarketCategTypes from "@stores/marketCategTypes"
+import Helper from "@utils/helper"
 
 const MarketplaceButton = dynamic(
   () => import("@components/molecules/MarketplaceButton"),
@@ -36,6 +37,7 @@ const MarketplaceDetail = () => {
   } = useMarketplaceProvider()
   const { marketType } = useGlobal()
   const { NFTMintAble, fetchStatus } = useMarketCategTypes()
+  const { textWithDots } = Helper
 
   const _hiddenMarketbtn = useMemo(() => {
     let _disable: boolean = false
@@ -74,7 +76,7 @@ const MarketplaceDetail = () => {
       <div className="block">
         <Breadcrumb />
         <div className="flex w-full flex-col gap-x-[30px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0 md:gap-x-[60px] lg:gap-x-[120px]">
-          <div className="hidden sm:block">
+          <div className="hidden w-full max-w-[480px] sm:block">
             <CardContentDetails
               detail={
                 marketOrder.land_data?.details ??
@@ -102,14 +104,14 @@ const MarketplaceDetail = () => {
                   textHead="create by"
                   name="nakamoto.games"
                   date={String(marketOrder.created_at)}
-                  link={CONFIGS.CONTRACT_ADDRESS.NAKA}
+                  link={textWithDots(CONFIGS.CONTRACT_ADDRESS.NAKA, 6)}
                 />
                 {marketOrder.seller_id && (
                   <CardWriterDetails
                     textHead="Owned by"
                     name={marketOrder.land_data?.name}
                     date={String(marketOrder.created_at)}
-                    link={marketOrder.seller_id}
+                    link={textWithDots(marketOrder.seller_id, 6)}
                     image={marketOrder.land_data?.image}
                     alt={marketOrder.land_data?.type}
                   />

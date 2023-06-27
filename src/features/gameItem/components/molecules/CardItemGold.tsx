@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React, { useEffect, useMemo } from "react"
 import ButtonLink from "@components/atoms/button/ButtonLink"
 import { Box } from "@mui/material"
 import useProfileStore from "@stores/profileStore/index"
@@ -15,6 +15,7 @@ import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
 import { ImageCustom } from "@components/atoms/image/Image"
 import CardBuyItemHeader from "@feature/gameItem/molecules/CardBuyItemHeader"
 import ArrowJoinIcon from "@components/icons/ArrowJoinIcon"
+import useGetProfileGolds from "@feature/profile/containers/hook/useGetProfileGolds"
 
 interface ICardBuyItemProp {
   gameObject: IGame
@@ -44,6 +45,8 @@ export default function CardItemGold({
     goldProfile,
     goldProfileComma
   } = useGlobal()
+
+  const { mutateGetProfileGolds } = useGetProfileGolds()
   const profile = useProfileStore((state) => state.profile.data)
   const router = useRouter()
 
@@ -147,6 +150,17 @@ export default function CardItemGold({
     </div>
   )
 
+  useEffect(() => {
+    let load = false
+    if (!load && profile) {
+      mutateGetProfileGolds(profile?.address || "")
+    }
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const inputClasses =
     "flex h-10 items-center justify-between rounded-xl border-[1px] p-[10px] text-center font-neue-machina-semi text-sm"
 
@@ -164,6 +178,7 @@ export default function CardItemGold({
                   name={itemSelected.name}
                   itemSize={`${goldProfileComma}`}
                   title={isWaitingRoom ? " " : ""}
+                  refresh={() => mutateGetProfileGolds(profile?.address || "")}
                 />
               )}
               <div className="flex w-full flex-col gap-3 rounded-2xl border-[1px] border-neutral-700 bg-primary-main p-3">

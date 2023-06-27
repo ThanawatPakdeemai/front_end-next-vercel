@@ -378,3 +378,7 @@ export interface IGeoProfile {
   asn: string
   org: string
 }
+
+export interface IGolds {
+  gold: number
+}

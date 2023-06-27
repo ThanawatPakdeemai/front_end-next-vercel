@@ -27,7 +27,10 @@ describe("TextfieldDetailContent component", () => {
       const key = `renders-type-${_index}`
       render(
         <TextfieldDetailContent
-          type={_type as TNFTType}
+          type={_type.toString() as TNFTType}
+          // type={
+          //   typeof _type === "number" ? (_type.toString() as TNFTType) : _type
+          // }
           key={key}
         />
       )

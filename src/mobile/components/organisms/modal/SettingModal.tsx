@@ -3,6 +3,7 @@ import {
   Avatar,
   Box,
   CardHeader,
+  Divider,
   IconButton,
   SwipeableDrawer
 } from "@mui/material"
@@ -18,6 +19,7 @@ import { ImageCustom } from "@components/atoms/image/Image"
 import { StyledAvatar } from "@mobile/components/atoms/headerMenu/HeadProfileMobile"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
+import ButtonTelegram from "@components/atoms/button/ButtonTelegram"
 import LogoutModal from "./LogoutModal"
 import ProfileSettingModal from "./ProfileSettingModal"
 import PlayedHistoryModal from "./PlayedHistoryModal"
@@ -223,6 +225,13 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
             title={t("Support")}
           />
         </Box>
+        {profile && !profile.telegram_id && (
+          <>
+            <ButtonTelegram />
+            <Divider className="my-6 !block border-b border-[#35383F]" />
+          </>
+        )}
+
         <CardHeader
           onClick={() => setToggleLogout(!toggleLogout)}
           sx={{

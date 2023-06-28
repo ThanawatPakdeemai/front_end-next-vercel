@@ -60,6 +60,11 @@ const Helper = {
     const originalText = bytes.toString(CryptoJS.enc.Utf8)
     return originalText
   },
+  decryptWithBuffer(_cipherText: string) {
+    const bytes = Buffer.from(_cipherText, "base64")
+    const originalText = bytes.toString("utf-8")
+    return originalText
+  },
   decryptSocketWithAES<T>(_cipherText: string): T | undefined {
     if (_cipherText) {
       const removeDoubleQuotes = _cipherText.replace(/["']/g, "")

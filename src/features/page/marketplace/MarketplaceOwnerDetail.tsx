@@ -94,7 +94,8 @@ const MarketplaceOwnerDetail = () => {
           >
             {profile.data &&
             !invenItemData.installments_data &&
-            invenItemData.owner_id === profile.data.id &&
+            (invenItemData.owner_id === profile.data.id ||
+              invenItemData.owner_id === profile.data.address) &&
             invenItemData.type !== "nft_avatar" ? (
               <div className="flex w-full items-center justify-between gap-x-2">
                 <MarketplaceButton
@@ -113,8 +114,10 @@ const MarketplaceOwnerDetail = () => {
                     !invenItemData.marketplaces_data &&
                     (invenItemData.type === "nft_land" ||
                       invenItemData.type === "nft_building") &&
-                    invenItemData.owner_id === profile.data.id
+                    invenItemData.owner_id === profile.data.id &&
+                    !invenItemData.rentals_data
                   }
+                  isRenting={!!invenItemData.rentals_data}
                 />
               </div>
             ) : null}

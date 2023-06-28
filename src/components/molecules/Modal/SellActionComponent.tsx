@@ -35,6 +35,7 @@ interface IProps {
   setPeriod: (_period: number) => void
   maxPeriod: number
   isRentout?: boolean
+  isRenting?: boolean
 }
 
 const SellActionComponent = ({
@@ -47,7 +48,8 @@ const SellActionComponent = ({
   period,
   setPeriod,
   maxPeriod,
-  isRentout = false
+  isRentout = false,
+  isRenting
 }: IProps) => {
   const { formatNumber } = Helper
   const { onCheckApprovalForAllNFT } = useGlobalMarket()
@@ -123,7 +125,9 @@ const SellActionComponent = ({
               minHeight: 40
             }}
           >
-            {MARKET_SELLING.map((m) => (
+            {MARKET_SELLING.filter(
+              (m) => !isRenting || m.value === "fullpayment"
+            ).map((m) => (
               <MenuItem
                 key={uuidv4()}
                 value={m.value}

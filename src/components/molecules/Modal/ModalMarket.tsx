@@ -64,6 +64,7 @@ interface IProps {
   sellerType?: TSellerType
   sellingType?: TSellingType
   plot?: IPosition
+  isRenting?: boolean
 }
 
 const ModalMarket = ({
@@ -86,7 +87,8 @@ const ModalMarket = ({
   sellerType = "user",
   sellingType,
   plot,
-  setPeriod
+  setPeriod,
+  isRenting
 }: IProps) => {
   const currencyRef = useRef<boolean>(false)
   const { getPriceNakaCurrent, convertNFTTypeToTType } = Helper
@@ -457,6 +459,7 @@ const ModalMarket = ({
                     setPeriod={onPeriodChange}
                     maxPeriod={action === "rent_out" ? 365 : maxPeriod}
                     isRentout={action === "rent_out"}
+                    isRenting={isRenting}
                   />
                 ) : null}
                 {action === "buy" &&

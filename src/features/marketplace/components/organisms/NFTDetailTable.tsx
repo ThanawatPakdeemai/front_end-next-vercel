@@ -449,12 +449,13 @@ const NFTDetailTable = ({
         ) : null}
         {rentalData &&
         profile.data &&
-        profile.data.address === rentalData.seller_address ? (
+        profile.data.address === rentalData.seller_address &&
+        !rentalData.period.every((p) => p.claim_status) ? (
           <Button
             disabled={
-              !rentalData.period.some((p) =>
-                dayjs().isAfter(dayjs(p.due_date))
-              ) && rentalData.period.some((p) => p.claim_status === false)
+              !rentalData.period.some(
+                (p) => dayjs().isAfter(dayjs(p.due_date)) && !p.claim_status
+              )
             }
             variant="contained"
             color="secondary"

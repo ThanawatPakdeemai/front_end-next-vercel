@@ -446,6 +446,8 @@ const useInventoryContext = () => {
                     img: response.data.material_data.image,
                     detail: response.data.material_data.detail,
                     totalAmount: response.data.item_amount,
+                    owner_id: profile.data?.id,
+                    player_id: profile.data?.id,
                     marketplaces_data: {
                       item_amount: response.data.item_amount,
                       order_id: response.data.order_id,

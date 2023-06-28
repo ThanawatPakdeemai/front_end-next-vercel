@@ -41,7 +41,8 @@ const MarketplaceOwnerDetail = () => {
               profile.data.address &&
               invenItemData.wallet_address &&
               profile.data.address === invenItemData.wallet_address &&
-              !invenItemData.marketplaces_data && (
+              !invenItemData.marketplaces_data &&
+              invenItemData.type !== "nft_avatar" && (
                 <div className="px-8">
                   <TransferBox
                     _tokenId={invenItemData.id}
@@ -79,7 +80,8 @@ const MarketplaceOwnerDetail = () => {
               profile.data.address &&
               invenItemData.wallet_address &&
               profile.data.address === invenItemData.wallet_address &&
-              !invenItemData.marketplaces_data && (
+              !invenItemData.marketplaces_data &&
+              invenItemData.type !== "nft_avatar" && (
                 <div className="px-8">
                   <TransferBox
                     _tokenId={invenItemData.id}

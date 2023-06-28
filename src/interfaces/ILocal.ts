@@ -1,3 +1,5 @@
+import { IParamFromTelegram } from "@providers/BaseProvider"
+
 export type TLocalKey =
   | "token"
   | "email"
@@ -7,6 +9,7 @@ export type TLocalKey =
   | "wallet-connector"
   | "shareToEarn-ExpireTime"
   | "shareToEarn-code"
+  | "telegramId"
 
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
@@ -18,10 +21,11 @@ export enum ELocalKey {
   time = "time",
   walletConnector = "wallet-connector",
   shareToEarn = "shareToEarn-ExpireTime",
-  shareToEarnCode = "shareToEarn-code"
+  shareToEarnCode = "shareToEarn-code",
+  telegramId = "telegramId"
 }
 
 export interface ILocal {
   key: TLocalKey
-  value?: string
+  value?: string | IParamFromTelegram
 }

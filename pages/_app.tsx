@@ -18,6 +18,7 @@ import rt from "dayjs/plugin/relativeTime"
 import createEmotionCache from "@utils/createEmotionCache"
 import { metaData } from "@src/meta/meta"
 import Head from "next/head"
+import BaseProvider from "@providers/BaseProvider"
 
 const Loading = dynamic(() => import("@components/molecules/Loading"), {
   suspense: true,
@@ -56,7 +57,9 @@ const MyApp = (props) => {
           <CacheProvider value={emotionCache}>
             <ThemeProvider theme={customTheme}>
               <ProviderApp>
-                {getLayout(<Component {...pageProps} />)}
+                <BaseProvider>
+                  {getLayout(<Component {...pageProps} />)}
+                </BaseProvider>
               </ProviderApp>
             </ThemeProvider>
           </CacheProvider>

@@ -24,6 +24,7 @@ const MarketplaceOwnerDetail = () => {
     if (setInvPeriod) setInvPeriod(_value)
   }
 
+  console.log(invenItemData)
   return invenItemData && !isLoading ? (
     <div className="flex flex-col pb-4">
       <div className="mt-16 flex w-full flex-col justify-center gap-x-[60px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0">
@@ -94,7 +95,8 @@ const MarketplaceOwnerDetail = () => {
           >
             {profile.data &&
             !invenItemData.installments_data &&
-            invenItemData.owner_id === profile.data.id &&
+            (invenItemData.owner_id === profile.data.id ||
+              invenItemData.owner_id === profile.data.address) &&
             invenItemData.type !== "nft_avatar" ? (
               <div className="flex w-full items-center justify-between gap-x-2">
                 <MarketplaceButton
@@ -113,8 +115,10 @@ const MarketplaceOwnerDetail = () => {
                     !invenItemData.marketplaces_data &&
                     (invenItemData.type === "nft_land" ||
                       invenItemData.type === "nft_building") &&
-                    invenItemData.owner_id === profile.data.id
+                    invenItemData.owner_id === profile.data.id &&
+                    !invenItemData.rentals_data
                   }
+                  isRenting={!!invenItemData.rentals_data}
                 />
               </div>
             ) : null}

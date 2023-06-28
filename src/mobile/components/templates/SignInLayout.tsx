@@ -98,20 +98,6 @@ const SignInLayout = () => {
           </Button>
         </Box>
 
-        {/* <Box
-          component="div"
-          className="mt-4 py-4"
-        >
-          <Divider className="!block" />
-        </Box> */}
-
-        {/* <Box component="div">
-          <ButtonTelegram />
-          <p className="mt-2 pr-2 text-center text-[10px] font-normal">
-            {`Available for users who have already sync account with Telegram only`}
-          </p>
-        </Box> */}
-
         <Box
           component="div"
           className="py-4"

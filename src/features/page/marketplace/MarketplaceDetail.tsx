@@ -129,13 +129,17 @@ const MarketplaceDetail = () => {
               position={marketOrder.land_data?.position}
               price={marketOrder.price}
               qrCode={marketOrder.land_data?.qrcode_image}
-              count={{
-                helperText: `Total supply : ${marketOrder.item_amount}`,
-                label: "Supply in market",
-                min: 1,
-                max: marketOrder.item_amount || 1,
-                count: 1
-              }}
+              count={
+                marketType !== "nft_naka_punk"
+                  ? {
+                      helperText: `Total supply : ${marketOrder.item_amount}`,
+                      label: "Supply in market",
+                      min: 1,
+                      max: marketOrder.item_amount || 1,
+                      count: 1
+                    }
+                  : undefined
+              }
               sellingType={
                 marketOrder.selling_type && marketOrder.seller_type !== "system"
                   ? {

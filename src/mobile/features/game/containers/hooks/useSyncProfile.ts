@@ -2,7 +2,6 @@ import { MESSAGES } from "@constants/messages"
 import useLinkToTelegram from "@feature/game/containers/hooks/useLinkToTelegram"
 import useToast from "@feature/toast/containers/useToast"
 import { ELocalKey } from "@interfaces/ILocal"
-import useDrawerControllerMobileStore from "@stores/drawerControllerMobile"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
 import { useCallback } from "react"
@@ -60,7 +59,7 @@ const useSyncProfile = () => {
         }
       })
     }
-  }, [profile])
+  }, [profile, errorToast, mutateLinkToTelegram, successToast, telegramIdLocal])
 
   return {
     handleSyncFacebookId,

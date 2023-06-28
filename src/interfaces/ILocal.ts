@@ -1,5 +1,3 @@
-import { IParamFromTelegram } from "@providers/BaseProvider"
-
 export type TLocalKey =
   | "token"
   | "email"
@@ -27,5 +25,5 @@ export enum ELocalKey {
 
 export interface ILocal {
   key: TLocalKey
-  value?: string | IParamFromTelegram
+  value?: string
 }

@@ -18,7 +18,6 @@ import { IError } from "@src/types/contract"
 import useConnectMetamaskAction from "@utils/useConnectMetamesk"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import Web3 from "web3"
-import { useBaseProvider } from "@providers/BaseProvider"
 import useSignIn from "./useSignIn"
 import useLoginMetamask from "./useLoginMetamask"
 

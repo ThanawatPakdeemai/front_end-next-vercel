@@ -20,7 +20,6 @@ import { StyledAvatar } from "@mobile/components/atoms/headerMenu/HeadProfileMob
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import ButtonTelegram from "@components/atoms/button/ButtonTelegram"
-import useSyncProfile from "@mobile/features/game/containers/hooks/useSyncProfile"
 import LogoutModal from "./LogoutModal"
 import ProfileSettingModal from "./ProfileSettingModal"
 import PlayedHistoryModal from "./PlayedHistoryModal"
@@ -39,7 +38,6 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
 
   const { t } = useTranslation()
   const { clearAllDrawer } = useDrawerControllerMobile()
-  const { telegramIdLocal } = useSyncProfile()
 
   return (
     <SwipeableDrawer
@@ -227,7 +225,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
             title={t("Support")}
           />
         </Box>
-        {profile && !profile.telegram_id && telegramIdLocal && (
+        {profile && !profile.telegram_id && (
           <>
             <ButtonTelegram />
             <Divider className="my-6 !block border-b border-[#35383F]" />

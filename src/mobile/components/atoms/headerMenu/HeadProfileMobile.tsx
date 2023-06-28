@@ -35,26 +35,18 @@ const HeadProfileMobile = () => {
     openProfileSetting: toggleProfileSetting,
     setOpenProfileSetting: setToggleProfileSetting,
     openSyncAccount: toggleSyncAccount,
-    setOpenSyncAccount: setToggleSyncAccount,
-    openSetting: toggleSetting,
-    setOpenSetting: setToggleSetting
+    setOpenSyncAccount: setToggleSyncAccount
   } = useDrawerControllerMobileStore()
 
   return (
     <header className="header bg-[#F32429] pb-[55px]">
-      <HeaderSyncAccount
-        target="Telegram"
-        open={toggleSyncAccount}
-        setOpenSyncAccount={(_toggle) => setToggleSyncAccount(_toggle)}
-        setOpenSetting={(_toggle) => setToggleSetting(_toggle)}
-      />
-      {/* {profile && !profile.telegram_id && (
+      {profile && !profile.telegram_id && (
         <HeaderSyncAccount
           target="Telegram"
           open={toggleSyncAccount}
           setOpenSyncAccount={(_toggle) => setToggleSyncAccount(_toggle)}
         />
-      )} */}
+      )}
       <div className="flex items-center justify-between px-5 py-10">
         <Box
           component="div"

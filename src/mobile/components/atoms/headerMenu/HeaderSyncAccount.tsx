@@ -1,4 +1,3 @@
-import SettingModal from "@mobile/components/organisms/modal/SettingModal"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import { SwipeableDrawer } from "@mui/material"
 import React from "react"
@@ -7,7 +6,6 @@ interface IHeaderSyncAccountProps {
   target: string
   open: boolean
   setOpenSyncAccount: (_toggle: boolean) => void
-  setOpenSetting: (_toggle: boolean) => void
 }
 
 const HeaderSyncAccount = ({

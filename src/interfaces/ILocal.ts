@@ -8,6 +8,7 @@ export type TLocalKey =
   | "shareToEarn-ExpireTime"
   | "shareToEarn-code"
   | "telegramId"
+  | "telegramUser"
 
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
@@ -20,7 +21,8 @@ export enum ELocalKey {
   walletConnector = "wallet-connector",
   shareToEarn = "shareToEarn-ExpireTime",
   shareToEarnCode = "shareToEarn-code",
-  telegramId = "telegramId"
+  telegramId = "telegramId",
+  telegramUser = "telegramUser"
 }
 
 export interface ILocal {

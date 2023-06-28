@@ -76,5 +76,8 @@ export const MESSAGES = {
   "support_polygon_only": "This function only supports Polygon Network",
   "check_owner_nft_error": "You are't owner this NFT",
   "check_order_error": "Order isn't founded!.",
-  "network_error": "RPC or Network are offline!, Please try again later."
+  "network_error": "RPC or Network are offline!, Please try again later.",
+  "sync_telegram_success": "Sync telegram success",
+  "sync_telegram_error": "Sync telegram error",
+  "sync_telegram_already": "Sync telegram already"
 }

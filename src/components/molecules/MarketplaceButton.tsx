@@ -271,7 +271,7 @@ const MarketplaceButton = ({
         sellingType={
           curAction === "rent_out" ? "rental" : marketplaces_data?.selling_type
         }
-        isRented={isRenting}
+        isRenting={isRenting}
         orderPrice={marketplaces_data?.price}
       />
     </div>

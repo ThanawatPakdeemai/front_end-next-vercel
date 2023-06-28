@@ -24,7 +24,6 @@ const MarketplaceOwnerDetail = () => {
     if (setInvPeriod) setInvPeriod(_value)
   }
 
-  console.log(invenItemData)
   return invenItemData && !isLoading ? (
     <div className="flex flex-col pb-4">
       <div className="mt-16 flex w-full flex-col justify-center gap-x-[60px] gap-y-[60px] px-10 py-4 sm:flex-row sm:gap-y-0 sm:px-0 sm:py-0">

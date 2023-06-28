@@ -7,7 +7,6 @@ import RightDetailsMarketplace from "@feature/marketplace/components/organisms/R
 import { useInventoryProvider } from "@providers/InventoryProvider"
 import useProfileStore from "@stores/profileStore"
 import dynamic from "next/dynamic"
-import useGlobal from "@hooks/useGlobal"
 
 const MarketplaceButton = dynamic(
   () => import("@components/molecules/MarketplaceButton"),
@@ -20,7 +19,6 @@ const MarketplaceOwnerDetail = () => {
   const { profile } = useProfileStore()
   const { invenItemData, isLoading, invAmount, invPeriod, setInvPeriod } =
     useInventoryProvider()
-  const { marketType } = useGlobal()
 
   const onInvPeriodChange = (_value: number) => {
     if (setInvPeriod) setInvPeriod(_value)
@@ -44,7 +42,7 @@ const MarketplaceOwnerDetail = () => {
               invenItemData.wallet_address &&
               profile.data.address === invenItemData.wallet_address &&
               !invenItemData.marketplaces_data &&
-              marketType !== "nft_avatar" && (
+              invenItemData.type !== "nft_avatar" && (
                 <div className="px-8">
                   <TransferBox
                     _tokenId={invenItemData.id}
@@ -83,7 +81,7 @@ const MarketplaceOwnerDetail = () => {
               invenItemData.wallet_address &&
               profile.data.address === invenItemData.wallet_address &&
               !invenItemData.marketplaces_data &&
-              marketType !== "nft_avatar" && (
+              invenItemData.type !== "nft_avatar" && (
                 <div className="px-8">
                   <TransferBox
                     _tokenId={invenItemData.id}

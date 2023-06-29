@@ -18,6 +18,7 @@ import { IError } from "@src/types/contract"
 import useConnectMetamaskAction from "@utils/useConnectMetamesk"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import Web3 from "web3"
+import useSyncProfile from "@mobile/features/game/containers/hooks/useSyncProfile"
 import useSignIn from "./useSignIn"
 import useLoginMetamask from "./useLoginMetamask"
 
@@ -40,6 +41,7 @@ const useFormLoginController = () => {
   const web3 = new Web3(Web3.givenProvider)
   const { address: account } = useWeb3Provider()
   const { getSignature } = useConnectMetamaskAction()
+  const { handleSyncFacebookId } = useSyncProfile()
 
   const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
@@ -96,6 +98,9 @@ const useFormLoginController = () => {
         .then((_res) => {
           if (_res) {
             successToast(MESSAGES.logged_in_successfully)
+
+            // Save user Facebook id to database
+            handleSyncFacebookId(response.userID)
           }
         })
         .catch((_error: IError) => {

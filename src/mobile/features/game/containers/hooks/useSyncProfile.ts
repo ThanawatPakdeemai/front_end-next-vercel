@@ -1,6 +1,10 @@
 import { TelegramUser } from "@components/atoms/button/TelegramWidget"
 import { MESSAGES } from "@constants/messages"
-import useLinkToTelegram from "@feature/game/containers/hooks/useLinkToTelegram"
+import {
+  useLinkToFacebook,
+  useLinkToTelegram
+} from "@feature/profile/containers/hook/useSyncProfileQuery"
+import useGetProfileByEmail from "@feature/profile/containers/hook/getProfileByEmail"
 import useToast from "@feature/toast/containers/useToast"
 import { ELocalKey } from "@interfaces/ILocal"
 import useProfileStore from "@stores/profileStore"
@@ -10,14 +14,44 @@ import { useCallback } from "react"
 const useSyncProfile = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { mutateLinkToTelegram } = useLinkToTelegram()
+  const { mutateLinkToFacebook } = useLinkToFacebook()
   const { errorToast, successToast } = useToast()
-  // Maybe not neccessary
-  // const telegramIdLocal = Helper.getLocalStorage(ELocalKey.telegramId)
+  const { onSetProfileData } = useProfileStore()
+  const { profile: dataProfile } = useGetProfileByEmail(profile?.email ?? "")
 
-  const handleSyncFacebookId = useCallback(() => {
-    // get facebook id from local storage
-    // if facebook id exist, then sync data facebook
-  }, [])
+  /**
+   * @description Handle check user already exist in website, then sync data Facebook
+   */
+  const handleSyncFacebookId = useCallback(
+    (facebook_id: string) => {
+      if (profile && profile.facebook_id) {
+        errorToast(MESSAGES.sync_facebook_already)
+        return
+      }
+      if (profile && !profile.facebook_id) {
+        // If user not exist in website, then create new user in website
+        mutateLinkToFacebook({
+          player_id: profile.id,
+          facebook_id
+        }).then(async (res) => {
+          if (res?.data?.facebook_id) {
+            successToast(MESSAGES.sync_facebook_success)
+            if (dataProfile) {
+              onSetProfileData(dataProfile)
+            }
+          }
+        })
+      }
+    },
+    [
+      profile,
+      errorToast,
+      mutateLinkToFacebook,
+      successToast,
+      dataProfile,
+      onSetProfileData
+    ]
+  )
 
   /**
    * @description Handle check user already exist in website, then sync data telegram
@@ -39,16 +73,26 @@ const useSyncProfile = () => {
         mutateLinkToTelegram({
           player_id: profile.id,
           telegram_id: response.id
-        }).then((res) => {
+        }).then(async (res) => {
           if (res?.data?.telegram_id) {
             successToast(MESSAGES.sync_telegram_success)
             Helper.removeLocalStorage(ELocalKey.telegramUser)
             Helper.removeLocalStorage(ELocalKey.telegramId)
+            if (dataProfile) {
+              onSetProfileData(dataProfile)
+            }
           }
         })
       }
     },
-    [profile, errorToast, mutateLinkToTelegram, successToast]
+    [
+      profile,
+      errorToast,
+      mutateLinkToTelegram,
+      successToast,
+      dataProfile,
+      onSetProfileData
+    ]
   )
 
   return {

@@ -9,6 +9,7 @@ import NotificationModal from "@mobile/components/organisms/modal/NotificationMo
 import ProfileSettingModal from "@mobile/components/organisms/modal/ProfileSettingModal"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import useDrawerControllerMobileStore from "@stores/drawerControllerMobile"
+import { useBaseProvider } from "@providers/BaseProvider"
 import HeaderSyncAccount from "./HeaderSyncAccount"
 
 export const StyledAvatar = {
@@ -28,6 +29,7 @@ const HeadProfileMobile = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { count } = useNotiStore()
   const { openNotification, setOpenNotification } = useDrawerControllerMobile()
+  const { paramFromTelegram } = useBaseProvider()
 
   const {
     openProfileCreate: toggleProfileCreate,
@@ -40,7 +42,7 @@ const HeadProfileMobile = () => {
 
   return (
     <header className="header bg-[#F32429] pb-[55px]">
-      {profile && !profile.telegram_id && (
+      {profile && !profile.telegram_id && paramFromTelegram && (
         <HeaderSyncAccount
           target="Telegram"
           open={toggleSyncAccount}

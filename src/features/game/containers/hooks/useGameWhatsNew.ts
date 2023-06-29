@@ -3,6 +3,7 @@ import {
   getGamePartnerAllReview,
   getGamePartnerNewVersion
 } from "@feature/game/partnerGames/containers/services/gamePartners.service"
+import { getAllGameReview } from "@feature/review/containers/services/review.services"
 import useGlobal from "@hooks/useGlobal"
 import { useQuery } from "@tanstack/react-query"
 
@@ -15,7 +16,12 @@ const useGameWhatsNew = (_gameMode: IGetType, _gameId: string) => {
       case "partner-game":
         return getGamePartnerAllReview(limit, page, _gameId)
       default:
-        return null
+        return getAllGameReview({
+          _limit: limit,
+          _page: page,
+          _gameId,
+          _sort: "createdAt"
+        })
     }
   }
 

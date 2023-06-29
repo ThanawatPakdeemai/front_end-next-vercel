@@ -79,5 +79,8 @@ export const MESSAGES = {
   "network_error": "RPC or Network are offline!, Please try again later.",
   "sync_telegram_success": "Sync telegram success",
   "sync_telegram_error": "Sync telegram error",
-  "sync_telegram_already": "Sync telegram already"
+  "sync_telegram_already": "Sync telegram already",
+  "sync_facebook_success": "Sync Facebook success",
+  "sync_facebook_error": "Sync Facebook error",
+  "sync_facebook_already": "Sync Facebook already"
 }

@@ -21,6 +21,7 @@ import { useState } from "react"
 const GoldTransferPage = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const [exp, setExp] = useState<number>(0)
+  // eslint-disable-next-line no-unused-vars
   const [amount, setAmount] = useState<number>(0)
 
   return (

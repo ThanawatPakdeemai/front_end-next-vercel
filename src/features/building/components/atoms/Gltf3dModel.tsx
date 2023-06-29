@@ -51,6 +51,7 @@ const Gltf3dModel = ({ model }: IModelProps) => {
                     fontWeight: 800,
                     marginTop: 40
                   }}
+                  className="flex flex-row gap-1"
                 >
                   {progress.toFixed(2)} %
                 </p>

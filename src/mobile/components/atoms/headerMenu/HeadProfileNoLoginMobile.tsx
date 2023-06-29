@@ -30,14 +30,14 @@ const HeadProfileNoLoginMobile = () => {
           sx={StyledAvatar}
         >
           <div className="head-profile__info--welcome flex flex-col">
-            <p className="flex items-center gap-2 font-urbanist text-[14px]">
+            <div className="flex items-center gap-2 font-urbanist text-[14px]">
               <div className="flex h-[26px] w-[40px] items-center justify-center rounded-[6px] bg-[#121212] p-[10px]">
                 <NakaIconMobile fill="#F32429" />
               </div>
               <span className="text-sm font-bold uppercase text-[#121212]">
                 NAKAMOTO.Games
               </span>
-            </p>
+            </div>
           </div>
         </Box>
         <div className="head-profile__mobile--right flex items-center gap-4">

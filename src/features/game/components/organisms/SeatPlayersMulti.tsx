@@ -91,7 +91,7 @@ const SeatPlayersMulti = ({ players }: IPropsPlayerMulti) => {
         const frontendUrl = `${baseUrlFront}/${router.query.typeGame}/${gameData.path}/summary/${room_id}`
 
         let gameURL = ""
-        if (gameData.type_code === "multi_02" && ip) {
+        if (gameData.type_code === "multi_02") {
           const dataLinkGame = `${room_id}:|:${profile?.id}:|:${
             itemSelected._id
           }:|:${profile?.email}:|:${Helper.getLocalStorage(
@@ -100,7 +100,7 @@ const SeatPlayersMulti = ({ players }: IPropsPlayerMulti) => {
             start_time
           ).getTime()}:|:${profile?.username}:|:${playerInroom?.length}:|:${
             dataPlayers?.map_id
-          }:|:${ip}`
+          }:|:${ip || profile.user_ip_address}`
 
           gameURL = `${baseUrlGame}/${gameData.id}/?query=${Helper.makeID(
             8
@@ -114,8 +114,8 @@ const SeatPlayersMulti = ({ players }: IPropsPlayerMulti) => {
             start_time
           ).getTime()}:|:${profile?.username}:|:${playerInroom?.length}:|:${
             dataPlayers?.map_id
-          }:|:${ip}`
-          gameURL = `${gameData.game_url}/${gameData.id}/?query=${Helper.makeID(
+          }:|:${ip || profile.user_ip_address}`
+          gameURL = `${baseUrlGame}/${gameData.id}/?query=${Helper.makeID(
             8
           )}${btoa(dataLinkGame)}`
         }

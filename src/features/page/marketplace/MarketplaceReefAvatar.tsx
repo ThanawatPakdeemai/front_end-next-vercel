@@ -12,7 +12,6 @@ import {
   TextField,
   Typography
 } from "@mui/material"
-import useCountStore from "@stores/countComponant"
 import useLoadingStore from "@stores/loading"
 import useProfileStore from "@stores/profileStore"
 import React, { memo, useEffect, useState } from "react"
@@ -23,11 +22,11 @@ import ButtonLink from "@components/atoms/button/ButtonLink"
 import WandIcon from "@components/icons/WandIcon"
 import RightMenuNotLogIn from "@components/molecules/rightMenu/RightMenuNotLogIn"
 import CouponIcon from "@components/icons/CouponIcon"
-import Helper from "@utils/helper"
 import useMutateAvatarReef from "@feature/avatarReef/containers/hook/useMutateAvatarReef"
 import RedemptionCode from "@components/molecules/RedemptionCode"
 import Breadcrumb from "@components/molecules/Breadcrumb"
 import { MESSAGES } from "@constants/messages"
+import { useMarketplaceProvider } from "@providers/MarketplaceProvider"
 
 const MarketplaceReefAvatar = () => {
   const [evm, setEVM] = useState<string>("")
@@ -40,14 +39,13 @@ const MarketplaceReefAvatar = () => {
     purchAvatarReefData,
     mutatePurchaseAvatarReef
   } = useMutateAvatarReef()
-  const { count } = useCountStore()
   const { setOpen, setClose } = useLoadingStore()
   const { isLogin, profile } = useProfileStore()
   const { successToast, errorToast } = useToast()
   const [priceNP, setPriceNP] = useState<number>(0)
   const [metaData, setMetaData] = useState<IPunkMetaData[]>([])
-  // eslint-disable-next-line no-unused-vars
-  const { WeiToNumber } = Helper
+  const { marketAmount } = useMarketplaceProvider()
+  const count = marketAmount || 1
 
   const handleRedeem = (_coupon: string) => {
     if (evm) {
@@ -139,74 +137,76 @@ const MarketplaceReefAvatar = () => {
     <>
       <Breadcrumb />
       <div className="flex w-full flex-col justify-center gap-y-[30px] px-5 sm:flex-row sm:gap-x-[120px] sm:px-0">
-        <CardContentDetails
-          detail="Avatar Reef"
-          image={
-            !purchAvatarReefData ? "/images/temp-nakapunk.webp" : undefined
-          }
-          alt="avatar-reef"
-          txHash={purchAvatarReefData?.data.transaction_hash}
-          meta_data={metaData || undefined}
-        >
-          <div>
-            {purchAvatarReefData ? (
-              <div>
-                {metaData && profile && profile.data && (
-                  <div>
-                    {metaData && metaData.length > 0 && (
-                      <div className="flex items-center px-8 pt-6">
-                        <Chip
-                          label="congrats!"
-                          variant="filled"
-                          color="success"
-                          size="small"
-                          className="cursor-pointer uppercase"
-                        />
-                        <Typography className="ml-4 text-sm uppercase text-white-primary">
-                          you got {metaData.length} Avatar Reef
-                        </Typography>
-                      </div>
-                    )}
-                    <div
-                      className={
-                        metaData &&
-                        "custom-scroll max-h-[100px] overflow-y-scroll"
-                      }
-                    >
-                      {metaData.map((_data) => (
-                        <GotNaKAPunk
-                          key={uuidv4()}
-                          address={String(profile.data?.address)}
-                          token_id={_data.NFT_token}
-                        />
-                      ))}
-                    </div>
-                    {metaData && metaData.length > 0 && (
-                      <a
-                        href={`${CONFIGS.CHAIN.POLYGON_SCAN}/tx/${purchAvatarReefData.data.transaction_hash}`}
-                        target="_blank"
-                        rel="noreferrer"
+        <div className="hidden sm:block">
+          <CardContentDetails
+            detail="Avatar Reef"
+            image={
+              !purchAvatarReefData ? "/images/temp-nakapunk.webp" : undefined
+            }
+            alt="avatar-reef"
+            txHash={purchAvatarReefData?.data.transaction_hash}
+            meta_data={metaData || undefined}
+          >
+            <div>
+              {purchAvatarReefData ? (
+                <div>
+                  {metaData && profile && profile.data && (
+                    <div>
+                      {metaData && metaData.length > 0 && (
+                        <div className="flex items-center px-8 pt-6">
+                          <Chip
+                            label="congrats!"
+                            variant="filled"
+                            color="success"
+                            size="small"
+                            className="cursor-pointer uppercase"
+                          />
+                          <Typography className="ml-4 text-sm uppercase text-white-primary">
+                            you got {metaData.length} Avatar Reef
+                          </Typography>
+                        </div>
+                      )}
+                      <div
+                        className={
+                          metaData &&
+                          "custom-scroll max-h-[100px] overflow-y-scroll"
+                        }
                       >
-                        <Typography
-                          variant="button"
-                          className="cursor-pointer px-8 text-xs uppercase text-purple-primary"
+                        {metaData.map((_data) => (
+                          <GotNaKAPunk
+                            key={uuidv4()}
+                            address={String(profile.data?.address)}
+                            token_id={_data.NFT_token}
+                          />
+                        ))}
+                      </div>
+                      {metaData && metaData.length > 0 && (
+                        <a
+                          href={`${CONFIGS.CHAIN.POLYGON_SCAN}/tx/${purchAvatarReefData.data.transaction_hash}`}
+                          target="_blank"
+                          rel="noreferrer"
                         >
-                          view transaction
-                        </Typography>
-                      </a>
-                    )}
-                  </div>
-                )}
-              </div>
-            ) : undefined}
-          </div>
-        </CardContentDetails>
+                          <Typography
+                            variant="button"
+                            className="cursor-pointer px-8 text-xs uppercase text-purple-primary"
+                          >
+                            view transaction
+                          </Typography>
+                        </a>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ) : undefined}
+            </div>
+          </CardContentDetails>
+        </div>
         <div className="flex flex-col gap-y-4">
           <RightDetailsMarketplace
             type={marketType as TNFTType}
             title="avatar mystery box"
             method="mint"
-            price={priceNP * count}
+            price={priceNP}
             count={{
               helperText: `1 NFT = ${priceNP} NAKA`,
               label: "Quantity",
@@ -214,6 +214,59 @@ const MarketplaceReefAvatar = () => {
               max: 10,
               count: 1
             }}
+            image="/images/temp-nakapunk.webp"
+            showListMintItem={
+              purchAvatarReefData ? (
+                <div>
+                  {metaData && profile && profile.data && (
+                    <div>
+                      {metaData && metaData.length > 0 && (
+                        <div className="flex items-center px-8 pt-6">
+                          <Chip
+                            label="congrats!"
+                            variant="filled"
+                            color="success"
+                            size="small"
+                            className="cursor-pointer uppercase"
+                          />
+                          <Typography className="ml-4 text-sm uppercase text-white-primary">
+                            you got {metaData.length} Avatar Reef
+                          </Typography>
+                        </div>
+                      )}
+                      <div
+                        className={
+                          metaData &&
+                          "custom-scroll max-h-[100px] overflow-y-scroll"
+                        }
+                      >
+                        {metaData.map((_data) => (
+                          <GotNaKAPunk
+                            key={uuidv4()}
+                            address={String(profile.data?.address)}
+                            token_id={_data.NFT_token}
+                          />
+                        ))}
+                      </div>
+                      {metaData && metaData.length > 0 && (
+                        <a
+                          href={`${CONFIGS.CHAIN.POLYGON_SCAN}/tx/${purchAvatarReefData.data.transaction_hash}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <Typography
+                            variant="button"
+                            className="cursor-pointer px-8 text-xs uppercase text-purple-primary"
+                          >
+                            view transaction
+                          </Typography>
+                        </a>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ) : undefined
+            }
           >
             <div className="flex w-full flex-col gap-y-1 py-2">
               <Typography

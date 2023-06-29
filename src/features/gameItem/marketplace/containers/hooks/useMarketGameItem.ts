@@ -45,9 +45,10 @@ const useMarketGameItem = () => {
     mutateMarketCancelOrder,
     mutateFullPayment
   } = useMutateMarketplace()
-  const { updateGameItemList, getGameItemByToken } = useInvenGameItem()
+  const { getGameItemByToken } = useInvenGameItem()
   const { onCheckPolygonChain } = useGlobalMarket()
-  const { updateInvenNFTMarketData } = useInventoryProvider()
+  const { updateInvenNFTMarketData, onUpdateGameItemList } =
+    useInventoryProvider()
   const { errorToast } = useToast()
 
   // get order
@@ -140,11 +141,12 @@ const useMarketGameItem = () => {
               _txHash: _res.transactionHash,
               _sellerType: "user"
             }
-            updateGameItemList(
-              "decrease",
-              _resultEvent[1].toString(),
-              Number(_resultEvent[2].toString())
-            )
+            if (onUpdateGameItemList)
+              onUpdateGameItemList(
+                "decrease",
+                _resultEvent[1].toString(),
+                Number(_resultEvent[2].toString())
+              )
             const { data } = await mutateMarketCreateOrder(_data)
             if (data && updateInvenNFTMarketData)
               updateInvenNFTMarketData(undefined, "game_item", data.item_total)
@@ -221,11 +223,12 @@ const useMarketGameItem = () => {
               _orderId: _resultEvent[0],
               _txHash: _res.transactionHash
             }
-            updateGameItemList(
-              "increase",
-              _resultEvent[1].toString(),
-              Number(_resultEvent[2].toString())
-            )
+            if (onUpdateGameItemList)
+              onUpdateGameItemList(
+                "increase",
+                _resultEvent[1].toString(),
+                Number(_resultEvent[2].toString())
+              )
             await mutateMarketCancelOrder(data)
             _status = true
           }
@@ -326,11 +329,12 @@ const useMarketGameItem = () => {
               _smcAmount: Number(_resultEvent[2].toString()),
               _txHash: _res.transactionHash
             }
-            updateGameItemList(
-              "increase",
-              _resultEvent[1].toString(),
-              Number(_resultEvent[3].toString())
-            )
+            if (onUpdateGameItemList)
+              onUpdateGameItemList(
+                "increase",
+                _resultEvent[1].toString(),
+                Number(_resultEvent[3].toString())
+              )
             await mutateFullPayment(data)
             _status = true
           }

@@ -3,6 +3,7 @@ import {
   Avatar,
   Box,
   CardHeader,
+  Divider,
   IconButton,
   SwipeableDrawer
 } from "@mui/material"
@@ -18,9 +19,11 @@ import { ImageCustom } from "@components/atoms/image/Image"
 import { StyledAvatar } from "@mobile/components/atoms/headerMenu/HeadProfileMobile"
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
-import LogoutModal from "./LogoutModal"
+import useSyncProfile from "@mobile/features/game/containers/hooks/useSyncProfile"
+import { TelegramWidget } from "@components/atoms/button/TelegramWidget"
 import ProfileSettingModal from "./ProfileSettingModal"
 import PlayedHistoryModal from "./PlayedHistoryModal"
+import LogoutModal from "./LogoutModal"
 
 interface ISettingModalProps {
   open: boolean
@@ -36,6 +39,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
 
   const { t } = useTranslation()
   const { clearAllDrawer } = useDrawerControllerMobile()
+  const { handleSyncTelegramId } = useSyncProfile()
 
   return (
     <SwipeableDrawer
@@ -223,6 +227,16 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
             title={t("Support")}
           />
         </Box>
+        {profile && !profile.telegram_id && (
+          <>
+            <TelegramWidget
+              dataOnAuth={handleSyncTelegramId}
+              botName="NakaGameBot"
+            />
+            <Divider className="my-6 !block border-b border-[#35383F]" />
+          </>
+        )}
+
         <CardHeader
           onClick={() => setToggleLogout(!toggleLogout)}
           sx={{

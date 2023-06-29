@@ -1,7 +1,7 @@
+import React from "react"
 import Video from "@components/atoms/Video"
 import { IVideoProps } from "@constants/video"
 import { Box, SxProps, Theme } from "@mui/material"
-import React from "react"
 
 interface IHeroSectionProps extends IVideoProps {
   hasVideo?: boolean

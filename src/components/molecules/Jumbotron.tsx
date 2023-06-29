@@ -85,6 +85,8 @@ const Jumbotron = ({
     }
   }
 
+  const textHtml = `<p><span class="ql-font-neueMachinaSemiBold ql-size-huge">das</span></p>`
+
   return (
     <Box
       component="div"
@@ -135,6 +137,7 @@ const Jumbotron = ({
           />
         </div>
       )}
+      <div dangerouslySetInnerHTML={{ __html: textHtml }} />
     </Box>
   )
 }

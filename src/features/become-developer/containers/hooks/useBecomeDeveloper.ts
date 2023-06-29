@@ -16,10 +16,6 @@ const useBecomeDeveloper = () => {
     keepPreviousData: true,
     staleTime: Infinity
   })
-
-  // eslint-disable-next-line no-console
-  console.log("test-use-dev", becomeDeveloper)
-
   return {
     becomeDeveloperData: becomeDeveloper?.data,
     becomeDeveloperInfo: becomeDeveloper?.info || ({} as IInfo),

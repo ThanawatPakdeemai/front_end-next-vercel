@@ -7,9 +7,6 @@ export const getWebBecomeDeveloper = () =>
     services
       .get<IWebBecomeDev>(`/web/web-become-dev/all`)
       .then((reponse) => {
-        // eslint-disable-next-line no-console
-        console.log("test-reponse", reponse)
-
         resolve(reponse.data)
       })
       .catch((error) => reject(error))

@@ -14,7 +14,7 @@ export interface IList {
 }
 
 export interface IWebBecomeDevData {
-  button_data: IButtonData
+  button_data?: IButtonData
   button: boolean
   is_active: boolean
   list: IList[]

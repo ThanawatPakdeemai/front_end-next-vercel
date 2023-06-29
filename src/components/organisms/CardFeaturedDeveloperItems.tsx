@@ -8,23 +8,18 @@ interface ICardFeaturedDeveloperItemsProps {
 
 const CardFeaturedDeveloperItems = ({
   items
-}: ICardFeaturedDeveloperItemsProps) => {
-  // eslint-disable-next-line no-console
-  console.log("test-item", items)
-
-  return (
-    <div className="card-featured-developer__items flex flex-wrap justify-center gap-5 lg:flex-nowrap">
-      {items?.map((_elm) => (
-        <CardFeaturedDeveloperItem
-          key={_elm._id}
-          image={_elm.image_url}
-          subtitle={_elm.sub_title}
-          title={_elm.title}
-          description={_elm.detail}
-        />
-      ))}
-    </div>
-  )
-}
+}: ICardFeaturedDeveloperItemsProps) => (
+  <div className="card-featured-developer__items flex flex-wrap justify-center gap-5 lg:flex-nowrap">
+    {items?.map((_elm) => (
+      <CardFeaturedDeveloperItem
+        key={_elm._id}
+        image={_elm.image_url}
+        subtitle={_elm.sub_title}
+        title={_elm.title}
+        description={_elm.detail}
+      />
+    ))}
+  </div>
+)
 
 export default CardFeaturedDeveloperItems

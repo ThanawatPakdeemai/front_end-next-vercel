@@ -2,6 +2,7 @@ import ButtonGold from "@components/atoms/gold/ButtonGold"
 import GoldAllIcon from "@components/icons/GoldAllIcon"
 import GoldIcon from "@components/icons/GoldIcon"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import useTransferExpToGold from "@feature/gold/containers/hook/useTransferExpToGold"
 import PageHeader from "@feature/table/components/molecules/PageHeader"
 import TableHeader from "@feature/table/components/molecules/TableHeader"
 import TableRowData from "@feature/table/components/molecules/TableRowData"
@@ -23,7 +24,12 @@ const GoldTransferPage = () => {
   const [exp, setExp] = useState<number>(0)
   // eslint-disable-next-line no-unused-vars
   const [amount, setAmount] = useState<number>(0)
-
+  const { mutateTransferExpToGold } = useTransferExpToGold()
+  const transferExpGold = () => {
+    if (exp > 0) {
+      mutateTransferExpToGold(exp)
+    }
+  }
   return (
     <>
       <div className=" relative">
@@ -61,7 +67,8 @@ const GoldTransferPage = () => {
                   endAdornment: (
                     <InputAdornment
                       position="end"
-                      className="text-xs text-neutral-300"
+                      className="cursor-pointer text-xs text-neutral-300"
+                      onClick={() => setExp(Number(profile?.exp))}
                     >
                       All
                     </InputAdornment>
@@ -108,7 +115,7 @@ const GoldTransferPage = () => {
             Exp
           </p>
           <ButtonToggleIcon
-            handleClick={() => {}}
+            handleClick={transferExpGold}
             startIcon={<></>}
             text="transfer"
             className="btn-rainbow-theme mt-5 h-[50px] !w-full bg-secondary-main font-bold uppercase text-white-default"

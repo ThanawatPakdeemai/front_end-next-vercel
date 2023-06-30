@@ -210,8 +210,8 @@ export default function CardItemGold({
                       {gameObject && (
                         <div className="game-item-image h-6 w-6 p-[4px]">
                           <ImageCustom
-                            src={gameObject.item[0].image_icon}
-                            alt={gameObject.item[0].name}
+                            src={gameObject.item[0]?.image_icon}
+                            alt={gameObject.item[0]?.name}
                             width={20}
                             height={20}
                             className="h-full w-full object-contain opacity-40"

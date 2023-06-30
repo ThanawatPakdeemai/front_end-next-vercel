@@ -2,7 +2,11 @@ import ButtonGold from "@components/atoms/gold/ButtonGold"
 import GoldAllIcon from "@components/icons/GoldAllIcon"
 import GoldIcon from "@components/icons/GoldIcon"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
+import CONFIGS from "@configs/index"
+import { useGetCurrentExp } from "@feature/gold/containers/hook/useGetCurrentExp"
+
 import useTransferExpToGold from "@feature/gold/containers/hook/useTransferExpToGold"
+import useGetTransactionExpToGold from "@feature/gold/containers/hook/useGetTransactionExpToGold"
 import PageHeader from "@feature/table/components/molecules/PageHeader"
 import TableHeader from "@feature/table/components/molecules/TableHeader"
 import TableRowData from "@feature/table/components/molecules/TableRowData"
@@ -18,22 +22,89 @@ import {
 import TableContainer from "@mui/material/TableContainer"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
-import { useState } from "react"
+import { isNaN } from "lodash"
+import { useEffect, useState } from "react"
+import { PaginationNaka } from "@components/atoms/pagination"
+import TableNodata from "@feature/transaction/components/atoms/TableNodata"
+import dayjs from "dayjs"
 
 const GoldTransferPage = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const [exp, setExp] = useState<number>(0)
-  // eslint-disable-next-line no-unused-vars
   const [amount, setAmount] = useState<number>(0)
   const { errorToast } = useToast()
-  const { mutateTransferExpToGold } = useTransferExpToGold()
+  const { mutateTransferExpToGold, isLoading } = useTransferExpToGold()
+  const { data: _currentexp, refetch: _refetchexp } = useGetCurrentExp()
+  const [limit] = useState<number>(10)
+  const [skip, setSkip] = useState<number>(1)
+  const [sort] = useState({ createdAt: -1 })
+  const [search] = useState({})
+  const [totalCount, setTotalCount] = useState(10)
+
+  const {
+    data: dataTransaction,
+    refetch: refetchTransaction,
+    isLoading: loadingTransaction
+  } = useGetTransactionExpToGold({
+    _limit: limit,
+    _skip: skip,
+    _sort: sort,
+    _search: search
+  })
+
+  const currentExp = _currentexp?.data?.total_exp || 0
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      refetchTransaction().then((_res) => {
+        setTotalCount(_res?.data?.info?.totalCount || 10)
+      })
+    }
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataTransaction, skip])
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      if (currentExp < 1) {
+        _refetchexp()
+      }
+    }
+    return () => {
+      load = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentExp])
+
   const transferExpGold = () => {
     if (exp > 0) {
-      mutateTransferExpToGold(exp)
+      mutateTransferExpToGold(amount).then(async (res) => {
+        if (res) {
+          await _refetchexp()
+          await refetchTransaction()
+        }
+      })
     } else {
       errorToast("exp not found")
     }
   }
+
+  useEffect(() => {
+    let load = false
+    if (!load) {
+      if (exp && CONFIGS.EXP_TO_GOLD) {
+        setAmount(exp / Number(CONFIGS.EXP_TO_GOLD))
+      }
+    }
+    return () => {
+      load = true
+    }
+  }, [exp])
+
   return (
     <>
       <div className=" relative">
@@ -64,7 +135,20 @@ const GoldTransferPage = () => {
                   }
                 }}
                 value={exp}
-                onChange={(event) => setExp(Number(event.target.value))}
+                onChange={(event) => {
+                  const num = Number(event.target.value)
+                  if (num && !isNaN(num) && typeof num === "number") {
+                    if (profile) {
+                      if (num <= currentExp) {
+                        setExp(num)
+                      } else {
+                        setExp(currentExp)
+                      }
+                    }
+                  } else {
+                    setExp(0)
+                  }
+                }}
                 placeholder="Enter amount"
                 className="m-0"
                 InputProps={{
@@ -72,7 +156,7 @@ const GoldTransferPage = () => {
                     <InputAdornment
                       position="end"
                       className="cursor-pointer text-xs text-neutral-300"
-                      onClick={() => setExp(Number(profile?.exp))}
+                      onClick={() => setExp(Number(currentExp))}
                     >
                       All
                     </InputAdornment>
@@ -97,6 +181,8 @@ const GoldTransferPage = () => {
                     padding: "0 10px"
                   }
                 }}
+                disabled
+                value={amount}
                 className="m-0"
                 InputProps={{
                   startAdornment: (
@@ -114,13 +200,14 @@ const GoldTransferPage = () => {
           <p className=" text-xs uppercase text-neutral-500">
             My EXP :
             <span className="mx-1 text-neutral-300">
-              {Helper.formatNumber(profile?.exp || 0)}
+              {Helper.formatNumber(currentExp || 0)}
             </span>
             Exp
           </p>
           <ButtonToggleIcon
             handleClick={transferExpGold}
             startIcon={<></>}
+            disabled={exp <= 0 || isLoading}
             text="transfer"
             className="btn-rainbow-theme mt-5 h-[50px] !w-full bg-secondary-main font-bold uppercase text-white-default"
             type="button"
@@ -150,7 +237,7 @@ const GoldTransferPage = () => {
         title="Transactions"
         subtitle=""
       />
-      <TableContainer className="max-w-[552px] rounded-[14px] border border-neutral-800 bg-neutral-780 px-1.5 pb-1.5">
+      <TableContainer className="mb-5 max-w-[552px] rounded-[14px] border border-neutral-800 bg-neutral-780 px-1.5 pb-1.5">
         <Table>
           <TableHeader
             thead={[
@@ -171,13 +258,45 @@ const GoldTransferPage = () => {
               "tr:last-of-type td": { borderBottom: 0 }
             }}
           >
-            <TableRowData
-              gridTemplateColumns="118px 125px 125px 1fr"
-              child={[<>ssss</>, <>swww</>, <>swww</>, <>swww</>]}
-            />
+            {dataTransaction && !loadingTransaction ? (
+              dataTransaction?.data?.map((_data) => (
+                <TableRowData
+                  key={_data.id}
+                  gridTemplateColumns="118px 125px 125px 1fr"
+                  child={[
+                    <>
+                      <div className="rounded border border-neutral-700 px-2 py-1 text-neutral-500">
+                        {dayjs(_data.createdAt).format("DD MMM YYYY")}
+                      </div>
+                    </>,
+                    <>
+                      <div className="bg-transfer-gold  rounded px-2 py-1  text-primary-main">
+                        {_data.type}
+                      </div>
+                    </>,
+                    <>
+                      <div className=" text-[#FFCA63]">
+                        {_data?.meta_data?.gold_amount}
+                      </div>
+                    </>,
+                    <>- {_data?.meta_data?.exp_use}</>
+                  ]}
+                />
+              ))
+            ) : (
+              <>
+                <TableNodata />
+              </>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
+      <PaginationNaka
+        totalCount={totalCount}
+        limit={limit}
+        page={skip}
+        setPage={setSkip}
+      />
     </>
   )
 }

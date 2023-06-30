@@ -1,7 +1,12 @@
 /* eslint-disable no-new */
 import services from "@configs/axiosGlobalConfig"
-import { IPropsGetExpCurrent } from "@feature/gold/interfaces/IGoldService"
-import { IGolds } from "@feature/profile/interfaces/IProfileService"
+import {
+  IGolds,
+  IPropsGetExpTransaction,
+  ICurrentExp,
+  IResTransferExp,
+  IResTransactionExp
+} from "@feature/gold/interfaces/IGoldService"
 
 export const getGolds = (_address: string) =>
   new Promise<IGolds>((resolve, reject) => {
@@ -15,10 +20,10 @@ export const getGolds = (_address: string) =>
   })
 
 export const transferExpToGold = (_item_qty: number) =>
-  new Promise<IGolds>((resolve, reject) => {
+  new Promise<IResTransferExp>((resolve, reject) => {
     const data = { item_qty: _item_qty }
     services
-      .post<IGolds>(`/profile/exchange/exp-gold`, { ...data })
+      .post<IResTransferExp>(`/profile/exchange/exp-gold`, { ...data })
       .then((response) => {
         resolve(response.data)
       })
@@ -30,21 +35,22 @@ export const getTransactionTransferGold = ({
   _skip,
   _sort,
   _search
-}: IPropsGetExpCurrent) =>
-  new Promise<IGolds>((resolve, reject) => {
+}: IPropsGetExpTransaction) =>
+  new Promise<IResTransactionExp>((resolve, reject) => {
     const data = { limit: _limit, skip: _skip, sort: _sort, search: _search }
     services
-      .post<IGolds>(`/profile/transaction/exchange`, { ...data })
+      .post<IResTransactionExp>(`/profile/transaction/exchange`, { ...data })
       .then((response) => {
+        // console.log(response.data)
         resolve(response.data)
       })
       .catch((error) => reject(error))
   })
 
 export const getExpCurrent = () =>
-  new Promise<IGolds>((resolve, reject) => {
+  new Promise<ICurrentExp>((resolve, reject) => {
     services
-      .get<IGolds>(`/profile/exchange/current_accum_exp`)
+      .get<ICurrentExp>(`/profile/exchange/current_accum_exp`)
       .then((response) => {
         resolve(response.data)
       })

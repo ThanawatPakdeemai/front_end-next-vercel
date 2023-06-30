@@ -32,7 +32,7 @@ const MarketplaceRentalList = () => {
           <CardItemMarketPlace
             key={uuidv4()}
             cardType={_data.cardType}
-            id={_data.id}
+            id={_data.tokenId}
             itemImage={
               _data.cardType === "building"
                 ? {
@@ -50,11 +50,25 @@ const MarketplaceRentalList = () => {
                   }
                 : undefined
             }
+            percentage={
+              // eslint-disable-next-line no-nested-ternary
+              _data.percentage &&
+              _data.cardType === "building" &&
+              _data.percentage >= 0
+                ? 100 - Number(_data.percentage)
+                : _data.cardType === "building"
+                ? 100
+                : undefined
+            }
             itemName={_data.name}
             itemLevel={_data.level}
             itemAmount={_data.amount}
             href={`/${router.locale}/marketplace/inventory/${_data.cardType}/${_data.id}`}
             keyType={_data.keyType}
+            sellingType={{
+              title: _data.keyType,
+              color: _data.keyType === "owner" ? "secondary" : "error"
+            }}
             rental={_data.rental}
           />
         ))}

@@ -21,6 +21,7 @@ import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import useSyncProfile from "@mobile/features/game/containers/hooks/useSyncProfile"
 import { TelegramWidget } from "@components/atoms/button/TelegramWidget"
+import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
 import ProfileSettingModal from "./ProfileSettingModal"
 import PlayedHistoryModal from "./PlayedHistoryModal"
 import LogoutModal from "./LogoutModal"
@@ -40,6 +41,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
   const { t } = useTranslation()
   const { clearAllDrawer } = useDrawerControllerMobile()
   const { handleSyncTelegramId } = useSyncProfile()
+  const { isShowSyncTelegram } = useGlobalControllerMobile()
 
   return (
     <SwipeableDrawer
@@ -227,7 +229,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
             title={t("Support")}
           />
         </Box>
-        {profile && !profile.telegram_id && (
+        {isShowSyncTelegram() && (
           <>
             <TelegramWidget
               dataOnAuth={handleSyncTelegramId}

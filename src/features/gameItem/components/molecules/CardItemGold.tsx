@@ -15,7 +15,7 @@ import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
 import { ImageCustom } from "@components/atoms/image/Image"
 import CardBuyItemHeader from "@feature/gameItem/molecules/CardBuyItemHeader"
 import ArrowJoinIcon from "@components/icons/ArrowJoinIcon"
-import useGetProfileGolds from "@feature/profile/containers/hook/useGetProfileGolds"
+import useGetProfileGolds from "@feature/gold/containers/hook/useGetProfileGolds"
 
 interface ICardBuyItemProp {
   gameObject: IGame

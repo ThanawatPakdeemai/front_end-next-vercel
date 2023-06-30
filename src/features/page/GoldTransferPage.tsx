@@ -6,6 +6,7 @@ import useTransferExpToGold from "@feature/gold/containers/hook/useTransferExpTo
 import PageHeader from "@feature/table/components/molecules/PageHeader"
 import TableHeader from "@feature/table/components/molecules/TableHeader"
 import TableRowData from "@feature/table/components/molecules/TableRowData"
+import { useToast } from "@feature/toast/containers"
 import { ArrowForward } from "@mui/icons-material"
 import {
   Divider,
@@ -24,10 +25,13 @@ const GoldTransferPage = () => {
   const [exp, setExp] = useState<number>(0)
   // eslint-disable-next-line no-unused-vars
   const [amount, setAmount] = useState<number>(0)
+  const { errorToast } = useToast()
   const { mutateTransferExpToGold } = useTransferExpToGold()
   const transferExpGold = () => {
     if (exp > 0) {
       mutateTransferExpToGold(exp)
+    } else {
+      errorToast("exp not found")
     }
   }
   return (

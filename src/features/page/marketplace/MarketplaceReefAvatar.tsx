@@ -86,7 +86,7 @@ const MarketplaceReefAvatar = () => {
           successToast("Mint success")
         })
         .catch((_error) => {
-          errorToast("Transection fail")
+          errorToast("Transaction fail")
         })
         .finally(() => {
           setTimeout(() => setClose(), 1000)

@@ -4,15 +4,17 @@ import { IProfile } from "@src/types/profile"
 import useProfileStore from "@stores/profileStore"
 import React, { useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
+import { useRouter } from "next/router"
 import Balance from "./balance/Balance"
 import StatProfile from "./statProfile/StatProfile"
 import MenuLoggedin from "./menuProfile/MenuLoggedin"
 import { StyledMenuItemCustom } from "./SidebarGames"
+import ButtonGold from "../atoms/gold/ButtonGold"
 
 const SidebarProfile = () => {
   const { profile } = useProfileStore()
   const [profileData, setProfileData] = useState<IProfile>()
-
+  const router = useRouter()
   useEffect(() => {
     let load = false
 
@@ -40,7 +42,11 @@ const SidebarProfile = () => {
           />
         ))}
       </MenuList>
-
+      <ButtonGold
+        onClick={() => router.push("/gold-transfer")}
+        text="Get ”NAKA” Gold"
+        showIcon
+      />
       <Balance />
 
       {profileData && (

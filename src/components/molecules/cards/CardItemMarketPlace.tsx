@@ -228,16 +228,14 @@ const CardItemMarketPlace = ({
             icon={handleIcon()}
           />
         )}
-        {rental && keyType && (
+        {rental && id && (
           <div className="flex justify-between">
             <Chip
-              label={
-                keyType.toLowerCase() === "owner" ? rental.buyer : rental.owner
-              }
+              label={id}
               variant="outlined"
               size="small"
-              className={`pointer-events-auto ${
-                keyType ? "mr-2 !w-[50px]" : "absolute left-4 top-4 z-10"
+              className={`pointer-events-auto flex-1 ${
+                keyType ? "mr-2" : "absolute left-4 top-4 z-10"
               }  w-[93px] cursor-pointer truncate uppercase`}
               deleteIcon={
                 <ContentCopySharpIcon
@@ -249,19 +247,9 @@ const CardItemMarketPlace = ({
                 />
               }
               onDelete={() => {
-                if (keyType.toLowerCase() === "owner" && rental.buyer)
-                  copyClipboard(rental.buyer)
-                if (keyType.toLowerCase() !== "owner" && rental.owner)
-                  copyClipboard(rental.owner)
+                copyClipboard(id)
                 successToast(MESSAGES.copy)
               }}
-            />
-            <Chip
-              label={keyType}
-              variant="filled"
-              size="small"
-              className="cursor-pointer uppercase"
-              color={keyType.toLowerCase() === "owner" ? "secondary" : "error"}
             />
           </div>
         )}

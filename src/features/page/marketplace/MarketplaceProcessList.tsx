@@ -50,6 +50,16 @@ const MarketplaceProcessList = () => {
                   }
                 : undefined
             }
+            percentage={
+              // eslint-disable-next-line no-nested-ternary
+              _data.percentage &&
+              _data.cardType === "building" &&
+              _data.percentage >= 0
+                ? 100 - Number(_data.percentage)
+                : _data.cardType === "building"
+                ? 100
+                : undefined
+            }
             itemName={_data.name}
             itemLevel={_data.level}
             itemSize={_data.size as string}
@@ -57,7 +67,10 @@ const MarketplaceProcessList = () => {
             href={`/${router.locale}/marketplace/inventory/${_data.cardType}/${_data.id}`}
             sellingType={{
               title: _data.payment_type,
-              color: _data.payment_type === "unpaid" ? "error" : "info"
+              color:
+                _data.payment_type?.toLowerCase() === "unpaid"
+                  ? "error"
+                  : "info"
             }}
             price={_data.price}
           />

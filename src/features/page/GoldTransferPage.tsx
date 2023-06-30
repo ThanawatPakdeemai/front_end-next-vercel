@@ -32,7 +32,7 @@ const GoldTransferPage = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const [exp, setExp] = useState<number>(0)
   const [amount, setAmount] = useState<number>(0)
-  const { errorToast } = useToast()
+  const { errorToast, successToast } = useToast()
   const { mutateTransferExpToGold, isLoading } = useTransferExpToGold()
   const { data: _currentexp, refetch: _refetchexp } = useGetCurrentExp()
   const [limit] = useState<number>(10)
@@ -86,6 +86,7 @@ const GoldTransferPage = () => {
         if (res) {
           await _refetchexp()
           await refetchTransaction()
+          successToast("Transfer success")
         }
       })
     } else {

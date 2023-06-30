@@ -5,6 +5,7 @@ import { useRouter } from "next/router"
 import useInventoryOwner from "@feature/inventory/containers/hooks/useInventoryOwner"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
+import { IGameItemData } from "@feature/gameItem/interfaces/IGameItemService"
 import SkeletonMarketOwnerList from "./SkeletonMarketOwnerList"
 import CardListContainer from "./CardListContainer"
 
@@ -39,43 +40,59 @@ const MarketplaceOwnerList = () => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       >
-        {inventoryItemList.map((_data) => (
-          <CardItemMarketPlace
-            key={uuidv4()}
-            cardType={_data.cardType}
-            id={_data.tokenId}
-            itemImage={
-              // eslint-disable-next-line no-nested-ternary
-              _data.cardType === "game-item"
-                ? {
-                    src: String(_data.img),
-                    alt: _data.name,
-                    width: _data.name.includes("Bullet") ? 40 : 100
-                  }
-                : _data.cardType !== "land"
-                ? {
-                    src: String(_data.img),
-                    alt: _data.name,
-                    width: 200,
-                    height: 200
-                  }
-                : undefined
-            }
-            itemVideo={
-              _data.cardType === "land"
-                ? {
-                    src: _data.vdo as string,
-                    poster: String(_data.img)
-                  }
-                : undefined
-            }
-            itemName={_data.name}
-            itemLevel={_data.level}
-            itemSize={_data.size as string}
-            itemAmount={_data.amount as number}
-            href={`/${router.locale}/marketplace/inventory/${_data.cardType}/${_data.id}`}
-          />
-        ))}
+        {inventoryItemList.map((_data) => {
+          const text = _data.name
+          const splitText = text.split(/\s(?=\d)/)
+          const firstSpan = splitText[0]
+
+          return (
+            <CardItemMarketPlace
+              key={uuidv4()}
+              cardType={_data.cardType}
+              id={_data.tokenId}
+              // firstData={_data.find(
+              //   (e) => e.item_data?.name === "Bullet" && e.item_data.image
+              // )}
+              firstData={
+                inventoryItemList.find(
+                  (e) => firstSpan === "Bullet" && e.img
+                ) as IGameItemData | undefined
+              }
+              // firstData={_data.name}
+              itemImage={
+                // eslint-disable-next-line no-nested-ternary
+                _data.cardType === "game-item"
+                  ? {
+                      src: String(_data.img),
+                      alt: _data.name,
+                      width: _data.name.includes("Bullet") ? 40 : 100
+                    }
+                  : _data.cardType !== "land"
+                  ? {
+                      src: String(_data.img),
+                      alt: _data.name,
+                      width: 200,
+                      height: 200
+                    }
+                  : undefined
+              }
+              itemVideo={
+                _data.cardType === "land"
+                  ? {
+                      src: _data.vdo as string,
+                      poster: String(_data.img)
+                    }
+                  : undefined
+              }
+              // itemName={_data.name}
+              itemName={firstSpan}
+              itemLevel={_data.level}
+              itemSize={_data.size as string}
+              itemAmount={_data.amount as number}
+              href={`/${router.locale}/marketplace/inventory/${_data.cardType}/${_data.id}`}
+            />
+          )
+        })}
       </CardListContainer>
     )
   }

@@ -40,7 +40,7 @@ const AboutGameModal = ({
     >
       <Box
         component="div"
-        className="setting-list flex flex-col p-[8px_24px_36px] font-urbanist text-white-primary"
+        className="setting-list flex h-full flex-col p-[8px_24px_36px] font-urbanist text-white-primary"
         sx={{
           "h2": {
             lineHeight: "1",

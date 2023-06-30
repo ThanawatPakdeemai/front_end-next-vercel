@@ -477,7 +477,6 @@ const useGlobal = (
    * @description Fetch all token supported
    */
   const fetchChainData = useCallback(async () => {
-    if (isMobile) return
     if (!isLogin) return
     if (currentChainSelected === CONFIGS.CHAIN.CHAIN_ID_HEX_BNB) {
       await fetchAllTokenSupported()

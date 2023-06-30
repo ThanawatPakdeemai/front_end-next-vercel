@@ -42,7 +42,7 @@ import { useWeb3Provider } from "@providers/index"
 import Link from "next/link"
 import IReferrals from "@components/icons/Referrals"
 import Script from "next/script"
-import useLinkToTelegram from "@feature/game/containers/hooks/useLinkToTelegram"
+import { useLinkToTelegram } from "@feature/profile/containers/hook/useSyncProfileQuery"
 import EditProfileModal from "./EditProfileModal"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
@@ -172,7 +172,7 @@ const ProfileContent = () => {
       if (telegramId) {
         mutateLinkToTelegram({
           player_id: idPlayer,
-          telegram_id: telegramId
+          telegram_id: Number(telegramId)
         })
         localStorage.removeItem("telegram-params")
       }

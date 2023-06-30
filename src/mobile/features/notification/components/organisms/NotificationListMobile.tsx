@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid"
 import SkeletonNotificationList from "@mobile/components/atoms/skeleton/SkeletonNotificationList"
 import NoData from "@components/molecules/NoData"
 import { INotification } from "@feature/notification/interfaces/INotificationService"
-import useLoadingStore from "@stores/loading"
+import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
 import NotificationCardMobile from "../molecules/NotificationCardMobile"
 
 interface INotificationListMobile {
@@ -20,7 +20,7 @@ const NotificationListMobile = ({
   limit,
   handleClick
 }: INotificationListMobile) => {
-  const { setOpen } = useLoadingStore()
+  const { handleClickOpenLoading } = useGlobalControllerMobile()
 
   return (
     <Box
@@ -41,7 +41,8 @@ const NotificationListMobile = ({
             createdAt={_item.createdAt}
             status={_item.read}
             handleClick={() => {
-              setOpen("")
+              // setOpen("")
+              handleClickOpenLoading()
               handleClick(_item)
             }}
           />

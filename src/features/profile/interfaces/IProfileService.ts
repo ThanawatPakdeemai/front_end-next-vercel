@@ -47,6 +47,9 @@ export interface IProfile extends IProfileMain {
   level: number
   message?: string
   gold?: number
+  telegram_id?: string
+  facebook_id?: string
+  discord_id?: string
 }
 
 export interface IProfileSubmit {
@@ -377,4 +380,8 @@ export interface IGeoProfile {
   country_population: number
   asn: string
   org: string
+}
+
+export interface IGolds {
+  gold: number
 }

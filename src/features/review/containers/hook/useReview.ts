@@ -1,7 +1,8 @@
 import { useToast } from "@feature/toast/containers"
 import useGameStore from "@stores/game"
-import useProfileStore from "@stores/profileStore"
+// import useProfileStore from "@stores/profileStore"
 import React, { useState } from "react"
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 import useReviewContext from "../contexts/useReviewContext"
 import useAddReview from "./useAddReview"
 
@@ -10,36 +11,43 @@ const useReview = () => {
   const { setRate, setMessage, message, rate } = useReviewContext()
   const { mutateAddReview } = useAddReview()
   const { errorToast, successToast } = useToast()
-  const { dataGamePartner } = useGameStore()
-  const profile = useProfileStore((state) => state.profile.data)
+  const { data } = useGameStore()
+  // const profile = useProfileStore((state) => state.profile.data)
+  const { executeRecaptcha } = useGoogleReCaptcha()
 
   /**
    * @description Handle submit comment
    */
-  const onSubmitComment = (_message: string, _rating: number) => {
-    setLoading(true)
-
-    mutateAddReview({
-      user_id: profile && profile.id ? profile.id : "",
-      review_comment: _message,
-      review_rate: _rating,
-      game_content_id:
-        dataGamePartner && dataGamePartner.id ? dataGamePartner.id : ""
-    })
-      .then((res) => {
-        if (res) {
-          setTimeout(() => {
-            successToast("Review has been added")
+  const onSubmitComment = async (_review: string, _rating: number) => {
+    if (!executeRecaptcha) {
+      return
+    }
+    const _captcha = await executeRecaptcha("addReview")
+    if (data && _captcha) {
+      setLoading(true)
+      await mutateAddReview({
+        _recaptcha: _captcha,
+        _message: _review,
+        _rate: _rating,
+        _gameId: data?._id
+      })
+        .then((res) => {
+          if (res) {
             setMessage("")
             setRate(0)
+            successToast("Review has been added")
+          }
+        })
+        .catch((error) => {
+          errorToast(error.message)
+          setLoading(false)
+        })
+        .finally(() =>
+          setTimeout(() => {
             setLoading(false)
-          }, 3000)
-        }
-      })
-      .catch((error) => {
-        errorToast(error.message)
-        setLoading(false)
-      })
+          }, 1000)
+        )
+    }
   }
 
   /**

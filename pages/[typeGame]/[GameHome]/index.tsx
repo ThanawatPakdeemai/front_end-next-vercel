@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from "react"
+import { ReactElement, useCallback, useEffect } from "react"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useRouter } from "next/router"
 import { GetServerSideProps } from "next"
@@ -14,6 +14,8 @@ import { useTranslation } from "react-i18next"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import CardItemGold from "@feature/gameItem/components/molecules/CardItemGold"
 import useLoadingStore from "@stores/loading"
+import GameReviews from "@feature/game/components/molecules/GameReviews"
+import CONFIGS from "@configs/index"
 
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
@@ -131,51 +133,47 @@ export default function GameLobby() {
   }
 
   /**
+   * @description Button go to room list
+   */
+  const buttonGotoRoomlist = useCallback(() => {
+    if (!gameData) return <></>
+    return (
+      <Box
+        component="div"
+        className="flex w-full flex-col justify-between gap-4 uppercase"
+        sx={{
+          ".like-no_wrapper": {
+            flex: "0 0 100%",
+            ".like-no_score": {
+              width: "100%"
+            }
+          }
+        }}
+      >
+        <Box
+          component="div"
+          sx={StartButtonCustomStyle}
+          className="flex w-full justify-center uppercase"
+        >
+          <ButtonGame
+            textButton={t("join-game")}
+            url={`/${getGameMode(gameData)}/${
+              gameData.path
+            }${isRedirectRoomlist(gameData).toString()}`}
+          />
+        </Box>
+      </Box>
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameData])
+
+  /**
    * @description Render Form Buy Item
    */
   const renderFormBuyItem = () => {
     if (!gameData) return null
     switch (getGameMode(gameData)) {
       case "story-mode":
-        return (
-          <>
-            <Box
-              component="div"
-              className="flex w-full flex-col justify-between gap-4 uppercase"
-              sx={{
-                ".like-no_wrapper": {
-                  flex: "0 0 100%",
-                  ".like-no_score": {
-                    width: "100%"
-                  }
-                }
-              }}
-            >
-              <Box
-                component="div"
-                sx={StartButtonCustomStyle}
-                className="flex w-full justify-center uppercase"
-              >
-                <ButtonGame
-                  textButton={t("join-game")}
-                  url={getGameStoryModeURL(gameData)}
-                />
-              </Box>
-            </Box>
-          </>
-        )
-
-      case "free-to-play":
-        if (isPokerGame(gameData)) {
-          return (
-            <CardItemGold
-              buttonStyle="purple"
-              gameObject={gameData}
-            />
-          )
-        }
-        return <></>
-      case "free-to-earn":
         return (
           <Box
             component="div"
@@ -196,13 +194,25 @@ export default function GameLobby() {
             >
               <ButtonGame
                 textButton={t("join-game")}
-                url={`/${getGameMode(gameData)}/${
-                  gameData.path
-                }${isRedirectRoomlist(gameData).toString()}`}
+                url={getGameStoryModeURL(gameData)}
               />
             </Box>
           </Box>
         )
+
+      case "free-to-play":
+        if (isPokerGame(gameData)) {
+          return (
+            <CardItemGold
+              buttonStyle="purple"
+              gameObject={gameData}
+            />
+          )
+        }
+        return buttonGotoRoomlist()
+
+      case "free-to-earn":
+        return buttonGotoRoomlist()
       default:
         return (
           <CardBuyItem
@@ -251,23 +261,54 @@ export default function GameLobby() {
           />
         }
         component2={
-          <FullWidthContent
-            sxCustomStyled={{
-              "&.container": {
-                maxWidth: "100%!important",
-                "&.container-fullWidth": {
-                  padding: "49px"
-                }
+          CONFIGS.MODE === "development" ? (
+            <RightSidebarContentEffect
+              className="mb-[64px]"
+              content={
+                <FullWidthContent
+                  sxCustomStyled={{
+                    "&.container": {
+                      maxWidth: "100%!important",
+                      "&.container-fullWidth": {
+                        padding: "49px"
+                      }
+                    }
+                  }}
+                >
+                  <TabProvider>
+                    <GameTabsVertical
+                      gameId={gameData.id}
+                      gameType={getGameMode(gameData)}
+                    />
+                  </TabProvider>
+                </FullWidthContent>
               }
-            }}
-          >
-            <TabProvider>
-              <GameTabsVertical
-                gameId={gameData.id}
-                gameType="arcade-emporium"
-              />
-            </TabProvider>
-          </FullWidthContent>
+              aside={
+                <GameReviews
+                  gameType={getGameMode(gameData)}
+                  gameId={gameData.id}
+                />
+              }
+            />
+          ) : (
+            <FullWidthContent
+              sxCustomStyled={{
+                "&.container": {
+                  maxWidth: "100%!important",
+                  "&.container-fullWidth": {
+                    padding: "49px"
+                  }
+                }
+              }}
+            >
+              <TabProvider>
+                <GameTabsVertical
+                  gameId={gameData.id}
+                  gameType={getGameMode(gameData)}
+                />
+              </TabProvider>
+            </FullWidthContent>
+          )
         }
       />
     ) : (

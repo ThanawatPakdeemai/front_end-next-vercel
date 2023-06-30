@@ -48,3 +48,31 @@ export interface IGetGameItemsBalanceByItemId {
   _address: string
   _itemIdSmartContract: string
 }
+
+// fix later
+export interface ItemData {
+  _id: string
+  name: string
+  detail: string
+  price: number
+  image: string
+  item_id_smartcontract: number
+  image_icon: string
+  image_icon_color: string
+  item_size: string
+}
+
+export interface IGameItemData {
+  _id: string
+  created_at: string
+  seller_id: string
+  item_id: string
+  item_amount: number
+  price: number
+  seller_type: string
+  type: string
+  is_active: boolean
+  order_id: string
+  item_data: ItemData
+  img: string
+}

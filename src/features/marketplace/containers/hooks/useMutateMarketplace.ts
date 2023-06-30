@@ -123,7 +123,7 @@ const useMutateMarketplace = () => {
       mutationKey: ["useMarKPayBillInstallNFT"],
       retry: false,
       onSuccess: (_response) => {
-        successToast(_response.message)
+        successToast(_response.message || "Pay bill success")
       },
       onError: (_response) => {
         errMsgToast((_response as IMessage)?.message)

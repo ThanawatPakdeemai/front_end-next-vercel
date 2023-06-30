@@ -27,6 +27,7 @@ interface IProp {
     max: number
     count: number
   }
+  isUSD?: boolean
 }
 
 const TextfieldDetailContent = ({
@@ -34,9 +35,10 @@ const TextfieldDetailContent = ({
   position,
   // itemAmount,
   price,
-  count
+  count,
+  isUSD
 }: IProp) => {
-  const { calcNAKAPrice, calcUSDPrice } = useGlobalMarket()
+  const { calcUSDPrice, calcNakaPrice } = useGlobalMarket()
   const { invPrice, setInvPrice, invAmount, setInvAmount } =
     useInventoryProvider()
   const { marketAmount, setMarketAmount } = useMarketplaceProvider()
@@ -58,7 +60,7 @@ const TextfieldDetailContent = ({
         if (invAmount && invAmount <= count.min) setInvAmount(count.min)
         else setInvAmount((prev: number) => prev - 1)
       } else if (setMarketAmount) {
-        if (marketAmount && marketAmount >= count.min)
+        if (marketAmount && marketAmount <= count.min)
           setMarketAmount(count.min)
         else setMarketAmount((prev: number) => prev - 1)
       }
@@ -88,11 +90,15 @@ const TextfieldDetailContent = ({
     let load = false
     if (!load) {
       const _priceValue = invPrice || price || 0
-      const _valueNaka = formatNumber(calcNAKAPrice(_priceValue), {
-        maximumFractionDigits: 4
-      })
+      const _amount = invAmount || marketAmount || 1
+      const _valueNaka = formatNumber(
+        calcNakaPrice(_priceValue, _amount, isUSD),
+        {
+          maximumFractionDigits: 4
+        }
+      )
       setSellPriceNaKa(_valueNaka)
-      const _valueUSD = formatNumber(calcUSDPrice(_priceValue), {
+      const _valueUSD = formatNumber(calcUSDPrice(_priceValue, _amount), {
         maximumFractionDigits: 4
       })
       setSellPriceUSD(_valueUSD)
@@ -100,7 +106,8 @@ const TextfieldDetailContent = ({
     return () => {
       load = true
     }
-  }, [calcNAKAPrice, price, invPrice, formatNumber, calcUSDPrice])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [invAmount, invPrice, isUSD, marketAmount, price])
 
   return (
     <div
@@ -161,9 +168,9 @@ const TextfieldDetailContent = ({
       type === "nft_avatar" ||
       type === "nft_game" ? (
         <FormattedInputs
-          label="PRICE (NAKA)"
+          label={count && invPrice ? "PRICE (NAKA) : 1 item" : "PRICE (NAKA)"}
           className="!w-[131px] sm:!w-[232px]"
-          values={sellPriceNaKa}
+          values={count && invPrice ? String(invPrice) : sellPriceNaKa}
           onSetValues={onPriceChange}
           disabled={!!price}
           propsInput={{
@@ -176,7 +183,11 @@ const TextfieldDetailContent = ({
               </InputAdornment>
             )
           }}
-          helperText={`= ${sellPriceUSD} USD`}
+          helperText={
+            count && invPrice
+              ? `Total ${sellPriceNaKa} NAKA = ${sellPriceUSD} USD`
+              : `= ${sellPriceUSD} USD`
+          }
         />
       ) : null}
     </div>

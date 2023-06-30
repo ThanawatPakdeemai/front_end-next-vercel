@@ -23,9 +23,18 @@ describe("TextfieldDetailContent component", () => {
 
   it.each(types.map((type, index) => [index + 1, type]))(
     "Case %i : renders type %s without error",
-    (_index, type) => {
-      render(<TextfieldDetailContent type={type} />)
-      expect(screen.getByTestId(type)).toBeInTheDocument()
+    (_type, _index) => {
+      const key = `renders-type-${_index}`
+      render(
+        <TextfieldDetailContent
+          type={_type.toString() as TNFTType}
+          // type={
+          //   typeof _type === "number" ? (_type.toString() as TNFTType) : _type
+          // }
+          key={key}
+        />
+      )
+      expect(screen.getByTestId(_type)).toBeInTheDocument()
     }
   )
 

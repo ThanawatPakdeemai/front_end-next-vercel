@@ -1,7 +1,7 @@
 {
   "welcome_to_react": "Welcome to React",
-  "login": "Log in",
-  "logout": "Logout",
+  "login": "Sign in",
+  "logout": "Sign out",
   "register": "Register",
   "send": "SEND",
   "email_address": "Email Address",

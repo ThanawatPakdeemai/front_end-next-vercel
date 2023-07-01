@@ -155,7 +155,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
                 <NavigateNextIcon className="text-white-default" />
               </IconButton>
             }
-            title={t("Played History")}
+            title={t("All played games")}
           />
           {/* <CardHeader
             sx={{

@@ -400,7 +400,7 @@ const ProfileContent = () => {
                   <span className="absolute left-[15px]">
                     <PlugIcon />
                   </span>
-                  Logout
+                  Sign out
                 </div>
               </Button>
             </Box>

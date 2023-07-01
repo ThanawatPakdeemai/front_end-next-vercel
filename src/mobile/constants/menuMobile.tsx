@@ -60,7 +60,7 @@ export const MAIN_MENU_MOBILE: {
   },
   {
     id: "reward",
-    name: "Reward",
+    name: "Rewards",
     icon: <RewardIconMobile />,
     iconActive: <RewardFilledIconMobile />
   },

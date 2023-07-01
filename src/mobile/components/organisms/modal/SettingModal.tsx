@@ -151,7 +151,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
               </Avatar>
             }
             action={
-              <IconButton aria-label="played history">
+              <IconButton aria-label="All played games">
                 <NavigateNextIcon className="text-white-default" />
               </IconButton>
             }

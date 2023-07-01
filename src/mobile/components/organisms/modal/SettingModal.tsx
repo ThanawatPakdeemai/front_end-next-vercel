@@ -73,7 +73,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
           aria-hidden="true"
         >
           <ArrowBackIcon />
-          Setting
+          Settings
         </h2>
         <CardHeader
           sx={{

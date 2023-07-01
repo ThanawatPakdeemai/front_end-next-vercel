@@ -82,7 +82,7 @@ const LogoutModal = ({ open, setOpen }: ICategoriesModalProps) => {
               }}
             >
               <div className="flex items-center font-urbanist text-base font-bold">
-                Yes, Log out
+                Yes, log out
               </div>
             </Button>
           </Box>

@@ -282,7 +282,6 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
         setProfileSetting={() => setToggleProflie(false)}
         type="edit"
       />
-      {/* Played History Modal */}
       <PlayedHistoryModal
         open={togglePlayedHistory}
         setOpenPlayedHistory={() => setTogglePlayedHistory(false)}

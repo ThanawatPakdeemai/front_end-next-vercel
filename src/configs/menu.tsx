@@ -326,8 +326,8 @@ export const MENU_LOGGEDIN: IMenu[] = [
     external: false
   },
   {
-    id: "play-history",
-    label: "Played History",
+    id: "history",
+    label: "History",
     href: "/history",
     icon: <PlayHistoryIcon />,
     external: false

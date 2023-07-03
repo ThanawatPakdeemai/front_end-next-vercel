@@ -30,7 +30,7 @@ const FooterMobile = () => {
     } else if (_id === "reward") {
       setMenuActive({ id: _id, status: true })
       return setOpenReward(true)
-    } else if (_id === "settings") {
+    } else if (_id === "setting") {
       setMenuActive({ id: _id, status: true })
       return setOpenSetting(true)
     }
@@ -45,7 +45,7 @@ const FooterMobile = () => {
     } else if (_id === "reward") {
       setMenuActive({ id: "home", status: true })
       return setOpenReward(false)
-    } else if (_id === "settings") {
+    } else if (_id === "setting") {
       setMenuActive({ id: "home", status: true })
       return setOpenSetting(false)
     }
@@ -99,7 +99,7 @@ const FooterMobile = () => {
       {/* Setting Modal */}
       <SettingModal
         open={openSetting}
-        setOpenSetting={() => handMeneActive("settings")}
+        setOpenSetting={() => handMeneActive("setting")}
       />
     </Box>
   )

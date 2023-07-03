@@ -89,31 +89,31 @@ const BecomeDeveloperPage = () => {
 
   return (
     <main>
-      {sectionIntro && (
-        <HeroSection
-          hasVideo
-          src={
-            sectionIntro
-              ? sectionIntro?.image_url
-              : VIDEOS.becomeDeveloperVideo.src
-          }
-          poster={
-            sectionIntro.list[0].image_url || VIDEOS.becomeDeveloperVideo.poster
-          }
-          className="!items-end !justify-start pb-12"
-        >
-          <div className="flex items-center justify-between">
-            <Jumbotron
-              textTitle="nakamoto.games"
-              textTitleDark="FOR GAME DEVELOPERS_"
-              text="We take care of the infrastructure and distribution so you can focus on creating games. Publish your Web3 game now ⚡"
-              className="w-[620px]"
-              textButton="Subscribe Now"
-            />
-            <ButtonScroll anchorLink="become-developer--section-1" />
-          </div>
-        </HeroSection>
-      )}
+      <HeroSection
+        hasVideo
+        src={
+          sectionIntro
+            ? sectionIntro?.image_url
+            : VIDEOS.becomeDeveloperVideo.src
+        }
+        poster={
+          (sectionIntro && sectionIntro.list[0].image_url) ||
+          VIDEOS.becomeDeveloperVideo.poster
+        }
+        className="!items-end !justify-start pb-12"
+      >
+        <div className="flex items-center justify-between">
+          <Jumbotron
+            textTitle="nakamoto.games"
+            textTitleDark="FOR GAME DEVELOPERS_"
+            text="We take care of the infrastructure and distribution so you can focus on creating games. Publish your Web3 game now ⚡"
+            className="w-[620px]"
+            textButton="Subscribe Now"
+          />
+          <ButtonScroll anchorLink="become-developer--section-1" />
+        </div>
+      </HeroSection>
+
       <BecomeDeveloperContent
         id="become-developer--section-1"
         image={IMAGES.becomeDeveloperSection1}

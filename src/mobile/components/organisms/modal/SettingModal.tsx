@@ -155,7 +155,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
                 <NavigateNextIcon className="text-white-default" />
               </IconButton>
             }
-            title={t("Played History")}
+            title={t("History")}
           />
           {/* <CardHeader
             sx={{
@@ -282,7 +282,6 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
         setProfileSetting={() => setToggleProflie(false)}
         type="edit"
       />
-      {/* Played History Modal */}
       <PlayedHistoryModal
         open={togglePlayedHistory}
         setOpenPlayedHistory={() => setTogglePlayedHistory(false)}

@@ -27,10 +27,10 @@ const FooterMobile = () => {
     } else if (_id === "wishlist") {
       setMenuActive({ id: _id, status: true })
       return setOpenWishlist(true)
-    } else if (_id === "reward") {
+    } else if (_id === "rewards") {
       setMenuActive({ id: _id, status: true })
       return setOpenReward(true)
-    } else if (_id === "setting") {
+    } else if (_id === "settings") {
       setMenuActive({ id: _id, status: true })
       return setOpenSetting(true)
     }
@@ -42,10 +42,10 @@ const FooterMobile = () => {
     } else if (_id === "wishlist") {
       setMenuActive({ id: "home", status: true })
       return setOpenWishlist(false)
-    } else if (_id === "reward") {
+    } else if (_id === "rewards") {
       setMenuActive({ id: "home", status: true })
       return setOpenReward(false)
-    } else if (_id === "setting") {
+    } else if (_id === "settings") {
       setMenuActive({ id: "home", status: true })
       return setOpenSetting(false)
     }
@@ -94,12 +94,12 @@ const FooterMobile = () => {
       {/* Reward Modal */}
       <EarnRewardModal
         open={openReward}
-        setOpenReward={() => handMeneActive("reward")}
+        setOpenReward={() => handMeneActive("rewards")}
       />
       {/* Setting Modal */}
       <SettingModal
         open={openSetting}
-        setOpenSetting={() => handMeneActive("setting")}
+        setOpenSetting={() => handMeneActive("settings")}
       />
     </Box>
   )

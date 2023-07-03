@@ -9,6 +9,7 @@ pipeline {
           // sh 'ssh -o StrictHostKeyChecking=no naka@naka.im'
           // sh 'mkdir -p ~/.ssh'
           // sh "ssh-keyscan naka.im >> ~/.ssh/known_hosts"
+          sh "dig -4 TXT +short o-o.myaddr.l.google.com @ns1.google.com"
           sh "ssh naka@naka.im 'cd /home/naka/frontend-nextjs && ./deploy.sh && cd /home/naka/frontend-uat && ./deploy.sh'"
         }
       }

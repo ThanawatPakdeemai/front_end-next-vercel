@@ -1,4 +1,7 @@
 import React, { memo, useState } from "react"
+import * as yup from "yup"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { motion } from "framer-motion"
 import {
   Box,
   ButtonGroup,
@@ -6,7 +9,8 @@ import {
   TextField,
   Typography,
   CircularProgress,
-  Grid
+  Grid,
+  Alert
 } from "@mui/material"
 import LoginIcon from "@mui/icons-material/Login"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
@@ -26,6 +30,7 @@ import { useTranslation } from "react-i18next"
 import { isMobile } from "@hooks/useGlobal"
 import FromForgotPassword from "./FromForgotPassword"
 import useFormLoginController from "../containers/hooks/useFormLoginController"
+import { ISignIn } from "../interfaces/IAuthService"
 
 const FormLogin = () => {
   const {
@@ -34,8 +39,7 @@ const FormLogin = () => {
     twitterLogin,
     metaMarkLogin,
     isLoading,
-    onSubmitLogin,
-    onError
+    onSubmitLogin
   } = useFormLoginController()
 
   const { t } = useTranslation()
@@ -48,7 +52,19 @@ const FormLogin = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const handleShowPassword = () => setShowPassword(!showPassword)
 
-  const { register, handleSubmit } = useForm({
+  const SignUpSchema = yup
+    .object({
+      _email: yup.string().required(),
+      _password: yup.string().required()
+    })
+    .required()
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<ISignIn>({
+    resolver: yupResolver(SignUpSchema),
     defaultValues: {
       _email: "",
       _password: ""
@@ -57,21 +73,19 @@ const FormLogin = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmitLogin, onError)}>
+      <form onSubmit={handleSubmit(onSubmitLogin)}>
         <Box component="div">
           <Typography className="mb-2 font-neue-machina text-sm uppercase  text-neutral-500">
             {t("email_address")}
           </Typography>
           <TextField
             className="w-full"
-            required
             type="email"
             sx={{
               "& .MuiOutlinedInput-root": {
                 width: "100%"
               }
             }}
-            {...register("_email")}
             id="email-login"
             placeholder={`${t("email")}`}
             size="medium"
@@ -83,13 +97,29 @@ const FormLogin = () => {
                 </InputAdornment>
               )
             }}
+            {...register("_email")}
           />
+          {errors._email && (
+            <motion.div
+              initial={{ opacity: 0, marginBottom: 0 }}
+              animate={{
+                opacity: 1,
+                marginTop: 10
+              }}
+            >
+              <Alert
+                severity="warning"
+                className="rounded-lg"
+              >
+                Email is a required field
+              </Alert>
+            </motion.div>
+          )}
         </Box>
         <Box component="div">
           <Typography className="mb-2 mt-5 font-neue-machina text-sm uppercase text-neutral-500">
             {t("password")}
           </Typography>
-
           <TextField
             className="w-full"
             sx={{
@@ -99,11 +129,9 @@ const FormLogin = () => {
             }}
             id="password-login"
             size="medium"
-            {...register("_password")}
             type={showPassword ? "text" : "password"}
             placeholder={`${t("password")}`}
-            helperText={t("helperText_login")}
-            required
+            helperText={errors._email ? t("helperText_login") : ""}
             autoComplete="current-password"
             InputProps={{
               startAdornment: (
@@ -128,7 +156,24 @@ const FormLogin = () => {
                 </InputAdornment>
               )
             }}
+            {...register("_password")}
           />
+          {errors._password && (
+            <motion.div
+              initial={{ opacity: 0, marginBottom: 0 }}
+              animate={{
+                opacity: 1,
+                marginTop: 10
+              }}
+            >
+              <Alert
+                severity="warning"
+                className="rounded-lg"
+              >
+                Password is a required field
+              </Alert>
+            </motion.div>
+          )}
         </Box>
 
         <ButtonGroup className="mt-10 w-full gap-3 md:w-auto">

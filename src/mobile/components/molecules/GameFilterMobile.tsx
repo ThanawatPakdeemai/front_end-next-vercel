@@ -39,7 +39,7 @@ const GameFilterMobile = ({
           setSelectedCategory("all")
         }}
       >
-        Top game
+        Top Games
       </ButtonOutlineTemplate>
       <ButtonOutlineTemplate
         onClick={() => setOpen(true)}

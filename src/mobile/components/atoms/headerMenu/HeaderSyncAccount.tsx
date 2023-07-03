@@ -11,7 +11,7 @@ const HeaderSyncAccount = ({ target }: IHeaderSyncAccountProps) => (
       className="font-bold"
       type="button"
     >
-      Setting
+      Settings
     </button>{" "}
     to complete your profile.
   </div>

@@ -73,7 +73,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
           aria-hidden="true"
         >
           <ArrowBackIcon />
-          Setting
+          Settings
         </h2>
         <CardHeader
           sx={{
@@ -151,11 +151,11 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
               </Avatar>
             }
             action={
-              <IconButton aria-label="played history">
+              <IconButton aria-label="All played games">
                 <NavigateNextIcon className="text-white-default" />
               </IconButton>
             }
-            title={t("History")}
+            title={t("All played games")}
           />
           {/* <CardHeader
             sx={{

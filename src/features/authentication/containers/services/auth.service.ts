@@ -18,7 +18,7 @@ import {
   ISignUp,
   ISubmit
 } from "@feature/authentication/interfaces/IAuthService"
-import { ILoginProvider, IProfileRegister } from "@src/types/profile"
+import { ILoginProvider } from "@src/types/profile"
 
 export const signIn = ({ _email, _password }: ISignIn) =>
   new Promise<IProfile>((resolve, reject) => {
@@ -206,7 +206,7 @@ export const loginProvider = ({
   _providerUUID,
   _referral
 }: ILoginProvider) =>
-  new Promise((resolve, reject) => {
+  new Promise<IProfile>((resolve, reject) => {
     const data = {
       email: _email,
       provider: _provider,
@@ -220,7 +220,7 @@ export const loginProvider = ({
       providerUUID: _providerUUID
     }
     services
-      .post<IProfileRegister>(
+      .post<IProfile>(
         "/auth/signin/with_provider",
         _referral === null || _referral === "" || _referral === undefined
           ? { ...dataNoReferral }
@@ -229,7 +229,7 @@ export const loginProvider = ({
       .then((response) => {
         resolve(response.data)
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         reject(error)
       })
   })

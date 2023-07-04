@@ -9,6 +9,7 @@ import GoogleColorIcon from "@components/icons/SocialIcon/GoogleColorIcon"
 import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
 import useFormLoginController from "@feature/authentication/containers/hooks/useFormLoginController"
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
+import CONFIGS from "@configs/index"
 import LoginModal from "../organisms/modal/LoginModal"
 import CreateAccountModal from "../organisms/modal/CreateAccountModal"
 
@@ -49,12 +50,11 @@ const SignInLayout = () => {
               <span className="pr-2">
                 {toggleFacebookLogin ? (
                   <FacebookLogin
-                    appId={`${process.env.NEXT_PUBLIC_FACEBOOK_APPID}`}
+                    appId={`${CONFIGS.FACEBOOK_APP_ID}`}
                     autoLoad
                     fields="name,email,picture"
                     callback={facebookLogin}
                     cssClass="my-facebook-button-class"
-                    textButton={null}
                     icon={<FacebookColorIcon />}
                   />
                 ) : (

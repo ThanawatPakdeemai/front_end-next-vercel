@@ -86,7 +86,7 @@ const useInventoryPayment = () => {
                 tokenId: l.land_id,
                 cardType: "land",
                 name: l.name,
-                img: l.image,
+                img: l.NFT_image,
                 vdo: l.NFT_video,
                 payment_type: handleDate({
                   _keyType: l.key_type || "",

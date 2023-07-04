@@ -1,5 +1,6 @@
 /* eslint-disable no-new */
 import services from "@configs/axiosGlobalConfig"
+import CONFIGS from "@configs/index"
 import {
   IDataPlayerInfoResponse,
   IGetDataPlayerInfo,
@@ -137,3 +138,37 @@ export const getGeoInfo = () => {
 
   return Promise.resolve(promise)
 }
+
+export const linkToTelegram = (data: {
+  player_id: string
+  telegram_id: number
+}) =>
+  new Promise<any>((resolve, reject) => {
+    services
+      .put<any>(`${CONFIGS.BASE_URL.API}/profile/link-profile-telegram/`, {
+        ...data
+      })
+      .then((res) => {
+        resolve(res.data)
+      })
+      .catch((error: Error) => {
+        reject(error)
+      })
+  })
+
+export const linkToFacebook = (data: {
+  player_id: string
+  facebook_id: string
+}) =>
+  new Promise<IProfile>((resolve, reject) => {
+    services
+      .put<IProfile>(`${CONFIGS.BASE_URL.API}/profile/link-facebook-profile/`, {
+        ...data
+      })
+      .then((res) => {
+        resolve(res.data)
+      })
+      .catch((error: Error) => {
+        reject(error)
+      })
+  })

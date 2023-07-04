@@ -72,6 +72,16 @@ const MarketPlaceForsaleList = () => {
                   }
                 : undefined
             }
+            percentage={
+              // eslint-disable-next-line no-nested-ternary
+              _data.percentage &&
+              _data.cardType === "building" &&
+              _data.percentage >= 0
+                ? 100 - Number(_data.percentage)
+                : _data.cardType === "building"
+                ? 100
+                : undefined
+            }
             itemName={_data.name}
             itemLevel={_data.level}
             itemSize={_data.size as string}

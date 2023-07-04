@@ -15,7 +15,7 @@ import GameItemSingleCard from "@components/atoms/GameItemSingleCard"
 import { ImageCustom } from "@components/atoms/image/Image"
 import CardBuyItemHeader from "@feature/gameItem/molecules/CardBuyItemHeader"
 import ArrowJoinIcon from "@components/icons/ArrowJoinIcon"
-import useGetProfileGolds from "@feature/profile/containers/hook/useGetProfileGolds"
+import useGetProfileGolds from "@feature/gold/containers/hook/useGetProfileGolds"
 
 interface ICardBuyItemProp {
   gameObject: IGame
@@ -210,8 +210,8 @@ export default function CardItemGold({
                       {gameObject && (
                         <div className="game-item-image h-6 w-6 p-[4px]">
                           <ImageCustom
-                            src={gameObject.item[0].image_icon}
-                            alt={gameObject.item[0].name}
+                            src={gameObject.item[0]?.image_icon}
+                            alt={gameObject.item[0]?.name}
                             width={20}
                             height={20}
                             className="h-full w-full object-contain opacity-40"

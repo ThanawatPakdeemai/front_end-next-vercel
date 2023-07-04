@@ -138,7 +138,7 @@ const HistoryTableMobile = () => {
       {hydrated && (
         <div className="mx-auto max-w-[678px]">
           <HeaderForWardBackWardMobile
-            label="Played History"
+            label="History"
             onClickBackWard={() => router.back()}
             showForwardIcon={false}
           />

@@ -304,6 +304,29 @@ input:checked {
   justify-content: flex-start;
 }
 
+.bg-transfer-gold {
+  background: linear-gradient(
+    140.19deg,
+    #ffb800 14.77%,
+    #fdb834 14.78%,
+    #ffdd98 23.08%,
+    #feb319 39.68%,
+    #ffe1a3 49.07%,
+    #ffad00 59.9%,
+    #ffdc8f 72.54%,
+    #e09d05 84.09%
+  );
+  /* box-shadow: 0.5px 0.5px 0px 0px #00000040 inset; */
+  /* box-shadow: 0.5px 0.5px 0px 0px #ffffff59; */
+  /* box-shadow: 1.5px 1.5px 0px 0px #ffffffa6 inset; */
+  box-shadow: 0px 0px 17px 0px #ffb80099;
+  /* box-shadow: -1.5px -1.5px 0px 0px #00000040 inset; */
+}
+
+.text-shadow-text-red {
+  text-shadow: 2px 2px 20px #ff0000e5, 0 0 20px #ff0000e5;
+}
+
 .grecaptcha-badge {
   visibility: hidden;
   opacity: 0;

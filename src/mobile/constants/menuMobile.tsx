@@ -36,7 +36,7 @@ export const GAME_MENU_MOBILE: ISlideList[] = [
   // }
 ]
 
-export type TGameMenuMobile = "home" | "wishlist" | "reward" | "settings"
+export type TGameMenuMobile = "home" | "wishlist" | "rewards" | "settings"
 
 export const MAIN_MENU_MOBILE: {
   name: string
@@ -59,8 +59,8 @@ export const MAIN_MENU_MOBILE: {
     iconActive: <HeartFilledIconMobile />
   },
   {
-    id: "reward",
-    name: "Reward",
+    id: "rewards",
+    name: "Rewards",
     icon: <RewardIconMobile />,
     iconActive: <RewardFilledIconMobile />
   },

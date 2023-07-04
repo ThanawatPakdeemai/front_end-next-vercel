@@ -54,7 +54,7 @@ const PlayedHistoryModal = ({
           aria-hidden="true"
         >
           <ArrowBackIcon />
-          Played History
+          History
         </h2>
 
         <PlayedHistoryListMobile

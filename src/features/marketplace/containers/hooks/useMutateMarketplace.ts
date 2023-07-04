@@ -46,7 +46,7 @@ const useMutateMarketplace = () => {
       mutationKey: ["useMarKCancelOrder"],
       retry: false,
       onSuccess: (_response) => {
-        successToast(_response.data)
+        successToast(_response.data || "Cancel order success")
       },
       onError: (_response) => {
         errMsgToast((_response as IMessage)?.message)

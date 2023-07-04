@@ -21,7 +21,7 @@ const MainLayoutMobile = ({ children, ...props }: IMainLayoutMobileProps) => {
 
       <Box
         component="div"
-        className="home-page__mobile flex flex-col gap-6 pb-28"
+        className="home-page__mobile relative z-[2] flex flex-col gap-6 pb-28"
         sx={{
           marginTop: "-50px",
           position: "relative",

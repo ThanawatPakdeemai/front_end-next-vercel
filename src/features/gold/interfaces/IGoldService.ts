@@ -72,6 +72,13 @@ export interface IGetProfileResponse extends IProfileMain {
   _id: string
 }
 
+export interface IPropsGetExpTransaction {
+  _limit: number
+  _skip: number
+  _sort: { createdAt: -1 }
+  _search: { _id?: string }
+}
+
 export interface IGetUserByIdData {
   _id: string
   status: number
@@ -382,26 +389,55 @@ export interface IGeoProfile {
   org: string
 }
 
-export interface IDataFaceBook {
-  height: number
-  is_silhouette: boolean
-  url: string
-  width: number
+export interface IGolds {
+  gold: number
 }
 
-export interface IPictureFaceBook {
-  data: IDataFaceBook
+export interface ICurrentExp {
+  status: boolean
+  data: {
+    total_exp: number
+  }
+  info: {}
 }
 
-export interface IProfileFaceBook {
-  name: string
-  email: string
-  picture: IPictureFaceBook
+export interface IResTransferExp {
+  status: boolean
+  data: {
+    current_exp: number
+    gold: number
+  }
+  info: {}
+}
+
+export interface IMetaData {
+  exp_use: number
+  gold_amount: number
+  rate_exchange: string
+}
+
+// export interface IInfo {
+//   pages: number
+//   limit: number
+//   currentCount: number
+//   totalCount: number
+// }
+
+export interface IResTransactionExp {
+  status: boolean
+  data: IDataTransactionExp[]
+  info: IInfo
+}
+
+export interface IDataTransactionExp {
+  token_address: string
+  token_name: string
+  createdAt: Date
+  updatedAt: Date
+  status: string
+  current_time: Date
+  type: string
+  player_id: string
+  meta_data: IMetaData
   id: string
-  accessToken: string
-  userID: string
-  expiresIn: number
-  signedRequest: string
-  graphDomain: string
-  data_access_expiration_time: number
 }

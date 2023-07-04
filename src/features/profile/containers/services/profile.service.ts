@@ -160,9 +160,9 @@ export const linkToFacebook = (data: {
   player_id: string
   facebook_id: string
 }) =>
-  new Promise<any>((resolve, reject) => {
+  new Promise<IProfile>((resolve, reject) => {
     services
-      .put<any>(`${CONFIGS.BASE_URL.API}/profile/link-facebook-profile/`, {
+      .put<IProfile>(`${CONFIGS.BASE_URL.API}/profile/link-facebook-profile/`, {
         ...data
       })
       .then((res) => {

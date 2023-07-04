@@ -8,17 +8,17 @@ import {
   signInWithPopup
 } from "firebase/auth"
 import { initializeApp, getApps } from "@firebase/app"
-import { useRouter } from "next/router"
 import useLoginProvider from "@feature/authentication/containers/hooks/useLoginProvider"
-import { IProfileFaceBook } from "@src/types/profile"
 import { useForm } from "react-hook-form"
 import { ISignIn } from "@feature/authentication/interfaces/IAuthService"
-import { isMobile } from "@hooks/useGlobal"
 import { IError } from "@src/types/contract"
 import useConnectMetamaskAction from "@utils/useConnectMetamesk"
 import { useWeb3Provider } from "@providers/Web3Provider"
 import Web3 from "web3"
-import useSyncProfile from "@mobile/features/game/containers/hooks/useSyncProfile"
+import { useCallback } from "react"
+import { IProfileFaceBook } from "@feature/profile/interfaces/IProfileService"
+import { useLinkToFacebook } from "@feature/profile/containers/hook/useSyncProfileQuery"
+import useProfileController from "@feature/profile/containers/hook/useProfileController"
 import useSignIn from "./useSignIn"
 import useLoginMetamask from "./useLoginMetamask"
 
@@ -36,12 +36,12 @@ const useFormLoginController = () => {
   const { mutateLoginProvider } = useLoginProvider()
   const { mutateLoginMetamask } = useLoginMetamask()
   const { successToast, errorToast } = useToast()
-  const router = useRouter()
 
   const web3 = new Web3(Web3.givenProvider)
   const { address: account } = useWeb3Provider()
   const { getSignature } = useConnectMetamaskAction()
-  const { handleSyncFacebookId } = useSyncProfile()
+  const { mutateLinkToFacebook } = useLinkToFacebook()
+  const { fetchProfile } = useProfileController()
 
   const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
@@ -71,7 +71,7 @@ const useFormLoginController = () => {
       .then((_profile) => {
         if (_profile) {
           successToast(MESSAGES.sign_in_success)
-          isMobile && router.push("/")
+          // isMobile && router.push("/")
         }
       })
       .catch(() => {})
@@ -81,35 +81,57 @@ const useFormLoginController = () => {
     errorToast(MESSAGES.please_fill)
   }
 
-  const facebookLogin = async (response: IProfileFaceBook) => {
-    if (
-      response.email !== null &&
-      response.email !== undefined &&
-      response.userID !== null &&
-      response.userID !== undefined
-    ) {
-      mutateLoginProvider({
-        _email: response.email,
-        _provider: "facebook",
-        _prevPath: "/",
-        _providerUUID: response.userID,
-        _referral: ""
-      })
-        .then((_res) => {
-          if (_res) {
-            successToast(MESSAGES.logged_in_successfully)
-
-            // Save user Facebook id to database
-            handleSyncFacebookId(response.userID)
-          }
+  const facebookLogin = useCallback(
+    (response: IProfileFaceBook) => {
+      if (
+        response.email !== null &&
+        response.email !== undefined &&
+        response.userID !== null &&
+        response.userID !== undefined
+      ) {
+        mutateLoginProvider({
+          _email: response.email,
+          _provider: "facebook",
+          _prevPath: "/",
+          _providerUUID: response.userID,
+          _referral: ""
         })
-        .catch((_error: IError) => {
-          errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-        })
-    }
-  }
+          .then((_res) => {
+            if (_res) {
+              successToast(MESSAGES.logged_in_successfully)
+              console.error("_res", _res)
+              // Save user Facebook id to user's account
+              mutateLinkToFacebook({
+                player_id: _res.id,
+                facebook_id: response.userID
+              }).then((res) => {
+                if (res.facebook_id) {
+                  successToast(MESSAGES.sync_facebook_success)
+                  // Fetch profile without reloading page
+                  fetchProfile(_res, false)
+                }
+              })
+            }
+          })
+          .catch((_error: IError) => {
+            errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
+          })
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [
+      errorToast,
+      mutateLoginProvider,
+      successToast,
+      mutateLinkToFacebook,
+      fetchProfile
+    ]
+  )
 
-  const googleLogin = async () => {
+  /**
+   * @description Login with Google
+   */
+  const googleLogin = useCallback(async () => {
     const provider = new GoogleAuthProvider()
     provider.addScope("email")
     await signInWithPopup(auth, provider)
@@ -143,9 +165,13 @@ const useFormLoginController = () => {
       .catch((_error: IError) => {
         errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
       })
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [errorToast, mutateLoginProvider, successToast])
 
-  const twitterLogin = async () => {
+  /**
+   * @description Login with Twitter
+   */
+  const twitterLogin = useCallback(async () => {
     const provider = new TwitterAuthProvider()
     provider.addScope("email")
     await signInWithPopup(auth, provider)
@@ -179,9 +205,13 @@ const useFormLoginController = () => {
       .catch((_error: IError) => {
         errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
       })
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [errorToast, mutateLoginProvider, successToast])
 
-  const metaMarkLogin = async () => {
+  /**
+   * @description Login with Metamask
+   */
+  const metaMarkLogin = useCallback(async () => {
     let accounts: Array<string> = []
     try {
       await web3?.givenProvider?.request({ method: "eth_requestAccounts" })
@@ -211,7 +241,8 @@ const useFormLoginController = () => {
     } else {
       errorToast(MESSAGES["please-connect-wallet"])
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account, errorToast, mutateLoginMetamask, successToast])
 
   return {
     register,

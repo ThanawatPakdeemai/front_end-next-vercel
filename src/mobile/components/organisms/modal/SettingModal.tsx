@@ -22,6 +22,9 @@ import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/us
 import useSyncProfile from "@mobile/features/game/containers/hooks/useSyncProfile"
 import { TelegramWidget } from "@components/atoms/button/TelegramWidget"
 import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
+import FacebookLogin from "react-facebook-login"
+import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
+import CONFIGS from "@configs/index"
 import ProfileSettingModal from "./ProfileSettingModal"
 import PlayedHistoryModal from "./PlayedHistoryModal"
 import LogoutModal from "./LogoutModal"
@@ -40,8 +43,8 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
 
   const { t } = useTranslation()
   const { clearAllDrawer } = useDrawerControllerMobile()
-  const { handleSyncTelegramId } = useSyncProfile()
-  const { isShowSyncTelegram } = useGlobalControllerMobile()
+  const { handleSyncTelegramId, handleSyncFacebookId } = useSyncProfile()
+  const { isShowSyncTelegram, isShowSyncFacebook } = useGlobalControllerMobile()
 
   return (
     <SwipeableDrawer
@@ -157,41 +160,6 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
             }
             title={t("History")}
           />
-          {/* <CardHeader
-            sx={{
-              padding: "0px",
-              "& .MuiCardHeader-action": {
-                alignSelf: "center"
-              },
-              "& .MuiCardHeader-title": {
-                color: "#fff",
-                fontSize: "20px",
-                fontFamily: "Urbanist",
-                fontWeight: "700"
-              },
-              "& .MuiCardHeader-subheader": {
-                color: "#E0E0E0",
-                fontSize: "16px",
-                fontFamily: "Urbanist",
-                fontWeight: "500"
-              }
-            }}
-            avatar={
-              <Avatar
-                className="bg-error-100"
-                sx={{ width: 56, height: 56 }}
-                aria-label="recipe"
-              >
-                <Profile2Icon />
-              </Avatar>
-            }
-            action={
-              <IconButton aria-label="profile">
-                <NavigateNextIcon className="text-white-default" />
-              </IconButton>
-            }
-            title="Profile"
-          /> */}
           <CardHeader
             onClick={() => openInNewTab("https://t.me/NakamotoGames")}
             sx={{
@@ -233,7 +201,21 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
           <>
             <TelegramWidget
               dataOnAuth={handleSyncTelegramId}
-              botName="NakaGameBot"
+              botName="NakaGameMBot"
+            />
+            <Divider className="my-6 !block border-b border-[#35383F]" />
+          </>
+        )}
+        {isShowSyncFacebook() && (
+          <>
+            <FacebookLogin
+              appId={`${CONFIGS.FACEBOOK_APP_ID}`}
+              autoLoad
+              fields="name,email,picture"
+              callback={handleSyncFacebookId}
+              cssClass="my-facebook-button-class flex gap-2 items-center h-[50px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800 px-3"
+              icon={<FacebookColorIcon />}
+              textButton="Sync with Facebook"
             />
             <Divider className="my-6 !block border-b border-[#35383F]" />
           </>

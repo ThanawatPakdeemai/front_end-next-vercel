@@ -10,7 +10,11 @@ export interface INoData {
   text?: string
 }
 
-const NoData = ({ className, icon, text }: INoData) => (
+const NoData = ({
+  className,
+  icon,
+  text = "No data is currently available."
+}: INoData) => (
   <div className={`${className} no-data flex flex-col gap-7`}>
     {icon || (
       <div className="mx-auto flex h-[125px] w-[125px] items-center justify-center">

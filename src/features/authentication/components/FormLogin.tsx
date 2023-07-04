@@ -246,8 +246,8 @@ const FormLogin = () => {
                   autoLoad
                   fields="name,email,picture"
                   callback={facebookLogin}
-                  cssClass="my-facebook-button-class"
-                  textButton=""
+                  cssClass="button-facebook-login"
+                  textButton="Login with Facebook"
                   icon={<FacebookIcon />}
                 />
               ) : (

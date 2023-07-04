@@ -593,6 +593,7 @@ const FormRegister = () => {
                         }
                         cssClass="my-facebook-button-class"
                         icon={<FacebookIcon />}
+                        textButton="Register with Facebook"
                       />
                     ) : (
                       <FacebookIcon />

@@ -1,42 +1,24 @@
-import React, {
-  createContext,
-  PropsWithChildren,
-  useMemo,
-  useState
-} from "react"
+import { createContext, ReactNode, useContext } from "react"
+import useReviewContext from "./useReviewContext"
 
-interface IReviewContext {
-  message: string
-  setMessage: React.Dispatch<React.SetStateAction<string>>
-  setRate: React.Dispatch<React.SetStateAction<number>>
-  rate: number
-}
-export const ReviewContext = createContext<IReviewContext>({
-  message: "",
-  setMessage: () => {},
-  rate: 0,
-  setRate: () => {}
-})
+const ReviewContext = createContext<
+  ReturnType<typeof useReviewContext> | undefined
+>(undefined)
 
-ReviewContext.displayName = "ReviewContext"
-
-export function ReviewProvider({ children }: PropsWithChildren) {
-  const [message, setMessage] = useState<string>("")
-  const [rate, setRate] = useState<number>(0)
-
-  const reviewMessage = useMemo(
-    () => ({
-      rate,
-      setRate,
-      message,
-      setMessage
-    }),
-    [rate, message]
-  )
-
+export function ReviewProvider({
+  children,
+  gameId
+}: {
+  children: ReactNode
+  gameId: string
+}) {
+  const context = useReviewContext(gameId)
   return (
-    <ReviewContext.Provider value={reviewMessage}>
-      {children}
-    </ReviewContext.Provider>
+    <ReviewContext.Provider value={context}>{children}</ReviewContext.Provider>
   )
+}
+
+export function useReviewProvider() {
+  const context = useContext(ReviewContext)
+  return { ...context }
 }

@@ -1,4 +1,3 @@
-import { PaginationNaka } from "@components/atoms/pagination"
 import NoAuth from "@components/templates/NoAuth"
 import ReviewForm from "@feature/review/components/organisms/ReviewForm"
 import Review from "@feature/review/components/templates/Review"
@@ -7,38 +6,38 @@ import { Chip, Rating, Typography } from "@mui/material"
 import { Image } from "@components/atoms/image/index"
 import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { ReviewProvider } from "@feature/review/containers/contexts/ReviewProvider"
-import { IGamePartnerReviewsData } from "@feature/game/partnerGames/interfaces/IGamePartners"
-import useGameWhatsNew from "@feature/game/containers/hooks/useGameWhatsNew"
 import { IGetType } from "@feature/game/interfaces/IGameService"
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
+import { IReviewList } from "@feature/review/interfaces/IReviewGame"
+import {
+  ReviewProvider,
+  useReviewProvider
+} from "@feature/review/containers/contexts/ReviewProvider"
 
 interface IGameReviewProps {
   gameType: IGetType
   gameId: string
 }
-const GameReviews = ({ gameType, gameId }: IGameReviewProps) => {
+const GameReviewContent = ({ gameId }: { gameId: string }) => {
   const { t } = useTranslation()
-  const { page, setPage, totalCount, setTotalCount, stateProfile, hydrated } =
-    useGlobal()
-  const { allReviewsData, limit } = useGameWhatsNew(gameType, gameId)
-  const [review, setReview] = useState<IGamePartnerReviewsData[]>([])
+  const { stateProfile, hydrated } = useGlobal()
+  const { reviewList, reviewInfo, ownerReview } = useReviewProvider()
+  const [review, setReview] = useState<Array<IReviewList>>([])
   const [average, setAverage] = useState<number>(0)
 
   useEffect(() => {
     let load = false
 
     if (!load) {
-      if (allReviewsData) {
-        setReview(allReviewsData.data)
-        setTotalCount(allReviewsData.info.totalCount)
+      if (reviewList && reviewInfo) {
+        setReview(reviewList)
       }
     }
 
     return () => {
       load = true
     }
-  }, [allReviewsData, setTotalCount])
+  }, [reviewList, reviewInfo])
 
   /**
    * @description Calculate average rating
@@ -63,75 +62,75 @@ const GameReviews = ({ gameType, gameId }: IGameReviewProps) => {
   }, [review])
 
   return (
-    <>
+    <div className="relative h-full w-full">
       {hydrated && (
-        <ReviewProvider>
-          <Review average={average.toString()}>
-            {review && review.length > 0 ? (
-              review.map((_item) => (
-                <div
-                  key={_item.id}
-                  className="review--item mb-3 flex min-h-[68px] grid-flow-col flex-wrap items-center justify-between gap-2 rounded-2xl border border-neutral-800 bg-neutral-900 p-2 lg:grid"
-                >
-                  <div className="review--item__avatar animation-image row-span-2 flex h-[58px] w-[58px] items-center">
-                    <Image
-                      src={_item.user.avatar}
-                      width="200"
-                      height="200"
-                      alt={_item.user.username}
-                      className="h-[58px] w-full rounded-sm object-cover object-center"
-                    />
-                  </div>
-                  <div className="review--item__content__header flex w-full flex-wrap items-center lg:justify-between">
-                    <div className="review--item__content-username">
-                      {_item.user.username}
-                    </div>
-                    <div className="review--item__content-rating flex items-center gap-2">
-                      <Rating
-                        sx={{
-                          "& .MuiSvgIcon-root": {
-                            color: "#70727B",
-                            width: "20px"
-                          }
-                        }}
-                        size="small"
-                        name="read-only"
-                        value={parseFloat(_item.review_rate)}
-                        readOnly
-                        precision={0.5}
-                      />
-                      <Chip
-                        label={_item.review_rate}
-                        color="success"
-                        variant="filled"
-                        size="small"
-                        className="!h-[20px] !w-[38px] !bg-green-lemon !p-0"
+        <Review average={average.toString()}>
+          <div className="flex h-3/4 w-full flex-col gap-y-2">
+            <div className="flex h-full w-full flex-col gap-y-2">
+              {review && review.length > 0 ? (
+                review.map((_item) => (
+                  <div
+                    key={_item.id}
+                    className={`review--item flex h-auto min-h-[68px] w-full flex-row gap-x-2 rounded-default border-2 ${
+                      stateProfile && stateProfile.id === _item.player_info.id
+                        ? "border-error-main/75"
+                        : "border-neutral-800"
+                    } bg-primary-main p-1`}
+                  >
+                    <div className="h-[58px] w-[58px] min-w-[58px] rounded-sm">
+                      <Image
+                        src={_item.player_info.avatar}
+                        width={58}
+                        height={58}
+                        alt={_item.player_info.username}
+                        className="h-[58px] w-[58px] rounded-sm"
                       />
                     </div>
+                    <div className="flex h-full w-full flex-col gap-y-2">
+                      <div className="flex h-6 min-h-[24px] w-full flex-row justify-between">
+                        <div className="review--item__content-username flex h-full items-center">
+                          {_item.player_info.username}
+                        </div>
+                        <div className="review--item__content-rating flex h-full items-center gap-2">
+                          <Rating
+                            sx={{
+                              "& .MuiSvgIcon-root": {
+                                color: "#70727B",
+                                width: "20px"
+                              }
+                            }}
+                            size="small"
+                            name="read-only"
+                            value={parseFloat(_item.review_rate)}
+                            readOnly
+                            precision={0.5}
+                          />
+                          <Chip
+                            label={_item.review_rate}
+                            color="success"
+                            variant="filled"
+                            size="small"
+                            className="!h-[20px] !w-[38px] !bg-green-lemon !p-0"
+                          />
+                        </div>
+                      </div>
+                      <div className="h-auto w-full">
+                        <Typography
+                          className="mb-0 text-sm text-neutral-500 line-clamp-1"
+                          variant="body1"
+                          dangerouslySetInnerHTML={{
+                            __html: _item.review_comment
+                          }}
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <div className="review--item__content lg:min-w-[300px]">
-                    <Typography
-                      className="mb-0 text-sm text-neutral-500 line-clamp-1"
-                      variant="body1"
-                      dangerouslySetInnerHTML={{
-                        __html: _item.review_comment
-                      }}
-                    />
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="text-center">{t("no_review")}</div>
-            )}
-            <div className="relative z-10 flex justify-end">
-              <PaginationNaka
-                totalCount={totalCount}
-                limit={limit}
-                page={page}
-                setPage={setPage}
-              />
+                ))
+              ) : (
+                <div className="text-center">{t("no_review")}</div>
+              )}
             </div>
-            <div className="relative z-10 mb-7 mt-5">
+            <div className="z-10 h-1/4 w-full">
               {stateProfile ? (
                 <GoogleReCaptchaProvider
                   reCaptchaKey={`${process.env.NEXT_PUBLIC_KEY_RECAPTCHA}`}
@@ -143,19 +142,30 @@ const GameReviews = ({ gameType, gameId }: IGameReviewProps) => {
                   }}
                 >
                   <ReviewForm
+                    gameId={gameId}
                     avatar={stateProfile.avatar}
                     username={stateProfile.username}
+                    haveReview={!!ownerReview}
+                    reviewId={ownerReview?.id}
+                    reviewMessage={ownerReview?.review_comment}
+                    reviewRating={Number(ownerReview?.review_rate)}
                   />
                 </GoogleReCaptchaProvider>
               ) : (
                 <NoAuth />
               )}
             </div>
-          </Review>
-        </ReviewProvider>
+          </div>
+        </Review>
       )}
-    </>
+    </div>
   )
 }
+
+const GameReviews = ({ gameId }: IGameReviewProps) => (
+  <ReviewProvider gameId={gameId}>
+    <GameReviewContent gameId={gameId} />
+  </ReviewProvider>
+)
 
 export default GameReviews

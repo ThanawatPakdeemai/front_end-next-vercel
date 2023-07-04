@@ -303,3 +303,9 @@ input:checked {
 .MobileSlider .slick-dots {
   justify-content: flex-start;
 }
+
+.grecaptcha-badge {
+  visibility: hidden;
+  opacity: 0;
+  display: none;
+}

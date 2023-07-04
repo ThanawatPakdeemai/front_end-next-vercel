@@ -182,11 +182,6 @@ const CardItemMarketPlace = ({
                 className="pb-[2px] !text-neutral-400"
               />
             }
-            // onDelete={() => {
-            //   copyClipboard(id)
-            //   successToast(MESSAGES.copy)
-            // }}
-            // onClick={handleDeleteClick}
             onDelete={() => {
               copy(id, {
                 debug: true,
@@ -361,19 +356,6 @@ const CardItemMarketPlace = ({
                   color="error"
                 />
               )}
-
-              {sellingType &&
-                (cardType === "land" ||
-                  cardType === "building" ||
-                  cardType === "arcade-game") && (
-                  <Chip
-                    label={sellingType.title}
-                    variant="filled"
-                    size="small"
-                    className="cursor-pointer uppercase"
-                    color={sellingType.color || "info"}
-                  />
-                )}
             </div>
           </div>
           <div
@@ -381,9 +363,21 @@ const CardItemMarketPlace = ({
               isMobile ? `my-[8px]` : `my-[10px]`
             } border-b border-neutral-700 border-opacity-80`}
           />
+          {sellingType &&
+            (cardType === "land" ||
+              cardType === "building" ||
+              cardType === "arcade-game") && (
+              <Chip
+                label={sellingType.title}
+                variant="filled"
+                size="small"
+                className="mb-1 ml-2 cursor-pointer uppercase"
+                color={sellingType.color || "info"}
+              />
+            )}
           {rental ? (
             <div className="flex flex-col">
-              <div className="mx-2 flex items-center justify-between">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <Typography className="ml-[11px] text-sm uppercase text-neutral-500">
                     {formatNumber(rental.totalPrice as number, {
@@ -401,7 +395,7 @@ const CardItemMarketPlace = ({
                   className="cursor-pointer uppercase"
                 />
               </div>
-              <div className="mx-2 flex items-center justify-between">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <Typography className="ml-[11px] text-sm uppercase text-neutral-500">
                     EXPIRE ON

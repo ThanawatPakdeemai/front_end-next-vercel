@@ -1,4 +1,10 @@
-import React, { useRef, useState, useEffect } from "react"
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  Suspense
+} from "react"
 import { useRouter } from "next/router"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import CardMyLandContent from "@feature/land/components/CardMyLandContent"
@@ -9,7 +15,10 @@ import { Image } from "@components/atoms/image"
 import MiniMap from "@feature/map/components/organisms/MiniMap"
 import useGetAllLand from "@feature/land/containers/hooks/useGetAllLand"
 import useMyLandController from "@feature/land/containers/hooks/useMyLandController"
-import { useGetMyLand } from "@feature/land/containers/hooks/useGetMyLand"
+import {
+  useGetMyLand,
+  useGetLandById
+} from "@feature/land/containers/hooks/useGetMyLand"
 import useProfileStore from "@stores/profileStore"
 import IconArrowRight from "@components/icons/arrowRightIcon"
 import {
@@ -41,12 +50,41 @@ const MyLandPage = () => {
   const [pos, setPos] = useState<{ x: string; y: string }>({ x: "175", y: "1" })
 
   const { mutateGetMyLand } = useGetMyLand()
+  const { mutateGetLandById } = useGetLandById()
   const { mutateUpdateLandBanner } = useUpdateLand()
   const { allLand: allLandData } = useGetAllLand()
   const { sortLandId, sortBlockPoint } = useMyLandController()
   const { errorToast, successToast } = useToast()
   const { query } = useRouter()
   const [expanded, setExpanded] = useState<boolean>(false)
+
+  const onLogoUpdate = useCallback(
+    async (id: string) => {
+      // fetch new data backend return path from backend not s3
+      const result = await mutateGetLandById({ _id: id })
+      const findIndexLand: number = ownerLandList.findIndex((f) => f._id === id)
+      if (findIndexLand >= 0 && result) {
+        const dummy =
+          ownerLandList.splice(findIndexLand, 1, {
+            image: result.image,
+            land_id: result.land_id,
+            logo_in_map: result.logo_in_map,
+            marketplaces_data: result.marketplaces_data,
+            name: result.name,
+            player_id: result.player_id,
+            position: result.position,
+            qrcode_image: result.qrcode_image,
+            type: result.type,
+            wallet_address: result.wallet_address,
+            _id: result._id,
+            color: colorThree.land
+          }) && ownerLandList
+        setOwnerLandList(dummy)
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [ownerLandList]
+  )
 
   const handleOnExpandClick = () => {
     setExpanded(!expanded)
@@ -179,13 +217,13 @@ const MyLandPage = () => {
   const onSubmit = async () => {
     if (selectedFile && imagePreview && currentLand) {
       setOpen("Uploading...")
-      const data: any = {
+      const data: { _landId: string; _img: string } = {
         _landId: currentLand._id,
         _img: selectedFile
       }
-
-      mutateUpdateLandBanner(data, {
+      await mutateUpdateLandBanner(data, {
         onSuccess(_res) {
+          onLogoUpdate(_res.data.id)
           successToast(
             "The banner has been uploaded successfully. Please wait for the image to be reviewed before it is displayed."
           )
@@ -283,14 +321,22 @@ const MyLandPage = () => {
             y={String(y)}
             className="hidden sm:block"
           >
-            <MiniMap
-              pos={pos}
-              className="!h-[315px] rounded-[14px]"
-              ownerList={ownerLandList}
-              notOwnerList={notOwnerLandList}
-              currentLand={currentLand}
-              setCurrentLand={setCurrentLand}
-            />
+            <Suspense
+              fallback={
+                <div className="relative flex h-full w-full items-center justify-center">
+                  Loading
+                </div>
+              }
+            >
+              <MiniMap
+                pos={pos}
+                className="!h-[315px] rounded-[14px]"
+                ownerList={ownerLandList}
+                notOwnerList={notOwnerLandList}
+                currentLand={currentLand}
+                setCurrentLand={setCurrentLand}
+              />
+            </Suspense>
           </CardMyLandContent>
           <MyLandList
             landData={landData}

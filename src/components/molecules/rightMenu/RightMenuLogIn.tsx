@@ -227,7 +227,7 @@ const RightMenuLogIn = () => {
               handleClick={async () => {
                 onClickLogout()
               }}
-              className="btn-rainbow-theme my-4 bg-error-main px-14 text-sm text-white-default"
+              className="btn-rainbow-theme my-4 bg-error-main px-2 text-sm text-white-default"
               type="button"
             />
           </Collapse>

@@ -43,10 +43,12 @@ const MarketplaceLayoutInventory = ({
           <HeaderMunuMobile />
         </div>
         <div className="items-center sm:flex" />
-        <Divider
-          className="hidden !w-full sm:block"
-          sx={{ marginTop: 2 }}
-        />
+        {!isMapPage ? (
+          <Divider
+            className="hidden !w-full sm:block"
+            sx={{ marginTop: 2 }}
+          />
+        ) : null}
         <div className="flex flex-col gap-3 sm:flex-row">
           {/* add filter component here */}
           {!isMapPage && (
@@ -106,10 +108,6 @@ const MarketplaceLayoutInventory = ({
                 </MenuList>
               </div>
               <Balance widthBalance="w-[calc(100%-70px)]" />
-              {/* <AmountBalance
-            icon={chain === "polygon" ? <INaka /> : <IBusd />}
-            balance={balance || { digit: 0, text: "N/A" }}
-          /> */}
               {profile && (
                 <ButtonToggleIcon
                   startIcon={<PlugIcon />}
@@ -118,7 +116,7 @@ const MarketplaceLayoutInventory = ({
                     await onResetNotification()
                     await onReset()
                   }}
-                  className="btn-rainbow-theme my-4 bg-error-main px-14 text-sm text-white-default"
+                  className="btn-rainbow-theme my-4 bg-error-main px-2 text-sm text-white-default"
                   type="button"
                 />
               )}
@@ -129,7 +127,6 @@ const MarketplaceLayoutInventory = ({
               isMapPage && `absolute`
             } z-50 hidden h-0 sm:block sm:h-[85vh]`}
           >
-            {/* className="absolute left-[22vh] z-50 h-[85vh]" */}
             <InventoryPage />
           </div>
           <div
@@ -146,33 +143,6 @@ const MarketplaceLayoutInventory = ({
             ) : (
               <main className="ml-0 flex w-full flex-col items-center	 gap-y-4 px-2 sm:ml-20 sm:items-start">
                 <FilterDropdown />
-                {/* <div className="block flex gap-2 sm:hidden">
-                  <TextField
-                    className="w-full"
-                    placeholder="Search Keyword"
-                    InputProps={{
-                      style: {
-                        fontSize: "14px",
-                        fontFamily: "neueMachina",
-                        // width: "100%",
-                        paddingLeft: 16
-                      },
-                      endAdornment: (
-                        <InputAdornment
-                          position="end"
-                          className="cursor-pointer"
-                          onClick={() => {}}
-                        >
-                          <SearchIcon />
-                        </InputAdornment>
-                      )
-                    }}
-                    onChange={(_event) => {}}
-                  />
-                  <div className="h-[40px] w-[40px] rounded-lg bg-purple-primary p-2">
-                    <SettingIconFilter />
-                  </div>
-                </div> */}
                 {children}
               </main>
             )}

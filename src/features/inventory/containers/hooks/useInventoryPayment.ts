@@ -91,7 +91,8 @@ const useInventoryPayment = () => {
                 payment_type: handleDate({
                   _keyType: l.key_type || "",
                   _data: l.installments_data ? l.installments_data.period : []
-                })
+                }),
+                keyType: l.key_type
               }))
               _total = _data.length
             }
@@ -126,7 +127,8 @@ const useInventoryPayment = () => {
                 payment_type: handleDate({
                   _keyType: b.key_type || "",
                   _data: b.installments_data ? b.installments_data.period : []
-                })
+                }),
+                keyType: b.key_type
               }))
               _total = _data.length
             }
@@ -156,7 +158,8 @@ const useInventoryPayment = () => {
                 payment_type: handleDate({
                   _keyType: g.key_type || "",
                   _data: g.installments_data ? g.installments_data.period : []
-                })
+                }),
+                keyType: g.key_type
               }))
             }
           })

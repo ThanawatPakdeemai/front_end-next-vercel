@@ -12,7 +12,7 @@ import { IReviewList } from "@feature/review/interfaces/IReviewGame"
 import {
   ReviewProvider,
   useReviewProvider
-} from "@feature/review/containers/contexts/ReviewProvider"
+} from "@feature/review/containers/providers/ReviewProvider"
 
 interface IGameReviewProps {
   gameType: IGetType

@@ -1,7 +1,7 @@
 import { useToast } from "@feature/toast/containers"
 import { useState } from "react"
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
-import { useReviewProvider } from "@feature/review/containers/contexts/ReviewProvider"
+import { useReviewProvider } from "@feature/review/containers/providers/ReviewProvider"
 import useMutateReview from "./useMutateReview"
 
 const useReview = () => {

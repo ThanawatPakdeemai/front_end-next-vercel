@@ -1,5 +1,5 @@
+import useReviewContext from "@feature/review/containers/hook/useReviewContext"
 import { createContext, ReactNode, useContext } from "react"
-import useReviewContext from "./useReviewContext"
 
 const ReviewContext = createContext<
   ReturnType<typeof useReviewContext> | undefined
@@ -20,5 +20,6 @@ export function ReviewProvider({
 
 export function useReviewProvider() {
   const context = useContext(ReviewContext)
+
   return { ...context }
 }

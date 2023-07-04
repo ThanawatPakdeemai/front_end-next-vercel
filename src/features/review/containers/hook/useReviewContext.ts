@@ -2,8 +2,8 @@ import { IReviewList } from "@feature/review/interfaces/IReviewGame"
 import { IInfo } from "@interfaces/IHelper"
 import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
-import { getAllGameReview } from "../services/review.services"
-import useMutateReview from "../hook/useMutateReview"
+import { getAllGameReview } from "@feature/review/containers/services/review.services"
+import useMutateReview from "./useMutateReview"
 
 const useReviewContext = (_id: string) => {
   const { mutateCheckOwnerReview } = useMutateReview()

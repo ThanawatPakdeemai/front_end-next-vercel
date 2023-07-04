@@ -1,9 +1,10 @@
 import CardItemMarketPlace from "@components/molecules/cards/CardItemMarketPlace"
 import { useRouter } from "next/router"
 import { v4 as uuidv4 } from "uuid"
-import React from "react"
+import React, { useCallback } from "react"
 import useInventoryPayment from "@feature/inventory/containers/hooks/useInventoryPayment"
 import useProfileStore from "@stores/profileStore"
+import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
 import SkeletonMarketOwnerList from "./SkeletonMarketOwnerList"
 import CardListContainer from "./CardListContainer"
 
@@ -20,6 +21,13 @@ const MarketplaceProcessList = () => {
 
   const router = useRouter()
 
+  const handleColor = useCallback((_keyType?: string, _payType?: string) => {
+    let _color: "info" | "error" | "secondary" = "info"
+    if (_payType && _payType.toLowerCase() === "unpaid") _color = "error"
+    if (_keyType && _keyType === "owner") _color = "secondary"
+    return _color
+  }, [])
+
   if (inventoryItemPayment && inventoryItemPayment.length > 0 && !isLoading) {
     return (
       <CardListContainer
@@ -30,7 +38,7 @@ const MarketplaceProcessList = () => {
       >
         {inventoryItemPayment.map((_data) => (
           <CardItemMarketPlace
-            key={uuidv4()}
+            key={_data.id}
             cardType={_data.cardType}
             id={_data.tokenId}
             itemImage={
@@ -67,10 +75,7 @@ const MarketplaceProcessList = () => {
             href={`/${router.locale}/marketplace/inventory/${_data.cardType}/${_data.id}`}
             sellingType={{
               title: _data.payment_type,
-              color:
-                _data.payment_type?.toLowerCase() === "unpaid"
-                  ? "error"
-                  : "info"
+              color: handleColor(_data.keyType, _data.payment_type)
             }}
             price={_data.price}
           />

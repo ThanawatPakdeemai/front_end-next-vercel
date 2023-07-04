@@ -88,7 +88,7 @@ const MarketPlaceForsaleList = () => {
             itemAmount={_data.amount as number}
             href={`/${router.locale}/marketplace/inventory/${_data.cardType}/${_data.id}`}
             sellingType={{
-              title: _data.selling,
+              title: _data.selling || "checking",
               color: handleColorSellingType(_data.selling as TSellingType)
             }}
             price={_data.price}

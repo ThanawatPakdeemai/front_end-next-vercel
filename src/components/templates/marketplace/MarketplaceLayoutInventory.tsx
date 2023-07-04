@@ -43,10 +43,12 @@ const MarketplaceLayoutInventory = ({
           <HeaderMunuMobile />
         </div>
         <div className="items-center sm:flex" />
-        <Divider
-          className="hidden !w-full sm:block"
-          sx={{ marginTop: 2 }}
-        />
+        {!isMapPage ? (
+          <Divider
+            className="hidden !w-full sm:block"
+            sx={{ marginTop: 2 }}
+          />
+        ) : null}
         <div className="flex flex-col gap-3 sm:flex-row">
           {/* add filter component here */}
           {!isMapPage && (

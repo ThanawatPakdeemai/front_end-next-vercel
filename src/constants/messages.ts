@@ -6,7 +6,7 @@ export const MESSAGES = {
   "please_connect_metamask": "Please connect to MetaMask.",
   "logged_in_successfully": "Logged in successfully",
   "logged_in_unsuccessfully": "Logged in unsuccessfully",
-  "sign_in_success": "Sign in successfully",
+  "sign_in_success": "Successfully signed in",
   "success_get_code": "Codes sent to your email. Please check and fill in.",
   "code_number_not_expired": "Code number not expired",
   "edit_profile_success": "Updated",

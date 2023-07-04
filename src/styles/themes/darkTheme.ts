@@ -32,7 +32,7 @@ export const theme: ThemeOptions = {
     }
   },
   spacing: 8,
-  direction: "rtl",
+  direction: "ltr",
   shape: {
     borderRadius: 25
   },

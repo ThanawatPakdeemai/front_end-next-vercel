@@ -16,9 +16,9 @@ import {
 import { initializeApp, getApps, getApp } from "@firebase/app"
 import { useRouter } from "next/router"
 import useLoginProvider from "@feature/authentication/containers/hooks/useLoginProvider"
-import { IProfileFaceBook } from "@src/types/profile"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { IProfileFaceBook } from "@feature/profile/interfaces/IProfileService"
 import useFormController from "./useFormController"
 
 export interface TFormData {

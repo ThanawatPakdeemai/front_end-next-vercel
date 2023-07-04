@@ -9,8 +9,6 @@ import NotificationModal from "@mobile/components/organisms/modal/NotificationMo
 import ProfileSettingModal from "@mobile/components/organisms/modal/ProfileSettingModal"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import useDrawerControllerMobileStore from "@stores/drawerControllerMobile"
-import { useBaseProvider } from "@providers/BaseProvider"
-import HeaderSyncAccount from "./HeaderSyncAccount"
 
 export const StyledAvatar = {
   color: "#E0E0E0",
@@ -29,26 +27,18 @@ const HeadProfileMobile = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { count } = useNotiStore()
   const { openNotification, setOpenNotification } = useDrawerControllerMobile()
-  const { paramFromTelegram } = useBaseProvider()
+  // const { isShowSyncTelegram } = useGlobalControllerMobile()
 
   const {
     openProfileCreate: toggleProfileCreate,
     setOpenProfileCreate: setToggleProfileCreate,
     openProfileSetting: toggleProfileSetting,
-    setOpenProfileSetting: setToggleProfileSetting,
-    openSyncAccount: toggleSyncAccount,
-    setOpenSyncAccount: setToggleSyncAccount
+    setOpenProfileSetting: setToggleProfileSetting
   } = useDrawerControllerMobileStore()
 
   return (
     <header className="header bg-[#F32429] pb-[55px]">
-      {profile && !profile.telegram_id && paramFromTelegram && (
-        <HeaderSyncAccount
-          target="Telegram"
-          open={toggleSyncAccount}
-          setOpenSyncAccount={(_toggle) => setToggleSyncAccount(_toggle)}
-        />
-      )}
+      {/* {isShowSyncTelegram() && <HeaderSyncAccount target="Telegram" />} */}
       <div className="flex items-center justify-between px-5 py-10">
         <Box
           component="div"

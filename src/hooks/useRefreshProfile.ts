@@ -1,6 +1,5 @@
 import { getProfileByEmail } from "@feature/profile/containers/services/profile.service"
 import { useWeb3Provider } from "@providers/Web3Provider"
-import { IProfile } from "@src/types/profile"
 import useNotiStore from "@stores/notification"
 import useProfileStore from "@stores/profileStore"
 import Helper from "@utils/helper"
@@ -26,7 +25,7 @@ const useRefreshProfile = () => {
     refreshProfileToken()
       .then((_res) => {
         if (_res) {
-          getProfileByEmail(_res.email).then((__res: IProfile) => {
+          getProfileByEmail(_res.email).then((__res) => {
             onSetProfileData(__res)
             onSetProfileAddress(__res.address)
             onSetProfileJWT(__res.jwtToken)

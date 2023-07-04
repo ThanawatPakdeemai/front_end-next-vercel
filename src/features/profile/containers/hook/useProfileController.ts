@@ -11,6 +11,32 @@ import toast from "react-hot-toast"
 const useProfileController = () => {
   const { setClose, setOpen } = useLoadingStore()
   const { onSetProfileData, onSetProfileAddress } = useProfileStore()
+
+  /**
+   * @description Fetch profile by email
+   */
+  const fetchProfile = useCallback(
+    async (_profile: IProfile, _refresh: boolean) => {
+      await getProfileByEmail(_profile.email).then((_res) => {
+        onSetProfileData(_res)
+        onSetProfileAddress(_res.address)
+        toast.dismiss()
+        setClose()
+        // setTimeout(() => {
+        //   successToast(MESSAGES.success)
+        // }, 500)
+        if (_refresh) {
+          setTimeout(() => {
+            // eslint-disable-next-line no-use-before-define
+            // handleConnectWallet()
+            window.location.reload()
+          }, 1000)
+        }
+      })
+    },
+    [onSetProfileData, onSetProfileAddress, setClose]
+  )
+
   /**
    * @description Update wallet address if it's empty
    */
@@ -54,6 +80,7 @@ const useProfileController = () => {
   )
 
   return {
+    fetchProfile,
     onUpdateWallet
   }
 }

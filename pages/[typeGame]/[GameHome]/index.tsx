@@ -14,6 +14,8 @@ import { useTranslation } from "react-i18next"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import CardItemGold from "@feature/gameItem/components/molecules/CardItemGold"
 import useLoadingStore from "@stores/loading"
+import GameReviews from "@feature/game/components/molecules/GameReviews"
+import CONFIGS from "@configs/index"
 
 const SkeletonBanner = dynamic(
   () => import("@components/atoms/skeleton/SkeletonBanner"),
@@ -259,23 +261,54 @@ export default function GameLobby() {
           />
         }
         component2={
-          <FullWidthContent
-            sxCustomStyled={{
-              "&.container": {
-                maxWidth: "100%!important",
-                "&.container-fullWidth": {
-                  padding: "49px"
-                }
+          CONFIGS.MODE === "development" ? (
+            <RightSidebarContentEffect
+              className="mb-[64px]"
+              content={
+                <FullWidthContent
+                  sxCustomStyled={{
+                    "&.container": {
+                      maxWidth: "100%!important",
+                      "&.container-fullWidth": {
+                        padding: "49px"
+                      }
+                    }
+                  }}
+                >
+                  <TabProvider>
+                    <GameTabsVertical
+                      gameId={gameData.id}
+                      gameType={getGameMode(gameData)}
+                    />
+                  </TabProvider>
+                </FullWidthContent>
               }
-            }}
-          >
-            <TabProvider>
-              <GameTabsVertical
-                gameId={gameData.id}
-                gameType="arcade-emporium"
-              />
-            </TabProvider>
-          </FullWidthContent>
+              aside={
+                <GameReviews
+                  gameType={getGameMode(gameData)}
+                  gameId={gameData.id}
+                />
+              }
+            />
+          ) : (
+            <FullWidthContent
+              sxCustomStyled={{
+                "&.container": {
+                  maxWidth: "100%!important",
+                  "&.container-fullWidth": {
+                    padding: "49px"
+                  }
+                }
+              }}
+            >
+              <TabProvider>
+                <GameTabsVertical
+                  gameId={gameData.id}
+                  gameType={getGameMode(gameData)}
+                />
+              </TabProvider>
+            </FullWidthContent>
+          )
         }
       />
     ) : (

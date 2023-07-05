@@ -327,27 +327,6 @@ const FullMap = () => {
         open={expanded}
         setClose={(_toggle) => setExpanded(_toggle)}
       />
-      {/* <ModalCustom
-        open={expanded}
-        onClose={handleOnExpandClick}
-        className="m-auto gap-3 rounded-[34px] p-[10px] max-[420px]:w-[370px]"
-        width={515}
-      >
-        <Stack
-          spacing={3}
-          className="md:p-5"
-        >
-          <div className="rounded-2xl border-[1px] border-neutral-700 bg-neutral-800 p-2 uppercase">
-            <ModalHeader
-              handleClose={handleOnExpandClick}
-              title="Filter"
-            />
-          </div>
-          <div className="grid h-[500px] w-full justify-items-center overflow-y-auto">
-            <FilterBox />
-          </div>
-        </Stack>
-      </ModalCustom> */}
       {/* ---------- map ---------- */}
       <div className="h-full w-full">
         <Canvas

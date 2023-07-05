@@ -126,7 +126,7 @@ const MarketplaceLayoutInventory = ({
           )}
           <div
             className={` ${
-              isMapPage ? "absolute h-4/5" : "h-0 sm:h-[85vh]"
+              isMapPage ? "absolute h-full" : "h-0 sm:h-[85vh]"
             } z-50 hidden sm:block`}
           >
             <InventoryPage />

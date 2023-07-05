@@ -41,7 +41,7 @@ const MarketplaceLayoutInventory = ({
         <div className="hidden h-1/5 max-w-[1368px] sm:block">
           <Header />
         </div>
-        <div className="block sm:hidden">
+        <div className="block w-full sm:hidden">
           <HeaderMunuMobile />
         </div>
         <div className="items-center sm:flex" />

@@ -284,7 +284,7 @@ const FullMap = () => {
 
   return (
     <div className="map-content relative flex h-full w-full flex-col bg-[#0165B6]">
-      <div className="absolute top-6 z-10 mt-6 flex h-[200px] w-full justify-center sm:hidden">
+      <div className="absolute top-6 z-10 mt-10 flex h-[200px] w-full justify-center sm:hidden">
         <div className="grid max-w-[400px] justify-center gap-4">
           <div className="flex h-[40px] gap-2">
             <div className="flex !w-[315px] items-center justify-between rounded-lg bg-neutral-800 px-[15px]">

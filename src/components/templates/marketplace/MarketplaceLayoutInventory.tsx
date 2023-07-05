@@ -51,7 +51,7 @@ const MarketplaceLayoutInventory = ({
             sx={{ marginTop: 2 }}
           />
         ) : null}
-        <div className="flex h-full flex-col gap-3 sm:flex-row">
+        <div className="relative flex h-full flex-col gap-3 sm:flex-row">
           {/* add filter component here */}
           {!isMapPage && (
             <div className="hidden w-[200px] sm:block">

@@ -33,10 +33,12 @@ const MarketplaceLayoutInventory = ({
     <InventoryProvider>
       <div
         className={`${
-          isMapPage ? "w-full overflow-hidden" : "main-container"
+          isMapPage
+            ? "flex h-screen w-full flex-col items-center overflow-hidden"
+            : "main-container"
         }  mx-auto mt-16 sm:mt-0`}
       >
-        <div className="hidden sm:block">
+        <div className="hidden h-1/5 max-w-[1368px] sm:block">
           <Header />
         </div>
         <div className="block sm:hidden">
@@ -49,7 +51,7 @@ const MarketplaceLayoutInventory = ({
             sx={{ marginTop: 2 }}
           />
         ) : null}
-        <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="flex h-full flex-col gap-3 sm:flex-row">
           {/* add filter component here */}
           {!isMapPage && (
             <div className="hidden w-[200px] sm:block">
@@ -124,15 +126,15 @@ const MarketplaceLayoutInventory = ({
           )}
           <div
             className={` ${
-              isMapPage && `absolute`
-            } z-50 hidden h-0 sm:block sm:h-[85vh]`}
+              isMapPage ? "absolute h-4/5" : "h-0 sm:h-[85vh]"
+            } z-50 hidden sm:block`}
           >
             <InventoryPage />
           </div>
           <div
             className={
               isMapPage
-                ? "page-full-map h-[85vh] overflow-hidden"
+                ? "page-full-map h-full !overflow-hidden"
                 : "my-5 flex w-full flex-col gap-y-4"
             }
           >

@@ -1,10 +1,8 @@
 import CardItemMarketPlace from "@components/molecules/cards/CardItemMarketPlace"
 import { useRouter } from "next/router"
-import { v4 as uuidv4 } from "uuid"
 import React, { useCallback } from "react"
 import useInventoryPayment from "@feature/inventory/containers/hooks/useInventoryPayment"
 import useProfileStore from "@stores/profileStore"
-import { IInventoryItemList } from "@feature/inventory/interfaces/IInventoryItem"
 import SkeletonMarketOwnerList from "./SkeletonMarketOwnerList"
 import CardListContainer from "./CardListContainer"
 

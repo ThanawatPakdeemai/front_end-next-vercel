@@ -1,4 +1,4 @@
-/* eslint-disable-next-line max-len */
+/* eslint-disable max-len */
 import React from "react"
 import { IGame } from "@feature/game/interfaces/IGameService"
 import { Box } from "@mui/material"
@@ -57,6 +57,7 @@ const GameListMobile = ({ gameData, loading }: IGameList) => (
           />
         ))}
     </Box>
+    {/*  */}
     {/* {endScreen && (
         <Typography
           variant="button"

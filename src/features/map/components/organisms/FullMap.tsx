@@ -60,6 +60,20 @@ const FullMap = () => {
   const [disMove, setDisMove] = useState<boolean>(false)
   const [updateZoom, setUpdateZoom] = useState<boolean>(false)
   const [cameraPos, setCameraPos] = useState({ x: "175", y: "1" })
+  const [posX, setPosX] = useState<string | undefined>(undefined)
+  const [posY, setPosY] = useState<string | undefined>(undefined)
+
+  useEffect(() => {
+    let load = false
+    if (!load && router.query.x && router.query.y) {
+      setPosX(router.query.x as string)
+      setPosY(router.query.y as string)
+    }
+
+    return () => {
+      load = true
+    }
+  }, [router.query])
 
   const fetchAllLandToPlot = async () => {
     setOpen()
@@ -267,20 +281,23 @@ const FullMap = () => {
   }, [currentLand])
 
   useMemo(() => {
-    if (allLand && allLand.length > 0 && router.query) {
-      if (router.query.x && router.query.y) {
+    let load = false
+    if (!load && allLand && allLand.length > 0 && posX && posY) {
+      if (posX && posY) {
         const landByXY = allLand.find(
           (element) =>
-            element.position.x === router.query.x &&
-            element.position.y === router.query.y
+            element.position.x === posX && element.position.y === posY
         )
         if (landByXY) {
           setCurrentLand(landByXY)
         }
       }
     }
+    return () => {
+      load = true
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.query, allLand])
+  }, [posX, posY, allLand])
 
   return (
     <div className="map-content relative flex h-full w-full flex-col bg-[#0165B6]">

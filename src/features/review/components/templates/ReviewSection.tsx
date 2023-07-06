@@ -10,7 +10,7 @@ interface IReviewProps {
   average?: string
 }
 
-const Review = ({ children, average }: IReviewProps) => {
+const ReviewSection = ({ children, average }: IReviewProps) => {
   const { t } = useTranslation()
   return (
     <div className="relative flex flex-col justify-start rounded-md border-[1px] border-neutral-700 border-opacity-80 bg-neutral-780 p-4">
@@ -35,4 +35,4 @@ const Review = ({ children, average }: IReviewProps) => {
   )
 }
 
-export default Review
+export default ReviewSection

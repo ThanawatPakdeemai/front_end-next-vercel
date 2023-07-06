@@ -13,7 +13,9 @@ const useReviewContext = (_id: string) => {
   const [limit, setLimit] = useState<number>(5)
   const [page, setPage] = useState<number>(1)
   const [reviewList, setReviewList] = useState<Array<IReviewList>>([])
-  const [reviewInfo, setReviewInfo] = useState<IInfo | undefined>(undefined)
+  const [reviewInfo, setReviewInfo] = useState<
+    (IInfo & { avarage: number }) | undefined
+  >(undefined)
   const [ownerReview, setOwnerReview] = useState<IReviewList | undefined>(
     undefined
   )
@@ -21,7 +23,7 @@ const useReviewContext = (_id: string) => {
   const getReviewListById = async (_checkOwner: boolean) => {
     setReviewLoading(true)
     let _list: Array<IReviewList> = []
-    let _info: IInfo | undefined
+    let _info: (IInfo & { avarage: number }) | undefined
     const { status, data, info } = await getAllGameReview({
       _limit: limit,
       _page: page,

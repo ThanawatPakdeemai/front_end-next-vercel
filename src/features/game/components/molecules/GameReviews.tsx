@@ -26,7 +26,6 @@ const GameReviewContent = ({ gameId }: { gameId: string }) => {
   const { stateProfile, hydrated } = useGlobal()
   const { reviewList, reviewInfo, ownerReview } = useReviewProvider()
   const [review, setReview] = useState<Array<IReviewList>>([])
-  const [average, setAverage] = useState<number>(0)
   const [openModalLogin, setOpenModalLogin] = useState<boolean>(false)
 
   useEffect(() => {
@@ -43,32 +42,12 @@ const GameReviewContent = ({ gameId }: { gameId: string }) => {
     }
   }, [reviewList, reviewInfo])
 
-  /**
-   * @description Calculate average rating
-   */
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (review && review.length > 0) {
-        const total = review.reduce(
-          (acc, cur) => acc + parseFloat(cur.review_rate),
-          0
-        )
-        const _average = total / review.length
-        setAverage(_average)
-      }
-    }
-
-    return () => {
-      load = true
-    }
-  }, [review])
-
   return (
     <div className="relative h-full w-full">
       {hydrated && (
-        <ReviewSection average={average.toString()}>
+        <ReviewSection
+          average={reviewInfo ? reviewInfo.avarage.toString() : "0"}
+        >
           <div className="flex h-3/4 w-full flex-col gap-y-2">
             <div className="flex h-full w-full flex-col gap-y-2">
               {review && review.length > 0 ? (

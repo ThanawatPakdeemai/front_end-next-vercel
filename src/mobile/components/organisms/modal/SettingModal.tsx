@@ -210,7 +210,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
           <>
             <FacebookLogin
               appId={`${CONFIGS.FACEBOOK_APP_ID}`}
-              autoLoad
+              autoLoad={false}
               fields="name,email,picture"
               callback={handleSyncFacebookId}
               cssClass="my-facebook-button-class flex gap-2 items-center h-[50px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800 px-3"

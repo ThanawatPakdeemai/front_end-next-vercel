@@ -1,3 +1,4 @@
+/* eslint-disable-next-line max-len */
 import { useEffect, useState } from "react"
 import useGlobal, { isMobile } from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
@@ -127,11 +128,12 @@ const useGamePageListController = (
       }
       const filterData: IPayloadGameFilter = {
         // eslint-disable-next-line no-nested-ternary
-        limit: isMobile
-          ? limitPage.limit >= 10
-            ? limitPage.limit
-            : 10
-          : limitPage.limit,
+        // limit: isMobile
+        //   ? limitPage.limit >= 10
+        //     ? limitPage.limit
+        //     : 10
+        //   : limitPage.limit,
+        limit: isMobile ? 9999 : _limit,
         skip: page,
         sort: "_id",
         search: searchDropdown,
@@ -180,11 +182,14 @@ const useGamePageListController = (
     limit,
     mutateGetGameAllFilter,
     gameMode,
-    _categoryId,
-    limitPage
+    _categoryId
+    // limitPage
   ])
 
-  const handleInfinityLimit = () => {
+  /**
+   * Refactor this later
+   */
+  /* const handleInfinityLimit = () => {
     if (gameFilter && isMobile) {
       if (scrollBottom && limitPage.limit < totalCount && isMobile) {
         setLimitPage({
@@ -202,7 +207,7 @@ const useGamePageListController = (
         setEndLimit(true)
       }
     }
-  }
+  } */
 
   const handleSearchFilter = () => {
     setEndLimit(false)
@@ -213,7 +218,8 @@ const useGamePageListController = (
   useEffect(() => {
     let load = false
     if (!load) {
-      handleInfinityLimit()
+      // Hide to change to load more button
+      // handleInfinityLimit()
     }
     return () => {
       load = true

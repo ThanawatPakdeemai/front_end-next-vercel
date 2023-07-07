@@ -184,7 +184,7 @@ const GameDetailLayoutMobile = ({ gameData }: IGameDetailLayoutMobileProps) => {
           ))}
           <div className="game-section__categories--item game-section__categories--item-gameType">
             <ButtonOutlineTemplate className="capitalize">
-              {gameData.game_type}
+              {gameData.game_type.replace("player", " player")}
             </ButtonOutlineTemplate>
           </div>
         </div>

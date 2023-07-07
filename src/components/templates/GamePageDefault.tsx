@@ -43,7 +43,7 @@ const GamePageDefault = ({
   const isReward =
     router.pathname &&
     router.pathname === "/[typeGame]/[GameHome]/[typeReward]/[notification_id]"
-  const { gameRatingData } = useGameRating(data?._id || "")
+  const { ratingGame, onSubmitSendRating } = useGameRating(data?._id)
   const {
     onClickedPrev,
     onClickedNext,
@@ -79,7 +79,8 @@ const GamePageDefault = ({
                       ? gameData.image_category_list
                       : ""
                   }
-                  value={gameRatingData ? gameRatingData.percent : 100}
+                  value={ratingGame ? ratingGame.percent : 100}
+                  handleClick={onSubmitSendRating}
                 />
                 <StatisticGameDetail statsGameById={statsGameById} />
                 <TopPlayer

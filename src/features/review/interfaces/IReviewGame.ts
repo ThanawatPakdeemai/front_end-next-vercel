@@ -1,4 +1,8 @@
-import { IFormatMessageService, IFormatService } from "@interfaces/IHelper"
+import {
+  IFormatMessageService,
+  IFormatService,
+  IInfo
+} from "@interfaces/IHelper"
 
 interface IId {
   id: string
@@ -36,9 +40,13 @@ export interface IReviewGameData extends IId {
   player_id: IReviewPlayerData
 }
 
-export interface IReviewListServ extends IFormatService {
+export interface IGetReviewList {
+  status: boolean
   message: string
   data: Array<IReviewGameData>
+  info: IInfo & {
+    avarage: number
+  }
 }
 
 export interface IReviewGameServ extends IFormatMessageService {

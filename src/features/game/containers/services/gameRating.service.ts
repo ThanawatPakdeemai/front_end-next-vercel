@@ -1,6 +1,8 @@
 import services from "@configs/axiosGlobalConfig"
-import { IGameRatingServ } from "@feature/game/interfaces/IGameRating"
-import { IReviewGameServ } from "@feature/review/interfaces/IReviewGame"
+import {
+  IGameRatingServ,
+  IRatingServ
+} from "@feature/game/interfaces/IGameRating"
 
 export const getGameRatingById = (_gameId: string) =>
   new Promise<IGameRatingServ>((resolve, reject) => {
@@ -15,16 +17,16 @@ export const getGameRatingById = (_gameId: string) =>
   })
 
 export const addGameRating = ({
-  _gameId,
+  _id,
   _type
 }: {
-  _gameId: string
+  _id: string
   _type: boolean
 }) =>
-  new Promise<IReviewGameServ>((resolve, reject) => {
-    const _data = { game_id: _gameId, type: _type }
+  new Promise<IRatingServ>((resolve, reject) => {
+    const _data = { game_id: _id, type: _type }
     services
-      .post<IReviewGameServ>(`/game-rating/create`, { ..._data })
+      .post<IRatingServ>(`/game-rating/create`, { ..._data })
       .then((res) => {
         resolve(res.data)
       })
@@ -34,16 +36,16 @@ export const addGameRating = ({
   })
 
 export const updateGameRating = ({
-  _gameId,
+  _id,
   _type
 }: {
-  _gameId: string
+  _id: string
   _type: boolean
 }) =>
-  new Promise<IReviewGameServ>((resolve, reject) => {
+  new Promise<IRatingServ>((resolve, reject) => {
     const _data = { type: _type }
     services
-      .post<IReviewGameServ>(`/game-rating/update/${_gameId}`, { ..._data })
+      .put<IRatingServ>(`/game-rating/update/${_id}`, { ..._data })
       .then((res) => {
         resolve(res.data)
       })
@@ -53,9 +55,9 @@ export const updateGameRating = ({
   })
 
 export const getCheckUserRatingGame = (_gameId: string) =>
-  new Promise((resolve, reject) => {
+  new Promise<IRatingServ>((resolve, reject) => {
     services
-      .get(`/game-rating/check-rating/${_gameId}`)
+      .get<IRatingServ>(`/game-rating/check-rating/${_gameId}`)
       .then((res) => {
         resolve(res.data)
       })

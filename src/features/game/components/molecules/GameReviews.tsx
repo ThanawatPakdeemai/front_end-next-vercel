@@ -1,8 +1,6 @@
-import NoAuth from "@components/templates/NoAuth"
 import ReviewForm from "@feature/review/components/organisms/ReviewForm"
-import Review from "@feature/review/components/templates/Review"
 import useGlobal from "@hooks/useGlobal"
-import { Chip, Rating, Typography } from "@mui/material"
+import { Chip, Rating, Stack, Typography } from "@mui/material"
 import { Image } from "@components/atoms/image/index"
 import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
@@ -13,6 +11,11 @@ import {
   ReviewProvider,
   useReviewProvider
 } from "@feature/review/containers/providers/ReviewProvider"
+import ButtonLogin from "@components/molecules/rightMenu/ButtonLogin"
+import { ModalCustom } from "@components/molecules/Modal/ModalCustom"
+import ModalHeader from "@components/molecules/Modal/ModalHeader"
+import FormLogin from "@feature/authentication/components/FormLogin"
+import ReviewSection from "@feature/review/components/templates/ReviewSection"
 
 interface IGameReviewProps {
   gameType: IGetType
@@ -23,7 +26,7 @@ const GameReviewContent = ({ gameId }: { gameId: string }) => {
   const { stateProfile, hydrated } = useGlobal()
   const { reviewList, reviewInfo, ownerReview } = useReviewProvider()
   const [review, setReview] = useState<Array<IReviewList>>([])
-  const [average, setAverage] = useState<number>(0)
+  const [openModalLogin, setOpenModalLogin] = useState<boolean>(false)
 
   useEffect(() => {
     let load = false
@@ -39,32 +42,12 @@ const GameReviewContent = ({ gameId }: { gameId: string }) => {
     }
   }, [reviewList, reviewInfo])
 
-  /**
-   * @description Calculate average rating
-   */
-  useEffect(() => {
-    let load = false
-
-    if (!load) {
-      if (review && review.length > 0) {
-        const total = review.reduce(
-          (acc, cur) => acc + parseFloat(cur.review_rate),
-          0
-        )
-        const _average = total / review.length
-        setAverage(_average)
-      }
-    }
-
-    return () => {
-      load = true
-    }
-  }, [review])
-
   return (
     <div className="relative h-full w-full">
       {hydrated && (
-        <Review average={average.toString()}>
+        <ReviewSection
+          average={reviewInfo ? reviewInfo.avarage.toString() : "0"}
+        >
           <div className="flex h-3/4 w-full flex-col gap-y-2">
             <div className="flex h-full w-full flex-col gap-y-2">
               {review && review.length > 0 ? (
@@ -152,11 +135,36 @@ const GameReviewContent = ({ gameId }: { gameId: string }) => {
                   />
                 </GoogleReCaptchaProvider>
               ) : (
-                <NoAuth />
+                // <NoAuth />
+                <>
+                  <ButtonLogin
+                    handleButton={() => {
+                      setOpenModalLogin(true)
+                    }}
+                  />
+                  <ModalCustom
+                    open={openModalLogin}
+                    onClose={() => setOpenModalLogin(false)}
+                    className="w-full gap-3 rounded-[34px] p-[10px] md:w-auto"
+                    width="auto"
+                  >
+                    <Stack
+                      spacing={3}
+                      className="md:p-5"
+                    >
+                      <ModalHeader
+                        handleClose={() => setOpenModalLogin(false)}
+                        title="Login"
+                      />
+
+                      <FormLogin />
+                    </Stack>
+                  </ModalCustom>
+                </>
               )}
             </div>
           </div>
-        </Review>
+        </ReviewSection>
       )}
     </div>
   )

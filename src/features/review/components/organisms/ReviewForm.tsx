@@ -26,23 +26,24 @@ const ReviewForm = ({
   haveReview = false,
   reviewId,
   reviewMessage = "",
-  reviewRating = 0
+  reviewRating
 }: IReviewFormProps) => {
   const { onSubmitComment, onSubmitUpdateReview, onSubmitDeleteReview } =
     useReview()
   const [hasReview, setHasReview] = useState<boolean>(haveReview)
   const [disMessage, setDisMessage] = useState<boolean>(true)
   const [reviewMess, setReviewMess] = useState<string>(reviewMessage)
-  const [reviewRate, setReviewRate] = useState<number>(reviewRating)
+  const [reviewRate, setReviewRate] = useState<number>(reviewRating || 0)
 
   useEffect(() => {
     let load = false
     if (!load) {
-      if (haveReview) {
-        setHasReview(haveReview)
-      }
+      if (haveReview) setHasReview(haveReview)
+      else setHasReview(false)
       if (reviewMessage) setReviewMess(reviewMessage)
+      else setReviewMess("")
       if (reviewRating) setReviewRate(reviewRating)
+      else setReviewRate(0)
     }
     return () => {
       load = true

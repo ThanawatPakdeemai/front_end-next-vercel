@@ -6,6 +6,7 @@ import { ReactElement, ReactNode } from "react"
 import type { NextPage } from "next"
 import { appWithTranslation } from "next-i18next"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { SessionProvider } from "next-auth/react"
 import type { AppProps } from "next/app"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ProviderApp, Web3Provider } from "@providers/index"
@@ -38,7 +39,10 @@ type AppPropsWithLayout = AppProps & {
 }
 
 const MyApp = (props) => {
-  const { Component, pageProps }: AppPropsWithLayout = props
+  const {
+    Component,
+    pageProps: { session, ...pageProps }
+  }: AppPropsWithLayout = props
   const getLayout = Component.getLayout ?? ((page) => page)
   const emotionCache: EmotionCache = clientSideEmotionCache
   const queryClient = new QueryClient()
@@ -55,13 +59,15 @@ const MyApp = (props) => {
       <QueryClientProvider client={queryClient}>
         <Web3Provider>
           <CacheProvider value={emotionCache}>
-            <ThemeProvider theme={customTheme}>
-              <ProviderApp>
-                <BaseProvider>
-                  {getLayout(<Component {...pageProps} />)}
-                </BaseProvider>
-              </ProviderApp>
-            </ThemeProvider>
+            <SessionProvider session={session}>
+              <ThemeProvider theme={customTheme}>
+                <ProviderApp>
+                  <BaseProvider>
+                    {getLayout(<Component {...pageProps} />)}
+                  </BaseProvider>
+                </ProviderApp>
+              </ThemeProvider>
+            </SessionProvider>
           </CacheProvider>
         </Web3Provider>
         <ReactQueryDevtools initialIsOpen />

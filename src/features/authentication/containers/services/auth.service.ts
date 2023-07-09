@@ -217,7 +217,7 @@ export const loginProvider = ({
     const dataNoReferral = {
       email: _email,
       provider: _provider,
-      providerUUID: _providerUUID
+      providerUUID: "3PR60tnJ1COwrKLfYQsUXvSp69D3"
     }
     services
       .post<IProfile>(

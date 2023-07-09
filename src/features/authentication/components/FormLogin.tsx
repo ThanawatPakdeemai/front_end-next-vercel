@@ -10,8 +10,10 @@ import {
   Typography,
   CircularProgress,
   Grid,
-  Alert
+  Alert,
+  Button
 } from "@mui/material"
+import { useSession, signIn, signOut } from "next-auth/react"
 import LoginIcon from "@mui/icons-material/Login"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
 import LockOpenIcon from "@mui/icons-material/LockOpen"
@@ -29,6 +31,7 @@ import useLoginTypeStore from "@stores/loginTypes"
 import { useTranslation } from "react-i18next"
 import { isMobile } from "@hooks/useGlobal"
 import CONFIGS from "@configs/index"
+import DiscordIcon from "@components/icons/SocialIcon/DiscordIcon"
 import FromForgotPassword from "./FromForgotPassword"
 import useFormLoginController from "../containers/hooks/useFormLoginController"
 import { ISignIn } from "../interfaces/IAuthService"
@@ -45,9 +48,14 @@ const FormLogin = () => {
 
   const { t } = useTranslation()
 
+  const { data: session, status } = useSession()
+  // eslint-disable-next-line no-console
+  console.log("test-session", session, status)
+
   const {
     getClickLoginFacebook: toggleFacebookLogin,
-    setClickLoginFacebook: setToggleFacebookLogin
+    setClickLoginFacebook: setToggleFacebookLogin,
+    setClickLoginTypes: setLoginTypes
   } = useLoginTypeStore()
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -71,6 +79,11 @@ const FormLogin = () => {
       _password: ""
     }
   })
+
+  const handleLogin = (_typeLogin: string) => {
+    setLoginTypes(_typeLogin)
+    signIn(_typeLogin)
+  }
 
   return (
     <>
@@ -276,8 +289,19 @@ const FormLogin = () => {
               stiffness: 400,
               damping: 4
             }}
-            onClick={googleLogin}
+            onClick={() => handleLogin("google")}
             icon={<GoogleIcon />}
+            className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
+          />
+          <ButtonIcon
+            whileHover="hover"
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 4
+            }}
+            onClick={() => handleLogin("discord")}
+            icon={<DiscordIcon />}
             className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
           />
           {!isMobile && (
@@ -293,6 +317,7 @@ const FormLogin = () => {
               className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
             />
           )}
+          <Button onClick={() => signOut()}>signOut</Button>
         </div>
       </Grid>
     </>

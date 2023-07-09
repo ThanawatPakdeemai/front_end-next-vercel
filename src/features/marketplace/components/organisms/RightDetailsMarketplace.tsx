@@ -149,8 +149,10 @@ const RightDetailsMarketplace = ({
         <Divider className="mt-1 !block border-[1px] border-neutral-800 sm:!hidden" />
 
         <div className="flex flex-col gap-y-4 px-4 pt-6">
-          <div className="flex items-center gap-4">
-            <Typography className="text-neutral-300">{method}</Typography>
+          <div className="flex flex-row items-center gap-4">
+            {method ? (
+              <Typography className="text-neutral-300">{method}</Typography>
+            ) : null}
             <Chip
               label={handleType()}
               size="small"

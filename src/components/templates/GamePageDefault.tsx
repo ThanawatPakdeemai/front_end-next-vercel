@@ -19,6 +19,7 @@ import IconArrowRight from "@components/icons/arrowRightIcon"
 import useGameOverview from "@feature/game/containers/hooks/useGameOverview"
 import Breadcrumb from "@components/molecules/Breadcrumb"
 import { useRouter } from "next/router"
+import useGameRating from "@feature/game/containers/hooks/useGameRating"
 
 interface IGamePageDefaultProps {
   component: React.ReactNode
@@ -42,7 +43,7 @@ const GamePageDefault = ({
   const isReward =
     router.pathname &&
     router.pathname === "/[typeGame]/[GameHome]/[typeReward]/[notification_id]"
-
+  const { ratingGame, onSubmitSendRating } = useGameRating(data?._id)
   const {
     onClickedPrev,
     onClickedNext,
@@ -78,7 +79,8 @@ const GamePageDefault = ({
                       ? gameData.image_category_list
                       : ""
                   }
-                  value={78.34}
+                  value={ratingGame ? ratingGame.percent : 100}
+                  handleClick={onSubmitSendRating}
                 />
                 <StatisticGameDetail statsGameById={statsGameById} />
                 <TopPlayer

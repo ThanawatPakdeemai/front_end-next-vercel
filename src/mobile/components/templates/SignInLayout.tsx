@@ -16,10 +16,7 @@ import CreateAccountModal from "../organisms/modal/CreateAccountModal"
 const SignInLayout = () => {
   const { facebookLogin, googleLogin, twitterLogin } = useFormLoginController()
 
-  const {
-    getClickLoginFacebook: toggleFacebookLogin,
-    setClickLoginFacebook: setToggleFacebookLogin
-  } = useLoginTypeStore()
+  const { setClickLoginFacebook: setToggleFacebookLogin } = useLoginTypeStore()
 
   const [openModalLogin, setOpenModalLogin] = useState<boolean>(false)
   const [openModalCreateAccount, setOpenModalCreateAccount] =
@@ -48,20 +45,16 @@ const SignInLayout = () => {
           >
             <div className="flex items-center font-urbanist text-base font-medium">
               <span className="pr-2">
-                {toggleFacebookLogin ? (
-                  <FacebookLogin
-                    appId={`${CONFIGS.FACEBOOK_APP_ID}`}
-                    autoLoad
-                    fields="name,email,picture"
-                    callback={facebookLogin}
-                    cssClass="my-facebook-button-class"
-                    icon={<FacebookColorIcon />}
-                  />
-                ) : (
-                  <FacebookColorIcon />
-                )}
+                <FacebookLogin
+                  appId={`${CONFIGS.FACEBOOK_APP_ID}`}
+                  autoLoad={false}
+                  fields="name,email,picture"
+                  callback={facebookLogin}
+                  cssClass="my-facebook-button-class flex gap-2"
+                  icon={<FacebookColorIcon />}
+                  textButton="Sign in with Facebook"
+                />
               </span>
-              <span>Sign in with Facebook</span>
             </div>
           </Button>
         </Box>

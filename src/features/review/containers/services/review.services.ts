@@ -1,5 +1,9 @@
 import services from "@configs/axiosGlobalConfig"
 import { IGamePartnerReviewsReponse } from "@feature/game/partnerGames/interfaces/IGamePartners"
+import {
+  IGetReviewList,
+  IReviewGameServ
+} from "@feature/review/interfaces/IReviewGame"
 
 /**
  * @description Add comment for game partner
@@ -67,7 +71,7 @@ export const getAllGameReview = ({
   _gameId: string
   _sort: string
 }) =>
-  new Promise<IGamePartnerReviewsReponse>((resolve, reject) => {
+  new Promise<IGetReviewList>((resolve, reject) => {
     const _data = {
       limit: _limit,
       skip: _page,
@@ -75,7 +79,7 @@ export const getAllGameReview = ({
       sort: _sort
     }
     services
-      .post<IGamePartnerReviewsReponse>(`/game-review`, { ..._data })
+      .post<IGetReviewList>(`/game-review`, { ..._data })
       .then((reponse) => {
         resolve(reponse.data)
       })
@@ -83,9 +87,9 @@ export const getAllGameReview = ({
   })
 
 export const getCheckedPlayerReview = (_gameId: string) =>
-  new Promise((resolve, reject) => {
+  new Promise<IReviewGameServ>((resolve, reject) => {
     services
-      .get(`/game-review/check-review/${_gameId}`)
+      .get<IReviewGameServ>(`/game-review/check-review/${_gameId}`)
       .then((reponse) => {
         resolve(reponse.data)
       })
@@ -103,14 +107,14 @@ export const addReview = ({
   _rate: number
   _gameId: string
 }) =>
-  new Promise((resolve, reject) => {
+  new Promise<IReviewGameServ>((resolve, reject) => {
     const _data = {
       review_comment: _message,
       review_rate: _rate,
       game_id: _gameId
     }
     services
-      .post(
+      .post<IReviewGameServ>(
         `/game-review/create`,
         { ..._data },
         {
@@ -126,21 +130,31 @@ export const addReview = ({
   })
 
 export const updateReview = ({
-  _gameId,
+  _recaptcha,
+  _reviewId,
   _message,
   _rate
 }: {
-  _gameId: string
+  _recaptcha: string
+  _reviewId: string
   _message: string
   _rate: number
 }) =>
-  new Promise((resolve, reject) => {
+  new Promise<IReviewGameServ>((resolve, reject) => {
     const _data = {
       review_comment: _message,
       review_rate: _rate
     }
     services
-      .put(`/game-review/update/${_gameId}`, { ..._data })
+      .put<IReviewGameServ>(
+        `/game-review/update/${_reviewId}`,
+        { ..._data },
+        {
+          headers: {
+            "g-recaptcha-token": _recaptcha
+          }
+        }
+      )
       .then((reponse) => {
         resolve(reponse.data)
       })
@@ -148,9 +162,9 @@ export const updateReview = ({
   })
 
 export const deleteReview = (_gameId: string) =>
-  new Promise((resolve, reject) => {
+  new Promise<IReviewGameServ>((resolve, reject) => {
     services
-      .delete(`/game-review/delete/${_gameId}`)
+      .delete<IReviewGameServ>(`/game-review/delete/${_gameId}`)
       .then((reponse) => {
         resolve(reponse.data)
       })

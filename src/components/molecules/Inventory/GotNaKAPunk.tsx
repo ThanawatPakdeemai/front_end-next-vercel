@@ -1,6 +1,9 @@
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import CopyMiniIcon from "@components/icons/Referral/CoopyMiniIcon"
-import { Chip, Typography } from "@mui/material"
+import { MESSAGES } from "@constants/messages"
+import { useToast } from "@feature/toast/containers"
+import { Chip, Divider, Typography } from "@mui/material"
+import Helper from "@utils/helper"
 import React from "react"
 
 interface IProp {
@@ -8,11 +11,19 @@ interface IProp {
   token_id: string
 }
 
-const GotNaKAPunk = ({ address, token_id }: IProp) => (
-  <div className="px-8">
-    <div className="my-2 grid grid-cols-2">
-      <div className="flex items-center">
-        <Typography className="mr-2 text-xs uppercase text-white-primary">
+const GotNaKAPunk = ({ address, token_id }: IProp) => {
+  const { copyClipboard } = Helper
+  const { successToast } = useToast()
+
+  const handleCopyClipboard = (_copy: string) => {
+    copyClipboard(_copy)
+    successToast(MESSAGES.copy)
+  }
+
+  return (
+    <div className="flex w-full min-w-[320px] flex-col gap-x-2 gap-y-1 py-1 pl-8 pr-4 md:flex-row">
+      <div className="flex w-fit max-w-[204px] flex-row items-center gap-x-1">
+        <Typography className="text-xs uppercase text-white-primary">
           address :
         </Typography>
         <Chip
@@ -22,13 +33,13 @@ const GotNaKAPunk = ({ address, token_id }: IProp) => (
           className="max-w-[113px] cursor-pointer uppercase"
         />
         <ButtonIcon
-          onClick={() => {}}
-          className="ml-2 flex !h-[25px] !w-[25px] items-center justify-center rounded-[4px] border border-neutral-700 bg-neutral-900"
+          onClick={() => handleCopyClipboard(address)}
+          className="flex !h-[25px] !w-[25px] items-center justify-center rounded-[4px] border border-neutral-700 bg-neutral-900"
           icon={<CopyMiniIcon />}
         />
       </div>
-      <div className="flex items-center">
-        <Typography className="mr-2 text-xs uppercase text-white-primary">
+      <div className="flex w-fit flex-row items-center gap-x-1">
+        <Typography className="text-xs uppercase text-white-primary">
           token id :
         </Typography>
         <Chip
@@ -38,20 +49,14 @@ const GotNaKAPunk = ({ address, token_id }: IProp) => (
           className="max-w-[113px] cursor-pointer uppercase"
         />
         <ButtonIcon
-          onClick={() => {}}
-          className="ml-2 flex !h-[25px] !w-[25px] items-center justify-center rounded-[4px] border border-neutral-700 bg-neutral-900"
+          onClick={() => handleCopyClipboard(token_id)}
+          className="flex !h-[25px] !w-[25px] items-center justify-center rounded-[4px] border border-neutral-700 bg-neutral-900"
           icon={<CopyMiniIcon />}
         />
       </div>
+      <Divider className="!block border-b-[1px] border-neutral-800/75 md:hidden" />
     </div>
-    {/* <Typography
-      variant="button"
-      onClick={() => {}}
-      className="cursor-pointer text-xs uppercase text-purple-primary"
-    >
-      view transaction
-    </Typography> */}
-  </div>
-)
+  )
+}
 
 export default GotNaKAPunk

@@ -1,3 +1,5 @@
+import CONFIGS from "."
+
 export const NAKA_ECOSYSTEMSS = [
   {
     label: "Blog",
@@ -17,6 +19,11 @@ export const NAKA_ECOSYSTEMSS = [
   {
     label: "Legacy Version",
     path: "https://legacy.nakamoto.games",
+    icon: true
+  },
+  {
+    label: "Marketplace Legacy Version",
+    path: `${CONFIGS.BASE_URL.MARKETPLACE_LEGACY}`,
     icon: true
   }
   // {

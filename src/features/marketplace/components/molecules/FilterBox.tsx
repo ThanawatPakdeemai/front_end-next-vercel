@@ -1,5 +1,5 @@
 import { Collapse, Typography } from "@mui/material"
-import React, { memo, useMemo, useState } from "react"
+import React, { memo, useMemo, useState, useRef, useEffect } from "react"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { NextRouter, useRouter } from "next/router"
 import DropdownIcon from "@components/icons/DropdownIcon"
@@ -43,6 +43,7 @@ const FilterBox = () => {
     onResetFilterType,
     filterType
   } = useMarketFilterStore()
+  const boxRef = useRef<HTMLElement | null>(null)
 
   const [expanded, setExpanded] = useState<boolean>(false)
 
@@ -249,10 +250,26 @@ const FilterBox = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search])
 
+  useEffect(() => {
+    const handler = (e) => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      if (!boxRef?.current?.contains(e.target)) {
+        setExpanded(false)
+      }
+    }
+    document.addEventListener("mousedown", handler)
+    return () => {
+      document.removeEventListener("mousedown", handler)
+    }
+  }, [])
+
   return (
-    <div className="grid w-52 gap-3 ">
+    <div
+      id="filter-box"
+      className="grid w-52 gap-3"
+    >
       {!isMap && (
-        <section>
+        <section ref={boxRef}>
           <button
             type="button"
             onClick={handleOnExpandClick}
@@ -380,73 +397,6 @@ const FilterBox = () => {
               onSetSearch({ key: "selling_type", value: _value as string })
             }
           />
-          {/* <>
-            <Typography className="text-xs uppercase text-neutral-500">
-              Price Range (NAKA)
-            </Typography>
-            <TextField
-              className="w-full"
-              placeholder="00.0"
-              InputProps={{
-                style: {
-                  fontSize: "14px",
-                  fontFamily: "neueMachina",
-                  width: "100%"
-                },
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <div className="flex items-center	">
-                      <SpeedHeight />
-                      <Typography className="ml-2 text-xs uppercase text-neutral-500">
-                        max
-                      </Typography>
-                    </div>
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment
-                    position="end"
-                    className="cursor-pointer"
-                    onClick={() => {}}
-                  >
-                    <INaka color="#E1E2E2" />
-                  </InputAdornment>
-                )
-              }}
-              onChange={(_event) => {}}
-            />
-            <TextField
-              className="w-full"
-              placeholder="00.0"
-              InputProps={{
-                style: {
-                  fontSize: "14px",
-                  fontFamily: "neueMachina",
-                  width: "100%"
-                },
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <div className="flex items-center	">
-                      <SpeedLow />
-                      <Typography className="ml-2 text-xs uppercase text-neutral-500">
-                        min
-                      </Typography>
-                    </div>
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment
-                    position="end"
-                    className="cursor-pointer"
-                    onClick={() => {}}
-                  >
-                    <INaka color="#E1E2E2" />
-                  </InputAdornment>
-                )
-              }}
-              onChange={(_event) => {}}
-            />
-          </> */}
         </>
       ) : null}
       {isP2P || isForSale ? (

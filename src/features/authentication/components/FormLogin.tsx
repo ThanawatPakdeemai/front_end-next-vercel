@@ -243,11 +243,11 @@ const FormLogin = () => {
               toggleFacebookLogin ? (
                 <FacebookLogin
                   appId={`${CONFIGS.FACEBOOK_APP_ID}`}
-                  autoLoad
+                  autoLoad={false}
                   fields="name,email,picture"
                   callback={facebookLogin}
-                  cssClass="my-facebook-button-class"
-                  textButton=""
+                  cssClass="button-facebook-login"
+                  textButton="Login with Facebook"
                   icon={<FacebookIcon />}
                 />
               ) : (

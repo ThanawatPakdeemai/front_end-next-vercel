@@ -25,7 +25,7 @@ const useGamePartners = () => {
     isError: allReviewsDataError,
     error: allReviewsDataErrorData
   } = useQuery({
-    queryKey: ["gameAllReviews", limit, page, gameData?.id || ""],
+    queryKey: ["gamePartnerAllReviews", limit, page, gameData?.id || ""],
     queryFn: () =>
       gameData ? getGamePartnerAllReview(limit, page, gameData.id) : null,
     keepPreviousData: true,

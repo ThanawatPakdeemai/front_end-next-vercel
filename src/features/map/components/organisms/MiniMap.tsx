@@ -10,7 +10,6 @@ import { calculatePosition } from "@utils/map"
 import ButtonIcon from "@components/atoms/button/ButtonIcon"
 import { ILandMap } from "@feature/land/interfaces/ILandService"
 import { useRouter } from "next/router"
-import { v4 as uuidv4 } from "uuid"
 import CameraController from "../molecules/CameraController"
 import MapScene from "../molecules/MapScene"
 import BoxElement from "../molecules/BoxElement"
@@ -57,9 +56,18 @@ const MiniMap = ({
   }, [])
 
   const buttonsControl = [
-    { onClick: handleCenter, icon: <GpsFixedIcon htmlColor="#E1E2E2" /> },
-    { onClick: handleZoomIn, icon: <AddBoxOutlinedIcon htmlColor="#E1E2E2" /> },
     {
+      id: "id-center",
+      onClick: handleCenter,
+      icon: <GpsFixedIcon htmlColor="#E1E2E2" />
+    },
+    {
+      id: "id-zoom-in",
+      onClick: handleZoomIn,
+      icon: <AddBoxOutlinedIcon htmlColor="#E1E2E2" />
+    },
+    {
+      id: "id-zoom-out",
       onClick: handleZoomOut,
       icon: <IndeterminateCheckBoxOutlinedIcon htmlColor="#E1E2E2" />
     }
@@ -153,9 +161,9 @@ const MiniMap = ({
             display: "flex"
           }}
         >
-          {buttonsControl.map(({ onClick, icon }) => (
+          {buttonsControl.map(({ onClick, icon, id }) => (
             <ButtonIcon
-              key={uuidv4()}
+              key={id}
               onClick={onClick}
               className="map-button"
               icon={icon}

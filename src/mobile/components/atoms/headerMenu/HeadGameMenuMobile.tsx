@@ -2,24 +2,13 @@ import React, { memo } from "react"
 import { GAME_MENU_MOBILE } from "@mobile/constants/menuMobile"
 import { Box } from "@mui/material"
 import { IGetType } from "@feature/game/interfaces/IGameService"
-import useScrollToEndStore from "@stores/scrollToEnd"
+import { defaultCategory, useBaseProvider } from "@providers/BaseProvider"
 
-export interface IHeadGameMenuMobileProps {
-  activeMenu: string
-  setActiveMenu: React.Dispatch<React.SetStateAction<IGetType>>
-}
-
-const HeadGameMenuMobile = ({
-  activeMenu,
-  setActiveMenu
-}: IHeadGameMenuMobileProps) => {
-  const { setCountCallApi: setValueCountCallApi, setEndLimitApi: setEndLimit } =
-    useScrollToEndStore()
-
-  const handlGameMenu = (_type) => {
-    setValueCountCallApi(0)
+const HeadGameMenuMobile = () => {
+  const { setSelectedCategory, setActiveMenu, activeMenu } = useBaseProvider()
+  const handleGameMenu = (_type: IGetType) => {
     setActiveMenu(_type)
-    setEndLimit(false)
+    setSelectedCategory(defaultCategory)
   }
 
   return (
@@ -29,7 +18,7 @@ const HeadGameMenuMobile = ({
     >
       {GAME_MENU_MOBILE.map((item) => (
         <Box
-          onClick={() => handlGameMenu(item.type)}
+          onClick={() => handleGameMenu(item.type)}
           component="button"
           key={item.id}
           className={`relative flex-1 px-[6px] py-[12px] font-urbanist text-[90%] ${

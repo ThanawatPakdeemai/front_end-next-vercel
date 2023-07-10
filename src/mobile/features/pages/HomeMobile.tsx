@@ -1,71 +1,77 @@
-import React, { useState, memo, useEffect, useCallback } from "react"
+import React, { memo, useCallback } from "react"
 import { Box } from "@mui/material"
 import MainLayoutMobile from "@mobile/components/templates/MainLayoutMobile"
 import GameFilterMobile from "@mobile/components/molecules/GameFilterMobile"
 import SearchInputMobile from "@mobile/components/atoms/input/SearchInputMobile"
 import CategoriesModal from "@mobile/components/organisms/modal/CategoriesModal"
 import GameListMobile from "@mobile/components/organisms/GameListMobile"
-import { IGame } from "@feature/game/interfaces/IGameService"
+import useGameStore from "@stores/game"
+import { useBaseProvider } from "@providers/BaseProvider"
 import useGlobal from "@hooks/useGlobal"
+import { IGame } from "@feature/game/interfaces/IGameService"
 import useDrawerControllerMobile from "../game/containers/hooks/useDrawerControllerMobile"
 import useGameControllerMobile from "../game/containers/hooks/useGameControllerMobile"
+import useGamePageListControllerMobile from "../game/containers/hooks/useGamePageListControllerMobile"
 import useFavoriteGameControllerMobile from "../game/containers/hooks/useFavoriteGameControllerMobile"
 
 const HomeMobile = () => {
-  const {
-    setSelectedCategory,
-    searchBlog,
-    setSearchBlog,
-    gameData,
-    categories,
-    loadingFilterGame,
-    activeMenu,
-    setActiveMenu
-  } = useGameControllerMobile()
-  const { stateProfile, defaultBody } = useGlobal()
+  const { allCategory, allGameFreeToPlay, allGameStoryMode } = useGameStore()
+  const { searchBlog, setSearchBlog } = useGameControllerMobile()
   const { open, setOpen } = useDrawerControllerMobile()
+  const { activeMenu } = useBaseProvider()
+  const { gameAllFilterIsLoading } = useGamePageListControllerMobile()
+  const { stateProfile, defaultBody } = useGlobal()
   const { gameFavorite } = useFavoriteGameControllerMobile({
     defaultBody,
     profileId: stateProfile?.id || ""
   })
-  const [gameDataWithFavouriteData, setGameDataWithFavouriteData] = useState<
-    IGame[]
-  >([])
-  const [choiceType, setChoiceType] = useState<string>("Categories")
 
-  const handleFavouriteData = useCallback(() => {
-    if (!stateProfile) return []
-    const mapFavouriteData = gameData.map((_item) =>
-      gameFavorite.find((_elm) => _elm._id === _item._id)
-        ? { ..._item, favorite: true }
-        : { ..._item, favorite: false }
-    )
-    setGameDataWithFavouriteData(mapFavouriteData)
-  }, [gameData, gameFavorite, stateProfile])
+  const handleFavouriteData = useCallback(
+    (gameData: IGame[]) => {
+      if (gameData.length === 0) return []
+      const mapFavouriteData = gameData.map((_item) =>
+        gameFavorite.find((_elm) => _elm._id === _item._id)
+          ? { ..._item, favorite: true }
+          : { ..._item, favorite: false }
+      )
+      return mapFavouriteData
+    },
+    [gameFavorite]
+  )
 
-  useEffect(() => {
-    let load = false
-
-    if (!load) handleFavouriteData()
-
-    return () => {
-      load = true
+  const renderGameByActiveMenu = () => {
+    switch (activeMenu) {
+      case "free-to-play":
+        return (
+          <GameListMobile
+            gameData={
+              handleFavouriteData(allGameFreeToPlay || []) ||
+              allGameFreeToPlay ||
+              []
+            }
+            loading={gameAllFilterIsLoading}
+          />
+        )
+      case "story-mode":
+        return (
+          <GameListMobile
+            gameData={
+              handleFavouriteData(allGameStoryMode || []) ||
+              allGameStoryMode ||
+              []
+            }
+            loading={gameAllFilterIsLoading}
+          />
+        )
+      default:
+        return <></>
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameData, gameFavorite, handleFavouriteData, stateProfile])
+  }
 
   return (
-    <MainLayoutMobile
-      activeMenu={activeMenu}
-      setActiveMenu={setActiveMenu}
-    >
+    <MainLayoutMobile>
       {/* Filter */}
-      <GameFilterMobile
-        setActiveMenu={setActiveMenu}
-        setSelectedCategory={setSelectedCategory}
-        setOpen={setOpen}
-        choiceType={choiceType}
-      />
+      <GameFilterMobile setOpen={setOpen} />
       {/* Search */}
       <Box
         component="div"
@@ -78,18 +84,13 @@ const HomeMobile = () => {
       </Box>
 
       {/* Game List */}
-      <GameListMobile
-        gameData={stateProfile ? gameDataWithFavouriteData : gameData}
-        loading={loadingFilterGame}
-      />
+      {renderGameByActiveMenu()}
 
       {/* Modal Category */}
       <CategoriesModal
         open={open}
         setOpen={setOpen}
-        setSelectedCategory={setSelectedCategory}
-        categories={categories}
-        choiceType={(_name) => setChoiceType(_name)}
+        categories={allCategory || []}
       />
     </MainLayoutMobile>
   )

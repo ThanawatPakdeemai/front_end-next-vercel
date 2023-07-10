@@ -1,4 +1,3 @@
-import { IGetType } from "@feature/game/interfaces/IGameService"
 import useProfileStore from "@stores/profileStore"
 import { useCallback, useState } from "react"
 
@@ -6,7 +5,6 @@ const useGlobalControllerMobile = () => {
   const profile = useProfileStore((state) => state.profile.data)
 
   // State
-  const [activeMenu, setActiveMenu] = useState<IGetType>("free-to-play")
   const [limit, setLimit] = useState<number>(10)
   const iOS =
     typeof navigator !== "undefined" &&
@@ -36,8 +34,6 @@ const useGlobalControllerMobile = () => {
   }, [])
 
   return {
-    setActiveMenu,
-    activeMenu,
     limit,
     setLimit,
     iOS,

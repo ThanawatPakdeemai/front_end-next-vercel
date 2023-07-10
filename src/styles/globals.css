@@ -326,3 +326,9 @@ input:checked {
 .text-shadow-text-red {
   text-shadow: 2px 2px 20px #ff0000e5, 0 0 20px #ff0000e5;
 }
+
+.grecaptcha-badge {
+  visibility: hidden;
+  opacity: 0;
+  display: none;
+}

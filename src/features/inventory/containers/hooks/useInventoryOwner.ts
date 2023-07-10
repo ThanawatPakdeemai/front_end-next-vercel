@@ -324,6 +324,16 @@ const useInventoryOwner = () => {
 
   useEffect(() => {
     let cleanup = false
+    if (!cleanup && marketType) {
+      setNFTType(marketType)
+    }
+    return () => {
+      cleanup = true
+    }
+  }, [marketType])
+
+  useEffect(() => {
+    let cleanup = false
     if (!cleanup) {
       fetchInventoryNFTItem()
     }
@@ -341,16 +351,6 @@ const useInventoryOwner = () => {
       cleanup = true
     }
   }, [fetchInventoryItem])
-
-  useEffect(() => {
-    let cleanup = false
-    if (!cleanup && marketType) {
-      setNFTType(marketType)
-    }
-    return () => {
-      cleanup = true
-    }
-  }, [marketType])
 
   useMemo(() => {
     let cleanup = false

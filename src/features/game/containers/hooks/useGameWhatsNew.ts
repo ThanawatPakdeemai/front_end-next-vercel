@@ -3,7 +3,6 @@ import {
   getGamePartnerAllReview,
   getGamePartnerNewVersion
 } from "@feature/game/partnerGames/containers/services/gamePartners.service"
-import { getAllGameReview } from "@feature/review/containers/services/review.services"
 import useGlobal from "@hooks/useGlobal"
 import { useQuery } from "@tanstack/react-query"
 
@@ -16,12 +15,7 @@ const useGameWhatsNew = (_gameMode: IGetType, _gameId: string) => {
       case "partner-game":
         return getGamePartnerAllReview(limit, page, _gameId)
       default:
-        return getAllGameReview({
-          _limit: limit,
-          _page: page,
-          _gameId,
-          _sort: "createdAt"
-        })
+        break
     }
   }
 
@@ -40,7 +34,7 @@ const useGameWhatsNew = (_gameMode: IGetType, _gameId: string) => {
     queryFn: () => handleQueryFunction(),
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: !!_gameId
+    enabled: !!(_gameId && _gameMode === "partner-game")
   })
 
   /**
@@ -55,11 +49,10 @@ const useGameWhatsNew = (_gameMode: IGetType, _gameId: string) => {
     error: newVersionDataErrorData
   } = useQuery({
     queryKey: ["gameNewVersion", _gameId || ""],
-    queryFn: () =>
-      _gameMode === "partner-game" ? getGamePartnerNewVersion(_gameId) : null,
+    queryFn: () => getGamePartnerNewVersion(_gameId),
     keepPreviousData: true,
     staleTime: Infinity,
-    enabled: !!_gameId
+    enabled: !!(_gameId && _gameMode === "partner-game")
   })
 
   return {

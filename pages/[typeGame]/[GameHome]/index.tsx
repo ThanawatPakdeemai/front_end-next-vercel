@@ -3,7 +3,6 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useRouter } from "next/router"
 import { GetServerSideProps } from "next"
 import dynamic from "next/dynamic"
-import { getGameByPath } from "@feature/game/containers/services/game.service"
 import useGetGameByPath from "@feature/game/containers/hooks/useFindGameByPath"
 import useGameStore from "@stores/game"
 import { TabProvider } from "@feature/tab/contexts/TabProvider"
@@ -80,15 +79,15 @@ const ButtonGame = dynamic(
   }
 )
 
-const GameDetailLayoutMobile = dynamic(
-  () => import("@mobile/components/templates/GameDetailLayoutMobile"),
+const GameLobbyMobile = dynamic(
+  () => import("@mobile/components/pages/GameLobbyMobile"),
   {
     suspense: true,
     ssr: false
   }
 )
 
-export default function GameLobby() {
+function GameLobbyDesktop() {
   const router = useRouter()
   const { onSetGameData } = useGameStore()
   const { GameHome } = router.query
@@ -315,43 +314,21 @@ export default function GameLobby() {
       <GamePageDefault component={<SkeletonBanner />} />
     )
 
-  /**
-   * @description Content Mobile
-   */
-  const renderContentMobile = () => {
-    if (gameData) {
-      return <GameDetailLayoutMobile gameData={gameData} />
-    }
-    return <GamePageDefault component={<SkeletonBanner />} />
-  }
-
-  /**
-   * @description Render Default Page (Mobile or Desktop)
-   * @returns
-   */
-  const renderDefaultPage = () => {
-    if (isMobile) {
-      return renderContentMobile()
-    }
-    return renderContentDesktop()
-  }
-
-  return renderDefaultPage()
+  return renderContentDesktop()
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const _gameData = await getGameByPath((ctx?.params?.GameHome as string) || "")
-
-  const _redirect = _gameData
-    ? false
-    : { destination: "/404", permanent: false }
-  return {
-    props: {
-      ...(await serverSideTranslations(ctx.locale!, ["common"]))
-    },
-    redirect: _redirect
+export default function GameLobby() {
+  if (isMobile) {
+    return <GameLobbyMobile />
   }
+  return GameLobbyDesktop()
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => ({
+  props: {
+    ...(await serverSideTranslations(ctx.locale!, ["common"]))
+  }
+})
 
 GameLobby.getLayout = function getLayout(page: ReactElement) {
   return page

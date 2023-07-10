@@ -234,7 +234,7 @@ const TransactionPage = ({ profile }: IProp) => {
           </TableContainer>
           <Box
             component="div"
-            className="my-2 flex justify-between md:my-5 md:w-[678px]"
+            className="my-2 flex justify-between md:my-5"
             sx={{
               ".MuiPagination-ul": {
                 gap: "5px 0"

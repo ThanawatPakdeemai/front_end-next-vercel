@@ -2,7 +2,7 @@ import MenuItemCustom from "@components/atoms/MenuItemCustom"
 import DropdownIcon from "@components/icons/DropdownIcon"
 import { ISelectDropDown } from "@interfaces/IMenu"
 import { Collapse } from "@mui/material"
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 
 interface IProps {
   title: string
@@ -12,13 +12,30 @@ interface IProps {
 
 const SearchDropDown = ({ title, dropDown, onClick }: IProps) => {
   const [expandedPrice, setExpandedPrice] = useState<boolean>(false)
+  const searchRef = useRef<HTMLDivElement | null>(null)
 
   const handleOnExpandPrice = () => {
     setExpandedPrice(!expandedPrice)
   }
 
+  useEffect(() => {
+    const handler = (e) => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      if (!searchRef?.current?.contains(e.target)) {
+        setExpandedPrice(false)
+      }
+    }
+    document.addEventListener("mousedown", handler)
+    return () => {
+      document.removeEventListener("mousedown", handler)
+    }
+  }, [])
+
   return (
-    <div className="relative flex w-full">
+    <div
+      className="relative flex w-full"
+      ref={searchRef}
+    >
       <button
         type="button"
         onClick={handleOnExpandPrice}

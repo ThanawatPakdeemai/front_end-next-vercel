@@ -86,8 +86,8 @@ const MarketplaceNakaPunk = () => {
   return (
     <>
       <Breadcrumb />
-      <div className="flex w-full flex-col justify-center gap-y-[30px] px-5 sm:flex-row sm:gap-x-[120px] sm:px-0">
-        <div className="hidden sm:block">
+      <div className="flex w-full max-w-[1368px] flex-col justify-center gap-x-4 gap-y-[30px] px-5 sm:flex-row sm:gap-x-12 sm:px-0 xl:gap-x-[120px]">
+        <div className="hidden md:block">
           <CardContentDetails
             showDetails
             detail="THE NAKA PUNKS IS A NEXT-GENERATION NFT COLLECTION. IT NOT ONLY BRINGS A LIMITED COLLECTION OF UNIQUE PUNKLIKE CHARACTERS INTO A WORLD BUILT FOR THEM BUT ALSO INTEGRATES PRIVILEGES TO THE HOLDERS OF THESE NFTS. EACH PUNK WILL HAVE DISTINCT CHARACTERISTICS, STRENGTHS, AND WEAKNESSES, BESTOWING UNIQUE CAPABILITIES ON THEIR OWNERS AND WILL BE PARTICULARLY SUITABLE FOR CERTAIN ACTIVITIES WITHIN THE NAKAMOTO.GAMES AND NAKAVERSE."

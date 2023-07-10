@@ -136,7 +136,7 @@ const MarketplaceReefAvatar = () => {
   return (
     <>
       <Breadcrumb />
-      <div className="flex w-full flex-col justify-center gap-y-[30px] px-5 sm:flex-row sm:gap-x-[120px] sm:px-0">
+      <div className="flex w-full max-w-[1368px] flex-col justify-center gap-x-4 gap-y-[30px] px-5 sm:flex-row sm:gap-x-12 sm:px-0 xl:gap-x-[120px]">
         <div className="hidden sm:block">
           <CardContentDetails
             detail="Avatar Reef"

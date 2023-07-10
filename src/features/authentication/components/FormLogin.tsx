@@ -28,6 +28,7 @@ import FacebookLogin from "react-facebook-login"
 import useLoginTypeStore from "@stores/loginTypes"
 import { useTranslation } from "react-i18next"
 import { isMobile } from "@hooks/useGlobal"
+import CONFIGS from "@configs/index"
 import FromForgotPassword from "./FromForgotPassword"
 import useFormLoginController from "../containers/hooks/useFormLoginController"
 import { ISignIn } from "../interfaces/IAuthService"
@@ -241,12 +242,12 @@ const FormLogin = () => {
             icon={
               toggleFacebookLogin ? (
                 <FacebookLogin
-                  appId={`${process.env.NEXT_PUBLIC_FACEBOOK_APPID}`}
-                  autoLoad
+                  appId={`${CONFIGS.FACEBOOK_APP_ID}`}
+                  autoLoad={false}
                   fields="name,email,picture"
                   callback={facebookLogin}
-                  cssClass="my-facebook-button-class"
-                  textButton={null}
+                  cssClass="button-facebook-login"
+                  textButton="Login with Facebook"
                   icon={<FacebookIcon />}
                 />
               ) : (

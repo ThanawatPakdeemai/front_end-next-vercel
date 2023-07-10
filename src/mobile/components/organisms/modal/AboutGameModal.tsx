@@ -64,7 +64,7 @@ const AboutGameModal = ({
             <h3 className={classesGridTitle}>How to play</h3>
             <div
               dangerouslySetInnerHTML={{
-                __html: gameData.howto.details || ""
+                __html: gameData.howto?.details || ""
               }}
             />
           </div>

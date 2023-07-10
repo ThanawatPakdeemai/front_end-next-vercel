@@ -84,7 +84,7 @@ const FreeToEarnGamesPage = () => {
       </div>
 
       {totalCount === 0 && (
-        <div className="d-flex  justify-center text-center">
+        <div className="d-flex justify-center text-center">
           <NoData />
         </div>
       )}

@@ -154,21 +154,6 @@ const ProfileContent = () => {
     }
   }, [player_id])
 
-  // const jsClickButton = async () => {
-  //   const telegramParams: any = await localStorage.getItem("telegram-params")
-  //   const telegramParse: any = JSON.parse(telegramParams)
-  //   if (telegramParse) {
-  //     const telegramId = String(telegramParse.id)
-  //     if (telegramId) {
-  //       mutateLinkToTelegram({
-  //         player_id: idPlayer,
-  //         telegram_id: Number(telegramId)
-  //       })
-  //       localStorage.removeItem("telegram-params")
-  //     }
-  //   }
-  // }
-
   useEffect(() => {
     const timer = setTimeout(() => {
       const gandalf: any = document.querySelector("#telegram-login-NakaGameBot")

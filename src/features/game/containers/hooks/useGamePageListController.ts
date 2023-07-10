@@ -133,7 +133,7 @@ const useGamePageListController = (
         //     ? limitPage.limit
         //     : 10
         //   : limitPage.limit,
-        limit: isMobile ? 9999 : _limit,
+        limit: limitPage.limit,
         skip: page,
         sort: "_id",
         search: searchDropdown,
@@ -182,8 +182,8 @@ const useGamePageListController = (
     limit,
     mutateGetGameAllFilter,
     gameMode,
-    _categoryId
-    // limitPage
+    _categoryId,
+    limitPage
   ])
 
   /**

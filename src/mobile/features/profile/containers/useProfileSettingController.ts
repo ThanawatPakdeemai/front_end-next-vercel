@@ -19,17 +19,17 @@ const useProfileSettingController = () => {
 
   // Hook
   const { avatar } = useGetAvatar()
-  const { limit, page } = useGlobal()
+  // const { limit, page } = useGlobal()
   const { mutateUpdateProfile } = useUpdateProfile()
   const { errorToast, successToast } = useToast()
-  const { refetchGetProfile: onRefetchProfile } = useGetProfileInfo({
-    _limit: limit,
-    _playerId: profile?.id ?? "",
-    _page: page,
-    _sort: "",
-    _cheat: "All",
-    _rewards_send_status: "All"
-  })
+  // const { refetchGetProfile: onRefetchProfile } = useGetProfileInfo({
+  //   _limit: limit,
+  //   _playerId: profile?.id ?? "",
+  //   _page: page,
+  //   _sort: "",
+  //   _cheat: "All",
+  //   _rewards_send_status: "All"
+  // })
 
   // State
   const [defaultAvatar, setDefaultAvatar] = useState<string>(
@@ -102,7 +102,7 @@ const useProfileSettingController = () => {
               .then((_res) => {
                 if (_res) {
                   successToast(MESSAGES.edit_profile_success)
-                  onRefetchProfile()
+                  // onRefetchProfile()
                   setDefaultAvatar(_res.avatar)
                   featchAvatar()
                   // if (avatar && avatar.length > 0) {
@@ -164,7 +164,7 @@ const useProfileSettingController = () => {
     avatarList: setAvatarList(),
     handleSubmit,
     onSubmit,
-    onRefetchProfile,
+    // onRefetchProfile,
     defaultAvatar,
     setDefaultAvatar,
     avatarGoto,

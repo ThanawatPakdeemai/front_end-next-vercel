@@ -18,7 +18,6 @@ const useSyncProfile = () => {
   const { mutateLinkToFacebook } = useLinkToFacebook()
   const { errorToast, successToast } = useToast()
   const { onSetProfileData } = useProfileStore()
-  const { profile: dataProfile } = useGetProfileByEmail(profile?.email ?? "")
 
   /**
    * @description Handle check user already exist in website, then sync data Facebook
@@ -70,8 +69,8 @@ const useSyncProfile = () => {
             successToast(MESSAGES.sync_telegram_success)
             Helper.removeLocalStorage(ELocalKey.telegramUser)
             Helper.removeLocalStorage(ELocalKey.telegramId)
-            if (dataProfile) {
-              onSetProfileData(dataProfile)
+            if (res.data) {
+              onSetProfileData(res.data)
             }
           }
         })
@@ -82,7 +81,7 @@ const useSyncProfile = () => {
       errorToast,
       mutateLinkToTelegram,
       successToast,
-      dataProfile,
+      // dataProfile,
       onSetProfileData
     ]
   )

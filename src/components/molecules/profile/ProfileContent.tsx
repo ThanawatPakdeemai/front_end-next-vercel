@@ -6,7 +6,7 @@ import ShapeIcon from "@components/icons/ShapeIcon"
 import TableIcon from "@components/icons/TableIcon"
 import ButtonToggleIcon from "@components/molecules/gameSlide/ButtonToggleIcon"
 import Tagline from "@components/molecules/tagline/Tagline"
-import { Box, Divider, Typography } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 import useProfileStore from "@stores/profileStore"
 import { IPlayerInfoResponse } from "@src/types/profile"
 import { RandomReveal } from "react-random-reveal"
@@ -31,10 +31,10 @@ import { useTranslation } from "react-i18next"
 // import { useLinkToTelegram } from "@feature/profile/containers/hook/useSyncProfileQuery"
 import useSyncProfile from "@mobile/features/game/containers/hooks/useSyncProfile"
 import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
-import { TelegramWidget } from "@components/atoms/button/TelegramWidget"
-import FacebookLogin from "react-facebook-login"
-import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
-import CONFIGS from "@configs/index"
+// import { TelegramWidget } from "@components/atoms/button/TelegramWidget"
+// import FacebookLogin from "react-facebook-login"
+// import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
+// import CONFIGS from "@configs/index"
 import EditProfileModal from "./EditProfileModal"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
@@ -222,7 +222,7 @@ const ProfileContent = () => {
       </div> */}
 
       {/* ====== */}
-      {isShowSyncTelegram() && (
+      {/* {isShowSyncTelegram() && (
         <>
           <TelegramWidget
             dataOnAuth={handleSyncTelegramId}
@@ -230,8 +230,8 @@ const ProfileContent = () => {
           />
           <Divider className="my-6 !block border-b border-[#35383F]" />
         </>
-      )}
-      {isShowSyncFacebook() && (
+      )} */}
+      {/* {isShowSyncFacebook() && (
         <>
           <FacebookLogin
             appId={`${CONFIGS.FACEBOOK_APP_ID}`}
@@ -244,7 +244,7 @@ const ProfileContent = () => {
           />
           <Divider className="my-6 !block border-b border-[#35383F]" />
         </>
-      )}
+      )} */}
       {/* ====== */}
       <SideSocialShare hidden="hidden lg:block" />
       <div className="relative">

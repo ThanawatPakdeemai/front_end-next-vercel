@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { IHistory } from "@feature/history/interfaces/IHistoryService"
 import { INotification } from "@feature/notification/interfaces/INotificationService"
 import { ITableHeader } from "@feature/table/interface/ITable"
@@ -6,17 +8,23 @@ import useNotiStore from "@stores/notification"
 import { useRouter } from "next/router"
 import { Trans } from "react-i18next"
 
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import useGlobal from "@hooks/useGlobal"
 import useProfileStore from "@stores/profileStore"
+import useHistorySWR from "./useHistorySWR"
 import useHistory from "./useHistory"
 
 const useHistoryController = () => {
   const profile = useProfileStore((state) => state.profile.data)
   const { setNotificationItem, setPlayHistoryItem } = useNotiStore()
-  const { getHistoryData, historyIsLoading } = useHistory()
   const router = useRouter()
-  const { limit } = useGlobal()
+  const { limit, page } = useGlobal()
+  const { historyData } = useHistorySWR({
+    player_id: profile && profile.id ? profile.id : "",
+    limit,
+    skip: page
+  })
+  const { historyIsLoading } = useHistory()
 
   // States
   const [skip, setSkip] = useState<number>(1)
@@ -63,45 +71,34 @@ const useHistoryController = () => {
     )
   }
 
+  const fetchHistory = useCallback(() => {
+    if (historyData && historyData.info) {
+      setTotalCount(historyData.info.totalCount)
+    }
+  }, [historyData])
+
   useEffect(() => {
     let load = false
 
     if (!load) {
-      const fetchHistory = async () => {
-        if (profile) {
-          await getHistoryData({
-            player_id: profile && profile.id ? profile.id : "",
-            limit,
-            skip
-          }).then((res) => {
-            if (res.data && res.data.length > 0) {
-              // res.status === 200 -> ok
-              setHxHistory(res.data)
-            }
-            if (res.info) {
-              setTotalCount(res.info.totalCount)
-            }
-          })
-        }
-      }
       fetchHistory()
     }
 
     return () => {
       load = true
     }
-  }, [limit, skip, profile, getHistoryData])
+  }, [limit, profile, fetchHistory])
 
   return {
     HistoryTableHead,
     handleClickView,
-    isLoadingHistory: historyIsLoading,
     limit,
     setSkip,
     totalCount,
     skip,
     hxHistory,
-    historyIsLoading
+    historyIsLoading,
+    isLoadingHistory: historyIsLoading
   }
 }
 

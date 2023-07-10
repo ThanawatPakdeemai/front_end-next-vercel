@@ -1,5 +1,6 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from "react"
 import SettingIcon from "@components/icons/SettingIcon"
 import ShapeIcon from "@components/icons/ShapeIcon"
@@ -29,8 +30,8 @@ import { useTranslation } from "react-i18next"
 // import { useWeb3Provider } from "@providers/index"
 // import Script from "next/script"
 // import { useLinkToTelegram } from "@feature/profile/containers/hook/useSyncProfileQuery"
-import useSyncProfile from "@mobile/features/game/containers/hooks/useSyncProfile"
-import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
+// import useSyncProfile from "@mobile/features/game/containers/hooks/useSyncProfile"
+// import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
 // import { TelegramWidget } from "@components/atoms/button/TelegramWidget"
 // import FacebookLogin from "react-facebook-login"
 // import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
@@ -73,8 +74,8 @@ const ProfileContent = () => {
 
   const { profile: profileFetched, isError } = useGetProfileByEmail(emailPlayer)
   // const { mutateLinkToTelegram } = useLinkToTelegram()
-  const { handleSyncTelegramId, handleSyncFacebookId } = useSyncProfile()
-  const { isShowSyncTelegram, isShowSyncFacebook } = useGlobalControllerMobile()
+  // const { handleSyncTelegramId, handleSyncFacebookId } = useSyncProfile()
+  // const { isShowSyncTelegram, isShowSyncFacebook } = useGlobalControllerMobile()
 
   useEffect(() => {
     if (isError) {

@@ -1,35 +1,29 @@
-import React, { useState } from "react"
-import { IGameCategory } from "@feature/dropdown/interfaces/IDropdownService"
+import React from "react"
 import { Box, SwipeableDrawer } from "@mui/material"
 import { ImageCustom } from "@components/atoms/image/Image"
 import { StyleDrawer } from "@mobile/styles/muiStyleMobile"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import CheckIcon from "@mui/icons-material/Check"
+import { useBaseProvider } from "@providers/BaseProvider"
+import { IGameCategory } from "@feature/dropdown/interfaces/IDropdownService"
 
 interface ICategoriesModalProps {
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>
   categories: IGameCategory[] | undefined
-  choiceType?: (_name: string) => void
 }
 
 const CategoriesModal = ({
   open,
   setOpen,
-  categories,
-  setSelectedCategory,
-  choiceType
+  categories
 }: ICategoriesModalProps) => {
   const { clearAllDrawer } = useDrawerControllerMobile()
+  const { setSelectedCategory, selectedCategory } = useBaseProvider()
 
-  const [choiceId, setChoiceId] = useState<string>("")
-
-  const onClickSelectChoiceFilter = (_id: string, _name: string) => {
+  const onClickSelectChoiceFilter = (item: IGameCategory) => {
     setOpen(false)
-    setSelectedCategory(_id)
-    setChoiceId(_id)
-    choiceType?.(_name)
+    setSelectedCategory(item)
   }
 
   return (
@@ -87,19 +81,21 @@ const CategoriesModal = ({
                   fontSize: "18px",
                   fontWeight: 600
                 }}
-                onClick={() => onClickSelectChoiceFilter(item.id, item.name)}
+                onClick={() => onClickSelectChoiceFilter(item)}
               >
                 <div className="relative h-[56px] w-[56px] scale-50 overflow-hidden rounded-lg">
-                  <ImageCustom
-                    src={item.image_list}
-                    alt={item.name}
-                    width={56}
-                    height={56}
-                    className="h-full w-full object-cover object-center"
-                  />
+                  {item.image_list && (
+                    <ImageCustom
+                      src={item.image_list}
+                      alt={item.name}
+                      width={56}
+                      height={56}
+                      className="h-full w-full object-cover object-center"
+                    />
+                  )}
                 </div>
                 <span>{item.name}</span>
-                {choiceId === item.id && (
+                {selectedCategory.id === item.id && (
                   <CheckIcon className="ml-auto mr-4 text-warning-100" />
                 )}
               </Box>

@@ -2,17 +2,15 @@ import { Box } from "@mui/material"
 import React from "react"
 import useProfileStore from "@stores/profileStore"
 import HeadProfileMobile from "../atoms/headerMenu/HeadProfileMobile"
-import HeadGameMenuMobile, {
-  IHeadGameMenuMobileProps
-} from "../atoms/headerMenu/HeadGameMenuMobile"
 import FooterMobile from "../organisms/FooterMobile"
+import HeadGameMenuMobile from "../atoms/headerMenu/HeadGameMenuMobile"
 import HeadProfileNoLoginMobile from "../atoms/headerMenu/HeadProfileNoLoginMobile"
 
-interface IMainLayoutMobileProps extends IHeadGameMenuMobileProps {
+interface IMainLayoutMobileProps {
   children: React.ReactNode
 }
 
-const MainLayoutMobile = ({ children, ...props }: IMainLayoutMobileProps) => {
+const MainLayoutMobile = ({ children }: IMainLayoutMobileProps) => {
   const profile = useProfileStore((state) => state.profile.data)
 
   return (
@@ -33,10 +31,7 @@ const MainLayoutMobile = ({ children, ...props }: IMainLayoutMobileProps) => {
         }}
       >
         {/* Header */}
-        <HeadGameMenuMobile
-          activeMenu={props.activeMenu}
-          setActiveMenu={props.setActiveMenu}
-        />
+        <HeadGameMenuMobile />
         {children}
       </Box>
       {/* Footer */}

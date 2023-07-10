@@ -3,7 +3,6 @@ import useGlobal from "@hooks/useGlobal"
 import useFilterStore from "@stores/blogFilter"
 import useGameStore from "@stores/game"
 import useAllCategories from "@hooks/useAllCategories"
-import { defaultCategory } from "@providers/BaseProvider"
 
 const useGameControllerMobile = () => {
   // Hook
@@ -22,7 +21,10 @@ const useGameControllerMobile = () => {
         getCategoriesAll &&
         getCategoriesAll.length > 0
       ) {
-        setAllCategory([defaultCategory, ...getCategoriesAll])
+        // When you want to add default category
+        // setAllCategory([defaultCategory, ...getCategoriesAll])
+        // When you don't want to add default category
+        setAllCategory(getCategoriesAll)
       }
     }
     return () => {

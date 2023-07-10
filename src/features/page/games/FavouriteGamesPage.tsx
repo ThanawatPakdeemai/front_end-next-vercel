@@ -135,7 +135,8 @@ const FavouriteGamesPage = () => {
         {isLoadingGameFavourite
           ? [...Array(pageSize)].map(() => <SkeletonCard key={uuid()} />)
           : null}
-        {gameFavouriteState && gameFavouriteState.length > 0 ? (
+        {gameFavouriteState &&
+          gameFavouriteState.length > 0 &&
           gameFavouriteState.map((game) => {
             const menu = getGameMenu(game)
             return (
@@ -152,11 +153,13 @@ const FavouriteGamesPage = () => {
                 gameType={getGameMode(game)}
               />
             )
-          })
-        ) : (
-          <NoData className="mt-4" />
-        )}
+          })}
       </div>
+      {totalCount === 0 && (
+        <div className="d-flex justify-center text-center">
+          <NoData />
+        </div>
+      )}
       <Box
         component="div"
         className="my-2 flex w-full justify-between md:my-5"

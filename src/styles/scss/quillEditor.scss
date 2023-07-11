@@ -1,0 +1,39 @@
+$font-family_1: Arial, sans-serif;
+$font-family_2: "neueMachina";
+$font-family_3: "neueMachinaSemiBold";
+$font-family_4: "neueMachinaBold";
+$font-family_5: "digital-7";
+$font-family_6: "mondwest";
+$font-family_7: "Digital";
+
+.ql-font-neueMachina {
+  font-family: $font-family_2;
+}
+.ql-font-neueMachinaSemiBold {
+  font-family: $font-family_3;
+}
+.ql-font-neueMachinaBold {
+  font-family: $font-family_4;
+}
+.ql-font-digital-7 {
+  font-family: $font-family_5;
+}
+.ql-font-mondwest {
+  font-family: $font-family_6;
+}
+.ql-font-Digital {
+  font-family: $font-family_7;
+}
+
+.ql-size-14px {
+  font-size: 0.875rem;
+}
+.ql-size-16px {
+  font-size: 1rem;
+}
+.ql-size-22px {
+  font-size: 1.375rem;
+}
+.ql-size-46px {
+  font-size: 2.875rem;
+}

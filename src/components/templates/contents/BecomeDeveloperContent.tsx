@@ -20,7 +20,7 @@ const BecomeDeveloperContent = ({
   children = (
     <Jumbotron
       textTitle="NAKAMOTO.GAMES"
-      textTitleDark="FOR GAME DEVELOPERS_"
+      textTitleSub="FOR GAME DEVELOPERS_"
       text="We take care of the infrastructure and distribution so you can focus on creating games. Publish your Web3 game now ⚡"
       textButton="Subscribe Now"
       className="w-[620px]"

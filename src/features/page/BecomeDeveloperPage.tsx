@@ -34,8 +34,6 @@ const BecomeDeveloperPage = () => {
     const filterIntro = becomeDeveloperData?.find(
       (_elm) => _elm.section_name === "Intro"
     )
-    // eslint-disable-next-line no-console
-    console.log("test-filterIntro", filterIntro)
     setSectionIntro(filterIntro)
   }
 
@@ -66,53 +64,50 @@ const BecomeDeveloperPage = () => {
 
     // const mapDataFeature = { ...filterFeature, list: mapListFeature }
 
-    setSectionFeature(filterFeature || FEATURES_DEVELOPER)
+    setSectionFeature(filterFeature)
   }
 
   useEffect(() => {
-    let load = false
-    if (!load) {
-      filterBecomeDevIntro()
-      filterBecomeDevFeature()
+    let load = true
+
+    if (becomeDeveloperData && becomeDeveloperData.length > 0 && load) {
+      ;(async () => {
+        await filterBecomeDevIntro()
+        await filterBecomeDevFeature()
+      })()
     }
+
     return () => {
-      load = true
+      load = false
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  // // eslint-disable-next-line no-console
-  // console.log("test-FEATURES_DEVELOPER", FEATURES_DEVELOPER)
+  }, [becomeDeveloperData])
 
   // eslint-disable-next-line no-console
   console.log("test-VIDEOS", VIDEOS)
+  // eslint-disable-next-line no-console
+  console.log("test-filter", sectionIntro)
 
   return (
     <main>
-      <HeroSection
-        hasVideo
-        src={
-          sectionIntro
-            ? sectionIntro?.image_url
-            : VIDEOS.becomeDeveloperVideo.src
-        }
-        poster={
-          (sectionIntro && sectionIntro.list[0].image_url) ||
-          VIDEOS.becomeDeveloperVideo.poster
-        }
-        className="!items-end !justify-start pb-12"
-      >
-        <div className="flex items-center justify-between">
-          <Jumbotron
-            textTitle="nakamoto.games"
-            textTitleDark="FOR GAME DEVELOPERS_"
-            text="We take care of the infrastructure and distribution so you can focus on creating games. Publish your Web3 game now ⚡"
-            className="w-[620px]"
-            textButton="Subscribe Now"
-          />
-          <ButtonScroll anchorLink="become-developer--section-1" />
-        </div>
-      </HeroSection>
+      {sectionIntro && (
+        <HeroSection
+          hasVideo
+          src={sectionIntro.image_url}
+          poster=""
+          className="!items-end !justify-start pb-12"
+        >
+          <div className="flex items-center justify-between">
+            <Jumbotron
+              textTitle={sectionIntro.list[0].title}
+              textTitleSub={sectionIntro.list[0].sub_title}
+              className="w-[620px]"
+              textButton="Subscribe Now"
+            />
+            <ButtonScroll anchorLink="become-developer--section-1" />
+          </div>
+        </HeroSection>
+      )}
 
       <BecomeDeveloperContent
         id="become-developer--section-1"
@@ -128,7 +123,7 @@ const BecomeDeveloperPage = () => {
           />
           <Jumbotron
             textTitle={`Import your <br> existing `}
-            textTitleDark="NFTs."
+            textTitleSub="NFTs."
             text="Display your in-game NFTs in the Nakamoto.Games storefront. Get gamers watching your in-game assets 🎮"
             className="w-[620px]"
           />
@@ -193,7 +188,7 @@ const BecomeDeveloperPage = () => {
           <div className="inner-content ml-10">
             <Jumbotron
               textTitle="READY TO TRY <br> NAKAMOTO.GAMES?"
-              textTitleDark="FOR GAME DEVELOPERS_"
+              textTitleSub="FOR GAME DEVELOPERS_"
               text="Submit your game for assessment and be up and running in a matter of days."
               className="w-[576px] text-center"
               sxCustomStyled={{
@@ -270,7 +265,7 @@ const BecomeDeveloperPage = () => {
         <div className="relative z-[2] flex items-center justify-center text-center">
           <Jumbotron
             textTitle="WANT TO READ MORE?"
-            textTitleDark="FOR GAME DEVELOPERS_"
+            textTitleSub="FOR GAME DEVELOPERS_"
             text="We love sharing stories about our development progress, mechanics, updates and much more!"
             className="w-[620px]"
             textButton="Subscribe Now"

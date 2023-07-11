@@ -7,7 +7,7 @@ export interface IJumbotronProps {
   sxCustomStyled?: SxProps<Theme>
   className?: string
   textTitle?: string
-  textTitleDark?: string
+  textTitleSub?: string
   text?: string
   textButton?: string
   iconButton?: React.ReactNode
@@ -43,7 +43,7 @@ const Jumbotron = ({
   size = "large",
   onClickButton,
   hrefButton,
-  textTitleDark,
+  textTitleSub,
   textTitleDarkVariant = "success"
 }: IJumbotronProps) => {
   /**
@@ -85,8 +85,6 @@ const Jumbotron = ({
     }
   }
 
-  const textHtml = `<p><span class="ql-font-neueMachinaSemiBold ql-size-huge">das</span></p>`
-
   return (
     <Box
       component="div"
@@ -94,31 +92,19 @@ const Jumbotron = ({
       className={`jumbotron ${className}`}
     >
       <div className="jumbotron-title">
-        {textTitle && (
-          <Typography
-            variant="h1"
-            className="jumbotron-title__light mb-0 inline font-neue-machina-bold text-[46px] uppercase text-neutral-100"
-            dangerouslySetInnerHTML={{
-              __html: `${textTitle}`
-            }}
-          />
-        )}
-        {textTitleDark && (
-          <Typography
-            variant="h1"
-            className="jumbotron-title__light mb-0 inline font-neue-machina-bold text-[46px] uppercase text-neutral-100"
-          >
-            <span
-              className={`jumbotron-title--text ${classTextTitleDarkVariant()}`}
-            >
-              {textTitleDark}
-            </span>
-          </Typography>
-        )}
+        <Typography
+          variant="h1"
+          dangerouslySetInnerHTML={{
+            __html: `${textTitle}`
+          }}
+        />
       </div>
-      {text && (
-        <div className="jumbotron-text mb-8 mt-4 text-neutral-400">{text}</div>
-      )}
+      <Typography
+        className="jumbotron-text mb-8 mt-4"
+        dangerouslySetInnerHTML={{
+          __html: `${textTitleSub}`
+        }}
+      />
       {textButton && (
         <div className="jumbotron-button">
           <ButtonLink
@@ -137,7 +123,6 @@ const Jumbotron = ({
           />
         </div>
       )}
-      <div dangerouslySetInnerHTML={{ __html: textHtml }} />
     </Box>
   )
 }

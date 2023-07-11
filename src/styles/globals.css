@@ -2,6 +2,7 @@
 @import "./css/cardTitle.css";
 @import "./css/common.css";
 @import "./css/gameSlick.css";
+@import "./css/quillEditor.css";
 
 @tailwind base;
 @tailwind components;

@@ -47,7 +47,7 @@ const SignInLayout = () => {
               <span className="pr-2">
                 <FacebookLogin
                   appId={`${CONFIGS.FACEBOOK_APP_ID}`}
-                  autoLoad
+                  autoLoad={false}
                   fields="name,email,picture"
                   callback={facebookLogin}
                   cssClass="my-facebook-button-class flex gap-2"

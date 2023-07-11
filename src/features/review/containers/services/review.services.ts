@@ -1,8 +1,8 @@
 import services from "@configs/axiosGlobalConfig"
 import { IGamePartnerReviewsReponse } from "@feature/game/partnerGames/interfaces/IGamePartners"
 import {
-  IReviewGameServ,
-  IReviewListServ
+  IGetReviewList,
+  IReviewGameServ
 } from "@feature/review/interfaces/IReviewGame"
 
 /**
@@ -71,7 +71,7 @@ export const getAllGameReview = ({
   _gameId: string
   _sort: string
 }) =>
-  new Promise<IReviewListServ>((resolve, reject) => {
+  new Promise<IGetReviewList>((resolve, reject) => {
     const _data = {
       limit: _limit,
       skip: _page,
@@ -79,7 +79,7 @@ export const getAllGameReview = ({
       sort: _sort
     }
     services
-      .post<IReviewListServ>(`/game-review`, { ..._data })
+      .post<IGetReviewList>(`/game-review`, { ..._data })
       .then((reponse) => {
         resolve(reponse.data)
       })

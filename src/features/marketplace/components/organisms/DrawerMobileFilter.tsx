@@ -37,7 +37,7 @@ const Puller = styled(Box)(() => ({
 
 export default function SwipeableEdgeDrawer({ open, setClose }: IProp) {
   return (
-    <div>
+    <div className="block sm:hidden">
       <Global
         styles={{
           ".MuiDrawer-root > .MuiPaper-root": {

@@ -39,7 +39,7 @@ const InventoryPage = ({ className }: IProps) => {
             // transition={{ duration: 2, ease: "easeIn" }}
             className={`${
               isMapPage ? "!h-full" : "!h-fit"
-            } rounded-br-sm bg-neutral-780 p-4 sm:h-full`}
+            } overflow-y-auto rounded-br-sm bg-neutral-780 p-4 sm:h-full`}
           >
             <FilterBox />
           </motion.div>

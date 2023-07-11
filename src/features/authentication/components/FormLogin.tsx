@@ -256,7 +256,7 @@ const FormLogin = () => {
               toggleFacebookLogin ? (
                 <FacebookLogin
                   appId={`${CONFIGS.FACEBOOK_APP_ID}`}
-                  autoLoad
+                  autoLoad={false}
                   fields="name,email,picture"
                   callback={facebookLogin}
                   cssClass="button-facebook-login"

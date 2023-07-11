@@ -319,7 +319,9 @@ const CardItemMarketPlace = ({
                 className={
                   isMobile
                     ? `h-[148px] w-[148px]`
-                    : `relative h-[202px] w-full overflow-hidden`
+                    : `relative h-[202px] w-full overflow-hidden ${
+                        cardType === "material" && "grid content-center"
+                      }`
                 }
               >
                 <Video

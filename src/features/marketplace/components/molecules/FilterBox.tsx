@@ -1,5 +1,5 @@
 import { Collapse, Typography } from "@mui/material"
-import React, { memo, useMemo, useState } from "react"
+import React, { memo, useMemo, useState, useRef, useEffect } from "react"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { NextRouter, useRouter } from "next/router"
 import DropdownIcon from "@components/icons/DropdownIcon"
@@ -43,6 +43,7 @@ const FilterBox = () => {
     onResetFilterType,
     filterType
   } = useMarketFilterStore()
+  const boxRef = useRef<HTMLElement | null>(null)
 
   const [expanded, setExpanded] = useState<boolean>(false)
 
@@ -249,10 +250,26 @@ const FilterBox = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search])
 
+  useEffect(() => {
+    const handler = (e) => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      if (!boxRef?.current?.contains(e.target)) {
+        setExpanded(false)
+      }
+    }
+    document.addEventListener("mousedown", handler)
+    return () => {
+      document.removeEventListener("mousedown", handler)
+    }
+  }, [])
+
   return (
-    <div className="grid w-52 gap-3 ">
+    <div
+      id="filter-box"
+      className="grid w-52 gap-3"
+    >
       {!isMap && (
-        <section>
+        <section ref={boxRef}>
           <button
             type="button"
             onClick={handleOnExpandClick}

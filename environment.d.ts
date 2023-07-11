@@ -19,6 +19,7 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_SUPPORT: string
     readonly NEXT_PUBLIC_KEYTEXT: string
     readonly NEXT_PUBLIC_MARKETPLACE: string
+    readonly NEXT_PUBLIC_MARKETPLACE_LEGACY: string
     readonly NEXT_PUBLIC_NAKAVERSE: string
     readonly NEXT_PUBLIC_NAKA_CONTRACT: string
     readonly NEXT_PUBLIC_KEY_RECAPTCHA: string

@@ -4,11 +4,10 @@ import { MESSAGES } from "@constants/messages"
 import { INotification } from "@feature/notification/interfaces/INotificationService"
 import useNotiStore from "@stores/notification"
 import { IHistory } from "@feature/history/interfaces/IHistoryService"
-// import { validTypeGames } from "@pages/[typeGame]"
 import { useCallback, useEffect, useState } from "react"
 import useProfileStore from "@stores/profileStore"
 import useGlobal from "@hooks/useGlobal"
-import useGetNotification from "./useGetNotification"
+import useGetNotificationSWR from "./useGetNotificationSWR"
 import useNotificationReadAll from "./useNotificationReadAll"
 
 const useNotificationController = () => {
@@ -34,7 +33,7 @@ const useNotificationController = () => {
     count,
     onResetNotification
   } = useNotiStore()
-  const { isLoadingNotification, dataNotification } = useGetNotification({
+  const { isLoadingNotification, dataNotification } = useGetNotificationSWR({
     player_id: profile?.id || "",
     limit,
     skip: page

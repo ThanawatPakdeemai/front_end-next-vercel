@@ -20,6 +20,11 @@ export const NAKA_ECOSYSTEMSS = [
     icon: true
   }
   // {
+  //   label: "Marketplace Legacy Version",
+  //   path: `${CONFIGS.BASE_URL.MARKETPLACE_LEGACY}`,
+  //   icon: true
+  // }
+  // {
   //   label: "Marketplace",
   //   path: `${CONFIGS.BASE_URL.MARKETPLACE}`,
   //   icon: true

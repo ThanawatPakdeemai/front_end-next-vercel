@@ -205,7 +205,7 @@ export default function AllTransactionTable({ profile }: IProp) {
                             className="flex w-fit"
                           >
                             <span className="font-neue-machina-bold text-sm text-neutral-600">
-                              - {item.fee.toFixed(4)}
+                              - {item.fee && item.fee.toFixed(4)}
                             </span>
                           </div>,
                           <div
@@ -224,7 +224,7 @@ export default function AllTransactionTable({ profile }: IProp) {
                                   minWidth: "10px !important",
                                   borderRadius: "5px !important"
                                 }}
-                                className="h-6 flex-none justify-self-end font-neue-machina text-[10px] uppercase text-grey-neutral04"
+                                className="h-6 flex-none justify-self-end whitespace-nowrap font-neue-machina text-[10px] uppercase text-grey-neutral04"
                                 // onClick={() => {
                                 //   onHandleView(item)
                                 // }}

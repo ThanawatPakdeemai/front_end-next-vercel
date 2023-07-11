@@ -41,7 +41,7 @@ const MarketplaceLayoutInventory = ({
         <div className="hidden h-1/5 max-w-[1368px] sm:block">
           <Header />
         </div>
-        <div className="block sm:hidden">
+        <div className="block w-full sm:hidden">
           <HeaderMunuMobile />
         </div>
         <div className="items-center sm:flex" />
@@ -51,7 +51,7 @@ const MarketplaceLayoutInventory = ({
             sx={{ marginTop: 2 }}
           />
         ) : null}
-        <div className="flex h-full flex-col gap-3 sm:flex-row">
+        <div className="relative flex h-full flex-col gap-3 sm:flex-row">
           {/* add filter component here */}
           {!isMapPage && (
             <div className="hidden w-[200px] sm:block">
@@ -126,7 +126,7 @@ const MarketplaceLayoutInventory = ({
           )}
           <div
             className={` ${
-              isMapPage ? "absolute h-4/5" : "h-0 sm:h-[85vh]"
+              isMapPage ? "absolute h-full" : "h-0 sm:h-[85vh]"
             } z-50 hidden sm:block`}
           >
             <InventoryPage />

@@ -4,7 +4,6 @@ import {
   useLinkToFacebook,
   useLinkToTelegram
 } from "@feature/profile/containers/hook/useSyncProfileQuery"
-import useGetProfileByEmail from "@feature/profile/containers/hook/getProfileByEmail"
 import useToast from "@feature/toast/containers/useToast"
 import { ELocalKey } from "@interfaces/ILocal"
 import useProfileStore from "@stores/profileStore"
@@ -76,14 +75,7 @@ const useSyncProfile = () => {
         })
       }
     },
-    [
-      profile,
-      errorToast,
-      mutateLinkToTelegram,
-      successToast,
-      // dataProfile,
-      onSetProfileData
-    ]
+    [profile, errorToast, mutateLinkToTelegram, successToast, onSetProfileData]
   )
 
   return {

@@ -1,12 +1,10 @@
 import { MESSAGES } from "@constants/messages"
 import useGetAvatar from "@feature/avatar/containers/hook/useGetAvatar"
-import useGetProfileInfo from "@feature/profile/containers/hook/getProfileInfo"
 import useUpdateProfile from "@feature/profile/containers/hook/getUpdateProfile"
 import { getGeoInfo } from "@feature/profile/containers/services/profile.service"
 import { IGeoProfile } from "@feature/profile/interfaces/IProfileService"
 import { IVerticalThumbSlide } from "@feature/slider/interfaces/ISlides"
 import { useToast } from "@feature/toast/containers"
-import useGlobal from "@hooks/useGlobal"
 import useLoadingStore from "@stores/loading"
 import useProfileStore from "@stores/profileStore"
 import { useCallback, useEffect, useState } from "react"
@@ -19,17 +17,8 @@ const useProfileSettingController = () => {
 
   // Hook
   const { avatar } = useGetAvatar()
-  // const { limit, page } = useGlobal()
   const { mutateUpdateProfile } = useUpdateProfile()
   const { errorToast, successToast } = useToast()
-  // const { refetchGetProfile: onRefetchProfile } = useGetProfileInfo({
-  //   _limit: limit,
-  //   _playerId: profile?.id ?? "",
-  //   _page: page,
-  //   _sort: "",
-  //   _cheat: "All",
-  //   _rewards_send_status: "All"
-  // })
 
   // State
   const [defaultAvatar, setDefaultAvatar] = useState<string>(
@@ -102,18 +91,8 @@ const useProfileSettingController = () => {
               .then((_res) => {
                 if (_res) {
                   successToast(MESSAGES.edit_profile_success)
-                  // onRefetchProfile()
                   setDefaultAvatar(_res.avatar)
                   featchAvatar()
-                  // if (avatar && avatar.length > 0) {
-                  //   const currentAvatar = avatar.findIndex(
-                  //     (_avatar) => _avatar.value === defaultAvatar
-                  //   )
-                  //   if (currentAvatar) {
-                  //     setAvatarGoto(currentAvatar)
-                  //   }
-                  // }
-                  // onCloseModal()
                   setClose()
                 }
               })
@@ -164,7 +143,6 @@ const useProfileSettingController = () => {
     avatarList: setAvatarList(),
     handleSubmit,
     onSubmit,
-    // onRefetchProfile,
     defaultAvatar,
     setDefaultAvatar,
     avatarGoto,

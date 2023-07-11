@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
 import { IHistory } from "@feature/history/interfaces/IHistoryService"
 import { INotification } from "@feature/notification/interfaces/INotificationService"
 import { ITableHeader } from "@feature/table/interface/ITable"
@@ -73,6 +71,7 @@ const useHistoryController = () => {
 
   const fetchHistory = useCallback(() => {
     if (historyData && historyData.info) {
+      setHxHistory(historyData.data)
       setTotalCount(historyData.info.totalCount)
     }
   }, [historyData])

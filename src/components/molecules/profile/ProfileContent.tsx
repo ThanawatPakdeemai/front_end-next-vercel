@@ -27,15 +27,6 @@ import useGetProfileByEmail from "@feature/profile/containers/hook/getProfileByE
 import { useToast } from "@feature/toast/containers"
 import { MESSAGES } from "@constants/messages"
 import { useTranslation } from "react-i18next"
-// import { useWeb3Provider } from "@providers/index"
-// import Script from "next/script"
-// import { useLinkToTelegram } from "@feature/profile/containers/hook/useSyncProfileQuery"
-// import useSyncProfile from "@mobile/features/game/containers/hooks/useSyncProfile"
-// import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
-// import { TelegramWidget } from "@components/atoms/button/TelegramWidget"
-// import FacebookLogin from "react-facebook-login"
-// import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
-// import CONFIGS from "@configs/index"
 import EditProfileModal from "./EditProfileModal"
 import SliderBadges from "./SliderBadges"
 import SideSocialShare from "../SideSocialShare"
@@ -73,9 +64,6 @@ const ProfileContent = () => {
   })
 
   const { profile: profileFetched, isError } = useGetProfileByEmail(emailPlayer)
-  // const { mutateLinkToTelegram } = useLinkToTelegram()
-  // const { handleSyncTelegramId, handleSyncFacebookId } = useSyncProfile()
-  // const { isShowSyncTelegram, isShowSyncFacebook } = useGlobalControllerMobile()
 
   useEffect(() => {
     if (isError) {
@@ -155,15 +143,6 @@ const ProfileContent = () => {
     }
   }, [player_id])
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const gandalf: any = document.querySelector("#telegram-login-NakaGameBot")
-      const list: any = document.querySelector("#login-telegram")
-      list.append(gandalf)
-    }, 5000)
-    return () => clearTimeout(timer)
-  }, [])
-
   const handleOnExpandClick = () => {
     setOpenEdit(!openEdit)
   }
@@ -180,58 +159,6 @@ const ProfileContent = () => {
 
   return profileFetched && getProfileInfo && !isFetching ? (
     <div className="login-telegram mt-8 w-full md:mt-0 md:w-[98%] lg:w-[90%]">
-      {/* <div className="w-[90%]"> */}
-      {/* <button
-        onClick={jsClickButton}
-        className="hidden"
-        id="button-click"
-      >
-        Click
-      </button>
-      <div
-        id="login-telegram"
-        className="hidden pb-[20px]"
-      >
-        <Script
-          async
-          src="https://telegram.org/js/telegram-widget.js?22"
-          data-telegram-login="NakaGameBot"
-          data-size="large"
-          data-onauth="onTelegramAuth(user)"
-          data-request-access="write"
-          strategy="lazyOnload"
-        />
-        <Script id="show-banner">
-          {`function onTelegramAuth(params) { localStorage.setItem('telegram-params', JSON.stringify(params)); document.getElementById("button-click").click();} 
-              `}
-        </Script>
-      </div> */}
-
-      {/* ====== */}
-      {/* {isShowSyncTelegram() && (
-        <>
-          <TelegramWidget
-            dataOnAuth={handleSyncTelegramId}
-            botName="NakaGameMBot"
-          />
-          <Divider className="my-6 !block border-b border-[#35383F]" />
-        </>
-      )} */}
-      {/* {isShowSyncFacebook() && (
-        <>
-          <FacebookLogin
-            appId={`${CONFIGS.FACEBOOK_APP_ID}`}
-            autoLoad={false}
-            fields="name,email,picture"
-            callback={handleSyncFacebookId}
-            cssClass="my-facebook-button-class flex gap-2 items-center h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
-            icon={<FacebookColorIcon />}
-            textButton="Sync with Facebook"
-          />
-          <Divider className="my-6 !block border-b border-[#35383F]" />
-        </>
-      )} */}
-      {/* ====== */}
       <SideSocialShare hidden="hidden lg:block" />
       <div className="relative">
         <Box

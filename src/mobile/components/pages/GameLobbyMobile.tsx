@@ -8,7 +8,7 @@ import GameDetailLayoutMobile from "../templates/GameDetailLayoutMobile"
 const GameLobbyMobile = () => {
   const router = useRouter()
   const { onSetGameData, allGame } = useGameStore()
-  const { GameHome, typeGame } = router.query
+  const { GameHome } = router.query
   const [gameData, setGameData] = useState<IGame>()
   const { gameData: gameDataFound } = useGetGameByPath(
     GameHome ? GameHome.toString() : ""
@@ -16,21 +16,11 @@ const GameLobbyMobile = () => {
 
   const fetchGame = useCallback(async () => {
     if (allGame && allGame.length > 0) {
-      // Find game in local storage first
-      const _game = allGame?.find(
-        (game) => game.path === GameHome && typeGame === game.game_mode
-      )
-      if (_game) {
-        onSetGameData(_game)
-        setGameData(_game)
-      } else {
-        // If not found, using found game in API
-        if (!gameDataFound) return
-        onSetGameData(gameDataFound)
-        setGameData(gameDataFound)
-      }
+      if (!gameDataFound) return
+      onSetGameData(gameDataFound)
+      setGameData(gameDataFound)
     }
-  }, [GameHome, onSetGameData, typeGame, allGame, gameDataFound])
+  }, [onSetGameData, allGame, gameDataFound])
 
   useEffect(() => {
     let load = false

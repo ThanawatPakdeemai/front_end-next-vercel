@@ -7,6 +7,7 @@ import {
 import configZustandDevTools from "@utils/configDevtools"
 import Helper from "@utils/helper"
 import { ELocalKey } from "@interfaces/ILocal"
+import { IAvatar } from "@feature/avatar/interfaces/IAvatarService"
 
 export interface IUseProfileStore {
   address: string | undefined
@@ -19,6 +20,9 @@ export interface IUseProfileStore {
   onSetProfileAddress: (_address: string | undefined) => void
   onSetProfileData: (_profile: IProfile) => void
   onSetProfileJWT: (_token: string) => void
+  avatarList: IAvatar[]
+  onSetAvatarList: (_avatarList: IAvatar[]) => void
+  onResetAvatarList: () => void
 }
 
 const useProfileStore = create<IUseProfileStore>()(
@@ -48,7 +52,8 @@ const useProfileStore = create<IUseProfileStore>()(
               ...prev,
               profile: { ...resetData },
               address: undefined,
-              isLogin: false
+              isLogin: false,
+              avatarList: []
             }),
             false,
             "ProfileStore/onReset"
@@ -84,6 +89,21 @@ const useProfileStore = create<IUseProfileStore>()(
             "ProfileStore/onSetProfileToken"
           )
           Helper.setLocalStorage({ key: ELocalKey.token, value: _token })
+        },
+        avatarList: [],
+        onSetAvatarList: (_avatarList) => {
+          set(
+            () => ({ avatarList: _avatarList }),
+            false,
+            "ProfileStore/onSetAvatarList"
+          )
+        },
+        onResetAvatarList: () => {
+          set(
+            () => ({ avatarList: [] }),
+            false,
+            "ProfileStore/onResetAvatarList"
+          )
         }
       }),
       configZustandDevTools("Profile-Store")

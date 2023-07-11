@@ -41,7 +41,6 @@ export const getTransactionTransferGold = ({
     services
       .post<IResTransactionExp>(`/profile/transaction/exchange`, { ...data })
       .then((response) => {
-        // console.log(response.data)
         resolve(response.data)
       })
       .catch((error) => reject(error))

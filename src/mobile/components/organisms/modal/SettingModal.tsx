@@ -1,6 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
-
 import React, { useState } from "react"
 import {
   Avatar,
@@ -23,11 +20,11 @@ import { StyledAvatar } from "@mobile/components/atoms/headerMenu/HeadProfileMob
 import ArrowBackIcon from "@mobile/components/atoms/icons/ArrowBackIcon"
 import useDrawerControllerMobile from "@mobile/features/game/containers/hooks/useDrawerControllerMobile"
 import useSyncProfile from "@mobile/features/game/containers/hooks/useSyncProfile"
-// import { TelegramWidget } from "@components/atoms/button/TelegramWidget"
+import { TelegramWidget } from "@components/atoms/button/TelegramWidget"
 import useGlobalControllerMobile from "@mobile/features/game/containers/hooks/useGlobalControllerMobile"
-// import FacebookLogin from "react-facebook-login"
-// import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
-// import CONFIGS from "@configs/index"
+import FacebookLogin from "react-facebook-login"
+import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
+import CONFIGS from "@configs/index"
 import ProfileSettingModal from "./ProfileSettingModal"
 import PlayedHistoryModal from "./PlayedHistoryModal"
 import LogoutModal from "./LogoutModal"
@@ -201,7 +198,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
             title={t("Support")}
           />
         </Box>
-        {/* {isShowSyncTelegram() && (
+        {isShowSyncTelegram() && (
           <>
             <TelegramWidget
               dataOnAuth={handleSyncTelegramId}
@@ -209,8 +206,8 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
             />
             <Divider className="my-6 !block border-b border-[#35383F]" />
           </>
-        )} */}
-        {/* {isShowSyncFacebook() && (
+        )}
+        {isShowSyncFacebook() && (
           <>
             <FacebookLogin
               appId={`${CONFIGS.FACEBOOK_APP_ID}`}
@@ -223,7 +220,7 @@ const SettingModal = ({ open, setOpenSetting }: ISettingModalProps) => {
             />
             <Divider className="my-6 !block border-b border-[#35383F]" />
           </>
-        )} */}
+        )}
 
         <CardHeader
           onClick={() => setToggleLogout(!toggleLogout)}

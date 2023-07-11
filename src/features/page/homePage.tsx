@@ -44,7 +44,7 @@ import useFormLoginController from "@feature/authentication/containers/hooks/use
 import useLoginTypeStore from "@stores/loginTypes"
 
 const Home = () => {
-  const { googleLogin } = useFormLoginController()
+  const { googleLogin, discordLogin } = useFormLoginController()
   const { profile } = useProfileStore()
   const { clearQuestStore, setOpen, hasCompleted } = useQuestStore()
   const { hydrated, isFreeToEarnGame, isFreeToPlayGame, isStoryModeGame } =
@@ -127,15 +127,13 @@ const Home = () => {
   ])
 
   const handleLogin = () => {
-    // eslint-disable-next-line no-console
-    console.log("test-handleLogin", session, status, logintTypes)
-    if (session && status === "authenticated") {
-      // if (logintTypes === "google") {
-      //   // eslint-disable-next-line no-console
-      //   console.log("test-logintTypes", logintTypes)
-
-      googleLogin()
-      // }
+    if (session && status === "authenticated" && logintTypes !== "") {
+      if (logintTypes === "google") {
+        googleLogin()
+      }
+      if (logintTypes === "discord") {
+        discordLogin()
+      }
     }
   }
 

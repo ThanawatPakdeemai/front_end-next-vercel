@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 4004",
+    "dev": "next dev",
     "dev:prod": "env-cmd -f .env.production next dev -p 4004",
     "build": "next build",
     "build:css": "yarn build:sass && npx tailwindcss -i ./src/styles/globals.css -o ./src/styles/output.css && yarn format:prettier-css",

@@ -1,7 +1,7 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import DiscordProvider from "next-auth/providers/discord"
-import { ISessionCallBaqck } from "@src/types/nextauth"
+import { ISessionCallBack } from "@src/types/nextauth"
 
 export const authOptions: any = {
   // Configure one or more authentication providers
@@ -16,7 +16,7 @@ export const authOptions: any = {
     })
   ],
   callbacks: {
-    session: async (session: ISessionCallBaqck) => {
+    session: async (session: ISessionCallBack) => {
       if (session.session.user) {
         session.session.user.id = session.token.sub
       }

@@ -20,7 +20,7 @@ export interface ISession {
   expires: string
 }
 
-export interface ISessionCallBaqck {
+export interface ISessionCallBack {
   session: ISession
   token: IToken
 }

@@ -17,6 +17,7 @@ import useChainSupportStore from "@stores/chainSupport"
 import useNotiStore from "@stores/notification"
 import Helper from "@utils/helper"
 import { isMobile as detectMobile } from "react-device-detect"
+import { signOut } from "next-auth/react"
 import useSupportedChain from "./useSupportedChain"
 import useGameGlobal from "./useGameGlobal"
 
@@ -394,6 +395,7 @@ const useGlobal = (
     setQtyItemOfRoom(0)
     onResetNotification()
     onReset()
+    signOut()
     await router.push("/")
   }
 

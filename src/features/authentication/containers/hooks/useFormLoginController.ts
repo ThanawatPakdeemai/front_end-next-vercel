@@ -1,12 +1,7 @@
 import _ from "lodash"
 import { MESSAGES } from "@constants/messages"
 import { useToast } from "@feature/toast/containers"
-import {
-  TwitterAuthProvider,
-  GoogleAuthProvider,
-  getAuth,
-  signInWithPopup
-} from "firebase/auth"
+import { TwitterAuthProvider, getAuth, signInWithPopup } from "firebase/auth"
 import { useSession } from "next-auth/react"
 import { initializeApp, getApps } from "@firebase/app"
 import useLoginProvider from "@feature/authentication/containers/hooks/useLoginProvider"
@@ -20,8 +15,6 @@ import { useCallback } from "react"
 import { IProfileFaceBook } from "@feature/profile/interfaces/IProfileService"
 import { useLinkToFacebook } from "@feature/profile/containers/hook/useSyncProfileQuery"
 import useProfileController from "@feature/profile/containers/hook/useProfileController"
-import useLoginTypeStore from "@stores/loginTypes"
-
 import useSignIn from "./useSignIn"
 import useLoginMetamask from "./useLoginMetamask"
 
@@ -136,54 +129,10 @@ const useFormLoginController = () => {
   /**
    * @description Login with Google
    */
-  const googleLogin = async () => {
-    // eslint-disable-next-line no-console
-    console.log("test-googleLogin", session)
-
-    // if (session && status === "authenticated" && logintTypes !== "") {
-    //   if (logintTypes === "google") {
-    //     googleLogin()
-    //   }
-    // }
-
-    // const provider = new GoogleAuthProvider()
-    // provider.addScope("email")
-    // await signInWithPopup(auth, provider)
-    //   .then((result) => {
-    //     const { user } = result
-    //     if (
-    //       user.providerData[0].email !== null &&
-    //       user.providerData[0].email !== undefined &&
-    //       result.providerId !== null &&
-    //       result.providerId !== undefined
-    //     ) {
-    //       mutateLoginProvider({
-    //         _email: user.providerData[0].email,
-    //         _provider: "google",
-    //         _prevPath: "/",
-    //         _providerUUID: user.uid,
-    //         _referral: ""
-    //       })
-    //         .then((_res) => {
-    //           if (_res) {
-    //             successToast(MESSAGES.logged_in_successfully)
-    //           }
-    //         })
-    //         .catch((_error: IError) => {
-    //           errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-    //         })
-    //     } else {
-    //       errorToast(MESSAGES.logged_in_unsuccessfully)
-    //     }
-    //   })
-    //   .catch((_error: IError) => {
-    //     errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
-    //   })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-
-    if (session && session.user?.email) {
+  const googleLogin = useCallback(async () => {
+    if (session && session?.user?.email && session?.user?.id) {
       mutateLoginProvider({
-        _email: session.user?.email,
+        _email: session.user.email,
         _provider: "google",
         _prevPath: "/",
         _providerUUID: session.user.id,
@@ -197,10 +146,9 @@ const useFormLoginController = () => {
         .catch((_error: IError) => {
           errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
         })
-    } else {
-      errorToast(MESSAGES.logged_in_unsuccessfully)
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [errorToast, mutateLoginProvider, successToast])
 
   /**
    * @description Login with Twitter
@@ -239,6 +187,30 @@ const useFormLoginController = () => {
       .catch((_error: IError) => {
         errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [errorToast, mutateLoginProvider, successToast])
+
+  /**
+   * @description Login with Twitter
+   */
+  const discordLogin = useCallback(async () => {
+    if (session && session?.user?.email && session?.user?.id) {
+      mutateLoginProvider({
+        _email: session.user.email,
+        _provider: "discord",
+        _prevPath: "/",
+        _providerUUID: session.user.id,
+        _referral: ""
+      })
+        .then((_res) => {
+          if (_res) {
+            successToast(MESSAGES.logged_in_successfully)
+          }
+        })
+        .catch((_error: IError) => {
+          errorToast(MESSAGES.logged_in_unsuccessfully || _error.message)
+        })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errorToast, mutateLoginProvider, successToast])
 
@@ -287,7 +259,8 @@ const useFormLoginController = () => {
     facebookLogin,
     googleLogin,
     twitterLogin,
-    metaMarkLogin
+    metaMarkLogin,
+    discordLogin
   }
 }
 

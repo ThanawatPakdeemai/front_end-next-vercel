@@ -4,7 +4,6 @@ import {
   useLinkToFacebook,
   useLinkToTelegram
 } from "@feature/profile/containers/hook/useSyncProfileQuery"
-import useGetProfileByEmail from "@feature/profile/containers/hook/getProfileByEmail"
 import useToast from "@feature/toast/containers/useToast"
 import { ELocalKey } from "@interfaces/ILocal"
 import useProfileStore from "@stores/profileStore"
@@ -18,7 +17,6 @@ const useSyncProfile = () => {
   const { mutateLinkToFacebook } = useLinkToFacebook()
   const { errorToast, successToast } = useToast()
   const { onSetProfileData } = useProfileStore()
-  const { profile: dataProfile } = useGetProfileByEmail(profile?.email ?? "")
 
   /**
    * @description Handle check user already exist in website, then sync data Facebook
@@ -70,21 +68,14 @@ const useSyncProfile = () => {
             successToast(MESSAGES.sync_telegram_success)
             Helper.removeLocalStorage(ELocalKey.telegramUser)
             Helper.removeLocalStorage(ELocalKey.telegramId)
-            if (dataProfile) {
-              onSetProfileData(dataProfile)
+            if (res.data) {
+              onSetProfileData(res.data)
             }
           }
         })
       }
     },
-    [
-      profile,
-      errorToast,
-      mutateLinkToTelegram,
-      successToast,
-      dataProfile,
-      onSetProfileData
-    ]
+    [profile, errorToast, mutateLinkToTelegram, successToast, onSetProfileData]
   )
 
   return {

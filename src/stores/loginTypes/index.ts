@@ -15,9 +15,9 @@ const useLoginTypeStore = create<ILoginTypesStore>()(
         getClickLoginTypes: "",
         setClickLoginTypes: (_types: string) => {
           set(
-            () => ({ getClickLoginTypes: _types }),
-            false,
-            "TypeStores/UseTypesStore"
+            () => ({ getClickLoginTypes: _types })
+            // false,
+            // "TypeStores/UseTypesStore"
           )
         }
       }),

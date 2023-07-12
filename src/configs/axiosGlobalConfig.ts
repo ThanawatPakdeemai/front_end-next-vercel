@@ -27,7 +27,7 @@ export const removeAxiosToken = () => {
 const resetProfile = () => {
   unstable_batchedUpdates(() => {
     useProfileStore.getState().onReset()
-    Helper.resetLocalStorage()
+    // Helper.resetLocalStorage()
     removeAxiosToken()
   })
 }

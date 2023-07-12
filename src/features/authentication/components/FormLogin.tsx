@@ -35,8 +35,7 @@ import useFormLoginController from "../containers/hooks/useFormLoginController"
 import { ISignIn } from "../interfaces/IAuthService"
 
 const FormLogin = () => {
-  const { twitterLogin, metaMarkLogin, isLoading, onSubmitLogin } =
-    useFormLoginController()
+  const { metaMarkLogin, isLoading, onSubmitLogin } = useFormLoginController()
 
   const { t } = useTranslation()
 
@@ -262,7 +261,7 @@ const FormLogin = () => {
               stiffness: 400,
               damping: 4
             }}
-            onClick={twitterLogin}
+            onClick={() => handleLogin("twitter")}
             icon={<TwitterIcon />}
             className="flex h-[40px] w-[75px] items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800"
           />

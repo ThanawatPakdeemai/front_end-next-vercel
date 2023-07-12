@@ -44,12 +44,12 @@ import useFormLoginController from "@feature/authentication/containers/hooks/use
 import useLoginTypeStore from "@stores/loginTypes"
 
 const Home = () => {
-  const { googleLogin, discordLogin } = useFormLoginController()
+  const { googleLogin, discordLogin, twitterLogin } = useFormLoginController()
   const { profile } = useProfileStore()
   const { clearQuestStore, setOpen, hasCompleted } = useQuestStore()
   const { hydrated, isFreeToEarnGame, isFreeToPlayGame, isStoryModeGame } =
     useGlobal()
-  const { getClickLoginTypes: logintTypes } = useLoginTypeStore()
+  const { getClickLoginTypes: loginTypes } = useLoginTypeStore()
 
   const [openSwap, setOpenSwap] = useState(false)
   const { t } = useTranslation()
@@ -127,12 +127,20 @@ const Home = () => {
   ])
 
   const handleLogin = () => {
-    if (session && status === "authenticated" && logintTypes !== "") {
-      if (logintTypes === "google") {
-        googleLogin()
-      }
-      if (logintTypes === "discord") {
-        discordLogin()
+    if (session && status === "authenticated" && loginTypes !== "") {
+      switch (loginTypes) {
+        case "google":
+          googleLogin()
+          break
+        case "discord":
+          discordLogin()
+          break
+        case "twitter":
+          twitterLogin()
+          break
+        default:
+          // Handle unknown login type
+          break
       }
     }
   }
@@ -146,7 +154,7 @@ const Home = () => {
       load = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session, status, logintTypes])
+  }, [session, status, loginTypes])
 
   return hydrated ? (
     <>

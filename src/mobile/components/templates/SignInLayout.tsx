@@ -1,22 +1,17 @@
+/* eslint-disable max-len */
 import React, { useState } from "react"
 import { Box, Button, Divider, Typography } from "@mui/material"
 import CardNoReward from "@feature/game/containers/components/atoms/CardNoReward"
 import TwitterIcon from "@components/icons/SocialIcon/TwitterIcon"
-import useLoginTypeStore from "@stores/loginTypes"
-import FacebookLogin from "react-facebook-login"
 import LogoNakaBigIcon from "@components/icons/LogoNakaBigIcon"
 import GoogleColorIcon from "@components/icons/SocialIcon/GoogleColorIcon"
-import FacebookColorIcon from "@components/icons/SocialIcon/FacebookColorIcon"
 import useFormLoginController from "@feature/authentication/containers/hooks/useFormLoginController"
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
-import CONFIGS from "@configs/index"
 import LoginModal from "../organisms/modal/LoginModal"
 import CreateAccountModal from "../organisms/modal/CreateAccountModal"
 
 const SignInLayout = () => {
-  const { facebookLogin, googleLogin, twitterLogin } = useFormLoginController()
-
-  const { setClickLoginFacebook: setToggleFacebookLogin } = useLoginTypeStore()
+  const { googleLogin, twitterLogin } = useFormLoginController()
 
   const [openModalLogin, setOpenModalLogin] = useState<boolean>(false)
   const [openModalCreateAccount, setOpenModalCreateAccount] =
@@ -37,7 +32,7 @@ const SignInLayout = () => {
         <Typography className="my-8 text-center font-urbanist text-3xl font-bold uppercase text-red-card">
           Welcome Back
         </Typography>
-        <Box component="div">
+        {/* <Box component="div">
           <Button
             variant="contained"
             className="mb-[1.125rem] h-[50px] w-[293px] rounded-2xl border border-solid border-neutral-690 !bg-neutral-800"
@@ -57,7 +52,7 @@ const SignInLayout = () => {
               </span>
             </div>
           </Button>
-        </Box>
+        </Box> */}
         <Box component="div">
           <Button
             variant="contained"

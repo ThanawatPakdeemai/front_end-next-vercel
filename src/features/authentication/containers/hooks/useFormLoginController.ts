@@ -145,7 +145,7 @@ const useFormLoginController = () => {
         })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [errorToast, mutateLoginProvider, successToast])
+  }, [errorToast, mutateLoginProvider, successToast, session])
 
   /**
    * @description Login with Twitter
@@ -169,7 +169,7 @@ const useFormLoginController = () => {
         })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [errorToast, mutateLoginProvider, successToast])
+  }, [errorToast, mutateLoginProvider, successToast, session])
 
   /**
    * @description Login with Twitter
@@ -193,7 +193,7 @@ const useFormLoginController = () => {
         })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [errorToast, mutateLoginProvider, successToast])
+  }, [errorToast, mutateLoginProvider, successToast, session])
 
   /**
    * @description Login with Metamask

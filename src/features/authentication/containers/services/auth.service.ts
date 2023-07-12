@@ -121,7 +121,7 @@ export const refreshProfileToken = async (
       })
       .catch((error) => {
         useProfileStore.getState().onReset()
-        // Helper.resetLocalStorage()
+        Helper.resetLocalStorage()
         callBeckWhenError && callBeckWhenError()
         if (error instanceof Error) {
           // console.error("Error", error.message)
@@ -131,7 +131,7 @@ export const refreshProfileToken = async (
       })
   } catch (error) {
     useProfileStore.getState().onReset()
-    // Helper.resetLocalStorage()
+    Helper.resetLocalStorage()
     callBeckWhenError && callBeckWhenError()
     if (error instanceof Error) {
       throw Error(`refreshToken : ${error}`)
